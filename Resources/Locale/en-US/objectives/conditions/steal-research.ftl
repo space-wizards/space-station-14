@@ -1,1 +1,5 @@
-objective-condition-steal-research-title = Steal {$count} technologies.
+objective-condition-steal-research-title = Украдите { $count } { $count ->
+    [one] технологию
+    [few] технологии
+    *[other] технологий
+}.

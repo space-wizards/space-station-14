@@ -1,6 +1,6 @@
-refined-butchered-success = You slice {$target} with {$tool}.
-refined-butchered-success-others = The {$user} sliced {$target} with {$tool}.
-refined-slice-verb-message-default = Slice entity with sharp item.
-refined-slice-verb-target-isnt-dead = Needs to be dead.
-refined-slice-verb-message-tool = You are going to need a different tool to slice {$target}.
-refined-slice-verb-name = Slice
+refined-butchered-success = Вы разрезаете { $target } используя { $tool }.
+refined-butchered-success-others = { $user } разрезал { $target } используя { $tool }.
+refined-slice-verb-message-default = Разрезать острым предметом.
+refined-slice-verb-target-isnt-dead = Цель должна быть мертва.
+refined-slice-verb-message-tool = Вам понадобится другой инструмент для разрезания { $target }.
+refined-slice-verb-name = Разрезать

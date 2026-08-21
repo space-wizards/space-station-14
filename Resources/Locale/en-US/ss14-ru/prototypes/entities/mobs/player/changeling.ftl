@@ -1,0 +1,14 @@
+ent-MobLing = Урист МакКрад
+    .desc = { ent-MobHuman.desc }
+    .suffix = Неантаг
+ent-MobHeadSlug = мозговой червь
+    .desc = Небольшое, похожее на слизня существо с большой, зияющей пастью. Оно покрыто густой, слизистой субстанцией.
+    .suffix = { ent-SimpleSpaceMobBase.suffix }
+ent-ChangelingFleshClothingAbilityStoreDummy = { "" }
+    .desc = { "" }
+ent-ChangelingVoiceMimicDummy = { "" }
+    .desc = { "" }
+ent-ChangelingNightVisionDummy = { "" }
+    .desc = { "" }
+ent-ChangelingFakeMindshieldDummy = { "" }
+    .desc = { "" }

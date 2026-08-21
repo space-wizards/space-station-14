@@ -1,150 +1,150 @@
-marking-GauzeLefteyePatch-gauze_lefteye_2 = Gauze eyepatch (Left)
-marking-GauzeLefteyePatch = Gauze eyepatch (Left)
+marking-GauzeLefteyePatch-gauze_lefteye_2 = Бинт, Перевязь глаза (Левый)
+marking-GauzeLefteyePatch = Бинт, Перевязь глаза (Левый)
 
-marking-GauzeLefteyePad-gauze_lefteye_1 = Gauze eyepad (Left)
-marking-GauzeLefteyePad = Gauze eyepad (Left)
+marking-GauzeLefteyePad-gauze_lefteye_1 = Бинт, Подушечка на глаз (Левый)
+marking-GauzeLefteyePad = Бинт, Подушечка на глаз (Левый)
 
-marking-GauzeRighteyePatch-gauze_righteye_2 = Gauze eyepatch (Right)
-marking-GauzeRighteyePatch = Gauze eyepatch (Right)
+marking-GauzeRighteyePatch-gauze_righteye_2 = Бинт, Перевязь глаза (Правый)
+marking-GauzeRighteyePatch = Бинт, Перевязь глаза (Правый)
 
-marking-GauzeRighteyePad-gauze_righteye_1 = Gauze eyepad (Right)
-marking-GauzeRighteyePad = Gauze eyepad (Right)
+marking-GauzeRighteyePad-gauze_righteye_1 = Бинт, Подушечка на глаз (Правый)
+marking-GauzeRighteyePad = Бинт, Подушечка на глаз (Правый)
 
-marking-GauzeShoulder-gauze_shoulder = Gauze Shoulder Sling
-marking-GauzeShoulder = Gauze Shoulder Sling
+marking-GauzeShoulder-gauze_shoulder = Бинт, Плечо
+marking-GauzeShoulder = Бинт, Плечо
 
-marking-GauzeStomach-gauze_abdomen = Gauze Stomach Wrap
-marking-GauzeStomach = Gauze Stomach Wrap
+marking-GauzeStomach-gauze_abdomen = Бинт, Перевязь живота
+marking-GauzeStomach = Бинт, Перевязь живота
 
-marking-GauzeUpperArmRight-gauze_upperarm_r = Gauze Forearm Wrap (Right)
-marking-GauzeUpperArmRight = Gauze Forearm Wrap (Right)
+marking-GauzeUpperArmRight-gauze_upperarm_r = Бинт, Перевязь предплечья (Правый)
+marking-GauzeUpperArmRight = Бинт, Перевязь предплечья (Правый)
 
-marking-GauzeLowerArmRight-gauze_lowerarm_r = Gauze Wrist Wrap (Right)
-marking-GauzeLowerArmRight = Gauze Wrist Wrap (Right)
+marking-GauzeLowerArmRight-gauze_lowerarm_r = Бинт, Перевязь запястья (Правый)
+marking-GauzeLowerArmRight = Бинт, Перевязь запястья (Правый)
 
-marking-GauzeLeftArm-gauze_leftarm = Gauze Arm Wrap (Left)
-marking-GauzeLeftArm = Gauze Arm Wrap (Left)
+marking-GauzeLeftArm-gauze_leftarm = Бинт, Перевязь руки (Левый)
+marking-GauzeLeftArm = Бинт, Перевязь руки (Левый)
 
-marking-GauzeLowerLegLeft-gauze_lowerleg_l = Gauze Ankle Wrap (Left)
-marking-GauzeLowerLegLeft = Gauze Ankle Wrap (Left)
+marking-GauzeLowerLegLeft-gauze_lowerleg_l = Бинт, Перевязь голеностопа (Левый)
+marking-GauzeLowerLegLeft = Бинт, Перевязь голеностопа (Левый)
 
-marking-GauzeBoxerWrapLeft-gauze_boxerwrap_l = Gauze Handwrap (Left)
-marking-GauzeBoxerWrapLeft = Gauze Handwrap (Left)
+marking-GauzeBoxerWrapLeft-gauze_boxerwrap_l = Бинт, Перевязь кисти (Левый)
+marking-GauzeBoxerWrapLeft = Бинт, Перевязь кисти (Левый)
 
-marking-GauzeBoxerWrapRight-gauze_boxerwrap_r = Gauze Handwrap (Right)
-marking-GauzeBoxerWrapRight = Gauze Handwrap (Right)
+marking-GauzeBoxerWrapRight-gauze_boxerwrap_r = Бинт, Перевязь кисти (Правый)
+marking-GauzeBoxerWrapRight = Бинт, Перевязь кисти (Правый)
 
-marking-GauzeUpperLegLeft-gauze_upperleg_l = Gauze Thigh Wrap (Left)
-marking-GauzeUpperLegLeft = Gauze Thigh Wrap (Left)
+marking-GauzeUpperLegLeft-gauze_upperleg_l = Бинт, Перевязь бедра (Левый)
+marking-GauzeUpperLegLeft = Бинт, Перевязь бедра (Левый)
 
-marking-GauzeLowerLegRight-gauze_lowerleg_r = Gauze Ankle Wrap (Right)
-marking-GauzeLowerLegRight = Gauze Ankle Wrap (Right)
+marking-GauzeLowerLegRight-gauze_lowerleg_r = Бинт, Перевязь голеностопа (Правый)
+marking-GauzeLowerLegRight = Бинт, Перевязь голеностопа (Правый)
 
-marking-GauzeUpperLegRight-gauze_upperleg_r = Gauze Thigh Wrap (Right)
-marking-GauzeUpperLegRight = Gauze Thigh Wrap (Right)
+marking-GauzeUpperLegRight-gauze_upperleg_r = Бинт, Перевязь бедра (Правый)
+marking-GauzeUpperLegRight = Бинт, Перевязь бедра (Правый)
 
-marking-GauzeBlindfold-gauze_blindfold = Gauze Blindfold
-marking-GauzeBlindfold = Gauze Blindfold
+marking-GauzeBlindfold-gauze_blindfold = Бинт, Повязка на оба глаза
+marking-GauzeBlindfold = Бинт, Повязка на глаза
 
-marking-GauzeHead-gauze_head = Gauze Head Wrap
-marking-GauzeHead = Gauze Head Wrap
+marking-GauzeHead-gauze_head = Бинт, Повязка на голову
+marking-GauzeHead = Бинт, Повязка на голову
 
-marking-GauzeLizardBlindfold-gauze_lizard_blindfold = Gauze Blindfold
-marking-GauzeLizardBlindfold = Gauze Blindfold
+marking-GauzeLizardBlindfold-gauze_lizard_blindfold = Бинт, Повязка на глаза
+marking-GauzeLizardBlindfold = Бинт, Повязка на глаза
 
-marking-GauzeLizardFootRight-gauze_lizard_foot_r = Gauze Foot Wrap (Right)
-marking-GauzeLizardFootRight = Gauze Foot Wrap (Right)
+marking-GauzeLizardFootRight-gauze_lizard_foot_r = Бинт, Перевязь стопы (Правый)
+marking-GauzeLizardFootRight = Бинт, Перевязь стопы (Правый)
 
-marking-GauzeLizardFootLeft-gauze_lizard_foot_l = Gauze Foot Wrap (Left)
-marking-GauzeLizardFootLeft = Gauze Foot Wrap (Left)
+marking-GauzeLizardFootLeft-gauze_lizard_foot_l = Бинт, Перевязь стопы (Левый)
+marking-GauzeLizardFootLeft = Бинт, Перевязь стопы (Левый)
 
-marking-GauzeLizardLefteyePatch-gauze_lizard_lefteye = Reptilian Gauze eyepatch (Left)
-marking-GauzeLizardLefteyePatch = Reptilian Gauze eyepatch (Left)
+marking-GauzeLizardLefteyePatch-gauze_lizard_lefteye = Унатх, Перевязь глаза (Левый)
+marking-GauzeLizardLefteyePatch = Унатх, Перевязь глаза (Левый)
 
-marking-GauzeLizardRighteyePatch-gauze_lizard_righteye = Reptilian Gauze eyepatch (Right)
-marking-GauzeLizardRighteyePatch = Reptilian Gauze Eyepatch (Right)
+marking-GauzeLizardRighteyePatch-gauze_lizard_righteye = Унатх, Перевязь глаза (Правый)
+marking-GauzeLizardRighteyePatch = Унатх, Перевязь глаза (Правый)
 
-marking-GauzeMothStomach-gauze_moth_abdomen = Insectoid Stomach Wrap
-marking-GauzeMothStomach = Insectoid Stomach Wrap
+marking-GauzeMothStomach-gauze_moth_abdomen = Инсектоид, Бинт, Перевязь живота
+marking-GauzeMothStomach = Инсектоид, Бинт, Перевязь живота
 
-marking-GauzeMothShoulder-gauze_moth_shoulder = Insectoid Shoulder Sling
-marking-GauzeMothShoulder = Insectoid Shoulder Sling
+marking-GauzeMothShoulder-gauze_moth_shoulder = Инсектоид, Бинт, Перевязь плеча
+marking-GauzeMothShoulder = Инсектоид, Бинт, Перевязь плеча
 
-marking-GauzeMothBlindfold-gauze_moth_blindfold = Insectoid Blindfold
-marking-GauzeMothBlindfold = Insectoid Blindfold
+marking-GauzeMothBlindfold-gauze_moth_blindfold = Инсектоид, Бинт, Повязка на глаза
+marking-GauzeMothBlindfold = Инсектоид, Бинт, Повязка на глаза
 
-marking-GauzeMothLeftEyePatch-gauze_moth_lefteye_2 = Insectoid Gauze eyepatch (Left)
-marking-GauzeMothLeftEyePatch = Insectoid Gauze eyepatch (Left)
+marking-GauzeMothLeftEyePatch-gauze_moth_lefteye_2 = Инсектоид, Бинт, Перевязь глаза (Левый)
+marking-GauzeMothLeftEyePatch = Инсектоид, Бинт, Перевязь глаза (Левый)
 
-marking-GauzeMothLeftEyePad-gauze_moth_lefteye_1 = Insectoid Gauze eyepad (Left)
-marking-GauzeMothLeftEyePad = Insectoid Gauze eyepad (Left)
+marking-GauzeMothLeftEyePad-gauze_moth_lefteye_1 = Инсектоид, Бинт, Перевязь глаза (Левый)
+marking-GauzeMothLeftEyePad = Инсектоид, Бинт, Перевязь глаза (Левый)
 
-marking-GauzeMothRightEyePatch-gauze_moth_righteye_2 = Insectoid Gauze eyepatch (Right)
-marking-GauzeMothRightEyePatch = Insectoid Gauze eyepatch (Right)
+marking-GauzeMothRightEyePatch-gauze_moth_righteye_2 = Инсектоид, Бинт, Перевязь глаза (Правый)
+marking-GauzeMothRightEyePatch = Инсектоид, Перевязь глаза (Правый)
 
-marking-GauzeMothRightEyePad-gauze_moth_righteye_1 = Insectoid Gauze eyepad (Right)
-marking-GauzeMothRightEyePad = Insectoid Gauze eyepad (Right)
+marking-GauzeMothRightEyePad-gauze_moth_righteye_1 = Инсектоид, Бинт, Подушечка на глаз (Правый)
+marking-GauzeMothRightEyePad = Инсектоид, Бинт, Подушечка на глаз (Правый)
 
-marking-GauzeMothUpperArmRight-gauze_moth_upperarm_r = Insectoid Gauze Forearm Wrap (Right)
-marking-GauzeMothUpperArmRight = Insectoid Gauze Forearm Wrap (Right)
+marking-GauzeMothUpperArmRight-gauze_moth_upperarm_r = Инсектоид, Бинт, Перевязь предплечья (Правый)
+marking-GauzeMothUpperArmRight = Инсектоид, Бинт, Перевязь предплечья (Правый)
 
-marking-GauzeMothUpperArmLeft-gauze_moth_upperarm_l = Insectoid Gauze Forearm Wrap (Left)
-marking-GauzeMothUpperArmLeft = Insectoid Gauze Forearm Wrap (Left)
+marking-GauzeMothUpperArmLeft-gauze_moth_upperarm_l = Инсектоид, Бинт, Перевязь предплечья (Левый)
+marking-GauzeMothUpperArmLeft = Инсектоид, Бинт, Перевязь предплечья (Левый)
 
-marking-GauzeMothUpperLegRight-gauze_moth_upperleg_r = Insectoid Gauze Thigh Wrap (Right)
-marking-GauzeMothUpperLegRight = Insectoid Gauze Thigh Wrap (Right)
+marking-GauzeMothUpperLegRight-gauze_moth_upperleg_r = Инсектоид, Бинт, Перевязь бедра (Правый)
+marking-GauzeMothUpperLegRight = Инсектоид, Бинт, Перевязь бедра (Правый)
 
-marking-GauzeMothUpperLegLeft-gauze_moth_upperleg_l = Insectoid Gauze Thigh Wrap (Left)
-marking-GauzeMothUpperLegLeft = Insectoid Gauze Thigh Wrap (Left)
+marking-GauzeMothUpperLegLeft-gauze_moth_upperleg_l = Инсектоид, Бинт, Перевязь бедра (Левый)
+marking-GauzeMothUpperLegLeft = Инсектоид, Бинт, Перевязь бедра (Левый)
 
-marking-GauzeMothLowerLegRight-gauze_moth_lowerleg_r = Insectoid Gauze Shin Wrap (Right)
-marking-GauzeMothLowerLegRight = Insectoid Gauze Shin Wrap (Right)
+marking-GauzeMothLowerLegRight-gauze_moth_lowerleg_r = Инсектоид, Бинт, Перевязь голени (Правый)
+marking-GauzeMothLowerLegRight = Инсектоид, Бинт, Перевязь голени (Правый)
 
-marking-GauzeMothLowerLegLeft-gauze_moth_lowerleg_l = Insectoid Gauze Shin Wrap (Left)
-marking-GauzeMothLowerLegLeft = Insectoid Gauze Shin Wrap (Left)
+marking-GauzeMothLowerLegLeft-gauze_moth_lowerleg_l = Инсектоид, Бинт, Перевязь голени (Левый)
+marking-GauzeMothLowerLegLeft = Инсектоид, Бинт, Перевязь голени (Левый)
 
-marking-GauzeVulpStomach-gauze_vulp_abdomen = Vulpkanin Gauze Stomach Wrap
-marking-GauzeVulpStomach = Vulpkanin Gauze Stomach Wrap
+marking-GauzeVulpStomach-gauze_vulp_abdomen = Вульпканин, Бинт, Перевязь живота
+marking-GauzeVulpStomach = Вульпканин, Бинт, Перевязь живота
 
-marking-GauzeVulpBlindfold-gauze_vulp_blindfold = Vulpkanin Blindfold
-marking-GauzeVulpBlindfold = Vulpkanin Blindfold
+marking-GauzeVulpBlindfold-gauze_vulp_blindfold = Вульпканин, Бинт, Повязка на глаза
+marking-GauzeVulpBlindfold = Вульпканин, Бинт, Повязка на глаза
 
-marking-GauzeVulpBoxerwrapLeft-gauze_vulp_boxerwrap_l = Vulpkanin Gauze Hand Wrap (Left)
-marking-GauzeVulpBoxerwrapLeft = Vulpkanin Gauze Hand Wrap (Left)
+marking-GauzeVulpBoxerwrapLeft-gauze_vulp_boxerwrap_l = Вульпканин, Бинт, Перевязь кисти (Левый)
+marking-GauzeVulpBoxerwrapLeft = Вульпканин, Бинт, Повязка на кисть (Левый)
 
-marking-GauzeVulpBoxerwrapRight-gauze_vulp_boxerwrap_r = Vulpkanin Gauze Hand Wrap (Right)
-marking-GauzeVulpBoxerwrapRight = Vulpkanin Gauze Hand Wrap (Right)
+marking-GauzeVulpBoxerwrapRight-gauze_vulp_boxerwrap_r = Вульпканин, Бинт, Повязка на кисть (Правый)
+marking-GauzeVulpBoxerwrapRight = Вульпканин, Бинт, Повязка на кисть (Правый)
 
-marking-GauzeVulpHead-gauze_vulp_head = Vulpkanin Gauze Head Wrap
-marking-GauzeVulpHead = Vulpkanin Gauze Head Wrap
+marking-GauzeVulpHead-gauze_vulp_head = Вульпканин, Бинт, Повязка на голову
+marking-GauzeVulpHead = Вульпканин, Бинт, Повязка на голову
 
-marking-GauzeVulpLeftArm-gauze_vulp_leftarm = Vulpkanin Gauze Arm Wrap (Left)
-marking-GauzeVulpLeftArm = Vulpkanin Gauze Arm Wrap (Left)
+marking-GauzeVulpLeftArm-gauze_vulp_leftarm = Вульпканин, Бинт, Повязка на руку (Левый)
+marking-GauzeVulpLeftArm = Вульпканин, Бинт, Повязка на руку (Левый)
 
-marking-GauzeVulpLefteyePatch-gauze_vulp_lefteye_2 = Vulpkanin Gauze Eyepatch (Left)
-marking-GauzeVulpLefteyePatch = Vulpkanin Gauze Eyepatch (Left)
+marking-GauzeVulpLefteyePatch-gauze_vulp_lefteye_2 = Вульпканин, Бинт, Перевязь глаза (Левый)
+marking-GauzeVulpLefteyePatch = Вульпканин, Бинт, Перевязь глаза (Левый)
 
-marking-GauzeVulpLowerArmRight-gauze_vulp_lowerarm_r = Vulpkanin Gauze Wrist Wrap (Right)
-marking-GauzeVulpLowerArmRight = Vulpkanin Gauze Wrist Wrap (Right)
+marking-GauzeVulpLowerArmRight-gauze_vulp_lowerarm_r = Вульпканин, Бинт, Перевязь запястья (Правый)
+marking-GauzeVulpLowerArmRight = Вульпканин, Бинт, Перевязь запястья (Правый)
 
-marking-GauzeVulpLowerLegLeft-gauze_vulp_lowerleg_l = Vulpkanin Gauze Ankle Wrap (Left)
-marking-GauzeVulpLowerLegLeft = Vulpkanin Gauze Ankle Wrap (Left)
+marking-GauzeVulpLowerLegLeft-gauze_vulp_lowerleg_l = Вульпканин, Бинт, Перевязь голени (Левый)
+marking-GauzeVulpLowerLegLeft = Вульпканин, Бинт, Перевязь голени (Левый)
 
-marking-GauzeVulpLowerLegRight-gauze_vulp_lowerleg_r = Vulpkanin Gauze Ankle Wrap (Right)
-marking-GauzeVulpLowerLegRight = Vulpkanin Gauze Ankle Wrap (Right)
+marking-GauzeVulpLowerLegRight-gauze_vulp_lowerleg_r = Вульпканин, Бинт, Перевязь голени (Правый)
+marking-GauzeVulpLowerLegRight = Вульпканин, Бинт, Перевязь голени (Правый)
 
-marking-GauzeVulpRighteyePatch-gauze_vulp_righteye_2 = Vulpkanin Gauze Eyepatch (Right)
-marking-GauzeVulpRighteyePatch = Vulpkanin Gauze Eyepatch (Right)
+marking-GauzeVulpRighteyePatch-gauze_vulp_righteye_2 = Вульпканин, Бинт, Перевязь глаза (Правый)
+marking-GauzeVulpRighteyePatch = Вульпканин, Бинт, Перевязь глаза (Правый)
 
-marking-GauzeVulpShoulder-gauze_vulp_shoulder = Vulpkanin Gauze Shoulder Sling
-marking-GauzeVulpShoulder = Vulpkanin Gauze Shoulder Sling
+marking-GauzeVulpShoulder-gauze_vulp_shoulder = Вульпканин, Бинт, Перевязь плеча
+marking-GauzeVulpShoulder = Вульпканин, Бинт, Перевязь плеча
 
-marking-GauzeVulpUpperArmRight-gauze_vulp_upperarm_r = Vulpkanin Gauze Forearm Wrap (Right)
-marking-GauzeVulpUpperArmRight = Vulpkanin Gauze Forearm Wrap (Right)
+marking-GauzeVulpUpperArmRight-gauze_vulp_upperarm_r = Вульпканин, Бинт, Перевязь предплечья (Правый)
+marking-GauzeVulpUpperArmRight = Вульпканин, Бинт, Перевязь предплечья (Правый)
 
-marking-GauzeVulpUpperLegLeft-gauze_vulp_upperleg_l = Vulpkanin Gauze Thigh Wrap (Left)
-marking-GauzeVulpUpperLegLeft = Vulpkanin Gauze Thigh Wrap (Left)
+marking-GauzeVulpUpperLegLeft-gauze_vulp_upperleg_l = Вульпканин, Бинт, Перевязь бедра (Левый)
+marking-GauzeVulpUpperLegLeft = Вульпканин, Бинт, Перевязь бедра (Левый)
 
-marking-GauzeVulpUpperLegRight-gauze_vulp_upperleg_r = Vulpkanin Gauze Thigh Wrap (Right)
-marking-GauzeVulpUpperLegRight = Vulpkanin Gauze Thigh Wrap (Right)
+marking-GauzeVulpUpperLegRight-gauze_vulp_upperleg_r = Вульпканин, Бинт, Перевязь бедра (Правый)
+marking-GauzeVulpUpperLegRight = Вульпканин, Бинт, Перевязь бедра (Правый)
 

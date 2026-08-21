@@ -1,0 +1,11 @@
+ent-BasePresentBox = декоративный подарок
+    .desc = Красивая обёртка, разочаровывающая пустота внутри.
+ent-BigPresentBox = { ent-BasePresentBox }
+    .desc = { ent-BasePresentBox.desc }
+    .suffix = Большой
+ent-MediumPresentBox = { ent-BasePresentBox }
+    .desc = { ent-BasePresentBox.desc }
+    .suffix = Средний
+ent-SmallPresentBox = { ent-BasePresentBox }
+    .desc = { ent-BasePresentBox.desc }
+    .suffix = Маленький

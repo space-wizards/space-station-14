@@ -1,0 +1,5 @@
+ent-SolutionMopMoproach = { ent-SolutionMopNormal }
+    .desc = { ent-SolutionMopNormal.desc }
+ent-MobMoproach = швабракан
+    .desc = У этого маленького швабракана тапочки-швабры на лапках! Как же очаровательно!
+    .suffix = { ent-MobMothroach.suffix }

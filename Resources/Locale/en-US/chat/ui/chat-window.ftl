@@ -1,7 +1,7 @@
-chat-window-title = Chat
+chat-window-title = Чат
 
-cmd-chatwindow-desc = Additional Chat Window
-cmd-chatwindow-help = Usage: chatwindow
+cmd-chatwindow-desc = Дополнительное окно чата
+cmd-chatwindow-help = Использование: chatwindow
 
-cmd-achatwindow-desc = Admin Chat Window
-cmd-achatwindow-help = Usage: achatwindow
+cmd-achatwindow-desc = Окно админ чата
+cmd-achatwindow-help = Использование: achatwindow

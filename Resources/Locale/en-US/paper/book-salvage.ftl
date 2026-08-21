@@ -1,90 +1,90 @@
-book-text-demonomicon1 = How To Summon a Demon
-          - by J.G. Wizgerald
+book-text-demonomicon1 = Как Вызвать Демона
+          - автор Дж.Дж. Визджеральд
 
-          1. todo finish writing demon summoning guide
+          1. закончить написание руководства по вызову демона
 
-book-text-demonomicon2 = How To Summon a Lemon
-          - by J.G. Wizgerald
+book-text-demonomicon2 = Как Вызвать Димона
+          - автор Дж.Дж. Визджеральд
 
-          1. todo finish writing lemon summoning guide
-          2. WAit. Typo. Oh shit. Sorry guys
+          1. закончить написание руководства по вызову димона
+          2. СТоп. Опечатка. Чёрт. Простите чуваки
 
-book-text-demonomicon3 = Cool Demon Names I Found
-      - by Ms. Mossrock
+book-text-demonomicon3 = Найденные Мною Крутые Имена Демонов
+      - автор мисс Моссрок
 
-      Abraxas
-      Nephilim
-      Baal
-      Leviathan
-      Gary
-      Moloch
-      Scylla
-      Phenex
+      Абраксас
+      Нефилим
+      Баал
+      Левиафан
+      Гэри
+      Молох
+      Сцилла
+      Фенекс
 
-book-text-chemistry-insane = IGOR CHEMISTRY GUIDE TO CHEMISTRY
+book-text-chemistry-insane = РУКОВОДСТВО ПО ХИМИИ ИГОРЯ ХИМИКА
 
-      TITLE: GUIDE TO CHEMISTRY
+      НАЗВАНИЕ: РУКОВОДСТВО ПО ХИМИИ
 
-      ABSTRACT: GUIDE TO CHEMISTRY
+      АННОТАЦИЯ: РУКОВОДСТВО ПО ХИМИИ
 
-      SECTION: WISE WORDS OF IGOR CHEMISTRY
+      РАЗДЕЛ: МУДРЫЕ СЛОВА ИГОРЯ ХИМИКА
 
-      MY NUMBER ONE TIP. IS TO ALWAYS HAVE FUN. YOU NEVER KNOW WHEN IT'LL ALL END.
-      SO JUST KEEP AT IT!!
+      МОЙ СОВЕТ НОМЕР ОДИН. ВСЕГДА ВЕСЕЛИСЬ. НИКОГДА НЕ ЗНАЕШЬ, КОГДА ВСЁ ЗАКОНЧИТСЯ.
+      ТАК ЧТО ПРОСТО ПРОДОЛЖАЙ!!!
 
-      MY NUMBER TWO TIP. I JUST CAN'T STOP FUCKING GRINDING UP JUMPSUITS. MY "COLLEAGUES" (agents) KEEP YELLING AT ME
-      TO STOP AND THAT 'itll come out of our paychecks' BUT THE STUFF IS SO GOOD. I'M LIKE AN INTERIOR DECORATION GENIUS.
-      SAXOPHONES AND BATTERIES TAKE MY MIND OFF OF IT BUT I'M ALWAYS BACK TO THE JUMPSUITS. HOO WEE.
+      МОЙ СОВЕТ НОМЕР ДВА. Я ПРОСТО НЕ МОГУ БЛЯТЬ ПЕРЕСТАТЬ ПЕРЕМАЛЫВАТЬ КОМБИНЕЗОНЫ В ИЗМЕЛЬЧИТЕЛЕ. МОИ Т.Н. "КОЛЛЕГИ" (агенты) ПОСТОЯННО КРИЧАТ НА МЕНЯ
+      ЧТОБЫ Я ПЕРЕСТАЛ И ЧТО "их стоимость вычтут из нашей зарплаты", НО ОНИ ТАК ХОРОШИ. Я ПРЯМО ГЕНИЙ ДИЗАЙНА ИНТЕРЬЕРА.
+      САКСОФОНЫ И БАТАРЕИ ОТВЛЕКАЮТ МЕНЯ, НО Я ВСЕГДА ВОЗВРАЩАЮСЬ К КОМБИНЕЗОНАМ. ИИИ-ХАА.
 
-      MY NUMBER THREE TIP. THANK YOU FOR READING!! IGOR CHEMISTRY
+      МОЙ СОВЕТ НОМЕР ТРИ. СПАСИБО, ЧТО ПРОЧИТАЛИ!!! ИГОРЬ ХИМИК
 
-      CONCLUSION: IGOR CHEMISTRY
+      ВЫВОДЫ: ИГОРЬ ХИМИК
 
-book-text-botanics = ** Applications of Botanical Specimens Found In Nanotrasen Territories **
+book-text-botanics = ** Практическое применение образцов флоры, встречаемых на территориях Nanotrasen **
 
-      Many plants, when ground, yield useful chemicals. S. (spessmens) papaver and S. aloe vera
-      are known for their basic healing properties.
+      Многие растения, будучи измельчёнными, образуют полезные химические вещества. К. (тут и далее — космический) мак и к. алоэ вера
+      известны благодаря своим целебным свойствам.
 
-      S. lucidum, or lingzhi, is known for its potent ability to save those near death from toxins. Eating too much
-      is known to cause adverse effects.
+      К. трутовик, он же линчжи, известен потенциальной возможностью спасать находящихся при смерти от токсинов.
+      Однако чрезмерное его употребление может привести к неблагоприятным последствиям.
 
-      S. amanita, a powerfully poisonous specimen (Rest In Peace Sir Alacaster), and S. galactica, a
-      seemingly ordinary antitoxin, appear to have some sort of relation to eachother.
+      К. мухомор, чрезвычайно ядовитый гриб (Покойтесь с миром, сэр Алакастер), и к. галакточертополох,
+      казалось бы, обычный антитоксин, оказывается, имеют какое-то отношение друг к другу.
 
-      Some research is being done on combinations of the medicinal plants discussed, and they may prove fruitful.
+      В настоящее время проводятся специальные исследования сочетаний обсуждаемых лекарственных растений, которые могут оказаться плодотворными.
 
       ----
 
-      - penned by James Alacaster and Golzuk Amaranth
+      - авторы Джеймс Алакастер и Голзук Амарант
 
-book-text-gnome = All Hail Our Gnome King
+book-text-gnome = Да Здравствует Гномий Король
 
-      He who is the grand cartographer who placed our kind into the world of the Island!
+      Он есть Великий Картограф, что поместил наш народ в мир Острова!
 
-      He who loves those with the largest of Hats!
+      Тот, кто любит обладателей самых пышных шляп!
 
-      Struck down by the evildoers who cannot appreciate our kind!
+      Сражённый злопыхателями, не способными признать наш род!
 
-      Our revenge will be dealt in full! He will Rise once more! hee Hoo!
+      Наша месть свершится сполна! Он восстанет вновь! Хии хуу!
 
-book-text-fishing = When I grow up, I want to be one of the harvesters of the space sea!
+book-text-fishing = Когда я вырасту, я хочу стать одним из собирателей космического моря!
 
-      I think before my days are done I want to catch the fabled space fish!
+      Я надеюсь, что до конца своих дней успею поймать легендарную космическую рыбу!
 
-      I'm like a little rat sailing the seas of cheese! The bastards come to end me but I am as sly as a cat and as lucky as they come!
+      Я как маленькая крыска, плывущая по сырному морю! Ублюдки явятся чтобы прикончить меня, но я хитёр как кот, и также удачлив!
 
-      Press the <L BUMPER> and <R TRIGGER> to activate the fishing minigame.
+      Зажмите <L БАМПЕР> и <R БАМПЕР>, чтобы активировать мини-игру "Рыбалка".
 
-      - Sgt. John Baker Aclopoly
+      - Сержант Джон Бейкер Аклополи
 
-book-text-detective = CHAPTER 1: SMALL ADVENTURES IN A BIG STATION
+book-text-detective = ГЛАВА 1: МАЛЕНЬКИЙ ПЕРЕПОЛОХ НА БОЛЬШОЙ СТАНЦИИ
 
-      This station is filled with crime and grime...
+      Эта станция тонула в преступности и грязи...
 
-      I was shooting hoops down on Bagel when I heard a cry and a laser shot. I walked under the table nearby to hide, but there wasn't a second shot.
+      Я был на Багеле, играл в мяч, когда услышал вскрик и лазерный выстрел. Я зашёл под стоящий рядом стол, намереваясь спрятаться, но второго выстрела не прозвучало.
 
-      Outside, the engineerin chief got blasted by two Syndies hooked up with some fierce contraband. There wasn't enough of him for an open casket funeral.
+      Снаружу, двое синдов, которым удалось пронести опасную контрабанду, напали на главу инженерии. Того, что от него осталось, не хватило бы на похороны в открытом гробу.
 
-      Things always go wild here.. I'll never look at clowns the same.
+      Здесь всегда всё идёт наперекосяк... Я никогда больше не буду относиться к клоунам как раньше.
 
-      The question is.. Who did it?
+      Вопрос в том... Кто это сделал на самом деле?

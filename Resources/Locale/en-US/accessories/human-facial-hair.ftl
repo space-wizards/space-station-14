@@ -1,104 +1,104 @@
-marking-HumanFacialHairAbe = Beard (Abraham Lincoln)
-marking-HumanFacialHairAbe-abe = Beard (Abraham Lincoln)
+marking-HumanFacialHairAbe = Борода (Авраам Линкольн)
+marking-HumanFacialHairAbe-abe = Борода (Авраам Линкольн)
 
-marking-HumanFacialHairBrokenman = Beard (Broken Man)
-marking-HumanFacialHairBrokenman-brokenman = Beard (Broken Man)
+marking-HumanFacialHairBrokenman = Борода (Сломанный человек)
+marking-HumanFacialHairBrokenman-brokenman = Борода (Сломанный человек)
 
-marking-HumanFacialHairChin = Beard (Chinstrap)
-marking-HumanFacialHairChin-chin = Beard (Chinstrap)
+marking-HumanFacialHairChin = Борода (Шкиперская бородка)
+marking-HumanFacialHairChin-chin = Борода (Шкиперская бородка)
 
-marking-HumanFacialHairDwarf = Beard (Dwarf)
-marking-HumanFacialHairDwarf-dwarf = Beard (Dwarf)
+marking-HumanFacialHairDwarf = Борода (Дворф)
+marking-HumanFacialHairDwarf-dwarf = орода (Дворф)
 
-marking-HumanFacialHairFullbeard = Beard (Full)
-marking-HumanFacialHairFullbeard-fullbeard = Beard (Full)
+marking-HumanFacialHairFullbeard = Борода (Полная)
+marking-HumanFacialHairFullbeard-fullbeard = Борода (Полная)
 
-marking-HumanFacialHairCroppedfullbeard = Beard (Cropped Fullbeard)
-marking-HumanFacialHairCroppedfullbeard-croppedfullbeard = Beard (Cropped Fullbeard)
+marking-HumanFacialHairCroppedfullbeard = Борода (Обрезанная полная борода)
+marking-HumanFacialHairCroppedfullbeard-croppedfullbeard = Борода (Обрезанная полная борода)
 
-marking-HumanFacialHairGt = Beard (Goatee)
-marking-HumanFacialHairGt-gt = Beard (Goatee)
+marking-HumanFacialHairGt = Борода (Козлиная бородка)
+marking-HumanFacialHairGt-gt = Борода (Козлиная бородка)
 
-marking-HumanFacialHairHip = Beard (Hipster)
-marking-HumanFacialHairHip-hip = Beard (Hipster)
+marking-HumanFacialHairHip = Борода (Хипстер)
+marking-HumanFacialHairHip-hip = Борода (Хипстер)
 
-marking-HumanFacialHairJensen = Beard (Jensen)
-marking-HumanFacialHairJensen-jensen = Beard (Jensen)
+marking-HumanFacialHairJensen = Борода (Дженсен)
+marking-HumanFacialHairJensen-jensen = Борода (Дженсен)
 
-marking-HumanFacialHairNeckbeard = Beard (Neckbeard)
-marking-HumanFacialHairNeckbeard-neckbeard = Beard (Neckbeard)
+marking-HumanFacialHairNeckbeard = Борода (Шейная борода)
+marking-HumanFacialHairNeckbeard-neckbeard = Борода (Шейная борода)
 
-marking-HumanFacialHairWise = Beard (Very Long)
-marking-HumanFacialHairWise-wise = Beard (Very Long)
+marking-HumanFacialHairWise = Борода (Очень длинная)
+marking-HumanFacialHairWise-wise = Борода (Очень длинная)
 
-marking-HumanFacialHairMuttonmus = Beard (Muttonmus)
-marking-HumanFacialHairMuttonmus-muttonmus = Beard (Muttonmus)
+marking-HumanFacialHairMuttonmus = Борода (Баранья)
+marking-HumanFacialHairMuttonmus-muttonmus = Борода (Баранья)
 
-marking-HumanFacialHairMartialartist = Beard (Martial Artist)
-marking-HumanFacialHairMartialartist-martialartist = Beard (Martial Artist)
+marking-HumanFacialHairMartialartist = Борода (Мастер боевых искусств)
+marking-HumanFacialHairMartialartist-martialartist = Борода (Мастер боевых искусств)
 
-marking-HumanFacialHairChinlessbeard = Beard (Chinless Beard)
-marking-HumanFacialHairChinlessbeard-chinlessbeard = Beard (Chinless Beard)
+marking-HumanFacialHairChinlessbeard = Борода (Без подбородка)
+marking-HumanFacialHairChinlessbeard-chinlessbeard = Борода (Без подбородка)
 
-marking-HumanFacialHairMoonshiner = Beard (Moonshiner)
-marking-HumanFacialHairMoonshiner-moonshiner = Beard (Moonshiner)
+marking-HumanFacialHairMoonshiner = Борода (Самогонщик)
+marking-HumanFacialHairMoonshiner-moonshiner = Борода (Самогонщик)
 
-marking-HumanFacialHairLongbeard = Beard (Long)
-marking-HumanFacialHairLongbeard-longbeard = Beard (Long)
+marking-HumanFacialHairLongbeard = Борода (Длинная)
+marking-HumanFacialHairLongbeard-longbeard = Борода (Длинная)
 
-marking-HumanFacialHairVolaju = Beard (Volaju)
-marking-HumanFacialHairVolaju-volaju = Beard (Volaju)
+marking-HumanFacialHairVolaju = Борода (Воладзю)
+marking-HumanFacialHairVolaju-volaju = Борода (Воладзю)
 
-marking-HumanFacialHair3oclock = Beard (Three o Clock Shadow)
-marking-HumanFacialHair3oclock-3oclock = Beard (Three o Clock Shadow)
+marking-HumanFacialHair3oclock = Борода (Тень "три часа")
+marking-HumanFacialHair3oclock-3oclock = Борода (Тень "три часа")
 
-marking-HumanFacialHairFiveoclock = Beard (Five o Clock Shadow)
-marking-HumanFacialHairFiveoclock-fiveoclock = Beard (Five o Clock Shadow)
+marking-HumanFacialHairFiveoclock = Борода (Тень "пять часов")
+marking-HumanFacialHairFiveoclock-fiveoclock = Борода (Тень "пять часов")
 
-marking-HumanFacialHair5oclockmoustache = Beard (Five o Clock Moustache)
-marking-HumanFacialHair5oclockmoustache-5oclockmoustache = Beard (Five o Clock Moustache)
+marking-HumanFacialHair5oclockmoustache = Борода (Усы "пять часов")
+marking-HumanFacialHair5oclockmoustache-5oclockmoustache = Борода (Усы "пять часов")
 
-marking-HumanFacialHair7oclock = Beard (Seven o Clock Shadow)
-marking-HumanFacialHair7oclock-7oclock = Beard (Seven o Clock Shadow)
+marking-HumanFacialHair7oclock = Борода (Тень "семь часов")
+marking-HumanFacialHair7oclock-7oclock = Борода (Тень "семь часов")
 
-marking-HumanFacialHair7oclockmoustache = Beard (Seven o Clock Moustache)
-marking-HumanFacialHair7oclockmoustache-7oclockmoustache = Beard (Seven o Clock Moustache)
+marking-HumanFacialHair7oclockmoustache = Борода (Усы "семь часов")
+marking-HumanFacialHair7oclockmoustache-7oclockmoustache = Борода (Усы "семь часов")
 
-marking-HumanFacialHairMoustache = Moustache
-marking-HumanFacialHairMoustache-moustache = Moustache
+marking-HumanFacialHairMoustache = Усы
+marking-HumanFacialHairMoustache-moustache = Усы
 
-marking-HumanFacialHairPencilstache = Moustache (Pencilstache)
-marking-HumanFacialHairPencilstache-pencilstache = Moustache (Pencilstache)
+marking-HumanFacialHairPencilstache = Усы (Карандаш)
+marking-HumanFacialHairPencilstache-pencilstache = Усы (Карандаш)
 
-marking-HumanFacialHairSmallstache = Moustache (Smallstache)
-marking-HumanFacialHairSmallstache-smallstache = Moustache (Smallstache)
+marking-HumanFacialHairSmallstache = Усы (Малюсенькие)
+marking-HumanFacialHairSmallstache-smallstache = Усы (Малюсенькие)
 
-marking-HumanFacialHairWalrus = Moustache (Walrus)
-marking-HumanFacialHairWalrus-walrus = Moustache (Walrus)
+marking-HumanFacialHairWalrus = Усы (Моржовые)
+marking-HumanFacialHairWalrus-walrus = Усы (Моржовые)
 
-marking-HumanFacialHairFumanchu = Moustache (Fu Manchu)
-marking-HumanFacialHairFumanchu-fumanchu = Moustache (Fu Manchu)
+marking-HumanFacialHairFumanchu = Усы (Фу Манчу)
+marking-HumanFacialHairFumanchu-fumanchu = Усы (Фу Манчу)
 
-marking-HumanFacialHairHogan = Moustache (Hulk Hogan)
-marking-HumanFacialHairHogan-hogan = Moustache (Hulk Hogan)
+marking-HumanFacialHairHogan = Усы (Халк Хоган)
+marking-HumanFacialHairHogan-hogan = Усы (Халк Хоган)
 
-marking-HumanFacialHairSelleck = Moustache (Selleck)
-marking-HumanFacialHairSelleck-selleck = Moustache (Selleck)
+marking-HumanFacialHairSelleck = Усы (Селлек)
+marking-HumanFacialHairSelleck-selleck = Усы (Селлек)
 
-marking-HumanFacialHairChaplin = Moustache (Square)
-marking-HumanFacialHairChaplin-chaplin = Moustache (Square)
+marking-HumanFacialHairChaplin = Усы (Квадрат)
+marking-HumanFacialHairChaplin-chaplin = Усы (Квадрат)
 
-marking-HumanFacialHairVandyke = Moustache (Van Dyke)
-marking-HumanFacialHairVandyke-vandyke = Moustache (Van Dyke)
+marking-HumanFacialHairVandyke = Усы (Ван Дайк)
+marking-HumanFacialHairVandyke-vandyke = Усы (Ван Дайк)
 
-marking-HumanFacialHairWatson = Moustache (Watson)
-marking-HumanFacialHairWatson-watson = Moustache (Watson)
+marking-HumanFacialHairWatson = Усы (Ватсон)
+marking-HumanFacialHairWatson-watson = Усы (Ватсон)
 
-marking-HumanFacialHairElvis = Sideburns (Elvis)
-marking-HumanFacialHairElvis-elvis = Sideburns (Elvis)
+marking-HumanFacialHairElvis = Бакенбарды (Элвис)
+marking-HumanFacialHairElvis-elvis = Бакенбарды (Элвис)
 
-marking-HumanFacialHairMutton = Sideburns (Mutton Chops)
-marking-HumanFacialHairMutton-mutton = Sideburns (Mutton Chops)
+marking-HumanFacialHairMutton = Бакенбарды (Бараньи отбивные)
+marking-HumanFacialHairMutton-mutton = Бакенбарды (Бараньи отбивные)
 
-marking-HumanFacialHairSideburn = Sideburns
-marking-HumanFacialHairSideburn-sideburn = Sideburns
+marking-HumanFacialHairSideburn = Бакенбарды
+marking-HumanFacialHairSideburn-sideburn = Бакенбарды

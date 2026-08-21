@@ -1,35 +1,38 @@
-lobby-state-paused = Paused
-lobby-state-soon = Round starting soon
-lobby-state-right-now-question = Right Now?
-lobby-state-right-now-confirmation = Right Now
-lobby-state-round-start-countdown-text = Round starts In: {$timeLeft}
-lobby-state-ready-button-join-state = Join
-lobby-state-ready-button-ready-up-state = Ready Up
-lobby-state-player-status-not-ready = Not Ready
-lobby-state-player-status-ready = Ready
-lobby-state-player-status-observer = Observer
-lobby-state-player-status-round-not-started = The round hasn't started yet
+lobby-state-paused = Пауза
+lobby-state-soon = Раунд скоро начнётся
+lobby-state-right-now-question = Прямо сейчас?
+lobby-state-right-now-confirmation = Прямо сейчас
+lobby-state-round-start-countdown-text = Раунд начнётся через: { $timeLeft }
+lobby-state-ready-button-join-state = Присоединиться
+lobby-state-ready-button-ready-up-state = Готов
+lobby-state-player-status-not-ready = Не готов
+lobby-state-player-status-ready = Готов
+lobby-state-player-status-observer = Наблюдатель
+lobby-state-player-status-round-not-started = Раунд ещё не начался
 lobby-state-player-status-round-time =
-    The round time is: {$hours} {$hours ->
-    [1]hour
-    *[other]hours
-    } and {$minutes} {$minutes ->
-    [1]minute
-    *[other]minutes
+    Время раунда: { $hours } { $hours ->
+        [one] час
+        [few] часа
+        *[other] часов
+    } и { $minutes } { $minutes ->
+        [one] минута
+        [few] минуты
+        *[other] минут
     }
-lobby-state-song-text = Playing: [color=white]{$songTitle}[/color] by [color=white]{$songArtist}[/color]
-lobby-state-song-no-song-text = No lobby song playing.
-lobby-state-song-unknown-title = [color=dimgray]Unknown title[/color]
-lobby-state-song-unknown-artist = [color=dimgray]Unknown artist[/color]
-lobby-state-background-text = Menu art: [color=white]{$backgroundTitle}[/color] by [color=white]{$backgroundArtist}[/color]
-lobby-state-background-no-background-text = No menu art loaded.
-lobby-state-background-unknown-title = [color=dimgray]Unknown title[/color]
-lobby-state-background-unknown-artist = [color=dimgray]Unknown artist[/color]
+lobby-state-song-text = Играет: [color=white]{ $songTitle }[/color], исполнитель [color=white]{ $songArtist }[/color]
+lobby-state-song-no-song-text = В лобби не играет песня.
+lobby-state-song-unknown-title = [color=dimgray]Неизвестное название[/color]
+lobby-state-song-unknown-artist = [color=dimgray]Неизвестный исполнитель[/color]
+lobby-state-background-text = Фон лобби: [color=white]{ $backgroundTitle }[/color], автор: [color=white]{ $backgroundArtist }[/color]
+lobby-state-background-no-background-text = Фон лобби не загружен.
+lobby-state-background-unknown-title = [color=dimgray]Неизвестное название[/color]
+lobby-state-background-unknown-artist = [color=dimgray]Неизвестный художник[/color]
 lobby-state-playtime-comment-normal =
-    You've spent {$hours} {$hours ->
-    [1]hour
-    *[other]hours
-    } ingame today. Remember to take breaks!
-lobby-state-playtime-comment-concerning = You've played for {$hours} hours today. Please take a break.
-lobby-state-playtime-comment-grasstouchless = {$hours} hours. Consider logging off to attend to your needs.
-lobby-state-playtime-comment-selfdestructive = {$hours} hours. Really?
+    Сегодня вы провели в игре { $hours } { $hours ->
+        [1] час
+        [few] часа
+        *[other] часов
+    }. Не забывайте отдыхать!
+lobby-state-playtime-comment-concerning = Сегодня вы наиграли { $hours } часов. Пожалуйста, отдохните.
+lobby-state-playtime-comment-grasstouchless = { $hours } часов. Подумайте о выходе из игры, чтобы заняться своими делами.
+lobby-state-playtime-comment-selfdestructive = { $hours } часов. Серьёзно?

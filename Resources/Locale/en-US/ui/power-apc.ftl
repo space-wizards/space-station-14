@@ -1,18 +1,18 @@
-apc-menu-title = APC
-apc-menu-breaker-label = Main Breaker
-apc-menu-power-label = Load
-apc-menu-external-label = External Power
-apc-menu-charge-label = {$percent} Charged
+apc-menu-title = ЛКП
+apc-menu-breaker-label = Главный рубильник
+apc-menu-power-label = Нагрузка
+apc-menu-external-label = Внешнее питание
+apc-menu-charge-label = Заряд { $percent }
 
 # For the power state label
 
-apc-menu-power-state-good = Good
-apc-menu-power-state-low = Low
-apc-menu-power-state-none = None
+apc-menu-power-state-good = Хорошее
+apc-menu-power-state-low = Слабое
+apc-menu-power-state-none = Отсутствует
 apc-menu-power-state-label-text = { POWERWATTS($power) } / { POWERWATTS($maxLoad) }
-apc-menu-power-state-label-tripped = OVERLOAD
+apc-menu-power-state-label-tripped = ПЕРЕГРУЗКА
 
 # For the flavor text on the footer
 
-apc-menu-flavor-left = Contact an engineer for assistance.
+apc-menu-flavor-left = Обратитесь к инженеру за помощью.
 apc-menu-flavor-right = v1.2

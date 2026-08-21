@@ -1,28 +1,28 @@
 # Ammo
 
-uplink-pistol-magazine-name = Pistol Magazine (.35 auto)
-uplink-pistol-magazine-desc = Pistol magazine with 15 cartridges. Compatible with the Viper.
+uplink-pistol-magazine-name = Пистолетный магазин (.35 авто)
+uplink-pistol-magazine-desc = Пистолетный магазин на 10 патронов. Совместим с "Гадюкой".
 
-uplink-pistol-magazine-c20r-name = SMG magazine (.35 auto)
-uplink-pistol-magazine-c20r-desc = SMG magazine with 30 cartridges. Compatible with C-20r.
+uplink-pistol-magazine-c20r-name = Магазин ПП (.35 авто)
+uplink-pistol-magazine-c20r-desc = Магазин ПП на 30 патронов. Совместим с C-20r.
 
-uplink-magazine-bulldog-pellet-name = Drum magazine (.50 pellet)
-uplink-magazine-bulldog-pellet-desc = Shotgun magazine with 8 shells filled with buckshot. Compatible with the Bulldog.
+uplink-magazine-bulldog-pellet-name = Барабанный магазин (.50 дробь)
+uplink-magazine-bulldog-pellet-desc = Магазин для дробовика, наполненный восемью дробовыми патронами. Совместим с Бульдогом.
 
-uplink-magazine-bulldog-slug-name = Drum magazine (.50 slug)
-uplink-magazine-bulldog-slug-desc = Shotgun magazine with 8 shells filled with slugs. Compatible with the Bulldog.
+uplink-magazine-bulldog-slug-name = Барабанный магазин (.50 пуля)
+uplink-magazine-bulldog-slug-desc = Магазин для дробовика, наполненный восемью пулевыми патронами. Совместим с Бульдогом.
 
-uplink-pistol-magazine-caseless-name = Pistol Magazine (.25 caseless)
-uplink-pistol-magazine-caseless-desc = Pistol magazine with 10 cartridges. Compatible with the Cobra.
+uplink-pistol-magazine-caseless-name = Пистолетный магазин (.25 безгильзовые)
+uplink-pistol-magazine-caseless-desc = Пистолетный магазин на 10 патронов. Совместим с "Коброй".
 
-uplink-mosin-ammo-name = Ammunition box (.30 rifle)
-uplink-mosin-ammo-desc = A box of 60 cartridges for the surplus rifle.
+uplink-mosin-ammo-name = Коробка патронов (.30 винтовочные)
+uplink-mosin-ammo-desc = Коробка с 60 патронами для резервной винтовки.
 
-uplink-estoc-ammo-name = Rifle magazine (.20 rifle)
-uplink-estoc-ammo-desc = A rifle magazine with 25 cartridges. Compatible with the Estoc DMR.
+uplink-estoc-ammo-name = Винтовочный магазин (.20 винтовочный)
+uplink-estoc-ammo-desc = Винтовочный магазин на 25 патронов. Совместим с марксманской винтовкой Эсток.
 
-uplink-sniper-ammo-name = Ammunition box (.60 antimateriel)
-uplink-sniper-ammo-desc = A box of 10 cartridges for the Hristov sniper rifle.
+uplink-sniper-ammo-name = Коробка патронов (.60 крупнокалиберные)
+uplink-sniper-ammo-desc = Коробка с 10 патронами для снайперской винтовки Христов.
 
-uplink-ammo-bundle-name = Ammo Bundle
-uplink-ammo-bundle-desc = Reloading! Contains 4 magazines for the C-20r, 4 drums for the Bulldog, 3 magazines for the Estoc DMR, and 2 ammo boxes for the L6 SAW.
+uplink-ammo-bundle-name = Набор боеприпасов
+uplink-ammo-bundle-desc = Перезаряжаюсь! Содержит 4 магазина для C-20r, 4 барабана для Бульдога, 3 магазина для винтовки Эсток и 2 короба патронов для L6 SAW.

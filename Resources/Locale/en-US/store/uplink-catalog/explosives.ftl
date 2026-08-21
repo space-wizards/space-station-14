@@ -1,40 +1,40 @@
 # Explosives
 
-uplink-explosive-grenade-name = Explosive Grenade
-uplink-explosive-grenade-desc = A simplistic grenade with a 3.5 second long fuse that is geared towards injuring personnel. Causes minimal hull damage.
+uplink-explosive-grenade-name = Разрывная граната
+uplink-explosive-grenade-desc = Простая граната с 3,5-секундным запалом, ориентированная на поражение личного состава. Наносит минимальные повреждения стенам и полу.
 
-uplink-smoke-grenade-name = Smoke Grenade
-uplink-smoke-grenade-desc = A grenade that releases a huge cloud of smoke, perfect for killing someone in the shadows or making a sneaky getaway.
+uplink-smoke-grenade-name = Дымовая граната
+uplink-smoke-grenade-desc = Граната, выпускающая огромное облако дыма, идеально подходит для того, чтобы убить кого-то в тени или незаметно скрыться.
 
-uplink-mini-bomb-name = Minibomb
-uplink-mini-bomb-desc = A low-yield, high-impact precision sabotage explosive with a 5 second long fuse. Perfect for quickly destroying a machine, dead body, or whatever else needs to go.
+uplink-mini-bomb-name = Минибомба Синдиката
+uplink-mini-bomb-desc = Маломощное, высокоэффективное точечное взрывное устройство для диверсий, с 5-секундным взрывателем. Идеально подходит для быстрого уничтожения устройств, трупа или чего-либо ещё.
 
-uplink-penguin-grenade-name = Grenade Penguin
-uplink-penguin-grenade-desc = A small, highly-aggressive penguin with a grenade strapped around its neck. Trained to ignore all Syndicate agents and relentlessly pursue a single, random nearby target when released.
+uplink-penguin-grenade-name = Пингвин-гренадёр
+uplink-penguin-grenade-desc = Маленький, крайне агрессивный пингвин с гранатой на шее. Натренирован игнорировать всех агентов Синдиката и неустанно преследовать случайную, ближайшую цель, как только его выпустят.
 
 uplink-c4-name = C-4
-uplink-c4-desc = Use it to breach walls, airlocks or sabotage equipment. It can be attached to almost all objects and has a modifiable timer with a minimum setting of 10 seconds.
+uplink-c4-desc = Используйте её, чтобы разрушать стены, шлюзы или саботировать оборудование. Её можно прикрепить практически к любому объекту, а таймер можно изменять, минимальное значение — 10 секунд.
 
-uplink-grenadier-rig-name = grenadier chest rig
-uplink-grenadier-rig-desc = All you need for a loud party: 4 explosive grenades, 2 EMP grenades and 2 minibombs in a chest rig.
+uplink-grenadier-rig-name = Тактический жилет гренадёра
+uplink-grenadier-rig-desc = Всё, что нужно для шумной вечеринки: 4 разрывные гранаты, 2 ЭМИ гранаты и 2 минибомбы в разгрузочном жилете.
 
-uplink-c4-bundle-name = C-4 bundle
-uplink-c4-bundle-desc = Because sometimes quantity is quality. Contains 8 C-4 plastic explosives.
+uplink-c4-bundle-name = Набор C-4
+uplink-c4-bundle-desc = Иногда количество — это качество. Содержит 8 штук взрывчатки C-4.
 
-uplink-emp-grenade-name = EMP Grenade
-uplink-emp-grenade-desc = A grenade designed to disrupt electronic systems. Useful for disrupting communications, security's energy weapons, and APCs when you're in a tight spot.
+uplink-emp-grenade-name = ЭМИ граната
+uplink-emp-grenade-desc = Граната, предназначенная для выведения из строя электроники. Пригодится для нарушения коммуникаций, отключения энергетического оружия охраны и ЛКП, если вы оказались в стеснённых обстоятельствах.
 
-uplink-exploding-pen-name = Exploding pen
-uplink-exploding-pen-desc = A class IV explosive device contained within a standard pen. Comes with a 4 second fuse.
+uplink-exploding-pen-name = Взрывающаяся ручка
+uplink-exploding-pen-desc = Взрывное устройство класса IV, помещённое в стандартную ручку. Снабжено 4-секундным таймером.
 
-uplink-exploding-syndicate-bomb-name = Syndicate Bomb
-uplink-exploding-syndicate-bomb-desc = A big, anchored bomb that can create a huge explosion if not defused in time. Useful as a distraction. Has an adjustable timer with a minimum setting of 180 seconds.
+uplink-exploding-syndicate-bomb-name = Бомба Синдиката
+uplink-exploding-syndicate-bomb-desc = Большая, закрепляемая на месте бомба, которая произведёт мощный взрыв, если её вовремя не обезвредить. Имеет регулируемый таймер взрыва, с минимальной настройкой в 120 секунд.
 
-uplink-shrapnel-grenade-name = Shrapnel Grenade
-uplink-shrapnel-grenade-desc = Launches a spray of sharp fragments dealing great damage against unarmored targets.
+uplink-shrapnel-grenade-name = Осколочная граната
+uplink-shrapnel-grenade-desc = Выпускает серию острых осколков, наносящих огромный урон по незащищённым целям.
 
-uplink-incendiary-grenade-name = Incendiary Grenade
-uplink-incendiary-grenade-desc = Releases a spray of incendiary fragments, igniting anyone near the detonation area.
+uplink-incendiary-grenade-name = Зажигательная граната
+uplink-incendiary-grenade-desc = Выпускает серию зажигательных фрагментов, поджигающих всех, кто находится в зоне детонации.
 
-uplink-power-sink-name = Power Sink
-uplink-power-sink-desc = Drains immense amounts of electricity from the grid, then explodes once it's saturated. Use wrench to connect it to wires.
+uplink-power-sink-name = Поглотитель энергии
+uplink-power-sink-desc = Вытягивает огромное количество электроэнергии из сети, а затем взрывается после наполнения. Подключите его к проводам с помощью гаечного ключа.

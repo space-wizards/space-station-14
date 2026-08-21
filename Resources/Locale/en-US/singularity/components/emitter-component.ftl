@@ -1,20 +1,20 @@
 ### EmitterComponent
 
 # Shows when attempting to turn the emitter on or off without proper access
-comp-emitter-access-locked = The {$target} is access locked!
+comp-emitter-access-locked = Доступ к { $target } заблокирован!
 
 # Shows when turning the emitter on/off
-comp-emitter-turned-on = The {$target} turns on.
+comp-emitter-turned-on = { $target } включается.
 
-comp-emitter-turned-off = The {$target} turns off.
+comp-emitter-turned-off = { $target } отключается.
 
 # Shows if the user attempts to activate the emitter while it's un-anchored.
-comp-emitter-not-anchored = The {$target} isn't anchored to the ground!
+comp-emitter-not-anchored = { $target } не закреплён!
 
-emitter-component-current-type = The current selected type is: [color=yellow]{$type}[/color].
-emitter-component-type-set = Type set to: {$type}
+emitter-component-current-type = Установленный тип: [color=yellow]{ $type }[/color].
+emitter-component-type-set = Установить тип: { $type }
 
-emitter-destroyed-broadcast = A powered emitter {$location} has been destroyed.
-emitter-unlocked-broadcast = A powered emitter {$location} has been unlocked.
-emitter-unpowered-broadcast = A powered emitter {$location} has lost power.
-emitter-turn-off-broadcast = A powered emitter {$location} was turned off.
+emitter-destroyed-broadcast = Включенный эмиттер { $location } был уничтожен.
+emitter-deconstructed-broadcast = Включенный эмиттер  { $location } был разобран.
+emitter-unlocked-broadcast = Включенный эмиттер  { $location } разблокирован.
+emitter-unpowered-broadcast = Включенный эмиттер  { $location } потерял питание.

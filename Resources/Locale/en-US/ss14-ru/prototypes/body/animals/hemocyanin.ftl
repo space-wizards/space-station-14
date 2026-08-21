@@ -1,0 +1,2 @@
+ent-BaseMobHemocyanin = { "" }
+    .desc = { "" }

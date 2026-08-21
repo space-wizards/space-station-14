@@ -1,2 +1,2 @@
-parrot-verb-clear-memory = Clear parrot memory
-parrot-popup-memory-cleared = Parrot memory cleared
+parrot-verb-clear-memory = Очистить память попугая
+parrot-popup-memory-cleared = Память попугая очищена

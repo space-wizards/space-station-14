@@ -1,2 +1,2 @@
-﻿cmd-readyall-desc = Readies up all players in the lobby, except for observers.
-cmd-readyall-help = Usage: readyall [bool]
+cmd-readyall-desc = Переключает всех игроков в лобби в "Готов", кроме наблюдателей.
+cmd-readyall-help = Использование: readyall [bool]

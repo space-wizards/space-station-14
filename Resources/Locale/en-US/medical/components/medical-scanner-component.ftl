@@ -1,4 +1,4 @@
 ## EnterVerb
 
-medical-scanner-verb-enter = Enter
-medical-scanner-verb-noun-occupant = occupant
+medical-scanner-verb-enter = Залезть
+medical-scanner-verb-noun-occupant = пациента

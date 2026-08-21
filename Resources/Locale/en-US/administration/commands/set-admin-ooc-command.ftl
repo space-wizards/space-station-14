@@ -1,2 +1,2 @@
-cmd-setadminooc-desc = Sets the color of your OOC messages. Color must be in hex format, example: setadminooc #c43b23
-cmd-setadminooc-help = Usage: setadminooc <color>
+cmd-setadminooc-desc = Устанавливает цвет ваших OOC-сообщений. Цвет должен быть в шестнадцатеричном (HEX) формате, пример: setadminooc #c43b23
+cmd-setadminooc-help = Использование: setadminooc <color>

@@ -1,26 +1,26 @@
 # Allies
 
-uplink-holopara-kit-name = Holoparasite Kit
-uplink-holopara-kit-desc = The pride and joy of Cybersun. Contains an injector that hosts a sentient metaphysical guardian made of hard light which resides in the user's body when not active.
-    The guardian can punch rapidly and is immune to hazardous environments while being resistant to direct trauma, but shares any damage it takes with the user.
+uplink-holopara-kit-name = Набор "Голопаразит"
+uplink-holopara-kit-desc = Предмет гордости и радости компании Cybersun. Содержит инъектор, в котором находится разумный метафизический страж из твёрдого света, который в неактивном состоянии скрывается в теле пользователя.
+    Страж может наносить быстрые удары, невосприимчив к опасностям атмосферы и устойчив к механическому урону, но разделяет получаемые повреждения с хозяином.
 
-uplink-reinforcement-radio-name = Reinforcement Teleporter
-uplink-reinforcement-radio-traitor-desc = Radio in a reinforcement agent of extremely questionable quality. No off button, buy this if you're ready to party. Call in a medic, spy, or thief to help you out. Good luck.
+uplink-reinforcement-radio-name = Телепорт подкрепления
+uplink-reinforcement-radio-traitor-desc =  Телепортирует в качестве подкрепления сомнительного качества агента. Не имеет кнопки отключения, покупайте его только если вы готовы к вечеринке. Вызовите медика, шпиона или вора, чтобы они помогли вам. Удачи.
 
-uplink-reinforcement-radio-nukeops-name = Nuclear Operative Teleporter
-uplink-reinforcement-radio-nukeops-desc = Radio in a nuclear operative of extremely questionable quality. No off button, buy this if you're ready to party. They have basic nuclear operative gear.
+uplink-reinforcement-radio-nukeops-name = Телепорт Ядерного оперативника
+uplink-reinforcement-radio-nukeops-desc =  Телепортирует в качестве подкрепления сомнительного качества ядерного оперативника. Не имеет кнопки отключения, покупайте его только если вы готовы к вечеринке. У них будет базовое снаряжение ядерного оперативника.
 
-uplink-reinforcement-radio-cyborg-assault-name = Syndicate Assault Cyborg Teleporter
-uplink-reinforcement-radio-cyborg-assault-desc = A lean, mean killing machine with access to an Energy Sword, an L6 SAW with self-replenishing ammo reserves, an EMAG, and a Pinpointer.
+uplink-reinforcement-radio-cyborg-assault-name = Телепорт штурмового киборга Синдиката
+uplink-reinforcement-radio-cyborg-assault-desc =  Машина для убийств с доступом к энергомечу, пулемёту, криптографическому секвенсору и пинпоинтеру.
 
-uplink-reinforcement-radio-ancestor-name = Genetic Ancestor Reinforcement Teleporter
-uplink-reinforcement-radio-ancestor-desc = Call in a trained ancestor of your choosing to assist you. Comes with a single syndicate cigarette and a cool hat.
+uplink-reinforcement-radio-ancestor-name = Телепорт подкрепления генетическим предком
+uplink-reinforcement-radio-ancestor-desc =  Призовите на помощь специально обученного предка по вашему выбору. Комплектуются одной сигаретой Синдиката.
 
-uplink-carp-dehydrated-name = Dehydrated Space Carp
-uplink-carp-dehydrated-desc = The power of a space carp in the palm of your hand. Expand with water to unleash a real-life space carp. Pet before use to prevent fishy friendly fire.
+uplink-carp-dehydrated-name = Обезвоженный космический карп
+uplink-carp-dehydrated-desc = Выглядит как плюшевый игрушечный карп, но стоит только добавить воды, и он превращается в настоящего космического карпа!
 
-uplink-mobcat-microbomb-name = SyndiCat Teleporter
-uplink-mobcat-microbomb-desc = Call in a handy space-proof cat equipped with a microbomb implant. Explodes when seriously injured. Can bite painfully.
+uplink-mobcat-microbomb-name = Телепорт СиндиКота
+uplink-mobcat-microbomb-desc = Призывает ручного кота, оснащённого имплантом Микробомба. Взрывается при серьёзном ранении. Может больно кусаться.
 
-uplink-syndicate-pai-name = Syndicate personal ai device
-uplink-syndicate-pai-desc = A Syndicate variant of the pAI with access to the Syndicate radio channel. We do not guarantee their usefulness.
+uplink-syndicate-pai-name = пИИ Синдиката
+uplink-syndicate-pai-desc = Вариант пИИ от Синдиката, с доступом к радиоканалу Синдиката. Полезность не гарантируется.

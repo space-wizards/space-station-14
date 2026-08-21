@@ -1,0 +1,15 @@
+ent-MaintenanceFluffSpawner = спавнер добыча тех туннели
+    .desc = { ent-MarkerBase.desc }
+    .suffix = Разное+Одежда
+ent-MaintenanceToolSpawner = спавнер добыча тех туннели
+    .desc = { ent-MarkerBase.desc }
+    .suffix = Инструменты+Батареи+Материалы
+ent-MaintenanceWeaponSpawner = спавнер добыча тех туннели
+    .desc = { ent-MarkerBase.desc }
+    .suffix = Хлам+Оружие
+ent-MaintenancePlantSpawner = спавнер добыча тех туннели
+    .desc = { ent-MarkerBase.desc }
+    .suffix = Растения
+ent-MaintenanceInsulsSpawner = спавнер добыча тех туннели
+    .desc = { ent-MarkerBase.desc }
+    .suffix = Изольки, безопасный

@@ -1,2 +1,2 @@
-insulated-examinable-verb-text = Insulated
-insulated-examinable-verb-text-message = This item appears to be electrically insulated. It should protect the wearer from shocks.
+insulated-examinable-verb-text = Изолированный
+insulated-examinable-verb-text-message = Этот предмет, по всей видимости, имеет электрическую изоляцию. Оно должно защищать от поражения электрическим током.

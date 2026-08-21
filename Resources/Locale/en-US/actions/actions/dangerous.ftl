@@ -1,1 +1,1 @@
-dangerous-action-popup = You cannot bring yourself to take this action because it might hurt someone.
+dangerous-action-popup = Вы не можете заставить себя совершить этот поступок, потому что это может причинить кому-то вред.

@@ -1,1 +1,1 @@
-selectable-component-adder-category-name = Add feature
+selectable-component-adder-category-name = Добавить функцию

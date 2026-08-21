@@ -1,9 +1,9 @@
-tray-component-nothing-planted-message = It has nothing planted in it...
-tray-component-water-level-message = Water:     [color=cyan]{$waterLevel}[/color]
-tray-component-nutrient-level-message = Nutrient: [color=orange]{$nutritionLevel}[/color]
+tray-component-nothing-planted-message = Здесь ничего не посажено..
+tray-component-water-level-message = Вода: [color=cyan]{ $waterLevel }[/color]
+tray-component-nutrient-level-message = Питательные вещества: [color=orange]{ $nutritionLevel }[/color]
 
-tray-component-weed-high-level-warning = It's filled with [color=green]weeds[/color]!
-tray-component-water-low-warning = The [color=cyan]water[/color] level is [color=red]low[/color]!
-tray-component-nutrient-low-warning = The [color=orange]nutrient[/color] level is [color=red]low[/color]!
-tray-component-toxin-high-level-warning = The [color=red]toxicity level alert[/color] is flashing red.
-tray-component-pest-high-level-warning = It's filled with [color=gray]tiny worms[/color]!
+tray-component-weed-high-level-warning = Он заполнен [color=green]сорняками[/color]!
+tray-component-water-low-warning = [color=red]Низкий[/color] уровень [color=cyan]воды[/color]!
+tray-component-nutrient-low-warning = [color=red]Низкий[/color] уровень [color=orange]питательных веществ[/color]!
+tray-component-toxin-high-level-warning = Горит [color=red]предупреждение уровня токсичности[/color].
+tray-component-pest-high-level-warning = Он заполнен [color=gray]маленькими червячками[/color]!

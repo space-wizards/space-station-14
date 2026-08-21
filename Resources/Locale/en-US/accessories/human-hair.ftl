@@ -1,612 +1,612 @@
-marking-HumanHairAfro = Afro
-marking-HumanHairAfro-afro = Afro
+marking-HumanHairAfro = Афро
+marking-HumanHairAfro-afro = Афро
 
-marking-HumanHairAfro2 = Afro 2
-marking-HumanHairAfro2-afro2 = Afro 2
+marking-HumanHairAfro2 = Афро 2
+marking-HumanHairAfro2-afro2 = Афро 2
 
-marking-HumanHairBigafro = Afro (Large)
-marking-HumanHairBigafro-bigafro = Afro (Large)
+marking-HumanHairBigafro = Афро (Большая)
+marking-HumanHairBigafro-bigafro = Афро (Большая)
 
-marking-HumanHairAntenna = Ahoge
-marking-HumanHairAntenna-antenna = Ahoge
+marking-HumanHairAntenna = Ахоге
+marking-HumanHairAntenna-antenna = Ахоге
 
-marking-HumanHairBaby = Baby
-marking-HumanHairBaby-baby = Baby
+marking-HumanHairBaby = Малыш
+marking-HumanHairBaby-baby = Малыш
 
-marking-HumanHairBalding = Balding Hair
-marking-HumanHairBalding-e = Balding Hair
+marking-HumanHairBalding = Лысеющий
+marking-HumanHairBalding-e = Лысеющий
 
-marking-HumanHairBedhead = Bedhead
-marking-HumanHairBedhead-bedhead = Bedhead
+marking-HumanHairBedhead = Небрежная
+marking-HumanHairBedhead-bedhead = Небрежная
 
-marking-HumanHairBedheadv2 = Bedhead 2
-marking-HumanHairBedheadv2-bedheadv2 = Bedhead 2
+marking-HumanHairBedheadv2 = Небрежная 2
+marking-HumanHairBedheadv2-bedheadv2 = Небрежная 2
 
-marking-HumanHairBedheadv3 = Bedhead 3
-marking-HumanHairBedheadv3-bedheadv3 = Bedhead 3
+marking-HumanHairBedheadv3 = Небрежная 3
+marking-HumanHairBedheadv3-bedheadv3 = Небрежная 3
 
-marking-HumanHairLongBedhead = Long Bedhead
-marking-HumanHairLongBedhead-long_bedhead = Long Bedhead
+marking-HumanHairLongBedhead = Небрежная (Длинная)
+marking-HumanHairLongBedhead-long_bedhead = Небрежная (Длинная)
 
-marking-HumanHairLongBedhead2 = Long Bedhead 2
-marking-HumanHairLongBedhead2-long_bedhead2 = Long Bedhead 2
+marking-HumanHairLongBedhead2 = Небрежная (Длинная 2)
+marking-HumanHairLongBedhead2-long_bedhead2 = Небрежная (Длинная 2)
 
-marking-HumanHairFloorlengthBedhead = Floorlength Bedhead
-marking-HumanHairFloorlengthBedhead-floorlength_bedhead = Floorlength Bedhead
+marking-HumanHairFloorlengthBedhead = Небрежная (До пола)
+marking-HumanHairFloorlengthBedhead-floorlength_bedhead = Небрежная (До пола)
 
-marking-HumanHairBeehive = Beehive
-marking-HumanHairBeehive-beehive = Beehive
+marking-HumanHairBeehive = Улей
+marking-HumanHairBeehive-beehive = Улей
 
-marking-HumanHairBeehivev2 = Beehive 2
-marking-HumanHairBeehivev2-beehivev2 = Beehive 2
+marking-HumanHairBeehivev2 = Улей 2
+marking-HumanHairBeehivev2-beehivev2 = Улей 2
 
-marking-HumanHairBob = Bob Hair
-marking-HumanHairBob-bob = Bob Hair
+marking-HumanHairBob = Каре
+marking-HumanHairBob-bob = Каре
 
-marking-HumanHairBob2 = Bob Hair 2
-marking-HumanHairBob2-bob2 = Bob Hair 2
+marking-HumanHairBob2 = Каре 2
+marking-HumanHairBob2-bob2 = Каре 2
 
-marking-HumanHairBobcut = Bob Hair 3
-marking-HumanHairBobcut-bob3 = Bob Hair 3
+marking-HumanHairBobcut = Каре 3
+marking-HumanHairBobcut-bob3 = Каре 3
 
-marking-HumanHairBob4 = Bob Hair 4
-marking-HumanHairBob4-bob4 = Bob Hair 4
+marking-HumanHairBob4 = Каре 4
+marking-HumanHairBob4-bob4 = Каре 4
 
-marking-HumanHairBob5 = Bob Hair 5
-marking-HumanHairBob5-bob5 = Bob Hair 5
+marking-HumanHairBob5 = Каре 5
+marking-HumanHairBob5-bob5 = Каре 5
 
-marking-HumanHairBobcurl = Bobcurl
-marking-HumanHairBobcurl-bobcurl = Bobcurl
+marking-HumanHairBobcurl = Каре (Завитки)
+marking-HumanHairBobcurl-bobcurl = Каре (Завитки)
 
-marking-HumanHairBoddicker = Boddicker
-marking-HumanHairBoddicker-boddicker = Boddicker
+marking-HumanHairBoddicker = Боддикер
+marking-HumanHairBoddicker-boddicker = Боддикер
 
-marking-HumanHairBowlcut = Bowlcut
-marking-HumanHairBowlcut-bowlcut = Bowlcut
+marking-HumanHairBowlcut = Горшок
+marking-HumanHairBowlcut-bowlcut = Горшок
 
-marking-HumanHairBowlcut2 = Bowlcut 2
-marking-HumanHairBowlcut2-bowlcut2 = Bowlcut 2
+marking-HumanHairBowlcut2 = Горшок 2
+marking-HumanHairBowlcut2-bowlcut2 = Горшок 2
 
-marking-HumanHairBraid = Braid (Floorlength)
-marking-HumanHairBraid-braid = Braid (Floorlength)
+marking-HumanHairBraid = Плетение (До пола)
+marking-HumanHairBraid-braid = Плетение (До пола)
 
-marking-HumanHairBraided = Braided
-marking-HumanHairBraided-braided = Braided
+marking-HumanHairBraided = Плетение
+marking-HumanHairBraided-braided = Плетение
 
-marking-HumanHairBraidfront = Braided Front
-marking-HumanHairBraidfront-braidfront = Braided Front
+marking-HumanHairBraidfront = Плетение (Спереди)
+marking-HumanHairBraidfront-braidfront = Плетение (Спереди)
 
-marking-HumanHairBraid2 = Braid (High)
-marking-HumanHairBraid2-braid2 = Braid (High)
+marking-HumanHairBraid2 = Плетение (Высокое)
+marking-HumanHairBraid2-braid2 = Плетение (Высокое)
 
-marking-HumanHairHbraid = Braid (Low)
-marking-HumanHairHbraid-hbraid = Braid (Low)
+marking-HumanHairHbraid = Плетение (Низкое)
+marking-HumanHairHbraid-hbraid = Плетение (Низкое)
 
-marking-HumanHairShortbraid = Braid (Short)
-marking-HumanHairShortbraid-shortbraid = Braid (Short)
+marking-HumanHairShortbraid = Плетение (Короткое)
+marking-HumanHairShortbraid-shortbraid = Плетение (Короткое)
 
-marking-HumanHairBraidtail = Braided Tail
-marking-HumanHairBraidtail-braidtail = Braided Tail
+marking-HumanHairBraidtail = Плетёный хвостик
+marking-HumanHairBraidtail-braidtail = Плетёный хвостик
 
-marking-HumanHairBun = Bun Head
-marking-HumanHairBun-bun = Bun Head
+marking-HumanHairBun = Пучок
+marking-HumanHairBun-bun = Пучок
 
-marking-HumanHairBunhead2 = Bun Head 2
-marking-HumanHairBunhead2-bunhead2 = Bun Head 2
+marking-HumanHairBunhead2 = Пучок 2
+marking-HumanHairBunhead2-bunhead2 = Пучок 2
 
-marking-HumanHairBun3 = Bun Head 3
-marking-HumanHairBun3-bunhead3 = Bun Head 3
+marking-HumanHairBun3 = Пучок 3
+marking-HumanHairBun3-bunhead3 = Пучок 3
 
-marking-HumanHairLargebun = Bun (Large)
-marking-HumanHairLargebun-largebun = Bun (Large)
+marking-HumanHairLargebun = Пучок (Большой)
+marking-HumanHairLargebun-largebun = Пучок (Большой)
 
-marking-HumanHairManbun = Bun (Manbun)
-marking-HumanHairManbun-manbun = Bun (Manbun)
+marking-HumanHairManbun = Пучок (Мужской)
+marking-HumanHairManbun-manbun = Пучок (Мужской)
 
-marking-HumanHairTightbun = Bun (Tight)
-marking-HumanHairTightbun-tightbun = Bun (Tight)
+marking-HumanHairTightbun = Пучок (Затянутый)
+marking-HumanHairTightbun-tightbun = Пучок (Затянутый)
 
-marking-HumanHairBusiness = Business Hair
-marking-HumanHairBusiness-business = Business Hair
+marking-HumanHairBusiness = Деловая
+marking-HumanHairBusiness-business = Деловая
 
-marking-HumanHairBusiness2 = Business Hair 2
-marking-HumanHairBusiness2-business2 = Business Hair 2
+marking-HumanHairBusiness2 = Деловая 2
+marking-HumanHairBusiness2-business2 = Деловая 2
 
-marking-HumanHairBusiness3 = Business Hair 3
-marking-HumanHairBusiness3-business3 = Business Hair 3
+marking-HumanHairBusiness3 = Деловая 3
+marking-HumanHairBusiness3-business3 = Деловая 3
 
-marking-HumanHairBusiness4 = Business Hair 4
-marking-HumanHairBusiness4-business4 = Business Hair 4
+marking-HumanHairBusiness4 = Деловая 4
+marking-HumanHairBusiness4-business4 = Деловая 4
 
-marking-HumanHairBuzzcut = Buzzcut
-marking-HumanHairBuzzcut-buzzcut = Buzzcut
+marking-HumanHairBuzzcut = Баз кат
+marking-HumanHairBuzzcut-buzzcut = Баз кат
 
-marking-HumanHairCia = CIA
-marking-HumanHairCia-cia = CIA
+marking-HumanHairCia = ЦРУ
+marking-HumanHairCia-cia = ЦРУ
 
-marking-HumanHairClassicAfro = Classic Afro
-marking-HumanHairClassicAfro-classicafro = Classic Afro
+marking-HumanHairClassicAfro = Классическая Афро
+marking-HumanHairClassicAfro-classicafro = Классическая Афро
 
-marking-HumanHairClassicBigAfro = Classic Big Afro
-marking-HumanHairClassicBigAfro-classicbigafro = Classic Big Afro
+marking-HumanHairClassicBigAfro = Классическая Афро (Большая)
+marking-HumanHairClassicBigAfro-classicbigafro = Классическая Афро (Большая)
 
-marking-HumanHairClassicBusiness = Classic Business Hair
-marking-HumanHairClassicBusiness-classicbusiness = Classic Business Hair
+marking-HumanHairClassicBusiness = Классическая Деловая
+marking-HumanHairClassicBusiness-classicbusiness = Классическая Деловая
 
-marking-HumanHairClassicCia = Classic CIA
-marking-HumanHairClassicCia-classiccia = Classic CIA
+marking-HumanHairClassicCia = Классическая ЦРУ
+marking-HumanHairClassicCia-classiccia = Классическая ЦРУ
 
-marking-HumanHairClassicCornrows2 = Classic Cornrows 2
-marking-HumanHairClassicCornrows2-classiccornrows2 = Classic Cornrows 2
+marking-HumanHairClassicCornrows2 = Классическая Корнроу 2
+marking-HumanHairClassicCornrows2-classiccornrows2 = Классическая Корнроу 2
 
-marking-HumanHairClassicFloorlengthBedhead = Classic Floorlength Bedhead
-marking-HumanHairClassicFloorlengthBedhead-classicfloorlength_bedhead = Classic Floorlength Bedhead
+marking-HumanHairClassicFloorlengthBedhead = Классическая Небрежная (До пола)
+marking-HumanHairClassicFloorlengthBedhead-classicfloorlength_bedhead = Классическая Небрежная (До пола)
 
-marking-HumanHairClassicLong2 = Classic Long Hair 2
-marking-HumanHairClassicLong2-classiclong2 = Classic Long Hair 2
+marking-HumanHairClassicLong2 = Классическая Длинные волосы 2
+marking-HumanHairClassicLong2-classiclong2 = Классическая Длинные волосы 2
 
-marking-HumanHairClassicLong3 = Classic Long Hair 3
-marking-HumanHairClassicLong3-classiclong3 = Classic Long Hair 3
+marking-HumanHairClassicLong3 = Классическая Длинные волосы 3
+marking-HumanHairClassicLong3-classiclong3 = Классическая Длинные волосы 3
 
-marking-HumanHairClassicModern = Classic Modern
-marking-HumanHairClassicModern-classicmodern = Classic Modern
+marking-HumanHairClassicModern = Классическая Современная
+marking-HumanHairClassicModern-classicmodern = Классическая Современная
 
-marking-HumanHairClassicMulder = Classic Mulder
-marking-HumanHairClassicMulder-classicmulder = Classic Mulder
+marking-HumanHairClassicMulder = Классическая Малдер
+marking-HumanHairClassicMulder-classicmulder = Классическая Малдер
 
-marking-HumanHairClassicWisp = Classic Wisp
-marking-HumanHairClassicWisp-classicwisp = Classic Wisp
+marking-HumanHairClassicWisp = Классическая Пряди
+marking-HumanHairClassicWisp-classicwisp = Классическая Пряди
 
-marking-HumanHairCoffeehouse = Coffee House
-marking-HumanHairCoffeehouse-coffeehouse = Coffee House
+marking-HumanHairCoffeehouse = Кофейная
+marking-HumanHairCoffeehouse-coffeehouse = Кофейная
 
-marking-HumanHairCombover = Combover
-marking-HumanHairCombover-combover = Combover
+marking-HumanHairCombover = Зачёс (Назад)
+marking-HumanHairCombover-combover = Зачёс (Назад)
 
-marking-HumanHairCornrows = Cornrows
-marking-HumanHairCornrows-cornrows = Cornrows
+marking-HumanHairCornrows = Корнроу
+marking-HumanHairCornrows-cornrows = Корнроу
 
-marking-HumanHairCornrows2 = Cornrows 2
-marking-HumanHairCornrows2-cornrows2 = Cornrows 2
+marking-HumanHairCornrows2 = Корнроу 2
+marking-HumanHairCornrows2-cornrows2 = Корнроу 2
 
-marking-HumanHairCornrowbun = Cornrow Bun
-marking-HumanHairCornrowbun-cornrowbun = Cornrow Bun
+marking-HumanHairCornrowbun = Корнроу (Пучок)
+marking-HumanHairCornrowbun-cornrowbun = Корнроу (Пучок)
 
-marking-HumanHairCornrowbraid = Cornrow Braid
-marking-HumanHairCornrowbraid-cornrowbraid = Cornrow Braid
+marking-HumanHairCornrowbraid = Корнроу (Косичка)
+marking-HumanHairCornrowbraid-cornrowbraid = Корнроу (Косичка)
 
-marking-HumanHairCornrowtail = Cornrow Tail
-marking-HumanHairCornrowtail-cornrowtail = Cornrow Tail
+marking-HumanHairCornrowtail = Корнроу (Хвостик)
+marking-HumanHairCornrowtail-cornrowtail = Корнроу (Хвостик)
 
-marking-HumanHairCrewcut = Crewcut
-marking-HumanHairCrewcut-crewcut = Crewcut
+marking-HumanHairCrewcut = Крю-кат
+marking-HumanHairCrewcut-crewcut = Крю-кат
 
-marking-HumanHairCrewcut2 = Crewcut 2
-marking-HumanHairCrewcut2-crewcut2 = Crewcut 2
+marking-HumanHairCrewcut2 = Крю-кат 2
+marking-HumanHairCrewcut2-crewcut2 = Крю-кат 2
 
-marking-HumanHairCube = Cube
-marking-HumanHairCube-cube = Cube
+marking-HumanHairCube = Куб
+marking-HumanHairCube-cube = Куб
 
-marking-HumanHairCurls = Curls
-marking-HumanHairCurls-curls = Curls
+marking-HumanHairCurls = Завитки
+marking-HumanHairCurls-curls = Завитки
 
-marking-HumanHairC = Cut Hair
-marking-HumanHairC-c = Cut Hair
+marking-HumanHairC = Подстриженная
+marking-HumanHairC-c = Подстриженная
 
-marking-HumanHairDandypompadour = Dandy Pompadour
-marking-HumanHairDandypompadour-dandypompadour = Dandy Pompadour
+marking-HumanHairDandypompadour = Денди Помпадур
+marking-HumanHairDandypompadour-dandypompadour = Денди Помпадур
 
-marking-HumanHairDevilock = Devil Lock
-marking-HumanHairDevilock-devilock = Devil Lock
+marking-HumanHairDevilock = Дьявольский замок
+marking-HumanHairDevilock-devilock = Дьявольский замок
 
-marking-HumanHairDoublebun = Double Bun
-marking-HumanHairDoublebun-doublebun = Double Bun
+marking-HumanHairDoublebun = Двойной пучок
+marking-HumanHairDoublebun-doublebun = Двойной пучок
 
-marking-HumanHairDoublebunLong = Double Bun Long
-marking-HumanHairDoublebunLong-doublebun_long = Double Bun Long
+marking-HumanHairDoublebunLong = Двойной пучок (Длинные)
+marking-HumanHairDoublebunLong-doublebun_long = Двойной пучок (Длинные)
 
-marking-HumanHairDreads = Dreadlocks
-marking-HumanHairDreads-dreads = Dreadlocks
+marking-HumanHairDreads = Дреды
+marking-HumanHairDreads-dreads = Дреды
 
-marking-HumanHairDrillruru = Drillruru
-marking-HumanHairDrillruru-drillruru = Drillruru
+marking-HumanHairDrillruru = Дрели
+marking-HumanHairDrillruru-drillruru = Дрели
 
-marking-HumanHairDrillhairextended = Drill Hair (Extended)
-marking-HumanHairDrillhairextended-drillhairextended = Drill Hair (Extended)
+marking-HumanHairDrillhairextended = Дрели (Распущенные)
+marking-HumanHairDrillhairextended-drillhairextended = Дрели (Распущенные)
 
-marking-HumanHairEmo = Emo
-marking-HumanHairEmo-emo = Emo
+marking-HumanHairEmo = Эмо
+marking-HumanHairEmo-emo = Эмо
 
-marking-HumanHairEmofringe = Emo Fringe
-marking-HumanHairEmofringe-emofringe = Emo Fringe
+marking-HumanHairEmofringe = Эмо (Чёлка)
+marking-HumanHairEmofringe-emofringe = Эмо (Чёлка)
 
-marking-HumanHairNofade = Fade (None)
-marking-HumanHairNofade-nofade = Fade (None)
+marking-HumanHairNofade = Фэйд (Отсутствует)
+marking-HumanHairNofade-nofade = Фэйд (Отсутствует)
 
-marking-HumanHairHighfade = Fade (High)
-marking-HumanHairHighfade-highfade = Fade (High)
+marking-HumanHairHighfade = Фэйд (Высокий)
+marking-HumanHairHighfade-highfade = Фэйд (Высокий)
 
-marking-HumanHairMedfade = Fade (Medium)
-marking-HumanHairMedfade-medfade = Fade (Medium)
+marking-HumanHairMedfade = Фэйд (Средний)
+marking-HumanHairMedfade-medfade = Фэйд (Средний)
 
-marking-HumanHairLowfade = Fade (Low)
-marking-HumanHairLowfade-lowfade = Fade (Low)
+marking-HumanHairLowfade = Фэйд (Низкий)
+marking-HumanHairLowfade-lowfade = Фэйд (Низкий)
 
-marking-HumanHairBaldfade = Fade (Bald)
-marking-HumanHairBaldfade-baldfade = Fade (Bald)
+marking-HumanHairBaldfade = Фэйд (Лысый)
+marking-HumanHairBaldfade-baldfade = Фэйд (Лысый)
 
-marking-HumanHairFeather = Feather
-marking-HumanHairFeather-feather = Feather
+marking-HumanHairFeather = Перья
+marking-HumanHairFeather-feather = Перья
 
-marking-HumanHairFather = Father
-marking-HumanHairFather-father = Father
+marking-HumanHairFather = Отец
+marking-HumanHairFather-father = Отец
 
-marking-HumanHairSargeant = Flat Top
-marking-HumanHairSargeant-sargeant = Flat Top
+marking-HumanHairSargeant = Флэттоп
+marking-HumanHairSargeant-sargeant = Флэттоп
 
-marking-HumanHairFlair = Flair
-marking-HumanHairFlair-flair = Flair
+marking-HumanHairFlair = Флейр
+marking-HumanHairFlair-flair = Флейр
 
-marking-HumanHairBigflattop = Flat Top (Big)
-marking-HumanHairBigflattop-bigflattop = Flat Top (Big)
+marking-HumanHairBigflattop = Флэттоп (Большой)
+marking-HumanHairBigflattop-bigflattop = Флэттоп (Большой)
 
-marking-HumanHairFlow = Flow Hair
-marking-HumanHairFlow-f = Flow Hair
+marking-HumanHairFlow = Флоу
+marking-HumanHairFlow-f = Флоу
 
-marking-HumanHairGelled = Gelled Back
-marking-HumanHairGelled-gelled = Gelled Back
+marking-HumanHairGelled = Уложенная
+marking-HumanHairGelled-gelled = Уложенная
 
-marking-HumanHairGentle = Gentle
-marking-HumanHairGentle-gentle = Gentle
+marking-HumanHairGentle = Аккуратная
+marking-HumanHairGentle-gentle = Аккуратная
 
-marking-HumanHairHalfbang = Half-banged Hair
-marking-HumanHairHalfbang-halfbang = Half-banged Hair
+marking-HumanHairHalfbang = Полурасчесанная
+marking-HumanHairHalfbang-halfbang = Полурасчесанная
 
-marking-HumanHairHalfbang2 = Half-banged Hair 2
-marking-HumanHairHalfbang2-halfbang2 = Half-banged Hair 2
+marking-HumanHairHalfbang2 = Полурасчесанная 2
+marking-HumanHairHalfbang2-halfbang2 = Полурасчесанная 2
 
-marking-HumanHairHalfshaved = Half-shaved
-marking-HumanHairHalfshaved-halfshaved = Half-shaved
+marking-HumanHairHalfshaved = Полувыбритая
+marking-HumanHairHalfshaved-halfshaved = Полувыбритая
 
-marking-HumanHairHedgehog = Hedgehog Hair
-marking-HumanHairHedgehog-hedgehog = Hedgehog Hair
+marking-HumanHairHedgehog = Ёжик
+marking-HumanHairHedgehog-hedgehog = Ёжик
 
-marking-HumanHairHimecut = Hime Cut
-marking-HumanHairHimecut-himecut = Hime Cut
+marking-HumanHairHimecut = Химэ
+marking-HumanHairHimecut-himecut = Химэ
 
-marking-HumanHairHimecut2 = Hime Cut 2
-marking-HumanHairHimecut2-himecut2 = Hime Cut 2
+marking-HumanHairHimecut2 = Химэ 2
+marking-HumanHairHimecut2-himecut2 = Химэ 2
 
-marking-HumanHairShorthime = Hime Cut (Short)
-marking-HumanHairShorthime-shorthime = Hime Cut (Short)
+marking-HumanHairShorthime = Химэ (Короткая)
+marking-HumanHairShorthime-shorthime = Химэ (Короткая)
 
-marking-HumanHairHimeup = Hime Updo
-marking-HumanHairHimeup-himeup = Hime Updo
+marking-HumanHairHimeup = Химэ (Укладка)
+marking-HumanHairHimeup-himeup = Химэ (Укладка)
 
-marking-HumanHairHitop = Hitop
-marking-HumanHairHitop-hitop = Hitop
+marking-HumanHairHitop = Хайтоп
+marking-HumanHairHitop-hitop = Хайтоп
 
-marking-HumanHairJade = Jade
-marking-HumanHairJade-jade = Jade
+marking-HumanHairJade = Джейд
+marking-HumanHairJade-jade = Джейд
 
-marking-HumanHairJensen = Jensen Hair
-marking-HumanHairJensen-jensen = Jensen Hair
+marking-HumanHairJensen = Дженсен
+marking-HumanHairJensen-jensen = Дженсен
 
-marking-HumanHairJoestar = Joestar
-marking-HumanHairJoestar-joestar = Joestar
+marking-HumanHairJoestar = Джостар
+marking-HumanHairJoestar-joestar = Джостар
 
-marking-HumanHairKeanu = Keanu Hair
-marking-HumanHairKeanu-keanu = Keanu Hair
+marking-HumanHairKeanu = Киану
+marking-HumanHairKeanu-keanu = Киану
 
-marking-HumanHairKusanagi = Kusanagi Hair
-marking-HumanHairKusanagi-kusanagi = Kusanagi Hair
+marking-HumanHairKusanagi = Кусанаги
+marking-HumanHairKusanagi-kusanagi = Кусанаги
 
-marking-HumanHairLongBow = Long Bow
-marking-HumanHairLongBow-longbow = Long Bow
+marking-HumanHairLongBow = Длинная с бантом
+marking-HumanHairLongBow-longbow = Длинная с бантом
 
-marking-HumanHairLong = Long Hair 1
-marking-HumanHairLong-long = Long Hair 1
+marking-HumanHairLong = Длинная 1
+marking-HumanHairLong-long = Длинная 1
 
-marking-HumanHairLong2 = Long Hair 2
-marking-HumanHairLong2-long2 = Long Hair 2
+marking-HumanHairLong2 = Длинная 2
+marking-HumanHairLong2-long2 = Длинная 2
 
-marking-HumanHairLong3 = Long Hair 3
-marking-HumanHairLong3-long3 = Long Hair 3
+marking-HumanHairLong3 = Длинная 3
+marking-HumanHairLong3-long3 = Длинная 3
 
-marking-HumanHairLongWithBundles = Long With Bundles
-marking-HumanHairLongWithBundles-longbundled = Long With Bundles
+marking-HumanHairLongWithBundles = Длинная с пучками
+marking-HumanHairLongWithBundles-longbundled = Длинная с пучками
 
-marking-HumanHairLongovereye = Long Over Eye
-marking-HumanHairLongovereye-longovereye = Primary
-marking-HumanHairLongovereye-longovereye_highlight = Highlight
+marking-HumanHairLongovereye = Длинная (Через глаз)
+marking-HumanHairLongovereye-longovereye = Основной
+marking-HumanHairLongovereye-longovereye_highlight = Через глаз
 
-marking-HumanHairLbangs = Long Bangs
-marking-HumanHairLbangs-lbangs = Long Bangs
+marking-HumanHairLbangs = Длинная (Чёлка)
+marking-HumanHairLbangs-lbangs = Длинная (Чёлка)
 
-marking-HumanHairLongemo = Long Emo
-marking-HumanHairLongemo-longemo = Long Emo
+marking-HumanHairLongemo = Длинная (Эмо)
+marking-HumanHairLongemo-longemo = Длинная (Эмо)
 
-marking-HumanHairLongfringe = Long Fringe
-marking-HumanHairLongfringe-longfringe = Long Fringe
+marking-HumanHairLongfringe = Длинная чёлка
+marking-HumanHairLongfringe-longfringe = Длинная чёлка
 
-marking-HumanHairLongsidepart = Long Side Part
-marking-HumanHairLongsidepart-longsidepart = Long Side Part
+marking-HumanHairLongsidepart = Длинная сайд-парт
+marking-HumanHairLongsidepart-longsidepart = Длинная сайд-парт
 
-marking-HumanHairMegaeyebrows = Mega Eyebrows
-marking-HumanHairMegaeyebrows-megaeyebrows = Mega Eyebrows
+marking-HumanHairMegaeyebrows = Широкие брови
+marking-HumanHairMegaeyebrows-megaeyebrows = Широкие брови
 
-marking-HumanHairMessy = Messy
-marking-HumanHairMessy-messy = Messy
+marking-HumanHairMessy = Растрёпанная
+marking-HumanHairMessy-messy = Растрёпанная
 
-marking-HumanHairModern = Modern
-marking-HumanHairModern-modern = Modern
+marking-HumanHairModern = Современная
+marking-HumanHairModern-modern = Современная
 
-marking-HumanHairMohawk = Mohawk
-marking-HumanHairMohawk-d = Mohawk
+marking-HumanHairMohawk = Могавк
+marking-HumanHairMohawk-d = Могавк
 
-marking-HumanHairNitori = Nitori
-marking-HumanHairNitori-nitori = Nitori
+marking-HumanHairNitori = Нитори
+marking-HumanHairNitori-nitori = Нитори
 
-marking-HumanHairReversemohawk = Mohawk (Reverse)
-marking-HumanHairReversemohawk-reversemohawk = Mohawk (Reverse)
+marking-HumanHairReversemohawk = Могавк (Обратный)
+marking-HumanHairReversemohawk-reversemohawk = Могавк (Обратный)
 
-marking-HumanHairUnshavenMohawk = Mohawk (Unshaven)
-marking-HumanHairUnshavenMohawk-unshaven_mohawk = Mohawk (Unshaven)
+marking-HumanHairUnshavenMohawk = Могавк (Небритый)
+marking-HumanHairUnshavenMohawk-unshaven_mohawk = Могавк (Небритый)
 
-marking-HumanHairMulder = Mulder
-marking-HumanHairMulder-mulder = Mulder
+marking-HumanHairMulder = Малдер
+marking-HumanHairMulder-mulder = Малдер
 
-marking-HumanHairOdango = Odango
-marking-HumanHairOdango-odango = Odango
+marking-HumanHairOdango = Оданго
+marking-HumanHairOdango-odango = Оданго
 
-marking-HumanHairOmbre = Ombre
-marking-HumanHairOmbre-ombre = Ombre
+marking-HumanHairOmbre = Омбре
+marking-HumanHairOmbre-ombre = Омбре
 
-marking-HumanHairOneshoulder = One Shoulder
-marking-HumanHairOneshoulder-oneshoulder = One Shoulder
+marking-HumanHairOneshoulder = На одно плечо
+marking-HumanHairOneshoulder-oneshoulder = На одно плечо
 
-marking-HumanHairShortovereye = Over Eye
-marking-HumanHairShortovereye-shortovereye = Over Eye
+marking-HumanHairShortovereye = Через глаз
+marking-HumanHairShortovereye-shortovereye = Через глаз
 
-marking-HumanHairOxton = Oxton
-marking-HumanHairOxton-oxton = Oxton
+marking-HumanHairOxton = Окстон
+marking-HumanHairOxton-oxton = Окстон
 
-marking-HumanHairParted = Parted
-marking-HumanHairParted-parted = Parted
+marking-HumanHairParted = С пробором
+marking-HumanHairParted-parted = С пробором
 
-marking-HumanHairPart = Parted (Side)
-marking-HumanHairPart-part = Parted (Side)
+marking-HumanHairPart = С пробором (Сбоку)
+marking-HumanHairPart-part = С пробором (Сбоку)
 
-marking-HumanHairKagami = Pigtails
-marking-HumanHairKagami-kagami = Pigtails
+marking-HumanHairKagami = Хвостики
+marking-HumanHairKagami-kagami = Хвостики
 
-marking-HumanHairPigtails = Pigtails 2
-marking-HumanHairPigtails-pigtails2 = Pigtails 2
+marking-HumanHairPigtails = Хвостики 2
+marking-HumanHairPigtails-pigtails2 = Хвостики 2
 
-marking-HumanHairPigtails2 = Pigtails 3
-marking-HumanHairPigtails2-pigtails3 = Pigtails 3
+marking-HumanHairPigtails2 = Хвостики 3
+marking-HumanHairPigtails2-pigtails3 = Хвостики 3
 
-marking-HumanHairPixie = Pixie Cut
-marking-HumanHairPixie-pixie = Pixie Cut
+marking-HumanHairPixie = Пикси
+marking-HumanHairPixie-pixie = Пикси
 
-marking-HumanHairPompadour = Pompadour
-marking-HumanHairPompadour-pompadour = Pompadour
+marking-HumanHairPompadour = Помпадур
+marking-HumanHairPompadour-pompadour = Помпадур
 
-marking-HumanHairBigpompadour = Pompadour (Big)
-marking-HumanHairBigpompadour- = Pompadour (Big)
+marking-HumanHairBigpompadour = Помпадур (Большая)
+marking-HumanHairBigpompadour- = Помпадур (Большая)
 
-marking-HumanHairPonytail = Ponytail
-marking-HumanHairPonytail-bigpompadour = Ponytail
+marking-HumanHairPonytail = Хвостик
+marking-HumanHairPonytail-bigpompadour = Хвостик
 
-marking-HumanHairPonytail2 = Ponytail 2
-marking-HumanHairPonytail2-ponytail2 = Ponytail 2
+marking-HumanHairPonytail2 = Хвостик 2
+marking-HumanHairPonytail2-ponytail2 = Хвостик 2
 
-marking-HumanHairPonytail3 = Ponytail 3
-marking-HumanHairPonytail3-ponytail3 = Ponytail 3
+marking-HumanHairPonytail3 = Хвостик 3
+marking-HumanHairPonytail3-ponytail3 = Хвостик 3
 
-marking-HumanHairPonytail4 = Ponytail 4
-marking-HumanHairPonytail4-ponytail4 = Ponytail 4
+marking-HumanHairPonytail4 = Хвостик 4
+marking-HumanHairPonytail4-ponytail4 = Хвостик 4
 
-marking-HumanHairPonytail5 = Ponytail 5
-marking-HumanHairPonytail5-ponytail5 = Ponytail 5
+marking-HumanHairPonytail5 = Хвостик 5
+marking-HumanHairPonytail5-ponytail5 = Хвостик 5
 
-marking-HumanHairPonytail6 = Ponytail 6
-marking-HumanHairPonytail6-ponytail6 = Ponytail 6
+marking-HumanHairPonytail6 = Хвостик 6
+marking-HumanHairPonytail6-ponytail6 = Хвостик 6
 
-marking-HumanHairPonytail7 = Ponytail 7
-marking-HumanHairPonytail7-ponytail7 = Ponytail 7
+marking-HumanHairPonytail7 = Хвостик 7
+marking-HumanHairPonytail7-ponytail7 = Хвостик 7
 
-marking-HumanHairHighponytail = Ponytail (High)
-marking-HumanHairHighponytail-highponytail = Ponytail (High)
+marking-HumanHairHighponytail = Хвостик (Высокий)
+marking-HumanHairHighponytail-highponytail = Хвостик (Высокий)
 
-marking-HumanHairStail = Ponytail (Short)
-marking-HumanHairStail-stail = Ponytail (Short)
+marking-HumanHairStail = Хвостик (Короткий)
+marking-HumanHairStail-stail = Хвостик (Короткий)
 
-marking-HumanHairLongstraightponytail = Ponytail (Long)
-marking-HumanHairLongstraightponytail-longstraightponytail = Ponytail (Long)
+marking-HumanHairLongstraightponytail = Хвостик (Длинный)
+marking-HumanHairLongstraightponytail-longstraightponytail = Хвостик (Длинный)
 
-marking-HumanHairCountry = Ponytail (Country)
-marking-HumanHairCountry-country = Ponytail (Country)
+marking-HumanHairCountry = Хвостик (Деревенский)
+marking-HumanHairCountry-country = Хвостик (Деревенский)
 
-marking-HumanHairFringetail = Ponytail (Fringe)
-marking-HumanHairFringetail-fringetail = Ponytail (Fringe)
+marking-HumanHairFringetail = Хвостик (Чёлка)
+marking-HumanHairFringetail-fringetail = Хвостик (Чёлка)
 
-marking-HumanHairSidetail = Ponytail (Side)
-marking-HumanHairSidetail-sidetail = Ponytail (Side)
+marking-HumanHairSidetail = Хвостик (Сбоку)
+marking-HumanHairSidetail-sidetail = Хвостик (Сбоку)
 
-marking-HumanHairSidetail2 = Ponytail (Side) 2
-marking-HumanHairSidetail2-sidetail2 = Ponytail (Side) 2
+marking-HumanHairSidetail2 = Хвостик (Сбоку) 2
+marking-HumanHairSidetail2-sidetail2 = Хвостик (Сбоку) 2
 
-marking-HumanHairSidetail3 = Ponytail (Side) 3
-marking-HumanHairSidetail3-sidetail3 = Ponytail (Side) 3
+marking-HumanHairSidetail3 = Хвостик (Сбоку) 3
+marking-HumanHairSidetail3-sidetail3 = Хвостик (Сбоку) 3
 
-marking-HumanHairSidetail4 = Ponytail (Side) 4
-marking-HumanHairSidetail4-sidetail4 = Ponytail (Side) 4
+marking-HumanHairSidetail4 = Хвостик (Сбоку) 4
+marking-HumanHairSidetail4-sidetail4 = Хвостик (Сбоку) 4
 
-marking-HumanHairSpikyponytail = Ponytail (Spiky)
-marking-HumanHairSpikyponytail-spikyponytail = Ponytail (Spiky)
+marking-HumanHairSpikyponytail = Хвостик (Шипастый)
+marking-HumanHairSpikyponytail-spikyponytail = Хвостик (Шипастый)
 
-marking-HumanHairPoofy = Poofy
-marking-HumanHairPoofy-poofy = Poofy
+marking-HumanHairPoofy = Пышная
+marking-HumanHairPoofy-poofy = Пышная
 
-marking-HumanHairPulato = Pulato
-marking-HumanHairPulato-pulato = Pulato
+marking-HumanHairPulato = Пулато
+marking-HumanHairPulato-pulato = Пулато
 
-marking-HumanHairQuiff = Quiff
-marking-HumanHairQuiff-quiff = Quiff
+marking-HumanHairQuiff = Квифф
+marking-HumanHairQuiff-quiff = Квифф
 
-marking-HumanHairRonin = Ronin
-marking-HumanHairRonin-ronin = Ronin
+marking-HumanHairRonin = Ронин
+marking-HumanHairRonin-ronin = Ронин
 
-marking-HumanHairShaped = Shaped
-marking-HumanHairShaped-shaped = Shaped
+marking-HumanHairShaped = Фигурная
+marking-HumanHairShaped-shaped = Фигурная
 
-marking-HumanHairShaved = Shaved
-marking-HumanHairShaved-shaved = Shaved
+marking-HumanHairShaved = Бритая
+marking-HumanHairShaved-shaved = Бритая
 
-marking-HumanHairShavedpart = Shaved Part
-marking-HumanHairShavedpart-shavedpart = Shaved Part
+marking-HumanHairShavedpart = Бритая часть
+marking-HumanHairShavedpart-shavedpart = Бритая часть
 
-marking-HumanHairShortbangs = Short Bangs
-marking-HumanHairShortbangs-shortbangs = Short Bangs
+marking-HumanHairShortbangs = Каре (Чёлка)
+marking-HumanHairShortbangs-shortbangs = Каре (Чёлка)
 
-marking-HumanHairA = Short Hair
-marking-HumanHairA-a = Short Hair
+marking-HumanHairA = Короткая
+marking-HumanHairA-a = Короткая
 
-marking-HumanHairShorthair2 = Short Hair 2
-marking-HumanHairShorthair2-shorthair2 = Short Hair 2
+marking-HumanHairShorthair2 = Короткая 2
+marking-HumanHairShorthair2-shorthair2 = Короткая 2
 
-marking-HumanHairShorthair3 = Short Hair 3
-marking-HumanHairShorthair3-shorthair3 = Short Hair 3
+marking-HumanHairShorthair3 = Короткая 3
+marking-HumanHairShorthair3-shorthair3 = Короткая 3
 
-marking-HumanHairD = Short Hair 4
-marking-HumanHairD-d = Short Hair 4
+marking-HumanHairD = Короткая 5
+marking-HumanHairD-d = Короткая 5
 
-marking-HumanHairE = Short Hair 5
-marking-HumanHairE-e = Short Hair 5
+marking-HumanHairE = Короткая 6
+marking-HumanHairE-e = Короткая 6
 
-marking-HumanHairF = Short Hair 6
-marking-HumanHairF-f = Short Hair 6
+marking-HumanHairF = Короткая 7
+marking-HumanHairF-f = Короткая 7
 
-marking-HumanHairShorthairg = Short Hair 7
-marking-HumanHairShorthairg-shorthairg = Short Hair 7
+marking-HumanHairShorthairg = Короткая 8
+marking-HumanHairShorthairg-shorthairg = Короткая 8
 
-marking-HumanHair80s = Short Hair 80s
-marking-HumanHair80s-80s = Short Hair 80s
+marking-HumanHair80s = Короткая (80-ые)
+marking-HumanHair80s-80s = Короткая (80-ые)
 
-marking-HumanHairRosa = Short Hair Rosa
-marking-HumanHairRosa-rosa = Short Hair Rosa
+marking-HumanHairRosa = Короткая (Роза)
+marking-HumanHairRosa-rosa = Короткая (Роза)
 
-marking-HumanHairB = Shoulder-length Hair
-marking-HumanHairB-b = Shoulder-length Hair
+marking-HumanHairB = До плеч
+marking-HumanHairB-b = До плеч
 
-marking-HumanHairBAlt = Shoulder-length Hair (Over eye)
-marking-HumanHairBAlt-b_alt = Shoulder-length Hair (Over eye)
+marking-HumanHairBAlt = До плеч (Над глазом)
+marking-HumanHairBAlt-b_alt = До плеч (Над глазом)
 
-marking-HumanHairSidecut = Sidecut
-marking-HumanHairSidecut-sidecut = Sidecut
+marking-HumanHairSidecut = Боковой вырез
+marking-HumanHairSidecut-sidecut = Боковой вырез
 
-marking-HumanHairSkinhead = Skinhead
-marking-HumanHairSkinhead-skinhead = Skinhead
+marking-HumanHairSkinhead = Бритоголовый
+marking-HumanHairSkinhead-skinhead = Бритоголовый
 
-marking-HumanHairProtagonist = Slightly Long Hair
-marking-HumanHairProtagonist-protagonist = Slightly Long Hair
+marking-HumanHairProtagonist = Слегка длинная
+marking-HumanHairProtagonist-protagonist = Слегка длинная
 
-marking-HumanHairSpikey = Spiky
-marking-HumanHairSpikey-spikey = Spiky
+marking-HumanHairSpikey = Колючая
+marking-HumanHairSpikey-spikey = Колючая
 
-marking-HumanHairSpiky = Spiky 2
-marking-HumanHairSpiky-spiky = Spiky 2
+marking-HumanHairSpiky = Колючая 2
+marking-HumanHairSpiky-spiky = Колючая 2
 
-marking-HumanHairSpiky2 = Spiky 3
-marking-HumanHairSpiky2-spiky2 = Spiky 3
+marking-HumanHairSpiky2 = Колючая 3
+marking-HumanHairSpiky2-spiky2 = Колючая 3
 
-marking-HumanHairSpookyLong = Spooky Long
-marking-HumanHairSpookyLong-spookylong = Spooky Long
+marking-HumanHairSpookyLong = Длинная (Зловещая)
+marking-HumanHairSpookyLong-spookylong = Длинная (Зловещая)
 
-marking-HumanHairSwept = Swept Back Hair
-marking-HumanHairSwept-swept = Swept Back Hair
+marking-HumanHairSwept = Зачёс назад
+marking-HumanHairSwept-swept = Зачёс назад
 
-marking-HumanHairSwept2 = Swept Back Hair 2
-marking-HumanHairSwept2-swept2 = Swept Back Hair 2
+marking-HumanHairSwept2 = Зачёс назад 2
+marking-HumanHairSwept2-swept2 = Зачёс назад 2
 
-marking-HumanHairTailed = Tailed
-marking-HumanHairTailed-tailed = Tailed
+marking-HumanHairTailed = Хвостатая
+marking-HumanHairTailed-tailed = Хвостатая
 
-marking-HumanHairThinning = Thinning
-marking-HumanHairThinning-thinning = Thinning
+marking-HumanHairThinning = Редеющая
+marking-HumanHairThinning-thinning = Редеющая
 
-marking-HumanHairThinningfront = Thinning (Front)
-marking-HumanHairThinningfront-thinningfront = Thinning (Front)
+marking-HumanHairThinningfront = Редеющая (Спереди)
+marking-HumanHairThinningfront-thinningfront = Редеющая (Спереди)
 
-marking-HumanHairThinningrear = Thinning (Rear)
-marking-HumanHairThinningrear-thinningrear = Thinning (Rear)
+marking-HumanHairThinningrear = Редеющая (Сзади)
+marking-HumanHairThinningrear-thinningrear = Редеющая (Сзади)
 
-marking-HumanHairTopknot = Topknot
-marking-HumanHairTopknot-topknot = Topknot
+marking-HumanHairTopknot = Пучок на макушке
+marking-HumanHairTopknot-topknot = Пучок на макушке
 
-marking-HumanHairTressshoulder = Tress Shoulder
-marking-HumanHairTressshoulder-tressshoulder = Tress Shoulder
+marking-HumanHairTressshoulder = Коса на плече
+marking-HumanHairTressshoulder-tressshoulder = Коса на плече
 
-marking-HumanHairTrimmed = Trimmed
-marking-HumanHairTrimmed-trimmed = Trimmed
+marking-HumanHairTrimmed = Под машинку
+marking-HumanHairTrimmed-trimmed = Под машинку
 
-marking-HumanHairTrimflat = Trim Flat
-marking-HumanHairTrimflat-trimflat = Trim Flat
+marking-HumanHairTrimflat = Под машинку (Плоская)
+marking-HumanHairTrimflat-trimflat = Под машинку (Плоская)
 
-marking-HumanHairTwintail = Twintails
-marking-HumanHairTwintail-twintail = Twintails
+marking-HumanHairTwintail = Два хвостика
+marking-HumanHairTwintail-twintail = Два хвостика
 
-marking-HumanHairTwoStrands = Two Strands
-marking-HumanHairTwoStrands-twostrands = Two Strands
+marking-HumanHairTwoStrands = Две пряди
+marking-HumanHairTwoStrands-twostrands = Две пряди
 
-marking-HumanHairUndercut = Undercut
-marking-HumanHairUndercut-undercut = Undercut
+marking-HumanHairUndercut = Андеркат
+marking-HumanHairUndercut-undercut = Андеркат
 
-marking-HumanHairUndercutleft = Undercut Left
-marking-HumanHairUndercutleft-undercutleft = Undercut Left
+marking-HumanHairUndercutleft = Андеркат (Слева)
+marking-HumanHairUndercutleft-undercutleft = Андеркат (Слева)
 
-marking-HumanHairUndercutright = Undercut Right
-marking-HumanHairUndercutright-undercutright = Undercut Right
+marking-HumanHairUndercutright = Андеркат (Справа)
+marking-HumanHairUndercutright-undercutright = Андеркат (Справа)
 
-marking-HumanHairUneven = Uneven
-marking-HumanHairUneven-uneven = Uneven
+marking-HumanHairUneven = Неровная
+marking-HumanHairUneven-uneven = Неровная
 
-marking-HumanHairUnkept = Unkept
-marking-HumanHairUnkept-unkept = Unkept
+marking-HumanHairUnkept = Неухоженная
+marking-HumanHairUnkept-unkept = Неухоженная
 
-marking-HumanHairUpdo = Updo
-marking-HumanHairUpdo-updo = Updo
+marking-HumanHairUpdo = Высокая
+marking-HumanHairUpdo-updo = Высокая
 
-marking-HumanHairVlong = Very Long Hair
-marking-HumanHairVlong-vlong = Very Long Hair
+marking-HumanHairVlong = Очень длинная
+marking-HumanHairVlong-vlong = Очень длинная
 
-marking-HumanHairLongest = Very Long Hair 2
-marking-HumanHairLongest-longest = Very Long Hair 2
+marking-HumanHairLongest = Очень длинная 2
+marking-HumanHairLongest-longest = Очень длинная 2
 
-marking-HumanHairLongest2 = Very Long Over Eye
-marking-HumanHairLongest2-longest2 = Primary
-marking-HumanHairLongest2-longovereye_highlight = Highlight
+marking-HumanHairLongest2 = Очень длинная (Через глаз)
+marking-HumanHairLongest2-longest2 = Основной
+marking-HumanHairLongest2-longovereye_highlight = Через глаз
 
-marking-HumanHairVeryshortovereyealternate = Very Short (Over Eye)
-marking-HumanHairVeryshortovereyealternate- = Very Short (Over Eye)
+marking-HumanHairVeryshortovereyealternate = Очень короткая (Через глаз альт.)
+marking-HumanHairVeryshortovereyealternate- = Очень короткая (Через глаз альт.)
 
-marking-HumanHairVlongfringe = Very Long with Fringe
-marking-HumanHairVlongfringe-vlongfringe = Very Long with Fringe
+marking-HumanHairVlongfringe = Очень короткая (Чёлка)
+marking-HumanHairVlongfringe-vlongfringe = Очень короткая (Чёлка)
 
-marking-HumanHairVolaju = Volaju
-marking-HumanHairVolaju-volaju = Volaju
+marking-HumanHairVolaju = Воладзю
+marking-HumanHairVolaju-volaju = Воладзю
 
-marking-HumanHairWisp = Wisp
-marking-HumanHairWisp-wisp = Wisp
+marking-HumanHairWisp = Пряди
+marking-HumanHairWisp-wisp = Пряди
 
-marking-HumanHairLongWithBangs = Long With Bangs
-marking-HumanHairLongWithBangs-longwithbangs = Long With Bangs
+marking-HumanHairLongWithBangs = Длинная с чёлкой
+marking-HumanHairLongWithBangs-longwithbangs = Длинная с чёлкой
 
-marking-HumanHairOverEyePigtail = Pigtail (Over Eye)
-marking-HumanHairOverEyePigtail-overeyepigtail = Pigtail (Over Eye)
+marking-HumanHairOverEyePigtail = Хвостик (Через глаз)
+marking-HumanHairOverEyePigtail-overeyepigtail = Хвостик (Через глаз)
 
-marking-HumanHairTerminal = Terminal
-marking-HumanHairTerminal-terminal = Primary
-marking-HumanHairTerminal-terminal_highlight = Highlight
-marking-HumanHairTerminal-terminal_headband = Headband
+marking-HumanHairTerminal = Терминал
+marking-HumanHairTerminal-terminal = Основной
+marking-HumanHairTerminal-terminal_highlight = Кончики
+marking-HumanHairTerminal-terminal_headband = Повязка на голову

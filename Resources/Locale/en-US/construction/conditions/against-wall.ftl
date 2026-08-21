@@ -1,1 +1,1 @@
-construction-step-condition-against-wall = You must place it up against a wall.
+construction-step-condition-against-wall = Вы должны расположить это к стене.

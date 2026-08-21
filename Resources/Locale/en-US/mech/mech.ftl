@@ -1,16 +1,23 @@
-mech-equipment-begin-install = Installing {THE($item)}...
-mech-equipment-finish-install = Finished installing {THE($item)}
+mech-verb-enter = Войти
+mech-verb-exit = Извлечь пилота
 
-mech-equipment-select-popup = {$item} selected
-mech-equipment-select-none-popup = Nothing selected
+mech-equipment-begin-install = { CAPITALIZE($item) } устанавливается...
+mech-equipment-finish-install = Установка { $item } завершена
 
-mech-ui-open-verb = Open control panel
+mech-equipment-select-popup = Выбрано следующее: { $item }
+mech-equipment-select-none-popup = Ничего не выбрано
 
-mech-menu-title = mech control panel
+mech-ui-open-verb = Открыть панель управления
 
-mech-integrity-display = Integrity: {$amount}%
-mech-energy-display = Energy: {$amount}%
-mech-energy-missing = Energy: MISSING
-mech-slot-display = Open Slots: {$amount}
+mech-menu-title = Панель управления меха
 
-mech-construction-guide-string = All mech parts must be attached to the harness.
+mech-integrity-display = Целостность: { $amount }%
+mech-energy-display = Энергия: { $amount }%
+mech-energy-missing = Энергия: ОТСУТСТВУЕТ
+mech-slot-display = Доступно слотов: { $amount }
+
+mech-no-enter = Вы не можете пилотировать это.
+
+mech-eject-pilot-alert = { $user } вытаскивает пилота из { $item }!
+
+mech-construction-guide-string = Все механические детали должны быть прикреплены к каркасу.

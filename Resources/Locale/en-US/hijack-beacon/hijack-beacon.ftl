@@ -1,16 +1,16 @@
-hijack-beacon-announcement-sender = Automated Trade Station
-hijack-beacon-announcement-activated = Attention! An Attempted Breach of the Automated Trade Station's firewall has been detected! Estimated {$time} seconds until firewall breach!
-hijack-beacon-announcement-deactivated = Firewall breach failed. Firewall integrity partially restored. Have a nice day!
-hijack-beacon-announcement-success = Successfully disengaged Automated Trade Station firewall. {$fine} spesos has been transferred from station funds to [%ERROR%]. Your trade station warranty is now void. This incident has been reported.
+hijack-beacon-announcement-sender = Автоматизированная торговая станция
+hijack-beacon-announcement-activated = Внимание! Обнаружена попытка взлома брандмауэра автоматизированной торговой станции! Примерное время до взлома брандмауэра: { $time } секунд!
+hijack-beacon-announcement-deactivated = Взлом брандмауэра не удался. Целостность брандмауэра частично восстановлена. Хорошего дня!
+hijack-beacon-announcement-success = Брандмауэр автоматизированной торговой станции успешно отключен. { $fine } кредитов переведено из средств станции на [%ERROR%]. Гарантия вашей торговой станции аннулирована. Об этом инциденте сообщено.
 
-hijack-beacon-examine-await-activate = The beacon is [color=green]ready to activate[/color].
-hijack-beacon-examine-await-cooldown = The beacon is [color=red]on cooldown[/color].
-hijack-beacon-examine-await-hijack-complete = The beacon is [color=red]spent[/color].
+hijack-beacon-examine-await-activate = Маяк [color=green]готов к активации[/color].
+hijack-beacon-examine-await-cooldown = Маяк [color=red]перезаряжается[/color].
+hijack-beacon-examine-await-hijack-complete = Маяк [color=red]использован[/color].
 
-hijack-beacon-popup-anchor = The beacon anchors itself into the ground!
-hijack-beacon-popup-unanchor = The beacon unanchors itself from the ground.
+hijack-beacon-popup-anchor = Маяк закрепляется!
+hijack-beacon-popup-unanchor = Маяк открепляется.
 
-hijack-beacon-verb-activate-text = Activate
-hijack-beacon-verb-activate-message = The beacon can only be armed on the Automated Trade Station, on an unoccupied tile.
-hijack-beacon-verb-deactivate-text = Deactivate
-hijack-beacon-verb-deactivate-message = The beacon isn't going to deactivate itself, you know.
+hijack-beacon-verb-activate-text = Активировать
+hijack-beacon-verb-activate-message = Маяк можно активировать только на автоматизированной торговой станции, на незанятой клетке.
+hijack-beacon-verb-deactivate-text = Деактивировать
+hijack-beacon-verb-deactivate-message = Маяк сам себя не отключит, понимаете?

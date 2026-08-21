@@ -1,1 +1,1 @@
-retractable-item-hand-cannot-drop = Your hand is already occupied.
+retractable-item-hand-cannot-drop = Ваша рука уже занята.

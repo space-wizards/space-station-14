@@ -1,70 +1,77 @@
 ## Rev Head
 
-roles-antag-rev-head-name = Head Revolutionary
-roles-antag-rev-head-objective = Your objective is to take over the station by converting people to your cause and eliminating all members of Command.
+roles-antag-rev-head-name = Глава революции
+roles-antag-rev-head-objective = Ваша задача — захватить станцию, склонив членов экипажа на свою сторону, и устранив всех членов командования.
 
 head-rev-role-greeting =
-    You are a head revolutionary. You are tasked with removing all of Command from power through death, restraint, or conversion.
-    The Syndicate has sponsored you with a flash that converts others to your cause. Beware, this won't work on those with eye protection or mindshield implants. Remember that Command and Security are implanted with mindshields as part of the hiring process.
+    Вы — глава революции. Вам поручено устранить весь командный состав станции путём убийства, ареста или конверсии.
+    Синдикат проспонсировал вас особой вспышкой, которая обращает других на вашу сторону. Осторожно, она не сработает на тех, у кого есть имплант "Щит разума", и тех, кто носит защиту для глаз. Помните, что в процессе найма члены командования и службы безопасности проходят имплантацию "Щитом разума".
     Viva la revolución!
 
 head-rev-briefing =
-    Use flashes to convert people to your cause.
-    Kill, restrain, or convert all members of Command to take over the station.
+    Используйте вспышки, чтобы обратить членов экипажа на свою сторону.
+    Убейте, арестуйте или конвертируйте всех членом командования, чтобы захватить станцию.
 
-head-rev-break-mindshield = The mindshield implant was destroyed!
+head-rev-break-mindshield = Имплант "Щит разума" был уничтожен!
 
 ## Rev
 
-roles-antag-rev-name = Revolutionary
-roles-antag-rev-objective = Your objective is to ensure the safety and follow the orders of the head revolutionaries, and to help them take over the station by eliminating all members of Command.
+roles-antag-rev-name = Революционер
+roles-antag-rev-objective = Ваша задача — защищать и выполнять приказы глав революции и помочь им захватить станцию, устранив всех членов командования.
 
-rev-break-control = {$name} has remembered their true allegiance!
+rev-break-control = { $name } { GENDER($name) ->
+    [male] вспомнил, кому он верен
+    [female] вспомнила, кому она верна
+    [epicene] вспомнили, кому они верни
+    *[neuter] вспомнило, кому оно верно
+} на самом деле!
 
 rev-role-greeting =
-    You are a revolutionary. You are tasked with protecting the head revolutionaries and helping them take over the station.
-    The revolution must work together to kill, restrain, or convert all members of Command.
+    Вы — Революционер. Вам поручено защищать глав революции и помогать им захватить станцию.
+    Революция должна работать вместе, чтобы убить, арестовать или конвертировать всех членов командования.
     Viva la revolución!
 
-rev-briefing = Help the head revolutionaries kill, restrain, or convert all members of Command to take over the station.
+rev-briefing = Помогите главам революции убить, арестовать или конвертировать всех членов командования, чтобы захватить станцию.
 
 ## General
 
-rev-title = Revolutionaries
-rev-description = Revolutionaries hidden among the crew are seeking to convert others to their cause and overthrow Command.
+rev-title = Революционеры
+rev-description = Революционеры скрывающиеся среди экипажа стремятся обратить других на свою сторону и свергнуть командование.
 
-rev-not-enough-ready-players = Not enough players readied up for the game. There were {$readyPlayersCount} players readied up out of {$minimumPlayers} needed. Can't start Revolutionaries.
-rev-no-one-ready = No players readied up! Can't start Revolutionaries.
-rev-no-heads = There were no Head Revolutionaries to be selected. Can't start Revolutionaries.
+rev-not-enough-ready-players = Недостаточно игроков готовы к игре! { $readyPlayersCount } игроков из необходимых { $minimumPlayers } готовы. Нельзя запустить пресет Революционеры.
+rev-no-one-ready = Нет готовых игроков! Нельзя запустить пресет Революционеры.
+rev-no-heads = Нет кандидатов на роль главы революции. Нельзя запустить пресет Революционеры.
 
-rev-won = The head revolutionaries survived and successfully seized control of the station.
+rev-won = Главы революции выжили и уничтожили весь командный состав станции.
 
-rev-lost = All head revolutionaries have died, and Command survived.
+rev-lost = Все главы революции погибли, а командование выжило.
 
-rev-stalemate = Both Command and the head revolutionaries have all died. It's a draw.
+rev-stalemate = И командование и главы революции погибли. Это ничья.
 
-rev-reverse-stalemate = Both Command and the head revolutionaries survived.
+rev-reverse-stalemate = И командование и главы революции выжили.
 
-rev-headrev-count = {$initialCount ->
-    [one] There was one head revolutionary:
-    *[other] There were {$initialCount} head revolutionaries:
+rev-headrev-count = { $initialCount ->
+    [one] Глава революции был один:
+    *[other] Глав революции было { $initialCount }:
 }
 
-rev-headrev-name-user = [color=#5e9cff]{$name}[/color] ([color=gray]{$username}[/color]) converted {$count} {$count ->
-    [one] person
-    *[other] people
-}
+rev-headrev-name-user = [color=#5e9cff]{ $name }[/color] ([color=gray]{ $username }[/color]) конвертировал { $count } { $count ->
+    [one] члена
+    [few] члена
+    *[other] членов
+} экипажа
 
-rev-headrev-name = [color=#5e9cff]{$name}[/color] converted {$count} {$count ->
-    [one] person
-    *[other] people
-}
+rev-headrev-name = [color=#5e9cff]{ $name }[/color] конвертировал { $count } { $count ->
+    [one] члена
+    [few] члена
+    *[other] членов
+} экипажа
 
 ## Deconverted window
 
-rev-deconverted-title = Deconverted!
+rev-deconverted-title = Разконвертированы!
 rev-deconverted-text =
-    As the last head revolutionary has died, the revolution is over.
+    Со смертью последнего главы революции, революция оканчивается.
 
-    You are no longer a revolutionary, so be nice.
-rev-deconverted-confirm = Confirm
+    Вы больше не революционер, так что ведите себя хорошо.
+rev-deconverted-confirm = Подтвердить

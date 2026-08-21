@@ -1,18 +1,18 @@
 # Types
-mixing-verb-default-mix = mix
-mixing-verb-default-grind = grind
-mixing-verb-default-juice = juice
-mixing-verb-default-condense = condense
-mixing-verb-centrifuge = centrifugation
-mixing-verb-electrolysis = electrolyze
-mixing-verb-holy = bless
-mixing-verb-stir = stir
-mixing-verb-shake = shake
+mixing-verb-default-mix = смешивание
+mixing-verb-default-grind = измельчение
+mixing-verb-default-juice = выжимание
+mixing-verb-default-condense = конденсирование
+mixing-verb-centrifuge = центрифугирование
+mixing-verb-electrolysis = электролиз
+mixing-verb-holy = благословение
+mixing-verb-stir = метод стир
+mixing-verb-shake = метод шейк
 
 ## Entity
 
-default-mixing-success = You mix the {$mixed} with the {$mixer}
-bible-mixing-success = You bless the {$mixed} with the {$mixer}
-spoon-mixing-success = You stir the {$mixed} with the {$mixer}
-handheld-centrifuge-success = You seperate chemicals in the {$mixed}
+default-mixing-success = Вы смешиваете { $mixed } при помощи { $mixer }
+bible-mixing-success = Вы благословляете { $mixed } при помощи { $mixer }
+spoon-mixing-success = Вы размешиваете { $mixed } при помощи { $mixer }
+handheld-centrifuge-success = Вы разделяете вещества при помощи { $mixed }
 

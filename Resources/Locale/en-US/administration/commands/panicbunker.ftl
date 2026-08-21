@@ -1,7 +1,7 @@
 cmd-panicbunker-desc = Toggles the panic bunker, which enables stricter restrictions on who's allowed to join the server.
 cmd-panicbunker-help = Usage: panicbunker
-panicbunker-command-enabled = Panic bunker has been enabled.
-panicbunker-command-disabled = Panic bunker has been disabled.
+panicbunker-command-enabled = Режим "Бункер" был включён.
+panicbunker-command-disabled = Режим "Бункер" был выключен.
 
 cmd-panicbunker_disable_with_admins-desc = Toggles whether or not the panic bunker will disable when an admin connects.
 cmd-panicbunker_disable_with_admins-help = Usage: panicbunker_disable_with_admins
@@ -25,10 +25,10 @@ panicbunker-command-show-reason-disabled = The panic bunker will no longer show 
 
 cmd-panicbunker_min_account_age-desc = Gets or sets the minimum account age in minutes that an account must have to be allowed to connect with the panic bunker enabled.
 cmd-panicbunker_min_account_age-help = Usage: panicbunker_min_account_age <minutes>
-panicbunker-command-min-account-age-is = The minimum account age for the panic bunker is {$minutes} minutes.
-panicbunker-command-min-account-age-set = Set the minimum account age for the panic bunker to {$minutes} minutes.
+panicbunker-command-min-account-age-is = The minimum account age for the panic bunker is { $minutes } minutes.
+panicbunker-command-min-account-age-set = Set the minimum account age for the panic bunker to { $minutes } minutes.
 
 cmd-panicbunker_min_overall_minutes-desc = Gets or sets the minimum overall playtime in minutes that an account must have to be allowed to connect with the panic bunker enabled.
 cmd-panicbunker_min_overall_minutes-help = Usage: panicbunker_min_overall_minutes <minutes>
-panicbunker-command-min-overall-minutes-is = The minimum overall playtime for the panic bunker is {$minutes} minutes.
-panicbunker-command-min-overall-minutes-set = Set the minimum overall playtime for the panic bunker to {$minutes} minutes.
+panicbunker-command-min-overall-minutes-is = The minimum overall playtime for the panic bunker is { $minutes } minutes.
+panicbunker-command-min-overall-minutes-set = Set the minimum overall playtime for the panic bunker to { $minutes } minutes.

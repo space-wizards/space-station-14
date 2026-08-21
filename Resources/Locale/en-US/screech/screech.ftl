@@ -1,1 +1,1 @@
-screech-protection-examine-text = It provides protection from [color=lightblue]loud noises[/color].
+screech-protection-examine-text = Предоставляет защиту от [color=lightblue]громких звуков[/color].

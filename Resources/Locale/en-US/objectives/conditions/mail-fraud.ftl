@@ -1,1 +1,1 @@
-objective-condition-mail-fraud-title = Cut into {$count} letters or packages not addressed to you.
+objective-condition-mail-fraud-title = Вскройте { $count } не адресованных вам писем или посылок. 

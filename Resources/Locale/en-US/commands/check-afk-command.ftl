@@ -1,8 +1,8 @@
-cmd-checkafk-desc = Shows the AFK confirmation window to a player.
-cmd-checkafk-help = Usage: checkafk <player>
-cmd-checkafk-invalid-arguments = Expected exactly one player argument.
-cmd-checkafk-invalid-player = Unable to find that player.
-cmd-checkafk-not-attached = That player is not attached to an entity.
-cmd-checkafk-failed = Unable to show AFK confirmation to that player.
-cmd-checkafk-sent = Sent AFK confirmation to {$player}.
-cmd-checkafk-hint = Player name or user ID
+cmd-checkafk-desc = Отправить игроку проверку на АФК.
+cmd-checkafk-help = Использование: checkafk <логин игрока>
+cmd-checkafk-invalid-arguments = Ожидался ровно один аргумент логина.
+cmd-checkafk-invalid-player = Не удалось найти этого игрока..
+cmd-checkafk-not-attached = Этот игрок не закреплен за сущностью.
+cmd-checkafk-failed = Не удалось показать игроку окно проверки АФК.
+cmd-checkafk-sent = Отправлена проверка на АФК игроку {$player}.
+cmd-checkafk-hint = Логин игрока или ID

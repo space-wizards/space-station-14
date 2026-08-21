@@ -1,36 +1,36 @@
-alert-level-announcement = Attention! Station alert level is now {$name}! {$announcement}
+alert-level-announcement = Внимание! Уровень угрозы станции теперь { $name }! { $announcement }
 
-alert-level-unknown = Unknown.
-alert-level-unknown-instructions = Unknown.
+alert-level-unknown = Неизвестный.
+alert-level-unknown-instructions = Информация отсутствует.
 
-alert-level-green = Green
-alert-level-green-announcement = It is now safe to return to your workplaces.
-alert-level-green-instructions = Do your job.
+alert-level-green = Зелёный
+alert-level-green-announcement = Станция работает в штатном режиме. Дополнительных ограничений нет.
+alert-level-green-instructions = Выполняйте свою работу.
 
-alert-level-blue = Blue
-alert-level-blue-announcement = There is a confirmed threat to the station. Security should perform random checks. Crewmembers are advised to be vigilant and report suspicious activity to security.
-alert-level-blue-instructions = Crewmembers are advised to be vigilant and report suspicious activity to security.
+alert-level-blue = Синий
+alert-level-blue-announcement = На станции зафиксирована угроза безопасности I уровня. Членам экипажа рекомендуется выполнять указания, отданные должностными лицами. Экипаж обязан информировать службу безопасности о любой подозрительной активности. Дополнительные инструкции указаны в КПК.
+alert-level-blue-instructions = Выполняйте свою работу, если вы находитесь в безопасности. Носите свою ID-карту на поясе. Проявляйте бдительность и сообщайте службе безопасности о любой подозрительной активности.
 
-alert-level-red = Red
-alert-level-red-announcement = There is an immediate threat to the station. Security should prepare to use lethal force if necessary. Crewmembers should find a safe place to shelter in, and are advised to follow any present authorities.
-alert-level-red-instructions = Crewmembers should find a safe place to shelter in, and are advised to follow any present authorities.
+alert-level-red = Красный
+alert-level-red-announcement = На станции подтверждена угроза безопасности II уровня. Служба безопасности уполномочена проводить досмотр членов экипажа и обыск рабочих отсеков. Может быть введён комендантский час, часть экипажа может быть мобилизована. Дополнительные инструкции указаны в КПК.
+alert-level-red-instructions = Выполняйте свою работу, если вы находитесь в безопасности. Носите свою ID-карту на поясе. Включите режим «координат» на комбинезоне. Проявляйте бдительность и сообщайте службе безопасности о любой подозрительной активности. Подчиняйтесь правомерным приказам должностных лиц.
 
-alert-level-violet = Violet
-alert-level-violet-announcement = There is a viral threat on the station. Medical staff are advised to isolate crewmembers with any symptoms. Crewmembers are advised to distance themselves from others and perform safety measures to prevent further spread.
-alert-level-violet-instructions = Crewmembers are advised to distance themselves from others and perform safety measures to prevent further spread.
+alert-level-violet = Фиолетовый
+alert-level-violet-announcement = На станции зафиксирована биологическая угроза. Активирован протокол изоляции. Медицинскому персоналу предписано изолировать членов экипажа с любыми симптомами. Экипажу рекомендуется соблюдать дистанцию, следовать мерам предосторожности для предотвращения распространения вируса и выполнять указания главного врача. Дополнительные инструкции указаны в КПК.
+alert-level-violet-instructions = Продолжайте выполнять свои обязанности, если вы здоровы. Соблюдайте дистанцию. При ухудшении самочувствия немедленно обратитесь за медицинским обследованием, надев стерильную маску.
 
-alert-level-yellow = Yellow
-alert-level-yellow-announcement = There is a structural or atmospheric threat within the station. Engineering staff are advised to immediately respond and perform safety measures. Crewmembers are advised to stay away from the threat, and stay in their workplaces if necessary.
-alert-level-yellow-instructions = Crewmembers are advised to stay away from the threat, and stay in their workplaces if necessary.
+alert-level-yellow = Жёлтый
+alert-level-yellow-announcement = На станции выявлена структурная или атмосферная угроза. Инженерный отдел уполномочен координировать ликвидацию последствий. Дополнительные инструкции указаны в КПК.
+alert-level-yellow-instructions = Выполняйте свою работу, если вы находитесь в безопасности. Немедленно покиньте и не возвращайтесь в опасную зону. Подчиняйтесь правомерным приказам инженерного отдела.
 
-alert-level-gamma = Gamma
-alert-level-gamma-announcement = Central Command has ordered the Gamma security level on the station. Security is to have weapons equipped at all times, and all civilians are to immediately seek their nearest head for transportation to a secure location.
-alert-level-gamma-instructions = All civilians are to immediately seek their nearest head for transportation to a secure location.
+alert-level-gamma = Гамма
+alert-level-gamma-announcement = На станции введено военное положение. Действует комендантский час. Служба безопасности вправе применять III уровень силы за любые противоправные действия. Дополнительные инструкции указаны в КПК.
+alert-level-gamma-instructions = Обратитесь к главе своего отдела за указаниями. Носите свою ID-карту на поясе. Включите режим «координат» на комбинезоне. Находитесь в пределах своего отдела или в общественной зоне, если иное не предписано капитаном. Исполняйте приказы капитана в полном объёме. Корпорация Nanotrasen заверяет вас: угроза будет вскоре нейтрализована.
 
-alert-level-delta = Delta
-alert-level-delta-nuke-announcement = The station is currently under threat of imminent destruction. Crewmembers are advised to listen to heads of staff for more information.
-alert-level-delta-instructions = Crewmembers are advised to listen to heads of staff for more information.
+alert-level-delta = Дельта
+alert-level-delta-nuke-announcement = Станция находится под угрозой неминуемого уничтожения. Дождитесь инструкций Центрального Командования или Департамента Специальных Операций. В случае их отсутствия — начинайте эвакуацию. Служба безопасности уполномочена устранять правонарушителей на месте.
+alert-level-delta-instructions = Обратитесь к главе своего отдела за указаниями. Соблюдайте указы Центрального Командования, Департамента Специальных Операций, капитана или службы безопасности. При отсутствии указаний немедленно приступите к эвакуации.
 
-alert-level-epsilon = Epsilon
-alert-level-epsilon-announcement = Central Command has ordered the Epsilon security level on the station. Consider all contracts terminated.
-alert-level-epsilon-instructions = Consider all contracts terminated.
+alert-level-epsilon = Эпсилон
+alert-level-epsilon-announcement = Центральное Командование объявило уровень угрозы «Эпсилон». Все контракты расторгнуты. Спасибо, что выбрали корпорацию Nanotrasen.
+alert-level-epsilon-instructions = Все контракты расторгнуты. Спасибо, что выбрали корпорацию Nanotrasen.

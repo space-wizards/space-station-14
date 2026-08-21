@@ -1,0 +1,10 @@
+ent-Cane = трость
+    .desc = Деревянная трость.
+ent-CaneBlade = трость с клинком
+    .desc = Острый клинок с рукоятью в виде трости.
+ent-CaneSheath = { ent-Cane }
+    .desc = { ent-Cane.desc }
+    .suffix = Пустой
+ent-CaneSheathFilled = { ent-CaneSheath }
+    .desc = { ent-CaneSheath.desc }
+    .suffix = Полный

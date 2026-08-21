@@ -1,34 +1,34 @@
 # Chemicals
 
-uplink-hypopen-name = Hypopen
-uplink-hypopen-desc = A chemical hypospray disguised as a pen, capable of instantly injecting up to 10u of reagents. Takes a moment to refill it, so plan accordingly!
+uplink-hypopen-name = Гипоручка
+uplink-hypopen-desc = Химический гипоспрей, замаскированный под ручку, способный мгновенно впрыснуть до 10 ед. реагентов. Изначально пуст.
 
-uplink-hypodart-name = Hypodart
-uplink-hypodart-desc = A seemingly unremarkable dart with a hidden 10u liquid reserve. Instantly injects into a target when thrown and pierces hardsuits.
+uplink-hypodart-name = Гиподротик
+uplink-hypodart-desc = Неприметный на первый взгляд дротик с увеличенным резервуаром для химических веществ. Он вмещает в себя до 10 ед. реагентов и мгновенно впрыскивает их при попадании в цель. Изначально пуст.
 
-uplink-chemistry-kit-name = Chemical Synthesis Kit
-uplink-chemistry-kit-desc = A starter kit for the aspiring chemist, includes two vials of vestine for all your criminal needs!
+uplink-chemistry-kit-name = Набор химического синтеза
+uplink-chemistry-kit-desc = Стартовый набор начинающего химика, включающий две пробирки вестина для всех ваших преступных нужд!
 
-uplink-zombie-bundle-name = Syndicate Zombie Bundle
-uplink-zombie-bundle-desc = An all-in-one kit for unleashing the undead upon a station. Take the Ambuzol+ pill for the cure!
+uplink-zombie-bundle-name = Зомби-набор Синдиката
+uplink-zombie-bundle-desc = Универсальный набор для создания зомби на станции.
 
-uplink-nocturine-chemistry-bottle-name = Nocturine Bottle
-uplink-nocturine-chemistry-bottle-desc = A chemical that puts your target straight to sleep. Frequently bought with the Hypodarts or Hypopen.
+uplink-nocturine-chemistry-bottle-name = Бутылочка ноктюрина.
+uplink-nocturine-chemistry-bottle-desc = Химическое вещество, которое усыпляет вашу цель.
 
-uplink-combat-medkit-name = Combat Medical Kit
-uplink-combat-medkit-desc = A medkit made for fixing combat injuries.
+uplink-combat-medkit-name = Боевая аптечка
+uplink-combat-medkit-desc = Аптечка, предназначенная для лечения боевых ранений.
 
-uplink-combat-medipen-name = Combat Medipen
-uplink-combat-medipen-desc = A single-use medipen containing chemicals that regenerate most types of damage.
+uplink-combat-medipen-name = Боевой медипен
+uplink-combat-medipen-desc = Одноразовый медипен, содержащий химические вещества, восстанавливающие большинство видов повреждений.
 
-uplink-stimpack-name = Hyperzine Injector
-uplink-stimpack-desc = The legendary chemical produced by Donk Co. for the Syndicate. Injecting yourself with this will increase your run speed and let you recover from stuns faster for 60 seconds.
+uplink-stimpack-name = Инъектор гиперзина
+uplink-stimpack-desc = Легендарный химический коктейль, производимый компанией Donk Co. для Синдиката. Одна инъекция этого вещества увеличивает скорость бега и позволяет быстрее восстанавливаться после оглушения в течение 60-ти секунд.
 
-uplink-stimkit-name = Hyperzine Injector Kit
-uplink-stimkit-desc = A standard medkit containing 6 hyperzine microinjectors. Each dose lasts for 30 seconds.
+uplink-stimkit-name = Набор инъекторов гиперзина
+uplink-stimkit-desc = Аптечка, содержащая 6 микроинъекторов гиперзина, каждый из которых содержит дозу гиперзина на 30 секунд.
 
-uplink-cigarettes-name = Syndicate Smokes Packet
-uplink-cigarettes-desc = Elite cigarettes for elite agents. Infused with omnizine for when you need to do more than calm your nerves.
+uplink-cigarettes-name = Пачка сигарет Синдиката
+uplink-cigarettes-desc = Элитные сигареты для элитных агентов Синдиката. Насыщенные лекарствами, когда вам нужно больше, чем просто успокоить нервы.
 
-uplink-meds-bundle-name = Interdyne Medical Bundle
-uplink-meds-bundle-desc = An assortment of autoinjectors and combat medkits to cover for every possible situation. Contains an elite compact defibrillator that can be used as a weapon.
+uplink-meds-bundle-name = Медицинский набор Interdyne
+uplink-meds-bundle-desc = Ассортимент автоинъекторов и медицинского оборудования премиум-класса на все случаи жизни. Содержит элитный компактный дефибриллятор, который можно использовать в качестве оружия.

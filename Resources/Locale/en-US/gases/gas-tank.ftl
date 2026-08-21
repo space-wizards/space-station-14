@@ -1,1 +1,1 @@
-﻿gas-max-pressure-alert = The pressure relief valve bursts open!
+gas-max-pressure-alert = Клапан сброса давления не выдержал!

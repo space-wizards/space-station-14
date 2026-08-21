@@ -1,1 +1,1 @@
-equip-spray-verb-press = Press
+equip-spray-verb-press = Нажать

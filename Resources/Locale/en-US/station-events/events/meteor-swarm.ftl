@@ -1,9 +1,11 @@
-﻿station-event-meteor-swarm-start-announcement = Meteors have been detected on collision course with the station.
-station-event-meteor-swarm-end-announcement = The meteor swarm has passed. Please return to your stations.
+station-event-meteor-swarm-start-announcement = Обнаружен рой метеоритов прямо по курсу станции.
+station-event-meteor-swarm-end-announcement = Метеорный рой миновал. Пожалуйста, вернитесь на свои рабочие места.
 
-station-event-space-dust-start-announcement = The station is passing through a debris cloud, expect minor damage to external fittings and fixtures.
-station-event-meteor-urist-start-announcement = The station is colliding with an unidentified swarm of debris. Please stay calm and do not listen to them.
-station-event-meteor-cow-start-announcement = The station is colliding with an unidentified swarm of debris. Warning: Do not feed them wheat. Moo-ve away from exterior sections.
-station-event-meteor-clown-start-announcement = The station is colliding with an unidentified swarm of debris. HONK! Evacuate laughing gas storage immediately.
-station-event-meteor-potato-start-announcement = The station is colliding with an unidentified swarm of debris. High starch content detected.
-station-event-fun-swarm-start-announcement = The station is colliding with an unidentified swarm of debris. Please panic appropriately.
+station-event-space-dust-start-announcement = Станция проходит через облако обломков, ожидается незначительный ущерб элементам конструкции и внешнему оборудованию.
+station-event-meteor-urist-start-announcement = Станция столкнулась с неидентифицированным облаком обломков. Пожалуйста, сохраняйте спокойствие и не слушайте их.
+station-event-meteor-cow-start-announcement = Станция столкнулась с неидентифицированным облаком обломков. Предупреждение: не кормите их пшеницей. Му-уйдите от внешних секций.
+station-event-meteor-clown-start-announcement = Станция столкнулась с неидентифицированным облаком обломков. ХОНК! Немедленно эвакуируйте запасы веселящего газа.
+station-event-meteor-potato-start-announcement = Станция столкнулась с неидентифицированным облаком обломков. Обнаружен высокое содержание крахмала.
+station-event-fun-swarm-start-announcement = Станция столкнулась с неидентифицированным облаком обломков. Пожалуйста, паникуйте соответствующе.
+station-event-bio-swarm-start-announcement = Обнаружен рой метеоритов прямо по курсу станции. Присутствует биологическая опасность.
+## bio-swarm-start ревертнут до обновления движка, запись оставлена до декабря, либо возвращения ##

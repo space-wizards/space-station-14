@@ -1,13 +1,13 @@
-feedbackpopup-window-name = Request for feedback
+feedbackpopup-window-name = Запрос на обратную связь
 
-feedbackpopup-control-button-text = Open Link
+feedbackpopup-control-button-text = Открыть ссылку
 
 feedbackpopup-control-total-surveys = {$num ->
-    [one] {$num} entry
-   *[other] {$num} entries
+    [one] { $num } запись
+    *[other] { $num } записей
 }
-feedbackpopup-control-no-entries= No entries
-feedbackpopup-control-ui-footer = Let us know what you think!
+feedbackpopup-control-no-entries= Нет записей
+feedbackpopup-control-ui-footer = Поделитесь своим мнением!
 
 # Command strings
 command-description-openfeedbackpopup = Opens the feedback popup window.

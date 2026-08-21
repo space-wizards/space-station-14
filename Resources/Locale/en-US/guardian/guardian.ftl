@@ -1,30 +1,30 @@
 ## Guardian host specific
 
-guardian-created = You feel... Haunted.
-guardian-already-present-invalid-creation = You are NOT re-living that haunting experience!
-guardian-no-actions-invalid-creation = You don't have the ability to host a guardian!
-guardian-activator-invalid-target = {CAPITALIZE(THE($entity))} is incapable of hosting a guardian!
-guardian-no-soul = Your guardian has no soul.
-guardian-available = Your guardian now has a soul.
-guardian-inside-container = There's no room to release your guardian!
+guardian-created = Вы чувствуете... Одержимость.
+guardian-already-present-invalid-creation = Вы НЕ переживёте заново ту одержимость!
+guardian-no-actions-invalid-creation = У вас нет возможности содержать в себе стража!
+guardian-activator-invalid-target = { CAPITALIZE($entity) } не способен содержать стража!
+guardian-no-soul = У вашего стража нет души.
+guardian-available = У вашего стража теперь есть душа.
+guardian-inside-container = Здесь не хватает места, чтобы высвободить стража!
 
 ## Injector specific
-guardian-injector-empty-invalid-creation = The injector is spent.
-guardian-injector-empty-examine = [color=#ba1919]The injector is spent.[/color]
+guardian-injector-empty-invalid-creation = Инъектор израсходован.
+guardian-injector-empty-examine = [color=#ba1919]Инъектор израсходован.[/color].
 
 ## Guardian deck specific
 
-guardian-deck-invalid-creation = The deck can only provide one guardian at a time!
-guardian-deck-used-examine = [color=#ba1919]The deck's magic has been used up.[/color]
+guardian-deck-invalid-creation = Колода может предоставить только одного стража!
+guardian-deck-used-examine = [color=#ba1919]Магия колоды была исчерпана.[/color]
 
 ## Guardian entity specific
 
-guardian-entity-recall = The guardian vanishes into thin air!
-guardian-entity-taking-damage = Your guardian is taking damage!
+guardian-entity-recall = Страж исчезает в воздухе!
+guardian-entity-taking-damage = Ваш страж получает урон!
 
 ## Health warnings
-guardian-host-critical-warn = YOUR HOST IS WOUNDED!
-guardian-host-death-warn = YOUR FORM SUCCUMBS TO NONEXISTENCE!
-guardian-death-warn = YOUR BODY IS PIERCED BY SUBATOMIC PAIN AS IT DISINTEGRATES!
-guardian-attack-host = You cannot attack your host.
+guardian-host-critical-warn = ВАШ ХОЗЯИН РАНЕН!
+guardian-host-death-warn = ВЫ ПЕРЕСТАЁТЕ СУЩЕСТВОВАТЬ
+guardian-death-warn = ВАШЕ ТЕЛО ПРОНЗАЕТ СУБАТОМНАЯ БОЛЬ, КОГДА ОНО РАСПАДАЕТСЯ!
+guardian-attack-host = Вы не можете атаковать своего хозяина.
 

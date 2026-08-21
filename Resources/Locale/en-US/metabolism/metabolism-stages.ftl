@@ -1,6 +1,6 @@
-metabolism-stage-respiration = Respiration
-metabolism-stage-digestion = Digestion
-metabolism-stage-bloodstream = Bloodstream
-metabolism-stage-metabolites = Metabolites
+metabolism-stage-respiration = Дыхание
+metabolism-stage-digestion = Пищеварение
+metabolism-stage-bloodstream = Кровоток
+metabolism-stage-metabolites = Метаболизм
 
-metabolism-stage-plant = Plant Metabolism
+metabolism-stage-plant = Метаболизм растений

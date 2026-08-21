@@ -1,35 +1,35 @@
-marking-ScarEyeRight-scar_eye_right = Right Eye Scar
-marking-ScarEyeRight = Eye Scar (Right)
+marking-ScarEyeRight-scar_eye_right = Шрам на глазу (Правый)
+marking-ScarEyeRight = Шрам на глазу (Правый)
 
-marking-ScarEyeLeft-scar_eye_left = Left Eye Scar
-marking-ScarEyeLeft = Eye Scar (Left)
+marking-ScarEyeLeft-scar_eye_left = Шрам на глазу (Левый)
+marking-ScarEyeLeft = Шрам на глазу (Левый)
 
-marking-ScarTopSurgeryShort-scar_top_surgery_short = Top Surgery Scar
-marking-ScarTopSurgeryShort = Top Surgery Scar (Short)
+marking-ScarTopSurgeryShort-scar_top_surgery_short = Хирургический шрам (Короткий)
+marking-ScarTopSurgeryShort = Хирургический шрам (Короткий)
 
-marking-ScarTopSurgeryLong-scar_top_surgery_long = Top Surgery Scar
-marking-ScarTopSurgeryLong = Top Surgery Scar (Long)
+marking-ScarTopSurgeryLong-scar_top_surgery_long = Хирургический шрам (Длинный)
+marking-ScarTopSurgeryLong = Хирургический шрам (Длинный)
 
-marking-ScarChest-scar_chest = Chest Scar
-marking-ScarChest = Chest Scar
+marking-ScarChest-scar_chest = Шрам на груди
+marking-ScarChest = Шрам на груди
 
-marking-ScarNeck-scar_neck = Neck Scar
-marking-ScarNeck = Neck Scar
+marking-ScarNeck-scar_neck = Шрам на шее
+marking-ScarNeck = Шрам на шее
 
-marking-ScarChestBullets-scar_chest_bullets = Bullet Holes Scar
-marking-ScarChestBullets = Chest Scar (Bullets)
+marking-ScarChestBullets-scar_chest_bullets = Шрам, пулевые отверстия
+marking-ScarChestBullets = Шрам на груди (Пули)
 
-marking-ScarStomachBullets-scar_stomach_bullets = Bullet Holes Scar
-marking-ScarStomachBullets = Stomach Scar (Bullets)
+marking-ScarStomachBullets-scar_stomach_bullets = Шрам, пулевые отверстия
+marking-ScarStomachBullets = Шрам на животе (Пули)
 
-marking-ScarFace1-scar_face_1 = Face Scar
-marking-ScarFace1 = Face Scar (Large)
+marking-ScarFace1-scar_face_1 = Шрам на лице
+marking-ScarFace1 = Шрам на лице (Большой)
 
-marking-ScarFace2-scar_face_2 = Face Scar
-marking-ScarFace2 = Face Scar (Small)
+marking-ScarFace2-scar_face_2 = Шрам на лице
+marking-ScarFace2 = Шрам на лице (Маленький)
 
-marking-ScarEyeRightSmall-scar_eye_right_small = Right Eye Scar (Small)
-marking-ScarEyeRightSmall = Small Eye Scar (Right)
+marking-ScarEyeRightSmall-scar_eye_right_small = Шрам на глазу (Правый, Маленький)
+marking-ScarEyeRightSmall = Шрам на глазу (Правый, Маленький)
 
-marking-ScarEyeLeftSmall-scar_eye_left_small = Left Eye Scar (Small)
-marking-ScarEyeLeftSmall = Small Eye Scar (Left)
+marking-ScarEyeLeftSmall-scar_eye_left_small = Шрам на глазу (Левый, Маленький)
+marking-ScarEyeLeftSmall = Шрам на глазу (Левый, Маленький)
