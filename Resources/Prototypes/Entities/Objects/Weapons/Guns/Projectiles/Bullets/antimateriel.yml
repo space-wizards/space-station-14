@@ -9,7 +9,7 @@
       types:
         Piercing: 75
         Structural: 100
-    penetrationThreshold: 1001
+    penetrationThreshold: 601
     penetrationDamageTypeRequirement:
     - Structural
   - type: StaminaDamageOnCollide
