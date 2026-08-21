@@ -36,7 +36,8 @@
                 <RichTextLabel Text="{Loc 'credits-window-page-label'}"/>
                 <controls:IntegerLineEdit Name="PageJumpLineEdit"
                                       SelectAllOnFocus="True"
-                                      SetWidth="40"/>
+                                      SetWidth="40"
+                                      MinValue="1"/>
                 <BoxContainer Name="ButtonsContainer"
                               Orientation="Horizontal"
                               Margin="8 0"/>
