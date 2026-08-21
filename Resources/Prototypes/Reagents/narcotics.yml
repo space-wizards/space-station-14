@@ -273,6 +273,34 @@
         boozePower: 5
 
 - type: reagent
+  id: Pax
+  name: reagent-name-pax
+  group: Narcotics
+  desc: reagent-desc-pax
+  physicalDesc: reagent-physical-desc-soothing
+  allowedDepartments:
+  - Security
+  - Medical
+  color: "#AAAAAA"
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:GenericStatusEffect
+        key: Pacified
+        component: Pacified
+        time: 5
+      - !type:MovementSpeedModifier
+        walkSpeedModifier: 1.05
+        sprintSpeedModifier: 1.05
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAdrenaline
+        time: 1.5
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectStunned
+        time: 1
+        type: Remove
+
+- type: reagent
   id: SpaceDrugs
   name: reagent-name-space-drugs
   group: Narcotics
