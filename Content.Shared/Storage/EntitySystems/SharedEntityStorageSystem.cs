@@ -331,22 +331,26 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
             var parent = parentContainer.Owner;
             var xform = Transform(parent);
 
-            if (TryComp<EntityStorageComponent>(parent, out var entStorageComp))
+            if (!_container.IsEntityInContainer(parent) && TryComp<EntityStorageComponent>(parent, out var entStorageComp))
             {
-                if (!_container.IsEntityInContainer(parent))
+                if (entStorageComp.EnteringOffset == Vector2.Zero)
                 {
-                    if (!TransformSystem.TryGetMapOrGridCoordinates(parent, out var coordinates, xform))
+                    if (!_container.Remove(toRemove, parentContainer))
                         return false;
-
-                    var rot = xform.LocalRotation;
-
-                    if (!_container.Remove(toRemove,
-                            parentContainer,
-                            destination: coordinates.Value.Offset(rot.RotateVec(entStorageComp.EnteringOffset))))
-                        return false;
-
                     break;
                 }
+
+                if (!TransformSystem.TryGetMapOrGridCoordinates(parent, out var coordinates, xform))
+                    return false;
+
+                var rot = xform.LocalRotation;
+
+                if (!_container.Remove(toRemove,
+                        parentContainer,
+                        destination: coordinates.Value.Offset(rot.RotateVec(entStorageComp.EnteringOffset))))
+                    return false;
+
+                break;
             }
 
             if (!_container.Remove(toRemove, parentContainer))
