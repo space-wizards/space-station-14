@@ -3,17 +3,17 @@
 - type: stack
   parent: BaseTileStack
   id: FloorTileStackPlastic
-  name: stack-plastic-floor
+  name: stack-plastic-tile
   spawn: FloorTileItemPlastic
 
 - type: stack
   parent: BaseTileStack
   id: FloorTileStackDarkPlastic
-  name: stack-plastic-dark-floor
+  name: stack-plastic-tile
   spawn: FloorTileItemDarkPlastic
 
 - type: stack
   parent: BaseTileStack
   id: FloorTileStackWhitePlastic
-  name: stack-plastic-white-floor
+  name: stack-plastic-tile
   spawn: FloorTileItemWhitePlastic
