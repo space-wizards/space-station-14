@@ -66,18 +66,14 @@ public sealed partial class ProjectileSystem : SharedProjectileSystem
                 _color.RaiseEffect(Color.Red, new List<EntityUid> { target }, Filter.Pvs(target, entityManager: EntityManager));
             }
 
-            if (Exists(component.Shooter))
-            {
-                _adminLogger.Add(LogType.BulletHit,
-                    LogImpact.Medium,
-                    $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter!.Value):user} hit {otherName:target} and dealt {damage:damage} damage");
-            }
-            else
-            {
-                _adminLogger.Add(LogType.BulletHit,
-                    LogImpact.Medium,
-                    $"Projectile {ToPrettyString(uid):projectile} shot by a now deleted entity (grenade?) hit {otherName:target} and dealt {damage:damage} damage");
-            }
+            var shotByString = Exists(component.Shooter)
+                ? $"{ToPrettyString(component.Shooter!.Value):user}"
+                : "a now deleted entity (grenade?)";
+
+            _adminLogger.Add(LogType.BulletHit,
+                LogImpact.Medium,
+                $"Projectile {ToPrettyString(uid):projectile} shot by {shotByString} hit {otherName:target} and dealt {damage:damage} damage");
+
 
             component.ProjectileSpent = !TryPenetrate((uid, component), damage, damageRequired);
         }
