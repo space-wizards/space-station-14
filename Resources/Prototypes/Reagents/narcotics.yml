@@ -294,9 +294,12 @@
         sprintSpeedModifier: 1.05
       - !type:ModifyStatusEffect
         effectProto: StatusEffectAdrenaline
-        time: 1.5
+        time: 1
       - !type:ModifyStatusEffect
         effectProto: StatusEffectStunned
+        time: 1
+        type: Remove
+      - !type:ModifyKnockdown
         time: 1
         type: Remove
 
