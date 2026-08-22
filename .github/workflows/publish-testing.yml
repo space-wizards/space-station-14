@@ -28,7 +28,18 @@ jobs:
     - name: Get Engine Tag
       run: |
         cd RobustToolbox
-        git fetch --depth=1
+        git fetch --depth=1 --tags
+        echo "ENGINE_VERSION=$(git describe --tags --abbrev=0 | sed 's/^v//')" >> $GITHUB_ENV
+
+    - name: Check Engine Version Exists
+      run: |
+        echo "Checking for engine version $ENGINE_VERSION"
+        if ! curl -sSf https://robust-builds.cdn.spacestation14.com/manifest.json \
+          | jq -e --arg v "$ENGINE_VERSION" 'has($v)' > /dev/null; then
+          echo "::error::Engine version $ENGINE_VERSION not found in the manifest (or the manifest could not be fetched)."
+          exit 1
+        fi
+        echo "Engine version $ENGINE_VERSION found."
 
     - name: Install dependencies
       run: dotnet restore
