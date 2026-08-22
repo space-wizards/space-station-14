@@ -4,6 +4,7 @@ using Content.Client.LateJoin;
 using Content.Client.Lobby.UI;
 using Content.Client.Message;
 using Content.Client.Playtime;
+using Content.Client.RoundEnd;
 using Content.Client.UserInterface.Systems.Chat;
 using Content.Client.Voting;
 using Content.Shared.CCVar;
@@ -75,6 +76,10 @@ namespace Content.Client.Lobby
             _gameTicker.InfoBlobUpdated += UpdateLobbyUi;
             _gameTicker.LobbyStatusUpdated += LobbyStatusUpdated;
             _gameTicker.LobbyLateJoinStatusUpdated += LobbyLateJoinStatusUpdated;
+            _gameTicker.PreviousRoundInfoUpdated += OnPreviousRoundInfoUpdated;
+            // Need to trigger this manually, as on startup, this even has been
+            // fired before we have had a chance to subscribe:
+            OnPreviousRoundInfoUpdated();
         }
 
         protected override void Shutdown()
@@ -84,6 +89,7 @@ namespace Content.Client.Lobby
             _gameTicker.InfoBlobUpdated -= UpdateLobbyUi;
             _gameTicker.LobbyStatusUpdated -= LobbyStatusUpdated;
             _gameTicker.LobbyLateJoinStatusUpdated -= LobbyLateJoinStatusUpdated;
+            _gameTicker.PreviousRoundInfoUpdated -= OnPreviousRoundInfoUpdated;
             _contentAudioSystem.LobbySoundtrackChanged -= UpdateLobbySoundtrackInfo;
 
             _voteManager.ClearPopupContainer();
@@ -174,6 +180,16 @@ namespace Content.Client.Lobby
         private void LobbyLateJoinStatusUpdated()
         {
             Lobby!.ReadyButton.Disabled = _gameTicker.DisallowedLateJoin;
+        }
+
+        private void OnPreviousRoundInfoUpdated()
+        {
+            if (_gameTicker.LastRoundInfo != null)
+            {
+                var controller = _userInterfaceManager.GetUIController<RoundEndSummaryUIController>();
+                controller.UpdateRoundInfo(_gameTicker.LastRoundInfo);
+                Lobby!.ConfigureRoundSummaryButton();
+            }
         }
 
         private void UpdateLobbyUi()
