@@ -1,5 +1,3 @@
-using Content.Shared.Examine;
-using Content.Shared.Interaction;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
@@ -18,7 +16,6 @@ public sealed partial class TeleportActionSystem : EntitySystem
 {
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
-    [Dependency] private ExamineSystemShared _examine = default!;
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private PullingSystem _pulling = default!;
@@ -58,12 +55,8 @@ public sealed partial class TeleportActionSystem : EntitySystem
 
         var xform = Transform(user);
         var mapId = _transform.GetMapId(target);
-        if (xform.MapID != mapId ||
-            !_examine.InRangeUnOccluded(user, target, SharedInteractionSystem.MaxRaycastRange))
-        {
-            _popup.PopupEntity(Loc.GetString("teleport-action-popup-cant-see"), user, user);
+        if (xform.MapID != mapId)
             return false;
-        }
 
         var mapTarget = _transform.GetWorldPositionRotation(target.EntityId);
         var targetMapCoordinates = new MapCoordinates(mapTarget.WorldPosition + target.Position, mapId);
