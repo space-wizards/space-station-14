@@ -186,4 +186,16 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<int> DeltaPressureParallelBatchSize =
         CVarDef.Create("atmos.delta_pressure_parallel_batch_size", 10, CVar.SERVERONLY);
+
+    /// <summary>
+    /// Whether pipes and/or pipenodes will take damage if they exceed their maximum pressure.
+    /// </summary>
+    public static readonly CVarDef<bool> PipeDamage =
+        CVarDef.Create("atmos.pipe_damage", true, CVar.SERVERONLY);
+
+    /// <summary>
+    /// Determines whether there is randomness in performing pipe damage when overpressurized.
+    /// </summary>
+    public static readonly CVarDef<bool> PipeDamageRandomness =
+        CVarDef.Create("atmos.pipe_damage_randomness", true, CVar.SERVERONLY);
 }
