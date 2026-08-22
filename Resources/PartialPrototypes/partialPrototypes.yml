@@ -1,0 +1,23 @@
+﻿# This is where you should mark directories as partial downstream, allowing you to modify upstream prototypes from files different from the original, preventing merge conflicts.
+# Partial prototypes allow you to add and remove data, and remove components.
+# For up-to-date documentation on how partial prototypes work, see the documentation on IPrototypeManager.PartialDirectory
+
+# The order matters, partials are applied in the order in which they are listed here.
+# For example, with:
+# - /Prototypes/_ForkOne
+# - /Prototypes/_ForkTwo
+# If both directories recursively contain a modification to the same prototype, _ForkOne's will be applied first, and _ForkTwo's will be applied second.
+
+# You can also use multiple files in this directory instead of only this one.
+# If you do, files will be read ordered by their name.
+# For example, if this directory contains two files containing the following sequences each:
+# /Resources/PartialPrototypes/a.yml
+# - /Prototypes/_ForkOne
+# /Resources/PartialPrototypes/b.yml
+# - /Prototypes/_ForkTwo
+# And both paths modify the same prototype, then _ForkOne's will be applied first, and _ForkTwo's will be applied second.
+
+# You can specify both directories and specific files by adding lines like:
+#
+# - /Prototypes/_ForkOne
+# - /Prototypes/Catalog/uplink_catalog.yml
