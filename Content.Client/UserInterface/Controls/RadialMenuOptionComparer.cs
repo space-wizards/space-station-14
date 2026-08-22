@@ -2,12 +2,12 @@ namespace Content.Client.UserInterface.Controls;
 
 /// <summary>
 /// A class to compare radial menu options.
+/// Orders options in ascending order (null last!), then alphabetical tooltip (null last!).
 /// </summary>
 public sealed class RadialMenuOptionComparer : IComparer<RadialMenuOptionBase>
 {
     /// <summary/>
     /// Compares two RadialMenuOptionBase.
-    /// Orders them by ascending order, then alphabetical tooltip.
     /// <seealso cref="IComparer{RadialMenuOptionBase}.Compare(RadialMenuOptionBase?, RadialMenuOptionBase?)"/>
     /// </summary>
     public int Compare(RadialMenuOptionBase? x, RadialMenuOptionBase? y)
