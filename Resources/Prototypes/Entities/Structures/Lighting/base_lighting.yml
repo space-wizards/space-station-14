@@ -22,7 +22,7 @@
   - type: InteractionOutline
   - type: Sprite
     drawdepth: WallMountedItems
-    offset: 0, 1
+    # offset: 0, 1
     layers:
     - map: ["enum.PoweredLightLayers.Base"]
       state: base
@@ -110,7 +110,7 @@
   components:
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/light-tube.rsi
-    offset: 0, 1
+    # offset: 0, 1
     state: empty
   - type: PointLight
     enabled: false
