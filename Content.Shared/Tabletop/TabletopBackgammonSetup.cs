@@ -1,19 +1,28 @@
+using Content.Shared.Tabletop.Components;
 using JetBrains.Annotations;
+using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Tabletop;
 
+/// <summary>
+/// A class to set up a board and pieces for a game of backgammon.
+/// </summary>
 [UsedImplicitly]
 public sealed partial class TabletopBackgammonSetup : TabletopSetup
 {
     [DataField]
-    public string WhitePiecePrototype { get; private set; } = "WhiteTabletopPiece";
+    public EntProtoId WhitePiecePrototype = "WhiteTabletopPiece";
 
     [DataField]
-    public string BlackPiecePrototype { get; private set; } = "BlackTabletopPiece";
+    public EntProtoId BlackPiecePrototype = "BlackTabletopPiece";
 
-    public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
+    /// <summary>
+    /// Sets up a game of backgammon at the coordinates given.
+    /// </summary>
+    public override void SetupTabletop(Entity<TabletopGameComponent> tabletop, MapCoordinates coordinates, EntityManager entityManager)
     {
-        var board = entityManager.SpawnEntity(BoardPrototype, session.Position);
+        tabletop.Comp.Board = entityManager.Spawn(BoardPrototype, coordinates);
 
         const float borderLengthX = 7.35f; //BORDER
         const float borderLengthY = 5.60f; //BORDER
@@ -40,10 +49,9 @@ public sealed partial class TabletopBackgammonSetup : TabletopSetup
             bool isTop,
             bool isLeftSide)
         {
+            var pieceProtoId = isBlackPiece ? BlackPiecePrototype : WhitePiecePrototype;
             for (var i = 0; i < numberOfPieces; i++)
-            {
-                session.Entities.Add(entityManager.SpawnEntity(isBlackPiece ? BlackPiecePrototype : WhitePiecePrototype, session.Position.Offset(GetXPosition(distanceFromSide, isLeftSide), GetYPosition(i, isTop))));
-            }
+                SpawnPiece(pieceProtoId, new(GetXPosition(distanceFromSide, isLeftSide), GetYPosition(i, isTop)), tabletop, entityManager);
         }
 
         // top left

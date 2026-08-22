@@ -1098,25 +1098,19 @@
     - hand:
         emptyLabel: borg-slot-documents-empty
         emptyRepresentative: BookBase
-        whitelist:
+        whitelist: &documentsWhitelist
+          components:
+          - TabletopGame
           tags:
           - Book
           - Dice
           - Document
           - Figurine
-          - TabletopBoard
           - Write
     - hand:
         emptyLabel: borg-slot-documents-empty
         emptyRepresentative: Paper
-        whitelist:
-          tags:
-          - Book
-          - Dice
-          - Document
-          - Figurine
-          - TabletopBoard
-          - Write
+        whitelist: *documentsWhitelist
     - item: HandLabeler
     - item: RubberStampApproved
     - item: RubberStampDenied

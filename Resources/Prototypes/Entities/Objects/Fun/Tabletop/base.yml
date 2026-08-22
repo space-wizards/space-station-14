@@ -1,39 +1,49 @@
 # When adding a new board game, also add it to id: AllBoardGamesTable
 
-# The actual item that players can pick up, or throw when they lose
+# Note: all board game pieces should be marked as HideSpawnMenu, they lack most of the physical components for practical use.
+
+# The actual item that players can pick up, or throw when they lose.
 - type: entity
   abstract: true
   parent: BaseItem
-  id: BaseBoardEntity # Board item
+  id: BaseBoardEntity
   name: board
   description: A blank board.
   components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/boards.rsi
   - type: TabletopGame
     size: 256, 256
-    setup:
-      !type:TabletopEmptySetup
-      boardPrototype: Crowbar
-  - type: Tag
-    tags:
-    - TabletopBoard
+  - type: ActivatableUI
+    key: enum.TabletopGameUiKey.Key
+    verbText: tabletop-verb-play-game
+  - type: UserInterface
+    interfaces:
+      enum.TabletopGameUiKey.Key:
+        type: TabletopGameBoundUserInterface
 
+# A draggable item for tabletop boards.
+# Entities dragged onto the board have their appearance copied onto one of these.
 - type: entity
-  abstract: true
-  parent: BaseItem
-  id: BaseTabletopPiece # Board piece
+  id: BaseTabletopPiece
+  description: A piece used for playing a board game.
+  categories: [HideSpawnMenu]
   components:
   - type: TabletopDraggable
   - type: Sprite
     noRot: true
+    sprite: Objects/Fun/Tabletop/generic_pieces.rsi
   - type: Appearance
+  - type: Clickable
+  - type: InteractionOutline
 
-# Entity which acts as the background sprite in the tabletop game
+# Entity that acts as the background sprite in tabletop games.
 - type: entity
   abstract: true
   id: BaseBoardTabletop
-  name: baseboard
-  categories: [ HideSpawnMenu ]
+  name: board
   components:
+  - type: TabletopBackground
+  - type: Clickable # For pointing
   - type: Sprite
-    noRot: false
     drawdepth: FloorTiles

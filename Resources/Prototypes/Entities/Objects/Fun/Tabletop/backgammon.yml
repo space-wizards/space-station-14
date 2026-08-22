@@ -5,21 +5,19 @@
   description: Old fashioned game of dice and pieces.
   components:
   - type: Sprite
-    sprite: Objects/Fun/Tabletop/backgammon.rsi
-    state: board
+    state: backgammon
   - type: TabletopGame
     boardName: tabletop-backgammon-board-name
     size: 550, 410
-    setup:
-      !type:TabletopBackgammonSetup
-      boardPrototype: &BackgammonBoard BackgammonBoardTabletop
+    setup: !type:TabletopBackgammonSetup
+      boardPrototype: BackgammonBoardTabletop
 
 - type: entity
   parent: BaseBoardTabletop
-  id: *BackgammonBoard
+  id: BackgammonBoardTabletop
   name: backgammon
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Fun/Tabletop/backgammon_tabletop.rsi
-    state: backgammonBoard
+    sprite: Objects/Fun/Tabletop/Tabletops/backgammon.rsi
+    state: board

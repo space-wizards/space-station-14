@@ -1,13 +1,18 @@
+using Content.Shared.Tabletop.Components;
 using JetBrains.Annotations;
+using Robust.Shared.Map;
 
 namespace Content.Shared.Tabletop;
 
+/// <summary>
+/// A class to set up an empty board at a given position.
+/// </summary>
 [UsedImplicitly]
 public sealed partial class TabletopEmptySetup : TabletopSetup
 {
-    public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
+    /// <inheritdoc />
+    public override void SetupTabletop(Entity<TabletopGameComponent> tabletop, MapCoordinates coordinates, EntityManager entityManager)
     {
-        var board = entityManager.SpawnEntity(BoardPrototype, session.Position.Offset(0, 0));
-        session.Entities.Add(board);
+        tabletop.Comp.Board = entityManager.SpawnEntity(BoardPrototype, coordinates);
     }
 }

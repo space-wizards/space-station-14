@@ -1130,3 +1130,8 @@ DrinkNeurotoxinGlass: null
 #2026-08-19
 JanitorServiceLight: null
 
+#2026-08-20
+CheckerCrownBlack: CheckersKingBlack
+CheckerCrownWhite: CheckersKingRed
+CheckerPieceBlack: CheckersPieceBlack
+CheckerPieceWhite: CheckersPieceRed

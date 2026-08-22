@@ -109,16 +109,25 @@ namespace Content.Server.Pointing.EntitySystems
             _replay.RecordServerMessage(new PopupEntityEvent(viewerMessage, PopupType.Small, _gameTiming.CurTick, netSource));
         }
 
-        public bool InRange(EntityUid pointer, EntityCoordinates coordinates)
+        /// <summary>
+        /// Checks if <paramref name="coordinates"/> are within range of <paramref name="pointer"/>.
+        /// If not null, uses the pointed entity <paramref name="target"/> to see if the position is in range.
+        /// </summary>
+        public bool InRange(EntityUid pointer, EntityCoordinates coordinates, EntityUid? target = null)
         {
             if (HasComp<GhostComponent>(pointer))
+                return _transform.InRange(Transform(pointer).Coordinates, coordinates, PointingRange);
+
+            if (target != null)
             {
-                return _transform.InRange(Transform(pointer).Coordinates, coordinates, 15);
+                var ev = new InRangeOverrideEvent(pointer, target.Value);
+                RaiseLocalEvent(pointer, ref ev);
+
+                if (ev.Handled)
+                    return ev.InRange;
             }
-            else
-            {
-                return _examine.InRangeUnOccluded(pointer, coordinates, 15, predicate: e => e == pointer);
-            }
+
+            return _examine.InRangeUnOccluded(pointer, coordinates, PointingRange, predicate: e => e == pointer);
         }
 
         public bool TryPoint(ICommonSession? session, EntityCoordinates coordsPointed, EntityUid pointed)
@@ -152,7 +161,7 @@ namespace Content.Server.Pointing.EntitySystems
                 return false;
             }
 
-            if (!InRange(player, coordsPointed))
+            if (!InRange(player, coordsPointed, pointed))
             {
                 _popup.PopupEntity(Loc.GetString("pointing-system-try-point-cannot-reach"), player, player);
                 return false;

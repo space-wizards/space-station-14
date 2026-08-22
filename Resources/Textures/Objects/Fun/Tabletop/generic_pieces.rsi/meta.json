@@ -1,29 +1,20 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Zumorica, Fishfish458",
+    "copyright": "Originals by Zumorica, Fishfish458, crown by Capnsockless, greyscaled by whatston3 (GitHub)",
     "size": {
         "x": 24,
         "y": 24
     },
     "states": [
         {
-            "name": "red"
+            "name": "crown"
         },
         {
-            "name": "green"
+            "name": "inner_circle"
         },
         {
-            "name": "yellow"
-        },
-        {
-            "name": "blue"
-        },
-        {
-            "name": "white"
-        },
-        {
-            "name": "black"
+            "name": "outer_ring"
         }
     ]
 }
