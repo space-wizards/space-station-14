@@ -15,12 +15,23 @@ public sealed partial class RoundEndSummaryUIController : UIController,
 {
     [Dependency] private IInputManager _input = default!;
 
+    /// <summary>
+    /// Raised when the round summary window is opened or closed.
+    /// Argument is true when window is open
+    /// </summary>
+    public event Action<bool>? OnWindowToggled;
+
+    private RoundEndMessageInfo? _lastRoundInfo = null;
     private RoundEndSummaryWindow? _window;
 
-    private void ToggleScoreboardWindow(ICommonSession? session = null)
+    public void ToggleRoundEndSummaryWindow(ICommonSession? session = null)
     {
         if (_window == null)
+        {
+            if (_lastRoundInfo != null)
+                OpenRoundEndSummaryWindow(_lastRoundInfo);
             return;
+        }
 
         if (_window.IsOpen)
         {
@@ -31,21 +42,41 @@ public sealed partial class RoundEndSummaryUIController : UIController,
             _window.OpenCenteredRight();
             _window.MoveToFront();
         }
+
+        OnWindowToggled?.Invoke(_window.IsOpen);
     }
 
-    public void OpenRoundEndSummaryWindow(RoundEndMessageEvent message)
+    public void OpenRoundEndSummaryWindow(RoundEndMessageInfo roundInfo)
     {
         // Don't open duplicate windows (mainly for replays).
-        if (_window?.RoundId == message.RoundId)
+        if (_window?.RoundId == roundInfo.RoundId)
             return;
 
-        _window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText,
-            message.RoundDuration, message.RoundId, message.AllPlayersEndInfo);
+        _lastRoundInfo = roundInfo;
+        _window = new RoundEndSummaryWindow(roundInfo);
+        _window.OnClose += () => OnWindowToggled?.Invoke(false);
+
+        _window.OpenCenteredRight();
+        _window.MoveToFront();
+        OnWindowToggled?.Invoke(true);
     }
 
     public void OnSystemLoaded(ClientGameTicker system)
     {
         _input.SetInputCommand(ContentKeyFunctions.ToggleRoundEndSummaryWindow,
-            InputCmdHandler.FromDelegate(ToggleScoreboardWindow));
+            InputCmdHandler.FromDelegate(ToggleRoundEndSummaryWindow));
+    }
+
+    public void UpdateRoundInfo(RoundEndMessageInfo roundInfo)
+    {
+        _lastRoundInfo = roundInfo;
+    }
+
+    /// <summary>
+    /// Returns true if we have the information to open the round summary window
+    /// </summary>
+    public bool IsSummaryValid()
+    {
+        return _lastRoundInfo != null;
     }
 }
