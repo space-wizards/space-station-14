@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Silicons.StationAi;
 
+// Interaction handlers between the AI's held entity (its player-controlled entity within the frame) and the world.
 public abstract partial class SharedStationAiSystem
 {
     /*
@@ -228,7 +229,7 @@ public sealed class StationAiRadial : BaseStationAiAction
     /// <summary>
     /// The string to display when the item is selected.
     /// </summary>
-    public LocId? Tooltip;
+    public string? Tooltip;
 
     /// <summary>
     /// The event type to raise when this action is selected.
@@ -252,16 +253,22 @@ public abstract class BaseStationAiAction
     public EntityUid User { get; set; }
 }
 
-// No idea if there's a better way to do this.
 /// <summary>
 /// Grab actions possible for an AI on the target entity.
 /// </summary>
 [ByRefEvent]
 public record struct GetStationAiRadialEvent()
 {
+    /// <summary>
+    /// The actions this interaction supports.
+    /// Handlers should add their own actions here.
+    /// </summary>
     public List<StationAiRadial> Actions = new();
 }
 
+/// <summary>
+/// Interface keys for the radial AI menu.
+/// </summary>
 [Serializable, NetSerializable]
 public enum AiUi : byte
 {

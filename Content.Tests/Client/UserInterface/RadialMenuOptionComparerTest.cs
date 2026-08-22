@@ -29,7 +29,7 @@ public sealed class RadialMenuOptionComparerTest : RobustUnitTest
         var option2 = new OtherTestRadialMenuOption
         {
             Order = 2,
-            ToolTip = "Before OptionB!"
+            ToolTip = "Before Option3, despite the equal order!"
         };
         var option3 = new TestRadialMenuOption
         {

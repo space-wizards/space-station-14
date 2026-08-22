@@ -16,9 +16,9 @@ namespace Content.Client.UserInterface.Controls;
 [GenerateTypedNameReferences]
 public sealed partial class SimpleRadialMenu : RadialMenu
 {
-    private EntityUid? _attachMenuToEntity;
+    static readonly private RadialMenuOptionComparer Comparer = new();
 
-    private RadialMenuOptionComparer _comparer = new();
+    private EntityUid? _attachMenuToEntity;
 
     [Dependency] private IClyde _clyde = default!;
     [Dependency] private IEntityManager _entManager = default!;
@@ -88,13 +88,13 @@ public sealed partial class SimpleRadialMenu : RadialMenu
         switch (models)
         {
             case RadialMenuOptionBase[] asArray:
-                Array.Sort(asArray, _comparer);
+                Array.Sort(asArray, Comparer);
                 return asArray;
             case List<RadialMenuOptionBase> asList:
-                asList.Sort(_comparer);
+                asList.Sort(Comparer);
                 return asList;
             default:
-                return models.Order(_comparer);
+                return models.Order(Comparer);
         }
     }
 
@@ -251,34 +251,6 @@ public sealed partial class SimpleRadialMenu : RadialMenu
         {
             Children.Remove(control);
         }
-    }
-
-    private static int CompareRadialMenuOptions(RadialMenuOptionBase x, RadialMenuOptionBase y)
-    {
-        if (ReferenceEquals(x, y))
-            return 0;
-
-        // First sort by order, then by tooltip.
-        // Any non-null order value comes before null.
-        if (y.Order != x.Order)
-        {
-            if (y?.Order is null)
-                return -1;
-
-            if (x?.Order is null)
-                return 1;
-
-            return x.Order < y.Order ? 1 : -1;
-        }
-
-        // Sort by tooltip: non-null order values come before null ones.
-        if (y?.ToolTip is null)
-            return -1;
-
-        if (x?.ToolTip is null)
-            return 1;
-
-        return string.Compare(x.ToolTip, y.ToolTip, StringComparison.Ordinal);
     }
 
     #region target entity tracking
