@@ -145,6 +145,9 @@ public abstract partial class ClothingSystem : EntitySystem
         if (!Resolve(item, ref item.Comp, false))
             return false;
 
+        if (item.Comp.InSlotFlag == null)
+            return false;
+
         if ((item.Comp.Slots & item.Comp.InSlotFlag) != SlotFlags.NONE)
             return true;
 
