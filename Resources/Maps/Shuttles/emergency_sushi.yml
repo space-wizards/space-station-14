@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 288.1.0
+  engineVersion: 288.0.1
   forkId: ""
   forkVersion: ""
-  time: 08/20/2026 15:17:59
+  time: 08/12/2026 22:33:47
   entityCount: 1417
 maps: []
 grids:
@@ -341,7 +341,6 @@ entities:
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
       pos: -16.5,3.5
   - uid: 13
     components:
@@ -4792,37 +4791,31 @@ entities:
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
       pos: -7.5,-17.5
   - uid: 718
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
       pos: -7.5,-18.5
   - uid: 719
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
       pos: -7.5,-10.5
   - uid: 720
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
       pos: -7.5,-3.5
   - uid: 723
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
       pos: -7.5,10.5
   - uid: 724
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
       pos: -12.5,10.5
   - uid: 725
     components:
@@ -4838,13 +4831,11 @@ entities:
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
       pos: -10.5,17.5
   - uid: 728
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
       pos: -10.5,18.5
   - uid: 729
     components:
@@ -4880,55 +4871,46 @@ entities:
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
       pos: -3.5,2.5
   - uid: 736
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
       pos: -3.5,3.5
   - uid: 737
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
       pos: -3.5,4.5
   - uid: 738
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
       pos: -3.5,-2.5
   - uid: 739
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
       pos: -3.5,-3.5
   - uid: 740
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
       pos: -3.5,-4.5
   - uid: 741
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
       pos: -12.5,-4.5
   - uid: 742
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
       pos: -12.5,-3.5
   - uid: 743
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
       pos: -12.5,11.5
 - proto: FlashlightSeclite
   entities:
@@ -9630,7 +9612,7 @@ entities:
     - type: Transform
       parent: 1
       pos: -1.5,17.5
-- proto: WindoorCommandLocked
+- proto: WindoorSecureCommandLocked
   entities:
   - uid: 1392
     components:
@@ -9644,7 +9626,7 @@ entities:
       parent: 1
       rot: 1.5707963267948966 rad
       pos: -10.5,17.5
-- proto: WindoorEngineeringLocked
+- proto: WindoorSecureEngineeringLocked
   entities:
   - uid: 1394
     components:
@@ -9676,7 +9658,7 @@ entities:
       parent: 1
       rot: 1.5707963267948966 rad
       pos: -2.5,-17.5
-- proto: WindoorMedicalLocked
+- proto: WindoorSecureMedicalLocked
   entities:
   - uid: 1399
     components:
@@ -9690,7 +9672,7 @@ entities:
       parent: 1
       rot: 1.5707963267948966 rad
       pos: -12.5,-4.5
-- proto: WindoorSecurityLocked
+- proto: WindoorSecureSecurityLocked
   entities:
   - uid: 1401
     components:
@@ -9710,7 +9692,7 @@ entities:
       parent: 1
       rot: 3.141592653589793 rad
       pos: -9.5,12.5
-- proto: WindoorServiceLocked
+- proto: WindoorSecureServiceLocked
   entities:
   - uid: 1404
     components:
