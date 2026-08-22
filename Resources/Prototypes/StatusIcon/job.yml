@@ -331,7 +331,7 @@
     state: TramDriver
   jobName: job-name-tramdriver
 
-# Entertainer (like service, but not actually service)
+# Theatre
 
 - type: jobIcon
   parent: JobIcon

@@ -8,3 +8,4 @@ department-Security-description = Protect the station and keep the peace.
 department-Science-description = Research and develop new technologies for the station.
 department-Silicon-description = Fulfill the terms of your installed lawset.
 department-Specific-description = Jobs that not all stations have.
+department-Theatre-description = Perform amusing antics and heartfelt performances for the crew.

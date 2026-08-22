@@ -2,7 +2,7 @@
 job-description-captain = Manage the resources and personnel of the entire station. Work alongside the other heads of staff to ensure the station's crew remain content and productive.
 job-description-ce = Manage the resources and personnel of the Engineering department to ensure the station remains intact, functional, and habitable.
 job-description-cmo = Manage the resources and personnel of the Medical department to ensure the station's crew remain alive and in good health.
-job-description-hop = Manage the resources and personnel of the Service department, and perform general administrative duties. Handle paperwork, perform job transfers, and keep your pet corgi safe.
+job-description-hop = Manage the resources and personnel of the Service and Theatre departments, and perform general administrative duties. Handle paperwork, perform job transfers, and keep your pet corgi safe.
 job-description-hos = Manage the resources and personnel of the Security department to ensure the station's crew remain safe and law-abiding.
 job-description-qm = Manage the resources and personnel of the Cargo department to ensure the station remains well-supplied and the money keeps flowing.
 job-description-rd = Manage the resources and personnel of the Science department to ensure that research progresses smoothly and the station's silicons function properly.
@@ -38,12 +38,9 @@ job-description-bartender = Serve drinks and keep the bar lively.
 job-description-botanist = Grow fresh ingredients, medicinal herbs, and other plant-based supplies for the station.
 job-description-chaplain = Preach the good word of your religion, hold services and funerals, and conduct miracles with your holy book.
 job-description-chef = Keep the crew fed, butcher and dispose of dead animals, and help keep the bar lively.
-job-description-clown = Entertain the crew with slapstick routines and terrible jokes, and engage in light rivalry with the mime.
 job-description-janitor = Keep the station clean, recycle garbage into raw materials, and help exterminate vermin.
 job-description-lawyer = Ensure that criminals receive legal representation and fair judgment. Inform the crew of their rights and help organize trials, lawsuits, and settlements.
 job-description-librarian = Keep the library organized. Provide the crew with educational materials, entertaining stories, and tabletop games.
-job-description-mime = Entertain the crew with silent acts of performance art, and engage in light rivalry with the clown.
-job-description-musician = Entertain the crew with your unique musical talents.
 job-description-passenger = Enjoy your stay aboard the station with no obligations!
 job-description-reporter = Inform and entertain the station's crew with wireless cameras and news bulletins.
 job-description-serviceworker = Assist the bar and kitchen with providing sustenance to the crew.
@@ -52,6 +49,11 @@ job-description-tram-driver = Drive around a tram from stop to stop.
 # Silicon
 job-description-borg = Use your robotic chassis to perform a wide variety of specialized tasks.
 job-description-station-ai = Remotely interface with the station's cameras, airlocks, radio, and other electronic devices from the safety of your core.
+
+# Theatre
+job-description-clown = Entertain the crew with slapstick routines and terrible jokes, and engage in light rivalry with the mime.
+job-description-mime = Entertain the crew with silent acts of performance art, and engage in light rivalry with the clown.
+job-description-musician = Entertain the crew with your unique musical talents.
 
 # Misc.
 job-description-centcommoff = Act as liaison to the newest state-of-the-art space station in Nanotrasen's fleet.
