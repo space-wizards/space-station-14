@@ -51,6 +51,8 @@
   - type: NpcFactionMember
     factions:
     - Syndicate
+  - type: CombatPower
+    factor: 2.0
 
 - type: antagSpecifier
   parent: BaseNukeops

@@ -113,6 +113,8 @@
       path: /Audio/Announcements/announce.ogg
     weight: 8
     duration: 35
+    chaos:
+      Anomaly: 20
   - type: AnomalySpawnRule
 
 - type: entity
@@ -129,6 +131,8 @@
       path: /Audio/Announcements/announce.ogg
     weight: 8
     duration: 35
+    chaos:
+      Anomaly: 10
   - type: BluespaceArtifactRule
 
 - type: entity
@@ -140,6 +144,8 @@
     reoccurrenceDelay: 5
     earliestStart: 1
     duration: 1
+    chaos:
+      Anomaly: 10
   - type: BluespaceLockerRule
 
 - type: entity
@@ -150,6 +156,8 @@
     weight: 7
     duration: 1
     minimumPlayers: 15
+    chaos:
+      Power: 50
   - type: BreakerFlipRule
     blacklist:
       components:
@@ -165,6 +173,8 @@
     minimumPlayers: 25
     weight: 3
     duration: 1
+    chaos:
+      Mess: 20
   - type: BureaucraticErrorRule
     ignoredJobs:
     - StationAi
@@ -182,6 +192,8 @@
     minimumPlayers: 15
     weight: 5
     duration: 1
+    chaos:
+      Mess: 15
   - type: ClericalErrorRule
 
 - type: entity
@@ -193,6 +205,9 @@
     duration: 1
     occursDuringRoundEnd: false
     minimumPlayers: 10
+    chaos:
+      Hostile: 10
+      Medical: 20
   - type: RandomEntityStorageSpawnRule
     prototype: MobSkeletonCloset
 
@@ -205,6 +220,13 @@
     earliestStart: 40
     reoccurrenceDelay: 20
     minimumPlayers: 20
+    chaos:
+      Hostile: 40
+      Friend: 40
+      Combat: 40
+      Atmos: 40
+      Death: 100
+      Medical: 100
     duration: null
     occursDuringRoundEnd: false
   - type: SpaceSpawnRule
@@ -235,6 +257,12 @@
     earliestStart: 30
     reoccurrenceDelay: 20
     minimumPlayers: 30
+    chaos:
+      Hostile: 20
+      Friend: 20
+      Combat: 40
+      Death: 40
+      Medical: 40
   - type: SpaceSpawnRule
   - type: AntagLoadProfileRule
   - type: AntagObjectives
@@ -264,6 +292,11 @@
     earliestStart: 20
     reoccurrenceDelay: 20
     minimumPlayers: 15
+    chaos:
+      Hostile: 10
+      Friend: 10
+      Combat: 20
+      Death: 20
   - type: ParadoxCloneRule
     objectiveBlacklist:
       tags:
@@ -291,6 +324,12 @@
     occursDuringRoundEnd: false
     earliestStart: 45
     minimumPlayers: 20
+    chaos:
+      Hostile: 20
+      Friend: 20
+      Combat: 40
+      Death: 100
+      Medical: 100
   - type: RandomSpawnRule
     prototype: MobRevenant
 
@@ -305,6 +344,10 @@
     earliestStart: 30
     reoccurrenceDelay: 60
     minimumPlayers: 30
+    chaos:
+      Hostile: 150
+      Death: 100
+      Medical: 200
 
 # disabled until event is rewritten to be more interesting
 #- type: entity
@@ -326,6 +369,9 @@
       path: /Audio/Announcements/attention.ogg
     endAnnouncement: station-event-gas-leak-end-announcement
     weight: 8
+    chaos:
+      Atmos: 50
+      Medical: 50
   - type: GasLeakRule
 
 - type: entity
@@ -337,6 +383,10 @@
     minimumPlayers: 15
     weight: 7
     duration: 240
+    chaos:
+      Hostile: 20
+      Friend: 20
+      Medical: 100
   - type: KudzuGrowthRule
 
 - type: entity
@@ -353,6 +403,8 @@
         volume: -4
     duration: 50
     maxDuration: 100
+    chaos:
+      Power: 100
   - type: PowerGridCheckRule
 
 - type: entity
@@ -367,6 +419,8 @@
       path: /Audio/Announcements/attention.ogg
     duration: 120
     maxDuration: 240
+    chaos:
+      Mess: 20
   - type: SolarFlareRule
     onlyJamHeadsets: true
     affectedChannels:
@@ -395,6 +449,8 @@
     minimumPlayers: 15
     weight: 5
     duration: 60
+    chaos:
+      Mess: 200
   - type: VentClogRule
 
 # Critters
@@ -412,6 +468,9 @@
     weight: 5
     duration: 5
     maxDuration: 20
+    chaos:
+      Hostile: 40
+      Medical: 50
   - type: VentHordeRule
     table: !type:GroupSelector
       rolls: 4, 8
@@ -433,6 +492,9 @@
     weight: 5
     duration: 5
     maxDuration: 20
+    chaos:
+      Hostile: 40
+      Medical: 50
   - type: VentHordeRule
     table: !type:GroupSelector
       rolls: 4, 8
@@ -454,6 +516,9 @@
     weight: 5
     duration: 5
     maxDuration: 20
+    chaos:
+      Hostile: 40
+      Medical: 50
   - type: VentHordeRule
     table: !type:GroupSelector
       rolls: 4, 8
@@ -473,6 +538,9 @@
     weight: 1.5
     duration: 5
     maxDuration: 20
+    chaos:
+      Hostile: 40
+      Medical: 50
   - type: VentHordeRule
     table: !type:GroupSelector
       rolls: 4, 8
@@ -489,6 +557,10 @@
     weight: 1 # Zombies was happening basically every single survival round, so now it's super rare
     duration: 1
     occursDuringRoundEnd: false
+    chaos:
+      Hostile: 100
+      Medical: 200
+      Death: 200
   - type: ZombieRule
   - type: AntagSelection
     antags:
@@ -509,6 +581,10 @@
     weight: 5.5
     minimumPlayers: 20
     duration: null # LoneOpsSpawn needs an infinite duration so that it inherits the NukeOpsRule things of an actually appropriate end screen (not always "Neutral outcome!") and... ending the game if the station is nuked.
+    chaos:
+      Hostile: 60
+      Medical: 100
+      Death: 100
     occursDuringRoundEnd: false
   - type: RuleGrids
   - type: LoadMapRule
@@ -536,6 +612,8 @@
       path: /Audio/Announcements/intercept.ogg
     duration: null # the rule has to last the whole round not 1 second
     occursDuringRoundEnd: false
+    chaos:
+      Hostile: 20
   - type: AlertLevelInterceptionRule
   - type: AntagSelection
     antags:
@@ -554,6 +632,8 @@
     duration: 150
     maxDuration: 300
     reoccurrenceDelay: 30
+    chaos:
+      Friend: 20
   - type: MassHallucinationsRule
     minTimeBetweenIncidents: 0.1
     maxTimeBetweenIncidents: 300
@@ -569,6 +649,10 @@
     weight: 8
     reoccurrenceDelay: 20
     duration: 1
+    chaos:
+      Hostile: 10
+      Friend: 10
+      Mess: 30
   - type: IonStormRule
 
 - type: entity
@@ -581,6 +665,9 @@
     weight: 5
     minimumPlayers: 25
     reoccurrenceDelay: 20
+    chaos:
+      Atmos: 15
+      Security: 50
   - type: GreytideVirusRule
     accessGroups:
     - Cargo
@@ -602,6 +689,9 @@
     minimumPlayers: 1
     maxOccurrences: 2
     weight: 10
+    chaos:
+      Hostile: 10
+      Friend: 10
   - type: RandomSpawnRule
     prototype: RandomSatchelSpawner
 
@@ -616,6 +706,9 @@
     reoccurrenceDelay: 20
     minimumPlayers: 4
     duration: null
+    chaos:
+      Hostile: 10
+      Friend: 10
     occursDuringRoundEnd: false
   - type: SpaceSpawnRule
     spawnDistance: 0
@@ -682,6 +775,8 @@
   - type: StationEvent
     earliestStart: 25
     minimumPlayers: 15
+    chaos:
+      Hostile: 20
   - type: AntagSpawner
     prototype: PlayerBorgSyndicateDerelictGhostRole
   - type: AntagSelection

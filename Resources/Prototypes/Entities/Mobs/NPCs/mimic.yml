@@ -12,6 +12,8 @@
   - type: NpcFactionMember
     factions:
     - SimpleHostile
+  - type: CombatPower
+    factor: 1.0
   - type: Sprite
     drawdepth: Mobs
     sprite: Structures/Machines/VendingMachines/cola.rsi

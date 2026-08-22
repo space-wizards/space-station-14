@@ -1,10 +1,11 @@
+using Content.Server.StationEvents.Metric;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.StationEvents.Components;
 
 /// <summary>
-///     Defines basic data for a station event
+///   Defines basic data for a station event
 /// </summary>
 [RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class StationEventComponent : Component
@@ -37,46 +38,46 @@ public sealed partial class StationEventComponent : Component
     public SoundSpecifier? EndAudio;
 
     /// <summary>
-    ///     In minutes, when is the first round time this event can start
+    ///   In minutes, when is the first round time this event can start
     /// </summary>
     [DataField]
     public int EarliestStart = 5;
 
     /// <summary>
-    ///     In minutes, the amount of time before the same event can occur again
+    ///   In minutes, the amount of time before the same event can occur again
     /// </summary>
     [DataField]
     public int ReoccurrenceDelay = 30;
 
     /// <summary>
-    ///     How long the event lasts.
+    ///   How long the event lasts.
     /// </summary>
     [DataField]
     public TimeSpan? Duration = TimeSpan.FromSeconds(1);
 
     /// <summary>
-    ///     The max amount of time the event lasts.
+    ///   The max amount of time the event lasts.
     /// </summary>
     [DataField]
     public TimeSpan? MaxDuration;
 
     /// <summary>
-    ///     How many players need to be present on station for the event to run
+    ///   How many players need to be present on station for the event to run
     /// </summary>
     /// <remarks>
-    ///     To avoid running deadly events with low-pop
+    ///   To avoid running deadly events with low-pop
     /// </remarks>
     [DataField]
     public int MinimumPlayers;
 
     /// <summary>
-    ///     How many times this even can occur in a single round
+    ///   How many times this even can occur in a single round
     /// </summary>
     [DataField]
     public int? MaxOccurrences;
 
     /// <summary>
-    /// When the station event ends.
+    ///   When the station event ends.
     /// </summary>
     [DataField("endTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
@@ -87,4 +88,12 @@ public sealed partial class StationEventComponent : Component
     /// </summary>
     [DataField]
     public bool OccursDuringRoundEnd = true;
+
+    /// <summary>
+    ///   Expected Chaos changes when this event occurs.
+    ///   Used by the GameDirector, which picks an event expected to make the desired chaos changes.
+    /// </summary>
+    [DataField]
+    public ChaosMetrics Chaos = new ChaosMetrics();
+
 }

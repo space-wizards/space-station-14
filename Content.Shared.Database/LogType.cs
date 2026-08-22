@@ -488,4 +488,9 @@ public enum LogType
     /// Silicon law changes.
     /// </summary>
     SiliconLaw = 105,
+    
+    /// <summary>
+    /// Dynamic events.
+    /// </summary>
+    GameDirector = 106,
 }
