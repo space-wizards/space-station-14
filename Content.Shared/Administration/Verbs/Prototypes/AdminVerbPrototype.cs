@@ -5,6 +5,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Administration.Verbs.Prototypes;
 
+/// <summary>
+/// Defines a target-filtered admin verb as an ordered sequence of operations.
+/// </summary>
 [DataDefinition]
 public abstract partial class AdminVerbPrototype : IPrototype
 {
@@ -27,7 +30,7 @@ public abstract partial class AdminVerbPrototype : IPrototype
     public EntityWhitelist? Blacklist { get; private set; }
 
     /// <summary>
-    /// Operations are executed synchronously in the order they are listed.
+    /// Executed synchronously in the listed order, so later operations can rely on earlier ones.
     /// </summary>
     [DataField(required: true, serverOnly: true)]
     public AdminOperation[] Operations { get; private set; } = [];
