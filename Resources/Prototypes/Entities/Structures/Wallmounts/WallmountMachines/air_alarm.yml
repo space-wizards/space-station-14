@@ -51,12 +51,15 @@
     group: AirAlarm
   - type: Clickable
   - type: InteractionOutline
+  - type: ActivatableUI
+    key: enum.SharedAirAlarmInterfaceKey.Key
   - type: UserInterface
     interfaces:
       enum.SharedAirAlarmInterfaceKey.Key:
         type: AirAlarmBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
+  - type: ActivatableUIRequiresPower
   - type: WiresPanel
   - type: Wires
     boardName: wires-board-name-airalarm

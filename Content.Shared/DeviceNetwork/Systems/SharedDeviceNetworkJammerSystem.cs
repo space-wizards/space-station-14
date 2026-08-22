@@ -26,7 +26,7 @@ public abstract class SharedDeviceNetworkJammerSystem : EntitySystem
 
     /// <summary>
     /// Returns the set of networks that this entity can jam.
-    public IReadOnlySet<string> GetJammableNetworks(Entity<DeviceNetworkJammerComponent> ent)
+    public IReadOnlySet<int> GetJammableNetworks(Entity<DeviceNetworkJammerComponent> ent)
     {
         return ent.Comp.JammableNetworks;
     }
@@ -34,7 +34,7 @@ public abstract class SharedDeviceNetworkJammerSystem : EntitySystem
     /// <summary>
     /// Enables this entity to jam packets on the specified network.
     /// </summary>
-    public void AddJammableNetwork(Entity<DeviceNetworkJammerComponent> ent, string networkId)
+    public void AddJammableNetwork(Entity<DeviceNetworkJammerComponent> ent, int networkId)
     {
         if (ent.Comp.JammableNetworks.Add(networkId))
             Dirty(ent);
@@ -43,7 +43,7 @@ public abstract class SharedDeviceNetworkJammerSystem : EntitySystem
     /// <summary>
     /// Stops this entity from jamming packets on the specified network.
     /// </summary>
-    public void RemoveJammableNetwork(Entity<DeviceNetworkJammerComponent> ent, string networkId)
+    public void RemoveJammableNetwork(Entity<DeviceNetworkJammerComponent> ent, int networkId)
     {
         if (ent.Comp.JammableNetworks.Remove(networkId))
             Dirty(ent);

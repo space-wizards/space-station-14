@@ -17,7 +17,7 @@ namespace Content.Client.Atmos.Monitor.UI;
 public sealed partial class AirAlarmWindow : FancyWindow
 {
     public event Action<string, IAtmosDeviceData>? AtmosDeviceDataChanged;
-    public event Action<IAtmosDeviceData>? AtmosDeviceDataCopied;
+	public event Action<IAtmosDeviceData>? AtmosDeviceDataCopied;
     public event Action<string, AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? AtmosAlarmThresholdChanged;
     public event Action<AirAlarmMode>? AirAlarmModeChanged;
     public event Action<bool>? AutoModeChanged;
@@ -158,7 +158,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
                 }
 
                 break;
-            case AtmosSensorData sensor:
+            case AtmosMonitorData sensor:
                 if (!_sensors.TryGetValue(addr, out var sensorControl))
                 {
                     var control = new SensorInfo(sensor, addr);
