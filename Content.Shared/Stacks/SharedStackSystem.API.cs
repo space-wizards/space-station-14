@@ -434,7 +434,7 @@ public abstract partial class SharedStackSystem
     [PublicAPI]
     public EntityUid SpawnAtPosition(int count, StackPrototype prototype, EntityCoordinates spawnPosition)
     {
-        var entity = SpawnAtPosition(prototype.Spawn, spawnPosition); // The real SpawnAtPosition
+        var entity = PredictedSpawnAtPosition(prototype.Spawn, spawnPosition); // The real SpawnAtPosition
 
         SetCount((entity, null), count);
         return entity;

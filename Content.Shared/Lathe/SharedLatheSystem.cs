@@ -69,17 +69,17 @@ public abstract partial class SharedLatheSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return false;
 
-        recipes = GetAvailableRecipes(uid, component, getUnavailable);
+        recipes = GetAvailableRecipes(uid, component, getUnavailable).ToList();
         return true;
     }
 
     [PublicAPI]
-    public List<ProtoId<LatheRecipePrototype>> GetAvailableRecipes(EntityUid uid, LatheComponent component, bool getUnavailable = false)
+    public IEnumerable<ProtoId<LatheRecipePrototype>> GetAvailableRecipes(EntityUid uid, LatheComponent component, bool getUnavailable = false)
     {
         var ev = new LatheGetRecipesEvent((uid, component), getUnavailable);
         AddRecipesFromPacks(ev.Recipes, component.StaticPacks);
         RaiseLocalEvent(uid, ev);
-        return ev.Recipes.ToList();
+        return ev.Recipes;
     }
 
     /// <summary>

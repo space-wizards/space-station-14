@@ -150,9 +150,12 @@ public sealed partial class LatheMenu : FancyWindow
 
         RecipeCount.Text = Loc.GetString("lathe-menu-recipe-count", ("count", recipesToShow.Count));
 
-        var sortedRecipesToShow = recipesToShow.OrderBy(x => _lathe.GetRecipeName(x.Recipe));
+        recipesToShow.Sort((RecipeListData a, RecipeListData b) =>
+        {
+            return _lathe.GetRecipeName(a.Recipe).CompareTo(_lathe.GetRecipeName(b.Recipe));
+        });
         _dataToControls.Clear();
-        RecipeList.PopulateList(sortedRecipesToShow.ToList());
+        RecipeList.PopulateList(recipesToShow);
     }
 
     public void UpdateMaterialAmounts()
