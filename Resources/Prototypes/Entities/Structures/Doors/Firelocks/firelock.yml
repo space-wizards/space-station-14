@@ -129,8 +129,7 @@
     enabled: false
   - type: Occluder
     enabled: false
-  - type: WallMount
-    arc: 360
+  - type: InteractionIgnoreAnchoredInTile
   - type: StaticPrice
     price: 200
   - type: AccessReader

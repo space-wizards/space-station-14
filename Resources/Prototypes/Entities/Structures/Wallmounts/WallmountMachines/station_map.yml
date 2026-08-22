@@ -37,7 +37,6 @@
   suffix: Wall
   components:
   - type: WallMount
-    arc: 360
   - type: Appearance
   - type: StationMap
   - type: Sprite
@@ -112,7 +111,6 @@
   description: A station map assembly.
   components:
   - type: WallMount
-    arc: 360
   - type: Sprite
     sprite: Structures/Wallmounts/station-map.rsi
     offset: 0, -0.25
