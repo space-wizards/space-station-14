@@ -520,7 +520,13 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Consumable/Food/Baked/bread.rsi"), "plain"),
             Act = () =>
             {
-                _polymorphSystem.PolymorphEntity(args.Target, "AdminBreadSmite");
+                var breadedTarget = _polymorphSystem.PolymorphEntity(args.Target, "AdminBreadSmite");
+                if (breadedTarget.HasValue)
+                {
+                    EnsureComp<MumbleAccentComponent>(breadedTarget.Value);
+                    _transformSystem.SetNoLocalRotation(breadedTarget.Value, true);
+                    RemComp<InputMoverComponent>(breadedTarget.Value);
+                }
             },
             Impact = LogImpact.Extreme,
             Message = string.Join(": ", breadName, Loc.GetString("admin-smite-become-bread-description"))
