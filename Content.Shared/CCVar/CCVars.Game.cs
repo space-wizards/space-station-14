@@ -160,7 +160,7 @@ public sealed partial class CCVars
     ///     Role bans, whitelists, playtime requirements, and antag restrictions always apply.
     /// </summary>
     public static readonly CVarDef<MinimumJobFallback>
-        GameMinimumJobFallback = CVarDef.Create("game.minimum_job_fallback", MinimumJobFallback.SameDepartment,
+        GameMinimumJobFallback = CVarDef.Create("game.minimum_job_fallback", MinimumJobFallback.None,
             CVar.ARCHIVE | CVar.SERVERONLY);
 
     /// <summary>
