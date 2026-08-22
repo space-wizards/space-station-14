@@ -377,6 +377,12 @@ public abstract partial class SharedBuckleSystem
         var coords = new EntityCoordinates(strap, strap.Comp.BuckleOffset);
         _transform.SetCoordinates(buckle, xform, coords, rotation: Angle.Zero);
 
+        if (TryComp<InputMoverComponent>(buckle, out var mover))
+        {
+            mover.LerpTarget = TimeSpan.Zero;
+            Dirty(buckle, mover);
+        }
+
         _joints.SetRelay(buckle, strap);
 
         switch (strap.Comp.Position)
