@@ -80,6 +80,16 @@
     price: 70
 
 - type: entity
+  parent: VehicleWheelchair
+  id: VehicleWheelchairFolded
+  suffix: folded
+  components:
+  - type: Foldable
+    folded: true
+  - type: Strap
+    enabled: False
+
+- type: entity
   id: VehicleJanicart
   parent: BaseVehicleStrap
   name: janicart
