@@ -80,6 +80,7 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
         var countFixed = 0;
 
         //TODO: check if map exists so we can quit early
+        //TODO: rewrite the flow to check which entities should be aligned in one method, and then align those entities in a separate method
 
         foreach (var (ent, comp, trans) in query)
         {
