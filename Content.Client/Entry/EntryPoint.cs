@@ -109,6 +109,7 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("utilityCurvePreset");
             _prototypeManager.RegisterIgnore("gasReaction");
             _prototypeManager.RegisterIgnore("seed"); // Seeds prototypes are server-only.
+            _prototypeManager.RegisterIgnore("adminSmite");
             _prototypeManager.RegisterIgnore("objective");
             _prototypeManager.RegisterIgnore("holiday");
             _prototypeManager.RegisterIgnore("htnCompound");

@@ -1,0 +1,753 @@
+﻿- type: adminSmite
+  id: AdminSmiteSuperBonkLite
+  name: admin-smite-super-bonk-lite-name
+  description: admin-smite-super-bonk-lite-description
+  icon:
+    sprite: Structures/Furniture/Tables/glass.rsi
+    state: full
+  operations:
+  - !type:AddComponentsOperation
+    components:
+    - type: SuperBonk
+      stopWhenDead: true
+
+- type: adminSmite
+  id: AdminSmiteSuperBonk
+  name: admin-smite-super-bonk-name
+  description: admin-smite-super-bonk-description
+  icon:
+    sprite: Structures/Furniture/Tables/generic.rsi
+    state: full
+  operations:
+  - !type:AddComponentsOperation
+    components:
+    - type: SuperBonk
+      stopWhenDead: false
+
+- type: adminSmite
+  id: AdminSmiteNyanify
+  name: admin-smite-nyanify-name
+  description: admin-smite-nyanify-description
+  icon:
+    sprite: Clothing/Head/Hats/catears.rsi
+    state: icon
+  whitelist:
+    components:
+    - Inventory
+  operations:
+  - !type:SetEquipmentOperation
+    unremoveable: true
+    equipment:
+      head: ClothingHeadHatCatEars
+
+- type: adminSmite
+  id: AdminSmiteMaid
+  name: admin-smite-maid-name
+  description: admin-smite-maid-description
+  icon:
+    sprite: Clothing/Uniforms/Jumpskirts/Service/janimaid.rsi
+    state: icon
+  whitelist:
+    components:
+    - Inventory
+  operations:
+  - !type:SetEquipmentOperation
+    startingGear: JanitorMaidGear
+    unremoveable: true
+  - !type:EntityEffectsOperation
+    effects:
+    - !type:ModifyStatusEffect
+      effectProto: StatusEffectClumsyMaid
+      time: null
+      type: Set
+
+- type: adminSmite
+  id: AdminSmiteExplode
+  name: admin-smite-explode-name
+  description: admin-smite-explode-description
+  icon: Interface/VerbIcons/smite.svg.192dpi.png
+  operations:
+  - !type:AddComponentsOperation
+    replaceExisting: true
+    components:
+    - type: Explosive
+      explosionType: Default
+      totalIntensity: 800
+      intensitySlope: 800
+      maxIntensity: 800
+      maxTileBreak: 0
+      canCreateVacuum: false
+  - !type:EntityEffectsOperation
+    effects:
+    - !type:Explode
+      delete: false
+
+- type: adminSmite
+  id: AdminSmiteElectrocute
+  name: admin-smite-electrocute-name
+  description: admin-smite-electrocute-description
+  icon:
+    sprite: Clothing/Hands/Gloves/Color/yellow.rsi
+    state: icon
+  whitelist:
+    requireAll: true
+    components:
+    - Damageable
+    - MobState
+  operations:
+  - !type:EntityEffectsOperation
+    effects:
+    - !type:Electrocute
+      shockDamage: 100
+      electrocuteTime: 30
+      refresh: true
+      bypassInsulation: true
+
+- type: adminSmite
+  id: AdminSmiteZoomIn
+  name: admin-smite-zoom-in-name
+  description: admin-smite-zoom-in-description
+  icon: Interface/AdminActions/zoom.png
+  operations:
+  - !type:ScaleEyeZoomOperation
+    factor: 0.2
+
+# BROKEN: Negative eye zoom crashes viewport rendering.
+#- type: adminSmite
+#  id: AdminSmiteFlipEye
+#  name: admin-smite-flip-eye-name
+#  description: admin-smite-flip-eye-description
+#  icon: Interface/AdminActions/flip.png
+#  operations:
+#  - !type:ScaleEyeZoomOperation
+#    factor: -1
+
+- type: adminSmite
+  id: AdminSmiteSuperSpeed
+  name: admin-smite-super-speed-name
+  description: admin-smite-super-speed-description
+  icon: Interface/AdminActions/super_speed.png
+  operations:
+  - !type:AddComponentsOperation
+    replaceExisting: true
+    components:
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 400
+      baseSprintSpeed: 8000
+      baseAcceleration: 40
+  - !type:PopupOperation
+    message: admin-smite-super-speed-prompt
+    recipients: Target
+    location: Entity
+    type: LargeCaution
+
+- type: adminSmite
+  id: AdminSmiteSetAlight
+  name: admin-smite-set-alight-name
+  description: admin-smite-set-alight-description
+  icon: Interface/Alerts/Fire/fire.png
+  whitelist:
+    components:
+    - Flammable
+  operations:
+  - !type:EntityEffectsOperation
+    effects:
+    - !type:Flammable
+      multiplier: 1000
+    - !type:Ignite
+  - !type:PopupOperation
+    message: admin-smite-set-alight-self
+    recipients: Target
+    location: Entity
+    type: LargeCaution
+  - !type:PopupOperation
+    message: admin-smite-set-alight-others
+    recipients: PvsExceptTarget
+    location: Coordinates
+    type: MediumCaution
+
+- type: adminSmite
+  id: AdminSmiteOmniAccent
+  name: admin-smite-omni-accent-name
+  description: admin-smite-omni-accent-description
+  icon:
+    sprite: Interface/Actions/voice-mask.rsi
+    state: icon
+  operations:
+  - !type:AddComponentsOperation
+    components:
+    - type: BarkAccent
+    - type: BleatingAccent
+    - type: FrenchAccent
+    - type: GermanAccent
+    - type: LizardAccent
+    - type: MobsterAccent
+    - type: MothAccent
+    - type: OwOAccent
+    - type: SkeletonAccent
+    - type: SouthernAccent
+    - type: SpanishAccent
+    - type: StutteringAccent
+
+- type: adminSmite
+  id: AdminSmiteMakeStinky
+  name: admin-smite-make-stinky-name
+  description: admin-smite-make-stinky-description
+  icon:
+    sprite: Clothing/Mask/gas.rsi
+    state: icon
+  operations:
+  - !type:AddComponentsOperation
+    replaceExisting: true
+    components:
+    - type: GasMiner
+      spawnGas: Ammonia
+      spawnAmount: 20
+      showExamineText: false
+    - type: AtmosDevice
+      requireAnchored: false
+
+- type: adminSmite
+  id: AdminSmiteKillSign
+  name: admin-smite-kill-sign-name
+  description: admin-smite-kill-sign-description
+  icon:
+    sprite: Objects/Misc/killsign.rsi
+    state: icon
+  whitelist:
+    components:
+    - Inventory
+  operations:
+  - !type:AddComponentsOperation
+    replaceExisting: true
+    components:
+    - type: KillSign
+      hideFromOwner: false
+
+- type: adminSmite
+  id: AdminSmiteHiddenKillSign
+  name: admin-smite-kill-sign-hidden-name
+  description: admin-smite-kill-sign-hidden-description
+  icon:
+    sprite: Objects/Misc/killsign.rsi
+    state: icon-hidden
+  whitelist:
+    components:
+    - Inventory
+  operations:
+  - !type:AddComponentsOperation
+    replaceExisting: true
+    components:
+    - type: KillSign
+      hideFromOwner: true
+
+- type: adminSmite
+  id: AdminSmiteRemoveGravity
+  name: admin-smite-remove-gravity-name
+  description: admin-smite-remove-gravity-description
+  icon:
+    sprite: Structures/Machines/gravity_generator.rsi
+    state: off
+  operations:
+  - !type:AddComponentsOperation
+    replaceExisting: true
+    components:
+    - type: MovementIgnoreGravity
+      weightless: true
+    - type: GravityAffected
+      weightless: true
+
+# BROKEN: Setting an input mover's body type to Dynamic causes a movement assertion.
+#- type: adminSmite
+#  id: AdminSmitePinball
+#  name: admin-smite-pinball-name
+#  description: admin-smite-pinball-description
+#  icon:
+#    sprite: Objects/Fun/Balls/basketball.rsi
+#    state: icon
+#  whitelist:
+#    requireAll: true
+#    components:
+#    - Physics
+#    - Fixtures
+#  operations:
+#  - !type:PinballOperation
+
+# BROKEN: Setting an input mover's body type to Dynamic causes a movement assertion.
+#- type: adminSmite
+#  id: AdminSmiteYeet
+#  name: admin-smite-yeet-name
+#  description: admin-smite-yeet-description
+#  icon: Interface/VerbIcons/eject.svg.192dpi.png
+#  whitelist:
+#    requireAll: true
+#    components:
+#    - Physics
+#    - Fixtures
+#  operations:
+#  - !type:YeetOperation
+
+- type: adminSmite
+  id: AdminSmiteSuperSlip
+  name: admin-smite-super-slip-name
+  description: admin-smite-super-slip-description
+  icon:
+    sprite: Objects/Specific/Janitorial/soap.rsi
+    state: omega-4
+  operations:
+  - !type:SuperSlipOperation
+
+- type: adminSmite
+  id: AdminSmiteSiliconLawBound
+  name: admin-smite-silicon-laws-bound-name
+  description: admin-smite-silicon-laws-bound-description
+  icon:
+    sprite: Interface/Actions/actions_borg.rsi
+    state: state-laws
+  operations:
+  - !type:AddComponentsOperation
+    replaceExisting: true
+    components:
+    - type: SiliconLawProvider
+      laws: Crewsimov
+  - !type:AddUserInterfacesOperation
+    interfaces:
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+  - !type:SiliconLawBoundOperation
+  - !type:AddActionOperation
+    action: ActionViewLaws
+  - !type:AddMindRoleOperation
+    role: MindRoleSiliconBrain
+  - !type:PopupOperation
+    message: admin-smite-silicon-laws-bound-self
+    recipients: Target
+    location: Entity
+    type: LargeCaution
+
+- type: adminSmite
+  id: AdminSmiteChessDimension
+  name: admin-smite-chess-dimension-name
+  description: admin-smite-chess-dimension-description
+  icon:
+    sprite: Objects/Fun/Tabletop/chessboard.rsi
+    state: chessboard
+  operations:
+  - !type:SetGodmodeOperation
+    enabled: true
+  - !type:AddComponentsOperation
+    components:
+    - type: TabletopDraggable
+  - !type:PopupOperation
+    message: admin-smite-chess-self
+    recipients: Target
+    location: Entity
+    type: LargeCaution
+  - !type:PopupOperation
+    message: admin-smite-chess-others
+    recipients: PvsExceptTarget
+    location: Coordinates
+    type: MediumCaution
+  - !type:TabletopDimensionOperation
+    prototype: ChessBoard
+
+- type: adminSmite
+  id: AdminSmiteLockerStuff
+  name: admin-smite-locker-stuff-name
+  description: admin-smite-locker-stuff-description
+  icon:
+    sprite: Structures/Storage/closet.rsi
+    state: generic
+  operations:
+  - !type:StuffIntoLockerOperation
+    prototype: ClosetMaintenance
+
+- type: adminSmite
+  id: AdminSmiteHomingRod
+  name: admin-smite-homing-rod-name
+  description: admin-smite-homing-rod-description
+  icon:
+    sprite: Objects/Specific/Security/target.rsi
+    state: target_s
+  operations:
+  - !type:HomingRodOperation
+    prototype: ImmovableRodKeepTilesStill
+    distance: 350
+    speed: 25
+
+- type: adminSmite
+  id: AdminSmiteSlowHomingRod
+  name: admin-smite-homing-rod-slow-name
+  description: admin-smite-homing-rod-slow-description
+  icon:
+    sprite: Objects/Specific/Security/target.rsi
+    state: target_c
+  operations:
+  - !type:HomingRodOperation
+    prototype: ImmovableRodKeepTilesStill
+    distance: 200
+    speed: 5
+    matchTargetSprintSpeed: true
+
+- type: adminSmite
+  id: AdminSmiteCreamPie
+  name: admin-smite-creampie-name
+  description: admin-smite-creampie-description
+  icon:
+    sprite: Objects/Consumable/Food/Baked/pie.rsi
+    state: plain-slice
+  whitelist:
+    components:
+    - CreamPied
+  operations:
+  - !type:CreamPieOperation
+
+- type: adminSmite
+  id: AdminSmiteDust
+  name: admin-smite-dust-name
+  description: admin-smite-dust-description
+  icon:
+    sprite: Objects/Materials/materials.rsi
+    state: ash
+  operations:
+  - !type:PopupOperation
+    message: admin-smite-turned-ash-other
+    recipients: Pvs
+    location: Entity
+    type: LargeCaution
+  - !type:AddComponentsOperation
+    replaceExisting: true
+    components:
+    - type: SpawnOnDespawn
+      prototype: Ash
+    - type: TimedDespawn
+      lifetime: 0
+
+- type: adminSmite
+  id: AdminSmiteGhostKick
+  name: admin-smite-ghostkick-name
+  description: admin-smite-ghostkick-description
+  icon: Interface/gavel.svg.192dpi.png
+  whitelist:
+    components:
+    - Actor
+  operations:
+  - !type:GhostKickOperation
+    reason: admin-smite-ghostkick-reason
+
+- type: adminSmite
+  id: AdminSmiteRunWalkSwap
+  name: admin-smite-run-walk-swap-name
+  description: admin-smite-run-walk-swap-description
+  icon: Interface/AdminActions/run-walk-swap.png
+  operations:
+  - !type:SwapMovementSpeedsOperation
+  - !type:PopupOperation
+    message: admin-smite-run-walk-swap-prompt
+    recipients: Target
+    location: Entity
+    type: LargeCaution
+
+- type: adminSmite
+  id: AdminSmiteRemoveBlood
+  name: admin-smite-remove-blood-name
+  description: admin-smite-remove-blood-description
+  icon:
+    sprite: Fluids/tomato_splat.rsi
+    state: puddle-1
+  whitelist:
+    components:
+    - Bloodstream
+  operations:
+  - !type:SpillBloodstreamOperation
+  - !type:PopupOperation
+    message: admin-smite-remove-blood-self
+    recipients: Target
+    location: Entity
+    type: LargeCaution
+  - !type:PopupOperation
+    message: admin-smite-remove-blood-others
+    recipients: PvsExceptTarget
+    location: Coordinates
+    type: MediumCaution
+
+- type: adminSmite
+  id: AdminSmiteBuffering
+  name: admin-smite-buffering-name
+  description: admin-smite-buffering-description
+  icon: Interface/Misc/buffering_smite_icon.png
+  operations:
+  - !type:AddComponentsOperation
+    components:
+    - type: Buffering
+
+- type: adminSmite
+  id: AdminSmiteCluwne
+  name: admin-smite-cluwne-name
+  description: admin-smite-cluwne-description
+  icon:
+    sprite: Clothing/Mask/cluwne.rsi
+    state: icon
+  whitelist:
+    components:
+    - Inventory
+  operations:
+  - !type:AddComponentsOperation
+    components:
+    - type: Cluwne
+
+- type: adminSmite
+  id: AdminSmiteAngerPointingArrows
+  name: admin-smite-anger-pointing-arrows-name
+  description: admin-smite-anger-pointing-arrows-description
+  icon:
+    sprite: Interface/Misc/pointing.rsi
+    state: pointing
+  operations:
+  - !type:AddComponentsOperation
+    components:
+    - type: PointingArrowAngering
+
+- type: adminSmite
+  id: AdminSmiteHeadstand
+  name: admin-smite-headstand-name
+  description: admin-smite-headstand-description
+  icon: Interface/VerbIcons/refresh.svg.192dpi.png
+  operations:
+  - !type:AddComponentsOperation
+    components:
+    - type: Headstand
+
+- type: adminSmite
+  id: AdminSmiteSpeakBackwards
+  name: admin-smite-speak-backwards-name
+  description: admin-smite-speak-backwards-description
+  icon: Interface/AdminActions/help-backwards.png
+  operations:
+  - !type:AddComponentsOperation
+    components:
+    - type: BackwardsAccent
+
+- type: adminSmite
+  id: AdminSmiteDisarmProne
+  name: admin-smite-disarm-prone-name
+  description: admin-smite-disarm-prone-description
+  icon: Interface/Actions/disarm.png
+  operations:
+  - !type:AddComponentsOperation
+    components:
+    - type: DisarmProne
+
+- type: adminSmite
+  id: AdminSmiteCrawler
+  name: admin-smite-crawler-name
+  description: admin-smite-crawler-description
+  icon:
+    sprite: Mobs/Animals/snake.rsi
+    state: icon
+  operations:
+  - !type:AddComponentsOperation
+    components:
+    - type: Worm
+
+- type: adminSmite
+  id: AdminSmiteMonkey
+  name: admin-smite-monkeyify-name
+  description: admin-smite-monkeyify-description
+  icon:
+    sprite: Mobs/Animals/monkey.rsi
+    state: monkey
+  operations:
+  - !type:PolymorphOperation
+    prototype: AdminMonkeySmite
+
+- type: adminSmite
+  id: AdminSmiteGarbageCan
+  name: admin-smite-garbage-can-name
+  description: admin-smite-garbage-can-description
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: disposal
+  operations:
+  - !type:PolymorphOperation
+    prototype: AdminDisposalsSmite
+
+- type: adminSmite
+  id: AdminSmiteBread
+  name: admin-smite-become-bread-name
+  description: admin-smite-become-bread-description
+  icon:
+    sprite: Objects/Consumable/Food/Baked/bread.rsi
+    state: plain
+  operations:
+  - !type:PolymorphOperation
+    prototype: AdminBreadSmite
+
+- type: adminSmite
+  id: AdminSmiteMouse
+  name: admin-smite-become-mouse-name
+  description: admin-smite-become-mouse-description
+  icon:
+    sprite: Mobs/Animals/mouse.rsi
+    state: icon-0
+  operations:
+  - !type:PolymorphOperation
+    prototype: AdminMouseSmite
+
+- type: adminSmite
+  id: AdminSmiteInstrument
+  name: admin-smite-become-instrument-name
+  description: admin-smite-become-instrument-description
+  icon:
+    sprite: Objects/Fun/Instruments/h_synthesizer.rsi
+    state: supersynth
+  operations:
+  - !type:PolymorphOperation
+    prototype: AdminInstrumentSmite
+
+- type: adminSmite
+  id: AdminSmiteReptilian
+  name: admin-smite-reptilian-species-swap-name
+  description: admin-smite-reptilian-species-swap-description
+  icon:
+    sprite: Objects/Fun/Plushies/lizard.rsi
+    state: icon
+  operations:
+  - !type:PolymorphOperation
+    prototype: AdminLizardSmite
+
+- type: adminSmite
+  id: AdminSmiteVulpkanin
+  name: admin-smite-vulpkanin-species-swap-name
+  description: admin-smite-vulpkanin-species-swap-description
+  icon:
+    sprite: Objects/Fun/Balls/tennisball.rsi
+    state: icon
+  operations:
+  - !type:PolymorphOperation
+    prototype: AdminVulpSmite
+
+- type: adminSmite
+  id: AdminSmiteRemoveHands
+  name: admin-smite-remove-hands-name
+  description: admin-smite-remove-hands-description
+  icon: Interface/AdminActions/remove-hands.png
+  whitelist:
+    components:
+    - Body
+  operations:
+  - !type:RemoveOrgansOperation
+    categories:
+    - HandLeft
+    - HandRight
+  - !type:PopupOperation
+    message: admin-smite-remove-hands-self
+    recipients: Target
+    location: Entity
+    type: LargeCaution
+  - !type:PopupOperation
+    message: admin-smite-remove-hands-other
+    recipients: PvsExceptTarget
+    location: Coordinates
+    type: Medium
+
+- type: adminSmite
+  id: AdminSmiteRemoveHand
+  name: admin-smite-remove-hand-name
+  description: admin-smite-remove-hand-description
+  icon: Interface/AdminActions/remove-hand.png
+  whitelist:
+    components:
+    - Body
+  operations:
+  - !type:RemoveOrgansOperation
+    categories:
+    - HandLeft
+    - HandRight
+    maxCount: 1
+  - !type:PopupOperation
+    message: admin-smite-remove-hands-self
+    recipients: Target
+    location: Entity
+    type: LargeCaution
+  - !type:PopupOperation
+    message: admin-smite-remove-hands-other
+    recipients: PvsExceptTarget
+    location: Coordinates
+    type: Medium
+
+- type: adminSmite
+  id: AdminSmiteStomachRemoval
+  name: admin-smite-stomach-removal-name
+  description: admin-smite-stomach-removal-description
+  icon:
+    sprite: Mobs/Species/Human/organs.rsi
+    state: stomach
+  whitelist:
+    components:
+    - Body
+  operations:
+  - !type:RemoveOrgansOperation
+    categories:
+    - Stomach
+    delete: true
+  - !type:PopupOperation
+    message: admin-smite-stomach-removal-self
+    recipients: Target
+    location: Entity
+    type: LargeCaution
+
+- type: adminSmite
+  id: AdminSmiteLungRemoval
+  name: admin-smite-lung-removal-name
+  description: admin-smite-lung-removal-description
+  icon:
+    sprite: Mobs/Species/Human/organs.rsi
+    state: lung-r
+  whitelist:
+    components:
+    - Body
+  operations:
+  - !type:RemoveOrgansOperation
+    categories:
+    - Lungs
+    delete: true
+  - !type:PopupOperation
+    message: admin-smite-lung-removal-self
+    recipients: Target
+    location: Entity
+    type: LargeCaution
+
+- type: adminSmite
+  id: AdminSmiteVomitOrgans
+  name: admin-smite-vomit-organs-name
+  description: admin-smite-vomit-organs-description
+  icon:
+    sprite: Fluids/vomit_toxin.rsi
+    state: vomit_toxin-1
+  whitelist:
+    components:
+    - Body
+  operations:
+  - !type:EntityEffectsOperation
+    effects:
+    - !type:Vomit
+      thirstAmount: -1000
+      hungerAmount: -1000
+  - !type:RemoveOrgansOperation
+    categories:
+    - Heart
+    - Lungs
+    - Stomach
+    - Liver
+    - Kidneys
+  - !type:PopupOperation
+    message: admin-smite-vomit-organs-self
+    recipients: Target
+    location: Entity
+    type: LargeCaution
+  - !type:PopupOperation
+    message: admin-smite-vomit-organs-others
+    recipients: PvsExceptTarget
+    location: Coordinates
+    type: MediumCaution
