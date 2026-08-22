@@ -7,6 +7,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
+using Robust.Shared.Input;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.UserInterface.Systems.Alerts;
@@ -44,9 +45,12 @@ public sealed partial class AlertsUIController : UIController, IOnStateEntered<G
         SyncAlerts();
     }
 
-    private void OnAlertPressed(object? sender, ProtoId<AlertPrototype> e)
+    private void OnAlertPressed(object? sender, (ProtoId<AlertPrototype> alert, BoundKeyFunction function) e)
     {
-        _alertsSystem?.AlertClicked(e);
+        if (e.function == EngineKeyFunctions.UIClick)
+            _alertsSystem?.AlertClicked(e.alert);
+        else
+            _alertsSystem?.AlertRightClicked(e.alert);
     }
 
     private void SystemOnClearAlerts(object? sender, EventArgs e)

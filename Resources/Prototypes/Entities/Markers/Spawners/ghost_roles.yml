@@ -115,6 +115,11 @@
     rules: ghost-role-information-loneop-rules
     mindRoles:
     - MindRoleLoneops
+    ghostAlert: NukeOp
+    ghostAlertSound: &BaseGhostAlertSound
+      path: /Audio/Misc/ghost_alert.ogg
+      params:
+        volume: -5
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -169,6 +174,8 @@
     rules: ghost-role-information-space-dragon-rules
     mindRoles:
     - MindRoleDragon
+    ghostAlert: SpaceDragon
+    ghostAlertSound: *BaseGhostAlertSound
   - type: Sprite
     layers:
     - state: green
@@ -188,6 +195,8 @@
     - MindRoleNinja
     raffle:
       settings: default
+    ghostAlert: SpaceNinja
+    ghostAlertSound: *BaseGhostAlertSound
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -262,6 +271,8 @@
     rules: ghost-role-information-silicon-rules
     mindRoles:
     - MindRoleMothershipCore
+    ghostAlert: Xenoborgs
+    ghostAlertSound: *BaseGhostAlertSound
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -354,6 +365,8 @@
     - MindRoleWizard
     raffle:
       settings: default
+    ghostAlert: Wizard
+    ghostAlertSound: *BaseGhostAlertSound
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
