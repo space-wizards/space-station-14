@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Doors.Systems;
 using Content.Server.NPC.Pathfinding;
 using Content.Server.Shuttles.Components;
@@ -24,6 +25,7 @@ public sealed partial class DockingSystem : SharedDockingSystem
     [Dependency] private PathfindingSystem _pathfinding = default!;
     [Dependency] private ShuttleConsoleSystem _console = default!;
     [Dependency] private SharedJointSystem _jointSystem = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
@@ -257,11 +259,27 @@ public sealed partial class DockingSystem : SharedDockingSystem
         if (HasComp<PhysicsComponent>(gridA) &&
             HasComp<PhysicsComponent>(gridB))
         {
+            var bodyA = _physicsQuery.Comp(gridA);
+            var bodyB = _physicsQuery.Comp(gridB);
+            var gridAIsLighter = bodyA.Mass < bodyB.Mass;
+            var followerUid = gridAIsLighter ? gridA : gridB;
+            var followerBody = gridAIsLighter ? bodyA : bodyB;
+            var referenceBody = gridAIsLighter ? bodyB : bodyA;
+            var referenceUid = gridAIsLighter ? gridB : gridA;
+
+            var followerCenterWorld = Vector2.Transform(followerBody.LocalCenter, _transform.GetWorldMatrix(followerUid));
+            var followerCenterReferenceGrid =
+                Vector2.Transform(followerCenterWorld, _transform.GetInvWorldMatrix(referenceUid));
+
+            // Prevent shuttle annihilating cargo (any leftover relative momentum becomes a swing around the dock joint)
+            _physics.SetLinearVelocity(followerUid, _physics.GetLinearVelocity(referenceUid, followerCenterReferenceGrid, component: referenceBody), body: followerBody);
+            _physics.SetAngularVelocity(followerUid, referenceBody.AngularVelocity, body: followerBody);
+
             SharedJointSystem.LinearStiffness(
                 2f,
                 0.7f,
-                _physicsQuery.Comp(gridA).Mass,
-                _physicsQuery.Comp(gridB).Mass,
+                bodyA.Mass,
+                bodyB.Mass,
                 out var stiffness,
                 out var damping);
 
