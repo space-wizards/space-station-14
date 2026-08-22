@@ -539,3 +539,6 @@ entity-effect-disarm =
         [1] Disarms
         *[other] disarms
     } the entity
+
+entity-effect-guidebook-emp-reaction-effect = Triggers an electromagnetic pulse on impact.
+entity-effect-guidebook-flash-reaction-effect = Emits a blinding flash on impact.

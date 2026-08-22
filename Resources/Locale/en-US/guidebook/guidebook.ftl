@@ -9,3 +9,4 @@ guidebook-error-message = Error Message
 
 guidebook-monkey-unspin = Unspin Monkey
 guidebook-monkey-disco = Disco Monkey
+guidebook-nested-effect-description = Contains the following secondary effects:
