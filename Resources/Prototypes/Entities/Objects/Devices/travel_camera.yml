@@ -40,6 +40,7 @@
   id: BasePhotograph
   name: photograph
   components:
+  - type: Photograph
   - type: PaperLabelType
     labelType: Photograph
 
