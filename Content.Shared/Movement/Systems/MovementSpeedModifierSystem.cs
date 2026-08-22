@@ -122,6 +122,30 @@ namespace Content.Shared.Movement.Systems
             Dirty(ent);
         }
 
+        public void ChangeBaseWeightlessModifier(Entity<MovementSpeedModifierComponent?> entity, float speed)
+        {
+            if (!Resolve(entity, ref entity.Comp, false))
+                return;
+
+            entity.Comp.BaseWeightlessModifier = speed;
+            Dirty(entity);
+        }
+
+        public void ChangeBaseWeightlessFriction(Entity<MovementSpeedModifierComponent?> entity, float friction, float acceleration)
+        {
+            if (!Resolve(entity, ref entity.Comp, false))
+                return;
+
+            entity.Comp.BaseWeightlessFriction = friction;
+            entity.Comp.BaseWeightlessAcceleration = acceleration;
+            Dirty(entity);
+        }
+
+        public void ChangeBaseWeightlessFriction(Entity<MovementSpeedModifierComponent?> entity, float friction)
+        {
+            ChangeBaseWeightlessFriction(entity, friction, friction);
+        }
+
         /// <summary>
         /// Refreshes the grounded speed modifiers for an entity.
         /// </summary>
@@ -189,15 +213,31 @@ namespace Content.Shared.Movement.Systems
             Dirty(ent);
         }
 
-        public void ChangeBaseFriction(EntityUid uid, float friction, float frictionNoInput, float acceleration, MovementSpeedModifierComponent? move = null)
+        public void ChangeBaseFriction(Entity<MovementSpeedModifierComponent?> entity, float friction, float frictionNoInput, float acceleration)
         {
-            if (!Resolve(uid, ref move, false))
+            if (!Resolve(entity, ref entity.Comp, false))
                 return;
 
-            move.BaseFriction = friction;
-            move.FrictionNoInput = frictionNoInput;
-            move.BaseAcceleration = acceleration;
-            Dirty(uid, move);
+            entity.Comp.BaseFriction = friction;
+            entity.Comp.FrictionNoInput = frictionNoInput;
+            entity.Comp.BaseAcceleration = acceleration;
+            Dirty(entity);
+        }
+
+        public void ChangeBaseFriction(Entity<MovementSpeedModifierComponent?> entity, float friction, float acceleration)
+        {
+            ChangeBaseFriction(entity, friction, friction, acceleration);
+        }
+
+        public void ChangeBaseFriction(Entity<MovementSpeedModifierComponent?> entity, float friction)
+        {
+            ChangeBaseFriction(entity, friction, friction, friction);
+        }
+
+        public void ChangeAllFriction(Entity<MovementSpeedModifierComponent?> entity, float friction)
+        {
+            ChangeBaseFriction(entity, 0);
+            ChangeBaseWeightlessFriction(entity, 0);
         }
     }
 
