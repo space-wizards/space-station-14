@@ -6,7 +6,8 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Atmos;
-using Content.Shared.Ghost;
+using Content.Shared.Ghost.Components;
+using Content.Shared.Decals;
 using Content.Shared.Gravity;
 using Content.Shared.Light.Components;
 using Content.Shared.Parallax.Biomes;
@@ -591,7 +592,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     continue;
 
                 // Check if it's a valid spawn, if so then use it.
-                var enumerator = _mapSystem.GetAnchoredEntitiesEnumerator(gridUid, grid, node);
+                var enumerator = _mapSystem.GetAnchoredEntities(gridUid, grid, node);
                 enumerator.MoveNext(out var existing);
 
                 if (!forced && existing != null)
@@ -809,7 +810,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     continue;
 
                 // Don't mess with anything that's potentially anchored.
-                var anchored = _mapSystem.GetAnchoredEntitiesEnumerator(gridUid, grid, indices);
+                var anchored = _mapSystem.GetAnchoredEntities(gridUid, grid, indices);
 
                 if (anchored.MoveNext(out _) || !TryGetEntity(indices, component, (gridUid, grid), out var entPrototype))
                     continue;
@@ -829,7 +830,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         }
 
         // Decals
-        var loadedDecals = new Dictionary<uint, Vector2i>();
+        var loadedDecals = new Dictionary<DecalIndex, Vector2i>();
         component.LoadedDecals.Add(chunk, loadedDecals);
 
         for (var x = 0; x < ChunkSize; x++)
@@ -842,7 +843,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     continue;
 
                 // Don't mess with anything that's potentially anchored.
-                var anchored = _mapSystem.GetAnchoredEntitiesEnumerator(gridUid, grid, indices);
+                var anchored = _mapSystem.GetAnchoredEntities(gridUid, grid, indices);
 
                 if (anchored.MoveNext(out _) || !TryGetDecals(indices, component.Layers, seed, (gridUid, grid), out var decals))
                     continue;
@@ -956,7 +957,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     continue;
 
                 // Don't mess with anything that's potentially anchored.
-                var anchored = _mapSystem.GetAnchoredEntitiesEnumerator(gridUid, grid, indices);
+                var anchored = _mapSystem.GetAnchoredEntities(gridUid, grid, indices);
 
                 if (anchored.MoveNext(out _))
                 {

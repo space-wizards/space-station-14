@@ -30,16 +30,28 @@ public sealed partial class MovementModStatusSystem : EntitySystem
 
     public override void Initialize()
     {
+        SubscribeLocalEvent<MovementModStatusEffectComponent, StatusEffectAppliedEvent>(OnMovementModApplied);
         SubscribeLocalEvent<MovementModStatusEffectComponent, StatusEffectRemovedEvent>(OnMovementModRemoved);
         SubscribeLocalEvent<MovementModStatusEffectComponent, StatusEffectRelayedEvent<RefreshMovementSpeedModifiersEvent>>(OnRefreshRelay);
+        SubscribeLocalEvent<FrictionStatusEffectComponent, StatusEffectAppliedEvent>(OnFrictionStatusEffectApplied);
         SubscribeLocalEvent<FrictionStatusEffectComponent, StatusEffectRemovedEvent>(OnFrictionStatusEffectRemoved);
         SubscribeLocalEvent<FrictionStatusEffectComponent, StatusEffectRelayedEvent<RefreshFrictionModifiersEvent>>(OnRefreshFrictionStatus);
         SubscribeLocalEvent<FrictionStatusEffectComponent, StatusEffectRelayedEvent<TileFrictionEvent>>(OnRefreshTileFrictionStatus);
     }
 
+    private void OnMovementModApplied(Entity<MovementModStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
+    {
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(args.Target);
+    }
+
     private void OnMovementModRemoved(Entity<MovementModStatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
     {
         TryUpdateMovementStatus(args.Target, (ent, ent), 1f);
+    }
+
+    private void OnFrictionStatusEffectApplied(Entity<FrictionStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
+    {
+        _movementSpeedModifier.RefreshFrictionModifiers(args.Target);
     }
 
     private void OnFrictionStatusEffectRemoved(Entity<FrictionStatusEffectComponent> entity, ref StatusEffectRemovedEvent args)
