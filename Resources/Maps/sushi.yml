@@ -4,7 +4,7 @@ meta:
   engineVersion: 289.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/22/2026 15:24:26
+  time: 08/22/2026 15:35:07
   entityCount: 25207
 maps:
 - 1
@@ -134316,7 +134316,7 @@ entities:
       linkedPorts:
         513:
         - - Pressed
-          - Toggle
+          - Open
   - uid: 19544
     components:
     - type: Transform
@@ -134516,6 +134516,11 @@ entities:
       parent: 2
       rot: -1.5707963267948966 rad
       pos: 104.5,69.5
+    - type: DeviceLinkSource
+      linkedPorts:
+        538:
+        - - Pressed
+          - Open
   - uid: 19555
     components:
     - type: Transform
