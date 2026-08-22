@@ -1,10 +1,7 @@
-using Content.Server.Defusable.Components;
-using Content.Server.Defusable.Systems;
-using Content.Server.Doors.Systems;
 using Content.Server.Wires;
 using Content.Shared.Defusable;
-using Content.Shared.Doors;
-using Content.Shared.Doors.Components;
+using Content.Shared.Defusable.Components;
+using Content.Shared.Defusable.Systems;
 using Content.Shared.Wires;
 
 namespace Content.Server.Defusable.WireActions;
@@ -24,16 +21,16 @@ public sealed partial class BoomWireAction : ComponentWireAction<DefusableCompon
 
     public override bool Cut(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        return EntityManager.System<DefusableSystem>().BoomWireCut(user, wire, comp);
+        return EntityManager.System<DefusableSystem>().BoomWireCut(user, (wire.Owner, comp));
     }
 
     public override bool Mend(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        return EntityManager.System<DefusableSystem>().BoomWireMend(user, wire, comp);
+        return EntityManager.System<DefusableSystem>().BoomWireMend(user, (wire.Owner, comp));
     }
 
     public override void Pulse(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        EntityManager.System<DefusableSystem>().BoomWirePulse(user, wire, comp);
+        EntityManager.System<DefusableSystem>().BoomWirePulse(user, (wire.Owner, comp));
     }
 }
