@@ -269,38 +269,33 @@ namespace Content.Server.Ghost
 
         private void OnGhostWarpsRequest(GhostWarpsRequestEvent msg, EntitySessionEventArgs args)
         {
-            if (!CanGhostWarp(args.SenderSession, out var entity))
+            if (!CanGhostWarp(args.SenderSession, out var player))
             {
                 Log.Warning($"User {args.SenderSession.Name} sent a {nameof(GhostWarpsRequestEvent)} without being a ghost.");
                 return;
             }
 
-            var response = new GhostWarpsResponseEvent(GetPlayerWarps(entity).Concat(GetLocationWarps()).ToList());
+            var response = new GhostWarpsResponseEvent(GetPlayerWarps(player).Concat(GetLocationWarps()).ToList());
             RaiseNetworkEvent(response, args.SenderSession.Channel);
-        }
-
-        public void GhostWarpRequest(ICommonSession player, NetEntity target)
-        {
-            if (!CanGhostWarp(player, out var attached))
-            {
-                Log.Warning($"User {player.Name} tried to warp to {target} without being a ghost.");
-                return;
-            }
-
-            var realTarget = GetEntity(target);
-
-            if (!Exists(realTarget))
-            {
-                Log.Warning($"User {player.Name} tried to warp to an invalid entity id: {target}");
-                return;
-            }
-
-            WarpTo(attached, realTarget);
         }
 
         private void OnGhostWarpToTargetRequest(GhostWarpToTargetRequestEvent msg, EntitySessionEventArgs args)
         {
-            GhostWarpRequest(args.SenderSession, msg.Target);
+            if (!CanGhostWarp(args.SenderSession, out var player))
+            {
+                Log.Warning($"User {args.SenderSession.Name} tried to warp to {msg.Target} without being a ghost.");
+                return;
+            }
+
+            var target = GetEntity(msg.Target);
+
+            if (!Exists(target))
+            {
+                Log.Warning($"User {args.SenderSession.Name} tried to warp to an invalid entity id: {msg.Target}");
+                return;
+            }
+
+            WarpTo(player, target);
         }
 
         /// <summary>
@@ -308,7 +303,7 @@ namespace Content.Server.Ghost
         /// </summary>
         private void OnGhostnadoRequest(GhostnadoRequestEvent msg, EntitySessionEventArgs args)
         {
-            if (!CanGhostWarp(args.SenderSession, out var uid))
+            if (!CanGhostWarp(args.SenderSession, out var player))
             {
                 Log.Warning($"User {args.SenderSession.Name} tried to ghostnado without being a ghost.");
                 return;
@@ -318,25 +313,24 @@ namespace Content.Server.Ghost
                 return;
 
             // If there is a ghostnado happening you almost definitely wanna join it, so we automatically follow instead of just warping.
-            _followerSystem.StartFollowingEntity(uid, target);
+            _followerSystem.StartFollowingEntity(player, target);
         }
-
         /// <summary>
         /// Request to warp to a random player with at least one ghost follower.
         /// </summary>
         private void OnWarpToRandomFollowedRequest(WarpToRandomFollowedRequestEvent msg, EntitySessionEventArgs args)
         {
-            if (!CanGhostWarp(args.SenderSession, out var uid))
+            if (!CanGhostWarp(args.SenderSession, out var player))
             {
                 Log.Warning($"User {args.SenderSession.Name} tried to warp to a random player with at least one ghost follower without being a ghost.");
                 return;
             }
 
-            var following = _followerQuery.CompOrNull(uid)?.Following;
+            var following = _followerQuery.CompOrNull(player)?.Following;
             if (_followerSystem.GetRandomGhostFollowed(except:following) is not {} target)
                 return;
 
-            _followerSystem.StartFollowingEntity(uid, target);
+            _followerSystem.StartFollowingEntity(player, target);
         }
 
         /// <summary>
@@ -344,13 +338,13 @@ namespace Content.Server.Ghost
         /// </summary>
         private void OnWarpToRandomRequest(WarpToRandomRequestEvent msg, EntitySessionEventArgs args)
         {
-            if (!CanGhostWarp(args.SenderSession, out var uid))
+            if (!CanGhostWarp(args.SenderSession, out var player))
             {
                 Log.Warning($"User {args.SenderSession.Name} tried to warp to a random player without being a ghost.");
                 return;
             }
 
-            var following = _followerQuery.CompOrNull(uid)?.Following;
+            var following = _followerQuery.CompOrNull(player)?.Following;
             // select player warps cuz no one wants to warp to places.
             if (GetPlayerWarps(following).ToArray() is not {} warps)
                 return;
@@ -358,10 +352,9 @@ namespace Content.Server.Ghost
                 return;
             var warp = _random.Pick(warps);
 
-            var realTarget = GetEntity(warp.Entity);
-            _followerSystem.StartFollowingEntity(uid, realTarget);
+            var target = GetEntity(warp.Entity);
+            _followerSystem.StartFollowingEntity(player, target);
         }
-
 
         private void WarpTo(EntityUid uid, EntityUid target)
         {

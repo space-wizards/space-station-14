@@ -1,3 +1,4 @@
+using Content.Client.UserInterface.RichText;
 using Content.Client.UserInterface.Systems.Chat.Controls;
 using Content.Shared.Chat;
 using Content.Shared.Input;
@@ -17,7 +18,7 @@ namespace Content.Client.UserInterface.Systems.Chat.Widgets;
 
 [GenerateTypedNameReferences]
 [Virtual]
-public partial class ChatBox : UIWidget
+public partial class ChatBox : UIWidget, IEntityLinkClickHandler
 {
     [Dependency] private IEntityManager _entManager = default!;
     [Dependency] private ILogManager _log = default!;
@@ -155,6 +156,11 @@ public partial class ChatBox : UIWidget
             return;
 
         ChatInput.ChannelSelector.Select(toSelect);
+    }
+
+    public void HandleClick(NetEntity netEntity)
+    {
+        _entManager.RaisePredictiveEvent(new ClickMessageSenderRequestEvent(netEntity));
     }
 
     private void OnInputKeyBindDown(GUIBoundKeyEventArgs args)
