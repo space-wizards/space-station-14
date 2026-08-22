@@ -2,109 +2,89 @@
     xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
     Title="{Loc 'microwave-menu-title'}"
-    MinWidth="512"
-    MinSize="512 256">
+    MinSize="600 350"
+    Resizable="False">
     <BoxContainer Orientation="Vertical">
-        <BoxContainer Orientation="Horizontal"  >
-            <PanelContainer
-                Name="IngredientsPanel"
-                Access="Public"
-                MinSize="300 128"
-                Margin="5 5">
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
-                </PanelContainer.PanelOverride>
-                <ItemList
-                    Name="IngredientsList"
-                    Access="Public"
-                    Margin="5 5"
-                    VerticalExpand="True"
-                    HorizontalExpand="True"
-                    StyleClasses="transparentBackgroundItemList"
-                    SelectMode="Button"
-                    SizeFlagsStretchRatio="3"
-                    ItemSeparation="5"
-                    MinSize="100 128">
-                    <!-- Ingredients are added here by code -->
-                </ItemList>
-            </PanelContainer>
-            <BoxContainer
-                Orientation="Vertical"
-                MinWidth="170"
-                Margin="10 10"
-                VerticalExpand="True"
-                HorizontalExpand="True">
-                <PanelContainer
-                    VerticalExpand="True"
-                    HorizontalExpand="True">
-                    <PanelContainer
-                        VerticalExpand="True"
-                        ModulateSelfOverride="#FF0000"
-                        MinSize="100 128">
-                        <BoxContainer Orientation="Vertical">
-                            <Label
-                                Name="CookTimeInfoLabel"
-                                Access="Public"
-                                Align="Center"
-                                Modulate="#FFFFFF"
-                                VAlign="Center" />
-                            <BoxContainer  Orientation="Vertical">
-                                <Button
-                                    Name="InstantCookButton"
-                                    Access="Public"
-                                    Text="{Loc 'microwave-menu-instant-button'}"
-                                    StyleClasses="OpenLeft"
-                                    ToggleMode="True"
-                                    Margin="0 0 2 0"
-                                    TextAlign="Center" />
-                                <GridContainer
-                                    Name="CookTimeButtonVbox"
-                                    HSeparationOverride="1"
-                                    VSeparationOverride="1"
-                                    HorizontalExpand="True"
-                                    Columns="3"
-                                    Margin="0"
-                                    Access="Public">
-                                    <!-- Cook time buttons are added here by code -->
+        <BoxContainer Orientation="Horizontal" VerticalExpand="True" Margin="5">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="1.35" Margin="0 0 5 0">
+                <controls:StripeBack>
+                    <Label Text="{Loc 'microwave-menu-ingredients'}" StyleClasses="LabelHeading" HorizontalAlignment="Center" Margin="10 2" />
+                </controls:StripeBack>
+                <PanelContainer StyleClasses="PanelInsetDeep" Margin="0 0 0 5" VerticalExpand="True">
+                    <PanelContainer Name="IngredientsPanel">
+                        <PanelContainer Name="IngredientsBusyBackground" Visible="False" MouseFilter="Ignore">
+                            <PanelContainer.PanelOverride>
+                                <gfx:StyleBoxFlat BackgroundColor="#947300" />
+                            </PanelContainer.PanelOverride>
+                        </PanelContainer>
+                        <ScrollContainer Margin="5">
+                            <BoxContainer HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalExpand="True" VerticalExpand="True">
+                                <GridContainer Name="IngredientsGrid" Columns="4" HSeparationOverride="5" VSeparationOverride="5">
+                                    <!-- Ingredients are added here by code -->
                                 </GridContainer>
-                                <BoxContainer
-                                    Orientation="Vertical"
-                                    Align="Center"
-                                    SizeFlagsStretchRatio="3">
-                                    <Control MinSize="0 15" />
-                                    <Button
-                                        Name="StartButton"
-                                        Access="Public"
-                                        Text="{Loc 'microwave-menu-start-button'}"
-                                        StyleClasses="positive"
-                                        TextAlign="Center" />
-                                    <Button
-                                        Name="EjectButton"
-                                        Access="Public"
-                                        Text="{Loc 'microwave-menu-eject-all-text'}"
-                                        ToolTip="{Loc 'microwave-menu-eject-all-tooltip'}"
-                                        StyleClasses="negative"
-                                        TextAlign="Center" />
-                                </BoxContainer>
                             </BoxContainer>
-                        </BoxContainer>
+                        </ScrollContainer>
+                        <Label
+                            Name="IngredientsEmptyLabel"
+                            Text="{Loc 'microwave-menu-ingredients-empty'}"
+                            StyleClasses="LabelWeak"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Visible="False" />
                     </PanelContainer>
                 </PanelContainer>
             </BoxContainer>
+            <customControls:VSeparator Margin="0 5" />
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="5 3 0 0">
+                <PanelContainer StyleClasses="PanelDark" Margin="0 0 0 5" MinHeight="35">
+                    <Label Text="{Loc 'microwave-menu-cook-time'}" StyleClasses="LabelHeading" HorizontalAlignment="Center" Margin="10 2" />
+                </PanelContainer>
+                <PanelContainer Margin="0 0 0 5">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat
+                            BackgroundColor="#1e272a"
+                            BorderColor="#2C2F33"
+                            BorderThickness="2" />
+                    </PanelContainer.PanelOverride>
+                    <controls:SegmentDisplay
+                        Name="TimerDisplay"
+                        DigitCount="4"
+                        ShowDecimalPoint="True"
+                        DecimalPosition="2"
+                        MaxHeight="54"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Margin="4 2" />
+                </PanelContainer>
+                <PanelContainer StyleClasses="PanelInsetDark" Margin="0 0 0 5">
+                    <BoxContainer Orientation="Vertical" Margin="10 5">
+                        <Button Name="InstantCookButton" Text="{Loc 'microwave-menu-instant-button'}" StyleClasses="OpenLeft" ToggleMode="True" Margin="0 0 2 0" TextAlign="Center" />
+                        <GridContainer Name="CookTimeButtonGrid" HSeparationOverride="1" VSeparationOverride="1" Columns="3">
+                            <!-- Cook time buttons are added here by code -->
+                        </GridContainer>
+                    </BoxContainer>
+                </PanelContainer>
+                <PanelContainer StyleClasses="PanelInsetDark" Margin="0 0 0 5">
+                    <BoxContainer Orientation="Vertical" Margin="15 9" VerticalAlignment="Center">
+                        <Button Name="StartButton" Text="{Loc 'microwave-menu-start-button'}" StyleClasses="positive" TextAlign="Center" />
+                        <Button Name="EjectButton" Text="{Loc 'microwave-menu-eject-all-text'}" ToolTip="{Loc 'microwave-menu-eject-all-tooltip'}" StyleClasses="negative" TextAlign="Center" />
+                    </BoxContainer>
+                </PanelContainer>
+            </BoxContainer>
         </BoxContainer>
-         <!-- Footer -->
-        <BoxContainer Orientation="Vertical">
-            <PanelContainer StyleClasses="LowDivider" />
+        <!-- Footer -->
+        <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom">
+            <PanelContainer StyleClasses="LowDivider" Margin="0 5 0 0" />
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
-                <Label Text="{Loc 'microwave-menu-footer-flavor-left'}" StyleClasses="WindowFooterText" />
-                <Label Text="{Loc 'microwave-menu-footer-flavor-right'}" StyleClasses="WindowFooterText"
-                       HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
-                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered" VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
+                <Label Text="{Loc 'microwave-menu-footer-flavor-left'}" StyleClasses="WindowFooterText" FontColorOverride="#FF5555" />
+                <Label Text="{Loc 'microwave-menu-footer-flavor-right'}" StyleClasses="WindowFooterText" HorizontalAlignment="Right" HorizontalExpand="True" Margin="0 0 5 0" />
+                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered" VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19" />
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>
-    <PanelContainer Name="DisableCookingPanelOverlay" MouseFilter="Stop">
+    <PanelContainer Name="DisableCookingPanelOverlay" Visible="False" MouseFilter="Stop">
         <PanelContainer.PanelOverride>
             <gfx:StyleBoxFlat BackgroundColor="#1B1B1E66" />
         </PanelContainer.PanelOverride>

@@ -1,18 +1,75 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
-            xmlns:ui="clr-namespace:Content.Client.Kitchen.UI"
-            xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-            Title="{Loc grinder-menu-title}" MinSize="768 256">
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    Title="{Loc grinder-menu-title}" MinSize="768 342" Resizable="False">
     <BoxContainer Orientation="Horizontal">
-        <BoxContainer Orientation="Vertical" VerticalAlignment="Top" Margin="8" MinWidth="100">
-            <Label Text="{Loc grinder-menu-auto-label}" HorizontalAlignment="Center"/>
-            <Button Name="AutoModeButton" Text="{Loc grinder-menu-auto-button-off}" TextAlign="Center" MinSize="64 48" Margin="0 0 0 16" />
-            <Label Text="{Loc grinder-menu-manual-label}" HorizontalAlignment="Center"/>
-            <Button Name="GrindButton" Text="{Loc grinder-menu-grind-button}" TextAlign="Center" MinSize="64 48" Margin="0 0 0 16" />
-            <Button Name="JuiceButton" Text="{Loc grinder-menu-juice-button}" TextAlign="Center" MinSize="64 48" />
+        <BoxContainer Orientation="Vertical" Margin="8" MinWidth="130">
+            <BoxContainer Orientation="Vertical">
+                <PanelContainer StyleClasses="PanelDark" MinHeight="32" Margin="0 0 0 4">
+                    <Label Text="{Loc grinder-menu-auto-label}" StyleClasses="LabelHeading" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0" />
+                </PanelContainer>
+                <Button Name="AutoModeButton" Text="{Loc grinder-menu-auto-button-off}" TextAlign="Center" MinSize="64 48" />
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical" Margin="0 4 0 0">
+                <PanelContainer StyleClasses="PanelDark" MinHeight="32" Margin="0 0 0 4">
+                    <Label Text="{Loc grinder-menu-manual-label}" StyleClasses="LabelHeading" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0" />
+                </PanelContainer>
+                <Button Name="GrindButton" Text="{Loc grinder-menu-grind-button}" TextAlign="Center" MinSize="64 48" Margin="0 0 0 4" />
+                <Button Name="JuiceButton" Text="{Loc grinder-menu-juice-button}" TextAlign="Center" MinSize="64 48" />
+            </BoxContainer>
+            <Control VerticalExpand="True" />
+            <BoxContainer Orientation="Vertical" Margin="0 4 0 0">
+                <PanelContainer StyleClasses="PanelDark" MinHeight="32" Margin="0 0 0 4">
+                    <Label Text="{Loc grinder-menu-solution}" StyleClasses="LabelHeading" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0" />
+                </PanelContainer>
+                <PanelContainer StyleClasses="PanelInsetDark" MinHeight="46">
+                    <BoxContainer Orientation="Vertical" Margin="10 4" VerticalAlignment="Center">
+                        <Label Name="BeakerNameLabel" Text="???" HorizontalAlignment="Center" />
+                        <Label Name="BeakerVolumeLabel" Text="0/0" StyleClasses="LabelWeak" HorizontalAlignment="Center" />
+                    </BoxContainer>
+                </PanelContainer>
+            </BoxContainer>
         </BoxContainer>
-
-        <ui:LabelledContentBox Name="ChamberContentBox" LabelText="{Loc grinder-menu-chamber-content-box-label}" ButtonText="{Loc grinder-menu-chamber-content-box-button}" VerticalExpand="True" HorizontalExpand="True" Margin="8" SizeFlagsStretchRatio="2"/>
-
-        <ui:LabelledContentBox Name="BeakerContentBox" LabelText="{Loc grinder-menu-beaker-content-box-label}" ButtonText="{Loc grinder-menu-beaker-content-box-button}" VerticalExpand="True" HorizontalExpand="True" Margin="8" SizeFlagsStretchRatio="2"/>
+        <customControls:VSeparator Margin="0 5" />
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="8 3 8 8">
+            <controls:StripeBack>
+                <Label Text="{Loc grinder-menu-chamber-content-box-label}" StyleClasses="LabelHeading" HorizontalAlignment="Center" Margin="10 0" />
+            </controls:StripeBack>
+            <PanelContainer StyleClasses="PanelInsetDeep" Margin="0 0 0 4" VerticalExpand="True" MinWidth="254">
+                <PanelContainer>
+                    <ScrollContainer Margin="6">
+                        <BoxContainer HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalExpand="True" VerticalExpand="True">
+                            <GridContainer Name="ChamberGrid" Columns="3" HSeparationOverride="4" VSeparationOverride="4" HorizontalExpand="True" VerticalExpand="True" />
+                        </BoxContainer>
+                    </ScrollContainer>
+                    <Label
+                        Name="ChamberEmptyLabel"
+                        Text="{Loc grinder-menu-chamber-empty}"
+                        StyleClasses="LabelWeak"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Visible="False" />
+                    <PanelContainer Name="ChamberDisabledOverlay" Visible="False" MouseFilter="Stop">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#1B1B1E66" />
+                        </PanelContainer.PanelOverride>
+                    </PanelContainer>
+                </PanelContainer>
+            </PanelContainer>
+            <Button Name="ChamberEjectButton" Text="{Loc grinder-menu-chamber-content-box-button}" StyleClasses="negative" TextAlign="Center" />
+        </BoxContainer>
+        <customControls:VSeparator Margin="0 5" />
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="8 3 8 8" SizeFlagsStretchRatio="2">
+            <controls:StripeBack>
+                <Label Text="{Loc grinder-menu-beaker-content-box-label}" StyleClasses="LabelHeading" HorizontalAlignment="Center" Margin="10 0" />
+            </controls:StripeBack>
+            <PanelContainer StyleClasses="PanelInsetDeep" Margin="0 0 0 4" VerticalExpand="True">
+                <ScrollContainer Margin="4">
+                    <BoxContainer Name="BeakerContents" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" />
+                </ScrollContainer>
+            </PanelContainer>
+            <Button Name="BeakerEjectButton" Text="{Loc grinder-menu-beaker-content-box-button}" StyleClasses="negative" TextAlign="Center" />
+        </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

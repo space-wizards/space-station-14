@@ -6,7 +6,7 @@ namespace Content.Shared.Kitchen;
 /// Sent by the client if they want to toggle the grinder's auto mode.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class ReagentGrinderToggleAutoModeMessage() : BoundUserInterfaceMessage;
+public sealed class ReagentGrinderToggleAutoModeMessage : BoundUserInterfaceMessage;
 
 /// <summary>
 /// Sent by the client if they want to start the grinder.
@@ -21,7 +21,7 @@ public sealed class ReagentGrinderStartMessage(GrinderProgram program) : BoundUs
 /// Sent by the client if they want to eject all grindable entities within the grinder.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class ReagentGrinderEjectChamberAllMessage() : BoundUserInterfaceMessage;
+public sealed class ReagentGrinderEjectChamberAllMessage : BoundUserInterfaceMessage;
 
 /// <summary>
 /// Sent by the client if they want eject a single grindable entity within the grinder.
