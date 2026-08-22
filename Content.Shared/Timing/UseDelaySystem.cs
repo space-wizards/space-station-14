@@ -47,7 +47,8 @@ public sealed partial class UseDelaySystem : EntitySystem
     {
         // Set default delay length from the prototype
         // This makes it easier for simple use cases that only need a single delay
-        SetLength((ent, ent.Comp), ent.Comp.Delay, DefaultId);
+        if (ent.Comp.Delay != TimeSpan.Zero)
+            SetLength((ent, ent.Comp), ent.Comp.Delay, DefaultId);
     }
 
     private void OnUnpaused(Entity<UseDelayComponent> ent, ref EntityUnpausedEvent args)
@@ -134,9 +135,10 @@ public sealed partial class UseDelaySystem : EntitySystem
     /// </summary>
     public UseDelayInfo GetLastEndingDelay(Entity<UseDelayComponent> ent)
     {
-        if (!ent.Comp.Delays.TryGetValue(DefaultId, out var last))
+        if (ent.Comp.Delays.Count == 0)
             return new UseDelayInfo(TimeSpan.Zero);
 
+        var last = new UseDelayInfo(TimeSpan.Zero);
         foreach (var entry in ent.Comp.Delays)
         {
             if (entry.Value.EndTime > last.EndTime)
@@ -153,11 +155,15 @@ public sealed partial class UseDelaySystem : EntitySystem
     /// Otherwise reset it and return true.</param>
     public bool TryResetDelay(Entity<UseDelayComponent> ent, bool checkDelayed = false, string id = DefaultId)
     {
+        if (_gameTiming.ApplyingState)
+            return false;
+
         if (checkDelayed && IsDelayed((ent.Owner, ent.Comp), id))
             return false;
 
+        // If the delay doesn't exist, there is no delay; we treat this as true.
         if (!ent.Comp.Delays.TryGetValue(id, out var entry))
-            return false;
+            return true;
 
         var curTime = _gameTiming.CurTime;
         entry.StartTime = curTime;
@@ -168,8 +174,9 @@ public sealed partial class UseDelaySystem : EntitySystem
 
     public bool TryResetDelay(EntityUid uid, bool checkDelayed = false, UseDelayComponent? component = null, string id = DefaultId)
     {
+        // If the component doesn't exist, there is no delay; we treat this as true.
         if (!Resolve(uid, ref component, false))
-            return false;
+            return true;
 
         return TryResetDelay((uid, component), checkDelayed, id);
     }
