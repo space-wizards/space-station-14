@@ -1,0 +1,16 @@
+<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+              Orientation="Vertical">
+    <BoxContainer Orientation="Horizontal">
+        <BoxContainer HorizontalExpand="True"></BoxContainer>
+        <Label Name="ParrotRoundLabel" Text="{Loc parrot-memory-line-current-round}" Visible="False"></Label>
+        <cc:HSeparator Margin="4 0" />
+        <Button Name="ParrotMemoryPlayerButton" Text="Player" ToolTip="{Loc 'parrot-memory-line-ahelp-tooltip'}"></Button>
+        <cc:HSeparator Margin="4 0" />
+        <Label Name="ParrotMemoryDate"></Label>
+        <cc:HSeparator Margin="4 0" />
+        <Button Name="ParrotBlockButton" Access="Public" MinWidth="100"></Button>
+    </BoxContainer>
+    <RichTextLabel Name="ParrotMemoryText"></RichTextLabel>
+    <cc:VSeparator Margin="0 2"></cc:VSeparator>
+</BoxContainer>
