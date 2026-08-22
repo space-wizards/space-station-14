@@ -4,7 +4,7 @@ meta:
   engineVersion: 289.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/22/2026 15:18:56
+  time: 08/22/2026 15:22:56
   entityCount: 23948
 maps:
 - 5350
@@ -7036,7 +7036,7 @@ entities:
       pos: 34.5,45.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -57934.605
+      secondsUntilStateChange: -57955.098
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -68599,10 +68599,8 @@ entities:
     components:
     - type: Transform
       parent: 30
-      pos: -20.5,37.5
-    - type: PointLight
-      enabled: True
-    - type: ActiveEmergencyLight
+      rot: 3.141592653589793 rad
+      pos: -18.5,34.5
   - uid: 21391
     components:
     - type: Transform
