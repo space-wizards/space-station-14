@@ -88201,8 +88201,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 26263
-      configurators:
-      - invalid
   - uid: 5118
     components:
     - type: Transform
@@ -88266,8 +88264,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 26263
-      configurators:
-      - invalid
   - uid: 6508
     components:
     - type: Transform
@@ -88286,8 +88282,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 26263
-      configurators:
-      - invalid
   - uid: 6585
     components:
     - type: Transform
