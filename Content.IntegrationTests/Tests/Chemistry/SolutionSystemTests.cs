@@ -1,7 +1,9 @@
+#nullable enable
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 using Robust.Shared.GameObjects;
@@ -13,14 +15,13 @@ namespace Content.IntegrationTests.Tests.Chemistry;
 // We are adding two non-reactive solutions in these tests
 // To ensure volume(A) + volume(B) = volume(A+B)
 // reactions can change this assumption
-[TestFixture]
 [TestOf(typeof(SharedSolutionContainerSystem))]
 public sealed class SolutionSystemTests : GameTest
 {
     [TestPrototypes]
-    private const string Prototypes = @"
+    private const string Prototypes = $@"
 - type: entity
-  id: SolutionTarget
+  id: {SolutionTarget}
   components:
   - type: Solution
     id: beaker
@@ -29,63 +30,60 @@ public sealed class SolutionSystemTests : GameTest
   - type: Spillable
 
 - type: reagent
-  id: TestReagentA
+  id: {TestReagentA}
   name: reagent-name-nothing
   desc: reagent-desc-nothing
   physicalDesc: reagent-physical-desc-nothing
 
 - type: reagent
-  id: TestReagentB
+  id: {TestReagentB}
   name: reagent-name-nothing
   desc: reagent-desc-nothing
   physicalDesc: reagent-physical-desc-nothing
 
 - type: reagent
-  id: TestReagentC
+  id: {TestReagentC}
   specificHeat: 2.0
   name: reagent-name-nothing
   desc: reagent-desc-nothing
   physicalDesc: reagent-physical-desc-nothing
 
 - type: reagent
-  id: TestReagentD
+  id: {TestReagentD}
   name: reagent-name-nothing
   desc: reagent-desc-nothing
   physicalDesc: reagent-physical-desc-nothing
 
 - type: reaction
-  id: TestReagentA
+  id: {TestReagentA}
   reactants:
-    TestReagentC:
+    {TestReagentC}:
       amount: 1
-    TestReagentD:
+    {TestReagentD}:
       amount: 1
   products:
-    TestReagentA: 20
+    {TestReagentA}: 20
 ";
 
+    private const string SolutionTarget = "SolutionTarget";
     private const string TestReagentA = "TestReagentA";
     private const string TestReagentB = "TestReagentB";
     private const string TestReagentC = "TestReagentC";
     private const string TestReagentD = "TestReagentD";
-    private const string Water = "Water";
-    private const string Oil = "Oil";
+    private static readonly ProtoId<ReagentPrototype> Water = "Water";
+    private static readonly ProtoId<ReagentPrototype> Oil = "Oil";
+
+    [SidedDependency(Side.Server)] private SharedSolutionContainerSystem _solutionContainer = default!;
 
     [Test]
     public async Task TryAddTwoNonReactiveReagent()
     {
-        var pair = Pair;
-        var server = pair.Server;
-
-        var entityManager = server.ResolveDependency<IEntityManager>();
-        var protoMan = server.ResolveDependency<IPrototypeManager>();
-        var containerSystem = entityManager.System<SharedSolutionContainerSystem>();
-        var testMap = await pair.CreateTestMap();
-        var coordinates = testMap.GridCoords;
+        await Pair.CreateTestMap();
+        var coordinates = TestMap!.GridCoords;
 
         EntityUid beaker;
 
-        await server.WaitAssertion(() =>
+        await Server.WaitAssertion(() =>
         {
             var oilQuantity = FixedPoint2.New(15);
             var waterQuantity = FixedPoint2.New(10);
@@ -93,21 +91,27 @@ public sealed class SolutionSystemTests : GameTest
             var oilAdded = new Solution(Oil, oilQuantity);
             var originalWater = new Solution(Water, waterQuantity);
 
-            beaker = entityManager.SpawnEntity("SolutionTarget", coordinates);
-            Assert.That(containerSystem
-                .TryGetSolution(beaker, "beaker", out var solutionEnt, out var solution));
+            beaker = SSpawnAtPosition(SolutionTarget, coordinates);
 
-            solution.AddSolution(originalWater, protoMan);
-            Assert.That(containerSystem
+            Assert.That(_solutionContainer
+                .TryGetSolution(beaker, "beaker", out var solutionEnt, out var solution));
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(solution, Is.Not.Null);
+                Assert.That(solutionEnt, Is.Not.Null);
+            }
+
+            solution.AddSolution(originalWater, SProtoMan);
+            Assert.That(_solutionContainer
                 .TryAddSolution(solutionEnt.Value, oilAdded));
 
             var water = solution.GetTotalPrototypeQuantity(Water);
             var oil = solution.GetTotalPrototypeQuantity(Oil);
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(water, Is.EqualTo(waterQuantity));
                 Assert.That(oil, Is.EqualTo(oilQuantity));
-            });
+            }
         });
     }
 
@@ -116,19 +120,12 @@ public sealed class SolutionSystemTests : GameTest
     [Test]
     public async Task TryAddTooMuchNonReactiveReagent()
     {
-        var pair = Pair;
-        var server = pair.Server;
-
-        var testMap = await pair.CreateTestMap();
-
-        var entityManager = server.ResolveDependency<IEntityManager>();
-        var protoMan = server.ResolveDependency<IPrototypeManager>();
-        var containerSystem = entityManager.System<SharedSolutionContainerSystem>();
-        var coordinates = testMap.GridCoords;
+        await Pair.CreateTestMap();
+        var coordinates = TestMap!.GridCoords;
 
         EntityUid beaker;
 
-        await server.WaitAssertion(() =>
+        await Server.WaitAssertion(() =>
         {
             var oilQuantity = FixedPoint2.New(1500);
             var waterQuantity = FixedPoint2.New(10);
@@ -136,39 +133,46 @@ public sealed class SolutionSystemTests : GameTest
             var oilAdded = new Solution(Oil, oilQuantity);
             var originalWater = new Solution(Water, waterQuantity);
 
-            beaker = entityManager.SpawnEntity("SolutionTarget", coordinates);
-            Assert.That(containerSystem
+            beaker = SSpawnAtPosition(SolutionTarget, coordinates);
+            Assert.That(_solutionContainer
                 .TryGetSolution(beaker, "beaker", out var solutionEnt, out var solution));
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(solution, Is.Not.Null);
+                Assert.That(solutionEnt, Is.Not.Null);
+            }
 
-            solution.AddSolution(originalWater, protoMan);
-            Assert.That(containerSystem
-                .TryAddSolution(solutionEnt.Value, oilAdded), Is.False);
+            solution.AddSolution(originalWater, SProtoMan);
+            Assert.That(_solutionContainer.TryAddSolution(solutionEnt.Value, oilAdded), Is.False);
 
             var water = solution.GetTotalPrototypeQuantity(Water);
             var oil = solution.GetTotalPrototypeQuantity(Oil);
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(water, Is.EqualTo(waterQuantity));
                 Assert.That(oil, Is.EqualTo(FixedPoint2.Zero));
-            });
+            }
         });
     }
-
-    [SidedDependency(Side.Server)] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
     [Test]
     public async Task TryOverflowReaction()
     {
-        var testMap = await Pair.CreateTestMap();
+        await Pair.CreateTestMap();
 
         await Server.WaitAssertion(() =>
         {
             var reagentC = new Solution(TestReagentC, 5);
             var reagentD = new Solution(TestReagentD, 5);
 
-            var beaker = SSpawnAtPosition("SolutionTarget", testMap.GridCoords);
+            var beaker = SSpawnAtPosition(SolutionTarget, TestMap!.GridCoords);
 
             Assert.That(_solutionContainer.TryGetSolution(beaker, "beaker", out var solutionEnt, out var solution));
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(solution, Is.Not.Null);
+                Assert.That(solutionEnt, Is.Not.Null);
+            }
 
             _solutionContainer.AddSolution(solutionEnt.Value, reagentC);
             _solutionContainer.AddSolution(solutionEnt.Value, reagentD);
@@ -183,37 +187,35 @@ public sealed class SolutionSystemTests : GameTest
     [Test]
     public async Task TryMixAndOverflowTooMuchReagent()
     {
-        var pair = Pair;
-        var server = pair.Server;
-
-
-        var entityManager = server.ResolveDependency<IEntityManager>();
-        var protoMan = server.ResolveDependency<IPrototypeManager>();
-        var testMap = await pair.CreateTestMap();
-        var containerSystem = entityManager.System<SharedSolutionContainerSystem>();
-        var coordinates = testMap.GridCoords;
+        await Pair.CreateTestMap();
+        var coordinates = TestMap!.GridCoords;
 
         EntityUid beaker;
 
-        await server.WaitAssertion(() =>
+        await Server.WaitAssertion(() =>
         {
-            var ratio = 9;
-            var threshold = 20;
+            const int ratio = 9;
+            const int threshold = 20;
             var waterQuantity = FixedPoint2.New(10);
             var oilQuantity = FixedPoint2.New(ratio * waterQuantity.Int());
 
             var oilAdded = new Solution(Oil, oilQuantity);
             var originalWater = new Solution(Water, waterQuantity);
 
-            beaker = entityManager.SpawnEntity("SolutionTarget", coordinates);
-            Assert.That(containerSystem
+            beaker = SSpawnAtPosition(SolutionTarget, coordinates);
+            Assert.That(_solutionContainer
                 .TryGetSolution(beaker, "beaker", out var solutionEnt, out var solution));
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(solution, Is.Not.Null);
+                Assert.That(solutionEnt, Is.Not.Null);
+            }
 
-            solution.AddSolution(originalWater, protoMan);
-            Assert.That(containerSystem
+            solution.AddSolution(originalWater, SProtoMan);
+            Assert.That(_solutionContainer
                 .TryMixAndOverflow(solutionEnt.Value, oilAdded, threshold, out var overflowingSolution));
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(solution.Volume, Is.EqualTo(FixedPoint2.New(threshold)));
 
@@ -222,13 +224,14 @@ public sealed class SolutionSystemTests : GameTest
                 Assert.That(waterMix, Is.EqualTo(FixedPoint2.New(threshold / (ratio + 1))));
                 Assert.That(oilMix, Is.EqualTo(FixedPoint2.New(threshold / (ratio + 1) * ratio)));
 
-                Assert.That(overflowingSolution.Volume, Is.EqualTo(FixedPoint2.New(80)));
+                Assert.That(overflowingSolution, Is.Not.Null);
+                Assert.That(overflowingSolution!.Volume, Is.EqualTo(FixedPoint2.New(80)));
 
                 var waterOverflow = overflowingSolution.GetTotalPrototypeQuantity(Water);
                 var oilOverFlow = overflowingSolution.GetTotalPrototypeQuantity(Oil);
                 Assert.That(waterOverflow, Is.EqualTo(waterQuantity - waterMix));
                 Assert.That(oilOverFlow, Is.EqualTo(oilQuantity - oilMix));
-            });
+            }
         });
     }
 
@@ -236,33 +239,32 @@ public sealed class SolutionSystemTests : GameTest
     [Test]
     public async Task TryMixAndOverflowTooBigOverflow()
     {
-        var pair = Pair;
-        var server = pair.Server;
-
-        var entityManager = server.ResolveDependency<IEntityManager>();
-        var protoMan = server.ResolveDependency<IPrototypeManager>();
-        var containerSystem = entityManager.System<SharedSolutionContainerSystem>();
-        var testMap = await pair.CreateTestMap();
-        var coordinates = testMap.GridCoords;
+        await Pair.CreateTestMap();
+        var coordinates = TestMap!.GridCoords;
 
         EntityUid beaker;
 
-        await server.WaitAssertion(() =>
+        await Server.WaitAssertion(() =>
         {
-            var ratio = 9;
-            var threshold = 60;
+            const int ratio = 9;
+            const int threshold = 60;
             var waterQuantity = FixedPoint2.New(10);
             var oilQuantity = FixedPoint2.New(ratio * waterQuantity.Int());
 
             var oilAdded = new Solution(Oil, oilQuantity);
             var originalWater = new Solution(Water, waterQuantity);
 
-            beaker = entityManager.SpawnEntity("SolutionTarget", coordinates);
-            Assert.That(containerSystem
+            beaker = SSpawnAtPosition(SolutionTarget, coordinates);
+            Assert.That(_solutionContainer
                 .TryGetSolution(beaker, "beaker", out var solutionEnt, out var solution));
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(solution, Is.Not.Null);
+                Assert.That(solutionEnt, Is.Not.Null);
+            }
 
-            solution.AddSolution(originalWater, protoMan);
-            Assert.That(containerSystem
+            solution.AddSolution(originalWater, SProtoMan);
+            Assert.That(_solutionContainer
                 .TryMixAndOverflow(solutionEnt.Value, oilAdded, threshold, out _),
                 Is.False);
         });
@@ -271,36 +273,33 @@ public sealed class SolutionSystemTests : GameTest
     [Test]
     public async Task TestTemperatureCalculations()
     {
-        var pair = Pair;
-        var server = pair.Server;
-        var protoMan = server.ResolveDependency<IPrototypeManager>();
         const float temp = 100.0f;
 
         // Adding reagent with adjusts temperature
-        await server.WaitAssertion(() =>
+        await Server.WaitAssertion(() =>
         {
             var solution = new Solution(TestReagentA, FixedPoint2.New(100)) { Temperature = temp };
             Assert.That(solution.Temperature, Is.EqualTo(temp * 1));
 
-            solution.AddSolution(new Solution(TestReagentA, FixedPoint2.New(100)) { Temperature = temp * 3 }, protoMan);
+            solution.AddSolution(new Solution(TestReagentA, FixedPoint2.New(100)) { Temperature = temp * 3 }, SProtoMan);
             Assert.That(solution.Temperature, Is.EqualTo(temp * 2));
 
-            solution.AddSolution(new Solution(TestReagentB, FixedPoint2.New(100)) { Temperature = temp * 5 }, protoMan);
+            solution.AddSolution(new Solution(TestReagentB, FixedPoint2.New(100)) { Temperature = temp * 5 }, SProtoMan);
             Assert.That(solution.Temperature, Is.EqualTo(temp * 3));
         });
 
         // adding solutions combines thermal energy
-        await server.WaitAssertion(() =>
+        await Server.WaitAssertion(() =>
         {
             var solutionOne = new Solution(TestReagentA, FixedPoint2.New(100)) { Temperature = temp };
 
             var solutionTwo = new Solution(TestReagentB, FixedPoint2.New(100)) { Temperature = temp };
             solutionTwo.AddReagent(TestReagentC, FixedPoint2.New(100));
 
-            var thermalEnergyOne = solutionOne.GetHeatCapacity(protoMan) * solutionOne.Temperature;
-            var thermalEnergyTwo = solutionTwo.GetHeatCapacity(protoMan) * solutionTwo.Temperature;
-            solutionOne.AddSolution(solutionTwo, protoMan);
-            Assert.That(solutionOne.GetHeatCapacity(protoMan) * solutionOne.Temperature, Is.EqualTo(thermalEnergyOne + thermalEnergyTwo));
+            var thermalEnergyOne = solutionOne.GetHeatCapacity(SProtoMan) * solutionOne.Temperature;
+            var thermalEnergyTwo = solutionTwo.GetHeatCapacity(SProtoMan) * solutionTwo.Temperature;
+            solutionOne.AddSolution(solutionTwo, SProtoMan);
+            Assert.That(solutionOne.GetHeatCapacity(SProtoMan) * solutionOne.Temperature, Is.EqualTo(thermalEnergyOne + thermalEnergyTwo));
         });
     }
 }

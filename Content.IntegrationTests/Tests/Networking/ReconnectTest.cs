@@ -1,38 +1,22 @@
+#nullable enable
 using Content.IntegrationTests.Fixtures;
-using Robust.Client.Console;
-using Robust.Shared.Network;
 
-namespace Content.IntegrationTests.Tests.Networking
+namespace Content.IntegrationTests.Tests.Networking;
+
+public sealed class ReconnectTest : GameTest
 {
-    [TestFixture]
-    public sealed class ReconnectTest : GameTest
+    [Test]
+    public async Task Test()
     {
-        [Test]
-        public async Task Test()
-        {
-            var pair = Pair;
-            var server = pair.Server;
-            var client = pair.Client;
+        await Client.ExecuteCommand("disconnect");
 
-            var host = client.ResolveDependency<IClientConsoleHost>();
-            var netManager = client.ResolveDependency<IClientNetManager>();
+        // Run some ticks for the disconnect to complete and such.
+        await Pair.ReallyBeIdle();
 
-            await client.WaitPost(() => host.ExecuteCommand("disconnect"));
+        // Reconnect.
+        await Client.Connect(Server);
 
-            // Run some ticks for the disconnect to complete and such.
-            await pair.RunTicksSync(5);
-
-            await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
-
-            // Reconnect.
-            client.SetConnectTarget(server);
-
-            await client.WaitPost(() => netManager.ClientConnect(null, 0, null));
-
-            // Run some ticks for the handshake to complete and such.
-            await pair.RunTicksSync(10);
-
-            await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
-        }
+        // Run some ticks for the handshake to complete and such.
+        await Pair.ReallyBeIdle();
     }
 }
