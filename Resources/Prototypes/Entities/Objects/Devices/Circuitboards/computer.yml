@@ -365,6 +365,7 @@
       state: cpu_command
     - type: ComputerBoard
       prototype: ComputerComms
+    - type: ShuttleCaller
 
 - type: entity
   parent: [ BaseComputerCircuitboard, BaseSyndicateContraband ]

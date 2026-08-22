@@ -778,6 +778,11 @@
     radius: 1.5
     energy: 4.0
     color: "#3c5eb5"
+  - type: Damageable
+    damageModifierSet: StructuralMetallicStrong
+  - type: ShuttleCaller
+  - type: Injurable
+    damageContainer: StructuralInorganic
 
 - type: entity
   parent: ComputerComms
