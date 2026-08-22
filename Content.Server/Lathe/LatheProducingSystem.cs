@@ -1,4 +1,4 @@
-using Content.Server.Lathe.Components;
+using Content.Shared.Lathe;
 using Content.Shared.Power.EntitySystems;
 
 namespace Content.Server.Lathe;

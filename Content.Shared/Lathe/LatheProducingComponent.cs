@@ -1,4 +1,4 @@
-namespace Content.Server.Lathe.Components;
+namespace Content.Shared.Lathe;
 
 /// <summary>
 /// For EntityQuery to keep track of which lathes are producing

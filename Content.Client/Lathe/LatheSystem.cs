@@ -1,6 +1,7 @@
 using Robust.Client.GameObjects;
 using Content.Client.Lathe.UI;
 using Content.Client.Power;
+using Content.Client.Power.EntitySystems;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Power;
@@ -11,7 +12,6 @@ namespace Content.Client.Lathe;
 
 public sealed partial class LatheSystem : SharedLatheSystem
 {
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
 
@@ -22,7 +22,7 @@ public sealed partial class LatheSystem : SharedLatheSystem
             return;
 
         // Lathe specific stuff
-        if (_appearance.TryGetData<bool>(uid, LatheVisuals.IsRunning, out var isRunning, args.Component))
+        if (Appearance.TryGetData<bool>(uid, LatheVisuals.IsRunning, out var isRunning, args.Component))
         {
             if (_sprite.LayerMapTryGet((uid, args.Sprite), LatheVisualLayers.IsRunning, out var runningLayer, false) &&
                 component.RunningState != null &&
@@ -33,7 +33,7 @@ public sealed partial class LatheSystem : SharedLatheSystem
             }
         }
 
-        if (_appearance.TryGetData<bool>(uid, PowerDeviceVisuals.Powered, out var powered, args.Component) &&
+        if (Appearance.TryGetData<bool>(uid, PowerDeviceVisuals.Powered, out var powered, args.Component) &&
             _sprite.LayerMapTryGet((uid, args.Sprite), PowerDeviceVisualLayers.Powered, out var powerLayer, false))
         {
             _sprite.LayerSetVisible((uid, args.Sprite), powerLayer, powered);
@@ -83,6 +83,11 @@ public sealed partial class LatheSystem : SharedLatheSystem
     protected override bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component)
     {
         return true;
+    }
+
+    protected override bool IsPowered(EntityUid ent)
+    {
+        return this.IsPowered(ent, EntityManager);
     }
 }
 
