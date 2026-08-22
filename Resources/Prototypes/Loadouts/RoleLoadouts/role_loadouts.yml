@@ -509,6 +509,10 @@
 # These loadouts are used for non-crew spawns, like off-station antags and event mobs
 # They will be used without player configuration, thus they will only ever apply what is forced by MinLimit
 
+# Central Command Official
+- type: roleLoadout
+  id: JobCentralCommandOfficial # Used for the corpse spawn so that they don't get someone else's gear
+
 # gives vox a harness and breathing mask
 # nitrogen tank not included
 - type: roleLoadout

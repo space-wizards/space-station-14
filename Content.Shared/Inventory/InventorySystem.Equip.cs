@@ -48,6 +48,21 @@ public abstract partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, BeingGibbedEvent>(OnBeingGibbed);
     }
 
+    [SubscribeLocalEvent]
+    private void OnTryInsert(Entity<InventoryComponent> ent, ref ContainerIsInsertingAttemptEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        if (!ent.Comp.Containers.Contains(args.Container))
+            return;
+
+        if (CanFit(ent.AsNullable(), args.EntityUid, args.Container.ID))
+            return;
+
+        args.Cancel();
+    }
+
     private void OnEntRemoved(EntityUid uid, InventoryComponent component, EntRemovedFromContainerMessage args)
     {
         if (!TryGetSlot(uid, args.Container.ID, out var slotDef, inventory: component))
@@ -124,12 +139,43 @@ public abstract partial class InventorySystem
         TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory, force: true, checkDoafter: true, triggerHandContact: true);
     }
 
+    /// <summary>
+    /// Tries to equip an item on an entity.
+    /// </summary>
+    /// <param name="uid">The entity equipping the item.</param>
+    /// <param name="itemUid">The item being equipped.</param>
+    /// <param name="slot">The slot into which the item is being equipped.</param>
+    /// <param name="silent">Whether to show popups to the entity.</param>
+    /// <param name="force">If true, skips checks whether the item can actually be equipped. Not recommended, as this makes code unsafe in most cases.</param>
+    /// <param name="predicted">Whether to predict the equip action.</param>
+    /// <param name="inventory">The target's inventory component.</param>
+    /// <param name="clothing">The item's clothing component.</param>
+    /// <param name="checkDoafter">Whether to check if the entity has an equip delay.</param>
+    /// <param name="triggerHandContact">Whether to trigger hand contact with the entity. Always true for the gloves slot.</param>
+    /// <param name="checkActor">If true, checks whether the entity equipping the item can access and equip it.</param>
+    /// <returns>Whether the item was equipped.</returns>
     public bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false, bool predicted = false,
-        InventoryComponent? inventory = null, ClothingComponent? clothing = null, bool checkDoafter = false, bool triggerHandContact = false) =>
-        TryEquip(uid, uid, itemUid, slot, silent, force, predicted, inventory, clothing, checkDoafter, triggerHandContact);
+        InventoryComponent? inventory = null, ClothingComponent? clothing = null, bool checkDoafter = false, bool triggerHandContact = false, bool checkActor = true) =>
+        TryEquip(uid, uid, itemUid, slot, silent, force, predicted, inventory, clothing, checkDoafter, triggerHandContact, checkActor);
 
+    /// <summary>
+    /// Tries to equip an item on an entity.
+    /// </summary>
+    /// <param name="actor">The entity equipping the item.</param>
+    /// <param name="target">The entity onto which the item is equipped.</param>
+    /// <param name="itemUid">The item being equipped.</param>
+    /// <param name="slot">The slot into which the item is being equipped.</param>
+    /// <param name="silent">Whether to show popups to the entity.</param>
+    /// <param name="force">If true, skips checks whether the item can actually be equipped. Not recommended, as this makes code unsafe in most cases.</param>
+    /// <param name="predicted">Whether to predict the equip action.</param>
+    /// <param name="inventory">The target's inventory component.</param>
+    /// <param name="clothing">The item's clothing component.</param>
+    /// <param name="checkDoafter">Whether to check if the entity has an equip delay.</param>
+    /// <param name="triggerHandContact">Whether to trigger hand contact with the entity. Always true for the gloves slot.</param>
+    /// <param name="checkActor">If true, checks whether the entity equipping the item can access and equip it.</param>
+    /// <returns>Whether the item was equipped.</returns>
     public bool TryEquip(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, bool silent = false, bool force = false, bool predicted = false,
-        InventoryComponent? inventory = null, ClothingComponent? clothing = null, bool checkDoafter = false, bool triggerHandContact = false)
+        InventoryComponent? inventory = null, ClothingComponent? clothing = null, bool checkDoafter = false, bool triggerHandContact = false, bool checkActor = true)
     {
         if (!Resolve(target, ref inventory, false))
         {
@@ -149,7 +195,7 @@ public abstract partial class InventorySystem
             return false;
         }
 
-        if (!force && !CanEquip(actor, target, itemUid, slot, out var reason, slotDefinition, inventory, clothing, containerSlot: slotContainer))
+        if (!force && !CanEquip(actor, target, itemUid, slot, out var reason, slotDefinition, inventory, clothing, containerSlot: slotContainer, checkActor: checkActor))
         {
             if (!silent)
                 _popup.PopupCursor(Loc.GetString(reason), actor);
@@ -186,7 +232,7 @@ public abstract partial class InventorySystem
         RaiseLocalEvent(target, beforeEquipEvent);
 
         // actually equip the item
-        if (!_containerSystem.Insert(itemUid, slotContainer))
+        if (!_containerSystem.Insert(itemUid, slotContainer, force: force))
         {
             if (!silent)
                 _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"), actor);
@@ -232,6 +278,54 @@ public abstract partial class InventorySystem
     }
 
     /// <summary>
+    /// Checks whether an item can fit into an inventory slot.
+    /// </summary>
+    /// <param name="ent">The entity to check against.</param>
+    /// <param name="item">The item to check.</param>
+    /// <param name="slot">The slot to check.</param>
+    /// <param name="slotDefinition">The slot definition.</param>
+    /// <returns>Whether the item can fit into the slot.</returns>
+    public bool CanFit(Entity<InventoryComponent?> ent, Entity<ItemComponent?, ClothingComponent?> item, string slot, SlotDefinition? slotDefinition = null)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        if (slotDefinition == null && !TryGetSlot(ent, slot, out slotDefinition, inventory: ent.Comp))
+            return false;
+
+        if (slotDefinition.DependsOn != null)
+        {
+            if (!TryGetSlotEntity(ent, slotDefinition.DependsOn, out var slotEntity, ent.Comp))
+                return false;
+
+            if (slotDefinition.DependsOnComponents is { } componentRegistry)
+            {
+                foreach (var (_, entry) in componentRegistry)
+                {
+                    if (!HasComp(slotEntity, entry.Component.GetType()))
+                        return false;
+
+                    if (TryComp<AllowSuitStorageComponent>(slotEntity, out var comp) &&
+                        _whitelistSystem.IsWhitelistFailOrNull(comp.Whitelist, item))
+                        return false;
+                }
+            }
+        }
+
+        var fittingInPocket = slotDefinition.SlotFlags.HasFlag(SlotFlags.POCKET) &&
+            Resolve(item, ref item.Comp1, false) &&
+            _item.GetSizePrototype(item.Comp1.Size) <= _item.GetSizePrototype(PocketableItemSize);
+
+        if (!fittingInPocket && (!Resolve(item, ref item.Comp2, false) || !item.Comp2.Slots.HasFlag(slotDefinition.SlotFlags)))
+            return false;
+
+        if (!_whitelistSystem.CheckBoth(item, slotDefinition.Blacklist, slotDefinition.Whitelist))
+            return false;
+
+        return true;
+    }
+
+    /// <summary>
     /// Checks whether the entity can equip the item.
     /// </summary>
     /// <param name="uid">The entity equipping the item.</param>
@@ -244,11 +338,12 @@ public abstract partial class InventorySystem
     /// <param name="item">The item's component.</param>
     /// <param name="containerSlot">The container for the slot into which the item is being equipped.</param>
     /// <param name="assumeEmpty">If true, checks whether the entity could be inserted if the container were empty.</param>
+    /// <param name="checkActor">If true, checks whether the entity equipping the item can access and equip it.</param>
     /// <returns>Whether the item can be equipped.</returns>
     public bool CanEquip(EntityUid uid, EntityUid itemUid, string slot, [NotNullWhen(false)] out string? reason,
         SlotDefinition? slotDefinition = null, InventoryComponent? inventory = null,
-        ClothingComponent? clothing = null, ItemComponent? item = null, ContainerSlot? containerSlot = null, bool assumeEmpty = false) =>
-        CanEquip(uid, uid, itemUid, slot, out reason, slotDefinition, inventory, clothing, item, containerSlot, assumeEmpty);
+        ClothingComponent? clothing = null, ItemComponent? item = null, ContainerSlot? containerSlot = null, bool assumeEmpty = false, bool checkActor = true) =>
+        CanEquip(uid, uid, itemUid, slot, out reason, slotDefinition, inventory, clothing, item, containerSlot, assumeEmpty, checkActor);
 
     /// <summary>
     /// Checks whether the actor can equip an item on the target.
@@ -264,9 +359,10 @@ public abstract partial class InventorySystem
     /// <param name="item">The item's component.</param>
     /// <param name="containerSlot">The container for the slot into which the item is being equipped.</param>
     /// <param name="assumeEmpty">If true, checks whether the entity could be inserted if the container were empty.</param>
+    /// <param name="checkActor">If true, checks whether the entity equipping the item can access and equip it.</param>
     /// <returns>Whether the item can be equipped.</returns>
     public bool CanEquip(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, [NotNullWhen(false)] out string? reason, SlotDefinition? slotDefinition = null,
-        InventoryComponent? inventory = null, ClothingComponent? clothing = null, ItemComponent? item = null, ContainerSlot? containerSlot = null, bool assumeEmpty = false)
+        InventoryComponent? inventory = null, ClothingComponent? clothing = null, ItemComponent? item = null, ContainerSlot? containerSlot = null, bool assumeEmpty = false, bool checkActor = true)
     {
         reason = "inventory-component-can-equip-cannot";
         if (!Resolve(target, ref inventory, false))
@@ -284,55 +380,23 @@ public abstract partial class InventorySystem
             return false;
 
         DebugTools.Assert(slotDefinition.Name == slot);
-        if (slotDefinition.DependsOn != null)
-        {
-            if (!TryGetSlotEntity(target, slotDefinition.DependsOn, out EntityUid? slotEntity, inventory))
-                return false;
 
-            if (slotDefinition.DependsOnComponents is { } componentRegistry)
+        if (checkActor)
+        {
+            if (!CanAccess(actor, target, itemUid))
             {
-                foreach (var (_, entry) in componentRegistry)
-                {
-                    if (!HasComp(slotEntity, entry.Component.GetType()))
-                        return false;
-
-                    if (TryComp<AllowSuitStorageComponent>(slotEntity, out var comp) &&
-                        _whitelistSystem.IsWhitelistFailOrNull(comp.Whitelist, itemUid))
-                        return false;
-                }
+                reason = "interaction-system-user-interaction-cannot-reach";
+                return false;
             }
-        }
 
-        var fittingInPocket = slotDefinition.SlotFlags.HasFlag(SlotFlags.POCKET) &&
-                              item != null &&
-                              _item.GetSizePrototype(item.Size) <= _item.GetSizePrototype(PocketableItemSize);
-        if (clothing == null && !fittingInPocket
-            || clothing != null && !clothing.Slots.HasFlag(slotDefinition.SlotFlags) && !fittingInPocket)
-        {
-            reason = "inventory-component-can-equip-does-not-fit";
-            return false;
-        }
+            var attemptEvent = new IsEquippingAttemptEvent(actor, target, itemUid, slotDefinition);
+            RaiseLocalEvent(actor, attemptEvent, true);
 
-        if (!CanAccess(actor, target, itemUid))
-        {
-            reason = "interaction-system-user-interaction-cannot-reach";
-            return false;
-        }
-
-        if (_whitelistSystem.IsWhitelistFail(slotDefinition.Whitelist, itemUid) ||
-            _whitelistSystem.IsWhitelistPass(slotDefinition.Blacklist, itemUid))
-        {
-            reason = "inventory-component-can-equip-does-not-fit";
-            return false;
-        }
-
-        var attemptEvent = new IsEquippingAttemptEvent(actor, target, itemUid, slotDefinition);
-        RaiseLocalEvent(actor, attemptEvent, true);
-
-        if (attemptEvent.Cancelled)
-        {
-            reason = attemptEvent.Reason ?? reason;
-            return false;
+            if (attemptEvent.Cancelled)
+            {
+                reason = attemptEvent.Reason ?? reason;
+                return false;
+            }
         }
 
         var targetAttemptEvent = new IsEquippingTargetAttemptEvent(actor, target, itemUid, slotDefinition);
