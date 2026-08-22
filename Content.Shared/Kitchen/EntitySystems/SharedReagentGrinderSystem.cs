@@ -331,8 +331,9 @@ public abstract partial class SharedReagentGrinderSystem : EntitySystem
                 if (solution.Volume > beakerSolution.AvailableVolume)
                     continue;
 
-                var ev = new BeingGrindedEvent();
+                var ev = new BeingGrindedEvent(ent);
                 RaiseLocalEvent(item, ref ev);
+                _destructible.DestroyEntity(item);
             }
             _solutionContainersSystem.TryAddSolution(beakerSolutionEntity.Value, solution);
         }
