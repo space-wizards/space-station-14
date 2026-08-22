@@ -79,8 +79,8 @@
     - MedkitCombatFilled # End of first line
     - GrenadeShrapnel
     - EmpGrenade
-    belt:
     - Truncheon
+    belt:
     - Handcuffs
     - Handcuffs
     - CrowbarRed
@@ -370,23 +370,21 @@
     - GrenadeBlast
     - GrenadeBlast
     - GrenadeBlast
+    - GrenadeFlash
+    - GrenadeFlash # End of first line
+    - GrenadeEMP
+    - GrenadeEMP
+    - GrenadeEMP
     - MagazinePistol
-    - MedkitCombatFilled # End of first line
-    - GrenadeEMP
-    - GrenadeEMP
-    - GrenadeEMP
-    - GrenadeFlash
-    - GrenadeFlash
-    - GrenadeFlash
-    - MagazinePistol
-    belt:
     - Truncheon
-    - Handcuffs
+    belt:
     - Handcuffs
     - CrowbarRed
+    - EmergencyMedipen
     - WeaponPistolMk58
     - MagazinePistol
-    - EmergencyMedipen
+    - MagazinePistol
+    - MedkitCombatFilled
 
 - type: startingGear
   parent: ERTSecurityGearEVA
@@ -399,23 +397,22 @@
     - ExGrenade
     - SmokeGrenade
     - EmpGrenade
-    - HoloprojectorSecurity
     - TelescopicShield
-    - TelescopicShield
-    - TelescopicShield
-    - MedkitCombatFilled # End of first line
+    - TelescopicShield # End of first line
+    - MedkitCombatFilled
     - MagazinePistolSubMachineGunTopMounted
     - MagazinePistolSubMachineGunTopMounted
     - MagazinePistolSubMachineGunTopMounted
     - MagazinePistolSubMachineGunTopMounted
-    belt:
     - Truncheon
+    belt:
     - Handcuffs
     - Handcuffs
     - CrowbarRed
     - WeaponPistolMk58
     - MagazinePistol
     - EmergencyMedipen
+    - HoloprojectorSecurity
 
 - type: startingGear
   parent: ERTSecurityGearEVA
@@ -430,12 +427,11 @@
     - BoxShotgunSlug
     - BoxShotgunIncendiary
     - MedkitCombatFilled # End of first line
-    - SmokeGrenade
     - ExGrenade
     - CableDetStack
     - BoxDetonator
-    belt:
     - Truncheon
+    belt:
     - Handcuffs
     - Handcuffs
     - CrowbarRed
@@ -532,8 +528,8 @@
     - MedkitCombatFilled
     - ClothingEyesGlassesChemical
     - ChemistryBottleOmnizine
-    belt:
     - Truncheon
+    belt:
     - Zipties
     - CrowbarRed
     - MagazineRifle
