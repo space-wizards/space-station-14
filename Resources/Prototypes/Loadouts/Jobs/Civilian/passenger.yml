@@ -1,29 +1,9 @@
-# Greytide Time
-- type: loadoutEffectGroup
-  id: GreyTider
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobPassenger
-      time: 10h # silly reward for people who play passenger a lot
-
-# Head of Greytide (for grey mantle)
-- type: loadoutEffectGroup
-  id: MasterGrey
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobPassenger
-      time: 20h # fun mantle for the most experienced greytiders
-
 # Face
 - type: loadout
   id: PassengerFace
   effects:
   - !type:GroupLoadoutEffect
-    proto: GreyTider
+    proto: PassengerStarter
   equipment:
     mask: ClothingMaskGas
 
@@ -44,7 +24,7 @@
   id: RainbowJumpsuit
   effects:
   - !type:GroupLoadoutEffect
-    proto: GreyTider
+    proto: PassengerStarter
   equipment:
     jumpsuit: ClothingUniformColorRainbow
 
@@ -53,7 +33,7 @@
   id: RainbowJumpskirt
   effects:
   - !type:GroupLoadoutEffect
-    proto: GreyTider
+    proto: PassengerStarter
   equipment:
     jumpsuit: ClothingUniformJumpskirtColorRainbow
 
@@ -62,7 +42,7 @@
   id: AncientJumpsuit
   effects:
   - !type:GroupLoadoutEffect
-    proto: GreyTider
+    proto: PassengerSenior
   equipment:
     jumpsuit: ClothingUniformJumpsuitAncient
 
@@ -73,7 +53,7 @@
     neck: ClothingNeckMantle
   effects:
   - !type:GroupLoadoutEffect
-    proto: MasterGrey
+    proto: PassengerSenior
 
 - type: startingGear
   id: Mantle
@@ -101,7 +81,7 @@
   id: PassengerGloves
   effects:
   - !type:GroupLoadoutEffect
-    proto: GreyTider
+    proto: PassengerStarter
   equipment:
     gloves: ClothingHandsGlovesFingerlessInsulated
 
