@@ -11,6 +11,8 @@
     closeable: true
     closeSound:
       collection: bottleCloseSounds
+    openEmptySound:
+      collection: bottleOpenEmptySounds
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alco-bottle.rsi # fallback
   - type: Tool
