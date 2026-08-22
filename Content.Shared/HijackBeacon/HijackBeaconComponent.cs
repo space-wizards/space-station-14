@@ -28,22 +28,16 @@ public sealed partial class HijackBeaconComponent : Component
     public TimeSpan DeactivationLength = TimeSpan.FromSeconds(5);
 
     /// <summary>
-    ///     Remaining time until the hijack is completed.
+    ///     How long it takes for the beacon to hack.
     /// </summary>
     [DataField, Access(typeof(HijackBeaconSystem))]
-    public TimeSpan RemainingTime = TimeSpan.FromSeconds(200);
+    public TimeSpan HackTime = TimeSpan.FromSeconds(200);
 
     /// <summary>
     ///     Default amount of time before the beacon can be re-activated, if it is disarmed.
     /// </summary>
     [DataField, Access(typeof(HijackBeaconSystem))]
     public TimeSpan Cooldown = TimeSpan.FromSeconds(20);
-
-    /// <summary>
-    ///     Remaining cooldown time before the beacon can be reactivated.
-    /// </summary>
-    [DataField, AutoNetworkedField, Access(typeof(HijackBeaconSystem))]
-    public TimeSpan CooldownTime = TimeSpan.Zero;
 
     /// <summary>
     ///     How much cash should be withdrawn from each department account?
