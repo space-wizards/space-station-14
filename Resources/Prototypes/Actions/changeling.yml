@@ -319,8 +319,21 @@
     layers:
     - state: last_resort
   - type: InstantAction
-    event: !type:ChangelingLastResortActionEvent
-  - type: ChangelingLastResortAbility
+    event: !type:ActionSequenceInstantEvent
+  - type: ActionSequence
+    steps:
+    - !type:GetMindActionStep
+      targetKey: Performer
+    - !type:SpawnEntityActionStep
+      entity: MobHeadSlug
+      locationKey: Performer
+      outSpawnedKey: Spawned
+    - !type:TransferMindActionStep
+      mindKey: Mind
+      targetKey: Spawned
+    - !type:GibActionStep
+      bypassResistance: true
+      targetKey: Performer
 
 - type: entity
   parent: BaseAction

@@ -23,8 +23,3 @@ public sealed partial class ChangelingLastResortAbilityComponent : Component
     [DataField]
     public SoundSpecifier Sound = new SoundCollectionSpecifier("gib", AudioParams.Default.WithVariation(0.025f));
 }
-
-/// <summary>
-/// Action event for Last Resort.
-/// </summary>
-public sealed partial class ChangelingLastResortActionEvent : InstantActionEvent;
