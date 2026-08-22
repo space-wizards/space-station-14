@@ -22,6 +22,7 @@
     - id: SnakeSpawnHorde
     - id: SpiderClownSpawnHorde
     - id: SpiderSpawnHorde
+    - id: SuddenNukeArm
     - id: VentClog
 
 - type: entityTable
@@ -688,3 +689,12 @@
     antags:
     - !type:FixedAntagCount
       proto: DerelictSyndicateAssaultCyborg
+
+- type: entity
+  parent: BaseStationEvent
+  id: SuddenNukeArm
+  components:
+  - type: StationEvent
+    weight: 4
+    minimumPlayers: 15
+  - type: SuddenNukeArmRule
