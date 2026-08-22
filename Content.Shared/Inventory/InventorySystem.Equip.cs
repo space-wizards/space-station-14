@@ -9,6 +9,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
+using Content.Shared.Kitchen.EntitySystems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Strip;
@@ -626,6 +627,15 @@ public abstract partial class InventorySystem
             // TODO: Give me an API that can tell the difference between a virtual item and an electropak being removed.
             if (!HasComp<AttachedClothingComponent>(item))
                 args.Giblets.Add(item);
+        }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnBeingGrinded(Entity<InventoryComponent> ent, ref BeingGrindedEvent args)
+    {
+        foreach (var item in GetHandOrInventoryEntities((ent, null, ent)))
+        {
+            _transform.DropNextTo(item, args.Grinder);
         }
     }
 }
