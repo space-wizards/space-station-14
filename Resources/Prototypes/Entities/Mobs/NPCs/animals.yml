@@ -272,9 +272,22 @@
       reagents:
       - ReagentId: Blood
         Quantity: 100
-  - type: EggLayer
-    eggSpawn:
-    - id: FoodEgg
+  - type: EntityProducerAction
+    insufficientSatiationPopup: action-popup-lay-egg-too-hungry
+    userPopup: action-popup-lay-egg-user
+    othersPopup: action-popup-lay-egg-others
+  - type: SatiationProduction
+    delay: 60
+    delayMax: 120
+    satiationUsage: 60
+    minimumSatiation: 60
+    automaticForPlayers: false
+  - type: EntityProducer
+    table:
+      id: FoodEgg
+  - type: ActionGrant
+    actions:
+    - ActionAnimalLayEgg
   - type: ReplacementAccent
     accent: chicken
   - type: SentienceTarget
@@ -727,9 +740,22 @@
       reagents:
       - ReagentId: Blood
         Quantity: 100
-  - type: EggLayer
-    eggSpawn:
-    - id: FoodEgg
+  - type: EntityProducerAction
+    insufficientSatiationPopup: action-popup-lay-egg-too-hungry
+    userPopup: action-popup-lay-egg-user
+    othersPopup: action-popup-lay-egg-others
+  - type: SatiationProduction
+    delay: 60
+    delayMax: 120
+    satiationUsage: 60
+    minimumSatiation: 60
+    automaticForPlayers: false
+  - type: EntityProducer
+    table:
+      id: FoodEgg
+  - type: ActionGrant
+    actions:
+    - ActionAnimalLayEgg
   - type: ReplacementAccent
     accent: duck
   - type: SentienceTarget
@@ -912,18 +938,18 @@
   - type: SolutionManager
     solutions:
     - SolutionUdder
-  - type: Udder
-    minHungerThreshold: Peckish
-    reagentId: Milk
-    quantityPerUpdate: 25
-    growthDelay: 30
+  - type: HarvestableSolution
+    solutionName: udder
+    verbText: udder-system-verb-milk
+    emptyMessage: udder-system-dry
+    successMessage: udder-system-success
   - type: ToolRefinable
     refineResult:
     - id: FoodMeat
       amount: 5
   - type: Grammar
     attributes:
-      gender: female # Here because of UdderComponent
+      gender: female # Milk-producing animals are female.
   - type: InteractionPopup
     successChance: 0.7
     interactDelay: 2 # Avoids overlapping SFX due to spam - these SFX are a little longer than the typical 1 second.
@@ -956,6 +982,16 @@
       reagents:
       - ReagentId: Milk
         Quantity: 30
+  - type: SatiationProduction
+    producer: Parent
+    delay: 30
+    minimumSatiationThreshold: Peckish
+  # TODO: toxins from bloodstream !?
+  - type: SolutionProducer
+    generated:
+      reagents:
+      - ReagentId: Milk
+        Quantity: 25
 
 - type: entity
   name: crab
@@ -1075,13 +1111,11 @@
     solutions:
     - SolutionUdderGoat
     - SolutionWool
-  - type: Udder
-    minHungerThreshold: Peckish
-    reagentId: MilkGoat
-    quantityPerUpdate: 25
-    growthDelay: 20
-  - type: Wooly
-    minHungerThreshold: Peckish
+  - type: HarvestableSolution
+    solutionName: udder
+    verbText: udder-system-verb-milk
+    emptyMessage: udder-system-dry
+    successMessage: udder-system-success
   - type: Edible
     destroyOnEmpty: false
     solution: wool
@@ -1096,7 +1130,7 @@
       amount: 4
   - type: Grammar
     attributes:
-      gender: female # Here because of UdderComponent
+      gender: female # Milk-producing animals are female.
   - type: Speech
     speechSounds: Goat
     speechVerb: Goat
@@ -1130,6 +1164,13 @@
       reagents:
       - ReagentId: MilkGoat
         Quantity: 30
+  - type: SatiationProduction
+    delay: 20
+  - type: SolutionProducer
+    generated:
+      reagents:
+      - ReagentId: MilkGoat
+        Quantity: 25
 
 - type: entity
   parent: SolutionLarge
@@ -1138,6 +1179,14 @@
   components:
   - type: Solution
     id: wool
+  - type: SatiationProduction
+    producer: Parent
+    minimumSatiationThreshold: Peckish
+  - type: SolutionProducer
+    generated:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 25
 
 - type: entity
   abstract: true
@@ -1206,13 +1255,11 @@
     solutions:
     - SolutionUdderSheep
     - SolutionWoolSheep
-  - type: Udder
-    reagentId: MilkSheep
-    quantityPerUpdate: 25
-    growthDelay: 20
-    minHungerThreshold: Peckish
-  - type: Wooly
-    minHungerThreshold: Peckish
+  - type: HarvestableSolution
+    solutionName: udder
+    verbText: udder-system-verb-milk
+    emptyMessage: udder-system-dry
+    successMessage: udder-system-success
   - type: Shearable
     targetSolutionName: wool
     shearedProductId: MaterialCotton1 # Cotton is spawned because there is no wool item.
@@ -1231,7 +1278,7 @@
       amount: 4
   - type: Grammar
     attributes:
-      gender: female # Here because of UdderComponent
+      gender: female # Milk-producing animals are female.
   - type: Speech
     speechSounds: Sheep
     speechVerb: Sheep
@@ -1274,6 +1321,13 @@
       reagents:
       - ReagentId: MilkSheep
         Quantity: 25
+  - type: SatiationProduction
+    delay: 20
+  - type: SolutionProducer
+    generated:
+      reagents:
+      - ReagentId: MilkSheep
+        Quantity: 25
 
 - type: entity
   parent: SolutionWool
@@ -1296,6 +1350,11 @@
       reagents:
       - ReagentId: SpaceDrugs
         Quantity: 25
+  - type: SolutionProducer
+    generated:
+      reagents:
+      - ReagentId: SpaceDrugs
+        Quantity: 25
 
 - type: entity
   parent: [ MobSheepBase, SimpleMobBase, BaseMobDestructible ]
@@ -1314,8 +1373,6 @@
     energy: 0.5
   - type: RgbLightController
     layers: [ 1 ]
-  - type: Wooly
-    reagentId: SpaceDrugs
   - type: Shearable
     targetSolutionName: wool
     shearedProductId: LeavesCannabisRainbow
@@ -1608,9 +1665,8 @@
     - map: [ "mask" ]
     - map: [ "head" ]
   - type: Hands
-    activeHandId: Hand
-    hands:
-      Hand:
+    startingHands:
+      hand_left:
         location: Left
   - type: ComplexInteraction
   - type: CreamPied
@@ -2720,6 +2776,7 @@
     useSound:
       path: /Audio/Items/crowbar.ogg
   - type: PassiveDamage # Slight passive regen. Assuming one damage type, comes out to about 4 damage a minute from base.yml.
+    intervalHaltOnDamageTaken: 5s
     allowedStates:
     - Alive
     damage:
@@ -3404,7 +3461,7 @@
       types:
         Slash: 6
         Piercing: 6
-        Structural: 15
+        Structural: 6 # Secondary breaching
 
 - type: entity
   name: space cat
