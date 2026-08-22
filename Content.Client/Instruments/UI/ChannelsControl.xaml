@@ -1,27 +1,7 @@
-<Control xmlns="https://spacestation14.io"
-         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
+<Control xmlns="https://spacestation14.io">
     <BoxContainer Orientation="Vertical">
         <ScrollContainer MinHeight="90">
             <BoxContainer Orientation="Vertical" Name="ChannelsContainer" SeparationOverride="3" />
         </ScrollContainer>
-        <controls:HSpacer Spacing="10" />
-        <GridContainer Columns="5" HSeparationOverride="1" VSeparationOverride="1">
-            <!-- Name display selector -->
-            <Label Text="{Loc 'instruments-component-channels-name-display-selector-label'}" />
-            <controls:VSpacer Spacing="10" />
-            <Button Name="TrackSelectorButton"
-                    Text="{Loc 'instruments-component-channels-name-display-selector-track-button'}"
-                    HorizontalExpand="true"
-                    StyleClasses="OpenBoth" />
-            <Button Name="ProgramSelectorButton"
-                    Text="{Loc 'instruments-component-channels-name-display-selector-program-button'}"
-                    Pressed="True"
-                    HorizontalExpand="true"
-                    StyleClasses="OpenBoth" />
-            <Button Name="InstrumentSelectorButton"
-                    Text="{Loc 'instruments-component-channels-name-display-selector-instrument-button'}"
-                    HorizontalExpand="true"
-                    StyleClasses="OpenBoth" />
-        </GridContainer>
     </BoxContainer>
 </Control>

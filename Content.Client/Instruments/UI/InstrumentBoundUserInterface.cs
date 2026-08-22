@@ -6,7 +6,6 @@ using Robust.Client.Audio.Midi;
 using Robust.Client.UserInterface;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.Containers;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Instruments.UI;
 
@@ -304,34 +303,29 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
 
         for (var i = 0; i < RobustMidiEvent.MaxChannels; i++)
         {
-            bool channelFound = false;
-            var trackName = "";
-            var instrumentName = "";
-            var programName = "";
+            var channelUsed = false;
             var state = !instrument?.FilteredChannels[i] ?? false;
+            var channelLabel = "";
+
             // Always show percussion channel if the instrument allows it, resolved or not.
             if (i == RobustMidiEvent.PercussionChannel && instrument!.AllowPercussion)
             {
-                channelFound = true;
-                programName = _percussionLabel;
+                channelUsed = true;
+                channelLabel = _percussionLabel;
             }
             else if (instrument!.IsInputOpen)
             {
-                channelFound = true;
+                channelUsed = true;
             }
             else if (i != RobustMidiEvent.PercussionChannel
-                && activeInstrument != null
-                && activeInstrument.Tracks.TryGetValue(i, out var resolvedMidiChannel)
-                && resolvedMidiChannel != null)
+                    && activeInstrument != null
+                    && activeInstrument.UsedChannels[i])
             {
-                channelFound = true;
-                trackName = resolvedMidiChannel.TrackName ?? "";
-                instrumentName = resolvedMidiChannel.InstrumentName ?? "";
-                programName = resolvedMidiChannel.ProgramName ?? "";
+                channelUsed = true;
             }
 
-            if (channelFound)
-                channelSettings.Add(new MidiChannelInfo(i, trackName, instrumentName, programName, state));
+            if (channelUsed)
+                channelSettings.Add(new MidiChannelInfo(i, channelLabel, state));
         }
 
         _channelsControl.SetChannels(channelSettings.ToArray());
@@ -342,13 +336,8 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
 /// Simple DTO for relaying MIDI channel information
 /// </summary>
 /// <param name="Id">MIDI channel ID</param>
-/// <param name="TrackName">MIDI channel track name</param>
-/// <param name="ProgramName">MIDI channel track name</param>
-/// <param name="InstrumentName">MIDI channel track name</param>
 /// <param name="FilterState">MIDI channel filter state</param>
 public readonly record struct MidiChannelInfo(
     int Id,
-    string TrackName,
-    string InstrumentName,
-    string ProgramName,
+    string Label,
     bool FilterState);
