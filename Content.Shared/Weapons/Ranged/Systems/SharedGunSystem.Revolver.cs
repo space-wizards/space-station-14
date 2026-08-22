@@ -36,7 +36,7 @@ public partial class SharedGunSystem
         if (args.Handled)
             return;
 
-        if (!_useDelay.TryResetDelay(ent))
+        if (!_useDelay.TryResetDelay(ent.Owner))
             return;
 
         args.Handled = true;
