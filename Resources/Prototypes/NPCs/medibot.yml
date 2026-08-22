@@ -61,4 +61,10 @@
         targetKey: Target
         components:
         - type: NPCRecentlyInjected
-
+    - !type:HTNPrimitiveTask
+      operator: !type:SpeakOperator
+        speech: !type:SingleSpeakOperatorSpeech
+          line: medibot-finish-inject
+        hidden: true
+        cooldownID: medibot-finish-inject
+        cooldown: 5
