@@ -378,6 +378,39 @@
     event: !type:ScreechActionEvent
 
 - type: entity
+  parent: BaseAction
+  id: ActionChangelingChameleonSkin
+  name: Chameleon skin
+  description: Our skin pigmentation rapidly changes to suit our current environment. Allows us to become faster and invisible in the dark. Can be toggled on and off.
+  components:
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: camo-undies-off
+      map: ["enum.ActionVisuals.Icon"]
+    - state: camo-undies-on
+      map: ["enum.ActionVisuals.IconToggled"]
+      visible: false
+  - type: Action
+    useDelay: 1
+    raiseOnAction: true
+  - type: InstantAction
+    event: !type:ChangeOwnComponentsSpellEvent
+      toAdd:
+      - type: Stealth
+      forcedAdd:
+      - type: LightLevelEntityEffect
+        conditions:
+        - effects:
+          - !type:MovementSpeedModifier
+            walkSpeedModifier: 1.2
+            sprintSpeedModifier: 1.2
+          minLight: 0
+          maxLight: 0.4
+      - type: StealthInDark
+        activatedLightLevel: 0.4
+
+- type: entity
   parent: FakeMindShieldToggleAction
   id: ActionChangelingFakeMindshieldToggle
   name: '[color=green]Toggle Fake Mindshield[/color]'

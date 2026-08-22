@@ -67,6 +67,11 @@ emergency_early_launch_allowed = false
 # Time in minutes after round start to auto-call the emergency shuttle. Set to zero to disable.
 auto_call_time = 90
 
+[lookup]
+# Whether to enable the server-side point light lookup tree. 
+# To help with performance, this should only be enabled if the server needs to be able to compute light levels.
+enable_server_light_tree = true
+
 [console]
 # If this is true, people connecting from this computer will automatically be elevated to full admin privileges.
 # Make sure to disable this if you are running a public server, especially if you are using a tunneling service.

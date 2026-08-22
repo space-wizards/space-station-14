@@ -41,3 +41,6 @@ changeling-catalog-voice-mindshield-desc = Modify your neuron's natural waves to
 
 changeling-catalog-night-vision-name = Night Vision
 changeling-catalog-night-vision-desc = You modify your photoreceptors and heighten your senses as to become able to see in complete darkness.
+
+changeling-catalog-chameleon-skin-name = Chameleon skin
+changeling-catalog-chameleon-skin-desc = Our skin pigmentation rapidly changes to suit our current environment. Allows us to become faster and invisible in the dark. Can be toggled on and off.
