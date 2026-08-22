@@ -145,7 +145,10 @@ namespace Content.Server.DeviceNetwork.Systems
                 _configurator.OnDeviceShutdown(list, (uid, component));
             }
 
-            GetNetwork(component.DeviceNetId).Remove(component);
+            if (GetNetwork(component.DeviceNetId).Remove(component))
+            {
+                RaiseLocalEvent(uid, new DeviceNetworkDisconnectedEvent());
+            }
         }
 
         /// <summary>
@@ -157,7 +160,12 @@ namespace Content.Server.DeviceNetwork.Systems
             if (!Resolve(uid, ref device, false))
                 return false;
 
-            return GetNetwork(device.DeviceNetId).Add(device);
+            if (GetNetwork(device.DeviceNetId).Add(device))
+            {
+                RaiseLocalEvent(uid, new DeviceNetworkConnectedEvent());
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -172,7 +180,12 @@ namespace Content.Server.DeviceNetwork.Systems
             if (preventAutoConnect)
                 device.AutoConnect = false;
 
-            return GetNetwork(device.DeviceNetId).Remove(device);
+            if (GetNetwork(device.DeviceNetId).Remove(device))
+            {
+                RaiseLocalEvent(uid, new DeviceNetworkDisconnectedEvent());
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
