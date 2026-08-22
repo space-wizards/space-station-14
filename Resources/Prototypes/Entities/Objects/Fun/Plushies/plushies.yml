@@ -465,6 +465,20 @@
 
 - type: entity
   parent: PlushieLizard
+  id: PlushieLizardSalamander
+  name: salamander plushie
+  description: An adorable stuffed toy that resembles a newt. A cousin of the lizard? No, maybe that's reaching a bit...
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/mander.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/Plushies/mander.rsi
+  - type: Clothing
+    sprite: Objects/Fun/Plushies/mander.rsi
+
+- type: entity
+  parent: PlushieLizard
   id: PlushieLizardMirrored
   suffix: Mirrored
   components:
