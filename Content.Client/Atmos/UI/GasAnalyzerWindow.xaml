@@ -1,7 +1,8 @@
-<DefaultWindow xmlns="https://spacestation14.io"
+<controls:FancyWindow xmlns="https://spacestation14.io"
+               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                MinSize="270 420"
                SetSize="360 420" Title="{Loc 'gas-analyzer-window-name'}">
-    <BoxContainer Orientation="Vertical" Margin="5 5 5 5">
+    <BoxContainer Orientation="Vertical" Margin="10">
         <BoxContainer Name="CTopBox" Orientation="Horizontal"/>
         <!-- Gas Mix Data, Populated by function -->
         <TabContainer Name="CTabContainer" VerticalExpand="True" Margin="1 1 1 2">
@@ -43,4 +44,4 @@
             </ScrollContainer>
         </TabContainer>
     </BoxContainer>
-</DefaultWindow>
+</controls:FancyWindow>
