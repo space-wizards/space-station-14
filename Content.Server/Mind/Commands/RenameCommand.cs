@@ -1,16 +1,19 @@
-using System.Diagnostics.CodeAnalysis;
+using Content.Server.Administration.Logs;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
+using Content.Shared.Database;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Mind.Commands;
 
 [AdminCommand(AdminFlags.VarEdit)]
 public sealed partial class RenameCommand : LocalizedEntityCommands
 {
+    [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private IConfigurationManager _cfgManager = default!;
     [Dependency] private IEntityManager _entManager = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
@@ -26,8 +29,8 @@ public sealed partial class RenameCommand : LocalizedEntityCommands
             return;
         }
 
-        var name = args[1];
-        if (name.Length > _cfgManager.GetCVar(CCVars.MaxNameLength))
+        var newName = args[1];
+        if (newName.Length > _cfgManager.GetCVar(CCVars.MaxNameLength))
         {
             shell.WriteLine(Loc.GetString("cmd-rename-too-long"));
             return;
@@ -36,7 +39,13 @@ public sealed partial class RenameCommand : LocalizedEntityCommands
         if (!TryParseUid(args[0], shell, _entManager, out var entityUid))
             return;
 
-        _metaSystem.SetEntityName(entityUid.Value, name);
+        var uid = entityUid.Value;
+        var admin = shell.Player;
+
+        _adminLogger.Add(LogType.Action,
+            LogImpact.Low,
+            $"Admin {admin} ({admin?.UserId}) renamed {uid} to \"{newName}\"");
+        _metaSystem.SetEntityName(uid, newName);
     }
 
     private bool TryParseUid(string str, IConsoleShell shell,
