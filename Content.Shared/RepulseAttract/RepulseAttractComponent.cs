@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Physics;
+using Content.Shared.Timing;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 
@@ -35,4 +36,10 @@ public sealed partial class RepulseAttractComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public CollisionGroup CollisionMask = CollisionGroup.GhostImpassable;
+
+    /// <summary>
+    ///     The <see cref="UseDelayInfo"/> ID we should check for.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public string UseDelayId = UseDelaySystem.DefaultId;
 }
