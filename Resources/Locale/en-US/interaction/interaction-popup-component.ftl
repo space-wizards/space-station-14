@@ -34,6 +34,7 @@ petting-success-snake = You pet {THE($target)} on {POSS-ADJ($target)} scaly larg
 petting-success-monkey = You pet {THE($target)} on {POSS-ADJ($target)} mischevious little head.
 petting-success-nymph = You pet {THE($target)} on {POSS-ADJ($target)} wooden little head.
 petting-success-scurret = You pet {THE($target)} on {POSS-ADJ($target)} legally distinct head.
+petting-success-tactical-mothroach = You pet {THE($target)} on {POSS-ADJ($target)} well trained head.
 
 petting-failure-generic = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} aloof towards you.
 
@@ -57,6 +58,7 @@ petting-failure-monkey = You reach out to pet {THE($target)}, but {SUBJECT($targ
 petting-failure-nymph = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BASIC($target, "move", "moves")} {POSS-ADJ($target)} branches away.
 petting-failure-shadow = You try to pet {THE($target)}, but your hand passes through the cold darkness of {POSS-ADJ($target)} body.
 petting-failure-scurret = You reach out to pet {THE($target)}, but {SUBJECT($target)} does a backflip!
+petting-failure-tactical-mothroach = You reach out to pet {THE($target)}, and almost get yourself shot!
 
 ## Petting silicons
 
