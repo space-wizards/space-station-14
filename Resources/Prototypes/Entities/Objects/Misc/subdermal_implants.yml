@@ -10,10 +10,19 @@
     - SubdermalImplant
     - HideContextMenu
 
-#Fun implants
 
 - type: entity
   parent: BaseSubdermalImplant
+  id: BaseSubdermalDeimplantableImplant
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - Deimplantable
+
+#Fun implants
+- type: entity
+  parent: BaseSubdermalDeimplantableImplant
   id: SadTromboneImplant
   name: sad trombone implant
   description: This implant plays a sad tune when the user dies.
@@ -33,7 +42,7 @@
         variation: 0.125
 
 - type: entity
-  parent: BaseSubdermalImplant
+  parent: BaseSubdermalDeimplantableImplant
   id: LightImplant
   name: light implant
   description: This implant emits light from the user's skin on activation.
@@ -50,7 +59,7 @@
   - type: UnpoweredFlashlight
 
 - type: entity
-  parent: BaseSubdermalImplant
+  parent: BaseSubdermalDeimplantableImplant
   id: BikeHornImplant
   name: bike horn implant
   description: This implant lets the user honk anywhere at any time.
@@ -69,7 +78,7 @@
 #Security implants
 
 - type: entity
-  parent: BaseSubdermalImplant
+  parent: BaseSubdermalDeimplantableImplant
   id: TrackingImplant
   name: tracking implant
   description: This implant has a tracking device attached to the suit sensor network.
@@ -94,7 +103,7 @@
 #Traitor implants
 
 - type: entity
-  parent: BaseSubdermalImplant
+  parent: BaseSubdermalDeimplantableImplant
   id: StorageImplant
   name: storage implant
   description: This implant grants hidden storage within a person's body using bluespace technology.
@@ -122,7 +131,7 @@
           type: StorageBoundUserInterface
 
 - type: entity
-  parent: BaseSubdermalImplant
+  parent: BaseSubdermalDeimplantableImplant
   id: FreedomImplant
   name: freedom implant
   description: This implant lets the user break out of hand restraints up to three times before ceasing to function anymore.
@@ -138,7 +147,7 @@
     targetUser: true
 
 - type: entity
-  parent: BaseSubdermalImplant
+  parent: BaseSubdermalDeimplantableImplant
   id: RadioImplant
   name: radio implant
   description: This implant grants access to the Syndicate channel without a headset.
@@ -150,7 +159,7 @@
     - Syndicate
 
 - type: entity
-  parent: BaseSubdermalImplant
+  parent: BaseSubdermalDeimplantableImplant
   id: UplinkImplant
   name: uplink implant
   description: This implant lets the user access a hidden Syndicate uplink at will.
@@ -168,7 +177,7 @@
         type: StoreBoundUserInterface
 
 - type: entity
-  parent: BaseSubdermalImplant
+  parent: BaseSubdermalDeimplantableImplant
   id: EmpImplant
   name: EMP implant
   description: This implant creates an electromagnetic pulse when activated.
@@ -183,7 +192,7 @@
     disableDuration: 10
 
 - type: entity
-  parent: BaseSubdermalImplant
+  parent: BaseSubdermalDeimplantableImplant
   id: ScramImplant
   name: scram implant
   description: This implant randomly teleports the user within a large radius when activated.
@@ -196,7 +205,7 @@
     targetUser: true
 
 - type: entity
-  parent: BaseSubdermalImplant
+  parent: BaseSubdermalDeimplantableImplant
   id: DnaScramblerImplant
   name: DNA scrambler implant
   description: This implant lets the user randomly change their appearance and name once.
@@ -214,7 +223,7 @@
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
-  parent: BaseSubdermalImplant
+  parent: BaseSubdermalDeimplantableImplant
   id: ChameleonControllerImplant
   name: chameleon controller implant
   description: This implant allows you to instantly change the appearance of all worn chameleon clothing.
@@ -230,7 +239,7 @@
         type: ChameleonControllerBoundUserInterface
 
 - type: entity
-  parent: BaseSubdermalImplant
+  parent: BaseSubdermalDeimplantableImplant
   id: VoiceMaskImplant
   name: identity mask implant
   description: This implant allows you to change your identity at will.
@@ -249,7 +258,7 @@
 #Nuclear Operative/Special Exclusive implants
 
 - type: entity
-  parent: BaseSubdermalImplant
+  parent: BaseSubdermalDeimplantableImplant
   id: MicroBombImplant
   name: micro-bomb implant
   description: This implant detonates the user upon activation or upon death.
@@ -280,7 +289,7 @@
 
 
 - type: entity
-  parent: BaseSubdermalImplant
+  parent: BaseSubdermalDeimplantableImplant
   id: MacroBombImplant
   name: macro-bomb implant
   description: This implant creates a large explosion on death after a preprogrammed countdown.
@@ -318,7 +327,7 @@
       canCreateVacuum: true
 
 - type: entity
-  parent: BaseSubdermalImplant
+  parent: BaseSubdermalDeimplantableImplant
   id: DeathAcidifierImplant
   name: death-acidifier implant
   description: This implant melts the user and their equipment upon death.
@@ -339,7 +348,7 @@
     predicted: true
 
 - type: entity
-  parent: BaseSubdermalImplant
+  parent: BaseSubdermalDeimplantableImplant
   id: DeathRattleImplant
   name: death rattle implant
   description: This implant will inform the Syndicate radio channel should the user fall into critical condition or die.
@@ -358,7 +367,7 @@
       targetUser: true
 
 - type: entity
-  parent: BaseSubdermalImplant
+  parent: BaseSubdermalDeimplantableImplant
   id: FakeMindShieldImplant
   name: fake mindshield implant
   description: This implant allows the implanter to produce a fake signal that NT security huds use to identify individuals implanted with a mindshield.
@@ -371,7 +380,7 @@
 # Sec and Command implants
 
 - type: entity
-  parent: BaseSubdermalImplant
+  parent: BaseSubdermalDeimplantableImplant
   id: MindShieldImplant
   name: mindshield implant
   description: This implant will ensure loyalty to Nanotrasen and prevent mind control devices.
