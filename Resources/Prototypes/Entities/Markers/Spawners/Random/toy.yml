@@ -236,6 +236,7 @@
       - id: FoamBlade
       - id: FoamCutlass
       - id: CardSword
+      - id: WeaponPlushieToolbox
     - !type:GroupSelector # Throwing type group
       rolls: 2 # Expendables need restocks
       children:
