@@ -18,14 +18,15 @@ public sealed partial class PaperLabelVisualizerSystem : VisualizerSystem<PaperL
         if (!SpriteSystem.LayerMapTryGet((uid, args.Sprite), PaperLabelVisuals.Layer, out var layerId, logMissing: false))
             return;
 
+        // Note: only change the state itself - if needing to hide a label, set the state to null.
+        // Other systems may need to change the visibility, we should not interfere with that.
         if (!AppearanceSystem.TryGetData<PaperLabelType>(uid, PaperLabelVisuals.LabelType, out var labelType)
             || labelType == PaperLabelType.None)
         {
-            SpriteSystem.LayerSetVisible((uid, args.Sprite), layerId, false);
+            SpriteSystem.LayerSetRsiState((uid, args.Sprite), layerId, null);
         }
         else
         {
-            SpriteSystem.LayerSetVisible((uid, args.Sprite), layerId, true);
             var state = component.LabelStates.GetValueOrDefault(labelType) ?? component.FallbackLabelState;
             SpriteSystem.LayerSetRsiState((uid, args.Sprite), layerId, state);
 

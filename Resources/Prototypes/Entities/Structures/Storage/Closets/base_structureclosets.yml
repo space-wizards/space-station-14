@@ -58,6 +58,7 @@
       enum.StorageVisuals.Open:
         enum.PaperLabelVisuals.Layer:
           True: { visible: false }
+          False: { visible: true }
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic

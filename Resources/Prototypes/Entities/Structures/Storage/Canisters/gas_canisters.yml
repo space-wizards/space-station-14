@@ -48,6 +48,7 @@
       enum.StorageVisuals.Open:
         enum.PaperLabelVisuals.Layer:
           True: { visible: false }
+          False: { visible: true }
   - type: ActivatableUI
     key: enum.GasCanisterUiKey.Key
   - type: UIRequiresLock

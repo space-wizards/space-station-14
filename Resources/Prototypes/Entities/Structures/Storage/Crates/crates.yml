@@ -719,6 +719,12 @@
     node: cratecoffin
     containers:
     - entity_storage
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        enum.PaperLabelVisuals.Layer:
+          True: { visible: false }
+          False: { visible: true }
 
 - type: entity
   parent: [ BaseCrate, StructureHealthContainer ]
