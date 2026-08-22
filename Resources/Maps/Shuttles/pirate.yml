@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 288.1.0
+  engineVersion: 289.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/20/2026 15:23:45
+  time: 08/22/2026 21:42:49
   entityCount: 798
 maps: []
 grids:
@@ -12,9 +12,9 @@ grids:
 orphans:
 - 1
 nullspace:
-- 796
 - 797
 - 798
+- 799
 tilemap:
   0: Space
   14: FloorBar
@@ -188,9 +188,9 @@ entities:
     - type: ExplosionAirtightGrid
     - type: ChunkContainer
       chunkEntities:
-      - 796
       - 797
       - 798
+      - 799
 - proto: AirlockExternalGlassShuttleSyndicateLocked
   entities:
   - uid: 2
@@ -1703,7 +1703,7 @@ entities:
       pos: -1.5,11.5
 - proto: ChunkEntity
   entities:
-  - uid: 796
+  - uid: 797
     components:
     - type: ChunkEntity
       root: 1
@@ -1749,7 +1749,7 @@ entities:
             79: -7,-2
             80: -7,-1
             93: -9,-4
-  - uid: 797
+  - uid: 798
     components:
     - type: ChunkEntity
       root: 1
@@ -1831,7 +1831,7 @@ entities:
             142: 5,3
             143: 5,2
             144: 5,1
-  - uid: 798
+  - uid: 799
     components:
     - type: ChunkEntity
       root: 1
@@ -3595,20 +3595,12 @@ entities:
       parent: 1
       rot: 3.141592653589793 rad
       pos: 3.5,5.5
-  - uid: 486
-    components:
-    - type: Transform
-      parent: 1
-      pos: 0.5,-1.5
-    - type: ApcPowerReceiver
-      powerLoad: 0
   - uid: 487
     components:
     - type: Transform
       parent: 1
-      pos: -2.5,-1.5
-    - type: ApcPowerReceiver
-      powerLoad: 0
+      rot: -1.5707963267948966 rad
+      pos: -0.5,3.5
   - uid: 488
     components:
     - type: Transform
@@ -3642,10 +3634,7 @@ entities:
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
-      pos: -8.5,3.5
-    - type: ApcPowerReceiver
-      powerLoad: 0
+      pos: 1.5,-0.5
   - uid: 493
     components:
     - type: Transform
@@ -3666,26 +3655,18 @@ entities:
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
-      pos: -4.5,2.5
-    - type: ApcPowerReceiver
-      powerLoad: 0
+      pos: -8.5,3.5
   - uid: 496
     components:
     - type: Transform
       parent: 1
-      rot: -1.5707963267948966 rad
-      pos: -0.5,2.5
-    - type: ApcPowerReceiver
-      powerLoad: 0
+      rot: 3.141592653589793 rad
+      pos: -1.5,0.5
   - uid: 497
     components:
     - type: Transform
       parent: 1
-      rot: 3.141592653589793 rad
-      pos: -2.5,0.5
-    - type: ApcPowerReceiver
-      powerLoad: 0
+      pos: -1.5,-1.5
   - uid: 498
     components:
     - type: Transform
@@ -3764,6 +3745,12 @@ entities:
       parent: 1
       rot: 1.5707963267948966 rad
       pos: 1.5,1.5
+  - uid: 796
+    components:
+    - type: Transform
+      parent: 1
+      rot: 1.5707963267948966 rad
+      pos: -4.5,1.5
 - proto: Rack
   entities:
   - uid: 509

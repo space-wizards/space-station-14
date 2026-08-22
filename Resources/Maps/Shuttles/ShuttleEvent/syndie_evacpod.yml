@@ -1,21 +1,21 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 288.1.0
+  engineVersion: 289.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/20/2026 15:42:35
-  entityCount: 202
+  time: 08/22/2026 21:12:33
+  entityCount: 203
 maps: []
 grids:
 - 1
 orphans:
 - 1
 nullspace:
-- 199
-- 200
 - 201
 - 202
+- 203
+- 204
 tilemap:
   0: Space
   29: FloorDark
@@ -116,10 +116,10 @@ entities:
     - type: RadiationGridResistance
     - type: ChunkContainer
       chunkEntities:
-      - 199
-      - 200
       - 201
       - 202
+      - 203
+      - 204
     - type: TileHistory
       chunkHistory: {}
     - type: ImplicitRoof
@@ -427,7 +427,7 @@ entities:
       pos: 2.5,1.5
 - proto: ChunkEntity
   entities:
-  - uid: 199
+  - uid: 201
     components:
     - type: ChunkEntity
       root: 1
@@ -454,7 +454,7 @@ entities:
             1: 1,-1
             2: 0,-1
             5: 2,-1
-  - uid: 200
+  - uid: 202
     components:
     - type: ChunkEntity
       root: 1
@@ -485,7 +485,7 @@ entities:
           decals:
             7: -2,0
             16: -5,0
-  - uid: 201
+  - uid: 203
     components:
     - type: ChunkEntity
       root: 1
@@ -516,7 +516,7 @@ entities:
           decals:
             12: 0,0
             13: 1,0
-  - uid: 202
+  - uid: 204
     components:
     - type: ChunkEntity
       root: 1
@@ -1087,36 +1087,44 @@ entities:
       pos: -2.5,2.5
 - proto: Poweredlight
   entities:
-  - uid: 76
+  - uid: 80
     components:
     - type: Transform
       parent: 1
-      rot: 3.141592653589793 rad
-      pos: 0.5,-1.5
+      rot: 1.5707963267948966 rad
+      pos: -0.5,-1.5
+  - uid: 199
+    components:
+    - type: Transform
+      parent: 1
+      rot: -1.5707963267948966 rad
+      pos: 1.5,-1.5
 - proto: PoweredSmallLight
   entities:
   - uid: 77
     components:
     - type: Transform
       parent: 1
-      pos: -4.5,0.5
+      rot: 3.141592653589793 rad
+      pos: -1.5,0.5
   - uid: 78
     components:
     - type: Transform
       parent: 1
-      pos: 5.5,0.5
+      rot: 3.141592653589793 rad
+      pos: -4.5,0.5
   - uid: 79
     components:
     - type: Transform
       parent: 1
-      rot: -1.5707963267948966 rad
-      pos: 2.5,1.5
-  - uid: 80
+      rot: 3.141592653589793 rad
+      pos: 5.5,0.5
+  - uid: 200
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
-      pos: -1.5,1.5
+      rot: 3.141592653589793 rad
+      pos: 2.5,0.5
 - proto: RandomPosterContraband
   entities:
   - uid: 81

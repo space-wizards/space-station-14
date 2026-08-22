@@ -1,19 +1,19 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 288.1.0
+  engineVersion: 289.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/20/2026 14:59:36
-  entityCount: 204
+  time: 08/22/2026 21:21:23
+  entityCount: 205
 maps: []
 grids:
 - 1
 orphans:
 - 1
 nullspace:
-- 203
-- 204
+- 205
+- 206
 tilemap:
   0: Space
   84: FloorReinforced
@@ -108,8 +108,8 @@ entities:
     - type: ExplosionAirtightGrid
     - type: ChunkContainer
       chunkEntities:
-      - 203
-      - 204
+      - 205
+      - 206
 - proto: AirAlarm
   entities:
   - uid: 11
@@ -509,7 +509,7 @@ entities:
       pos: 3.5,6.5
 - proto: ChunkEntity
   entities:
-  - uid: 203
+  - uid: 205
     components:
     - type: ChunkEntity
       root: 1
@@ -540,7 +540,7 @@ entities:
             4: 3,-3
             5: 4,-3
             6: 5,-3
-  - uid: 204
+  - uid: 206
     components:
     - type: ChunkEntity
       root: 1
@@ -1051,16 +1051,21 @@ entities:
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
-      pos: 1.5,0.5
-- proto: PoweredSmallLight
-  entities:
-  - uid: 50
+      pos: 1.5,3.5
+  - uid: 204
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
-      pos: 2.5,6.5
+      rot: 3.141592653589793 rad
+      pos: 1.5,-2.5
+- proto: PoweredSmallLight
+  entities:
+  - uid: 203
+    components:
+    - type: Transform
+      parent: 1
+      rot: -1.5707963267948966 rad
+      pos: 4.5,5.5
 - proto: ReinforcedPlasmaWindow
   entities:
   - uid: 15

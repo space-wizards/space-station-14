@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 288.1.0
+  engineVersion: 289.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/20/2026 15:23:13
+  time: 08/22/2026 21:42:03
   entityCount: 595
 maps: []
 grids:
@@ -12,10 +12,10 @@ grids:
 orphans:
 - 1
 nullspace:
-- 592
 - 593
 - 594
 - 595
+- 596
 tilemap:
   1: Space
   3: FloorBlueCircuit
@@ -75,10 +75,10 @@ entities:
     - type: ExplosionAirtightGrid
     - type: ChunkContainer
       chunkEntities:
-      - 592
       - 593
       - 594
       - 595
+      - 596
     - type: TileHistory
       chunkHistory: {}
 - proto: AirlockGlassShuttleXenoborgLocked
@@ -1844,7 +1844,7 @@ entities:
       pos: -9.5,0.5
 - proto: ChunkEntity
   entities:
-  - uid: 592
+  - uid: 593
     components:
     - type: ChunkEntity
       root: 1
@@ -1902,7 +1902,7 @@ entities:
           decals:
             54: 4,0
             59: 6,3
-  - uid: 593
+  - uid: 594
     components:
     - type: ChunkEntity
       root: 1
@@ -1940,7 +1940,7 @@ entities:
             40: 1,-9
             41: 1,-10
             42: 1,-11
-  - uid: 594
+  - uid: 595
     components:
     - type: ChunkEntity
       root: 1
@@ -1996,7 +1996,7 @@ entities:
             29: -4,3
             30: -4,2
             31: -4,1
-  - uid: 595
+  - uid: 596
     components:
     - type: ChunkEntity
       root: 1
@@ -2520,11 +2520,6 @@ entities:
       pos: -2.5,-4.5
 - proto: PoweredlightBlue
   entities:
-  - uid: 127
-    components:
-    - type: Transform
-      parent: 1
-      pos: -8.5,1.5
   - uid: 128
     components:
     - type: Transform
@@ -2581,6 +2576,12 @@ entities:
     - type: Transform
       parent: 1
       pos: 6.5,3.5
+  - uid: 592
+    components:
+    - type: Transform
+      parent: 1
+      rot: -1.5707963267948966 rad
+      pos: -6.5,-0.5
 - proto: Recycler
   entities:
   - uid: 111
