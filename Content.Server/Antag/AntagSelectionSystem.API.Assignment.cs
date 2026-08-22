@@ -9,6 +9,7 @@ using Content.Shared.Ghost.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Players;
 using JetBrains.Annotations;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -75,6 +76,28 @@ public sealed partial class AntagSelectionSystem
             return false;
 
         return IsSessionValid(player, gameRule, antag);
+    }
+
+    /// <inhereitdoc cref="IsSessionValid(ICommonSession,Entity{AntagSelectionComponent},ProtoId{AntagSpecifierPrototype})"/>
+    public bool IsSessionValid(NetUserId player,
+        Entity<AntagSelectionComponent> gameRule,
+        ProtoId<AntagSpecifierPrototype> def)
+    {
+        if (!ProtoMan.Resolve(def, out var antag))
+            return false;
+
+        return IsSessionValid(player, gameRule, antag);
+    }
+
+    [PublicAPI]
+    public bool IsSessionValid(NetUserId player,
+        Entity<AntagSelectionComponent> gameRule,
+        AntagSpecifierPrototype def)
+    {
+        if (!_playerManager.SessionsDict.TryGetValue(player, out var session))
+            return false;
+
+        return IsSessionValid(session, gameRule, def);
     }
 
     /// <summary>

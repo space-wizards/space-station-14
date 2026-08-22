@@ -1,5 +1,4 @@
 ﻿- type: entity
-  save: false
   parent: [ BaseSimpleMob, BaseMobAnimal, MobCombat, MobBloodstream, BaseMobDestructible ]
   id: BaseMobArgocyte
   suffix: AI

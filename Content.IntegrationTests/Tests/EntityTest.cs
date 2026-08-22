@@ -7,6 +7,7 @@ using Content.IntegrationTests.Fixtures.Attributes;
 using Robust.Shared;
 using Robust.Shared.Audio.Components;
 using Robust.Shared.Configuration;
+using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
@@ -14,6 +15,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Spawners;
+using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -21,6 +23,8 @@ namespace Content.IntegrationTests.Tests
     [TestOf(typeof(EntityUid))]
     public sealed class EntityTest : GameTest
     {
+        [SidedDependency(Side.Server)] private readonly MapLoaderSystem _mapLoader = default!;
+
         private static readonly HashSet<ProtoId<EntityCategoryPrototype>> IgnoredCategories = ["Spawner", "Debug"];
 
         public override PoolSettings PoolSettings => new()
@@ -123,6 +127,68 @@ namespace Content.IntegrationTests.Tests
                 }
             });
             await server.WaitRunTicks(450); // 15 seconds, enough to trigger most update loops
+            await server.WaitPost(() =>
+            {
+                static IEnumerable<(EntityUid, TComp)> Query<TComp>(IEntityManager entityMan)
+                    where TComp : Component
+                {
+                    var query = entityMan.AllEntityQueryEnumerator<TComp>();
+                    while (query.MoveNext(out var uid, out var meta))
+                    {
+                        yield return (uid, meta);
+                    }
+                }
+
+                var entityMetas = Query<MetaDataComponent>(entityMan).ToList();
+                foreach (var (uid, meta) in entityMetas)
+                {
+                    if (!meta.EntityDeleted)
+                        entityMan.DeleteEntity(uid);
+                }
+
+                Assert.That(entityMan.EntityCount, Is.Zero);
+            });
+        }
+
+        /// <summary>
+        /// Variant of <see cref="SpawnAndDeleteAllEntitiesInTheSameSpot"/> that saves all entities into a file.
+        /// </summary>
+        [Test]
+        [PairConfig(nameof(Disconnected))]
+        public async Task SpawnAndSaveAllEntities()
+        {
+            var pair = Pair;
+            Assert.That(pair.Client.Session, Is.Null);
+            var server = pair.Server;
+            var map = await pair.CreateTestMap();
+
+            var entityMan = server.ResolveDependency<IEntityManager>();
+            var prototypeMan = server.ResolveDependency<IPrototypeManager>();
+
+            await server.WaitPost(() =>
+            {
+                var protoIds = prototypeMan
+                    .EnumeratePrototypes<EntityPrototype>()
+                    .Where(p => !p.Abstract)
+                    .Where(p => !pair.IsTestPrototype(p))
+                    .Where(p => !p.Components.ContainsKey("MapGrid")) // This will smash stuff otherwise.
+                    .Where(p => !p.Components.ContainsKey("RoomFill")) // This comp can delete all entities, and spawn others
+                    .Select(p => p.ID)
+                    .ToList();
+                foreach (var protoId in protoIds)
+                {
+                    entityMan.SpawnEntity(protoId, map.GridCoords);
+                }
+            });
+
+            await server.WaitRunTicks(450); // 15 seconds, enough to trigger most update loops
+
+            // Save the game!
+            await server.WaitPost(() =>
+            {
+                Assert.That(_mapLoader.TrySaveAllEntities(new ResPath($"/test_{nameof(SpawnAndSaveAllEntities)}.rtsave")));
+            });
+
             await server.WaitPost(() =>
             {
                 static IEnumerable<(EntityUid, TComp)> Query<TComp>(IEntityManager entityMan)

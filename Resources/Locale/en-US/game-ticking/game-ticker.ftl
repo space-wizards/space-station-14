@@ -47,3 +47,10 @@ preset-no-one-ready = Can't start {$presetName}. No players are ready.
 game-run-level-PreRoundLobby = Pre-round lobby
 game-run-level-InRound = In round
 game-run-level-PostRound = Post round
+
+game-ticker-autosave-warning = The game will be autosaved in {$minutes} {$minutes ->
+      [1] minute
+      *[other] minutes
+}.
+game-ticker-saving = The game is saving, it will take a few seconds.
+game-ticker-saved = The game was saved.

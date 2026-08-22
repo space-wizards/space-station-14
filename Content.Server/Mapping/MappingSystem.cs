@@ -43,7 +43,7 @@ public sealed partial class MappingSystem : EntitySystem
             "autosave <map> <path if enabling>",
             ToggleAutosaveCommand);
 
-        Subs.CVar(_cfg, CCVars.AutosaveEnabled, SetAutosaveEnabled, true);
+        Subs.CVar(_cfg, CCVars.MappingAutosaveEnabled, SetAutosaveEnabled, true);
     }
 
     private void SetAutosaveEnabled(bool b)
@@ -73,7 +73,7 @@ public sealed partial class MappingSystem : EntitySystem
             }
 
             _currentlyAutosaving[uid] = (CalculateNextTime(), name);
-            var saveDir = new ResPath(Path.Combine(_cfg.GetCVar(CCVars.AutosaveDirectory), name).Replace(Path.DirectorySeparatorChar, '/'));
+            var saveDir = new ResPath(Path.Combine(_cfg.GetCVar(CCVars.MappingAutosaveDirectory), name).Replace(Path.DirectorySeparatorChar, '/'));
             _resMan.UserData.CreateDir(saveDir.ToRootedPath());
 
             var path = saveDir / new ResPath($"{DateTime.Now:yyyy-M-dd_HH.mm.ss}-AUTO.yml");
@@ -88,7 +88,7 @@ public sealed partial class MappingSystem : EntitySystem
 
     private TimeSpan CalculateNextTime()
     {
-        return _timing.RealTime + TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.AutosaveInterval));
+        return _timing.RealTime + TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.MappingAutosaveInterval));
     }
 
     private double ReadableTimeLeft(EntityUid uid)

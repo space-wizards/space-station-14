@@ -2,7 +2,6 @@
   abstract: true
   parent: StructureHealthMachineMassive
   id: BaseMech
-  save: false
   components:
   - type: MobMover
   - type: Mech
