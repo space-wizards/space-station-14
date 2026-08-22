@@ -12,8 +12,8 @@ VERSION = os.environ["GITHUB_SHA"]
 RELEASE_DIR = "release"
 
 #
-# CONFIGURATION PARAMETERS
-# Forks should change these to publish to their own infrastructure.
+# DEFAULT CONFIGURATION PARAMETERS
+# Forks can change these to point at their own infrastructure.
 #
 ROBUST_CDN_URL = "https://wizards.cdn.spacestation14.com/"
 FORK_ID = "wizards"
@@ -21,9 +21,11 @@ FORK_ID = "wizards"
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--fork-id", default=FORK_ID)
+    parser.add_argument("--cdn-url", default=ROBUST_CDN_URL)
 
     args = parser.parse_args()
     fork_id = args.fork_id
+    robust_cdn_url = args.cdn_url
 
     session = requests.Session()
     session.headers = {
@@ -39,7 +41,7 @@ def main():
     headers = {
         "Content-Type": "application/json"
     }
-    resp = session.post(f"{ROBUST_CDN_URL}fork/{fork_id}/publish/start", json=data, headers=headers)
+    resp = session.post(f"{robust_cdn_url}fork/{fork_id}/publish/start", json=data, headers=headers)
     resp.raise_for_status()
     print("Publish successfully started, adding files...")
 
@@ -51,7 +53,7 @@ def main():
                 "Robust-Cdn-Publish-File": os.path.basename(file),
                 "Robust-Cdn-Publish-Version": VERSION
             }
-            resp = session.post(f"{ROBUST_CDN_URL}fork/{fork_id}/publish/file", data=f, headers=headers)
+            resp = session.post(f"{robust_cdn_url}fork/{fork_id}/publish/file", data=f, headers=headers)
 
         resp.raise_for_status()
 
@@ -63,7 +65,7 @@ def main():
     headers = {
         "Content-Type": "application/json"
     }
-    resp = session.post(f"{ROBUST_CDN_URL}fork/{fork_id}/publish/finish", json=data, headers=headers)
+    resp = session.post(f"{robust_cdn_url}fork/{fork_id}/publish/finish", json=data, headers=headers)
     resp.raise_for_status()
 
     print("SUCCESS!")
