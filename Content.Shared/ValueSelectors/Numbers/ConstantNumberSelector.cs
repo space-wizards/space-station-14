@@ -1,17 +1,12 @@
 using Robust.Shared.Random;
 
-namespace Content.Shared.EntityTable.ValueSelector;
+namespace Content.Shared.ValueSelectors.Numbers;
 
-/// <summary>
-/// Gives a constant value.
-/// </summary>
-public sealed partial class ConstantNumberSelector : NumberSelector
+/// <inheritdoc cref="IConstantValueSelector{T}"/>
+public sealed partial class ConstantNumberSelector : NumberSelector, IConstantValueSelector<int>
 {
-    /// <summary>
-    /// The constant value of this selector.
-    /// </summary>
     [DataField]
-    public int Value = 1;
+    public int Value { get; set; } = 1;
 
     public ConstantNumberSelector(int value)
     {
