@@ -15,7 +15,7 @@
   - type: InteractionOutline
   - type: Repairable
   - type: Damageable
-    damageModifierSet: SteelMod
+    damageModifierSet: SteelGrilleMod
   - type: Destructible
     thresholds:
     - trigger:

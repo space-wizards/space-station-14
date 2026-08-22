@@ -44,7 +44,7 @@
     lockTime: 5
     unlockTime: 5
   - type: Damageable
-    damageModifierSet: PlasteelMod
+    damageModifierSet: PlasteelStructureMod
   - type: Destructible
     thresholds:
     - trigger:

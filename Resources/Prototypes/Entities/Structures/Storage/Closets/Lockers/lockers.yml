@@ -384,6 +384,8 @@
     stateDoorOpen: shotguncase_open
     stateDoorClosed: shotguncase_door
   - type: AccessReader
+  - type: Damageable
+    damageModifierSet: PlasteelStructureMod
   - type: Construction
     graph: GunSafe
     node: done

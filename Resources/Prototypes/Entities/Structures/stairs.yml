@@ -24,7 +24,7 @@
     sprite: Structures/stairs.rsi
     state: stairs_steel
   - type: Damageable
-    damageModifierSet: SteelMod
+    damageModifierSet: SteelStructureMod
   - type: Destructible
     thresholds:
     - trigger:
