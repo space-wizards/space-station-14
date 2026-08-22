@@ -23,6 +23,7 @@ using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
+using Content.Shared.QuickDialog;
 using Content.Shared.Stacks;
 using Content.Shared.Station.Components;
 using Content.Shared.Verbs;
@@ -410,8 +411,18 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     // Unbounded intentionally.
-                    _quickDialog.OpenDialog(player, Loc.GetString("admin-verbs-adjust-stack"), Loc.GetString("admin-verbs-dialog-adjust-stack-amount", ("max", _stackSystem.GetMaxCount(stack))), (int newAmount) =>
+                    _quickDialog.TryOpenDialog(
+                        "adjust-stack" + args.Target,
+                        player,
+                        Loc.GetString("admin-verbs-adjust-stack"),
+                        [
+                            new QuickDialogEntryInt((0, _stackSystem.GetMaxCount(stack)), Loc.GetString("admin-verbs-dialog-adjust-stack-amount"))
+                        ],
+                        (values) =>
                     {
+                        if (values[0] is not int newAmount)
+                            return;
+
                         _stackSystem.SetCount((args.Target, stack), newAmount);
                     });
                 },
@@ -444,8 +455,18 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/rename.png")),
             Act = () =>
             {
-                _quickDialog.OpenDialog(player, Loc.GetString("admin-verbs-dialog-rename-title"), Loc.GetString("admin-verbs-dialog-rename-name"), (string newName) =>
+                _quickDialog.TryOpenDialog(
+                    "rename-" + args.Target,
+                    player,
+                    Loc.GetString("admin-verbs-dialog-rename-title"),
+                    [
+                        new QuickDialogEntryString((0, 100), Loc.GetString("admin-verbs-dialog-rename-name"))
+                    ],
+                    (values) =>
                 {
+                    if (values[0] is not string newName)
+                        return;
+
                     _metaSystem.SetEntityName(args.Target, newName);
                 });
             },
@@ -462,9 +483,19 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/redescribe.png")),
             Act = () =>
             {
-                _quickDialog.OpenDialog(player, Loc.GetString("admin-verbs-dialog-redescribe-title"), Loc.GetString("admin-verbs-dialog-redescribe-description"), (LongString newDescription) =>
+                _quickDialog.TryOpenDialog(
+                    "redescribe-" + args.Target,
+                    player,
+                    Loc.GetString("admin-verbs-dialog-redescribe-title"),
+                    [
+                        new QuickDialogEntryString((0, 2000), Loc.GetString("admin-verbs-dialog-redescribe-description"))
+                    ],
+                    (values) =>
                 {
-                    _metaSystem.SetEntityDescription(args.Target, newDescription.String);
+                    if (values[0] is not string newDescription)
+                        return;
+
+                    _metaSystem.SetEntityDescription(args.Target, newDescription);
                 });
             },
             Impact = LogImpact.Medium,
@@ -480,12 +511,25 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/rename_and_redescribe.png")),
             Act = () =>
             {
-                _quickDialog.OpenDialog(player, Loc.GetString("admin-verbs-dialog-rename-and-redescribe-title"), Loc.GetString("admin-verbs-dialog-rename-name"), Loc.GetString("admin-verbs-dialog-redescribe-description"),
-                    (string newName, LongString newDescription) =>
+                _quickDialog.TryOpenDialog(
+                    "rename-and-redescribe" + args.Target,
+                    player,
+                    Loc.GetString("admin-verbs-dialog-rename-and-redescribe-title"),
+                    [
+                        new QuickDialogEntryString((0, 100), Loc.GetString("admin-verbs-dialog-rename-name")),
+                        new QuickDialogEntryString((0, 100), Loc.GetString("admin-verbs-dialog-redescribe-description")),
+                    ],
+                    (values) =>
                     {
+                        if (values[0] is not string newName)
+                            return;
+
+                        if (values[1] is not string newDescription)
+                            return;
+
                         var meta = MetaData(args.Target);
                         _metaSystem.SetEntityName(args.Target, newName, meta);
-                        _metaSystem.SetEntityDescription(args.Target, newDescription.String, meta);
+                        _metaSystem.SetEntityDescription(args.Target, newDescription, meta);
                     });
             },
             Impact = LogImpact.Medium,
@@ -715,9 +759,16 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Fun/caps.rsi"), "mag-6"),
                 Act = () =>
                 {
-                    _quickDialog.OpenDialog(player, Loc.GetString("admin-verbs-dialog-set-bullet-amount-title"), Loc.GetString("admin-verbs-dialog-set-bullet-amount-amount", ("cap", ballisticAmmo.Capacity)), (string amount) =>
+                    _quickDialog.TryOpenDialog(
+                        "set-bullet-amount" + args.Target,
+                        player,
+                        Loc.GetString("admin-verbs-dialog-set-bullet-amount-title"),
+                        [
+                            new QuickDialogEntryInt((0, ballisticAmmo.Capacity), Loc.GetString("admin-verbs-dialog-set-bullet-amount-amount")),
+                        ],
+                        (values) =>
                     {
-                        if (!int.TryParse(amount, out var result))
+                        if (values[0] is not int result)
                             return;
 
                         _gun.SetBallisticUnspawned((args.Target, ballisticAmmo), result);

@@ -63,6 +63,10 @@
     notificationPrefix: prayer-chat-notify-centcom
     verb: prayer-verbs-call
     verbImage: null
+  - type: UserInterface
+    interfaces:
+      enum.PrayUiKey.Key:
+        type: QuickDialogBoundUserInterface
 
 - type: entity
   parent: PhoneInstrument

@@ -1,4 +1,3 @@
-using Content.Server.Administration;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.DeviceNetwork.Systems;
@@ -23,6 +22,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.NameModifier.Components;
 using Content.Shared.Paper;
 using Content.Shared.Power;
+using Content.Shared.QuickDialog;
 using Content.Shared.Tools;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
@@ -31,7 +31,6 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Fax;
 
@@ -58,6 +57,9 @@ public sealed partial class FaxSystem : EntitySystem
     private static readonly ProtoId<ToolQualityPrototype> ScrewingQuality = "Screwing";
 
     private const string PaperSlotId = "Paper";
+
+    private const int MinFaxNameLength = 1;
+    private const int MaxFaxNameLength = 100;
 
     public override void Initialize()
     {
@@ -219,11 +221,18 @@ public sealed partial class FaxSystem : EntitySystem
             !_toolSystem.HasQuality(args.Used, ScrewingQuality)) // Screwing because Pulsing already used by device linking
             return;
 
-        _quickDialog.OpenDialog(actor.PlayerSession,
+        args.Handled = _quickDialog.TryOpenDialog(
+            "faxRename-" + uid,
+            actor.PlayerSession,
             Loc.GetString("fax-machine-dialog-rename"),
-            Loc.GetString("fax-machine-dialog-field-name"),
-            (string newName) =>
+            [
+                new QuickDialogEntryString((MinFaxNameLength, MaxFaxNameLength), Loc.GetString("fax-machine-dialog-field-name"))
+            ],
+            (values) =>
         {
+            if (values[0] is not string newName)
+                return;
+
             if (component.FaxName == newName)
                 return;
 
@@ -246,8 +255,6 @@ public sealed partial class FaxSystem : EntitySystem
             _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-name-set"), uid);
             UpdateUserInterface(uid, component);
         });
-
-        args.Handled = true;
     }
 
     private void OnEmagged(EntityUid uid, FaxMachineComponent component, ref GotEmaggedEvent args)
