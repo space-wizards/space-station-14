@@ -134,6 +134,8 @@
     - state: paper_stamp-generic
       map: ["enum.PaperVisualLayers.Stamp"]
       visible: false
+  - type: PaperLabelType
+    labelType: Printout
   - type: PaperVisuals
     headerImagePath: "/Textures/Interface/Paper/paper_heading_artifact_analyzer.svg.96dpi.png"
     headerMargin: 0.0, 16.0, 0.0, 0.0
@@ -164,7 +166,7 @@
       map: ["enum.PaperVisualLayers.Stamp"]
       visible: false
   - type: PaperLabelType
-    paperType: CaptainsPaper
+    color: "#e6e6fa"
   - type: PaperVisuals
     headerImagePath: "/Textures/Interface/Paper/paper_heading_captains_thoughts.svg.96dpi.png"
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
@@ -198,7 +200,7 @@
       map: ["enum.PaperVisualLayers.Stamp"]
       visible: false
   - type: PaperLabelType
-    paperType: Invoice
+    color: "#9ef5ff"
   - type: Tag
     tags:
     - Document
@@ -246,6 +248,8 @@
     - state: paper_stamp-generic
       map: ["enum.PaperVisualLayers.Stamp"]
       visible: false
+  - type: PaperLabelType
+    labelType: Printout
   - type: PaperVisuals
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_perforated.svg.96dpi.png"
     headerImagePath: "/Textures/Interface/Paper/paper_heading_nanotask.svg.96dpi.png"
@@ -274,7 +278,7 @@
       map: ["enum.PaperVisualLayers.Stamp"]
       visible: false
   - type: PaperLabelType
-    paperType: Bounty
+    color: "#f7e574"
   - type: Tag
     tags:
     - Document
@@ -323,7 +327,7 @@
       map: ["enum.PaperVisualLayers.Stamp"]
       visible: false
   - type: PaperLabelType
-    paperType: Bounty
+    color: "#f7e574"
   - type: Tag
     tags:
     - Document
@@ -368,6 +372,8 @@
       - state: paper_stamp-generic
         map: ["enum.PaperVisualLayers.Stamp"]
         visible: false
+  - type: PaperLabelType
+    color: "#cccccc"
   - type: PaperVisuals
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
     contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"

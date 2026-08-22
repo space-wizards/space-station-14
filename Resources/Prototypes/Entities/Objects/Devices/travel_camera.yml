@@ -39,6 +39,9 @@
   parent: BasePaper
   id: BasePhotograph
   name: photograph
+  components:
+  - type: PaperLabelType
+    labelType: Photograph
 
 - type: entity
   parent: BasePhotograph

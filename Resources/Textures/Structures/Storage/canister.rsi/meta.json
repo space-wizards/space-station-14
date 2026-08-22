@@ -155,16 +155,16 @@
             "name": "scrubber-open"
         },
         {
-            "name": "bounty"
-        },
-        {
-            "name": "captains_paper"
-        },
-        {
-            "name": "invoice"
+            "name": "business-card"
         },
         {
             "name": "paper"
+        },
+        {
+            "name": "photograph"
+        },
+        {
+            "name": "printout"
         },
         {
             "name": "integrity-unshaded-0"

@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseStructureDynamic, BasePaperLabelableVisualized, StructureHealthContainer ]
+  parent: [ BaseStructureDynamic, BasePaperLabelable, StructureHealthContainer ]
   id: CrateArtifactContainer
   name: artifact container
   description: Used to safely contain and move artifacts.
@@ -70,16 +70,6 @@
       stateDoorClosed: artifact_container_door
     - type: GenericVisualizer
       visuals:
-        enum.PaperLabelVisuals.HasLabel:
-          enum.PaperLabelVisuals.Layer:
-            True: { visible: true }
-            False: { visible: false }
-        enum.PaperLabelVisuals.LabelType:
-          enum.PaperLabelVisuals.Layer:
-            Paper: { state: paper }
-            Bounty: { state: bounty }
-            CaptainsPaper: { state: captains_paper }
-            Invoice: { state: invoice }
         enum.StorageVisuals.Open:
           enum.PaperLabelVisuals.Layer:
             True: { offset: "0.0,0.3125" }
@@ -162,16 +152,6 @@
         base:
           True: { state: icon-open }
           False: { state: icon }
-      enum.PaperLabelVisuals.HasLabel:
-        enum.PaperLabelVisuals.Layer:
-          True: { visible: true }
-          False: { visible: false }
-      enum.PaperLabelVisuals.LabelType:
-        enum.PaperLabelVisuals.Layer:
-          Paper: { state: paper }
-          Bounty: { state: bounty }
-          CaptainsPaper: { state: captain }
-          Invoice: { state: invoice }
   - type: ItemSlots
   - type: ContainerContainer
     containers:
