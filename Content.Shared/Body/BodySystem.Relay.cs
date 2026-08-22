@@ -1,7 +1,12 @@
 using Content.Shared.Body.Events;
+using Content.Shared.Chat;
+using Content.Shared.Cloning.Events;
+using Content.Shared.Eye.Blinding.Systems;
+using Content.Shared.Eye.Blinking;
 using Content.Shared.Gibbing;
 using Content.Shared.Humanoid;
 using Content.Shared.Medical;
+using Content.Shared.Mobs;
 using JetBrains.Annotations;
 
 namespace Content.Shared.Body;
@@ -18,6 +23,14 @@ public sealed partial class BodySystem
         SubscribeLocalEvent<BodyComponent, ApplyOrganMarkingsEvent>(RefRelayBodyEvent);
         SubscribeLocalEvent<BodyComponent, OrganCopyAppearanceEvent>(RefRelayBodyEvent);
         SubscribeLocalEvent<BodyComponent, HumanoidLayerVisibilityChangedEvent>(RefRelayBodyEvent);
+
+        SubscribeLocalEvent<BodyComponent, EmoteEvent>(RefRelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, MobStateChangedEvent>(RefRelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, BlindnessChangedEvent>(RefRelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, CloningEvent>(RefRelayBodyEvent);
+
+        SubscribeLocalEvent<BodyComponent, ToggleEyesActionEvent>(RelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, CanSeeAttemptEvent>(RelayBodyEvent);
     }
 
     private void RefRelayBodyEvent<T>(EntityUid uid, BodyComponent component, ref T args) where T : struct
