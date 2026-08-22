@@ -51,6 +51,32 @@ public sealed partial class SecretStashSystem : EntitySystem
         entity.Comp.ItemContainer = _containerSystem.EnsureContainer<ContainerSlot>(entity, "stash", out _);
     }
 
+    [SubscribeLocalEvent]
+    private void OnMapInit(Entity<SecretStashComponent> entity, ref MapInitEvent args)
+    {
+        if (entity.Comp.MaxItemSize != null)
+            return;
+
+        if (!TryComp<ItemComponent>(entity, out var itemComp))
+        {
+            RemCompDeferred(entity, entity.Comp);
+            Log.Error($"No Item component found for : {ToPrettyString(entity)}!");
+            return;
+        }
+
+        var smallerSize = _item.GetSizeSmaller(_item.GetSizePrototype(itemComp.Size));
+
+        if (smallerSize == null)
+        {
+            RemCompDeferred(entity, entity.Comp);
+            Log.Error($"{ToPrettyString(entity)} is too small to have the SecretStash component!");
+            return;
+        }
+
+        entity.Comp.MaxItemSize = smallerSize;
+        Dirty(entity);
+    }
+
     private void OnDestroyed(Entity<SecretStashComponent> entity, ref DestructionEventArgs args)
     {
         DropContentsAndAlert(entity);
@@ -108,7 +134,7 @@ public sealed partial class SecretStashSystem : EntitySystem
         }
 
         // check if item is too big to fit into secret stash or is in the blacklist
-        if (_item.GetSizePrototype(itemComp.Size) > _item.GetSizePrototype(entity.Comp.MaxItemSize) ||
+        if (_item.GetSizePrototype(itemComp.Size) > _item.GetSizePrototype(entity.Comp.MaxItemSize!.Value) ||
             _whitelistSystem.IsWhitelistPass(entity.Comp.Blacklist, itemToHideUid))
         {
             var msg = Loc.GetString("comp-secret-stash-action-hide-item-too-big",
