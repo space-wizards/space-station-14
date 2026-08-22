@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
@@ -300,39 +302,212 @@ public abstract partial class SharedHandsSystem
     /// <summary>
     ///     Enumerate over hands, starting with the currently active hand.
     /// </summary>
-    public IEnumerable<string> EnumerateHands(Entity<HandsComponent?> ent)
+    public HandEnumerable EnumerateHands(Entity<HandsComponent?> ent)
+    {
+        return new HandEnumerable(this, ent);
+    }
+
+    private HandEnumerator GetHandEnumerator(Entity<HandsComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
-            yield break;
+            return default;
 
-        if (ent.Comp.ActiveHandId != null)
-            yield return ent.Comp.ActiveHandId;
+        return new HandEnumerator(ent.Comp, ent.Comp.SortedHands.GetEnumerator());
+    }
 
-        foreach (var name in ent.Comp.SortedHands)
+    public readonly struct HandEnumerable : IEnumerable<string>
+    {
+        private readonly SharedHandsSystem _handsSystem;
+        private readonly Entity<HandsComponent?> _entity;
+
+        internal HandEnumerable(SharedHandsSystem handsSystem, Entity<HandsComponent?> entity)
         {
-            if (name != ent.Comp.ActiveHandId)
-                yield return name;
+            _handsSystem = handsSystem;
+            _entity = entity;
+        }
+
+        public HandEnumerator GetEnumerator()
+        {
+            return _handsSystem.GetHandEnumerator(_entity);
+        }
+
+        IEnumerator<string> IEnumerable<string>.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    }
+
+    public struct HandEnumerator : IEnumerator<string>
+    {
+        private readonly HandsComponent _hands;
+        private List<string>.Enumerator _handEnumerator;
+        private bool _activeHandChecked;
+        private bool _valid;
+
+        internal HandEnumerator(HandsComponent hands, List<string>.Enumerator handEnumerator)
+        {
+            _hands = hands;
+            _handEnumerator = handEnumerator;
+            _activeHandChecked = false;
+            _valid = true;
+            Current = default!;
+        }
+
+        public string Current { get; private set; }
+
+        object IEnumerator.Current => Current;
+
+        public bool MoveNext()
+        {
+            if (!_valid)
+                return false;
+
+            if (!_activeHandChecked)
+            {
+                _activeHandChecked = true;
+                var activeHand = _hands.ActiveHandId;
+                if (activeHand != null)
+                {
+                    Current = activeHand;
+                    return true;
+                }
+            }
+
+            while (_handEnumerator.MoveNext())
+            {
+                var hand = _handEnumerator.Current;
+                if (hand == _hands.ActiveHandId)
+                    continue;
+
+                Current = hand;
+                return true;
+            }
+
+            return false;
+        }
+
+        void IEnumerator.Reset()
+        {
+            throw new NotSupportedException();
+        }
+
+        public void Dispose()
+        {
+            _handEnumerator.Dispose();
         }
     }
 
     /// <summary>
     ///     Enumerate over held items, starting with the item in the currently active hand (if there is one).
     /// </summary>
-    public IEnumerable<EntityUid> EnumerateHeld(Entity<HandsComponent?> ent)
+    public HeldEnumerable EnumerateHeld(Entity<HandsComponent?> ent)
+    {
+        return new HeldEnumerable(this, ent);
+    }
+
+    private HeldEnumerator GetHeldEnumerator(Entity<HandsComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
-            yield break;
+            return default;
 
-        if (TryGetActiveItem(ent, out var activeHeld))
-            yield return activeHeld.Value;
+        return new HeldEnumerator(this, ent, ent.Comp, ent.Comp.SortedHands.GetEnumerator());
+    }
 
-        foreach (var name in ent.Comp.SortedHands)
+    public readonly struct HeldEnumerable : IEnumerable<EntityUid>
+    {
+        private readonly SharedHandsSystem _handsSystem;
+        private readonly Entity<HandsComponent?> _entity;
+
+        internal HeldEnumerable(SharedHandsSystem handsSystem, Entity<HandsComponent?> entity)
         {
-            if (name == ent.Comp.ActiveHandId)
-                continue;
+            _handsSystem = handsSystem;
+            _entity = entity;
+        }
 
-            if (TryGetHeldItem(ent, name, out var held))
-                yield return held.Value;
+        public HeldEnumerator GetEnumerator()
+        {
+            return _handsSystem.GetHeldEnumerator(_entity);
+        }
+
+        IEnumerator<EntityUid> IEnumerable<EntityUid>.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    }
+
+    public struct HeldEnumerator : IEnumerator<EntityUid>
+    {
+        private readonly SharedHandsSystem _handsSystem;
+        private readonly Entity<HandsComponent?> _entity;
+        private readonly HandsComponent _hands;
+        private List<string>.Enumerator _handEnumerator;
+        private bool _activeHandChecked;
+        private bool _valid;
+
+        internal HeldEnumerator(SharedHandsSystem handsSystem, Entity<HandsComponent?> entity, HandsComponent hands, List<string>.Enumerator handEnumerator)
+        {
+            _handsSystem = handsSystem;
+            _entity = entity;
+            _hands = hands;
+            _handEnumerator = handEnumerator;
+            _activeHandChecked = false;
+            _valid = true;
+            Current = default;
+        }
+
+        public EntityUid Current { get; private set; }
+
+        object IEnumerator.Current => Current;
+
+        public bool MoveNext()
+        {
+            if (!_valid)
+                return false;
+
+            if (!_activeHandChecked)
+            {
+                _activeHandChecked = true;
+                if (_handsSystem.TryGetActiveItem(_entity, out var activeHeld))
+                {
+                    Current = activeHeld.Value;
+                    return true;
+                }
+            }
+
+            while (_handEnumerator.MoveNext())
+            {
+                var hand = _handEnumerator.Current;
+                if (hand == _hands.ActiveHandId)
+                    continue;
+
+                if (_handsSystem.TryGetHeldItem(_entity, hand, out var held))
+                {
+                    Current = held.Value;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        void IEnumerator.Reset()
+        {
+            throw new NotSupportedException();
+        }
+
+        public void Dispose()
+        {
+            _handEnumerator.Dispose();
         }
     }
 
