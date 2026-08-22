@@ -23,6 +23,24 @@
     state: ShaftMiner
   jobName: job-name-salvagespec
 
+# Civilian
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconPassenger
+  icon:
+    sprite: *icon-rsi
+    state: Passenger
+  jobName: job-name-passenger
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconVisitor
+  icon:
+    sprite: *icon-rsi
+    state: Visitor
+  jobName: job-name-visitor
+
 # Command
 
 - type: jobIcon
@@ -356,24 +374,6 @@
     sprite: *icon-rsi
     state: Musician
   jobName: job-name-musician
-
-# Passenger
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconPassenger
-  icon:
-    sprite: *icon-rsi
-    state: Passenger
-  jobName: job-name-passenger
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconVisitor
-  icon:
-    sprite: *icon-rsi
-    state: Visitor
-  jobName: job-name-visitor
 
 # Silicon
 

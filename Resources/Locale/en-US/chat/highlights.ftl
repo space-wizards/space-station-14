@@ -32,7 +32,7 @@ highlights-paramedic = Paramedic, "Para", "Medic", Medbay, Medical, "Med"
 highlights-scientist = Scientist, Science, "Sci", "RND", "R&D"
 highlights-researchassistant = Research Assistant, Science, "Sci", "RND", "R&D"
 
-# Civilian
+# Service
 highlights-bartender = Bartender, Barkeeper, Barkeep, "Bar", Service, "Serv"
 highlights-botanist = Botanist, Botany, Hydroponics, Service, "Serv"
 highlights-chaplain = Chaplain, "Chap", Chapel, Service, "Serv"
@@ -43,7 +43,6 @@ highlights-lawyer = Lawyer, Attorney, "Law", Service, "Serv"
 highlights-librarian = Librarian, Library, Service, "Serv"
 highlights-mime = Mime, Theatre, Theater, Service, "Serv"
 highlights-musician = Musician, "Music", Theatre, Theater, Service, "Serv"
-highlights-passenger = Passenger, Greytider, Graytider, "Tider", "Tide"
 highlights-serviceworker = Service Worker, Service, "Serv"
 
 # Station-specific
@@ -53,3 +52,6 @@ highlights-psychologist = Psychologist, Psychology, "Psych", Medbay, Medical, "M
 # Silicon
 highlights-borg = Cyborg, Silicon, Borg, Robotics, "Robot"
 highlights-stationai = Station AI, Silicon, "AI", "sAI"
+
+# Civilian
+highlights-passenger = Passenger, Greytider, Graytider, "Tider", "Tide"
