@@ -180,6 +180,8 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
 
             if (didBloody)
                 _appearance.SetData(uid, RecyclerVisuals.Bloody, true);
+
+            return;
         }
 
         if (_destructible.CanDestroy(item) && component.ReclaimSolutions)
