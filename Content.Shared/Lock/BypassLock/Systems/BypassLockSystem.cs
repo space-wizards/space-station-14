@@ -75,7 +75,7 @@ public sealed partial class BypassLockSystem : EntitySystem
 
         if (TryComp<WiresPanelComponent>(target, out var wiresPanel) &&
             TryComp<BypassLockComponent>(target, out var bypassLock) && bypassLock.OpenWiresPanel)
-            _wires.TogglePanel(target, wiresPanel, true, args.User);
+            _wires.TogglePanel((target, wiresPanel), true, args.User);
 
     }
 

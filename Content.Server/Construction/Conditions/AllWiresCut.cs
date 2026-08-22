@@ -1,4 +1,4 @@
-﻿using Content.Server.Wires;
+﻿using Content.Shared.Wires;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
