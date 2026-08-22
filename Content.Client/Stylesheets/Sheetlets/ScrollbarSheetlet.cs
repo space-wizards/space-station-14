@@ -12,37 +12,36 @@ public sealed class ScrollbarSheetlet : Sheetlet<PalettedStylesheet>
 
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        // TODO: hardcoded colors!!!
         var vScrollBarGrabberNormal = new StyleBoxFlat
         {
-            BackgroundColor = Color.Gray.WithAlpha(0.35f), ContentMarginLeftOverride = DefaultGrabberSize,
+            BackgroundColor = sheet.SecondaryPalette.Text.WithAlpha(0.35f), ContentMarginLeftOverride = DefaultGrabberSize,
             ContentMarginTopOverride = DefaultGrabberSize,
         };
         var vScrollBarGrabberHover = new StyleBoxFlat
         {
-            BackgroundColor = new Color(140, 140, 140).WithAlpha(0.35f), ContentMarginLeftOverride = DefaultGrabberSize,
+            BackgroundColor = sheet.SecondaryPalette.TextDark.WithAlpha(0.35f), ContentMarginLeftOverride = DefaultGrabberSize,
             ContentMarginTopOverride = DefaultGrabberSize,
         };
 
         var vScrollBarGrabberGrabbed = new StyleBoxFlat
         {
-            BackgroundColor = new Color(160, 160, 160).WithAlpha(0.35f), ContentMarginLeftOverride = DefaultGrabberSize,
+            BackgroundColor = sheet.PrimaryPalette.TextDark.WithAlpha(0.35f), ContentMarginLeftOverride = DefaultGrabberSize,
             ContentMarginTopOverride = DefaultGrabberSize,
         };
 
         var hScrollBarGrabberNormal = new StyleBoxFlat
         {
-            BackgroundColor = Color.Gray.WithAlpha(0.35f), ContentMarginTopOverride = DefaultGrabberSize,
+            BackgroundColor = sheet.SecondaryPalette.Text.WithAlpha(0.35f), ContentMarginTopOverride = DefaultGrabberSize,
         };
 
         var hScrollBarGrabberHover = new StyleBoxFlat
         {
-            BackgroundColor = new Color(140, 140, 140).WithAlpha(0.35f), ContentMarginTopOverride = DefaultGrabberSize,
+            BackgroundColor = sheet.SecondaryPalette.TextDark.WithAlpha(0.35f), ContentMarginTopOverride = DefaultGrabberSize,
         };
 
         var hScrollBarGrabberGrabbed = new StyleBoxFlat
         {
-            BackgroundColor = new Color(160, 160, 160).WithAlpha(0.35f), ContentMarginTopOverride = DefaultGrabberSize,
+            BackgroundColor = sheet.PrimaryPalette.TextDark.WithAlpha(0.35f), ContentMarginTopOverride = DefaultGrabberSize,
         };
 
         return
