@@ -1,5 +1,5 @@
-using Content.Server.Medical.Components;
 using Content.Shared.CartridgeLoader;
+using Content.Shared.Medical.HealthAnalyzer;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 
