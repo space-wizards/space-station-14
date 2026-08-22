@@ -18,7 +18,7 @@ public sealed partial class RCDPrototype : IPrototype
     /// The RCD mode associated with the operation
     /// </summary>
     [DataField(required: true), ViewVariables(VVAccess.ReadOnly)]
-    public RcdMode Mode { get; private set; } = RcdMode.Invalid;
+    public RcdMode Mode { get; private set; }
 
     /// <summary>
     /// The name associated with the prototype.
@@ -128,7 +128,6 @@ public sealed partial class RCDPrototype : IPrototype
 
 public enum RcdMode : byte
 {
-    Invalid,
     Deconstruct,
     ConstructTile,
     ConstructObject,
