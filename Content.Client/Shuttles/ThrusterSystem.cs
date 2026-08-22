@@ -20,7 +20,7 @@ public sealed partial class ThrusterSystem : VisualizerSystem<ThrusterComponent>
         SpriteSystem.LayerSetVisible((uid, args.Sprite), ThrusterVisualLayers.ThrustOn, state);
         SetThrusting(
             uid,
-            state && AppearanceSystem.TryGetData<bool>(uid, ThrusterVisualState.Thrusting, out var thrusting, args.Component) && thrusting,
+            state && args.TryGetData<bool>(ThrusterVisualState.Thrusting, out var thrusting) && thrusting,
             args.Sprite
         );
     }
