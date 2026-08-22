@@ -1,6 +1,8 @@
 ﻿using System.Buffers.Binary;
+using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Chat.Managers;
 using Content.Server.Database;
@@ -22,6 +24,7 @@ public sealed class IPIntel
     private readonly IGameTiming _gameTiming;
 
     private readonly ISawmill _sawmill;
+    private readonly ConcurrentDictionary<IPAddress, Lazy<Task<IPIntelResult>>> _pendingLookups = new();
 
     public IPIntel(IIPIntelApi api,
         IServerDbManager db,
@@ -107,7 +110,7 @@ public sealed class IPIntel
             }
         }
 
-        var ip = e.IP.Address;
+        var ip = NormalizeAddress(e.IP.Address);
         var username = e.UserName;
 
         // Is this a local ip address?
@@ -138,11 +141,10 @@ public sealed class IPIntel
             return _rejectUnknown ? (true, Loc.GetString("generic-misconfigured")) : (false, string.Empty);
         }
 
-        var apiResult = await QueryIPIntelRateLimited(ip);
+        var apiResult = await QueryIPIntelSingle(ip);
         switch (apiResult.Code)
         {
             case IPIntelResultCode.Success:
-                await Task.Run(() => _db.UpsertIPIntelCache(DateTime.UtcNow, ip, apiResult.Score));
                 return ScoreCheck(apiResult.Score, username);
 
             case IPIntelResultCode.RateLimited:
@@ -158,6 +160,8 @@ public sealed class IPIntel
 
     public async Task<IPIntelResult> QueryIPIntelRateLimited(IPAddress ip)
     {
+        ip = NormalizeAddress(ip);
+
         IncrementAndTestRateLimit(ref _day, TimeSpan.FromDays(1), "daily");
         IncrementAndTestRateLimit(ref _minute, TimeSpan.FromMinutes(1), "minute");
 
@@ -196,6 +200,50 @@ public sealed class IPIntel
         }
 
         return new IPIntelResult(0, IPIntelResultCode.Errored);
+    }
+
+    private Task<IPIntelResult> QueryIPIntelSingle(IPAddress ip)
+    {
+        ip = NormalizeAddress(ip);
+
+        var lookup = _pendingLookups.GetOrAdd(
+            ip,
+            // Shitcode to stop it invoking the method, we mostly just need it to see if there's an existing one for this IP already.
+            static (address, self) => new Lazy<Task<IPIntelResult>>(
+                () => self.QueryAndCacheIPIntel(address),
+                LazyThreadSafetyMode.ExecutionAndPublication),
+            this);
+
+        return lookup.Value;
+    }
+
+    private async Task<IPIntelResult> QueryAndCacheIPIntel(IPAddress ip)
+    {
+        try
+        {
+            var result = await QueryIPIntelRateLimited(ip);
+
+            if (result.Code == IPIntelResultCode.Success)
+            {
+                await _db.UpsertIPIntelCache(
+                    DateTime.UtcNow,
+                    ip,
+                    result.Score);
+            }
+
+            return result;
+        }
+        finally
+        {
+            _pendingLookups.TryRemove(ip, out _);
+        }
+    }
+
+    private static IPAddress NormalizeAddress(IPAddress address)
+    {
+        return address.IsIPv4MappedToIPv6
+            ? address.MapToIPv4()
+            : address;
     }
 
     private bool CheckSuddenRateLimit()
