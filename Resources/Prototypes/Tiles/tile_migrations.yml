@@ -143,10 +143,6 @@
   target: FloorArcadeBlue
 
 - type: tileAlias
-  id: FloorSteelMono
-  target: FloorSteel
-
-- type: tileAlias
   id: FloorHydro
   target: FloorSteel
 
