@@ -2894,7 +2894,22 @@
     - type: MobThresholds
       thresholds:
         0: Alive
-        180: Dead
+        120: Dead
+    - type: SolutionContainerManager
+      solutions:
+        melee:
+          maxVol: 60
+    - type: MeleeChemicalInjector
+      transferAmount: 4
+      solution: melee
+    - type: SolutionRegeneration
+      solution: melee
+      generated:
+        reagents:
+        - ReagentId: Mechanotoxin
+          Quantity: 0.5
+        - ReagentId: Laughter
+          Quantity: 3.5
     - type: Spider
       webPrototype: SpiderWebClown
     - type: MeleeWeapon
@@ -2902,10 +2917,11 @@
       angle: 0
       animation: WeaponArcBite
       soundHit:
-        path: /Audio/Effects/bite.ogg
+        path: /Audio/Items/bikehorn.ogg
       damage:
         types:
-          Piercing: 8
+          Blunt: 2
+          Piercing: 4
     - type: FootstepModifier
       footstepSoundCollection:
         collection: FootstepClownFast
