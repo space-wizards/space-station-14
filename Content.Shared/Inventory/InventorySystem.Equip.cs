@@ -644,7 +644,7 @@ public abstract partial class InventorySystem
             if (!HasComp<ExtractableComponent>(item) ||
                 !HasComp<FitsInDispenserComponent>(item))
             {
-                var randCoords = _random.NextVector2(.5f, .5f);
+                var randCoords = _random.NextVector2(.5f);
                 _transform.DropNextTo(item, args.Grinder);
                 _throwing.TryThrow(item, randCoords);
                 continue;
