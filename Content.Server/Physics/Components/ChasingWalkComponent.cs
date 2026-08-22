@@ -1,4 +1,4 @@
-using Content.Server.Administration.Systems.Verbs.Operations;
+using Content.Server.Administration.Verbs.Operations;
 using Content.Server.Physics.Controllers;
 using Content.Server.Weapons.Ranged.Systems;
 using Robust.Shared.Prototypes;

@@ -1,8 +1,6 @@
-﻿using Content.Server.Administration.Verbs.Operations;
-using Content.Server.Administration.Verbs.Operations.Smites;
 using Content.Shared.Body.Components;
 
-namespace Content.Server.Administration.Systems.Verbs.Operations;
+namespace Content.Server.Administration.Verbs.Operations;
 
 public sealed partial class AdminOperationSystem
 {
@@ -12,3 +10,6 @@ public sealed partial class AdminOperationSystem
         _bloodstream.SpillAllSolutions(entity.AsNullable());
     }
 }
+
+// TODO: Use EntityEffectsOperation once spilling bloodstream solutions has an entity effect.
+public sealed partial class SpillBloodstreamOperation : AdminOperationBase<SpillBloodstreamOperation>;

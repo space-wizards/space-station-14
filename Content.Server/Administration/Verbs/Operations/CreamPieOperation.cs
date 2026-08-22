@@ -1,8 +1,6 @@
-﻿using Content.Server.Administration.Verbs.Operations;
-using Content.Server.Administration.Verbs.Operations.Smites;
 using Content.Shared.Nutrition.Components;
 
-namespace Content.Server.Administration.Systems.Verbs.Operations;
+namespace Content.Server.Administration.Verbs.Operations;
 
 public sealed partial class AdminOperationSystem
 {
@@ -12,3 +10,6 @@ public sealed partial class AdminOperationSystem
         _creamPie.SetCreamPied(entity.AsNullable(), true);
     }
 }
+
+// TODO: Use EntityEffectsOperation once CreamPied state has an entity effect.
+public sealed partial class CreamPieOperation : AdminOperationBase<CreamPieOperation>;

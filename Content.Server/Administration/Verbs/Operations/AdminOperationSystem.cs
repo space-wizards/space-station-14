@@ -1,5 +1,4 @@
-﻿using Content.Server.Administration.Verbs.Operations;
-using Content.Server.Clothing.Systems;
+﻿using Content.Server.Clothing.Systems;
 using Content.Server.GhostKick;
 using Content.Server.Mind;
 using Content.Server.Movement.Systems;
@@ -22,7 +21,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 
-namespace Content.Server.Administration.Systems.Verbs.Operations;
+namespace Content.Server.Administration.Verbs.Operations;
 
 /// <summary>
 /// Executes data-defined admin operations by raising their local events on the target.

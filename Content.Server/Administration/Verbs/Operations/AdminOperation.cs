@@ -1,6 +1,4 @@
-﻿using Content.Server.Administration.Systems.Verbs.Operations;
-
-namespace Content.Server.Administration.Verbs.Operations;
+﻿namespace Content.Server.Administration.Verbs.Operations;
 
 /// <summary>
 /// A data-defined step in an admin verb, dispatched to the target as a local event.

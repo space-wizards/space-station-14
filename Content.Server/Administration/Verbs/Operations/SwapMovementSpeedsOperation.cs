@@ -1,8 +1,6 @@
-﻿using Content.Server.Administration.Verbs.Operations;
-using Content.Server.Administration.Verbs.Operations.Smites;
 using Content.Shared.Movement.Components;
 
-namespace Content.Server.Administration.Systems.Verbs.Operations;
+namespace Content.Server.Administration.Verbs.Operations;
 
 public sealed partial class AdminOperationSystem
 {
@@ -16,3 +14,5 @@ public sealed partial class AdminOperationSystem
         Dirty(entity, movementSpeed);
     }
 }
+
+public sealed partial class SwapMovementSpeedsOperation : AdminOperationBase<SwapMovementSpeedsOperation>;

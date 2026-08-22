@@ -1,8 +1,6 @@
-﻿using Content.Server.Administration.Verbs.Operations;
-using Content.Server.Administration.Verbs.Operations.Smites;
 using Content.Shared.Slippery;
 
-namespace Content.Server.Administration.Systems.Verbs.Operations;
+namespace Content.Server.Administration.Verbs.Operations;
 
 public sealed partial class AdminOperationSystem
 {
@@ -22,3 +20,5 @@ public sealed partial class AdminOperationSystem
             RemComp(entity, slipComponent);
     }
 }
+
+public sealed partial class SuperSlipOperation : AdminOperationBase<SuperSlipOperation>;

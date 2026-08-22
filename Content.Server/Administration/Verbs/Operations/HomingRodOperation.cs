@@ -1,12 +1,11 @@
-﻿using System.Numerics;
+﻿using Robust.Shared.Prototypes;
+using System.Numerics;
 using Content.Server.Physics.Components;
-using Content.Server.Administration.Verbs.Operations;
-using Content.Server.Administration.Verbs.Operations.Smites;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Spawners;
 
-namespace Content.Server.Administration.Systems.Verbs.Operations;
+namespace Content.Server.Administration.Verbs.Operations;
 
 public sealed partial class AdminOperationSystem
 {
@@ -38,4 +37,22 @@ public sealed partial class AdminOperationSystem
         if (TryComp<TimedDespawnComponent>(rod, out var despawn))
             despawn.Lifetime = offset.Length() / speed * 3;
     }
+}
+
+public sealed partial class HomingRodOperation : AdminOperationBase<HomingRodOperation>
+{
+    [DataField(required: true)]
+    public EntProtoId Prototype { get; private set; }
+
+    [DataField(required: true)]
+    public float Distance { get; private set; }
+
+    [DataField(required: true)]
+    public float Speed { get; private set; }
+
+    /// <summary>
+    /// Uses the target's sprint speed when available, falling back to <see cref="Speed"/>.
+    /// </summary>
+    [DataField]
+    public bool MatchTargetSprintSpeed { get; private set; }
 }

@@ -1,8 +1,7 @@
-﻿using Content.Server.Administration.Verbs.Operations;
-using Content.Server.Administration.Verbs.Operations.Smites;
+﻿using Robust.Shared.Prototypes;
 using Content.Shared.Storage.Components;
 
-namespace Content.Server.Administration.Systems.Verbs.Operations;
+namespace Content.Server.Administration.Verbs.Operations;
 
 public sealed partial class AdminOperationSystem
 {
@@ -21,4 +20,10 @@ public sealed partial class AdminOperationSystem
 
         _weldable.SetWeldedState(locker, true);
     }
+}
+
+public sealed partial class StuffIntoLockerOperation : AdminOperationBase<StuffIntoLockerOperation>
+{
+    [DataField(required: true)]
+    public EntProtoId Prototype { get; private set; }
 }

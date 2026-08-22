@@ -1,4 +1,4 @@
-using Content.Server.Administration.Systems.Verbs.Operations;
+using Content.Server.Administration.Verbs.Operations;
 using Content.Server.Administration.Verbs.Prototypes;
 using Content.Shared.Administration;
 using Content.Shared.Database;
