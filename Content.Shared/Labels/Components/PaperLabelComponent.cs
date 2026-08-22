@@ -20,7 +20,7 @@ public sealed partial class PaperLabelComponent : Component
 
     /// <summary>
     /// The RSI states to use per label type.
-    /// Note: None does not need to be defined, it will never be used.
+    /// Note: None does not need to be defined, it will never be read from this dictionary.
     /// </summary>
     [DataField]
     public Dictionary<PaperLabelType, string> LabelStates = new()
