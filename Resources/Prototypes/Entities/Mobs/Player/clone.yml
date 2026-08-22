@@ -2,24 +2,27 @@
 # If you add a new trait, job specific component or a component doing visual/examination changes for humanoids
 # then add it here to the correct prototype.
 # The datafields of the components copied using CopyComp.
-# Subscribe to CloningEvent instead if that is not enough.
+# If you need persistent fields (carrying over values after cloning)
+# or other special overwrite logic, add it to CloningContext.
+# And finally, if you need other oddball behavior, like unzombifying a clone,
+# add a ClonedEvent handler - this should not be used for copying data where possible.
 
 # Traits that root mentally or otherwise only affect you mentally.
 - type: cloningSettings
   id: TraitsMental
   components:
+  - LightweightDrunk
   - Pacified
   - Paracusia
-  - LightweightDrunk
 
 # Traits that root in physical things in your body.
 - type: cloningSettings
   id: TraitsPhysical
   components:
   - BlackAndWhiteOverlay
-  - Narcolepsy
   - ImpairedMobility
   # - LegsParalyzed (you get healed)
+  - Narcolepsy
   - PermanentBlindness
   - Snoring
   - Unrevivable
@@ -72,10 +75,10 @@
   - SouthernAccent
   - SpanishAccent
   - StutteringAccent
-  eventComponents:
+  # CloningContext fields
+  - CreamPied # Displacements
   - Damageable # Sprites and damage modifier
   - Flammable # Displacements
-  - CreamPied # Displacements
   - Hands # displacements
   - Puller
   - Vocal # voice sounds
@@ -86,8 +89,8 @@
   components:
   - BibleUser
   - CommandStaff
-  - MindShield
   - MimePowers
+  - MindShield
   - SpaceNinja
   - Thieving
 
@@ -96,8 +99,8 @@
   id: Antag
   components:
   - HeadRevolutionary
-  - Revolutionary
   - NukeOperative
+  - Revolutionary
 
 - type: cloningSettings
   abstract: true
@@ -110,13 +113,13 @@
 
 # a full clone with all traits and items, but no antag roles
 - type: cloningSettings
-  id: BaseClone
   parent: [Body, Special, Traits, BaseEquipmentBlacklist]
+  id: BaseClone
 
 # for cloning pods
 - type: cloningSettings
-  id: CloningPod
   parent: [BaseClone, Antag]
+  id: CloningPod
   forceCloning: false
   copyEquipment: null
   copyInternalStorage: false
@@ -124,8 +127,8 @@
 
 # for paradox clones
 - type: cloningSettings
-  id: ParadoxCloningSettings
   parent: [BaseClone, Antag]
+  id: ParadoxCloningSettings
   components:
   - Forensics # This is so hugging data is copied to the clone, so you can't hug metagame them
 
@@ -141,22 +144,21 @@
   # that means we only need to copy them over when switching between species.
   # So these don't need to be part of the Body settings, unless someone makes a trait that adjusts these components.
   - BodyEmotes
-  - MessyDrinker
   # - Fixtures TODO: A better way to clone fixtures or a fixture fix. Currently if you devour someone on the ground and transform, you lose collision with tables as they were knocked down when they were copied.
+  - MessyDrinker
+  - ScaleVisuals # for dwarf height
   - Speech
   - TemperatureProtection
   - TypingIndicator
-  - ScaleVisuals # for dwarf height
-  eventComponents:
-  # these need special treatment in the event subscription
+  # CloningContext components
+  - Bloodstream # blood reagents
   - Inventory # arachnid pockets and diona feet
-  - Wagging # lizard tails
-  - Storage # slime storage
+  - JumpAbility # vulp leaping
+  - MovementSpeedModifier # moths when weightless
   - Rootable # diona
   - Sericulture # arachnids
-  - MovementSpeedModifier # moths when weightless
-  - JumpAbility # vulp leaping
-  - Bloodstream # blood reagents
+  - Storage # slime storage
+  - Wagging # lizard tails
   copyInternalStorage: false
   copyImplants: false
   raiseEntityRenamedEvent: false
@@ -179,13 +181,13 @@
   id: PlantClone
   components:
   - Plant
-  - PlantHarvest
-  - PlantChemicals
-  - PlantGrowth
   - PlantAtmospheric
+  - PlantChemicals
   - PlantConsumeExudeGas
-  - PlantWeedPest
+  - PlantGrowth
+  - PlantHarvest
   - PlantToxins
+  - PlantWeedPest
   # traits
   - PlantTraitKudzu
   - PlantTraitLigneous
@@ -194,11 +196,22 @@
 
 # for plant lifecycle clones
 - type: cloningSettings
-  id: PlantLifecycleClone
   parent: PlantClone
+  id: PlantLifecycleClone
   components:
+  - PlantHolder
   # traits
   - PlantTraitSampled
   - PlantTraitSeedless
-  eventComponents:
-  - PlantHolder
+
+# for cloned items
+- type: cloningSettings
+  id: ItemClone
+  components:
+  - ChameleonClothing
+  - Forensics
+  - Label
+  - Paper
+  - Stack
+  # CloningContext components
+  - Store

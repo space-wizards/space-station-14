@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Body;
+using Content.Shared.Cloning;
 using Content.Shared.Humanoid;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -9,7 +10,7 @@ namespace Content.Shared.Wagging;
 /// An emoting wag for markings.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
-[Access(typeof(WaggingSystem))]
+[Access(typeof(WaggingSystem), typeof(CloningContext))]
 public sealed partial class WaggingComponent : Component
 {
     /// <summary>

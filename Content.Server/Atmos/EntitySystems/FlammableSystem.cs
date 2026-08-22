@@ -494,26 +494,5 @@ namespace Content.Server.Atmos.EntitySystems
                 }
             }
         }
-
-        public void CopyComponent(Entity<FlammableComponent?> entity, EntityUid clone)
-        {
-            if (!Resolve(entity, ref entity.Comp, false))
-                return;
-
-            // Don't clone being on fire here.
-            var cloneComp = EnsureComp<FlammableComponent>(clone);
-            cloneComp.Displacement = entity.Comp.Displacement;
-            cloneComp.AlwaysCombustible = entity.Comp.AlwaysCombustible;
-            cloneComp.CanExtinguish = entity.Comp.CanExtinguish;
-            cloneComp.Damage = entity.Comp.Damage.Clone();
-            cloneComp.FirestackFade = entity.Comp.FirestackFade;
-            cloneComp.FirestacksOnIgnite = entity.Comp.FirestacksOnIgnite;
-            cloneComp.MaximumFireStacks = entity.Comp.MaximumFireStacks;
-            cloneComp.MinimumFireStacks = entity.Comp.MinimumFireStacks;
-            cloneComp.ResistTime = entity.Comp.ResistTime;
-            Dirty(clone, cloneComp);
-
-            UpdateAppearance(clone, cloneComp);
-        }
     }
 }

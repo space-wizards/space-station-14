@@ -13,6 +13,9 @@ namespace Content.Shared.Store.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class StoreComponent : Component
 {
+    /// <summary>
+    /// The name to display on the title bar of the store's UI.
+    /// </summary>
     [DataField]
     public LocId Name = "store-ui-default-title";
 
@@ -42,7 +45,7 @@ public sealed partial class StoreComponent : Component
     /// Used to increase the severity of the admin log upon purchase if the purchaser is not a member of one of the listed factions.
     /// </summary>
     [DataField]
-    public HashSet<ProtoId<NpcFactionPrototype>>? ExpectedFaction = new ();
+    public HashSet<ProtoId<NpcFactionPrototype>>? ExpectedFaction = new();
 
     /// <summary>
     /// The person/mind who "owns" the store/account. Used if you want the listings to be fixed
@@ -64,32 +67,32 @@ public sealed partial class StoreComponent : Component
     public HashSet<ListingDataWithCostModifiers> LastAvailableListings = new();
 
     /// <summary>
-    ///     All current entities bought from this shop. Useful for keeping track of refunds and upgrades.
+    /// All current entities bought from this shop. Useful for keeping track of refunds and upgrades.
     /// </summary>
     [ViewVariables, DataField]
     public List<EntityUid> BoughtEntities = new();
 
     /// <summary>
-    ///     The total balance spent in this store. Used for refunds.
+    /// The total balance spent in this store. Used for refunds.
     /// </summary>
     [ViewVariables, DataField]
     public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> BalanceSpent = new();
 
     /// <summary>
-    ///     Controls if the store allows refunds
+    /// Controls if the store allows refunds
     /// </summary>
     [ViewVariables, DataField]
     public bool RefundAllowed;
 
     /// <summary>
-    ///     Checks if store can be opened by the account owner only.
-    ///     Not meant to be used with uplinks.
+    /// Checks if store can be opened by the account owner only.
+    /// Not meant to be used with uplinks.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField]
     public bool OwnerOnly;
 
     /// <summary>
-    ///     The map the store was originally from, used to block refunds if the map is changed
+    /// The map the store was originally from, used to block refunds if the map is changed
     /// </summary>
     [DataField]
     public EntityUid? StartingMap;
@@ -115,7 +118,7 @@ public readonly record struct StoreAddedEvent;
 public readonly record struct StoreRemovedEvent;
 
 /// <summary>
-///     Broadcast when an Entity with the <see cref="StoreRefundComponent"/> is deleted
+/// Broadcast when an Entity with the <see cref="StoreRefundComponent"/> is deleted
 /// </summary>
 [ByRefEvent]
 public readonly struct RefundEntityDeletedEvent
