@@ -11,8 +11,11 @@
   - type: Icon
     state: full
   - type: IconSmooth
-    key: full
-    base: carpet_
+    key: carpet
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ carpet ]
+      base: carpet_
   - type: Tag
     tags:
     - Carpet
@@ -263,10 +266,11 @@
     sprite: Structures/Furniture/Carpets/card_carpet.rsi
     state: full
   - type: IconSmooth
-    key: cardpets
-    additionalKeys:
-    - cards
-    base: carpet_
+    key: cardpet
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ cardpet, cards ]
+      base: carpet_
   - type: Tag
     tags:
     - Carpet

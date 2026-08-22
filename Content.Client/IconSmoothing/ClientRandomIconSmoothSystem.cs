@@ -23,7 +23,6 @@ public sealed partial class ClientRandomIconSmoothSystem : SharedRandomIconSmoot
         if (!_appearance.TryGetData<string>(ent, RandomIconSmoothState.State, out var state, args.Component))
             return;
 
-        smooth.StateBase = state;
-        _iconSmooth.SetStateBase(ent, smooth, state);
+        smooth.States[ent.Comp.Index].Base = state;
     }
 }

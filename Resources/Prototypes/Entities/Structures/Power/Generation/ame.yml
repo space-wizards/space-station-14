@@ -170,9 +170,11 @@
   - type: Transform
     anchored: true
   - type: IconSmooth
-    mode: CardinalFlags
-    base: shield_
     key: ame_shield
+    states:
+    - !type:DirectionSpriteSmoothing
+      mask: [ ame_shield ]
+      base: shield_
   - type: AmeShield
   - type: NodeContainer
     nodes:

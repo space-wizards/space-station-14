@@ -55,10 +55,7 @@
       shader: unshaded
       visible: false
   - type: IconSmooth
-    key: walls
-    additionalKeys:
-    - woods
-    mode: NoSprite
+    key: doors
   - type: AnimationPlayer
   - type: Physics
   - type: Fixtures

@@ -36,9 +36,10 @@
   - type: SpiderWebObject
   - type: IconSmooth
     key: web
-    additionalKeys:
-    - walls
-    base: web_
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ web, walls ]
+      base: web_
   - type: Construction
     graph: CobwebsGraph
     node: start

@@ -95,8 +95,7 @@
   - type: PlacementReplacement
     key: shutters
   - type: IconSmooth
-    key: walls
-    mode: NoSprite
+    key: doors
 
 - type: entity
   id: ShuttersNormal
