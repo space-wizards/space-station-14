@@ -128,6 +128,9 @@
     proto: robot
   - type: Speech
     speechVerb: Robotic
+  - type: StatusIconEquipment
+    slots:
+    - idcard
 
 - type: entity
   parent: BasePDA

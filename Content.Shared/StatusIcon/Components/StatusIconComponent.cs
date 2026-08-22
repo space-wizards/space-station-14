@@ -14,8 +14,24 @@ public sealed partial class StatusIconComponent : Component
     /// If null, the sprite bounds will be used.
     /// </summary>
     [AutoNetworkedField]
-    [DataField("bounds"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public Box2? Bounds;
+
+    /// <summary>
+    /// Entites that don't normally have status icons might be temporarily granted them,
+    /// such as by equipment with StatusIconEquipmentComponent.
+    /// </summary>
+    [AutoNetworkedField]
+    [DataField]
+    public bool Temporary = false;
+
+    /// <summary>
+    /// The count of how many entities are granting this temporary component.
+    /// The component should be deleted if it's temporary and the user count is 0.
+    /// </summary>
+    [AutoNetworkedField]
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public int TemporaryUserCount = 0;
 }
 
 /// <summary>
