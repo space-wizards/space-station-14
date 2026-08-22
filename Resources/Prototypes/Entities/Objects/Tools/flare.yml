@@ -60,15 +60,21 @@
         maxDuration: 45.0
         startValue: 2.5
         endValue: 10.0
-      - !type:RandomizeBehaviour # weaker flicker as it fades out
+      - !type:RandomizeBehaviour # add flicker as it fizzles out
         id: fade_out
         interpolate: Nearest
-        minDuration: 0.001
-        maxDuration: 0.001
-        startValue: 4.0
-        endValue: 8.0
+        minDuration: 0.01
+        maxDuration: 0.01
+        startValue: 1.5
+        endValue: 3.5
         property: Energy
         isLooped: true
+      - !type:FadeBehaviour # fade out energy without flicker initially
+        id: fade_out
+        property: Energy
+        maxDuration: 12.0
+        startValue: 9.0
+        endValue: 3.0
       - !type:FadeBehaviour # fade out radius as it burns out
         id: fade_out
         maxDuration: 15.0
