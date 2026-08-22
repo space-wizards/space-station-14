@@ -22,6 +22,7 @@ using Content.Shared.Throwing;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Collections;
 using Robust.Shared.Player;
+using Content.Shared.Body.Systems;
 
 namespace Content.Shared.StatusEffectNew;
 
@@ -60,6 +61,7 @@ public sealed partial class StatusEffectsSystem
         SubscribeLocalEvent<StatusEffectContainerComponent, EmoteEvent>(RefRelayStatusEffectEvent, before: new[] { typeof(VocalSystem), typeof(MumbleAccentSystem) });
 
         SubscribeLocalEvent<StatusEffectContainerComponent, BleedModifierEvent>(RefRelayStatusEffectEvent);
+        SubscribeLocalEvent<StatusEffectContainerComponent, ModifyBloodDropletEvent>(RefRelayStatusEffectEvent);
         SubscribeLocalEvent<StatusEffectContainerComponent, DamageModifyEvent>(RelayStatusEffectEvent);
         SubscribeLocalEvent<StatusEffectContainerComponent, RefreshPressureImmunityEvent>(RefRelayStatusEffectEvent);
         SubscribeLocalEvent<StatusEffectContainerComponent, SelfBeforeDefibrillatorZapsEvent>(RelayStatusEffectEvent);
