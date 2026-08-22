@@ -96,13 +96,13 @@ public sealed partial class GraphicsTab : Control
     {
         var vSync = VSyncCheckBox.Pressed;
         MaxFpsInput.Disabled = vSync;
-        MaxFpsDisplayRateButton.Disabled = vSync || _clyde.GetWindowMonitor() == null;
+        MaxFpsDisplayRateButton.Disabled = vSync || _clyde.GetMainWindowMonitor() == null;
         MaxFpsContainer.Modulate = vSync ? Color.FromHex("#FFFFFF80") : Color.White;
     }
 
     private void SetMaxFpsToDisplayRate()
     {
-        if (_clyde.GetWindowMonitor() is not { RefreshRate: > 0 } monitor)
+        if (_clyde.GetMainWindowMonitor() is not { RefreshRate: > 0 } monitor)
             return;
 
         MaxFpsInput.MaxValue = Math.Max(MaxFpsInput.MaxValue, monitor.RefreshRate);
