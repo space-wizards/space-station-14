@@ -116,7 +116,7 @@ public sealed partial class SatiationThresholds<T>
     /// The current <typeparamref name="T"/> value, at least when maintained by something like
     /// <see cref="BaseSatiationEffectSystem{TComp,T}"/>
     /// </summary>
-    [DataField(CurrentTag), ViewVariables]
+    [DataField(CurrentTag)]
     public T Current;
 
     public const string ThresholdsTag = "thresholds";
