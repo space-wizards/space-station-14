@@ -35,6 +35,8 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
     [UISystemDependency] private readonly HandsSystem _handsSystem = default!;
     [UISystemDependency] private readonly SpriteSystem _sprite = default!;
 
+    private EntityQuery<VirtualItemComponent> _virtualItemQuery = default!;
+
     private EntityUid? _playerUid;
     private InventorySlotsComponent? _playerInventory;
     private readonly Dictionary<string, ItemSlotButtonContainer> _slotGroups = new();
@@ -51,6 +53,8 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
 
         var gameplayStateLoad = UIManager.GetUIController<GameplayStateLoadController>();
         gameplayStateLoad.OnScreenLoad += OnScreenLoad;
+
+        _virtualItemQuery = _entities.GetEntityQuery<VirtualItemComponent>();
     }
 
     private void OnScreenLoad()
@@ -96,6 +100,8 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
         button.Pressed += ItemPressed;
         button.StoragePressed += StoragePressed;
         button.Hover += SlotButtonHovered;
+        button.Blocked = _virtualItemQuery.HasComp(data.HeldEntity) || data.IsBlocked();
+        button.UpdateBlockers(data.Blockers);
 
         return button;
     }
@@ -257,6 +263,7 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
         _inventorySystem.OnSlotRemoved += RemoveSlot;
         _inventorySystem.OnLinkInventorySlots += LoadSlots;
         _inventorySystem.OnUnlinkInventory += UnloadSlots;
+        _inventorySystem.EntitySlotUpdate += EntitySlotUpdate;
         _inventorySystem.OnSpriteUpdate += SpriteUpdated;
     }
 
@@ -267,6 +274,7 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
         _inventorySystem.OnSlotRemoved -= RemoveSlot;
         _inventorySystem.OnLinkInventorySlots -= LoadSlots;
         _inventorySystem.OnUnlinkInventory -= UnloadSlots;
+        _inventorySystem.EntitySlotUpdate -= EntitySlotUpdate;
         _inventorySystem.OnSpriteUpdate -= SpriteUpdated;
     }
 
@@ -423,6 +431,25 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
         UpdateInventoryHotbar(null);
     }
 
+    private void EntitySlotUpdate(SlotData data)
+    {
+        var blocked = _virtualItemQuery.HasComp(data.HeldEntity) || data.IsBlocked();
+
+        if (_strippingWindow?.InventoryButtons.GetButton(data.SlotName) is { } inventoryButton)
+        {
+            inventoryButton.Highlight = data.Highlighted;
+            inventoryButton.Blocked = blocked;
+            inventoryButton.UpdateBlockers(data.Blockers);
+        }
+
+        if (_slotGroups.GetValueOrDefault(data.SlotGroup)?.GetButton(data.SlotName) is { } button)
+        {
+            button.Highlight = data.Highlighted;
+            button.Blocked = blocked;
+            button.UpdateBlockers(data.Blockers);
+        }
+    }
+
     private void SpriteUpdated(SlotSpriteUpdate update)
     {
         var (entity, group, name, showStorage) = update;
@@ -436,15 +463,13 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
         if (_slotGroups.GetValueOrDefault(group)?.GetButton(name) is not { } button)
             return;
 
-        if (_entities.TryGetComponent(entity, out VirtualItemComponent? virtb))
+        if (_virtualItemQuery.TryComp(entity, out var virtb))
         {
             button.SetEntity(virtb.BlockingEntity);
-            button.Blocked = true;
         }
         else
         {
             button.SetEntity(entity);
-            button.Blocked = false;
             button.StorageButton.Visible = showStorage;
         }
     }

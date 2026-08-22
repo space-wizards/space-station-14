@@ -140,9 +140,8 @@
   id: ClothingOuterEVASuitBase
   name: base EVA Suit
   components:
-# SlotBlocker blocked until UI change
-#  - type: SlotBlock
-#    slots: [innerclothing, feet]
+  - type: InventorySlotBlock
+    slots: [innerclothing, feet]
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000
