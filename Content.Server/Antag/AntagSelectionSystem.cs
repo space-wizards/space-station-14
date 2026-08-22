@@ -18,6 +18,7 @@ using Content.Server.Roles.Jobs;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Antag;
+using Content.Shared.Antag.Components;
 using Content.Shared.Clothing;
 using Content.Shared.Database;
 using Content.Shared.Follower;
@@ -35,7 +36,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using static Content.Server.Antag.Components.AntagSelectionTime;
+using static Content.Shared.Antag.Components.AntagSelectionTime;
 
 namespace Content.Server.Antag;
 
@@ -199,6 +200,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             // This is the best query to do it in, and we're not returning early so might as well do it here.
             AddGameRuleDefinitions((uid, antag), pool.Count, ref _preSpawnRules, ref _postSpawnRules, GameTicker.IsGameRuleActive(uid, rule));
             antag.PreSelectionsComplete = true;
+            Dirty(uid, antag);
         }
 
         // Pick a random player session and then try to assign the currently available antags from it!
@@ -361,6 +363,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         var antags = GetAntags(gameRule, players.Count);
         AssignAntags(gameRule, players, antags);
         gameRule.Comp.PreSelectionsComplete = true;
+        Dirty(gameRule);
     }
 
     private void AssignAntags(Entity<AntagSelectionComponent> gameRule, IList<ICommonSession> players, List<AntagCount> antags)
@@ -575,7 +578,10 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     private void PreSelectSession(Entity<AntagSelectionComponent> gameRule, ProtoId<AntagSpecifierPrototype> protoId, ICommonSession player)
     {
         if (!gameRule.Comp.PreSelectedSessions.TryGetValue(protoId, out var set))
+        {
             gameRule.Comp.PreSelectedSessions.Add(protoId, set = new HashSet<ICommonSession>());
+            Dirty(gameRule);
+        }
 
         // Element already exists, don't need to log it twice, this typically happens when a pre-selected antag is initialized!
         if (!set.Add(player))
@@ -743,6 +749,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         }
 
         gameRule.Comp.AssignmentHandled = true;
+        Dirty(gameRule);
     }
 
     /// <summary>
