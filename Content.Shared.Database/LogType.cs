@@ -464,6 +464,7 @@ public enum LogType
     /// Logs related to botany, such as planting and harvesting crops
     /// </summary>
     Botany = 100,
+
     /// <summary>
     /// Artifact node got activated.
     /// </summary>
@@ -488,4 +489,9 @@ public enum LogType
     /// Silicon law changes.
     /// </summary>
     SiliconLaw = 105,
+
+    /// <summary>
+    /// For anything relating to bug reports.
+    /// </summary>
+    BugReport = 106,
 }
