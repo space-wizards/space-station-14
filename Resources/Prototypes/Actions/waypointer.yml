@@ -1,0 +1,22 @@
+﻿- type: entity
+  parent: BaseAction
+  id: ActionManageWaypointers
+  name: Manage Waypointers
+  description: Manage the visibility of your waypointers.
+  components:
+  - type: Action
+    toggled: true
+  - type: Sprite
+    sprite: Markers/Waypointers/waypointer_action.rsi
+    layers:
+    - state: action_icon_off
+      map: [ "enum.ActionVisuals.Icon" ]
+    - state: action_icon_on
+      map: [ "enum.ActionVisuals.IconToggled" ]
+      visible: false
+  - type: InstantAction
+    event: !type:ActionManageWaypointersEvent
+  - type: UserInterface
+    interfaces:
+      enum.WaypointerUiKey.Key:
+        type: WaypointerMenuBoundUserinterface
