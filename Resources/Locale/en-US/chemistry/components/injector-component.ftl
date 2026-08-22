@@ -35,7 +35,6 @@ injector-component-cannot-transfer-message = You aren't able to transfer into {T
 injector-component-cannot-transfer-message-self = You aren't able to transfer into yourself!
 injector-component-cannot-inject-message = You aren't able to inject into {THE($target)}!
 injector-component-cannot-inject-message-self = You aren't able to inject into yourself!
-injector-component-cannot-draw-message = You aren't able to draw from {THE($target)}!
 injector-component-cannot-draw-message-self = You aren't able to draw from yourself!
 injector-component-ignore-mobs = This injector can only interact with containers!
 
