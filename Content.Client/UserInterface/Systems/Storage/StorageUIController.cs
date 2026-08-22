@@ -53,6 +53,12 @@ public sealed partial class StorageUIController : UIController, IOnSystemChanged
     public bool OpaqueStorageWindow;
     private int _openStorageLimit = -1;
 
+    /// <summary>
+    /// Set of open storage windows, and their associated bui, so we can
+    /// reparent them if the user changes the StaticStorageUI setting.
+    /// </setting>
+    private readonly Dictionary<StorageWindow, StorageBoundUserInterface> _storageWindows = new();
+
     public bool IsDragging => _menuDragHelper.IsDragging;
     public ItemGridPiece? CurrentlyDragging => _menuDragHelper.Dragged;
 
@@ -91,6 +97,14 @@ public sealed partial class StorageUIController : UIController, IOnSystemChanged
     private void OnStaticStorageChanged(bool obj)
     {
         StaticStorageUIEnabled = obj;
+
+        // We now need to reparent any open windows to where
+        // they should be if they were opened with the new setting
+        foreach (var (window, bui) in _storageWindows)
+        {
+            window.Parent?.RemoveChild(window);
+            ShowStorageWindow(bui, window);
+        }
     }
 
     public StorageWindow CreateStorageWindow(StorageBoundUserInterface sBui)
@@ -107,9 +121,33 @@ public sealed partial class StorageUIController : UIController, IOnSystemChanged
             OnPieceUnpressed(args, window, piece);
         };
 
+        _storageWindows.Add(window, sBui);
+        window.OnClose += () => _storageWindows.Remove(window);
+
+        ShowStorageWindow(sBui, window);
+
+        return window;
+    }
+
+    public void OnSystemLoaded(StorageSystem system)
+    {
+        _input.FirstChanceOnKeyEvent += OnMiddleMouse;
+    }
+
+    public void OnSystemUnloaded(StorageSystem system)
+    {
+        _input.FirstChanceOnKeyEvent -= OnMiddleMouse;
+    }
+
+    /// <summary>
+    /// Adds the window to the game UI. Where the window is displayed
+    /// depends on the value of <cref see="StaticStorageUIEnabled" />
+    /// </summary>
+    private void ShowStorageWindow(StorageBoundUserInterface sBui, StorageWindow window)
+    {
         if (StaticStorageUIEnabled)
         {
-            var hotbar = UIManager.GetActiveUIWidgetOrNull<HotbarGui>();
+            var storageDisplay = UIManager.GetActiveUIWidgetOrNull<StorageGui>();
             // this lambda handles the nested storage case
             // during nested storage, a parent window hides and a child window is
             // immediately inserted to the end of the list
@@ -128,29 +166,29 @@ public sealed partial class StorageUIController : UIController, IOnSystemChanged
                 child.SetPositionInParent(invisibleIndex);
             };
 
-            if (hotbar != null)
+            if (storageDisplay != null)
             {
-                hotbar.DoubleStorageContainer.Visible = _openStorageLimit == 2;
-                hotbar.SingleStorageContainer.Visible = _openStorageLimit != 2;
+                storageDisplay.DoubleStorageContainer.Visible = _openStorageLimit == 2;
+                storageDisplay.SingleStorageContainer.Visible = _openStorageLimit != 2;
             }
 
             if (_openStorageLimit == 2)
             {
-                if (hotbar?.LeftStorageContainer.Children.Any(c => c.Visible) == false) // we're comparing booleans because it's bool? and not bool from the optional chaining
+                if (storageDisplay?.LeftStorageContainer.Children.Any(c => c.Visible) == false) // we're comparing booleans because it's bool? and not bool from the optional chaining
                 {
-                    hotbar?.LeftStorageContainer.AddChild(window);
-                    reorder(hotbar?.LeftStorageContainer, window);
+                    storageDisplay?.LeftStorageContainer.AddChild(window);
+                    reorder(storageDisplay?.LeftStorageContainer, window);
                 }
                 else
                 {
-                    hotbar?.RightStorageContainer.AddChild(window);
-                    reorder(hotbar?.RightStorageContainer, window);
+                    storageDisplay?.RightStorageContainer.AddChild(window);
+                    reorder(storageDisplay?.RightStorageContainer, window);
                 }
             }
             else
             {
-                hotbar?.SingleStorageContainer.AddChild(window);
-                reorder(hotbar?.SingleStorageContainer, window);
+                storageDisplay?.SingleStorageContainer.AddChild(window);
+                reorder(storageDisplay?.SingleStorageContainer, window);
             }
             _closeRecentWindowUIController.SetMostRecentlyInteractedWindow(window);
         }
@@ -172,21 +210,10 @@ public sealed partial class StorageUIController : UIController, IOnSystemChanged
             {
                 window.OpenCenteredLeft();
             }
+            _ui.RegisterControl(sBui, window);
         }
-
-        _ui.RegisterControl(sBui, window);
-        return window;
     }
 
-    public void OnSystemLoaded(StorageSystem system)
-    {
-        _input.FirstChanceOnKeyEvent += OnMiddleMouse;
-    }
-
-    public void OnSystemUnloaded(StorageSystem system)
-    {
-        _input.FirstChanceOnKeyEvent -= OnMiddleMouse;
-    }
 
     /// One might ask, Hey Emo, why are you parsing raw keyboard input just to rotate a rectangle?
     /// The answer is, that input bindings regarding mouse inputs are always intercepted by the UI,
