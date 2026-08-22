@@ -6,6 +6,7 @@ namespace Content.Client.UserInterface.Controls;
 /// <summary>
 /// A line edit which accepts only integers as text input, and can clamp input to a lower or upper bound.
 /// </summary>
+/// <remarks>If <see cref="MaxValue"/> and <see cref="MinValue"/> are in conflict, MinValue takes priority.</remarks>
 public sealed class IntegerLineEdit : LineEdit
 {
     private static readonly Regex RegNumbers = new("^-*?[0-9]*$");
@@ -40,13 +41,19 @@ public sealed class IntegerLineEdit : LineEdit
 
     private void ClampMax(LineEditEventArgs _)
     {
-        if (MaxValue is {} max && Value() > max)
+        if (!AcceptableNonNumber() && MaxValue is {} max && Value() > max)
             Text = max.ToString();
     }
 
     private void ClampMin(LineEditEventArgs _)
     {
-        if (MinValue is {} min && Value() < min)
+        if (!AcceptableNonNumber() && MinValue is {} min && Value() < min)
             Text = min.ToString();
+    }
+
+    /// <returns>True if the text is blank or only a negative sign.</returns>
+    private bool AcceptableNonNumber()
+    {
+        return Text is "" or "-";
     }
 }
