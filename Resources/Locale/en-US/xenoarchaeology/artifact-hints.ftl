@@ -61,6 +61,7 @@ xenoarch-trigger-tip-wrenching = Tightening
 xenoarch-trigger-tip-prying = Prying
 xenoarch-trigger-tip-screwing = Screwing
 xenoarch-trigger-tip-pulsing = Pulsing
+xenoarch-trigger-tip-honking = Applied Honk
 xenoarch-trigger-tip-pressure-low = Low pressure
 xenoarch-trigger-tip-pressure-high = High pressure
 xenoarch-trigger-tip-examine = Close inspection
@@ -80,12 +81,15 @@ xenoarch-trigger-tip-particle = Singularity-Effecting Particles
 xenoarch-trigger-tip-anomparticle = Anomaly-Effecting Particles
 xenoarch-trigger-tip-stamina-damage = Organic Exhaustion
 xenoarch-trigger-tip-laser = High-Intensity photon impacts
+xenoarch-trigger-tip-distress = Emotional distress
+xenoarch-trigger-tip-chitter = Chittering
 
 ### Description hints
 xenoarch-trigger-examine-wrenching = There's a loose bit spinning around.
 xenoarch-trigger-examine-prying = There's a panel coming up from the surface.
 xenoarch-trigger-examine-screwing = There's a raised section with a small inset on it.
 xenoarch-trigger-examine-pulsing = An exposed diode pokes out of the artifact's surface.
+xenoarch-trigger-examine-honking = There appears to be a concerning lack of honk.
 xenoarch-trigger-examine-timer = Carvings and scratches cover the surface... You can just barely make out a number: [italic]{$time}[/italic]
 
 ### Effects hints
