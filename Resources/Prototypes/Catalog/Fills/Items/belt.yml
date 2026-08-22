@@ -219,12 +219,12 @@
   parent: ClothingBeltHolster
   suffix: Filled
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: WeaponRevolverInspector
-        - id: SpeedLoaderMagnum
+      utility_slot:
+      - SpeedLoaderMagnum
+      sidearm_slot:
+      - WeaponRevolverInspector
 
 - type: entity
   id: ClothingBeltChefFilled

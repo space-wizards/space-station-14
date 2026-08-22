@@ -318,6 +318,9 @@
   - type: BasicEntityAmmoProvider
     proto: GrapplingHook
     capacity: 1
+  - type: Tag
+    tags:
+    - Sidearm
   - type: UseDelay
     delay: 0.5
   - type: Appearance

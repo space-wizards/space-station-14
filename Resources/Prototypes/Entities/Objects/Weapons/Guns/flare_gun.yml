@@ -9,6 +9,9 @@
     layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
+  - type: Tag
+    tags:
+    - Sidearm
   - type: Item
     size: Small
     shape:
@@ -73,6 +76,3 @@
         whitelist:
           tags:
             - ShellShotgun
-  - type: Tag
-    tags:
-    - Sidearm

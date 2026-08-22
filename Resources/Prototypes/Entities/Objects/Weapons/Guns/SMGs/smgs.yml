@@ -72,6 +72,9 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Tag
+    tags:
+    - SubMachineGun
   - type: Gun
     fireRate: 10
     soundGunshot:
@@ -95,6 +98,9 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Tag
+    tags:
+    - SubMachineGun
   - type: Clothing
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
   - type: Wieldable
@@ -177,6 +183,9 @@
           map: ["enum.GunVisualLayers.Base"]
         - state: mag-0
           map: ["enum.GunVisualLayers.Mag"]
+    - type: Tag
+      tags:
+      - SubMachineGun
     - type: Clothing
       sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
     - type: Wieldable
@@ -241,6 +250,9 @@
       - state: mag-unshaded-0
         map: ["enum.GunVisualLayers.MagUnshaded"]
         shader: unshaded
+  - type: Tag
+    tags:
+    - SubMachineGun
   - type: Clothing
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
   - type: ChamberMagazineAmmoProvider
