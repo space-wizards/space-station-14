@@ -66,7 +66,7 @@ public sealed partial class PointingSystem
     private void OnArrowStartup(EntityUid uid, PointingArrowComponent component, ComponentStartup args)
     {
         if (TryComp<SpriteComponent>(uid, out var sprite))
-            _sprite.SetDrawDepth((uid, sprite), (int)DrawDepth.Overlays);
+            _sprite.SetDrawDepth((uid, sprite), (byte)DrawDepth.Overlays);
 
         BeginPointAnimation(uid, component.StartPosition, component.Offset, component.AnimationKey);
     }
@@ -75,7 +75,7 @@ public sealed partial class PointingSystem
     {
         if (TryComp<SpriteComponent>(uid, out var sprite))
         {
-            _sprite.SetDrawDepth((uid, sprite), (int)DrawDepth.Overlays);
+            _sprite.SetDrawDepth((uid, sprite), (byte)DrawDepth.Overlays);
             sprite.NoRotation = false;
         }
     }

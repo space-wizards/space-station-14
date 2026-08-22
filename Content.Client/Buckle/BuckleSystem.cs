@@ -64,7 +64,7 @@ internal sealed partial class BuckleSystem : SharedBuckleSystem
             {
                 // This will only assign if empty, it won't get overwritten by new depth on multiple calls, which do happen easily
                 buckle.OriginalDrawDepth ??= buckledSprite.DrawDepth;
-                _sprite.SetDrawDepth((buckledEntity, buckledSprite), strapSprite.DrawDepth - 1);
+                _sprite.SetDrawDepth((buckledEntity, buckledSprite), (byte) (strapSprite.DrawDepth - 1));
             }
             else if (buckle.OriginalDrawDepth.HasValue)
             {
@@ -105,7 +105,7 @@ internal sealed partial class BuckleSystem : SharedBuckleSystem
             return;
 
         ent.Comp.OriginalDrawDepth ??= buckledSprite.DrawDepth;
-        _sprite.SetDrawDepth((ent.Owner, buckledSprite), strapSprite.DrawDepth - 1);
+        _sprite.SetDrawDepth((ent.Owner, buckledSprite), (byte) (strapSprite.DrawDepth - 1));
     }
 
     /// <summary>
