@@ -19,7 +19,7 @@
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/screen.rsi
     state: screen # Note: outer_frame will be added on top of text layers.
-    # noRot: true # TODO From acessibility standpoint, screens with text shouln't be rotattable (Check it with acessibility team) # Mapping Lead already have concerns about this
+    # noRot: true # TODO From an accessibility standpoint, screens with text shouldn't be rotatable; Mapping Lead already have concerns about this.
   - type: Appearance
   - type: Damageable
     damageModifierSet: GlassMod
