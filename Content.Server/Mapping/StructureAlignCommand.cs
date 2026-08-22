@@ -6,13 +6,19 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Mapping;
 
+/// <summary>
+/// Automatically snap the alignment of all anchored airlocks, doors, firelocks etc.
+/// to line up with adjacent structures.
+/// </summary>
 [AdminCommand(AdminFlags.Mapping)]
 public sealed partial class StructureAlignCommand : LocalizedEntityCommands
 {
     [Dependency] private SharedStructureAlignerSystem _aligner = default!;
 
+    /// <inheritdoc/>
     public override string Command => "align";
 
+    /// <inheritdoc/>
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length > 2)
@@ -49,6 +55,7 @@ public sealed partial class StructureAlignCommand : LocalizedEntityCommands
             shell.WriteLine(response);
     }
 
+    /// <inheritdoc/>
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         return args.Length switch

@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Mapping;
 
 /// <summary>
-/// This entity is used by StructureAlignerSystem as a reference point when determining the alignment of adjacent entities.
+/// This entity is used by <see cref="SharedStructureAlignerSystem"/> as a reference point when determining the alignment of adjacent entities.
 /// </summary>
 [RegisterComponent]
 [NetworkedComponent]

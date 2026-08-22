@@ -2,6 +2,7 @@
 
 using Content.Shared.Administration;
 using Content.Shared.CCVar.CVarAccess;
+using Content.Shared.Mapping;
 
 namespace Content.Shared.CCVar;
 
@@ -133,9 +134,11 @@ public sealed partial class CCVars
         CVarDef.Create("playtime.minutes_today", 0f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
-    ///     If the cvar is enabled, every StructureAlignerComponent will be Aligned when the map initializes.
+    ///     If the cvar is enabled, every <see cref="StructureAlignerComponent"/> will be Aligned when the map initializes.
     /// </summary>
-    /// <remark>May be considered a stopgap measure when unupgraded maps are in rotation?</remark>
+    /// <remarks>
+    ///     May be considered a stopgap measure when unupgraded maps are in rotation?
+    /// </remarks>
     public static readonly CVarDef<bool> MapInitAlign =
         CVarDef.Create("align.map_init", false, CVar.SERVER | CVar.REPLICATED);
 
