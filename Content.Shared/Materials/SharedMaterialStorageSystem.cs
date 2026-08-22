@@ -1,9 +1,11 @@
 using System.Linq;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Stacks;
 using Content.Shared.Whitelist;
 using JetBrains.Annotations;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -20,6 +22,8 @@ public abstract partial class SharedMaterialStorageSystem : EntitySystem
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private SharedStackSystem _sharedStackSystem = default!;
 
     /// <summary>
     /// Default volume for a sheet if the material's entity prototype has no material composition.
@@ -34,6 +38,7 @@ public abstract partial class SharedMaterialStorageSystem : EntitySystem
         SubscribeLocalEvent<MaterialStorageComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<MaterialStorageComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<MaterialStorageComponent, TechnologyDatabaseModifiedEvent>(OnDatabaseModified);
+        SubscribeAllEvent<EjectMaterialMessage>(OnEjectMessage);
     }
 
     public override void Update(float frameTime)
@@ -409,6 +414,48 @@ public abstract partial class SharedMaterialStorageSystem : EntitySystem
         UpdateMaterialWhitelist(ent);
     }
 
+    private void OnEjectMessage(EjectMaterialMessage msg, EntitySessionEventArgs args)
+    {
+        if (args.SenderSession.AttachedEntity is not { } player)
+            return;
+
+        var uid = GetEntity(msg.Entity);
+
+        if (!TryComp<MaterialStorageComponent>(uid, out var component))
+            return;
+
+        if (!Exists(uid))
+            return;
+
+        if (!_actionBlocker.CanInteract(player, uid))
+            return;
+
+        if (!component.CanEjectStoredMaterials || !ProtoMan.TryIndex<MaterialPrototype>(msg.Material, out var material))
+            return;
+
+        var volume = 0;
+
+        if (material.StackEntity != null)
+        {
+            if (!ProtoMan.Index<EntityPrototype>(material.StackEntity).TryComp<PhysicalCompositionComponent>(out var composition, EntityManager.ComponentFactory))
+                return;
+
+            var volumePerSheet = composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == msg.Material).Value;
+            var sheetsToExtract = Math.Min(msg.SheetsToExtract, _sharedStackSystem.GetMaxCount(material.StackEntity.Value));
+
+            volume = sheetsToExtract * volumePerSheet;
+        }
+
+        if (volume <= 0 || !TryChangeMaterialAmount(uid, msg.Material, -volume))
+            return;
+
+        var mats = SpawnMultipleFromMaterial(volume, material, Transform(uid).Coordinates, out _);
+        foreach (var mat in mats.Where(mat => !TerminatingOrDeleted(mat)))
+        {
+            _sharedStackSystem.TryMergeToContacts(mat);
+        }
+    }
+
     public int GetSheetVolume(MaterialPrototype material)
     {
         if (material.StackEntity == null)
@@ -420,5 +467,73 @@ public abstract partial class SharedMaterialStorageSystem : EntitySystem
             return DefaultSheetVolume;
 
         return composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == material.ID).Value;
+    }
+
+    /// <summary>
+    /// Spawn an amount of a material in stack entities.
+    /// Note the 'amount' is material dependent.
+    /// 1 biomass = 1 biomass in its stack,
+    /// but 100 plasma = 1 sheet of plasma, etc.
+    /// </summary>
+    public List<EntityUid> SpawnMultipleFromMaterial(int amount, string material, EntityCoordinates coordinates)
+    {
+        return SpawnMultipleFromMaterial(amount, material, coordinates, out _);
+    }
+
+    /// <summary>
+    /// Spawn an amount of a material in stack entities.
+    /// Note the 'amount' is material dependent.
+    /// 1 biomass = 1 biomass in its stack,
+    /// but 100 plasma = 1 sheet of plasma, etc.
+    /// </summary>
+    public List<EntityUid> SpawnMultipleFromMaterial(int amount, string material, EntityCoordinates coordinates, out int overflowMaterial)
+    {
+        overflowMaterial = 0;
+        if (!ProtoMan.TryIndex<MaterialPrototype>(material, out var stackType))
+        {
+            Log.Error("Failed to index material prototype " + material);
+            return new List<EntityUid>();
+        }
+
+        return SpawnMultipleFromMaterial(amount, stackType, coordinates, out overflowMaterial);
+    }
+
+    /// <summary>
+    /// Spawn an amount of a material in stack entities.
+    /// Note the 'amount' is material dependent.
+    /// 1 biomass = 1 biomass in its stack,
+    /// but 100 plasma = 1 sheet of plasma, etc.
+    /// </summary>
+    [PublicAPI]
+    public List<EntityUid> SpawnMultipleFromMaterial(int amount, MaterialPrototype materialProto, EntityCoordinates coordinates)
+    {
+        return SpawnMultipleFromMaterial(amount, materialProto, coordinates, out _);
+    }
+
+    /// <summary>
+    /// Spawn an amount of a material in stack entities.
+    /// Note the 'amount' is material dependent.
+    /// 1 biomass = 1 biomass in its stack,
+    /// but 100 plasma = 1 sheet of plasma, etc.
+    /// </summary>
+    public List<EntityUid> SpawnMultipleFromMaterial(int amount, MaterialPrototype materialProto, EntityCoordinates coordinates, out int overflowMaterial)
+    {
+        overflowMaterial = 0;
+
+        if (amount <= 0 || materialProto.StackEntity == null)
+            return new List<EntityUid>();
+
+        var entProto = ProtoMan.Index<EntityPrototype>(materialProto.StackEntity);
+        if (!entProto.TryComp<PhysicalCompositionComponent>(out var composition, EntityManager.ComponentFactory))
+            return new List<EntityUid>();
+
+        var materialPerStack = composition.MaterialComposition[materialProto.ID];
+        var amountToSpawn = amount / materialPerStack;
+        overflowMaterial = amount - amountToSpawn * materialPerStack;
+
+        if (amountToSpawn == 0)
+            return new List<EntityUid>();
+
+        return _sharedStackSystem.SpawnMultipleAtPosition(materialProto.StackEntity.Value, amountToSpawn, coordinates);
     }
 }
