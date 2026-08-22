@@ -1,12 +1,13 @@
-using System.Collections.Generic;
-using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.EntityTable;
 using Content.Shared.EntityTable.Conditions;
 using Content.Shared.EntityTable.EntitySelectors;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Content.IntegrationTests.Tests.EntityTable;
 
@@ -193,6 +194,17 @@ public sealed class EntityTableTest : GameTest
                children:
                 - id: {EntProto1}
                 - id: {EntProto2}
+             - id: {EntProto2}
+
+         - type: entityTable
+           id: EntityTableTestSkipSelectorWithFailedChildren
+           table: !type:GroupSelector
+             children:
+             - !type:AllSelector
+               children:
+                - id: {EntProto1}
+                  conditions:
+                  - !type:AlwaysFailCondition
              - id: {EntProto2}
          """;
 
@@ -390,6 +402,18 @@ public sealed class EntityTableTest : GameTest
         Assert.That(result, Is.EqualTo(new[] { new EntProtoId(EntProto2) }));
     }
 
+    [Test]
+    [RunOnSide(Side.Server)]
+    public void ChildrenSelector_SkipDeadSelectors()
+    {
+        // to not re-init test, just repeat a lot of times, because probability can come into play
+        for (var i = 0; i < 100; i++)
+        {
+            var result = Run(Table("EntityTableTestSkipSelectorWithFailedChildren"));
+            Assert.That(result, Is.EquivalentTo([EntProto2]));
+        }
+    }
+
     /// <summary>
     /// Demonstrates how injecting ExcludeEntitiesFromContextCondition through the context's
     /// AdditionalConditionsKey can change the behavior of an otherwise unconstrained table.
@@ -449,4 +473,22 @@ public sealed class EntityTableTest : GameTest
     private EntProtoId[] Run(EntityTablePrototype proto, IRobustRandom rand = null, EntityTableContext ctx = null)
         => _sEntityTable.GetSpawns(proto, rand, ctx)
                         .ToArray();
+}
+
+/// <summary>
+/// This condition always fails. Used mainly for integration tests.
+/// Can be used with <see cref="EntityTableCondition.Invert"/> to always succeed for extra pointlessness.
+/// </summary>
+public sealed partial class AlwaysFailCondition : EntityTableCondition
+{
+    /// <inheritdoc/>>
+    protected override bool EvaluateImplementation(
+        EntityTableSelector root,
+        IEntityManager entMan,
+        IPrototypeManager proto,
+        EntityTableContext ctx
+    )
+    {
+        return false;
+    }
 }
