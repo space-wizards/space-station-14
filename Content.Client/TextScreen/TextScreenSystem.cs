@@ -120,17 +120,17 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
             return;
 
         if (args.TryGetData<Color>(TextScreenVisuals.Color, out var color))
-            component.Color = (Color)color;
+            component.Color = color;
 
         // DefaultText: fallback text e.g. broadcast updates from comms consoles
         if (args.TryGetData<string>(TextScreenVisuals.DefaultText, out var newDefault))
-            component.Text = SegmentText((string)newDefault, component);
+            component.Text = SegmentText(newDefault, component);
 
         // ScreenText: currently rendered text e.g. the "ETA" accompanying shuttle timers
         if (args.TryGetData<string>(TextScreenVisuals.ScreenText, out var text) && text != component.LastText)
         {
             TimeSpan? startTime = null;
-            if (args.AppearanceData.TryGetValue(TextScreenVisuals.ScreenTextTime, out var screenTextTime) && screenTextTime is TimeSpan scrollStart)
+            if (args.TryGetData<TimeSpan>(TextScreenVisuals.ScreenTextTime, out var scrollStart))
                 startTime = scrollStart;
 
             component.TextToDraw = SegmentText(text, component);
