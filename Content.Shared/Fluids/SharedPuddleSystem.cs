@@ -99,7 +99,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
         TickEvaporation();
     }
 
-    private void OnPrototypesReloaded(PrototypesReloadedEventArgs ev)
+    protected virtual void OnPrototypesReloaded(PrototypesReloadedEventArgs ev)
     {
         if (ev.WasModified<ReagentPrototype>())
             CacheStandsout();
