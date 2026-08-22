@@ -44,6 +44,7 @@ public abstract partial class SharedChangelingLastResortSystem : EntitySystem
             return; // Transfer Mind is unpredictable.
 
         var slug = PredictedSpawnAtPosition(ent.Comp.SlugPrototype, Transform(args.Performer).Coordinates);
+        _mind.MakeSentient(slug);
         _mind.TransferTo(mindId, slug, mind: mind);
 
         _destructionResistance.SetEnabled(args.Performer, false);
