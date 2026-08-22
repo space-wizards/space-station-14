@@ -69,6 +69,25 @@
     tags:
     - PetWearable
     - WhitelistChameleon
+    - EngiGoggles
+
+- type: entity
+  parent: [ClothingEyesGlassesMeson, ClothingEyesHudDiagnostic]
+  id: ClothingEyesGlassesMesonDiagnostic
+  name: diagnostic engineering goggles
+  description: Green-tinted goggles using a proprietary polymer that provides protection from eye damage of all types. Has attatched diagnostic HUD.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/engihud.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/engihud.rsi
+  - type: Construction
+    graph: GlassesEngiHUD
+    node: glassesEngi
+  - type: Tag
+    tags:
+    - PetWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingEyesBase
