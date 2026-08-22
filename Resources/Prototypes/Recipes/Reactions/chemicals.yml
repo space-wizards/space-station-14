@@ -69,16 +69,6 @@
     Acetone: 2
 
 - type: reaction
-  id: FoamingAgent
-  reactants:
-    Lithium:
-      amount: 1
-    Hydrogen:
-      amount: 1
-  products:
-    FoamingAgent: 2
-
-- type: reaction
   id: PolytrinicAcid
   reactants:
     SulfuricAcid:
@@ -587,3 +577,18 @@
       amount: 3
   products:
     PhosphoricAcid: 10
+
+- type: reaction
+  id: LithiumWaterHeater
+  reactants:
+    Water:
+      amount: 1
+    Lithium:
+      amount: 1
+  products:
+    Hydrogen: 2 #partly for science accuracy, and party to prevent double heating with vvv due to liquid size reduction (same energy, less units)
+  effects:
+  - !type:AdjustSolutionThermalEnergy #so i'll be honest I have no idea how this system is meant to work
+    delta: 500 #i just fiddled around till 10u lithium + 10u water = 10 hydogen @540k for tiders, or whatever weird clf3 mixes people invent
+  - !type:CreateGas
+    gas: WaterVapor
