@@ -34,7 +34,7 @@ public sealed partial class LogWireAction : ComponentWireAction<AccessReaderComp
         _access = EntityManager.System<AccessReaderSystem>();
     }
 
-    public override bool Cut(EntityUid user, Wire wire, AccessReaderComponent comp)
+    public override bool Cut(EntityUid? user, Wire wire, AccessReaderComponent comp)
     {
         WiresSystem.TryCancelWireAction(wire.Owner, PulseTimeoutKey.Key);
         EntityManager.System<AccessReaderSystem>().SetLoggingActive((wire.Owner, comp), false);
@@ -42,13 +42,13 @@ public sealed partial class LogWireAction : ComponentWireAction<AccessReaderComp
         return true;
     }
 
-    public override bool Mend(EntityUid user, Wire wire, AccessReaderComponent comp)
+    public override bool Mend(EntityUid? user, Wire wire, AccessReaderComponent comp)
     {
         EntityManager.System<AccessReaderSystem>().SetLoggingActive((wire.Owner, comp), true);
         return true;
     }
 
-    public override void Pulse(EntityUid user, Wire wire, AccessReaderComponent comp)
+    public override void Pulse(EntityUid? user, Wire wire, AccessReaderComponent comp)
     {
         _access.LogAccess((wire.Owner, comp), Loc.GetString(PulseLog));
         EntityManager.System<AccessReaderSystem>().SetLoggingActive((wire.Owner, comp), false);

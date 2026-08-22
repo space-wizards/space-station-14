@@ -19,19 +19,19 @@ public sealed partial class CameraMapVisibilityWireAction : ComponentWireAction<
             : StatusLightState.Off;
     }
 
-    public override bool Cut(EntityUid user, Wire wire, SurveillanceCameraComponent component)
+    public override bool Cut(EntityUid? user, Wire wire, SurveillanceCameraComponent component)
     {
         _cameraMapSystem.SetCameraVisibility(wire.Owner, false);
         return true;
     }
 
-    public override bool Mend(EntityUid user, Wire wire, SurveillanceCameraComponent component)
+    public override bool Mend(EntityUid? user, Wire wire, SurveillanceCameraComponent component)
     {
         _cameraMapSystem.SetCameraVisibility(wire.Owner, true);
         return true;
     }
 
-    public override void Pulse(EntityUid user, Wire wire, SurveillanceCameraComponent component)
+    public override void Pulse(EntityUid? user, Wire wire, SurveillanceCameraComponent component)
     {
 
     }
