@@ -1,7 +1,6 @@
-using Robust.Shared.Audio;
 using Content.Shared.StatusIcon;
-using Robust.Shared.Prototypes;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.NukeOps;
 
@@ -11,6 +10,9 @@ namespace Content.Shared.NukeOps;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class NukeOperativeComponent : Component
 {
+    /// <summary>
+    /// The icon representing the nuclear operative's faction. Visible to other nuclear operatives.
+    /// </summary>
     [DataField]
-    public ProtoId<FactionIconPrototype> SyndStatusIcon = "SyndicateFaction";
+    public ProtoId<StatusIconPrototype> SyndStatusIcon = "SyndicateFaction";
 }
