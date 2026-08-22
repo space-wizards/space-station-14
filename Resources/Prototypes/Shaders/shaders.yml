@@ -140,3 +140,8 @@
   id: Sharpness
   kind: source
   path: "/Textures/Shaders/sharpness.swsl"
+
+- type: shader
+  id: XRayVision
+  kind: source
+  path: "/Textures/Shaders/xrayvision.swsl"

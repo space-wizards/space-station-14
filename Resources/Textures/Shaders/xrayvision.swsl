@@ -1,0 +1,46 @@
+// X-ray shader for showing tiles and entities hidden behind walls.
+// Optional scanlines can be applied on top for the overlay effect.
+light_mode unshaded;
+
+uniform highp vec4 OVERLAY_COLOR;
+
+// Whether the scanline effect is applied. 0 = off, non-zero = on.
+uniform highp float SCANLINES;
+
+// FOV shadow-depth map and the FOV centre in world coordinates.
+uniform sampler2D FOV_TEXTURE;
+uniform highp vec2 FOV_CENTER;
+
+// World-space offset from the FOV centre to this fragment.
+varying highp vec2 worldSpaceDiff;
+
+const highp float FOV_PI = 3.14159265;
+const highp float FOV_MAP_OFFSET_Y = 0.75;
+const highp float FOV_BIAS = -0.75 / 32.0;
+
+// Mirrors occludeDepth() from /Shaders/Internal/shadow_cast_shared.swsl.
+highp float xRayOccludeDepth(highp vec2 rel)
+{
+    highp float deflect = atan(rel.y, -rel.x) / FOV_PI;
+    highp float mapOffsetX = (deflect + 1.0) / 2.0;
+    return zClydeShadowDepthUnpack(texture2D(FOV_TEXTURE, vec2(mapOffsetX, FOV_MAP_OFFSET_Y))).x;
+}
+
+void vertex()
+{
+    highp vec3 worldPos = modelMatrix * vec3(aPos, 1.0);
+    worldSpaceDiff = worldPos.xy - FOV_CENTER;
+}
+
+void fragment()
+{
+    highp vec4 tex = zTexture(UV);
+
+    // Only tint fragments that are hidden by the FOV shadow map.
+    highp float ourDist = length(worldSpaceDiff);
+    if (xRayOccludeDepth(worldSpaceDiff) + FOV_BIAS >= ourDist)
+        discard;
+
+    highp float scanline = mod(FRAGCOORD.y, SCANLINES);
+    COLOR = vec4(tex.rgb * OVERLAY_COLOR.rgb, tex.a * OVERLAY_COLOR.a * max(scanline, 1.0));
+}
