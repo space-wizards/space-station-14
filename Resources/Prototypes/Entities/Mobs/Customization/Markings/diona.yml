@@ -19,26 +19,40 @@
   bodyPart: Head
   groupWhitelist: [Diona]
   coloring:
-    default:
-      type:
-        !type:SimpleColoring
-          color: "#FFFFFF"
+    layers:
+      flowers_head_vine:
+        type:
+          !type:SimpleColoring
+          color: "#99794D"
+      flowers_head_flowers:
+        type:
+          !type:SimpleColoring
+          color: "#8B81CC"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
-    state: flowers_head
+    state: flowers_head_vine
+  - sprite: Mobs/Customization/diona.rsi
+    state: flowers_head_flowers
 
 - type: marking
   id: DionaFlowersBody
   bodyPart: Chest
   groupWhitelist: [Diona]
   coloring:
-    default:
-      type:
-        !type:SimpleColoring
-          color: "#FFFFFF"
+    layers:
+      flowers_body_vine:
+        type:
+          !type:SimpleColoring
+          color: "#99794D"
+      flowers_body_flowers:
+        type:
+          !type:SimpleColoring
+          color: "#8B81CC"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
-    state: flowers_body
+    state: flowers_body_vine
+  - sprite: Mobs/Customization/diona.rsi
+    state: flowers_body_flowers
 
 - type: marking
   id: DionaLeafCover
@@ -57,13 +71,20 @@
   bodyPart: Head
   groupWhitelist: [Diona]
   coloring:
-    default:
-      type:
-        !type:SimpleColoring
-          color: "#FFFFFF"
+    layers:
+      bloom_flower:
+        type:
+          !type:SimpleColoring
+          color: "#A64292"
+      bloom_leaves:
+        type:
+          !type:SimpleColoring
+          color: "#4B6B20"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
-    state: bloom
+    state: bloom_flower
+  - sprite: Mobs/Customization/diona.rsi
+    state: bloom_leaves
 
 - type: marking
   id: DionaBracketHead
@@ -73,7 +94,7 @@
     default:
       type:
         !type:SimpleColoring
-          color: "#FFFFFF"
+          color: "#F0D79E"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: bracket
@@ -83,25 +104,50 @@
   bodyPart: Head
   groupWhitelist: [Diona]
   coloring:
-    default:
-      type:
-        !type:SkinColoring
+    layers:
+      brush_branches:
+        type:
+          !type:SkinColoring
+      brush_leaves:
+        type:
+          !type:SimpleColoring
+          color: "#5F7039"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
-    state: brush
+    state: brush_branches
+  - sprite: Mobs/Customization/diona.rsi
+    state: brush_leaves
 
 - type: marking
   id: DionaCornflowerHead
   bodyPart: Head
   groupWhitelist: [Diona]
   coloring:
-    default:
-      type:
-        !type:SimpleColoring
-          color: "#FFFFFF"
+    layers:
+      cornflower_branches:
+        type:
+          !type:SkinColoring
+      cornflower_leaves:
+        type:
+          !type:SimpleColoring
+          color: "#8A9A68"
+      cornflower_petals:
+        type:
+          !type:SimpleColoring
+          color: "#82D7F6"
+      cornflower_pollen: #Center of the flowers, not sure what else to call it.
+        type:
+          !type:SimpleColoring
+          color: "#E7F682" # The center of actual cornflowers seems to be purple according to google images, but my job here is match the original sprites, not be realistic.
   sprites:
   - sprite: Mobs/Customization/diona.rsi
-    state: cornflower
+    state: cornflower_branches
+  - sprite: Mobs/Customization/diona.rsi
+    state: cornflower_leaves
+  - sprite: Mobs/Customization/diona.rsi
+    state: cornflower_petals
+  - sprite: Mobs/Customization/diona.rsi
+    state: cornflower_pollen
 
 - type: marking
   id: DionaFicusHead
@@ -111,7 +157,7 @@
     default:
       type:
         !type:SimpleColoring
-          color: "#FFFFFF"
+          color: "#649C2C"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: ficus
@@ -121,26 +167,40 @@
   bodyPart: Head
   groupWhitelist: [Diona]
   coloring:
-    default:
-      type:
-        !type:SimpleColoring
+    layers:
+      garland_leaves:
+        type:
+          !type:SimpleColoring
+          color: "#458C26"
+      garland_flowers:
+        type:
+          !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
-    state: garland
+    state: garland_leaves
+  - sprite: Mobs/Customization/diona.rsi
+    state: garland_flowers
 
 - type: marking
   id: DionaKingHead
   bodyPart: Head
   groupWhitelist: [Diona]
   coloring:
-    default:
-      type:
-        !type:SimpleColoring
-          color: "#FFFFFF"
+    layers:
+      king_flower:
+        type:
+          !type:SimpleColoring
+          color: "#A69724"
+      king_leaves:
+        type:
+          !type:SimpleColoring
+          color: "#4B6B20"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
-    state: king
+    state: king_flower
+  - sprite: Mobs/Customization/diona.rsi
+    state: king_leaves
 
 - type: marking
   id: DionaLaurelHead
@@ -150,7 +210,7 @@
     default:
       type:
         !type:SimpleColoring
-          color: "#FFFFFF"
+          color: "#81994E"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: laurel
@@ -163,7 +223,7 @@
     default:
       type:
         !type:SimpleColoring
-          color: "#FFFFFF"
+          color: "#819C4A"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: leafy
@@ -173,13 +233,20 @@
   bodyPart: Head
   groupWhitelist: [Diona]
   coloring:
-    default:
-      type:
-        !type:SimpleColoring
-          color: "#FFFFFF"
+    layers:
+      lotus_flower:
+        type:
+          !type:SimpleColoring
+          color: "#2A54A8"
+      lotus_leaves:
+        type:
+          !type:SimpleColoring
+          color: "#4B6B20"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
-    state: lotus
+    state: lotus_flower
+  - sprite: Mobs/Customization/diona.rsi
+    state: lotus_leaves
 
 - type: marking
   id: DionaMeadowHeadTop
@@ -189,7 +256,7 @@
     default:
       type:
         !type:SimpleColoring
-          color: "#FFFFFF"
+          color: "#849956"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: meadow
@@ -198,11 +265,6 @@
   id: DionaOakHead
   bodyPart: Head
   groupWhitelist: [Diona]
-  coloring:
-    default:
-      type:
-        !type:SimpleColoring
-          color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: oak
@@ -215,7 +277,7 @@
     default:
       type:
         !type:SimpleColoring
-          color: "#FFFFFF"
+          color: "#6C852D"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: palm
@@ -224,11 +286,6 @@
   id: DionaRootHead
   bodyPart: Head
   groupWhitelist: [Diona]
-  coloring:
-    default:
-      type:
-        !type:SimpleColoring
-          color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: root
@@ -238,26 +295,40 @@
   bodyPart: Head
   groupWhitelist: [Diona]
   coloring:
-    default:
-      type:
-        !type:SimpleColoring
-          color: "#FFFFFF"
+    layers:
+      rose_flower:
+        type:
+          !type:SimpleColoring
+          color: "#B3273C"
+      rose_leaves:
+        type:
+          !type:SimpleColoring
+          color: "#4B6B20"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
-    state: rose
+    state: rose_flower
+  - sprite: Mobs/Customization/diona.rsi
+    state: rose_leaves
 
 - type: marking
   id: DionaRoseyHead
   bodyPart: Head
   groupWhitelist: [Diona]
   coloring:
-    default:
-      type:
-        !type:SimpleColoring
-          color: "#FFFFFF"
+    layers:
+      rosey_flowers:
+        type:
+          !type:SimpleColoring
+          color: "#B51C3D"
+      rosey_leaves:
+        type:
+          !type:SimpleColoring
+          color: "#8A9A68"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
-    state: rosey
+    state: rosey_flowers
+  - sprite: Mobs/Customization/diona.rsi
+    state: rosey_leaves
 
 - type: marking
   id: DionaShrubHeadTop
@@ -267,7 +338,7 @@
     default:
       type:
         !type:SimpleColoring
-          color: "#FFFFFF"
+          color: "#7D562C"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: shrub
@@ -277,78 +348,127 @@
   bodyPart: HeadSide
   groupWhitelist: [Diona]
   coloring:
-    default:
-      type:
-        !type:SimpleColoring
-          color: "#FFFFFF"
+    layers:
+      spinner_branches:
+        type:
+          !type:SkinColoring
+      spinner_leaves:
+        type:
+          !type:SimpleColoring
+          color: "#5F7039"
+      spinner_eyes:
+        type:
+          !type:EyeColoring
   sprites:
   - sprite: Mobs/Customization/diona.rsi
-    state: spinner
+    state: spinner_branches
+  - sprite: Mobs/Customization/diona.rsi
+    state: spinner_leaves
+  - sprite: Mobs/Customization/diona.rsi
+    state: spinner_eyes
 
 - type: marking
   id: DionaSproutHeadSide
   bodyPart: HeadSide
   groupWhitelist: [Diona]
   coloring:
-    default:
-      type:
-        !type:SimpleColoring
-          color: "#FFFFFF"
+    layers:
+      sprout_leaf:
+        type:
+          !type:SimpleColoring
+          color: "#AAC176"
+      sprout_eyes:
+        type:
+          !type:EyeColoring
   sprites:
   - sprite: Mobs/Customization/diona.rsi
-    state: sprout
+    state: sprout_leaf
+  - sprite: Mobs/Customization/diona.rsi
+    state: sprout_eyes
 
 - type: marking
   id: DionaVineHeadTop
   bodyPart: HeadTop
   groupWhitelist: [Diona]
   coloring:
-    default:
-      type:
-        !type:SimpleColoring
-          color: "#FFFFFF"
+    layers:
+      vine_branches:
+        type:
+          !type:SkinColoring
+      vine_vines:
+        type:
+          !type:SimpleColoring
+          color: "#819C4A"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
-    state: vine
+    state: vine_branches
+  - sprite: Mobs/Customization/diona.rsi
+    state: vine_vines
 
 - type: marking
   id: DionaVinelHead
   bodyPart: Head
   groupWhitelist: [Diona]
   coloring:
-    default:
-      type:
-        !type:SimpleColoring
-          color: "#FFFFFF"
+    layers:
+      vinel_vines:
+        type:
+          !type:SimpleColoring
+          color: "#4D2F11"
+      vinel_leaves:
+        type:
+          !type:SimpleColoring
+          color: "#264D12"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
-    state: vinel
+    state: vinel_vines
+  - sprite: Mobs/Customization/diona.rsi
+    state: vinel_leaves
 
 - type: marking
   id: DionaVinesHead
   bodyPart: Head
   groupWhitelist: [Diona]
   coloring:
-    default:
-      type:
-        !type:SimpleColoring
-          color: "#FFFFFF"
+    layers:
+      vines_vines:
+        type:
+          !type:SimpleColoring
+          color: "#4D2F11"
+      vines_leaves:
+        type:
+          !type:SimpleColoring
+          color: "#264D12"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
-    state: vines
+    state: vines_vines
+  - sprite: Mobs/Customization/diona.rsi
+    state: vines_leaves
 
 - type: marking
   id: DionaWildflowerHead
   bodyPart: Head
   groupWhitelist: [Diona]
   coloring:
-    default:
-      type:
-        !type:SimpleColoring
+    layers:
+      wildflower_flowers:
+        type:
+          !type:SimpleColoring
           color: "#FFFFFF"
+      wildflower_leaves:
+        type:
+          !type:SimpleColoring
+          color: "#BFE477"
+      wildflower_branches:
+        type:
+          !type:SkinColoring
   sprites:
   - sprite: Mobs/Customization/diona.rsi
-    state: wildflower
+    state: wildflower_flowers
+  - sprite: Mobs/Customization/diona.rsi
+    state: wildflower_leaves
+  - sprite: Mobs/Customization/diona.rsi
+    state: wildflower_branches
 
 - type: marking
   id: DionaVineOverlay
