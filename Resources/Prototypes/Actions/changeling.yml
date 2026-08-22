@@ -96,6 +96,9 @@
     useDelay: 2
     checkCanInteract: false # You can heal even if you are killed
     checkConsciousness: false
+  - type: ConfirmableAction
+    popup: suicide-regen-action-popup
+    confirmWhenToggled: false
   - type: RegenerativeStasisAction
     bonusCooldownPerDamage: 0.675 # Bonus 135s (total 180s) at 200 damage
     minStasisCooldown: 45
@@ -200,7 +203,7 @@
   description: "Silently sting a target and worsen their sight for a short duration. \n\nRequires 30 Chemicals."
   components:
   - type: Action
-    useDelay: 10
+    useDelay: 30
     raiseOnAction: true
     itemIconStyle: BigAction
   - type: Sprite
@@ -277,6 +280,26 @@
     - !type:AddReagentToBloodstream
       reagent: Cryptobiolin
       quantity: 10 # About 20s of your speech being scrambled
+
+- type: entity
+  parent: BaseActionChangelingSting
+  id: ActionChangelingStingMute
+  name: Mute Sting
+  description: "Silently sting a target and inject them with chemicals that prevent them from speaking. \n\nRequires 30 Chemicals."
+  components:
+  - type: Action
+    useDelay: 30
+    raiseOnAction: true
+    itemIconStyle: BigAction
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: mute_sting
+  - type: EntityEffectAction
+    effects:
+    - !type:AddReagentToBloodstream
+      reagent: TaciticAcid
+      quantity: 5 # 50s of imperceptible mute
 
 - type: entity
   parent: BaseAction
