@@ -1,0 +1,17 @@
+<ui:FancyWindow xmlns="https://spacestation14.io"
+            xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+            xmlns:widgets="clr-namespace:Content.Client.Atmos.AirlockController.UI.Widgets"
+            MinSize="360 260" Resizable="True" Title="{Loc airlock-controller-ui-title}">
+    <BoxContainer Orientation="Vertical" Margin="5 5 5 5">
+        <widgets:AirlockStatusPanel Name="CStatus" />
+
+        <!-- Cycle controls -->
+        <BoxContainer Orientation="Horizontal" Margin="0 0 0 4">
+            <Button Name="CCycleAButton" Text="{Loc 'airlock-controller-ui-cycle-a'}" HorizontalExpand="True" Margin="0 0 2 0" />
+            <Button Name="CCycleBButton" Text="{Loc 'airlock-controller-ui-cycle-b'}" HorizontalExpand="True" Margin="2 0 0 0" />
+        </BoxContainer>
+        <Button Name="CCancelButton" Text="{Loc 'airlock-controller-ui-cancel'}" HorizontalExpand="True" Margin="0 0 0 4" />
+
+        <Button Name="CConfigButton" Text="{Loc 'airlock-controller-ui-configure'}" HorizontalAlignment="Right" />
+    </BoxContainer>
+</ui:FancyWindow>

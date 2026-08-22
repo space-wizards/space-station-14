@@ -1,0 +1,58 @@
+- type: entity
+  parent: BaseAirlockControlDevice
+  id: AirlockCycler
+  name: airlock cycler
+  description: Calls the airlock's chamber over to your side so you can get in.
+  components:
+  - type: DeviceNetwork
+    prefix: device-address-prefix-airlock-cycler
+    examinableAddress: true
+  - type: AirlockCycler
+  - type: UserInterface
+    interfaces:
+      enum.AirlockControllerUiKey.Key:
+        type: AirlockCyclerBoundUserInterface
+  - type: ContainerFill
+    containers:
+      board: [ AirlockCyclerElectronics ]
+  - type: PointLight
+    energy: 0.8
+    color: "#FEEE4A"
+  - type: RotatingLight
+    speed: 30
+  - type: Sprite
+    sprite: Structures/Wallmounts/airlock_cycler.rsi
+    layers:
+    - state: base
+      map: ["enum.AirlockControllerVisualLayers.Base"]
+    - state: state_idle
+      shader: unshaded
+      map: ["enum.AirlockControllerVisualLayers.State"]
+    - state: side_a
+      shader: unshaded
+      map: ["enum.AirlockControllerVisualLayers.Display"]
+    - state: error
+      shader: unshaded
+      map: ["enum.AirlockControllerVisualLayers.Error"]
+      visible: false
+    - state: light_off
+      shader: unshaded
+      map: ["enum.AirlockControllerVisualLayers.Light"]
+  - type: Construction
+    graph: AirlockCycler
+    node: airlock_cycler
+
+- type: entity
+  parent: BaseAirlockControlAssembly
+  id: AirlockCyclerAssembly
+  name: airlock cycler assembly
+  description: An airlock cycler. It isn't calling anything yet.
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/airlock_cycler.rsi
+    layers:
+    - state: base
+      map: [ "enum.ConstructionVisuals.Layer" ]
+  - type: Construction
+    graph: AirlockCycler
+    node: assembly

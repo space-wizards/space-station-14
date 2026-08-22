@@ -233,3 +233,13 @@
   wires:
   - !type:AccessWireAction
   - !type:AiInteractWireAction
+
+- type: wireLayout
+  id: AirlockController
+  wires:
+  - !type:AiInteractWireAction
+  - !type:PowerWireAction
+  - !type:AccessWireAction
+  - !type:LogWireAction
+  - !type:AirlockControllerBoltingWireAction
+  - !type:AirlockControllerLightWireAction

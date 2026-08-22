@@ -1,0 +1,181 @@
+- type: entity
+  parent: BaseWallmountMachine
+  abstract: true
+  id: BaseAirlockControlDevice
+  components:
+  - type: StationAiWhitelist
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
+  - type: DeviceNetwork
+    deviceNetId: AtmosDevices
+    receiveFrequencyId: AtmosMonitor
+    transmitFrequencyId: AtmosMonitor
+  - type: WiredNetworkConnection
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceNetworkRequiresPower
+  - type: SpamEmitSound
+    enabled: false
+    minInterval: 6
+    maxInterval: 6
+    sound:
+      path: /Audio/Machines/alarm.ogg
+      params:
+        volume: -10
+  - type: Clickable
+  - type: InteractionOutline
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+  - type: Appearance
+  - type: PointLight
+    enabled: false
+    radius: 3
+    lightMask: ConeDouble
+    castShadows: false
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.AirlockControllerVisualLayers.State:
+          True: { visible: true }
+          False: { visible: false }
+        enum.AirlockControllerVisualLayers.Display:
+          True: { visible: true }
+          False: { visible: false }
+        enum.AirlockControllerVisualLayers.Light:
+          True: { visible: true }
+          False: { visible: false }
+      enum.AirlockControllerVisuals.State:
+        enum.AirlockControllerVisualLayers.State:
+          Idle: { state: state_idle }
+          Sealing: { state: state_sealing }
+          Evacuating: { state: state_evacuating }
+          Filling: { state: state_filling }
+          Unsealing: { state: state_unsealing }
+      enum.AirlockControllerVisuals.Display:
+        enum.AirlockControllerVisualLayers.Display:
+          SideA: { state: side_a }
+          SideB: { state: side_b }
+          Maintenance: { state: maintenance }
+      enum.AirlockControllerVisuals.Error:
+        enum.AirlockControllerVisualLayers.Error:
+          True: { visible: true }
+          False: { visible: false }
+      enum.AirlockControllerVisuals.Cycling:
+        enum.AirlockControllerVisualLayers.Light:
+          True: { state: light_on }
+          False: { state: light_off }
+  - type: Damageable
+    damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+          params:
+            volume: -4
+  - type: GuideHelp
+    guides:
+    - Airlocks
+    - DeviceMonitoringAndControl
+
+- type: entity
+  parent: BaseWallmountMetallic
+  abstract: true
+  id: BaseAirlockControlAssembly
+  components:
+  - type: Appearance
+
+- type: entity
+  parent: BaseAirlockControlDevice
+  id: AirlockController
+  name: airlock controller
+  description: Cycles an airlock's atmosphere so the air doesn't go out the door with you.
+  components:
+  - type: DeviceNetwork
+    prefix: device-address-prefix-airlock-controller
+    sendBroadcastAttemptEvent: true
+  - type: DeviceList
+  - type: DeviceLinkSource
+    ports:
+    - AirlockStateA
+    - AirlockStateB
+    - AirlockCycling
+    lastSignals:
+      AirlockStateA: true
+      AirlockStateB: false
+      AirlockCycling: false
+  - type: AtmosDevice
+  - type: AirlockController
+  - type: UserInterface
+    interfaces:
+      enum.AirlockControllerUiKey.Key:
+        type: AirlockControllerBoundUserInterface
+      enum.AirlockControllerUiKey.Config:
+        type: AirlockControllerConfigBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: WiresPanel
+  - type: Wires
+    boardName: wires-board-name-airlock-controller
+    layoutId: AirlockController
+  - type: AccessReader
+    access: [["Atmospherics"]]
+  - type: ContainerFill
+    containers:
+      board: [ AirlockControllerElectronics ]
+  - type: WiresVisuals
+  - type: PointLight
+    energy: 0.6
+    color: "#E0A14A"
+  - type: RotatingLight
+    speed: 40
+  # TODO: MAKE SPRITE GOOD!
+  - type: Sprite
+    sprite: Structures/Wallmounts/airlock_controller.rsi
+    layers:
+    - state: base
+      map: ["enum.AirlockControllerVisualLayers.Base"]
+    - state: state_idle
+      shader: unshaded
+      map: ["enum.AirlockControllerVisualLayers.State"]
+    - state: side_a
+      shader: unshaded
+      map: ["enum.AirlockControllerVisualLayers.Display"]
+    - state: error
+      shader: unshaded
+      map: ["enum.AirlockControllerVisualLayers.Error"]
+      visible: false
+    - state: light_off
+      shader: unshaded
+      map: ["enum.AirlockControllerVisualLayers.Light"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      visible: false
+  - type: Construction
+    graph: AirlockController
+    node: airlock_controller
+
+- type: entity
+  parent: BaseAirlockControlAssembly
+  id: AirlockControllerAssembly
+  name: airlock controller assembly
+  description: An airlock controller. It isn't controlling much of anything yet.
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/airlock_controller.rsi
+    layers:
+    - state: panel
+      map: [ "enum.ConstructionVisuals.Layer" ]
+  - type: Construction
+    graph: AirlockController
+    node: assembly
