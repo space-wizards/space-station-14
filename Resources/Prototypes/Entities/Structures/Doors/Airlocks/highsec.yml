@@ -1,6 +1,6 @@
 - type: entity
+  parent: [ BaseStructure, StructureHealthDoorStrong ]
   id: HighSecDoor
-  parent: BaseStructure
   name: high security door
   description: Keeps the bad out and keeps the good in.
   placement:
@@ -19,18 +19,18 @@
       map: ["enum.DoorVisualLayers.Base"]
     - state: closed_unlit
       shader: unshaded
-      sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects-vault.rsi
       map: ["enum.DoorVisualLayers.BaseUnlit"]
       visible: true
     - state: welded
-      sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects-vault.rsi
       map: ["enum.WeldableLayers.BaseWelded"]
     - state: bolted_unlit
       shader: unshaded
-      sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects-vault.rsi
       map: ["enum.DoorVisualLayers.BaseBolted"]
     - state: emergency_unlit
-      sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects-vault.rsi
       map: ["enum.DoorVisualLayers.BaseEmergencyAccess"]
       shader: unshaded
     - state: panel_open
@@ -120,17 +120,23 @@
   - type: Airtight
   - type: Occluder
   - type: Damageable
-    damageModifierSet: StrongMetallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 1500
+        damage: 350
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlasteel1:
+            min: 1
+            max: 2
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+          params:
+            volume: -4
   - type: Construction
     graph: Airlock
     node: highSecDoor
@@ -143,3 +149,5 @@
   - type: IconSmooth
     key: walls
     mode: NoSprite
+  - type: StructureAligner
+  - type: StructureAlignerPylon

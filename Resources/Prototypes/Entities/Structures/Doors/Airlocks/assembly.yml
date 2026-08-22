@@ -235,7 +235,10 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/shuttle-base.rsi
-    state: "assembly"
+    layers:
+    - state: docking-clamp
+      offset: 0, -1
+    - state: assembly
 
 - type: entity
   parent: AirlockAssembly
