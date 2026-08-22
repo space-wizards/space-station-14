@@ -34,6 +34,24 @@ public sealed partial class TriggerOnVoiceComponent : BaseTriggerOnXComponent
     public int ListenRange = 4;
 
     /// <summary>
+    /// Match the keyphrase approximately so accents and stutters still trigger it.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool FuzzyMatch;
+
+    /// <summary>
+    /// Minimum trigram overlap score required for a fuzzy keyphrase match.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float FuzzyMatchThreshold = 0.5f;
+
+    /// <summary>
+    /// Cached trigram form of <see cref="KeyPhrase"/> for fuzzy matching.
+    /// </summary>
+    [ViewVariables]
+    public List<VoiceCommandCandidate> KeyPhraseCandidates = new();
+
+    /// <summary>
     /// Whether we are currently recording a new keyphrase.
     /// </summary>
     [DataField, AutoNetworkedField]
