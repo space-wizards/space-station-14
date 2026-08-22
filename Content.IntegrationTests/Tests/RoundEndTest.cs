@@ -31,7 +31,6 @@ namespace Content.IntegrationTests.Tests
         {
             DummyTicker = false,
             Connected = true,
-            Dirty = true
         };
 
         [Test]
@@ -155,6 +154,9 @@ namespace Content.IntegrationTests.Tests
                 roundEndSystem.DefaultCountdownDuration = TimeSpan.FromMinutes(4);
                 ticker.RestartRound();
             });
+
+            await pair.RunTicksSync(5);
+            await CheckRunLevel(GameRunLevel.InRound);
         }
     }
 }
