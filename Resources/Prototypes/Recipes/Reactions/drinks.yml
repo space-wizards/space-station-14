@@ -1134,23 +1134,6 @@
   products:
     SuiDream: 3
 
-- type: reaction #duplicated in reactions med so it shows up in guidebook
-  id: Synaptizine
-  requiredMixerCategories:
-  - Stir
-  reactants:
-    WatermelonWakeup:
-      amount: 1
-    Sugar:
-      amount: 1
-    EnergyDrink:
-      amount: 1
-    Lithium:
-      amount: 2
-  products:
-    Synaptizine: 5
-- type: reaction
-
 - type: reaction
   id: SyndicateBomb
   reactants:

@@ -218,7 +218,7 @@
   products:
     Ambuzol: 4
 
-- type: reaction #duplicated in reactions drinks so it shows up in guidebook
+- type: reaction
   id: Synaptizine
   requiredMixerCategories:
   - Stir
