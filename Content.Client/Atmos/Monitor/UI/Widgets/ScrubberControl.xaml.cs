@@ -1,3 +1,4 @@
+using Content.Client.Stylesheets;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Monitor.Components;
@@ -26,9 +27,11 @@ public sealed partial class ScrubberControl : BoxContainer
     private CollapsibleHeading _addressLabel => CAddress;
     private OptionButton _pumpDirection => CPumpDirection;
     private FloatSpinBox _volumeRate => CVolumeRate;
+    private FloatSpinBox _targetPressure => CTargetPressure;
     private CheckBox _wideNet => CWideNet;
     private Button _copySettings => CCopySettings;
     private Button _selectAll => CSelectAll;
+    private Button _overflowAll => COverflowAll;
     private Button _deselectAll => CDeselectAll;
 
     private GridContainer _gases => CGasContainer;
@@ -71,6 +74,13 @@ public sealed partial class ScrubberControl : BoxContainer
         };
         _volumeRate.IsValid += value => value >= 0;
 
+        _targetPressure.Value = _data.TargetPressure;
+        _targetPressure.OnValueChanged += _ =>
+        {
+            _data.TargetPressure = _targetPressure.Value;
+            ScrubberDataChanged?.Invoke(address, _data);
+        };
+
         foreach (var value in Enum.GetValues<ScrubberPumpDirection>())
         {
             _pumpDirection.AddItem(Loc.GetString($"air-alarm-ui-pump-direction-{value.ToString().ToLower()}"), (int) value);
@@ -94,12 +104,21 @@ public sealed partial class ScrubberControl : BoxContainer
         _selectAll.OnPressed += _ =>
         {
             _data.FilterGases = new HashSet<Gas>(allGases);
+            _data.OverflowGases = [];
+            ScrubberDataChanged?.Invoke(_address, _data);
+        };
+
+        _overflowAll.OnPressed += _ =>
+        {
+            _data.FilterGases = [];
+            _data.OverflowGases = new HashSet<Gas>(allGases);
             ScrubberDataChanged?.Invoke(_address, _data);
         };
 
         _deselectAll.OnPressed += _ =>
         {
             _data.FilterGases = [];
+            _data.OverflowGases = [];
             ScrubberDataChanged?.Invoke(_address, _data);
         };
 
@@ -113,15 +132,47 @@ public sealed partial class ScrubberControl : BoxContainer
                 Name = value.ToString(),
                 Text = Loc.GetString(gasName),
                 ToggleMode = true,
-                HorizontalExpand = true,
-                Pressed = _data.FilterGases.Contains(value)
+                HorizontalExpand = true
             };
-            gasButton.OnToggled += args =>
+            if (_data.FilterGases.Contains(value))
             {
-                if (args.Pressed)
-                    _data.FilterGases.Add(value);
-                else
-                    _data.FilterGases.Remove(value);
+                gasButton.StyleClasses.Add(StyleClass.Positive);
+            }
+            else if (!_data.OverflowGases.Contains(value))
+            {
+                gasButton.StyleClasses.Add(StyleClass.Negative);
+            }
+            gasButton.OnPressed += args =>
+            {
+                var beforeState = 0; // Disabled
+                if (_data.OverflowGases.Contains(value))
+                {
+                    beforeState = 1; // Overflow
+                }
+                else if (_data.FilterGases.Contains(value))
+                {
+                    beforeState = 2; // Filter
+                }
+
+                _data.FilterGases.Remove(value);
+                _data.OverflowGases.Remove(value);
+                gasButton.StyleClasses.Remove(StyleClass.Positive);
+                gasButton.StyleClasses.Remove(StyleClass.Negative);
+                gasButton.Pressed = false;
+
+                switch (beforeState)
+                {
+                    case 0: // Disabled -> Overflow
+                        _data.OverflowGases.Add(value);
+                        break;
+                    case 1: // Overflow -> Filter
+                        _data.FilterGases.Add(value);
+                        gasButton.StyleClasses.Add(StyleClass.Positive);
+                        break;
+                    case 2: // Filter -> Disabled
+                        gasButton.StyleClasses.Add(StyleClass.Negative);
+                        break;
+                }
 
                 ScrubberDataChanged?.Invoke(_address, _data);
             };
@@ -143,13 +194,26 @@ public sealed partial class ScrubberControl : BoxContainer
         _data.VolumeRate = data.VolumeRate;
         _volumeRate.Value = _data.VolumeRate;
 
+        _data.TargetPressure = data.TargetPressure;
+        _targetPressure.Value = _data.TargetPressure;
+
         _data.WideNet = data.WideNet;
         _wideNet.Pressed = _data.WideNet;
         _data.FilterGases = data.FilterGases;
+        _data.OverflowGases = data.OverflowGases;
 
         foreach (var value in Enum.GetValues<Gas>())
         {
-            _gasControls[value].Pressed = data.FilterGases.Contains(value);
+            _gasControls[value].StyleClasses.Remove(StyleClass.Positive);
+            _gasControls[value].StyleClasses.Remove(StyleClass.Negative);
+            if (data.FilterGases.Contains(value))
+            {
+                _gasControls[value].StyleClasses.Add(StyleClass.Positive);
+            }
+            else if (!data.OverflowGases.Contains(value))
+            {
+                _gasControls[value].StyleClasses.Add(StyleClass.Negative);
+            }
         }
     }
 }
