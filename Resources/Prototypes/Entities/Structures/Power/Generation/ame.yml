@@ -30,7 +30,7 @@
         layer:
         - WallLayer
   - type: Damageable
-    damageModifierSet: PlasteelMod
+    damageModifierSet: PlasteelStructureMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -155,7 +155,7 @@
         layer:
         - WallLayer
   - type: Damageable
-    damageModifierSet: PlasteelMod
+    damageModifierSet: PlasteelStructureMod
   - type: Destructible
     thresholds:
     - trigger:

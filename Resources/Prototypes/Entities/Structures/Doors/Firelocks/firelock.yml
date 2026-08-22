@@ -28,7 +28,7 @@
     tags:
     - ForceFixRotations # Allow fixrotations to target these
   - type: Damageable
-    damageModifierSet: PlasteelMod
+    damageModifierSet: PlasteelStructureMod
   - type: Destructible
     thresholds:
     - trigger:

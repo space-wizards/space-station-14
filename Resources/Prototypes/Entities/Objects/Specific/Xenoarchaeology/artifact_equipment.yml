@@ -54,7 +54,7 @@
     - type: PlaceableSurface
       isPlaceable: false
     - type: Damageable
-      damageModifierSet: PlasteelMod
+      damageModifierSet: PlasteelStructureMod
     - type: Destructible
       thresholds:
       - trigger:
@@ -136,7 +136,7 @@
       path: /Audio/Items/toolbox_drop.ogg
   - type: LockVisuals
   - type: Damageable
-    damageModifierSet: PlasteelMod
+    damageModifierSet: PlasteelStructureMod
   - type: Destructible
     thresholds:
     - trigger:

@@ -120,7 +120,7 @@
   - type: Airtight
   - type: Occluder
   - type: Damageable
-    damageModifierSet: PlasteelMod
+    damageModifierSet: PlasteelStructureMod
   - type: Destructible
     thresholds:
     - trigger:
