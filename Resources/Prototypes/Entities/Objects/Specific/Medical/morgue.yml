@@ -1,6 +1,6 @@
 - type: entity
   id: BodyBag
-  parent: [ BaseDeployFoldable, BasePaperLabelableVisualized ]
+  parent: [ BaseDeployFoldable, BasePaperLabelable ]
   name: body bag
   description: A plastic bag designed for the storage and transportation of cadavers to stop body decomposition.
   components:
@@ -59,16 +59,6 @@
     stateDoorOpen: open_overlay
   - type: GenericVisualizer
     visuals:
-      enum.PaperLabelVisuals.HasLabel:
-        enum.PaperLabelVisuals.Layer:
-          True: {visible: true}
-          False: {visible: false}
-      enum.PaperLabelVisuals.LabelType:
-        enum.PaperLabelVisuals.Layer:
-          Paper: { state: paper }
-          Bounty: { state: bounty }
-          CaptainsPaper: { state: captains_paper }
-          Invoice: { state: invoice }
       enum.FoldedVisuals.State:
         foldedLayer:
           True: {visible: true}
@@ -76,6 +66,9 @@
         unfoldedLayer:
           True: {visible: false}
           False: {visible: true}
+  - type: PaperLabel
+    labelStates: {}
+    fallbackLabelState: paper # Currently only supports one sprite.
   - type: Pullable
   - type: AntiRottingContainer
   - type: ContainerContainer

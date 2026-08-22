@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseItem, BasePaperLabelable ] #TODO: Add sprites for different types of paper, replace BasePaperLabelable with BasePaperLabelableVisualized
+  parent: [ BaseItem, BasePaperLabelable ]
   id: SeedBase
   abstract: true
   components:
@@ -12,12 +12,9 @@
         map: ["enum.PaperLabelVisuals.Layer"]
         sprite: Objects/Specific/Hydroponics/seeds.rsi
     - type: Appearance
-    - type: GenericVisualizer
-      visuals:
-        enum.PaperLabelVisuals.HasLabel:
-          enum.PaperLabelVisuals.Layer:
-            True: { visible: true }
-            False: { visible: false }
+    - type: PaperLabel
+      labelStates: {}
+      fallbackLabelState: paper # Currently only supports one sprite.
     - type: Item
       size: Tiny
     - type: StaticPrice

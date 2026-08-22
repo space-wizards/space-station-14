@@ -8,25 +8,33 @@
     },
     "states": [
         {
-        "name": "black"
+            "name": "black"
         },
         {
-        "name": "red"
+            "name": "red"
         },
         {
-        "name": "blue"
+            "name": "blue"
         },
         {
-        "name": "green"
+            "name": "green"
         },
         {
-        "name": "yellow"
+            "name": "yellow"
         },
         {
-        "name": "purple"
+            "name": "purple"
         },
         {
-        "name": "rainbow"
+            "name": "rainbow"
+        },
+        {
+            "directions": 4,
+            "name": "paper-inhand-left"
+        },
+        {
+            "directions": 4,
+            "name": "paper-inhand-right"
         }
     ]
 }

@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ BaseStructureDynamic, BasePaperLabelableVisualized, StructureHealthContainerStrong ]
+  parent: [ BaseStructureDynamic, BasePaperLabelable, StructureHealthContainerStrong ]
   id: GasCanister
   name: gas canister
   description: A canister that can contain any type of gas. It can be attached to connector ports using a wrench.
@@ -45,19 +45,10 @@
           1: { state: can-o1, shader: "unshaded" }
           2: { state: can-o2, shader: "unshaded" }
           3: { state: can-o3, shader: "unshaded" }
-      enum.PaperLabelVisuals.HasLabel:
-        enum.PaperLabelVisuals.Layer:
-          True: { visible: true }
-          False: { visible: false }
       enum.StorageVisuals.Open:
         enum.PaperLabelVisuals.Layer:
           True: { visible: false }
-      enum.PaperLabelVisuals.LabelType:
-        enum.PaperLabelVisuals.Layer:
-          Paper: { state: paper }
-          Bounty: { state: bounty }
-          CaptainsPaper: { state: captains_paper }
-          Invoice: { state: invoice }
+          False: { visible: true }
   - type: ActivatableUI
     key: enum.GasCanisterUiKey.Key
   - type: UIRequiresLock
