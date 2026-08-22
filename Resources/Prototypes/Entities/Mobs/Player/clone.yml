@@ -23,6 +23,7 @@
   - PermanentBlindness
   - Snoring
   - Unrevivable
+  - MindUntransferableToBrain
 
 - type: cloningSettings
   parent: [TraitsMental, TraitsPhysical]

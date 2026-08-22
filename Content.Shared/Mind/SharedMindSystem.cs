@@ -211,6 +211,15 @@ public abstract partial class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
+    /// Public method to update the <see cref="MindContainerComponent.LastMind"/> property.
+    /// </summary>
+    /// <remarks>Note that this gets done automatically when transferring a mind using <see cref="TransferTo"/>.</remarks>
+    public void SetLastMind(Entity<MindContainerComponent> entity, EntityUid? lastMind)
+    {
+        entity.Comp.LastMind = lastMind;
+    }
+
+    /// <summary>
     ///     True if the OwnedEntity of this mind is physically dead.
     ///     This specific definition, as opposed to CharacterDeadIC, is used to determine if ghosting should allow return.
     /// </summary>

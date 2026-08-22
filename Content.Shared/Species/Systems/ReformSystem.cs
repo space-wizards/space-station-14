@@ -4,6 +4,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 using Content.Shared.Mind;
+using Content.Shared.Traits.Assorted;
 using Content.Shared.Zombies;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
@@ -92,7 +93,11 @@ public sealed partial class ReformSystem : EntitySystem
 
         // This transfers the mind to the new entity
         if (_mindSystem.TryGetMind(uid, out var mindId, out var mind))
+        {
             _mindSystem.TransferTo(mindId, child, mind: mind);
+            if (HasComp<MindUntransferableToBrainComponent>(uid))
+                EnsureComp<MindUntransferableToBrainComponent>(child);
+        }
 
         // Delete the old entity
         QueueDel(uid);

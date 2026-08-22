@@ -1,5 +1,5 @@
-using Content.Server.Ghost.Roles.Raffles;
 using Content.Server.Mind.Commands;
+using Content.Shared.Ghost.Roles.Raffles;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 
@@ -22,14 +22,17 @@ public sealed partial class GhostRoleComponent : Component
     public bool MakeSentient = true;
 
     /// <summary>
-    ///     The probability that this ghost role will be available after init.
-    ///     Used mostly for takeover roles that want some probability of being takeover, but not 100%.
+    /// The probability that this ghost role will be available after init.
+    /// Used mostly for takeover roles that want some probability of being takeover, but not 100%.
     /// </summary>
     [DataField("prob")]
     public float Probability = 1f;
 
     // We do this so updating RoleName and RoleDescription in VV updates the open EUIs.
 
+    /// <summary>
+    /// Name of the role to display in the ghost role UI.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
     public string RoleName
@@ -42,6 +45,9 @@ public sealed partial class GhostRoleComponent : Component
         }
     }
 
+    /// <summary>
+    /// Description of the role to display in the ghost role UI.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
     public string RoleDescription
@@ -54,6 +60,9 @@ public sealed partial class GhostRoleComponent : Component
         }
     }
 
+    /// <summary>
+    /// Rules for the role to display in the ghost role UI when selected.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
     public string RoleRules
@@ -72,15 +81,27 @@ public sealed partial class GhostRoleComponent : Component
     [DataField, Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // Don't make eye contact
     public List<EntProtoId> MindRoles = new() { "MindRoleGhostRoleNeutral" };
 
+    /// <summary>
+    /// Can the ghost role speak?
+    /// </summary>
     [DataField]
     public bool AllowSpeech { get; set; } = true;
 
+    /// <summary>
+    /// Can the ghost role move?
+    /// </summary>
     [DataField]
     public bool AllowMovement { get; set; }
 
+    /// <summary>
+    /// Has the ghost role been taken by a player?
+    /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     public bool Taken { get; set; }
 
+    /// <summary>
+    /// Identifier for this specific ghost role slot.
+    /// </summary>
     [ViewVariables]
     public uint Identifier { get; set; }
 

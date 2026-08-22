@@ -271,7 +271,7 @@ public sealed partial class MindSystem : SharedMindSystem
                 TransferTo(component!.Mind.Value, newMind?.VisitingEntity);
             }
             component!.Mind = mindId;
-            component.LastMind = mindId;
+            SetLastMind((entity.Value, component), mindId);
             component.HasMind = true;
             mind.OwnedEntity = entity;
             mind.OriginalOwnedEntity ??= GetNetEntity(mind.OwnedEntity);

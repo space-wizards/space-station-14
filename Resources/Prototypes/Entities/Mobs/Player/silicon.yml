@@ -466,12 +466,13 @@
   - type: NameIdentifier
     group: StationAi
   - type: ToggleableGhostRole
-    roleName: station-ai-ghost-role-name
-    roleDescription: station-ai-ghost-role-description
-    roleRules: ghost-role-information-silicon-rules
-    mindRoles:
-    - MindRoleGhostRoleSilicon
-    job: StationAi
+    ghostRole:
+      roleName: station-ai-ghost-role-name
+      roleDescription: station-ai-ghost-role-description
+      roleRules: ghost-role-information-silicon-rules
+      mindRoles:
+      - MindRoleGhostRoleSilicon
+      jobProto: StationAi
 
 # Hologram projection that the AI's eye tracks.
 - type: entity

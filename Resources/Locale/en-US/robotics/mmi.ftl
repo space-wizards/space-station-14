@@ -13,3 +13,6 @@ positronic-brain-stop-searching-verb-text = Stop searching
 positronic-brain-stopped-searching = Neuron descrambling halted.
 
 positronic-brain-slot-component-slot-name-brain = Brain
+
+mmi-brain-role-name = Man-Machine Interface
+mmi-brain-role-description = A scrambled brain made electronically sentient. Follow your new laws.
