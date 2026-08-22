@@ -78,8 +78,6 @@
       map: ["fireAlarmState"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Transform
-    anchored: true
   - type: Construction
     graph: FireAlarm
     node: fire_alarm

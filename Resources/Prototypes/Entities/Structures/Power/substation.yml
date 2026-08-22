@@ -132,7 +132,7 @@
 
 # Compact Wall Substation Base
 - type: entity
-  parent: [ CoreSubstation, StructureHealthMachine ]
+  parent: [ CoreSubstation, BaseWallmountMetallic, StructureHealthMachine ]
   id: BaseSubstationWall
   categories: [ HideSpawnMenu ]
   name: wallmount substation
@@ -149,20 +149,12 @@
     netsync: false
     castShadows: false
     offset: 0, -0.2
-  - type: Clickable
   - type: ContainerFill
     containers:
       board: [ WallmountSubstationElectronics ]
   - type: ContainerContainer
     containers:
       board: !type:Container
-  - type: InteractionOutline
-  - type: Physics
-    bodyType: Static
-    canCollide: false
-  - type: Fixtures
-  - type: Transform
-    anchored: true
   - type: Sprite # TODO: add sprite for maintenance panel open
     drawdepth: WallMountedItems
     sprite: Structures/Power/substation.rsi
@@ -196,7 +188,6 @@
     maxIntensity: 50
     intensitySlope: 2
     totalIntensity: 100
-  - type: WallMount
 
 # Substations in use
 
@@ -238,6 +229,7 @@
 
       # Construction Frame
 - type: entity
+  parent: BaseWallmountMetallic
   id: BaseSubstationWallFrame
   categories: [ HideSpawnMenu ]
   name: wallmount substation frame
@@ -245,14 +237,6 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Physics
-    bodyType: Static
-    canCollide: false
-  - type: Fixtures
-  - type: Transform
-    anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Power/substation.rsi
@@ -261,4 +245,3 @@
   - type: Construction
     graph: WallmountSubstation
     node: frame
-  - type: WallMount

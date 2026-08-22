@@ -1,13 +1,10 @@
+# Base recharging behaviours
 - type: entity
   abstract: true
-  parent: [BaseMachinePowered, ConstructibleMachine]
-  id: BaseRecharger
+  id: CoreRecharger
   placement:
     mode: SnapgridCenter
   components:
-  - type: Transform
-    anchored: true
-    noRot: false
   - type: Sprite
     snapCardinals: true
   - type: Appearance
@@ -15,14 +12,37 @@
     slotId: charger_slot
   - type: ApcPowerReceiver
     powerLoad: 1 # same as draw given in ChargerComponent.PassiveDraw; increased when it is actually charging something
-  - type: Anchorable
-    delay: 1
   - type: StaticPrice
     price: 75
 
 - type: entity
   abstract: true
-  parent: [ BaseRecharger, BaseSmallConstructibleMachineDestructible ]
+  parent: CoreRecharger
+  id: CoreItemRecharger
+  components:
+  - type: PowerChargerVisuals
+  - type: ContainerContainer
+    containers:
+      charger_slot: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: RequireProjectileTarget
+
+# Base physical rechargers
+- type: entity
+  abstract: true
+  parent: [ CoreRecharger, BaseMachinePowered, ConstructibleMachine ]
+  id: BaseRecharger
+  components:
+  - type: Transform
+    anchored: true
+    noRot: false
+  - type: Anchorable
+    delay: 1
+
+- type: entity
+  abstract: true
+  parent: [ CoreItemRecharger, BaseMachinePowered, ConstructibleMachine, BaseSmallConstructibleMachineDestructible ]
   id: BaseItemRecharger
   components:
   - type: Sprite
@@ -44,13 +64,6 @@
         - TabletopMachineMask
         layer:
         - BulletImpassable
-  - type: PowerChargerVisuals
-  - type: ContainerContainer
-    containers:
-      charger_slot: !type:ContainerSlot
-      machine_board: !type:Container
-      machine_parts: !type:Container
-  - type: RequireProjectileTarget
   - type: Destructible
     thresholds:
     - trigger:
@@ -64,6 +77,7 @@
         sound:
           collection: MetalBreak
 
+# Instances
 - type: entity
   parent: BaseItemRecharger
   id: PowerCellRecharger
@@ -204,7 +218,7 @@
   - type: MultiHandedItem
 
 - type: entity
-  parent: [ BaseItemRecharger, BaseWallmount ]
+  parent: [ CoreItemRecharger, BaseWallmount ]
   id: WallWeaponCapacitorRecharger
   name: wall recharger
   description: A compact wall-mounted recharger. It can only recharge electronic devices and has no space for power cells.
