@@ -462,6 +462,7 @@
   group: Narcotics
   desc: reagent-desc-StrawberryIce
   physicalDesc: reagent-physical-desc-fizzy
+  contrabandSeverity: Major
   flavor: fizzy
   color: "#FF36AE"
   metabolisms:
