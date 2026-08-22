@@ -1,0 +1,29 @@
+using Robust.Shared.GameStates;
+using Robust.Shared.Utility;
+
+namespace Content.Shared.Overlays;
+
+/// <summary>
+/// Adds a image overlay on screen when wearing an entity with this component.
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+public sealed partial class ImageOverlayComponent : Component
+{
+    /// <summary>
+    /// Path to image overlaid on the screen.
+    /// </summary>
+    [DataField(required: true), AutoNetworkedField]
+    public ResPath PathToOverlayImage = default!;
+
+    /// <summary>
+    /// The additional Color that can be overlaid over whole screen.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Color AdditionalColorOverlay = new(0, 0, 0, 0);
+
+    /// <summary>
+    /// Is this overlay active
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Active = true;
+}
