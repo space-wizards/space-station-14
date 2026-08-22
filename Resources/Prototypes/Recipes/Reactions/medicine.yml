@@ -218,19 +218,23 @@
   products:
     Ambuzol: 4
 
-- type: reaction
+- type: reaction #duplicated in reactions drinks so it shows up in guidebook
   id: Synaptizine
+  requiredMixerCategories:
+  - Stir
   reactants:
-    Lithium:
+    WatermelonWakeup:
       amount: 1
     Sugar:
       amount: 1
-    Water:
+    EnergyDrink:
       amount: 1
+    Lithium:
+      amount: 2
   products:
-    Synaptizine: 3
-
+    Synaptizine: 5
 - type: reaction
+
   id: Tricordrazine
   reactants:
     Inaprovaline:

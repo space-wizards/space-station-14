@@ -11,7 +11,7 @@ reagent-name-chlorine-trifluoride = chlorine trifluoride
 reagent-desc-chlorine-trifluoride = You really, REALLY don't want to get this shit anywhere near you.
 
 reagent-name-foaming-agent = foaming agent
-reagent-desc-foaming-agent = Makes foam such as that's required in metal foam grenades.
+reagent-desc-foaming-agent = Makes a foam that solidifies into metal when mixed with fluorosulfuric acid and iron or aluminium.
 
 reagent-name-welding-fuel = welding fuel
 reagent-desc-welding-fuel = Used by welders to weld.

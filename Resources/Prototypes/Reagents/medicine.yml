@@ -786,7 +786,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 2
+            Poison: 1
       - !type:ModifyStatusEffect
         effectProto: StatusEffectStunned
         time: 3.0
@@ -798,6 +798,31 @@
         effectProto: StatusEffectSeeingRainbow
         time: 15.0
         type: Remove
+      - !type:Jitter
+        conditions:
+        - !type:ReagentCondition
+          reagent: Synaptizine
+          min: 25
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Synaptizine
+          min: 45
+        damage:
+          types:
+            Heat: 1.5
+            Poison: 1
+      - !type:Vomit
+        conditions:
+        - !type:ReagentCondition
+          reagent: Synaptizine
+          min: 75
+        probability: 0.75
+      - !type:PopupMessage
+        visualType: Medium
+        messages: [ "ethyloxyephedrine-effect-feeling-awake", "ethyloxyephedrine-effect-clear-mind" ]
+        type: Local
+        probability: 0.1
 
 - type: reagent
   id: TranexamicAcid
@@ -1141,6 +1166,7 @@
         damage:
           types:
             Blunt: 3 # 12 per u
+  fizziness: 0.9 #just a silly little addition, likelihood that if you put it in a can or soda bottle and it sprays lmao
 
 - type: reagent
   id: Bruizine
