@@ -1,11 +1,13 @@
 - type: vendingMachineInventory
   id: MagiVendInventory
   startingInventory:
-    ClothingHeadHatWizard: 3
-    ClothingOuterWizard: 3
-    ClothingHeadHatRedwizard: 3
+    ClothingHeadHatWizardAbyss: 3
+    ClothingOuterWizardAbyss: 3
+    ClothingHeadHatWizardBlue: 3
+    ClothingOuterWizardBlue: 3
+    ClothingHeadHatWizardRed: 3
     ClothingOuterWizardRed: 3
-    ClothingHeadHatVioletwizard: 3
+    ClothingHeadHatWizardViolet: 3
     ClothingOuterWizardViolet: 3
     ClothingHeadHelmetWizardHelm: 3
     ClothingShoesWizard: 9
