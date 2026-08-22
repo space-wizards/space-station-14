@@ -43,7 +43,7 @@ public sealed partial class SolutionContainerVisualsSystem : VisualizerSystem<So
                 SolutionContainerVisuals.FillFraction,
                 out float fraction,
                 args.Component))
-            return;
+            fraction = 0f;
 
         // C# moment; setting it as nullable (even though it's not) avoids a
         // gazillion .AsNullable calls.

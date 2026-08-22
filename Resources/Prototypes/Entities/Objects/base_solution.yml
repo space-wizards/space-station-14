@@ -1,10 +1,10 @@
-﻿- type: entity
+- type: entity
   id: Solution # Not abstract because it's a fallback for missing solution protos!
   categories: [ HideSpawnMenu ]
   name: solution
   components:
   - type: Solution
-
+  
 - type: entity
   id: SolutionCryo
   categories: [ HideSpawnMenu ]
@@ -23,6 +23,7 @@
   components:
   - type: Solution
     id: beaker
+  - type: SolutionAppearance
 
 - type: entity
   abstract: true
@@ -55,6 +56,7 @@
   components:
   - type: Solution
     id: drink
+  - type: SolutionAppearance
 
 - type: entity
   abstract: true
