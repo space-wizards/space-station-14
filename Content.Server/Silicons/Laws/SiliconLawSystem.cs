@@ -42,6 +42,8 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
     [Dependency] private IRobustRandom _robustRandom = default!;
     [Dependency] private IonLawSystem _ionLaw = default!;
 
+    [Dependency] private EntityQuery<SiliconLawBoundComponent> lawBoundQuery = default!;
+
     private static readonly ProtoId<SiliconLawsetPrototype> DefaultCrewLawset = "Crewsimov";
 
     /// <inheritdoc/>
@@ -312,11 +314,10 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
 
     private void OnIonStormEvent(Entity<IonStormSiliconLawComponent> ent, ref IonStormEvent args)
     {
-        if (!TryComp<SiliconLawBoundComponent>(ent, out var lawBound))
+        if (!lawBoundQuery.TryComp(ent, out var lawBound))
             return;
 
-        if (!TryComp<IonStormSiliconLawComponent>(ent, out var target))
-            return;
+        var target = ent.Comp;
 
         var laws = GetLaws(ent, lawBound);
         if (laws.Laws.Count == 0)
@@ -325,11 +326,16 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
         // clone it so not modifying stations lawset
         laws = laws.Clone();
 
-        SwapRandomLawset(target.RandomLawsetChance, ref laws, target.IonRandomLawsets);
+        // try to swap it out with a random lawset
+        if (_robustRandom.Prob(target.RandomLawsetChance))
+            SwapRandomLawset(ref laws, target.IonRandomLawsets);
 
-        ShuffleLaws(target.ShuffleChance, laws.Laws);
+        // shuffle them all
+        if (_robustRandom.Prob(target.ShuffleChance))
+            ShuffleLaws(laws.Laws);
 
-        RemoveRandomLaw(target.RemoveChance, laws.Laws);
+        if (_robustRandom.Prob(target.RemoveChance))
+            RemoveRandomLaw(laws.Laws);
 
         // generate a new law...
         var newLaw = _ionLaw.GetIonLaw();
@@ -337,7 +343,11 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
         if (string.IsNullOrEmpty(newLaw))
             return;
 
-        RandomReplaceOrAddGlitchedLaw(target.ReplaceChance, laws.Laws, newLaw);
+        // see if the law we add will replace a random existing law or be a new glitched order one
+        if (laws.Laws.Count > 0 && _robustRandom.Prob(target.ReplaceChance))
+            RandomReplaceLaw(laws.Laws, newLaw);
+        else
+            AddGlitchedLaw(laws.Laws, newLaw);
 
         RankLaws(laws.Laws);
 
@@ -350,15 +360,10 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
     /// <summary>
     /// Has a chance to swap referenced lawset with provided lawset list
     /// </summary>
-    /// <param name="chance">The chance it will swap the lawset to a new one</param>
     /// <param name="laws">The lawset you might swap</param>
     /// <param name="randomLawset">The lookup table for acceptable lawsets</param>
-    public void SwapRandomLawset(float chance, ref SiliconLawset laws, ProtoId<WeightedRandomPrototype> randomLawset)
+    public void SwapRandomLawset(ref SiliconLawset laws, ProtoId<WeightedRandomPrototype> randomLawset)
     {
-        // try to swap it out with a random lawset
-        if (!_robustRandom.Prob(chance))
-            return;
-
         var lawsets = ProtoMan.Index<WeightedRandomPrototype>(randomLawset);
         var lawset = lawsets.Pick(_robustRandom);
         laws = GetLawset(lawset);
@@ -367,14 +372,9 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
     /// <summary>
     /// Has a chance to shuffle referenced lawset
     /// </summary>
-    /// <param name="chance">The chance to shuffle</param>
     /// <param name="laws">The lawset you might shuffle</param>
-    public void ShuffleLaws(float chance, List<SiliconLaw> laws)
+    public void ShuffleLaws(List<SiliconLaw> laws)
     {
-        // shuffle them all
-        if (!_robustRandom.Prob(chance))
-            return;
-
         // hopefully work with existing glitched laws if there are multiple ion storms
         var baseOrder = FixedPoint2.New(1);
         foreach (var law in laws)
@@ -395,12 +395,11 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
     /// <summary>
     /// Has a chance to remove a random law from a referenced lawset
     /// </summary>
-    /// <param name="chance">The chance to remove a law</param>
     /// <param name="laws">The lawset you might remove from</param>
-    public void RemoveRandomLaw(float chance, List<SiliconLaw> laws)
+    public void RemoveRandomLaw(List<SiliconLaw> laws)
     {
         // see if we can remove a random law
-        if (laws.Count <= 0 || !_robustRandom.Prob(chance))
+        if (laws.Count <= 0)
             return;
 
         var i = _robustRandom.Next(laws.Count);
@@ -408,52 +407,57 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
     }
 
     /// <summary>
-    /// Has a chance to replace or add a given law to the referenced lawset
+    /// Replaces a random law in a lawset with a supplied law.
     /// </summary>
-    /// <param name="chance">The chance to do the replacement</param>
     /// <param name="laws">The lawset you might replace from</param>
     /// <param name="newLaw">The string of the new law</param>
     /// <returns></returns>
-    public void RandomReplaceOrAddGlitchedLaw(float chance, List<SiliconLaw> laws, string newLaw)
+    public void RandomReplaceLaw(List<SiliconLaw> laws, string newLaw)
     {
-        // see if the law we add will replace a random existing law or be a new glitched order one
-        if (laws.Count > 0 && _robustRandom.Prob(chance))
+        // double-checking this seems wrong but I'm not sure if there's a way around it
+        if (laws.Count <= 0)
+            return;
+
+        var i = _robustRandom.Next(laws.Count);
+        laws[i] = new SiliconLaw()
         {
-            var i = _robustRandom.Next(laws.Count);
-            laws[i] = new SiliconLaw()
-            {
-                LawString = newLaw,
-                Order = laws[i].Order
-            };
-        }
-        else
+            LawString = newLaw,
+            Order = laws[i].Order
+        };
+    }
+
+    /// <summary>
+    /// Adds a random glitched law in a lawset with a supplied law.
+    /// </summary>
+    /// <param name="laws">The lawset you might replace from</param>
+    /// <param name="newLaw">The string of the new law</param>
+    /// <returns></returns>
+    public void AddGlitchedLaw(List<SiliconLaw> laws, string newLaw)
+    {
+        var glitchedLaw = new SiliconLaw
         {
-            var glitchedLaw = new SiliconLaw
-            {
-                LawString = newLaw,
-                Order = -1,
-                LawIdentifierOverride = Loc.GetString(
-                    "ion-storm-law-scrambled-number",
-                    (
-                        "length",
-                        _robustRandom.Next(
-                            IonStormIdentifierMinLength,
-                            IonStormIdentifierMaxLength
-                        )
+            LawString = newLaw,
+            Order = -1,
+            LawIdentifierOverride = Loc.GetString(
+                "ion-storm-law-scrambled-number",
+                (
+                    "length",
+                    _robustRandom.Next(
+                        IonStormIdentifierMinLength,
+                        IonStormIdentifierMaxLength
                     )
-                ),
-                Corrupted = true
-            };
-            laws.Insert(0, glitchedLaw);
-        }
+                )
+            ),
+            Corrupted = true
+        };
+        laws.Insert(0, glitchedLaw);
     }
 
     /// <summary>
     /// Sets and notifies the lawset of law'd entity.
     /// Prefer using <see cref="SetLaws"/> on non silicon.
     /// </summary>
-    /// <param name="uid">Entity you would like to set</param>
-    /// <param name="lawProvider">The law provider of the entity</param>
+    /// <param name="ent">Entity you would like to set</param>
     /// <param name="laws">The lawset you would like to set the provider to</param>
     public void SetAlteredLawset(Entity<SiliconLawProviderComponent> ent, SiliconLawset laws)
     {
