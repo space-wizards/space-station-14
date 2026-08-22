@@ -204,4 +204,10 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> GameAdminJobTracking =
         CVarDef.Create("game.admin_job_tracking", false, CVar.SERVERONLY);
+
+    /// <summary>
+    /// Whether admins can log events with no category
+    /// </summary>
+    public static readonly CVarDef<bool> AdminEventAllowNoneCategory =
+        CVarDef.Create("admin.event_log.allow_none_category", true, CVar.SERVERONLY);
 }
