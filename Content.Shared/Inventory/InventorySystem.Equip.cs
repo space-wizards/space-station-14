@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Armor;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Clothing.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Gibbing;
@@ -9,6 +10,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
+using Content.Shared.Kitchen.Components;
 using Content.Shared.Kitchen.EntitySystems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
@@ -37,7 +39,6 @@ public abstract partial class InventorySystem
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private SharedStrippableSystem _strippable = default!;
-    [Dependency] private SharedReagentGrinderSystem _grinder = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private ThrowingSystem _throwing = default!;
 
@@ -640,7 +641,8 @@ public abstract partial class InventorySystem
     {
         foreach (var item in GetHandOrInventoryEntities((ent, null, ent)))
         {
-            if (_grinder.GetGrinderSolution(item, args.Program) is null)
+            if (!HasComp<ExtractableComponent>(item) ||
+                !HasComp<FitsInDispenserComponent>(item))
             {
                 var randCoords = _random.NextVector2(.5f, .5f);
                 _transform.DropNextTo(item, args.Grinder);

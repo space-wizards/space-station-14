@@ -335,7 +335,7 @@ public abstract partial class SharedReagentGrinderSystem : EntitySystem
                 if (solution.Volume > beakerSolution.AvailableVolume)
                     continue;
 
-                var ev = new BeingGrindedEvent(ent, program, ent.Comp.InputContainer);
+                var ev = new BeingGrindedEvent(ent, ent.Comp.InputContainer);
                 RaiseLocalEvent(item, ref ev);
 
                 _destructible.DestroyEntity(item);
@@ -419,4 +419,4 @@ public abstract partial class SharedReagentGrinderSystem : EntitySystem
 }
 
 [ByRefEvent]
-public readonly record struct BeingGrindedEvent(EntityUid Grinder, GrinderProgram Program, Container InputContainer);
+public readonly record struct BeingGrindedEvent(EntityUid Grinder, Container InputContainer);
