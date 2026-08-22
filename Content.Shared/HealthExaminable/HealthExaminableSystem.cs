@@ -20,6 +20,14 @@ public sealed partial class HealthExaminableSystem : EntitySystem
         SubscribeLocalEvent<HealthExaminableComponent, GetVerbsEvent<ExamineVerb>>(OnGetExamineVerbs);
     }
 
+    [SubscribeLocalEvent]
+    private void OnComponentInit(Entity<HealthExaminableComponent> ent, ref ComponentInit args)
+    {
+        // This catches and sorts thresholds that are unsorted in YAML.
+        // If this causes a test failure, you must sort your thresholds in YAML from lowest to highest.
+        ent.Comp.Thresholds.Sort();
+    }
+
     private void OnGetExamineVerbs(EntityUid uid, HealthExaminableComponent component, GetVerbsEvent<ExamineVerb> args)
     {
         if (!TryComp<DamageableComponent>(uid, out var damage))
@@ -58,26 +66,21 @@ public sealed partial class HealthExaminableSystem : EntitySystem
             if (dmg == FixedPoint2.Zero)
                 continue;
 
-            FixedPoint2 closest = FixedPoint2.Zero;
-
-            string chosenLocStr = string.Empty;
-            foreach (var threshold in component.Thresholds)
+            var chosenLocStr = string.Empty;
+            for (var i = component.Thresholds.Length - 1; i >= 0; i--)
             {
-                var str = $"health-examinable-{component.LocPrefix}-{type}-{threshold}";
-                var tempLocStr = Loc.GetString($"health-examinable-{component.LocPrefix}-{type}-{threshold}", ("target", Identity.Entity(uid, EntityManager)));
-
-                // i.e., this string doesn't exist, because theres nothing for that threshold
-                if (tempLocStr == str)
+                if (component.Thresholds[i] > dmg)
                     continue;
 
-                if (dmg > threshold && threshold > closest)
-                {
-                    chosenLocStr = tempLocStr;
-                    closest = threshold;
-                }
+                if (!Loc.TryGetString($"health-examinable-{component.LocPrefix}-{type}-{i}", out var locStr, ("target", Identity.Entity(uid, EntityManager))))
+                    continue;
+
+                chosenLocStr = locStr;
+                break;
             }
 
-            if (closest == FixedPoint2.Zero)
+            // No threshold string was found
+            if (string.IsNullOrEmpty(chosenLocStr))
                 continue;
 
             if (!first)

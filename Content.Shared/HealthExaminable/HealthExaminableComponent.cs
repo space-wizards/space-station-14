@@ -7,8 +7,22 @@ namespace Content.Shared.HealthExaminable;
 [RegisterComponent, Access(typeof(HealthExaminableSystem))]
 public sealed partial class HealthExaminableComponent : Component
 {
-    public List<FixedPoint2> Thresholds = new()
-        { FixedPoint2.New(8), FixedPoint2.New(15), FixedPoint2.New(30), FixedPoint2.New(50), FixedPoint2.New(75), FixedPoint2.New(100), FixedPoint2.New(200) };
+    /// <summary>
+    /// Damage thresholds between examinable damage states.
+    /// </summary>
+    /// <remarks>
+    /// Must be sorted from lowest to highest for correct work.
+    /// </remarks>
+    [DataField]
+    public FixedPoint2[] Thresholds = [
+        8,
+        15,
+        30,
+        50,
+        75,
+        100,
+        200
+    ];
 
     [DataField(required: true)]
     public HashSet<ProtoId<DamageTypePrototype>> ExaminableTypes = default!;
