@@ -39,7 +39,7 @@ public sealed partial class PlanetLightSystem : EntitySystem
     {
         base.Initialize();
 
-        _cfgManager.OnValueChanged(CCVars.AmbientOcclusion, val =>
+        Subs.CVar(_cfgManager, CCVars.AmbientOcclusion, val =>
         {
             AmbientOcclusion = val;
         }, true);
@@ -62,5 +62,11 @@ public sealed partial class PlanetLightSystem : EntitySystem
         _overlayMan.RemoveOverlay<SunShadowOverlay>();
         _overlayMan.RemoveOverlay<AfterLightTargetOverlay>();
         _overlayMan.RemoveOverlay<AmbientOcclusionOverlay>();
+    }
+
+    [SubscribeLocalEvent]
+    private void OnClearColor(ref GetClearColorEvent ev)
+    {
+        ev.Color = Color.Transparent;
     }
 }
