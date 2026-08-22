@@ -121,11 +121,11 @@ public sealed partial class LabelSystem : EntitySystem
 
         if (string.IsNullOrWhiteSpace(ent.Comp.Content))
         {
-            args.Examined.PushMarkup(Loc.GetString("comp-paper-label-has-label-blank"));
+            args.Examined.PushMarkup(Loc.GetString("paper-component-has-label-blank"));
             return;
         }
 
-        args.Examined.PushMarkup(Loc.GetString("comp-paper-label-has-label"));
+        args.Examined.PushMarkup(Loc.GetString("paper-component-has-label"));
         var text = ent.Comp.Content;
         args.Examined.PushMarkup(text.TrimEnd());
         args.Handled = true;
