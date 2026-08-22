@@ -26,6 +26,7 @@ public sealed partial class PlantMutationSystem : EntitySystem
     [Dependency] private BotanySystem _botany = default!;
     [Dependency] private ISerializationManager _serialization = default!;
     [Dependency] private PlantSystem _plant = default!;
+    [Dependency] private PlantAnalyzerSystem _plantAnalyzer = default!;
     [Dependency] private PlantTraySystem _plantTray = default!;
     [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
 
@@ -58,6 +59,8 @@ public sealed partial class PlantMutationSystem : EntitySystem
                     ent.Comp.Mutations.Add(mutation);
             }
         }
+
+        _plantAnalyzer.UpdatePlantUi(ent.Owner);
     }
 
     /// <summary>

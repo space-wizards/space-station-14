@@ -7,3 +7,6 @@ tray-component-water-low-warning = The [color=cyan]water[/color] level is [color
 tray-component-nutrient-low-warning = The [color=orange]nutrient[/color] level is [color=red]low[/color]!
 tray-component-toxin-high-level-warning = The [color=red]toxicity level alert[/color] is flashing red.
 tray-component-pest-high-level-warning = It's filled with [color=gray]tiny worms[/color]!
+tray-component-plant-improper-heat-warning = The [color=orange]improper temperature level alert[/color] is blinking.
+tray-component-plant-improper-pressure-warning = The [color=lightblue]improper environment pressure alert[/color] is blinking.
+tray-component-plant-missing-gas-warning = The [color=cyan]improper gas environment alert[/color] is blinking.
