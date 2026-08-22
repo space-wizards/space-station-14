@@ -10,7 +10,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Labels.EntitySystems;
 
-public sealed partial class LabelSystem : EntitySystem
+public abstract partial class SharedLabelSystem : EntitySystem
 {
     [Dependency] private NameModifierSystem _nameModifier = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;

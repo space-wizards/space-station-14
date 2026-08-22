@@ -23,7 +23,7 @@ public sealed partial class SalvageJobBoardSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private AudioSystem _audio = default!;
     [Dependency] private CargoSystem _cargo = default!;
-    [Dependency] private LabelSystem _label = default!;
+    [Dependency] private SharedLabelSystem _label = default!;
     [Dependency] private PaperSystem _paper = default!;
     [Dependency] private RadioSystem _radio = default!;
     [Dependency] private StationSystem _station = default!;

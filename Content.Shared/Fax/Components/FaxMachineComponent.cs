@@ -154,9 +154,6 @@ public sealed partial class FaxPrintout
     [DataField(required: true)]
     public string Name { get; private set; } = default!;
 
-    [DataField]
-    public string? Label { get; private set; }
-
     [DataField(required: true)]
     public string Content { get; private set; } = default!;
 
@@ -175,19 +172,25 @@ public sealed partial class FaxPrintout
     [DataField]
     public string? SenderFaxName { get; private set; } = default!;
 
+    /// <summary>
+    /// The original entity from which this fax was generated, if any.
+    /// </summary>
+    [DataField]
+    public EntityUid? OriginalEntity = default!;
+
     private FaxPrintout()
     {
     }
 
-    public FaxPrintout(string content, string name, string? label = null, string? prototypeId = null, string? stampState = null, List<StampDisplayInfo>? stampedBy = null, bool locked = false, string? senderFaxName = null)
+    public FaxPrintout(string content, string name, string? prototypeId = null, string? stampState = null, List<StampDisplayInfo>? stampedBy = null, bool locked = false, string? senderFaxName = null, EntityUid? originalEntity = null)
     {
         Content = content;
         Name = name;
-        Label = label;
         PrototypeId = prototypeId ?? "";
         StampState = stampState;
         StampedBy = stampedBy ?? new List<StampDisplayInfo>();
         Locked = locked;
         SenderFaxName = senderFaxName;
+        OriginalEntity = originalEntity;
     }
 }
