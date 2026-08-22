@@ -46,8 +46,6 @@ public abstract partial class SharedReagentGrinderSystem : EntitySystem
     [Dependency] private SharedPowerStateSystem _powerState = default!;
     [Dependency] private SharedTransformSystem _xform = default!;
     [Dependency] private InventorySystem _inventory = default!;
-    [Dependency] private ThrowingSystem _throwing = default!;
-    [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -337,18 +335,8 @@ public abstract partial class SharedReagentGrinderSystem : EntitySystem
                 if (solution.Volume > beakerSolution.AvailableVolume)
                     continue;
 
-                foreach (var inv in _inventory.GetHandOrInventoryEntities(item))
-                {
-                    if (GetGrinderSolution(inv, program) is null)
-                    {
-                        var randCoords = _random.NextVector2(2f, 2f);
-                        _xform.DropNextTo(inv, ent.Owner);
-                        _throwing.TryThrow(inv, randCoords);
-                        continue;
-                    }
-
-                    _containerSystem.Insert(inv, ent.Comp.InputContainer);
-                }
+                var ev = new BeingGrindedEvent(ent, program, ent.Comp.InputContainer);
+                RaiseLocalEvent(item, ref ev);
 
                 _destructible.DestroyEntity(item);
             }
@@ -431,4 +419,4 @@ public abstract partial class SharedReagentGrinderSystem : EntitySystem
 }
 
 [ByRefEvent]
-public readonly record struct BeingGrindedEvent(EntityUid Grinder);
+public readonly record struct BeingGrindedEvent(EntityUid Grinder, GrinderProgram Program, Container InputContainer);

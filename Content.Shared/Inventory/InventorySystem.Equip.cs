@@ -14,10 +14,12 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Strip;
 using Content.Shared.Strip.Components;
+using Content.Shared.Throwing;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Inventory;
@@ -35,6 +37,9 @@ public abstract partial class InventorySystem
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private SharedStrippableSystem _strippable = default!;
+    [Dependency] private SharedReagentGrinderSystem _grinder = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
 
     private static readonly ProtoId<ItemSizePrototype> PocketableItemSize = "Small";
 
@@ -635,7 +640,15 @@ public abstract partial class InventorySystem
     {
         foreach (var item in GetHandOrInventoryEntities((ent, null, ent)))
         {
-            _transform.DropNextTo(item, args.Grinder);
+            if (_grinder.GetGrinderSolution(item, args.Program) is null)
+            {
+                var randCoords = _random.NextVector2(.5f, .5f);
+                _transform.DropNextTo(item, args.Grinder);
+                _throwing.TryThrow(item, randCoords);
+                continue;
+            }
+
+            _containerSystem.Insert(item, args.InputContainer);
         }
     }
 }
