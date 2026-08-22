@@ -33,7 +33,6 @@
     - state: noticeboard
     - state: notice-0
       map: ["enum.StorageFillLayers.Fill"]
-  - type: Appearance
   - type: Storage
     grid:
     - 0,0,4,3
