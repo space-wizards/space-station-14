@@ -83,7 +83,7 @@ public sealed partial class SimpleRadialMenu : RadialMenu
         }
     }
 
-    public IEnumerable<RadialMenuOptionBase> SortOptions(IEnumerable<RadialMenuOptionBase> models)
+    private IEnumerable<RadialMenuOptionBase> SortOptions(IEnumerable<RadialMenuOptionBase> models)
     {
         switch (models)
         {

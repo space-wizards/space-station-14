@@ -127,6 +127,8 @@ public sealed partial class RCDPrototype : IPrototype
 
     /// <summary>
     /// The relative order to use in the rotary menu.
+    /// Lower numbers appear before higher numbers, which appear before null.
+    /// Defaults to null.
     /// </summary>
     [DataField]
     public int? MenuOrder { get; private set; }
