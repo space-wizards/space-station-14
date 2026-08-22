@@ -1,54 +1,32 @@
-using Content.Shared.Actions;
 using Content.Shared.Alert;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Gravity;
 using Content.Shared.Inventory;
-using Content.Shared.Item;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.Clothing;
 
+/// <summary>
+/// A system for enabling and disabling the effects of magboots.
+/// The boots "force" gravity for the wearing entity when enabled and on a grid.
+/// </summary>
 public sealed partial class SharedMagbootsSystem : EntitySystem
 {
     [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private ClothingSystem _clothing = default!;
     [Dependency] private ItemToggleSystem _toggle = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedGravitySystem _gravity = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<MagbootsComponent, ItemToggledEvent>(OnToggled);
-        SubscribeLocalEvent<MagbootsComponent, ClothingGotEquippedEvent>(OnGotEquipped);
-        SubscribeLocalEvent<MagbootsComponent, ClothingGotUnequippedEvent>(OnGotUnequipped);
-        SubscribeLocalEvent<MagbootsComponent, IsWeightlessEvent>(OnIsWeightless);
-        SubscribeLocalEvent<MagbootsComponent, InventoryRelayedEvent<IsWeightlessEvent>>(OnIsWeightless);
-    }
-
-    private void OnToggled(Entity<MagbootsComponent> ent, ref ItemToggledEvent args)
-    {
-        if (_container.TryGetContainingContainer((ent.Owner, null, null), out var container))
-            UpdateMagbootEffects(container.Owner, ent, args.Activated);
-    }
-
-    private void OnGotUnequipped(Entity<MagbootsComponent> ent, ref ClothingGotUnequippedEvent args)
-    {
-        UpdateMagbootEffects(args.Wearer, ent, false);
-    }
-
-    private void OnGotEquipped(Entity<MagbootsComponent> ent, ref ClothingGotEquippedEvent args)
-    {
-        UpdateMagbootEffects(args.Wearer, ent, _toggle.IsActivated(ent.Owner));
-    }
+    [Dependency] private EntityQuery<MovedByPressureComponent> _movedByPressureQuery = default!;
 
     public void UpdateMagbootEffects(EntityUid user, Entity<MagbootsComponent> ent, bool state)
     {
         // TODO: public api for this and add access
-        if (TryComp<MovedByPressureComponent>(user, out var moved))
+        if (_movedByPressureQuery.TryComp(user, out var moved))
             moved.Enabled = !state;
 
         _gravity.RefreshWeightless(user);
@@ -59,6 +37,34 @@ public sealed partial class SharedMagbootsSystem : EntitySystem
             _alerts.ClearAlert(user, ent.Comp.MagbootsAlert);
     }
 
+    #region Event Handlers
+    [SubscribeLocalEvent]
+    private void OnToggled(Entity<MagbootsComponent> ent, ref ItemToggledEvent args)
+    {
+        if (_clothing.IsEquipped(ent.Owner)
+            && _container.TryGetContainingContainer((ent.Owner, null, null), out var container))
+            UpdateMagbootEffects(container.Owner, ent, args.Activated);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnGotUnequipped(Entity<MagbootsComponent> ent, ref ClothingGotUnequippedEvent args)
+    {
+        UpdateMagbootEffects(args.Wearer, ent, false);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnGotEquipped(Entity<MagbootsComponent> ent, ref ClothingGotEquippedEvent args)
+    {
+        UpdateMagbootEffects(args.Wearer, ent, _toggle.IsActivated(ent.Owner));
+    }
+
+    [SubscribeLocalEvent]
+    private void OnIsWeightless(Entity<MagbootsComponent> ent, ref InventoryRelayedEvent<IsWeightlessEvent> args)
+    {
+        OnIsWeightless(ent, ref args.Args);
+    }
+
+    [SubscribeLocalEvent]
     private void OnIsWeightless(Entity<MagbootsComponent> ent, ref IsWeightlessEvent args)
     {
         if (args.Handled || !_toggle.IsActivated(ent.Owner))
@@ -71,9 +77,5 @@ public sealed partial class SharedMagbootsSystem : EntitySystem
         args.IsWeightless = false;
         args.Handled = true;
     }
-
-    private void OnIsWeightless(Entity<MagbootsComponent> ent, ref InventoryRelayedEvent<IsWeightlessEvent> args)
-    {
-        OnIsWeightless(ent, ref args.Args);
-    }
+    #endregion Event Handlers
 }
