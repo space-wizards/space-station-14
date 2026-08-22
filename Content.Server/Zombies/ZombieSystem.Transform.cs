@@ -6,6 +6,7 @@ using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.Ghost;
 using Content.Server.Inventory;
+using Content.Server.KillTracking;
 using Content.Server.Mind;
 using Content.Server.NPC;
 using Content.Server.NPC.HTN;
@@ -143,6 +144,7 @@ public sealed partial class ZombieSystem
         RemComp<LegsParalyzedComponent>(target);
         RemComp<ComplexInteractionComponent>(target);
         RemComp<SentienceTargetComponent>(target);
+        RemComp<KillTrackerComponent>(target); //A dead person is already dead - maybe worth reapplying if we want to track zombie slaying kills
 
         //funny voice
         var accentType = "zombie";
