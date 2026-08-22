@@ -915,6 +915,43 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("custom_vote_log_option", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.FlaggedWord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("flagged_word_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("boolean")
+                        .HasColumnName("enabled");
+
+                    b.Property<bool>("FlagPartialMatches")
+                        .HasColumnType("boolean")
+                        .HasColumnName("flag_partial_matches");
+
+                    b.Property<byte>("Severity")
+                        .HasColumnType("smallint")
+                        .HasColumnName("severity");
+
+                    b.Property<string>("Word")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("word");
+
+                    b.HasKey("Id")
+                        .HasName("PK_flagged_word");
+
+                    b.HasIndex("Word")
+                        .IsUnique()
+                        .HasDatabaseName("IX_flagged_word_word");
+
+                    b.ToTable("flagged_word", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.IPIntelCache", b =>
                 {
                     b.Property<int>("Id")

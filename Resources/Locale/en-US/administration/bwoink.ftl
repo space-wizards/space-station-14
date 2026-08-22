@@ -24,6 +24,8 @@ admin-ahelp-admin-only-tooltip = If checked, then the message won't be visible f
 
 admin-bwoink-play-sound = Bwoink?
 
+admin-flagged-word = [Automated] User said: "{$flagged}" in the context of: "{$original}"
+
 bwoink-title-none-selected = None selected
 
 bwoink-system-rate-limited = System: you are sending messages too quickly.
