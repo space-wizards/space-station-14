@@ -9,6 +9,25 @@
   abstract: true
   components:
     - type: StationBankAccount
+      accounts:
+        Cargo:
+          balance: 2000
+          revenueDistribution: 0.00
+        Engineering:
+          balance: 1000
+          revenueDistribution: 0.20
+        Medical:
+          balance: 1000
+          revenueDistribution: 0.20
+        Science:
+          balance: 1000
+          revenueDistribution: 0.20
+        Security:
+          balance: 1000
+          revenueDistribution: 0.20
+        Service:
+          balance: 1000
+          revenueDistribution: 0.20
     - type: StationCargoOrderDatabase
       orders:
         Cargo: [ ]

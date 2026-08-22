@@ -1,6 +1,7 @@
 using Content.Shared.Cargo.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Cargo.Components;
@@ -30,32 +31,10 @@ public sealed partial class StationBankAccountComponent : Component
     public double LockboxCut = 0.75;
 
     /// <summary>
-    /// A dictionary corresponding to the money held by each cargo account.
+    /// A dictionary corresponding to the data of each cargo account.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public Dictionary<ProtoId<CargoAccountPrototype>, int> Accounts = new()
-    {
-        { "Cargo",       2000 },
-        { "Engineering", 1000 },
-        { "Medical",     1000 },
-        { "Science",     1000 },
-        { "Security",    1000 },
-        { "Service",     1000 },
-    };
-
-    /// <summary>
-    /// A baseline distribution used for income and dispersing leftovers after sale.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public Dictionary<ProtoId<CargoAccountPrototype>, double> RevenueDistribution = new()
-    {
-        { "Cargo",       0.00 },
-        { "Engineering", 0.20 },
-        { "Medical",     0.20 },
-        { "Science",     0.20 },
-        { "Security",    0.20 },
-        { "Service",     0.20 },
-    };
+    public Dictionary<ProtoId<CargoAccountPrototype>, CargoAccountData> Accounts;
 
     /// <summary>
     /// How much the bank balance goes up per second, every Delay period. Rounded down when multiplied.
@@ -80,4 +59,41 @@ public sealed partial class StationBankAccountComponent : Component
 /// Broadcast and raised on station ent whenever its balance is updated.
 /// </summary>
 [ByRefEvent]
-public readonly record struct BankBalanceUpdatedEvent(EntityUid Station, Dictionary<ProtoId<CargoAccountPrototype>, int> Balance);
+public readonly record struct BankBalanceUpdatedEvent(EntityUid Station, Dictionary<ProtoId<CargoAccountPrototype>, CargoAccountData> Accounts);
+
+/// <summary>
+/// Contains the data for each CargoAccountPrototype.
+/// </summary>
+[DataDefinition, NetSerializable, Serializable]
+public sealed partial class CargoAccountData : IRobustCloneable<CargoAccountData>
+{
+    /// <summary>
+    ///     The money held by the cargo account.
+    /// </summary>
+    [DataField]
+    public int Balance;
+
+    /// <summary>
+    ///     The proportion used for income and dispersing leftovers after sale.
+    /// </summary>
+    [DataField]
+    public double RevenueDistribution;
+
+    public CargoAccountData(int balance, double revenueDistribution)
+    {
+        Balance = balance;
+        RevenueDistribution = revenueDistribution;
+    }
+
+    public CargoAccountData(CargoAccountData data) : this(
+        data.Balance,
+        data.RevenueDistribution
+        )
+    {
+    }
+
+    public CargoAccountData Clone()
+    {
+        return new CargoAccountData(this);
+    }
+}
