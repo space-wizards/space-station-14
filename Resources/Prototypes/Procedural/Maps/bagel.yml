@@ -33,3 +33,14 @@
     roomWhitelist:
       tags:
       - TheaterBagel
+  - type: Sprite
+    offset: 0, 0.5
+    layers:
+      - state: red
+      # max size
+      - sprite: Markers/Outlines/11x8.rsi
+        state: rect
+        color: red
+      - sprite: Markers/Outlines/11x8.rsi
+        state: label
+        color: red
