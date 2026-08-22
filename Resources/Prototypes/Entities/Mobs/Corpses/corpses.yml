@@ -1,88 +1,340 @@
+# CENTCOMM
 - type: entity
   parent: SalvageHumanCorpse
-  id: MobRandomServiceCorpse
-  suffix: Dead, Service
+  id: MobCorpseCentcommOfficial
+  name: central command official corpse
+  suffix: Dead, CentComm Official
   components:
   - type: Loadout
-    prototypes:
-      - HoPGear
-      - ClownGear
-      - MimeGear
-      - JanitorGear
-      - ServiceWorkerGear
-      - MusicianGear
-      - BotanistGear
-      - ChefGear
-      - ChaplainGear
-      - PassengerGear
+    prototypes: [ CorpseCentcommOfficialGear ]
+
+# COMMAND
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseCaptain
+  name: captain corpse
+  suffix: Dead, Captain
+  components:
+  - type: Loadout
+    prototypes: [ CorpseCaptainGear ]
 
 - type: entity
   parent: SalvageHumanCorpse
-  id: MobRandomEngineerCorpse
-  suffix: Dead, Engineer
+  id: MobCorpseHeadOfPersonnel
+  name: head of personnel corpse
+  suffix: Dead, Head of Personnel
   components:
   - type: Loadout
-    prototypes:
-    - TechnicalAssistantGear
-    - AtmosphericTechnicianGear
-    - StationEngineerGear
+    prototypes: [ CorpseHeadOfPersonnelGear ]
 
 - type: entity
   parent: SalvageHumanCorpse
-  id: MobRandomCargoCorpse
-  suffix: Dead, Cargo
+  id: MobCorpseChiefEngineer
+  name: chief engineer corpse
+  suffix: Dead, Chief Engineer
   components:
   - type: Loadout
-    prototypes:
-    - CargoTechGear
-    - SalvageSpecialistGear
+    prototypes: [ CorpseChiefEngineerGear ]
 
 - type: entity
   parent: SalvageHumanCorpse
-  id: MobRandomMedicCorpse
-  suffix: Dead, Medic
+  id: MobCorpseChiefMedicalOfficer
+  name: chief medical officer corpse
+  suffix: Dead, Chief Medical Officer
   components:
   - type: Loadout
-    prototypes:
-    - MedicalInternGear
-    - PsychologistGear
-    - ChemistGear
-    - DoctorGear
+    prototypes: [ CorpseChiefMedicalOfficerGear ]
 
 - type: entity
   parent: SalvageHumanCorpse
-  id: MobRandomScienceCorpse
-  suffix: Dead, Science
+  id: MobCorpseHeadOfSecurity
+  name: head of security corpse
+  suffix: Dead, Head of Security
   components:
   - type: Loadout
-    prototypes:
-    - ResearchAssistantGear
-    - ScientistGear
+    prototypes: [ CorpseHeadOfSecurityGear ]
 
 - type: entity
   parent: SalvageHumanCorpse
-  id: MobRandomSecurityCorpse
-  suffix: Dead, Security
+  id: MobCorpseResearchDirector
+  name: research director corpse
+  suffix: Dead, Research Director
   components:
   - type: Loadout
-    prototypes:
-    - SecurityCadetGear
-    - SecurityOfficerGear
-    - DetectiveGear
-    - WardenGear
+    prototypes: [ CorpseResearchDirectorGear ]
+
+# SECURITY
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseWarden
+  name: warden corpse
+  suffix: Dead, Warden
+  components:
+  - type: Loadout
+    prototypes: [ CorpseWardenGear ]
 
 - type: entity
   parent: SalvageHumanCorpse
-  id: MobRandomCommandCorpse
-  suffix: Dead, Command
+  id: MobCorpseDetective
+  name: detective corpse
+  suffix: Dead, Detective
   components:
   - type: Loadout
-    prototypes:
-    - HoPGear
-    - CentcommGear
-    - CaptainGear
-    - HoSGear
-    - ResearchDirectorGear
-    - CMOGear
-    - ChiefEngineerGear
-    - QuartermasterGear
+    prototypes: [ CorpseDetectiveGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseSecurityOfficer
+  name: security officer corpse
+  suffix: Dead, Security Officer
+  components:
+  - type: Loadout
+    prototypes: [ CorpseSecurityOfficerGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseSecurityCadet
+  name: security cadet corpse
+  suffix: Dead, Security Cadet
+  components:
+  - type: Loadout
+    prototypes: [ CorpseSecurityCadetGear ]
+
+# SCIENCE
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseScientist
+  name: scientist corpse
+  suffix: Dead, Scientist
+  components:
+  - type: Loadout
+    prototypes: [ CorpseScientistGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseResearchAssistant
+  name: research assistant corpse
+  suffix: Dead, Research Assistant
+  components:
+  - type: Loadout
+    prototypes: [ CorpseResearchAssistantGear ]
+
+# MEDICAL
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseMedicalDoctor
+  name: medical doctor corpse
+  suffix: Dead, Medical Doctor
+  components:
+  - type: Loadout
+    prototypes: [ CorpseMedicalDoctorGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseParamedic
+  name: paramedic corpse
+  suffix: Dead, Paramedic
+  components:
+  - type: Loadout
+    prototypes: [ CorpseParamedicGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseChemist
+  name: chemist corpse
+  suffix: Dead, Chemist
+  components:
+  - type: Loadout
+    prototypes: [ CorpseChemistGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseMedicalIntern
+  name: medical intern corpse
+  suffix: Dead, Medical Intern
+  components:
+  - type: Loadout
+    prototypes: [ CorpseMedicalInternGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpsePsychologist
+  name: psychologist corpse
+  suffix: Dead, Psychologist
+  components:
+  - type: Loadout
+    prototypes: [ CorpsePsychologistGear ]
+
+# ENGINEERING
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseAtmosphericTechnician
+  name: atmospheric technician corpse
+  suffix: Dead, Atmospheric Technician
+  components:
+  - type: Loadout
+    prototypes: [ CorpseAtmosphericTechnicianGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseStationEngineer
+  name: station engineer corpse
+  suffix: Dead, Station Engineer
+  components:
+  - type: Loadout
+    prototypes: [ CorpseStationEngineerGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseTechnicalAssistant
+  name: technical assistant corpse
+  suffix: Dead, Technical Assistant
+  components:
+  - type: Loadout
+    prototypes: [ CorpseTechnicalAssistantGear ]
+
+# CARGO
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseQuartermaster
+  name: quartermaster corpse
+  suffix: Dead, Quartermaster
+  components:
+  - type: Loadout
+    prototypes: [ CorpseQuartermasterGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseSalvageSpecialist
+  name: salvage specialist corpse
+  suffix: Dead, Salvage Specialist
+  components:
+  - type: Loadout
+    prototypes: [ CorpseSalvageSpecialistGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseCargoTechnician
+  name: cargo technician corpse
+  suffix: Dead, Cargo Technician
+  components:
+  - type: Loadout
+    prototypes: [ CorpseCargoTechnicianGear ]
+
+# SERVICE / CIVILIAN
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseBartender
+  name: bartender corpse
+  suffix: Dead, Bartender
+  components:
+  - type: Loadout
+    prototypes: [ CorpseBartenderGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseBotanist
+  name: botanist corpse
+  suffix: Dead, Botanist
+  components:
+  - type: Loadout
+    prototypes: [ CorpseBotanistGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseChef
+  name: chef corpse
+  suffix: Dead, Chef
+  components:
+  - type: Loadout
+    prototypes: [ CorpseChefGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseJanitor
+  name: janitor corpse
+  suffix: Dead, Janitor
+  components:
+  - type: Loadout
+    prototypes: [ CorpseJanitorGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseLawyer
+  name: lawyer corpse
+  suffix: Dead, Lawyer
+  components:
+  - type: Loadout
+    prototypes: [ CorpseLawyerGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseChaplain
+  name: chaplain corpse
+  suffix: Dead, Chaplain
+  components:
+  - type: Loadout
+    prototypes: [ CorpseChaplainGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseLibrarian
+  name: librarian corpse
+  suffix: Dead, Librarian
+  components:
+  - type: Loadout
+    prototypes: [ CorpseLibrarianGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseReporter
+  name: reporter corpse
+  suffix: Dead, Reporter
+  components:
+  - type: Loadout
+    prototypes: [ CorpseReporterGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseMusician
+  name: musician corpse
+  suffix: Dead, Musician
+  components:
+  - type: Loadout
+    prototypes: [ CorpseMusicianGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseServiceWorker
+  name: service worker corpse
+  suffix: Dead, Service Worker
+  components:
+  - type: Loadout
+    prototypes: [ CorpseServiceWorkerGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseMime
+  name: mime corpse
+  suffix: Dead, Mime
+  components:
+  - type: Loadout
+    prototypes: [ CorpseMimeGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpseClown
+  name: clown corpse
+  suffix: Dead, Clown
+  components:
+  - type: Loadout
+    prototypes: [ CorpseClownGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobCorpsePassenger
+  name: passenger corpse
+  suffix: Dead, Passenger
+  components:
+  - type: Loadout
+    prototypes: [ CorpsePassengerGear ]
