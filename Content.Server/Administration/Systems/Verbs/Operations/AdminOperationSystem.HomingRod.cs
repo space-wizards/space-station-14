@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using Content.Server.Physics.Components;
-using Content.Shared.Administration.Verbs.Operations;
-using Content.Shared.Administration.Verbs.Operations.Smites;
+using Content.Server.Administration.Verbs.Operations;
+using Content.Server.Administration.Verbs.Operations.Smites;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Spawners;

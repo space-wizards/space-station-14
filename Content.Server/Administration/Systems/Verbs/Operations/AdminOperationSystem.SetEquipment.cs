@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration.Verbs.Operations;
+﻿using Content.Server.Administration.Verbs.Operations;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;

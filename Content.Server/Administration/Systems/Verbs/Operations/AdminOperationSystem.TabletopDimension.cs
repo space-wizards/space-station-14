@@ -1,5 +1,5 @@
-﻿using Content.Shared.Administration.Verbs.Operations;
-using Content.Shared.Administration.Verbs.Operations.Smites;
+﻿using Content.Server.Administration.Verbs.Operations;
+using Content.Server.Administration.Verbs.Operations.Smites;
 using Content.Shared.Tabletop.Components;
 
 namespace Content.Server.Administration.Systems.Verbs.Operations;

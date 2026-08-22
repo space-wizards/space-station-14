@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration.Verbs.Operations;
+﻿using Content.Server.Administration.Verbs.Operations;
 using Robust.Shared.Player;
 
 namespace Content.Server.Administration.Systems.Verbs.Operations;

@@ -1,6 +1,6 @@
 using Content.Server.Administration.Systems.Verbs.Operations;
+using Content.Server.Administration.Verbs.Prototypes;
 using Content.Shared.Administration;
-using Content.Shared.Administration.Verbs.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;

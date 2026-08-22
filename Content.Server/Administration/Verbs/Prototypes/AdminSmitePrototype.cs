@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Administration.Verbs.Prototypes;
+namespace Content.Server.Administration.Verbs.Prototypes;
 
 /// <summary>
 /// Identifies admin verb prototypes exposed in the Smite category.

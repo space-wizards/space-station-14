@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Administration.Verbs.Operations;
+namespace Content.Server.Administration.Verbs.Operations;
 
 /// <summary>
 /// Adds an action unless the target already has one from the same prototype.

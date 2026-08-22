@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration.Verbs.Operations;
+﻿using Content.Server.Administration.Verbs.Operations;
 
 namespace Content.Server.Administration.Systems.Verbs.Operations;
 

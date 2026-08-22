@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Administration.Verbs.Operations;
+﻿namespace Content.Server.Administration.Verbs.Operations;
 
 /// <summary>
 /// Adds or replaces configured bound UIs without touching unrelated entries.

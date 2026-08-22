@@ -1,6 +1,6 @@
 ﻿using Content.Shared.EntityEffects;
 
-namespace Content.Shared.Administration.Verbs.Operations;
+namespace Content.Server.Administration.Verbs.Operations;
 
 public sealed partial class EntityEffectsOperation : AdminOperationBase<EntityEffectsOperation>
 {

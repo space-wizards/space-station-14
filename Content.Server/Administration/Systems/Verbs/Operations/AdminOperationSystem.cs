@@ -1,4 +1,5 @@
-﻿using Content.Server.Clothing.Systems;
+﻿using Content.Server.Administration.Verbs.Operations;
+using Content.Server.Clothing.Systems;
 using Content.Server.GhostKick;
 using Content.Server.Mind;
 using Content.Server.Movement.Systems;
@@ -9,7 +10,6 @@ using Content.Server.Silicons.Laws;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Tabletop;
 using Content.Shared.Actions;
-using Content.Shared.Administration.Verbs.Operations;
 using Content.Shared.Body;
 using Content.Shared.Body.Systems;
 using Content.Shared.Damage.Systems;
@@ -27,7 +27,7 @@ namespace Content.Server.Administration.Systems.Verbs.Operations;
 /// <summary>
 /// Executes data-defined admin operations by raising their local events on the target.
 /// </summary>
-public sealed partial class AdminOperationSystem : EntitySystem, IAdminOperationRaiser
+public sealed partial class AdminOperationSystem : EntitySystem
 {
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private BloodstreamSystem _bloodstream = default!;

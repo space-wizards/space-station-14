@@ -1,7 +1,7 @@
 ﻿using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Administration.Verbs.Operations;
+namespace Content.Server.Administration.Verbs.Operations;
 
 /// <summary>
 /// Equips optional starting gear, then overrides configured slots with explicit equipment.

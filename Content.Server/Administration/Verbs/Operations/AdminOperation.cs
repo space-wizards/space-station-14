@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Administration.Verbs.Operations;
+﻿using Content.Server.Administration.Systems.Verbs.Operations;
+
+namespace Content.Server.Administration.Verbs.Operations;
 
 /// <summary>
 /// A data-defined step in an admin verb, dispatched to the target as a local event.
@@ -7,7 +9,7 @@
 [ImplicitDataDefinitionForInheritors]
 public abstract partial class AdminOperation
 {
-    public abstract void RaiseEvent(EntityUid target, EntityUid user, IAdminOperationRaiser raiser);
+    public abstract void RaiseEvent(EntityUid target, EntityUid user, AdminOperationSystem system);
 }
 
 /// <summary>
@@ -15,18 +17,10 @@ public abstract partial class AdminOperation
 /// </summary>
 public abstract partial class AdminOperationBase<T> : AdminOperation where T : AdminOperationBase<T>
 {
-    public override void RaiseEvent(EntityUid target, EntityUid user, IAdminOperationRaiser raiser)
+    public override void RaiseEvent(EntityUid target, EntityUid user, AdminOperationSystem system)
     {
-        raiser.RaiseOperationEvent(target, user, (T) this);
+        system.RaiseOperationEvent(target, user, (T) this);
     }
-}
-
-/// <summary>
-/// Provides the dispatch bridge used by operations to raise their strongly typed local events.
-/// </summary>
-public interface IAdminOperationRaiser
-{
-    void RaiseOperationEvent<T>(EntityUid target, EntityUid user, T operation) where T : AdminOperationBase<T>;
 }
 
 /// <summary>
