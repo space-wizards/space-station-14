@@ -1,3 +1,5 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.Payload.Components;
 
 /// <summary>
@@ -8,5 +10,5 @@ namespace Content.Shared.Payload.Components;
 ///     cref="PayloadCaseComponent"/>, the trigger will grant components to the case-entity. If the case entity is
 ///     triggered, it will forward the trigger onto any contained payload entity.
 /// </remarks>
-[RegisterComponent]
-public sealed partial class PayloadCaseComponent : Component { }
+[RegisterComponent, NetworkedComponent]
+public sealed partial class PayloadCaseComponent : Component;
