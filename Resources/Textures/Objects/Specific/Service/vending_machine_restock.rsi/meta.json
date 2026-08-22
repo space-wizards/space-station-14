@@ -98,6 +98,9 @@
     },
     {
       "name": "refill_tanks"
+    },
+    {
+      "name": "refill_moth"
     }
   ]
 }

@@ -284,6 +284,94 @@
     - Meat
 
 - type: entity
+  name: cot'n strips
+  parent: FoodSnackBase
+  id: FoodSnackMothJerky
+  description: Immitation cotton jerky? How does that work? Oh well, you're too busy moffing about to care.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - imitation
+      - cotton
+  - type: Sprite
+    state: mothjerky
+  - type: Item
+    heldPrefix: mothjerky
+  - type: Edible
+    requiresSpecialDigestion: true
+    trash:
+    - FoodPacketMothTrash
+  - type: Tag
+    tags:
+    - ClothMade
+
+- type: entity
+  name: mothSpheres
+  parent: FoodSnackBase
+  id: FoodSnackMothSpheres
+  description: It's full of chemicals! Er, are you sure you want to eat these?
+  components:
+  - type: FlavorProfile
+    flavors:
+      - chemicals
+      - cotton
+  - type: Sprite
+    state: mothsphere
+  - type: Item
+    heldPrefix: mothsphere
+  - type: Edible
+    requiresSpecialDigestion: true
+    trash:
+    - FoodPacketMothSpheresTrash
+  - type: Tag
+    tags:
+    - ClothMade
+
+- type: entity
+  name: fluff puffs
+  parent: FoodSnackBase
+  id: FoodSnackCottonPuffs
+  description: Straight up cotton balls, not even any flavoring. You can probably use these to clean your ears. Tasty either way.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cotton
+  - type: Sprite
+    state: mothpuffs
+  - type: Item
+    heldPrefix: mothpuffs
+  - type: Edible
+    requiresSpecialDigestion: true
+    trash:
+    - FoodPacketPuffTrash
+  - type: Tag
+    tags:
+    - ClothMade
+
+- type: entity
+  name: Mr. McFluff's famous moth cakes
+  parent: FoodSnackBase
+  id: FoodSnackMothCakes
+  description: The best of Mr. McFluff's, a growing moth's favorite snack and a verifiable hit of nostalgia.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - nostalgic
+      - sweet
+      - cotton
+  - type: Sprite
+    state: mothcakes
+  - type: Item
+    heldPrefix: mothcakes
+  - type: Edible
+    requiresSpecialDigestion: true
+    trash:
+    - FoodPacketMothCakesTrash
+  - type: Tag
+    tags:
+    - ClothMade
+
+- type: entity
   name: syndi-cakes
   parent: FoodSnackBase
   id: FoodSnackSyndi
@@ -767,11 +855,80 @@
 - type: entity
   categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
+  id: FoodPacketMothTrash
+  name: cot'n strips
+  components:
+  - type: Sprite
+    state: mothjerky-trash
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: trash-inhand-left
+        color: "#ca8a34"
+      right:
+      - state: trash-inhand-right
+        color: "#ca8a34"
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: FoodPacketTrash
+  id: FoodPacketMothSpheresTrash
+  name: mothSpheres
+  components:
+  - type: Sprite
+    state: mothsphere-trash
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: trash-inhand-left
+        color: "#3db83b"
+      right:
+      - state: trash-inhand-right
+        color: "#3db83b"
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: FoodPacketTrash
+  id: FoodPacketPuffTrash
+  name: cot'n puffs
+  components:
+  - type: Sprite
+    state: mothpuffs-trash
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: trash-inhand-left
+        color: "#e5c484"
+      right:
+      - state: trash-inhand-right
+        color: "#e5c484"
+
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: FoodPacketTrash
   id: FoodPacketSyndiTrash
   name: syndi-cakes box
   components:
   - type: Sprite
     state: syndicakes-trash
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: trash-inhand-left
+        color: "#FFFFFF"
+      right:
+      - state: trash-inhand-right
+        color: "#FFFFFF"
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: FoodPacketTrash
+  id: FoodPacketMothCakesTrash
+  name: Mr. McFluff's box
+  components:
+  - type: Sprite
+    state: mothcakes-trash
   - type: Item
     inhandVisuals:
       left:
