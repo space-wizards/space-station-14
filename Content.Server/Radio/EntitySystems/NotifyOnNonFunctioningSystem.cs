@@ -6,6 +6,7 @@ using Content.Shared.Construction;
 using Content.Shared.Destructible;
 using Content.Shared.Lock;
 using Content.Shared.Power.EntitySystems;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Radio.EntitySystems;
@@ -16,9 +17,13 @@ namespace Content.Server.Radio.EntitySystems;
 /// </summary>
 public sealed partial class NotifyOnNonFunctioningSystem : EntitySystem
 {
-    [Dependency] private RadioSystem _radio = default!;
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private NavMapSystem _navMap = default!;
     [Dependency] private PowerStateSystem _powerState = default!;
+    [Dependency] private RadioSystem _radio = default!;
+
+    [Dependency] private EntityQuery<ApcPowerReceiverComponent> _powerReceiverQuery = default!;
+    [Dependency] private EntityQuery<PowerConsumerComponent> _powerConsumerQuery = default!;
 
     /// <summary> Notify on entity destruction. </summary>
     [SubscribeLocalEvent]
@@ -70,7 +75,7 @@ public sealed partial class NotifyOnNonFunctioningSystem : EntitySystem
     [SubscribeLocalEvent]
     private void ReceivedChanged(Entity<NotifyOnNonFunctioningComponent> ent, ref PowerConsumerReceivedChanged args)
     {
-        if (!ent.Comp.LocUnpowered.HasValue ||!_powerState.GetWorkingState(ent.Owner))
+        if (!ent.Comp.LocUnpowered.HasValue || !_powerState.GetWorkingState(ent.Owner))
             return;
 
         if (args.ReceivedPower < args.DrawRate)
@@ -79,7 +84,6 @@ public sealed partial class NotifyOnNonFunctioningSystem : EntitySystem
 
     private void AlertRadioIfWasWorking(Entity<NotifyOnNonFunctioningComponent> ent, string locString, bool ignorePower = false)
     {
-
         if (!_powerState.GetWorkingState(ent.Owner))
             return;
 
@@ -88,17 +92,22 @@ public sealed partial class NotifyOnNonFunctioningSystem : EntitySystem
 
     private void AlertRadio(Entity<NotifyOnNonFunctioningComponent> ent, string locString, bool ignorePower = false)
     {
+        // Are we rate-limited?
+        if (ent.Comp.NextMessage > _timing.CurTime)
+            return;
+
         if (ent.Comp.RequirePowered && !ignorePower)
         {
-            if (TryComp<ApcPowerReceiverComponent>(ent, out var apc) && !apc.Powered)
+            if (_powerReceiverQuery.TryComp(ent, out var apc) && !apc.Powered)
                 return;
 
-            if (TryComp<PowerConsumerComponent>(ent, out var consumer) && consumer.DrawRate > consumer.ReceivedPower)
+            if (_powerConsumerQuery.TryComp(ent, out var consumer) && consumer.DrawRate > consumer.ReceivedPower)
                 return;
         }
 
         var locationInfo = FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString(ent.Owner));
         var message = Loc.GetString(locString, ("location", locationInfo));
         _radio.SendRadioMessage(ent.Owner, message, ent.Comp.RadioChannel, ent.Owner);
+        ent.Comp.NextMessage = _timing.CurTime + ent.Comp.NextMessageDelay;
     }
 }

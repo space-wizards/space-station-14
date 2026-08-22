@@ -259,9 +259,9 @@
     - timer
   - type: Explosive
     explosionType: XenoborgAntiStructureExplosion
-    totalIntensity: 25
-    intensitySlope: 3
-    maxIntensity: 3
+    totalIntensity: 15.0
+    intensitySlope: 1.6
+    maxIntensity: 1.8
     maxTileBreak: 0
   - type: SineWaveAnimation
     xWave:
