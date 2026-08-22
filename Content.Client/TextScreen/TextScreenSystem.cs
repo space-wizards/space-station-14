@@ -119,18 +119,18 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
         if (!Resolve(uid, ref args.Sprite))
             return;
 
-        if (args.AppearanceData.TryGetValue(TextScreenVisuals.Color, out var color) && color is Color)
-            component.Color = (Color)color;
+        if (args.TryGetData<Color>(TextScreenVisuals.Color, out var color))
+            component.Color = color;
 
         // DefaultText: fallback text e.g. broadcast updates from comms consoles
-        if (args.AppearanceData.TryGetValue(TextScreenVisuals.DefaultText, out var newDefault) && newDefault is string)
-            component.Text = SegmentText((string)newDefault, component);
+        if (args.TryGetData<string>(TextScreenVisuals.DefaultText, out var newDefault))
+            component.Text = SegmentText(newDefault, component);
 
         // ScreenText: currently rendered text e.g. the "ETA" accompanying shuttle timers
-        if (args.AppearanceData.TryGetValue(TextScreenVisuals.ScreenText, out var screenText) && screenText is string text && text != component.LastText)
+        if (args.TryGetData<string>(TextScreenVisuals.ScreenText, out var text) && text != component.LastText)
         {
             TimeSpan? startTime = null;
-            if (args.AppearanceData.TryGetValue(TextScreenVisuals.ScreenTextTime, out var screenTextTime) && screenTextTime is TimeSpan scrollStart)
+            if (args.TryGetData<TimeSpan>(TextScreenVisuals.ScreenTextTime, out var scrollStart))
                 startTime = scrollStart;
 
             component.TextToDraw = SegmentText(text, component);
@@ -147,8 +147,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
                 DrawScrolledLayers((uid, component, args.Sprite));
         }
 
-        if (!args.AppearanceData.TryGetValue(TextScreenVisuals.TargetTime, out var time)
-            || time is not TimeSpan target)
+        if (!args.TryGetData<TimeSpan>(TextScreenVisuals.TargetTime, out var target))
             return;
 
         if (target > _gameTiming.CurTime)
