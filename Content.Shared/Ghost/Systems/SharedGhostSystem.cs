@@ -154,7 +154,7 @@ public struct GhostWarp
     /// <summary>
     /// Whether this warp represents a warp point or a player
     /// </summary>
-    public bool IsWarpPoint { get;  }
+    public bool IsWarpPoint { get; }
 }
 
 /// <summary>
@@ -193,15 +193,31 @@ public sealed class GhostWarpToTargetRequestEvent : EntityEventArgs
 /// A client to server request for their ghost to be warped to the most followed player.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class GhostnadoRequestEvent : EntityEventArgs;
+public sealed class GhostnadoRequestEvent(bool warp = false) : EntityEventArgs
+{
+    public bool Warp { get; } = warp;
+}
+
+/// <summary>
+/// A server to client response for <see cref="GhostnadoRequestEvent"/>.
+/// </summary>
+/// <param name="entityFound">Whether Any entity to warp to was found.</param>
+[Serializable, NetSerializable]
+public sealed class GhostnadoResponseEvent(bool entityFound) : EntityEventArgs
+{
+    public bool EntityFound { get; } = entityFound;
+}
 
 /// <summary>
 /// A client to server request for their ghost to be warped to a random player with at least one ghost follower.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class WarpToRandomFollowedRequestEvent : EntityEventArgs;
-/// <summary>
+public sealed class WarpToRandomFollowedRequestEvent(bool warp = false) : EntityEventArgs
+{
+    public bool Warp { get; } = warp;
+}
 
+/// <summary>
 /// A client to server request for their ghost to be warped to a random player.
 /// </summary>
 [Serializable, NetSerializable]

@@ -44,6 +44,7 @@ public sealed partial class GhostUIController : UIController, IOnSystemChanged<G
         system.PlayerAttached += OnPlayerAttached;
         system.PlayerDetached += OnPlayerDetached;
         system.GhostWarpsResponse += OnWarpsResponse;
+        system.GhostnadoResponse += OnGhostnadoResponse;
         system.GhostRoleCountUpdated += OnRoleCountUpdated;
     }
 
@@ -54,7 +55,13 @@ public sealed partial class GhostUIController : UIController, IOnSystemChanged<G
         system.PlayerAttached -= OnPlayerAttached;
         system.PlayerDetached -= OnPlayerDetached;
         system.GhostWarpsResponse -= OnWarpsResponse;
+        system.GhostnadoResponse -= OnGhostnadoResponse;
         system.GhostRoleCountUpdated -= OnRoleCountUpdated;
+    }
+
+    private void OnWindowOpened()
+    {
+        OnGhostnado(false);
     }
 
     public void UpdateGui()
@@ -101,6 +108,11 @@ public sealed partial class GhostUIController : UIController, IOnSystemChanged<G
         window.Populate();
     }
 
+    private void OnGhostnadoResponse(GhostnadoResponseEvent msg)
+    {
+        Gui?.TargetWindow.UpdateGhostnadoButtons(msg.EntityFound);
+    }
+
     private void OnRoleCountUpdated(GhostUpdateGhostRoleCountEvent msg)
     {
         UpdateGui();
@@ -112,15 +124,15 @@ public sealed partial class GhostUIController : UIController, IOnSystemChanged<G
         _net.SendSystemNetworkMessage(msg);
     }
 
-    private void OnGhostnadoClicked()
+    private void OnGhostnado(bool warp = true)
     {
-        var msg = new GhostnadoRequestEvent();
+        var msg = new GhostnadoRequestEvent(warp);
         _net.SendSystemNetworkMessage(msg);
     }
 
-    private void OnWarpToRandomFollowedClicked()
+    private void OnWarpToRandomFollowedClicked(bool warp = true)
     {
-        var msg = new WarpToRandomFollowedRequestEvent();
+        var msg = new WarpToRandomFollowedRequestEvent(warp);
         _net.SendSystemNetworkMessage(msg);
     }
 
@@ -139,9 +151,10 @@ public sealed partial class GhostUIController : UIController, IOnSystemChanged<G
         Gui.ReturnToBodyPressed += ReturnToBody;
         Gui.GhostRolesPressed += GhostRolesPressed;
         Gui.TargetWindow.WarpClicked += OnWarpClicked;
-        Gui.TargetWindow.OnGhostnadoClicked += OnGhostnadoClicked;
+        Gui.TargetWindow.OnGhostnadoClicked += OnGhostnado;
         Gui.TargetWindow.OnWarpToRandomFollowedClicked += OnWarpToRandomFollowedClicked;
         Gui.TargetWindow.OnWarpToRandomClicked += OnWarpToRandomClicked;
+        Gui.TargetWindow.OnOpen += OnWindowOpened;
 
         UpdateGui();
     }
