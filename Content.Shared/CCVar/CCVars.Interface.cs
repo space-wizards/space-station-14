@@ -122,6 +122,13 @@ public sealed partial class CCVars
         CVarDef.Create("ui.admin_overlay_stack_max", 3, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
+    /// Determines visibility of the Networking tab in the options menu.
+    /// Prevents players accidentally changing their networking settings in a way that breaks the game.
+    /// Can be toggled by client-side command.
+    /// </summary>
+    public static readonly CVarDef<bool> AdvancedSettings =
+        CVarDef.Create("ui.advanced_settings", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
     /// The default state for showing admin overlays in the strip menu.
     /// </summary>
     public static readonly CVarDef<bool> AdminStripMenuOverlayDefault =
