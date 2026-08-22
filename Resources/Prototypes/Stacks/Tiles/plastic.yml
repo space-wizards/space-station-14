@@ -9,11 +9,11 @@
 - type: stack
   parent: BaseTileStack
   id: FloorTileStackDarkPlastic
-  name: stack-plastic-tile
+  name: stack-plastic-dark-tile
   spawn: FloorTileItemDarkPlastic
 
 - type: stack
   parent: BaseTileStack
   id: FloorTileStackWhitePlastic
-  name: stack-plastic-tile
+  name: stack-plastic-white-tile
   spawn: FloorTileItemWhitePlastic
