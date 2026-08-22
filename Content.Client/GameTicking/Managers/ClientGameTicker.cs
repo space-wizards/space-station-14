@@ -47,6 +47,7 @@ namespace Content.Client.GameTicking.Managers
         public event Action? LobbyStatusUpdated;
         public event Action? LobbyLateJoinStatusUpdated;
         public event Action<IReadOnlyDictionary<NetEntity, Dictionary<ProtoId<JobPrototype>, int?>>>? LobbyJobsAvailableUpdated;
+        public event Action? PreviousRoundInfoUpdated;
 
         public override void Initialize()
         {
@@ -59,7 +60,7 @@ namespace Content.Client.GameTicking.Managers
             SubscribeNetworkEvent<TickerLobbyInfoEvent>(LobbyInfo);
             SubscribeNetworkEvent<TickerLobbyCountdownEvent>(LobbyCountdown);
             SubscribeNetworkEvent<RoundEndMessageEvent>(RoundEnd);
-            SubscribeNetworkEvent<PreviousRoundInfoMessageEvent>(PreviousRoundInfoUpdated);
+            SubscribeNetworkEvent<PreviousRoundInfoMessageEvent>(OnPreviousRoundInfoEvent);
             SubscribeNetworkEvent<RequestWindowAttentionEvent>(OnAttentionRequest);
             SubscribeNetworkEvent<TickerLateJoinStatusEvent>(LateJoinStatus);
             SubscribeNetworkEvent<TickerJobsAvailableEvent>(UpdateJobsAvailable);
@@ -167,16 +168,13 @@ namespace Content.Client.GameTicking.Managers
 
             var controller = _userInterfaceManager.GetUIController<RoundEndSummaryUIController>();
             controller.OpenRoundEndSummaryWindow(message.RoundInfo);
+            PreviousRoundInfoUpdated?.Invoke();
         }
 
-        private void PreviousRoundInfoUpdated(PreviousRoundInfoMessageEvent message)
+        private void OnPreviousRoundInfoEvent(PreviousRoundInfoMessageEvent message)
         {
             LastRoundInfo = message.RoundInfo;
-
-            /// Need to inform the round end summary ui controller of the new info,
-            /// as it's unable to get a reference to this class.
-            var controller = _userInterfaceManager.GetUIController<RoundEndSummaryUIController>();
-            controller.UpdateRoundInfo(message.RoundInfo);
+            PreviousRoundInfoUpdated?.Invoke();
         }
     }
 }
