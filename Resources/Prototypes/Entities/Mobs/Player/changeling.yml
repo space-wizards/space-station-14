@@ -17,6 +17,11 @@
     actions:
     - ActionChangelingStore
     - ActionChangelingStasis
+  - type: SatiationGrant
+    removeOnShutdown: false
+    satiation:
+      Chemicals:
+        prototype: ChemicalsChangeling
   - type: Store
     balance:
       ChangelingDNA: 60
