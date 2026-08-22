@@ -25,8 +25,19 @@
     maxEntities: 4 # big grill, many steaks
     whitelist:
       components:
+      - Heatable
       - Temperature
   - type: PlaceableSurface
+  - type: ElectricalHeater
+    minimumPower: 1
+    offset: 0
+    efficiency: 1
+    canStandbyIfEmpty: false
+    distributeHeatTo:
+    - type: HeatContainerAddress
+      addressType: Component
+      targetName: ItemPlacer
+      includeExternals : true
   - type: Machine
     board: ElectricGrillMachineCircuitboard
   - type: Appearance
