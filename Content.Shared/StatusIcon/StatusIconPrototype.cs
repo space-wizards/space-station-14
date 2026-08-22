@@ -45,6 +45,12 @@ public partial class StatusIconData : IComparable<StatusIconData>
     public bool HideOnStealth = true;
 
     /// <summary>
+    /// Whether to always show the icon to the entity it belongs to
+    /// </summary>
+    [DataField]
+    public bool AlwaysShowToOwner = true;
+
+    /// <summary>
     /// Specifies what entities and components/tags this icon can be shown to.
     /// </summary>
     [DataField]

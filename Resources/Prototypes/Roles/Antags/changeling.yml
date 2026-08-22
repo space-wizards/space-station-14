@@ -31,6 +31,9 @@
     actions:
     - ActionChangelingStore
     - ActionChangelingStasis
+  - type: DisplayFactionIcon
+    icons:
+    - ChangelingFaction
   - type: SatiationGrant
     removeOnShutdown: false
     satiation:
