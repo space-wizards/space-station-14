@@ -1049,6 +1049,9 @@
 - type: Tag
   id: OreUranium # CargoBounty: BountySalvageOreUranium
 
+- type: Tag
+  id: Organ # Storage whitelist: TrashBag
+
 ## P ##
 
 - type: Tag
