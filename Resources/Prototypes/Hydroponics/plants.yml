@@ -2394,3 +2394,39 @@
         min: 1
         max: 10
         potencyDivisor: 10
+
+- type: entity
+  parent: BasePlant
+  id: SunionPlants
+  name: sunion
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/sunion.rsi
+  - type: PlantData
+    name: seeds-sunion-name
+    packetPrototype: SunionSeeds
+    productPrototypes: [ FoodSunion ]
+  - type: Plant
+    lifespan: 25
+    maturation: 15
+    production: 3
+    yield: 2
+    potency: 10
+    growthStages: 3
+  - type: PlantGrowth
+    waterConsumption: 0.6
+    nutrientConsumption: 0.5
+  - type: PlantChemicals
+    chemicals:
+      Aluminium:
+        min: 1
+        max: 5
+        potencyDivisor: 10
+      Potassium:
+        min: 1
+        max: 5
+        potencyDivisor: 10
+      Sulfur:
+        min: 1
+        max: 5
+        potencyDivisor: 10
