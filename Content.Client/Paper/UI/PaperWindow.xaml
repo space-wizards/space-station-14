@@ -31,6 +31,7 @@
         </PanelContainer>
         <!-- Bottom buttons for editing -->
         <BoxContainer Name="EditButtons" Orientation="Horizontal" HorizontalAlignment="Right" Margin="6">
+            <Button Name="ReloadButton" Visible="False" Text="{Loc paper-ui-reload-button}" ToolTip="{Loc paper-ui-reload-tooltip}"/>
             <Button Name="SaveButton" />
         </BoxContainer>
     </BoxContainer>
