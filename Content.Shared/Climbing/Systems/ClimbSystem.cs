@@ -154,13 +154,15 @@ public sealed partial class ClimbSystem : VirtualController
         if (TryComp(args.Dragged, out ClimbingComponent? climbing) && climbing.IsClimbing)
             return;
 
-        var canVault = args.User == args.Dragged
+        var isSelfClimb = args.User == args.Dragged;
+
+        var canVault = isSelfClimb
             ? CanVault(component, args.User, uid, out _)
             : CanVault(component, args.User, args.Dragged, uid, out _);
 
         args.CanDrop = canVault;
 
-        if (!HasComp<HandsComponent>(args.User))
+        if (!isSelfClimb && !HasComp<HandsComponent>(args.User))
             args.CanDrop = false;
 
         args.Handled = true;
