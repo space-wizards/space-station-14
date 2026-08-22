@@ -4,39 +4,28 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Movement.Systems;
 
-/// <summary>
-/// Controls the switching of motion and standing still animation
-/// </summary>
-public sealed partial class ClientSpriteMovementSystem : SharedSpriteMovementSystem
+/// <inheritdoc/>
+public sealed partial class ClientSpriteMovementSystem : SpriteMovementSystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
+
     [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
 
-    public override void Initialize()
+    [SubscribeLocalEvent]
+    private void AfterHandleState(Entity<SpriteMovementComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<SpriteMovementComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
+        UpdateSprite(ent);
     }
 
-    private void OnAfterAutoHandleState(Entity<SpriteMovementComponent> ent, ref AfterAutoHandleStateEvent args)
+    protected override void UpdateSprite(Entity<SpriteMovementComponent> ent)
     {
-        if (!_spriteQuery.TryGetComponent(ent, out var sprite))
+        if (!_spriteQuery.TryComp(ent, out var sprite))
             return;
 
-        if (ent.Comp.IsMoving)
+        var layers = ent.Comp.IsMoving ? ent.Comp.MovementLayers : ent.Comp.NoMovementLayers;
+        foreach (var (layer, state) in layers)
         {
-            foreach (var (layer, state) in ent.Comp.MovementLayers)
-            {
-                _sprite.LayerSetData((ent.Owner, sprite), layer, state);
-            }
-        }
-        else
-        {
-            foreach (var (layer, state) in ent.Comp.NoMovementLayers)
-            {
-                _sprite.LayerSetData((ent.Owner, sprite), layer, state);
-            }
+            _sprite.LayerSetData((ent, sprite), layer, state);
         }
     }
 }
