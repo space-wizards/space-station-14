@@ -4,6 +4,11 @@ using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Popups;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
+using Content.Shared.Ninja.Events;
+using Content.Shared.Projectiles;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Ninja.Systems;
 
@@ -12,6 +17,9 @@ namespace Content.Shared.Ninja.Systems;
 /// </summary>
 public abstract partial class SharedSpaceNinjaSystem : EntitySystem
 {
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedActionsSystem _action = default!;
+    [Dependency] private DisableActionSystem _disableAction = default!;
     [Dependency] protected SharedNinjaSuitSystem Suit = default!;
     [Dependency] protected SharedPopupSystem Popup = default!;
 
@@ -65,13 +73,28 @@ public abstract partial class SharedSpaceNinjaSystem : EntitySystem
         return false;
     }
 
+    [SubscribeLocalEvent]
+    private void OnNinjaAttackedMelee(Entity<SpaceNinjaComponent> ninja, ref AttackedEvent args)
+    {
+        TryRevealNinja(ninja, disable: true);
+    }
+
     /// <summary>
     /// Handle revealing ninja if cloaked when attacked.
     /// </summary>
     [SubscribeLocalEvent]
-    private void OnNinjaAttacked(Entity<SpaceNinjaComponent> ent, ref AttackedEvent args)
+    private void OnNinjaAttackedRanged(Entity<SpaceNinjaComponent> ninja, ref HitByProjectileEvent args)
     {
-        TryRevealNinja(ent, disable: true);
+        TryRevealNinja(ninja, disable: true);
+    }
+
+    /// <summary>
+    /// Handle revealing ninja if cloaked when attacked.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnNinjaAttackedRanged(Entity<SpaceNinjaComponent> ninja, ref HitByHitScanEvent args)
+    {
+        TryRevealNinja(ninja, disable: true);
     }
 
     /// <summary>
@@ -84,10 +107,31 @@ public abstract partial class SharedSpaceNinjaSystem : EntitySystem
         TryRevealNinja(ent, disable: false);
     }
 
-    private void TryRevealNinja(Entity<SpaceNinjaComponent> ent, bool disable)
+    private void TryRevealNinja(Entity<SpaceNinjaComponent> ninja, bool disable)
     {
-        if (ent.Comp.Suit is {} uid && TryComp<NinjaSuitComponent>(ent.Comp.Suit, out var suit))
-            Suit.RevealNinja((uid, suit), ent, disable: disable);
+        if (ninja.Comp.Suit is not { } suit || !TryComp<NinjaSuitComponent>(ninja.Comp.Suit, out var suitComp))
+            return;
+
+        var revealed = Suit.RevealNinja((suit, suitComp), ninja);
+
+        if (!revealed || !disable)
+            return;
+
+        var ev = new NinjaAbilitiesDisabledEvent();
+        RaiseLocalEvent(ninja, ref ev);
+
+        // previously cloaked, disable abilities for a short time
+        _audio.PlayPredicted(suitComp.RevealSound, ninja, ninja);
+        Popup.PopupEntity(Loc.GetString("ninja-revealed"), ninja, ninja, PopupType.MediumCaution);
+    }
+
+    /// <summary>
+    /// This disables the sword's dash for the disable duration.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnAbilitiesDisabled(Entity<DisableActionComponent> ability, ref ActionRelayedEvent<NinjaAbilitiesDisabledEvent> args)
+    {
+        _disableAction.DisableAction(ability.AsNullable());
     }
 
     /// <summary>
