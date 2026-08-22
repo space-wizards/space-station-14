@@ -59,4 +59,14 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> ForceClientHudVersionWatermark =
         CVarDef.Create("server.force_client_hud_version_watermark", false, CVar.REPLICATED | CVar.SERVER);
+
+    /// <summary>
+    ///     The list of fallback servers that will be offered to the player, if the server is full.
+    /// </summary>
+    /// <remarks>
+    /// Servers have a name and an URL, these are separated by a comma. The name,url pairs are separated by semicolons.
+    /// Example: "Server Name 1,ss14s://server1.hostdomain.com;Server Name 2,ss14s://server2.hostdomain.com"
+    /// </remarks>
+    public static readonly CVarDef<string> FallbackServers =
+        CVarDef.Create("server.fallback_servers", "", CVar.SERVERONLY);
 }

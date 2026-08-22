@@ -1,9 +1,6 @@
-using System;
 using Robust.Client;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -108,11 +105,16 @@ namespace Content.Client.Launcher
             }
         }
 
-        public bool Redial()
+        public bool Redial(string? url = null, string? infoText = null)
         {
             try
             {
-                if (_gameController.LaunchState.Ss14Address != null)
+                if (url is not null)
+                {
+                    _gameController.Redial(url, infoText);
+
+                }
+                else if (_gameController.LaunchState.Ss14Address != null)
                 {
                     _gameController.Redial(_gameController.LaunchState.Ss14Address);
                     return true;

@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Client.Stylesheets;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
@@ -7,7 +6,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -30,8 +28,25 @@ namespace Content.Client.Launcher
         private readonly IConfigurationManager _cfg;
         private readonly IClipboardManager _clipboard;
 
-        public LauncherConnectingGui(LauncherConnecting state, IRobustRandom random,
-            IPrototypeManager prototype, IConfigurationManager config, IClipboardManager clipboard)
+        /// <summary>
+        /// The server redirect controls that have been created on the GUI
+        /// </summary>
+        /// <remarks>
+        /// The dictionary keys are the server urls, so the same server can't be added twice
+        /// </remarks>
+        private readonly Dictionary<string, FallbackControl> _fallbackControls = new ();
+
+        /// <summary>
+        /// An easy-to-access list of the visibility status for each Fallback control on the GUI
+        /// </summary>
+        private readonly Dictionary<string, bool> _visibleFallbacks = new();
+
+        public LauncherConnectingGui(
+            LauncherConnecting state,
+            IRobustRandom random,
+            IPrototypeManager prototype,
+            IConfigurationManager config,
+            IClipboardManager clipboard)
         {
             _state = state;
             _random = random;
@@ -70,6 +85,32 @@ namespace Content.Client.Launcher
             LastNetDisconnectedArgsChanged(edim.LastNetDisconnectedArgs);
         }
 
+        /// <summary>
+        /// Creates a server fallback button, along with its related GUI elements
+        /// </summary>
+        private void CreateFallbackGui(string name, string url, int players, int maxPlayers, bool visible)
+        {
+            var option = new FallbackControl();
+            option.ServerName.Text = name;
+            option.FallbackButton.OnButtonDown += _ => OnFallbackButtonPressed(url);
+            FallbackBox.AddChild(option);
+            _fallbackControls.Add(url, option);
+            _visibleFallbacks.Add(url, visible);
+
+            option.PlayersLabel.Text = Loc.GetString("connecting-fallback-players",("players", players),("maxPlayers", maxPlayers));
+            option.Visible = visible;
+        }
+
+        /// <summary>
+        /// Checks if any Fallback buttons are visible after the last update, and adjusts FallbackLabel as appropriate
+        /// (Buttons can be hidden after updates, if their player count exceeds their capacity)
+        /// </summary>
+        private void UpdateFallbackLabel()
+        {
+            var loc = _visibleFallbacks.ContainsValue(true) ? "connecting-fallback-label" : "connecting-fallback-label-full";
+            FallbackLabel.Text = Loc.GetString(loc);
+        }
+
         // Just button, there's only one at once anyways :)
         private void ReconnectButtonPressed(BaseButton.ButtonEventArgs args)
         {
@@ -81,6 +122,14 @@ namespace Content.Client.Launcher
             }
 
             _state.RetryConnect();
+        }
+
+        /// <summary>
+        /// Connects the client to a different server
+        /// </summary>
+        private void OnFallbackButtonPressed(string target)
+        {
+            _state.Redial(target, Loc.GetString("connecting-switching",("target",target)));
         }
 
         private void CopyButtonPressed(BaseButton.ButtonEventArgs args)
@@ -133,7 +182,55 @@ namespace Content.Client.Launcher
                     _waitTime = RedialWaitTimeSeconds;
                 }
 
+                HandleFallbacks(reason);
             }
+        }
+
+        /// <summary>
+        /// Reads the fallback string sent by the server, and creates or updates fallback buttons on the GUI
+        /// </summary>
+        private void HandleFallbacks(INetStructuredReason reason)
+        {
+            // List of fallback servers sent by the current server
+            if (reason.Message.StringOf("fallbackServers") is not { } fallback)
+                return;
+
+            // The string separates servers by ; and data fields about each server by ,
+            foreach (var server in fallback.Split(";", StringSplitOptions.RemoveEmptyEntries))
+            {
+                // Each server must have a name, url, playercount and max playercount
+                var members = server.Split(",", StringSplitOptions.RemoveEmptyEntries);
+                if (members.Length != 4)
+                {
+                    Log.Warning($"Fallback server info contained malformed element: '{server}'");
+                    continue;
+                }
+
+                var name = members[0].Trim();
+                var url = members[1].Trim();
+
+                if (!int.TryParse(members[2].Trim(), out var players) || !int.TryParse(members[3].Trim(), out var max))
+                {
+                    Log.Info($"Fallback server info contained invalid player count data: '{server}'");
+                    continue;
+                }
+
+                // Since the list is sent by the server on every reconnect attempt, we must check that
+                // we are not adding the same servers multiple times
+                if (_fallbackControls.TryGetValue(url, out var control))
+                {
+                    control.PlayersLabel.Text = Loc.GetString("connecting-fallback-players",("players", players),("maxPlayers", max));
+                    control.Visible = players < max;
+                    _visibleFallbacks[url]= players < max;
+                }
+                else
+                {
+                    FallbackBox.Visible = true;
+                    CreateFallbackGui(name, url, players, max, players < max);
+                }
+            }
+
+            UpdateFallbackLabel();
         }
 
         private void ChangeLoginTip()
@@ -182,7 +279,7 @@ namespace Content.Client.Launcher
             else
             {
                 button.Disabled = true;
-                button.Text = Loc.GetString("connecting-redial-wait", ("time", _waitTime.ToString("00.000")));
+                button.Text = Loc.GetString("connecting-redial-wait", ("time", _waitTime.ToString("00")));
             }
         }
 

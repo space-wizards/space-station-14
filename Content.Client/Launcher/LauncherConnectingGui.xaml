@@ -54,12 +54,18 @@
                 </Control>
                 <Label Name="ConnectingAddress" StyleClasses="LabelSubText" HorizontalAlignment="Center" />
             </BoxContainer>
+            <!-- Server Fallback Panel -->
+            <BoxContainer Name="FallbackBox" Visible="False" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="4 4 4 0">
+                <controls:StripeBack />
+                <Label Name="FallbackLabel" Access="Public" StyleClasses="LabelSubText" HorizontalAlignment="Center" Margin="0 4"/>
+                <!-- Individual server entries are filled in by code -->
+            </BoxContainer>
+            <!-- Bottom edge -->
             <PanelContainer>
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BackgroundColor="#444" ContentMarginTopOverride="2" />
                 </PanelContainer.PanelOverride>
             </PanelContainer>
-
             <BoxContainer Orientation="Horizontal" Margin="12 0 4 0" VerticalAlignment="Bottom">
                 <Label Text="{Loc 'connecting-tip'}" StyleClasses="LabelSubText" />
                 <Label Text="{Loc 'connecting-version'}" StyleClasses="LabelSubText"
