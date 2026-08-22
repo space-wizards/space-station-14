@@ -254,7 +254,7 @@
 
 - type: tileAlias
   id: PlatingIronsand
-  target: Plating # we have ironsand walls, why no ironsand plating?
+  target: Plating
 
 - type: tileAlias
   id: FloorCaveDrought
@@ -302,7 +302,7 @@
 
 - type: tileAlias
   id: FloorTechMaint
-  target: FloorTechMaint2 # should have done migration of 2 into 1, but eh
+  target: FloorTechMaint2
 
 - type: tileAlias
   id: FloorXenoborg
@@ -326,7 +326,7 @@
 
 - type: tileAlias
   id: FloorDarkSquiggly
-  target: FloorExoHorizontal # needs to be vertical and horizontal at the same time...
+  target: FloorExoHorizontal
 
 - type: tileAlias
   id: FloorAsphalt
