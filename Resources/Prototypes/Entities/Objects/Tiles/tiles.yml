@@ -475,6 +475,50 @@
 # TODO add a catwalk tile item once tile smoothing is supported
 
 - type: entity
+  name: plastic floor
+  parent: FloorTileItemBase
+  id: FloorTileItemPlastic
+  components:
+  - type: Sprite
+    state: steel # TODO need plastic sprite
+  - type: Item
+    heldPrefix: plastic
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorPlastic
+  - type: Stack
+    stackType: FloorTileStackPlastic
+
+- type: entity
+  parent: FloorTileItemPlastic
+  id: FloorTileItemDarkPlastic
+  name: dark plastic floor
+  components:
+  - type: Sprite
+    state: dark # TODO need dark plastic sprite
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorDarkPlastic
+  - type: Stack
+    stackType: FloorTileStackDarkPlastic
+
+- type: entity
+  parent: FloorTileItemPlastic
+  id: FloorTileItemWhitePlastic
+  name: white plastic floor
+  components:
+  - type: Sprite
+    state: white # TODO need white plastic sprite
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorWhitePlastic
+  - type: Stack
+    stackType: FloorTileStackWhitePlastic
+
+- type: entity
   name: linoleum floor
   parent: FloorTileItemBase
   id: FloorTileItemLino
