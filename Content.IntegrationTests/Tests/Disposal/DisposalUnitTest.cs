@@ -9,6 +9,7 @@ using Content.Shared.Disposal.Tube;
 using Content.Shared.Disposal.Unit;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Reflection;
+using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.Disposal
 {
@@ -232,6 +233,62 @@ namespace Content.IntegrationTests.Tests.Disposal
             {
                 // Re-pressurizing
                 Flush(disposalUnit, unitComponent, false, disposalSystem);
+            });
+        }
+
+        [Test]
+        public async Task UnpoweredUnitDoesNotRepressurize()
+        {
+            var pair = Pair;
+            var server = pair.Server;
+
+            var testMap = await pair.CreateTestMap();
+
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var timing = server.ResolveDependency<IGameTiming>();
+            var disposalSystem = entityManager.System<SharedDisposalUnitSystem>();
+            var power = entityManager.System<PowerReceiverSystem>();
+
+            EntityUid unit = default;
+            DisposalUnitComponent comp = default!;
+
+            await server.WaitAssertion(() =>
+            {
+                unit = entityManager.SpawnEntity("DisposalUnitDummy", testMap.GridCoords);
+                comp = entityManager.GetComponent<DisposalUnitComponent>(unit);
+                power.SetNeedsPower(unit, false);
+            });
+
+            await pair.RunTicksSync(1);
+
+            await server.WaitAssertion(() =>
+            {
+                Assert.That(power.IsPowered(unit), Is.True);
+
+                comp.NextPressurized = timing.CurTime + TimeSpan.FromSeconds(0.5);
+                Assert.That(disposalSystem.GetState((unit, comp)), Is.EqualTo(DisposalsPressureState.Pressurizing));
+
+                power.SetNeedsPower(unit, true);
+            });
+
+            await pair.RunTicksSync(60);
+
+            await server.WaitAssertion(() =>
+            {
+                // Frozen while unpowered: never reaches Ready despite plenty of time passing.
+                Assert.That(power.IsPowered(unit), Is.False);
+                Assert.That(disposalSystem.GetState((unit, comp)), Is.EqualTo(DisposalsPressureState.Pressurizing));
+
+                power.SetNeedsPower(unit, false);
+            });
+
+            await pair.RunTicksSync(60);
+
+            await server.WaitAssertion(() =>
+            {
+                // With power back it finishes pressurizing.
+                Assert.That(power.IsPowered(unit), Is.True);
+                Assert.That(disposalSystem.GetState((unit, comp)), Is.EqualTo(DisposalsPressureState.Ready));
             });
         }
     }

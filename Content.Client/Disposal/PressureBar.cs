@@ -7,9 +7,9 @@ namespace Content.Client.Disposal;
 
 public sealed class PressureBar : ProgressBar
 {
-    public bool UpdatePressure(TimeSpan fullPressureTime, float pressurePreSecond)
+    public bool UpdatePressure(TimeSpan fullPressureTime, float pressurePreSecond, TimeSpan? frozenTime = null)
     {
-        var currentTime = IoCManager.Resolve<IGameTiming>().CurTime;
+        var currentTime = frozenTime ?? IoCManager.Resolve<IGameTiming>().CurTime;
         var pressure = (float)Math.Min(1.0f, 1.0f - (fullPressureTime.TotalSeconds - currentTime.TotalSeconds) * pressurePreSecond);
         UpdatePressureBar(pressure);
         return pressure >= 1.0f;

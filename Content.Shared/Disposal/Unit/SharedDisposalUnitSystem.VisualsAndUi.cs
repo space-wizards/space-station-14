@@ -36,7 +36,7 @@ public abstract partial class SharedDisposalUnitSystem
     /// <returns>The estimated time.</returns>
     public TimeSpan EstimatedFullPressure(Entity<DisposalUnitComponent> ent)
     {
-        if (ent.Comp.NextPressurized < _timing.CurTime)
+        if (ent.Comp.NextPressurized < (ent.Comp.PowerOff ?? _timing.CurTime))
             return TimeSpan.Zero;
 
         return ent.Comp.NextPressurized;
@@ -44,12 +44,9 @@ public abstract partial class SharedDisposalUnitSystem
 
     protected void UpdateUI(Entity<DisposalUnitComponent> entity)
     {
-        if (_timing.ApplyingState)
-            return;
-
         if (_ui.TryGetOpenUi(entity.Owner, DisposalUnitUiKey.Key, out var bui))
         {
-            bui.Update<DisposalUnitBoundUserInterfaceState>();
+            bui.Update();
         }
     }
 

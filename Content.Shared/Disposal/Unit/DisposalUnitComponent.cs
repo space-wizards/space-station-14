@@ -6,6 +6,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Disposal.Components;
 
@@ -78,9 +79,28 @@ public sealed partial class DisposalUnitComponent : Component
 
     /// <summary>
     /// Next time the disposal unit will be pressurized.
+    /// If PowerOff is not null, this is unreliable.
     /// </summary>
-    [DataField, AutoNetworkedField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoNetworkedField, AutoPausedField]
     public TimeSpan NextPressurized = TimeSpan.Zero;
+
+    /// <summary>
+    /// If not null, the time the entity lost power while repressurizing.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoNetworkedField, AutoPausedField]
+    public TimeSpan? PowerOff;
+
+    /// <summary>
+    /// The last time the disposal unit was flushed.
+    /// </summary>
+    /// <remarks>
+    /// Needed as NextPressurized is unreliable for judging time since last flush.
+    /// </remarks
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoNetworkedField, AutoPausedField]
+    public TimeSpan? LastFlushTime;
 
     /// <summary>
     /// The percentage of pressure gained per second by the unit.
@@ -187,12 +207,6 @@ public record DisposalSystemTransitionEvent;
 /// </summary>
 [Serializable, NetSerializable]
 public sealed partial class DisposalDoAfterEvent : SimpleDoAfterEvent;
-
-/// <summary>
-/// Message sent from the server to the client to update the UI of disposal units.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class DisposalUnitBoundUserInterfaceState : BoundUserInterfaceState;
 
 /// <summary>
 /// Disposal unit pressure states.

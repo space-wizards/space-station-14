@@ -13,6 +13,7 @@ namespace Content.Client.Disposal.Unit
     {
         public TimeSpan FullPressure;
         public float PressurePerSecond;
+        public TimeSpan? PowerOff;
 
         public DisposalUnitWindow()
         {
@@ -22,7 +23,7 @@ namespace Content.Client.Disposal.Unit
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
-            PressureBar.UpdatePressure(FullPressure, PressurePerSecond);
+            PressureBar.UpdatePressure(FullPressure, PressurePerSecond, PowerOff);
         }
     }
 }
