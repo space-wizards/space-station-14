@@ -23,6 +23,7 @@ public sealed partial class SharedMagbootsSystem : EntitySystem
 
     [Dependency] private EntityQuery<MovedByPressureComponent> _movedByPressureQuery = default!;
 
+    #region Public API
     public void UpdateMagbootEffects(EntityUid user, Entity<MagbootsComponent> ent, bool state)
     {
         // TODO: public api for this and add access
@@ -36,6 +37,7 @@ public sealed partial class SharedMagbootsSystem : EntitySystem
         else
             _alerts.ClearAlert(user, ent.Comp.MagbootsAlert);
     }
+    #endregion Public API
 
     #region Event Handlers
     [SubscribeLocalEvent]
@@ -59,12 +61,6 @@ public sealed partial class SharedMagbootsSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnIsWeightless(Entity<MagbootsComponent> ent, ref InventoryRelayedEvent<IsWeightlessEvent> args)
-    {
-        OnIsWeightless(ent, ref args.Args);
-    }
-
-    [SubscribeLocalEvent]
     private void OnIsWeightless(Entity<MagbootsComponent> ent, ref IsWeightlessEvent args)
     {
         if (args.Handled || !_toggle.IsActivated(ent.Owner))
@@ -76,6 +72,12 @@ public sealed partial class SharedMagbootsSystem : EntitySystem
 
         args.IsWeightless = false;
         args.Handled = true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnIsWeightless(Entity<MagbootsComponent> ent, ref InventoryRelayedEvent<IsWeightlessEvent> args)
+    {
+        OnIsWeightless(ent, ref args.Args);
     }
     #endregion Event Handlers
 }
