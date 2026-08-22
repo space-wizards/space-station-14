@@ -194,6 +194,19 @@
     energy: 0.5
 
 - type: entity
+  id: RocketSmokeEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TimedDespawn
+    lifetime: 1.3
+  - type: Sprite
+    sprite: Effects/rocket_smoke.rsi
+    drawdepth: SmallMobs
+    layers:
+    - state: smoke_gray_scale
+      map: ["enum.EffectLayers.Unshaded"]
+
+- type: entity
   parent: BulletRocket
   id: BulletGuidedXenoborgMissile
   name: guided xenoborg missile
@@ -207,6 +220,10 @@
       shader: unshaded
     - state: fire
       shader: unshaded
+  - type: EffectGenerator
+    effectPrototype: RocketSmokeEffect
+    randomRotation: true
+    maxDistance: 0.1
   - type: PointLight
     radius: 3.5
     color: magenta
@@ -236,6 +253,17 @@
     rotateWithImpulse: true
 
 - type: entity
+  parent: RocketSmokeEffect
+  id: RocketSmokeSinWaveEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SineWaveAnimation
+    xWave:
+      amplitude: 0.4
+      frequency: 17
+      phaseOffset: null
+
+- type: entity
   parent: BaseBulletTrigger
   id: BulletXenoborgMechadermisRocket
   name: mechadermis rocket
@@ -247,6 +275,10 @@
     - state: mechadermis-missile-base
     - state: mechadermis-missile-unshaded
       shader: unshaded
+  - type: EffectGenerator
+    effectPrototype: RocketSmokeSinWaveEffect
+    randomRotation: true
+    maxDistance: 0.1
   - type: TriggerOnSpawn
     keyOut: timerTrigger
   - type: TimerTrigger
