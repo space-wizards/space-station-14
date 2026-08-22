@@ -1,4 +1,5 @@
 ﻿using Content.Shared.EntityTable.EntitySelectors;
+using Content.Shared.RatKing.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
@@ -8,22 +9,20 @@ namespace Content.Shared.RatKing.Components;
 /// This is used for entities that can be
 /// rummaged through by the rat king to get loot.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(RummagerSystem))]
 [AutoGenerateComponentState]
 public sealed partial class RummageableComponent : Component
 {
     /// <summary>
     /// Whether or not this entity has been rummaged through already.
     /// </summary>
-    [DataField("looted"), ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool Looted;
 
     /// <summary>
     /// How long it takes to rummage through a rummageable container.
     /// </summary>
-    [DataField("rummageDuration"), ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public float RummageDuration = 3f;
 
     /// <summary>
@@ -35,6 +34,6 @@ public sealed partial class RummageableComponent : Component
     /// <summary>
     /// Sound played on rummage completion.
     /// </summary>
-    [DataField("sound")]
+    [DataField]
     public SoundSpecifier? Sound = new SoundCollectionSpecifier("storageRustle");
 }
