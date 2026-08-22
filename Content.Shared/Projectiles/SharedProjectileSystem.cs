@@ -269,6 +269,9 @@ public record struct ProjectileReflectAttemptEvent(EntityUid ProjUid, Projectile
     SlotFlags IInventoryRelayEvent.TargetSlots => SlotFlags.WITHOUT_POCKET;
 }
 
+/// <summary>
+/// Raised when a projectile is shot
+/// </summary>
 [ByRefEvent]
 public record struct ProjectileShotEvent;
 
