@@ -440,6 +440,15 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: MineGameArcadeComputerCircuitboard
+  name: mine game arcade board
+  description: A computer printed circuit board for a mine game arcade cabinet.
+  components:
+    - type: ComputerBoard
+      prototype: MineGameArcade
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: ParticleAcceleratorComputerCircuitboard
   name: PA control box computer board
   description: A computer printed circuit board for a particle accelerator control box.
