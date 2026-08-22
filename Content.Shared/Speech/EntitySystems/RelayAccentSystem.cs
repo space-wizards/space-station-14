@@ -1,3 +1,4 @@
+using Content.Shared.Cuffs;
 using Content.Shared.Inventory;
 using Content.Shared.Speech.Components;
 using Content.Shared.StatusEffectNew;
@@ -35,6 +36,15 @@ public abstract class RelayAccentSystem<T> : EntitySystem where T : BaseAccentCo
         SubscribeLocalEvent<T, AccentGetEvent>(OnAccent, before: AccentBefore, after: AccentAfter);
         SubscribeLocalEvent<T, InventoryRelayedEvent<AccentGetEvent>>(OnInventoryRelayAccent, before: RelayAccentBefore, after: RelayAccentAfter);
         SubscribeLocalEvent<T, StatusEffectRelayedEvent<AccentGetEvent>>(OnStatusEffectRelayAccent, before: RelayAccentBefore, after: RelayAccentAfter);
+        SubscribeLocalEvent<T, CuffedRelayEvent<AccentGetEvent>>(OnCuffedRelayAccent, before: RelayAccentBefore, after: RelayAccentAfter);
+    }
+
+    protected virtual void OnCuffedRelayAccent(Entity<T> ent, ref CuffedRelayEvent<AccentGetEvent> args)
+    {
+        if (!ent.Comp.RelayAccent)
+            return;
+
+        OnAccent(ent, ref args.Args);
     }
 
     protected virtual void OnInventoryRelayAccent(Entity<T> ent, ref InventoryRelayedEvent<AccentGetEvent> args)

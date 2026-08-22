@@ -7,8 +7,11 @@ using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.Execution;
+using Content.Shared.FixedPoint;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -25,7 +28,6 @@ using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Events;
 using Content.Shared.Rejuvenate;
-using Content.Shared.Stunnable;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
@@ -34,6 +36,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
 
@@ -42,6 +45,7 @@ namespace Content.Shared.Cuffs
     // TODO remove all the IsServer() checks.
     public abstract partial class SharedCuffableSystem : EntitySystem
     {
+        [Dependency] private IGameTiming _timing = default!;
         [Dependency] private INetManager _net = default!;
         [Dependency] private ISharedAdminLogManager _adminLog = default!;
         [Dependency] private ActionBlockerSystem _actionBlocker = default!;
@@ -60,6 +64,7 @@ namespace Content.Shared.Cuffs
         public override void Initialize()
         {
             base.Initialize();
+            InitializeRelay();
 
             SubscribeLocalEvent<CuffableComponent, HandCountChangedEvent>(OnHandCountChanged);
             SubscribeLocalEvent<UncuffAttemptEvent>(OnUncuffAttempt);
@@ -157,11 +162,18 @@ namespace Content.Shared.Cuffs
 
         private void OnCuffsRemovedFromContainer(EntityUid uid, CuffableComponent component, EntRemovedFromContainerMessage args)
         {
+            if (_timing.ApplyingState)
+                return;
+
             // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
             if (args.Container.ID != component.Container?.ID)
                 return;
 
             _virtualItem.DeleteInHandsMatching(uid, args.Entity);
+
+            var evCuffs = new CuffsRemovedEvent(uid);
+            RaiseLocalEvent(args.Entity, ref evCuffs);
+
             UpdateCuffState(uid, component);
         }
 
@@ -305,6 +317,66 @@ namespace Content.Shared.Cuffs
             {
                 _popup.PopupEntity(Loc.GetString("cuffable-component-remove-cuffs-fail-message"), user, user);
             }
+        }
+
+        [SubscribeLocalEvent]
+        private void OnDamage(Entity<CuffableComponent> ent, ref DamageDealtEvent args)
+        {
+            if (_timing.ApplyingState)
+                return;
+
+            var dmgSpecifier = args.Damage;
+            dmgSpecifier.ClampMin(0f);
+            var damageValue = dmgSpecifier.GetTotal();
+
+            if (damageValue <= 0f || !IsCuffed(ent.AsNullable()))
+                return;
+
+            var destroyableCuffs = new List<Entity<HandcuffComponent>>();
+
+            foreach (var cuffsEnt in GetAllCuffs((ent, ent)))
+            {
+                if (!TryComp<HandcuffComponent>(cuffsEnt, out var handcuff) || handcuff.BreakOnDamageThreshold == null)
+                    continue;
+
+                handcuff.DamageWhileWorn += damageValue;
+
+                if (handcuff.DamageWhileWorn >= handcuff.BreakOnDamageThreshold)
+                    destroyableCuffs.Add((cuffsEnt, handcuff));
+            }
+
+            if (destroyableCuffs.Count == 0)
+                return;
+
+            foreach (var cuffsEnt in destroyableCuffs)
+            {
+                Uncuff(ent.Owner, null, cuffsEnt.Owner, ent.Comp, cuffsEnt.Comp);
+            }
+
+            _popup.PopupEntity(Loc.GetString("handcuff-component-cuffs-broke"), ent, PopupType.MediumCaution);
+        }
+
+        [SubscribeLocalEvent]
+        private void OnExecutionStarted(Entity<CuffableComponent> ent, ref ExecutionStartedEvent args)
+        {
+            var foundDestroyedCuffs = false;
+            foreach (var cuffsEnt in GetAllCuffs(ent.AsNullable()))
+            {
+                if (!TryComp<HandcuffComponent>(cuffsEnt, out var handcuff))
+                    return;
+
+                if (handcuff.BreakOnDamageThreshold != null)
+                {
+                    Uncuff(ent.Owner, null, cuffsEnt, ent.Comp, handcuff);
+                    foundDestroyedCuffs = true;
+                }
+            }
+
+            if(!foundDestroyedCuffs)
+                return;
+
+            args.CancelExecution = true;
+            args.CancelMessage = Loc.GetString("handcuff-component-cuffs-broke");
         }
 
         private void OnCuffAfterInteract(EntityUid uid, HandcuffComponent component, AfterInteractEvent args)
@@ -486,7 +558,12 @@ namespace Content.Shared.Cuffs
             var ev = new TargetHandcuffedEvent();
             RaiseLocalEvent(target, ref ev);
 
+            var evCuffs = new CuffsAppliedEvent(target);
+            RaiseLocalEvent(handcuff, ref evCuffs);
+
             UpdateHeldItems(target, handcuff, component);
+
+            cuff.DamageWhileWorn = FixedPoint2.Zero;
 
             return true;
         }
@@ -887,4 +964,16 @@ namespace Content.Shared.Cuffs
     /// <seealso cref="HandcuffComponent.StunBonus"/>
     [ByRefEvent]
     public record struct CheckIncapacitatedCuffEvent(bool Incapacitated);
+
+    /// <summary>
+    /// Raised on the cuffs when they are applied.
+    /// </summary>
+    [ByRefEvent]
+    public record struct CuffsAppliedEvent(EntityUid Target);
+
+    /// <summary>
+    /// Raised on the cuffs when they are removed.
+    /// </summary>
+    [ByRefEvent]
+    public record struct CuffsRemovedEvent(EntityUid Target);
 }
