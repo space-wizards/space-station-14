@@ -770,9 +770,12 @@ public sealed partial class AdminVerbSystem
     {
         if (TryComp<StationDataComponent>(target, out var station))
         {
-            foreach (var grid in station.Grids)
+            foreach (var gridRelation in station.Grids)
             {
-                var enumerator = Transform(grid).ChildEnumerator;
+                if (gridRelation.Entity == null)
+                    continue;
+
+                var enumerator = Transform(gridRelation.Entity.Value).ChildEnumerator;
                 while (enumerator.MoveNext(out var ent))
                 {
                     yield return ent;

@@ -44,9 +44,9 @@ public sealed class EntityCoordinatesConverter : AdminLogConverter<EntityCoordin
             writer.WriteNumber("mapId", mapComponent.MapId.GetHashCode());
             writer.WriteBoolean("mapPaused", mapComponent.MapPaused);
         }
-        if (entities.TryGetComponent(value, out StationMemberComponent? stationMemberComponent))
+        if (entities.TryGetComponent(value, out StationMemberComponent? stationMemberComponent) && stationMemberComponent.Station.Entity != null)
         {
-            WriteEntityInfo(writer, stationMemberComponent.Station, entities, "stationMember");
+            WriteEntityInfo(writer, stationMemberComponent.Station.Entity.Value, entities, "stationMember");
         }
 
         writer.WriteEndObject();

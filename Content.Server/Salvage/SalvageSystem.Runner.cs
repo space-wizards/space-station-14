@@ -152,10 +152,10 @@ public sealed partial class SalvageSystem
                 Dirty(uid, comp);
                 Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-seconds", ("duration", TimeSpan.FromSeconds(45).Seconds)));
             }
-            else if (comp.Stream == null && remaining < audioLength)
+            else if (comp.Stream.Entity == null && remaining < audioLength)
             {
                 var audio = _audio.PlayPvs(comp.Sound, uid);
-                comp.Stream = audio?.Entity;
+                SetRelation(uid, ref comp.Stream, audio?.Entity);
                 _audio.SetMapAudio(audio);
                 comp.Stage = ExpeditionStage.MusicCountdown;
                 Dirty(uid, comp);
@@ -184,12 +184,15 @@ public sealed partial class SalvageSystem
                 {
                     foreach (var member in data.Grids)
                     {
+                        if (member.Entity == null)
+                            continue;
+
                         while (shuttleQuery.MoveNext(out var shuttleUid, out var shuttle, out var shuttleXform))
                         {
                             if (shuttleXform.MapUid != uid || HasComp<FTLComponent>(shuttleUid))
                                 continue;
 
-                            _shuttle.FTLToDock(shuttleUid, shuttle, member, ftlTime);
+                            _shuttle.FTLToDock(shuttleUid, shuttle, member.Entity.Value, ftlTime);
                         }
 
                         break;

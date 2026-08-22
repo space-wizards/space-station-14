@@ -17,7 +17,6 @@ public sealed partial class AnomalySystem
 {
     private void InitializeVessel()
     {
-        SubscribeLocalEvent<AnomalyVesselComponent, ComponentShutdown>(OnVesselShutdown);
         SubscribeLocalEvent<AnomalyVesselComponent, MapInitEvent>(OnVesselMapInit);
         SubscribeLocalEvent<AnomalyVesselComponent, InteractUsingEvent>(OnVesselInteractUsing);
         SubscribeLocalEvent<AnomalyVesselComponent, ExaminedEvent>(OnExamined);
@@ -30,20 +29,9 @@ public sealed partial class AnomalySystem
         if (!args.IsInDetailsRange)
             return;
 
-        args.PushText(component.Anomaly == null
+        args.PushText(component.Anomaly.Entity == null
             ? Loc.GetString("anomaly-vessel-component-not-assigned")
             : Loc.GetString("anomaly-vessel-component-assigned"));
-    }
-
-    private void OnVesselShutdown(EntityUid uid, AnomalyVesselComponent component, ComponentShutdown args)
-    {
-        if (component.Anomaly is not { } anomaly)
-            return;
-
-        if (!TryComp<AnomalyComponent>(anomaly, out var anomalyComp))
-            return;
-
-        anomalyComp.ConnectedVessel = null;
     }
 
     private void OnVesselMapInit(EntityUid uid, AnomalyVesselComponent component, MapInitEvent args)
@@ -53,18 +41,18 @@ public sealed partial class AnomalySystem
 
     private void OnVesselInteractUsing(EntityUid uid, AnomalyVesselComponent component, InteractUsingEvent args)
     {
-        if (component.Anomaly != null ||
+        if (component.Anomaly.Entity != null ||
             !TryComp<AnomalyScannerComponent>(args.Used, out var scanner) ||
             scanner.ScannedAnomaly is not { } anomaly)
         {
             return;
         }
 
-        if (!TryComp<AnomalyComponent>(anomaly, out var anomalyComponent) || anomalyComponent.ConnectedVessel != null)
+        if (!TryComp<AnomalyComponent>(anomaly, out var anomalyComponent) || anomalyComponent.ConnectedVessel.Entity != null)
             return;
 
-        component.Anomaly = scanner.ScannedAnomaly;
-        anomalyComponent.ConnectedVessel = uid;
+        SetRelation(uid, ref component.Anomaly, anomaly);
+        SetRelation(anomaly, ref anomalyComponent.ConnectedVessel, uid);
         _radiation.SetSourceEnabled(uid, true);
         UpdateVesselAppearance(uid,  component);
         Popup.PopupEntity(Loc.GetString("anomaly-vessel-component-anomaly-assigned"), uid);
@@ -72,7 +60,7 @@ public sealed partial class AnomalySystem
 
     private void OnVesselGetPointsPerSecond(EntityUid uid, AnomalyVesselComponent component, ref ResearchServerGetPointsPerSecondEvent args)
     {
-        if (!this.IsPowered(uid, EntityManager) || component.Anomaly is not {} anomaly)
+        if (!this.IsPowered(uid, EntityManager) || component.Anomaly.Entity is not {} anomaly)
             return;
 
         args.Points += (int) (GetAnomalyPointValue(anomaly) * component.PointMultiplier);
@@ -86,7 +74,7 @@ public sealed partial class AnomalySystem
             if (args.Anomaly != component.Anomaly)
                 continue;
 
-            component.Anomaly = null;
+            ClearRelation(ent, ref component.Anomaly);
             UpdateVesselAppearance(ent,  component);
             _radiation.SetSourceEnabled(ent, false);
 
@@ -119,7 +107,7 @@ public sealed partial class AnomalySystem
         if (!Resolve(uid, ref component))
             return;
 
-        var on = component.Anomaly != null;
+        var on = component.Anomaly.Entity != null;
 
         if (!TryComp<AppearanceComponent>(uid, out var appearanceComponent))
             return;
@@ -128,7 +116,7 @@ public sealed partial class AnomalySystem
         if (_pointLight.TryGetLight(uid, out var pointLightComponent))
             _pointLight.SetEnabled(uid, on, pointLightComponent);
 
-        if (component.Anomaly == null || !TryGetStabilityVisual(component.Anomaly.Value, out var visual))
+        if (component.Anomaly.Entity == null || !TryGetStabilityVisual(component.Anomaly.Entity.Value, out var visual))
             visual = AnomalyStabilityVisuals.Stable;
 
         Appearance.SetData(uid, AnomalyVesselVisuals.AnomalySeverity, visual, appearanceComponent);
@@ -141,7 +129,7 @@ public sealed partial class AnomalySystem
         var query = EntityQueryEnumerator<AnomalyVesselComponent>();
         while (query.MoveNext(out var vesselEnt, out var vessel))
         {
-            if (vessel.Anomaly is not { } anomUid)
+            if (vessel.Anomaly.Entity is not { } anomUid)
                 continue;
 
             if (!TryComp<AnomalyComponent>(anomUid, out var anomaly))
