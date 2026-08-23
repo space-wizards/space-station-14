@@ -19,10 +19,10 @@ public abstract partial class EntityTableSelectorWithChildrenBase : EntityTableS
     /// <inheritdoc/>
     public override bool CheckConditions(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
     {
-        using var scoped = ScopedConditions(ctx);
-
         if (!base.CheckConditions(entMan, proto, ctx))
             return false;
+
+        using var scoped = ScopedConditions(ctx);
 
         foreach (var selector in Children)
         {
