@@ -17,15 +17,11 @@ public sealed partial class InteractionParticleSystem : EntitySystem
     [Dependency] private TransformSystem _xform = default!;
 
     [Dependency] private EntityQuery<DoAfterComponent> _doafterQuery = default!;
+    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
 
     private const string AnimateKey = "particle-animation";
 
-    private static readonly Dictionary<InteractionParticleType, EntProtoId> InteractionParticleIds = new ()
-    {
-        { InteractionParticleType.Use, "InteractionParticleUse" },
-        { InteractionParticleType.Pull, "InteractionParticlePull" },
-        { InteractionParticleType.InHand, "InteractionParticleUse" },
-    };
+    private static readonly EntProtoId[] InteractionParticleIds = ["InteractionParticleUse", "InteractionParticlePull", "InteractionParticleUse"];
 
     [EventSubscription]
     private void OnInteractionParticle(InteractionParticleEvent ev)
@@ -59,7 +55,7 @@ public sealed partial class InteractionParticleSystem : EntitySystem
         }
 
         var performerTargetDelta = targetXform.LocalPosition - performerXform.LocalPosition;
-        var particle = Spawn(InteractionParticleIds[type], performerXform.Coordinates);
+        var particle = Spawn(InteractionParticleIds[(int)type], performerXform.Coordinates);
 
         var doAfterOffset = 0f;
         if (type == InteractionParticleType.InHand)
@@ -76,15 +72,16 @@ public sealed partial class InteractionParticleSystem : EntitySystem
 
         var inHandDelta = new Vector2(0, 0.85f + doAfterOffset);
 
-        if (used is { } usedEntity && Exists(usedEntity) && TryComp<SpriteComponent>(usedEntity, out var usedSprite))
+        var particleSprite = _spriteQuery.Comp(particle);
+
+        if (used is { } usedEntity && Exists(usedEntity) && _spriteQuery.TryComp(usedEntity, out var usedSprite))
         {
-            _sprite.CopySprite((usedEntity, usedSprite), particle);
+            _sprite.CopySprite((usedEntity, usedSprite), (particle, particleSprite));
             _sprite.SetDrawDepth(particle, (int) Shared.DrawDepth.DrawDepth.Effects);
         }
 
-        var sprite = Comp<SpriteComponent>(particle);
-        sprite.NoRotation = true;
-        var spriteColor = sprite.Color;
+        particleSprite.NoRotation = true;
+        var spriteColor = particleSprite.Color;
         var startPos = performerXform.LocalPosition;
         var animation = type switch
         {

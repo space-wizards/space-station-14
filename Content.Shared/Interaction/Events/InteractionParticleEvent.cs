@@ -35,7 +35,7 @@ public sealed class InteractionParticleEvent(NetEntity performer, NetEntity? use
 }
 
 [Serializable, NetSerializable]
-public enum InteractionParticleType
+public enum InteractionParticleType : byte
 {
     Use,
     Pull,
