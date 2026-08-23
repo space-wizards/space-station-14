@@ -253,8 +253,8 @@ namespace Content.Server.Light.EntitySystems
         {
             var level = GetLevel(ent);
 
-            if (level == ent.Comp.Level)
-                return;
+            //if (level == ent.Comp.Level)
+            //    return;
 
             ent.Comp.Level = level;
             Dirty(ent);
