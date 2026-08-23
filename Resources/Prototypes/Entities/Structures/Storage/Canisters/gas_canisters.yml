@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ BaseStructureDynamic, BasePaperLabelable, StructureHealthContainerStrong ]
+  parent: [ BaseStructureDynamic, BasePaperLabelableVisualized, StructureHealthContainerStrong ]
   id: GasCanister
   name: gas canister
   description: A canister that can contain any type of gas. It can be attached to connector ports using a wrench.

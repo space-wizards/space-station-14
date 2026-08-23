@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ BaseStructureDynamic, BasePaperLabelable ]
+  parent: [ BaseStructureDynamic, BasePaperLabelableVisualized ]
   id: ClosetBase
   name: closet
   description: A standard-issue Nanotrasen storage unit.

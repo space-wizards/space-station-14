@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseItem, BasePaperLabelable ]
+  parent: [ BaseItem, BasePaperLabelableVisualized ]
   id: SeedBase
   abstract: true
   components:
@@ -11,10 +11,9 @@
         visible: false
         map: ["enum.PaperLabelVisuals.Layer"]
         sprite: Objects/Specific/Hydroponics/seeds.rsi
-    - type: Appearance
-    - type: PaperLabel
+    - type: PaperLabelVisuals # Overriding the base visuals, only supports one sprite.
       labelStates: {}
-      fallbackLabelState: paper # Currently only supports one sprite.
+      fallbackLabelState: paper
     - type: Item
       size: Tiny
     - type: StaticPrice

@@ -18,7 +18,7 @@
       content: syndicate-business-card-base
     - type: PaperLabelType
       labelType: BusinessCard
-      color: "#680f15" # surely this will work great and not look bad
+      color: "#680f15"
     - type: PaperVisuals
       headerImagePath: "/Textures/Interface/Paper/paper_heading_syndicate_logo.svg.96dpi.png"
       headerMargin: 0.0, 2.0, 0.0, 0.0

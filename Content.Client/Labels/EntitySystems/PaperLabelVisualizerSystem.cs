@@ -1,17 +1,17 @@
+using Content.Client.Labels.Components;
 using Content.Shared.Labels;
-using Content.Shared.Labels.Components;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Labels.EntitySystems;
 
 /// <summary>
-/// A system that updates the sprites and color of an entity.
+/// A system that updates the sprites of an entity to show recolorable paper labels.
 /// </summary>
-/// <seealso cref="PaperLabelComponent"/>
-public sealed partial class PaperLabelVisualizerSystem : VisualizerSystem<PaperLabelComponent>
+/// <seealso cref="PaperLabelVisualsComponent"/>
+public sealed partial class PaperLabelVisualizerSystem : VisualizerSystem<PaperLabelVisualsComponent>
 {
     /// <inheritdoc/>
-    protected override void OnAppearanceChange(EntityUid uid, PaperLabelComponent component, ref AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(EntityUid uid, PaperLabelVisualsComponent component, ref AppearanceChangeEvent args)
     {
         base.OnAppearanceChange(uid, component, ref args);
 

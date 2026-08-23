@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseStructureDynamic, BasePaperLabelable, StructureHealthContainer ]
+  parent: [ BaseStructureDynamic, BasePaperLabelableVisualized, StructureHealthContainer ]
   id: CrateArtifactContainer
   name: artifact container
   description: Used to safely contain and move artifacts.
