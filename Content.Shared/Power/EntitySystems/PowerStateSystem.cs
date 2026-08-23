@@ -11,21 +11,28 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
 {
     [Dependency] private SharedPowerReceiverSystem _powerReceiverSystem = default!;
 
-    [Dependency] private EntityQuery<PowerStateComponent> _powerStateQuery = default!;
+    [Dependency] protected EntityQuery<PowerStateComponent> PowerStateQuery = default!;
 
     /// <summary>
     /// Sets the working state of the entity, adjusting its power draw accordingly.
     /// </summary>
     /// <param name="ent">The entity to set the working state for.</param>
-    /// <param name="working">Whether the entity should be in the working state.</param>
+    /// <param name="isWorking">Whether the entity should be in the working state.</param>
     [PublicAPI]
-    public void SetWorkingState(Entity<PowerStateComponent?> ent, bool working)
+    public virtual void SetWorkingState(Entity<PowerStateComponent?> ent, bool isWorking)
     {
-        if (!_powerStateQuery.Resolve(ent, ref ent.Comp))
+        if (!PowerStateQuery.Resolve(ent, ref ent.Comp))
             return;
 
-        _powerReceiverSystem.SetLoad(ent.Owner, working ? ent.Comp.WorkingPowerDraw : ent.Comp.IdlePowerDraw);
-        ent.Comp.IsWorking = working;
+        SetPowerLoad((ent, ent.Comp), isWorking);
+
+        if (ent.Comp.IsWorking == isWorking)
+            return;
+
+        ent.Comp.IsWorking = isWorking;
+
+        var ev = new PowerStateChanged(isWorking);
+        RaiseLocalEvent(ent, ref ev);
     }
 
     /// <summary>
@@ -33,16 +40,46 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
     /// Use this for if you're not sure if the entity has a <see cref="PowerStateComponent"/>.
     /// </summary>
     /// <param name="ent">The entity to set the working state for.</param>
-    /// <param name="working">Whether the entity should be in the working state.</param>
+    /// <param name="isWorking">Whether the entity should be in the working state.</param>
     [PublicAPI]
-    public void TrySetWorkingState(Entity<PowerStateComponent?> ent, bool working)
+    public void TrySetWorkingState(Entity<PowerStateComponent?> ent, bool isWorking)
     {
         // Sometimes systems calling this API handle generic objects that can or can't consume power,
         // so to reduce boilerplate we don't log an error. Any entity that *should* have an ApcPowerRecieverComponent
         // will log an error in tests if someone tries to add an entity that doesn't have one.
-        if (!_powerStateQuery.Resolve(ent, ref ent.Comp, false))
+        if (!PowerStateQuery.Resolve(ent, ref ent.Comp, false))
             return;
 
-        SetWorkingState(ent, working);
+        SetWorkingState(ent, isWorking);
+    }
+
+    /// <summary>
+    /// Tries to get working state out of <see cref="PowerStateComponent"/>,
+    /// returns it if found, returns false if not found.
+    /// </summary>
+    [PublicAPI]
+    public bool GetWorkingState(Entity<PowerStateComponent?> ent)
+    {
+        if (!PowerStateQuery.Resolve(ent, ref ent.Comp))
+            return false;
+
+        return ent.Comp.IsWorking;
+    }
+
+    /// <summary> Sets up power load for provided working state. </summary>
+    protected virtual void SetPowerLoad(Entity<PowerStateComponent> ent, bool isWorking)
+    {
+        SharedApcPowerReceiverComponent? apcPower = null;
+        if (_powerReceiverSystem.ResolveApc(ent, ref apcPower))
+        {
+            var powerLoadToSet = isWorking ? ent.Comp.WorkingPowerDraw : ent.Comp.IdlePowerDraw;
+            _powerReceiverSystem.SetLoad((ent, apcPower), powerLoadToSet);
+        }
     }
 }
+
+/// <summary>
+/// Event of changing power state of entity.
+/// </summary>
+[ByRefEvent]
+public record struct PowerStateChanged(bool IsWorking);
