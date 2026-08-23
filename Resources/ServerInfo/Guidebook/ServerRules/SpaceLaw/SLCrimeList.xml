@@ -424,9 +424,10 @@
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Generally, this only applies to refusing orders from Central Command, the Captain, or a higher-ranking member of the same department; e.g,
-        it's [italic]not[/italic] Insubordination for a Station Engineer to refuse orders from a Security Officer or the Research Director,
+        it's [italic]not[/italic] insubordination for a Station Engineer to refuse orders from a Security Officer or the Research Director,
         even if those orders are otherwise reasonable and lawful.
-        Repeat offenses might warrant a demotion, depending on their severity.
+        It's typically best for departments to handle insubordination internally (i.e, without Security's involvement); extremely persistent or severe
+        cases of insubordination might warrant a formal warning from Security, jail time, or even outright demotion.
       </Box>
     </ColorBox>
     <ColorBox>
