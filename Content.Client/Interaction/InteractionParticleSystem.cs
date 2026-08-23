@@ -27,13 +27,7 @@ public sealed partial class InteractionParticleSystem : EntitySystem
         { InteractionParticleType.InHand, "InteractionParticleUse" },
     };
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeAllEvent<InteractionParticleEvent>(OnInteractionParticle);
-    }
-
+    [EventSubscription]
     private void OnInteractionParticle(InteractionParticleEvent ev)
     {
         var performer = GetEntity(ev.Performer);
