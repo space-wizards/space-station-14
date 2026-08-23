@@ -122,6 +122,23 @@
           min: 15
 
 - type: reagent
+  id: Pax
+  name: reagent-name-pax
+  group: Narcotics
+  desc: reagent-desc-pax
+  physicalDesc: reagent-physical-desc-soothing
+  contrabandSeverity: Syndicate
+  flavor: numbingtranquility
+  color: "#AAAAAA"
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:GenericStatusEffect
+        key: Pacified
+        component: Pacified
+        time: 4
+
+- type: reagent
   id: Stimulants
   name: reagent-name-stimulants
   group: Narcotics
