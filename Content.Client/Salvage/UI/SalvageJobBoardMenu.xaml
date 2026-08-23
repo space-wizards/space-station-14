@@ -17,10 +17,7 @@
             <RichTextLabel Text="{Loc 'job-board-ui-label-rank'}" Margin="0 0 5 0"/>
             <RichTextLabel Text="{Loc 'salvage-job-rank-title-0'}" Name="RankLabel"/>
         </BoxContainer>
-        <PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="10">
-            <PanelContainer.PanelOverride>
-                <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
-            </PanelContainer.PanelOverride>
+        <PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="10" StyleClasses="PanelDeep">
             <ScrollContainer HScrollEnabled="False"
                              HorizontalExpand="True"
                              VerticalExpand="True">

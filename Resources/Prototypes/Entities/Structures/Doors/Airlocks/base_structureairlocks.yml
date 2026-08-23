@@ -156,6 +156,8 @@
     guides:
     - Airlocks
     - WirePanels
+  - type: StructureAligner
+  - type: StructureAlignerPylon
 
 - type: entity
   parent: [ BaseAirlockSecure, StructureHealthDoor ]
@@ -216,6 +218,8 @@
     - Airlocks
     - WirePanels
     - Networking
+  placement:
+    mode: SnapgridCenter
 
 - type: entity
   id: AirlockRCDResistant
