@@ -1,0 +1,6 @@
+version = 1
+
+[[annotations]]
+path = ["hand.png"]
+SPDX-FileCopyrightText = "sowelipililimute"
+SPDX-License-Identifier = "LicenseRef-Wallening"

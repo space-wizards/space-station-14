@@ -20,6 +20,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
     [Dependency] private SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
@@ -72,7 +73,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
         args.Verbs.Add(new ActivationVerb
         {
-            Act = () => InteractUI(args.User, uid, component),
+            Act = () => InteractUI(args.User, (uid, component)),
             Text = Loc.GetString(component.VerbText),
             // TODO VERB ICON find a better icon
             Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
@@ -86,7 +87,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
         args.Verbs.Add(new Verb
         {
-            Act = () => InteractUI(args.User, uid, component),
+            Act = () => InteractUI(args.User, (uid, component)),
             Text = Loc.GetString(component.VerbText),
             // TODO VERB ICON find a better icon
             Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
@@ -133,7 +134,8 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (component.RequiredItems != null)
             return;
 
-        args.Handled = InteractUI(args.User, uid, component);
+        var interactionParticle = false;
+        args.Handled = InteractUI(args.User, uid, component, ref interactionParticle);
     }
 
     private void OnActivate(EntityUid uid, ActivatableUIComponent component, ActivateInWorldEvent args)
@@ -147,7 +149,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (component.RequiredItems != null)
             return;
 
-        args.Handled = InteractUI(args.User, uid, component);
+        args.Handled = InteractUI(args.User, uid, component, ref args.InteractionParticle);
     }
 
     private void OnInteractUsing(EntityUid uid, ActivatableUIComponent component, InteractUsingEvent args)
@@ -164,7 +166,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (_whitelistSystem.IsWhitelistFail(component.RequiredItems, args.Used))
             return;
 
-        args.Handled = InteractUI(args.User, uid, component);
+        args.Handled = InteractUI(args.User, uid, component, ref args.InteractionParticle);
     }
 
     private void OnUIClose(EntityUid uid, ActivatableUIComponent component, BoundUIClosedEvent args)
@@ -180,13 +182,21 @@ public sealed partial class ActivatableUISystem : EntitySystem
         SetCurrentSingleUser(uid, null, component);
     }
 
-    private bool InteractUI(EntityUid user, EntityUid uiEntity, ActivatableUIComponent aui)
+    private void InteractUI(EntityUid user, Entity<ActivatableUIComponent> ui)
+    {
+        var interactionParticle = false;
+        InteractUI(user, ui, ui, ref interactionParticle);
+        _interaction.DoContactInteraction(user, ui, null, true, interactionParticles: interactionParticle);
+    }
+
+    private bool InteractUI(EntityUid user, EntityUid uiEntity, ActivatableUIComponent aui, ref bool interactionParticle)
     {
         if (aui.Key == null || !_uiSystem.HasUi(uiEntity, aui.Key))
             return false;
 
         if (_uiSystem.IsUiOpen(uiEntity, aui.Key, user))
         {
+            interactionParticle = false;
             _uiSystem.CloseUi(uiEntity, aui.Key, user);
             return true;
         }
@@ -242,6 +252,8 @@ public sealed partial class ActivatableUISystem : EntitySystem
         //Let the component know a user opened it so it can do whatever it needs to do
         var aae = new AfterActivatableUIOpenEvent(user);
         RaiseLocalEvent(uiEntity, aae);
+
+        interactionParticle = aae.InteractionParticle;
 
         return true;
     }

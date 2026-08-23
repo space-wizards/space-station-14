@@ -324,7 +324,7 @@ public abstract partial class SharedStrippableSystem : EntitySystem
         var prefix = stealth ? "stealthily " : "";
         _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to {prefix}strip the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s {slot} slot");
 
-        _interactionSystem.DoContactInteraction(user, item);
+        _interactionSystem.DoContactInteraction(user, item, null, true);
 
         var doAfterArgs = new DoAfterArgs(EntityManager, user, time, new StrippableDoAfterEvent(false, true, slot), user, target, item)
         {
@@ -539,7 +539,7 @@ public abstract partial class SharedStrippableSystem : EntitySystem
         var prefix = stealth ? "stealthily " : "";
         _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to {prefix}strip the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s hands");
 
-        _interactionSystem.DoContactInteraction(user, item);
+        _interactionSystem.DoContactInteraction(user, item, null, true);
 
         var doAfterArgs = new DoAfterArgs(EntityManager, user, time, new StrippableDoAfterEvent(false, false, handName), user, target, item)
         {
@@ -638,7 +638,10 @@ public abstract partial class SharedStrippableSystem : EntitySystem
             return;
 
         if (TryOpenStrippingUi(args.User, (uid, component)))
+        {
             args.Handled = true;
+            args.InteractionParticle = false;
+        }
     }
 
     /// <summary>
