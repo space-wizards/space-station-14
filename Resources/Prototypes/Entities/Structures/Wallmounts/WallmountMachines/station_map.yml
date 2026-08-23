@@ -47,6 +47,7 @@
   - type: Construction
     node: broken
   - type: EntityTableContainerFill
+    contextContainers: true
     containers:
       board:
         id: StationMapCircuitboard
