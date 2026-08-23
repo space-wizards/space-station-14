@@ -98,7 +98,6 @@
       map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
     - state: paper
-      visible: false
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: Storage
     maxItemSize: Normal
