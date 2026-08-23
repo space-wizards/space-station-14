@@ -154,6 +154,8 @@
     guides:
     - Airlocks
     - WirePanels
+  - type: StaticPrice
+    price: 150
   - type: StructureAligner
   - type: StructureAlignerPylon
 
@@ -203,9 +205,6 @@
           collection: MetalSlam
   - type: Paintable
     group: AirlockStandard
-  # TODO:ERRANT why no static price on High Security?
-  - type: StaticPrice
-    price: 150
   - type: PryUnpowered
   - type: GuideHelp
     guides:
