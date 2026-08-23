@@ -419,6 +419,26 @@
     slots: WITHOUT_POCKET
 
 - type: entity
+  parent: [ ClothingOuterEVASuitBase, BaseMajorContraband, AllowSuitStorageClothing ]
+  id: ClothingOuterArmorChangelingWeak
+  name: chitineous carapace
+  description: A temporary protective layer made by changelings to protect themselves from the harshness of space.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/lingarmor.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/lingarmor.rsi
+  - type: GroupExamine
+  - type: ProtectedFromStepTriggers
+    slots: WITHOUT_POCKET
+  - type: TimedDespawn
+    examine: true
+    lifetime: 240
+  - type: FleetingClothing
+    removedSound:
+      path: /Audio/Voice/Slime/slime_squish.ogg # TODO: replace placeholder
+
+- type: entity
   parent: [ ClothingOuterBaseLarge, BaseMajorContraband, AllowSuitStorageClothing ]
   id: ClothingOuterArmorBone
   name: bone armor

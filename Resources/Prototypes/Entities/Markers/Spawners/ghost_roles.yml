@@ -198,6 +198,26 @@
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
   parent: BaseAntagSpawner
+  id: SpawnPointGhostSpaceChangeling
+  components:
+  - type: GhostRole
+    name: ghost-role-information-changeling-name
+    description: ghost-role-information-changeling-description
+    rules: ghost-role-information-antagonist-rules
+    mindRoles:
+    - MindRoleChangeling
+    raffle:
+      settings: default
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: Objects/Weapons/Melee/armblade.rsi
+      state: icon
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseAntagSpawner
   id: SpawnPointGhostParadoxClone
   components:
   - type: GhostRole

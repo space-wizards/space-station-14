@@ -1,4 +1,4 @@
-﻿- type: antag
+- type: antag
   id: Changeling
   name: roles-antag-changeling-name
   antagonist: true
@@ -38,3 +38,63 @@
       ChangelingDNA: 60
   mindRoles:
   - MindRoleChangeling
+
+# for the mid round space-spawned changeling
+- type: antagSpecifier
+  parent: Changeling
+  id: SpaceChangeling
+  spawnerPrototype: SpawnPointGhostSpaceChangeling
+  pickPlayer: false
+  startingGear: SpaceChangelingGear
+  briefing:
+    text: space-changeling-role-greeting
+    color: Red
+    sound: /Audio/Ambience/Antag/changeling_start.ogg
+  components:
+  - type: RandomMetadata
+    nameSegments:
+    - NamesFirst
+    - NamesLast
+    nameFormat: name-format-standard
+  # meteor!
+  - type: PolymorphOnTrigger
+    polymorph: ChangelingMeteor
+    keysIn:
+    - poly
+  - type: TriggerOnSpawn
+    keyOut: poly
+
+- type: startingGear
+  id: SpaceChangelingGear # almost naked!
+  equipment:
+    head: ClothingHeadHelmetLingWeak
+    outerClothing: ClothingOuterArmorChangelingWeak
+
+- type: entity
+  name: strange meteor
+  description: This meteor looks more akin to a fossile than to an aggregate of minerals.
+  id: ChangelingMeteor
+  parent: BaseMeteor
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: changeling
+  - type: FlingTowardStation
+    speed: 15
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ExplodeBehavior
+      - !type:WeightedSpawnEntityBehavior
+        weightedEntityTable: "MeteorSpawnAsteroidWallTable"
+        minSpawn: 2
+        maxSpawn: 4
+        spawnAfter: 0.5

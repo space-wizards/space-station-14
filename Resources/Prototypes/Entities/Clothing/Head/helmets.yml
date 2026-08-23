@@ -355,6 +355,26 @@
     layers:
       Hair: HEAD
 
+- type: entity
+  parent: [ ClothingHeadEVAHelmetBase, BaseMajorContraband]
+  id: ClothingHeadHelmetLingWeak
+  name: chitineous carapace helmet
+  description: A temporary chitinous helmet made by changelings to protect themselves from the harshness of space.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/linghelmet.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/linghelmet.rsi
+  - type: HideLayerClothing
+    layers:
+      Hair: HEAD
+  - type: TimedDespawn
+    examine: true
+    lifetime: 240
+  - type: FleetingClothing
+    removedSound:
+      path: /Audio/Voice/Slime/slime_squish.ogg # TODO: replace placeholder
+
 #ERT HELMETS
 #ERT Leader Helmet
 - type: entity
