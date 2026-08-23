@@ -81,6 +81,18 @@
     state: changeling
   - type: FlingTowardStation
     speed: 15
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 240
+      - ReagentId: LivingBlood
+        Quantity: 20
+  - type: Explosive
+    explosionType: DemolitionCharge
+    totalIntensity: 999
+    intensitySlope: 100
+    tileBreakScale: 0
   - type: Destructible
     thresholds:
     - trigger:
@@ -93,8 +105,10 @@
         sound:
           collection: MetalBreak
       - !type:ExplodeBehavior
-      - !type:WeightedSpawnEntityBehavior
-        weightedEntityTable: "MeteorSpawnAsteroidWallTable"
-        minSpawn: 2
-        maxSpawn: 4
-        spawnAfter: 0.5
+      - !type:SpillBehavior
+        solution: solution
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodMeatHuman:
+            min: 1
+            max: 2

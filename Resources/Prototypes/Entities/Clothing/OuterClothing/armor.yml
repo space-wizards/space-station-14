@@ -434,6 +434,8 @@
   - type: TimedDespawn
     examine: true
     lifetime: 240
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
   - type: FleetingClothing
     removedSound:
       path: /Audio/Voice/Slime/slime_squish.ogg # TODO: replace placeholder
