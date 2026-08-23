@@ -107,13 +107,16 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         if (!TryComp<ChangelingIdentityComponent>(ent, out var identity))
             return;
 
+        if (!ent.Comp.ManualDrop)
+            return; // can't drop identities in this mode
+
         if (identity.CurrentIdentity == targetIdentity)
             return; // don't drop our current identity
 
         if (!_changelingIdentity.TryGetDataFromIdentity((ent.Owner, identity), targetIdentity.Value, out _))
             return; // this identity does not belong to this player
 
-        _popup.PopupClient(Loc.GetString("changeling-transform-bui-drop-identity-entity-popup", ("entity", targetIdentity.Value)), ent.Owner, PopupType.Large);
+        _popup.PopupEntity(Loc.GetString("changeling-transform-bui-drop-identity-entity-popup", ("entity", targetIdentity.Value)), ent.Owner, ent.Owner, PopupType.Large);
         _changelingIdentity.DropStoredIdentity(ent.Owner, targetIdentity.Value);
     }
 
@@ -129,7 +132,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
 
         var selfMessage = Loc.GetString("changeling-transform-attempt-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
         var othersMessage = Loc.GetString("changeling-transform-attempt-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
-        _popup.PopupPredicted(
+        _popup.PopupEntity(
             selfMessage,
             othersMessage,
             ent,
@@ -180,6 +183,11 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         if (args.Target is not { } targetIdentity)
             return;
 
+        EntityUid? previousIdentity = null;
+
+        if (TryComp<ChangelingIdentityComponent>(ent.Owner, out var identityComp) && !ent.Comp.ManualDrop)
+            previousIdentity = identityComp.CurrentIdentity;
+
         var beforeTransformEvent = new BeforeChangelingTransformEvent(targetIdentity);
         RaiseLocalEvent(args.User, beforeTransformEvent);
 
@@ -208,6 +216,9 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
 
         var afterTransformEvent = new AfterChangelingTransformEvent(targetIdentity);
         RaiseLocalEvent(args.User, afterTransformEvent);
+
+        if (previousIdentity != null)
+            _changelingIdentity.DropStoredIdentity(ent.Owner, previousIdentity.Value);
     }
 
     private void StorageBeforeTransform(Entity<StorageComponent> ent, ref BeforeChangelingTransformEvent args)

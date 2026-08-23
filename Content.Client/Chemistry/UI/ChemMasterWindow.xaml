@@ -1,7 +1,6 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                 MinSize="620 670"
                 Title="{Loc 'chem-master-bound-user-interface-title'}">
     <TabContainer Name="Tabs" Margin="5 5 7 5">
@@ -13,10 +12,7 @@
                 <Button MinSize="80 0" Name="InputEjectButton" Access="Public" Text="{Loc 'chem-master-window-eject-button'}" />
             </BoxContainer>
 
-            <PanelContainer VerticalExpand="True" MinSize="0 200">
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
-                </PanelContainer.PanelOverride>
+            <PanelContainer VerticalExpand="True" MinSize="0 200" StyleClasses="PanelDeep">
 
                 <ScrollContainer HorizontalExpand="True" MinSize="0 200">
                     <!-- Initially empty, when server sends state data this will have container contents and fill volume.-->
@@ -39,10 +35,7 @@
             </BoxContainer>
 
             <!-- Buffer info -->
-            <PanelContainer VerticalExpand="True" MinSize="0 200">
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
-                </PanelContainer.PanelOverride>
+            <PanelContainer VerticalExpand="True" MinSize="0 200" StyleClasses="PanelDeep">
 
                 <ScrollContainer HorizontalExpand="True" MinSize="0 200">
                     <!-- Buffer reagent list -->
@@ -61,10 +54,7 @@
                 <Button MinSize="80 0" Name="OutputEjectButton" Access="Public" Text="{Loc 'chem-master-window-eject-button'}" />
             </BoxContainer>
 
-            <PanelContainer VerticalExpand="True" MinSize="0 200">
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
-                </PanelContainer.PanelOverride>
+            <PanelContainer VerticalExpand="True" MinSize="0 200" StyleClasses="PanelDeep">
 
                 <ScrollContainer HorizontalExpand="True" MinSize="0 200">
                     <!-- Initially empty, when server sends state data this will have container contents and fill volume.-->
@@ -89,10 +79,7 @@
             </BoxContainer>
 
             <!-- Wrap the packaging info-->
-            <PanelContainer>
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
-                </PanelContainer.PanelOverride>
+            <PanelContainer StyleClasses="PanelDeep">
 
                 <!-- Packaging Info -->
                 <BoxContainer Orientation="Vertical" Margin="4" HorizontalExpand="True" VerticalExpand="True" SeparationOverride="5">

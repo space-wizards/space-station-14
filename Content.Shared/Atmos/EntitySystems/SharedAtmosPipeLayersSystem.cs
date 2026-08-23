@@ -123,7 +123,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
 
         if (TryComp<SubFloorHideComponent>(ent, out var subFloorHide) && subFloorHide.IsUnderCover)
         {
-            _popup.PopupClient(Loc.GetString("atmos-pipe-layers-component-cannot-adjust-pipes"), ent, args.User);
+            _popup.PopupEntity(Loc.GetString("atmos-pipe-layers-component-cannot-adjust-pipes"), ent, args.User);
             return;
         }
 
@@ -142,7 +142,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
                 var toolName = Loc.GetString(toolProto.ToolName).ToLower();
                 var message = Loc.GetString("atmos-pipe-layers-component-tool-missing", ("toolName", toolName));
 
-                _popup.PopupClient(message, ent, args.User);
+                _popup.PopupEntity(message, ent, args.User);
             }
 
             return;
@@ -218,20 +218,8 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
             var layerName = GetPipeLayerName(ent.Comp.CurrentPipeLayer);
             var message = Loc.GetString("atmos-pipe-layers-component-change-layer", ("layerName", layerName));
 
-            _popup.PopupClient(message, ent, user);
+            _popup.PopupEntity(message, ent, user);
         }
-    }
-
-    /// <summary>
-    /// Try to find an entity prototype associated with a specified <see cref="AtmosPipeLayer"/>.
-    /// </summary>
-    /// <param name="component">The <see cref="AtmosPipeLayersComponent"/> with the alternative prototypes data.</param>
-    /// <param name="layer">The atmos pipe layer associated with the entity prototype.</param>
-    /// <param name="proto">The returned entity prototype.</param>
-    /// <returns>True if there was an entity prototype associated with the layer.</returns>
-    public bool TryGetAlternativePrototype(AtmosPipeLayersComponent component, AtmosPipeLayer layer, out EntProtoId proto)
-    {
-        return component.AlternativePrototypes.TryGetValue(layer, out proto);
     }
 
     /// <summary>

@@ -2,13 +2,14 @@ using Content.Server.Administration.Logs;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power;
 using Content.Shared.SurveillanceCamera;
 using Content.Shared.SurveillanceCamera.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
-using Content.Shared.DeviceNetwork.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.SurveillanceCamera;
 
@@ -82,7 +83,7 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
                 { DeviceNetworkConstants.Command, string.Empty },
                 { CameraAddressData, deviceNet.Address },
                 { CameraNameData, component.UseEntityNameAsCameraId ? MetaData(uid).EntityName : component.CameraId },
-                { CameraSubnetData, string.Empty }
+                { CameraSubnetData, null }
             };
 
             var dest = string.Empty;
@@ -108,7 +109,7 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
                     payload[DeviceNetworkConstants.Command] = CameraHeartbeatMessage;
                     break;
                 case CameraPingMessage:
-                    if (!args.Data.TryGetValue(CameraSubnetData, out string? subnet))
+                    if (!args.Data.TryGetValue(CameraSubnetData, out ProtoId<DeviceFrequencyPrototype>? subnet))
                     {
                         return;
                     }
@@ -204,9 +205,9 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
 
         if (camera.AvailableNetworks.Count == 0)
         {
-            if (deviceNet.ReceiveFrequencyId != null)
+            if (deviceNet.ReceiveFrequencyId is { } recvFreq)
             {
-                camera.AvailableNetworks.Add(deviceNet.ReceiveFrequencyId);
+                camera.AvailableNetworks.Add(recvFreq);
             }
             else if (!camera.NetworkSet)
             {
