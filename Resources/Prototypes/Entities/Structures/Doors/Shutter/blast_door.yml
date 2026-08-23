@@ -34,7 +34,7 @@
   - type: RadiationBlocker
     resistance: 8
   - type: Damageable
-    damageModifierSet: PlasteelStructureMod
+    damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -92,7 +92,7 @@
     state: assembly
   - type: InteractionOutline
   - type: Damageable
-    damageModifierSet: PlasteelStructureMod
+    damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
     - trigger:

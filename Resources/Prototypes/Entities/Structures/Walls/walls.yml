@@ -386,7 +386,7 @@
     graph: Girder
     node: reinforcedWall
   - type: Damageable
-    damageModifierSet: PlasteelStructureMod
+    damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
     - trigger: *DamageWallStrong
@@ -460,7 +460,7 @@
     sprite: Structures/Walls/reinforced-diagonal.rsi
     state: state0
   - type: Damageable
-    damageModifierSet: PlasteelStructureMod
+    damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
     - trigger: *DamageWallStrong
@@ -589,7 +589,7 @@
         - WallLayer
         density: 2000
   - type: Damageable
-    damageModifierSet: PlasteelStructureMod
+    damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
     - trigger: *DamageWallStrong
@@ -611,7 +611,7 @@
   name: shuttle wall
   components:
   - type: Damageable
-    damageModifierSet: PlasteelStructureMod
+    damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
     - trigger: *DamageWallStrong
@@ -772,7 +772,7 @@
     sprite: Structures/Walls/exo.rsi
     state: rgeneric
   - type: Damageable
-    damageModifierSet: PlasteelStructureMod
+    damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
     - trigger: *DamageWallStrong
@@ -843,7 +843,7 @@
     graph: Girder
     node: uraniumWall
   - type: Damageable
-    damageModifierSet: PlasteelStructureMod
+    damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
     - trigger: *DamageWallWeak

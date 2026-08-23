@@ -65,7 +65,7 @@
     graph: Girder
     node: reinforcedGirder
   - type: Damageable
-    damageModifierSet: PlasteelStructureMod
+    damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
     - trigger:
