@@ -147,7 +147,7 @@ public sealed partial class LabelSystem : EntitySystem
 
         args.Handled = true;
     }
-    #endregion Event Handlers
+    #endregion
 
     #region Public API
     /// <summary>
@@ -234,7 +234,7 @@ public sealed partial class LabelSystem : EntitySystem
         label = (labelEnt, labelComp);
         return true;
     }
-    #endregion Public API
+    #endregion
 
     #region Internal
     private void HandleModified(Entity<PaperLabelComponent> ent, ContainerModifiedMessage args)
@@ -261,5 +261,5 @@ public sealed partial class LabelSystem : EntitySystem
         }
         _appearance.SetData(ent, PaperLabelVisuals.LabelType, labelType, ent.Comp2);
     }
-    #endregion Internal
+    #endregion
 }
