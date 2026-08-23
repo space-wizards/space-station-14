@@ -456,6 +456,8 @@
     - state: paper_stamp-generic
       map: ["enum.PaperVisualLayers.Stamp"]
       visible: false
+  - type: PaperLabelType
+    labelType: Paper # Close enough.
   - type: Paper
     content: envelope-default-message
   - type: PaperVisuals
