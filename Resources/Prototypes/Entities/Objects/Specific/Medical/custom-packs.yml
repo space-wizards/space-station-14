@@ -1,0 +1,117 @@
+- type: entity
+  name: empty iv bag
+  description: An empty IV bag and needles that can store blood for later transfusion.
+  parent: [BaseItem, SolutionIVBag, SolutionSmall]
+  id: EmptyIVBag
+  suffix: Empty
+  components:
+  - type: Tag
+    tags:
+    - IVBag
+  - type: Appearance
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medical.rsi
+    layers:
+    - state: bloodpack-liquid-1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+    - state: bloodpack-empty
+      map: [ "enum.SolutionContainerLayers.Base" ]
+  - type: Icon
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: bloodpack-empty
+  - type: Item
+    heldPrefix: bloodpack
+    size: Small
+    sprite: Objects/Specific/Medical/medical.rsi
+  - type: ReactionMixer
+    mixerType: SelfMix
+    reactionTypes:
+    - EmptyIVBag
+  - type: InjectableSolution
+    solution: ivbag
+  - type: DrawableSolution
+    solution: ivbag
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: bloodpack-liquid-
+    inHandsMaxFillLevels: 0
+    solutionName: ivbag
+  - type: MixableSolution
+    solution: ivbag
+
+- type: entity
+  name: iron blood iv bag
+  description: An IV bag ready for injection into those with iron blood.
+  parent: BaseItem
+  id: IronBloodIVBag
+  components:
+  - type: Tag
+    tags:
+    - IVBag
+  - type: Appearance
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medical.rsi
+    layers:
+    - state: bloodpack-liquid-5
+      color: "#800000"
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+    - state: bloodpack-empty
+      map: [ "enum.SolutionContainerLayers.Base" ]
+  - type: Item
+    size: Small
+  - type: Healing
+    damageContainers:
+    - Biological
+    damage:
+      types:
+        Bloodloss: -0.375 #lowers bloodloss damage
+    modifyBloodLevel: 10 #restores about 5% blood per use on standard humanoids.
+    healingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
+    healingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
+
+- type: entity
+  name: copper blood iv bag
+  description: An IV bag ready for injection into those with copper blood.
+  parent: BaseItem
+  id: CopperBloodIVBag
+  components:
+  - type: Tag
+    tags:
+    - IVBag
+  - type: Appearance
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medical.rsi
+    layers:
+    - state: bloodpack-liquid-5
+      color: "#800000"
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+    - state: bloodpack-empty
+      map: [ "enum.SolutionContainerLayers.Base" ]
+  - type: Item
+    size: Small
+  - type: Healing
+    damageContainers:
+    - Biological
+    damage:
+      types:
+        Bloodloss: -0.375 #lowers bloodloss damage
+    modifyBloodLevel: 10 #restores about 5% blood per use on standard humanoids.
+    healingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
+    healingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125

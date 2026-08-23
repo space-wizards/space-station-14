@@ -276,3 +276,11 @@
     Plastic: 250
     Silver: 400
     Gold: 50 # A bit of gold for the gold ornaments on it!
+
+- type: latheRecipe
+  id: EmptyIVBag
+  result: EmptyIVBag
+  completetime: 1
+  materials:
+    Plastic: 15
+    Steel: 10

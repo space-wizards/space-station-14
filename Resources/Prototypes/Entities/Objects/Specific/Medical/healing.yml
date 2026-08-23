@@ -255,6 +255,15 @@
     count: 1
 
 - type: entity
+  parent: Bloodpack
+  id: Bloodpack5
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Stack
+    stackType: Bloodpack
+    count: 5
+
+- type: entity
   parent: BaseHealingItem
   id: Tourniquet
   name: tourniquet

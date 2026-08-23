@@ -1,0 +1,15 @@
+- type: reaction
+  id: IronBloodIVPack
+  impact: Low
+  quantized: true
+  conserveEnergy: false
+  requiredMixerCategories:
+  - EmptyIVBag
+  reactants:
+    Blood:
+      amount: 60
+  effects:
+  - !type:SpawnEntity
+    entity: Bloodpack5
+    number: 1
+  - !type:DeleteEntity

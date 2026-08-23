@@ -8,6 +8,7 @@ mixing-verb-electrolysis = electrolyze
 mixing-verb-holy = bless
 mixing-verb-stir = stir
 mixing-verb-shake = shake
+mixing-verb-packing = packing
 
 ## Entity
 

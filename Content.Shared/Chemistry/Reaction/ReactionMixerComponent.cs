@@ -48,7 +48,8 @@ public enum ReactionMixerType
 {
     None, // Mixing is handled by its own system.
     Machine, // Mixing is handled via interaction.
-    Handheld // Mixing is handled via using in hand
+    Handheld, // Mixing is handled via using in hand
+    SelfMix, // Mixer applies to solution if mixable.
 }
 
 [ByRefEvent]
