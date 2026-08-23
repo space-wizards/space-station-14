@@ -177,7 +177,7 @@
     sprite: Structures/Power/substation.rsi
     state: substation_wall_static
   - type: Damageable
-    damageModifierSet: SteelStructureMod
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:

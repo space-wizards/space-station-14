@@ -109,7 +109,7 @@
     containers:
     - board
   - type: Damageable
-    damageModifierSet: SteelStructureMod
+    damageModifierSet: SteelStaticMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -197,7 +197,7 @@
   - type: RadiationBlocker
     resistance: 1
   - type: Damageable
-    damageModifierSet: SteelStructureMod
+    damageModifierSet: SteelStaticMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -241,7 +241,7 @@
     - board
   - type: InteractionOutline
   - type: Damageable
-    damageModifierSet: SteelStructureMod
+    damageModifierSet: SteelStaticMod
   - type: Destructible
     thresholds:
     - trigger:

@@ -59,7 +59,7 @@
       sprite: Structures/Storage/Crates/labels.rsi
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: Damageable
-    damageModifierSet: SteelStructureMod
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:

@@ -34,7 +34,7 @@
     sprite: Structures/Walls/solid.rsi
     state: wall_girder
   - type: Damageable
-    damageModifierSet: SteelStructureMod
+    damageModifierSet: SteelStaticMod
   - type: Destructible
     thresholds:
     - trigger:

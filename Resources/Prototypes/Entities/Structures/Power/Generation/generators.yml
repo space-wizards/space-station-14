@@ -43,7 +43,7 @@
     supplyRampTolerance: 500
   - type: Anchorable # Reduces anchor time to 1 second
   - type: Damageable
-    damageModifierSet: SteelStructureMod
+    damageModifierSet: SteelMod
   - type: PacifismDangerousAttack
   - type: Destructible
     thresholds:

@@ -54,7 +54,7 @@
 # Common metal found all over the place.
 # Used for static entities which mostly never move.
 - type: damageModifierSet
-  id: SteelStructureMod
+  id: SteelStaticMod
   coefficients:
     Piercing: 0.7 # Bullets aren't a good option against metal
   flatReductions:

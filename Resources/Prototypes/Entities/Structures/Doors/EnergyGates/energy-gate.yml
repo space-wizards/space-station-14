@@ -55,7 +55,7 @@
       - MobState # no mobs
       - Pullable # no dragging things in
   - type: Damageable
-    damageModifierSet: SteelStructureMod
+    damageModifierSet: SteelStaticMod
   - type: Destructible
     thresholds:
     - trigger:

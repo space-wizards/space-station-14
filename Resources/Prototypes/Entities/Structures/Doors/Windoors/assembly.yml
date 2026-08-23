@@ -30,7 +30,7 @@
     delay: 8
     fx: EffectRCDDeconstruct8
   - type: Damageable
-    damageModifierSet: SteelStructureMod
+    damageModifierSet: SteelStaticMod
   - type: Destructible
     thresholds:
     - trigger: &DamageDoorWeak
