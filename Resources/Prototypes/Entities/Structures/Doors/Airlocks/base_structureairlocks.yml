@@ -1,7 +1,7 @@
 ﻿- type: entity
   abstract: true
   parent: BaseStructure
-  id: BaseAirlockSecure
+  id: BaseAirlockSecure # You probably want to inherit from Airlock rather than this
   name: airlock
   description: It opens, it closes, and maybe crushes you.
   placement:
@@ -62,7 +62,7 @@
     # This key didn't seem to actually be doing anything, and the one who put it there had no memory what it was for.
     # Remove it fully a month, if no issue comes up from commenting it out
 #    additionalKeys:
-#    - woods
+#    - woods # TODO:ERRANT I dont think this actually does anything
     mode: NoSprite
   - type: AnimationPlayer
   - type: Physics
@@ -145,7 +145,7 @@
     key: walls
   - type: LightningTarget
     priority: 1
-  - type: Tag
+  - type: Tag # TODO:ERRANT
     tags:
     - HighSecDoor
     # This tag is used to nagivate the Airlock construction graph. It's needed because this construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
@@ -163,7 +163,7 @@
   name: airlock
   description: It opens, it closes, and maybe crushes you.
   components:
-  - type: LayerChangeOnWeld
+  - type: LayerChangeOnWeld # TODO:ERRANT check if this should go on parent
     unWeldedLayer: AirlockLayer
     weldedLayer: WallLayer
   - type: DoorSignalControl
