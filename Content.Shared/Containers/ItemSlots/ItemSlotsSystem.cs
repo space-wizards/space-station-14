@@ -54,7 +54,7 @@ public sealed partial class ItemSlotsSystem : EntitySystem
     /// For updating ItemSlotVisuals, uses HasItem to check if something has been inserted then updates.
     /// </summary>
     /// <param name="ent">For accessing ItemSlotsComponent.</param>
-    public void UpdateAppearance(Entity<ItemSlotsComponent> ent)
+    private void UpdateAppearance(Entity<ItemSlotsComponent> ent)
     {
         if (!TryComp<ItemSlotVisualsComponent>(ent, out var visuals) || !TryComp<AppearanceComponent>(ent, out var appearance))
             return;
