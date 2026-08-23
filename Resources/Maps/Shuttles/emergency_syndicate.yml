@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 288.0.1
+  engineVersion: 289.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/12/2026 22:34:49
+  time: 08/22/2026 21:38:24
   entityCount: 661
 maps: []
 grids:
@@ -12,10 +12,10 @@ grids:
 orphans:
 - 1
 nullspace:
-- 658
 - 659
 - 660
 - 661
+- 662
 tilemap:
   2: Space
   3: FloorDark
@@ -161,13 +161,12 @@ entities:
     - type: ExplosionAirtightGrid
     - type: TileHistory
       chunkHistory: {}
-    - type: GridSplitNode
     - type: ChunkContainer
       chunkEntities:
-      - 658
       - 659
       - 660
       - 661
+      - 662
 - proto: AirCanister
   entities:
   - uid: 657
@@ -177,11 +176,10 @@ entities:
       pos: 4.5,-21.5
 - proto: AirlockCargoGlassLocked
   entities:
-  - uid: 445
+  - uid: 446
     components:
     - type: Transform
       parent: 1
-      rot: 3.141592653589793 rad
       pos: -2.5,-18.5
 - proto: AirlockCommandGlassLocked
   entities:
@@ -199,11 +197,10 @@ entities:
       pos: 2.5,-2.5
 - proto: AirlockEngineeringLocked
   entities:
-  - uid: 446
+  - uid: 445
     components:
     - type: Transform
       parent: 1
-      rot: 3.141592653589793 rad
       pos: 3.5,-18.5
 - proto: AirlockGlassShuttleSyndicate
   entities:
@@ -261,13 +258,11 @@ entities:
     components:
     - type: Transform
       parent: 1
-      rot: 3.141592653589793 rad
       pos: 0.5,-14.5
   - uid: 448
     components:
     - type: Transform
       parent: 1
-      rot: 3.141592653589793 rad
       pos: 0.5,-9.5
 - proto: AirlockSecurityGlassLocked
   entities:
@@ -275,7 +270,6 @@ entities:
     components:
     - type: Transform
       parent: 1
-      rot: 3.141592653589793 rad
       pos: -3.5,-6.5
   - uid: 450
     components:
@@ -295,19 +289,16 @@ entities:
     components:
     - type: Transform
       parent: 1
-      rot: -1.5707963267948966 rad
       pos: -0.5,-6.5
   - uid: 455
     components:
     - type: Transform
       parent: 1
-      rot: -1.5707963267948966 rad
       pos: 1.5,-6.5
   - uid: 456
     components:
     - type: Transform
       parent: 1
-      rot: -1.5707963267948966 rad
       pos: 0.5,-6.5
 - proto: APCBasic
   entities:
@@ -1635,7 +1626,7 @@ entities:
       pos: 3.5,-5.5
 - proto: ChunkEntity
   entities:
-  - uid: 658
+  - uid: 659
     components:
     - type: ChunkEntity
       root: 1
@@ -1667,7 +1658,7 @@ entities:
             angle: 1.5707963267948966 rad
           decals:
             14: -6,-17
-  - uid: 659
+  - uid: 660
     components:
     - type: ChunkEntity
       root: 1
@@ -1691,7 +1682,7 @@ entities:
             angle: 1.5707963267948966 rad
           decals:
             15: -6,-9
-  - uid: 660
+  - uid: 661
     components:
     - type: ChunkEntity
       root: 1
@@ -1713,7 +1704,7 @@ entities:
             angle: 4.71238898038469 rad
           decals:
             17: 6,-17
-  - uid: 661
+  - uid: 662
     components:
     - type: ChunkEntity
       root: 1
@@ -1993,21 +1984,25 @@ entities:
     components:
     - type: Transform
       parent: 1
+      rot: 1.5707963267948966 rad
       pos: -1.5,-3.5
   - uid: 419
     components:
     - type: Transform
       parent: 1
+      rot: 1.5707963267948966 rad
       pos: -1.5,-2.5
   - uid: 420
     components:
     - type: Transform
       parent: 1
+      rot: 1.5707963267948966 rad
       pos: 2.5,-2.5
   - uid: 421
     components:
     - type: Transform
       parent: 1
+      rot: 1.5707963267948966 rad
       pos: 2.5,-3.5
   - uid: 422
     components:
@@ -2028,19 +2023,16 @@ entities:
     components:
     - type: Transform
       parent: 1
-      rot: -1.5707963267948966 rad
       pos: 3.5,-18.5
   - uid: 457
     components:
     - type: Transform
       parent: 1
-      rot: -1.5707963267948966 rad
       pos: -5.5,-10.5
   - uid: 458
     components:
     - type: Transform
       parent: 1
-      rot: -1.5707963267948966 rad
       pos: -3.5,-10.5
   - uid: 459
     components:
@@ -2051,19 +2043,16 @@ entities:
     components:
     - type: Transform
       parent: 1
-      rot: -1.5707963267948966 rad
       pos: 4.5,-10.5
   - uid: 461
     components:
     - type: Transform
       parent: 1
-      rot: -1.5707963267948966 rad
       pos: 5.5,-10.5
   - uid: 462
     components:
     - type: Transform
       parent: 1
-      rot: -1.5707963267948966 rad
       pos: 6.5,-10.5
 - proto: GasOutletInjector
   entities:
@@ -3004,7 +2993,7 @@ entities:
       parent: 1
       rot: 1.5707963267948966 rad
       pos: -3.5,-0.5
-- proto: PlasmaWindoorSecureSecurityLocked
+- proto: PlasmaWindoorSecurityLocked
   entities:
   - uid: 124
     components:
