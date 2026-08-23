@@ -525,7 +525,7 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(user, userMessage, true);
 
             _adminLogger.Add(LogType.InteractHand, LogImpact.Low, $"{user} interacted with {target}");
-            DoContactInteraction(user, target, null, true, message);
+            DoContactInteraction(user, target, null, true, message, interactionParticles: message.InteractionParticle);
             if (message.Handled || userMessage.Handled)
                 return;
 

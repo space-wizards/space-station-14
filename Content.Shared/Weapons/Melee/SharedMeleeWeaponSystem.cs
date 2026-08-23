@@ -550,7 +550,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
         var weapon = GetEntity(ev.Weapon);
 
         // We skip weapon -> target interaction, as forensics system applies DNA on hit
-        Interaction.DoContactInteraction(user, weapon, null, true);
+        Interaction.DoContactInteraction(user, weapon, null, true, interactionParticles: false);
 
         // If the user is using a long-range weapon, this probably shouldn't be happening? But I'll interpret melee as a
         // somewhat messy scuffle. See also, heavy attacks.
@@ -697,7 +697,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
 
         var weapon = GetEntity(ev.Weapon);
 
-        Interaction.DoContactInteraction(user, weapon, null, true);
+        Interaction.DoContactInteraction(user, weapon, null, true, interactionParticles: false);
 
         // For stuff that cares about it being attacked.
         foreach (var target in targets)

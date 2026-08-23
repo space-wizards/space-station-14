@@ -1,8 +1,5 @@
-// SPDX-FileCopyrightText: 2026 Janet Blackquill <uhhadd@gmail.com>
-//
-// SPDX-License-Identifier: LicenseRef-Wallening
-
 using System.Numerics;
+using Content.Shared.DoAfter;
 using Content.Shared.Interaction.Events;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -18,6 +15,8 @@ public sealed partial class InteractionParticleSystem : EntitySystem
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private AnimationPlayerSystem _animation = default!;
     [Dependency] private TransformSystem _xform = default!;
+
+    [Dependency] private EntityQuery<DoAfterComponent> _doafterQuery = default!;
 
     private const string AnimateKey = "particle-animation";
 
@@ -66,14 +65,22 @@ public sealed partial class InteractionParticleSystem : EntitySystem
         }
 
         var performerTargetDelta = targetXform.LocalPosition - performerXform.LocalPosition;
-        var inHandDelta = new Vector2(0, 0.85f);
         var particle = Spawn(InteractionParticleIds[type], performerXform.Coordinates);
 
+        var doAfterOffset = 0f;
         if (type == InteractionParticleType.InHand)
         {
             used = target;
             _xform.SetParent(particle, performer);
+
+            if (_doafterQuery.TryComp(performer, out var activeDoAfter))
+            {
+                var count = activeDoAfter.DoAfters.Count;
+                doAfterOffset = count * 0.20f;
+            }
         }
+
+        var inHandDelta = new Vector2(0, 0.85f + doAfterOffset);
 
         if (used is { } usedEntity && Exists(usedEntity) && TryComp<SpriteComponent>(usedEntity, out var usedSprite))
         {
