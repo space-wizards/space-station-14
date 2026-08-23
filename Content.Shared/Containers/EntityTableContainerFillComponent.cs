@@ -1,3 +1,4 @@
+using Content.Shared.EntityTable;
 using Content.Shared.EntityTable.EntitySelectors;
 
 namespace Content.Shared.Containers;
@@ -17,4 +18,11 @@ public sealed partial class EntityTableContainerFillComponent : Component
     /// </summary>
     [DataField]
     public bool Sort;
+
+    /// <summary>
+    /// When true the container will be passed into the table with an <see cref="EntityTableContext"/>.
+    /// </summary>
+    /// <remarks>Creating a context isn't free so it's made opt-in.</remarks>
+    [DataField]
+    public bool ContextContainers;
 }

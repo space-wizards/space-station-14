@@ -1,4 +1,3 @@
-using Content.Shared.Containers;
 using Content.Shared.EntityTable.EntitySelectors;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -12,16 +11,10 @@ public sealed partial class EmptyContainerCondition : EntityTableCondition
 {
     public const string ContainerContextKey = "Container";
 
-    /// <summary>
-    /// If true the condition fails when no container was passed in from context.
-    /// </summary>
-    [DataField]
-    public bool RequireContainer = true;
-
     protected override bool EvaluateImplementation(EntityTableSelector root, IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
     {
         if (!ctx.TryGetData<BaseContainer>(ContainerContextKey, out var container))
-            return !RequireContainer;
+            return false;
 
         return container.Count == 0;
     }
