@@ -4,8 +4,8 @@ meta:
   engineVersion: 289.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/22/2026 21:32:50
-  entityCount: 1022
+  time: 08/23/2026 06:47:09
+  entityCount: 1017
 maps: []
 grids:
 - 2
@@ -5234,6 +5234,11 @@ entities:
       pos: -1.5,3.5
 - proto: Poweredlight
   entities:
+  - uid: 1
+    components:
+    - type: Transform
+      parent: 2
+      pos: -1.5,-3.5
   - uid: 525
     components:
     - type: Transform
@@ -5275,12 +5280,6 @@ entities:
       parent: 2
       rot: 1.5707963267948966 rad
       pos: -3.5,10.5
-  - uid: 532
-    components:
-    - type: Transform
-      parent: 2
-      rot: 1.5707963267948966 rad
-      pos: 3.5,3.5
   - uid: 533
     components:
     - type: Transform
@@ -5293,12 +5292,6 @@ entities:
       parent: 2
       rot: -1.5707963267948966 rad
       pos: -2.5,3.5
-  - uid: 535
-    components:
-    - type: Transform
-      parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -1.5,-4.5
   - uid: 536
     components:
     - type: Transform
@@ -5310,23 +5303,12 @@ entities:
     - type: Transform
       parent: 2
       pos: 10.5,0.5
-  - uid: 538
-    components:
-    - type: Transform
-      parent: 2
-      pos: 3.5,-4.5
   - uid: 539
     components:
     - type: Transform
       parent: 2
       rot: 3.141592653589793 rad
       pos: 3.5,-2.5
-  - uid: 541
-    components:
-    - type: Transform
-      parent: 2
-      rot: 1.5707963267948966 rad
-      pos: -4.5,9.5
   - uid: 557
     components:
     - type: Transform
@@ -5424,11 +5406,6 @@ entities:
       parent: 2
       rot: 3.141592653589793 rad
       pos: 7.5,2.5
-  - uid: 993
-    components:
-    - type: Transform
-      parent: 2
-      pos: 7.5,5.5
   - uid: 994
     components:
     - type: Transform
@@ -5440,12 +5417,6 @@ entities:
       parent: 2
       rot: 3.141592653589793 rad
       pos: 7.5,-2.5
-  - uid: 996
-    components:
-    - type: Transform
-      parent: 2
-      rot: 1.5707963267948966 rad
-      pos: 12.5,1.5
 - proto: PoweredlightExterior
   entities:
   - uid: 556

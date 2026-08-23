@@ -4,8 +4,8 @@ meta:
   engineVersion: 289.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/22/2026 21:31:32
-  entityCount: 975
+  time: 08/23/2026 06:43:12
+  entityCount: 976
 maps: []
 grids:
 - 1
@@ -4772,7 +4772,7 @@ entities:
     components:
     - type: Transform
       parent: 1
-      pos: -3.5,-18.5
+      pos: -11.5,2.5
   - uid: 451
     components:
     - type: Transform
@@ -4806,7 +4806,7 @@ entities:
     - type: Transform
       parent: 1
       rot: 3.141592653589793 rad
-      pos: -11.5,-0.5
+      pos: -10.5,-0.5
   - uid: 461
     components:
     - type: Transform
@@ -4855,6 +4855,11 @@ entities:
       parent: 1
       rot: -1.5707963267948966 rad
       pos: 1.5,-3.5
+  - uid: 767
+    components:
+    - type: Transform
+      parent: 1
+      pos: -1.5,-18.5
   - uid: 780
     components:
     - type: Transform
@@ -4971,6 +4976,12 @@ entities:
       pos: -2.5,8.5
 - proto: Screen
   entities:
+  - uid: 419
+    components:
+    - type: Transform
+      parent: 1
+      rot: 3.141592653589793 rad
+      pos: -11.5,-1.5
   - uid: 438
     components:
     - type: Transform
@@ -4983,18 +4994,12 @@ entities:
       parent: 1
       rot: 1.5707963267948966 rad
       pos: -9.5,-15.5
-  - uid: 767
-    components:
-    - type: Transform
-      parent: 1
-      rot: 1.5707963267948966 rad
-      pos: -2.5,-1.5
   - uid: 768
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
-      pos: -11.5,-1.5
+      rot: 3.141592653589793 rad
+      pos: -2.5,-1.5
   - uid: 781
     components:
     - type: Transform

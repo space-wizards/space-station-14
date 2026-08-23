@@ -4,8 +4,8 @@ meta:
   engineVersion: 289.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/22/2026 21:41:18
-  entityCount: 155
+  time: 08/23/2026 06:48:43
+  entityCount: 156
 maps: []
 grids:
 - 181
@@ -1218,6 +1218,23 @@ entities:
         - - Pressed
           - Toggle
         47:
+        - - Pressed
+          - Toggle
+  - uid: 135
+    components:
+    - type: Transform
+      parent: 181
+      rot: -1.5707963267948966 rad
+      pos: -5.5,-4.5
+    - type: DeviceLinkSource
+      linkedPorts:
+        47:
+        - - Pressed
+          - Toggle
+        37:
+        - - Pressed
+          - Toggle
+        69:
         - - Pressed
           - Toggle
 - proto: SMESBasic

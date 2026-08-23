@@ -4,7 +4,7 @@ meta:
   engineVersion: 289.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/22/2026 21:26:08
+  time: 08/23/2026 06:38:19
   entityCount: 1031
 maps: []
 grids:
@@ -5372,6 +5372,12 @@ entities:
       pos: 2.5,17.5
 - proto: Poweredlight
   entities:
+  - uid: 782
+    components:
+    - type: Transform
+      parent: 1
+      rot: 3.141592653589793 rad
+      pos: 5.5,-9.5
   - uid: 783
     components:
     - type: Transform
@@ -5395,12 +5401,6 @@ entities:
     - type: Transform
       parent: 1
       pos: 5.5,-5.5
-  - uid: 787
-    components:
-    - type: Transform
-      parent: 1
-      rot: 1.5707963267948966 rad
-      pos: 3.5,-9.5
   - uid: 788
     components:
     - type: Transform
@@ -5411,13 +5411,14 @@ entities:
     components:
     - type: Transform
       parent: 1
-      rot: -1.5707963267948966 rad
-      pos: 5.5,-7.5
+      rot: 3.141592653589793 rad
+      pos: 2.5,6.5
   - uid: 791
     components:
     - type: Transform
       parent: 1
-      pos: 4.5,-15.5
+      rot: 1.5707963267948966 rad
+      pos: -1.5,14.5
   - uid: 792
     components:
     - type: Transform
@@ -5452,24 +5453,19 @@ entities:
     components:
     - type: Transform
       parent: 1
-      pos: 0.5,7.5
+      rot: 3.141592653589793 rad
+      pos: -1.5,6.5
   - uid: 798
     components:
     - type: Transform
       parent: 1
       rot: 3.141592653589793 rad
       pos: -3.5,9.5
-  - uid: 799
-    components:
-    - type: Transform
-      parent: 1
-      pos: 3.5,15.5
   - uid: 800
     components:
     - type: Transform
       parent: 1
-      rot: -1.5707963267948966 rad
-      pos: 2.5,16.5
+      pos: 3.5,-15.5
   - uid: 802
     components:
     - type: Transform
@@ -5503,6 +5499,12 @@ entities:
     - type: Transform
       parent: 1
       pos: 1.5,-16.5
+  - uid: 1013
+    components:
+    - type: Transform
+      parent: 1
+      rot: -1.5707963267948966 rad
+      pos: 3.5,15.5
 - proto: PoweredSmallLight
   entities:
   - uid: 803
@@ -5786,6 +5788,17 @@ entities:
       pos: -1.5,-17.5
 - proto: Screen
   entities:
+  - uid: 787
+    components:
+    - type: Transform
+      parent: 1
+      rot: 3.141592653589793 rad
+      pos: 4.5,-10.5
+  - uid: 799
+    components:
+    - type: Transform
+      parent: 1
+      pos: -0.5,11.5
   - uid: 912
     components:
     - type: Transform
@@ -5795,17 +5808,14 @@ entities:
     components:
     - type: Transform
       parent: 1
+      rot: 1.5707963267948966 rad
       pos: -5.5,-0.5
   - uid: 1012
     components:
     - type: Transform
       parent: 1
+      rot: 1.5707963267948966 rad
       pos: -5.5,-8.5
-  - uid: 1013
-    components:
-    - type: Transform
-      parent: 1
-      pos: 4.5,-10.5
   - uid: 1014
     components:
     - type: Transform
@@ -5821,11 +5831,6 @@ entities:
     - type: Transform
       parent: 1
       pos: 4.5,-14.5
-  - uid: 1018
-    components:
-    - type: Transform
-      parent: 1
-      pos: -3.5,8.5
   - uid: 1019
     components:
     - type: Transform
