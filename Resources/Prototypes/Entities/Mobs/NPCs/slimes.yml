@@ -117,13 +117,6 @@
   - type: ReplacementAccent
     accent: slimes
   - type: GhostTakeoverAvailable
-  - type: GhostRole
-    makeSentient: true
-    name: ghost-role-information-slimes-name
-    description: ghost-role-information-slimes-description
-    rules: ghost-role-information-nonantagonist-rules
-    raffle:
-      settings: short
   - type: Speech
     speechVerb: Slime
     speechSounds: Slime
@@ -159,6 +152,7 @@
       factions:
         - SimpleHostile
     - type: GhostRole
+      name: ghost-role-information-slimes-name
       description: ghost-role-information-angry-slimes-description
       rules: ghost-role-information-angry-slimes-rules
       mindRoles:
@@ -198,6 +192,7 @@
       factions:
         - SimpleHostile
     - type: GhostRole
+      name: ghost-role-information-slimes-name
       description: ghost-role-information-angry-slimes-description
       rules: ghost-role-information-angry-slimes-rules
       mindRoles:
@@ -236,6 +231,7 @@
       factions:
         - SimpleHostile
     - type: GhostRole
+      name: ghost-role-information-slimes-name
       description: ghost-role-information-angry-slimes-description
       rules: ghost-role-information-angry-slimes-rules
       mindRoles:
