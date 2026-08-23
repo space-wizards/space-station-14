@@ -1,78 +1,231 @@
-using System.Text;
 using Content.Shared.TextScreen.Components;
+using Robust.Client.GameObjects;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.TextScreen.Systems;
 
 /// <inheritdoc/>
 public sealed partial class ClientTextScreenSystem : TextScreenSystem
 {
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+
+    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
+    [Dependency] private EntityQuery<TextScreenTimerComponent> _screenTimerQuery = default!;
+
     /// <summary>
-    /// The maximum number of characters to display per line when scrolled.
+    /// Contains char/state Key/Value pairs. <br/>
+    /// The states in Textures/Effects/text.rsi that special character should be replaced with.
+    /// </summary>
+    private static readonly Dictionary<char, string> CharStatePairs = new() {
+        { '<', "angle-l" },
+        { '>', "angle-r" },
+        {'\'', "apostrophe" },
+        {'\\', "backslash" },
+        { ' ', "blank" },
+        { '[', "bracket-l" },
+        { ']', "bracket-r" },
+        { '^', "caret" },
+        { ':', "colon" },
+        { ',', "comma" },
+        { '-', "dash" },
+        { '=', "equals" },
+        { '!', "exclamation" },
+        { '#', "hash" },
+        { '(', "paren-l" },
+        { ')', "paren-r" },
+        { '%', "percent" },
+        { '.', "period" },
+        { '+', "plus" },
+        { '?', "question" },
+        { '"', "quotation" },
+        { ';', "semicolon" },
+        { '/', "slash" },
+        { '$', "speso" },
+        { '*', "star" },
+        { '_', "underscore" },
+    };
+
+    private const string DefaultState = "blank";
+
+    /// <summary>
+    /// A string prefix for all text layers.
+    /// </summary>
+    private const string TextMapKey = "textMapKey";
+
+    /// <summary>
+    /// The path to the RSI containing the text sprites.
+    /// </summary>
+    private const string TextPath = "Effects/text.rsi";
+
+    /// <summary>
+    /// The width of an individual character, in pixels.
+    /// </summary>
+    private const int CharWidth = 4;
+
+    /// <summary>
+    /// The maximum number of characters to display per row.
     /// </summary>
     private const int MaxScrollingCharacters = 32;
 
-    private static readonly string[] LineBreaks = new[] { "\r\n", "\n" };
+    /// <summary>
+    /// The longest that a message should take to cross the screen before wrapping around.
+    /// </summary>
+    private static readonly TimeSpan MaxMessageScrollTime = TimeSpan.FromSeconds(5);
 
-    private StringBuilder _builder = new();
+    /// <summary>
+    /// The longest that it should take to scroll one pixel on a screen.
+    /// </summary>
+    private static readonly TimeSpan MaxPixelScrollTime = TimeSpan.FromMilliseconds(100);
 
     #region Public API
+    /// <inheritdoc/>
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        UpdatesOutsidePrediction = true;
+    }
+
     /// <summary>
-    /// Sets the string to be displayed for a given entity.
+    /// Update handler - keep timers and scrolling text up to date.
     /// </summary>
-    public void SetString(Entity<TextScreenComponent?> ent, string input)
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<TextScreenTimerComponent>();
+        while (query.MoveNext(out var uid, out var timer))
+        {
+            if (timer.DisplayTime == null)
+            {
+                if (timer.FinishDisplayed)
+                    continue;
+
+                SetTextToDisplay(uid, timer.FinishedText);
+                timer.FinishDisplayed = true;
+            }
+            else
+            {
+                int screenValue = ConvertTimeToScreenValue(timer.DisplayTime.Value, _timing.CurTime);
+                if (screenValue == 0)
+                {
+                    SetTextToDisplay(uid, timer.FinishedText);
+                    timer.FinishDisplayed = true;
+                    timer.DisplayTime = null;
+                    timer.ScreenValue = 0;
+                }
+                else if (screenValue != timer.ScreenValue)
+                {
+                    var timerText = ConstructTimerText(timer);
+                    SetTextToDisplay(uid, timerText);
+                    timer.ScreenValue = screenValue;
+                }
+            }
+        }
+
+        var query = EntityQueryEnumerator<TextScreenComponent>();
+        while (query.MoveNext(out var uid, out var screen))
+        {
+            if (_screenTimerQuery.TryComp(uid, out var timer))
+            {
+                if (_gameTiming.CurTime < timer.Target)
+                {
+                    BuildTimerLayers((uid, timer, screen));
+                    DrawStaticLayers(uid, timer.LayerStatesToDraw);
+                }
+                else
+                {
+                    TeardownTimer((uid, screen));
+                }
+            }
+            else if (screen.ScrollEnabled && screen.NextScrollTime.Any(x => x < _gameTiming.CurTime))
+            {
+                DrawScrolledLayers((uid, screen));
+            }
+        }
+    }
+
+    /// <summary>
+    /// Converts the difference between two timespans into a value between 0 and 9999.
+    /// </summary>
+    public int ConvertTimeToScreenValue(TimeSpan targetTime, TimeSpan curTime)
+    {
+        if (targetTime <= curTime)
+            return 0;
+        var milliseconds = (targetTime - curTime).TotalMilliseconds;
+        if (milliseconds < 10_000) // 9999, 99:99, the largest value that could fit in two fields.
+            return (int)milliseconds;
+        else if (milliseconds <= TimeSpan.MillisecondsPerHour)
+            return targetTime.Minutes * 100 + targetTime.Seconds;
+        else
+            return targetTime.Hours * 100 + targetTime.Minutes;
+    }
+
+    /// <summary>
+    /// Converts the difference between two timespans into a value between 0 and 9999.
+    /// </summary>
+    public void SetTextToDisplay(Entity<TextScreenComponent?> ent, string? text)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        var strings = input.Split(LineBreaks, StringSplitOptions.None);
-        _builder.Clear();
-        for (int i = 0; i < ent.Comp.Rows; i++)
-        {
-            if (i < strings.Length)
-                _builder.Append(strings[i].Substring(0, int.Min(strings[i].Length, MaxScrollingCharacters)));
-            if (i != ent.Comp.Rows - 1)
-                _builder.Append("\n");
-        }
+        if (ent.Comp.TextToDisplay == text)
+            return;
 
-        ent.Comp.Text = _builder.ToString();
-        Dirty(ent);
-    }
-
-    /// <summary>
-    /// Returns the <paramref name="timeSpan"/> converted to a string in either HH:MM, MM:SS or potentially SS:mm format.
-    /// </summary>
-    /// <param name="timeSpan">TimeSpan to convert into string.</param>
-    /// <param name="getMilliseconds">Should the string be ss:ms if minutes are less than 1?</param>
-    /// <remarks>
-    /// hours, minutes, seconds, and centiseconds are each set to 2 decimal places by default.
-    /// </remarks>
-    public static string TimeToString(TimeSpan timeSpan, bool getMilliseconds = true, string hours = "D2", string minutes = "D2", string seconds = "D2", string cs = "D2")
-    {
-        string firstString;
-        string lastString;
-
-        if (timeSpan.TotalHours >= 1)
-        {
-            firstString = timeSpan.Hours.ToString(hours);
-            lastString = timeSpan.Minutes.ToString(minutes);
-        }
-        else if (timeSpan.TotalMinutes >= 1 || !getMilliseconds)
-        {
-            firstString = timeSpan.Minutes.ToString(minutes);
-            lastString = timeSpan.Seconds.ToString(seconds);
-        }
-        else
-        {
-            firstString = timeSpan.Seconds.ToString(seconds);
-            var centiseconds = timeSpan.Milliseconds / 10;
-            lastString = centiseconds.ToString(cs);
-        }
-
-        return firstString + ':' + lastString;
+        ent.Comp.TextToDisplay = text;
+        ent.Comp.NewTextToDisplay = true;
     }
     #endregion Public API
 
     #region Event Handlers
+    /// <summary>
+    /// Handles updates from the server.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnStartup(Entity<TextScreenComponent> ent, ref ComponentStartup args)
+    {
+        if (!_spriteQuery.TryComp(ent, out var sprite))
+            return;
+
+        for (var rowIdx = 0; rowIdx < ent.Comp.Rows; rowIdx++)
+        {
+            var maxIndex = ent.Comp.ScrollEnabled ? ent.Comp.RowLength + 1 : ent.Comp.RowLength;
+            var textScreenRow = ent.Comp.RowData[rowIdx];
+
+            for (var chr = 0; chr <= maxIndex; chr++)
+            {
+                var newKey = TextMapKey + rowIdx + chr;
+                _sprite.LayerMapReserve((ent, sprite), newKey);
+                textScreenRow.Layers.Add((newKey, null));
+            }
+        }
+
+        if (ent.Comp.FrameState != null)
+            _sprite.AddLayer((ent, sprite), ent.Comp.FrameState, null);
+    }
+
+    /// <summary>
+    /// Handles updates from the server.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnAutoHandleState(Entity<TextScreenComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        if (_screenTimerQuery.HasComp(ent))
+            return;
+
+
+    }
+
+    /// <summary>
+    /// Handles updates from the server.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnAutoHandleState(Entity<TextScreenTimerComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        if (ent.Comp.TargetTime != ent.Comp.DisplayTime)
+    }
+
     /// <summary>
     /// Handles non-trivial pause timing for scrolling.
     /// </summary>

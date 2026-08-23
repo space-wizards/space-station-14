@@ -14,7 +14,7 @@ namespace Content.Shared.TextScreen.Components;
 /// Pausing handled manually due to non-trivial TextScreenRow logic.
 /// </remarks>
 [RegisterComponent, NetworkedComponent, Access(typeof(TextScreenSystem))]
-[AutoGenerateComponentState]
+[AutoGenerateComponentState(true, fieldDeltas: true)]
 public sealed partial class TextScreenComponent : Component
 {
     /// <summary>
@@ -85,11 +85,11 @@ public sealed partial class TextScreenComponent : Component
     public TextScreenRow[] RowData = new TextScreenRow[2];
 
     /// <summary>
-    /// The current text to display on the screen.
+    /// The text to display on the screen.
     /// Each row delimited with a newline (\n) character.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string Text;
+    public string? Text;
 
     /// <summary>
     /// The time that the text was sent.
@@ -100,10 +100,24 @@ public sealed partial class TextScreenComponent : Component
     public TimeSpan TextTime;
 
     /// <summary>
-    /// The last received text for this screen. Prevents resetting the scroll state on updates.
+    /// The last value of <see cref="Text"/> received from the server.
+    /// Only used client-side!
     /// </summary>
     [DataField]
-    public string LastText;
+    public string? TextToDisplay;
+
+    /// <summary>
+    /// The last time TextToDisplay was updated.
+    /// Only used client-side!
+    /// </summary>
+    [DataField]
+    public TimeSpan? DisplayTime;
+
+    /// <summary>
+    /// If true, text to display has been updated and should redraw.
+    /// </summary>
+    [ViewVariables]
+    public bool NewTextToDisplay;
 
     /// <summary>
     /// The layer for the outer frame of the text screen.
@@ -137,6 +151,10 @@ public partial struct TextScreenRow
     /// Each character is a fixed size (assumed 4 pixels wide)
     /// </summary>
     public int ScrollPosition;
-    public List<(string Key, string state)> Layers;
+
+    /// <summary>
+    /// A list with each of the rows in the sprite.
+    /// </summary>
+    public List<(string Key, string? state)> Layers = new();
     public string Text;
 }
