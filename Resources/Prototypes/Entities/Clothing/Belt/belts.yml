@@ -36,7 +36,9 @@
     slotVisuals:
       item:
         layer: Fill0
-        fillBaseName: sheath-sabre
+        iconVisuals:
+          filled:
+          - state: sheath-sabre
         inHandsFillBaseName: -sabre
         equippedFillBaseName: -sabre
   - type: Appearance

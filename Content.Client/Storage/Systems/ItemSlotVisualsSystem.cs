@@ -25,15 +25,17 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
 
             var filled = AppearanceSystem.TryGetData(uid, visual.Layer, out bool hasItem, args.Component) && hasItem;
 
-            if (filled && !string.IsNullOrEmpty(visual.FillBaseName))
-            {
-                SpriteSystem.LayerSetVisible((uid, args.Sprite), layerIndex, true);
-                SpriteSystem.LayerSetRsiState((uid, args.Sprite), layerIndex, visual.FillBaseName);
-            }
-            else
+            if (!filled)
             {
                 SpriteSystem.LayerSetVisible((uid, args.Sprite), layerIndex, false);
+                continue;
             }
+
+            if (!visual.IconVisuals.TryGetValue("filled", out var layers) || layers.Count == 0)
+                continue;
+
+            SpriteSystem.LayerSetVisible((uid, args.Sprite), layerIndex, true);
+            SpriteSystem.LayerSetRsiState((uid, args.Sprite), layerIndex, layers[0].State);
         }
 
         _itemSystem.VisualsChanged(uid);

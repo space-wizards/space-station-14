@@ -47,10 +47,10 @@ public partial struct ItemSlotVisuals()
     public EntityWhitelist? Whitelist;
 
     /// <summary>
-    /// The name used for the Icon Fills.
+    /// Layers to add to the Icon for Icon Fill Visuals.
     /// </summary>
     [DataField]
-    public string? FillBaseName = null;
+    public Dictionary<string, List<PrototypeLayerData>> IconVisuals = new();
 
     /// <summary>
     /// The name used for the Inhand Fills.
