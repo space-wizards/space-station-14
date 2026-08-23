@@ -22,7 +22,6 @@ public sealed partial class EntityTableContainerFillComponent : Component
     /// <summary>
     /// When true the container will be passed into the table with an <see cref="EntityTableContext"/>.
     /// </summary>
-    /// <remarks>Creating a context isn't free so it's made opt-in.</remarks>
     [DataField]
     public bool ContextContainers;
 }
