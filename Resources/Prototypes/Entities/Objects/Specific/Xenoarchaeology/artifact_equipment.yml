@@ -99,7 +99,6 @@
         shader: unshaded
       - state: paper
         map: ["enum.PaperLabelVisuals.Layer"]
-        shader: unshaded
   - type: Storage
     maxItemSize: Normal
     grid:
