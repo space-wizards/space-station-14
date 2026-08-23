@@ -13,7 +13,7 @@ public sealed partial class ToolComponent : Component
     public HashSet<ProtoId<ToolQualityPrototype>> Qualities = [];
 
     /// <summary>
-    ///     For tool interactions that have a delay before action this will modify the rate, time to wait is divided by this value
+    /// For tool interactions that have a delay before action this will modify the rate, time to wait is divided by this value
     /// </summary>
     [DataField, AutoNetworkedField]
     public float SpeedModifier = 1f;
