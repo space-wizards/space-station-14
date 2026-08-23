@@ -131,7 +131,7 @@ public abstract partial class SharedGhostSystem : EntitySystem
 
     private void OnGhostClickMessageSender(Entity<GhostComponent> ent, ref ClickMessageSenderEvent args)
     {
-        if (_tag.HasTag(args.Sender, FollowerSystem.PreventGhostnadoWarpTag))
+        if (_tag.HasTag(args.Sender, FollowerSystem.PreventGhostnadoWarpTag)) //tag is used on any ghost that shouldn't be teleported to
         {
             return;
         }
