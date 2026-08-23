@@ -8,6 +8,7 @@ using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Chat;
 using Content.Shared.Follower;
+using Content.Shared.Tag;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -23,7 +24,7 @@ public abstract partial class SharedGhostSystem : EntitySystem
     [Dependency] protected IGameTiming _gameTiming = default!;
     [Dependency] private ISharedAdminManager _adminManager = default!;
     [Dependency] private FollowerSystem _follower = default!;
-
+    [Dependency] private TagSystem _tag = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -130,7 +131,11 @@ public abstract partial class SharedGhostSystem : EntitySystem
 
     private void OnGhostClickMessageSender(Entity<GhostComponent> ent, ref ClickMessageSenderEvent args)
     {
-        _follower.StartFollowingEntity(ent, args.Sender); //only admins out of ghost form can be teleported to, no need for a filter
+        if (_tag.HasTag(args.Sender, FollowerSystem.PreventGhostnadoWarpTag))
+        {
+            return;
+        }
+        _follower.StartFollowingEntity(ent, args.Sender);
     }
 }
 
