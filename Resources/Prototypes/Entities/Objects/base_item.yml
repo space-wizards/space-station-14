@@ -121,6 +121,7 @@
 # Use this (NOT BasePaperLabelable) if the child prototype has sprites for paper labels (use the enum.PaperLabelVisuals.Layer key on the relevant layer).
 # Again, note that if an entity has its own ContainerContainer component then paper_label needs to be added to that too, or else there's bugs.
 - type: entity
+  parent: BasePaperLabelable
   id: BasePaperLabelableVisualized
   abstract: true
   components:
