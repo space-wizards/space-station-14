@@ -18,7 +18,7 @@
   - type: Transform
     anchored: true
   - type: Damageable
-    damageModifierSet: SteelGrilleMod
+    damageModifierSet: RodMetalMod
   - type: Destructible
     thresholds:
     - trigger: &DamageBarrierNormal

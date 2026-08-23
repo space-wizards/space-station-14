@@ -83,8 +83,9 @@
     Caustic: 15
     Structural: 3
 
+# Steel rods
 - type: damageModifierSet
-  id: SteelGrilleMod
+  id: RodMetalMod
   coefficients:
     Piercing: 0.7 # Bullets aren't a good option against metal
     Slash: 1.5 # Easier to cut through

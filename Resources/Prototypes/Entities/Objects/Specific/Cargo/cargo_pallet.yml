@@ -37,7 +37,7 @@
   id: CargoPallet
   components:
   - type: Damageable
-    damageModifierSet: SteelGrilleMod
+    damageModifierSet: RodMetalMod
   - type: Destructible
     thresholds:
     - trigger:
