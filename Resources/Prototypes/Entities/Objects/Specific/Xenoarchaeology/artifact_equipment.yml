@@ -92,13 +92,14 @@
     sprite: Objects/Storage/artifact_container.rsi
     state: icon
     layers:
-      - state: icon
-        map: [ base ]
-      - state: locked
-        map: ["enum.LockVisualLayers.Lock"]
-        shader: unshaded
-      - state: paper
-        map: ["enum.PaperLabelVisuals.Layer"]
+    - state: icon
+      map: [ base ]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: paper
+      visible: false
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: Storage
     maxItemSize: Normal
     grid:
