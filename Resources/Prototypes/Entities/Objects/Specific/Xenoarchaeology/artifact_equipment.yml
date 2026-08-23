@@ -83,7 +83,7 @@
       price: 250
 
 - type: entity
-  parent: [ BaseStorageItem, StructureHealthContainerWeak ]
+  parent: [ BaseStorageItem, BasePaperLabelableVisualized, StructureHealthContainerWeak ]
   id: HandheldArtifactContainer
   name: handheld artifact container
   description: A handheld case used to safely contain and move small artifacts.
@@ -96,6 +96,9 @@
         map: [ base ]
       - state: locked
         map: ["enum.LockVisualLayers.Lock"]
+        shader: unshaded
+      - state: paper
+        map: ["enum.PaperLabelVisuals.Layer"]
         shader: unshaded
   - type: Storage
     maxItemSize: Normal
@@ -136,16 +139,6 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
-  - type: PaperLabel
-    labelSlot:
-      insertVerbText: Attach Label
-      ejectVerbText: Remove Label
-      whitelist:
-        components:
-          - Paper
-      blacklist:
-        tags:
-        - Book
   - type: GenericVisualizer
     visuals:
       enum.StorageVisuals.Open:
