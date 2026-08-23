@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Numerics;
 using Content.Shared.EntityTable;
-using Content.Shared.EntityTable.Conditions;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -72,13 +71,7 @@ public sealed partial class ContainerFillSystem : EntitySystem
                 continue;
             }
 
-            // Pass in the container being filled so conditions can look at it
-            var ctx = new EntityTableContext(new Dictionary<string, object>
-            {
-                { EmptyContainerCondition.ContainerContextKey, container },
-            });
-
-            var spawns = _entityTable.GetSpawns(table, ctx: ctx).ToList();
+            var spawns = _entityTable.GetSpawns(table).ToList();
 
             if (ent.Comp.Sort)
             {
