@@ -1,6 +1,6 @@
 using Robust.Shared.Random;
 
-namespace Content.Shared.EntityTable.ValueSelector;
+namespace Content.Shared.ValueSelectors.Numbers;
 
 /// <summary>
 /// Gives a value between the two numbers specified, inclusive.
