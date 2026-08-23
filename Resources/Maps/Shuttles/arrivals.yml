@@ -4,8 +4,8 @@ meta:
   engineVersion: 289.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/23/2026 06:33:10
-  entityCount: 256
+  time: 08/23/2026 13:33:08
+  entityCount: 258
 maps: []
 grids:
 - 292
@@ -165,7 +165,7 @@ entities:
       pos: 3.5,-2.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -1893.962
+      secondsUntilStateChange: -2001.6912
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -182,7 +182,7 @@ entities:
       pos: 3.5,4.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -1895.6954
+      secondsUntilStateChange: -2003.4246
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -199,7 +199,7 @@ entities:
       pos: -4.5,4.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -1890.1621
+      secondsUntilStateChange: -1997.8912
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -216,7 +216,7 @@ entities:
       pos: -4.5,-2.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -1892.0621
+      secondsUntilStateChange: -1999.7913
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -268,18 +268,30 @@ entities:
     - RCDDeconstructable
 - proto: ArrivalsShuttleTimer
   entities:
-  - uid: 294
+  - uid: 87
     components:
     - type: Transform
       parent: 292
+      rot: -1.5707963267948966 rad
+      pos: 3.5,-1.5
+  - uid: 88
+    components:
+    - type: Transform
+      parent: 292
+      rot: 1.5707963267948966 rad
+      pos: -4.5,-1.5
+  - uid: 89
+    components:
+    - type: Transform
+      parent: 292
+      rot: 1.5707963267948966 rad
       pos: -4.5,3.5
-    - type: Godmode
-  - uid: 295
+  - uid: 90
     components:
     - type: Transform
       parent: 292
+      rot: -1.5707963267948966 rad
       pos: 3.5,3.5
-    - type: Godmode
 - proto: AtmosDeviceFanDirectional
   entities:
   - uid: 164
@@ -1140,14 +1152,12 @@ entities:
       pos: 2.7300956,-3.6138248
 - proto: ExtinguisherCabinetFilled
   entities:
-  - uid: 277
+  - uid: 79
     components:
     - type: Transform
       parent: 292
+      rot: 3.141592653589793 rad
       pos: -0.5,-4.5
-    - type: Godmode
-    missingComponents:
-    - Destructible
 - proto: GasPassiveGate
   entities:
   - uid: 184

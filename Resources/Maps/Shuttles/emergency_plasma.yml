@@ -4,8 +4,8 @@ meta:
   engineVersion: 289.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/22/2026 21:35:29
-  entityCount: 1181
+  time: 08/23/2026 13:51:30
+  entityCount: 1183
 maps: []
 grids:
 - 2
@@ -6323,6 +6323,12 @@ entities:
       pos: 6.3648415,-19.594425
 - proto: Screen
   entities:
+  - uid: 66
+    components:
+    - type: Transform
+      parent: 2
+      rot: -1.5707963267948966 rad
+      pos: 10.5,2.5
   - uid: 155
     components:
     - type: Transform
@@ -6357,6 +6363,11 @@ entities:
     - type: Transform
       parent: 2
       pos: 6.5,-12.5
+  - uid: 1165
+    components:
+    - type: Transform
+      parent: 2
+      pos: 14.5,3.5
 - proto: ShuttleWindow
   entities:
   - uid: 30

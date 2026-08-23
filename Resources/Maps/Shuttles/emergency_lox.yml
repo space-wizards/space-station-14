@@ -4,8 +4,8 @@ meta:
   engineVersion: 289.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/22/2026 21:33:28
-  entityCount: 667
+  time: 08/23/2026 13:47:10
+  entityCount: 668
 maps: []
 grids:
 - 670
@@ -3646,6 +3646,12 @@ entities:
       pos: -2.5,-8.5
 - proto: Poweredlight
   entities:
+  - uid: 122
+    components:
+    - type: Transform
+      parent: 670
+      rot: -1.5707963267948966 rad
+      pos: -1.5,-9.5
   - uid: 310
     components:
     - type: Transform
@@ -3695,13 +3701,6 @@ entities:
       parent: 670
       rot: 3.141592653589793 rad
       pos: -4.5,-5.5
-  - uid: 624
-    components:
-    - type: Transform
-      parent: 670
-      pos: -2.5,-7.5
-    - type: ApcPowerReceiver
-      powerLoad: 0
   - uid: 641
     components:
     - type: Transform
@@ -3752,7 +3751,7 @@ entities:
       powerLoad: 0
 - proto: Screen
   entities:
-  - uid: 122
+  - uid: 6
     components:
     - type: Transform
       parent: 670
@@ -3780,6 +3779,12 @@ entities:
       parent: 670
       rot: 1.5707963267948966 rad
       pos: -7.5,0.5
+  - uid: 624
+    components:
+    - type: Transform
+      parent: 670
+      rot: -1.5707963267948966 rad
+      pos: -0.5,-5.5
 - proto: ShotGunCabinetFilled
   entities:
   - uid: 106
