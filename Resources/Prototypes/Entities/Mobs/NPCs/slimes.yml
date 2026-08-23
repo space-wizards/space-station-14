@@ -152,7 +152,6 @@
       factions:
         - SimpleHostile
     - type: GhostRole
-      name: ghost-role-information-slimes-name
       description: ghost-role-information-angry-slimes-description
       rules: ghost-role-information-angry-slimes-rules
       mindRoles:
@@ -193,7 +192,6 @@
         - SimpleHostile
     - type: GhostRole
       name: ghost-role-information-slimes-name
-      description: ghost-role-information-angry-slimes-description
       rules: ghost-role-information-angry-slimes-rules
       mindRoles:
       - MindRoleGhostRoleTeamAntagonist
@@ -233,7 +231,6 @@
     - type: GhostRole
       name: ghost-role-information-slimes-name
       description: ghost-role-information-angry-slimes-description
-      rules: ghost-role-information-angry-slimes-rules
       mindRoles:
       - MindRoleGhostRoleTeamAntagonist
       raffle:

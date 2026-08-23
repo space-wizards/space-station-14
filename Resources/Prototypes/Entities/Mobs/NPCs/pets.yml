@@ -656,9 +656,14 @@
     noMovementLayers:
       movement:
         state: hamster-0
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-hamlet-name
+    description: ghost-role-information-hamlet-description
+    rules: ghost-role-information-nonantagonist-rules
   - type: GhostTakeoverAvailable
-  - type: SentienceTarget
-    flavorKind: station-event-random-sentience-flavor-organic
   - type: InteractionPopup
     successChance: 1
     interactSuccessString: petting-success-hamster
@@ -870,8 +875,11 @@
     size: Huge
   - type: MobPrice
     price: 3000 # it is a truly valuable creature
-  - type: SentienceTarget
-    flavorKind: station-event-random-sentience-flavor-organic
+  - type: GhostRole
+    name: ghost-role-information-smile-name
+    description: ghost-role-information-smile-description
+    rules: ghost-role-information-nonantagonist-rules
+    raffle: null
   - type: Grammar
     attributes:
       proper: true
