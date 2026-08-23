@@ -7,7 +7,7 @@ namespace Content.Client.Labels.Components;
 /// <summary>
 /// This component controls the visuals for drawing paper label sprites on an entity.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 [Access(typeof(LabelSystem))]
 public sealed partial class PaperLabelVisualsComponent : Component
 {
