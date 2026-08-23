@@ -66,7 +66,7 @@
         unfoldedLayer:
           True: {visible: false}
           False: {visible: true}
-  - type: PaperLabel
+  - type: PaperLabelVisuals
     labelStates: {}
     fallbackLabelState: paper # Currently only supports one sprite.
   - type: Pullable
