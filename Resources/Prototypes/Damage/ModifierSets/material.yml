@@ -142,7 +142,7 @@
     Shock: 20
     Caustic: 20
 
-# Mix of SteelGrille and Glass
+# Mix of RodMetal and Glass
 - type: damageModifierSet
   id: GlassReinforcedMod
   coefficients:

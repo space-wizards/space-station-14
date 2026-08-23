@@ -32,6 +32,8 @@
     - entity_storage
   - type: Paintable
     group: Locker
+  - type: Damageable
+    damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
     - trigger:

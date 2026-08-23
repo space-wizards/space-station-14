@@ -32,8 +32,6 @@
     soundHit:
       collection: MetalThud
   - type: InteractionOutline
-  - type: Damageable
-    damageModifierSet: PlasteelMod
   - type: Physics
   - type: Fixtures
     fixtures:
