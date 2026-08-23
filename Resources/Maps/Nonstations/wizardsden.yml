@@ -1,16 +1,16 @@
 meta:
   format: 7
-  category: Grid
+  category: Map
   engineVersion: 289.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/23/2026 13:18:24
-  entityCount: 628
-maps: []
+  time: 08/23/2026 18:01:29
+  entityCount: 629
+maps:
+- 411
 grids:
 - 1
-orphans:
-- 1
+orphans: []
 nullspace:
 - 536
 - 537
@@ -40,7 +40,7 @@ entities:
     - type: MetaData
       name: Wizard's Den
     - type: Transform
-      parent: invalid
+      parent: 411
       pos: -0.5138889,-0.4756779
     - type: MapGrid
       chunks:
@@ -191,6 +191,31 @@ entities:
     - type: TileHistory
       chunkHistory: {}
     - type: ExplosionAirtightGrid
+  - uid: 411
+    components:
+    - type: MetaData
+      name: Map Entity
+    - type: Transform
+    - type: Map
+      mapPaused: True
+    - type: GridTree
+    - type: Broadphase
+    - type: OccluderTree
+    - type: MapLight
+      ambientLightColor: '#42147DFF'
+    - type: Parallax
+      parallax: Wizard
+    - type: MapAtmosphere
+      space: False
+      mixture:
+        temperature: 293.2
+        volume: 2500
+        moles:
+          Oxygen: 21.824879
+          Nitrogen: 82.10312
+        immutable: True
+    - type: ChunkContainer
+      chunkEntities: []
 - proto: APCHyperCapacity
   entities:
   - uid: 199
