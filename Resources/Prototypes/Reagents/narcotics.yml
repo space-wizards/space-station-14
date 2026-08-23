@@ -1,4 +1,21 @@
 - type: reagent
+  id: Deboxide
+  name: reagent-name-deboxide
+  group: Narcotics
+  desc: reagent-desc-deboxide
+  physicalDesc: reagent-physical-desc-powdery
+  contrabandSeverity: Minor
+  flavor: bitter
+  color: "#FFB041"
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:GenericStatusEffect
+        key: Pacified
+        component: Pacified
+        time: 4
+
+- type: reagent
   id: Desoxyephedrine
   name: reagent-name-desoxyephedrine
   group: Narcotics
@@ -127,9 +144,8 @@
   group: Narcotics
   desc: reagent-desc-pax
   physicalDesc: reagent-physical-desc-soothing
-  allowedDepartments:
-  - Security
-  - Medical
+  contrabandSeverity: Syndicate
+  flavor: numbingtranquility
   color: "#AAAAAA"
   metabolisms:
     Bloodstream:
@@ -137,7 +153,7 @@
       - !type:GenericStatusEffect
         key: Pacified
         component: Pacified
-        time: 4
+        time: 5
 
 - type: reagent
   id: Stimulants

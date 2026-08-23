@@ -316,6 +316,20 @@
     Fluorosurfactant: 5
 
 - type: reaction
+  id: Deboxide
+  impact: Medium
+  minTemp: 310
+  reactants:
+    MindbreakerToxin:
+      amount: 1
+    Synaptizine:
+      amount: 1
+    Oxygen:
+      amount: 1
+  products:
+    Deboxide: 3
+
+- type: reaction
   id: Desoxyephedrine
   impact: Medium
   minTemp: 370
@@ -407,9 +421,9 @@
   id: Pax
   impact: Medium
   reactants:
-    MindbreakerToxin:
+    Deboxide:
       amount: 1
-    Synaptizine:
+    Vestine:
       amount: 1
     Water:
       amount: 1
