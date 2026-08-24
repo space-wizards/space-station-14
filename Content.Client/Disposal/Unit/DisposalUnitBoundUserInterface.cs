@@ -38,6 +38,7 @@ namespace Content.Client.Disposal.Unit
             _disposalUnitWindow.Power.OnPressed += _ => ButtonPressed(DisposalUnitUiButton.Power);
 
             _disposalUnitWindow.TagEdit.OnTextEntered += arg => LineEdited(arg.Text);
+            _disposalUnitWindow.TagEdit.OnFocusExit += _ => RefreshTagEdit(); // More clarity for if you didn't change the tag
 
             Update();
         }
