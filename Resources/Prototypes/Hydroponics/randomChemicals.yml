@@ -22,7 +22,6 @@
     - Benzene
     - Phenol
     - Bleach
-    - Pax
   - quantity: 5 # Medical chems
     weight: 2
     reagents:
