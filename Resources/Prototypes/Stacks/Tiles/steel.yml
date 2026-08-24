@@ -26,6 +26,12 @@
 
 - type: stack
   parent: BaseTileStack
+  id: FloorTileSteelMono
+  name: stack-steel-mono-tile
+  spawn: FloorTileItemSteelMono
+
+- type: stack
+  parent: BaseTileStack
   id: FloorTileSteelPavementVertical
   name: stack-steel-vertical-pavement
   spawn: FloorTileItemSteelPavementVertical

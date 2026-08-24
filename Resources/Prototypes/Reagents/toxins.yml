@@ -63,7 +63,6 @@
       effects:
       - !type:Emote
         emote: Yawn
-        showInChat: true
         probability: 0.1
       - !type:MovementSpeedModifier
         walkSpeedModifier: 0.65
@@ -566,7 +565,6 @@
       effects:
       - !type:Emote
         emote: Honk
-        showInChat: true
         showInGuidebook: true
         force: true
         probability: 0.2
@@ -816,3 +814,45 @@
           min: 4
         - !type:MetabolizerTypeCondition
           type: [ Changeling ]
+
+- type: reagent
+  id: PhosphoricAcid
+  name: reagent-name-phosphoric-acid
+  desc: reagent-name-phosphoric-acid
+  physicalDesc: reagent-physical-desc-oily
+  group: Toxins
+  flavor: sour
+  color: "#236931" # Not actually green IRL but is often dyed green when diluted.
+  plantMetabolism:
+  - !type:PlantAdjustNutrition
+    amount: 2
+  - !type:PlantAdjustHealth
+    amount: -0.5
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        ignoreResistances: false
+        damage:
+          types:
+            Caustic: 0.1
+      - !type:Emote
+        emote: Scream
+        probability: 0.1
+  metabolisms:
+    Bloodstream:
+      metabolismRate: 0.2 # Phosphoric Acid is a relatively slow acid.
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Caustic: 0.3
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "generic-reagent-effect-burning-insides" ]
+        probability: 0.2
+      - !type:Emote
+        emote: Scream
+        probability: 0.1
