@@ -175,3 +175,18 @@
   name: signal-port-name-item-detected
   description: signal-port-description-item-detected
   defaultLinks: [ Toggle, Trigger, Timer ]
+
+- type: sourcePort
+  id: AirlockStateA
+  name: signal-port-name-airlock-state-a
+  description: signal-port-description-airlock-state-a
+
+- type: sourcePort
+  id: AirlockStateB
+  name: signal-port-name-airlock-state-b
+  description: signal-port-description-airlock-state-b
+
+- type: sourcePort
+  id: AirlockCycling
+  name: signal-port-name-airlock-cycling
+  description: signal-port-description-airlock-cycling

@@ -42,6 +42,9 @@ device-address-prefix-turret = TRT-
 device-address-prefix-console = CLS-
 device-address-prefix-fire-alarm = FIR-
 device-address-prefix-air-alarm = AIR-
+device-address-prefix-airlock-controller = ALC-
+device-address-prefix-airlock-cycler = ACY-
+device-address-prefix-door = DOR-
 
 device-address-prefix-sensor-monitor = MON-
 

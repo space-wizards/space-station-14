@@ -71,9 +71,12 @@
   - type: RadiationBlocker
     resistance: 2
   - type: DoorSignalControl
+  - type: DoorDeviceControl
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
+    prefix: device-address-prefix-door
+    examinableAddress: true
   - type: WirelessNetworkConnection
     range: 200
   - type: DeviceLinkSink

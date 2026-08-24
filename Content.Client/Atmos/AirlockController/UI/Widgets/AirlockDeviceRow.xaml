@@ -1,0 +1,22 @@
+<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:widgets="clr-namespace:Content.Client.Atmos.AirlockController.UI.Widgets"
+              Orientation="Vertical" Margin="4">
+    <RichTextLabel Name="HeaderLabel" />
+
+    <BoxContainer Name="DoorBox" Orientation="Horizontal" Visible="False">
+        <Label Text="{Loc 'airlock-controller-config-door-side'}" Margin="0 0 4 0" />
+        <widgets:AirlockSideSelector Name="DoorSide" HorizontalExpand="True" />
+    </BoxContainer>
+
+    <BoxContainer Name="CyclerBox" Orientation="Horizontal" Visible="False">
+        <Label Text="{Loc 'airlock-controller-config-cycler-side'}" Margin="0 0 4 0" />
+        <widgets:AirlockSideSelector Name="CyclerSide" HorizontalExpand="True" />
+    </BoxContainer>
+
+    <BoxContainer Name="VentBox" Orientation="Horizontal" Visible="False">
+        <CheckBox Name="VentACheck" Text="{Loc 'airlock-controller-config-vent-a'}" Margin="0 0 6 0" />
+        <CheckBox Name="SiphonACheck" Text="{Loc 'airlock-controller-config-siphon-a'}" Margin="0 0 6 0" />
+        <CheckBox Name="VentBCheck" Text="{Loc 'airlock-controller-config-vent-b'}" Margin="0 0 6 0" />
+        <CheckBox Name="SiphonBCheck" Text="{Loc 'airlock-controller-config-siphon-b'}" Margin="0 0 6 0" />
+    </BoxContainer>
+</BoxContainer>

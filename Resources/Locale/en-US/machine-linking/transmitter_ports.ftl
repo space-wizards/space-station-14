@@ -75,3 +75,12 @@ signal-port-description-power-discharging = This port is invoked with HIGH when 
 
 signal-port-name-item-detected = Detected
 signal-port-description-item-detected = This port is invoked whenever the transmitter detects an item.
+
+signal-port-name-airlock-state-a = At side A
+signal-port-description-airlock-state-a = Held HIGH while the airlock is idle with its chamber at side A's atmosphere.
+
+signal-port-name-airlock-state-b = At side B
+signal-port-description-airlock-state-b = Held HIGH while the airlock is idle with its chamber at side B's atmosphere.
+
+signal-port-name-airlock-cycling = Cycling
+signal-port-description-airlock-cycling = Held HIGH for the duration of a cycle.
