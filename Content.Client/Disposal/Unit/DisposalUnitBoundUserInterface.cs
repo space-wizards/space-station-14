@@ -32,14 +32,15 @@ namespace Content.Client.Disposal.Unit
 
             _disposalUnitWindow.Eject.OnPressed += _ => ButtonPressed(DisposalUnitUiButton.Eject);
             _disposalUnitWindow.Engage.OnPressed += _ => ButtonPressed(DisposalUnitUiButton.Engage);
-            _disposalUnitWindow.Power.OnPressed += _ => ButtonPressed(DisposalUnitUiButton.Power);
+            _disposalUnitWindow.Power.OnPressed += _ =>
+            {
+                ButtonPressed(DisposalUnitUiButton.Power);
+                ToggleStateText(_disposalUnitWindow, _disposalUnitWindow.Power.Pressed);
+            };
 
             // Disable the button if there's nothing for it to do
             _disposalUnitWindow.Routing.Visible = EntMan.HasComponent<DisposalTaggerComponent>(Owner);
-            _disposalUnitWindow.Routing.OnPressed += _ =>
-            {
-                SendPredictedMessage(new DisposalTaggerOpenUiMessage());
-            };
+            _disposalUnitWindow.Routing.OnPressed += _ => SendPredictedMessage(new DisposalTaggerOpenUiMessage());
 
             Update();
         }
@@ -66,14 +67,22 @@ namespace Content.Client.Disposal.Unit
             var fullPressure = disposalUnit.EstimatedFullPressure(entity);
             var pressurePerSecond = entity.Comp.PressurePerSecond;
 
-            _disposalUnitWindow.UnitState.Text = !powered
-                                                ? Loc.GetString($"disposal-unit-state-Unpowered")
-                                                : Loc.GetString($"disposal-unit-state-{disposalState}");
+            ToggleStateText(_disposalUnitWindow, powered);
+            _disposalUnitWindow.UnitState.Text = Loc.GetString($"disposal-unit-state-{disposalState}");
             _disposalUnitWindow.FullPressure = disposalUnit.EstimatedFullPressure(entity);
             _disposalUnitWindow.PressurePerSecond = entity.Comp.PressurePerSecond;
             _disposalUnitWindow.PressureBar.UpdatePressure(fullPressure, pressurePerSecond);
             _disposalUnitWindow.Power.Pressed = powered;
             _disposalUnitWindow.Engage.Pressed = entity.Comp.Engaged;
+        }
+
+        /// <summary>
+        /// This trick is used to hide power being unpredicted so the UI feels responsive.
+        /// </summary>
+        private void ToggleStateText(DisposalUnitWindow window, bool powered)
+        {
+            window.UnitState.Visible = powered;
+            window.UnitStateUnpowered.Visible = !powered;
         }
     }
 }

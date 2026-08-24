@@ -6,8 +6,13 @@
     <BoxContainer Orientation="Vertical" Margin="10">
         <BoxContainer Orientation="Horizontal" SeparationOverride="4">
             <Label Text="{Loc 'ui-disposal-unit-label-state'}" />
-            <Label Name="UnitState" Access="Public"
+            <Label Name="UnitState"
+                   Access="Public"
                    Text="{Loc 'ui-disposal-unit-label-status'}" />
+            <Label Name="UnitStateUnpowered"
+                   Access="Public"
+                   Visible="False"
+                   Text="{Loc 'disposal-unit-state-Unpowered'}" />
             <Control HorizontalExpand="True"/>
             <controls:SwitchButton Name="Power"
                                   Access="Public"
