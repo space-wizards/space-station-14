@@ -289,3 +289,11 @@
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/pan.rsi
 
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakAgender
+  name: mysterious cloak
+  description: This cloak makes the user feel mysterious.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/agender.rsi
