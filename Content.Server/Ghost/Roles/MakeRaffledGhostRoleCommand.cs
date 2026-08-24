@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Ghost.Roles.Components;
-using Content.Server.Ghost.Roles.Raffles;
 using Content.Shared.Administration;
 using Content.Shared.Ghost.Roles.Raffles;
 using Content.Shared.Mind.Components;

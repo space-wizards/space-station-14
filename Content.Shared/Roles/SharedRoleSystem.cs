@@ -27,6 +27,7 @@ public abstract partial class SharedRoleSystem : EntitySystem
     [Dependency] protected ISharedPlayerManager Player = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private SharedMindSystem _minds = default!;
+    [Dependency] private INetManager _net = default!;
 
     private JobRequirementOverridePrototype? _requirementOverride;
 

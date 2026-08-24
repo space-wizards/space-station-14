@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Prototypes;
 
-namespace Content.Server.Ghost.Roles.Raffles;
+namespace Content.Shared.Ghost.Roles.Raffles;
 
 /// <summary>
 /// Allows getting a <see cref="IGhostRoleRaffleDecider"/> as prototype.

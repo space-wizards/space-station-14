@@ -16,6 +16,7 @@ public sealed partial class ToggleableGhostRoleSystem : EntitySystem
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private GhostRoleSystem _ghostRole = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -61,11 +62,7 @@ public sealed partial class ToggleableGhostRoleSystem : EntitySystem
         EnsureComp<GhostTakeoverAvailableComponent>(ent);
 
         // GhostRoleComponent inherits custom settings from the ToggleableGhostRoleComponent
-        ghostRole.RoleName = Loc.GetString(ent.Comp.RoleName);
-        ghostRole.RoleDescription = Loc.GetString(ent.Comp.RoleDescription);
-        ghostRole.RoleRules = Loc.GetString(ent.Comp.RoleRules);
-        ghostRole.JobProto = ent.Comp.JobProto;
-        ghostRole.MindRoles = ent.Comp.MindRoles;
+        _ghostRole.ApplyGhostRoleSettings((ent, ghostRole), ent.Comp.GhostRole);
     }
 
     private void OnExamined(EntityUid uid, ToggleableGhostRoleComponent component, ExaminedEvent args)
