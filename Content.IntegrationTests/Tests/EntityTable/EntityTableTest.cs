@@ -8,6 +8,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Collections.Generic;
 using System.Linq;
+using Robust.Shared.Containers;
 
 namespace Content.IntegrationTests.Tests.EntityTable;
 
@@ -17,6 +18,8 @@ public sealed class EntityTableTest : GameTest
 {
     [SidedDependency(Side.Server)]
     private readonly EntityTableSystem _sEntityTable = null!;
+    [SidedDependency(Side.Server)]
+    private readonly SharedContainerSystem _sContainer = null!;
 
     private const string EntProto1 = "EntityTableTestEnt1";
     private const string EntProto2 = "EntityTableTestEnt2";
@@ -206,6 +209,14 @@ public sealed class EntityTableTest : GameTest
                   conditions:
                   - !type:AlwaysFailCondition
              - id: {EntProto2}
+
+         - type: entityTable
+           id: EntityTableTestContainerCondition
+           table: !type:AllSelector
+             children:
+             - id: {EntProto1}
+               conditions:
+               - !type:EmptyContainerCondition
          """;
 
     [Test]
@@ -459,6 +470,28 @@ public sealed class EntityTableTest : GameTest
             Assert.That(empty, Is.Null);
             Assert.That(result, Is.EquivalentTo([new EntProtoId(EntProto1), new EntProtoId(EntProto2)]));
         }
+    }
+
+    [Test, Description("Tests each possibility for EntityTableContext EmptyContainerCondition.")]
+    [RunOnSide(Side.Server)]
+    public void TestEmptyContainerCondition()
+    {
+        // No context results in failure.
+        var result = Run(Table("EntityTableTestContainerCondition"));
+        Assert.That(result, Is.Empty);
+
+        // An empty container succeeds.
+        var container = _sContainer.MakeContainer<ContainerSlot>(SSpawn(EntProto1), "containerId");
+        var ctx = new EntityTableContext(new() { [EmptyContainerCondition.ContainerContextKey] = container });
+
+        result = Run(Table("EntityTableTestContainerCondition"), ctx: ctx);
+        Assert.That(result, Is.EquivalentTo(new [] { EntProto1 }));
+
+        // A non-empty container fails.
+        _sContainer.Insert(SSpawn(EntProto1), container, force: true);
+
+        result = Run(Table("EntityTableTestContainerCondition"), ctx: ctx);
+        Assert.That(result, Is.Empty);
     }
 
     private static IRobustRandom SeededRand(int seed)
