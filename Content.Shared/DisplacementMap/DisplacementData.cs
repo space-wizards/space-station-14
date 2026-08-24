@@ -16,4 +16,12 @@ public sealed partial class DisplacementData
 
     [DataField]
     public string ShaderOverrideUnshaded = "DisplacedDrawUnshaded";
+
+    // Shallow copy for networking purposes.
+    public DisplacementData(DisplacementData other)
+    {
+        SizeMaps = new(other.SizeMaps);
+        ShaderOverride = other.ShaderOverride;
+        ShaderOverrideUnshaded = other.ShaderOverrideUnshaded;
+    }
 }

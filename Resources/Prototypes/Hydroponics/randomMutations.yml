@@ -32,9 +32,9 @@
           min: 0.3
           max: 0.9
         up: !type:PlantAdjustWaterConsumption
-          amount: 5
+          amount: 0.1
         down: !type:PlantAdjustWaterConsumption
-          amount: -5
+          amount: -0.1
     - name: ChangeNutrientConsumption
       baseOdds: 0.018
       persists: false
@@ -45,9 +45,9 @@
           min: 0.05
           max: 1.2
         up: !type:PlantAdjustNutrientConsumption
-          amount: 5
+          amount: 0.25
         down: !type:PlantAdjustNutrientConsumption
-          amount: -5
+          amount: -0.25
     - name: ChangeToxinsTolerance
       baseOdds: 0.018
       persists: false
@@ -58,9 +58,9 @@
           min: 1
           max: 10
         up: !type:PlantAdjustToxinsTolerance
-          amount: 5
+          amount: 2
         down: !type:PlantAdjustToxinsTolerance
-          amount: -5
+          amount: -2
     - name: ChangeLowPressureTolerance
       baseOdds: 0.018
       persists: false
@@ -71,9 +71,9 @@
           min: 60
           max: 100
         up: !type:PlantAdjustLowPressureTolerance
-          amount: 5
+          amount: 10
         down: !type:PlantAdjustLowPressureTolerance
-          amount: -5
+          amount: -10
     - name: ChangeHighPressureTolerance
       baseOdds: 0.018
       persists: false
@@ -84,9 +84,9 @@
           min: 100
           max: 140
         up: !type:PlantAdjustHighPressureTolerance
-          amount: 5
+          amount: 10
         down: !type:PlantAdjustHighPressureTolerance
-          amount: -5
+          amount: -10
     - name: ChangeLowHeatTolerance
       baseOdds: 0.018
       persists: false
@@ -123,9 +123,9 @@
           min: 0
           max: 15
         up: !type:PlantAdjustPestTolerance
-          amount: 5
+          amount: 3
         down: !type:PlantAdjustPestTolerance
-          amount: -5
+          amount: -3
     - name: ChangeWeedTolerance
       baseOdds: 0.018
       persists: false
@@ -136,9 +136,9 @@
           min: 0
           max: 15
         up: !type:PlantAdjustWeedTolerance
-          amount: 5
+          amount: 3
         down: !type:PlantAdjustWeedTolerance
-          amount: -5
+          amount: -3
     - name: ChangeEndurance
       baseOdds: 0.036
       persists: false
@@ -149,9 +149,9 @@
           min: 50
           max: 150
         up: !type:PlantAdjustEndurance
-          amount: 5
+          amount: 20
         down: !type:PlantAdjustEndurance
-          amount: -5
+          amount: -20
     - name: ChangeYield
       baseOdds: 0.036
       persists: false
@@ -162,9 +162,9 @@
           min: 3
           max: 10
         up: !type:PlantAdjustYield
-          amount: 5
+          amount: 1
         down: !type:PlantAdjustYield
-          amount: -5
+          amount: -1
     - name: ChangeLifespan
       baseOdds: 0.036
       persists: false
@@ -175,9 +175,9 @@
           min: 10
           max: 80
         up: !type:PlantAdjustLifespan
-          amount: 5
+          amount: 15
         down: !type:PlantAdjustLifespan
-          amount: -5
+          amount: -15
     - name: ChangeMaturation
       baseOdds: 0.036
       persists: false
@@ -188,9 +188,9 @@
           min: 3
           max: 8
         up: !type:PlantAdjustMaturation
-          amount: 5
+          amount: 1
         down: !type:PlantAdjustMaturation
-          amount: -5
+          amount: -1
     - name: ChangeProduction
       baseOdds: 0.036
       persists: false
@@ -201,9 +201,9 @@
           min: 1
           max: 10
         up: !type:PlantAdjustProduction
-          amount: 5
+          amount: 2
         down: !type:PlantAdjustProduction
-          amount: -5
+          amount: -2
     - name: ChangePotency
       baseOdds: 0.036
       persists: false
@@ -214,9 +214,9 @@
           min: 30
           max: 100
         up: !type:PlantAdjustPotency
-          amount: 5
+          amount: 15
         down: !type:PlantAdjustPotency
-          amount: -5
+          amount: -15
     - name: ChangeSeedless
       baseOdds: 0.036
       persists: false

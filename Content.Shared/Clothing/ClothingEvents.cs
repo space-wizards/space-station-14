@@ -5,22 +5,25 @@ using Content.Shared.Clothing.Components;
 namespace Content.Shared.Clothing;
 
 /// <summary>
-///     Raised directed at a piece of clothing to get the set of layers to show on the wearer's sprite
+/// Raised directed at a piece of clothing to get the set of layers to show on the wearer's sprite.
 /// </summary>
 public sealed class GetEquipmentVisualsEvent : EntityEventArgs
 {
     /// <summary>
-    ///     Entity that is wearing the item.
+    /// Entity that is wearing the item.
     /// </summary>
     public readonly EntityUid Equipee;
 
     public readonly string Slot;
 
     /// <summary>
-    ///     The layers that will be added to the entity that is wearing this item.
+    /// The layers that will be added to the entity that is wearing this item.
+    /// NOTE: any layers will be checked for species-specific layers automatically inside ClothingSystem.
+    /// If you return a state of "equipped-HEAD" and "equipped-HEAD-reptilian" exists,
+    /// it will be automatically used by entities with InventoryComponent.SpeciesId set to "reptilian".
     /// </summary>
     /// <remarks>
-    ///     Note that the actual ordering of the layers depends on the order in which they are added to this list;
+    /// Note that the actual ordering of the layers depends on the order in which they are added to this list.
     /// </remarks>
     public List<(string, PrototypeLayerData)> Layers = new();
 
@@ -32,22 +35,25 @@ public sealed class GetEquipmentVisualsEvent : EntityEventArgs
 }
 
 /// <summary>
-///     Raised directed at a piece of clothing after its visuals have been updated.
+/// Raised directed at a piece of clothing after its visuals have been updated.
 /// </summary>
 /// <remarks>
-///     Useful for systems/components that modify the visual layers that an item adds to a player. (e.g. RGB memes)
+/// Useful for systems/components that modify the visual layers that an item adds to a player. (e.g. RGB memes)
 /// </remarks>
 public sealed class EquipmentVisualsUpdatedEvent : EntityEventArgs
 {
     /// <summary>
-    ///     Entity that is wearing the item.
+    /// Entity that is wearing the item.
     /// </summary>
     public readonly EntityUid Equipee;
 
+    /// <summary>
+    /// The slot that the equipment is being worn in.
+    /// </summary>
     public readonly string Slot;
 
     /// <summary>
-    ///     The layers that this item is now revealing.
+    /// The layers that this item is now revealing.
     /// </summary>
     public HashSet<string> RevealedLayers;
 
@@ -59,16 +65,16 @@ public sealed class EquipmentVisualsUpdatedEvent : EntityEventArgs
     }
 }
 
-public sealed partial class ToggleMaskEvent : InstantActionEvent { }
+public sealed partial class ToggleMaskEvent : InstantActionEvent;
 
 /// <summary>
-///     Event raised on the mask entity when it is toggled.
+/// Event raised on the mask entity when it is toggled.
 /// </summary>
 [ByRefEvent]
 public readonly record struct ItemMaskToggledEvent(Entity<MaskComponent> Mask, EntityUid? Wearer);
 
 /// <summary>
-///     Event raised on the entity wearing the mask when it is toggled.
+/// Event raised on the entity wearing the mask when it is toggled.
 /// </summary>
 [ByRefEvent]
 public readonly record struct WearerMaskToggledEvent(Entity<MaskComponent> Mask);
