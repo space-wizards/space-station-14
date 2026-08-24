@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseAirlockSecure, StructureHealthDoorStrong]
+  parent: [ BaseAirlockIndestructible, StructureHealthDoorStrong]
   id: HighSecDoor
   name: high security door
   description: Keeps the bad out and keeps the good in.

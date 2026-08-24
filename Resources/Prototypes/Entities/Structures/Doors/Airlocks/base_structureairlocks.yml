@@ -3,7 +3,7 @@
 - type: entity
   abstract: true
   parent: BaseStructure
-  id: BaseAirlockSecure
+  id: BaseAirlockIndestructible
   name: airlock
   description: It opens, it closes, and maybe crushes you.
   placement:
@@ -160,12 +160,11 @@
   - type: StructureAlignerPylon
 
 - type: entity
-  parent: [ BaseAirlockSecure, StructureHealthDoor ]
+  parent: [ BaseAirlockIndestructible, StructureHealthDoor ]
   id: Airlock
   name: airlock
   description: It opens, it closes, and maybe crushes you.
   components:
-  # This is not on BaseSecure, because the high security door is always on the wall layer
   - type: LayerChangeOnWeld
     unWeldedLayer: AirlockLayer
     weldedLayer: WallLayer
@@ -211,8 +210,6 @@
     - Airlocks
     - WirePanels
     - Networking
-  placement:
-    mode: SnapgridCenter
 
 - type: entity
   id: AirlockRCDResistant
@@ -237,7 +234,6 @@
     enabled: false
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/airlock-base.rsi
-  - type: AnimationPlayer
   - type: Fixtures
     fixtures:
       fix1:
