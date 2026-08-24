@@ -35,6 +35,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Server.Preferences.Managers;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Mind;
 using static Content.Shared.Configurable.ConfigurationComponent;
@@ -69,6 +70,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private IPlayerManager _playerManager = default!;
         [Dependency] private SiliconLawSystem _siliconLawSystem = default!;
         [Dependency] private AfkConfirmSystem _afkConfirm = default!;
+        [Dependency] private IServerPreferencesManager _preferencesManager = default!;
 
         private readonly Dictionary<ICommonSession, List<EditSolutionsEui>> _openSolutionUis = new();
 
@@ -200,6 +202,37 @@ namespace Content.Server.Administration.Systems
                         Category = VerbCategory.Admin,
                         Act = () => _afkConfirm.TryStartConfirmation(targetActor.PlayerSession, requireAttached: true),
                         Impact = LogImpact.Low
+                    });
+
+                    // Rename character profile
+                    args.Verbs.Add(new Verb
+                    {
+                        Text = Loc.GetString("admin-verbs-rename-character"),
+                        Category = VerbCategory.Admin,
+                        Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/rename_character.png")),
+                        Act = () =>
+                        {
+                            _quickDialog.OpenDialog(player,
+                                Loc.GetString("admin-verbs-dialog-rename-character-title"),
+                                Loc.GetString("admin-verbs-dialog-rename-name"),
+                                (string newName) =>
+                                {
+                                    _metaSystem.SetEntityName(args.Target, newName);
+                                    var userId = targetActor.PlayerSession.UserId;
+                                    var prefs = _preferencesManager.GetPreferences(userId);
+
+                                    var profile = prefs.SelectedCharacter;
+                                    var profileIndex = prefs.SelectedCharacterIndex;
+
+                                    _preferencesManager.SetProfile(targetActor.PlayerSession.UserId,
+                                        profileIndex,
+                                        profile.WithName(newName));
+                                    _preferencesManager.FinishLoad(targetActor.PlayerSession);
+                                });
+                        },
+                        Impact = LogImpact.Extreme,
+                        Message = Loc.GetString("admin-trick-rename-character-description"),
+                        Priority = -1,
                     });
                 }
 
