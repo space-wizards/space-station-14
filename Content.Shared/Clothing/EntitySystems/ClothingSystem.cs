@@ -145,6 +145,8 @@ public abstract partial class ClothingSystem : EntitySystem
         if (!Resolve(item, ref item.Comp, false))
             return false;
 
+        // If the entity is in a user's hand, or not on their body at all,
+        // the flag is null, and the bitwise and below returns null!
         if (item.Comp.InSlotFlag == null)
             return false;
 

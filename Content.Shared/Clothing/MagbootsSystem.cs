@@ -21,31 +21,16 @@ public sealed partial class SharedMagbootsSystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedGravitySystem _gravity = default!;
 
-    [Dependency] private EntityQuery<MovedByPressureComponent> _movedByPressureQuery = default!;
+    [Dependency] private EntityQuery<MovedByPressureComponent> _movedByPressureQuery;
 
-    #region Public API
-    public void UpdateMagbootEffects(EntityUid user, Entity<MagbootsComponent> ent, bool state)
-    {
-        // TODO: public api for this and add access
-        if (_movedByPressureQuery.TryComp(user, out var moved))
-            moved.Enabled = !state;
-
-        _gravity.RefreshWeightless(user);
-
-        if (state)
-            _alerts.ShowAlert(user, ent.Comp.MagbootsAlert);
-        else
-            _alerts.ClearAlert(user, ent.Comp.MagbootsAlert);
-    }
-    #endregion Public API
-
-    #region Event Handlers
     [SubscribeLocalEvent]
     private void OnToggled(Entity<MagbootsComponent> ent, ref ItemToggledEvent args)
     {
         if (_clothing.IsEquipped(ent.Owner)
             && _container.TryGetContainingContainer((ent.Owner, null, null), out var container))
+        {
             UpdateMagbootEffects(container.Owner, ent, args.Activated);
+        }
     }
 
     [SubscribeLocalEvent]
@@ -58,6 +43,20 @@ public sealed partial class SharedMagbootsSystem : EntitySystem
     private void OnGotEquipped(Entity<MagbootsComponent> ent, ref ClothingGotEquippedEvent args)
     {
         UpdateMagbootEffects(args.Wearer, ent, _toggle.IsActivated(ent.Owner));
+    }
+
+    public void UpdateMagbootEffects(EntityUid user, Entity<MagbootsComponent> ent, bool state)
+    {
+        // TODO: public api for this and add access
+        if (_movedByPressureQuery.TryComp(user, out var moved))
+            moved.Enabled = !state;
+
+        _gravity.RefreshWeightless(user);
+
+        if (state)
+            _alerts.ShowAlert(user, ent.Comp.MagbootsAlert);
+        else
+            _alerts.ClearAlert(user, ent.Comp.MagbootsAlert);
     }
 
     [SubscribeLocalEvent]
@@ -79,5 +78,4 @@ public sealed partial class SharedMagbootsSystem : EntitySystem
     {
         OnIsWeightless(ent, ref args.Args);
     }
-    #endregion Event Handlers
 }
