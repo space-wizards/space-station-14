@@ -79,3 +79,9 @@
   - type: Tag
     tags:
     - Stunbaton
+  - type: ReactionMixer
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/sizzle.ogg
+    timetoMix: 5.0
+    reactionTypes:
+    - Electrolysis
