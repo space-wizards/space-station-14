@@ -80,7 +80,7 @@
       board: [ DoorElectronics ]
   - type: ContainerContainer
     containers:
-      board: !type:Container # TODO:ERRANT HS doors don't have this, but why?
+      board: !type:Container
   - type: AccessReader
     containerAccessProvider: board
   - type: Door
@@ -137,7 +137,7 @@
   - type: Construction
     graph: Airlock
     node: airlock
-    containers: # TODO:ERRANT Not on the parent so you can't steal the board from a high sec door?
+    containers:
     - board
   - type: PlacementReplacement
     key: walls

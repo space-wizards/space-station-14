@@ -19,8 +19,9 @@
     boardName: wires-board-name-highsec
     layoutId: HighSec
     alwaysRandomize: true
-    # Explode is set to false because before the reparenting they weren't targeted at all, but I wasn't sure
-    # if that's a bug or an intentional feature. So I retained some of that behavior
+    # Before the reparenting, these they weren't targeted at all, unlike the regular airlocks.
+    # Not sure if that was an inheritance mistake or an intentional feature, so I retained some of that behavior
+    # by having them be targeted but not explode
   - type: LightningTarget
     lightningExplode: false
   - type: Damageable
@@ -44,8 +45,6 @@
   - type: Construction
     graph: Airlock
     node: highSecDoor
-    #containers: # Not on the parent so you can't steal the board from a high sec door?
-    #- board
   - type: Tag
     tags:
     - HighSecDoor
