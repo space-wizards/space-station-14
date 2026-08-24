@@ -1,8 +1,10 @@
 using System.Numerics;
+using Content.Shared.CCVar;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction.Events;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -11,6 +13,7 @@ namespace Content.Client.Interaction;
 
 public sealed partial class InteractionParticleSystem : EntitySystem
 {
+    [Dependency] private IConfigurationManager _config = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private AnimationPlayerSystem _animation = default!;
@@ -26,6 +29,9 @@ public sealed partial class InteractionParticleSystem : EntitySystem
     [EventSubscription]
     private void OnInteractionParticle(InteractionParticleEvent ev)
     {
+        if (!_config.GetCVar(CCVars.InteractionParticleShow))
+            return;
+
         var performer = GetEntity(ev.Performer);
         var used = GetEntity(ev.Used);
         var target = GetEntity(ev.Target);

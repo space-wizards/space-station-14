@@ -23,6 +23,7 @@
                        StyleClasses="LabelKeyText"/>
                 <CheckBox Name="ShowHeldItemCheckBox" Text="{Loc 'ui-options-show-held-item'}" />
                 <CheckBox Name="ShowCombatModeIndicatorsCheckBox" Text="{Loc 'ui-options-show-combat-mode-indicators'}" />
+                <CheckBox Name="InteractionParticleShowCheckBox" Text="{Loc 'ui-options-show-interaction-particles'}" />
                 <Label Text="{Loc 'ui-options-general-storage'}"
                        StyleClasses="LabelKeyText"/>
                 <CheckBox Name="OpaqueStorageWindowCheckBox" Text="{Loc 'ui-options-opaque-storage-window'}" />
