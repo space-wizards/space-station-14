@@ -69,7 +69,7 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         Health.Update(Loc.GetString("botany-ui-health"), $"{holder.Health:0.#} / {plant.Endurance:0.#}", progress: plant.Endurance > 0f ? holder.Health / plant.Endurance : 1f);
 
         var growth = holder.ReadyForHarvest ? Loc.GetString("botany-ui-harvest-ready") : $"{holder.Age} / {harvestAge} {Loc.GetString("botany-ui-unit-cycles")}";
-        var growthProgress = holder.ReadyForHarvest || harvestAge <= 0 ? 1f : (float)holder.Age / harvestAge;
+        var growthProgress = holder.ReadyForHarvest || harvestAge <= 0 ? 1f : holder.Age / harvestAge;
 
         Growth.Update(Loc.GetString("botany-ui-growth"), growth, progress: growthProgress);
     }
@@ -101,20 +101,21 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         UpdateDelta(EnduranceDelta, plant.Endurance, prototypePlant.Endurance);
         UpdateDelta(YieldDelta, plant.Yield, prototypePlant.Yield);
         UpdateDelta(LifespanDelta, plant.Lifespan, prototypePlant.Lifespan);
-        UpdateDelta(MaturationDelta, plant.Maturation, prototypePlant.Maturation);
+        UpdateDelta(MaturationDelta, plant.Maturation, prototypePlant.Maturation, invert: true);
         UpdateDelta(ProductionDelta, plant.Production, prototypePlant.Production);
         UpdateDelta(PotencyDelta, plant.Potency, prototypePlant.Potency);
         UpdateDelta(MutationModDelta, holder.MutationMod, prototypeHolder.MutationMod);
     }
 
-    private static void UpdateDelta(Label label, float value, float prototypeValue)
+    private void UpdateDelta(Label label, float value, float prototypeValue, bool invert = false)
     {
         var delta = value - prototypeValue;
         label.Text = $"({delta:+#.#;-#.#;0})";
+
         label.FontColorOverride = delta switch
         {
-            > 0f => Color.LimeGreen,
-            < 0f => Color.Crimson,
+            > 0f => invert ? Color.Crimson : Color.LimeGreen,
+            < 0f => invert ? Color.LimeGreen : Color.Crimson,
             _ => Color.DimGray,
         };
     }
