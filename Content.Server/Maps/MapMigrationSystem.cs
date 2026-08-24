@@ -56,7 +56,7 @@ public sealed partial class MapMigrationSystem : EntitySystem
             foreach (var (oldId, node) in mappings)
             {
                 if (node is not ValueDataNode valueNode)
-                    continue;
+                    throw new InvalidDataException($"Invalid map migration for '{oldId}' in '{path}'.");
 
                 var newId = string.IsNullOrWhiteSpace(valueNode.Value) || valueNode.Value == "null"
                     ? null
