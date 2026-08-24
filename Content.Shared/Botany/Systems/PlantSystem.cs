@@ -162,7 +162,7 @@ public sealed partial class PlantSystem : EntitySystem
     public bool TryGetTray(Entity<PlantComponent?> ent, out Entity<PlantTrayComponent> trayEnt)
     {
         trayEnt = default!;
-        if (!Resolve(ent.Owner, ref ent.Comp))
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
             return false;
 
         trayEnt.Owner = Transform(ent.Owner).ParentUid;
@@ -306,10 +306,12 @@ public sealed partial class PlantSystem : EntitySystem
         if (holder.ReadyForHarvest)
             return holder.Age;
 
-        var productionCycles = (int)MathF.Floor(ent.Comp.Production) + 1;
-        var lastHarvest = holder.Age < ent.Comp.Maturation ? (int)MathF.Ceiling(ent.Comp.Maturation) - 1 : holder.LastHarvest;
+        var productionTicks = (int)MathF.Floor(ent.Comp.Production);
+        var productionStartAge = holder.Age < ent.Comp.Maturation
+            ? (int)MathF.Ceiling(ent.Comp.Maturation)
+            : holder.LastHarvest + 1;
 
-        return Math.Max(holder.Age, lastHarvest + productionCycles);
+        return Math.Max(holder.Age, productionStartAge + productionTicks);
     }
 
     /// <summary>

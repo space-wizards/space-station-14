@@ -26,6 +26,7 @@ public sealed partial class PlantTraySystem : EntitySystem
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
+    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery = default!;
     [Dependency] private EntityQuery<PlantDataComponent> _dataQuery = default!;
     [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery = default!;
     [Dependency] private EntityQuery<PlantWeedPestComponent> _weedPestQuery = default!;
@@ -61,6 +62,21 @@ public sealed partial class PlantTraySystem : EntitySystem
     private void OnSolutionTransferred(Entity<PlantTrayComponent> ent, ref SolutionTransferredEvent args)
     {
         _audio.PlayPredicted(ent.Comp.WateringSound, ent, args.User);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnPlantTerminating(Entity<PlantComponent> ent, ref EntityTerminatingEvent args)
+    {
+        var trayUid = Transform(ent.Owner).ParentUid;
+
+        if (!_trayQuery.TryComp(trayUid, out var tray)
+            || tray.PlantEntity != ent.Owner)
+        {
+            return;
+        }
+
+        tray.PlantEntity = null;
+        DirtyField(trayUid, tray, nameof(tray.PlantEntity));
     }
 
     // Workaround for https://github.com/space-wizards/space-station-14/pull/35314
@@ -250,7 +266,6 @@ public sealed partial class PlantTraySystem : EntitySystem
         return ent.Comp.ToxinLevel >= ent.Comp.MaxToxinLevel * 0.5f;
     }
 
-
     /// <summary>
     /// Checks whether the tray contains a plant entity.
     /// </summary>
@@ -272,11 +287,7 @@ public sealed partial class PlantTraySystem : EntitySystem
 
         plant = ent.Comp.PlantEntity;
         if (plant == null || Deleted(plant))
-        {
-            ent.Comp.PlantEntity = null;
-            DirtyField(ent, nameof(ent.Comp.PlantEntity));
             return false;
-        }
 
         return true;
     }

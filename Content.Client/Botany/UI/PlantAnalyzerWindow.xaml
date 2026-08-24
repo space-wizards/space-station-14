@@ -3,7 +3,7 @@
                       xmlns:chemistry="clr-namespace:Content.Client.Chemistry.UI"
                       xmlns:botany="clr-namespace:Content.Client.Botany.UI"
                       xmlns:atmos="clr-namespace:Content.Client.Atmos.UI"
-                      MinWidth="700"
+                      MinWidth="750"
                       MinHeight="500">
     <BoxContainer Orientation="Vertical"
                   MinWidth="600"
@@ -216,9 +216,11 @@
                         <GridContainer Columns="3"
                                        HorizontalExpand="True"
                                        VerticalExpand="True">
-                            <BoxContainer Name="Mutations"
-                                          Orientation="Vertical"
-                                          HorizontalExpand="True" />
+                            <BoxContainer HorizontalExpand="True">
+                                   <BoxContainer Name="Mutations"
+                                                 Orientation="Vertical"
+                                                 MaxWidth="250" />
+                            </BoxContainer>
                             <PanelContainer StyleClasses="LowDivider"
                                             VerticalExpand="True"
                                             SetWidth="2"
