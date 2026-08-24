@@ -37,6 +37,7 @@
     - Silver
     - Phenol
     - Bleach
+    - Pax
   - quantity: 5 # Medical chems
     weight: 2
     reagents:
@@ -142,7 +143,6 @@
     - Nocturine
     - MuteToxin
     - Lead
-    - Pax
   - quantity: 0.1
     weight: 5 # 99.9% chance of appearing at least once with 60u of vestine with an average of 6.5 occurances.
     reagents:
