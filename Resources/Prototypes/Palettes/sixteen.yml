@@ -1,6 +1,6 @@
 ﻿- type: palette
   id: Rainbow
-  name: Rainbow
+  name: palette-rainbow
   colors:
     blue: "#1861d5"
     red: "#951710"
@@ -12,7 +12,7 @@
 
 - type: palette
   id: Sixteen
-  name: Sixteen
+  name: palette-sixteen
   colors:
     black: "#1D1D21"
     red: "#B02E26"

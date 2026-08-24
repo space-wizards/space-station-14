@@ -1,6 +1,6 @@
-using Content.Shared.Decals;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Sprite;
+using Robust.Shared.ColorNaming;
 using Robust.Shared.GameStates;
 using Robust.Shared.Random;
 
@@ -8,6 +8,7 @@ namespace Content.Server.Sprite;
 
 public sealed partial class RandomSpriteSystem : SharedRandomSpriteSystem
 {
+    [Dependency] private IPaletteManager _palette = default!;
     [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
@@ -52,7 +53,7 @@ public sealed partial class RandomSpriteSystem : SharedRandomSpriteSystem
                         color = previousColor;
                     else
                     {
-                        color = _random.Pick(ProtoMan.Index<ColorPalettePrototype>(selectedState.Value).Colors.Values);
+                        color = _palette.PickRandomColor(selectedState.Value);
                         previousColor = color;
                     }
                 }

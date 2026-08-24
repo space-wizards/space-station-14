@@ -1,5 +1,5 @@
-using Content.Shared.Decals;
 using Robust.Shared.Audio;
+using Robust.Shared.ColorNaming;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -25,9 +25,9 @@ public sealed partial class UnpoweredFlashlightComponent : Component
     public EntityUid? ToggleActionEntity;
 
     /// <summary>
-    ///  <see cref="ColorPalettePrototype"/> ID that determines the list
+    ///  <see cref="PalettePrototype"/> ID that determines the list
     /// of colors to select from when we get emagged
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public ProtoId<ColorPalettePrototype> EmaggedColorsPrototype = "Emagged";
+    public ProtoId<PalettePrototype> EmaggedColorsPrototype = "Emagged";
 }
