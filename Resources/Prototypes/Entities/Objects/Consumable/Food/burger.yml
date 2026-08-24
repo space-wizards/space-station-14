@@ -378,6 +378,25 @@
       - state: plain-inhand-left
       right:
       - state: plain-inhand-right
+
+- type: entity
+  parent: FoodBase
+  id: FakeFoodBurgerCheese
+  name: cheese burger
+  description: This noble burger stands proudly clad in golden cheese.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/burger.rsi
+    state: cheese
+  - type: FakeConsumable
+  - type: Item
+    sprite: Objects/Consumable/Food/burger.rsi
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      right:
+      - state: plain-inhand-right
+
 # TODO: Make this work.
   # - type: Sprite
   #   state: plate

@@ -3,7 +3,6 @@ using Content.Shared.Charges.Systems;
 using Content.Shared.Crayon;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
-using Content.Shared.Nutrition.EntitySystems;
 
 namespace Content.Server.Crayon;
 

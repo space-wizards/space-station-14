@@ -9,5 +9,5 @@ public sealed partial class MagicCrayonComponent : Component
     /// The entity prototype that will be spawned by this magic crayon.
     /// </summary>
     [DataField]
-    public EntProtoId SpawnProto = "FoodBurgerCheese";
+    public EntProtoId SpawnProto = "FakeFoodBurgerCheese";
 }
