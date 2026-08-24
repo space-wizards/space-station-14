@@ -282,5 +282,5 @@
   result: EmptyIVBag
   completetime: 1
   materials:
-    Plastic: 15
-    Steel: 10
+    Plastic: 75
+    Steel: 50
