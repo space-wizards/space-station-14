@@ -268,15 +268,6 @@ public sealed class DisposalUnitUiButtonPressedMessage : BoundUserInterfaceMessa
 }
 
 /// <summary>
-/// Message data sent from client to server when a disposal unit ui button is pressed.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class DisposalUnitUiTaggerEditMessage(string newTag) : BoundUserInterfaceMessage
-{
-    public readonly string NewTag = newTag;
-}
-
-/// <summary>
 /// Key for the disposal unit UI.
 /// </summary>
 [Serializable, NetSerializable]

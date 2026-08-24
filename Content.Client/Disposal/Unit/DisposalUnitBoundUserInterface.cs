@@ -1,5 +1,7 @@
+using Content.Client.Disposal.Tagger;
 using Content.Client.Power.EntitySystems;
 using Content.Shared.Disposal.Components;
+using Content.Shared.Disposal.Holder;
 using Content.Shared.Disposal.Tagger;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
@@ -23,7 +25,7 @@ namespace Content.Client.Disposal.Unit
 
         private void LineEdited(string newTag)
         {
-            SendPredictedMessage(new DisposalUnitUiTaggerEditMessage(newTag));
+            SendPredictedMessage(new DisposalTaggerUiActionMessage(newTag, SharedDisposalHolderSystem.TagLimit));
         }
 
         protected override void Open()
@@ -37,6 +39,7 @@ namespace Content.Client.Disposal.Unit
             _disposalUnitWindow.Engage.OnPressed += _ => ButtonPressed(DisposalUnitUiButton.Engage);
             _disposalUnitWindow.Power.OnPressed += _ => ButtonPressed(DisposalUnitUiButton.Power);
 
+            _disposalUnitWindow.TagEdit.IsValid += s => SharedDisposalHolderSystem.TagRegex.IsMatch(s);
             _disposalUnitWindow.TagEdit.OnTextEntered += arg => LineEdited(arg.Text);
             _disposalUnitWindow.TagEdit.OnFocusExit += _ => RefreshTagEdit(); // More clarity for if you didn't change the tag
 
@@ -84,10 +87,10 @@ namespace Content.Client.Disposal.Unit
             if (_disposalUnitWindow == null)
                 return;
 
-            if (EntMan.TryGetComponent(Owner, out FlushTaggerComponent? component))
+            if (EntMan.TryGetComponent(Owner, out DisposalTaggerComponent? component))
             {
                 _disposalUnitWindow.TagBox.Visible = true;
-                _disposalUnitWindow.TagEdit.Text = component.DisposalTag;
+                _disposalUnitWindow.TagEdit.Text = component.Tag;
             }
             else
             {

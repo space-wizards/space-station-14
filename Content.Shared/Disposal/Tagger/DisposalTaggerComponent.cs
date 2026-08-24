@@ -7,13 +7,14 @@ namespace Content.Shared.Disposal.Components;
 
 /// <summary>
 /// Entities that pass through disposal tubes with this component can be marked with a tag.
+/// Entities flushed from a disposal unit with this component can be marked with a tag.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(DisposalTaggerSystem))]
 public sealed partial class DisposalTaggerComponent : Component
 {
     /// <summary>
-    /// Tag to apply to passing entities.
+    /// Tag to apply to passing or flushing entities.
     /// </summary>
     [DataField, AutoNetworkedField]
     public string Tag = string.Empty;
