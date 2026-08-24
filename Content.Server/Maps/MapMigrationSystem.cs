@@ -19,7 +19,7 @@ public sealed partial class MapMigrationSystem : EntitySystem
 {
     [Dependency] private IResourceManager _resMan = default!;
 
-    private const string MigrationFile = "/migration.yml";
+    private const string MigrationFile = "/Migrations/migration.yml";
 
     public override void Initialize()
     {
