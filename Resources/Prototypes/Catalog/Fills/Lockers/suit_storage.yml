@@ -150,6 +150,8 @@
         tableId: FillEngineerHardsuit
   - type: AccessReader
     access: [["Engineering"]]
+  - type: Sprite
+    sprite: Structures/Storage/SuitStorage/engineering.rsi
 
 #Atmospherics hardsuit
 - type: entity
@@ -163,6 +165,8 @@
         tableId: FillAtmosphericsHardsuit
   - type: AccessReader
     access: [["Atmospherics"]]
+  - type: Sprite
+    sprite: Structures/Storage/SuitStorage/engineering-atmos.rsi
 
 #Security hardsuit
 - type: entity
@@ -176,6 +180,8 @@
         tableId: FillSuitStorageSecurity
   - type: AccessReader
     access: [["Security"]]
+  - type: Sprite
+    sprite: Structures/Storage/SuitStorage/security.rsi
 
 - type: entityTable
   id: FillSuitStorageSecurity
@@ -197,6 +203,8 @@
         tableId: FillChiefEngineerHardsuit
   - type: AccessReader
     access: [["ChiefEngineer"]]
+  - type: Sprite
+    sprite: Structures/Storage/SuitStorage/command-engineering.rsi
 
 #CMO's hardsuit
 - type: entity
@@ -210,6 +218,8 @@
         tableId: FillChiefMedicalOfficerHardsuit
   - type: AccessReader
     access: [ [ "ChiefMedicalOfficer" ] ]
+  - type: Sprite
+    sprite: Structures/Storage/SuitStorage/command-medical.rsi
 
 #RD's hardsuit
 - type: entity
@@ -223,6 +233,8 @@
         tableId: FillResearchDirectorHardsuit
   - type: AccessReader
     access: [ [ "ResearchDirector" ] ]
+  - type: Sprite
+    sprite: Structures/Storage/SuitStorage/command-science.rsi
 
 #HOS's hardsuit
 - type: entity
@@ -236,19 +248,9 @@
         tableId: FillHeadOfSecurityHardsuit
   - type: AccessReader
     access: [["HeadOfSecurity"]]
+  - type: Sprite
+    sprite: Structures/Storage/SuitStorage/command-security.rsi
 
-#Warden's hardsuit
-- type: entity
-  id: SuitStorageWarden
-  parent: SuitStorageBase
-  suffix: Warden
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage: !type:NestedSelector
-        tableId: FillLockerWardenHarduit
-  - type: AccessReader
-    access: [["Armory"]]
 
 #Captain's hardsuit
 - type: entity
@@ -262,6 +264,23 @@
         tableId: FillCaptainHardsuit
   - type: AccessReader
     access: [["Captain"]]
+  - type: Sprite
+    sprite: Structures/Storage/SuitStorage/command-captain.rsi
+
+#Warden's hardsuit
+- type: entity
+  id: SuitStorageWarden
+  parent: SuitStorageBase
+  suffix: Warden
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerWardenHarduit
+  - type: AccessReader
+    access: [["Armory"]]
+  - type: Sprite
+    sprite: Structures/Storage/SuitStorage/security-warden.rsi
 
 #Salvage hardsuit
 - type: entity
@@ -275,6 +294,8 @@
         tableId: FillSalvageSpecialistHardsuitSpatio
   - type: AccessReader
     access: [["Salvage"]]
+  - type: Sprite
+    sprite: Structures/Storage/SuitStorage/cargo-salvage.rsi
 
 #Blood-red hardsuit
 - type: entity
@@ -286,6 +307,8 @@
     containers:
       entity_storage: !type:NestedSelector
         tableId: FillSuitStorageSyndie
+  - type: Sprite
+    sprite: Structures/Storage/SuitStorage/antag-syndicate.rsi
 
 - type: entityTable
   id: FillSuitStorageSyndie

@@ -5,11 +5,8 @@
   parent: ClosetSteelBase
   description: It's a storage unit for tools.
   components:
-  - type: Appearance
-  - type: EntityStorageVisuals
-    stateBaseClosed: eng
-    stateDoorOpen: eng_open
-    stateDoorClosed: eng_tool_door
+  - type: Sprite
+    sprite: Structures/Storage/Closets/engineering-tools.rsi
 
 # Radiation suit closet
 - type: entity
@@ -18,11 +15,8 @@
   parent: ClosetSteelBase
   description: "More comfortable than radiation poisioning."
   components:
-  - type: Appearance
-  - type: EntityStorageVisuals
-    stateBaseClosed: eng
-    stateDoorOpen: eng_open
-    stateDoorClosed: eng_rad_door
+  - type: Sprite
+    sprite: Structures/Storage/Closets/engineering-radiation.rsi
 
 # Emergency closet
 - type: entity
@@ -31,11 +25,8 @@
   parent: ClosetSteelBase
   description: It's a storage unit for emergency breath masks and O2 tanks.
   components:
-  - type: Appearance
-  - type: EntityStorageVisuals
-    stateBaseClosed: emergency
-    stateDoorOpen: emergency_open
-    stateDoorClosed: emergency_door
+  - type: Sprite
+    sprite: Structures/Storage/Closets/emergency-oxygen.rsi
 
 # Emergency N2 closet
 - type: entity
@@ -44,11 +35,8 @@
   parent: ClosetSteelBase
   description: It's full of life-saving equipment. Assuming, that is, that you breathe nitrogen.
   components:
-  - type: Appearance
-  - type: EntityStorageVisuals
-    stateBaseClosed: n2
-    stateDoorOpen: n2_open
-    stateDoorClosed: n2_door
+  - type: Sprite
+    sprite: Structures/Storage/Closets/emergency-nitrogen.rsi
 
 # Fire safety closet
 - type: entity
@@ -57,11 +45,8 @@
   parent: ClosetSteelBase
   description: It's a storage unit for fire-fighting supplies.
   components:
-  - type: Appearance
-  - type: EntityStorageVisuals
-    stateBaseClosed: fire
-    stateDoorOpen: fire_open
-    stateDoorClosed: fire_door
+  - type: Sprite
+    sprite: Structures/Storage/Closets/emergency-fire.rsi
 
 # EOD closet
 - type: entity
@@ -70,11 +55,8 @@
   parent: ClosetSteelBase
   description: It's a storage unit for explosion-protective suits.
   components:
-  - type: Appearance
-  - type: EntityStorageVisuals
-    stateBaseClosed: bomb
-    stateDoorOpen: bomb_open
-    stateDoorClosed: bomb_door
+  - type: Sprite
+    sprite: Structures/Storage/Closets/bomb.rsi
 
 # Janitorial bomb suit closet
 - type: entity
@@ -84,11 +66,8 @@
   description: It's a storage unit for janitorial explosion-protective suits.
   categories: [ DoNotMap ]
   components:
-  - type: Appearance
-  - type: EntityStorageVisuals
-    stateBaseClosed: janitor_bomb
-    stateDoorOpen: janitor_bomb_open
-    stateDoorClosed: janitor_bomb_door
+  - type: Sprite
+    sprite: Structures/Storage/Closets/bomb.rsi
 
 # Biohazard
 
@@ -99,55 +78,40 @@
   name: level 3 biohazard gear closet
   description: It's a storage unit for level 3 biohazard gear.
   components:
-  - type: Appearance
-  - type: EntityStorageVisuals
-    stateBaseClosed: bio
-    stateDoorOpen: bio_open
-    stateDoorClosed: bio_door
+  - type: Sprite
+    sprite: Structures/Storage/Closets/biohazard.rsi
 
 # Science Variant
 - type: entity
   id: ClosetL3Science
   parent: ClosetL3
   components:
-  - type: Appearance
-  - type: EntityStorageVisuals
-    stateBaseClosed: bio_sci
-    stateDoorOpen: bio_sci_open
-    stateDoorClosed: bio_sci_door
+  - type: Sprite
+    sprite: Structures/Storage/Closets/biohazard-science.rsi
 
 # Virology variant
 - type: entity
   id: ClosetL3Virology
   parent: ClosetL3
   components:
-  - type: Appearance
-  - type: EntityStorageVisuals
-    stateBaseClosed: bio_viro
-    stateDoorOpen: bio_viro_open
-    stateDoorClosed: bio_viro_door
+  - type: Sprite
+    sprite: Structures/Storage/Closets/biohazard-virology.rsi
 
 # Security variant
 - type: entity
   id: ClosetL3Security
   parent: ClosetL3
   components:
-  - type: Appearance
-  - type: EntityStorageVisuals
-    stateBaseClosed: bio_sec
-    stateDoorOpen: bio_sec_open
-    stateDoorClosed: bio_sec_door
+  - type: Sprite
+    sprite: Structures/Storage/Closets/biohazard-security.rsi
 
 # Janitor variant
 - type: entity
   id: ClosetL3Janitor
   parent: ClosetL3
   components:
-  - type: Appearance
-  - type: EntityStorageVisuals
-    stateBaseClosed: bio_jan
-    stateDoorOpen: bio_jan_open
-    stateDoorClosed: bio_jan_door
+  - type: Sprite
+    sprite: Structures/Storage/Closets/biohazard-janitor.rsi
 
 # Maintenance closet
 - type: entity
@@ -155,11 +119,6 @@
   name: maintenance closet
   parent: ClosetSteelBase
   description: It's a storage unit.
-  components:
-  - type: Appearance
-  - type: EntityStorageVisuals
-    stateDoorOpen: generic_open
-    stateDoorClosed: generic_door
 
 # Syndicate
 - type: entity
@@ -168,11 +127,8 @@
   parent: ClosetSteelBase
   description: It's a storage unit with a blood-red design.
   components:
-  - type: Appearance
-  - type: EntityStorageVisuals
-    stateBaseClosed: syndicate
-    stateDoorOpen: syndicate_open
-    stateDoorClosed: syndicate_door
+  - type: Sprite
+    sprite: Structures/Storage/Closets/antag-syndicate.rsi
 
 # Bluespace closet
 - type: entity

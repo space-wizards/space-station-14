@@ -533,17 +533,7 @@
         {
             "name": "shotguncase_open"
         },
-        {
-            "name": "sparking",
-            "delays": [
-                [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1
-                ]
-            ]
-        },
+
         {
             "name": "syndicate"
         },
@@ -561,9 +551,6 @@
         },
         {
             "name": "tac_open"
-        },
-        {
-            "name": "unlocked"
         },
         {
             "name": "warden"
