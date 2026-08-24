@@ -35,11 +35,6 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
     /// </summary>
     public static readonly Regex TagRegex = new("^[a-zA-Z0-9, ]*$", RegexOptions.Compiled);
 
-    /// <summary>
-    /// How many characters a disposal tag is allowed to be.
-    /// </summary>
-    public const int TagLimit = 30;
-
     [SubscribeLocalEvent]
     private void OnComponentStartup(Entity<DisposalHolderComponent> ent, ref ComponentStartup args)
     {

@@ -4,11 +4,11 @@ ui-disposal-unit-title = {CAPITALIZE($name)}
 
 ui-disposal-unit-label-state = State:
 ui-disposal-unit-label-pressure = Pressure:
-ui-disposal-unit-tagger-label = Routing tag:
 ui-disposal-unit-label-status = Ready
 
 ui-disposal-unit-button-flush = Flush
 ui-disposal-unit-button-eject = Eject Contents
+ui-disposal-unit-button-routing = Routing
 ui-disposal-unit-button-power = Power
 
 ## Verbs
@@ -24,6 +24,7 @@ disposal-unit-state-Ready = Ready
 # Yes I want it to always say Pressurizing
 disposal-unit-state-Flushed = Pressurizing
 disposal-unit-state-Pressurizing = Pressurizing
+disposal-unit-state-Unpowered = Unpowered
 
 # putting people in
 disposal-unit-being-inserted = {CAPITALIZE($user)} is trying to force you into a disposal chute!

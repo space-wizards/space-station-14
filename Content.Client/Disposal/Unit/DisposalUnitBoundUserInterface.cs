@@ -1,8 +1,6 @@
-using Content.Client.Disposal.Tagger;
 using Content.Client.Power.EntitySystems;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Disposal.Components;
-using Content.Shared.Disposal.Holder;
-using Content.Shared.Disposal.Tagger;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 
@@ -23,11 +21,6 @@ namespace Content.Client.Disposal.Unit
             SendPredictedMessage(new DisposalUnitUiButtonPressedMessage(button));
         }
 
-        private void LineEdited(string newTag)
-        {
-            SendPredictedMessage(new DisposalTaggerUiActionMessage(newTag, SharedDisposalHolderSystem.TagLimit));
-        }
-
         protected override void Open()
         {
             base.Open();
@@ -35,13 +28,18 @@ namespace Content.Client.Disposal.Unit
             _disposalUnitWindow = this.CreateWindow<DisposalUnitWindow>();
             _disposalUnitWindow.OpenCenteredRight();
 
+            _disposalUnitWindow.SetInfoFromEntity(EntMan, Owner);
+
             _disposalUnitWindow.Eject.OnPressed += _ => ButtonPressed(DisposalUnitUiButton.Eject);
             _disposalUnitWindow.Engage.OnPressed += _ => ButtonPressed(DisposalUnitUiButton.Engage);
             _disposalUnitWindow.Power.OnPressed += _ => ButtonPressed(DisposalUnitUiButton.Power);
 
-            _disposalUnitWindow.TagEdit.IsValid += s => SharedDisposalHolderSystem.TagRegex.IsMatch(s);
-            _disposalUnitWindow.TagEdit.OnTextEntered += arg => LineEdited(arg.Text);
-            _disposalUnitWindow.TagEdit.OnFocusExit += _ => RefreshTagEdit(); // More clarity for if you didn't change the tag
+            // Disable the button if there's nothing for it to do
+            _disposalUnitWindow.Routing.Visible = EntMan.HasComponent<DisposalTaggerComponent>(Owner);
+            _disposalUnitWindow.Routing.OnPressed += _ =>
+            {
+                SendPredictedMessage(new DisposalTaggerOpenUiMessage());
+            };
 
             Update();
         }
@@ -54,8 +52,6 @@ namespace Content.Client.Disposal.Unit
             {
                 Refresh((Owner, component));
             }
-
-            RefreshTagEdit();
         }
 
         public void Refresh(Entity<DisposalUnitComponent> entity)
@@ -63,39 +59,21 @@ namespace Content.Client.Disposal.Unit
             if (_disposalUnitWindow == null)
                 return;
 
-            var name = EntMan.GetComponent<MetaDataComponent>(entity.Owner).EntityName;
-            _disposalUnitWindow.Title = Loc.GetString("ui-disposal-unit-title", ("name", name));
-
-            if (!EntMan.TryGetComponent(entity.Owner, out DisposalUnitComponent? disposals))
-                return;
-
             var disposalUnit = EntMan.System<DisposalUnitSystem>();
-            var disposalState = disposalUnit.GetState(entity);
-            var fullPressure = disposalUnit.EstimatedFullPressure((Owner, disposals));
-            var pressurePerSecond = disposals.PressurePerSecond;
 
-            _disposalUnitWindow.UnitState.Text = Loc.GetString($"disposal-unit-state-{disposalState}");
+            var powered = EntMan.System<PowerReceiverSystem>().IsPowered(Owner);
+            var disposalState = disposalUnit.GetState(entity);
+            var fullPressure = disposalUnit.EstimatedFullPressure(entity);
+            var pressurePerSecond = entity.Comp.PressurePerSecond;
+
+            _disposalUnitWindow.UnitState.Text = !powered
+                                                ? Loc.GetString($"disposal-unit-state-Unpowered")
+                                                : Loc.GetString($"disposal-unit-state-{disposalState}");
             _disposalUnitWindow.FullPressure = disposalUnit.EstimatedFullPressure(entity);
             _disposalUnitWindow.PressurePerSecond = entity.Comp.PressurePerSecond;
             _disposalUnitWindow.PressureBar.UpdatePressure(fullPressure, pressurePerSecond);
-            _disposalUnitWindow.Power.Pressed = EntMan.System<PowerReceiverSystem>().IsPowered(Owner);
+            _disposalUnitWindow.Power.Pressed = powered;
             _disposalUnitWindow.Engage.Pressed = entity.Comp.Engaged;
-        }
-
-        public void RefreshTagEdit()
-        {
-            if (_disposalUnitWindow == null)
-                return;
-
-            if (EntMan.TryGetComponent(Owner, out DisposalTaggerComponent? component))
-            {
-                _disposalUnitWindow.TagBox.Visible = true;
-                _disposalUnitWindow.TagEdit.Text = component.Tag;
-            }
-            else
-            {
-                _disposalUnitWindow.TagBox.Visible = false;
-            }
         }
     }
 }

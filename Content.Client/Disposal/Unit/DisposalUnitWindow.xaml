@@ -1,19 +1,17 @@
 ﻿<controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       xmlns:disposal="clr-namespace:Content.Client.Disposal"
-                      MinSize="300 140"
-            SetSize="300 185"
-            Resizable="False">
+                      SetSize="300 160"
+                      Resizable="False">
     <BoxContainer Orientation="Vertical" Margin="10">
         <BoxContainer Orientation="Horizontal" SeparationOverride="4">
             <Label Text="{Loc 'ui-disposal-unit-label-state'}" />
             <Label Name="UnitState" Access="Public"
                    Text="{Loc 'ui-disposal-unit-label-status'}" />
-        </BoxContainer>
-        <Control MinSize="0 5" />
-        <BoxContainer Name="TagBox" Access="Public" Orientation="Horizontal" SeparationOverride="4">
-            <Label Text="{Loc 'ui-disposal-unit-tagger-label'}" />
-            <LineEdit Name="TagEdit" Access="Public" HorizontalExpand="True" />
+            <Control HorizontalExpand="True"/>
+            <controls:SwitchButton Name="Power"
+                                  Access="Public"
+                                  OnStateText="" OffStateText=""/>
         </BoxContainer>
         <Control MinSize="0 5" />
         <BoxContainer Orientation="Horizontal"
@@ -35,15 +33,14 @@
                     Text="{Loc 'ui-disposal-unit-button-flush'}"
                     StyleClasses="OpenRight"
                     ToggleMode="True" />
+            <Button Name="Routing"
+                    Access="Public"
+                    Text="{Loc 'ui-disposal-unit-button-routing'}"
+                    StyleClasses="OpenBoth" />
             <Button Name="Eject"
                     Access="Public"
                     Text="{Loc 'ui-disposal-unit-button-eject'}"
-                    StyleClasses="OpenBoth" />
-            <Button Name="Power"
-                    Access="Public"
-                    Text="{Loc 'ui-disposal-unit-button-power'}"
-                    StyleClasses="OpenLeft"
-                    ToggleMode="True" />
+                    StyleClasses="OpenLeft" />
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

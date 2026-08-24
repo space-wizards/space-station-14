@@ -1,5 +1,4 @@
 using Content.Shared.Disposal.Components;
-using Content.Shared.Disposal.Holder;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 
@@ -12,6 +11,8 @@ namespace Content.Client.Disposal.Tagger
     public sealed class DisposalTaggerBoundUserInterface : BoundUserInterface
     {
         private DisposalTaggerWindow? _window;
+
+        private const int TagLimit = 30;
 
         public DisposalTaggerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
@@ -35,7 +36,7 @@ namespace Content.Client.Disposal.Tagger
 
         private void AcceptButtonPressed(string tag)
         {
-            SendMessage(new DisposalTaggerUiActionMessage(tag, SharedDisposalHolderSystem.TagLimit));
+            SendMessage(new DisposalTaggerUiActionMessage(tag, TagLimit));
             Close();
         }
 

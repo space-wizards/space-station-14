@@ -146,6 +146,8 @@
     interfaces:
       enum.DisposalUnitUiKey.Key:
         type: DisposalUnitBoundUserInterface
+      enum.DisposalTaggerUiKey.Key:
+        type: DisposalTaggerBoundUserInterface
   - type: Rummageable
     table: !type:NestedSelector
       tableId: RatKingLoot

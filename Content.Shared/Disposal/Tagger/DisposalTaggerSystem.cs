@@ -14,12 +14,18 @@ public sealed partial class DisposalTaggerSystem : EntitySystem
 {
     [Dependency] private SharedDisposalHolderSystem _disposalHolder = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedUserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<DisposalTaggerComponent, GetDisposalsNextDirectionEvent>(OnGetTaggerNextDirection, after: new[] { typeof(DisposalTubeSystem) });
+
+        Subs.BuiEvents<DisposalTaggerComponent>(DisposalUnitUiKey.Key, subs =>
+        {
+            subs.Event<DisposalTaggerOpenUiMessage>(OnOpenUiAction);
+        });
 
         Subs.BuiEvents<DisposalTaggerComponent>(DisposalTaggerUiKey.Key, subs =>
         {
@@ -36,6 +42,11 @@ public sealed partial class DisposalTaggerSystem : EntitySystem
     private void OnGetTaggerNextDirection(Entity<DisposalTaggerComponent> ent, ref GetDisposalsNextDirectionEvent args)
     {
         _disposalHolder.AddTag(args.Holder, ent.Comp.Tag);
+    }
+
+    private void OnOpenUiAction(Entity<DisposalTaggerComponent> ent, ref DisposalTaggerOpenUiMessage args)
+    {
+        _uiSystem.TryToggleUi(ent.Owner, DisposalTaggerUiKey.Key, args.Actor);
     }
 
     /// <summary>

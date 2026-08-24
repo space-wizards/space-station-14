@@ -55,6 +55,12 @@ public sealed class DisposalTaggerUserInterfaceState : BoundUserInterfaceState
 }
 
 /// <summary>
+/// A message to opens the disposal tagger UI sent from a separate UI.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class DisposalTaggerOpenUiMessage : BoundUserInterfaceMessage;
+
+/// <summary>
 /// Key for opening disposal tagger UIs.
 /// </summary>
 [Serializable, NetSerializable]
