@@ -11,6 +11,11 @@ public sealed partial class XenoArtifactSystem
 {
     [Dependency] private EntityTableSystem _entityTable = default!;
 
+    /// <summary>
+    /// Trigger for fallback scenario, when artifact acquired no trigger when generating artifact.
+    /// </summary>
+    private static readonly EntProtoId DummyTrigger = "TriggerExamine";
+
     private void GenerateArtifactStructure(Entity<XenoArtifactComponent> ent)
     {
         var nodeCount = ent.Comp.NodeCount.Next(RobustRandom);
@@ -130,14 +135,20 @@ public sealed partial class XenoArtifactSystem
         var nodes = new List<Entity<XenoArtifactNodeComponent>>();
         for (var i = 0; i < nodeCount; i++)
         {
-            var triggers = _entityTable.GetSpawns(ent.Comp.TriggersTable, ctx: triggerPoolData.Context).ToArray();
-            var trigger = triggers.SingleOrDefault();
-            if (trigger == default)
+            var trigger = _entityTable.GetFirstOrDefault(ent.Comp.TriggersTable, ctx: triggerPoolData.Context);
+            if (trigger == null)
             {
-
+                trigger = DummyTrigger;
+                Log.Error(
+                    "Failed to generate proper artifact - selector {selector} with excepted entities {excepted} "
+                    + "provided zero triggers upon requesting new one",
+                    ent.Comp.TriggersTable,
+                    string.Join(", ", triggerPoolData.UsedTriggers.Select(x => x.Id))
+                );
             }
-            triggerPoolData.AddTriggerAsUsed(trigger);
-            nodes.Add(CreateNode(ent, trigger, iteration));
+
+            triggerPoolData.AddTriggerAsUsed(trigger.Value);
+            nodes.Add(CreateNode(ent, trigger.Value, iteration));
         }
 
         var successors = PopulateArtifactSegmentRecursive(
@@ -191,6 +202,9 @@ public sealed partial class XenoArtifactSystem
         return segmentSize;
     }
 
+    /// <summary>
+    /// Container that represents pool of XenoArtifact triggers.
+    /// </summary>
     private sealed class TriggerPoolData
     {
         private readonly HashSet<EntProtoId> _usedTriggers;
@@ -211,5 +225,7 @@ public sealed partial class XenoArtifactSystem
             if (!_usedTriggers.Add(trigger))
                 throw new ArgumentException();
         }
+
+        public IReadOnlyCollection<EntProtoId> UsedTriggers => _usedTriggers;
     }
 }
