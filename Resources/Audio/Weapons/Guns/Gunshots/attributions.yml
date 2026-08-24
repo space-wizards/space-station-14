@@ -43,6 +43,11 @@
   copyright: "Created by UnderlinedDesigns and DrinkingWindGames (https://freesound.org/people/DrinkingWindGames/sounds/789647), modified by Halycon"
   source: "https://freesound.org/people/UnderlinedDesigns/sounds/188499/"
 
+- files: ["xenofirebeam.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Laser Gun Ice Beam.wav by DrMinky. Converted to .OGG and MONO by august-sun"
+  source: "https://freesound.org/people/DrMinky/sounds/174436/"
+
 - files: ["magnetic_shot.ogg"]
   license: "CC-BY-4.0"
   copyright: "Created by simeonradivoev"
@@ -52,3 +57,13 @@
   license: "CC-BY-4.0"
   copyright: "custom_lizard_insomiac_inspired_footstep_06252025 by Artninja. Converted to .OGG and MONO by august-sun"
   source: "https://freesound.org/people/Artninja/sounds/813351/"
+  
+- files: ["nanite_gun.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by sadiefei"
+  source: "https://freesound.org/people/torn.rugged.audio.35/sounds/45934/"
+
+- files: ["rocket1.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by northern87, edited by beck-thompson (github)"
+  source: "https://freesound.org/people/northern87/sounds/88532/"

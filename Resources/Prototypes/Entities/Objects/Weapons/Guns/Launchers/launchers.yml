@@ -6,8 +6,6 @@
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
-  - type: Item
-    size: Ginormous
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
@@ -17,6 +15,10 @@
     quickEquip: false
     slots:
     - Back
+  - type: Item
+    size: Ginormous
+    shape:
+      - 0,0,6,3
   - type: StaticPrice
     price: 500
   - type: Gun
@@ -166,6 +168,47 @@
   - type: Appearance
 
 - type: entity
+  parent: [ BaseItem, BaseXenoborgContraband ]
+  id: WeaponGuidedMissileLauncherXenoborg
+  name: XB GML-78 # Xenoborg Guided Missile Launcher 78
+  description: A guided missile launcher.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/xenoborg_guided_missile_launcher.rsi
+    layers:
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-3
+      map: [ "enum.GunVisualLayers.Mag" ]
+  - type: Appearance
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: false
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+  - type: Gun
+    fireRate: 2
+    projectileSpeed: 6 # needs to be the same as the speed of the chasing walk component of the projectile
+    # otherwise the missile will be faster if shot without a target
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
+  - type: BallisticAmmoProvider
+    proto: BulletGuidedXenoborgMissile
+    capacity: 3
+    cycleable: false
+  - type: BallisticAmmoSelfRefiller
+    autoRefillRate: 17s # takes a while to get a new one
+  - type: TargetAssign
+  - type: DeviceLinkSink
+    ports:
+    - TargetReceiver
+  - type: AutoLinkReceiver
+    channel: XenoborgGuidedMissileLauncher
+
+- type: entity
   parent: BaseWeaponLauncher
   id: WeaponLauncherMultipleRocket
   name: multiple rocket launcher
@@ -198,6 +241,49 @@
     magState: mag
     steps: 2
     zeroVisible: true
+  - type: Appearance
+
+- type: entity
+  parent: [ BaseItem, BaseXenoborgContraband ]
+  id: WeaponRocketLauncherXenoborg
+  name: XB MRL-97-D # Xenoborg Multi Rocket Launcher 97 D (Demolition)
+  description: A alien rocket launcher fitted with special demolition rockets.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/xb_mlr.rsi
+    layers:
+    - state: mlr
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-6
+      map: [ "enum.GunVisualLayers.Mag" ]
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+  - type: Gun
+    burstFireRate: 12.5
+    selectedMode: Burst
+    availableModes:
+    - Burst
+    shotsPerBurst: 6
+    minAngle: 10
+    angleIncrease: 10
+    maxAngle: 50
+    projectileSpeed: 12.5
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/rocket1.ogg
+  - type: BallisticAmmoProvider
+    capacity: 6
+    proto: BulletXenoborgMechadermisRocket
+    cycleable: false
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: BallisticAmmoSelfRefiller
+    autoRefillRate: 17s
+  - type: MagazineVisuals
+    magState: mag
+    steps: 7
+    zeroVisible: false
   - type: Appearance
 
 - type: entity
