@@ -176,14 +176,14 @@
     range: 200
   - type: DeviceLinkSink
     ports:
-      - Open
-      - Close
-      - Toggle
-      - AutoClose
-      - DoorBolt
+    - Open
+    - Close
+    - Toggle
+    - AutoClose
+    - DoorBolt
   - type: DeviceLinkSource
     ports:
-      - DoorStatus
+    - DoorStatus
     lastSignals:
       DoorStatus: false
   - type: SoundOnOverload
@@ -212,16 +212,16 @@
     - Networking
 
 - type: entity
-  id: AirlockRCDResistant
-  parent: Airlock
   abstract: true
+  parent: Airlock
+  id: AirlockRCDResistant
   components:
   - type: RCDDeconstructable
     deconstructable: false
 
 - type: entity
-  id: AirlockGlass
   parent: Airlock
+  id: AirlockGlass
   name: glass airlock
   components:
   - type: MeleeSound
