@@ -12,7 +12,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Maps;
 
 /// <summary>
-///     Performs basic map migration operations by listening for engine <see cref="MapLoaderSystem"/> events.
+/// Performs basic map migration operations by listening for engine <see cref="MapLoaderSystem"/> events.
 /// </summary>
 public sealed partial class MapMigrationSystem : EntitySystem
 {
@@ -25,12 +25,11 @@ public sealed partial class MapMigrationSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<BeforeEntityReadEvent>(OnBeforeReadEvent);
 
         LoadMigrations();
 
 #if DEBUG
-        // Verify that all of the entries map to valid entity prototypes.
+        // Verify that all the entries map to valid entity prototypes.
         foreach (var newId in _migrations.Values.OfType<string>())
         {
             DebugTools.Assert(ProtoMan.HasIndex<EntityPrototype>(newId), $"{newId} is not an entity prototype.");
@@ -69,6 +68,7 @@ public sealed partial class MapMigrationSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnBeforeReadEvent(BeforeEntityReadEvent ev)
     {
         foreach (var (oldId, newId) in _migrations)
