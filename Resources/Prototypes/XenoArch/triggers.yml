@@ -241,12 +241,14 @@
 
 - type: entity
   id: TriggerMicrowave
+  parent: BaseXenoArtifactTrigger
   name: xenoarch-trigger-tip-microwave
   components:
   - type: XATMicrowave
 
 - type: entity
   id: TriggerPressureHigh
+  parent: BaseXenoArtifactTrigger
   name:  xenoarch-trigger-tip-pressure-high
   components:
   - type: XATPressure
@@ -370,9 +372,10 @@
   components:
   - type: XATMagnet
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerConsumeMoney
-  tip: xenoarch-trigger-tip-money
+  name:  xenoarch-trigger-tip-money
   components:
   - type: XATInteractWith
     interactionCount:
@@ -385,9 +388,10 @@
       components:
       - Cash
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerConsumeKnowledge
-  tip: xenoarch-trigger-tip-knowledge
+  name:  xenoarch-trigger-tip-knowledge
   components:
   - type: XATInteractWith
     destroyAfter: true
@@ -399,9 +403,10 @@
       tags:
       - Book
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerConsumeCarbs
-  tip: xenoarch-trigger-tip-carbs
+  name:  xenoarch-trigger-tip-carbs
   components:
   - type: XATInteractWith
     destroyAfter: true
@@ -419,9 +424,10 @@
       - Pie
       - Pizza
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerConsumeMeat
-  tip: xenoarch-trigger-tip-meat
+  name:  xenoarch-trigger-tip-meat
   components:
   - type: XATInteractWith
     destroyAfter: true
@@ -438,9 +444,10 @@
     - Protein
     - UncookedAnimalProteins
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerConsumeProduce
-  tip: xenoarch-trigger-tip-produce
+  name:  xenoarch-trigger-tip-produce
   components:
   - type: XATInteractWith
     destroyAfter: true
@@ -457,9 +464,10 @@
       - Ambrosia
       - Mushroom
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerInteractStamp
-  tip: xenoarch-trigger-tip-stamp
+  name: xenoarch-trigger-tip-stamp
   components:
   - type: XATInteractWith
     interactionTime: 0.5
@@ -472,43 +480,48 @@
       components:
       - Stamp
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerInteractShock
-  tip: xenoarch-trigger-tip-shock
+  name: xenoarch-trigger-tip-shock
   components:
   - type: XATShock
   - type: XATDamageThresholdReached
     typesNeeded:
       Shock: 5
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerAttackParticleEngine
-  tip: xenoarch-trigger-tip-particle
+  name: xenoarch-trigger-tip-particle
   components:
   - type: XATInteractAttack
     whitelist:
       components:
       - ParticleProjectile
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerAttackParticleAnomaly
-  tip: xenoarch-trigger-tip-anomparticle
+  name: xenoarch-trigger-tip-anomparticle
   components:
   - type: XATInteractAttack
     whitelist:
       components:
       - AnomalousParticle
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerAttackStaminaDamage
-  tip: xenoarch-trigger-tip-stamina-damage
+  name: xenoarch-trigger-tip-stamina-damage
   components:
   - type: XATStaminaDamageThresholdReached
     damageNeeded: 8 # half a practice disabler capacity
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerAttackLaser
-  tip: xenoarch-trigger-tip-laser
+  name: xenoarch-trigger-tip-laser
   components:
   - type: XATInteractAttack
     interactionCount:
