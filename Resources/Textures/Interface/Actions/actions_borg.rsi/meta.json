@@ -182,6 +182,9 @@
             "name":"xenoborg-oil-gun-module"
         },
         {
+            "name":"xenoborg-nanofoam-module"
+        },
+        {
             "name": "xenoborg-nanite-module"
         },
         {
