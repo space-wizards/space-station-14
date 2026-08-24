@@ -65,9 +65,9 @@
     - id: TriggerConsumeProduce
       weight: 0.5
     - id: TriggerInteractStamp
-      weight:
+      weight: 1
     - id: TriggerInteractShock
-      weight:
+      weight: 1
     - id: TriggerAttackParticleAnomaly
       weight: 1
     - id: TriggerAttackStaminaDamage

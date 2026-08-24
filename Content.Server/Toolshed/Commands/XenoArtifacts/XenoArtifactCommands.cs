@@ -115,15 +115,18 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
 
     /// <summary> Unlocks all nodes of artifact. </summary>
     [CommandImplementation("unlockallnodes")]
-    public void UnlockAllNodes([PipedArgument] EntityUid artifactEntityUid)
+    public void UnlockAllNodes([PipedArgument] IEnumerable<EntityUid> artifactUids)
     {
         _artifact ??= Sys<XenoArtifactSystem>();
-        var comp = Comp<XenoArtifactComponent>(artifactEntityUid);
-
-        var nodes = _artifact.GetAllNodes((artifactEntityUid, comp));
-        foreach (var node in nodes)
+        foreach (var artifactUid in artifactUids)
         {
-            _artifact.SetNodeUnlocked((node, node.Comp));
+            var comp = Comp<XenoArtifactComponent>(artifactUid);
+
+            var nodes = _artifact.GetAllNodes((artifactUid, comp));
+            foreach (var node in nodes)
+            {
+                _artifact.SetNodeUnlocked((node, node.Comp));
+            }
         }
     }
 
