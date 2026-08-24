@@ -1,10 +1,12 @@
 using Content.Shared.EntityTable.Conditions;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 
 namespace Content.Shared.EntityTable.EntitySelectors;
 
+/// <summary>
+/// Base type for entity table selector that can have child selectors and properly apply entity table conditions for them.
+/// </summary>
 [ImplicitDataDefinitionForInheritors, UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
 public abstract partial class EntityTableSelectorWithChildrenBase : EntityTableSelectorWithNestedBase
 {
@@ -14,19 +16,32 @@ public abstract partial class EntityTableSelectorWithChildrenBase : EntityTableS
     [DataField(required: true)]
     public List<EntityTableSelector> Children = new();
 
+    /// <inheritdoc/>
     public override bool CheckConditions(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
     {
-        var result = base.CheckConditions(entMan, proto, ctx);
-        var nestedSuccess = false;
+        if (!base.CheckConditions(entMan, proto, ctx))
+            return false;
+
+        using var scoped = ScopedConditions(ctx);
+
         foreach (var selector in Children)
         {
-            nestedSuccess |= selector.CheckConditions(entMan, proto, ctx);
+            // If any child succeeds this is a valid node
+            if (selector.CheckConditions(entMan, proto, ctx))
+                return true;
         }
 
-        return result && nestedSuccess;
+        return false;
     }
 }
 
+/// <summary>
+/// Base type for entity table selector that can apply list of additional entity table conditions upon
+/// nested entity table selectors.
+/// When making type, derived from this one, please remember to use <see cref="ScopedConditions"/> in your implementation of 
+/// <see cref="EntityTableSelector.GetSpawnsImplementation"/>, and inside <see cref="EntityTableSelector.CheckConditions"/>
+/// (if you override it).
+/// </summary>
 [ImplicitDataDefinitionForInheritors, UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
 public abstract partial class EntityTableSelectorWithNestedBase : EntityTableSelector
 {
@@ -36,32 +51,47 @@ public abstract partial class EntityTableSelectorWithNestedBase : EntityTableSel
     [DataField]
     public List<EntityTableCondition> ConditionsForChildren = new();
 
-    public override IEnumerable<EntProtoId> GetSpawns(IRobustRandom rand, IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
+    /// <summary>
+    /// Temporarily injects <see cref="ConditionsForChildren"/> (merged with any conditions already
+    /// scoped in <paramref name="ctx"/>) into the context so they are evaluated for every selector
+    /// below this one. The context is restored when the returned handle is disposed.
+    /// </summary>
+    protected IDisposable ScopedConditions(EntityTableContext ctx)
     {
-        var hasAdditionalConditions = ctx.TryGetData<List<EntityTableCondition>>(AdditionalConditionsKey, out var existingConditions);
-        if (ConditionsForChildren.Count == 0 && !hasAdditionalConditions)
-        {
-            foreach (var spawn in base.GetSpawns(rand, entMan, proto, ctx))
-            {
-                yield return spawn;
-            }
+        if (ConditionsForChildren.Count == 0)
+            return default(ScopedConditionsRestore);
 
-            yield break;
+        if (!ctx.TryGetData<List<EntityTableCondition>>(AdditionalConditionsKey, out var existingConditions))
+        {
+            // Nothing was scoped before: our own list can be used directly, no copy.
+            ctx.SetData(AdditionalConditionsKey, ConditionsForChildren);
+            return new ScopedConditionsRestore(ctx, null);
         }
 
-        List<EntityTableCondition> conditionsToUse = new(ConditionsForChildren);
-        if (hasAdditionalConditions)
-        {
-            conditionsToUse.AddRange(existingConditions!);
-        }
+        // Merge our conditions with whatever is already scoped in the context.
+        var combined = new List<EntityTableCondition>(ConditionsForChildren);
+        combined.AddRange(existingConditions);
+        ctx.SetData(AdditionalConditionsKey, combined);
+        return new ScopedConditionsRestore(ctx, existingConditions);
+    }
 
-        ctx.SetData(AdditionalConditionsKey, conditionsToUse);
-
-        foreach (var spawn in base.GetSpawns(rand, entMan, proto, ctx))
+    /// <summary>
+    /// Restores the <see cref="EntityTableContext"/> after a scoped-conditions block.
+    /// </summary>
+    protected readonly struct ScopedConditionsRestore(
+        EntityTableContext? ctx,
+        List<EntityTableCondition>? existingConditions
+    ) : IDisposable
+    {
+        public void Dispose()
         {
-            yield return spawn;
+            if(ctx == null)
+                return;
+
+            if (existingConditions is null)
+                ctx.RemoveData(AdditionalConditionsKey);
+            else
+                ctx.SetData(AdditionalConditionsKey, existingConditions);
         }
-        // restore context after checks are done
-        ctx.SetData(AdditionalConditionsKey, existingConditions!);
     }
 }

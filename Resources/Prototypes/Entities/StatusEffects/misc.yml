@@ -63,6 +63,15 @@
   - type: StunnedStatusEffect
   - type: KnockdownStatusEffect
 
+
+# Makes the creature immune to pressure damage.
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectPressureImmunity
+  name: pressure immunity
+  components:
+  - type: PressureImmunityStatusEffect
+
 # Prevents speaking and vocal emotes.
 - type: entity
   abstract: true
@@ -95,6 +104,13 @@
   - type: MutedStatusEffect
     speakPopup: ventriloquist-puppet-cant-speak
 
+- type: entity
+  parent: [ MobStatusEffectBase, MobStatusEffectDebuff ]
+  id: StatusEffectChangelingMuted
+  name: imperceptibly muted
+  components:
+  - type: MutedStatusEffect
+
 # Blurs your vision and makes you randomly fall asleep
 - type: entity
   parent: MobStatusEffectDebuff
@@ -110,6 +126,8 @@
   name: hallucinations
   components:
   - type: SeeingRainbowsStatusEffect
+  - type: ExaminableStatusEffect
+    messageId: status-effect-examine-seeing-rainbow
 
 # Causes your vision to become blurry and gives me a headache.
 - type: entity
@@ -121,9 +139,14 @@
 
 # Causes you to get drunk
 - type: entity
-  parent: [ StatusEffectWoozy, StatusEffectSlurred ]
+  parent: [ StatusEffectWoozy, StatusEffectSlurred, StatusEffectClumsyDrunk ]
   id: StatusEffectDrunk
   name: drunk
+  components:
+  - type: ExaminableStatusEffect
+    messageId: status-effect-examine-drunk
+  - type: StatusEffectAlert
+    alert: DrunkAlert
 
 # Prevents the target from seeing
 - type: entity
@@ -138,6 +161,8 @@
       - Blindable
       requireAll: true
   - type: BlindnessStatusEffect
+  - type: ExaminableStatusEffect
+    messageId: status-effect-examine-temporary-blindness
 
 # Obstructs the target's vision with the flash overlay.
 - type: entity

@@ -1,0 +1,12 @@
+- type: entity
+  abstract: true
+  id: BaseHungerThirstSlowdown
+  components:
+  - type: SatiationSpeedModifier
+    satiations:
+      Hunger:
+        thresholds:
+          Peckish: 0.75
+      Thirst:
+        thresholds:
+          Parched: 0.75
