@@ -1,10 +1,10 @@
-using System.Linq;
-using System.Numerics;
 using Content.Shared.EntityTable;
 using Content.Shared.EntityTable.Conditions;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using System.Linq;
+using System.Numerics;
 
 namespace Content.Shared.Containers;
 
@@ -84,8 +84,7 @@ public sealed partial class ContainerFillSystem : EntitySystem
                 );
             }
 
-            var spawns = _entityTable.GetSpawns(table, ctx: ctx)
-                                     .ToList();
+            var spawns = _entityTable.GetSpawns(table, ctx: ctx).ToList();
 
             if (ent.Comp.Sort)
             {
