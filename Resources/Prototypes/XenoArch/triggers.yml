@@ -108,7 +108,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerMusic
-  name:  xenoarch-trigger-tip-music
   components:
   - type: XATCompNearby
     requireComponentWithName: ActiveInstrument
@@ -117,7 +116,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerHeat
-  name:  xenoarch-trigger-tip-heat
   components:
   - type: XATTemperature
     targetTemperature: 373
@@ -134,7 +132,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerCold
-  name:  xenoarch-trigger-tip-cold
   components:
   - type: XATTemperature
     targetTemperature: 255
@@ -146,7 +143,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerNoOxygen
-  name:  xenoarch-trigger-tip-no-oxygen
   components:
   - type: XATGas
     targetGas: Oxygen
@@ -156,7 +152,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerWater
-  name:  xenoarch-trigger-tip-water
   components:
   - type: XATGas
     targetGas: WaterVapor
@@ -167,7 +162,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerCO2
-  name:  xenoarch-trigger-tip-co2
   components:
   - type: XATGas
     targetGas: CarbonDioxide
@@ -178,7 +172,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerPlasma
-  name:  xenoarch-trigger-tip-plasma
   components:
   - type: XATGas
     targetGas: Plasma
@@ -189,7 +182,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerTritium
-  name:  xenoarch-trigger-tip-tritium
   components:
   - type: XATGas
     targetGas: Tritium
@@ -200,7 +192,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerAmmonia
-  name:  xenoarch-trigger-tip-ammonia
   components:
   - type: XATGas
     targetGas: Ammonia
@@ -211,7 +202,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerN2O
-  name:  xenoarch-trigger-tip-n2o
   components:
   - type: XATGas
     targetGas: NitrousOxide
@@ -222,7 +212,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerFrezon
-  name:  xenoarch-trigger-tip-frezon
   components:
   - type: XATGas
     targetGas: Frezon
@@ -233,7 +222,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerRadiation
-  name:  xenoarch-trigger-tip-radiation
   components:
   - type: XATDamageThresholdReached
     typesNeeded:
@@ -242,14 +230,12 @@
 - type: entity
   id: TriggerMicrowave
   parent: BaseXenoArtifactTrigger
-  name: xenoarch-trigger-tip-microwave
   components:
   - type: XATMicrowave
 
 - type: entity
   id: TriggerPressureHigh
   parent: BaseXenoArtifactTrigger
-  name:  xenoarch-trigger-tip-pressure-high
   components:
   - type: XATPressure
     maxPressureThreshold: 385
@@ -257,7 +243,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerPressureLow
-  name:  xenoarch-trigger-tip-pressure-low
   components:
   - type: XATPressure
     minPressureThreshold: 50
@@ -265,14 +250,12 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerExamine
-  name:  xenoarch-trigger-tip-examine
   components:
   - type: XATExamine
 
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerBruteDamage
-  name:  xenoarch-trigger-tip-brute-damage
   components:
   - type: XATDamageThresholdReached
     groupsNeeded:
@@ -281,14 +264,12 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerInteraction
-  name:  xenoarch-trigger-tip-interaction
   components:
   - type: XATInteraction
 
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerWrenching
-  name:  xenoarch-trigger-tip-wrenching
   components:
   - type: XATToolUse
     requiredTool: Anchoring
@@ -298,7 +279,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerPrying
-  name:  xenoarch-trigger-tip-prying
   components:
   - type: XATToolUse
     requiredTool: Prying
@@ -308,7 +288,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerScrewing
-  name:  xenoarch-trigger-tip-screwing
   components:
   - type: XATToolUse
     requiredTool: Screwing
@@ -318,7 +297,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerPulsing
-  name:  xenoarch-trigger-tip-pulsing
   components:
   - type: XATToolUse
     requiredTool: Pulsing
@@ -328,7 +306,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerTimer
-  name:  xenoarch-trigger-tip-timer
   components:
   - type: XATTimer
     possibleDelayInSeconds:
@@ -338,7 +315,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerBlood
-  name:  xenoarch-trigger-tip-blood
   components:
   - type: XATReactive
     reagents:
@@ -354,28 +330,24 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerThrow
-  name:  xenoarch-trigger-tip-throw
   components:
   - type: XATItemLand
 
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerDeath
-  name:  xenoarch-trigger-tip-death
   components:
   - type: XATDeath
 
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerMagnet
-  name:  xenoarch-trigger-tip-magnet
   components:
   - type: XATMagnet
 
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerConsumeMoney
-  name:  xenoarch-trigger-tip-money
   components:
   - type: XATInteractWith
     interactionCount:
@@ -391,7 +363,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerConsumeKnowledge
-  name:  xenoarch-trigger-tip-knowledge
   components:
   - type: XATInteractWith
     destroyAfter: true
@@ -406,7 +377,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerConsumeCarbs
-  name:  xenoarch-trigger-tip-carbs
   components:
   - type: XATInteractWith
     destroyAfter: true
@@ -427,7 +397,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerConsumeMeat
-  name:  xenoarch-trigger-tip-meat
   components:
   - type: XATInteractWith
     destroyAfter: true
@@ -447,7 +416,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerConsumeProduce
-  name:  xenoarch-trigger-tip-produce
   components:
   - type: XATInteractWith
     destroyAfter: true
@@ -467,7 +435,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerInteractStamp
-  name: xenoarch-trigger-tip-stamp
   components:
   - type: XATInteractWith
     interactionTime: 0.5
@@ -483,7 +450,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerInteractShock
-  name: xenoarch-trigger-tip-shock
   components:
   - type: XATShock
   - type: XATDamageThresholdReached
@@ -493,7 +459,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerAttackParticleEngine
-  name: xenoarch-trigger-tip-particle
   components:
   - type: XATInteractAttack
     whitelist:
@@ -503,7 +468,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerAttackParticleAnomaly
-  name: xenoarch-trigger-tip-anomparticle
   components:
   - type: XATInteractAttack
     whitelist:
@@ -513,7 +477,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerAttackStaminaDamage
-  name: xenoarch-trigger-tip-stamina-damage
   components:
   - type: XATStaminaDamageThresholdReached
     damageNeeded: 8 # half a practice disabler capacity
@@ -521,7 +484,6 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerAttackLaser
-  name: xenoarch-trigger-tip-laser
   components:
   - type: XATInteractAttack
     interactionCount:
