@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using Robust.Shared.ContentPack;
 using Robust.Shared.EntitySerialization.Systems;
@@ -19,58 +18,65 @@ public sealed partial class MapMigrationSystem : EntitySystem
 {
     [Dependency] private IResourceManager _resMan = default!;
 
-    private const string MigrationFile = "/Migrations/migration.yml";
+    private const string MigrationDirectory = "/Migrations/";
+
+    private readonly Dictionary<string, string?> _migrations = new();
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<BeforeEntityReadEvent>(OnBeforeReadEvent);
 
-#if DEBUG
-        if (!TryReadFile(out var mappings))
-            return;
+        LoadMigrations();
 
+#if DEBUG
         // Verify that all of the entries map to valid entity prototypes.
-        foreach (var node in mappings.Children.Values)
+        foreach (var newId in _migrations.Values.OfType<string>())
         {
-            var newId = ((ValueDataNode) node).Value;
-            if (!string.IsNullOrEmpty(newId) && newId != "null")
-                DebugTools.Assert(ProtoMan.HasIndex<EntityPrototype>(newId), $"{newId} is not an entity prototype.");
+            DebugTools.Assert(ProtoMan.HasIndex<EntityPrototype>(newId), $"{newId} is not an entity prototype.");
         }
 #endif
     }
 
-    private bool TryReadFile([NotNullWhen(true)] out MappingDataNode? mappings)
+    private void LoadMigrations()
     {
-        mappings = null;
-        var path = new ResPath(MigrationFile);
-        if (!_resMan.TryContentFileRead(path, out var stream))
-            return false;
+        var paths = _resMan.ContentFindFiles(MigrationDirectory)
+            .Where(path => path.Extension == "yml");
 
-        using var reader = new StreamReader(stream, EncodingHelpers.UTF8);
-        var documents = DataNodeParser.ParseYamlStream(reader).FirstOrDefault();
+        foreach (var path in paths)
+        {
+            using var stream = _resMan.ContentFileRead(path);
+            using var reader = new StreamReader(stream, EncodingHelpers.UTF8);
+            var document = DataNodeParser.ParseYamlStream(reader).FirstOrDefault();
 
-        if (documents == null)
-            return false;
+            if (document == null)
+                continue;
 
-        mappings = (MappingDataNode) documents.Root;
-        return true;
+            var mappings = (MappingDataNode) document.Root;
+
+            foreach (var (oldId, node) in mappings)
+            {
+                if (node is not ValueDataNode valueNode)
+                    continue;
+
+                var newId = string.IsNullOrWhiteSpace(valueNode.Value) || valueNode.Value == "null"
+                    ? null
+                    : valueNode.Value;
+
+                if (!_migrations.TryAdd(oldId, newId))
+                    throw new InvalidDataException($"Duplicate map migration for '{oldId}' in '{path}'.");
+            }
+        }
     }
 
     private void OnBeforeReadEvent(BeforeEntityReadEvent ev)
     {
-        if (!TryReadFile(out var mappings))
-            return;
-
-        foreach (var (key, value) in mappings)
+        foreach (var (oldId, newId) in _migrations)
         {
-            if (value is not ValueDataNode valueNode)
-                continue;
-
-            if (string.IsNullOrWhiteSpace(valueNode.Value) || valueNode.Value == "null")
-                ev.DeletedPrototypes.Add(key);
+            if (newId == null)
+                ev.DeletedPrototypes.Add(oldId);
             else
-                ev.RenamedPrototypes.Add(key, valueNode.Value);
+                ev.RenamedPrototypes.Add(oldId, newId);
         }
     }
 }
