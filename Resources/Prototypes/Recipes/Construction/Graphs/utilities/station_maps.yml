@@ -12,6 +12,7 @@
         amount: 2
         doAfter: 2
       completed:
+      # An edge with no completed action feels unresponsive, so in this case a sound is added.
       - !type:PlaySound
         sound:
           collection: PlaceMetal
@@ -78,12 +79,12 @@
       - !type:PlaySound
         sound:
           collection: PlaceGlass
-    - to: electronics
     - to: wired
       steps:
       - tool: Cutting
         doAfter: 1
       completed:
+      # Empty the container instead of spawning a new electronics to maintain component changes the board might have.
       - !type:EmptyContainer
         container: *Container
         pickup: true
