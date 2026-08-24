@@ -22,7 +22,7 @@
     - Benzene
     - Phenol
     - Bleach
-    - Deboxide
+    - Deboxide # replaced pax
   - quantity: 5 # Medical chems
     weight: 2
     reagents:
@@ -128,7 +128,7 @@
     - Nocturine
     - MuteToxin
     - Lead
-    - Pax
+    - Pax # Moved because it's a vestine chem now
   - quantity: 0.1
     weight: 5 # 99.9% chance of appearing at least once with 60u of vestine with an average of 6.5 occurances.
     reagents:

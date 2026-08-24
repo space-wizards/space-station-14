@@ -9,7 +9,7 @@
   color: "#FFB041"
   metabolisms:
     Bloodstream:
-      effects:
+      effects: # PLACEHOLDER, I was having some issues with running the game so I just put in pax's effects. Intended to slow down weapon swing/fire speed, though that'd require a whole new entity effect system.
       - !type:GenericStatusEffect
         key: Pacified
         component: Pacified
@@ -153,7 +153,7 @@
       - !type:GenericStatusEffect
         key: Pacified
         component: Pacified
-        time: 5
+        time: 5 # Upped to 5 to give it something for the effective removal vestine does.
 
 - type: reagent
   id: Stimulants

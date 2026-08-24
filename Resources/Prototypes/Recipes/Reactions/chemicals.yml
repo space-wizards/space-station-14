@@ -319,10 +319,10 @@
   id: Deboxide
   impact: Medium
   minTemp: 310
-  reactants:
+  reactants: # old pax recipie but oxygen instead of water (it is an oxide after all)
     MindbreakerToxin:
       amount: 1
-    Synaptizine:
+    Synaptizine: 
       amount: 1
     Oxygen:
       amount: 1
@@ -421,7 +421,7 @@
   id: Pax
   impact: Medium
   reactants:
-    Deboxide:
+    Deboxide: # new precurssor, mindbreakertoxin and synaptizine recipie moved to Deboxide
       amount: 1
     Vestine:
       amount: 1
