@@ -533,7 +533,7 @@
 
 - type: entity
   parent: DisposalRouterFlipped
-  id: DisposalRouterWaste
+  id: DisposalRouterFlippedWaste
   suffix: Flipped, Waste
   components:
   - type: DisposalRouter

@@ -4,6 +4,7 @@ ui-disposal-unit-title = {CAPITALIZE($name)}
 
 ui-disposal-unit-label-state = State:
 ui-disposal-unit-label-pressure = Pressure:
+ui-disposal-unit-tagger-label = Routing tag:
 ui-disposal-unit-label-status = Ready
 
 ui-disposal-unit-button-flush = Flush

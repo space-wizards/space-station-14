@@ -33,6 +33,12 @@ public sealed partial class DisposalTaggerSystem : EntitySystem
         args.Tags.Add(ent.Comp.DisposalTag);
     }
 
+    [SubscribeLocalEvent]
+    private void OnUiUpdateTag(Entity<FlushTaggerComponent> ent, ref DisposalUnitUiTaggerEditMessage args)
+    {
+        ent.Comp.DisposalTag = args.NewTag;
+    }
+
     private void OnGetTaggerNextDirection(Entity<DisposalTaggerComponent> ent, ref GetDisposalsNextDirectionEvent args)
     {
         _disposalHolder.AddTag(args.Holder, ent.Comp.Tag);
