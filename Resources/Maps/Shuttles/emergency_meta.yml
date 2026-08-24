@@ -4,8 +4,8 @@ meta:
   engineVersion: 289.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/22/2026 21:34:23
-  entityCount: 983
+  time: 08/23/2026 13:49:08
+  entityCount: 984
 maps: []
 grids:
 - 1
@@ -2878,7 +2878,8 @@ entities:
     components:
     - type: Transform
       parent: 1
-      pos: 10.5,-2.5
+      rot: 3.141592653589793 rad
+      pos: 12.5,-11.5
   - uid: 420
     components:
     - type: Transform
@@ -2894,11 +2895,11 @@ entities:
     - type: Transform
       parent: 1
       pos: -3.5,-6.5
-  - uid: 865
+  - uid: 854
     components:
     - type: Transform
       parent: 1
-      pos: 12.5,-11.5
+      pos: 12.5,-2.5
 - proto: FireAxeCabinetFilled
   entities:
   - uid: 423
@@ -4016,11 +4017,6 @@ entities:
       parent: 1
       rot: 3.141592653589793 rad
       pos: 5.5,-6.5
-  - uid: 854
-    components:
-    - type: Transform
-      parent: 1
-      pos: 11.5,1.5
   - uid: 858
     components:
     - type: Transform
@@ -6093,24 +6089,37 @@ entities:
     components:
     - type: Transform
       parent: 1
-      pos: -4.5,-9.5
+      pos: 10.5,-2.5
   - uid: 58
     components:
     - type: Transform
       parent: 1
+      rot: -1.5707963267948966 rad
       pos: 5.5,-9.5
   - uid: 445
     components:
     - type: Transform
       parent: 1
-      rot: -1.5707963267948966 rad
-      pos: 12.5,-2.5
+      rot: 1.5707963267948966 rad
+      pos: -4.5,-9.5
   - uid: 810
     components:
     - type: Transform
       parent: 1
       rot: -1.5707963267948966 rad
       pos: 3.5,-2.5
+  - uid: 865
+    components:
+    - type: Transform
+      parent: 1
+      rot: 3.141592653589793 rad
+      pos: 10.5,-2.5
+  - uid: 979
+    components:
+    - type: Transform
+      parent: 1
+      rot: 1.5707963267948966 rad
+      pos: 5.5,-9.5
 - proto: Screwdriver
   entities:
   - uid: 260
