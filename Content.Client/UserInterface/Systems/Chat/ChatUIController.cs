@@ -11,7 +11,6 @@ using Content.Client.Gameplay;
 using Content.Client.Ghost;
 using Content.Client.Mind;
 using Content.Client.Roles;
-using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Chat.Widgets;
 using Content.Client.UserInterface.Systems.Gameplay;
@@ -19,7 +18,6 @@ using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Damage.ForceSay;
-using Content.Shared.Decals;
 using Content.Shared.Input;
 using Content.Shared.Radio;
 using Content.Shared.Roles.RoleCodeword;
@@ -54,6 +52,7 @@ public sealed partial class ChatUIController : UIController
     [Dependency] private IEntityManager _ent = default!;
     [Dependency] private IInputManager _input = default!;
     [Dependency] private IClientNetManager _net = default!;
+    [Dependency] private IPaletteManager _palette = default!;
     [Dependency] private IPlayerManager _player = default!;
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IStateManager _state = default!;
@@ -69,7 +68,7 @@ public sealed partial class ChatUIController : UIController
     [UISystemDependency] private readonly RoleCodewordSystem? _roleCodewordSystem = default!;
 
     private static readonly ProtoId<PalettePrototype> ChatNamePalette = "ChatNames";
-    private string[] _chatNameColors = default!;
+    private List<Color> _chatNameColors = default!;
     private bool _chatNameColorsEnabled;
 
     private ISawmill _sawmill = default!;
@@ -232,12 +231,7 @@ public sealed partial class ChatUIController : UIController
         gameplayStateLoad.OnScreenLoad += OnScreenLoad;
         gameplayStateLoad.OnScreenUnload += OnScreenUnload;
 
-        var nameColors = _prototypeManager.Index(ChatNamePalette).Colors.Values.ToArray();
-        _chatNameColors = new string[nameColors.Length];
-        for (var i = 0; i < nameColors.Length; i++)
-        {
-            _chatNameColors[i] = nameColors[i].ToHex();
-        }
+        _palette.GetPaletteColors(ChatNamePalette, _chatNameColors);
 
         _config.OnValueChanged(CCVars.ChatWindowOpacity, OnChatWindowOpacityChanged);
 
