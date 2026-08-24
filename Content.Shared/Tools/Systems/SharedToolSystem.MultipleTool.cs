@@ -74,6 +74,7 @@ public abstract partial class SharedToolSystem
         if (TryComp<PryingComponent>(uid, out var pryComp))
         {
             pryComp.Enabled = current.Behavior.Contains("Prying");
+            Dirty(uid, pryComp);
         }
 
         if (playSound && current.ChangeSound != null)
