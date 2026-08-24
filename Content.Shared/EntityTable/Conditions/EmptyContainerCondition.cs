@@ -9,9 +9,18 @@ namespace Content.Shared.EntityTable.Conditions;
 /// </summary>
 public sealed partial class EmptyContainerCondition : EntityTableCondition
 {
+    /// <summary>
+    /// Key for <see cref="EntityTableContext"/> to store container that should be checked by this condition.
+    /// </summary>
     public const string ContainerContextKey = "Container";
 
-    protected override bool EvaluateImplementation(EntityTableSelector root, IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
+    /// <inheritdoc/>>
+    protected override bool EvaluateImplementation(
+        EntityTableSelector root,
+        IEntityManager entMan,
+        IPrototypeManager proto,
+        EntityTableContext ctx
+    )
     {
         if (!ctx.TryGetData<BaseContainer>(ContainerContextKey, out var container))
             return false;
