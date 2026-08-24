@@ -54,5 +54,4 @@
         mask:
         - TableMask
         layer:
-        - TableLayer
-        - LowImpassable
+        - CounterLayer

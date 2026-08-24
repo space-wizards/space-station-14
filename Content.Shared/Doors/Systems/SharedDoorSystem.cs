@@ -628,7 +628,8 @@ public abstract partial class SharedDoorSystem : EntitySystem
                 continue;
 
             // Ignore low-passable entities.
-            if ((otherPhysics.Comp.CollisionMask & (int)CollisionGroup.LowImpassable) == 0)
+            if ((otherPhysics.Comp.CollisionMask & (int)CollisionGroup.LowImpassable) == 0 &&
+                otherPhysics.Comp.CollisionLayer != (int) CollisionGroup.CounterLayer)
                 continue;
 
             //For when doors need to close over conveyor belts
