@@ -523,10 +523,18 @@
 # Specific
 
 - type: entity
-  parent: DisposalRouter
-  id: DisposalRouterWaste
+  abstract: true
+  id: BaseWasteRouter
   suffix: Waste
   components:
   - type: DisposalRouter
     tags:
     - waste
+
+- type: entity
+  parent: [BaseWasteRouter, DisposalRouter ]
+  id: DisposalRouterWaste
+
+- type: entity
+  parent: [BaseWasteRouter, DisposalRouterFlipped ]
+  id: DisposalRouterWaste
