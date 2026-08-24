@@ -27,6 +27,12 @@ public sealed partial class DisposalTaggerSystem : EntitySystem
         });
     }
 
+    [SubscribeLocalEvent]
+    private void OnFlushTagger(Entity<FlushTaggerComponent> ent, ref BeforeDisposalFlushEvent args)
+    {
+        args.Tags.Add(ent.Comp.DisposalTag);
+    }
+
     private void OnGetTaggerNextDirection(Entity<DisposalTaggerComponent> ent, ref GetDisposalsNextDirectionEvent args)
     {
         _disposalHolder.AddTag(args.Holder, ent.Comp.Tag);

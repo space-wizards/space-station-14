@@ -519,3 +519,14 @@
           True: { state: signal-router-flipped }
   - type: Construction
     node: signal_router_flipped
+
+# Specific
+
+- type: entity
+  parent: DisposalRouter
+  id: DisposalRouterWaste
+  suffix: Waste
+  components:
+  - type: DisposalRouter
+    tags:
+    - waste

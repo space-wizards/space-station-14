@@ -150,6 +150,8 @@
     table: !type:NestedSelector
       tableId: RatKingLoot
   - type: RequireProjectileTarget
+  - type: FlushTagger
+    disposalTag: waste
 
 - type: entity
   id: MailingUnit
