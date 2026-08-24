@@ -2,8 +2,6 @@ using Content.Shared.EntityTable;
 using Content.Shared.EntityTable.Conditions;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Robust.Shared.Prototypes;
-using Content.Shared.Xenoarchaeology.Artifact.Prototypes;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
 
@@ -202,7 +200,7 @@ public sealed partial class XenoArtifactSystem
             _usedTriggers = new(requestedSize);
             Context = new EntityTableContext(new Dictionary<string, object>
             {
-                [IsNotRepeatingCondition.UsedSpawnsKey] = _usedTriggers
+                [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = _usedTriggers
             });
         }
 
