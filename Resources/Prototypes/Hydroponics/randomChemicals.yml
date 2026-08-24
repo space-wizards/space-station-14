@@ -5,120 +5,119 @@
     weight: 0.5
     reagents:
     - Omnizine
-    - Impedrezene
+    - Plasma
     - Fresium
     - HeartbreakerToxin
     - Honk
     - BuzzochloricBees
-  - quantity: 5
+  - quantity: 5 # Evil chems
     weight: 1
     reagents:
-    - Cognizine
+    - Heparin
     - Toxin
-    - Leporazine
-    - Epinephrine
-    - CarpoToxin
-    - SulfuricAcid
-    - Licoxide
     - Napalm
     - ChlorineTrifluoride
-    - Radium
-    - Gold
-    - Uranium
-    - Phosphorus
-    - AtomicBomb
-    - Neurotoxin
-    - ChangelingSting
-    - CogChamp
-    - JuiceThatMakesYouWeh
     - TearGas
     - Lipolicide
     - Benzene
-  - quantity: 5
-    weight: 2
-    reagents:
-    - Desoxyephedrine
-    - ChloralHydrate
-    - Ipecac
-    - Hyronalin
-    - Cryoxadone
-    - Ethylredoxrazine
-    - Dylovene
-    - Histamine
-    - Blood
-    - WeldingFuel
-    - Mercury
-    - Silver
     - Phenol
-    - Ultravasculine
-    - Carbon
-    - THC
-    - Nicotine
-    - DoctorsDelight
-    - IceCream
-    - Cola
-    - Diphenhydramine
-    - Iron
     - Bleach
-    - Mannitol
-  - quantity: 10
-    weight: 3
+    - Pax
+  - quantity: 5 # Medical chems
+    weight: 2
     reagents:
     - Bicaridine
     - Dermaline
     - Ephedrine
-    - NorepinephricAcid
     - Tricordrazine
     - Saline
-    - PulpedBananaPeel
-    - Cryptobiolin
-    - EZNutrient
+    - Cryoxadone
+    - DoctorsDelight
+    - Hyronalin
+    - Dylovene
+  - quantity: 10 # Intermediary
+    weight: 2
+    reagents:
     - Ammonia
-    - RobustHarvest
-    - SpaceLube
-    - Theobromine
-    - Allicin
     - Acetone
     - Ash
-    - SodiumCarbonate
-    - SpaceDrugs
+    - Oil
+    - Slime
+    - WeldingFuel
+    - CarpoToxin
+    - Histamine
+    - SulfuricAcid
+    - Fersilicite
+    - EZNutrient
+  - quantity: 10 # Gimmick chems
+    weight: 2
+    reagents:
+    - SpaceLube
     - SpaceGlue
-    - JuiceBerryPoison
-    - Pilk
-    - Posca
-    - Ethanol
-    - FourteenLoko
-    - LemonLime
-    - LemonLimeCranberry
-    - Enzyme
-    - Vinegar
+    - THC
+    - Ipecac
+    - Licoxide
+    - Theobromine
+    - Allicin
+    - NorepinephricAcid
+    - Cryptobiolin
+    - Ethylredoxrazine
+    - Blood
+    - Desoxyephedrine
+    - ChloralHydrate
+  - quantity: 12 # Basic Element Table
+    weight: 5
+    reagents:
     - Potassium
     - Fluorine
     - Aluminium
-    - Wine
-    - Coffee
-    - Beer
-  - quantity: 10
-    weight: 3.5
+    - Chlorine
+    - Mercury
+    - Carbon
+    - Iron
+    - Radium
+    - Phosphorus
+    - Gold
+    - Uranium
+    - Silver
+    - Nitrogen
+    - Copper
+    - Sulfur
+    - Lithium
+  - quantity: 10 # Basic Farming Table
+    weight: 5
     reagents:
     - Vitamin
-    - Kelotane
-    - Inaprovaline
-    - Oil
-    - Slime
     - Fiber
     - Water
     - Sugar
     - Cream
-    - SodaWater
     - Ice
-    - JuiceCarrot
     - Protein
     - Flour
     - Soysauce
     - TableSalt
-    - Chlorine
-    - Mercury
+    - Enzyme
+    - Vinegar
+    - Ethanol
+    - Wine
+    - Mayo
+    - IceCream
+    - Sap
+  - quantity: 5 # Interesting Farming Table
+    weight: 1
+    reagents:
+    - SpaceDrugs
+    - Kelotane
+    - Inaprovaline
+    - Lipozine
+    - JuiceThatMakesYouWeh
+    - CogChamp
+    - Laughter
+  - quantity: 5
+    weight: 0.02 # Ultra rare mega hit farming table
+    reagents:
+      - Cognizine
 
 - type: weightedRandomFillSolution
   id: EvilRandomFillSolution
