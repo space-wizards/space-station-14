@@ -236,8 +236,8 @@
       factions:
         - SimpleHostile
     - type: GhostRole
-      name: ghost-role-information-slimes-name
       description: ghost-role-information-angry-slimes-description
+      rules: ghost-role-information-nonantagonist-rules
       mindRoles:
       - MindRoleGhostRoleTeamAntagonist
       raffle:
