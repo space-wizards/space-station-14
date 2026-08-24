@@ -628,6 +628,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
                 continue;
 
             // Ignore low-passable entities.
+            // Counters also collide with small entities, they are low-passable, but shouldn't be ignored because they are pretty static.
             if ((otherPhysics.Comp.CollisionMask & (int)CollisionGroup.LowImpassable) == 0 &&
                 otherPhysics.Comp.CollisionLayer != (int) CollisionGroup.CounterLayer)
                 continue;
