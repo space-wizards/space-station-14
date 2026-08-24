@@ -353,6 +353,9 @@ public sealed partial class PlantTraySystem : EntitySystem
 
             if (holder.MissingGas)
                 markup.Add(Loc.GetString("tray-component-plant-missing-gas-warning"));
+
+            if (_plantHolder.GetHealthThreshold(plantUid.Value))
+                markup.Add(Loc.GetString("tray-component-plant-health-warning"));
         }
 
         return string.Join("\n", markup);

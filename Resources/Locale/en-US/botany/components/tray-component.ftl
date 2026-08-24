@@ -10,3 +10,4 @@ tray-component-pest-high-level-warning = It's filled with [color=gray]tiny worms
 tray-component-plant-improper-heat-warning = The [color=orange]improper temperature level alert[/color] is blinking.
 tray-component-plant-improper-pressure-warning = The [color=lightblue]improper environment pressure alert[/color] is blinking.
 tray-component-plant-missing-gas-warning = The [color=cyan]improper gas environment alert[/color] is blinking.
+tray-component-plant-health-warning = The [color=red]health alert[/color] is blinking.
