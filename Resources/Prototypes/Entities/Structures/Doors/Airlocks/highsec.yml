@@ -1,7 +1,7 @@
 - type: entity
   parent: [ BaseAirlockSecure, StructureHealthDoorStrong]
   id: HighSecDoor
-  name: high security airlock
+  name: high security door
   description: Keeps the bad out and keeps the good in.
   components:
   - type: Sprite
