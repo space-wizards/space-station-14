@@ -106,6 +106,33 @@
     proto: GrenadeFrag
 
 - type: entity
+  parent: [BaseWeaponLauncher, BaseXenoborgContraband]
+  id: WeaponNanofoamLauncherXenoborg
+  name: xenoborg nanofoam launcher
+  description: Launches a globule of nanomachines, encasing a target in a nanomachine-based foam.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/nanofoam_launcher.rsi
+    layers:
+    - state: icon
+      map: [ "enum.GunVisualLayers.Base" ]
+  - type: Gun
+    fireRate: 1
+    projectileSpeed: 25 # Slower than a bullet, same speed as our old projectile limit.
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/glob_fire.ogg
+  - type: AmmoCounter
+  - type: BallisticAmmoProvider
+    proto: GrenadeXenoborgNanofoam
+    capacity: 3
+  - type: BallisticAmmoSelfRefiller
+    autoRefillRate: 6s
+    affectedByEmp: true
+
+- type: entity
   parent: [ BaseWeaponLauncher, BaseMajorContraband ]
   id: WeaponLauncherRocket
   name: RPG-7

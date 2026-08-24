@@ -958,6 +958,31 @@
     tileBreakScale: 0.01
 
 - type: entity
+  parent: BaseBulletTrigger
+  id: BulletGrenadeNanofoam
+  name: nanofoam globule
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 1
+    soundHit:
+      path: /Audio/Effects/gen_hit.ogg
+  - type: StaminaDamageOnCollide
+    damage: 80
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: nano-glob
+  - type: SmokeOnTrigger
+    duration: 1
+    spreadAmount: 20
+    smokePrototype: NanomachineMetalFoam
+  - type: EmitSoundOnTrigger
+    sound: /Audio/Items/smoke_grenade_smoke.ogg
+
+- type: entity
   id: BulletGrenadeEMP
   name: EMP rocket
   parent: BaseBulletTrigger

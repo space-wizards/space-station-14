@@ -157,6 +157,14 @@
     prototype: FoamedAluminiumMetal
 
 - type: entity
+  parent: AluminiumMetalFoam
+  id: NanomachineMetalFoam
+  name: nanomachine metal foam
+  components:
+  - type: SpawnOnDespawn
+    prototype: FoamedNanomachineMetal
+
+- type: entity
   id: BaseFoamedMetal
   name: base foamed metal
   abstract: true
@@ -267,6 +275,15 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+
+- type: entity
+  parent: FoamedAluminiumMetal
+  id: FoamedNanomachineMetal
+  name: foamed nanomachine metal
+  description: "Foam formed by a nanomachine globule. Easily destroyed."
+  components:
+  - type: TimedDespawn
+    lifetime: 5
 
 - type: entity
   id: ReactionFlash

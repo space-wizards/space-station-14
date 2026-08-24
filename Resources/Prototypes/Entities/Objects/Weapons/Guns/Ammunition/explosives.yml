@@ -157,6 +157,14 @@
     state: frag
     suffix: false
 
+- type: entity
+  id: GrenadeXenoborgNanofoam
+  name: Nanofoam grenade
+  components:
+  - type: CartridgeAmmo
+    proto: BulletGrenadeNanofoam
+    soundEject: null
+
 # Cannon Balls
 
 - type: entity
