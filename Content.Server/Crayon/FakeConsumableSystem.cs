@@ -15,11 +15,8 @@ public sealed partial class FakeConsumableSystem : EntitySystem
 
     private void OnStopThrow(Entity<FakeConsumableComponent> ent, ref StopThrowEvent args)
     {
-        if (!ent.Comp.DeleteOnThrow)
-            return;
-
         var thrownCoords = Transform(ent).Coordinates;
-        _popup.PopupCoordinates("The food vanishes in a mist...", thrownCoords);
+        _popup.PopupCoordinates(Loc.GetString("fake-food-component-vanish", ("owner", ent)), thrownCoords);
         QueueDel(ent);
     }
 }

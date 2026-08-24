@@ -74,7 +74,7 @@
   id: MagicCrayonMime
   parent: BaseItem
   name: magic crayon
-  description: A magic crayon infused with the vow's power.
+  description: A crayon infused with the vow's essence.
   components:
   - type: Sprite
     sprite: Objects/Fun/crayons.rsi
@@ -83,6 +83,9 @@
     size: Tiny
     heldPrefix: mime
   - type: MagicCrayon
+    fakeFood: FakeFoodBurgerCheese
+    normalCrayon: CrayonMime
+    spawnSound: /Audio/Effects/pop.ogg
   - type: LimitedCharges
     maxCharges: 10
 

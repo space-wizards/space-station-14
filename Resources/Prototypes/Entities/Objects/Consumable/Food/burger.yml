@@ -379,8 +379,9 @@
       right:
       - state: plain-inhand-right
 
+# Fake food clone of the cheeseburger used in the magic crayon.
 - type: entity
-  parent: FoodBase
+  parent: FakeFoodBase
   id: FakeFoodBurgerCheese
   name: cheese burger
   description: This noble burger stands proudly clad in golden cheese.
@@ -388,7 +389,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/burger.rsi
     state: cheese
-  - type: FakeConsumable
   - type: Item
     sprite: Objects/Consumable/Food/burger.rsi
     inhandVisuals:

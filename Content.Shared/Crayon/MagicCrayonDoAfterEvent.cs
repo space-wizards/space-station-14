@@ -7,7 +7,7 @@ namespace Content.Shared.Crayon;
 [Serializable, NetSerializable]
 public sealed partial class MagicCrayonDoAfterEvent : SimpleDoAfterEvent
 {
-    public NetCoordinates ClickLocation { get; set; }
+    public NetCoordinates ClickLocation;
 
     public MagicCrayonDoAfterEvent()
     {

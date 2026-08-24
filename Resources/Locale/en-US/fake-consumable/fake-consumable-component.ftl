@@ -1,0 +1,1 @@
+fake-food-component-vanish = The {$owner} vanishes in a mist.

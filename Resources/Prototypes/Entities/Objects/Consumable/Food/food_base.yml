@@ -57,3 +57,11 @@
           True: {state: "icon-open"}
           False: {state: "icon"}
   - type: Openable
+
+# Base type for food that looks tasty but doesn't actually satiate the eater.
+- type: entity
+  abstract: true
+  parent: FoodBase
+  id: FakeFoodBase
+  components:
+    - type: FakeConsumable
