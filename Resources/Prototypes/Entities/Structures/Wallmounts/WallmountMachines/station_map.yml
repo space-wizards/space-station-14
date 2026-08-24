@@ -51,7 +51,7 @@
     containers:
       board:
         id: StationMapCircuitboard
-        prob: 0.50 # The board might be broken
+        prob: 0.25 # The board is probably broken
         conditions:
         - !type:EmptyContainerCondition # If this entity is spawned via construction the circuitboard already exists
 
@@ -78,9 +78,13 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
           False: { visible: false }
-  - type: ContainerFill
+  - type: EntityTableContainerFill
+    contextContainers: true
     containers:
-      board: [ StationMapCircuitboard ]
+      board:
+        id: StationMapCircuitboard
+        conditions:
+        - !type:EmptyContainerCondition
   - type: ApcPowerReceiver
     powerLoad: 50
   - type: PowerState
@@ -93,7 +97,7 @@
   - type: ActivatableUI
     key: enum.StationMapUiKey.Key
   - type: Damageable
-    damageModifierSet: GlassReinforcedMod
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
     - trigger:
