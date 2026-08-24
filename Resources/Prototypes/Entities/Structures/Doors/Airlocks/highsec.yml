@@ -19,11 +19,6 @@
     boardName: wires-board-name-highsec
     layoutId: HighSec
     alwaysRandomize: true
-    # Before the reparenting, these they weren't targeted at all, unlike the regular airlocks.
-    # Not sure if that was an inheritance mistake or an intentional feature, so I retained some of that behavior
-    # by having them be targeted but not explode
-  - type: LightningTarget
-    lightningExplode: false
   - type: Damageable
     damageModifierSet: PlasteelMod
   - type: Destructible

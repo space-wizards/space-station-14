@@ -1,4 +1,4 @@
-﻿# Feature-reduced parent, compatible with the requirements of the High Security Airlock
+﻿# Feature-reduced parent, compatible with the requirements of the High Security Door
 # You probably want to inherit from Airlock rather than this
 - type: entity
   abstract: true
@@ -165,7 +165,7 @@
   name: airlock
   description: It opens, it closes, and maybe crushes you.
   components:
-  # This is not on BaseSecure, because the high security airlock is always on the wall layer
+  # This is not on BaseSecure, because the high security door is always on the wall layer
   - type: LayerChangeOnWeld
     unWeldedLayer: AirlockLayer
     weldedLayer: WallLayer
