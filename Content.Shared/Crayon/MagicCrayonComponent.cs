@@ -3,6 +3,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Crayon;
 
+/// <summary>
+/// A component that describes a magic crayon, usually held by a mime.
+/// </summary>
 [RegisterComponent]
 public sealed partial class MagicCrayonComponent : Component
 {
@@ -19,7 +22,7 @@ public sealed partial class MagicCrayonComponent : Component
     public EntProtoId NormalCrayon;
 
     /// <summary>
-    /// The sound to play when the fake food is spawned.
+    /// If not null, the sound to play when the fake food is spawned.
     /// </summary>
     [DataField("spawnSound")]
     public SoundSpecifier? OnSpawnSound;
