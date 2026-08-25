@@ -33,7 +33,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Replays;
@@ -118,7 +117,7 @@ public sealed partial class ChatUIController : UIController
     /// <summary>
     ///     Factor multiplied by speech bubble char length to add to delay.
     /// </summary>
-    private const float BubbleDelayFactor = 0.8f / SingleBubbleCharLimit;
+    private const float BubbleDelayFactor = 0.35f / SingleBubbleCharLimit;
 
     /// <summary>
     ///     The max amount of speech bubbles over a single entity at once.
@@ -714,7 +713,7 @@ public sealed partial class ChatUIController : UIController
     private bool TryGetRadioChannel(string text, out RadioChannelPrototype? radioChannel)
     {
         radioChannel = null;
-        return _player.LocalEntity is EntityUid { Valid: true } uid
+        return _player.LocalEntity is { Valid: true } uid
            && _chatSys != null
            && _chatSys.TryProcessRadioMessage(uid, text, out _, out radioChannel, quiet: true);
     }
@@ -825,7 +824,8 @@ public sealed partial class ChatUIController : UIController
 
         var modifiedText = ev.Suffix != null
             ? Loc.GetString(forceSay.ForceSayMessageWrap,
-                ("message", msg), ("suffix", ev.Suffix))
+                ("message", msg),
+                ("suffix", ev.Suffix))
             : Loc.GetString(forceSay.ForceSayMessageWrapNoSuffix,
                 ("message", msg));
 
@@ -869,7 +869,10 @@ public sealed partial class ChatUIController : UIController
                 foreach (var (_, codewordData) in codewordComp.RoleCodewords)
                 {
                     foreach (string codeword in codewordData.Codewords)
-                        msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, codeword, "color", codewordData.Color.ToHex());
+                    {
+                        msg.WrappedMessage =
+                            SharedChatSystem.InjectTagAroundString(msg, codeword, "color", codewordData.Color.ToHex());
+                    }
                 }
             }
         }
