@@ -1,22 +1,24 @@
+#nullable enable
 using Content.IntegrationTests.Tests.Interaction;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Construction.Interaction;
 
 public sealed class WallConstruction : InteractionTest
 {
-    public const string Girder = "Girder";
-    public const string WallSolid = "WallSolid";
-    public const string Wall = "Wall";
+    private static readonly EntProtoId Girder = "Girder";
+    private static readonly EntProtoId WallSolid = "WallSolid";
+    private static readonly EntProtoId Wall = "Wall";
 
     [Test]
     public async Task ConstructWall()
     {
         await StartConstruction(Wall);
         await InteractUsing(Steel, 2);
-        Assert.That(HandSys.GetActiveItem((SEntMan.GetEntity(Player), Hands)), Is.Null);
+        Assert.That(HandSys.GetActiveItem((SPlayer, Hands)), Is.Null);
         ClientAssertPrototype(Girder, Target);
         await InteractUsing(Steel, 2);
-        Assert.That(HandSys.GetActiveItem((SEntMan.GetEntity(Player), Hands)), Is.Null);
+        Assert.That(HandSys.GetActiveItem((SPlayer, Hands)), Is.Null);
         AssertPrototype(WallSolid);
     }
 

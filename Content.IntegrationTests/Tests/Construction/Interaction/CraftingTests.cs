@@ -1,15 +1,19 @@
+#nullable enable
 using System.Linq;
 using Content.IntegrationTests.Tests.Interaction;
-using Content.Shared.DoAfter;
+using Content.Shared.Construction.Prototypes;
 using Content.Shared.Stacks;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Construction.Interaction;
 
 public sealed class CraftingTests : InteractionTest
 {
-    public const string ShardGlass = "ShardGlass";
-    public const string Spear = "Spear";
+    private static readonly EntProtoId ShardGlass = "ShardGlass";
+    private static readonly EntProtoId Spear = "Spear";
+    private static readonly EntProtoId ModularGrenade = "ModularGrenade";
+    private static readonly ProtoId<ConstructionPrototype> ModularGrenadeRecipe = "ModularGrenadeRecipe";
 
     /// <summary>
     /// Craft a simple instant recipe
@@ -29,8 +33,8 @@ public sealed class CraftingTests : InteractionTest
     public async Task CraftGrenade()
     {
         await PlaceInHands(Steel, 5);
-        await CraftItem("ModularGrenadeRecipe");
-        await FindEntity("ModularGrenade");
+        await CraftItem(ModularGrenadeRecipe);
+        await FindEntity(ModularGrenade);
     }
 
     /// <summary>
