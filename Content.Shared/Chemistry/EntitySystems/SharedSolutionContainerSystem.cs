@@ -75,14 +75,11 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     [Dependency] protected SharedAppearanceSystem AppearanceSystem = default!;
     [Dependency] protected SharedContainerSystem ContainerSystem = default!;
     [Dependency] protected SharedHandsSystem Hands = default!;
-
     [Dependency] private ILocalizationManager _localization = default!;
 
     [Dependency] protected EntityQuery<ContainedSolutionComponent> ContainedQuery = default!;
     [Dependency] protected EntityQuery<SolutionComponent> SolutionQuery = default!;
     [Dependency] protected EntityQuery<SolutionManagerComponent> SolutionManagerQuery = default!;
-    [Dependency] protected EntityQuery<ReactionMixerComponent> ReactionMixerQuery = default!;
-    [Dependency] protected EntityQuery<MixableSolutionComponent> MixableSolutionQuery = default!;
 
     public override void Initialize()
     {
@@ -492,11 +489,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     public void SetCanReact(Entity<SolutionComponent> soln, bool canReact)
     {
         soln.Comp.Solution.CanReact = canReact;
-        ReactionMixerQuery.TryComp(soln, out var reactionMixerComponent);
-        if (reactionMixerComponent == null || reactionMixerComponent.TimeToMix != TimeSpan.Zero ||
-            reactionMixerComponent.MixerType != ReactionMixerType.SelfMix|| !MixableSolutionQuery.TryComp(soln,out var mixable)||mixable.Solution!=soln.Comp.Id)
-            reactionMixerComponent = null;
-        UpdateChemicals(soln,mixerComponent:reactionMixerComponent);
+        UpdateChemicals(soln);
     }
 
     /// <summary>
@@ -528,11 +521,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             var proto = ProtoMan.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
             solution.AddReagent(proto, acceptedQuantity, temperature.Value, ProtoMan);
         }
-        ReactionMixerQuery.TryComp(soln, out var reactionMixerComponent);
-        if (reactionMixerComponent == null || reactionMixerComponent.TimeToMix != TimeSpan.Zero ||
-            reactionMixerComponent.MixerType != ReactionMixerType.SelfMix|| !MixableSolutionQuery.TryComp(soln,out var mixable)||mixable.Solution!=soln.Comp.Id)
-            reactionMixerComponent = null;
-        UpdateChemicals(soln,mixerComponent:reactionMixerComponent);
+
+        UpdateChemicals(soln);
         return acceptedQuantity == reagentQuantity.Quantity;
     }
 
@@ -648,12 +638,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         // Currently this is quite inefficient.
         solution.AddSolution(source.SplitSolution(quantity), ProtoMan);
 
-        ReactionMixerQuery.TryComp(soln, out var reactionMixerComponent);
-        if (reactionMixerComponent == null || reactionMixerComponent.TimeToMix != TimeSpan.Zero ||
-            reactionMixerComponent.MixerType != ReactionMixerType.SelfMix|| !MixableSolutionQuery.TryComp(soln,out var mixable)||mixable.Solution!=soln.Comp.Id)
-            reactionMixerComponent = null;
-
-        UpdateChemicals(soln,mixerComponent:reactionMixerComponent);
+        UpdateChemicals(soln);
         return true;
     }
 
@@ -698,12 +683,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         }
         else
             solution.AddSolution(toAdd, ProtoMan);
-        // check if there is reaction mixer that is self acting
-        ReactionMixerQuery.TryComp(soln, out var reactionMixerComponent);
-        if (reactionMixerComponent == null || reactionMixerComponent.TimeToMix != TimeSpan.Zero ||
-            reactionMixerComponent.MixerType != ReactionMixerType.SelfMix|| !MixableSolutionQuery.TryComp(soln,out var mixable)||mixable.Solution!=soln.Comp.Id)
-            reactionMixerComponent = null;
-        UpdateChemicals(soln,mixerComponent:reactionMixerComponent);
+
+        UpdateChemicals(soln);
         return quantity;
     }
 
@@ -723,11 +704,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return false;
 
         solution.AddSolution(toAdd, ProtoMan);
-        ReactionMixerQuery.TryComp(soln, out var reactionMixerComponent);
-        if (reactionMixerComponent == null || reactionMixerComponent.TimeToMix != TimeSpan.Zero ||
-            reactionMixerComponent.MixerType != ReactionMixerType.SelfMix|| !MixableSolutionQuery.TryComp(soln,out var mixable)||mixable.Solution!=soln.Comp.Id)
-            reactionMixerComponent = null;
-        UpdateChemicals(soln, mixerComponent:reactionMixerComponent);
+        UpdateChemicals(soln);
         return true;
     }
 
@@ -755,13 +732,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         solution.AddSolution(toAdd, ProtoMan);
         overflowingSolution = solution.SplitSolution(FixedPoint2.Max(FixedPoint2.Zero, solution.Volume - overflowThreshold));
-
-        ReactionMixerQuery.TryComp(soln, out var reactionMixerComponent);
-        if (reactionMixerComponent == null || reactionMixerComponent.TimeToMix != TimeSpan.Zero ||
-            reactionMixerComponent.MixerType != ReactionMixerType.SelfMix|| !MixableSolutionQuery.TryComp(soln,out var mixable)||mixable.Solution!=soln.Comp.Id)
-            reactionMixerComponent = null;
-
-        UpdateChemicals(soln,mixerComponent:reactionMixerComponent);
+        UpdateChemicals(soln);
         return true;
     }
 
@@ -814,12 +785,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return;
 
         solution.Temperature = temperature;
-        ReactionMixerQuery.TryComp(soln, out var reactionMixerComponent);
-        if (reactionMixerComponent == null || reactionMixerComponent.TimeToMix != TimeSpan.Zero ||
-            reactionMixerComponent.MixerType != ReactionMixerType.SelfMix|| !MixableSolutionQuery.TryComp(soln,out var mixable)||mixable.Solution!=soln.Comp.Id)
-            reactionMixerComponent = null;
-
-        UpdateChemicals(soln,mixerComponent:reactionMixerComponent);
+        UpdateChemicals(soln);
     }
 
     /// <summary>
@@ -835,12 +801,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         var heatCap = solution.GetHeatCapacity(ProtoMan);
         solution.Temperature = heatCap == 0 ? 0 : thermalEnergy / heatCap;
-        ReactionMixerQuery.TryComp(soln, out var reactionMixerComponent);
-        if (reactionMixerComponent == null || reactionMixerComponent.TimeToMix != TimeSpan.Zero ||
-            reactionMixerComponent.MixerType != ReactionMixerType.SelfMix|| !MixableSolutionQuery.TryComp(soln,out var mixable)||mixable.Solution!=soln.Comp.Id)
-            reactionMixerComponent = null;
-
-        UpdateChemicals(soln,mixerComponent:reactionMixerComponent);
+        UpdateChemicals(soln);
     }
 
     /// <summary>
@@ -859,12 +820,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         var heatCap = solution.GetHeatCapacity(ProtoMan);
         solution.Temperature += heatCap == 0 ? 0 : thermalEnergy / heatCap;
-        ReactionMixerQuery.TryComp(soln, out var reactionMixerComponent);
-        if (reactionMixerComponent == null || reactionMixerComponent.TimeToMix != TimeSpan.Zero ||
-            reactionMixerComponent.MixerType != ReactionMixerType.SelfMix|| !MixableSolutionQuery.TryComp(soln,out var mixable)||mixable.Solution!=soln.Comp.Id)
-            reactionMixerComponent = null;
-
-        UpdateChemicals(soln,mixerComponent:reactionMixerComponent);
+        UpdateChemicals(soln);
     }
 
     /// <summary>
@@ -884,12 +840,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         var heatCap = solution.GetHeatCapacity(ProtoMan);
         var deltaT = thermalEnergy / heatCap;
         solution.Temperature = Math.Clamp(solution.Temperature + deltaT, min, max);
-        ReactionMixerQuery.TryComp(soln, out var reactionMixerComponent);
-        if (reactionMixerComponent == null || reactionMixerComponent.TimeToMix != TimeSpan.Zero ||
-            reactionMixerComponent.MixerType != ReactionMixerType.SelfMix|| !MixableSolutionQuery.TryComp(soln,out var mixable)||mixable.Solution!=soln.Comp.Id)
-            reactionMixerComponent = null;
-
-        UpdateChemicals(soln,mixerComponent:reactionMixerComponent);
+        UpdateChemicals(soln);
     }
 
     #endregion Thermal Energy and Temperature
@@ -903,12 +854,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
     private void OnSolutionInit(Entity<SolutionComponent> entity, ref MapInitEvent args)
     {
-        ReactionMixerQuery.TryComp(entity, out var reactionMixerComponent);
-        if (reactionMixerComponent == null || reactionMixerComponent.TimeToMix != TimeSpan.Zero ||
-            reactionMixerComponent.MixerType != ReactionMixerType.SelfMix|| !MixableSolutionQuery.TryComp(entity,out var mixable)||mixable.Solution!=entity.Comp.Id)
-            reactionMixerComponent = null;
-
-        UpdateChemicals(entity,mixerComponent:reactionMixerComponent);
+        UpdateChemicals(entity);
     }
 
     private void OnSolutionShutdown(Entity<SolutionComponent> entity, ref ComponentShutdown args)
