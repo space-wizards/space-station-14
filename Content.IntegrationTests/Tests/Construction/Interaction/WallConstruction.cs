@@ -1,15 +1,10 @@
 #nullable enable
 using Content.IntegrationTests.Tests.Interaction;
-using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Construction.Interaction;
 
 public sealed class WallConstruction : InteractionTest
 {
-    private static readonly EntProtoId Girder = "Girder";
-    private static readonly EntProtoId WallSolid = "WallSolid";
-    private static readonly EntProtoId Wall = "Wall";
-
     [Test]
     public async Task ConstructWall()
     {
