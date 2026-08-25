@@ -62,7 +62,6 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
 
         RobustRandom.Shuffle(stationApcs);
 
-        var disabled = 0;
         foreach (var (apc, grid) in stationApcs)
         {
             // If the APC's grid matches our blacklist, skip to the next one.
@@ -75,7 +74,7 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
             AdminLogManager.Add(LogType.ItemConfigure, LogImpact.Medium,
                 $"Station event {ToPrettyString(uid):user} set the main breaker state of {ToPrettyString(apc):entity} to {stateString:state}");
 
-            if (++disabled >= toDisable)
+            if (--toDisable <= 0)
                 break;
         }
     }
