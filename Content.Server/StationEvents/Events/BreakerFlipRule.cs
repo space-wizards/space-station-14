@@ -15,6 +15,12 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
     [Dependency] private ApcSystem _apcSystem = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
+    [Dependency] private EntityQuery<StationMemberComponent> _stationMemberQuery;
+
+    // Limits on the minimum/maximum number of APCs to trigger.
+    private const int MinAPCs = 3;
+    private const int MaxAPCs = 7;
+
     protected override void Added(EntityUid uid, BreakerFlipRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
         if (!TryComp<StationEventComponent>(uid, out var stationEvent))
@@ -33,30 +39,39 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
         if (!TryGetRandomStation(out var chosenStation, uid => _whitelist.IsWhitelistFailOrNull(component.Blacklist, uid)))
             return;
 
-        var stationApcs = new List<Entity<ApcComponent>>();
+        var stationApcs = new List<(Entity<ApcComponent> apc, EntityUid grid)>();
         var query = EntityQueryEnumerator<ApcComponent, TransformComponent>();
         while (query.MoveNext(out var apcUid, out var apc, out var xform))
         {
-            if (apc.MainBreakerEnabled && CompOrNull<StationMemberComponent>(xform.GridUid)?.Station == chosenStation)
+            if (apc.MainBreakerEnabled
+                && xform.GridUid is { } grid
+                && _stationMemberQuery.CompOrNull(grid)?.Station == chosenStation)
             {
-                stationApcs.Add((apcUid, apc));
+                stationApcs.Add(((apcUid, apc), grid));
             }
         }
 
-        var toDisable = Math.Min(RobustRandom.Next(3, 7), stationApcs.Count);
+        var toDisable = Math.Min(RobustRandom.Next(MinAPCs, MaxAPCs), stationApcs.Count);
         if (toDisable == 0)
             return;
 
         RobustRandom.Shuffle(stationApcs);
 
-        for (var i = 0; i < toDisable; i++)
+        int disabled = 0;
+        foreach (var (apc, grid) in stationApcs)
         {
-            var apc = stationApcs[i];
+            // If the APC's grid matches our blacklist, skip to the next one.
+            if (_whitelist.IsWhitelistPass(component.GridBlacklist, grid))
+                continue;
+
             _apcSystem.ApcToggleBreaker(apc, apc);
 
             var stateString = apc.Comp.MainBreakerEnabled ? "Enabled" : "Disabled";
             AdminLogManager.Add(LogType.ItemConfigure, LogImpact.Medium,
                 $"Station event {ToPrettyString(uid):user} set the main breaker state of {ToPrettyString(apc):entity} to {stateString:state}");
+
+            if (++disabled >= toDisable)
+                break;
         }
     }
 }
