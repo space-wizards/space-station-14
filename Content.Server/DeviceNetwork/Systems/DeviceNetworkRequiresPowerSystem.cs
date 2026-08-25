@@ -5,7 +5,7 @@ using Content.Shared.DeviceNetwork.Events;
 
 namespace Content.Server.DeviceNetwork.Systems;
 
-public sealed class DeviceNetworkRequiresPowerSystem : EntitySystem
+public sealed partial class DeviceNetworkRequiresPowerSystem : EntitySystem
 {
     public override void Initialize()
     {

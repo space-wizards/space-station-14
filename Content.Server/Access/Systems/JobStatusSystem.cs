@@ -2,4 +2,4 @@
 
 namespace Content.Server.Access.Systems;
 
-public sealed class JobStatusSystem : SharedJobStatusSystem;
+public sealed partial class JobStatusSystem : SharedJobStatusSystem;
