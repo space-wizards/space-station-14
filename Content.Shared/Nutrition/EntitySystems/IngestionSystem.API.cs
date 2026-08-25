@@ -157,7 +157,7 @@ public sealed partial class IngestionSystem
     /// </summary>
     /// <param name="entity">Entity and comp that will be used to spawn trash</param>
     /// <param name="user">User that will attempt to pickup spawned trash</param>
-    /// <param name="replace">When true, tries to replace <see cref="entity"/> with spawned trash in hand</param>
+    /// <param name="replace">When true, tries to replace <see cref="entity"/> with spawned trash in user's hand</param>
     public void SpawnTrash(Entity<EdibleComponent> entity, EntityUid? user = null, bool replace = false)
     {
         if (entity.Comp.Trash.Count == 0)
@@ -168,11 +168,12 @@ public sealed partial class IngestionSystem
         string? hand = null;
         var pickup = user != null && _hands.IsHolding(user.Value, entity, out hand);
 
-        foreach (var spawnedTrash in trashes.Select(trash => EntityManager.PredictedSpawn(trash, position)).Where(spawnedTrash => pickup))
+        foreach (var spawnedTrash in trashes.Select(trash => EntityManager.PredictedSpawn(trash, position)))
         {
             // Put the trash in the user's hand
             // I am 100% confident we don't need this check but rider gets made at me if it's not here.
-            if (user is null)
+            if (!pickup ||
+                user is null)
                 continue;
 
             if (replace &&
