@@ -12,12 +12,6 @@ namespace Content.Server.StationEvents.Components;
 public sealed partial class BreakerFlipRuleComponent : Component
 {
     /// <summary>
-    /// Blacklist for stations not eligible to trigger this game rule.
-    /// </summary>
-    [DataField]
-    public EntityWhitelist? Blacklist;
-
-    /// <summary>
     /// Blacklist for grids not eligible to trigger this game rule.
     /// </summary>
     [DataField]
