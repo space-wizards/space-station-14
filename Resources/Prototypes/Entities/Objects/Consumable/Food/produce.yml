@@ -340,7 +340,7 @@
     trash:
     - TrashBananaPeel
   - type: ToolRefinable
-    refineResult: [] # produces trash on refine
+    refineResult: [] # Spawns trash on refine
   - type: Solution
     solution:
       reagents:
@@ -384,7 +384,7 @@
     trash:
     - TrashMimanaPeel
   - type: ToolRefinable
-    refineResult: [] # produces trash on refine
+    refineResult: [] # Spawns trash on refine
   - type: Solution
     solution:
       reagents:
@@ -1186,7 +1186,7 @@
     trash:
     - FoodCornTrash
   - type: ToolRefinable
-    refineResult: [] # produces trash on refine
+    refineResult: [] # Spawns trash on refine
   - type: Solution
     solution:
       reagents:
@@ -1862,7 +1862,7 @@
     trash:
     - WeaponRevolverPython
   - type: ToolRefinable
-    refineResult: [] # produces trash on refine
+    refineResult: [] # Spawns trash on refine
   - type: Tag
     tags:
     - Fruit # It's in the name
@@ -1899,7 +1899,7 @@
     trash:
     - RevolverCapGun
   - type: ToolRefinable
-    refineResult: [] # produces trash on refine
+    refineResult: [] # Spawns trash on refine
   - type: Tag
     tags:
     - Fruit
@@ -1920,7 +1920,7 @@
     trash:
     - RevolverCapGunFake
   - type: ToolRefinable
-    refineResult: [] # produces trash on refine
+    refineResult: [] # Spawns trash on refine
 
 - type: entity
   name: rice bushel
