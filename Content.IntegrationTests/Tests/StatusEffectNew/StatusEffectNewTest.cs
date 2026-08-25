@@ -3,7 +3,7 @@ using Content.IntegrationTests.Tests.Helpers;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Timing;
-using static Content.IntegrationTests.Tests.StatusEffectNew.StatusEffectNewPrototypes;
+using static Content.IntegrationTests.Tests.StatusEffectNew.StatusEffectNewTestPrototypes;
 
 namespace Content.IntegrationTests.Tests.StatusEffectNew;
 
@@ -100,5 +100,4 @@ public sealed class StatusEffectNewTest : InteractionTest
         Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusA, out var uidStatusA_2), Is.False, "Status effect A was still on the player after being removed!");
 
     }
-
 }

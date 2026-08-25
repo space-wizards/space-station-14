@@ -2,7 +2,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.StatusEffectNew;
 
-public static class StatusEffectNewPrototypes
+public static class StatusEffectNewTestPrototypes
 {
 
     public static readonly EntProtoId TargetProto = "MobHuman";
