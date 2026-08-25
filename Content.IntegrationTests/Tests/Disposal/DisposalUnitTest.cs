@@ -34,7 +34,7 @@ public sealed partial class DisposalUnitTest : GameTest
     {
         foreach (var entity in entities)
         {
-            Assert.That(unit.Container.ContainedEntities.Contains(entity), Is.EqualTo(result));
+            Assert.That(unit.Container?.ContainedEntities.Contains(entity), Is.EqualTo(result));
         }
     }
 
@@ -48,11 +48,11 @@ public sealed partial class DisposalUnitTest : GameTest
     {
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(unit.Container.ContainedEntities, Is.SupersetOf(entities));
-            Assert.That(entities, Has.Length.EqualTo(unit.Container.ContainedEntities.Count));
+            Assert.That(unit.Container?.ContainedEntities, Is.SupersetOf(entities));
+            Assert.That(entities, Has.Length.EqualTo(unit.Container?.ContainedEntities.Count));
 
             Assert.That(result, Is.EqualTo(disposalSystem.TryFlush((unitEntity, unit))));
-            Assert.That(result || entities.Length == 0, Is.EqualTo(unit.Container.ContainedEntities.Count == 0));
+            Assert.That(result || entities.Length == 0, Is.EqualTo(unit.Container?.ContainedEntities.Count == 0));
         }
     }
 
