@@ -37,7 +37,7 @@ public abstract partial class SpawnItemsOnUseSystem : EntitySystem
         var spawned = new HashSet<EntityUid>();
         foreach (var proto in spawnEntities)
         {
-            var spawn = (SpawnNextToOrDrop(proto, args.User, xform));
+            var spawn = (PredictedSpawnNextToOrDrop(proto, args.User, xform));
             spawned.Add(spawn);
 
             _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(args.User)} used {ToPrettyString(uid)} which spawned {ToPrettyString(spawn)}");
