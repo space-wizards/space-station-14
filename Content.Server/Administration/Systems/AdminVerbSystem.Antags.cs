@@ -29,6 +29,7 @@ public sealed partial class AdminVerbSystem
     private static readonly EntProtoId DefaultRevsRule = "Revolutionary";
     private static readonly EntProtoId DefaultThiefRule = "Thief";
     private static readonly EntProtoId DefaultChangelingRule = "Changeling";
+    private static readonly EntProtoId DefaultCosmicCultistRule = "CosmicCult";
     private static readonly EntProtoId ParadoxCloneRuleId = "ParadoxCloneSpawn";
     private static readonly EntProtoId DefaultWizardRule = "Wizard";
     private static readonly EntProtoId DefaultNinjaRule = "NinjaSpawn";
@@ -170,6 +171,22 @@ public sealed partial class AdminVerbSystem
             Message = string.Join(": ", changelingName, Loc.GetString("admin-verb-make-changeling")),
         };
         args.Verbs.Add(changeling);
+
+
+        var cosmicCultistName = Loc.GetString("admin-verb-text-make-cosmic-cultist");
+        Verb cosmicCultist = new()
+        {
+            Text = cosmicCultistName,
+            Category = VerbCategory.Antag,
+            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Misc/cosmic-icon.rsi"), "icon"),
+            Act = () =>
+            {
+                _antag.ForceMakeAntag<CosmicCultRuleComponent>(targetPlayer, DefaultCosmicCultistRule);
+            },
+            Impact = LogImpact.High,
+            Message = string.Join(": ", cosmicCultistName, Loc.GetString("admin-verb-make-cosmic-cultist")),
+        };
+        args.Verbs.Add(cosmicCultist);
 
         var paradoxCloneName = Loc.GetString("admin-verb-text-make-paradox-clone");
         Verb paradox = new()

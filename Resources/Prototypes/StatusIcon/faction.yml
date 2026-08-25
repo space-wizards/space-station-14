@@ -53,3 +53,16 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Syndicate
+
+- type: factionIcon
+  id: CosmicCultFaction
+  isShaded: false
+  priority: 11
+  locationPreference: Left
+  showTo:
+    components:
+    - ShowAntagIcons
+    - CosmicCultist
+  icon:
+    sprite: /Textures/Interface/Misc/cosmic-icon.rsi
+    state: icon

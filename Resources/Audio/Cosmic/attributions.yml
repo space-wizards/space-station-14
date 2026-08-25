@@ -21,6 +21,8 @@
 
 - files:
   - ability-gained.ogg
+  - cosmic-ai-start.ogg
+  - cosmic-start.ogg
   license: "CC-BY-SA-3.0"
   copyright: "By Octofoss for Cosmic Cult."
   source: "https://github.com/space-wizards/space-station-14"

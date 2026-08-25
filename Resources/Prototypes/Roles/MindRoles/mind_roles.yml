@@ -355,3 +355,18 @@
   - type: ChangelingRole
   - type: RoleBriefing
     briefing: changeling-briefing
+
+# Cosmic Cultist
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleCosmicCultist
+  name: Cosmic Cultist Role
+  components:
+  - type: MindRole
+    antagPrototype: CosmicCultist
+    exclusiveAntag: true
+    roleType: TeamAntagonist
+    subtype: role-subtype-cosmic-cultist
+  - type: CosmicCultRole
+  - type: RoleBriefing
+    briefing: cosmic-cultist-briefing

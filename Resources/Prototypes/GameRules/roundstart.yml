@@ -232,6 +232,25 @@
     maxDifficulty: 8
 
 - type: entity
+  id: CosmicCult
+  parent: [BaseGameRule, BaseRoundstartAntagRule]
+  components:
+  - type: LoadMapRule
+    mapPath: /Maps/Nonstations/the-cosmic-dark.yml
+  - type: CosmicCultRule
+  - type: GameRule
+    minPlayers: 25
+  - type: AntagSelection
+    agentName: changeling-round-end-agent-name
+    antags:
+    - !type:LinearAntagCount
+      proto: CosmicCultist
+      playerRatio: 25
+      range:
+        min: 2
+        max: 5
+
+- type: entity
   id: Revolutionary
   parent: [BaseGameRule, BaseRoundstartAntagRule]
   components:
