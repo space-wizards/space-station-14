@@ -153,7 +153,7 @@ public sealed partial class IngestionSystem
     #region EdibleComponent
 
     /// <summary>
-    /// Spawns trash fot the edible entity next to it.
+    /// Spawns trash for the edible entity next to it.
     /// </summary>
     /// <param name="entity">Entity and comp that will be used to spawn trash</param>
     /// <param name="user">User that will attempt to pickup spawned trash</param>
