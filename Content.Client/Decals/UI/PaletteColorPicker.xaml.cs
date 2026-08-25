@@ -22,13 +22,13 @@ public sealed partial class PaletteColorPicker : DefaultWindow
 
         _tex = _resourceCache.GetResource<TextureResource>("/Textures/Interface/Nano/button.svg.96dpi.png");
 
-        var i = 0;
-        foreach (var palette in _prototypeManager.EnumeratePrototypes<PalettePrototype>())
-        {
-            Palettes.AddItem(Loc.GetString(palette.Name));
-            Palettes.SetItemMetadata(i, palette); // ew
-            i += 1;
-        }
+        // var i = 0;
+        // foreach (var palette in _prototypeManager.EnumeratePrototypes<PalettePrototype>())
+        // {
+        //     Palettes.AddItem(Loc.GetString(palette.Name));
+        //     Palettes.SetItemMetadata(i, palette); // ew
+        //     i += 1;
+        // }
 
         Palettes.OnItemSelected += args =>
         {
@@ -43,11 +43,11 @@ public sealed partial class PaletteColorPicker : DefaultWindow
     private void SetupList()
     {
         PaletteList.Clear();
-        foreach (var (color, value) in (Palettes.SelectedMetadata as PalettePrototype)!.Colors)
-        {
-            var item = PaletteList.AddItem(color, _tex.Texture);
-            item.Metadata = value;
-            item.IconModulate = value;
-        }
+        // foreach (var (color, value) in (Palettes.SelectedMetadata as PalettePrototype)!.Colors)
+        // {
+        //     var item = PaletteList.AddItem(color, _tex.Texture);
+        //     item.Metadata = value;
+        //     item.IconModulate = value;
+        // }
     }
 }

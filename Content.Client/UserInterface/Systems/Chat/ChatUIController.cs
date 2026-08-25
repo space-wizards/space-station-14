@@ -68,7 +68,7 @@ public sealed partial class ChatUIController : UIController
     [UISystemDependency] private readonly RoleCodewordSystem? _roleCodewordSystem = default!;
 
     private static readonly ProtoId<PalettePrototype> ChatNamePalette = "ChatNames";
-    private List<Color> _chatNameColors = default!;
+    private List<string> _chatNameColors = default!;
     private bool _chatNameColorsEnabled;
 
     private ISawmill _sawmill = default!;
@@ -231,7 +231,14 @@ public sealed partial class ChatUIController : UIController
         gameplayStateLoad.OnScreenLoad += OnScreenLoad;
         gameplayStateLoad.OnScreenUnload += OnScreenUnload;
 
-        _palette.GetPaletteColors(ChatNamePalette, _chatNameColors);
+        var colorList = new List<Color>();
+        _palette.GetPaletteColors(ChatNamePalette, colorList);
+
+        _chatNameColors.Clear();
+        foreach (var color in colorList)
+        {
+            _chatNameColors.Add(color.ToHex());
+        }
 
         _config.OnValueChanged(CCVars.ChatWindowOpacity, OnChatWindowOpacityChanged);
 
@@ -943,7 +950,7 @@ public sealed partial class ChatUIController : UIController
     /// <returns>Hex value of the color</returns>
     public string GetNameColor(string name)
     {
-        var colorIdx = Math.Abs(name.GetHashCode() % _chatNameColors.Length);
+        var colorIdx = Math.Abs(name.GetHashCode() % _chatNameColors.Count);
         return _chatNameColors[colorIdx];
     }
 
