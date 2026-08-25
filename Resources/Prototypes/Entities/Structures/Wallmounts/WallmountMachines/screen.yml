@@ -16,6 +16,7 @@
       state: outer_frame
   - type: Sprite
     offset: 0, -0.5
+    noRot: true
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/screen.rsi
     state: screen # Note: outer_frame will be added on top of text layers.
