@@ -1,0 +1,100 @@
+- type: entity
+  id: FloorEntityCosmicDecay
+  categories: [ DoNotMap ] # This is labeled as DO NOT MAP because it should only exist in the z
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: TileEmission
+    color: "#605191"
+  - type: Physics
+    bodyType: Static
+  - type: Transform
+    anchored: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 999
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
+  - type: Sprite
+    sprite: Tiles/TileEntities/cosmicfloor-decay.rsi
+    drawdepth: BelowFloor
+  - type: Icon
+    sprite: Tiles/TileEntities/cosmicfloor-decay.rsi
+    state: full
+  - type: IconSmooth
+    key: floor
+    base: floor
+  - type: Tag
+    tags:
+    - HideContextMenu
+  - type: PlacementReplacement
+    key: tileOverlay
+
+- type: entity
+  parent: FloorEntityCosmicDecay
+  id: FloorEntityEntropicDecay
+  name: entropic decay
+  description: Just one glance at it sends a shiver down your spine.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: TileEmission
+    color: "#42a4ae"
+  - type: StepTrigger
+    requiredTriggeredSpeed: 0
+    intersectRatio: 0.1
+    blacklist:
+      tags:
+      - Catwalk
+  - type: Transform
+    anchored: true
+  - type: SyncSprite
+  - type: Clickable
+  - type: Sprite
+    sprite: Tiles/TileEntities/cosmicfloor-decay.rsi
+    drawdepth: BelowFloor
+    layers:
+    - state: decay
+      shader: unshaded
+  - type: Icon
+    sprite: Tiles/TileEntities/cosmicfloor-decay.rsi
+    state: full
+  - type: IconSmooth
+    key: floor
+    base: floor
+    additionalKeys:
+    - walls
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - SlipLayer
+        mask:
+        - ItemMask
+        density: 1000
+        hard: false
+  - type: Tag
+    tags:
+    - HideContextMenu
+  - type: PlacementReplacement
+    key: tileOverlay
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepWater
+      params:
+        volume: 8

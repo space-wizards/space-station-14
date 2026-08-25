@@ -1,0 +1,13 @@
+- files:
+  - floor.png
+  - double_edge_E.png
+  - double_edge_N.png
+  - double_edge_S.png
+  - double_edge_W.png
+  - single_edge_NE.png
+  - single_edge_NW.png
+  - single_edge_SE.png
+  - single_edge_SW.png
+  license: "CC-BY-SA-3.0"
+  copyright: "By AftrLite (GitHub)."
+  source: "https://github.com/space-wizards/space-station-14"

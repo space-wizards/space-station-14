@@ -1,0 +1,264 @@
+##################### MONUMENT
+- type: entity
+  id: CosmicMonument
+  parent: BaseStructure
+  name: The Monument
+  description: Built of a thousand little nothings, its surface reflects a starless emptiness...
+  components:
+  - type: InteractionOutline
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Physics
+    bodyType: Static
+  - type: SpriteFade
+#  - type: CosmicMonument
+#  - type: CosmicExamine
+#    cultistText: cosmic-examine-text-monument
+#    othersText: cosmic-examine-text-crew-monument
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.25,-0.25,1.25,0.75"
+        density: 9999
+        mask:
+        - LargeMobMask
+        layer:
+        - WallLayer
+  - type: Sprite
+    sprite: Structures/Specific/cosmic-monument.rsi
+    offset: 0, 1.155
+    drawdepth: Mobs
+    layers:
+    - state: base
+    - state: vfx-2
+      sprite: Effects/Cosmic/monument-vfx.rsi
+      offset: -0.03, 0.5
+      shader: unshaded
+      visible: false
+      map: ["effects"]
+  - type: Appearance
+#  - type: GenericVisualizer
+#    visuals:
+#      enum.MonumentVisuals.Status:
+#        effects:
+#          Idle: { visible: false }
+#          Finale: { visible: true }
+  - type: AmbientSound
+    enabled: true
+    volume: -8
+    range: 9
+    sound:
+      path: /Audio/Cosmic/monument-ambient.ogg
+  - type: PointLight
+    radius: 6
+    energy: 4
+    falloff: 2
+    enabled: true
+    castShadows: true
+    color: "#42a4ae"
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      interpolate: Linear
+      minDuration: 4
+      maxDuration: 8
+      startValue: 2
+      endValue: 4
+      property: Energy
+      enabled: true
+      isLooped: true
+      reverseWhenFinished: true
+#  - type: GuideHelp
+#    guides:
+#    - CosmicCult
+  - type: WarpPoint
+    location: The Monument
+
+###################### FONT
+- type: entity
+  parent: BaseStructure
+  id: CosmicFont
+  name: malign font
+  description: An eerie structure that reacts to the presence of those nearby...
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    noRot: true
+  - type: Clickable
+  - type: InteractionOutline
+#  - type: CosmicFont
+#  - type: CosmicExamine
+#    cultistText: cosmic-examine-text-font
+  - type: Sprite
+    offset: 0, 0.3
+    loop: false
+    noRot: true
+    drawdepth: Mobs
+    sprite: Structures/Specific/cosmic-font.rsi
+    layers:
+    - state: base
+#      map: [ "enum.CosmicFontVisualLayers.Base" ]
+    - state: icon
+      visible: false
+      map: [ "base" ]
+    - state: unshaded
+      shader: unshaded
+      visible: false
+      map: [ "glow" ]
+  - type: AnimationPlayer
+  - type: Appearance
+#  - type: GenericVisualizer
+#    visuals:
+#      enum.CosmicFontVisualLayers.Base:
+#        base:
+#          True: { visible: true }
+#        glow:
+#          True: { visible: true }
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.4
+          position: 0,0
+        density: 190
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
+      fontCollider:
+        shape:
+          !type:PhysShapeCircle
+          radius: 2.5
+        mask:
+        - MachineMask
+        layer:
+        - Impassable
+        density: 1000
+        hard: false
+  - type: PointLight
+    color: "#42a4ae"
+    radius: 2.5
+    energy: 6
+    enabled: false
+    castShadows: false
+    netsync: false
+
+- type: entity
+  parent: CosmicFont
+  id: CosmicFontFlipped
+  suffix: Flipped
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    scale: -1, 1
+    offset: -0.03, 0.3
+
+
+###################### PLINTH
+- type: entity
+  parent: BaseStructure
+  id: CosmicPlinth
+  name: malign plinth
+  description: An eerie structure.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    noRot: true
+  - type: PlaceableSurface
+  - type: Climbable
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Specific/Cosmic/cosmic-plinth.rsi
+    layers:
+    - state: icon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.4
+          position: 0,0
+        density: 190
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
+  - type: PointLight
+    color: "#42a4ae"
+    radius: 2.5
+    energy: 6
+    enabled: false
+    castShadows: false
+    netsync: false
+
+###################### PILLAR
+- type: entity
+  parent: BaseStructure
+  id: CosmicObelisk
+  name: malign obelisk
+  description: A mysterious-yet-inert sturcture. Unsettling.
+  components:
+  - type: Transform
+#    noRot: true
+  - type: Sprite
+    sprite: Structures/Specific/cosmic-pillar.rsi
+    offset: 0, 0.5
+    layers:
+    - state: icon
+    drawdepth: Mobs
+    noRot: true
+#  - type: CosmicExamine
+#    cultistText: cosmic-examine-text-forthecult
+  - type: SpriteFade
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.4
+          position: 0,0
+        mask:
+        - LargeMobMask
+        layer:
+        - WallLayer
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+
+##################### LAMP
+- type: entity
+  id: CosmicLamp
+  name: malign light
+  suffix: Always Powered
+  description: A mote of un-light shimmers within.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Specific/cosmic-light.rsi
+    drawdepth: Mobs
+    layers:
+    - state: base
+    - state: glow
+      shader: unshaded
+  - type: PointLight
+    color: "#42a4ae" # 5000K color temp
+    energy: 2
+    radius: 8
+    softness: 1
+    offset: "0, -0.5"

@@ -1,0 +1,26 @@
+- files:
+  - ability-nova-impact.ogg
+  - ability-nova-cast.ogg
+  - ability-nova-ambient.ogg
+  - ability-lapse.ogg
+  - ability-ingress.ogg
+  - ability-imposition.ogg
+  - ability-glare.ogg
+  - ability-shunt.ogg
+  - ability-siphon.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "By AftrLite(GitHub) for Cosmic Cult. Made using a combination of CC0 samples from freesound.org and personally-recorded foley."
+  source: "https://freesound.org/"
+
+- files:
+  - ability-shift-in.ogg
+  - ability-shift-out.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "By Darklyac for Cosmic Cult."
+  source: "https://github.com/space-wizards/space-station-14"
+
+- files:
+  - ability-gained.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "By Octofoss for Cosmic Cult."
+  source: "https://github.com/space-wizards/space-station-14"

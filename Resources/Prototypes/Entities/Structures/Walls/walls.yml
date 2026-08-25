@@ -196,6 +196,27 @@
     base: meat
 
 - type: entity
+  parent: [ BaseWall ]
+  id: WallIndestructible
+  suffix: INDESTRUCTIBLE
+  name: wall
+  categories: [ DoNotMap ]
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/debug.rsi
+    state: black
+  - type: Icon
+    sprite: Structures/Walls/debug.rsi
+    state: black
+  - type: Godmode
+  - type: Tag
+    tags:
+    - HideContextMenu
+  - type: IconSmooth
+    mode: NoSprite
+    key: walls
+
+- type: entity
   parent: [ BaseWall, BaseStructureHealth ]
   id: WallDebug
   name: debug wall
