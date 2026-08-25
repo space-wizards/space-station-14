@@ -8,6 +8,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.Prototypes;
 using Content.Shared.Verbs;
+using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition.EntitySystems;
@@ -151,7 +152,13 @@ public sealed partial class IngestionSystem
 
     #region EdibleComponent
 
-    public void SpawnTrash(Entity<EdibleComponent> entity, EntityUid? user = null)
+    /// <summary>
+    /// Spawns trash fot the edible entity next to it.
+    /// </summary>
+    /// <param name="entity">Entity and comp that will be used to spawn trash</param>
+    /// <param name="user">User that will attempt to pickup spawned trash</param>
+    /// <param name="replace">When true, tries to replace <see cref="entity"/> with spawned trash in hand</param>
+    public void SpawnTrash(Entity<EdibleComponent> entity, EntityUid? user = null, bool replace = false)
     {
         if (entity.Comp.Trash.Count == 0)
             return;
@@ -168,8 +175,9 @@ public sealed partial class IngestionSystem
             if (user is null)
                 continue;
 
-            if (hand is null ||
-                !_hands.TryForcePickup(user.Value, spawnedTrash, hand))
+            if (replace &&
+                (hand is null ||
+                 !_hands.TryForcePickup(user.Value, spawnedTrash, hand)))
                 _hands.TryPickupAnyHand(user.Value, spawnedTrash);
         }
     }

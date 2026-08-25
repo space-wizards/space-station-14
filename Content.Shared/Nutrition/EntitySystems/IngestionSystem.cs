@@ -509,12 +509,12 @@ public sealed partial class IngestionSystem : EntitySystem
 
     private void OnFullyEaten(Entity<EdibleComponent> entity, ref FullyEatenEvent args)
     {
-        SpawnTrash(entity, args.User);
+        SpawnTrash(entity, args.User, true);
     }
 
     private void OnBeforeToolRefined(Entity<EdibleComponent> entity, ref BeforeToolRefinedEvent args)
     {
-        SpawnTrash(entity, args.User);
+        SpawnTrash(entity, args.User, true);
     }
 
     private void AddEdibleVerbs(Entity<EdibleComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
