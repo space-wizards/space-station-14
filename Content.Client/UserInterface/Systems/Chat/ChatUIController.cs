@@ -499,8 +499,10 @@ public sealed partial class ChatUIController : UIController
 
         //Show names unless we're in a snowflake chat channel.
         //emotes don't count, their name is already inline. same with dead chat
+        //LOOC too
         if (speechData.Message.Channel != ChatChannel.Emotes &&
-            speechData.Message.Channel != ChatChannel.Dead)
+            speechData.Message.Channel != ChatChannel.Dead &&
+            speechData.Message.Channel != ChatChannel.LOOC)
         {
             //Add name tag if they are enabled
             if (ChatBubbleNameTags && !ActiveSpeechBubbleNameTags.ContainsKey(entity))
