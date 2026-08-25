@@ -23,7 +23,7 @@ public sealed partial class StatusEffectsSystem
         EntityUid target,
         EntProtoId effectProto,
         [NotNullWhen(true)] out EntityUid? statusEffect,
-        TimeSpan duration,
+        TimeSpan? duration,
         TimeSpan? delay = null
     )
     {
@@ -44,8 +44,8 @@ public sealed partial class StatusEffectsSystem
     }
 
 
-    ///<inheritdoc cref="TryAddStatusEffectDuration(EntityUid,EntProtoId,out EntityUid?,TimeSpan,TimeSpan?)"/>
-    public bool TryAddStatusEffectDuration(EntityUid target, EntProtoId effectProto, TimeSpan duration, TimeSpan? delay = null)
+    ///<inheritdoc cref="TryAddStatusEffectDuration(EntityUid,EntProtoId,out EntityUid?,TimeSpan?,TimeSpan?)"/>
+    public bool TryAddStatusEffectDuration(EntityUid target, EntProtoId effectProto, TimeSpan? duration, TimeSpan? delay = null)
     {
         return TryAddStatusEffectDuration(target, effectProto, out _, duration, delay);
     }
@@ -274,10 +274,10 @@ public sealed partial class StatusEffectsSystem
     /// <param name="effectProto">The prototype ID of the status effect to modify.</param>
     /// <param name="time">
     /// The time adjustment to apply to the status effect. Positive values extend the duration,
-    /// while negative values reduce it.
+    /// while negative values reduce it. Null makes it permanent.
     /// </param>
     /// <returns> True if duration was edited successfully, false otherwise.</returns>
-    public bool TryAddTime(EntityUid uid, EntProtoId effectProto, TimeSpan time)
+    public bool TryAddTime(EntityUid uid, EntProtoId effectProto, TimeSpan? time)
     {
         if (!_containerQuery.TryComp(uid, out var container))
             return false;
@@ -301,7 +301,7 @@ public sealed partial class StatusEffectsSystem
     /// <param name="effectProto">The prototype ID of the status effect to modify.</param>
     /// <param name="time">
     /// The time adjustment to apply to the status effect. Positive values extend the duration,
-    /// while negative values reduce it.
+    /// while negative values reduce it. Null removes the status effect.
     /// </param>
     /// <returns> True if duration was edited successfully, false otherwise.</returns>
     public bool TryRemoveTime(EntityUid uid, EntProtoId effectProto, TimeSpan? time)
@@ -316,7 +316,7 @@ public sealed partial class StatusEffectsSystem
     /// <param name="effectProto">The prototype ID of the status effect to modify.</param>
     /// <param name="time">The new duration for the status effect.</param>
     /// <returns> True if duration was set successfully, false otherwise.</returns>
-    public bool TrySetTime(EntityUid uid, EntProtoId effectProto, TimeSpan time)
+    public bool TrySetTime(EntityUid uid, EntProtoId effectProto, TimeSpan? time)
     {
         if (!_containerQuery.TryComp(uid, out var container))
             return false;
