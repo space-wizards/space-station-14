@@ -153,11 +153,11 @@ public sealed partial class IngestionSystem
     #region EdibleComponent
 
     /// <summary>
-    /// Spawns trash for the edible entity next to it.
+    /// Spawns trash for the edible entity, placing it in the same hand if held, otherwise spawning it nearby.
     /// </summary>
-    /// <param name="entity">Entity and comp that will be used to spawn trash</param>
-    /// <param name="user">User that will attempt to pickup spawned trash</param>
-    /// <param name="replace">When true, tries to replace <see cref="entity"/> with spawned trash in user's hand</param>
+    /// <param name="entity">Edible entity that will spawn trash.</param>
+    /// <param name="user">Optional user that will attempt to pickup spawned trash.</param>
+    /// <param name="replace">When true, tries to replace <paramref name="entity"/> with spawned trash if <paramref name="user"/> is holding it.</param>
     public void SpawnTrash(Entity<EdibleComponent> entity, EntityUid? user = null, bool replace = false)
     {
         if (entity.Comp.Trash.Count == 0)
@@ -168,8 +168,9 @@ public sealed partial class IngestionSystem
         string? hand = null;
         var pickup = user != null && _hands.IsHolding(user.Value, entity, out hand);
 
-        foreach (var spawnedTrash in trashes.Select(trash => EntityManager.PredictedSpawn(trash, position)))
+        foreach (var trash in trashes)
         {
+            var spawnedTrash = EntityManager.PredictedSpawn(trash, position);
             // Put the trash in the user's hand
             // I am 100% confident we don't need this check but rider gets made at me if it's not here.
             if (!pickup ||
