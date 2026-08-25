@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "By AftrLite (GitHub), circuitboard on 'frame2' and 'frame3' added by iaada (GitHub)",
+    "copyright": "By AftrLite (GitHub)",
     "size": {
         "x": 32,
         "y": 32
@@ -25,10 +25,6 @@
         },
         {
             "name": "frame2",
-            "directions": 4
-        },
-        {
-            "name": "frame3",
             "directions": 4
         },
         {

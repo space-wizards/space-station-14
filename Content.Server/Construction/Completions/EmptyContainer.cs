@@ -34,7 +34,7 @@ namespace Content.Server.Construction.Completions
             foreach (var ent in containerSys.EmptyContainer(container, true, reparent: !pickup))
             {
                 if (pickup)
-                    handSys.PickupOrDrop(userUid, ent, dropNear: true, handsComp: hands);
+                    handSys.PickupOrDrop(userUid, ent, handsComp: hands);
             }
         }
     }
