@@ -64,7 +64,7 @@ public sealed partial class ConstructionPlacementHijack : PlacementHijack
         if (!_protoMan.HasIndex(targetProtoId))
             return;
 
-        // Spawn our entity, get its SpriteComponent
+        // Set up our placement sprite from a test entity (deleted afterwards)
         var targetUid = _entMan.Spawn(targetProtoId);
         try
         {
