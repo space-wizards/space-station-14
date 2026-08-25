@@ -83,8 +83,6 @@
     size: Tiny
     heldPrefix: mime
   - type: MagicCrayon
-    fakeFood: FakeBurgerBacon
-    normalCrayon: CrayonMime
     spawnSound: /Audio/Effects/pop.ogg
   - type: LimitedCharges
     maxCharges: 10

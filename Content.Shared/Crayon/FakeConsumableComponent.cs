@@ -18,6 +18,12 @@ public sealed partial class FakeConsumableComponent : Component
     public string ContainerId = "fake_consumable_slot";
 
     /// <summary>
+    /// Whether when an entity ingests the fake consumable, it should also consume all the contents of the entity inside.
+    /// </summary>
+    [DataField]
+    public bool IngestContained = true;
+
+    /// <summary>
     /// The sound that plays when the consumable vanishes.
     /// </summary>
     [DataField("vanishSound")]

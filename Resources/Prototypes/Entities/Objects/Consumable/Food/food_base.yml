@@ -64,6 +64,9 @@
   parent: FoodBase
   id: FakeFoodBase
   components:
+    - type: FlavorProfile
+      flavors:
+        - nothing
     - type: FakeConsumable
       vanishSound: !type:SoundPathSpecifier
         path: /Audio/Effects/quick_exhale.ogg

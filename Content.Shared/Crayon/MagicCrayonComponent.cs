@@ -13,13 +13,13 @@ public sealed partial class MagicCrayonComponent : Component
     /// The fake food prototype that will be spawned by this magic crayon.
     /// </summary>
     [DataField]
-    public EntProtoId FakeFood;
+    public EntProtoId FakeFood = "FakeBurgerBacon";
 
     /// <summary>
     /// What to replace the magic crayon with when it's been used up.
     /// </summary>
     [DataField]
-    public EntProtoId NormalCrayon;
+    public EntProtoId NormalCrayon = "CrayonMime";
 
     /// <summary>
     /// If not null, the sound to play when the fake food is spawned.
