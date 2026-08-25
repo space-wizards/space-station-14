@@ -62,7 +62,7 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
 
         RobustRandom.Shuffle(stationApcs);
 
-        int disabled = 0;
+        var disabled = 0;
         foreach (var (apc, grid) in stationApcs)
         {
             // If the APC's grid matches our blacklist, skip to the next one.
