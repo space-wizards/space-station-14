@@ -126,8 +126,12 @@ public sealed partial class MetabolizerSystem : EntitySystem
         return true;
     }
 
-    private void TryMetabolizeStage(Entity<MetabolizerComponent, OrganComponent?, SolutionManagerComponent?> ent, ProtoId<MetabolismStagePrototype> stage)
+    private void TryMetabolizeStage(Entity<MetabolizerComponent, OrganComponent?, SolutionManagerComponent?> ent, ProtoId<MetabolismStagePrototype> stage, ref int reagentsProcessed)
     {
+        // Have we already processed all the reagents this organ can handle?
+        if (reagentsProcessed >= ent.Comp1.MaxReagentsProcessable)
+            return;
+
         if (!ent.Comp1.Solutions.TryGetValue(stage, out var solutionData))
             return;
 
@@ -153,10 +157,9 @@ public sealed partial class MetabolizerSystem : EntitySystem
 
         var isDead = _mobStateSystem.IsDead(solutionOwner.Value);
 
-        int reagents = 0;
         foreach (var (reagent, quantity) in list)
         {
-            if (!ProtoMan.TryIndex<ReagentPrototype>(reagent.Prototype, out var proto))
+            if (!ProtoMan.TryIndex(reagent.Prototype, out var proto))
                 continue;
 
             // Skip blood reagents
@@ -186,12 +189,12 @@ public sealed partial class MetabolizerSystem : EntitySystem
             var mostToRemove = FixedPoint2.Clamp(rate, 0, quantity);
 
             // we're done here entirely if this is true
-            if (reagents >= ent.Comp1.MaxReagentsProcessable)
+            if (reagentsProcessed >= ent.Comp1.MaxReagentsProcessable)
                 return;
 
-            var scale = (float) mostToRemove;
+            var scale = (float)mostToRemove;
             if (!solutionData.MetabolizeAll)
-                scale /= (float) rate;
+                scale /= (float)rate;
 
             // if it's possible for them to be dead, and they are,
             // then we shouldn't process any effects, but should probably
@@ -241,7 +244,7 @@ public sealed partial class MetabolizerSystem : EntitySystem
                 solution.RemoveReagent(reagent, mostToRemove);
 
                 // We have processed a reagant, so count it towards the cap
-                reagents += 1;
+                reagentsProcessed += 1;
 
                 if (transferSolution is not null && entry.Metabolites is not null)
                 {
@@ -265,9 +268,10 @@ public sealed partial class MetabolizerSystem : EntitySystem
         _organQuery.Resolve(ent, ref ent.Comp2, logMissing: false);
         _solutionQuery.Resolve(ent, ref ent.Comp3, logMissing: false);
 
+        var reagents = 0;
         foreach (var stage in ent.Comp1.Stages)
         {
-            TryMetabolizeStage(ent, stage);
+            TryMetabolizeStage(ent, stage, ref reagents);
         }
     }
 

@@ -113,7 +113,7 @@
     solutionOnBody: false
     updateInterval: 0.25
     metabolizerTypes: [ Dragon ]
-    stages: [ Digestion, Bloodstream ]
+    stages: [ Bloodstream, Digestion ]
   - type: ToolRefinable
     refineResult:
     - id: FoodMeatDragon
