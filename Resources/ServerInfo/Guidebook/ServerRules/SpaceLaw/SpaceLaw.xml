@@ -2,7 +2,7 @@
   # Space Law
   On Space Station 14, stations operate under abbreviated space law. All crew, passengers, and visitors aboard the station are expected to follow these laws.
 
-  Foreign invaders, such as nuclear operatives, ninjas, and pirates, are not protected under space law. Traitors are not foreign invaders, so they are usually protected by space law.
+  Foreign invaders, such as nuclear operatives, ninjas, changelings, and pirates, are not protected under space law. Traitors are not foreign invaders, so they are usually protected by space law.
 
   Space Law is not the server rules, but some rules reference Space Law and require it to be followed by certain people or to some degree.
 
@@ -23,7 +23,7 @@
   - Highly Illegal Contraband: Highly illegal contraband includes Syndicate contraband and magical contraband. Without explicit authorization from Central Command, highly illegal contraband may only be used in the event of dire, immediate emergencies, and only to prevent death or gross bodily harm. Once the emergency is dealt with, the contraband should be stored in a secure location.
 
   Security is obligated to seize contraband through routine searches or when processing criminals in the brig, but may prioritize other duties over confiscation if they see fit. With regards to contraband usage, Security is expected to follow the same regulations as everyone else. Confiscated contraband should be transferred to the Security department for secure storage or permanently disposed of. Collaborating with Cargo to sell confiscated contraband is highly encouraged, as it generally fetches a high value.
-  
+
   ## Search and Seizure
   A personnel search is the inspection and seizure of a crewmember's possessions. If any contraband is found during a search, the officer should confiscate the restricted items. Non-restricted items may be seized by Security if they were used to facilitate a crime. After the search is conducted, all legal items are to be returned to the person. A crewmate may legally decline any search conducted without probable cause or a warrant while the alert level is green. Random searches without probable cause or a warrant are permitted at any other alert level.
 
@@ -57,7 +57,7 @@
   - Example: A suspect has committed a 2-01 (Grand Theft) and a 3-04 (Kidnapping). The maximum allowable sentence time would be 10 minutes because 3-04 is the more severe crime.
   - Example 2: A suspect commits a 4-00 (Breach of Custody) and a 4-04 (Attempted Murder). Those crimes are equally severe; the maximum allowable sentence is 15 minutes.
   - Example 3: A suspect committed a 4-04 (Attempted Murder) previously during the shift, and has done so again, committing a 2-03 (Secure Trespass) in the process. The maximum allowable sentence is 18 minutes. 15 base for the 4-04, and 3 additional for being a repeat offender.
-  
+
   Remember, context matters greatly, and maximum sentences should be reserved for the worst offenders.
 
   [color=#a4885c]Repeat Offenders:[/color] A repeated crime occurs when someone is released after committing a crime and then commits the same crime again during the same shift. Repeated crimes can be charged with tacked-on time; first repeat: 3:00, second repeat: 6:00, third repeat: Permanent Confinement. It should be noted that each tacked-on time is directly linked to one charge, and that in the instance of multiple crimes being committed, you should use the longer time for the maximum allowable sentence. For example, if someone does their second repeat of Assault and one count of Kidnapping, their maximum allowable sentence would be 11 minutes. 5 from the Moderate crime of Assault, plus 6 from the second repeat.
