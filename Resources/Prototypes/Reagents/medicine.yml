@@ -843,7 +843,8 @@
           Burn: -1
       - !type:ModifyStatusEffect
         effectProto: StatusEffectMildWeakness # Reduced combat viability
-        time: 1
+        time: 5
+        type: Update # Only weak while the reagent is metabolising
       - !type:HealthChange
         conditions:
         - !type:MobStateCondition
