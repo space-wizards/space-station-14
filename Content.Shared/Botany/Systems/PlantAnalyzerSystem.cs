@@ -22,6 +22,7 @@ public sealed partial class PlantAnalyzerSystem : EntitySystem
     [Dependency] private ItemToggleSystem _toggle = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private PlantSystem _plant = default!;
 
     [SubscribeLocalEvent]
@@ -41,6 +42,19 @@ public sealed partial class PlantAnalyzerSystem : EntitySystem
             BreakOnMove = true,
             NeedHand = true,
         });
+    }
+
+    [SubscribeLocalEvent]
+    private void OnUiRangeCheck(Entity<PlantAnalyzerComponent> ent, ref BoundUserInterfaceCheckRangeEvent args)
+    {
+        if (args.Result == BoundUserInterfaceRangeResult.Fail || !args.UiKey.Equals(PlantAnalyzerUiKey.Key))
+            return;
+
+        if (ent.Comp.User is not { } user || args.Actor.Owner != user || ent.Comp.Target is not { } target
+            || Deleted(target) || !_interaction.InRangeUnobstructed(user, target))
+        {
+            args.Result = BoundUserInterfaceRangeResult.Fail;
+        }
     }
 
     [SubscribeLocalEvent]
@@ -109,6 +123,26 @@ public sealed partial class PlantAnalyzerSystem : EntitySystem
             if (analyzer.Target != plantUid)
                 continue;
 
+            UpdateAnalyzerUi((analyzerUid, analyzer));
+        }
+    }
+
+    /// <summary>
+    /// Updates analyzers observing a plant that changed its species.
+    /// </summary>
+    [PublicAPI]
+    public void ReplacePlantUi(EntityUid oldPlantUid, EntityUid newPlantUid, EntProtoId newPlantProto)
+    {
+        var query = EntityQueryEnumerator<PlantAnalyzerComponent>();
+        while (query.MoveNext(out var analyzerUid, out var analyzer))
+        {
+            if (analyzer.Target != oldPlantUid)
+                continue;
+
+            analyzer.Target = newPlantUid;
+            analyzer.Plant = newPlantUid;
+            analyzer.PlantProtoId = newPlantProto;
+            Dirty(analyzerUid, analyzer);
             UpdateAnalyzerUi((analyzerUid, analyzer));
         }
     }

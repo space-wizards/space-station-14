@@ -96,6 +96,7 @@ public sealed partial class PlantMutationSystem : EntitySystem
             _plant.PlantingPlant(newPlantUid);
 
         _plant.ForceUpdate(newPlantUid);
+        _plantAnalyzer.ReplacePlantUi(oldPlant.Owner, newPlantUid, newPlantProto);
         QueueDel(oldPlant);
     }
 

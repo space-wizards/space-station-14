@@ -14,7 +14,6 @@ public sealed partial class PlantCryoxadoneEntityEffectSystem : EntityEffectSyst
 {
     [Dependency] private PlantSystem _plant = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
-    [Dependency] private PlantHarvestSystem _plantHarvest = default!;
     [Dependency] private IGameTiming _timing = default!;
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantCryoxadone> args)
@@ -30,7 +29,8 @@ public sealed partial class PlantCryoxadoneEntityEffectSystem : EntityEffectSyst
             ? (int)Math.Max(entity.Comp.Maturation - 1, plantHolder.Age - random.Next(7, 10))
             : (int)(entity.Comp.Maturation / entity.Comp.GrowthStages);
 
-        _plantHarvest.AffectGrowth(entity.Owner, -deviation);
+        _plantHolder.AdjustsAge((entity.Owner, plantHolder), -deviation);
+        _plantHolder.AdjustsSkipAging((entity.Owner, plantHolder), 1);
         _plant.ForceUpdate(entity.AsNullable());
     }
 }

@@ -3,7 +3,8 @@
                       xmlns:chemistry="clr-namespace:Content.Client.Chemistry.UI"
                       xmlns:botany="clr-namespace:Content.Client.Botany.UI"
                       xmlns:atmos="clr-namespace:Content.Client.Atmos.UI"
-                      MinWidth="750"
+                      Resizable="False"
+                      MinWidth="800"
                       MinHeight="500">
     <BoxContainer Orientation="Vertical"
                   MinWidth="600"
@@ -158,7 +159,7 @@
                 </PanelContainer>
 
                 <!-- Gas exchange -->
-                <GridContainer Columns="2">
+                <BoxContainer SeparationOverride="4">
                     <PanelContainer StyleClasses="BackgroundPanelDark"
                                     HorizontalExpand="True"
                                     VerticalExpand="True">
@@ -168,8 +169,11 @@
                                    StyleClasses="LabelKeyText"
                                    Name="ConsumedHeading"
                                    Margin="0 0 0 2" />
-                            <atmos:GasDisplayControl Name="Consumed"
-                                                     EmptyMessage="{Loc 'botany-ui-gases-none'}" />
+                            <ScrollContainer MaxHeight="150"
+                                             ReturnMeasure="True">
+                                <atmos:GasDisplayControl Name="Consumed"
+                                                         EmptyMessage="{Loc 'botany-ui-gases-none'}" />
+                            </ScrollContainer>
                         </BoxContainer>
                     </PanelContainer>
                     <PanelContainer StyleClasses="BackgroundPanelDark"
@@ -181,11 +185,14 @@
                                    StyleClasses="LabelKeyText"
                                    Name="ExudedHeading"
                                    Margin="0 0 0 2" />
-                            <atmos:GasDisplayControl Name="Exuded"
-                                                     EmptyMessage="{Loc 'botany-ui-gases-none'}" />
+                            <ScrollContainer MaxHeight="150"
+                                             ReturnMeasure="True">
+                                <atmos:GasDisplayControl Name="Exuded"
+                                                         EmptyMessage="{Loc 'botany-ui-gases-none'}" />
+                            </ScrollContainer>
                         </BoxContainer>
                     </PanelContainer>
-                </GridContainer>
+                </BoxContainer>
 
                 <!-- Harvest chemicals -->
                 <PanelContainer StyleClasses="BackgroundPanelDark"
@@ -197,7 +204,11 @@
                                StyleClasses="LabelKeyText"
                                Name="ChemicalsHeading"
                                Margin="0 0 0 2" />
-                        <chemistry:ReagentDisplayControl Name="Chemicals" />
+                        <ScrollContainer MaxHeight="150"
+                                         ReturnMeasure="True">
+                            <chemistry:ReagentDisplayControl Name="Chemicals"
+                                                             EmptyMessage="{Loc 'botany-ui-chemicals-none'}" />
+                        </ScrollContainer>
                     </BoxContainer>
                 </PanelContainer>
 
@@ -219,7 +230,7 @@
                             <BoxContainer HorizontalExpand="True">
                                    <BoxContainer Name="Mutations"
                                                  Orientation="Vertical"
-                                                 MaxWidth="250" />
+                                                 MaxWidth="300" />
                             </BoxContainer>
                             <PanelContainer StyleClasses="LowDivider"
                                             VerticalExpand="True"
@@ -235,7 +246,6 @@
                                        Margin="0 0 8 0" />
                                 <Label Name="MutationMod"
                                        StyleClasses="LabelWeak" />
-                                <Label Name="MutationModDelta" />
                             </GridContainer>
                         </GridContainer>
                     </BoxContainer>

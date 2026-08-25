@@ -94,8 +94,7 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         GrowthStage.Text = $"{growthStage} / {plant.GrowthStages}";
         GrowthType.Text = GetGrowthType(plantEntity, prototypeId);
 
-        if (!_botanySystem.TryGetPlantComponent<PlantComponent>(null, prototypeId, out var prototypePlant)
-            || !_botanySystem.TryGetPlantComponent<PlantHolderComponent>(null, prototypeId, out var prototypeHolder))
+        if (!_botanySystem.TryGetPlantComponent<PlantComponent>(null, prototypeId, out var prototypePlant))
             return;
 
         UpdateDelta(EnduranceDelta, plant.Endurance, prototypePlant.Endurance);
@@ -104,7 +103,6 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         UpdateDelta(MaturationDelta, plant.Maturation, prototypePlant.Maturation, invert: true);
         UpdateDelta(ProductionDelta, plant.Production, prototypePlant.Production);
         UpdateDelta(PotencyDelta, plant.Potency, prototypePlant.Potency);
-        UpdateDelta(MutationModDelta, holder.MutationMod, prototypeHolder.MutationMod);
     }
 
     private void UpdateDelta(Label label, float value, float prototypeValue, bool invert = false)
@@ -239,11 +237,8 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         if (!_botanySystem.TryGetPlantComponent<PlantChemicalsComponent>(plantEntity, prototypeId, out var plantChemicals)
             || plantChemicals.Chemicals.Count == 0)
         {
-            Chemicals.AddChild(new Label
-            {
-                Text = Loc.GetString("botany-ui-chemicals-none"),
-                StyleClasses = { StyleClass.LabelWeak },
-            });
+            if (Chemicals.ChildCount == 0)
+                Chemicals.ShowEmptyMessage();
             return;
         }
 

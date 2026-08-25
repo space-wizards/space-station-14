@@ -2,6 +2,7 @@
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       xmlns:chemistry="clr-namespace:Content.Client.Chemistry.UI"
                       xmlns:botany="clr-namespace:Content.Client.Botany.UI"
+                      Resizable="False"
                       MinWidth="700"
                       MinHeight="400">
     <BoxContainer Orientation="Vertical"
@@ -99,7 +100,11 @@
                                StyleClasses="LabelKeyText"
                                Name="ReagentsHeading"
                                Margin="0 0 0 2" />
-                        <chemistry:ReagentDisplayControl Name="Reagents" />
+                        <ScrollContainer MaxHeight="150"
+                                         ReturnMeasure="True">
+                            <chemistry:ReagentDisplayControl Name="Reagents"
+                                                             EmptyMessage="{Loc 'botany-ui-chemicals-none'}" />
+                        </ScrollContainer>
                     </BoxContainer>
                 </PanelContainer>
             </BoxContainer>

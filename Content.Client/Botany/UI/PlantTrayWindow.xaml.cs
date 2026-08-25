@@ -67,21 +67,18 @@ public sealed partial class PlantTrayWindow : FancyWindow
     {
         Reagents.ClearDisplay();
 
+        if (Reagents.ChildCount == 0)
+        {
+            Reagents.ShowEmptyMessage();
+            return;
+        }
+
         if (_solutionSystem.ResolveSolution(tray.Owner, tray.Comp.SoilSolutionName, ref tray.Comp.SoilSolution, out var solution))
         {
             foreach (var (reagent, quantity) in solution.Contents)
             {
                 Reagents.AddReagent(reagent, quantity);
             }
-        }
-
-        if (Reagents.ChildCount == 0)
-        {
-            Reagents.AddChild(new Label
-            {
-                Text = Loc.GetString("botany-ui-reagents-none"),
-                StyleClasses = { StyleClass.LabelWeak },
-            });
         }
     }
 

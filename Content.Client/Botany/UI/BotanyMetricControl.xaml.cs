@@ -53,19 +53,18 @@ public sealed partial class BotanyMetricControl : PanelContainer
     /// <param name="value">The formatted current value.</param>
     /// <param name="target">The formatted target value, if any.</param>
     /// <param name="progress">The progress value in the range from zero to one, if any.</param>
-    /// <param name="useProgressColor">Whether to use <see cref="ProgressColor"/> for the progress bar.</param>
     public void Update(string title,
         string value,
         string? target = null,
-        float? progress = null,
-        bool useProgressColor = false)
+        float? progress = null)
     {
         Title.Text = title;
         Value.Text = value;
         Target.Text = target;
         Target.Visible = target != null;
         Progress.Visible = progress != null;
-        _progressStyle.BackgroundColor = useProgressColor ? ProgressColor ?? AccentColor : AccentColor;
+        _progressStyle.BackgroundColor = ProgressColor ?? AccentColor;
+
         if (progress != null)
             Progress.Value = Math.Clamp(progress.Value, 0f, 1f);
     }

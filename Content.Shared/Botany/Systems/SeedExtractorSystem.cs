@@ -38,7 +38,7 @@ public sealed partial class SeedExtractorSystem : EntitySystem
         {
             _popup.PopupCursor(Loc.GetString("seed-extractor-component-no-seeds", ("name", args.Used)),
                 args.User,
-                PopupType.MediumCaution);
+                PopupType.SmallCaution);
             return;
         }
 
@@ -49,9 +49,8 @@ public sealed partial class SeedExtractorSystem : EntitySystem
         PredictedQueueDel(args.Used);
         args.Handled = true;
 
-
         var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
-        var amount = random.NextFloat(ent.Comp.BaseSeeds.Min, ent.Comp.BaseSeeds.Max + 1);
+        var amount = random.NextFloat(ent.Comp.BaseSeeds.Min, ent.Comp.BaseSeeds.Max);
         var coords = Transform(ent).Coordinates;
 
         for (var i = 0; i < amount; i++)
