@@ -164,21 +164,21 @@ public sealed partial class IngestionSystem
         var position = _transform.GetMapCoordinates(entity);
         var trashes = entity.Comp.Trash;
         string? hand = null;
-        var pickup = user != null && _hands.IsHolding(user.Value, entity, out hand);
+        var pickup = user is not null && _hands.IsHolding(user.Value, entity, out hand);
 
         foreach (var trash in trashes)
         {
             var spawnedTrash = EntityManager.PredictedSpawn(trash, position);
-            // Put the trash in the user's hand
-            // I am 100% confident we don't need this check but rider gets made at me if it's not here.
-            if (!pickup ||
-                user is null)
+
+            // Can't or shouldn't pick this up, skip.
+            if (!pickup || user is null)
                 continue;
 
             if (replace &&
-                (hand is null ||
-                 !_hands.TryForcePickup(user.Value, spawnedTrash, hand)))
+                (hand is null || !_hands.TryForcePickup(user.Value, spawnedTrash, hand)))
+            {
                 _hands.TryPickupAnyHand(user.Value, spawnedTrash);
+            }
         }
     }
 
