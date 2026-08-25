@@ -514,7 +514,8 @@ public sealed partial class IngestionSystem : EntitySystem
 
     private void OnBeforeToolRefined(Entity<EdibleComponent> entity, ref BeforeToolRefinedEvent args)
     {
-        SpawnTrash(entity, args.User);
+        if (entity.Comp.SpawnTrashOnRefine)
+            SpawnTrash(entity, args.User);
     }
 
     private void AddEdibleVerbs(Entity<EdibleComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)

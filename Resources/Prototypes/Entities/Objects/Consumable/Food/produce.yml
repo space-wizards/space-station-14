@@ -337,6 +337,7 @@
     flavors:
       - banana
   - type: Edible
+    spawnTrashOnRefine: false
     trash:
     - TrashBananaPeel
   - type: ToolRefinable
@@ -382,6 +383,7 @@
       - banana
       - nothing
   - type: Edible
+    spawnTrashOnRefine: false
     trash:
     - TrashMimanaPeel
   - type: ToolRefinable
@@ -1185,6 +1187,7 @@
     flavors:
       - corn
   - type: Edible
+    spawnTrashOnRefine: false
     trash:
     - FoodCornTrash
   - type: ToolRefinable
@@ -1862,6 +1865,7 @@
   - type: Produce
     plantId: GatfruitPlants
   - type: Edible
+    spawnTrashOnRefine: false
     trash:
     - WeaponRevolverPython
   - type: ToolRefinable
@@ -1922,6 +1926,7 @@
   - type: Produce
     plantId: FakeCapfruitPlants
   - type: Edible
+    spawnTrashOnRefine: false
     trash:
     - RevolverCapGunFake
   - type: ToolRefinable
@@ -2332,6 +2337,7 @@
     flavors:
       - bungo
   - type: Edible
+    spawnTrashOnRefine: false
     trash:
     - FoodBungoPit
   - type: ToolRefinable
@@ -2636,6 +2642,7 @@
     flavors:
       - cherry
   - type: Edible
+    spawnTrashOnRefine: false
     trash:
     - TrashCherryPit
   - type: ToolRefinable
