@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Hands.EntitySystems;
@@ -33,14 +34,13 @@ public abstract partial class SpawnItemsOnUseSystem : EntitySystem
         var xform = Transform(args.User);
         var spawnEntities = GetSpawns(component.Items, _random);
 
-        EntityUid? entityToPlaceInHands =  null;
+        var spawned = new HashSet<EntityUid>();
         foreach (var proto in spawnEntities)
         {
-            var spawned = SpawnNextToOrDrop(proto, args.User, xform);
-            _hands.TryPickupAnyHand(args.User, spawned);
-            entityToPlaceInHands ??= spawned;
+            var spawn = (SpawnNextToOrDrop(proto, args.User, xform));
+            spawned.Add(spawn);
 
-            _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(args.User)} used {ToPrettyString(uid)} which spawned {ToPrettyString(entityToPlaceInHands.Value)}");
+            _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(args.User)} used {ToPrettyString(uid)} which spawned {ToPrettyString(spawn)}");
         }
 
         // The entity is often deleted, so play the sound at its position rather than parenting
@@ -52,14 +52,19 @@ public abstract partial class SpawnItemsOnUseSystem : EntitySystem
         // Delete entity only if component was successfully used
         if (component.Uses <= 0)
         {
-            var holding = _hands.IsHolding(args.User, uid, out var hand);
+            _hands.IsHolding(args.User, uid, out var hand);
             // Don't delete the entity in the event bus, so we queue it for deletion.
             // We need the free hand for the new item, so we send it to nullspace.
             _transform.DetachEntity(uid, Transform(uid));
             PredictedQueueDel(uid);
 
-            if (holding && entityToPlaceInHands is not null)
-                _hands.TryPickup(args.User, entityToPlaceInHands.Value, hand);
+            if (spawned.Count != 0)
+                _hands.TryPickup(args.User, spawned.First(), hand);
+        }
+
+        foreach (var ent in spawned)
+        {
+            _hands.TryPickupAnyHand(args.User, ent);
         }
 
         args.Handled = true;
