@@ -189,7 +189,7 @@ public abstract partial class SharedHandsSystem
     }
     
     /// <summary>
-    /// Turn the specified hand into a fake hand
+    /// Turn the specified hand into a "fake" hand (copy of old hand, but can't pick up anything)
     /// </summary>
     public virtual void FakeThisHand(Entity<HandsComponent?> ent, string handName)
     {
@@ -204,10 +204,8 @@ public abstract partial class SharedHandsSystem
             ContainerSystem.ShutdownContainer(container);
         
         var oldHand =  ent.Comp.Hands[handName];
-        var newHand = new Hand(oldHand.Location, oldHand.EmptyLabel, oldHand.EmptyRepresentative, new EntityWhitelist
-        {
-            Components = ["VirtualItem"]
-        });
+        // Copy over the old hand, but with an empty entity whitelist (can't hold anything)
+        var newHand = new Hand(oldHand.Location, oldHand.EmptyLabel, oldHand.EmptyRepresentative, EntityWhitelist.StaticInstantiate());
 
         if (!ent.Comp.Hands.Remove(handName))
             return;
@@ -225,6 +223,9 @@ public abstract partial class SharedHandsSystem
         Dirty(ent);
     }
 
+    /// <summary>
+    /// Replaces all of the entity's hands with "fake" hands
+    /// </summary>
     public void FakeHands(Entity<HandsComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))

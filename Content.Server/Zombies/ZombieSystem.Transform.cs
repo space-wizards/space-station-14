@@ -312,11 +312,9 @@ public sealed partial class ZombieSystem
             MakeGhostRole(target);
         }
 
-        if (TryComp<HandsComponent>(target, out var handsComp))
+        if (HasComp<HandsComponent>(target)) // replaces hands with non-functional placeholders (still looks like hands on the strip menu)
         {
             _hands.FakeHands(target);
-            //_hands.RemoveHands(target);
-            //RemComp(target, handsComp);
         }
 
         // Sloth: What the fuck?
