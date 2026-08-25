@@ -11,7 +11,7 @@ using static Content.Shared.Storage.EntitySpawnCollection;
 namespace Content.Shared.Storage.EntitySystems;
 
 /// <summary>
-/// This handles...
+/// This handles system used by the <see cref="SpawnItemsOnUseComponent"/>;
 /// </summary>
 public abstract partial class SpawnItemsOnUseSystem : EntitySystem
 {
@@ -34,7 +34,7 @@ public abstract partial class SpawnItemsOnUseSystem : EntitySystem
         var xform = Transform(args.User);
         var spawnEntities = GetSpawns(component.Items, _random);
 
-        var spawned = new HashSet<EntityUid>();
+        var spawned = new List<EntityUid>();
         foreach (var proto in spawnEntities)
         {
             var spawn = (PredictedSpawnNextToOrDrop(proto, args.User, xform));
@@ -56,10 +56,13 @@ public abstract partial class SpawnItemsOnUseSystem : EntitySystem
             // Don't delete the entity in the event bus, so we queue it for deletion.
             // We need the free hand for the new item, so we send it to nullspace.
             _transform.DetachEntity(uid, Transform(uid));
-            PredictedQueueDel(uid);
+            PredictedDel(uid);
 
-            if (spawned.Count != 0)
-                _hands.TryPickup(args.User, spawned.First(), hand);
+            if (spawned.Count != 0 && hand != null)
+            {
+                _hands.TryForcePickup(args.User, spawned[0], hand);
+                spawned.Remove(spawned[0]);
+            }
         }
 
         foreach (var ent in spawned)

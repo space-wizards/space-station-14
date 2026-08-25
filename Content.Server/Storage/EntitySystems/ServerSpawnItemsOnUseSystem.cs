@@ -44,6 +44,4 @@ public sealed partial class ServerSpawnItemsOnUseSystem : SpawnItemsOnUseSystem
 
         args.Handled = true;
     }
-
-
 }

@@ -1,3 +1,4 @@
+using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
@@ -6,7 +7,7 @@ namespace Content.Shared.Storage.Components;
 /// <summary>
 ///     Spawns items when used in hand.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(SpawnItemsOnUseSystem))]
 public sealed partial class SpawnItemsOnUseComponent : Component
 {
     /// <summary>
