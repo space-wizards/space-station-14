@@ -1,8 +1,8 @@
 #SOFTSUITS
 #Basic EVA
 - type: entity
-  id: SuitStorageEVA
   parent: SuitStorageBase
+  id: SuitStorageEVA
   suffix: EVA
   components:
   - type: EntityTableContainerFill
@@ -21,8 +21,8 @@
 
 #Basic EVA (Big Ass Helmet)
 - type: entity
-  id: SuitStorageEVAAlternate
   parent: SuitStorageBase
+  id: SuitStorageEVAAlternate
   suffix: EVA, Large Helmet
   components:
   - type: EntityTableContainerFill
@@ -41,8 +41,8 @@
 
 #Emergency EVA
 - type: entity
-  id: SuitStorageEVAEmergency
   parent: SuitStorageBase
+  id: SuitStorageEVAEmergency
   suffix: Emergency EVA
   components:
   - type: EntityTableContainerFill
@@ -60,8 +60,8 @@
 
 #Prisoner EVA
 - type: entity
-  id: SuitStorageEVAPrisoner
   parent: SuitStorageBase
+  id: SuitStorageEVAPrisoner
   suffix: Prisoner EVA
   components:
   - type: EntityTableContainerFill
@@ -80,8 +80,8 @@
 
 #Syndicate EVA
 - type: entity
-  id: SuitStorageEVASyndicate
   parent: SuitStorageBase
+  id: SuitStorageEVASyndicate
   suffix: Syndicate EVA
   components:
   - type: EntityTableContainerFill
@@ -100,8 +100,8 @@
 
 #Pirate EVA
 - type: entity
-  id: SuitStorageEVAPirate
   parent: SuitStorageBase
+  id: SuitStorageEVAPirate
   suffix: Pirate EVA
   components:
   - type: EntityTableContainerFill
@@ -119,8 +119,8 @@
 
 #NTSRA Voidsuit
 - type: entity
-  id: SuitStorageNTSRA
   parent: SuitStorageBase
+  id: SuitStorageNTSRA
   suffix: Ancient EVA
   components:
   - type: EntityTableContainerFill
@@ -140,8 +140,8 @@
 #HARDSUITS
 #Engineering hardsuit
 - type: entity
-  id: SuitStorageEngi
   parent: SuitStorageBase
+  id: SuitStorageEngi
   suffix: Station Engineer
   components:
   - type: EntityTableContainerFill
@@ -155,8 +155,8 @@
 
 #Atmospherics hardsuit
 - type: entity
-  id: SuitStorageAtmos
   parent: SuitStorageBase
+  id: SuitStorageAtmos
   suffix: Atmospheric Technician
   components:
   - type: EntityTableContainerFill
@@ -170,8 +170,8 @@
 
 #Security hardsuit
 - type: entity
-  id: SuitStorageSec
   parent: SuitStorageBase
+  id: SuitStorageSec
   suffix: Security
   components:
   - type: EntityTableContainerFill
@@ -193,8 +193,8 @@
 
 #CE's hardsuit
 - type: entity
-  id: SuitStorageCE
   parent: SuitStorageBase
+  id: SuitStorageCE
   suffix: Chief Engineer
   components:
   - type: EntityTableContainerFill
@@ -208,8 +208,8 @@
 
 #CMO's hardsuit
 - type: entity
-  id: SuitStorageCMO
   parent: SuitStorageBase
+  id: SuitStorageCMO
   suffix: Chief Medical Officer
   components:
   - type: EntityTableContainerFill
@@ -223,8 +223,8 @@
 
 #RD's hardsuit
 - type: entity
-  id: SuitStorageRD
   parent: SuitStorageBase
+  id: SuitStorageRD
   suffix: Research Director
   components:
   - type: EntityTableContainerFill
@@ -238,8 +238,8 @@
 
 #HOS's hardsuit
 - type: entity
-  id: SuitStorageHOS
   parent: SuitStorageBase
+  id: SuitStorageHOS
   suffix: Head of Security
   components:
   - type: EntityTableContainerFill
@@ -254,8 +254,8 @@
 
 #Captain's hardsuit
 - type: entity
-  id: SuitStorageCaptain
   parent: SuitStorageBase
+  id: SuitStorageCaptain
   suffix: Captain
   components:
   - type: EntityTableContainerFill
@@ -269,8 +269,8 @@
 
 #Warden's hardsuit
 - type: entity
-  id: SuitStorageWarden
   parent: SuitStorageBase
+  id: SuitStorageWarden
   suffix: Warden
   components:
   - type: EntityTableContainerFill
@@ -284,8 +284,8 @@
 
 #Salvage hardsuit
 - type: entity
-  id: SuitStorageSalv
   parent: SuitStorageBase
+  id: SuitStorageSalv
   suffix: Salvage
   components:
   - type: EntityTableContainerFill
@@ -299,8 +299,8 @@
 
 #Blood-red hardsuit
 - type: entity
-  id: SuitStorageSyndie
   parent: SuitStorageBase
+  id: SuitStorageSyndie
   suffix: Syndicate Hardsuit
   components:
   - type: EntityTableContainerFill
@@ -321,8 +321,8 @@
 
 #Pirate Captain's hardsuit
 - type: entity
-  id: SuitStoragePirateCap
   parent: SuitStorageBase
+  id: SuitStoragePirateCap
   suffix: Pirate Captain
   components:
   - type: EntityTableContainerFill
@@ -340,8 +340,8 @@
 
 #Wizard
 - type: entity
-  id: SuitStorageWizard
   parent: SuitStorageBase
+  id: SuitStorageWizard
   suffix: Wizard
   components:
   - type: EntityTableContainerFill

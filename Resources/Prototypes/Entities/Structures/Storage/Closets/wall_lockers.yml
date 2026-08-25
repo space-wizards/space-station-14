@@ -1,13 +1,13 @@
 - type: entity
-  id: ClosetWall
   parent: BaseWallCloset
+  id: ClosetWall
   name: maintenance wall closet
   description: It's a storage unit.
 
 - type: entity
+  parent: BaseWallCloset
   id: ClosetWallEmergency
   name: emergency wall closet
-  parent: BaseWallCloset
   description: It's a storage unit for emergency breath masks and O2 tanks.
   components:
   - type: Sprite
@@ -23,17 +23,17 @@
     sprite: Structures/Storage/ClosetsWallmounted/emergency-nitrogen.rsi
 
 - type: entity
+  parent: BaseWallCloset
   id: ClosetWallFire
   name: fire-safety wall closet
-  parent: BaseWallCloset
   description: It's a storage unit for fire-fighting supplies.
   components:
   - type: Sprite
     sprite: Structures/Storage/ClosetsWallmounted/emergency-fire.rsi
 
 - type: entity
-  id: ClosetWallBlack
   parent: BaseWallCloset
+  id: ClosetWallBlack
   name: black wall closet
   description: "A wardrobe packed with stylish black clothing."
   components:
@@ -41,8 +41,8 @@
     sprite: Structures/Storage/ClosetsWallmounted/generic-wardrobe-black.rsi
 
 - type: entity
-  id: ClosetWallBlue
   parent: BaseWallCloset
+  id: ClosetWallBlue
   name: blue wall closet
   description: "A wardrobe packed with stylish blue clothing."
   components:
@@ -50,18 +50,17 @@
     sprite: Structures/Storage/ClosetsWallmounted/generic-wardrobe-blue.rsi
 
 - type: entity
-  id: ClosetWallPink
   parent: BaseWallCloset
+  id: ClosetWallPink
   name: pink wall closet
   description: "A wardrobe packed with fabulous pink clothing."
   components:
   - type: Sprite
     sprite: Structures/Storage/ClosetsWallmounted/generic-wardrobe-pink.rsi
 
-
 - type: entity
-  id: ClosetWallGreen
   parent: BaseWallCloset
+  id: ClosetWallGreen
   name: green wall closet
   description: "A wardrobe packed with stylish green clothing."
   components:
@@ -69,16 +68,16 @@
     sprite: Structures/Storage/ClosetsWallmounted/generic-wardrobe-green.rsi
 
 - type: entity
-  id: ClosetWallOrange
   parent: BaseWallCloset
+  id: ClosetWallOrange
   name: prison wall closet
   components:
   - type: Sprite
     sprite: Structures/Storage/ClosetsWallmounted/prisoner-wardrobe.rsi
 
 - type: entity
-  id: ClosetWallYellow
   parent: BaseWallCloset
+  id: ClosetWallYellow
   name: yellow wall closet
   description: "A wardrobe packed with stylish yellow clothing."
   components:
@@ -86,8 +85,8 @@
     sprite: Structures/Storage/ClosetsWallmounted/generic-wardrobe-yellow.rsi
 
 - type: entity
-  id: ClosetWallWhite
   parent: BaseWallCloset
+  id: ClosetWallWhite
   name: white wall closet
   description: "A wardrobe packed with stylish white clothing."
   components:
@@ -95,8 +94,8 @@
     sprite: Structures/Storage/ClosetsWallmounted/generic-wardrobe-white.rsi
 
 - type: entity
-  id: ClosetWallGrey
   parent: BaseWallCloset
+  id: ClosetWallGrey
   name: grey wall closet
   description: "A wardrobe packed with a tide of grey clothing."
   components:
@@ -104,8 +103,8 @@
     sprite: Structures/Storage/ClosetsWallmounted/generic-wardrobe.rsi
 
 - type: entity
-  id: ClosetWallMixed
   parent: BaseWallCloset
+  id: ClosetWallMixed
   name: mixed wall closet
   description: "A wardrobe packed with a mix of colorful clothing."
   components:
@@ -113,16 +112,16 @@
     sprite: Structures/Storage/ClosetsWallmounted/generic-wardrobe-mixed.rsi
 
 - type: entity
-  id: ClosetWallAtmospherics
   parent: BaseWallCloset
+  id: ClosetWallAtmospherics
   name: atmospherics wall closet
   components:
   - type: Sprite
     sprite: Structures/Storage/ClosetsWallmounted/engineering-wardrobe-atmos.rsi
 
 - type: entity
-  id: LockerWallMedical
   parent: BaseWallLocker
+  id: LockerWallMedical
   name: medical wall locker
   components:
   - type: Sprite
@@ -208,8 +207,8 @@
     sprite: Structures/Storage/ClosetsWallmounted/prisoner-secure-8.rsi
 
 - type: entity
-  id: LockerWallSyndicate
   parent: BaseWallLocker
+  id: LockerWallSyndicate
   name: blood-red wall locker
   description: It's a wall storage unit with a blood-red design.
   suffix: "Locked"

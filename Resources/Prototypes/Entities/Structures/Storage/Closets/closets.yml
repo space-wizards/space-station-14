@@ -1,8 +1,8 @@
 # Tool closet
 - type: entity
+  parent: ClosetSteelBase
   id: ClosetTool
   name: tool closet
-  parent: ClosetSteelBase
   description: It's a storage unit for tools.
   components:
   - type: Sprite
@@ -10,9 +10,9 @@
 
 # Radiation suit closet
 - type: entity
+  parent: ClosetSteelBase
   id: ClosetRadiationSuit
   name: radiation suit closet
-  parent: ClosetSteelBase
   description: "More comfortable than radiation poisioning."
   components:
   - type: Sprite
@@ -20,9 +20,9 @@
 
 # Emergency closet
 - type: entity
+  parent: ClosetSteelBase
   id: ClosetEmergency
   name: emergency closet
-  parent: ClosetSteelBase
   description: It's a storage unit for emergency breath masks and O2 tanks.
   components:
   - type: Sprite
@@ -30,9 +30,9 @@
 
 # Emergency N2 closet
 - type: entity
+  parent: ClosetSteelBase
   id: ClosetEmergencyN2
   name: emergency nitrogen closet
-  parent: ClosetSteelBase
   description: It's full of life-saving equipment. Assuming, that is, that you breathe nitrogen.
   components:
   - type: Sprite
@@ -40,9 +40,9 @@
 
 # Fire safety closet
 - type: entity
+  parent: ClosetSteelBase
   id: ClosetFire
   name: fire-safety closet
-  parent: ClosetSteelBase
   description: It's a storage unit for fire-fighting supplies.
   components:
   - type: Sprite
@@ -50,9 +50,9 @@
 
 # EOD closet
 - type: entity
+  parent: ClosetSteelBase
   id: ClosetBomb
   name: EOD closet
-  parent: ClosetSteelBase
   description: It's a storage unit for explosion-protective suits.
   components:
   - type: Sprite
@@ -60,11 +60,11 @@
 
 # Janitorial bomb suit closet
 - type: entity
-  id: ClosetJanitorBomb
-  name: janitorial bomb suit closet
   parent: ClosetSteelBase
-  description: It's a storage unit for janitorial explosion-protective suits.
+  id: ClosetJanitorBomb
   categories: [ DoNotMap ]
+  name: janitorial bomb suit closet
+  description: It's a storage unit for janitorial explosion-protective suits.
   components:
   - type: Sprite
     sprite: Structures/Storage/Closets/bomb.rsi
@@ -73,8 +73,8 @@
 
 # Base level 3 bio hazard closet
 - type: entity
-  id: ClosetL3
   parent: ClosetSteelBase
+  id: ClosetL3
   name: level 3 biohazard gear closet
   description: It's a storage unit for level 3 biohazard gear.
   components:
@@ -83,48 +83,48 @@
 
 # Science Variant
 - type: entity
-  id: ClosetL3Science
   parent: ClosetL3
+  id: ClosetL3Science
   components:
   - type: Sprite
     sprite: Structures/Storage/Closets/biohazard-science.rsi
 
 # Virology variant
 - type: entity
-  id: ClosetL3Virology
   parent: ClosetL3
+  id: ClosetL3Virology
   components:
   - type: Sprite
     sprite: Structures/Storage/Closets/biohazard-virology.rsi
 
 # Security variant
 - type: entity
-  id: ClosetL3Security
   parent: ClosetL3
+  id: ClosetL3Security
   components:
   - type: Sprite
     sprite: Structures/Storage/Closets/biohazard-security.rsi
 
 # Janitor variant
 - type: entity
-  id: ClosetL3Janitor
   parent: ClosetL3
+  id: ClosetL3Janitor
   components:
   - type: Sprite
     sprite: Structures/Storage/Closets/biohazard-janitor.rsi
 
 # Maintenance closet
 - type: entity
+  parent: ClosetSteelBase
   id: ClosetMaintenance
   name: maintenance closet
-  parent: ClosetSteelBase
   description: It's a storage unit.
 
 # Syndicate
 - type: entity
+  parent: ClosetSteelBase
   id: LockerSyndicate
   name: blood-red closet
-  parent: ClosetSteelBase
   description: It's a storage unit with a blood-red design.
   components:
   - type: Sprite
@@ -132,10 +132,10 @@
 
 # Bluespace closet
 - type: entity
+  parent: ClosetMaintenance
   id: ClosetBluespace
   name: suspicious closet
   suffix: Bluespace
-  parent: ClosetMaintenance
   description: It's a storage unit... right?
   components:
     - type: ArrivalsBlacklist
@@ -151,10 +151,10 @@
 
 # Unstable bluespace closet
 - type: entity
+  parent: ClosetMaintenance
   id: ClosetBluespaceUnstable
   name: suspicious closet
   suffix: Bluespace unstable
-  parent: ClosetMaintenance
   description: It's a storage unit... right?
   components:
     - type: ArrivalsBlacklist
