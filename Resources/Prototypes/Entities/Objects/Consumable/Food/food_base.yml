@@ -65,3 +65,16 @@
   id: FakeFoodBase
   components:
     - type: FakeConsumable
+      vanishSound: !type:SoundPathSpecifier
+        path: /Audio/Effects/quick_exhale.ogg
+        params:
+          volume: 7
+          pitch: 0.5
+    - type: Damageable
+    - type: Injurable
+      damageContainer: Biological
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 1

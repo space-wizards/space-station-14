@@ -379,16 +379,15 @@
       right:
       - state: plain-inhand-right
 
-# Fake food clone of the cheeseburger used in the magic crayon.
+# Fake burgers for mime's magic crayon
+
 - type: entity
+  abstract: true
   parent: FakeFoodBase
-  id: FakeFoodBurgerCheese
-  name: cheese burger
-  description: This noble burger stands proudly clad in golden cheese.
+  id: FakeBurgerBase
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/burger.rsi
-    state: cheese
   - type: Item
     sprite: Objects/Consumable/Food/burger.rsi
     inhandVisuals:
@@ -396,6 +395,38 @@
       - state: plain-inhand-left
       right:
       - state: plain-inhand-right
+
+- type: entity
+  parent: FakeBurgerBase
+  id: FakeBurgerCheese
+  name: cheese burger
+  description: This noble burger stands proudly clad in golden cheese.
+  components:
+  - type: Sprite
+    state: cheese
+
+- type: entity
+  parent: FakeBurgerBase
+  id: FakeBurgerBacon
+  name: bacon burger
+  description: The perfect combination of all things American.
+  components:
+  - type: Sprite
+    state: bacon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: alpha-patty-inhand-left
+        color: "#b37659"
+      - state: alpha-filling-inhand-left
+        color: "#e8634f"
+      right:
+      - state: bun-inhand-right
+      - state: alpha-patty-inhand-right
+        color: "#b37659"
+      - state: alpha-filling-inhand-right
+        color: "#e8634f"
 
 # TODO: Make this work.
   # - type: Sprite

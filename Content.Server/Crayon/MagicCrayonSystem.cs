@@ -1,6 +1,5 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Popups;
-using Content.Shared.Actions.Events;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Crayon;
 using Content.Shared.Database;
