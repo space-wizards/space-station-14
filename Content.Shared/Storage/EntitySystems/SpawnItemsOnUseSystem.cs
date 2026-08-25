@@ -33,16 +33,12 @@ public abstract partial class SpawnItemsOnUseSystem : EntitySystem
         var xform = Transform(args.User);
         var spawnEntities = GetSpawns(component.Items, _random);
 
+        EntityUid? entityToPlaceInHands =  null;
         foreach (var proto in spawnEntities)
         {
-            EntityUid? entityToPlaceInHands = SpawnNextToOrDrop(proto, args.User, xform);
-
-            var holding = _hands.IsHolding(args.User, uid, out var hand);
-
-            if (holding && hand is not null)
-                _hands.TryForcePickup(args.User, entityToPlaceInHands.Value, hand);
-            else
-                _hands.TryPickupAnyHand(args.User, entityToPlaceInHands.Value);
+            var spawned = SpawnNextToOrDrop(proto, args.User, xform);
+            _hands.TryPickupAnyHand(args.User, spawned);
+            entityToPlaceInHands ??= spawned;
 
             _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(args.User)} used {ToPrettyString(uid)} which spawned {ToPrettyString(entityToPlaceInHands.Value)}");
         }
@@ -56,10 +52,14 @@ public abstract partial class SpawnItemsOnUseSystem : EntitySystem
         // Delete entity only if component was successfully used
         if (component.Uses <= 0)
         {
+            var holding = _hands.IsHolding(args.User, uid, out var hand);
             // Don't delete the entity in the event bus, so we queue it for deletion.
             // We need the free hand for the new item, so we send it to nullspace.
             _transform.DetachEntity(uid, Transform(uid));
             PredictedQueueDel(uid);
+
+            if (holding && entityToPlaceInHands is not null)
+                _hands.TryPickup(args.User, entityToPlaceInHands.Value, hand);
         }
 
         args.Handled = true;
