@@ -151,7 +151,7 @@
     duration: 1
     minimumPlayers: 15
   - type: BreakerFlipRule
-    gridBlacklist:
+    blacklist:
       components:
       - ProtectedGrid
 
