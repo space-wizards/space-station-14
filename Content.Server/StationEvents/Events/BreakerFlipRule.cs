@@ -74,7 +74,8 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
             AdminLogManager.Add(LogType.ItemConfigure, LogImpact.Medium,
                 $"Station event {ToPrettyString(uid):user} set the main breaker state of {ToPrettyString(apc):entity} to {stateString:state}");
 
-            if (--toDisable <= 0)
+            toDisable--;
+            if (toDisable <= 0)
                 break;
         }
     }
