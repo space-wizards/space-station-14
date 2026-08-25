@@ -22,7 +22,7 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
     [Dependency] private EntityQuery<StationEventComponent> _stationEventQuery;
     [Dependency] private EntityQuery<StationMemberComponent> _stationMemberQuery;
 
-    // Limits on the minimum/maximum number of APCs to trigger.
+    // Minimum/maximum number of APCs to trigger.
     private const int MinAPCs = 3;
     private const int MaxAPCs = 7;
 
