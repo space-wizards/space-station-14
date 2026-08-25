@@ -9,12 +9,17 @@ using JetBrains.Annotations;
 
 namespace Content.Server.StationEvents.Events;
 
+/// <summary>
+/// The system driving the logic for the breaker flip.
+/// Disables a random number of APCs (default between 3-7) on a random station.
+/// </summary>
 [UsedImplicitly]
 public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRuleComponent>
 {
     [Dependency] private ApcSystem _apcSystem = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
+    [Dependency] private EntityQuery<StationEventComponent> _stationEventQuery;
     [Dependency] private EntityQuery<StationMemberComponent> _stationMemberQuery;
 
     // Limits on the minimum/maximum number of APCs to trigger.
@@ -23,7 +28,7 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
 
     protected override void Added(EntityUid uid, BreakerFlipRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
-        if (!TryComp<StationEventComponent>(uid, out var stationEvent))
+        if (!_stationEventQuery.TryComp(uid, out var stationEvent))
             return;
 
         var str = Loc.GetString("station-event-breaker-flip-announcement", ("data", Loc.GetString($"random-sentience-event-data-{RobustRandom.Next(1, 6)}")));
