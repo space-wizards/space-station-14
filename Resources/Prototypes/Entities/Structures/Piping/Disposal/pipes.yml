@@ -530,6 +530,8 @@
   - type: DisposalRouter
     tags:
     - waste
+  - type: Flippable
+    mirrorEntity: DisposalRouterWaste
 
 - type: entity
   parent: DisposalRouterFlipped
@@ -539,3 +541,5 @@
   - type: DisposalRouter
     tags:
     - waste
+  - type: Flippable
+    mirrorEntity: DisposalRouterFlippedWaste
