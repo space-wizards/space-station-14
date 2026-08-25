@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects.Effects.Body;
@@ -159,17 +160,15 @@ public sealed partial class IngestionSystem
         var trashes = entity.Comp.Trash;
         var pickup = user != null && _hands.IsHolding(user.Value, entity, out _);
 
-        foreach (var trash in trashes)
+        foreach (var spawnedTrash in trashes.Select(trash => EntityManager.PredictedSpawn(trash, position)).Where(spawnedTrash => pickup))
         {
-            var spawnedTrash = EntityManager.PredictedSpawn(trash, position);
-
-            // If the user is holding the item
-            if (!pickup)
-                continue;
-
             // Put the trash in the user's hand
             // I am 100% confident we don't need this check but rider gets made at me if it's not here.
-            if (user != null)
+            if (user is null)
+                continue;
+
+            var hand = _hands.GetActiveHand(user.Value);
+            if (!_hands.TryPickup(user.Value, spawnedTrash, hand))
                 _hands.TryPickupAnyHand(user.Value, spawnedTrash);
         }
     }
