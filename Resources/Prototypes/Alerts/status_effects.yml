@@ -34,3 +34,11 @@
   name: alerts-vow-silence-name
   clickEvent: !type:BreakVowAlertEvent
   description: alerts-vow-silence-desc
+
+- type: alert
+  id: MildWeakStatusAlert
+  icons:
+  - sprite: /Textures/Interface/Alerts/status_effects.rsi
+    state: weak
+  name: alerts-weak-name
+  description: alerts-mild-weak-desc

@@ -12,6 +12,13 @@
       components:
       - Damageable
 
+- type: entity
+  abstract: true
+  parent: StatusEffectDamageModifierBase
+  id: StatusEffectDamageModifierDebuffBase
+  components:
+  - type: RejuvenateRemovedStatusEffect
+
 ## Buff
 
 - type: entity
@@ -25,3 +32,22 @@
         Radiation: 0.1
 
 ## Debuff
+
+- type: entity
+  parent: StatusEffectDamageModifierDebuffBase
+  id: StatusEffectMildWeakness
+  name: mild weakness
+  components:
+  - type: StatusEffectAlert
+    alert: MildWeakStatusAlert
+    showDuration: false
+  - type: DamageModifierStatusEffect
+    modifiers:
+      coefficients:
+        Blunt: 1.2
+        Slash: 1.2
+        Pierce: 1.2
+        Heat: 1.2
+        Cold: 1.2
+        Shock: 1.2
+        Caustic: 1.2

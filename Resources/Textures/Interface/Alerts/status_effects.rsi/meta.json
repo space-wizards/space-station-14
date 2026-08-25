@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "'drunk' created iaada based on the silhouette of https://github.com/discordia-space/CEV-Eris/raw/f7aa28fd4b4d0386c3393d829681ebca526f1d2d/icons/obj/drinks.dmi",
+    "copyright": "'drunk' created iaada (GitHub) based on the silhouette of https://github.com/discordia-space/CEV-Eris/raw/f7aa28fd4b4d0386c3393d829681ebca526f1d2d/icons/obj/drinks.dmi . 'weak' created by iaada(GitHub)",
     "size": {
         "x": 32,
         "y": 32
@@ -9,6 +9,9 @@
     "states": [
         {
             "name": "drunk"
+        },
+        {
+            "name": "weak"
         }
     ]
 }

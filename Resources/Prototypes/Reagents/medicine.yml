@@ -841,6 +841,9 @@
         damage:
           Brute: -1
           Burn: -1
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectMildWeakness # Reduced combat viability
+        time: 1
       - !type:HealthChange
         conditions:
         - !type:MobStateCondition
