@@ -1,7 +1,6 @@
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Crayon;
 
@@ -13,10 +12,10 @@ namespace Content.Shared.Crayon;
 public sealed partial class FakeConsumableComponent : Component
 {
     /// <summary>
-    /// If not null, the entity that this fake consumable component is holding.
+    /// The identifier of this fake consumable's container.
     /// </summary>
     [DataField]
-    public EntProtoId? Contained;
+    public string ContainerId = "fake_consumable_slot";
 
     /// <summary>
     /// The sound that plays when the consumable vanishes.

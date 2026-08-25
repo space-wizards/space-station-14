@@ -1,15 +1,14 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Destructible;
 using Content.Server.Popups;
-using Content.Shared.Containers;
 using Content.Shared.Crayon;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition;
 using Content.Shared.Throwing;
-using Content.Shared.Trigger.Systems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Crayon;
 
@@ -20,20 +19,18 @@ public sealed partial class FakeConsumableSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private TriggerSystem _trigger = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-
         SubscribeLocalEvent<FakeConsumableComponent, FakeConsumableDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<FakeConsumableComponent, InteractUsingEvent>(OnInteractUsingEvent);
         SubscribeLocalEvent<FakeConsumableComponent, DamageThresholdReached>(OnDamageThresholdReached);
-        SubscribeLocalEvent<FakeConsumableComponent, LandEvent>(OnLandEvent);
-        SubscribeLocalEvent<FakeConsumableComponent, IngestedEvent>(OnIngested);
+        SubscribeLocalEvent<FakeConsumableComponent, ThrownEvent>(OnThrown);
+        SubscribeLocalEvent<FakeConsumableComponent, FullyEatenEvent>(OnEaten);
     }
-
 
     private void OnInteractUsingEvent(Entity<FakeConsumableComponent> ent, ref InteractUsingEvent args)
     {
@@ -42,10 +39,11 @@ public sealed partial class FakeConsumableSystem : EntitySystem
 
         var used = args.Used;
         var user = args.User;
+        var slot = _container.EnsureContainer<ContainerSlot>(ent, ent.Comp.ContainerId);
 
-        if (ent.Comp.Contained != null)
+        if (slot.ContainedEntity != null)
         {
-            _popup.PopupCursor(Loc.GetString("fake-consumable-already-contained", ("contained", ent.Comp.Contained), ("owner", ent)), user);
+            _popup.PopupCursor(Loc.GetString("fake-consumable-already-contained", ("contained", slot.ContainedEntity), ("owner", ent)), user);
             return;
         }
 
@@ -74,9 +72,15 @@ public sealed partial class FakeConsumableSystem : EntitySystem
             return;
 
         var used = args.Used.Value;
+        var slot = _container.EnsureContainer<ContainerSlot>(ent, ent.Comp.ContainerId);
+        _container.Insert(used, slot);
 
-        ent.Comp.Contained = MetaData(used).EntityPrototype?.ID;
-        QueueDel(used);
+        args.Handled = true;
+    }
+
+    private void OnEaten(Entity<FakeConsumableComponent> ent, ref FullyEatenEvent args)
+    {
+        RevealContained(ent, args.User);
     }
 
     private void OnDamageThresholdReached(Entity<FakeConsumableComponent> ent, ref DamageThresholdReached args)
@@ -84,7 +88,7 @@ public sealed partial class FakeConsumableSystem : EntitySystem
         RevealContained(ent, null);
     }
 
-    private void OnLandEvent(Entity<FakeConsumableComponent> ent, ref LandEvent args)
+    private void OnThrown(Entity<FakeConsumableComponent> ent, ref ThrownEvent args)
     {
         RevealContained(ent, args.User);
     }
@@ -97,10 +101,11 @@ public sealed partial class FakeConsumableSystem : EntitySystem
 
         QueueDel(ent);
 
-        if (ent.Comp.Contained == null)
-            return;
-
-        var contained = Spawn(ent.Comp.Contained, landingCoords);
-        _trigger.ActivateTimerTrigger(contained, user);
+        if (_container.TryGetContainer(ent, ent.Comp.ContainerId, out var container)
+            && container.Count == 1)
+        {
+            var contained = container.ContainedEntities[0];
+            _container.Remove(contained, container, destination: landingCoords);
+        }
     }
 }
