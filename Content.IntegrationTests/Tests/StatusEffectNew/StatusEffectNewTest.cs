@@ -67,7 +67,6 @@ public sealed class StatusEffectNewTest : InteractionTest
             _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA);
             _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusB, TenTicks);
         });
-        _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timeA);
         
         Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusA, out var uidStatusA), Is.True, "Status effect A was not found on the player");
         Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusB, out var uidStatusB), Is.True, "Status effect B was not found on the player");
@@ -80,4 +79,26 @@ public sealed class StatusEffectNewTest : InteractionTest
         Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusC, out var uidStatusC_2), Is.False, "Status effect C was found on the player despite never being given");
 
     }
+    
+    [Test, Description("Test that status effects can manually be removed")]
+    public async Task TestManuallyRemoveStatusEffect()
+    {
+        await Server.WaitPost(() =>
+        {
+            SEntMan.EnsureComponent<TestListenerComponent>(SPlayer);
+            _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA);
+        });
+        
+        Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusA, out var uidStatusA), Is.True, "Status effect A was not found on the player");
+        Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusB, out var uidStatusB), Is.False, "Status effect B was found on the player despite never being given");
+
+        Assert.That(_sStatusSystem.TryRemoveStatusEffect(SPlayer, StatusA), Is.True, "TryRemoveStatusEffect for Status A failed!");
+        Assert.That(_sStatusSystem.TryRemoveStatusEffect(SPlayer, StatusB), Is.False, "TryRemoveStatusEffect for Status B (not on the player) somehow succeeded despite this effect not being on the player!?");
+        
+        await Server.WaitRunTicks(1); // have to wait for queued deletion of status effects
+        
+        Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusA, out var uidStatusA_2), Is.False, "Status effect A was still on the player after being removed!");
+
+    }
+
 }
