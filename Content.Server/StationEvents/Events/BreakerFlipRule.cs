@@ -22,8 +22,9 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
     [Dependency] private EntityQuery<StationEventComponent> _stationEventQuery;
     [Dependency] private EntityQuery<StationMemberComponent> _stationMemberQuery;
 
-    // Minimum/maximum number of APCs to trigger.
+    // Minimum number of APCs to trigger.
     private const int MinAPCs = 3;
+    // Maximum (exclusive) number of APCs to trigger.
     private const int MaxAPCs = 7;
 
     protected override void Added(EntityUid uid, BreakerFlipRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
