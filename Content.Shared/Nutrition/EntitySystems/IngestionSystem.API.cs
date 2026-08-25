@@ -158,7 +158,8 @@ public sealed partial class IngestionSystem
 
         var position = _transform.GetMapCoordinates(entity);
         var trashes = entity.Comp.Trash;
-        var pickup = user != null && _hands.IsHolding(user.Value, entity, out _);
+        string? hand = null;
+        var pickup = user != null && _hands.IsHolding(user.Value, entity, out hand);
 
         foreach (var spawnedTrash in trashes.Select(trash => EntityManager.PredictedSpawn(trash, position)).Where(spawnedTrash => pickup))
         {
@@ -167,8 +168,8 @@ public sealed partial class IngestionSystem
             if (user is null)
                 continue;
 
-            var hand = _hands.GetActiveHand(user.Value);
-            if (!_hands.TryPickup(user.Value, spawnedTrash, hand))
+            if (hand is null ||
+                !_hands.TryForcePickup(user.Value, spawnedTrash, hand))
                 _hands.TryPickupAnyHand(user.Value, spawnedTrash);
         }
     }
