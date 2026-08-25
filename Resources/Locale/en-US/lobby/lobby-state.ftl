@@ -38,3 +38,5 @@ escape-menu-playtime-minutes = You have played {$minutes} {$minutes ->
     *[other]minutes
     } today.
 escape-menu-playtime-hours = You have played {$hours} hours today.
+time-pm = PM
+time-am = AM

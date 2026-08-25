@@ -28,17 +28,22 @@ public sealed partial class EscapeMenu : DefaultWindow
     protected override void FrameUpdate(FrameEventArgs args)
     {
         Time.Text = DateTime.Now.ToString(_format);
+        if (_format != "h:mm tt")
+            return;
+
+        Time.Text = Time.Text.Replace("PM", Loc.GetString("time-pm"));
+        Time.Text = Time.Text.Replace("AM", Loc.GetString("time-am"));
     }
 
     private void UpdatePlaytime()
     {
         var minutesToday = _playtimeTracking.PlaytimeMinutesToday;
-        var msg = Loc.GetString("clock-playtime-minutes", ("minutes", (int)minutesToday));
+        var msg = Loc.GetString("escape-menu-playtime-minutes", ("minutes", (int)minutesToday));
 
         if (minutesToday >= 60)
         {
             var hoursToday = Math.Round(minutesToday / 60f, 1);
-            msg = Loc.GetString("clock-playtime-hours", ("hours", hoursToday));
+            msg = Loc.GetString("escape-menu-playtime-hours", ("hours", hoursToday));
         }
 
         Time.ToolTip = msg;
