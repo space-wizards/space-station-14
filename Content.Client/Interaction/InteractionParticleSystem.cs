@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared.CCVar;
+using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction.Events;
 using Robust.Client.Animations;
@@ -32,27 +33,48 @@ public sealed partial class InteractionParticleSystem : EntitySystem
         if (!_config.GetCVar(CCVars.InteractionParticleShow))
             return;
 
+        if (ev.ClickCoordinates == null && ev.Target == null)
+            return;
+
         var performer = GetEntity(ev.Performer);
         var used = GetEntity(ev.Used);
         var target = GetEntity(ev.Target);
 
-        if (!Exists(performer) || !Exists(target))
+        if (!Exists(performer))
             return;
 
         var type = ev.Type;
-        if (type == InteractionParticleType.Pull)
+        if (type == InteractionParticleType.Pull && target is {} pullTarget)
         {
-            (performer, target) = (target, performer);
+            (performer, target) = (pullTarget, performer);
         }
 
         var performerXform = Transform(performer);
-        var targetXform = Transform(target);
-        if (performerXform.MapID == MapId.Nullspace || targetXform.MapID == MapId.Nullspace)
+
+
+        EntityCoordinates targetPosition = default;
+        MapId targetMapId = default;
+        EntityUid targetParentUid = default;
+
+        if (ev.ClickCoordinates is {} clickCoordinates)
+        {
+                targetPosition = _xform.ToCoordinates(performerXform.ParentUid, clickCoordinates).SnapToGrid();
+                targetMapId = clickCoordinates.MapId;
+                targetParentUid = targetPosition.EntityId;
+        }
+        else if (target is {} targetEnt)
+        {
+            var targetXform = Transform(targetEnt);
+            targetMapId = targetXform.MapID;
+            targetParentUid = targetXform.ParentUid;
+        }
+
+        if (performerXform.MapID == MapId.Nullspace || targetMapId == MapId.Nullspace)
             return;
 
         // if the interaction is happening across parent boundaries (ie inhand or in a bag or something)
         // override it with an inhand particle effect
-        if (performerXform.ParentUid != targetXform.ParentUid)
+        if (performerXform.ParentUid != targetParentUid && target != null)
         {
             if (type == InteractionParticleType.Pull)
                 return;
@@ -60,7 +82,7 @@ public sealed partial class InteractionParticleSystem : EntitySystem
             type = InteractionParticleType.InHand;
         }
 
-        var performerTargetDelta = targetXform.LocalPosition - performerXform.LocalPosition;
+        var performerTargetDelta = targetPosition.Position - performerXform.LocalPosition;
         var particle = Spawn(InteractionParticleIds[(int)type], performerXform.Coordinates);
 
         var doAfterOffset = 0f;

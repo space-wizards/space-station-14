@@ -614,7 +614,7 @@ public abstract partial class InventorySystem
     {
         foreach (var item in _handsSystem.EnumerateHeld(uid))
         {
-            _interactionSystem.DoContactInteraction(uid, item, null, true);
+            _interactionSystem.DoContactInteraction(uid, item, null);
         }
     }
 

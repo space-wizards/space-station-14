@@ -289,7 +289,7 @@ public abstract partial class SharedHandsSystem
             return;
         }
 
-        _interactionSystem.DoContactInteraction(uid, entity, null, true); //Possibly fires twice if manually picked up via interacting with the object
+        _interactionSystem.DoContactInteraction(uid, entity, null); //Possibly fires twice if manually picked up via interacting with the object
 
         if (log)
             _adminLogger.Add(LogType.Pickup, LogImpact.Low, $"{ToPrettyString(uid):user} picked up {ToPrettyString(entity):entity}");

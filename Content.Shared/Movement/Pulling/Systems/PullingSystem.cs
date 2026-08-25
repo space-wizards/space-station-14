@@ -548,9 +548,9 @@ public sealed partial class PullingSystem : EntitySystem
 
         _interaction.DoContactInteraction(pullerUid,
             pullableUid,
-            null,
-            true,
-            interactionParticleType: InteractionParticleType.Pull);
+            null);
+
+        _interaction.CreateInteractionParticle(pullerUid, null, pullableUid, true, InteractionParticleType.Pull);
 
         // Use net entity so it's consistent across client and server.
         pullableComp.PullJointId = $"pull-joint-{GetNetEntity(pullableUid)}";

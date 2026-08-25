@@ -1,3 +1,4 @@
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Interaction.Events;
@@ -6,7 +7,7 @@ namespace Content.Shared.Interaction.Events;
 /// Data for interaction particles
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class InteractionParticleEvent(NetEntity performer, NetEntity? used, NetEntity target, bool isClientEvent, InteractionParticleType type) : EntityEventArgs
+public sealed class InteractionParticleEvent(NetEntity performer, NetEntity? used, NetEntity? target, MapCoordinates? clickCoordinates, bool isClientEvent, InteractionParticleType type) : EntityEventArgs
 {
     /// <summary>
     /// The performer of the interaction
@@ -21,7 +22,12 @@ public sealed class InteractionParticleEvent(NetEntity performer, NetEntity? use
     /// <summary>
     /// The target of the interaction
     /// </summary>
-    public NetEntity Target = target;
+    public NetEntity? Target = target;
+
+    /// <summary>
+    /// The click coordinates of the user.
+    /// </summary>
+    public MapCoordinates? ClickCoordinates = clickCoordinates;
 
     /// <summary>
     /// Workaround for event subscription not working w/ the session overload

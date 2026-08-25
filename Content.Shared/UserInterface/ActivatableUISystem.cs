@@ -186,7 +186,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
     {
         var interactionParticle = false;
         InteractUI(user, ui, ui, ref interactionParticle);
-        _interaction.DoContactInteraction(user, ui, null, true, interactionParticles: interactionParticle);
+        _interaction.DoContactInteraction(user, ui, null);
     }
 
     private bool InteractUI(EntityUid user, EntityUid uiEntity, ActivatableUIComponent aui, ref bool interactionParticle)
