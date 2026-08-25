@@ -38,8 +38,6 @@ namespace Content.Client.Disposal.Unit
                 ToggleStateText(_disposalUnitWindow, _disposalUnitWindow.Power.Pressed);
             };
 
-            // Disable the button if there's nothing for it to do
-            _disposalUnitWindow.Routing.Visible = EntMan.HasComponent<DisposalTaggerComponent>(Owner);
             _disposalUnitWindow.Routing.OnPressed += _ => SendPredictedMessage(new DisposalTaggerOpenUiMessage());
 
             Update();
@@ -74,6 +72,10 @@ namespace Content.Client.Disposal.Unit
             _disposalUnitWindow.PressureBar.UpdatePressure(fullPressure, pressurePerSecond);
             _disposalUnitWindow.Power.Pressed = powered;
             _disposalUnitWindow.Engage.Pressed = entity.Comp.Engaged;
+
+            // Hide the button if there's nothing for it to do
+            _disposalUnitWindow.Routing.Visible =
+                EntMan.TryGetComponent<DisposalTaggerComponent>(Owner, out var tagger) && tagger.Editable;
         }
 
         /// <summary>

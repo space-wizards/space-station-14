@@ -25,9 +25,4 @@ public sealed partial class DisposalTaggerWindow : DefaultWindow
 
         TagInput.IsValid = tag => _disposalHolder.TagIsValid(tag);
     }
-
-    public void UpdateState(DisposalTaggerUserInterfaceState state)
-    {
-        TagInput.Text = state.Tags;
-    }
 }

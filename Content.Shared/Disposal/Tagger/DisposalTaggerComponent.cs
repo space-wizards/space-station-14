@@ -24,6 +24,12 @@ public sealed partial class DisposalTaggerComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+
+    /// <summary>
+    /// If false editing the tag is disabled.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Editable = true;
 }
 
 /// <summary>
@@ -37,20 +43,6 @@ public sealed class DisposalTaggerUiActionMessage : BoundUserInterfaceMessage
     public DisposalTaggerUiActionMessage(string tags, int tagLength)
     {
         Tags = tags.Substring(0, Math.Min(tags.Length, tagLength));
-    }
-}
-
-/// <summary>
-/// Sends tag data to disposal tagger UIs.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class DisposalTaggerUserInterfaceState : BoundUserInterfaceState
-{
-    public readonly string Tags;
-
-    public DisposalTaggerUserInterfaceState(string tags)
-    {
-        Tags = tags;
     }
 }
 

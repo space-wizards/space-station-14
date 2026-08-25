@@ -27,11 +27,7 @@ namespace Content.Client.Disposal.Tagger
             _window.Confirm.OnPressed += _ => AcceptButtonPressed(_window.TagInput.Text);
             _window.TagInput.OnTextEntered += args => AcceptButtonPressed(args.Text);
 
-            if (EntMan.TryGetComponent<DisposalTaggerComponent>(Owner, out var tagger) &&
-                tagger.Tag != string.Empty)
-            {
-                _window.TagInput.Text = tagger.Tag;
-            }
+            Update();
         }
 
         private void AcceptButtonPressed(string tag)
@@ -40,16 +36,19 @@ namespace Content.Client.Disposal.Tagger
             Close();
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+        public override void Update()
         {
-            base.UpdateState(state);
+            base.Update();
 
-            if (state is not DisposalTaggerUserInterfaceState cast)
-            {
+            if (_window == null || !EntMan.TryGetComponent<DisposalTaggerComponent>(Owner, out var tagger))
                 return;
-            }
 
-            _window?.UpdateState(cast);
+            _window.TagInput.Text = tagger.Tag;
+            _window.TagInput.Editable = tagger.Editable;
+
+            _window.Confirm.Disabled = !tagger.Editable;
+            _window.Confirm.Text =
+                tagger.Editable ? Loc.GetString("generic-confirm") : Loc.GetString("generic-disabled");
         }
     }
 }

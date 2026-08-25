@@ -154,6 +154,7 @@
   - type: RequireProjectileTarget
   - type: DisposalTagger
     tag: waste
+    editable: false # Too easy to break disposals when the tag can be edited so easily
 
 - type: entity
   id: MailingUnit

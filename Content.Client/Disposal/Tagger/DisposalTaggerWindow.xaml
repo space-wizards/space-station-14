@@ -12,8 +12,7 @@
                       MinSize="320 0" />
             <Control MinSize="10 0" />
             <Button Name="Confirm"
-                    Access="Public"
-                    Text="{Loc 'disposal-tagger-window-tag-confirm-button'}" />
+                    Access="Public" />
         </BoxContainer>
     </BoxContainer>
 </DefaultWindow>
