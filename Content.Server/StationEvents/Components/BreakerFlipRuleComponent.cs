@@ -12,8 +12,8 @@ namespace Content.Server.StationEvents.Components;
 public sealed partial class BreakerFlipRuleComponent : Component
 {
     /// <summary>
-    /// Blacklist for grids not eligible to trigger this game rule.
+    /// Blacklist to exclude grids that triggered APCs should not be on.
     /// </summary>
     [DataField]
-    public EntityWhitelist? GridBlacklist;
+    public EntityWhitelist? Blacklist;
 }

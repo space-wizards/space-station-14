@@ -66,7 +66,7 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
         foreach (var (apc, grid) in stationApcs)
         {
             // If the APC's grid matches our blacklist, skip to the next one.
-            if (_whitelist.IsWhitelistPass(component.GridBlacklist, grid))
+            if (_whitelist.IsWhitelistPass(component.Blacklist, grid))
                 continue;
 
             _apcSystem.ApcToggleBreaker(apc, apc);
