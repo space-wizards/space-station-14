@@ -337,12 +337,10 @@
     flavors:
       - banana
   - type: Edible
-    spawnTrashOnRefine: false
     trash:
     - TrashBananaPeel
   - type: ToolRefinable
-    refineResult:
-    - id: TrashBananaPeel
+    refineResult: [] # produces trash on refine
   - type: Solution
     solution:
       reagents:
@@ -383,12 +381,10 @@
       - banana
       - nothing
   - type: Edible
-    spawnTrashOnRefine: false
     trash:
     - TrashMimanaPeel
   - type: ToolRefinable
-    refineResult:
-    - id: TrashMimanaPeel
+    refineResult: [] # produces trash on refine
   - type: Solution
     solution:
       reagents:
@@ -1187,12 +1183,10 @@
     flavors:
       - corn
   - type: Edible
-    spawnTrashOnRefine: false
     trash:
     - FoodCornTrash
   - type: ToolRefinable
-    refineResult:
-    - id: FoodCornTrash #no idea why you'd ever do this, but it's just here for consistency
+    refineResult: [] # produces trash on refine
   - type: Solution
     solution:
       reagents:
@@ -1865,12 +1859,10 @@
   - type: Produce
     plantId: GatfruitPlants
   - type: Edible
-    spawnTrashOnRefine: false
     trash:
     - WeaponRevolverPython
   - type: ToolRefinable
-    refineResult:
-    - id: WeaponRevolverPython
+    refineResult: [] # produces trash on refine
   - type: Tag
     tags:
     - Fruit # It's in the name
@@ -1907,8 +1899,7 @@
     trash:
     - RevolverCapGun
   - type: ToolRefinable
-    refineResult:
-    - id: RevolverCapGun
+    refineResult: [] # produces trash on refine
   - type: Tag
     tags:
     - Fruit
@@ -1926,12 +1917,10 @@
   - type: Produce
     plantId: FakeCapfruitPlants
   - type: Edible
-    spawnTrashOnRefine: false
     trash:
     - RevolverCapGunFake
   - type: ToolRefinable
-    refineResult:
-    - id: RevolverCapGunFake
+    refineResult: [] # produces trash on refine
 
 - type: entity
   name: rice bushel
@@ -2337,12 +2326,10 @@
     flavors:
       - bungo
   - type: Edible
-    spawnTrashOnRefine: false
     trash:
     - FoodBungoPit
   - type: ToolRefinable
-    refineResult:
-    - id: FoodBungoPit
+    refineResult: [] # Spawns trash on refine
   - type: Solution
     solution:
       reagents:
@@ -2642,12 +2629,10 @@
     flavors:
       - cherry
   - type: Edible
-    spawnTrashOnRefine: false
     trash:
     - TrashCherryPit
   - type: ToolRefinable
-    refineResult:
-    - id: TrashCherryPit
+    refineResult: [] # Spawns trash on refine
   - type: Solution
     solution:
       maxVol: 15

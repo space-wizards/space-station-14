@@ -23,17 +23,9 @@ public sealed partial class EdibleComponent : Component
 
     /// <summary>
     /// Should this entity be deleted when our solution is emptied?
-    /// True by default.
     /// </summary>
     [DataField]
     public bool DestroyOnEmpty = true;
-
-    /// <summary>
-    /// Should this entity spawn its trash (if any) when refined?
-    /// True by default.
-    /// </summary>
-    [DataField]
-    public bool SpawnTrashOnRefine = true;
 
     /// <summary>
     /// Trash we spawn when eaten, will not spawn if the item isn't deleted when empty.
