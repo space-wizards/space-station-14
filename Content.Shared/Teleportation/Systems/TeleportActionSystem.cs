@@ -57,18 +57,19 @@ public sealed partial class TeleportActionSystem : EntitySystem
             return false;
 
         var xform = Transform(user);
-        var mapId = _transform.GetMapId(target);
-        if (xform.MapID != mapId ||
+        var targetXform = Transform(target.EntityId);
+        if (xform.MapID != targetXform.MapID ||
             !_examine.InRangeUnOccluded(user, target, SharedInteractionSystem.MaxRaycastRange))
         {
             _popup.PopupEntity(Loc.GetString("teleport-action-popup-cant-see"), user, user);
             return false;
         }
 
-        var targetRot = _transform.GetWorldRotation(target.EntityId);
-        var targetMapCoordinates = _transform.ToMapCoordinates(target);
+        var targetEntPosRot = _transform.GetWorldPositionRotation(targetXform);
+        var targetRotated = targetEntPosRot.WorldRotation.RotateVec(target.Position);
+        var targetMapCoordinates = new MapCoordinates(targetEntPosRot.WorldPosition + targetRotated, targetXform.MapID);
 
-        if (IsDestinationBlocked(user, targetMapCoordinates, targetRot))
+        if (IsDestinationBlocked(user, targetMapCoordinates, targetEntPosRot.WorldRotation))
         {
             _popup.PopupEntity(Loc.GetString("teleport-action-popup-blocked"), user, user);
             return false;
