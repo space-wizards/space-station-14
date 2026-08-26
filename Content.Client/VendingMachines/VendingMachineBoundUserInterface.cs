@@ -3,13 +3,16 @@ using Content.Client.VendingMachines.UI;
 using Content.Shared.VendingMachines;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
+using Robust.Shared.Prototypes;
 using System.Linq;
 using Content.Shared.VendingMachines.Components;
 
 namespace Content.Client.VendingMachines;
 
-public sealed class VendingMachineBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+public sealed partial class VendingMachineBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+
     [ViewVariables]
     private VendingMachineMenu? _menu;
 
@@ -33,7 +36,14 @@ public sealed class VendingMachineBoundUserInterface(EntityUid owner, Enum uiKey
         var system = EntMan.System<VendingMachineSystem>();
         _cachedInventory = system.GetAllInventory(Owner);
 
-        _menu?.Populate(_cachedInventory, enabled);
+        IReadOnlyList<VendingMachineInventoryCategory> categories = [];
+        if (EntMan.TryGetComponent(Owner, out VendingMachineComponent? vending) &&
+            _prototypeManager.Resolve(vending.PackPrototypeId, out VendingMachineInventoryPrototype? inventoryPrototype))
+        {
+            categories = inventoryPrototype.Categories;
+        }
+
+        _menu?.Populate(_cachedInventory, categories, enabled);
     }
 
     public void UpdateAmounts()
