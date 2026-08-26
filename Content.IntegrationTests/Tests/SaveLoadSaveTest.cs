@@ -1,6 +1,8 @@
+#nullable enable
 using System.IO;
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
@@ -11,271 +13,231 @@ using Robust.Shared.Map.Events;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Utility;
 
-namespace Content.IntegrationTests.Tests
+namespace Content.IntegrationTests.Tests;
+
+/// <summary>
+/// Tests that a grid's yaml does not change when saved consecutively.
+/// </summary>
+public sealed partial class SaveLoadSaveTest : GameTest
 {
-    /// <summary>
-    /// Tests that a grid's yaml does not change when saved consecutively.
-    /// </summary>
-    [TestFixture]
-    public sealed partial class SaveLoadSaveTest : GameTest
+    [SidedDependency(Side.Server)] private MapLoaderSystem _sMapLoader = default!;
+    [SidedDependency(Side.Server)] private SharedMapSystem _sMap = default!;
+    [SidedDependency(Side.Server)] private IConfigurationManager _sCfg = default!;
+    [SidedDependency(Side.Server)] private IResourceManager _sResMan = default!;
+    [SidedDependency(Side.Server)] private SaveLoadSaveTestSystem _sTest = default!;
+
+    [Test]
+    [RunOnSide(Side.Server)]
+    [Description("Tries to save and load a simple grid.")]
+    public async Task CreateSaveLoadSaveGrid()
     {
-        [Test]
-        public async Task CreateSaveLoadSaveGrid()
+        Assume.That(_sCfg.GetCVar(CCVars.GridFill), Is.False);
+
+        _sTest.Enabled = true;
+
+        Assume.That(SEntMan.EntityCount, Is.EqualTo(0), "Lingering entities at the start of CreateSaveLoadSaveGrid");
+
+        var rp1 = new ResPath("/save load save 1.yml");
+        var rp2 = new ResPath("/save load save 2.yml");
+
+        _sMap.CreateMap(out var mapId0);
+        var grid0 = _sMap.CreateGridEntity(mapId0);
+        SEntMan.RunMapInit(grid0.Owner, SEntMan.GetComponent<MetaDataComponent>(grid0));
+        Assert.That(_sMapLoader.TrySaveGrid(grid0.Owner, rp1));
+        _sMap.CreateMap(out var mapId1);
+        Assert.That(_sMapLoader.TryLoadGrid(mapId1, rp1, out var grid1));
+        Assert.That(_sMapLoader.TrySaveGrid(grid1!.Value, rp2));
+
+        var userData = _sResMan.UserData;
+
+        string one;
+        string two;
+
+        using (var reader = new StreamReader(userData.Open(rp1, FileMode.Open)))
         {
-            var pair = Pair;
-            var server = pair.Server;
-            var entManager = server.ResolveDependency<IEntityManager>();
-            var mapLoader = entManager.System<MapLoaderSystem>();
-            var mapSystem = entManager.System<SharedMapSystem>();
-            var cfg = server.ResolveDependency<IConfigurationManager>();
-            Assume.That(cfg.GetCVar(CCVars.GridFill), Is.False);
-
-            var testSystem = server.System<SaveLoadSaveTestSystem>();
-            testSystem.Enabled = true;
-
-            Assume.That(SEntMan.EntityCount.Equals(0), "Lingering entities at the start of CreateSaveLoadSaveGrid");
-
-            var rp1 = new ResPath("/save load save 1.yml");
-            var rp2 = new ResPath("/save load save 2.yml");
-
-            MapId mapId0 = MapId.Nullspace;
-            MapId mapId1 = MapId.Nullspace;
-
-            await server.WaitPost(() =>
-            {
-                mapSystem.CreateMap(out mapId0);
-                var grid0 = mapSystem.CreateGridEntity(mapId0);
-                entManager.RunMapInit(grid0.Owner, entManager.GetComponent<MetaDataComponent>(grid0));
-                Assert.That(mapLoader.TrySaveGrid(grid0.Owner, rp1));
-                mapSystem.CreateMap(out mapId1);
-                Assert.That(mapLoader.TryLoadGrid(mapId1, rp1, out var grid1));
-                Assert.That(mapLoader.TrySaveGrid(grid1!.Value, rp2));
-            });
-
-            var userData = server.ResolveDependency<IResourceManager>().UserData;
-
-            string one;
-            string two;
-
-            await using (var stream = userData.Open(rp1, FileMode.Open))
-            using (var reader = new StreamReader(stream))
-            {
-                one = await reader.ReadToEndAsync();
-            }
-
-            await using (var stream = userData.Open(rp2, FileMode.Open))
-            using (var reader = new StreamReader(stream))
-            {
-                two = await reader.ReadToEndAsync();
-            }
-
-            Assert.Multiple(() =>
-            {
-                Assert.That(two, Is.EqualTo(one));
-                var failed = TestContext.CurrentContext.Result.Assertions.FirstOrDefault();
-                if (failed != null)
-                {
-                    var oneTmp = Path.GetTempFileName();
-                    var twoTmp = Path.GetTempFileName();
-
-                    File.WriteAllText(oneTmp, one);
-                    File.WriteAllText(twoTmp, two);
-
-                    TestContext.AddTestAttachment(oneTmp, "First save file");
-                    TestContext.AddTestAttachment(twoTmp, "Second save file");
-                    TestContext.Error.WriteLine("Complete output:");
-                    TestContext.Error.WriteLine(oneTmp);
-                    TestContext.Error.WriteLine(twoTmp);
-                }
-            });
-            testSystem.Enabled = false;
-            await server.WaitPost(() =>
-            {
-                mapSystem.DeleteMap(mapId0);
-                mapSystem.DeleteMap(mapId1);
-            });
-            Assert.That(SEntMan.EntityCount.Equals(0), "Lingering entities at the end of CreateSaveLoadSaveGrid");
+            one = reader.ReadToEnd();
         }
 
-        private new const string TestMap = "Maps/bagel.yml";
-
-        /// <summary>
-        /// Loads the default map, runs it for 5 ticks, then assert that it did not change.
-        /// </summary>
-        [Test]
-        public async Task LoadSaveTicksSaveBagel()
+        using (var reader = new StreamReader(userData.Open(rp2, FileMode.Open)))
         {
-            var pair = Pair;
-            var server = pair.Server;
-            var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
-            var mapSys = server.System<SharedMapSystem>();
-            var testSystem = server.System<SaveLoadSaveTestSystem>();
-            testSystem.Enabled = true;
-
-            Assume.That(SEntMan.EntityCount.Equals(0), "Lingering entities at the start of LoadSaveTicksSaveBagel");
-
-            var rp1 = new ResPath("/load save ticks save 1.yml");
-            var rp2 = new ResPath("/load save ticks save 2.yml");
-
-            MapId mapId = default;
-            var cfg = server.ResolveDependency<IConfigurationManager>();
-            Assert.That(cfg.GetCVar(CCVars.GridFill), Is.False);
-
-            // Load bagel.yml as uninitialized map, and save it to ensure it's up to date.
-            await server.WaitPost(() =>
-            {
-                var path = new ResPath(TestMap);
-                Assert.That(mapLoader.TryLoadMap(path, out var map, out _), $"Failed to load test map {TestMap}");
-                mapId = map!.Value.Comp.MapId;
-                Assert.That(mapLoader.TrySaveMap(mapId, rp1));
-
-                // Run 5 ticks.
-                server.RunTicks(5);
-            });
-
-            await server.WaitPost(() =>
-            {
-                Assert.That(mapLoader.TrySaveMap(mapId, rp2));
-            });
-
-            var userData = server.ResolveDependency<IResourceManager>().UserData;
-
-            string one;
-            string two;
-
-            await using (var stream = userData.Open(rp1, FileMode.Open))
-            using (var reader = new StreamReader(stream))
-            {
-                one = await reader.ReadToEndAsync();
-            }
-
-            await using (var stream = userData.Open(rp2, FileMode.Open))
-            using (var reader = new StreamReader(stream))
-            {
-                two = await reader.ReadToEndAsync();
-            }
-
-            Assert.Multiple(() =>
-            {
-                Assert.That(two, Is.EqualTo(one));
-                var failed = TestContext.CurrentContext.Result.Assertions.FirstOrDefault();
-                if (failed != null)
-                {
-                    var oneTmp = Path.GetTempFileName();
-                    var twoTmp = Path.GetTempFileName();
-
-                    File.WriteAllText(oneTmp, one);
-                    File.WriteAllText(twoTmp, two);
-
-                    TestContext.AddTestAttachment(oneTmp, "First save file");
-                    TestContext.AddTestAttachment(twoTmp, "Second save file");
-                    TestContext.Error.WriteLine("Complete output:");
-                    TestContext.Error.WriteLine(oneTmp);
-                    TestContext.Error.WriteLine(twoTmp);
-                }
-            });
-
-            testSystem.Enabled = false;
-            await server.WaitPost(() => mapSys.DeleteMap(mapId));
-            Assert.That(SEntMan.EntityCount.Equals(0), "Lingering entities at the end of LoadSaveTicksSaveBagel");
+            two = reader.ReadToEnd();
         }
 
-        /// <summary>
-        /// Loads the same uninitialized map at slightly different times, and then checks that they are the same
-        /// when getting saved.
-        /// </summary>
-        /// <remarks>
-        /// Should ensure that entities do not perform randomization prior to initialization and should prevents
-        /// bugs like the one discussed in github.com/space-wizards/RobustToolbox/issues/3870. This test is somewhat
-        /// similar to <see cref="LoadSaveTicksSaveBagel"/> and <see cref="SaveLoadSave"/>, but neither of these
-        /// caught the mentioned bug.
-        /// </remarks>
-        [Test]
-        public async Task LoadTickLoadBagel()
+        Assert.Multiple(() =>
         {
-            var pair = Pair;
-            var server = pair.Server;
-
-            var mapLoader = server.System<MapLoaderSystem>();
-            var mapSys = server.System<SharedMapSystem>();
-            var userData = server.ResolveDependency<IResourceManager>().UserData;
-            var cfg = server.ResolveDependency<IConfigurationManager>();
-            Assume.That(cfg.GetCVar(CCVars.GridFill), Is.False);
-            var testSystem = server.System<SaveLoadSaveTestSystem>();
-            testSystem.Enabled = true;
-
-            Assume.That(SEntMan.EntityCount.Equals(0), "Lingering entities at the start of LoadTickLoadBagel");
-
-            MapId mapId1 = default;
-            MapId mapId2 = default;
-            var fileA = new ResPath("/load tick load a.yml");
-            var fileB = new ResPath("/load tick load b.yml");
-            string yamlA;
-            string yamlB;
-
-            // Load & save the first map
-            await server.WaitPost(() =>
+            Assert.That(two, Has.Length.Positive);
+            Assert.That(two, Is.EqualTo(one));
+            var failed = TestContext.CurrentContext.Result.Assertions.FirstOrDefault();
+            if (failed != null)
             {
-                var path = new ResPath(TestMap);
-                Assert.That(mapLoader.TryLoadMap(path, out var map, out _), $"Failed to load test map {TestMap}");
-                mapId1 = map!.Value.Comp.MapId;
-                Assert.That(mapLoader.TrySaveMap(mapId1, fileA));
-            });
+                var oneTmp = Path.GetTempFileName();
+                var twoTmp = Path.GetTempFileName();
 
-            await using (var stream = userData.Open(fileA, FileMode.Open))
-            using (var reader = new StreamReader(stream))
-            {
-                yamlA = await reader.ReadToEndAsync();
+                File.WriteAllText(oneTmp, one);
+                File.WriteAllText(twoTmp, two);
+
+                TestContext.AddTestAttachment(oneTmp, "First save file");
+                TestContext.AddTestAttachment(twoTmp, "Second save file");
+                TestContext.Error.WriteLine("Complete output:");
+                TestContext.Error.WriteLine(oneTmp);
+                TestContext.Error.WriteLine(twoTmp);
             }
+        });
+        _sTest.Enabled = false;
 
-            // Load & save the second map
-            await server.WaitPost(() =>
-            {
-                server.RunTicks(5);
+        _sMap.DeleteMap(mapId0);
+        _sMap.DeleteMap(mapId1);
+        Assert.That(SEntMan.EntityCount, Is.Zero, "Lingering entities at the end of CreateSaveLoadSaveGrid");
+    }
 
-                var path = new ResPath(TestMap);
-                Assert.That(mapLoader.TryLoadMap(path, out var map, out _), $"Failed to load test map {TestMap}");
-                mapId2 = map!.Value.Comp.MapId;
-                Assert.That(mapLoader.TrySaveMap(mapId2, fileB));
-            });
+    private new const string TestMap = "Maps/bagel.yml";
 
-            await using (var stream = userData.Open(fileB, FileMode.Open))
-            using (var reader = new StreamReader(stream))
-            {
-                yamlB = await reader.ReadToEndAsync();
-            }
+    /// <summary>
+    /// Loads the default map, runs it for 5 ticks, then assert that it did not change.
+    /// </summary>
+    [Test]
+    [RunOnSide(Side.Server)]
+    public async Task LoadSaveTicksSaveBagel()
+    {
+        _sTest.Enabled = true;
 
-            Assert.That(yamlA, Is.EqualTo(yamlB));
+        Assume.That(SEntMan.EntityCount, Is.Zero, "Lingering entities at the start of LoadSaveTicksSaveBagel");
 
-            testSystem.Enabled = false;
-            await server.WaitPost(() =>
-            {
-                mapSys.DeleteMap(mapId1);
-                mapSys.DeleteMap(mapId2);
-            });
-            Assert.That(SEntMan.EntityCount.Equals(0), "Lingering entities at the end of LoadTickLoadBagel");
+        var rp1 = new ResPath("/load save ticks save 1.yml");
+        var rp2 = new ResPath("/load save ticks save 2.yml");
+
+        MapId mapId = default;
+        Assert.That(_sCfg.GetCVar(CCVars.GridFill), Is.False);
+
+        // Load bagel.yml as uninitialized map, and save it to ensure it's up to date.
+        var path = new ResPath(TestMap);
+        Assert.That(_sMapLoader.TryLoadMap(path, out var map, out _), $"Failed to load test map {TestMap}");
+        mapId = map!.Value.Comp.MapId;
+        Assert.That(_sMapLoader.TrySaveMap(mapId, rp1));
+
+        // Run 5 ticks.
+        Server.RunTicks(5);
+
+        Assert.That(_sMapLoader.TrySaveMap(mapId, rp2));
+
+        var userData = _sResMan.UserData;
+
+        string one;
+        string two;
+
+        using (var reader = new StreamReader(userData.Open(rp1, FileMode.Open)))
+        {
+            one = reader.ReadToEnd();
         }
 
-        /// <summary>
-        /// Simple system that modifies the data saved to a yaml file by removing the timestamp.
-        /// Required by some tests that validate that re-saving a map does not modify it.
-        /// </summary>
-        private sealed partial class SaveLoadSaveTestSystem : EntitySystem
+        using (var reader = new StreamReader(userData.Open(rp2, FileMode.Open)))
         {
-            public bool Enabled;
-            public override void Initialize()
-            {
-                SubscribeLocalEvent<AfterSerializationEvent>(OnAfterSave);
-            }
+            two = reader.ReadToEnd();
+        }
 
-            private void OnAfterSave(AfterSerializationEvent ev)
+        Assert.Multiple(() =>
+        {
+            Assert.That(two, Is.EqualTo(one));
+            var failed = TestContext.CurrentContext.Result.Assertions.FirstOrDefault();
+            if (failed != null)
             {
-                if (!Enabled)
-                    return;
+                var oneTmp = Path.GetTempFileName();
+                var twoTmp = Path.GetTempFileName();
 
-                // Remove timestamp.
-                ((MappingDataNode)ev.Node["meta"]).Remove("time");
+                File.WriteAllText(oneTmp, one);
+                File.WriteAllText(twoTmp, two);
+
+                TestContext.AddTestAttachment(oneTmp, "First save file");
+                TestContext.AddTestAttachment(twoTmp, "Second save file");
+                TestContext.Error.WriteLine("Complete output:");
+                TestContext.Error.WriteLine(oneTmp);
+                TestContext.Error.WriteLine(twoTmp);
             }
+        });
+
+        _sTest.Enabled = false;
+        _sMap.DeleteMap(mapId);
+        Assert.That(SEntMan.EntityCount, Is.Zero, "Lingering entities at the end of LoadSaveTicksSaveBagel");
+    }
+
+    /// <summary>
+    /// Loads the same uninitialized map at slightly different times, and then checks that they are the same
+    /// when getting saved.
+    /// </summary>
+    /// <remarks>
+    /// Should ensure that entities do not perform randomization prior to initialization and should prevents
+    /// bugs like the one discussed in github.com/space-wizards/RobustToolbox/issues/3870. This test is somewhat
+    /// similar to <see cref="LoadSaveTicksSaveBagel"/> and <see cref="SaveLoadSave"/>, but neither of these
+    /// caught the mentioned bug.
+    /// </remarks>
+    [Test]
+    [RunOnSide(Side.Server)]
+    [Description("Saves Bagel multiple times, checking that the YAML is identical between the two.")]
+    public async Task LoadTickLoadBagel()
+    {
+        var userData = Server.ResolveDependency<IResourceManager>().UserData;
+        Assume.That(_sCfg.GetCVar(CCVars.GridFill), Is.False);
+        _sTest.Enabled = true;
+
+        Assume.That(SEntMan.EntityCount, Is.Zero, "Lingering entities at the start of LoadTickLoadBagel");
+
+        var fileA = new ResPath("/load tick load a.yml");
+        var fileB = new ResPath("/load tick load b.yml");
+        string yamlA;
+        string yamlB;
+
+        // Load & save the first map
+        var path = new ResPath(TestMap);
+        Assert.That(_sMapLoader.TryLoadMap(path, out var map, out _), $"Failed to load test map {TestMap}");
+        MapId mapId1 = map!.Value.Comp.MapId;
+        Assert.That(_sMapLoader.TrySaveMap(mapId1, fileA));
+
+        using (var reader = new StreamReader(userData.Open(fileA, FileMode.Open)))
+        {
+            yamlA = reader.ReadToEnd();
+        }
+
+        // Load & save the second map
+        Server.RunTicks(5);
+
+        path = new ResPath(TestMap);
+        Assert.That(_sMapLoader.TryLoadMap(path, out map, out _), $"Failed to load test map {TestMap}");
+        MapId mapId2 = map!.Value.Comp.MapId;
+        Assert.That(_sMapLoader.TrySaveMap(mapId2, fileB));
+
+        using (var reader = new StreamReader(userData.Open(fileB, FileMode.Open)))
+        {
+            yamlB = reader.ReadToEnd();
+        }
+
+        Assert.That(yamlA, Has.Length.Positive);
+        Assert.That(yamlA, Is.EqualTo(yamlB));
+
+        _sTest.Enabled = false;
+        _sMap.DeleteMap(mapId1);
+        _sMap.DeleteMap(mapId2);
+        Assert.That(SEntMan.EntityCount, Is.Zero, "Lingering entities at the end of LoadTickLoadBagel");
+    }
+
+    /// <summary>
+    /// Simple system that modifies the data saved to a yaml file by removing the timestamp.
+    /// Required by some tests that validate that re-saving a map does not modify it.
+    /// </summary>
+    private sealed partial class SaveLoadSaveTestSystem : EntitySystem
+    {
+        public bool Enabled;
+        public override void Initialize()
+        {
+            SubscribeLocalEvent<AfterSerializationEvent>(OnAfterSave);
+        }
+
+        private void OnAfterSave(AfterSerializationEvent ev)
+        {
+            if (!Enabled)
+                return;
+
+            // Remove timestamp.
+            ((MappingDataNode)ev.Node["meta"]).Remove("time");
         }
     }
 }
