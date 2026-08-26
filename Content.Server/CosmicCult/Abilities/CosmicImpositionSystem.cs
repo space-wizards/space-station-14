@@ -7,18 +7,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.CosmicCult.Abilities;
 
-public sealed class CosmicImpositionSystem : EntitySystem
+public sealed partial class CosmicImpositionSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<CosmicImposingComponent, BeforeDamageChangedEvent>(OnImpositionDamaged);
-        SubscribeLocalEvent<CosmicCultistComponent, EventCosmicImposition>(OnCosmicImposition);
-    }
 
     public override void Update(float frameTime)
     {
@@ -34,6 +26,7 @@ public sealed class CosmicImpositionSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnCosmicImposition(Entity<CosmicCultistComponent> uid, ref EventCosmicImposition args)
     {
         EnsureComp<CosmicImposingComponent>(uid, out var comp);
@@ -43,6 +36,7 @@ public sealed class CosmicImpositionSystem : EntitySystem
         _audio.PlayPvs(uid.Comp.ImpositionSfx, uid, AudioParams.Default.WithVariation(0.05f));
     }
 
+    [SubscribeLocalEvent]
     private void OnImpositionDamaged(Entity<CosmicImposingComponent> uid, ref BeforeDamageChangedEvent args)
     {
         args.Cancelled = true;

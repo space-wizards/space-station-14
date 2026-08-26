@@ -10,20 +10,13 @@ using Robust.Shared.Player;
 
 namespace Content.Server.CosmicCult.Abilities;
 
-public sealed class CosmicSiphonSystem : EntitySystem
+public sealed partial class CosmicSiphonSystem : EntitySystem
 {
     [Dependency] private CosmicCultRuleSystem _cultRule = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<CosmicCultistComponent, EventCosmicSiphon>(OnCosmicSiphon);
-        SubscribeLocalEvent<CosmicCultistComponent, EventCosmicSiphonDoAfter>(OnCosmicSiphonDoAfter);
-    }
-
+    [SubscribeLocalEvent]
     private void OnCosmicSiphon(Entity<CosmicCultistComponent> uid, ref EventCosmicSiphon args)
     {
         if (args.Handled)
@@ -47,6 +40,7 @@ public sealed class CosmicSiphonSystem : EntitySystem
         _doAfter.TryStartDoAfter(doargs);
     }
 
+    [SubscribeLocalEvent]
     private void OnCosmicSiphonDoAfter(Entity<CosmicCultistComponent> ent, ref EventCosmicSiphonDoAfter args)
     {
         if (args.Cancelled || args.Handled || args.Args.Target is not { } target)

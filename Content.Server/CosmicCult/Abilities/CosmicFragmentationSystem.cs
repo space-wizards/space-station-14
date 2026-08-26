@@ -13,7 +13,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.CosmicCult.Abilities;
 
-public sealed class CosmicFragmentationSystem : EntitySystem
+public sealed partial class CosmicFragmentationSystem : EntitySystem
 {
     [Dependency] private AntagSelectionSystem _antag = default!;
     [Dependency] private MobStateSystem _mobState = default!;
@@ -21,18 +21,6 @@ public sealed class CosmicFragmentationSystem : EntitySystem
     [Dependency] private SharedMindSystem _mind = default!;
 
     private ProtoId<RadioChannelPrototype> _cultRadio = "CosmicRadio";
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<AILawUpdatedEvent>(OnLawInserted);
-
-        SubscribeLocalEvent<BorgChassisComponent, MalignFragmentationEvent>(OnFragmentBorg);
-        SubscribeLocalEvent<SiliconLawUpdaterComponent, MalignFragmentationEvent>(OnFragmentAi);
-
-        SubscribeLocalEvent<CosmicCultistComponent, EventCosmicFragmentation>(OnCosmicFragmentation);
-    }
 
     private void UnEmpower(Entity<CosmicCultistComponent> ent)
     {
@@ -48,6 +36,7 @@ public sealed class CosmicFragmentationSystem : EntitySystem
         comp.CosmicShiftWindup = CosmicCultistComponent.DefaultCosmicShiftWindup;
     }
 
+    [SubscribeLocalEvent]
     private void OnCosmicFragmentation(Entity<CosmicCultistComponent> ent, ref EventCosmicFragmentation args)
     {
         if (args.Handled || _mobState.IsIncapacitated(args.Target))
@@ -61,6 +50,7 @@ public sealed class CosmicFragmentationSystem : EntitySystem
         RaiseLocalEvent(args.Target, ref evt);
     }
 
+    [SubscribeLocalEvent]
     private void OnFragmentBorg(Entity<BorgChassisComponent> ent, ref MalignFragmentationEvent args)
     {
         if (!_mind.TryGetMind(ent, out var mindId, out var mind))
@@ -78,6 +68,7 @@ public sealed class CosmicFragmentationSystem : EntitySystem
         _antag.SendBriefing(wisp, Loc.GetString("cosmiccult-silicon-chantry-briefing", ("minutesandseconds", $"{mins} minutes and {secs} seconds")), Color.FromHex("#4cabb3"), null);
     }
 
+    [SubscribeLocalEvent]
     private void OnFragmentAi(Entity<SiliconLawUpdaterComponent> ent, ref MalignFragmentationEvent args)
     {
         var lawboard = Spawn("CosmicCultLawBoard", Transform(args.Target).Coordinates);
@@ -88,6 +79,7 @@ public sealed class CosmicFragmentationSystem : EntitySystem
         _container.Insert(lawboard, container, Transform(args.Target), true);
     }
 
+    [SubscribeLocalEvent]
     private void OnLawInserted(ref AILawUpdatedEvent args)
     {
         if (!TryComp<IntrinsicRadioTransmitterComponent>(args.Target, out var radio) || !TryComp<ActiveRadioComponent>(args.Target, out var transmitter))

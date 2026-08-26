@@ -17,7 +17,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.CosmicCult.Abilities;
 
-public sealed class CosmicShiftSystem : SharedCosmicShiftSystem
+public sealed partial class CosmicShiftSystem : SharedCosmicShiftSystem
 {
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;

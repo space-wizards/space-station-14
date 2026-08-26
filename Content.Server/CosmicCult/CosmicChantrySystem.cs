@@ -15,7 +15,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.CosmicCult;
-public sealed class CosmicChantrySystem : EntitySystem
+public sealed partial class CosmicChantrySystem : EntitySystem
 {
     [Dependency] private AntagSelectionSystem _antag = default!;
     [Dependency] private ChatSystem _chatSystem = default!;
@@ -33,15 +33,6 @@ public sealed class CosmicChantrySystem : EntitySystem
     /// Mind role to add to colossi.
     /// </summary>
     public static readonly EntProtoId MindRole = "MindRoleCosmicColossus";
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<CosmicChantryComponent, ComponentInit>(OnChantryStarted);
-        SubscribeLocalEvent<CosmicChantryComponent, ComponentShutdown>(OnChantryDestroyed);
-
-        SubscribeLocalEvent<CosmicChantryComponent, CosmicChantryDoAfter>(OnDoAfter);
-    }
 
     public override void Update(float frameTime)
     {
@@ -71,6 +62,7 @@ public sealed class CosmicChantrySystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnDoAfter(Entity<CosmicChantryComponent> ent, ref CosmicChantryDoAfter args)
     {
         if (!_mind.TryGetMind(ent.Comp.InternalVictim, out var mindEnt, out var mind))
@@ -87,6 +79,7 @@ public sealed class CosmicChantrySystem : EntitySystem
         QueueDel(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnChantryStarted(Entity<CosmicChantryComponent> ent, ref ComponentInit args)
     {
         var indicatedLocation = FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((ent, Transform(ent))));
@@ -105,6 +98,7 @@ public sealed class CosmicChantrySystem : EntitySystem
             mind.PreventGhosting = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnChantryDestroyed(Entity<CosmicChantryComponent> ent, ref ComponentShutdown args)
     {
         var comp = ent.Comp;

@@ -13,7 +13,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.CosmicCult;
 
-public sealed class CosmicBreachSystem : EntitySystem
+public sealed partial class CosmicBreachSystem : EntitySystem
 {
 	[Dependency] private IRobustRandom _random = default!;
 	[Dependency] private MapSystem _mapSystem = default!;
