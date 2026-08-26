@@ -63,7 +63,7 @@ public sealed partial class DoAfterServerTest : GameTest
     {
         var ev = new TestDoAfterEvent();
 
-        await Server.WaitPost(() =>
+        await Server.WaitAssertion(() =>
         {
             var mob = SSpawn(DoAfterDummy);
             var args = new DoAfterArgs(SEntMan, mob, SGameTiming.TickPeriod / 2, ev, null) { Broadcast = true };
@@ -84,13 +84,13 @@ public sealed partial class DoAfterServerTest : GameTest
     {
         var ev = new TestDoAfterEvent();
 
-        await Server.WaitPost(() =>
+        await Server.WaitAssertion(() =>
         {
             var mob = SSpawn(DoAfterDummy);
             var args = new DoAfterArgs(SEntMan, mob, SGameTiming.TickPeriod * 2, ev, null) { Broadcast = true };
 
             Assert.That(_sDoAfterSystem.TryStartDoAfter(args, out var id));
-            Assert.That(!ev.Cancelled);
+            Assert.That(ev.Cancelled, Is.False);
 
             _sDoAfterSystem.Cancel(id);
             Assert.That(ev.Cancelled);
