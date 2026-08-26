@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat, BaseSlicingRefinable, BaseMobDestructible ]
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat, BaseSlicingRefinable ]
   id: BaseMobBehonker
   name: behonker
   description: A floating demon aspect of the honkmother.
