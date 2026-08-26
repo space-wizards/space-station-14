@@ -1,23 +1,35 @@
 - type: vendingMachineInventory
   id: GoodCleanFunInventory
-  startingInventory:
-    DiceBag: 6
-    Paper: 8
-    d6Dice: 8
-    ChessBoard: 1
-    BackgammonBoard: 1
-    ParchisBoard: 1
-    CheckerBoard: 1
-    ShipBattlemap: 1
-    SnowBattlemap: 1
-    SandBattlemap: 1
-    MoonBattlemap: 1
-    GrassBattlemap: 1
-    PaperCNCSheet: 6
-    MysteryFigureBox: 2
-    BooksBag: 3
-    Magic9Ball: 2
-  contrabandInventory:
-    Basketball: 1
-    FoodSnackBoritos: 3
-    DrinkSpaceMountainWindCan: 3
+  categories:
+  - name: vending-machine-category-dice
+    icon: { entity: DiceBag }
+    startingInventory:
+      DiceBag: 6
+      d6Dice: 8
+  - name: vending-machine-category-board-games
+    icon: { entity: ChessBoard }
+    startingInventory:
+      ChessBoard: 1
+      BackgammonBoard: 1
+      ParchisBoard: 1
+      CheckerBoard: 1
+  - name: vending-machine-category-battle-maps
+    icon: { entity: ShipBattlemap }
+    startingInventory:
+      ShipBattlemap: 1
+      SnowBattlemap: 1
+      SandBattlemap: 1
+      MoonBattlemap: 1
+      GrassBattlemap: 1
+      PaperCNCSheet: 6
+  - name: vending-machine-category-tabletop-supplies
+    icon: { entity: Paper }
+    startingInventory:
+      Paper: 8
+      MysteryFigureBox: 2
+      BooksBag: 3
+      Magic9Ball: 2
+    contrabandInventory:
+      Basketball: 1
+      FoodSnackBoritos: 3
+      DrinkSpaceMountainWindCan: 3

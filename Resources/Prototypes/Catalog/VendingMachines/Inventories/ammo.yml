@@ -1,20 +1,33 @@
 - type: vendingMachineInventory
   id: AmmoVendInventory
-  startingInventory:
-    MagazineBoxCaselessRifle: 6
-    MagazineBoxCaselessRiflePractice: 3
-
-    MagazineBoxLightRifleBig: 6
-    MagazineBoxLightRiflePractice: 3
-
-    MagazineBoxMagnum: 6
-    MagazineBoxMagnumPractice: 3
-
-    MagazineBoxPistol: 6
-    MagazineBoxPistolPractice: 3
-
-    MagazineBoxRifle: 6
-    MagazineBoxRiflePractice: 3
-
-    BoxLethalshot: 6
-    BoxShotgunPractice: 3
+  categories:
+  - name: vending-machine-category-ammo-caseless-rifle
+    icon: { entity: MagazineBoxCaselessRifle }
+    startingInventory:
+      MagazineBoxCaselessRifle: 6
+      MagazineBoxCaselessRiflePractice: 3
+  - name: vending-machine-category-ammo-light-rifle
+    icon: { entity: MagazineBoxLightRifleBig }
+    startingInventory:
+      MagazineBoxLightRifleBig: 6
+      MagazineBoxLightRiflePractice: 3
+  - name: vending-machine-category-ammo-magnum
+    icon: { entity: MagazineBoxMagnum }
+    startingInventory:
+      MagazineBoxMagnum: 6
+      MagazineBoxMagnumPractice: 3
+  - name: vending-machine-category-ammo-pistol
+    icon: { entity: MagazineBoxPistol }
+    startingInventory:
+      MagazineBoxPistol: 6
+      MagazineBoxPistolPractice: 3
+  - name: vending-machine-category-ammo-rifle
+    icon: { entity: MagazineBoxRifle }
+    startingInventory:
+      MagazineBoxRifle: 6
+      MagazineBoxRiflePractice: 3
+  - name: vending-machine-category-ammo-shotgun
+    icon: { entity: BoxLethalshot }
+    startingInventory:
+      BoxLethalshot: 6
+      BoxShotgunPractice: 3
