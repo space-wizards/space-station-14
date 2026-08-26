@@ -75,6 +75,7 @@
       whitelist:
         components:
         - ChangelingRole
+        - NukeopsRole # Nukies are basically impossible to devour under normal gameplay. Killing them is still on the table.
 
 - type: entity
   parent: [BaseChangelingObjective, BaseLivingObjective]
