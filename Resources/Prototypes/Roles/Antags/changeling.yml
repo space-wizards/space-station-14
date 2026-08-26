@@ -46,6 +46,6 @@
     - ChangelingDNA
     balance:
       ChangelingDNA: 60
-    inputValidation: true
+    inputValidation: false
   mindRoles:
   - MindRoleChangeling
