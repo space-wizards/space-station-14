@@ -435,7 +435,7 @@
     examine: true
     lifetime: 240
   - type: ExplosionResistance
-    damageCoefficient: 0.1
+    damageCoefficient: 0.01 # nigh immune
   - type: FleetingClothing
     removedSound:
       path: /Audio/Voice/Slime/slime_squish.ogg # TODO: replace placeholder

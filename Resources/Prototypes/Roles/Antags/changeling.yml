@@ -96,18 +96,23 @@
       reagents:
       - ReagentId: Blood
         Quantity: 240
-      - ReagentId: LivingBlood
+      - ReagentId: LivingTissue
         Quantity: 20
+  - type: Meteor
+    damageTypes:
+      types:
+        Blunt: 1
+        Structural: 5
   - type: Explosive
     explosionType: DemolitionCharge
-    totalIntensity: 999
-    intensitySlope: 100
+    totalIntensity: 999 # BREAK RWALLS GOD DAMN IT
+    intensitySlope: 50
     tileBreakScale: 0
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 1
+        damage: 1000
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
