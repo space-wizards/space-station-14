@@ -17,8 +17,7 @@ namespace Content.Client.VendingMachines.UI;
 [GenerateTypedNameReferences]
 public sealed partial class VendingMachineMenu : FancyWindow
 {
-    private const int CategoryPanelWidth = 56;
-    private const int CategoryButtonSize = 40;
+    private const int CategoryButtonSize = 60;
 
     [Dependency] private IComponentFactory _componentFactory = default!;
     [Dependency] private IEntityManager _entityManager = default!;
@@ -39,7 +38,6 @@ public sealed partial class VendingMachineMenu : FancyWindow
 
     public VendingMachineMenu()
     {
-        MinSize = SetSize = new Vector2(250, 150);
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
@@ -108,18 +106,13 @@ public sealed partial class VendingMachineMenu : FancyWindow
 
             MainContainer.AddChild(outOfStockLabel);
 
-            SetSizeAfterUpdate(outOfStockLabel.Text.Length, 0);
-
             return;
         }
 
-        var longestEntry = string.Empty;
         var listData = new List<VendorItemsListData>();
 
-        for (var i = 0; i < _cachedInventory.Count; i++)
+        foreach (var entry in _cachedInventory)
         {
-            var entry = _cachedInventory[i];
-
             if (_selectedCategory is { } selected && !CategoryContains(selected, entry))
                 continue;
 
@@ -133,18 +126,13 @@ public sealed partial class VendingMachineMenu : FancyWindow
             var key = new VendorItemKey(entry.Type, prototype.ID);
             _amounts[key] = entry.Amount;
 
-            if (itemText.Length > longestEntry.Length)
-                longestEntry = itemText;
-
-            listData.Add(new VendorItemsListData(entry.Type, prototype.ID, i)
+            listData.Add(new VendorItemsListData(entry.Type, prototype.ID)
             {
                 ItemText = itemText
             });
         }
 
         VendingContents.PopulateList(listData);
-
-        SetSizeAfterUpdate(longestEntry.Length, listData.Count);
     }
 
     private static bool CategoryContains(VendingMachineInventoryCategory category, VendingMachineInventoryEntry entry)
@@ -185,10 +173,12 @@ public sealed partial class VendingMachineMenu : FancyWindow
 
         var group = new ButtonGroup(isNoneSetAllowed: false);
 
-        CategoryButtons.AddChild(CreateCategoryButton(
+        var selectedButton = CreateCategoryButton(
             _loc.GetString("vending-machine-category-all"),
             null,
-            group));
+            group);
+
+        CategoryButtons.AddChild(selectedButton);
 
         var spriteSystem = _entityManager.System<SpriteSystem>();
 
@@ -200,11 +190,16 @@ public sealed partial class VendingMachineMenu : FancyWindow
             {
                 Texture = spriteSystem.Frame0(category.Icon!),
                 Stretch = TextureRect.StretchMode.KeepAspectCentered,
-                SetSize = new Vector2(32, 32)
+                SetSize = new Vector2(48, 48)
             });
 
             CategoryButtons.AddChild(button);
+
+            if (_selectedCategory == category)
+                selectedButton = button;
         }
+
+        selectedButton.Pressed = true;
     }
 
     private Button CreateCategoryButton(string name, VendingMachineInventoryCategory? category, ButtonGroup group)
@@ -213,8 +208,6 @@ public sealed partial class VendingMachineMenu : FancyWindow
         {
             SetSize = new Vector2(CategoryButtonSize, CategoryButtonSize),
             Group = group,
-            ToggleMode = true,
-            Pressed = _selectedCategory == category,
             ToolTip = name,
             StyleClasses = { StyleClass.ButtonSquare }
         };
@@ -271,16 +264,9 @@ public sealed partial class VendingMachineMenu : FancyWindow
 
         return $"[{amount}] {itemName}";
     }
-
-    private void SetSizeAfterUpdate(int longestEntryLength, int contentCount)
-    {
-        var categoryWidth = CategoryPanel.Visible ? CategoryPanelWidth : 0;
-        SetSize = new Vector2(Math.Clamp((longestEntryLength + 2) * 12, 250, 400) + categoryWidth,
-            Math.Clamp(contentCount * 50, 150, 350));
-    }
 }
 
-public record VendorItemsListData(InventoryType ItemType, EntProtoId ItemProtoID, int ItemIndex) : ListData
+public record VendorItemsListData(InventoryType ItemType, EntProtoId ItemProtoID) : ListData
 {
     public string ItemText = string.Empty;
 }

@@ -4,7 +4,6 @@ using Content.Shared.VendingMachines;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
 using Robust.Shared.Prototypes;
-using System.Linq;
 using Content.Shared.VendingMachines.Components;
 
 namespace Content.Client.VendingMachines;
@@ -15,9 +14,6 @@ public sealed partial class VendingMachineBoundUserInterface(EntityUid owner, En
 
     [ViewVariables]
     private VendingMachineMenu? _menu;
-
-    [ViewVariables]
-    private List<VendingMachineInventoryEntry> _cachedInventory = new();
 
     protected override void Open()
     {
@@ -34,7 +30,7 @@ public sealed partial class VendingMachineBoundUserInterface(EntityUid owner, En
         var enabled = EntMan.TryGetComponent(Owner, out VendingMachineEjectComponent? eject) && !eject.Ejecting;
 
         var system = EntMan.System<VendingMachineSystem>();
-        _cachedInventory = system.GetAllInventory(Owner);
+        var inventory = system.GetAllInventory(Owner);
 
         IReadOnlyList<VendingMachineInventoryCategory> categories = [];
         if (EntMan.TryGetComponent(Owner, out VendingMachineComponent? vending) &&
@@ -43,7 +39,7 @@ public sealed partial class VendingMachineBoundUserInterface(EntityUid owner, En
             categories = inventoryPrototype.Categories;
         }
 
-        _menu?.Populate(_cachedInventory, categories, enabled);
+        _menu?.Populate(inventory, categories, enabled);
     }
 
     public void UpdateAmounts()
@@ -51,8 +47,8 @@ public sealed partial class VendingMachineBoundUserInterface(EntityUid owner, En
         var enabled = EntMan.TryGetComponent(Owner, out VendingMachineEjectComponent? eject) && !eject.Ejecting;
 
         var system = EntMan.System<VendingMachineSystem>();
-        _cachedInventory = system.GetAllInventory(Owner);
-        _menu?.UpdateAmounts(_cachedInventory, enabled);
+        var inventory = system.GetAllInventory(Owner);
+        _menu?.UpdateAmounts(inventory, enabled);
     }
 
     private void OnItemSelected(GUIBoundKeyEventArgs args, ListData data)
@@ -60,18 +56,10 @@ public sealed partial class VendingMachineBoundUserInterface(EntityUid owner, En
         if (args.Function != EngineKeyFunctions.UIClick)
             return;
 
-        if (data is not VendorItemsListData { ItemIndex: var itemIndex })
+        if (data is not VendorItemsListData { ItemType: var type, ItemProtoID: var id })
             return;
 
-        if (_cachedInventory.Count == 0)
-            return;
-
-        var selectedItem = _cachedInventory.ElementAtOrDefault(itemIndex);
-
-        if (selectedItem == null)
-            return;
-
-        SendPredictedMessage(new VendingMachineEjectMessage(selectedItem.Type, selectedItem.ID));
+        SendPredictedMessage(new VendingMachineEjectMessage(type, id));
     }
 
     protected override void Dispose(bool disposing)
