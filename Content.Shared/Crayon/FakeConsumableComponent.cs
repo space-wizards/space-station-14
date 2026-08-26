@@ -33,7 +33,7 @@ public sealed partial class FakeConsumableComponent : Component
     /// How much time should inserting an item take.
     /// </summary>
     [DataField]
-    public TimeSpan InsertDelay = TimeSpan.FromSeconds(5f);
+    public TimeSpan InsertDelay = TimeSpan.FromSeconds(7f);
 
     /// <summary>
     /// A blacklist of entities that cannot be inserted in this fake consumable, if null everything can be inserted.
