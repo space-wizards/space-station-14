@@ -95,14 +95,12 @@
       500: Dead
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
+    - trigger: !type:DamageTypeTrigger
         damageType: Blunt
         damage: 600
       behaviors:
       - !type:GibBehavior
-    - trigger:
-        !type:DamageTypeTrigger
+    - trigger: !type:DamageTypeTrigger
         damageType: Radiation
         damage: 15
       behaviors:
@@ -110,8 +108,7 @@
         popup: mouth-taste-metal
         popupType: LargeCaution
         targetOnly: true
-    - trigger:
-        !type:DamageTypeTrigger
+    - trigger: !type:DamageTypeTrigger
         damageType: Radiation
         damage: 40
       behaviors:
