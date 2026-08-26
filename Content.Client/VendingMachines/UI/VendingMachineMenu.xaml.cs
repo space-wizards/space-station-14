@@ -25,7 +25,6 @@ public sealed partial class VendingMachineMenu : FancyWindow
     [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     private readonly Dictionary<VendorItemKey, (ListContainerButton Button, VendingMachineItem Item)> _listItems = new();
-    private readonly Dictionary<VendorItemKey, uint> _amounts = new();
     private List<VendingMachineInventoryEntry> _cachedInventory = new();
     private VendingMachineInventoryCategory? _selectedCategory;
 
@@ -49,27 +48,26 @@ public sealed partial class VendingMachineMenu : FancyWindow
 
     private bool DataFilterCondition(string filter, ListData data)
     {
-        if (data is not VendorItemsListData { ItemText: var text })
+        if (data is not VendorItemsListData { ItemName: var name })
             return false;
 
         return string.IsNullOrEmpty(filter)
-        || text.Contains(filter, StringComparison.CurrentCultureIgnoreCase);
+        || name.Contains(filter, StringComparison.CurrentCultureIgnoreCase);
     }
 
     private void GenerateButton(ListData data, ListContainerButton button)
     {
-        if (data is not VendorItemsListData { ItemType: var type, ItemProtoID: var protoID, ItemText: var text })
+        if (data is not VendorItemsListData { ItemType: var type, ItemProtoID: var protoID, ItemName: var itemName })
             return;
 
-        var item = new VendingMachineItem(protoID, text);
         var key = new VendorItemKey(type, protoID);
+        var amount = GetAmount(key);
+        var item = new VendingMachineItem(protoID, GetItemText(itemName, amount));
+
         _listItems[key] = (button, item);
         button.AddChild(item);
         button.AddStyleClass(StyleClass.ButtonSquare);
-        button.Disabled =
-            !_enabled ||
-            !_amounts.TryGetValue(key, out var amount) ||
-            amount == 0;
+        button.Disabled = !_enabled || amount == 0;
     }
 
     /// <summary>
@@ -80,7 +78,6 @@ public sealed partial class VendingMachineMenu : FancyWindow
     {
         _enabled = enabled;
         _cachedInventory = inventory;
-        _amounts.Clear();
 
         PopulateCategories(categories);
         PopulateInventory();
@@ -117,19 +114,9 @@ public sealed partial class VendingMachineMenu : FancyWindow
                 continue;
 
             if (!_prototypeManager.Resolve(entry.ID, out var prototype))
-            {
-                _amounts[new VendorItemKey(entry.Type, entry.ID)] = 0;
                 continue;
-            }
 
-            var itemText = GetItemText(prototype, entry.Amount);
-            var key = new VendorItemKey(entry.Type, prototype.ID);
-            _amounts[key] = entry.Amount;
-
-            listData.Add(new VendorItemsListData(entry.Type, prototype.ID)
-            {
-                ItemText = itemText
-            });
+            listData.Add(new VendorItemsListData(entry.Type, prototype.ID, GetItemName(prototype)));
         }
 
         VendingContents.PopulateList(listData);
@@ -232,25 +219,29 @@ public sealed partial class VendingMachineMenu : FancyWindow
         _enabled = enabled;
         _cachedInventory = cachedInventory;
 
-        foreach (var (key, button) in _listItems)
+        foreach (var (key, control) in _listItems)
         {
-            if (!cachedInventory.TryFirstOrDefault(o => o.Type == key.Type && o.ID == key.Prototype, out var entry))
+            if (control.Button.Disposed ||
+                control.Button.Data is not VendorItemsListData { ItemName: var itemName })
                 continue;
 
-            if (!_prototypeManager.Resolve(key.Prototype, out var prototype))
-                continue;
+            var amount = GetAmount(key);
 
-            var amount = entry.Amount;
-            _amounts[key] = amount;
-
-            var text = GetItemText(prototype, amount);
-
-            button.Item.SetText(text);
-            button.Button.Disabled = !enabled || amount == 0;
+            control.Item.SetText(GetItemText(itemName, amount));
+            control.Button.Disabled = !enabled || amount == 0;
         }
     }
 
-    private string GetItemText(EntityPrototype prototype, uint amount)
+    private uint GetAmount(VendorItemKey key)
+    {
+        return _cachedInventory.TryFirstOrDefault(
+            entry => entry.Type == key.Type && entry.ID == key.Prototype,
+            out var inventoryEntry)
+            ? inventoryEntry.Amount
+            : 0;
+    }
+
+    private string GetItemName(EntityPrototype prototype)
     {
         var itemName = prototype.Name;
 
@@ -262,13 +253,12 @@ public sealed partial class VendingMachineMenu : FancyWindow
                 ("label", _loc.GetString(locId)));
         }
 
-        return $"[{amount}] {itemName}";
+        return itemName;
     }
+
+    private static string GetItemText(string itemName, uint amount) => $"[{amount}] {itemName}";
 }
 
-public record VendorItemsListData(InventoryType ItemType, EntProtoId ItemProtoID) : ListData
-{
-    public string ItemText = string.Empty;
-}
+public sealed record VendorItemsListData(InventoryType ItemType, EntProtoId ItemProtoID, string ItemName) : ListData;
 
 public readonly record struct VendorItemKey(InventoryType Type, EntProtoId Prototype);
