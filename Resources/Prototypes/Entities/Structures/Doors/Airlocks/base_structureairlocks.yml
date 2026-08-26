@@ -133,7 +133,7 @@
     resistance: 3
   - type: Occluder
   - type: Damageable
-    damageModifierSet: SteelMod
+    damageModifierSet: SteelStaticMod
   - type: Construction
     graph: Airlock
     node: airlock
