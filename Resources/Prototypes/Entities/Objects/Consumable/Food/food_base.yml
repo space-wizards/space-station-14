@@ -71,7 +71,7 @@
       vanishSound: !type:SoundPathSpecifier
         path: /Audio/Effects/quick_exhale.ogg
         params:
-          volume: 7
+          volume: 9
           pitch: 0.5
     - type: Damageable
     - type: Injurable

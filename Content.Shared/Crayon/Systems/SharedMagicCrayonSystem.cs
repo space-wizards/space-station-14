@@ -1,22 +1,21 @@
-using Content.Server.Administration.Logs;
-using Content.Server.Popups;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Charges.Systems;
-using Content.Shared.Crayon;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using System.Numerics;
 
-namespace Content.Server.Crayon;
+namespace Content.Shared.Crayon;
 
-public sealed partial class MagicCrayonSystem : EntitySystem
+public sealed partial class SharedMagicCrayonSystem : EntitySystem
 {
-    [Dependency] private IAdminLogManager _adminLog = default!;
+    [Dependency] private ISharedAdminLogManager _adminLog = default!;
     [Dependency] private SharedChargesSystem _charges = default!;
-    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
@@ -57,14 +56,14 @@ public sealed partial class MagicCrayonSystem : EntitySystem
 
         var user = args.User;
         var spawnCoords = GetCoordinates(args.ClickLocation);
-        var spawnedFood = Spawn(ent.Comp.FakeFood, spawnCoords);
+        var spawnedFood = PredictedSpawnAtPosition(ent.Comp.FakeFood, spawnCoords);
 
         _charges.TryUseCharge(ent.Owner);
 
         if (ent.Comp.OnSpawnSound != null)
         {
             var audioParams = (ent.Comp.OnSpawnSound?.Params ?? AudioParams.Default).WithVariation(0.2f);
-            _audio.PlayPvs(ent.Comp.OnSpawnSound, spawnedFood, audioParams);
+            _audio.PlayPredicted(ent.Comp.OnSpawnSound, spawnedFood, user, audioParams);
         }
 
         if (_charges.IsEmpty(ent.Owner))
@@ -87,8 +86,8 @@ public sealed partial class MagicCrayonSystem : EntitySystem
     private void MutateToNormal(Entity<MagicCrayonComponent> ent, EntityUid? user)
     {
         var coords = Transform(ent).Coordinates;
-        var normalCrayon = Spawn(ent.Comp.NormalCrayon);
-        Del(ent);
+        var normalCrayon = PredictedSpawnAtPosition(ent.Comp.NormalCrayon, coords);
+        PredictedDel(ent.Owner);
 
         if (!user.HasValue)
         {

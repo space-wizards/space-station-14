@@ -1,3 +1,3 @@
-﻿namespace Content.Shared.Crayon;
+namespace Content.Shared.Crayon.Systems;
 
 public abstract class SharedCrayonSystem : EntitySystem { }

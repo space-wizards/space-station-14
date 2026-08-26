@@ -5,6 +5,7 @@ using Content.Server.Decals;
 using Content.Server.Popups;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Crayon;
+using Content.Shared.Crayon.Systems;
 using Content.Shared.Database;
 using Content.Shared.Decals;
 using Content.Shared.Interaction;

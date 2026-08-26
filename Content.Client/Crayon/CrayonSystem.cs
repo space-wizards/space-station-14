@@ -4,6 +4,7 @@ using Content.Client.Stylesheets;
 using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Crayon;
+using Content.Shared.Crayon.Systems;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
