@@ -29,19 +29,31 @@ public sealed partial class MMIComponent : Component
     /// The sprite state when the brain inserted has a mind.
     /// </summary>
     [DataField]
-    public string HasMindState = "mmi_alive";
+    public string HasMindState = "mmi_on";
 
     /// <summary>
     /// The sprite state when the brain inserted doesn't have a mind.
     /// </summary>
     [DataField]
-    public string NoMindState = "mmi_dead";
+    public string NoMindState = "mmi_on";
 
     /// <summary>
     /// The sprite state when there is no brain inserted.
     /// </summary>
     [DataField]
     public string NoBrainState = "mmi_off";
+
+    /// <summary>
+    /// The sprite state when the brain inserted has a mind.
+    /// </summary>
+    [DataField]
+    public Color HasMindLightColor = Color.FromHex("#0094ff");
+
+    /// <summary>
+    /// The sprite state when the brain inserted doesn't have a mind.
+    /// </summary>
+    [DataField]
+    public Color NoMindLightColor = Color.FromHex("#ff3033");
 }
 
 [Serializable, NetSerializable]
@@ -55,5 +67,6 @@ public enum MMIVisuals : byte
 public enum MMIVisualLayers : byte
 {
     Brain,
-    Base
+    Base,
+    Unlit,
 }

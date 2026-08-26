@@ -104,6 +104,9 @@ public sealed partial class BorgSystem : SharedBorgSystem
         if (!_appearance.TryGetData(uid, MMIVisuals.HasMind, out bool hasMind))
             hasMind = false;
 
+        Color lightColor = Color.White;
+        bool lightVisible = false;
+
         _sprite.LayerSetVisible((uid, sprite), MMIVisualLayers.Brain, brain);
         if (!brain)
         {
@@ -115,6 +118,18 @@ public sealed partial class BorgSystem : SharedBorgSystem
                 ? component.HasMindState
                 : component.NoMindState;
             _sprite.LayerSetRsiState((uid, sprite), MMIVisualLayers.Base, state);
+
+            lightColor = hasMind
+                ? component.HasMindLightColor
+                : component.NoMindLightColor;
+            lightVisible = true;
+        }
+
+        // Update color if it exists.
+        if (_sprite.LayerMapTryGet((uid, sprite), MMIVisualLayers.Unlit, out var layerIndex, logMissing: false))
+        {
+            _sprite.LayerSetVisible((uid, sprite), layerIndex, lightVisible);
+            _sprite.LayerSetColor((uid, sprite), layerIndex, lightColor);
         }
     }
 

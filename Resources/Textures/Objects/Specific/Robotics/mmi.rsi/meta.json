@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "mmi textures made by Marum (https://github.com/marianolarre). Posibrain taken from tgstation at https://github.com/tgstation/tgstation/commit/cf45322c7ee16f9d7e43d5260daf24ceb77c1b25",
+    "copyright": "mmi textures made by Marum (https://github.com/marianolarre). Posibrain taken from tgstation at https://github.com/tgstation/tgstation/commit/cf45322c7ee16f9d7e43d5260daf24ceb77c1b25, unshaded edits by whatston3",
     "size": {
         "x": 32,
         "y": 32
@@ -14,10 +14,7 @@
             "name": "mmi_off"
         },
         {
-            "name": "mmi_alive"
-        },
-        {
-            "name": "mmi_dead"
+            "name": "mmi_on"
         },
         {
             "name": "mmi_brain"
@@ -26,32 +23,20 @@
             "name": "mmi_brain_alien"
         },
         {
+            "name": "mmi_light"
+        },
+        {
             "name": "posibrain"
         },
         {
             "name": "posibrain-occupied",
             "delays": [
                 [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1
+                    0.1, 0.1, 0.1, 0.1,
+                    0.1, 0.1, 0.1, 0.1,
+                    0.2, 0.1, 0.1, 0.1,
+                    0.1, 0.1, 0.1, 0.1,
+                    0.3
                 ]
             ]
         },
@@ -59,22 +44,8 @@
             "name": "posibrain-searching",
             "delays": [
                 [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1
+                    0.7, 0.1, 0.1, 0.1,
+                    0.3, 0.1, 0.1, 0.1
                 ]
             ]
         }
