@@ -57,7 +57,7 @@ public sealed partial class FollowerSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnFollowedReparent(Entity<FollowerComponent> ent, ref EntParentChangedMessage args)
+    private void OnFollowerReparent(Entity<FollowerComponent> ent, ref EntParentChangedMessage args)
     {
         _transform.SetParent(ent, ent.Comp.Following);
     }
