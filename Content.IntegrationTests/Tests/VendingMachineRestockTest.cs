@@ -11,7 +11,6 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.EntityTable;
 using Content.Shared.Storage.EntitySystems;
-using Content.Shared.VendingMachines;
 using Content.Shared.VendingMachines.Components;
 using Content.Shared.Wires;
 using Robust.Shared.GameObjects;
@@ -25,11 +24,18 @@ public sealed class VendingMachineRestockTest : GameTest
 {
     private static readonly ProtoId<DamageTypePrototype> TestDamageType = "Blunt";
 
+    private const string HumanVendingDummy = "HumanVendingDummy";
+    private const string VendingMachineTest = "VendingMachineTest";
+    private const string TestRestockCorrect = "TestRestockCorrect";
+    private const string TestRestockWrong = "TestRestockWrong";
+    private const string TestRestockExplode = "TestRestockExplode";
+    private const string TestRamen = "TestRamen";
+
     [TestPrototypes]
-    private const string Prototypes = @"
+    private const string Prototypes = $@"
 - type: entity
-  name: HumanVendingDummy
-  id: HumanVendingDummy
+  name: {HumanVendingDummy}
+  id: {HumanVendingDummy}
   components:
   - type: Hands
   - type: ComplexInteraction
@@ -38,28 +44,28 @@ public sealed class VendingMachineRestockTest : GameTest
 
 - type: entity
   parent: FoodSnackBase
-  id: TestRamen
-  name: TestRamen
+  id: {TestRamen}
+  name: {TestRamen}
 
 - type: vendingMachineInventory
   id: TestInventory
   startingInventory:
-    TestRamen: 1
+    {TestRamen}: 1
 
 - type: vendingMachineInventory
   id: OtherTestInventory
   startingInventory:
-    TestRamen: 3
+    {TestRamen}: 3
 
 - type: vendingMachineInventory
   id: BigTestInventory
   startingInventory:
-    TestRamen: 4
+    {TestRamen}: 4
 
 - type: entity
   parent: BaseVendingMachineRestock
-  id: TestRestockWrong
-  name: TestRestockWrong
+  id: {TestRestockWrong}
+  name: {TestRestockWrong}
   components:
   - type: VendingMachineRestock
     canRestock:
@@ -67,8 +73,8 @@ public sealed class VendingMachineRestockTest : GameTest
 
 - type: entity
   parent: BaseVendingMachineRestock
-  id: TestRestockCorrect
-  name: TestRestockCorrect
+  id: {TestRestockCorrect}
+  name: {TestRestockCorrect}
   components:
   - type: VendingMachineRestock
     canRestock:
@@ -76,8 +82,8 @@ public sealed class VendingMachineRestockTest : GameTest
 
 - type: entity
   parent: BaseVendingMachineRestock
-  id: TestRestockExplode
-  name: TestRestockExplode
+  id: {TestRestockExplode}
+  name: {TestRestockExplode}
   components:
   - type: Damageable
     damageModifierSet: Metallic
@@ -98,8 +104,8 @@ public sealed class VendingMachineRestockTest : GameTest
 
 - type: entity
   parent: BaseVendingMachine
-  id: VendingMachineTest
-  name: Test Ramen
+  id: {VendingMachineTest}
+  name: Test Ramen Vendor
   components:
   - type: Wires
     layoutId: Vending
@@ -110,13 +116,17 @@ public sealed class VendingMachineRestockTest : GameTest
     sprite: error.rsi
 ";
 
+    [SidedDependency(Side.Server)] private EntityTableSystem _sEntityTableSystem = default!;
+    [SidedDependency(Side.Server)] private DamageableSystem _sDamageableSystem = default!;
+    [SidedDependency(Side.Server)] private SharedMapSystem _sMapSystem = default!;
+    [SidedDependency(Side.Server)] private VendingMachineSystem _sVendingMachineSystem = default!;
+    [SidedDependency(Side.Server)] private WiresSystem _sWiresSystem = default!;
+
     [Test]
     [RunOnSide(Side.Server)]
-    [Description("Tests that all vendor restocks have a CargoProductPrototype (and can be purcahsed through cargo).")]
+    [Description($"Tests that all vendor restocks have a {nameof(CargoProductPrototype)} (and can be purchased through cargo).")]
     public async Task TestAllRestocksAreAvailableToBuy()
     {
-        var entityTable = Server.System<EntityTableSystem>();
-
         // Collect all entity prototypes which are vending machine restocks.
         var restockEntities = new HashSet<EntProtoId<VendingMachineRestockComponent>>();
         foreach (var proto in SProtoMan.EnumeratePrototypes<EntityPrototype>())
@@ -145,7 +155,7 @@ public sealed class VendingMachineRestockTest : GameTest
                 continue;
 
             var entitiesInProtoContainingRestock = new List<EntProtoId<VendingMachineRestockComponent>>();
-            foreach (var (fillSpawnEntry, _) in entityTable.ListSpawns(container))
+            foreach (var (fillSpawnEntry, _) in _sEntityTableSystem.ListSpawns(container))
             {
                 if (restockEntities.Contains(fillSpawnEntry.Id))
                     entitiesInProtoContainingRestock.Add(fillSpawnEntry.Id);
@@ -173,7 +183,7 @@ public sealed class VendingMachineRestockTest : GameTest
         }
         // Any entities left in restockEntities are restocks which can't be bought from Cargo.
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             const string restockCompName = nameof(VendingMachineRestockComponent);
 
@@ -184,15 +194,13 @@ public sealed class VendingMachineRestockTest : GameTest
             Assert.That(restockEntities,
                 Has.Count.EqualTo(0),
                 $"Some entities with {restockCompName} are unavailable for purchase: \n - {string.Join("\n - ", restockEntities)}");
-        });
+        }
     }
 
     [Test]
     [Description("Tests that restocking a vending machine can be restocked with a restock box.")]
     public async Task TestCompleteRestockProcess()
     {
-        var mapSystem = Server.System<SharedMapSystem>();
-
         EntityUid packageRight;
         EntityUid packageWrong;
         EntityUid machine;
@@ -211,60 +219,57 @@ public sealed class VendingMachineRestockTest : GameTest
             var coordinates = TestMap.GridCoords;
 
             // Spawn the entities.
-            user = SSpawnAtPosition("HumanVendingDummy", coordinates);
-            machine = SSpawnAtPosition("VendingMachineTest", coordinates);
-            packageRight = SSpawnAtPosition("TestRestockCorrect", coordinates);
-            packageWrong = SSpawnAtPosition("TestRestockWrong", coordinates);
+            user = SSpawnAtPosition(HumanVendingDummy, coordinates);
+            machine = SSpawnAtPosition(VendingMachineTest, coordinates);
+            packageRight = SSpawnAtPosition(TestRestockCorrect, coordinates);
+            packageWrong = SSpawnAtPosition(TestRestockWrong, coordinates);
 
             // Sanity test for components existing.
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
-                Assert.That(SEntMan.TryGetComponent(machine, out machineComponent!), $"Machine has no {nameof(VendingMachineComponent)}");
-                Assert.That(SEntMan.TryGetComponent(packageRight, out restockRightComponent!), $"Correct package has no {nameof(VendingMachineRestockComponent)}");
-                Assert.That(SEntMan.TryGetComponent(packageWrong, out restockWrongComponent!), $"Wrong package has no {nameof(VendingMachineRestockComponent)}");
-                Assert.That(SEntMan.TryGetComponent(machine, out machineWiresPanel!), $"Machine has no {nameof(WiresPanelComponent)}");
-            });
-
-            var systemMachine = Server.System<VendingMachineSystem>();
+                Assert.That(STryComp(machine, out machineComponent!), $"Machine has no {nameof(VendingMachineComponent)}");
+                Assert.That(STryComp(packageRight, out restockRightComponent!), $"Correct package has no {nameof(VendingMachineRestockComponent)}");
+                Assert.That(STryComp(packageWrong, out restockWrongComponent!), $"Wrong package has no {nameof(VendingMachineRestockComponent)}");
+                Assert.That(STryComp(machine, out machineWiresPanel!), $"Machine has no {nameof(WiresPanelComponent)}");
+            }
 
             // Test that the panel needs to be opened first.
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
-                Assert.That(systemMachine.TryAccessMachine(packageRight, restockRightComponent, machineComponent, user, machine), Is.False, "Right package is able to restock without opened access panel");
-                Assert.That(systemMachine.TryAccessMachine(packageWrong, restockWrongComponent, machineComponent, user, machine), Is.False, "Wrong package is able to restock without opened access panel");
-            });
+                Assert.That(_sVendingMachineSystem.TryAccessMachine(packageRight, restockRightComponent, machineComponent, user, machine), Is.False, "Right package is able to restock without opened access panel");
+                Assert.That(_sVendingMachineSystem.TryAccessMachine(packageWrong, restockWrongComponent, machineComponent, user, machine), Is.False, "Wrong package is able to restock without opened access panel");
+            }
 
-            var systemWires = Server.System<WiresSystem>();
             // Open the panel.
-            systemWires.TogglePanel(machine, machineWiresPanel, true);
+            _sWiresSystem.TogglePanel(machine, machineWiresPanel, true);
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 // Test that the right package works for the right machine.
-                Assert.That(systemMachine.TryAccessMachine(packageRight, restockRightComponent, machineComponent, user, machine), Is.True, "Correct package is unable to restock with access panel opened");
+                Assert.That(_sVendingMachineSystem.TryAccessMachine(packageRight, restockRightComponent, machineComponent, user, machine), Is.True, "Correct package is unable to restock with access panel opened");
 
                 // Test that the wrong package does not work.
-                Assert.That(systemMachine.TryMatchPackageToMachine(packageWrong, restockWrongComponent, machineComponent, user, machine), Is.False, "Package with invalid canRestock is able to restock machine");
+                Assert.That(_sVendingMachineSystem.TryMatchPackageToMachine(packageWrong, restockWrongComponent, machineComponent, user, machine), Is.False, "Package with invalid canRestock is able to restock machine");
 
                 // Test that the right package does work.
-                Assert.That(systemMachine.TryMatchPackageToMachine(packageRight, restockRightComponent, machineComponent, user, machine), Is.True, "Package with valid canRestock is unable to restock machine");
+                Assert.That(_sVendingMachineSystem.TryMatchPackageToMachine(packageRight, restockRightComponent, machineComponent, user, machine), Is.True, "Package with valid canRestock is unable to restock machine");
 
                 // Make sure there's something in there to begin with.
-                Assert.That(systemMachine.GetAvailableInventory(machine, machineComponent), Has.Count.GreaterThan(0),
+                Assert.That(_sVendingMachineSystem.GetAvailableInventory(machine, machineComponent), Has.Count.GreaterThan(0),
                     "Machine inventory is empty before emptying.");
-            });
+            }
 
             // Empty the inventory.
-            systemMachine.EjectRandom((machine, machineComponent), false, true);
-            Assert.That(systemMachine.GetAvailableInventory(machine, machineComponent), Has.Count.EqualTo(0),
+            _sVendingMachineSystem.EjectRandom((machine, machineComponent), false, true);
+            Assert.That(_sVendingMachineSystem.GetAvailableInventory(machine, machineComponent), Is.Not.Empty,
                 "Machine inventory is not empty after ejecting.");
 
             // Test that the inventory is actually restocked.
-            systemMachine.TryRestockInventory(machine, machineComponent);
-            Assert.That(systemMachine.GetAvailableInventory(machine, machineComponent), Has.Count.GreaterThan(0),
+            _sVendingMachineSystem.TryRestockInventory(machine, machineComponent);
+            Assert.That(_sVendingMachineSystem.GetAvailableInventory(machine, machineComponent), Has.Count.GreaterThan(0),
                 "Machine available inventory count is not greater than zero after restock.");
 
-            mapSystem.DeleteMap(TestMap.MapId);
+            _sMapSystem.DeleteMap(TestMap.MapId);
         });
     }
 
@@ -272,9 +277,6 @@ public sealed class VendingMachineRestockTest : GameTest
     [Description("Tests that a restock box can be broken open, spilling its contents.")]
     public async Task TestRestockBreaksOpen()
     {
-        var mapSystem = Server.System<SharedMapSystem>();
-        var damageableSystem = Server.System<DamageableSystem>();
-
         await Pair.CreateTestMap();
 
         Assume.That(TestMap, Is.Not.Null);
@@ -288,15 +290,15 @@ public sealed class VendingMachineRestockTest : GameTest
             var totalStartingRamen = 0;
 
             foreach (var meta in SEntMan.EntityQuery<MetaDataComponent>())
-                if (!meta.Deleted && meta.EntityPrototype?.ID == "TestRamen")
+                if (!meta.Deleted && meta.EntityPrototype?.ID == TestRamen)
                     totalStartingRamen++;
 
-            Assert.That(totalStartingRamen, Is.EqualTo(0),
+            Assert.That(totalStartingRamen, Is.Zero,
                 "Did not start with zero ramen.");
 
-            restock = SSpawnAtPosition("TestRestockExplode", coordinates);
+            restock = SSpawnAtPosition(TestRestockExplode, coordinates);
             var damageSpec = new DamageSpecifier(SProtoMan.Index(TestDamageType), 100);
-            var damageResult = damageableSystem.ChangeDamage(restock, damageSpec);
+            var damageResult = _sDamageableSystem.ChangeDamage(restock, damageSpec);
 
 #pragma warning disable NUnit2045
             Assert.That(!damageResult.Empty, "Received empty damageResult when attempting to damage restock box.");
@@ -315,13 +317,13 @@ public sealed class VendingMachineRestockTest : GameTest
             var totalRamen = 0;
 
             foreach (var meta in SEntMan.EntityQuery<MetaDataComponent>())
-                if (!meta.Deleted && meta.EntityPrototype?.ID == "TestRamen")
+                if (!meta.Deleted && meta.EntityPrototype?.ID == TestRamen)
                     totalRamen++;
 
             Assert.That(totalRamen, Is.EqualTo(2),
                 "Did not find enough ramen after destroying restock box.");
 
-            mapSystem.DeleteMap(TestMap.MapId);
+            _sMapSystem.DeleteMap(TestMap.MapId);
         });
     }
 
@@ -329,8 +331,6 @@ public sealed class VendingMachineRestockTest : GameTest
     [Description("Tests that vending machines have a limit to their inventory when restocked multiple times.")]
     public async Task TestRestockInventoryBounds()
     {
-        var vendingMachineSystem = Server.System<SharedVendingMachineSystem>();
-
         await Pair.CreateTestMap();
 
         Assume.That(TestMap, Is.Not.Null);
@@ -339,27 +339,27 @@ public sealed class VendingMachineRestockTest : GameTest
         {
             var coordinates = TestMap.GridCoords;
 
-            var machine = SSpawnAtPosition("VendingMachineTest", coordinates);
+            var machine = SSpawnAtPosition(VendingMachineTest, coordinates);
 
-            Assert.That(vendingMachineSystem.GetAvailableInventory(machine), Has.Count.EqualTo(1),
+            Assert.That(_sVendingMachineSystem.GetAvailableInventory(machine), Has.Count.EqualTo(1),
                 "Machine's available inventory did not contain one entry.");
 
-            Assert.That(vendingMachineSystem.GetAvailableInventory(machine)[0].Amount, Is.EqualTo(1),
+            Assert.That(_sVendingMachineSystem.GetAvailableInventory(machine)[0].Amount, Is.EqualTo(1),
                 "Machine's available inventory is not the expected amount.");
 
-            vendingMachineSystem.RestockInventoryFromPrototype(machine);
+            _sVendingMachineSystem.RestockInventoryFromPrototype(machine);
 
-            Assert.That(vendingMachineSystem.GetAvailableInventory(machine)[0].Amount, Is.EqualTo(2),
+            Assert.That(_sVendingMachineSystem.GetAvailableInventory(machine)[0].Amount, Is.EqualTo(2),
                 "Machine's available inventory is not double its starting amount after a restock.");
 
-            vendingMachineSystem.RestockInventoryFromPrototype(machine);
+            _sVendingMachineSystem.RestockInventoryFromPrototype(machine);
 
-            Assert.That(vendingMachineSystem.GetAvailableInventory(machine)[0].Amount, Is.EqualTo(3),
+            Assert.That(_sVendingMachineSystem.GetAvailableInventory(machine)[0].Amount, Is.EqualTo(3),
                 "Machine's available inventory is not triple its starting amount after two restocks.");
 
-            vendingMachineSystem.RestockInventoryFromPrototype(machine);
+            _sVendingMachineSystem.RestockInventoryFromPrototype(machine);
 
-            Assert.That(vendingMachineSystem.GetAvailableInventory(machine)[0].Amount, Is.EqualTo(3),
+            Assert.That(_sVendingMachineSystem.GetAvailableInventory(machine)[0].Amount, Is.EqualTo(3),
                 "Machine's available inventory did not stay the same after a third restock.");
         });
     }

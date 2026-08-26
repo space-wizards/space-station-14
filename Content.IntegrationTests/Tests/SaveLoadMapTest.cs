@@ -27,8 +27,8 @@ public sealed class SaveLoadMapTest : GameTest
     {
         var mapPath = new ResPath("/Maps/Test/TestMap.yml");
 
-        Vector2 grid1Position = new Vector2(10, 10);
-        Vector2 grid2Position = new Vector2(-8, -8);
+        var grid1Position = new Vector2(10, 10);
+        var grid2Position = new Vector2(-8, -8);
 
         var dir = mapPath.Directory;
         _sResMan.UserData.CreateDir(dir);
@@ -53,24 +53,24 @@ public sealed class SaveLoadMapTest : GameTest
         // Try to find our first grid
         TransformComponent? gridXform = null;
         Assert.That(_sMap.TryFindGridAt(mapId, grid1Position, out var gridUid, out var mapGridComp) &&
-                SEntMan.TryGetComponent(gridUid, out gridXform),
+                STryComp(gridUid, out gridXform),
             $"Could not get the transform of the grid at ({grid1Position.X}, {grid1Position.Y})");
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(_sTransform.GetWorldPosition(gridXform!), Is.EqualTo(new Vector2(10, 10)));
             Assert.That(_sMap.GetTileRef(gridUid, mapGridComp!, Vector2i.Zero).Tile, Is.EqualTo(new Tile(typeId: 1, flags: 1, variant: 255)));
-        });
+        }
 
         Assert.That(_sMap.TryFindGridAt(mapId, grid2Position, out gridUid, out mapGridComp) &&
-                SEntMan.TryGetComponent(gridUid, out gridXform),
+                STryComp(gridUid, out gridXform),
             $"Could not get the transform of the grid at ({grid2Position.X}, {grid2Position.Y})");
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(_sTransform.GetWorldPosition(gridXform!), Is.EqualTo(new Vector2(-8, -8)));
             Assert.That(_sMap.GetTileRef(gridUid, mapGridComp!, Vector2i.Zero).Tile, Is.EqualTo(new Tile(typeId: 2, flags: 1, variant: 254)));
-        });
+        }
 
         _sMap.DeleteMap(mapId);
     }

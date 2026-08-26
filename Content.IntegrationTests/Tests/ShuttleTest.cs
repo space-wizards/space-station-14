@@ -16,7 +16,7 @@ public sealed class ShuttleTest : GameTest
     [SidedDependency(Side.Server)] private SharedPhysicsSystem _sPhysics = default!;
 
     [Test]
-    [Description("Tests that grids have the ShuttleComponent and move when pushed.")]
+    [Description($"Tests that grids have the {nameof(ShuttleComponent)} and move when pushed.")]
     public async Task Test()
     {
         await Pair.CreateTestMap();
@@ -29,16 +29,16 @@ public sealed class ShuttleTest : GameTest
             var grid = TestMap.Grid;
             PhysicsComponent? gridPhys = null;
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(grid, Has.Comp<ShuttleComponent>(Server));
                 Assert.That(SEntMan.TryGetComponent(grid, out gridPhys));
-            });
-            Assert.Multiple(() =>
+            }
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(gridPhys!.BodyType, Is.EqualTo(BodyType.Dynamic));
-                Assert.That(SEntMan.GetComponent<TransformComponent>(grid).LocalPosition, Is.EqualTo(Vector2.Zero));
-            });
+                Assert.That(SComp<TransformComponent>(grid).LocalPosition, Is.EqualTo(Vector2.Zero));
+            }
             _sPhysics.ApplyLinearImpulse(grid, Vector2.One, body: gridPhys);
 
             Server.RunTicks(1);
@@ -46,7 +46,7 @@ public sealed class ShuttleTest : GameTest
 
         await Server.WaitAssertion(() =>
         {
-            Assert.That(SEntMan.GetComponent<TransformComponent>(TestMap.Grid).LocalPosition, Is.Not.EqualTo(Vector2.Zero));
+            Assert.That(SComp<TransformComponent>(TestMap.Grid).LocalPosition, Is.Not.EqualTo(Vector2.Zero));
         });
     }
 }

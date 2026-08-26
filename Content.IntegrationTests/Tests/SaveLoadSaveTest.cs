@@ -35,14 +35,14 @@ public sealed partial class SaveLoadSaveTest : GameTest
 
         _sTest.Enabled = true;
 
-        Assume.That(SEntMan.EntityCount, Is.EqualTo(0), "Lingering entities at the start of CreateSaveLoadSaveGrid");
+        Assume.That(SEntMan.EntityCount, Is.Zero, $"Lingering entities at the start of {nameof(CreateSaveLoadSaveGrid)}");
 
         var rp1 = new ResPath("/save load save 1.yml");
         var rp2 = new ResPath("/save load save 2.yml");
 
         _sMap.CreateMap(out var mapId0);
         var grid0 = _sMap.CreateGridEntity(mapId0);
-        SEntMan.RunMapInit(grid0.Owner, SEntMan.GetComponent<MetaDataComponent>(grid0));
+        SEntMan.RunMapInit(grid0.Owner, SComp<MetaDataComponent>(grid0));
         Assert.That(_sMapLoader.TrySaveGrid(grid0.Owner, rp1));
         _sMap.CreateMap(out var mapId1);
         Assert.That(_sMapLoader.TryLoadGrid(mapId1, rp1, out var grid1));
@@ -63,7 +63,7 @@ public sealed partial class SaveLoadSaveTest : GameTest
             two = reader.ReadToEnd();
         }
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(two, Has.Length.Positive);
             Assert.That(two, Is.EqualTo(one));
@@ -82,12 +82,12 @@ public sealed partial class SaveLoadSaveTest : GameTest
                 TestContext.Error.WriteLine(oneTmp);
                 TestContext.Error.WriteLine(twoTmp);
             }
-        });
+        }
         _sTest.Enabled = false;
 
         _sMap.DeleteMap(mapId0);
         _sMap.DeleteMap(mapId1);
-        Assert.That(SEntMan.EntityCount, Is.Zero, "Lingering entities at the end of CreateSaveLoadSaveGrid");
+        Assert.That(SEntMan.EntityCount, Is.Zero, $"Lingering entities at the end of {nameof(CreateSaveLoadSaveGrid)}");
     }
 
     private new const string TestMap = "Maps/bagel.yml";
@@ -101,7 +101,7 @@ public sealed partial class SaveLoadSaveTest : GameTest
     {
         _sTest.Enabled = true;
 
-        Assume.That(SEntMan.EntityCount, Is.Zero, "Lingering entities at the start of LoadSaveTicksSaveBagel");
+        Assume.That(SEntMan.EntityCount, Is.Zero, $"Lingering entities at the start of {nameof(LoadSaveTicksSaveBagel)}");
 
         var rp1 = new ResPath("/load save ticks save 1.yml");
         var rp2 = new ResPath("/load save ticks save 2.yml");
@@ -135,7 +135,7 @@ public sealed partial class SaveLoadSaveTest : GameTest
             two = reader.ReadToEnd();
         }
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(two, Is.EqualTo(one));
             var failed = TestContext.CurrentContext.Result.Assertions.FirstOrDefault();
@@ -153,11 +153,11 @@ public sealed partial class SaveLoadSaveTest : GameTest
                 TestContext.Error.WriteLine(oneTmp);
                 TestContext.Error.WriteLine(twoTmp);
             }
-        });
+        }
 
         _sTest.Enabled = false;
         _sMap.DeleteMap(mapId);
-        Assert.That(SEntMan.EntityCount, Is.Zero, "Lingering entities at the end of LoadSaveTicksSaveBagel");
+        Assert.That(SEntMan.EntityCount, Is.Zero, $"Lingering entities at the end of {nameof(LoadSaveTicksSaveBagel)}");
     }
 
     /// <summary>
@@ -179,7 +179,7 @@ public sealed partial class SaveLoadSaveTest : GameTest
         Assume.That(_sCfg.GetCVar(CCVars.GridFill), Is.False);
         _sTest.Enabled = true;
 
-        Assume.That(SEntMan.EntityCount, Is.Zero, "Lingering entities at the start of LoadTickLoadBagel");
+        Assume.That(SEntMan.EntityCount, Is.Zero, $"Lingering entities at the start of {nameof(LoadTickLoadBagel)}");
 
         var fileA = new ResPath("/load tick load a.yml");
         var fileB = new ResPath("/load tick load b.yml");
@@ -189,7 +189,7 @@ public sealed partial class SaveLoadSaveTest : GameTest
         // Load & save the first map
         var path = new ResPath(TestMap);
         Assert.That(_sMapLoader.TryLoadMap(path, out var map, out _), $"Failed to load test map {TestMap}");
-        MapId mapId1 = map!.Value.Comp.MapId;
+        var mapId1 = map!.Value.Comp.MapId;
         Assert.That(_sMapLoader.TrySaveMap(mapId1, fileA));
 
         using (var reader = new StreamReader(userData.Open(fileA, FileMode.Open)))
@@ -202,7 +202,7 @@ public sealed partial class SaveLoadSaveTest : GameTest
 
         path = new ResPath(TestMap);
         Assert.That(_sMapLoader.TryLoadMap(path, out map, out _), $"Failed to load test map {TestMap}");
-        MapId mapId2 = map!.Value.Comp.MapId;
+        var mapId2 = map!.Value.Comp.MapId;
         Assert.That(_sMapLoader.TrySaveMap(mapId2, fileB));
 
         using (var reader = new StreamReader(userData.Open(fileB, FileMode.Open)))
@@ -216,7 +216,7 @@ public sealed partial class SaveLoadSaveTest : GameTest
         _sTest.Enabled = false;
         _sMap.DeleteMap(mapId1);
         _sMap.DeleteMap(mapId2);
-        Assert.That(SEntMan.EntityCount, Is.Zero, "Lingering entities at the end of LoadTickLoadBagel");
+        Assert.That(SEntMan.EntityCount, Is.Zero, $"Lingering entities at the end of {nameof(LoadTickLoadBagel)}");
     }
 
     /// <summary>
