@@ -18,16 +18,22 @@ public sealed partial class FakeConsumableComponent : Component
     public string ContainerId = "fake_consumable_slot";
 
     /// <summary>
-    /// Whether when an entity ingests the fake consumable, it should also consume all the contents of the entity inside.
+    /// How much time it takes for the fake consumable to decay and spill out its contained item.
     /// </summary>
     [DataField]
-    public bool IngestContained = true;
+    public TimeSpan LifeSpan = TimeSpan.FromMinutes(1f);
 
     /// <summary>
     /// The sound that plays when the consumable vanishes.
     /// </summary>
     [DataField("vanishSound")]
     public SoundSpecifier OnVanishSound;
+
+    /// <summary>
+    /// How much time should inserting an item take.
+    /// </summary>
+    [DataField]
+    public TimeSpan InsertDelay = TimeSpan.FromSeconds(5f);
 
     /// <summary>
     /// A blacklist of entities that cannot be inserted in this fake consumable, if null everything can be inserted.

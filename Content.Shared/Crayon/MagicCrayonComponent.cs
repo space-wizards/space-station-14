@@ -22,6 +22,11 @@ public sealed partial class MagicCrayonComponent : Component
     public EntProtoId NormalCrayon = "CrayonMime";
 
     /// <summary>
+    /// How long it takes to spawn a fake consumable with this magic crayon.
+    /// </summary>
+    public TimeSpan SpawnDelay = TimeSpan.FromSeconds(7f);
+
+    /// <summary>
     /// If not null, the sound to play when the fake food is spawned.
     /// </summary>
     [DataField("spawnSound")]

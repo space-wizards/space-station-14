@@ -1,22 +1,24 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Destructible;
 using Content.Server.Popups;
-using Content.Shared.Body.Systems;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Crayon;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition;
-using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Throwing;
+using Content.Shared.Trigger.Components;
+using Content.Shared.Trigger.Systems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Crayon;
 
+/// <summary>
+/// A system that handles fake consumable logic.
+/// </summary>
 public sealed partial class FakeConsumableSystem : EntitySystem
 {
     [Dependency] private IAdminLogManager _adminLog = default!;
@@ -27,18 +29,22 @@ public sealed partial class FakeConsumableSystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private IngestionSystem _ingestion = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
- 
-    public override void Initialize()
-    {
-        base.Initialize();
+    [Dependency] private TriggerSystem _trigger = default!;
 
-        SubscribeLocalEvent<FakeConsumableComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<FakeConsumableComponent, FakeConsumableDoAfterEvent>(OnDoAfter);
-        SubscribeLocalEvent<FakeConsumableComponent, DamageThresholdReached>(OnDamageThresholdReached);
-        SubscribeLocalEvent<FakeConsumableComponent, FullyEatenEvent>(OnEaten);
-        SubscribeLocalEvent<FakeConsumableComponent, LandEvent>(OnLand);
+    public override void Update(float frameTime)
+    {
+        var query = EntityQueryEnumerator<FakeConsumableComponent>();
+        while (query.MoveNext(out var entity, out var comp))
+        {
+            comp.LifeSpan -= TimeSpan.FromSeconds(frameTime);
+            if (comp.LifeSpan <= TimeSpan.Zero)
+            {
+                RevealItem(entity, comp, null);
+            }
+        }
     }
 
+    [SubscribeLocalEvent]
     private void OnInteractUsing(Entity<FakeConsumableComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
@@ -60,7 +66,7 @@ public sealed partial class FakeConsumableSystem : EntitySystem
             return;
         }
 
-        var doAfterEventArgs = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(0.5f),
+        var doAfterEventArgs = new DoAfterArgs(EntityManager, user, ent.Comp.InsertDelay,
             new FakeConsumableDoAfterEvent(), ent, used: used)
         {
             BreakOnMove = true,
@@ -73,69 +79,101 @@ public sealed partial class FakeConsumableSystem : EntitySystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnDoAfter(Entity<FakeConsumableComponent> ent, ref FakeConsumableDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled || args.Used == null)
             return;
 
-        var used = args.Used.Value;
         var slot = _container.EnsureContainer<ContainerSlot>(ent, ent.Comp.ContainerId);
-        _container.Insert(used, slot);
+        _container.Insert(args.Used.Value, slot);
+        args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnEaten(Entity<FakeConsumableComponent> ent, ref FullyEatenEvent args)
     {
-        if (!_container.TryGetContainer(ent, ent.Comp.ContainerId, out var container))
+        var contained = RevealItem(ent, args.User);
+        if (!contained.HasValue)
             return;
 
-        if (container.Count == 0)
-        {
-            RevealContained(ent);
-            return;
-        }
-
-        var user = args.User;
-        var contained = container.ContainedEntities[0];
-
-        if (!_ingestion.CanIngest(user, contained) || !ent.Comp.IngestContained)
-            RevealContained(ent);
-        else
-            RevealContained(ent, true);
+        _ingestion.TryIngest(args.User, contained.Value);
     }
 
+    [SubscribeLocalEvent]
     private void OnDamageThresholdReached(Entity<FakeConsumableComponent> ent, ref DamageThresholdReached args)
     {
-        RevealContained(ent);
+        var contained = RevealItem(ent, null);
+        if (!contained.HasValue)
+            return;
+
+        var item = contained.Value;
+        RaiseLocalEvent(item, args, true);
+
+        if (HasComp<TimerTriggerComponent>(item))
+        {
+            _trigger.ActivateTimerTrigger(item);
+        }
     }
 
+    [SubscribeLocalEvent]
     private void OnLand(Entity<FakeConsumableComponent> ent, ref LandEvent args)
     {
-        RevealContained(ent);
+        var contained = RevealItem(ent, null);
+        if (!contained.HasValue)
+            return;
+
+        var item = contained.Value;
+        RaiseLocalEvent(item, ref args, true);
+
+        if (HasComp<TimerTriggerComponent>(item))
+        {
+            _trigger.ActivateTimerTrigger(item, args.User);
+        }
     }
 
-    private EntityUid? RevealContained(Entity<FakeConsumableComponent> ent, bool eat = false)
+    private bool TryGetContained(EntityUid uid, FakeConsumableComponent comp, out EntityUid? contained)
     {
-        var coords = Transform(ent).Coordinates;
+        contained = null;
 
-        _audio.PlayPvs(ent.Comp.OnVanishSound, coords);
-        _popup.PopupCoordinates(Loc.GetString("fake-consumable-vanish", ("owner", ent)), coords);
-
-        if (_container.TryGetContainer(ent, ent.Comp.ContainerId, out var container)
-            && container.Count == 1)
+        if (_container.TryGetContainer(uid, comp.ContainerId, out var container))
         {
-            var contained = container.ContainedEntities[0];
-            _container.Remove(contained, container);
-            QueueDel(ent);
-
-            if (eat)
-            {
-                // TODO -- Place the thing in your hand and eat it
-            }
-
-            return contained;
+            contained = container.Count == 0 ? null : container.ContainedEntities[0];
+            return true;
         }
 
-        QueueDel(ent);
+        return false;
+    }
+
+    private EntityUid? RevealItem(EntityUid uid, FakeConsumableComponent comp, EntityUid? user)
+    {
+        var coords = Transform(uid).Coordinates;
+
+        _audio.PlayPvs(comp.OnVanishSound, coords);
+        _popup.PopupCoordinates(Loc.GetString("fake-consumable-vanish", ("owner", uid)), coords);
+
+        if (TryGetContained(uid, comp, out var contained) && contained.HasValue)
+        {
+            if (!_container.TryGetContainer(uid, comp.ContainerId, out var container))
+                return null;
+
+            var item = contained.Value;
+
+            _container.Remove(item, container);
+            Del(uid);
+
+            if (user.HasValue)
+                _hands.TryPickupAnyHand(user.Value, item);
+
+            return item;
+        }
+
+        QueueDel(uid);
         return null;
+    }
+
+    private EntityUid? RevealItem(Entity<FakeConsumableComponent> ent, EntityUid? user)
+    {
+        return RevealItem(ent.Owner, ent.Comp, user);
     }
 }

@@ -22,15 +22,8 @@ public sealed partial class MagicCrayonSystem : EntitySystem
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<MagicCrayonComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<MagicCrayonComponent, MagicCrayonDoAfterEvent>(OnDoAfter);
-    }
-
-    private void OnAfterInteract(EntityUid uid, MagicCrayonComponent component, ref AfterInteractEvent args)
+    [SubscribeLocalEvent]
+    private void OnAfterInteract(Entity<MagicCrayonComponent> ent, ref AfterInteractEvent args)
     {
         if (args.Handled || args.Target != null)
             return;
@@ -41,11 +34,11 @@ public sealed partial class MagicCrayonSystem : EntitySystem
             return;
         }
 
-        if (_charges.IsEmpty(uid))
+        if (_charges.IsEmpty(ent.Owner))
             return;
 
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, TimeSpan.FromSeconds(0.5f),
-            new MagicCrayonDoAfterEvent(GetNetCoordinates(args.ClickLocation)), uid, used: uid)
+            new MagicCrayonDoAfterEvent(GetNetCoordinates(args.ClickLocation)), ent, used: ent)
         {
             BreakOnMove = true,
             BreakOnDamage = true,
@@ -56,45 +49,56 @@ public sealed partial class MagicCrayonSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnDoAfter(EntityUid uid, MagicCrayonComponent component, ref MagicCrayonDoAfterEvent args)
+    [SubscribeLocalEvent]
+    private void OnDoAfter(Entity<MagicCrayonComponent> ent, ref MagicCrayonDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled || args.Target != null)
             return;
 
-        if (_charges.IsEmpty(uid))
-            return;
-
         var user = args.User;
         var spawnCoords = GetCoordinates(args.ClickLocation);
-        var spawnedFood = Spawn(component.FakeFood, spawnCoords);
+        var spawnedFood = Spawn(ent.Comp.FakeFood, spawnCoords);
 
-        _charges.TryUseCharge(uid);
+        _charges.TryUseCharge(ent.Owner);
 
-        if (component.OnSpawnSound != null)
+        if (ent.Comp.OnSpawnSound != null)
         {
-            var audioParams = (component.OnSpawnSound?.Params ?? AudioParams.Default).WithVariation(0.2f);
-            _audio.PlayPvs(component.OnSpawnSound, spawnedFood, audioParams);
+            var audioParams = (ent.Comp.OnSpawnSound?.Params ?? AudioParams.Default).WithVariation(0.2f);
+            _audio.PlayPvs(ent.Comp.OnSpawnSound, spawnedFood, audioParams);
         }
 
-        if (_charges.IsEmpty(uid))
+        if (_charges.IsEmpty(ent.Owner))
         {
-            _popup.PopupEntity(Loc.GetString("crayon-interact-used-up-text", ("owner", uid)), user, user);
-            MutateToNormal(user, uid, component);
+            _popup.PopupEntity(Loc.GetString("crayon-interact-used-up-text", ("owner", ent)), user, user);
+            MutateToNormal(ent, user);
+            args.Handled = true;
+            return;
         }
 
-        _adminLog.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(user):user} drew a {ToPrettyString(spawnedFood):fakeFood} with {ToPrettyString(uid)}");
+        _adminLog.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(user):user} drew a {ToPrettyString(spawnedFood)} with {ToPrettyString(ent):used}");
         args.Handled = true;
     }
 
-    private void MutateToNormal(EntityUid user, EntityUid used, MagicCrayonComponent comp)
+    /// <summary>
+    /// Deletes the magic crayon and spawns a normal one as defined in <see cref="MagicCrayonComponent.NormalCrayon"/>.
+    /// </summary>
+    /// <param name="ent">The magic crayon to mutate.</param>
+    /// <param name="user">The entity who mutated the magic crayon.</param>
+    private void MutateToNormal(Entity<MagicCrayonComponent> ent, EntityUid? user)
     {
-        Del(used);
-        var mimeCrayon = Spawn(comp.NormalCrayon, Transform(user).Coordinates);
+        var coords = Transform(ent).Coordinates;
+        var normalCrayon = Spawn(ent.Comp.NormalCrayon);
+        Del(ent);
 
-        if (!_hands.TryPickupAnyHand(user, mimeCrayon))
+        if (!user.HasValue)
         {
-            var coords = Transform(user).Coordinates.Offset(new Vector2(0.5f, 0.0f));
-            _transform.SetCoordinates(mimeCrayon, coords);
+            _transform.SetCoordinates(normalCrayon, coords);
+            return;
+        }
+
+        if (!_hands.TryPickupAnyHand(user.Value, normalCrayon))
+        {
+            _transform.SetCoordinates(normalCrayon, coords.Offset(new Vector2(0.5f, 0.0f)));
         }
     }
 }
