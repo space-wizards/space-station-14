@@ -61,7 +61,7 @@ public sealed class AlertsComponentTests : GameTest
             var controlled = local.AttachedEntity;
             Assert.That(controlled, Is.Not.Null);
             // Making sure it exists
-            Assert.That(controlled, Has.Comp<AlertsComponent>(Server));
+            Assert.That(controlled, Has.Comp<AlertsComponent>(Client));
 
             // find the alertsui
             Assert.That(_cUIManager.ActiveScreen, Is.Not.Null);
