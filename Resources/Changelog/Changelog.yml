@@ -3660,3 +3660,9 @@ Entries:
     type: Fix
   id: 10044
   time: '2026-08-24T08:19:59.0000000+00:00'
+- author: kontakt
+  changes:
+  - message: Teleport actions on rotated grids arrive on-target.
+    type: Fix
+  id: 10045
+  time: '2026-08-24T08:19:59.0000000+00:00'
