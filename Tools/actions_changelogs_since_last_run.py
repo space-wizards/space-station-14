@@ -126,14 +126,17 @@ def get_last_changelog() -> str:
     session.headers["Accept"] = "application/vnd.github+json"
     session.headers["X-GitHub-Api-Version"] = "2022-11-28"
 
-    most_recent = get_most_recent_workflow(session, github_repository, github_run)
-    last_sha = most_recent["head_commit"]["id"]
-    print(f"Last successful publish job was {most_recent['id']}: {last_sha}")
-    last_changelog_stream = get_last_changelog_by_sha(
-        session, last_sha, github_repository
-    )
+    # If a previous workflow step already computed the last successful publish's
+    # SHA, reuse it instead of querying the GitHub Actions API for the same info.
+    last_sha = os.environ.get("LAST_PUBLISH_SHA")
+    if last_sha:
+        print(f"Using last publish SHA from environment: {last_sha}")
+    else:
+        most_recent = get_most_recent_workflow(session, github_repository, github_run)
+        last_sha = most_recent["head_commit"]["id"]
+        print(f"Last successful publish job was {most_recent['id']}: {last_sha}")
 
-    return last_changelog_stream
+    return get_last_changelog_by_sha(session, last_sha, github_repository)
 
 
 def get_last_changelog_by_sha(
@@ -242,7 +245,7 @@ def changelog_entries_to_message_lines(entries: Iterable[ChangelogEntry]) -> lis
                 emoji = TYPES_TO_EMOJI.get(change["type"], "❓")
                 message = change["message"]
 
-                if EXPERIMENTAL_LABEL in entry["labels"]:
+                if EXPERIMENTAL_LABEL in entry.get("labels", []):
                     emoji = f"{emoji}{EXPERIMENTAL_EMOJI}"
 
                 message_lines.append(create_change_line(emoji, message, url))

@@ -39,40 +39,47 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
 
-    # - name: Update changelog
-    #   run: |
-    #     dotnet tool install --global SpaceWizards.ChangelogTool --version 1.0.7
-    #     ss14-changelog update -d Resources/Changelog
-    #   env:
-    #     REPO: ${{ github.repository }}
-    #     BRANCH: stable
-    #     CHANGELOG_REPO_PATH: Resources/Changelog
-    #     EXTRA_CATEGORIES: Admin,Maps,Rules
-    #     GITHUB_TOKEN: ${{ secrets.CL_ACCESS_TOKEN }}
+    - name: Get last publish SHA
+      id: last-publish
+      run: Tools/actions_get_last_publish_sha.py
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    # - name: Commit and push changelog changes
-    #   id: changelog
-    #   run: |
-    #     git config user.name "Space-Wizards-Bot"
-    #     git config user.email "support@spacestation14.com"
-    #     if [ -n "$(git status --porcelain Resources/Changelog)" ]; then
-    #       git add Resources/Changelog
-    #       git commit -m "Update changelog"
-    #       git remote set-url origin "https://x-access-token:${CL_ACCESS_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-    #       git push origin "HEAD:${GITHUB_REF_NAME}"
-    #       echo "committed=true" >> "$GITHUB_OUTPUT"
-    #     fi
-    #   env:
-    #     CL_ACCESS_TOKEN: ${{ secrets.CL_ACCESS_TOKEN }}
+    - name: Update changelog
+      run: |
+        dotnet tool install --global SpaceWizards.ChangelogTool --version 1.0.8
+        ss14-changelog update -d Resources/Changelog
+      env:
+        REPO: ${{ github.repository }}
+        BRANCH: stable
+        CHANGELOG_REPO_PATH: Resources/Changelog
+        EXTRA_CATEGORIES: Admin,Maps,Rules
+        GITHUB_TOKEN: ${{ secrets.CL_ACCESS_TOKEN }}
+        LAST_PUBLISH_SHA: ${{ steps.last-publish.outputs.last_publish_sha }}
 
-    # - name: Create PR from stable to master
-    #   if: steps.changelog.outputs.committed == 'true'
-    #   env:
-    #     GH_TOKEN: ${{ secrets.CL_ACCESS_TOKEN }}
-    #   run: |
-    #     if [ -z "$(gh pr list --repo "$GITHUB_REPOSITORY" --head stable --base master --state open --json number --jq '.[].number')" ]; then
-    #       gh pr create --repo "$GITHUB_REPOSITORY" --base master --head stable --title "Update changelog" --body "Sync from release to master."
-    #     fi
+    - name: Commit and push changelog changes
+      id: changelog
+      run: |
+        git config user.name "Space-Wizards-Bot"
+        git config user.email "support@spacestation14.com"
+        if [ -n "$(git status --porcelain Resources/Changelog)" ]; then
+          git add Resources/Changelog
+          git commit -m "Update changelog"
+          git remote set-url origin "https://x-access-token:${CL_ACCESS_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+          echo "committed=true" >> "$GITHUB_OUTPUT"
+        fi
+      env:
+        CL_ACCESS_TOKEN: ${{ secrets.CL_ACCESS_TOKEN }}
+
+    - name: Create PR from stable to master
+      if: steps.changelog.outputs.committed == 'true'
+      env:
+        GH_TOKEN: ${{ secrets.CL_ACCESS_TOKEN }}
+      run: |
+        if [ -z "$(gh pr list --repo "$GITHUB_REPOSITORY" --head stable --base master --state open --json number --jq '.[].number')" ]; then
+          gh pr create --repo "$GITHUB_REPOSITORY" --base master --head stable --title "Update changelog" --body "Sync from release to master."
+        fi
 
     - name: Build Packaging
       run: dotnet build Content.Packaging --configuration Release --no-restore /m
@@ -94,6 +101,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DISCORD_WEBHOOK_URL: ${{ secrets.CHANGELOG_DISCORD_WEBHOOK }}
+        LAST_PUBLISH_SHA: ${{ steps.last-publish.outputs.last_publish_sha }}
 
     - name: Publish changelog (RSS)
       continue-on-error: true
