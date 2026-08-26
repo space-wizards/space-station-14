@@ -48,10 +48,3 @@
   name: stack-regenerative-mesh
   icon: {sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: regenerative-mesh}
   spawn: RegenerativeMesh
-
-- type: stack
-  parent: BaseSmallStack
-  id: EmptyIVBag
-  name: stack-empty-ivbag
-  icon: {sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: bloodpack-empty}
-  spawn: EmptyIVBag
