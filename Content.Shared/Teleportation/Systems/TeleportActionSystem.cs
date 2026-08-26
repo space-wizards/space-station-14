@@ -58,8 +58,7 @@ public sealed partial class TeleportActionSystem : EntitySystem
 
         var xform = Transform(user);
         var targetXform = Transform(target.EntityId);
-        if (xform.MapID != targetXform.MapID ||
-            !_examine.InRangeUnOccluded(user, target, SharedInteractionSystem.MaxRaycastRange))
+        if (!_examine.InRangeUnOccluded(user, target, SharedInteractionSystem.MaxRaycastRange))
         {
             _popup.PopupEntity(Loc.GetString("teleport-action-popup-cant-see"), user, user);
             return false;
