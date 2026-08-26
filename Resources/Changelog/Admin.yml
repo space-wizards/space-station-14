@@ -1890,5 +1890,26 @@ Entries:
   id: 232
   time: '2026-07-18T06:40:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44238
+- author: sowelipililimute
+  changes:
+  - message: "`body:insert` has been added, allowing entities to be inserted as organs into a body."
+    type: Add
+  - message: "`body:organs` has been added, allowing all organs within a body to be enumerated."
+    type: Add
+  - message: "`organ:parent` has been added, allowing you to get the parent organ from a child organ (torso from arm, arm from hand.)"
+    type: Add
+  - message: "`organ:children` has been added, allowing you to get all child organs from a parent organ. (hand from arm, internal organs & limbs from torso)"
+    type: Add
+  - message: "`organ:detach` has been added, allowing you to split off an organ from a body into its own body. For debug purposes only; this has no associated game-ready functionality."
+    type: Add
+  - message: "`organ:attach` has been added, allowing you to attach an organ to a parent organ."
+    type: Add
+  - message: "`organ:is` has been added, allowing you to test if an entity is an organ of a specific type."
+    type: Add
+  - message: "`organ:of_type` has been added, allowing you to filter for entities that are organs of a specific type."
+    type: Add
+  id: 233
+  time: '2026-07-26T09:36:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44812
 Name: Admin
 Order: 3
