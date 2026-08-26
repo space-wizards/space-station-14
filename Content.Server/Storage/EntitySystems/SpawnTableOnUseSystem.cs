@@ -19,15 +19,8 @@ public sealed partial class SpawnTableOnUseSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<SpawnTableOnUseComponent, UseInHandEvent>(OnUseInHand);
-        SubscribeLocalEvent<SpawnTableOnUseComponent, PriceCalculationEvent>(CalculatePrice, before: new[] { typeof(PricingSystem) });
-    }
-
     // TODO: This would probably be better off doing GetEstimatedPrice on the spawns rather than spawning every single entity.
+    [SubscribeLocalEvent(before: new[] { typeof(PricingSystem) })]
     private void CalculatePrice(Entity<SpawnTableOnUseComponent> ent, ref PriceCalculationEvent args)
     {
         var spawns = _entityTable.AverageSpawns(ent.Comp.Table);
@@ -44,6 +37,7 @@ public sealed partial class SpawnTableOnUseSystem : EntitySystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnUseInHand(Entity<SpawnTableOnUseComponent> ent, ref UseInHandEvent args)
     {
         if (args.Handled)
