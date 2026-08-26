@@ -10,15 +10,16 @@
   id: CosmicCultist
   prefRoles: [ CosmicCultist ]
   briefing:
-    text: changeling-role-greeting
+    text: cosmiccult-role-greeting
     color: "#4cabb3"
     sound: /Audio/Cosmic/cosmic-start.ogg
   components:
+  - type: CosmicCultist
   - type: RevolutionaryImmune
   - type: ZombieImmune
   - type: ActionGrant
-#    actions:
-#    - ActionChangelingStore
-#    - ActionChangelingStasis
+    actions:
+    - ActionCosmicSiphon
+    - ActionCosmicShunt
   mindRoles:
   - MindRoleCosmicCultist

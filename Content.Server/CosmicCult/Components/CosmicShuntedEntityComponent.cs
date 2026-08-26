@@ -1,11 +1,10 @@
 using Content.Shared.CosmicCult.Components;
-using Content.Shared.CosmicCult.Components;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.CosmicCult.Components;
 
 [RegisterComponent, AutoGenerateComponentPause]
-public sealed partial class CosmicShuntedComponent : Component
+public sealed partial class CosmicShuntedEntityComponent : Component
 {
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))] [AutoPausedField]
     public TimeSpan ExitVoidTime;

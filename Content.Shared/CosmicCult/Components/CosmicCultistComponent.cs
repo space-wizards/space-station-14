@@ -42,8 +42,7 @@ public sealed partial class CosmicCultistComponent : Component
 
     [DataField, AutoNetworkedField] public HashSet<EntProtoId> CosmicCultActions =
     [
-        // "ActionCosmicSiphon",
-        // "ActionCosmicShunt",
+
     ];
 
     [DataField] public EntProtoId CosmicFragmentationAction = "ActionCosmicFragmentation";

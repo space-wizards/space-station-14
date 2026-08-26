@@ -25,15 +25,16 @@ using Robust.Shared.Containers;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Utility;
 using System.Collections.Immutable;
-using System.Diagnostics;
 using System.Linq;
 using Content.Server.Audio;
+using Content.Server.CosmicCult;
 using Content.Server.CosmicCult.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Pinpointer;
 using Content.Shared.Audio;
 using Content.Shared.Coordinates;
 using Content.Shared.CosmicCult;
+using Content.Shared.CosmicCult.Abilities;
 using Content.Shared.CosmicCult.Components;
 using Content.Shared.CosmicCult.Prototypes;
 using Content.Shared.DoAfter;
@@ -44,14 +45,14 @@ using Content.Stellar.Server.CosmicCult.Components;
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponent>
+public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponent>
 {
     [Dependency] private ActionsSystem _actions = default!;
     [Dependency] private AntagSelectionSystem _antag = default!;
     [Dependency] private AudioSystem _audio = default!;
     [Dependency] private ChatSystem _chatSystem = default!;
-    // [Dependency] private  CosmicBreachSystem _breach = default!;
-    // [Dependency] private  CosmicCultSystem _cosmicCult = default!;
+    [Dependency] private CosmicBreachSystem _breach = default!;
+    [Dependency] private CosmicCultSystem _cosmicCult = default!;
     [Dependency] private EuiManager _euiMan = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private IConfigurationManager _config = default!;
@@ -66,7 +67,7 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
     [Dependency] private ServerGlobalSoundSystem _sound = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedContainerSystem _container = default!;
-    // [Dependency] private  SharedCosmicShiftSystem _cultShift = default!;
+    [Dependency] private SharedCosmicShiftSystem _cultShift = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private SharedMindSystem _mind = default!;
@@ -77,11 +78,11 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
     // [Dependency] private StellarGoalsSystem _goals = default!;
     // [Dependency] private StellarNumericGoalSystem _numericGoal = default!;
 
-    private readonly SoundSpecifier _briefingSound = new SoundPathSpecifier("/Audio/Cosmic/antag_cosmic_briefing.ogg");
-    private readonly SoundSpecifier _finaleSound = new SoundPathSpecifier("/Audio/Cosmic/tier-finale.ogg");
+    private readonly SoundSpecifier _briefingSound = new SoundPathSpecifier("/Audio/Cosmic/cosmic-start.ogg");
+    private readonly SoundSpecifier _finaleSound = new SoundPathSpecifier("/Audio/Cosmic/alarm-octarine.ogg");
     private readonly SoundSpecifier _tier3Sound = new SoundPathSpecifier("/Audio/Cosmic/tier3.ogg");
     private readonly SoundSpecifier _tier2Sound = new SoundPathSpecifier("/Audio/Cosmic/tier2.ogg");
-    private static readonly EntProtoId MindRole = "MindRoleCosmicCult";
+    private static readonly EntProtoId MindRole = "MindRoleCosmicCultist";
 
     private HashSet<Entity<NavMapBeaconComponent>> _beaconSet = new();
     private HashSet<Entity<CosmicBreachComponent, TransformComponent>> _breachSet = new();
@@ -198,24 +199,24 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
             SpawnStigma();
         }
 
-        if (component.BreachTimer is { } breachTimer && _timing.CurTime >= breachTimer)
-            DoBreach(uid, component);
-
-        if (component.CultWinTimer is { } winTimer && _timing.CurTime >= winTimer)
-            CultWin(uid, component);
-
-        if (component.FinaleTimer is { } finaleTimer && _timing.CurTime >= finaleTimer)
-            StartFinale(uid, component);
-
-        // Just to make sure nobody gets stuck station-side, 5 seconds before the finale, we cancel all doAfters on cultists and strip their ability to Shift.
-        if (component.FinaleTimer is { } finaleSetup && !component.FinaleSetup && _timing.CurTime >= (finaleSetup - TimeSpan.FromSeconds(5)))
-            FinaleSetup(uid, component);
-
-        if (component.Tier3Timer is { } tier3Timer && _timing.CurTime >= tier3Timer)
-            StartTier3(uid, component);
-
-        if (component.Tier2Timer is { } tier2Timer && _timing.CurTime >= tier2Timer)
-            StartTier2(uid, component);
+        // if (component.BreachTimer is { } breachTimer && _timing.CurTime >= breachTimer)
+        //     DoBreach(uid, component);
+        //
+        // if (component.CultWinTimer is { } winTimer && _timing.CurTime >= winTimer)
+        //     CultWin(uid, component);
+        //
+        // if (component.FinaleTimer is { } finaleTimer && _timing.CurTime >= finaleTimer)
+        //     StartFinale(uid, component);
+        //
+        // // Just to make sure nobody gets stuck station-side, 5 seconds before the finale, we cancel all doAfters on cultists and strip their ability to Shift.
+        // if (component.FinaleTimer is { } finaleSetup && !component.FinaleSetup && _timing.CurTime >= (finaleSetup - TimeSpan.FromSeconds(5)))
+        //     FinaleSetup(uid, component);
+        //
+        // if (component.Tier3Timer is { } tier3Timer && _timing.CurTime >= tier3Timer)
+        //     StartTier3(uid, component);
+        //
+        // if (component.Tier2Timer is { } tier2Timer && _timing.CurTime >= tier2Timer)
+        //     StartTier2(uid, component);
     }
 
     private void DoBreach(EntityUid uid, CosmicCultRuleComponent component)
@@ -270,7 +271,7 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         parallax.Parallax = "StellarParallaxMalignAlt2";
         Dirty(mapData, parallax);
 
-        var shuntQuery = EntityQueryEnumerator<CosmicShuntedComponent>();
+        var shuntQuery = EntityQueryEnumerator<CosmicShuntedEntityComponent>();
         while (shuntQuery.MoveNext(out _, out var shuntComp))
         {
             shuntComp.ConvertOnReturn = false;
@@ -461,13 +462,13 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
 
     protected override void AppendRoundEndText(EntityUid uid, CosmicCultRuleComponent component, GameRuleComponent gameRule, ref RoundEndTextAppendEvent args)
     {
-        var ftlKey = component.WinType.ToString().ToLower(); // convert this to a ternary boolean operator. the ! = xyz : xhz thingo.
-
-
-        var winType = Loc.GetString($"cosmiccult-roundend-{ftlKey}");
-        var summaryText = Loc.GetString($"cosmiccult-summary-{ftlKey}");
-        args.AddLine(winType);
-        args.AddLine(summaryText);
+        // var ftlKey = component.WinType.ToString().ToLower(); // convert this to a ternary boolean operator. the ! = xyz : xhz thingo.
+        //
+        //
+        // var winType = Loc.GetString($"cosmiccult-roundend-{ftlKey}");
+        // var summaryText = Loc.GetString($"cosmiccult-summary-{ftlKey}");
+        // args.AddLine(winType);
+        // args.AddLine(summaryText);
         args.AddLine(Loc.GetString("cosmiccult-roundend-cultist-count", ("initialCount", component.TotalCult)));
         args.AddLine(Loc.GetString("cosmiccult-roundend-cultpop-count", ("count", Math.Round(component.PortionConverted * 100d))));
         args.AddLine(Loc.GetString("cosmiccult-roundend-entropy-count", ("count", component.EntropySiphoned)));
@@ -481,11 +482,11 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         cult.Comp.EntropySiphoned += ent.Comp.CosmicSiphonQuantity;
         UpdateCultData(cult);
 
-        var query = EntityQueryEnumerator<CosmicEntropyGoalComponent, StellarNumericGoalComponent>();
-        while (query.MoveNext(out var uid, out _, out var numeric))
-        {
-            _numericGoal.SetCurrent((uid, numeric), cult.Comp.EntropySiphoned);
-        }
+        // var query = EntityQueryEnumerator<CosmicEntropyGoalComponent, StellarNumericGoalComponent>();
+        // while (query.MoveNext(out var uid, out _, out var numeric))
+        // {
+        //     _numericGoal.SetCurrent((uid, numeric), cult.Comp.EntropySiphoned);
+        // }
     }
 
     public void IncrementCultistProgress(Entity<CosmicCultistComponent> ent, int amount = 0)
@@ -504,20 +505,20 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
 
     public void AdjustCultObjectiveConversion(int value)
     {
-        var query = EntityQueryEnumerator<CosmicConversionGoalComponent, StellarNumericGoalComponent>();
-        while (query.MoveNext(out var uid, out _, out var numeric))
-        {
-            _numericGoal.ChangeCurrent((uid, numeric), value);
-        }
+        // var query = EntityQueryEnumerator<CosmicConversionGoalComponent, StellarNumericGoalComponent>();
+        // while (query.MoveNext(out var uid, out _, out var numeric))
+        // {
+        //     _numericGoal.ChangeCurrent((uid, numeric), value);
+        // }
     }
 
     public void AdjustCultObjectiveFinality(int value)
     {
-        var query = EntityQueryEnumerator<CosmicFinalityGoalComponent, StellarNumericGoalComponent>();
-        while (query.MoveNext(out var uid, out _, out var numeric))
-        {
-            _numericGoal.ChangeCurrent((uid, numeric), value);
-        }
+        // var query = EntityQueryEnumerator<CosmicFinalityGoalComponent, StellarNumericGoalComponent>();
+        // while (query.MoveNext(out var uid, out _, out var numeric))
+        // {
+        //     _numericGoal.ChangeCurrent((uid, numeric), value);
+        // }
     }
     #endregion
 
@@ -527,18 +528,12 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         if (!_mind.TryGetMind(uid, out var mindId, out var mind))
             return;
 
-        EnsureComp<CosmicCultistComponent>(uid, out var cultComp);
         EnsureComp<IntrinsicRadioReceiverComponent>(uid);
         EnsureComp<CosmicCultAssociatedRuleComponent>(uid, out var associatedComp);
 
         associatedComp.CultGamerule = rule;
 
-        _role.MindAddRole(mindId, MindRole, mind, true);
-        _goals.ObserveContainer(mindId, rule.Comp.GoalsContainer!.Value);
-
-        _antag.SendBriefing(uid, Loc.GetString("cosmiccult-role-roundstart-fluff"), Color.FromHex("#4cabb3"), _briefingSound);
-        _antag.SendBriefing(uid, Loc.GetString("cosmiccult-role-short-briefing"), Color.FromHex("#cae8e8"), null);
-
+        // _goals.ObserveContainer(mindId, rule.Comp.GoalsContainer!.Value);
         var transmitter = EnsureComp<IntrinsicRadioTransmitterComponent>(uid);
         var radio = EnsureComp<ActiveRadioComponent>(uid);
         radio.Channels.Add("CosmicRadio");
@@ -549,7 +544,6 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
 
         rule.Comp.TotalCult++;
         rule.Comp.Cultists.Add(uid);
-        Dirty(uid, cultComp);
     }
 
     private void OnAssociateRule(ref CosmicCultAssociateRuleEvent args)
@@ -592,8 +586,7 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
             return;
 
         _role.MindAddRole(mindId, MindRole, mind, true);
-        _antag.SendBriefing(session, Loc.GetString("cosmiccult-role-conversion-fluff"), Color.FromHex("#4cabb3"), _briefingSound);
-        _antag.SendBriefing(uid, Loc.GetString("cosmiccult-role-short-briefing"), Color.FromHex("#cae8e8"), null);
+        _antag.SendBriefing(session, Loc.GetString("cosmiccult-conversion-greeting"), Color.FromHex("#4cabb3"), _briefingSound);
 
         var cultComp = EnsureComp<CosmicCultistComponent>(uid);
         EnsureComp<IntrinsicRadioReceiverComponent>(uid);
@@ -604,7 +597,7 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         radio.Channels = ["CosmicRadio"];
         transmitter.Channels = ["CosmicRadio"];
 
-        _goals.ObserveContainer(mindId, cult.Comp.GoalsContainer!.Value);
+        // _goals.ObserveContainer(mindId, cult.Comp.GoalsContainer!.Value);
         _euiMan.OpenEui(new CosmicConvertedEui(), session);
         cult.Comp.TotalCult++;
         cult.Comp.Cultists.Add(uid);
