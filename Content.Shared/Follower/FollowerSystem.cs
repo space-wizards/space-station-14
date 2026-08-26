@@ -56,6 +56,12 @@ public sealed partial class FollowerSystem : EntitySystem
         SubscribeLocalEvent<FollowedComponent, StationAiRemoteEntityReplacementEvent>(OnFollowedStationAiRemoteEntityReplaced);
     }
 
+    [SubscribeLocalEvent]
+    private void OnFollowedReparent(Entity<FollowerComponent> ent, ref EntParentChangedMessage args)
+    {
+        _transform.SetParent(ent, ent.Comp.Following);
+    }
+
     private void OnFollowedAttempt(Entity<FollowedComponent> ent, ref ComponentGetStateAttemptEvent args)
     {
         if (args.Cancelled)
