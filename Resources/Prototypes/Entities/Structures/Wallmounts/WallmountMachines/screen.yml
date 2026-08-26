@@ -39,14 +39,6 @@
     deviceNetId: Wireless
     receiveFrequencyId: ShuttleTimer
 
-# Dummy screen for comms console
-- type: entity
-  parent: Screen
-  id: ScreenDummy
-  categories: [HideSpawnMenu]
-  components:
-  - type: Sprite
-
 - type: entity
   id: ArrivalsShuttleTimer
   parent: Screen

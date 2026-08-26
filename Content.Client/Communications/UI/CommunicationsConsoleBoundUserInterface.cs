@@ -24,7 +24,7 @@ public sealed partial class CommunicationsConsoleBoundUserInterface(EntityUid ow
     [ViewVariables]
     private CommunicationsConsoleMenu? _menu;
 
-    private static readonly EntProtoId FallbackScreen = "ScreenDummy";
+    private static readonly EntProtoId FallbackScreen = "Screen";
 
     /// <inheritdoc/>
     protected override void Open()
