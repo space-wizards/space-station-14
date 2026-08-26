@@ -65,10 +65,10 @@ public sealed partial class TeleportActionSystem : EntitySystem
             return false;
         }
 
-        var mapTarget = _transform.GetWorldPositionRotation(target.EntityId);
-        var targetMapCoordinates = new MapCoordinates(mapTarget.WorldPosition + target.Position, mapId);
+        var targetRot = _transform.GetWorldRotation(target.EntityId);
+        var targetMapCoordinates = _transform.ToMapCoordinates(target);
 
-        if (IsDestinationBlocked(user, targetMapCoordinates, mapTarget.WorldRotation))
+        if (IsDestinationBlocked(user, targetMapCoordinates, targetRot))
         {
             _popup.PopupEntity(Loc.GetString("teleport-action-popup-blocked"), user, user);
             return false;
