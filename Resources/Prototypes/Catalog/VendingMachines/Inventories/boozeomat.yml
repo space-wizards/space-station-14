@@ -22,7 +22,7 @@
       DrinkCognacBottleFull: 4
       DrinkCoffeeLiqueurBottleFull: 3
       DrinkGinBottleFull: 3
-      DrinkGildlagerBottleFull: 2
+      DrinkGildlagerBottleFull: 2  # If champagne gets less because its premium, then gildlager should match this and have two.
       DrinkMelonLiquorBottleFull: 3
       DrinkPatronBottleFull: 2
       DrinkRumBottleFull: 4
@@ -39,7 +39,7 @@
       DrinkAleBottleFull: 5
       DrinkBeerBottleFull: 5
       DrinkWineBottleFull: 5
-      DrinkChampagneBottleFull: 2
+      DrinkChampagneBottleFull: 2 # Because the premium drink.
       DrinkBeerCan: 5
       DrinkWineCan: 5
     contrabandInventory:
