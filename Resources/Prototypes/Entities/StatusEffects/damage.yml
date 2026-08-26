@@ -35,18 +35,18 @@
 
 - type: entity
   parent: StatusEffectDamageModifierDebuffBase
-  id: StatusEffectMildWeakness
-  name: mild weakness
+  id: StatusEffectFrail
+  name: frail
   components:
   - type: StatusEffectAlert
-    alert: MildWeakStatusAlert
+    alert: FrailStatusAlert
     showDuration: false
   - type: DamageModifierStatusEffect
     modifiers:
       coefficients:
         Blunt: 1.2
         Slash: 1.2
-        Pierce: 1.2
+        Piercing: 1.2
         Heat: 1.2
         Cold: 1.2
         Shock: 1.2

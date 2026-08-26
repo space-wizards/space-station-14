@@ -36,9 +36,9 @@
   description: alerts-vow-silence-desc
 
 - type: alert
-  id: MildWeakStatusAlert
+  id: FrailStatusAlert
   icons:
   - sprite: /Textures/Interface/Alerts/status_effects.rsi
-    state: weak
-  name: alerts-weak-name
-  description: alerts-mild-weak-desc
+    state: frail
+  name: alerts-frail-name
+  description: alerts-mild-frail-desc

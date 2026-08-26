@@ -842,7 +842,7 @@
           Brute: -1
           Burn: -1
       - !type:ModifyStatusEffect
-        effectProto: StatusEffectMildWeakness # Reduced combat viability
+        effectProto: StatusEffectFrail # Reduced combat viability
         time: 5
         type: Update # Only weak while the reagent is metabolising
       - !type:HealthChange
