@@ -6,16 +6,16 @@ using Content.Shared.VendingMachines.Components;
 namespace Content.Server.Destructible.Thresholds.Behaviors;
 
 /// <summary>
-///     Spawns a portion of the total items from one of the canRestock
-///     inventory entries on a VendingMachineRestock component.
+/// Spawns a portion of the total items from one of the canRestock
+/// inventory entries on a VendingMachineRestock component.
 /// </summary>
 [Serializable]
 [DataDefinition]
 public sealed partial class DumpRestockInventory : IThresholdBehavior
 {
     /// <summary>
-    ///     The percent of each inventory entry that will be salvaged
-    ///     upon destruction of the package.
+    /// The percent of each inventory entry that will be salvaged
+    /// upon destruction of the package.
     /// </summary>
     [DataField(required: true)]
     public float Percent = 0.5f;
@@ -34,7 +34,7 @@ public sealed partial class DumpRestockInventory : IThresholdBehavior
         if (!system.PrototypeManager.TryIndex(randomInventory, out VendingMachineInventoryPrototype? packPrototype))
             return;
 
-        foreach (var (entityId, count) in packPrototype.StartingInventory)
+        foreach (var (entityId, count) in packPrototype.EnumerateInventory(InventoryType.Regular))
         {
             var toSpawn = (int)Math.Round(count * Percent);
 

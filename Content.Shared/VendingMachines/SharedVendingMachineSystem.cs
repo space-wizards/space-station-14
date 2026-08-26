@@ -126,9 +126,13 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         if (!ProtoMan.TryIndex(component.PackPrototypeId, out VendingMachineInventoryPrototype? packPrototype))
             return;
 
-        AddInventoryFromPrototype(uid, packPrototype.StartingInventory, InventoryType.Regular, component, restockQuality);
-        AddInventoryFromPrototype(uid, packPrototype.EmaggedInventory, InventoryType.Emagged, component, restockQuality);
-        AddInventoryFromPrototype(uid, packPrototype.ContrabandInventory, InventoryType.Contraband, component, restockQuality);
+        AddInventoryFromPrototype(uid, packPrototype.EnumerateInventory(InventoryType.Regular),
+            InventoryType.Regular, component, restockQuality);
+        AddInventoryFromPrototype(uid, packPrototype.EnumerateInventory(InventoryType.Emagged),
+            InventoryType.Emagged, component, restockQuality);
+        AddInventoryFromPrototype(uid, packPrototype.EnumerateInventory(InventoryType.Contraband),
+            InventoryType.Contraband, component, restockQuality);
+
         Dirty(uid, component);
     }
 
@@ -164,11 +168,11 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         return GetAllInventory(uid, component).Where(_ => _.Amount > 0).ToList();
     }
 
-    private void AddInventoryFromPrototype(EntityUid uid, Dictionary<EntProtoId, uint>? entries,
+    private void AddInventoryFromPrototype(EntityUid uid, IEnumerable<KeyValuePair<EntProtoId, uint>> entries,
         InventoryType type,
         VendingMachineComponent? component = null, float restockQuality = 1.0f)
     {
-        if (!Resolve(uid, ref component) || entries == null)
+        if (!Resolve(uid, ref component))
         {
             return;
         }
