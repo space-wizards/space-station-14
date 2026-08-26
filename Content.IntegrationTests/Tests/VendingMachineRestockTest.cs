@@ -261,7 +261,7 @@ public sealed class VendingMachineRestockTest : GameTest
 
             // Empty the inventory.
             _sVendingMachineSystem.EjectRandom((machine, machineComponent), false, true);
-            Assert.That(_sVendingMachineSystem.GetAvailableInventory(machine, machineComponent), Is.Not.Empty,
+            Assert.That(_sVendingMachineSystem.GetAvailableInventory(machine, machineComponent), Is.Empty,
                 "Machine inventory is not empty after ejecting.");
 
             // Test that the inventory is actually restocked.
