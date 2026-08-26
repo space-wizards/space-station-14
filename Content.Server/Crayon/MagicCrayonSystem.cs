@@ -37,7 +37,7 @@ public sealed partial class MagicCrayonSystem : EntitySystem
         if (_charges.IsEmpty(ent.Owner))
             return;
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, TimeSpan.FromSeconds(0.5f),
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.SpawnDelay,
             new MagicCrayonDoAfterEvent(GetNetCoordinates(args.ClickLocation)), ent, used: ent)
         {
             BreakOnMove = true,
