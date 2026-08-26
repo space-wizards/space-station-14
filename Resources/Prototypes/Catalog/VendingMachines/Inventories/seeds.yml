@@ -1,44 +1,55 @@
 - type: vendingMachineInventory
   id: MegaSeedServitorInventory
   categories:
-  - startingInventory:
-      AloeSeeds: 3
-      AmbrosiaVulgarisSeeds: 3
+  - name: vending-machine-category-fruit-seeds
+    icon: { entity: AppleSeeds }
+    startingInventory:
       AppleSeeds: 5
       BananaSeeds: 5
       BerrySeeds: 5
-      CarrotSeeds: 5
-      CabbageSeeds: 5
-      ChanterelleSeeds: 5
       CherrySeeds: 5
-      ChiliSeeds: 5
       CocoaSeeds: 3
-      CornSeeds: 5
-      CottonSeeds: 5
-      EggplantSeeds: 5
-      GalaxythistleSeeds: 3
-      GarlicSeeds: 3
       GrapeSeeds: 5
       LemonSeeds: 5
       LimeSeeds: 5
       PineappleSeeds: 5
-      LingzhiSeeds: 3
-      OatSeeds: 5
+      OrangeSeeds: 5
+      WatermelonSeeds: 5
+  - name: vending-machine-category-vegetable-seeds
+    icon: { entity: CarrotSeeds }
+    startingInventory:
+      CarrotSeeds: 5
+      CabbageSeeds: 5
+      ChiliSeeds: 5
+      CornSeeds: 5
+      EggplantSeeds: 5
+      GarlicSeeds: 3
       OnionSeeds: 5
       OnionRedSeeds: 5
-      OrangeSeeds: 5
       PeaSeeds: 5
-      PoppySeeds: 3
       PotatoSeeds: 5
       PumpkinSeeds: 5
-      RiceSeeds: 5
       SoybeanSeeds: 5
-      SugarcaneSeeds: 5
-      TeaPlantSeeds: 5
       TomatoSeeds: 5
-      TowercapSeeds: 5
+  - name: vending-machine-category-grain-seeds
+    icon: { entity: WheatSeeds }
+    startingInventory:
+      OatSeeds: 5
+      RiceSeeds: 5
+      SugarcaneSeeds: 5
       WheatSeeds: 5
-      WatermelonSeeds: 5
+  - name: vending-machine-category-other-seeds
+    icon: { entity: PoppySeeds }
+    startingInventory:
+      AloeSeeds: 3
+      AmbrosiaVulgarisSeeds: 3
+      ChanterelleSeeds: 5
+      CottonSeeds: 5
+      GalaxythistleSeeds: 3
+      LingzhiSeeds: 3
+      PoppySeeds: 3
+      TeaPlantSeeds: 5
+      TowercapSeeds: 5
     contrabandInventory:
       TobaccoSeeds: 2
       FoodSnackSemki: 2

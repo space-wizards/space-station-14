@@ -1,7 +1,9 @@
 - type: vendingMachineInventory
   id: PietyVendInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-clothing
+    icon: { entity: ClothingUniformJumpsuitChaplain }
+    startingInventory:
       ClothingUniformJumpsuitChaplain: 2
       ClothingUniformJumpskirtChaplain: 2
       ClothingUniformJumpsuitMonasticRobeDark: 1
@@ -18,6 +20,16 @@
       ClothingOuterPlagueSuit: 1
       ClothingMaskPlague: 1
       ClothingHeadsetService: 2
+    contrabandInventory:
+      ClothingNeckScarfStripedBlack: 3
+    emaggedInventory:
+      ClothingOuterRobesCult: 3
+      ClothingHeadHatHoodCulthood: 3
+      ClothingShoesCult: 4
+      BedsheetCult: 4
+  - name: vending-machine-category-equipment
+    icon: { entity: Bible }
+    startingInventory:
       BoxCandle: 2
       BoxCandleSmall: 2
       Urn: 5
@@ -26,9 +38,3 @@
       FoodBakedBunHotX: 2
       DrinkWineBottleFull: 1
       ToyFigurineChaplain: 1
-      ClothingNeckScarfStripedBlack: 3
-    emaggedInventory:
-      ClothingOuterRobesCult: 3
-      ClothingHeadHatHoodCulthood: 3
-      ClothingShoesCult: 4
-      BedsheetCult: 4

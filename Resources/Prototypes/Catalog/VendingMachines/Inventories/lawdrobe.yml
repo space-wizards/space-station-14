@@ -1,7 +1,9 @@
 - type: vendingMachineInventory
   id: LawDrobeInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-uniforms
+    icon: { entity: ClothingUniformJumpsuitLawyerBlue }
+    startingInventory:
       ClothingUniformJumpsuitLawyerBlue: 1
       ClothingUniformJumpskirtLawyerBlue: 1
       ClothingUniformJumpsuitLawyerPurple: 1
@@ -12,16 +14,23 @@
       ClothingUniformJumpskirtLawyerBlack: 1
       ClothingUniformJumpsuitLawyerGood: 1
       ClothingUniformJumpskirtLawyerGood: 1
-      ClothingShoesBootsLaceup: 2
-      ClothingHeadsetService: 2
-      ClothingNeckLawyerbadge: 2
+  - name: vending-machine-category-office-supplies
+    icon: { entity: BookSpaceLaw }
+    startingInventory:
       BriefcaseBrown: 2
       BookSpaceLaw: 3
       LuxuryPen: 2
       HandLabeler: 2
     contrabandInventory:
-      ClothingOuterRobesJudge: 1
-      ClothingHeadHatPwig: 1
       # "Legally" obtained currency
       SpaceCash100: 2
+  - name: vending-machine-category-accessories
+    icon: { entity: ClothingNeckLawyerbadge }
+    startingInventory:
+      ClothingShoesBootsLaceup: 2
+      ClothingHeadsetService: 2
+      ClothingNeckLawyerbadge: 2
+    contrabandInventory:
+      ClothingOuterRobesJudge: 1
+      ClothingHeadHatPwig: 1
       ToyFigurineLawyer: 1

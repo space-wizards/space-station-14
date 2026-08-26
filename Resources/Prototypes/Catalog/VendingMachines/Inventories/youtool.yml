@@ -12,13 +12,10 @@
       trayScanner: 3
       NetworkConfigurator: 3
       GasAnalyzer: 3
+      CableApcStack: 5
     # Some engineer forgot to take the multitool out the youtool when working on it, happens.
     contrabandInventory:
       Multitool: 1
-  - name: vending-machine-category-components
-    icon: { entity: CableApcStack }
-    startingInventory:
-      CableApcStack: 5
   - name: vending-machine-category-equipment
     icon: { entity: FlashlightLantern }
     startingInventory:

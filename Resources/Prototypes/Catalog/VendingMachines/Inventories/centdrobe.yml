@@ -1,24 +1,32 @@
 - type: vendingMachineInventory
   id: CentDrobeInventory
   categories:
-  - startingInventory:
-      ClothingShoesBootsLaceup: 3
-      ClothingShoesBootsJack: 3
-      ClothingHandsGlovesCombat: 3
-      ClothingEyesGlassesSunglasses: 3
+  - name: vending-machine-category-uniforms
+    icon: { entity: ClothingUniformJumpsuitCentcomOfficer }
+    startingInventory:
       ClothingUniformJumpsuitCentcomOfficer: 3
       ClothingUniformJumpsuitCentcomOfficial: 3
       ClothingUniformJumpsuitCentcomAgent: 3
       ClothingUniformJumpsuitCentcomFormal: 3
       ClothingUniformJumpskirtCentcomFormalDress: 3
-      ClothingHeadHatCentcom: 3
-      ClothingHeadHatCentcomcap: 3
-      ClothingMaskGasCentcom: 3
-      ClothingHeadsetCentCom: 3
+  - name: vending-machine-category-outerwear
+    icon: { entity: ClothingOuterWinterCentcom }
+    startingInventory:
       ClothingOuterWinterCentcom: 3
       ClothingOuterCoatExpensive: 1
       ClothingNeckScarfStripedCentcom: 3
       ClothingNeckCloakCentcom: 3
+  - name: vending-machine-category-accessories
+    icon: { entity: ClothingHeadHatCentcom }
+    startingInventory:
+      ClothingShoesBootsLaceup: 3
+      ClothingShoesBootsJack: 3
+      ClothingHandsGlovesCombat: 3
+      ClothingEyesGlassesSunglasses: 3
+      ClothingHeadHatCentcom: 3
+      ClothingHeadHatCentcomcap: 3
+      ClothingMaskGasCentcom: 3
+      ClothingHeadsetCentCom: 3
     contrabandInventory:
       ToyFigurineCaptain: 1
       ToyFigurineHeadOfPersonnel: 1

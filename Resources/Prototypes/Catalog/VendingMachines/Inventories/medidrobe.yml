@@ -1,7 +1,7 @@
 - type: vendingMachineInventory
   id: MediDrobeInventory
   categories:
-  - name: vending-machine-category-medical-equipment
+  - name: vending-machine-category-equipment
     icon: { entity: ClothingEyesHudMedical }
     startingInventory:
       ClothingEyesHudMedical: 2

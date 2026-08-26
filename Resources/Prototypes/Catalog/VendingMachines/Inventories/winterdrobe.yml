@@ -15,7 +15,7 @@
     emaggedInventory:
       ClothingNeckScarfStripedSyndieGreen: 3
       ClothingNeckScarfStripedSyndieRed: 3
-  - name: vending-machine-category-outerwear
+  - name: vending-machine-category-clothing
     icon: { entity: ClothingOuterWinterCoat }
     startingInventory:
       ClothingOuterCoatTrench: 6

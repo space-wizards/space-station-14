@@ -1,17 +1,25 @@
 - type: vendingMachineInventory
   id: ChemDrobeInventory
   categories:
-  - startingInventory:
-      # Essential
-      ClothingEyesGlassesChemical: 1
-      # Optional
-      ClothingHeadsetMedical: 1
+  - name: vending-machine-category-bags
+    icon: { entity: ClothingBackpackChemistry }
+    startingInventory:
       ClothingBackpackChemistry: 1
       ClothingBackpackSatchelChemistry: 1
       ClothingBackpackDuffelChemistry: 1
       ChemBag: 1
+  - name: vending-machine-category-uniforms
+    icon: { entity: ClothingUniformJumpsuitChemistry }
+    startingInventory:
       ClothingUniformJumpsuitChemistry: 1
       ClothingUniformJumpskirtChemistry: 1
+  - name: vending-machine-category-equipment
+    icon: { entity: ClothingEyesGlassesChemical }
+    startingInventory:
+      # Essential
+      ClothingEyesGlassesChemical: 1
+      # Optional
+      ClothingHeadsetMedical: 1
       ClothingOuterCoatLabChem: 1
       ClothingOuterWinterChem: 1
       ClothingHandsGlovesLatex: 1

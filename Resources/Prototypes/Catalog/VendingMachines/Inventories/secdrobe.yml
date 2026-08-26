@@ -1,11 +1,29 @@
 - type: vendingMachineInventory
   id: SecDrobeInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-bags
+    icon: { entity: ClothingBackpackSecurity }
+    startingInventory:
       ClothingBackpackSecurity: 3
       ClothingBackpackSatchelSecurity: 3
       ClothingBackpackDuffelSecurity: 3
+  - name: vending-machine-category-uniforms
+    icon: { entity: ClothingUniformJumpsuitSec }
+    startingInventory:
       ClothingUniformJumpsuitSec: 3
+      ClothingUniformJumpskirtSec: 3
+      ClothingUniformJumpsuitSecGrey: 3
+      ClothingUniformJumpskirtSecGrey: 3
+      ClothingUniformJumpsuitSecBlue: 3
+  - name: vending-machine-category-outerwear
+    icon: { entity: ClothingOuterArmorBasic }
+    startingInventory:
+      ClothingOuterWinterSec: 2
+      ClothingOuterArmorBasic: 2
+      ClothingOuterArmorBasicSlim: 2
+  - name: vending-machine-category-equipment
+    icon: { entity: ClothingHeadHatBeretSecurity }
+    startingInventory:
       ClothingShoesBootsJack: 3
       ClothingHeadHatBeretSecurity: 3
       ClothingHeadHatSecsoft: 3
@@ -13,15 +31,8 @@
       ClothingMaskNeckGaiterRed: 3
       ClothingHandsGlovesColorBlack: 3
       ClothingHandsGlovesFingerless: 3
-      ClothingUniformJumpskirtSec: 3
-      ClothingUniformJumpsuitSecGrey: 3
-      ClothingUniformJumpskirtSecGrey: 3
-      ClothingUniformJumpsuitSecBlue: 3
       ClothingHeadsetSecurity: 3
-      ClothingOuterWinterSec: 2
-      ClothingOuterArmorBasic: 2
       ClothingNeckScarfStripedRed: 3
-      ClothingOuterArmorBasicSlim: 2
       ClothingEyesBlindfold: 1
       ClothingShoesBootsCombat: 1
       ClothingShoesBootsWinterSec: 2

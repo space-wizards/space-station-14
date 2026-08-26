@@ -5,9 +5,6 @@
     icon: { entity: HandheldHealthAnalyzer }
     startingInventory:
       HandheldHealthAnalyzer: 1
-  - name: vending-machine-category-trauma-care
-    icon: { entity: Brutepack }
-    startingInventory:
       Gauze: 3
       Brutepack: 3
       Ointment: 3
@@ -29,9 +26,6 @@
     icon: { entity: HandheldHealthAnalyzer }
     startingInventory:
       HandheldHealthAnalyzer: 1
-  - name: vending-machine-category-trauma-care
-    icon: { entity: Brutepack }
-    startingInventory:
       Tourniquet: 3
       Brutepack: 3
       AloeCream: 3 # Currently just a reskin of Ointment but it's something
@@ -86,9 +80,6 @@
     icon: { entity: HandheldHealthAnalyzer }
     startingInventory:
       HandheldHealthAnalyzer: 3
-  - name: vending-machine-category-trauma-care
-    icon: { entity: Brutepack }
-    startingInventory:
       Tourniquet: 5
       Brutepack: 5
       AloeCream: 5

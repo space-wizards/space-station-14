@@ -4,9 +4,7 @@
   - name: vending-machine-category-restraints
     icon: { entity: Handcuffs }
     startingInventory:
-      SecurityWhistle: 5
       Handcuffs: 8
-      Flash: 5
       Zipties: 12
       SecurityBola: 6
   - name: vending-machine-category-grenades
@@ -19,6 +17,8 @@
   - name: vending-machine-category-security-equipment
     icon: { entity: ClothingBeltSecurityWebbing }
     startingInventory:
+      SecurityWhistle: 5
+      Flash: 5
       Tourniquet: 5
       FlashlightSeclite: 5
       ClothingEyesGlassesSunglasses: 2

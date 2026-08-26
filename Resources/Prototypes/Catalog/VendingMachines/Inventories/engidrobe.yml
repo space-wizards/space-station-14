@@ -1,13 +1,21 @@
 - type: vendingMachineInventory
   id: EngiDrobeInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-bags
+    icon: { entity: ClothingBackpackEngineering }
+    startingInventory:
       ClothingBackpackDuffelEngineering: 3
       ClothingBackpackSatchelEngineering: 3
       ClothingBackpackEngineering: 3
+  - name: vending-machine-category-uniforms
+    icon: { entity: ClothingUniformJumpsuitEngineering }
+    startingInventory:
       ClothingUniformJumpsuitEngineering: 3
       ClothingUniformJumpskirtEngineering: 3
       ClothingUniformJumpsuitEngineeringHazard: 3
+  - name: vending-machine-category-equipment
+    icon: { entity: ClothingHeadHatHardhatYellow }
+    startingInventory:
       ClothingShoesColorBlack: 3
       ClothingOuterVestHazard: 3
       ClothingShoesBootsWork: 3

@@ -1,21 +1,29 @@
 - type: vendingMachineInventory
   id: BarDrobeInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-uniforms
+    icon: { entity: ClothingUniformJumpsuitBartender }
+    startingInventory:
+      ClothingUniformJumpsuitJacketMonkey: 2
+      ClothingUniformJumpsuitBartender: 2
+      ClothingUniformJumpskirtBartender: 2
+      ClothingUniformJumpsuitBartenderPurple: 2
+  - name: vending-machine-category-outerwear
+    icon: { entity: ClothingOuterApronBar }
+    startingInventory:
+      ClothingOuterApronBar: 2
+      ClothingOuterWinterBar: 2
+      ClothingOuterArmorBasicSlim: 2
+      ClothingOuterVest: 2
+  - name: vending-machine-category-accessories
+    icon: { entity: ClothingEyesHudBeer }
+    startingInventory:
       ClothingHeadHatBowlerHat: 2
       ClothingHeadHatTophat: 2
       ClothingEyesHudBeer: 2
       ClothingEyesEyepatchHudBeer: 2
       ClothingHeadsetService: 2
-      ClothingOuterApronBar: 2
-      ClothingOuterWinterBar: 2
-      ClothingUniformJumpsuitJacketMonkey: 2
-      ClothingUniformJumpsuitBartender: 2
-      ClothingUniformJumpskirtBartender: 2
-      ClothingUniformJumpsuitBartenderPurple: 2
       ClothingShoesColorBlack: 2
-      ClothingOuterArmorBasicSlim: 2
-      ClothingOuterVest: 2
       ClothingBeltBandolier: 2
       ClothingEyesGlassesSunglasses: 2
     contrabandInventory:

@@ -1,11 +1,6 @@
 - type: vendingMachineInventory
   id: GoodCleanFunInventory
   categories:
-  - name: vending-machine-category-dice
-    icon: { entity: DiceBag }
-    startingInventory:
-      DiceBag: 6
-      d6Dice: 8
   - name: vending-machine-category-board-games
     icon: { entity: ChessBoard }
     startingInventory:
@@ -21,11 +16,13 @@
       SandBattlemap: 1
       MoonBattlemap: 1
       GrassBattlemap: 1
-      PaperCNCSheet: 6
   - name: vending-machine-category-tabletop-supplies
     icon: { entity: Paper }
     startingInventory:
+      DiceBag: 6
+      d6Dice: 8
       Paper: 8
+      PaperCNCSheet: 6
       MysteryFigureBox: 2
       BooksBag: 3
       Magic9Ball: 2

@@ -17,16 +17,19 @@
   - name: vending-machine-category-chemicals
     icon: { entity: ChemistryBottleRobustHarvest }
     startingInventory:
-      Dropper: 4
       PlantBGoneSpray: 20
       WeedSpray: 20
       PestSpray: 20
-      Syringe: 5
       ChemistryBottleRobustHarvest: 3
       ChemistryBottleEZNutrient: 3
-      BoxMouthSwab: 1
-      BoxAgrichem: 1
     contrabandInventory:
       ChemistryBottleUnstableMutagen: 1
       Joint: 1
       ChemistryBottleLeft4Zed: 1
+  - name: vending-machine-category-equipment
+    icon: { entity: Dropper }
+    startingInventory:
+      Dropper: 4
+      Syringe: 5
+      BoxMouthSwab: 1
+      BoxAgrichem: 1

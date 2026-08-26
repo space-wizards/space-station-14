@@ -10,13 +10,13 @@
   - name: vending-machine-category-tools
     icon: { entity: Multitool }
     startingInventory:
-      ClothingHeadHatWelding: 6
       CrowbarYellow: 8
       Multitool: 4
       NetworkConfigurator: 5
   - name: vending-machine-category-equipment
     icon: { entity: PowerCellMedium }
     startingInventory:
+      ClothingHeadHatWelding: 6
       PowerCellMedium: 5
       ClothingHandsGlovesColorYellow: 6
       BoxInflatable: 2

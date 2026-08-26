@@ -1,13 +1,21 @@
 - type: vendingMachineInventory
   id: AtmosDrobeInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-bags
+    icon: { entity: ClothingBackpackAtmospherics }
+    startingInventory:
       ClothingBackpackDuffelAtmospherics: 2
       ClothingBackpackSatchelAtmospherics: 2
       ClothingBackpackAtmospherics: 2
+  - name: vending-machine-category-uniforms
+    icon: { entity: ClothingUniformJumpsuitAtmos }
+    startingInventory:
       ClothingUniformJumpsuitAtmos: 3
       ClothingUniformJumpskirtAtmos: 3
       ClothingUniformJumpsuitAtmosCasual: 3
+  - name: vending-machine-category-equipment
+    icon: { entity: ClothingHeadHelmetFire }
+    startingInventory:
       ClothingShoesColorWhite: 3
       ClothingHeadsetEngineering: 2
       ClothingHeadHelmetFire: 2

@@ -1,7 +1,16 @@
 - type: vendingMachineInventory
   id: CuraDrobeInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-uniforms
+    icon: { entity: ClothingUniformJumpsuitCurator }
+    startingInventory:
+      ClothingUniformJumpsuitCurator: 3
+      ClothingUniformJumpskirtCurator: 3
+      ClothingUniformJumpsuitLibrarian: 3
+      ClothingUniformJumpskirtLibrarian: 3
+  - name: vending-machine-category-equipment
+    icon: { entity: BooksBag }
+    startingInventory:
       BooksBag: 2
       BriefcaseBrown: 2
       HandLabeler: 2
@@ -9,10 +18,6 @@
       ClothingEyesGlasses: 2
       ClothingEyesGlassesJamjar: 2
       ClothingNeckScarfStripedGreen: 2
-      ClothingUniformJumpsuitCurator: 3
-      ClothingUniformJumpskirtCurator: 3
-      ClothingUniformJumpsuitLibrarian: 3
-      ClothingUniformJumpskirtLibrarian: 3
       ClothingShoesBootsLaceup: 2
       ClothingHeadsetService: 2
     contrabandInventory:

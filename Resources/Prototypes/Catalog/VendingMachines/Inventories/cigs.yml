@@ -1,7 +1,9 @@
 - type: vendingMachineInventory
   id: CigaretteMachineInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-smoking-products
+    icon: { entity: CigPackGreen }
+    startingInventory:
       CigPackGreen: 2
       CigPackRed: 2
       CigPackBlue: 2
@@ -10,13 +12,17 @@
       CigarCase: 1
       SmokingPipeFilledTobacco: 1
       Vape: 1
+    contrabandInventory:
+      GroundTobacco: 3
+      CigarGold: 2
+  - name: vending-machine-category-smoking-supplies
+    icon: { entity: FlippoLighter }
+    startingInventory:
       Matchbox: 5
       PackPaperRollingFilters: 3
       CheapLighter: 4
       Lighter: 2
       FlippoLighter: 2
     contrabandInventory:
-      GroundTobacco: 3
-      CigarGold: 2
       Igniter: 1
       NanotrasenFlippo: 1

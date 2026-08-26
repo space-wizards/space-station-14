@@ -1,18 +1,31 @@
 - type: vendingMachineInventory
   id: SyndieDrobeInventory
   categories:
-  - startingInventory:
-      ClothingHeadHatOutlawHat: 3
-      ClothingHeadHatSyndie: 5
-      ClothingMaskNeckGaiter: 5
-      ClothingOuterWinterSyndie: 5
-      ClothingHeadHatSyndieMAA: 3
-      ClothingOuterWinterSyndieCap: 3
-      ClothingOuterCoatSyndieCap: 3
+  - name: vending-machine-category-uniforms
+    icon: { entity: ClothingUniformJumpsuitSyndieFormal }
+    startingInventory:
       ClothingUniformJumpsuitSyndieFormal: 5
       ClothingUniformJumpskirtSyndieFormalDress: 5
       ClothingUniformJumpsuitOperative: 5
       ClothingUniformJumpskirtOperative: 5
+    contrabandInventory:
+      ClothingUniformJumpskirtTacticalMaid: 5
+  - name: vending-machine-category-outerwear
+    icon: { entity: ClothingOuterWinterSyndie }
+    startingInventory:
+      ClothingOuterWinterSyndie: 5
+      ClothingOuterWinterSyndieCap: 3
+      ClothingOuterCoatSyndieCap: 3
+    emaggedInventory:
+      ClothingOuterCoatSyndieCapArmored: 1
+      ClothingOuterWinterSyndieCapArmored: 1
+  - name: vending-machine-category-accessories
+    icon: { entity: ClothingHeadHatSyndie }
+    startingInventory:
+      ClothingHeadHatOutlawHat: 3
+      ClothingHeadHatSyndie: 5
+      ClothingMaskNeckGaiter: 5
+      ClothingHeadHatSyndieMAA: 3
       ClothingNeckScarfStripedSyndieGreen: 2
       ClothingNeckScarfStripedSyndieRed: 2
       ClothingShoesBootsWinterSyndicate: 2
@@ -20,9 +33,6 @@
       ToyFigurineFootsoldier: 1
       ToyFigurineNukieElite: 1
       ToyFigurineNukieCommander: 1
-      ClothingUniformJumpskirtTacticalMaid: 5
       ClothingHandsTacticalMaidGloves: 5
     emaggedInventory:
-      ClothingOuterCoatSyndieCapArmored: 1
-      ClothingOuterWinterSyndieCapArmored: 1
       ClothingHeadHatTacticalMaidHeadband: 5

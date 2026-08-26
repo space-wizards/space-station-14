@@ -1,13 +1,21 @@
 - type: vendingMachineInventory
   id: SciDrobeInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-bags
+    icon: { entity: ClothingBackpackScience }
+    startingInventory:
       ClothingBackpackScience: 3
       ClothingBackpackSatchelScience: 3
       ClothingBackpackDuffelScience: 3
+  - name: vending-machine-category-uniforms
+    icon: { entity: ClothingUniformJumpsuitScientist }
+    startingInventory:
       ClothingUniformJumpsuitScientist: 3
       ClothingUniformJumpskirtScientist: 3
       ClothingUniformJumpsuitScientistFormal: 3
+  - name: vending-machine-category-equipment
+    icon: { entity: ClothingOuterCoatRnd }
+    startingInventory:
       ClothingOuterCoatRnd: 3
       ClothingShoesColorWhite: 3
       ClothingNeckTieSci: 3

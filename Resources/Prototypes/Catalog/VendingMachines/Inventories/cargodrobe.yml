@@ -1,12 +1,21 @@
 - type: vendingMachineInventory
   id: CargoDrobeInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-bags
+    icon: { entity: ClothingBackpackCargo }
+    startingInventory:
       ClothingBackpackCargo: 3
       ClothingBackpackSatchelCargo: 3
       ClothingBackpackDuffelCargo: 3
+      MailBag: 2
+  - name: vending-machine-category-uniforms
+    icon: { entity: ClothingUniformJumpsuitCargo }
+    startingInventory:
       ClothingUniformJumpsuitCargo: 3
       ClothingUniformJumpskirtCargo: 3
+  - name: vending-machine-category-equipment
+    icon: { entity: ClothingHeadHatCargosoft }
+    startingInventory:
       ClothingShoesColorBlack: 3
       ClothingHandsGlovesFingerless: 3
       ClothingHeadHatCargosoft: 3
@@ -16,7 +25,6 @@
       ClothingOuterWinterMiner: 2
       ClothingNeckScarfStripedBrown: 3
       ClothingShoesBootsWinterCargo: 2
-      MailBag: 2
     contrabandInventory:
       ToyFigurineCargoTech: 1
       ToyFigurineSalvage: 1
