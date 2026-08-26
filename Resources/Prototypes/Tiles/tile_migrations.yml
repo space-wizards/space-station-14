@@ -70,3 +70,260 @@
 - type: tileAlias
   id: FloorSteelBurnt
   target: FloorSteelDamaged
+
+# 2026/07/22
+# The respritening! With this one simple trick, i give 200 mappers a collective aneurysm.
+
+- type: tileAlias
+  id: FloorBrassReebe
+  target: FloorSteelDamaged
+
+- type: tileAlias
+  id: FloorBrassFilled
+  target: FloorSteelDamaged
+
+- type: tileAlias
+  id: PlatingBrass
+  target: Plating
+
+- type: tileAlias
+  id: FloorDarkDiagonal
+  target: FloorDark
+
+- type: tileAlias
+  id: FloorDarkDiagonalMini
+  target: FloorDark
+
+- type: tileAlias
+  id: FloorDarkOffset
+  target: FloorDark
+
+- type: tileAlias
+  id: FloorSteelDiagonal
+  target: FloorSteel
+
+- type: tileAlias
+  id: FloorSteelDiagonalMini
+  target: FloorSteel
+
+- type: tileAlias
+  id: FloorSteelOffset
+  target: FloorSteel
+
+- type: tileAlias
+  id: FloorSteelDirty
+  target: FloorSteel
+
+- type: tileAlias
+  id: FloorWhiteDiagonal
+  target: FloorWhite
+
+- type: tileAlias
+  id: FloorWhiteDiagonalMini
+  target: FloorWhite
+
+- type: tileAlias
+  id: FloorWhiteOffset
+  target: FloorWhite
+
+- type: tileAlias
+  id: FloorUraniumMarble
+  target: FloorDarkMarble
+
+- type: tileAlias
+  id: FloorPlasmaMarble
+  target: FloorMarble
+
+- type: tileAlias
+  id: FloorEighties
+  target: FloorArcadeBlue
+
+- type: tileAlias
+  id: FloorArcadeBlue2
+  target: FloorArcadeBlue
+
+- type: tileAlias
+  id: FloorHydro
+  target: FloorSteel
+
+- type: tileAlias
+  id: FloorElevatorShaft
+  target: FloorDark
+
+- type: tileAlias
+  id: FloorMining
+  target: FloorDarkPlastic
+
+- type: tileAlias
+  id: FloorMiningLight
+  target: FloorDarkPlastic
+
+- type: tileAlias
+  id: FloorMiningDark
+  target: FloorDarkPlastic
+
+- type: tileAlias
+  id: FloorRockVault
+  target: FloorSteel
+
+- type: tileAlias
+  id: FloorShowroom
+  target: FloorSteel
+
+- type: tileAlias
+  id: FloorSteelSlatsContinuous
+  target: FloorSteelVerticalSlatsBordered
+
+- type: tileAlias
+  id: FloorDarkSlatsContinuous
+  target: FloorDarkVerticalSlatsBordered
+
+- type: tileAlias
+  id: FloorWhiteSlatsContinuous
+  target: FloorWhiteVerticalSlatsBordered
+
+- type: tileAlias
+  id: FloorMono
+  target: FloorSteel
+
+- type: tileAlias
+  id: TrainLattice
+  target: Lattice
+
+# 2026/07/28
+# More respritening
+- type: tileAlias
+  id: FloorGrassLight
+  target: FloorGrass
+
+- type: tileAlias
+  id: FloorLightAstroGrass
+  target: FloorAstroGrass
+
+- type: tileAlias
+  id: FloorIronsandTile
+  target: FloorAsteroidIronsand
+
+- type: tileAlias
+  id: FloorIronsandConcrete
+  target: FloorAsteroidIronsand
+
+- type: tileAlias
+  id: FloorIronsandConcreteMono
+  target: FloorAsteroidIronsand
+
+- type: tileAlias
+  id: FloorIronsandConcreteSmooth
+  target: FloorAsteroidIronsand
+
+- type: tileAlias
+  id: FloorGrayConcrete
+  target: FloorConcrete
+
+- type: tileAlias
+  id: FloorGrayConcreteMono
+  target: FloorConcreteMono
+
+- type: tileAlias
+  id: FloorGrayConcreteSmooth
+  target: FloorConcreteSmooth
+
+- type: tileAlias
+  id: FloorOldConcrete
+  target: FloorConcrete
+
+- type: tileAlias
+  id: FloorOldConcreteMono
+  target: FloorConcreteMono
+
+- type: tileAlias
+  id: FloorOldConcreteSmooth
+  target: FloorConcreteSmooth
+
+- type: tileAlias
+  id: IronsandPacked
+  target: FloorAsteroidIronsand
+
+- type: tileAlias
+  id: IronsandPaved
+  target: FloorAsteroidIronsand
+
+- type: tileAlias
+  id: PlatingIronsand
+  target: Plating
+
+- type: tileAlias
+  id: FloorCaveDrought
+  target: FloorCave
+
+- type: tileAlias
+  id: FloorAsteroidSandRedBorderless
+  target: FloorAsteroidSandBorderless
+
+- type: tileAlias
+  id: FloorAsteroidSandRed
+  target: FloorAsteroidSand
+
+- type: tileAlias
+  id: FloorAsteroidSandDug
+  target: FloorAsteroidSand
+
+- type: tileAlias
+  id: FloorAsteroidSandDugBorderless
+  target: FloorAsteroidSandBorderless
+
+- type: tileAlias
+  id: FloorLowDesert
+  target: FloorDesert
+
+- type: tileAlias
+  id: FloorAsteroidSandUnvariantizedBorderless
+  target: FloorAsteroidSand
+
+- type: tileAlias
+  id: FloorAsteroidSandUnvariantized
+  target: FloorAsteroidSand
+
+- type: tileAlias
+  id: FloorAsteroidIronsandUnvariantized
+  target: FloorAsteroidIronsand
+
+- type: tileAlias
+  id: FloorAsteroidIronsandUnvariantizedBorderless
+  target: FloorAsteroidIronsand
+
+- type: tileAlias
+  id: FloorSnowDug
+  target: FloorSnow
+
+- type: tileAlias
+  id: FloorTechMaint
+  target: FloorTechMaint2
+
+- type: tileAlias
+  id: FloorXenoborg
+  target: FloorExoBorg
+
+- type: tileAlias
+  id: FloorXeno
+  target: FloorExoViscera
+
+- type: tileAlias
+  id: FloorXenoSteel
+  target: FloorExoHull
+
+- type: tileAlias
+  id: FloorXenoSteelCorner
+  target: FloorExoCornerSW
+
+- type: tileAlias
+  id: FloorXenoMaint
+  target: FloorExoTechmaint
+
+- type: tileAlias
+  id: FloorDarkSquiggly
+  target: FloorExoHorizontal
+
+- type: tileAlias
+  id: FloorAsphalt
+  target: FloorConcrete

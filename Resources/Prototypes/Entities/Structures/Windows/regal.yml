@@ -1,0 +1,38 @@
+- type: entity
+  id: RegalWindow
+  name: regal window
+  description: An ornate window adorned with gilded filigree. Expensive!
+  parent: [BaseDeltaPressureReinforcedGlass, Window]
+  components:
+  - type: Sprite
+    sprite: Structures/Windows/window-regal.rsi
+  - type: Icon
+    sprite: Structures/Windows/window-regal.rsi
+  - type: Damageable
+    damageModifierSet: RGlass
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: RCDDeconstructable
+    cost: 1
+    delay: 2
+    fx: EffectRCDDeconstruct6
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    base: window
+  - type: Appearance
+  - type: DamageVisuals
+    thresholds: [5, 10, 20]
+    damageDivisor: 3
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks.rsi
