@@ -104,8 +104,8 @@ public sealed partial class BorgSystem : SharedBorgSystem
         if (!_appearance.TryGetData(uid, MMIVisuals.HasMind, out bool hasMind))
             hasMind = false;
 
-        Color lightColor = Color.White;
-        bool lightVisible = false;
+        var lightColor = Color.White;
+        var lightVisible = false;
 
         _sprite.LayerSetVisible((uid, sprite), MMIVisualLayers.Brain, brain);
         if (!brain)
