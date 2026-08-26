@@ -97,7 +97,15 @@ public sealed partial class FakeConsumableSystem : EntitySystem
         if (!contained.HasValue)
             return;
 
-        _ingestion.TryIngest(args.User, contained.Value);
+        var item = contained.Value;
+        if (_ingestion.CanIngest(args.User, item))
+        {
+            _ingestion.TryIngest(args.User, item);
+        }
+        else
+        {
+            _trigger.Trigger(item, args.User);
+        }
     }
 
     [SubscribeLocalEvent]
@@ -109,11 +117,7 @@ public sealed partial class FakeConsumableSystem : EntitySystem
 
         var item = contained.Value;
         RaiseLocalEvent(item, args, true);
-
-        if (HasComp<TimerTriggerComponent>(item))
-        {
-            _trigger.ActivateTimerTrigger(item);
-        }
+        _trigger.Trigger(item);
     }
 
     [SubscribeLocalEvent]
