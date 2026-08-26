@@ -99,7 +99,7 @@ public sealed partial class StoreComponent : Component
     /// Does nothing if the store UI is added seperately via <see cref="UserInterfaceComponent"/>
     /// </summary>
     [DataField]
-    public bool InputValidation;
+    public bool InputValidation = true;
 
     #region audio
     /// <summary>
