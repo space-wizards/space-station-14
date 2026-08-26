@@ -1,11 +1,8 @@
 using System.Numerics;
 using Content.Shared.Body.Components;
-using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
-using Robust.Shared.Random;
 
 namespace Content.Shared.Body.Systems;
 
@@ -14,41 +11,6 @@ public sealed partial class BloodstreamSystem
     [Dependency] private ThrowingSystem _throwing = default!;
 
     [Dependency] private EntityQuery<BloodstreamComponent> _bloodstreamQuery = default!;
-
-    [SubscribeLocalEvent]
-    private void OnDamage(Entity<BloodstreamDripOnDamageComponent> ent, ref DamageDealtEvent args)
-    {
-        if (!_bloodstreamQuery.TryComp(ent, out var bloodstream))
-            return;
-
-        if (!_solutionContainer.ResolveSolution(ent.Owner, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution))
-            return;
-
-        var qualifyingDamage = FixedPoint2.Zero;
-        foreach (var (damageType, damage) in args.Damage.DamageDict)
-        {
-            if (ent.Comp.Allowed.Contains(damageType))
-                qualifyingDamage += damage;
-        }
-
-        if (qualifyingDamage < ent.Comp.Threshold)
-            return;
-
-        var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
-        if (!rand.Prob(ent.Comp.Probability))
-            return;
-
-        if (ent.Comp.Amount.Min < 0)
-            return;
-
-        var amount = rand.Next(ent.Comp.Amount.Min, ent.Comp.Amount.Max + 1);
-        for (var i = 0; i < amount; i++)
-        {
-            var direction = rand.NextAngle().ToVec() * ent.Comp.Range.NextFloat(rand);
-            if (!TrySpawnDroplet((ent, bloodstream), direction, ent.Comp.Force.NextFloat(rand)))
-                return;
-        }
-    }
 
     /// <summary>
     /// Updates the amount of blood needed for a blood droplet transfer.

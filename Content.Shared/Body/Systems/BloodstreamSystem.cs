@@ -23,6 +23,7 @@ using Content.Shared.StatusEffectNew;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Body.Systems;
@@ -228,11 +229,19 @@ public sealed partial class BloodstreamSystem : EntitySystem
         // Higher damage weapons have a higher chance to crit!
 
         // Use both the receiver and the damage causing entity for the seed so that we have different results for multiple attacks in the same tick
+        var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent), GetNetEntity(args.Origin));
         var prob = Math.Clamp(totalFloat / 25, 0, 1);
-        if (totalFloat > 0 && SharedRandomExtensions.PredictedProb(_timing, prob, GetNetEntity(ent), GetNetEntity(args.Origin)))
+        if (totalFloat > 0 && rand.Prob(prob))
         {
-            TryBleedOut(ent.AsNullable(), total / 5);
             _audio.PlayPredicted(ent.Comp.InstantBloodSound, ent, args.Origin);
+
+            var amount = rand.Next(ent.Comp.MinDropletAmount, ent.Comp.MaxDropletAmount + 1);
+            for (var i = 0; i < amount; i++)
+            {
+                var direction = rand.NextAngle().ToVec() * rand.Next(ent.Comp.MinDropletRange, ent.Comp.MaxDropletRange + 1);
+                if (!TrySpawnDroplet(ent.AsNullable(), direction, ent.Comp.DropletForce.NextFloat(rand)))
+                    break;
+            }
         }
 
         // Heat damage will cauterize, causing the bleed rate to be reduced.
