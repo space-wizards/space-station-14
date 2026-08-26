@@ -36,7 +36,7 @@
 - type: entity
   parent: StatusEffectDamageModifierDebuffBase
   id: StatusEffectFrail
-  name: frail
+  name: frailty
   components:
   - type: StatusEffectAlert
     alert: FrailStatusAlert

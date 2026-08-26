@@ -13,5 +13,5 @@ alerts-stunned-desc = You're [color=yellow]stunned[/color]! Something is impairi
 alerts-vow-silence-name = Vow of Silence
 alerts-vow-silence-desc = You have taken a vow forbidding verbal or written communication as part of initiation into the Mystiko Tagma Mimon. Click to break your vow.
 
-alerts-frail-name = [color=yellow]Frail[/color]
+alerts-frail-name = [color=yellow]Frailty[/color]
 alerts-mild-frail-desc = You're [color=yellow]frail[/color]! You take more damage from [color=white]{ damage-group-brute }[/color] and [color=white]{ damage-group-burn }[/color].
