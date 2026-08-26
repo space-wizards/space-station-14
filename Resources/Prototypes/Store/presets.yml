@@ -53,6 +53,7 @@
     - ChangelingStoreUtility
     currencyWhitelist:
     - ChangelingDNA
+    inputValidation: true
 
 - type: entity
   parent: StorePresetUplink
