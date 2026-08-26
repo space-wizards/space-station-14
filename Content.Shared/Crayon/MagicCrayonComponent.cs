@@ -30,5 +30,5 @@ public sealed partial class MagicCrayonComponent : Component
     /// If not null, the sound to play when the fake food is spawned.
     /// </summary>
     [DataField("spawnSound")]
-    public SoundSpecifier? OnSpawnSound;
+    public SoundSpecifier? OnSpawnSound = new SoundPathSpecifier("/Audio/Effects/pop.ogg");
 }

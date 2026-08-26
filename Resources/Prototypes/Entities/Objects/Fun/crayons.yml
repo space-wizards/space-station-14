@@ -83,7 +83,6 @@
     size: Tiny
     heldPrefix: mime
   - type: MagicCrayon
-    spawnSound: /Audio/Effects/pop.ogg
   - type: LimitedCharges
     maxCharges: 10
 
