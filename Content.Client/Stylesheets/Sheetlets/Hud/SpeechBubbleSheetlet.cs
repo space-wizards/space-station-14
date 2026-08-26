@@ -14,8 +14,11 @@ public sealed class SpeechBubbleSheetlet : Sheetlet<PalettedStylesheet>
     {
         var loocMald = sheet.BaseFont.GetFont(12);
 
-        var nameFont = sheet.BaseFont.GetFont(10);
-        var speechFont = sheet.BaseFont.GetFont(12);
+        //var nameFont = sheet.BaseFont.GetFont(10);
+        var nameFont = sheet.ResCache.GetFont("/Fonts/Grand9k/Grand9kPixelUnicode.ttf", 9);
+        //var speechFont = sheet.BaseFont.GetFont(12);
+        var speechFont = sheet.ResCache.GetFont("/Fonts/Grand9k/Grand9kPixelUnicode.ttf", 12);
+
         var whisperFont = sheet.BaseFont.GetFont(12, FontKind.Italic);
 
         var bubbleBackgroundTexture = sheet.ResCache.GetTexture("/Textures/Interface/Nano/chat_bubble_background.png");
