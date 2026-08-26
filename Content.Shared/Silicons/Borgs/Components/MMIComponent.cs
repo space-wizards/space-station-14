@@ -92,5 +92,5 @@ public enum MMIVisualLayers : byte
     /// <summary>
     /// The optional layer of an indicator light.
     /// </summary>
-    Unshaded,
+    Unlit,
 }
