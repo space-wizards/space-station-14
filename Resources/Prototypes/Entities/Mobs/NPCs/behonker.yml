@@ -88,8 +88,7 @@
       500: Dead
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
+    - trigger: !type:DamageTypeTrigger
         damageType: Blunt
         damage: 600
       behaviors:
