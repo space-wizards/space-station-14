@@ -18,35 +18,14 @@ namespace Content.Client.CosmicCult;
 
 public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
 {
-    [Dependency] private readonly AnimationPlayerSystem _animPlayer = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly PointLightSystem _light = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private AnimationPlayerSystem _animPlayer = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private PointLightSystem _light = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     private readonly SoundSpecifier _siphonSfx = new SoundPathSpecifier("/Audio/_ST/CosmicCult/Abilities/ability-siphon.ogg");
     private readonly ResPath _rsiPath = new("/Textures/_ST/CosmicCult/Effects/ability-siphon.rsi");
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<CosmicFontComponent, StartCollideEvent>(OnFontApproached);
-        SubscribeLocalEvent<CosmicFontComponent, EndCollideEvent>(OnFontUnapproached);
-
-        SubscribeLocalEvent<CosmicStarMarkComponent, MoveEvent>(OnCultistMove);
-        SubscribeLocalEvent<CosmicStarMarkComponent, ComponentStartup>(OnCosmicStarMarkAdded);
-        SubscribeLocalEvent<CosmicStarMarkComponent, ComponentShutdown>(OnCosmicStarMarkRemoved);
-        SubscribeLocalEvent<CosmicStarMarkComponent, AnimationCompletedEvent>(OnAnimationCompleted);
-
-        SubscribeLocalEvent<CosmicImposingComponent, ComponentStartup>(OnCosmicImpositionAdded);
-        SubscribeLocalEvent<CosmicImposingComponent, ComponentShutdown>(OnCosmicImpositionRemoved);
-
-        SubscribeLocalEvent<CosmicCultistComponent, GetStatusIconsEvent>(GetCosmicCultIcon);
-        SubscribeLocalEvent<CosmicShuntedOriginComponent, GetStatusIconsEvent>(GetCosmicSSDIcon);
-
-        SubscribeNetworkEvent<InfluenceVisualsEvent>(OnInfluenceGain);
-        SubscribeNetworkEvent<SiphonVisualsEvent>(OnSiphon);
-    }
     protected override void OnMonumentInteracted(Entity<CosmicMonumentComponent> ent, ref InteractHandEvent args)
     {
         if (!TryComp<CosmicCultistComponent>(args.User, out var cultComp))
@@ -60,6 +39,7 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
         base.OnMonumentInteracted(ent, ref args);
     }
 
+    [SubscribeLocalEvent]
     private void OnCultistMove(Entity<CosmicStarMarkComponent> ent, ref MoveEvent args)
     {
         if (!_animPlayer.HasRunningAnimation(ent, ent.Comp.AnimationKey))
@@ -92,6 +72,7 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
             _animPlayer.Play(uid, animation, animationKey);
     }
 
+    [SubscribeLocalEvent]
     private void OnAnimationCompleted(EntityUid uid, CosmicStarMarkComponent component, AnimationCompletedEvent args)
     {
         if (args.Key != component.AnimationKey)
@@ -102,6 +83,7 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
     #endregion
 
     #region Influence Animation
+    [SubscribeNetworkEvent]
     private void OnInfluenceGain(InfluenceVisualsEvent args)
     {
         if (!Timing.IsFirstTimePredicted)
@@ -231,12 +213,14 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
     #endregion
 
     #region Malign Font
+    [SubscribeLocalEvent]
     private void OnFontApproached(Entity<CosmicFontComponent> ent, ref StartCollideEvent args)
     {
         if (args.OurFixtureId == "fontCollider" && Timing.IsFirstTimePredicted && HasComp<MobStateComponent>(args.OtherEntity) && !ent.Comp.Activated)
             PlayFontAnimation(ent, ent.Comp.InState, ent.Comp.AnimationKey);
     }
 
+    [SubscribeLocalEvent]
     private void OnFontUnapproached(Entity<CosmicFontComponent> ent, ref EndCollideEvent args)
     {
         if (args.OurFixtureId == "fontCollider" && Timing.IsFirstTimePredicted && HasComp<MobStateComponent>(args.OtherEntity) && !ent.Comp.Activated)
@@ -305,6 +289,7 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
     #endregion
 
     #region Siphon Visuals
+    [SubscribeNetworkEvent]
     private void OnSiphon(SiphonVisualsEvent args)
     {
         var ent = GetEntity(args.Target);
@@ -321,6 +306,7 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
     #endregion
 
     #region Layer Additions
+    [SubscribeLocalEvent]
     private void OnCosmicStarMarkAdded(Entity<CosmicStarMarkComponent> uid, ref ComponentStartup args)
     {
         if (_sprite.LayerMapTryGet(uid.Owner, CosmicRevealedKey.Key, out _, false) || !TryComp<SpriteComponent>(uid.Owner, out var sprite))
@@ -331,6 +317,7 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
         sprite.LayerSetShader(layer, "unshaded");
     }
 
+    [SubscribeLocalEvent]
     private void OnCosmicImpositionAdded(Entity<CosmicImposingComponent> uid, ref ComponentStartup args)
     {
         if (_sprite.LayerMapTryGet(uid.Owner, CosmicImposingKey.Key, out _, false) || !TryComp<SpriteComponent>(uid.Owner, out var sprite))
@@ -343,11 +330,13 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
     #endregion
 
     #region Layer Removals
+    [SubscribeLocalEvent]
     private void OnCosmicStarMarkRemoved(Entity<CosmicStarMarkComponent> uid, ref ComponentShutdown args)
     {
         _sprite.RemoveLayer(uid.Owner, CosmicRevealedKey.Key);
     }
 
+    [SubscribeLocalEvent]
     private void OnCosmicImpositionRemoved(Entity<CosmicImposingComponent> uid, ref ComponentShutdown args)
     {
         _sprite.RemoveLayer(uid.Owner, CosmicImposingKey.Key);
@@ -355,12 +344,14 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
     #endregion
 
     #region Icons
+    [SubscribeLocalEvent]
     private void GetCosmicCultIcon(Entity<CosmicCultistComponent> ent, ref GetStatusIconsEvent args)
     {
         if (_prototype.TryIndex(ent.Comp.StatusIcon, out var iconPrototype))
             args.StatusIcons.Add(iconPrototype);
     }
 
+    [SubscribeLocalEvent]
     private void GetCosmicSSDIcon(Entity<CosmicShuntedOriginComponent> ent, ref GetStatusIconsEvent args)
     {
         if (_prototype.TryIndex(ent.Comp.StatusIcon, out var iconPrototype))

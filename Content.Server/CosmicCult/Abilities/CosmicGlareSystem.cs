@@ -15,7 +15,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.CosmicCult.Abilities;
 
-public sealed class CosmicGlareSystem : EntitySystem
+public sealed partial class CosmicGlareSystem : EntitySystem
 {
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private FlashSystem _flash = default!;
@@ -28,13 +28,7 @@ public sealed class CosmicGlareSystem : EntitySystem
 
     private HashSet<Entity<PoweredLightComponent>> _lights = [];
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<CosmicCultistComponent, EventCosmicGlare>(OnCosmicGlare);
-    }
-
+    [SubscribeLocalEvent]
     private void OnCosmicGlare(Entity<CosmicCultistComponent> uid, ref EventCosmicGlare args)
     {
         _audio.PlayPvs(uid.Comp.GlareSfx, uid);

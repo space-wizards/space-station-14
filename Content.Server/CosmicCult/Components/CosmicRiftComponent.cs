@@ -3,9 +3,6 @@
 //
 // SPDX-License-Identifier: LicenseRef-CosmicCult
 
-using Robust.Shared.Audio;
-using Robust.Shared.Prototypes;
-
 namespace Content.Server.CosmicCult.Components;
 
 [RegisterComponent]

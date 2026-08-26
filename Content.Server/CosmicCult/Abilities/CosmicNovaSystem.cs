@@ -21,7 +21,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.CosmicCult.Abilities;
 
-public sealed class CosmicNovaSystem : EntitySystem
+public sealed partial class CosmicNovaSystem : EntitySystem
 {
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
@@ -34,17 +34,10 @@ public sealed class CosmicNovaSystem : EntitySystem
 
     private static readonly EntProtoId Projectile = "ProjectileCosmicNova";
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<CosmicCultistComponent, EventCosmicNova>(OnCosmicNova);
-        SubscribeLocalEvent<CosmicNovaComponent, StartCollideEvent>(OnNovaCollide);
-    }
-
     /// <summary>
     /// This is the basic spell projectile code but updated to use non-obsolete functions, all so i can change the default projectile speed. Fuck.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnCosmicNova(Entity<CosmicCultistComponent> uid, ref EventCosmicNova args)
     {
         var startPos = _transform.GetMapCoordinates(args.Performer);
@@ -82,6 +75,7 @@ public sealed class CosmicNovaSystem : EntitySystem
         _transform.SetWorldRotation(uid, direction.ToWorldAngle() + projectile.Angle);
     }
 
+    [SubscribeLocalEvent]
     private void OnNovaCollide(Entity<CosmicNovaComponent> uid, ref StartCollideEvent args)
     {
         if (_cosmicCult.EntityIsCultist(args.OtherEntity) || !HasComp<MobStateComponent>(args.OtherEntity))

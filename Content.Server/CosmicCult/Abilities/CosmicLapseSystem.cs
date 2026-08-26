@@ -9,21 +9,15 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.CosmicCult.Abilities;
 
-public sealed class CosmicLapseSystem : EntitySystem
+public sealed partial class CosmicLapseSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly PolymorphSystem _polymorph = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private PolymorphSystem _polymorph = default!;
+    [Dependency] private PopupSystem _popup = default!;
 
     private static readonly ProtoId<PolymorphPrototype> HumanLapse = "CosmicLapseMobHuman";
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<CosmicCultistComponent, EventCosmicLapse>(OnCosmicLapse);
-    }
-
+    [SubscribeLocalEvent]
     private void OnCosmicLapse(Entity<CosmicCultistComponent> uid, ref EventCosmicLapse action)
     {
         if (action.Handled || HasComp<CosmicShuntedOriginComponent>(action.Target) || HasComp<CosmicCultistComponent>(action.Target))

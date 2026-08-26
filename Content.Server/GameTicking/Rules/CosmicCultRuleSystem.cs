@@ -45,7 +45,7 @@ using Content.Stellar.Server.CosmicCult.Components;
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponent>
+public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponent>
 {
     [Dependency] private ActionsSystem _actions = default!;
     [Dependency] private AntagSelectionSystem _antag = default!;
@@ -95,14 +95,6 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         base.Initialize();
         _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("cosmiccult");
 
-        SubscribeLocalEvent<CosmicCultRuleComponent, RuleLoadedGridsEvent>(OnRuleLoadedGrids);
-        SubscribeLocalEvent<CosmicCultRuleComponent, AfterAntagEntitySelectedEvent>(OnAntagSelect);
-
-        SubscribeLocalEvent<CosmicCultistComponent, MobStateChangedEvent>(OnMobStateChanged);
-
-        SubscribeLocalEvent<CosmicCultAssociateRuleEvent>(OnAssociateRule);
-        SubscribeLocalEvent<CosmicCultAssociatedRuleComponent, ComponentShutdown>(OnAssociatedShutdown);
-
         // Subs.CVar(_config, STCCVars.CosmicCultFinaleTargetTime, value => _finaleTimeMax = TimeSpan.FromMinutes(value), true);
     }
 
@@ -137,11 +129,13 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         base.Started(uid, component, gameRule, args);
     }
 
+    [SubscribeLocalEvent]
     private void OnRuleLoadedGrids(Entity<CosmicCultRuleComponent> ent, ref RuleLoadedGridsEvent args)
     {
         ent.Comp.VoidMapId = args.Map;
     }
 
+    [SubscribeLocalEvent]
     private void OnAntagSelect(Entity<CosmicCultRuleComponent> uid, ref AfterAntagEntitySelectedEvent args)
     {
         TryStartCult(args.EntityUid, uid);
@@ -434,6 +428,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         return false;
     }
 
+    [SubscribeLocalEvent]
     private void OnMobStateChanged(Entity<CosmicCultistComponent> ent, ref MobStateChangedEvent args)
     {
         if (AssociatedGamerule(ent.Owner) is not { } cult || args.NewMobState is MobState.Alive || CultistsAlive(cult))
@@ -452,6 +447,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         cult.Comp.BreachTimer = null;
     }
 
+    [SubscribeLocalEvent]
     private void OnAssociatedShutdown(Entity<CosmicCultAssociatedRuleComponent> ent, ref ComponentShutdown args)
     {
         if (!TryComp<CosmicCultRuleComponent>(ent.Comp.CultGamerule, out var cult))
@@ -546,6 +542,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         rule.Comp.Cultists.Add(uid);
     }
 
+    [SubscribeLocalEvent]
     private void OnAssociateRule(ref CosmicCultAssociateRuleEvent args)
     {
         TransferCultAssociation(args.Originator, args.Target);

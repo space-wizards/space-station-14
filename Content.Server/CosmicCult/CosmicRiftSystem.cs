@@ -8,21 +8,15 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 
-namespace Content.Server.CosmicCult.EntitySystems;
+namespace Content.Server.CosmicCult;
 
-public sealed class CosmicRiftSystem : EntitySystem
+public sealed partial class CosmicRiftSystem : EntitySystem
 {
     [Dependency] private ActionsSystem _actions = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private PopupSystem _popup = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<CosmicRiftComponent, ActivateInWorldEvent>(OnInteract);
-        SubscribeLocalEvent<CosmicCultistComponent, EventAbsorbRiftDoAfter>(OnAbsorbDoAfter);
-    }
-
+    [SubscribeLocalEvent]
     private void OnInteract(Entity<CosmicRiftComponent> uid, ref ActivateInWorldEvent args)
     {
         if (!TryComp<CosmicCultistComponent>(args.User, out var cultist) || args.Handled )
@@ -50,6 +44,7 @@ public sealed class CosmicRiftSystem : EntitySystem
         _doAfter.TryStartDoAfter(doargs);
     }
 
+    [SubscribeLocalEvent]
     private void OnAbsorbDoAfter(Entity<CosmicCultistComponent> uid, ref EventAbsorbRiftDoAfter args)
     {
         var comp = uid.Comp;

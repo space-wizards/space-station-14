@@ -9,25 +9,19 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.CosmicCult.Abilities;
 
-public sealed class CosmicShiftSystem : SharedCosmicShiftSystem
+public sealed partial class CosmicShiftSystem : SharedCosmicShiftSystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private AnimationPlayerSystem _animPlayer = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
+    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery;
+
     private static readonly ProtoId<ShaderPrototype> HorizontalCut = "StellarSpriteCutAnimated";
     private static readonly EntProtoId VfxEntity = "CosmicShiftAbilityVfx";
-    private EntityQuery<SpriteComponent> _spriteQuery;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _spriteQuery = GetEntityQuery<SpriteComponent>();
-        SubscribeAllEvent<CosmicShiftAnimEvent>(OnShiftAnim);
-    }
-
+    [EventSubscription]
     private void OnShiftAnim(CosmicShiftAnimEvent args)
     {
         SetShader(GetEntity(args.Target), args.State);

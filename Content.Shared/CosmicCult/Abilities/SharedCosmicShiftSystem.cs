@@ -11,7 +11,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.CosmicCult.Abilities;
 
-public abstract class SharedCosmicShiftSystem : EntitySystem
+public abstract partial class SharedCosmicShiftSystem : EntitySystem
 {
     [Dependency] protected SharedAudioSystem Audio = default!;
     [Dependency] protected SharedContainerSystem Container = default!;
@@ -25,25 +25,14 @@ public abstract class SharedCosmicShiftSystem : EntitySystem
     private static readonly SoundSpecifier ShiftOutSfx = new SoundPathSpecifier("/Audio/_ST/CosmicCult/Abilities/ability-shift-out.ogg");
     private static readonly TimeSpan ShiftDuration = TimeSpan.FromSeconds(35);
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<CosmicCultistComponent, EventCosmicShift>(OnShiftAbility);
-        SubscribeLocalEvent<CosmicShiftedComponent, EventCosmicReturn>(OnReturnAbility);
-
-        SubscribeLocalEvent<CosmicCultistComponent, CosmicShiftStartDoAfter>(OnShiftStartDoAfter);
-        SubscribeLocalEvent<CosmicShiftedComponent, CosmicShiftEndDoAfter>(OnShiftEndDoAfter);
-
-        SubscribeLocalEvent<CosmicShiftedComponent, DropAttemptEvent>(CancelDropEvent);
-    }
-
+    [SubscribeLocalEvent]
     private void OnReturnAbility(Entity<CosmicShiftedComponent> ent, ref EventCosmicReturn args)
     {
         ent.Comp.ReadyToReturn = true;
         _doAfter.Cancel(ent.Comp.ReturnDoAfter);
     }
 
+    [SubscribeLocalEvent]
     private void OnShiftAbility(Entity<CosmicCultistComponent> ent, ref EventCosmicShift args)
     {
         if (args.Handled || HasComp<CosmicShiftedComponent>(ent) || HasComp<BlockMovementComponent>(ent) || _timing.ApplyingState || Container.IsEntityInContainer(ent.Owner))
@@ -59,6 +48,7 @@ public abstract class SharedCosmicShiftSystem : EntitySystem
         args.Handled = _doAfter.TryStartDoAfter(doargs);
     }
 
+    [SubscribeLocalEvent]
     protected virtual void OnShiftStartDoAfter(Entity<CosmicCultistComponent> ent, ref CosmicShiftStartDoAfter args)
     {
         if (args.Cancelled || args.Handled || Container.IsEntityInContainer(ent.Owner))
@@ -72,6 +62,7 @@ public abstract class SharedCosmicShiftSystem : EntitySystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnShiftEndDoAfter(Entity<CosmicShiftedComponent> ent, ref CosmicShiftEndDoAfter args)
     {
         ent.Comp.ReadyToReturn = true;
@@ -114,6 +105,7 @@ public abstract class SharedCosmicShiftSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void CancelDropEvent(EntityUid uid, CosmicShiftedComponent comp, DropAttemptEvent args)
     {
         args.Cancel();

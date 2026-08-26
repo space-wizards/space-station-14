@@ -123,6 +123,7 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
         Dirty(target, cultComp);
     }
 
+    [SubscribeLocalEvent]
     private void OnStartCultist(Entity<CosmicCultistComponent> ent, ref ComponentInit args)
     {
         Actions.AddAction(ent, ref ent.Comp.CosmicShiftActionActionEntity, ent.Comp.CosmicShiftAction, ent);
@@ -144,27 +145,37 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
     }
 
     #region Movespeed
+    [SubscribeLocalEvent]
     private void OnStartInfluenceStride(Entity<InfluenceStrideComponent> uid, ref ComponentInit args) // i wish movespeed was easier to work with
     {
         // _movementSpeed.RefreshMovementSpeedModifiers(uid);
     }
+
+    [SubscribeLocalEvent]
     private void OnEndInfluenceStride(Entity<InfluenceStrideComponent> uid, ref ComponentRemove args) // these functions just make sure
     {
         // _movementSpeed.RefreshMovementSpeedModifiers(uid);
     }
+
+    [SubscribeLocalEvent]
     private void OnStartImposition(Entity<CosmicImposingComponent> uid, ref ComponentInit args) // that movespeed applies more-or-less correctly
     {
         // _movementSpeed.RefreshMovementSpeedModifiers(uid);
     }
+
+    [SubscribeLocalEvent]
     private void OnEndImposition(Entity<CosmicImposingComponent> uid, ref ComponentRemove args) // as various cosmic cult effects get added and removed
     {
         // _movementSpeed.RefreshMovementSpeedModifiers(uid);
     }
 
+    [SubscribeLocalEvent]
     private void OnRefreshMoveSpeed(EntityUid uid, InfluenceStrideComponent comp, RefreshMovementSpeedModifiersEvent args)
     {
         args.ModifySpeed(1.1f, 1.1f);
     }
+
+    [SubscribeLocalEvent]
     private void OnImpositionMoveSpeed(EntityUid uid, CosmicImposingComponent comp, RefreshMovementSpeedModifiersEvent args)
     {
         args.ModifySpeed(0.65f, 0.65f);

@@ -20,7 +20,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.CosmicCult.Abilities;
 
-public sealed class CosmicShuntSystem : EntitySystem
+public sealed partial class CosmicShuntSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
@@ -31,15 +31,6 @@ public sealed class CosmicShuntSystem : EntitySystem
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private SharedStunSystem _stun = default!;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<CosmicCultistComponent, EventCosmicShunt>(OnCosmicShunt);
-        SubscribeLocalEvent<CosmicCultistComponent, CosmicShuntDoAfter>(OnCosmicShuntDoAfter);
-        SubscribeLocalEvent<CosmicShuntedEntityComponent, InteractHandEvent>(OnShuntInteract);
-    }
 
     public override void Update(float frameTime)
     {
@@ -92,6 +83,7 @@ public sealed class CosmicShuntSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnShuntInteract(Entity<CosmicShuntedEntityComponent> ent, ref InteractHandEvent args)
     {
         if (ent.Comp.ConvertOnReturn || args.Handled || !_cult.EntityIsCultist(args.User) || !TryComp<CosmicCultistComponent>(args.User, out var cultComp))
@@ -102,6 +94,7 @@ public sealed class CosmicShuntSystem : EntitySystem
         ent.Comp.ReadyToReturn = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnCosmicShunt(Entity<CosmicCultistComponent> ent, ref EventCosmicShunt args)
     {
         if (args.Handled)
@@ -116,6 +109,7 @@ public sealed class CosmicShuntSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("cosmicability-shunt-begin", ("target", Identity.Entity(ent, EntityManager))), ent, args.Target);
     }
 
+    [SubscribeLocalEvent]
     private void OnCosmicShuntDoAfter(Entity<CosmicCultistComponent> ent, ref CosmicShuntDoAfter args)
     {
         if (args.Cancelled || args.Handled || args.Args.Target is not { } target)

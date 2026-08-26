@@ -1,23 +1,16 @@
-
 using Content.Shared.CosmicCult;
 using Content.Shared.CosmicCult.Components;
 using Robust.Shared.Timing;
 
 namespace Content.Server.CosmicCult.Abilities.Colossus;
 
-public sealed class CosmicSunderSystem : EntitySystem
+public sealed partial class CosmicSunderSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<CosmicColossusComponent, EventCosmicColossusSunder>(OnColossusSunder);
-    }
-
+    [SubscribeLocalEvent]
     private void OnColossusSunder(Entity<CosmicColossusComponent> ent, ref EventCosmicColossusSunder args)
     {
         args.Handled = true;

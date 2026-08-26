@@ -7,22 +7,13 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.CosmicCult.Abilities;
 
-public sealed class CosmicIngressSystem : EntitySystem
+public sealed partial class CosmicIngressSystem : EntitySystem
 {
     [Dependency] private DoorSystem _door = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<CosmicCultistComponent, EventCosmicIngress>(OnCosmicIngress);
-
-        SubscribeLocalEvent<CosmicColossusComponent, EventCosmicColossusIngress>(OnColossusIngress);
-        SubscribeLocalEvent<CosmicColossusComponent, EventCosmicColossusIngressDoAfter>(OnColossusIngressDoAfter);
-    }
-
+    [SubscribeLocalEvent]
     private void OnCosmicIngress(Entity<CosmicCultistComponent> uid, ref EventCosmicIngress args)
     {
         var target = args.Target;
@@ -37,6 +28,7 @@ public sealed class CosmicIngressSystem : EntitySystem
         Spawn(uid.Comp.GenericVfx, Transform(target).Coordinates);
     }
 
+    [SubscribeLocalEvent]
     private void OnColossusIngress(Entity<CosmicColossusComponent> ent, ref EventCosmicColossusIngress args)
     {
         var doargs = new DoAfterArgs(EntityManager, ent, ent.Comp.IngressDoAfter, new EventCosmicColossusIngressDoAfter(), ent, args.Target)
@@ -50,6 +42,7 @@ public sealed class CosmicIngressSystem : EntitySystem
         _doAfter.TryStartDoAfter(doargs);
     }
 
+    [SubscribeLocalEvent]
     private void OnColossusIngressDoAfter(Entity<CosmicColossusComponent> ent, ref EventCosmicColossusIngressDoAfter args)
     {
         if (args.Args.Target is not { } target)
