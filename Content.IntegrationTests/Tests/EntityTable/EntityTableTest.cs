@@ -8,83 +8,92 @@ using Robust.Shared.Random;
 
 namespace Content.IntegrationTests.Tests.EntityTable;
 
-[TestFixture]
 [TestOf(typeof(EntityTableSystem))]
 public sealed class EntityTableTest : GameTest
 {
-    [SidedDependency(Side.Server)]
-    private readonly EntityTableSystem _sEntityTable = null!;
+    [SidedDependency(Side.Server)] private readonly EntityTableSystem _sEntityTable = null!;
 
     private const string EntProto1 = "EntityTableTestEnt1";
     private const string EntProto2 = "EntityTableTestEnt2";
     private const string EntProtoWithCost = "EntityTableTestEntWithCost";
+    private const string EntityTableTestEntSelector = "EntityTableTestEntSelector";
+    private const string EntityTableTestEntSelectorAmountRolls = "EntityTableTestEntSelectorAmountRolls";
+    private const string EntityTableTestAllSelector = "EntityTableTestAllSelector";
+    private const string EntityTableTestNoneSelector = "EntityTableTestNoneSelector";
+    private const string EntityTableTestNestedTable = "EntityTableTestNestedTable";
+    private const string EntityTableTestGroupAllFail = "EntityTableTestGroupAllFail";
+    private const string EntityTableTestEntSelectorWithCost = "EntityTableTestEntSelectorWithCost";
+    private const string EntityTableTestEntRequireAll = "EntityTableTestEntRequireAll";
+    private const string EntityTableTestEntRequireAny = "EntityTableTestEntRequireAny";
+    private const string EntityTableTestDeepComposition = "EntityTableTestDeepComposition";
+    private const string EntityTableTestChainTable = "EntityTableTestChainTable";
 
     [TestPrototypes]
     private const string Prototypes =
         $"""
          - type: entity
            id: {EntProto1}
-         
+
          - type: entity
            id: {EntProto2}
-         
+
          - type: entity
            id: {EntProtoWithCost}
            components:
            - type: DynamicRuleCost
              cost: 10
-         
+
          - type: entityTable
-           id: EntityTableTestEntSelector
+           id: {EntityTableTestEntSelector}
            table: !type:EntSelector
              id: {EntProto1}
-         
+
          - type: entityTable
-           id: EntityTableTestEntSelectorAmountRolls
+           id: {EntityTableTestEntSelectorAmountRolls}
            table: !type:EntSelector
              id: {EntProto1}
              amount: 3
              rolls: 2
-         
+
          - type: entityTable
-           id: EntityTableTestAllSelector
+           id: {EntityTableTestAllSelector}
            table: !type:AllSelector
              children:
              - id: {EntProto1}
              - !type:NoneSelector
              - id: {EntProto2}
-         
+
          - type: entityTable
-           id: EntityTableTestNoneSelector
+           id: {EntityTableTestNoneSelector}
            table: !type:NoneSelector
-         
+
          - type: entityTable
-           id: EntityTableTestNestedTable
+           id: {EntityTableTestNestedTable}
            table: !type:GroupSelector
              children:
              - id: {EntProto1}
                weight: 1
              - id: {EntProto2}
                weight: 2
-         
+
          - type: entityTable
-           id: EntityTableTestGroupAllFail
+           id: {EntityTableTestGroupAllFail}
            table: !type:GroupSelector
              children:
              - id: {EntProto1}
                conditions:
                - !type:HasBudgetCondition
                  costOverride: 100
-         
+
          - type: entityTable
-           id: EntityTableTestEntSelectorWithCost
+           id: {EntityTableTestEntSelectorWithCost}
            table: !type:EntSelector
              id: {EntProtoWithCost}
              conditions:
              - !type:HasBudgetCondition
-         
+
          - type: entityTable
-           id: EntityTableTestEntRequireAll
+           id: {EntityTableTestEntRequireAll}
            table: !type:EntSelector
              id: {EntProto1}
              requireAll: true
@@ -93,9 +102,9 @@ public sealed class EntityTableTest : GameTest
                costOverride: 100
              - !type:HasBudgetCondition
                costOverride: 0
-         
+
          - type: entityTable
-           id: EntityTableTestEntRequireAny
+           id: {EntityTableTestEntRequireAny}
            table: !type:EntSelector
              id: {EntProto1}
              requireAll: false
@@ -104,9 +113,9 @@ public sealed class EntityTableTest : GameTest
                costOverride: 100
              - !type:HasBudgetCondition
                costOverride: 0
-         
+
          - type: entityTable
-           id: EntityTableTestDeepComposition
+           id: {EntityTableTestDeepComposition}
            table: !type:AllSelector
              children:
              - !type:GroupSelector
@@ -119,24 +128,24 @@ public sealed class EntityTableTest : GameTest
                - id: {EntProto2}
                  weight: 2
              - id: {EntProto1}
-         
+
          - type: entityTable
-           id: EntityTableTestChainTable
+           id: {EntityTableTestChainTable}
            table: !type:NestedSelector
-             tableId: EntityTableTestNestedTable
+             tableId: {EntityTableTestNestedTable}
          """;
 
     [Test]
     public void EntSelector_BasicSingleSpawn()
     {
-        var result = Run(Table("EntityTableTestEntSelector"));
-        Assert.That(result, Is.EquivalentTo(new [] { EntProto1 }));
+        var result = Run(Table(EntityTableTestEntSelector));
+        Assert.That(result, Is.EquivalentTo([EntProto1]));
     }
 
     [Test]
     public void EntSelector_AmountAndRollsCompose()
     {
-        var result = Run(Table("EntityTableTestEntSelectorAmountRolls"));
+        var result = Run(Table(EntityTableTestEntSelectorAmountRolls));
         Assert.That(result, Has.Length.EqualTo(6));
         Assert.That(result, Is.All.EqualTo(EntProto1));
     }
@@ -144,15 +153,15 @@ public sealed class EntityTableTest : GameTest
     [Test]
     public void AllSelector_CombinesChildrenInOrder()
     {
-        var result = Run(Table("EntityTableTestAllSelector"));
+        var result = Run(Table(EntityTableTestAllSelector));
         // NoneSelector contributes nothing, so we get Ent1 then Ent2.
-        Assert.That(result, Is.EqualTo(new[] { new EntProtoId(EntProto1), new EntProtoId(EntProto2) }));
+        Assert.That(result, Is.EqualTo([new EntProtoId(EntProto1), new EntProtoId(EntProto2)]));
     }
 
     [Test]
     public void NoneSelector_YieldsNothing()
     {
-        var result = Run(Table("EntityTableTestNoneSelector"));
+        var result = Run(Table(EntityTableTestNoneSelector));
         Assert.That(result, Is.Empty);
     }
 
@@ -163,24 +172,24 @@ public sealed class EntityTableTest : GameTest
         var counts = new Dictionary<string, int>();
         for (var i = 0; i < 100; i++)
         {
-            var spawn = Run(Table("EntityTableTestNestedTable"), SeededRand(i)).Single();
+            var spawn = Run(Table(EntityTableTestNestedTable), SeededRand(i)).Single();
             counts[spawn] = counts.GetValueOrDefault(spawn) + 1;
         }
 
         // Ent2 has weight 2, Ent1 has weight 1, so Ent2 should dominate.
         Assert.That(counts[EntProto2], Is.GreaterThan(counts[EntProto1]));
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(counts[EntProto1], Is.GreaterThan(20));
             Assert.That(counts[EntProto2], Is.GreaterThan(40));
-        });
+        }
     }
 
     [Test]
     public void GroupSelector_AllChildrenConditionsFail_ReturnsEmpty()
     {
         // No budget in context => condition fails => GroupSelector's child pool is empty.
-        var result = Run(Table("EntityTableTestGroupAllFail"), ctx: new EntityTableContext());
+        var result = Run(Table(EntityTableTestGroupAllFail), ctx: new EntityTableContext());
         Assert.That(result, Is.Empty);
     }
 
@@ -188,7 +197,7 @@ public sealed class EntityTableTest : GameTest
     public void NestedSelector_ResolvesTransitively()
     {
         // EntityTableTestChainTable is a NestedSelector pointing at EntityTableTestNestedTable.
-        var chained = Run(Table("EntityTableTestChainTable"), SeededRand(42));
+        var chained = Run(Table(EntityTableTestChainTable), SeededRand(42));
         Assert.That(chained, Has.Length.EqualTo(1));
         Assert.That(chained[0], Is.AnyOf(EntProto1, EntProto2));
     }
@@ -199,24 +208,24 @@ public sealed class EntityTableTest : GameTest
         // EntityTableTestEntSelectorWithCost reads cost 10 from the DynamicRuleCostComponent.
 
         // Budget 9 => not enough.
-        var poor = Run(Table("EntityTableTestEntSelectorWithCost"), ctx: new EntityTableContext(new() { ["Budget"] = 9f }));
+        var poor = Run(Table(EntityTableTestEntSelectorWithCost), ctx: new EntityTableContext(new() { ["Budget"] = 9f }));
         Assert.That(poor, Is.Empty);
 
         // Budget 10 => enough.
-        var rich = Run(Table("EntityTableTestEntSelectorWithCost"), ctx: new EntityTableContext(new() { ["Budget"] = 10f }));
-        Assert.That(rich, Is.EquivalentTo(new[] { new EntProtoId(EntProtoWithCost) }));
+        var rich = Run(Table(EntityTableTestEntSelectorWithCost), ctx: new EntityTableContext(new() { ["Budget"] = 10f }));
+        Assert.That(rich, Is.EquivalentTo([new EntProtoId(EntProtoWithCost)]));
     }
 
     [Test]
     public void RequireAllConditionSemantics()
     {
         // RequireAll = true, one fails => no spawns.
-        var requireAllResult = Run(Table("EntityTableTestEntRequireAll"), ctx: new EntityTableContext(new() { ["Budget"] = 50f }));
+        var requireAllResult = Run(Table(EntityTableTestEntRequireAll), ctx: new EntityTableContext(new() { ["Budget"] = 50f }));
         Assert.That(requireAllResult, Is.Empty);
 
         // RequireAll = false, one passes => spawns.
-        var requireAnyResult = Run(Table("EntityTableTestEntRequireAny"), ctx: new EntityTableContext(new() { ["Budget"] = 50f }));
-        Assert.That(requireAnyResult, Is.EquivalentTo(new[] { new EntProtoId(EntProto1) }));
+        var requireAnyResult = Run(Table(EntityTableTestEntRequireAny), ctx: new EntityTableContext(new() { ["Budget"] = 50f }));
+        Assert.That(requireAnyResult, Is.EquivalentTo([new EntProtoId(EntProto1)]));
     }
 
     [Test]
@@ -224,8 +233,8 @@ public sealed class EntityTableTest : GameTest
     public void DeepComposition_ComplexTree()
     {
         // Ent1's condition fails (Budget 50 < CostOverride 100), so Group only has Ent2.
-        var result = Run(Table("EntityTableTestDeepComposition"), SeededRand(1), new EntityTableContext(new() { ["Budget"] = 50f }));
-        Assert.That(result, Is.EqualTo(new[] { new EntProtoId(EntProto2), new EntProtoId(EntProto1) }));
+        var result = Run(Table(EntityTableTestDeepComposition), SeededRand(1), new EntityTableContext(new() { ["Budget"] = 50f }));
+        Assert.That(result, Is.EqualTo([new EntProtoId(EntProto2), new EntProtoId(EntProto1)]));
     }
 
     private static IRobustRandom SeededRand(int seed)
