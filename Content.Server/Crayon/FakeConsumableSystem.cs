@@ -57,12 +57,14 @@ public sealed partial class FakeConsumableSystem : EntitySystem
         if (slot.ContainedEntity != null)
         {
             _popup.PopupCursor(Loc.GetString("fake-consumable-already-contained", ("contained", slot.ContainedEntity), ("owner", ent)), user);
+            args.Handled = true;
             return;
         }
 
         if (_whitelist.IsWhitelistPass(ent.Comp.Blacklist, used))
         {
             _popup.PopupCursor(Loc.GetString("fake-consumable-blacklisted-item", ("used", used), ("owner", ent)), user);
+            args.Handled = true;
             return;
         }
 
