@@ -1,12 +1,13 @@
 #nullable enable
 using Content.IntegrationTests.Tests.Interaction;
+using Content.Shared.Construction.Prototypes;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Construction.Interaction;
 
 public sealed class ComputerConstruction : InteractionTest
 {
-    private static readonly EntProtoId Computer = "Computer";
+    private static readonly ProtoId<ConstructionPrototype> ComputerRecipe = "Computer";
     private static readonly EntProtoId ComputerId = "ComputerId";
     private static readonly EntProtoId ComputerFrame = "ComputerFrame";
     private static readonly EntProtoId IdBoard = "IDComputerCircuitboard";
@@ -17,7 +18,7 @@ public sealed class ComputerConstruction : InteractionTest
     public async Task ConstructComputer()
     {
         // Place ghost
-        await StartConstruction(Computer);
+        await StartConstruction(ComputerRecipe);
 
         // Initial interaction (ghost turns into real entity)
         await InteractUsing(Steel, 5);
