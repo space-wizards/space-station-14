@@ -86,6 +86,14 @@
     thresholds:
       0: Alive
       500: Dead
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 600
+      behaviors:
+      - !type:GibBehavior
   - type: Metabolizer
     solutionOnBody: false
     updateInterval: 0.25
