@@ -215,6 +215,7 @@
     - sprite: Objects/Weapons/Melee/armblade.rsi
       state: icon
 
+
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
   parent: BaseAntagSpawner

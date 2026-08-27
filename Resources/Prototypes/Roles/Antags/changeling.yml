@@ -51,21 +51,17 @@
 
 # for the mid round space-spawned changeling
 - type: antagSpecifier
-  parent: Changeling
+  parent: RestrictedAntag
   id: SpaceChangeling
   spawnerPrototype: SpawnPointGhostSpaceChangeling
   pickPlayer: false
-  startingGear: SpaceChangelingGear
   briefing:
     text: space-changeling-role-greeting
     color: Red
     sound: /Audio/Ambience/Antag/changeling_start.ogg
+  mindRoles:
+  - MindRoleChangeling
   components:
-  - type: RandomMetadata
-    nameSegments:
-    - NamesFirst
-    - NamesLast
-    nameFormat: name-format-standard
   # meteor!
   - type: PolymorphOnTrigger
     polymorph: ChangelingMeteor
@@ -74,21 +70,18 @@
   - type: TriggerOnSpawn
     keyOut: poly
 
-- type: startingGear
-  id: SpaceChangelingGear # almost naked!
-  equipment:
-    head: ClothingHeadHelmetLingWeak
-    outerClothing: ClothingOuterArmorChangelingWeak
-
 - type: entity
   name: strange meteor
   description: This meteor looks more akin to a fossile than to an aggregate of minerals.
   id: ChangelingMeteor
-  parent: BaseMeteor
+  parent:
+  - BaseMeteor
+  - MobNightVision # dont think too hard about it not being a mob
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    state: changeling
+    sprite: Mobs/Animals/headslug.rsi
+    state: shell
   - type: FlingTowardStation
     speed: 15
   - type: Solution
@@ -103,16 +96,16 @@
       types:
         Blunt: 1
         Structural: 5
-  - type: Explosive
+  - type: Explosive # very weak explosion for visuals
     explosionType: DemolitionCharge
-    totalIntensity: 999 # BREAK RWALLS GOD DAMN IT
-    intensitySlope: 50
+    totalIntensity: 3
+    intensitySlope: 1
     tileBreakScale: 0
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 1000
+        damage: 1
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]

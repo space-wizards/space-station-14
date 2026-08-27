@@ -103,6 +103,93 @@
   - type: Tag # Removes DoorBumpOpener
     tags:
       []
+  - type: InteractionPopup
+    successChance: 0.2
+    interactSuccessString: petting-success-headslug
+    interactFailureString: petting-failure-headslug
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Effects/Fluids/blood1.ogg
+
+- type: entity
+  parent:
+  - SimpleSpaceMobBase
+  - MobNightVision
+  - BaseMobDestructible
+  - FlyingMobBase # its space faring because it spawns from space
+  id: MobHeadSlugElder
+  name: elder headslug
+  description: After living a few years, headslugs develop into this state and gain space faring abilities as a part of the changeling's reproduction cycle.
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 15
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: Sprite
+    drawdepth: SmallMobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: slug_elder
+      sprite: Mobs/Animals/headslug.rsi
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: slug_elder
+      Critical:
+        Base: slug_elder_dead
+      Dead:
+        Base: slug_elder_dead
+  - type: Deathgasp
+  - type: MobStateActions
+    actions:
+      Critical:
+      - ActionCritSuccumb
+      - ActionCritFakeDeath
+      - ActionCritLastWords
+  - type: ExplosionResistance # since it spawns in a bang
+    damageCoefficient: 0.1
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Critical
+      75: Dead
+  - type: MovementSpeedModifier # Slightly faster than regular mobs
+    baseWalkSpeed: 3
+    baseSprintSpeed: 5
+  - type: MeleeWeapon
+    altDisarm: false
+    damage:
+      types:
+        Blunt: 8
+        Structural: 25 # to destroy lockers in which bodies could be hidden
+  - type: ChangelingSlug
+  - type: ActionGrant
+    actions:
+    - ActionChangelingStasis # it is just a buffed headslug
+  - type: ReplacementAccent
+    accent: genericAggressive
+  - type: InteractionPopup
+    successChance: 0.01
+    interactSuccessString: petting-success-elder-headslug
+    interactFailureString: petting-failure-elder-headslug
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/cat_meow.ogg # meow
+  - type: ReplacementAccent # need these speech comps because it isnt targeted by MakeSentient.
+    accent: genericAggressive
+  - type: Speech
+    speechVerb: LargeMob
+  - type: Emoting
+  - type: Tag # Removes DoorBumpOpener
+    tags:
+      []
 
 - type: entity # dummy prototype for the store listing
   id: ChangelingFleshClothingAbilityStoreDummy

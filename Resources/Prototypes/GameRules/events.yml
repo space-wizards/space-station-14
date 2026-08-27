@@ -230,14 +230,16 @@
   components:
   - type: StationEvent
     weight: 6
-    duration: null
-    occursDuringRoundEnd: false
     earliestStart: 30
     reoccurrenceDelay: 20
-    minimumPlayers: 30
+    minimumPlayers: 20
+    duration: null
+    occursDuringRoundEnd: false
   - type: SpaceSpawnRule
     spawnDistance: 80
-  - type: AntagLoadProfileRule
+  - type: AntagSpawner
+    prototype: MobHeadSlugElder
+  - type: ChangelingRule
   - type: AntagRandomObjectives
     sets:
     - groups: ChangelingObjectiveGroupDevourDummy
