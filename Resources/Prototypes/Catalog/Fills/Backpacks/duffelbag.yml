@@ -446,3 +446,85 @@
         - id: WeaponShotgunHushpup
         - id: BoxLethalshot
         - id: TreasureCoinIron
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelVirtualSinger
+  name: virtual singer costume bag
+  description: Contains the famous virtual singer's costume. Have a great performance!
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: ClothingUniformJumpskirtVirtualSinger
+        - id: ClothingShoesBootsVirtualSinger
+        - id: ClothingHeadVirtualSingerWig
+        - id: FoodMealMemoryleek
+          amount: 2
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelVirtualChimera
+  name: chimera singer costume bag
+  description: Contains the famous chimera singer's costume. Have a great performance!
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: ClothingUniformJumpskirtVirtualChimera
+        - id: ClothingShoesBootsVirtualChimera
+        - id: ClothingHeadVirtualChimeraWig
+        - id: FoodBreadBaguette
+          amount: 2
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelVirtualFan
+  name: singer's fan costume bag
+  description: Contains the singer's fan costume. Have a great performance!
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: ClothingUniformJumpskirtVirtualFan
+        - id: ClothingShoesBootsVirtualFan
+        - id: ClothingHeadVirtualFanWig
+        - id: Multitool
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelVirtualForeigner
+  name: foreign singer costume bag
+  description: Contains the famous foreign singer's costume. Have a great performance!
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: ClothingUniformJumpskirtVirtualForeigner
+        - id: ClothingHeadVirtualForeignerWig
+        - id: ClothingShoesBootsVirtualForeigner
+        - id: PlushieCarp
+          amount: 2
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelVirtualTaro
+  name: Taro costume bag
+  description: Contains the Taro's costume. Have a great performance!
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: ClothingOuterCoatVirtualTaro
+        - id: ClothingUniformJumpsuitVirtualTaro
+        - id: ClothingShoesBootsVirtualTaro
+        - id: ClothingHeadVirtualTaroWig
+        - id: ClothingNeckScarfVirtualTaro
+        - id: ClothingHandsGlovesFingerless
+        - id: FoodFrozenPopsicleJumbo
+          amount: 2

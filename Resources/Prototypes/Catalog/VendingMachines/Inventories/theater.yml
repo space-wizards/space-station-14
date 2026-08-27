@@ -58,6 +58,11 @@
     ClothingShoesBootsCowboyWhite: 1
     ClothingHeadHatWizardFake: 1
     ClothingOuterWizardFake: 1
+    ClothingBackpackDuffelVirtualSinger: 1
+    ClothingBackpackDuffelVirtualChimera: 1
+    ClothingBackpackDuffelVirtualFan: 1
+    ClothingBackpackDuffelVirtualForeigner: 1
+    ClothingBackpackDuffelVirtualTaro: 1
   contrabandInventory:
     ClothingHeadHatRichard: 1
     ToyFigurineBoxer: 1

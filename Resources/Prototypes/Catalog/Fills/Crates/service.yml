@@ -176,11 +176,11 @@
           - id: ClothingMaskMime
           - id: ClothingBeltSuspendersRed
           - id: ClothingBeltSuspendersBlack
-        - !type:AllSelector # Performer starter kit
+        - !type:AllSelector # Virtual singer starter kit
           children:
-          - id: ClothingUniformJumpskirtPerformer
-          - id: ClothingShoesBootsPerformer
-          - id: ClothingHeadPerformerWig
+          - id: ClothingUniformJumpskirtVirtualSinger
+          - id: ClothingShoesBootsVirtualSinger
+          - id: ClothingHeadVirtualSingerWig
 
 - type: entity
   parent: CrateGenericSteel

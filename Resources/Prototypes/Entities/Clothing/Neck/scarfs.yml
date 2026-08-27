@@ -266,3 +266,15 @@
     sprite: Clothing/Neck/Scarfs/PrideScarfs/lesbian-long.rsi
   - type: Clothing
     sprite: Clothing/Neck/Scarfs/PrideScarfs/lesbian-long.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckScarfVirtualTaro
+  name: Taro's scarf
+  description: A bright blue scarf with yellow tips at the ends.
+  components:
+    - type: Sprite
+      sprite: Clothing/Neck/Scarfs/virtual_taro.rsi
+    - type: Clothing
+      sprite: Clothing/Neck/Scarfs/virtual_taro.rsi
+
