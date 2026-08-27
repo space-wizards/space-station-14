@@ -58,15 +58,7 @@ namespace Content.Client.Ghost
             if (!TryComp(uid, out SpriteComponent? sprite))
                 return;
 
-            var visible = GhostVisibility switch
-            {
-                GhostVisibilityMode.ShowAllGhosts => true,
-                GhostVisibilityMode.HideOtherGhosts => uid == _playerManager.LocalEntity,
-                GhostVisibilityMode.HideOtherGhostsAndSelf => false,
-                _ => throw new ArgumentOutOfRangeException()
-            };
-
-            _sprite.SetVisible((uid, sprite), visible);
+            _sprite.SetVisible((uid, sprite), GetGhostVisible(uid, GhostVisibility));
         }
 
         private void OnToggleLighting(EntityUid uid, EyeComponent component, ToggleLightingActionEvent args)
@@ -222,16 +214,19 @@ namespace Content.Client.Ghost
 
             while (query.MoveNext(out var uid, out _, out var sprite))
             {
-                var visible = mode switch
-                {
-                    GhostVisibilityMode.ShowAllGhosts => true,
-                    GhostVisibilityMode.HideOtherGhosts => uid == _playerManager.LocalEntity,
-                    GhostVisibilityMode.HideOtherGhostsAndSelf => false,
-                    _ => throw new ArgumentOutOfRangeException()
-                };
-
-                _sprite.SetVisible((uid, sprite), visible);
+                _sprite.SetVisible((uid, sprite), GetGhostVisible(uid, mode));
             }
+        }
+
+        private bool GetGhostVisible(EntityUid uid, GhostVisibilityMode mode)
+        {
+            return mode switch
+            {
+                GhostVisibilityMode.ShowAllGhosts => true,
+                GhostVisibilityMode.HideOtherGhosts => uid == _playerManager.LocalEntity,
+                GhostVisibilityMode.HideOtherGhostsAndSelf => false,
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
 
     }
