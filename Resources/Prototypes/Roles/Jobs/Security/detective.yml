@@ -10,7 +10,7 @@
   startingGear: DetectiveGear
   icon: "JobIconDetective"
   supervisors: job-supervisors-hos
-  guides: [ Forensics ]
+  guides: [ Forensics ] # Todo: should have a more specific guidebook page, since there's a bit more to detective than just forensics itself
   access:
   - Security
   - Brig

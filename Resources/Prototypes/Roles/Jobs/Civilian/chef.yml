@@ -10,7 +10,7 @@
   startingGear: ChefGear
   icon: "JobIconChef"
   supervisors: job-supervisors-hop
-  guides: [ Chef ] # TODO: should have a more specific guidebook page instead of using the department itself
+  guides: [ Chef ]
   access:
   - Service
   - Maintenance
