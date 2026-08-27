@@ -44,9 +44,6 @@ public sealed partial class VendingMachineInventoryCategory
     [DataField]
     public Dictionary<EntProtoId, uint> ContrabandInventory { get; private set; } = [];
 
-    /// <summary>
-    /// Returns inventory entries of the specified type for this category.
-    /// </summary>
     public IReadOnlyDictionary<EntProtoId, uint> GetInventory(InventoryType type)
     {
         return type switch
