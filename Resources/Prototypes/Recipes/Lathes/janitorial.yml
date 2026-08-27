@@ -60,7 +60,7 @@
 
 - type: latheRecipe
   id: LightReplacer
-  result: LightReplacerEmpty
+  result: LightReplacer
   completetime: 2.4
   materials:
     Steel: 100
