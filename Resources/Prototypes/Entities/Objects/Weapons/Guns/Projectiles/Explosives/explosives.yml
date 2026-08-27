@@ -74,10 +74,10 @@
     - state: grenade
   - type: ExplodeOnTrigger
   - type: Explosive
-    explosionType: Default
-    totalIntensity: 150 # a ~2 tile radius
-    intensitySlope: 5
-    maxIntensity: 10
+    explosionType: Clake
+    totalIntensity: 240 # a ~3 tile radius
+    intensitySlope: 4
+    maxIntensity: 25
     canCreateVacuum: false
 
 - type: entity
@@ -109,9 +109,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    totalIntensity: 50
-    intensitySlope: 1
-    maxIntensity: 5
+    totalIntensity: 120
+    intensitySlope: 5
+    maxIntensity: 9
     canCreateVacuum: false
   - type: ContainerContainer
     containers:

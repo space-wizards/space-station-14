@@ -109,3 +109,24 @@
       blacklist:
         components:
           - SurplusBundle
+
+# for the clake:
+- type: listing
+  id: GrenadeFrag
+  name: uplink-ammo-frag-name
+  description: uplink-ammo-frag-desc
+  productEntity: GrenadeFrag
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkAmmo
+
+- type: listing
+  id: GrenadeBlast
+  name: uplink-ammo-blast-name
+  description: uplink-ammo-blast-desc
+  productEntity: GrenadeBlast
+  cost:
+    Telecrystal: 2
+  categories:
+    - UplinkAmmo
