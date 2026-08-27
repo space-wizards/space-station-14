@@ -11,7 +11,6 @@ changeling-briefing =
 objective-issuer-changeling = [color=#FA2A55]The Hivemind[/color]
 
 changeling-round-end-agent-name = changeling
-space-changeling-round-end-agent-name = elder headslug
 
 space-changeling-role-greeting =
     You are a changeling, a highly intelligent predator.
