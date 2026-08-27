@@ -45,6 +45,7 @@
     - id: ZombieOutbreak
     - id: LoneOpsSpawn
     - id: WizardSpawn
+    - id: SpaceChangelingSpawn
     - !type:NestedSelector
       tableId: DerelictBorgEventTable
 
