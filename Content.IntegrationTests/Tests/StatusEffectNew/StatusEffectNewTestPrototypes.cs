@@ -10,10 +10,12 @@ public static class StatusEffectNewTestPrototypes
     public const string StatusA = "StatusA";
     public const string StatusB = "StatusB";
     public const string StatusC = "StatusC";
+    public const string StatusD = "StatusD";
     
     public static readonly TimeSpan OneSecond = new TimeSpan(0, 0, 0, 1);
     public static readonly TimeSpan OneMinute = new TimeSpan(0, 0, 1, 0);
     public static readonly TimeSpan TenTicks = new TimeSpan(10L);
+    public static readonly TimeSpan MinusTenTicks = new TimeSpan(-10L);
 
     [TestPrototypes]
     public static readonly string StatusEffectPrototypes = @$"
@@ -29,6 +31,11 @@ public static class StatusEffectNewTestPrototypes
 
 - type: entity
   id: {StatusC}
+  components:
+  - type: StatusEffect
+
+- type: entity
+  id: {StatusD}
   components:
   - type: StatusEffect
 ";

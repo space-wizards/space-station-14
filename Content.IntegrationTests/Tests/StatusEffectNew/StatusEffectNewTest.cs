@@ -16,7 +16,7 @@ public sealed class StatusEffectNewTest : InteractionTest
     [SidedDependency(Side.Server)] private readonly IGameTiming _gameTiming = default!;
     
     [Test, Description("Test that the durations of status effects can be set")]
-    public async Task TestDurations()
+    public async Task TestSetDurations()
     {
 
         var curTime = TimeSpan.Zero;
@@ -26,18 +26,27 @@ public sealed class StatusEffectNewTest : InteractionTest
             _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA);
             curTime = _gameTiming.CurTime;
             _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusB, OneMinute);
+            
+            // checking to ensure that a negative duration gets rejected
+            _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusC, MinusTenTicks);
         });
 
-        _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timeA);
+        
+        Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA), Is.True, "Status effect A was not found on the player");
+        Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var timeA), Is.True, "Could not get time info for effect A");
         
         Assert.That(timeA.EndEffectTime, Is.Null, "Status effect A did not have an end time of null");
         
-        _sStatusSystem.TryGetTime(SPlayer, StatusB, out var timeB);
+        Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusB), Is.True, "Status effect B was not found on the player");
+        Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusB, out var timeB), Is.True, "Could not get time info for effect B");
         Assert.That(timeB.EndEffectTime, Is.EqualTo(curTime + OneMinute), "Status effect B did not have an end time of one minute from start time");
+        
+        
+        Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusC), Is.False, "Status effect C was found despite having a negative duration");
     }
     
     [Test, Description("Test that the delays of status effects can be set")]
-    public async Task TestDelays()
+    public async Task TestSetDelays()
     {
         var curTimeA = TimeSpan.Zero;
         var curTimeB = TimeSpan.Zero;
@@ -50,11 +59,11 @@ public sealed class StatusEffectNewTest : InteractionTest
             curTimeB = _gameTiming.CurTime;
         });
 
-        _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timeA);
+        Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var timeA), Is.True, "Could not get time info for effect A");
         
         Assert.That(timeA.StartEffectTime, Is.EqualTo(curTimeA), "Status effect A did not start immediately");
         
-        _sStatusSystem.TryGetTime(SPlayer, StatusB, out var timeB);
+        Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusB, out var timeB), Is.True, "Could not get time info for effect B");
         Assert.That(timeB.StartEffectTime, Is.EqualTo(curTimeB + OneMinute), "Status effect B is not going to start after a delay of one minute");
     }
 
@@ -68,15 +77,15 @@ public sealed class StatusEffectNewTest : InteractionTest
             _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusB, TenTicks);
         });
         
-        Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusA, out var uidStatusA), Is.True, "Status effect A was not found on the player");
-        Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusB, out var uidStatusB), Is.True, "Status effect B was not found on the player");
-        Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusC, out var uidStatusC), Is.False, "Status effect C was found on the player despite never being given");
+        Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA), Is.True, "Status effect A was not found on the player");
+        Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusB), Is.True, "Status effect B was not found on the player");
+        Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusC), Is.False, "Status effect C was found on the player despite never being given");
 
         await Server.WaitRunTicks(10);
         
-        Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusA, out var uidStatusA_2), Is.True, "Status effect A was not found on the player after 10 ticks");
-        Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusB, out var uidStatusB_2), Is.False, "Status effect B was still on the player after it should have expired");
-        Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusC, out var uidStatusC_2), Is.False, "Status effect C was found on the player despite never being given");
+        Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA), Is.True, "Status effect A was not found on the player after 10 ticks");
+        Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusB), Is.False, "Status effect B was still on the player after it should have expired");
+        Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusC), Is.False, "Status effect C was found on the player despite never being given");
 
     }
     
@@ -89,15 +98,14 @@ public sealed class StatusEffectNewTest : InteractionTest
             _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA);
         });
         
-        Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusA, out var uidStatusA), Is.True, "Status effect A was not found on the player");
-        Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusB, out var uidStatusB), Is.False, "Status effect B was found on the player despite never being given");
+        Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA), Is.True, "Status effect A was not found on the player");
+        Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusB), Is.False, "Status effect B was found on the player despite never being given");
 
         Assert.That(_sStatusSystem.TryRemoveStatusEffect(SPlayer, StatusA), Is.True, "TryRemoveStatusEffect for Status A failed!");
         Assert.That(_sStatusSystem.TryRemoveStatusEffect(SPlayer, StatusB), Is.False, "TryRemoveStatusEffect for Status B (not on the player) somehow succeeded despite this effect not being on the player!?");
         
         await Server.WaitRunTicks(1); // have to wait for queued deletion of status effects
         
-        Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusA, out var uidStatusA_2), Is.False, "Status effect A was still on the player after being removed!");
-
+        Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA), Is.False, "Status effect A was still on the player after being removed!");
     }
 }
