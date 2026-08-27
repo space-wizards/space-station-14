@@ -5,12 +5,13 @@
     xmlns:co="clr-namespace:Content.Client.UserInterface.Controls"
     MinSize="470 350"
     MaxSize="470 350"
-    SetSize="470 350">
+    SetSize="470 350"
+    Resizable="False">
     <BoxContainer Name="MainContainer" Orientation="Vertical">
         <BoxContainer Orientation="Horizontal" VerticalExpand="True">
-            <PanelContainer Name="CategoryPanel" Visible="False" SetWidth="70" Margin="4 4 0 4" VerticalExpand="True">
+            <PanelContainer Name="CategoryPanel" Visible="False" SetWidth="75" Margin="5" VerticalExpand="True">
                 <ScrollContainer HScrollEnabled="False" VerticalExpand="True">
-                    <BoxContainer Name="CategoryButtons" Orientation="Vertical" SeparationOverride="2"
+                    <BoxContainer Name="CategoryButtons" Orientation="Vertical" SeparationOverride="2" Margin="0 0 7 0"
                         HorizontalAlignment="Center" />
                 </ScrollContainer>
             </PanelContainer>
