@@ -22,14 +22,14 @@ public sealed partial class LegsParalyzedSystem : EntitySystem
         _movementSpeedModifierSystem.ChangeBaseSpeed(ent.Owner, ent.Comp.BaseWalkSpeed, ent.Comp.BaseSprintSpeed, 20);
     }
 
-    /** <summary>
-    * Interject for Standup attempts and instead cancel them. Buckling is probably the only way they should be able to stand up.
-    * Unfortunately, there is no good options as far as trying to block the standing up and sitting down due to ForceStanding and several other parts not being built to be a cancelable event.
-    * so we have to head it off at the source.
-    *
-    * <see cref="WormSystem"/> for another implementation that does half of this.
-    * </summary>
-    */
+    ///<summary>
+    ///Interject for Standup attempts and instead cancel them. Buckling is probably the only way they should be able to stand up.
+    ///Unfortunately, there is no good options as far as trying to block the standing up and sitting down due to ForceStanding and several other parts not being built to be a cancelable event.
+    ///so we have to head it off at the source.
+    ///
+    ///<see cref="WormSystem"/> for another implementation that does half of this.
+    ///</summary>
+    ///
     [SubscribeLocalEvent]
     private void OnStandEvent(Entity<LegsParalyzedComponent> ent, ref StandUpAttemptEvent args)
     {
@@ -50,8 +50,6 @@ public sealed partial class LegsParalyzedSystem : EntitySystem
     /// <summary>
     /// Because we've Interjected on all standup events, we need to manage the Standing up.
     /// </summary>
-    /// <param name="ent"></param>
-    /// <param name="args"></param>
     [SubscribeLocalEvent]
     private void OnBuckled(Entity<LegsParalyzedComponent> ent, ref BuckledEvent args)
     {

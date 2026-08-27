@@ -12,29 +12,22 @@ namespace Content.Shared.Traits.Assorted;
 public sealed partial class LegsParalyzedComponent : Component
 {
 
-    /**
-     * <summary>
-     * Set the players new Base walk speed, Should be low because their legs are non-functional in some manner and they need to move by other means.
-     * </summary>
-     */
+    /// <summary>
+    /// Set the players new Base walk speed, Should be low because their legs are non-functional in some manner and they need to move by other means.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public int BaseWalkSpeed = 1;
 
-    /**
-     * <summary>
-     *  Set the players new Base speed, Should be low because their legs are non-functional in some manner and they need to move by other means.
-     * </summary>
-     */
+    ///<summary>
+    /// Set the players new Base speed, Should be low because their legs are non-functional in some manner and they need to move by other means.
+    ///</summary>
     [DataField, AutoNetworkedField]
     public int BaseSprintSpeed = 1;
 
-    /**
-     * <summary>
-     * Does the player drop their items when unbuckled.
-     * </summary>
-     */
+    ///<summary>
+    ///Does the player drop their items when unbuckled.
+    ///</summary>
     [DataField, AutoNetworkedField]
     public bool DropOnUnbuckle;
-
 
 }
