@@ -219,7 +219,7 @@
 - type: entity
   parent: [ BaseItem, BaseXenoborgContraband ]
   id: WeaponRocketLauncherXenoborg
-  name: XB MRL-97-D # Xenoborg Multi Rocket Launcher 97 D (Demolition)
+  name: xenoborg breaching rocket launcher
   description: A alien rocket launcher fitted with special demolition rockets.
   components:
   - type: Sprite
