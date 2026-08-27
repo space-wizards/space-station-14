@@ -70,11 +70,20 @@
   - type: ChangelingEscapeIdentityCondition
   - type: PickRandomPerson
     conditions:
-    - !type:RoleCondition
-      inverted: true # Do not roll changelings here. Their initial identity will be basically impossible to get after they transform.
+    - !type:NotAntagonistCondition # The only antagonists we want to roll for this objective are on-station. Everything else is basically impossible to devour.
+      excluded: # Lings are excluded because once they transform their identity is essentially not possible to obtain anymore.
+      - Traitor
+      - TraitorSleeper
+      - Thief
+      - HeadRev
+      - InitialInfected
+    # Kill and Escape objectives should have different targets.
+    - !type:ObjectiveTargetCondition
+      inverted: true
       whitelist:
         components:
-        - ChangelingRole
+        - KillPersonCondition
+        - ChangelingEscapeIdentityCondition
 
 - type: entity
   parent: [BaseChangelingObjective, BaseLivingObjective]
@@ -91,11 +100,13 @@
   - type: ChangelingEscapeDepartmentCondition
   - type: PickRandomPerson
     conditions:
-    - !type:RoleCondition # Do not roll changelings here. It will cause problems with weird job mindroles as they transform n stuff.
-      inverted: true
-      whitelist:
-        components:
-        - ChangelingRole
+    - !type:NotAntagonistCondition # Only allow on-station antags. This excludes changelings because them transforming makes mindroles inaccurate and makes this objective basically impossible.
+      excluded:
+      - Traitor
+      - TraitorSleeper
+      - Thief
+      - HeadRev
+      - InitialInfected
     - !type:RoleCondition
       whitelist:
         components:
@@ -114,12 +125,20 @@
     title: objective-condition-kill-maroon-title
   - type: PickRandomPerson
     conditions:
-    # Can't have multiple objectives to kill the same person.
+    - !type:NotAntagonistCondition # Only roll on-station antags.
+      excluded:
+      - Traitor
+      - TraitorSleeper
+      - Thief
+      - HeadRev
+      - InitialInfected
+    # Kill and Escape objectives should have different targets.
     - !type:ObjectiveTargetCondition
       inverted: true
       whitelist:
         components:
         - KillPersonCondition
+        - ChangelingEscapeIdentityCondition
   - type: KillPersonCondition
     requireDead: true
     requireMaroon: true
