@@ -29,5 +29,4 @@ public sealed partial class LegsParalyzedComponent : Component
     ///</summary>
     [DataField, AutoNetworkedField]
     public bool DropOnUnbuckle;
-
 }
