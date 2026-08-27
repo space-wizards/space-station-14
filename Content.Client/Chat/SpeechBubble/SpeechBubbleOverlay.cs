@@ -126,7 +126,10 @@ public sealed partial class SpeechBubbleOverlay : Overlay
             var entCoords = _transform.GetMapCoordinates(ent);
             var eyeCoords = eye.Position;
 
-            if (eye.DrawFov && !_examineSystem.InRangeUnOccluded(entCoords, eyeCoords, 0, null))
+            if (!args.WorldBounds.Contains(entCoords.Position))
+                return;
+
+            if (eye.DrawFov && !_examineSystem.InRangeUnOccluded(entCoords, eyeCoords, args.WorldBounds.Box.MaxDimension, null))
                 continue;
 
             //Get sprite bounding box so we can draw at the bottom.
