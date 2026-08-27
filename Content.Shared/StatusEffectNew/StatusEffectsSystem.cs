@@ -206,10 +206,11 @@ public sealed partial class StatusEffectsSystem : EntitySystem
     }
 
     /// <summary>
-    ///  Sets a new duration for a given status effect
+    ///  Sets a new duration for a given status effect (cannot shorten the duration).
     /// </summary>
     /// <param name="effect">The status effect entity.</param>
-    /// <param name="duration">New duration for the effect (ends at <c>duration</c> time after current time). If null, effect lasts indefinitely</param>
+    /// <param name="duration">New duration for the effect (ends at <c>duration</c> time after current time). If null, effect lasts indefinitely.
+    /// If the new duration is shorter than the existing duration, the existing duration will remain unchanged.</param>
     private void UpdateStatusEffectTime(Entity<StatusEffectComponent?> effect, TimeSpan? duration)
     {
         if (!_effectQuery.Resolve(effect, ref effect.Comp))
@@ -224,7 +225,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         if (duration is not null)
         {
             // Don't update time to a smaller timespan...
-            newEndTime = _timing.CurTime + duration;
+            newEndTime = _timing.CurTime + duration.Value;
             if (effect.Comp.EndEffectTime >= newEndTime)
                 return;
         }
@@ -232,6 +233,11 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         SetStatusEffectEndTime(effect, newEndTime);
     }
 
+    /// <summary>
+    ///  Sets a new delay for a given status effect. Does nothing if the effect has already started. Cannot shorten existing delay; but can make it start instantly.
+    /// </summary>
+    /// <param name="effect">The status effect entity.</param>
+    /// <param name="delay">New delay for the effect (ends at <c>delay</c> time after current time). If null, the effect starts instantly.</param>
     private void UpdateStatusEffectDelay(Entity<StatusEffectComponent?> effect, TimeSpan? delay)
     {
         if (!_effectQuery.Resolve(effect, ref effect.Comp))
@@ -241,12 +247,12 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         if (_timing.CurTime >= effect.Comp.StartEffectTime)
             return;
 
-        var newStartTime = TimeSpan.Zero;
+        var newStartTime = _timing.CurTime;
 
         if (delay is not null)
         {
             // Don't update time to a smaller timespan...
-            newStartTime = _timing.CurTime + delay.Value;
+            newStartTime += delay.Value;
             if (effect.Comp.StartEffectTime < newStartTime)
                 return;
         }

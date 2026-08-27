@@ -95,7 +95,8 @@ public sealed partial class StatusEffectsSystem
 
     /// <summary>
     /// Updates duration of effect to larger value between provided <see cref="duration"/> and current effect duration.
-    /// Tries to add status effect if it is not yet present on entity.
+    /// Tries to add status effect if it is not yet present on entity.<br/>
+    /// Use <see cref="TrySetDuration"/> to overwrite duration to a potentially smaller value.
     /// </summary>
     /// <param name="target">The target entity to which the effect should be added.</param>
     /// <param name="effectProto">ProtoId of the status effect entity. Make sure it has StatusEffectComponent on it.</param>
@@ -310,12 +311,13 @@ public sealed partial class StatusEffectsSystem
     }
 
     /// <summary>
-    /// Attempts to set the remaining time for a status effect on an entity.
+    /// Attempts to set the end time for an existing status effect on an entity (as in the exact timespan when the effect will end).
+    /// Does nothing if this effect is not present on the entity.
     /// </summary>
     /// <param name="uid">The target entity on which the effect is applied.</param>
     /// <param name="effectProto">The prototype ID of the status effect to modify.</param>
-    /// <param name="time">The new duration for the status effect.</param>
-    /// <returns> True if duration was set successfully, false otherwise.</returns>
+    /// <param name="time">The new end time for the status effect. Null makes the effect last indefinitely.</param>
+    /// <returns> True if end time was set successfully, false otherwise.</returns>
     public bool TrySetTime(EntityUid uid, EntProtoId effectProto, TimeSpan? time)
     {
         if (!_containerQuery.TryComp(uid, out var container))
@@ -327,6 +329,39 @@ public sealed partial class StatusEffectsSystem
             if (meta.EntityPrototype is not null && meta.EntityPrototype == effectProto)
             {
                 SetStatusEffectEndTime(effect, time);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Attempts to set a new duration for an existing status effect on an entity.
+    /// Does nothing if this effect is not present on the entity.
+    /// </summary>
+    /// <param name="uid">The target entity on which the effect is applied.</param>
+    /// <param name="effectProto">The prototype ID of the status effect to modify.</param>
+    /// <param name="duration">The new duration for the status effect. Null makes the effect last indefinitely.</param>
+    /// <returns> True if end time was set successfully, false otherwise.</returns>
+    public bool TrySetDuration(EntityUid uid, EntProtoId effectProto, TimeSpan? duration)
+    {
+        if (!_containerQuery.TryComp(uid, out var container))
+            return false;
+        
+        foreach (var effect in container.ActiveStatusEffects?.ContainedEntities ?? [])
+        {
+            var meta = MetaData(effect);
+            if (meta.EntityPrototype is not null && meta.EntityPrototype == effectProto)
+            {
+                if (duration is null)
+                {
+                    SetStatusEffectEndTime(effect, duration);
+                    return true;
+                }
+                if (!_effectQuery.TryComp(effect, out var effectComp))
+                    continue;
+                
+                SetStatusEffectEndTime(effect, effectComp.StartEffectTime + duration.Value);
                 return true;
             }
         }
