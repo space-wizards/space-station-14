@@ -250,7 +250,7 @@
       maxPicks: 1
     maxDifficulty: 8
   - type: AntagSelection
-    agentName: changeling-round-end-agent-name
+    agentName: space-changeling-round-end-agent-name
     antags:
     - !type:FixedAntagCount
       proto: SpaceChangeling

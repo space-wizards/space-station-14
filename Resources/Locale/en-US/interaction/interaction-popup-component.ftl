@@ -34,7 +34,7 @@ petting-success-snake = You pet {THE($target)} on {POSS-ADJ($target)} scaly larg
 petting-success-monkey = You pet {THE($target)} on {POSS-ADJ($target)} mischevious little head.
 petting-success-nymph = You pet {THE($target)} on {POSS-ADJ($target)} wooden little head.
 petting-success-scurret = You pet {THE($target)} on {POSS-ADJ($target)} legally distinct head.
-petting-success-headslug = You pet {THE($target)} {POSS-ADJ($target)} oozy surface.
+petting-success-headslug = You pet {THE($target)} on {POSS-ADJ($target)} oozy surface.
 petting-success-elder-headslug = You pet {THE($target)} {POSS-ADJ($target)} pulsating skin.
 
 petting-failure-generic = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} aloof towards you.
@@ -60,7 +60,7 @@ petting-failure-nymph = You reach out to pet {THE($target)}, but {SUBJECT($targe
 petting-failure-shadow = You try to pet {THE($target)}, but your hand passes through the cold darkness of {POSS-ADJ($target)} body.
 petting-failure-scurret = You reach out to pet {THE($target)}, but {SUBJECT($target)} does a backflip!
 petting-failure-headslug = You try to pet {THE($target)}, but your hand sinks in {POSS-ADJ($target)} flesh.
-petting-failure-elder-headslug = You try to pet {THE($target)}, but {SUBJECT($target)} almost bits you!
+petting-failure-elder-headslug = You try to pet {THE($target)}, but {SUBJECT($target)} almost bites you!
 
 ## Petting silicons
 

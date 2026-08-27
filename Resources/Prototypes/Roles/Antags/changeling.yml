@@ -82,6 +82,7 @@
   - type: Sprite
     sprite: Mobs/Animals/headslug.rsi
     state: shell
+    noRot: true
   - type: FlingTowardStation
     speed: 15
   - type: Solution

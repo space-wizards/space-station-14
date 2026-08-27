@@ -182,9 +182,7 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/cat_meow.ogg # meow
-  - type: ReplacementAccent # need these speech comps because it isnt targeted by MakeSentient.
-    accent: genericAggressive
-  - type: Speech
+  - type: Speech # need these speech comps because it isnt targeted by MakeSentient.
     speechVerb: LargeMob
   - type: Emoting
   - type: Tag # Removes DoorBumpOpener

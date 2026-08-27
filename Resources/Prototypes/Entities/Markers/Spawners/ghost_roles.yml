@@ -201,8 +201,8 @@
   id: SpawnPointGhostSpaceChangeling
   components:
   - type: GhostRole
-    name: ghost-role-information-changeling-name
-    description: ghost-role-information-changeling-description
+    name: ghost-role-information-space-changeling-name
+    description: ghost-role-information-space-changeling-description
     rules: ghost-role-information-antagonist-rules
     mindRoles:
     - MindRoleChangeling
