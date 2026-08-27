@@ -6,6 +6,7 @@
   startingGear: TramDriverGear
   icon: "JobIconTramDriver"
   supervisors: job-supervisors-hop
+  guides: [ Service ] # TODO: should have a more specific guidebook page instead of using the department itself
   requirements:
     - !type:OverallPlaytimeRequirement # someone that's not doing this job will just be a pain for the station
       time: 10h
