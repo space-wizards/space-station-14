@@ -3,18 +3,20 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:co="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
     MinSize="470 350"
     MaxSize="470 350"
     SetSize="470 350"
     Resizable="False">
     <BoxContainer Name="MainContainer" Orientation="Vertical">
         <BoxContainer Orientation="Horizontal" VerticalExpand="True">
-            <PanelContainer Name="CategoryPanel" Visible="False" SetWidth="75" Margin="5" VerticalExpand="True">
+            <PanelContainer Name="CategoryPanel" Visible="False" SetWidth="70" Margin="4 4 0 4" VerticalExpand="True">
                 <ScrollContainer HScrollEnabled="False" VerticalExpand="True">
-                    <BoxContainer Name="CategoryButtons" Orientation="Vertical" SeparationOverride="2" Margin="0 0 7 0"
+                    <BoxContainer Name="CategoryButtons" Orientation="Vertical" SeparationOverride="2"
                         HorizontalAlignment="Center" />
                 </ScrollContainer>
             </PanelContainer>
+            <customControls:VSeparator />
             <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
                 <LineEdit Name="SearchBar" PlaceHolder="{Loc 'vending-machine-component-search-filter'}" HorizontalExpand="True"  Margin ="4 4"/>
                 <co:SearchListContainer Name="VendingContents" VerticalExpand="True" Margin="4 4"/>
