@@ -127,7 +127,7 @@ public sealed partial class SpeechBubbleOverlay : Overlay
             var eyeCoords = eye.Position;
 
             if (!args.WorldBounds.Contains(entCoords.Position))
-                return;
+                continue;
 
             if (eye.DrawFov && !_examineSystem.InRangeUnOccluded(entCoords, eyeCoords, args.WorldBounds.Box.MaxDimension, null))
                 continue;
