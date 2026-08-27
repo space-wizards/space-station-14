@@ -60,7 +60,7 @@
   components:
   - type: PickRandomPerson
     conditions:
-    - !type:NotAntagonistCondition # Only roll on-station antags.
+    - !type:NotAntagonistCondition # Only roll on-station targets.
       excluded:
       - Traitor
       - TraitorSleeper

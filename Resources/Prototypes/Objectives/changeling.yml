@@ -70,7 +70,7 @@
   - type: ChangelingEscapeIdentityCondition
   - type: PickRandomPerson
     conditions:
-    - !type:NotAntagonistCondition # The only antagonists we want to roll for this objective are on-station. Everything else is basically impossible to devour.
+    - !type:NotAntagonistCondition # The only targets we want to roll for this objective are on-station. Everything else is basically impossible to devour.
       excluded: # Lings are excluded because once they transform their identity is essentially not possible to obtain anymore.
       - Traitor
       - TraitorSleeper
@@ -100,7 +100,7 @@
   - type: ChangelingEscapeDepartmentCondition
   - type: PickRandomPerson
     conditions:
-    - !type:NotAntagonistCondition # Only allow on-station antags. This excludes changelings because them transforming makes mindroles inaccurate and makes this objective basically impossible.
+    - !type:NotAntagonistCondition # Only allow on-station targets. This excludes changelings because them transforming makes mindroles inaccurate and makes this objective basically impossible.
       excluded:
       - Traitor
       - TraitorSleeper
@@ -125,7 +125,7 @@
     title: objective-condition-kill-maroon-title
   - type: PickRandomPerson
     conditions:
-    - !type:NotAntagonistCondition # Only roll on-station antags.
+    - !type:NotAntagonistCondition # Only roll on-station targets.
       excluded:
       - Traitor
       - TraitorSleeper
