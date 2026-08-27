@@ -231,7 +231,7 @@
   components:
   - type: StationEvent
     weight: 6
-    earliestStart: 30
+    earliestStart: 20 # can start early since lings need time to start doing stuff
     reoccurrenceDelay: 20
     minimumPlayers: 20
     duration: null
