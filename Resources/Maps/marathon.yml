@@ -59219,7 +59219,7 @@ entities:
     - type: Transform
       parent: 30
       pos: -19.773016,-50.50543
-- proto: ClothingShoesBootsPerformer
+- proto: ClothingShoesBootsVirtualSinger
   entities:
   - uid: 15071
     components:
@@ -59325,7 +59325,7 @@ entities:
     - type: Transform
       parent: 30
       pos: -72.460976,-48.531662
-- proto: ClothingUniformJumpskirtPerformer
+- proto: ClothingUniformJumpskirtVirtualSinger
   entities:
   - uid: 15070
     components:
