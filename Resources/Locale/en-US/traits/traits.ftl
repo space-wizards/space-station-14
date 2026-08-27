@@ -66,5 +66,5 @@ trait-hemophilia-desc = Your body fails to make blood clots.
 trait-impaired-mobility-name = Impaired Mobility
 trait-impaired-mobility-desc = You have difficulty moving without a mobility aid.
 
-trait-wheelchair-bound-name = Wheelchair Bound
-trait-wheelchair-bound-desc = You cannot move without your wheelchair. Wheelchair included.
+trait-wheelchair-user-name = Wheelchair User
+trait-wheelchair-user-desc = You cannot move without your wheelchair. Wheelchair included.
