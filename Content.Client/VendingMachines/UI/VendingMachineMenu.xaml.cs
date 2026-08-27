@@ -26,8 +26,6 @@ public sealed partial class VendingMachineMenu : FancyWindow
     private List<VendingMachineInventoryEntry> _cachedInventory = new();
     private VendingMachineInventoryCategory? _selectedCategory;
 
-    private const int CategoryButtonSize = 60;
-
     /// <summary>
     /// Whether the vending machine is able to be interacted with or not.
     /// </summary>
@@ -193,7 +191,7 @@ public sealed partial class VendingMachineMenu : FancyWindow
     {
         var button = new Button
         {
-            SetSize = new Vector2(CategoryButtonSize, CategoryButtonSize),
+            SetSize = new Vector2(60, 60),
             Group = group,
             ToolTip = name,
             StyleClasses = { StyleClass.ButtonSquare }
