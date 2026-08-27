@@ -17,8 +17,6 @@ namespace Content.Client.VendingMachines.UI;
 [GenerateTypedNameReferences]
 public sealed partial class VendingMachineMenu : FancyWindow
 {
-    private const int CategoryButtonSize = 60;
-
     [Dependency] private IComponentFactory _componentFactory = default!;
     [Dependency] private IEntityManager _entityManager = default!;
     [Dependency] private ILocalizationManager _loc = default!;
@@ -27,6 +25,8 @@ public sealed partial class VendingMachineMenu : FancyWindow
     private readonly Dictionary<VendorItemKey, (ListContainerButton Button, VendingMachineItem Item)> _listItems = new();
     private List<VendingMachineInventoryEntry> _cachedInventory = new();
     private VendingMachineInventoryCategory? _selectedCategory;
+
+    private const int CategoryButtonSize = 60;
 
     /// <summary>
     /// Whether the vending machine is able to be interacted with or not.
