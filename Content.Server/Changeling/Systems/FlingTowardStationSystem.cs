@@ -25,16 +25,16 @@ public sealed partial class FlingTowardStationSystem : EntitySystem
         if (!TryComp<StationDataComponent>(station, out var stationComp))
             return;
 
-        if (stationComp.Grids.Count == 0)
+        var grid = _station.GetLargestGrid((station, stationComp));
+        if (grid == null)
             return;
 
-        var grid = random.Pick(stationComp.Grids);
-        var stationPosition = _transform.GetMapCoordinates(grid);
+        var stationPosition = _transform.GetMapCoordinates(grid.Value);
         var entPosition = _transform.GetMapCoordinates(ent.Owner);
-        var gridPhys = Comp<PhysicsComponent>(grid);
+        var gridPhys = Comp<PhysicsComponent>(grid.Value);
 
         // calculate the offset from the center of mass of the station to the body
-        var offset = entPosition.Position - _transform.GetWorldRotation(grid).RotateVec(gridPhys.LocalCenter) - stationPosition.Position;
+        var offset = entPosition.Position - _transform.GetWorldRotation(grid.Value).RotateVec(gridPhys.LocalCenter) - stationPosition.Position;
 
         var physics = Comp<PhysicsComponent>(ent.Owner);
         _physics.ApplyLinearImpulse(ent.Owner, -offset.Normalized() * ent.Comp.Speed * physics.Mass, body: physics);
