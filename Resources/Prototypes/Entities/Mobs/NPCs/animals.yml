@@ -1147,8 +1147,6 @@
       Female: Goat
       Male: Goat
       Unsexed: Goat
-  - type: ReplacementAccent
-    accent: cow
     emoteSounds: Goat
   - type: BleatingAccent
   - type: InteractionPopup
