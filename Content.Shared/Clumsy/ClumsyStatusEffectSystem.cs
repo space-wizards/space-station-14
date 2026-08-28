@@ -119,12 +119,11 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
         _audio.PlayPvs(status.Comp.ClumsySound, args.AppliedTo);
     }
 
+    /// <summary> Especially clumsy people may sometimes fail to pick things up, and fail to hold on to things they are given.</summary>
     [SubscribeLocalEvent]
     private void OnEquippedHandEvent(Entity<ClumsyHoldStatusEffectComponent> status,
         ref StatusEffectRelayedEvent<BeforeEquippingHandEvent> args)
     {
-        /* */ //BeforeEquippingHandEvent
-        
         if (args.Args.Cancelled
             || !SharedRandomExtensions.PredictedProb(_timing, status.Comp.ClumsyChance, GetNetEntity(status), GetNetEntity(args.AppliedTo)))
             return;
@@ -138,33 +137,6 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
         var othersMessage = status.Comp.OtherFailedMessage == null ? null : Loc.GetString(status.Comp.OtherFailedMessage, ("item", args.Args.Item));
         _popup.PopupEntity(selfMessage, othersMessage, args.AppliedTo, args.AppliedTo);
         
-        /*/ //EquippedHandEvent
-        if (!SharedRandomExtensions.PredictedProb(_timing, status.Comp.ClumsyChance, GetNetEntity(status),
-                GetNetEntity(args.AppliedTo)))
-        {
-            return;
-        }
-        
-        var ev = args.Args;
-        if ((!TryComp<HandsComponent>(ev.User, out var handsComp)) || (!_hands.TryGetHandId((ev.User, handsComp), ev.Hand, out var handId)))
-        {
-            return;
-        }
-
-        _hands.TryDrop((ev.User, handsComp), handId);
-        
-        var identity = Identity.Entity(args.AppliedTo, EntityManager);
-
-        /*
-        var selfMessage = status.Comp.SelfFailedMessage == null
-            ? null
-            : Loc.GetString(status.Comp.SelfFailedMessage);
-        var othersMessage = status.Comp.OtherFailedMessage == null
-            ? null
-            : Loc.GetString(status.Comp.OtherFailedMessage, ("holder", identity));//args.Args.User));
-        
-        _popup.PopupEntity(selfMessage, othersMessage, args.AppliedTo, args.AppliedTo);*/
-        /* */
     }
     
 
