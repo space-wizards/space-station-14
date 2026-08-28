@@ -14,7 +14,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.EntityTable;
 
-[TestFixture]
 [TestOf(typeof(AntagonistTagCondition))]
 [TestOf(typeof(AntagonistTagEntityConditionSystem))]
 public sealed class AntagonistTagConditionTest : GameTest
@@ -77,7 +76,7 @@ public sealed class AntagonistTagConditionTest : GameTest
     {
         var mind = CreateMind();
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             // Positive filter (changeling.yml: "Only allow on-station targets.").
             var onStation = Cond(OnStationTags);
@@ -88,7 +87,7 @@ public sealed class AntagonistTagConditionTest : GameTest
             Assert.That(_conditions.TryCondition(mind, unkillable), Is.True);
             var onStationInverted = Cond(OnStationTags, inverted: true);
             Assert.That(_conditions.TryCondition(mind, onStationInverted), Is.True);
-        });
+        }
     }
 
     [Test]
@@ -97,13 +96,13 @@ public sealed class AntagonistTagConditionTest : GameTest
     {
         var mind = CreateMind();
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             var onStation = Cond(OnStationTags, allowNonAntags: false);
             Assert.That(_conditions.TryCondition(mind, onStation), Is.False);
             var onStationInverted = Cond(OnStationTags, allowNonAntags: false, inverted: true);
             Assert.That(_conditions.TryCondition(mind, onStationInverted), Is.True);
-        });
+        }
     }
 
     [Test]
@@ -114,12 +113,12 @@ public sealed class AntagonistTagConditionTest : GameTest
         var onStationAntag = CreateMind(OnStationAntagRole);
         var unkillableAntag = CreateMind(UnkillableAntagRole);
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
-            Assert.That(PassesAll(nonAntag), Is.True);          
-            Assert.That(PassesAll(onStationAntag), Is.True);    
-            Assert.That(PassesAll(unkillableAntag), Is.False);  
-        });
+            Assert.That(PassesAll(nonAntag), Is.True);
+            Assert.That(PassesAll(onStationAntag), Is.True);
+            Assert.That(PassesAll(unkillableAntag), Is.False);
+        }
 
         bool PassesAll(EntityUid mind)
         {
