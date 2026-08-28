@@ -90,6 +90,26 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
 
         _audio.PlayPredicted(status.Comp.ClumsySound, args.AppliedTo, args.AppliedTo);
     }
+    
+    /// <summary> Especially clumsy people may sometimes fail to pick things up, and fail to hold on to things they are given.</summary>
+    [SubscribeLocalEvent]
+    private void OnEquippedHandEvent(Entity<ClumsyGrabStatusEffectComponent> status,
+        ref StatusEffectRelayedEvent<BeforeEquippingHandEvent> args)
+    {
+        if (args.Args.Cancelled
+            || !SharedRandomExtensions.PredictedProb(_timing, status.Comp.ClumsyChance, GetNetEntity(status), GetNetEntity(args.AppliedTo)))
+            return;
+        
+        var ev = args.Args;
+
+        ev.Cancelled = true;
+        args.Args = ev;
+        
+        var selfMessage = status.Comp.SelfFailedMessage == null ? null : Loc.GetString(status.Comp.SelfFailedMessage, ("item", args.Args.Item));
+        var othersMessage = status.Comp.OtherFailedMessage == null ? null : Loc.GetString(status.Comp.OtherFailedMessage, ("item", args.Args.Item));
+        _popup.PopupEntity(selfMessage, othersMessage, args.AppliedTo, args.AppliedTo);
+        
+    }
 
     /// <summary> Clumsy people can't be trusted with guns! </summary>
     [SubscribeLocalEvent]
@@ -118,27 +138,6 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
         _audio.PlayPvs(status.Comp.GunShootFailSound, args.Args.Gun);
         _audio.PlayPvs(status.Comp.ClumsySound, args.AppliedTo);
     }
-
-    /// <summary> Especially clumsy people may sometimes fail to pick things up, and fail to hold on to things they are given.</summary>
-    [SubscribeLocalEvent]
-    private void OnEquippedHandEvent(Entity<ClumsyHoldStatusEffectComponent> status,
-        ref StatusEffectRelayedEvent<BeforeEquippingHandEvent> args)
-    {
-        if (args.Args.Cancelled
-            || !SharedRandomExtensions.PredictedProb(_timing, status.Comp.ClumsyChance, GetNetEntity(status), GetNetEntity(args.AppliedTo)))
-            return;
-        
-        var ev = args.Args;
-
-        ev.Cancelled = true;
-        args.Args = ev;
-        
-        var selfMessage = status.Comp.SelfFailedMessage == null ? null : Loc.GetString(status.Comp.SelfFailedMessage, ("item", args.Args.Item));
-        var othersMessage = status.Comp.OtherFailedMessage == null ? null : Loc.GetString(status.Comp.OtherFailedMessage, ("item", args.Args.Item));
-        _popup.PopupEntity(selfMessage, othersMessage, args.AppliedTo, args.AppliedTo);
-        
-    }
-    
 
     /// <summary> Clumsy people sometimes inject themselves! </summary>
     [SubscribeLocalEvent]

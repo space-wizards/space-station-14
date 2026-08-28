@@ -7,7 +7,7 @@ namespace Content.Shared.Clumsy.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(ClumsyStatusEffectSystem))]
-public sealed partial class ClumsyHoldStatusEffectComponent : Component
+public sealed partial class ClumsyGrabStatusEffectComponent : Component
 {
     /// <summary>
     /// How often they fail.
@@ -16,7 +16,7 @@ public sealed partial class ClumsyHoldStatusEffectComponent : Component
     public float ClumsyChance = 0.5f;
     
     /// <summary>
-    /// Popup played to the afflicted when they fail to pick up/hold the item.
+    /// Popup played to the afflicted when they fail to grab the item.
     /// </summary>
     /// <value> Parameters passed in:
     /// <list type="bullet">
@@ -24,10 +24,10 @@ public sealed partial class ClumsyHoldStatusEffectComponent : Component
     /// </list>
     /// </value>
     [DataField]
-    public LocId? SelfFailedMessage = "clumsy-hold-fail-message-user";
+    public LocId? SelfFailedMessage = "clumsy-grab-fail-message-user";
 
     /// <summary>
-    /// Popup played to others when the afflicted fails to pick up/hold the item.
+    /// Popup played to others when the afflicted fails to grab the item.
     /// </summary>
     /// <value> Parameters passed in:
     /// <list type="bullet">
@@ -35,5 +35,5 @@ public sealed partial class ClumsyHoldStatusEffectComponent : Component
     /// </list>
     /// </value>
     [DataField]
-    public LocId? OtherFailedMessage = "clumsy-hold-fail-message-others";
+    public LocId? OtherFailedMessage = "clumsy-grab-fail-message-others";
 }

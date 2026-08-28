@@ -14,7 +14,7 @@ public static class ClumsyTestPrototypes
     public const string TableProto = "TableProto";
     public const string ItemProto = "ItemProto";
     
-    public const string ClumsyHandsProto = "ClumsyHandsProto";
+    public const string ClumsyGrabProto = "ClumsyGrabProto";
 
     [TestPrototypes]
     public static readonly string ClumsyPrototypes = @$"
@@ -65,10 +65,10 @@ public static class ClumsyTestPrototypes
   - type: Item
 
 - type: entity
-  id: {ClumsyHandsProto}
+  id: {ClumsyGrabProto}
   components:
   - type: StatusEffect
-  - type: ClumsyHoldStatusEffect
+  - type: ClumsyGrabStatusEffect
     clumsyChance: 1
 ";
 }

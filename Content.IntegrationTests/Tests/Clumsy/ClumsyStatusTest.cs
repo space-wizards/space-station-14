@@ -169,16 +169,16 @@ public sealed class ClumsyStatusTest : InteractionTest
         }
     }
     
-    [Test, Description("Test that a mob with the ClumsyHold status will drop things.")]
-    public async Task TestClumsyHold()
+    [Test, Description("Test that a mob with the ClumsyGrab status will drop things.")]
+    public async Task TestClumsyGrab()
     {
         await Server.WaitPost(() =>
         {
             SEntMan.EnsureComponent<TestListenerComponent>(SPlayer);
-            _sStatusSystem.TrySetStatusEffectDuration(SPlayer, ClumsyHandsProto);
+            _sStatusSystem.TrySetStatusEffectDuration(SPlayer, ClumsyGrabProto);
         });
         
-        Assume.That(_sStatusSystem.HasStatusEffect(SPlayer, ClumsyHandsProto), Is.True);
+        Assume.That(_sStatusSystem.HasStatusEffect(SPlayer, ClumsyGrabProto), Is.True);
         Assume.That(_sHandsSystem.CountFreeHands(SPlayer), Is.EqualTo(_sHandsSystem.GetHandCount(SPlayer)), "Clumsy mob does not have all hands free before doing anything");
 
         

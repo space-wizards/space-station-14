@@ -139,7 +139,7 @@
   parent: MobStatusEffectBase
   id: StatusEffectClumsyZombie
   components:
-  - type: ClumsyHoldStatusEffect
+  - type: ClumsyGrabStatusEffect
     clumsyChance: *Chance100
 
 #endregion
