@@ -175,6 +175,7 @@
 - type: entity
   parent: GasCanister
   id: AirCanister
+  suffix: air
   components:
   - type: Sprite
     sprite: Structures/Storage/canister.rsi
@@ -190,6 +191,8 @@
     - state: mask-grey
       map: [ "enum.MaxPressureVisualLayers.Base" ]
       visible: false
+  - type: Label
+    localizedLabel: spray-painter-style-canisters-air
   - type: MaxPressureVisuals
     integrityMask: mask-grey
   - type: GasCanister
@@ -212,6 +215,7 @@
 - type: entity
   parent: GasCanister
   id: OxygenCanister
+  suffix: oxygen
   components:
   - type: Sprite
     layers:
@@ -226,6 +230,8 @@
     - state: mask-blue
       map: [ "enum.MaxPressureVisualLayers.Base" ]
       visible: false
+  - type: Label
+    localizedLabel: gas-oxygen
   - type: MaxPressureVisuals
     integrityMask: mask-blue
   - type: GasCanister
@@ -247,6 +253,7 @@
 - type: entity
   id: LiquidOxygenCanister
   parent: OxygenCanister
+  suffix: liquid oxygen
   components:
   - type: GasCanister
     air:
@@ -260,6 +267,7 @@
 - type: entity
   parent: GasCanister
   id: NitrogenCanister
+  suffix: nitrogen
   components:
     - type: Sprite
       layers:
@@ -274,6 +282,8 @@
       - state: mask-red
         map: [ "enum.MaxPressureVisualLayers.Base" ]
         visible: false
+    - type: Label
+      localizedLabel: gas-nitrogen
     - type: MaxPressureVisuals
       integrityMask: mask-red
     - type: GasCanister
@@ -295,6 +305,7 @@
 - type: entity
   id: LiquidNitrogenCanister
   parent: NitrogenCanister
+  suffix: liquid nitrogen
   components:
   - type: GasCanister
     air:
@@ -308,6 +319,7 @@
 - type: entity
   parent: GasCanister
   id: CarbonDioxideCanister
+  suffix: carbon dioxide
   components:
     - type: Sprite
       layers:
@@ -322,6 +334,8 @@
       - state: mask-black
         map: [ "enum.MaxPressureVisualLayers.Base" ]
         visible: false
+    - type: Label
+      localizedLabel: gas-carbon-dioxide
     - type: MaxPressureVisuals
       integrityMask: mask-black
     - type: GasCanister
@@ -345,6 +359,7 @@
 - type: entity
   id: LiquidCarbonDioxideCanister
   parent: CarbonDioxideCanister
+  suffix: liquid carbon dioxide
   components:
   - type: GasCanister
     air:
@@ -358,6 +373,7 @@
 - type: entity
   parent: GasCanister
   id: PlasmaCanister
+  suffix: plasma
   components:
     - type: Sprite
       layers:
@@ -372,6 +388,8 @@
       - state: mask-orange
         map: [ "enum.MaxPressureVisualLayers.Base" ]
         visible: false
+    - type: Label
+      localizedLabel: gas-plasma
     - type: MaxPressureVisuals
       integrityMask: mask-orange
     - type: GasCanister
@@ -395,6 +413,7 @@
 - type: entity
   parent: GasCanister
   id: TritiumCanister
+  suffix: tritium
   components:
     - type: Sprite
       layers:
@@ -409,6 +428,8 @@
       - state: mask-green
         map: [ "enum.MaxPressureVisualLayers.Base" ]
         visible: false
+    - type: Label
+      localizedLabel: gas-tritium
     - type: MaxPressureVisuals
       integrityMask: mask-green
     - type: GasCanister
@@ -432,6 +453,7 @@
 - type: entity
   parent: GasCanister
   id: WaterVaporCanister
+  suffix: water vapor
   components:
     - type: Sprite
       layers:
@@ -446,6 +468,8 @@
       - state: mask-water_vapor
         map: [ "enum.MaxPressureVisualLayers.Base" ]
         visible: false
+    - type: Label
+      localizedLabel: gas-water-vapor
     - type: MaxPressureVisuals
       integrityMask: mask-water_vapor
     - type: GasCanister
@@ -467,6 +491,7 @@
 - type: entity
   parent: GasCanister
   id: AmmoniaCanister
+  suffix: ammonia
   components:
     - type: Sprite
       layers:
@@ -481,6 +506,8 @@
       - state: mask-greenys
         map: [ "enum.MaxPressureVisualLayers.Base" ]
         visible: false
+    - type: Label
+      localizedLabel: gas-ammonia
     - type: MaxPressureVisuals
       integrityMask: mask-greenys
     - type: GasCanister
@@ -504,6 +531,7 @@
 - type: entity
   parent: GasCanister
   id: NitrousOxideCanister
+  suffix: nitrous oxide
   components:
     - type: Sprite
       layers:
@@ -518,6 +546,8 @@
       - state: mask-redws
         map: [ "enum.MaxPressureVisualLayers.Base" ]
         visible: false
+    - type: Label
+      localizedLabel: gas-nitrous-oxide
     - type: MaxPressureVisuals
       integrityMask: mask-redws
     - type: GasCanister
@@ -541,6 +571,7 @@
 - type: entity
   parent: GasCanister
   id: FrezonCanister
+  suffix: frezon
   components:
   - type: Sprite
     layers:
@@ -555,6 +586,8 @@
     - state: mask-frezon
       map: [ "enum.MaxPressureVisualLayers.Base" ]
       visible: false
+  - type: Label
+    localizedLabel: gas-frezon
   - type: MaxPressureVisuals
     integrityMask: mask-frezon
   - type: GasCanister
