@@ -187,10 +187,12 @@ internal sealed class AdminNameOverlay : Overlay
                 }
             }
 
+            var outline = TextOutline.Default with { Color = TextOutline.Default.Color.WithAlpha(alpha) };
+
             // Character name
             var color = Color.Aquamarine;
             color.A = alpha;
-            args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.CharacterName, uiScale, playerInfo.Connected ? color : colorDisconnected);
+            args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.CharacterName, uiScale, playerInfo.Connected ? color : colorDisconnected, outline);
             currentOffset += lineoffset;
 
             // Username
@@ -204,7 +206,7 @@ internal sealed class AdminNameOverlay : Overlay
             {
                 color = Color.Orange;
                 color.A = alpha;
-                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.PlaytimeString, uiScale, playerInfo.Connected ? color : colorDisconnected);
+                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.PlaytimeString, uiScale, playerInfo.Connected ? color : colorDisconnected, outline);
                 currentOffset += lineoffset;
             }
 
@@ -213,7 +215,7 @@ internal sealed class AdminNameOverlay : Overlay
             {
                 color = Color.GreenYellow;
                 color.A = alpha;
-                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.StartingJob, uiScale, playerInfo.Connected ? color : colorDisconnected);
+                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.StartingJob, uiScale, playerInfo.Connected ? color : colorDisconnected, outline);
                 currentOffset += lineoffset;
             }
 
@@ -264,7 +266,7 @@ internal sealed class AdminNameOverlay : Overlay
             var label = !string.IsNullOrEmpty(symbol)
                 ? Loc.GetString("player-tab-character-name-antag-symbol", ("symbol", symbol), ("name", text))
                 : text;
-            args.ScreenHandle.DrawString(_fontBold, screenCoordinates + currentOffset, label, uiScale, color);
+            args.ScreenHandle.DrawString(_fontBold, screenCoordinates + currentOffset, label, uiScale, color, outline);
             currentOffset += lineoffset;
 
             //Save the coordinates and size of the text block, for stack merge check

@@ -243,19 +243,19 @@ public sealed partial class AtmosDebugOverlay : Overlay
             ? "No Air"
             : data.Moles.Sum().ToString(CultureInfo.InvariantCulture);
 
-        handle.DrawString(_font, pos, $"Moles: {moles}");
+        handle.DrawString(_font, pos, $"Moles: {moles}", 1, Color.White, TextOutline.Default);
         pos += offset;
-        handle.DrawString(_font, pos, $"Temp: {data.Temperature}");
+        handle.DrawString(_font, pos, $"Temp: {data.Temperature}", 1, Color.White, TextOutline.Default);
         pos += offset;
         handle.DrawString(_font, pos, $"Excited: {data.InExcitedGroup?.ToString() ?? "None"}");
         pos += offset;
-        handle.DrawString(_font, pos, $"Space: {data.IsSpace}");
+        handle.DrawString(_font, pos, $"Space: {data.IsSpace}", 1, Color.White, TextOutline.Default);
         pos += offset;
-        handle.DrawString(_font, pos, $"Map: {data.MapAtmosphere}");
+        handle.DrawString(_font, pos, $"Map: {data.MapAtmosphere}", 1, Color.White, TextOutline.Default);
         pos += offset;
-        handle.DrawString(_font, pos, $"NoGrid: {data.NoGrid}");
+        handle.DrawString(_font, pos, $"NoGrid: {data.NoGrid}", 1, Color.White, TextOutline.Default);
         pos += offset;
-        handle.DrawString(_font, pos, $"Immutable: {data.Immutable}");
+        handle.DrawString(_font, pos, $"Immutable: {data.Immutable}", 1, Color.White, TextOutline.Default);
     }
 
     private void GetGrids(MapId mapId, Box2Rotated box)
