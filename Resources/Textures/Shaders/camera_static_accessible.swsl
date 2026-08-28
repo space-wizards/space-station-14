@@ -1,3 +1,5 @@
+light_mode unshaded;
+
 void fragment() {
     highp vec2 coords = FRAGCOORD.xy;
     highp vec2 value = vec2(coords * SCREEN_PIXEL_SIZE);
