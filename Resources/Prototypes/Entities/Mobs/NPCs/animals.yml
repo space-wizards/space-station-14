@@ -1143,10 +1143,6 @@
     speechSounds: Goat
     speechVerb: Goat
   - type: Vocal
-    sounds:
-      Female: Goat
-      Male: Goat
-      Unsexed: Goat
     emoteSounds: Goat
   - type: BleatingAccent
   - type: InteractionPopup
