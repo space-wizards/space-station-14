@@ -468,12 +468,12 @@ public abstract partial class SharedBuckleSystem
     /// <returns>Does the Unbuckle require Extrication</returns>
     private bool IsUnbuckleRequiresExtrication(Entity<BuckleComponent?> buckle, EntityUid? user, Entity<StrapComponent> strap)
     {
-        var cuffed = !TryComp<CuffableComponent>(buckle, out var targetCuffableComp) &&
-                     targetCuffableComp!.CuffedHandCount > 0;
+        var cuffed = TryComp<CuffableComponent>(buckle, out var targetCuffableComp) &&
+                     targetCuffableComp!.CuffedHandCouxnt > 0;
 
         return !strap.Comp.UnbuckleDoAfterTime.Equals(TimeSpan.Zero)
                && buckle != user
-               && _mobState.IsIncapacitated(buckle)
+               && !_mobState.IsIncapacitated(buckle)
                && !cuffed
                && !HasComp<StunnedComponent>(buckle);
     }
