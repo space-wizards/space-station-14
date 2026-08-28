@@ -134,4 +134,12 @@
     clumsyChance: *ChanceDrunk
     clumsySound: *SoundGlug
 
+# gruhhhhh
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectClumsyZombie
+  components:
+  - type: ClumsyHoldStatusEffect
+    clumsyChance: *Chance100
+
 #endregion

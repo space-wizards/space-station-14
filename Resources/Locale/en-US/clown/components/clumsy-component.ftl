@@ -9,3 +9,6 @@ clumsy-defibrillator-fail-message = Oops! You zapped yourself.
 
 clumsy-catch-fail-message-user = { CAPITALIZE(THE($item)) } hits your head!
 clumsy-catch-fail-message-others = { CAPITALIZE(THE($item)) } hits { THE($catcher) }'s head!
+
+clumsy-hold-fail-message-user = { CAPITALIZE(THE($item)) } slips out of your hands...
+clumsy-hold-fail-message-others = { CAPITALIZE(THE($item)) } slips out of their hands...

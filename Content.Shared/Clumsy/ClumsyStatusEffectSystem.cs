@@ -4,6 +4,9 @@ using Content.Shared.Climbing.Events;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Clumsy.Components;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Hands;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Medical;
 using Content.Shared.Popups;
@@ -27,6 +30,7 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
     [Dependency] private SharedStunSystem _stun = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
 
     [Dependency] private ClimbSystem _climb = default!;
     [Dependency] private DamageableSystem _damageable = default!;
@@ -114,6 +118,55 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
         _audio.PlayPvs(status.Comp.GunShootFailSound, args.Args.Gun);
         _audio.PlayPvs(status.Comp.ClumsySound, args.AppliedTo);
     }
+
+    [SubscribeLocalEvent]
+    private void OnEquippedHandEvent(Entity<ClumsyHoldStatusEffectComponent> status,
+        ref StatusEffectRelayedEvent<BeforeEquippingHandEvent> args)
+    {
+        /* */ //BeforeEquippingHandEvent
+        
+        if (args.Args.Cancelled
+            || !SharedRandomExtensions.PredictedProb(_timing, status.Comp.ClumsyChance, GetNetEntity(status), GetNetEntity(args.AppliedTo)))
+            return;
+        
+        var ev = args.Args;
+
+        ev.Cancelled = true;
+        args.Args = ev;
+        
+        var selfMessage = status.Comp.SelfFailedMessage == null ? null : Loc.GetString(status.Comp.SelfFailedMessage, ("item", args.Args.Item));
+        var othersMessage = status.Comp.OtherFailedMessage == null ? null : Loc.GetString(status.Comp.OtherFailedMessage, ("item", args.Args.Item));
+        _popup.PopupEntity(selfMessage, othersMessage, args.AppliedTo, args.AppliedTo);
+        
+        /*/ //EquippedHandEvent
+        if (!SharedRandomExtensions.PredictedProb(_timing, status.Comp.ClumsyChance, GetNetEntity(status),
+                GetNetEntity(args.AppliedTo)))
+        {
+            return;
+        }
+        
+        var ev = args.Args;
+        if ((!TryComp<HandsComponent>(ev.User, out var handsComp)) || (!_hands.TryGetHandId((ev.User, handsComp), ev.Hand, out var handId)))
+        {
+            return;
+        }
+
+        _hands.TryDrop((ev.User, handsComp), handId);
+        
+        var identity = Identity.Entity(args.AppliedTo, EntityManager);
+
+        /*
+        var selfMessage = status.Comp.SelfFailedMessage == null
+            ? null
+            : Loc.GetString(status.Comp.SelfFailedMessage);
+        var othersMessage = status.Comp.OtherFailedMessage == null
+            ? null
+            : Loc.GetString(status.Comp.OtherFailedMessage, ("holder", identity));//args.Args.User));
+        
+        _popup.PopupEntity(selfMessage, othersMessage, args.AppliedTo, args.AppliedTo);*/
+        /* */
+    }
+    
 
     /// <summary> Clumsy people sometimes inject themselves! </summary>
     [SubscribeLocalEvent]
