@@ -169,7 +169,7 @@ public sealed partial class EscapeUIController : UIController, IOnStateEntered<G
         if (gameTicker == null)
             return;
 
-        _escapeWindow?.RoundInfo.SetRoundInfo(gameTicker.PlayerCount, gameTicker.MapName, gameTicker.GamemodeTitle, gameTicker.RoundStartTimeSpan, gameTicker.IsGameStarted);
+        _escapeWindow?.RoundInfo.SetRoundInfo(gameTicker.RoundId, gameTicker.PlayerCount, gameTicker.MapName, gameTicker.GamemodeTitle, gameTicker.RoundStartTimeSpan, gameTicker.IsGameStarted);
     }
 
     private void EscapeButtonOnOnPressed(ButtonEventArgs obj)

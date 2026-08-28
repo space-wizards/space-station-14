@@ -4,11 +4,13 @@
                   HorizontalExpand="True"
                   Margin="8 6">
         <Label Text="{Loc 'ui-escape-round-info'}" StyleClasses="LabelKeyText" />
-        <GridContainer Columns="2" HorizontalExpand="True" Margin="4 2">
-            <Label Text="{Loc 'ui-escape-round-map'}" StyleClasses="LabelSubText" />
-            <Label Name="MapNameLabel" StyleClasses="LabelSubText" FontColorOverride="white" />
+        <GridContainer Columns="2" HorizontalExpand="True">
+            <Label Text="{Loc 'ui-escape-round-id'}" StyleClasses="LabelSubText" />
+            <Label Name="RoundIdLabel" StyleClasses="LabelSubText" FontColorOverride="white" />
             <Label Text="{Loc 'ui-escape-round-players'}" StyleClasses="LabelSubText" />
             <Label Name="PlayerCountLabel" StyleClasses="LabelSubText" FontColorOverride="white" />
+            <Label Text="{Loc 'ui-escape-round-map'}" StyleClasses="LabelSubText" />
+            <Label Name="MapNameLabel" StyleClasses="LabelSubText" FontColorOverride="white" />
             <Label Text="{Loc 'ui-escape-round-mode'}" StyleClasses="LabelSubText" />
             <Label Name="GamemodeLabel" StyleClasses="LabelSubText" FontColorOverride="white" />
             <Label Text="{Loc 'ui-escape-round-time'}" StyleClasses="LabelSubText" />
