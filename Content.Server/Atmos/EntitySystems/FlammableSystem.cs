@@ -58,6 +58,8 @@ namespace Content.Server.Atmos.EntitySystems
 
         private readonly Dictionary<Entity<FlammableComponent>, float> _fireEvents = new();
 
+        private const int FirestackEnergy = 37500; // joules release when on fire
+
         public override void Initialize()
         {
             UpdatesAfter.Add(typeof(AtmosphereSystem));
@@ -475,7 +477,7 @@ namespace Content.Server.Atmos.EntitySystems
                     var source = EnsureComp<IgnitionSourceComponent>(uid);
                     _ignitionSourceSystem.SetIgnited((uid, source));
 
-                    _temperatureSystem.ChangeHeat(uid, 12500 * flammable.FireStacks, false);
+                    _temperatureSystem.ChangeHeat(uid, FirestackEnergy * flammable.FireStacks, false);
 
                     var ev = new GetFireProtectionEvent();
                     // let the thing on fire handle it

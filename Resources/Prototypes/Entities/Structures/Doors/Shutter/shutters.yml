@@ -97,6 +97,8 @@
   - type: IconSmooth
     key: walls
     mode: NoSprite
+  - type: StructureAligner
+  - type: StructureAlignerPylon
 
 - type: entity
   id: ShuttersNormal
@@ -109,7 +111,7 @@
     containers:
     - board
   - type: Damageable
-    damageModifierSet: SteelMod
+    damageModifierSet: SteelStaticMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -197,7 +199,7 @@
   - type: RadiationBlocker
     resistance: 1
   - type: Damageable
-    damageModifierSet: SteelMod
+    damageModifierSet: SteelStaticMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -241,7 +243,7 @@
     - board
   - type: InteractionOutline
   - type: Damageable
-    damageModifierSet: SteelMod
+    damageModifierSet: SteelStaticMod
   - type: Destructible
     thresholds:
     - trigger:
