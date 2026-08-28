@@ -18,7 +18,6 @@
   mapName: Dev
   mapPath: /Maps/Test/dev_map.yml
   maxRandomOffset: 0
-  randomRotation: false
   minPlayers: 0
   stations:
     Dev:
