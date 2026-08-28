@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseWallmountMachine
+  parent: [ BaseWallmountMachine, StructureHealthMachineFlimsy ]
   id: SignalTimer
   name: signal timer
   description: It's a timer for sending timed signals to things.
@@ -12,6 +12,15 @@
     sprite: Structures/Wallmounts/switch.rsi
     state: on
   - type: Appearance
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
   - type: Rotatable
   - type: SignalTimer
     canEditLabel: false
@@ -54,15 +63,15 @@
     canEditLabel: true
   - type: TextScreenVisuals
     color: FloralWhite
-    textOffset: 0,6
-    timerOffset: 0,6
+#    textOffset: 0,3
+#    timerOffset: 0,3
     # textLength: 5 This field does not exist. Bug?
     rows: 1
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/signalscreen.rsi
-    state: signalscreen
     noRot: true
+    state: signalscreen
   - type: Construction
     graph: Timer
     node: screen

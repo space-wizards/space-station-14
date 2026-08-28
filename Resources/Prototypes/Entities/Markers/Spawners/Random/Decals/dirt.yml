@@ -10,33 +10,20 @@
     - DirtHeavy
     maxDecalsPerTile: 1
     snapPosition: true
-    zIndex: 1
+    zIndex: 5
     prob: 0.8
     color: '#FFFFFF7F'
     cleanable: true
     tileBlacklist: # Everything here just looks bad if it gets regular dirt on it
-    - FloorSteelMono
-    - FloorSteelDiagonal
-    - FloorSteelOffset
-    - FloorSteelDiagonalMini
     - FloorWood
     - FloorWoodLarge
     - FloorWhiteMono
-    - FloorWhiteDiagonal
-    - FloorWhiteOffset
-    - FloorWhiteDiagonalMini
     - FloorDarkMono
-    - FloorDarkDiagonal
-    - FloorDarkOffset
-    - FloorDarkDiagonalMini
     - FloorArcadeBlue
-    - FloorArcadeBlue2
     - FloorArcadeRed
-    - FloorEighties
     - FloorCarpetClown
     - FloorCarpetOffice
     - FloorBoxing
-    - FloorGym
     - FloorGlass
     - FloorRGlass
     - FloorAstroGrass
@@ -46,19 +33,14 @@
     - FloorAstroSnow
     - FloorAstroAsteroidSand
     - FloorFlesh
-    - FloorAsteroidSandUnvariantized
-    - FloorAsteroidIronsandUnvariantized
     - FloorCave
     - FloorAsteroidIronsand
     - FloorAsteroidTile
-    - FloorAsteroidSandDug
     - FloorAsteroidSand
     - FloorDirt
-    - FloorGrassLight
     - FloorGrassDark
     - FloorGrassJungle
     - FloorGrass
-    - FloorAsphalt
     - FloorReinforced
     - FloorLino
     deleteSpawnerAfterSpawn: true
@@ -104,23 +86,11 @@
     - Dirt
     - DirtHeavyMonotile
     tileBlacklist:
-    - FloorSteelDiagonal
-    - FloorSteelOffset
-    - FloorSteelDiagonalMini
-    - FloorWhiteDiagonal
-    - FloorWhiteOffset
-    - FloorWhiteDiagonalMini
-    - FloorDarkDiagonal
-    - FloorDarkOffset
-    - FloorDarkDiagonalMini
     - FloorArcadeBlue
-    - FloorArcadeBlue2
     - FloorArcadeRed
-    - FloorEighties
     - FloorCarpetClown
     - FloorCarpetOffice
     - FloorBoxing
-    - FloorGym
     - FloorAstroGrass
     - FloorMowedAstroGrass
     - FloorJungleAstroGrass
@@ -128,19 +98,14 @@
     - FloorAstroSnow
     - FloorAstroAsteroidSand
     - FloorFlesh
-    - FloorAsteroidSandUnvariantized
-    - FloorAsteroidIronsandUnvariantized
     - FloorCave
     - FloorAsteroidIronsand
     - FloorAsteroidTile
-    - FloorAsteroidSandDug
     - FloorAsteroidSand
     - FloorDirt
-    - FloorGrassLight
     - FloorGrassDark
     - FloorGrassJungle
     - FloorGrass
-    - FloorAsphalt
     - FloorReinforced
 
 - type: entity

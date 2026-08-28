@@ -30,6 +30,12 @@
   maxValue: 9999
 
 - type: nameIdentifierGroup
+  id: Xenoborg
+  format: name-identifier-format-xenoborg
+  minValue: 1000
+  maxValue: 9999
+
+- type: nameIdentifierGroup
   id: StationAi
   format: name-identifier-format-station-ai
   minValue: 100
@@ -42,6 +48,7 @@
 
 # Used to suffix a number to any mob to identify player controlled mob griefing.
 - type: nameIdentifierGroup
+  format: name-identifier-format-parens
   id: GenericNumber
 
 - type: nameIdentifierGroup
@@ -54,3 +61,8 @@
   format: name-identifier-format-telepad
   minValue: 0
   maxValue: 999
+
+- type: nameIdentifierGroup
+  id: AdjectivePrefix
+  identifierDataset: Adjectives
+  prefix: true

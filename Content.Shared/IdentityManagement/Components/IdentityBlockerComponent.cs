@@ -1,12 +1,13 @@
 using Content.Shared.Inventory;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.IdentityManagement.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class IdentityBlockerComponent : Component
 {
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Enabled = true;
 
     /// <summary>
@@ -16,6 +17,8 @@ public sealed partial class IdentityBlockerComponent : Component
     public IdentityBlockerCoverage Coverage = IdentityBlockerCoverage.FULL;
 }
 
+[Flags]
+[Serializable, NetSerializable]
 public enum IdentityBlockerCoverage
 {
     NONE  = 0,
@@ -34,4 +37,9 @@ public sealed class SeeIdentityAttemptEvent : CancellableEntityEventArgs, IInven
 
     // cumulative coverage from each relayed slot
     public IdentityBlockerCoverage TotalCoverage = IdentityBlockerCoverage.NONE;
+
+    /// <summary>
+    /// A specific name to override your identiy with.
+    /// </summary>
+    public string? NameOverride = null;
 }

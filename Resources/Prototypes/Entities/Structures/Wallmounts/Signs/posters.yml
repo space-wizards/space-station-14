@@ -1,39 +1,28 @@
 - type: entity
-  parent: BaseSign
-  id: PosterBase
   abstract: true
+  parent: BaseSignWeak
+  id: PosterBase
   components:
   - type: Sprite
     sprite: Structures/Wallmounts/posters.rsi
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/poster_broken.ogg
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/poster_broken.ogg
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
           PosterBroken:
             min: 1
             max: 1
         offset: 0
+  - type: Construction
+    graph: PosterGraph
+    node: start
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignWeak
   id: PosterBroken
   name: broken poster
   description: "You can't make out anything from the poster's original print. It's ruined."
@@ -42,17 +31,9 @@
     drawdepth: WallTops
     sprite: Structures/Wallmounts/posters.rsi
     state: poster_broken
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 5
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/poster_broken.ogg
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+  - type: Construction
+    graph: PosterGraph
+    node: tornPoster
 
 # Contraband
 - type: entity
@@ -1127,6 +1108,15 @@
   components:
   - type: Sprite
     state: poster55_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitBotanyFear
+  name: "Fear of hydroponics"
+  description: "Think three times before opening the airlock to hydroponics, a red threat might be hiding there."
+  components:
+  - type: Sprite
+    state: poster56_legit
 
 #maps
 

@@ -1,8 +1,11 @@
 ﻿- type: entity
-  parent: [BaseStructureDynamic, BaseItemCabinetGlass]
+  parent: BaseStructureDynamic
   id: BaseGlassBox
   abstract: true
   components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Storage/glassbox.rsi
   - type: Transform
     anchored: true
   - type: Physics
@@ -24,20 +27,18 @@
     delay: 4
 
 - type: entity
+  parent: [BaseGlassBox, BaseItemCabinetGlass, StructureHealthContainer]
   id: GlassBox
   name: glass box
   description: A sturdy showcase for an expensive exhibit.
-  parent: BaseGlassBox
   abstract: true # TODO: Temporarily abstract. Remove it after item scaling in cabinets is implemented.
   components:
   - type: Sprite
-    noRot: true
-    sprite: Structures/Storage/glassbox.rsi
     layers:
     - state: base
     - state: caplaser # TODO: Remove it after item scaling in cabinets is implemented.
       map: ["enum.ItemCabinetVisuals.Layer"]
-      visible: true
+      visible: false
     - state: glass
       map: ["enum.OpenableVisuals.Layer"]
     - state: locked
@@ -68,33 +69,17 @@
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Storage/glassbox.rsi
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: Glass
   - type: MeleeSound
     soundGroups:
       Brute:
         collection: GlassSmash
+  - type: Damageable
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:EmptyAllContainersBehaviour
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WindowShatter
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Machines/warning_buzzer.ogg
-          params:
-            volume: 10
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 100
       behaviors:
       - !type:EmptyAllContainersBehaviour
       - !type:PlaySoundBehavior
@@ -112,12 +97,10 @@
             max: 2
       - !type:ChangeConstructionNodeBehavior
         node: brokenGlassBox
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
-  id: GlassBoxLaser
   parent: GlassBox
+  id: GlassBoxLaser
   suffix: AntiqueLaser
   components:
   - type: AccessReader
@@ -135,8 +118,8 @@
         ejectSound: /Audio/Machines/machine_switch.ogg
 
 - type: entity
-  id: GlassBoxLaserOpen
   parent: GlassBoxLaser
+  id: GlassBoxLaserOpen
   suffix: AntiqueLaser, Open
   components:
   - type: Openable
@@ -145,8 +128,8 @@
     locked: false
 
 - type: entity
-  id: GlassBoxLaserFilled
   parent: GlassBoxLaser
+  id: GlassBoxLaserFilled
   suffix: AntiqueLaser, Filled
   components:
   - type: ContainerFill
@@ -160,15 +143,13 @@
   suffix: AntiqueLaser, Filled, Open
 
 - type: entity
+  parent: [ BaseGlassBox, StructureHealthContainerWeak ]
   id: GlassBoxFrame
   name: glass box frame
   description: A glassless sturdy showcase for an expensive exhibit.
-  parent: BaseGlassBox
   suffix: Frame
   components:
   - type: Sprite
-    noRot: true
-    sprite: Structures/Storage/glassbox.rsi
     layers:
     - state: base
   - type: Construction
@@ -176,21 +157,12 @@
     node: boxMissingWires
   - type: Climbable
   - type: Damageable
-    damageModifierSet: Wood
+    damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 60
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -200,18 +172,15 @@
           MaterialWoodPlank1:
             min: 2
             max: 5
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
 
 - type: entity
+  parent: GlassBoxFrame
   id: GlassBoxBroken
   name: broken glass box
   description: A broken showcase for a stolen expensive exhibit.
-  parent: GlassBoxFrame
   suffix: Broken
   components:
   - type: Sprite
-    sprite: Structures/Storage/glassbox.rsi
     layers:
     - state: base
     - state: glass-broken
@@ -220,29 +189,12 @@
     node: brokenGlassBox
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 60
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlassReinforced:
             min: 1
             max: 1
-          MaterialWoodPlank1:
-            min: 2
-            max: 5
-      - !type:DoActsBehavior
-        acts: ["Destruction"]

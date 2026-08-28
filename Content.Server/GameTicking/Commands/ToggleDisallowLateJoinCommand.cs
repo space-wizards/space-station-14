@@ -7,9 +7,9 @@ using Robust.Shared.Console;
 namespace Content.Server.GameTicking.Commands
 {
     [AdminCommand(AdminFlags.Round)]
-    public sealed class ToggleDisallowLateJoinCommand : LocalizedCommands
+    public sealed partial class ToggleDisallowLateJoinCommand : LocalizedCommands
     {
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private IConfigurationManager _configManager = default!;
 
         public override string Command => "toggledisallowlatejoin";
 

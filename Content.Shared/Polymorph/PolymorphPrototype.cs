@@ -106,16 +106,32 @@ public sealed partial record PolymorphConfiguration
     public bool RevertOnDeath = true;
 
     /// <summary>
+    /// Whether or not the polymorph reverts when the entity is deleted.
+    /// </summary>
+    [DataField(serverOnly: true)]
+    public bool RevertOnDelete = true;
+
+    /// <summary>
     /// Whether or not the polymorph reverts when the entity is eaten or fully sliced.
     /// </summary>
     [DataField(serverOnly: true)]
     public bool RevertOnEat;
 
     /// <summary>
-    /// Whether or not an already polymorphed entity is able to be polymorphed again
+    /// If true, attempts to polymorph this polymorph will fail, unless
+    /// <see cref="IgnoreAllowRepeatedMorphs"/> is true on the /new/ morph.
     /// </summary>
     [DataField(serverOnly: true)]
     public bool AllowRepeatedMorphs;
+
+    /// <summary>
+    /// If true, this morph will succeed even when used on an entity
+    /// that is already polymorphed with a configuration that has
+    /// <see cref="AllowRepeatedMorphs"/> set to false. Helpful for
+    /// smite polymorphs which should always succeed.
+    /// </summary>
+    [DataField(serverOnly: true)]
+    public bool IgnoreAllowRepeatedMorphs;
 
     /// <summary>
     /// The amount of time that should pass after this polymorph has ended, before a new one
@@ -138,13 +154,20 @@ public sealed partial record PolymorphConfiguration
     public SoundSpecifier? ExitPolymorphSound;
 
     /// <summary>
+    /// Whether or not the user should see a confirmation popup when attempting
+    /// to morph via an innate polymorph's action.
+    /// </summary>
+    [DataField]
+    public bool RevertConfirmationPopup = true;
+
+    /// <summary>
     ///     If not null, this popup will be displayed when being polymorphed into something.
     /// </summary>
     [DataField]
     public LocId? PolymorphPopup = "polymorph-popup-generic";
 
     /// <summary>
-    ///     If not null, this popup will be displayed when when being reverted from a polymorph.
+    ///     If not null, this popup will be displayed when being reverted from a polymorph.
     /// </summary>
     [DataField]
     public LocId? ExitPolymorphPopup = "polymorph-revert-popup-generic";
@@ -152,7 +175,21 @@ public sealed partial record PolymorphConfiguration
 
 public enum PolymorphInventoryChange : byte
 {
+    /// <summary>
+    /// On polymorph, no items are transferred. The original form's inventory is
+    /// stored in a paused map. On revert, the polymorph drops its inventory.
+    /// </summary>
     None,
+
+    /// <summary>
+    /// On polymorph and revert, all items are dropped.
+    /// </summary>
     Drop,
+
+    /// <summary>
+    /// On polymorph and revert, an attempt to transfer inventories will be
+    /// made. Currently, this doesn't handle dependent inventory slots like
+    /// jumpsuit pockets.
+    /// </summary>
     Transfer,
 }

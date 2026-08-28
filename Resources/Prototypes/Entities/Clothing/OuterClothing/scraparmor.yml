@@ -51,7 +51,7 @@
 
 # The armor itself
 - type: entity
-  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseMajorContraband, ClothingBeltUtility]
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseMajorContraband]
   id: ClothingOuterArmorScrap
   name: scrap armor
   description: A tider's gleaming plate mail. Bail up, or you're a dead man.
@@ -60,6 +60,8 @@
     sprite: Clothing/OuterClothing/Armor/scrap_armor.rsi
   - type: Item
     size: Ginormous
+    shape:
+    - 0,0,4,5
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/scrap_armor.rsi
     equipSound: /Audio/Effects/metal_scrape2.ogg

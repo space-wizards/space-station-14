@@ -1,6 +1,6 @@
 using Content.Server.Administration.Managers;
-using Content.Shared.Atmos.Components;
-using Content.Shared.Atmos.EntitySystems;
+using Content.Server.Atmos.Piping.Components;
+using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.NodeGroups;
@@ -9,11 +9,11 @@ using Robust.Shared.Console;
 namespace Content.Server.Sandbox.Commands
 {
     [AnyCommand]
-    public sealed class ColorNetworkCommand : LocalizedEntityCommands
+    public sealed partial class ColorNetworkCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IAdminManager _adminManager = default!;
-        [Dependency] private readonly AtmosPipeColorSystem _pipeColorSystem = default!;
-        [Dependency] private readonly SandboxSystem _sandboxSystem = default!;
+        [Dependency] private IAdminManager _adminManager = default!;
+        [Dependency] private AtmosPipeColorSystem _pipeColorSystem = default!;
+        [Dependency] private SandboxSystem _sandboxSystem = default!;
 
         public override string Command => "colornetwork";
 
@@ -56,14 +56,13 @@ namespace Content.Server.Sandbox.Commands
                 return;
             }
 
-            var color = Color.TryFromHex(args[2]);
-            if (!color.HasValue)
+            if (!Color.TryFromHex(args[2], out var color))
             {
                 shell.WriteError(Loc.GetString("shell-invalid-color-hex"));
                 return;
             }
 
-            PaintNodes(nodeContainerComponent, nodeGroupId, color.Value);
+            PaintNodes(nodeContainerComponent, nodeGroupId, color);
         }
 
         private void PaintNodes(NodeContainerComponent nodeContainerComponent, NodeGroupID nodeGroupId, Color color)
@@ -78,7 +77,7 @@ namespace Content.Server.Sandbox.Commands
                 if (!EntityManager.TryGetComponent(x.Owner, out AtmosPipeColorComponent? atmosPipeColorComponent))
                     continue;
 
-                _pipeColorSystem.SetColor((x.Owner, atmosPipeColorComponent), color);
+                _pipeColorSystem.SetColor(x.Owner, atmosPipeColorComponent, color);
             }
         }
     }

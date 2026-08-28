@@ -1,6 +1,6 @@
 using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 using System.Linq;
 
 namespace Content.Shared.Chemistry.Reagent;
@@ -14,13 +14,13 @@ namespace Content.Shared.Chemistry.Reagent;
 public partial struct ReagentId : IEquatable<ReagentId>
 {
     // TODO rename data field.
-    [DataField("ReagentId", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>), required: true)]
-    public string Prototype { get; private set; }
+    [DataField("ReagentId", required: true)]
+    public ProtoId<ReagentPrototype> Prototype { get; private set; }
 
     /// <summary>
     /// Any additional data that is unique to this reagent type. E.g., for blood this could be DNA data.
     /// </summary>
-    [DataField("data")]
+    [DataField]
     public List<ReagentData>? Data { get; private set; } = new();
 
     public ReagentId(string prototype, List<ReagentData>? data)
@@ -75,7 +75,21 @@ public partial struct ReagentId : IEquatable<ReagentId>
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(Prototype, Data);
+        // We need to make sure we take the hash code of Data by value in order
+        // for hashed key lookups to work properly
+        var hash = 17;
+        unchecked
+        {
+            if (Data?.Count != 0)
+            {
+                foreach (var data in Data ?? [])
+                {
+                    hash = hash * 23 + data.GetHashCode();
+                }
+            }
+        }
+
+        return HashCode.Combine(Prototype, hash);
     }
 
     public string ToString(FixedPoint2 quantity)

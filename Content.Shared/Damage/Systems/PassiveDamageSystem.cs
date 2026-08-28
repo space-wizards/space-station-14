@@ -1,27 +1,39 @@
 using Content.Shared.Damage.Components;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Mobs.Components;
-using Content.Shared.FixedPoint;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.Damage;
+namespace Content.Shared.Damage.Systems;
 
-public sealed class PassiveDamageSystem : EntitySystem
+public sealed partial class PassiveDamageSystem : EntitySystem
 {
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
-    public override void Initialize()
+    #region Subscriptions
+
+    [SubscribeLocalEvent]
+    private void OnPendingMapInit(Entity<PassiveDamageComponent> ent, ref MapInitEvent args)
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<PassiveDamageComponent, MapInitEvent>(OnPendingMapInit);
+        ent.Comp.NextDamage = _timing.CurTime + TimeSpan.FromSeconds(1f);
+        Dirty(ent);
     }
 
-    private void OnPendingMapInit(EntityUid uid, PassiveDamageComponent component, MapInitEvent args)
+    [SubscribeLocalEvent]
+    private void OnDamageTaken(Entity<PassiveDamageComponent> ent, ref DamageDealtEvent args)
     {
-        component.NextDamage = _timing.CurTime + TimeSpan.FromSeconds(1f);
+        if (ent.Comp.IntervalHaltOnDamageTaken == TimeSpan.Zero || !args.Damage.AnyPositive())
+            return;
+
+        var proposedUpdateTime = _timing.CurTime + ent.Comp.IntervalHaltOnDamageTaken;
+        if (proposedUpdateTime > ent.Comp.NextDamage)
+        {
+            ent.Comp.NextDamage = proposedUpdateTime;
+            Dirty(ent);
+        }
+
     }
+
+    #endregion
 
     // Every tick, attempt to damage entities
     public override void Update(float frameTime)
@@ -37,17 +49,15 @@ public sealed class PassiveDamageSystem : EntitySystem
             if (comp.NextDamage > curTime)
                 continue;
 
-            if (comp.DamageCap != 0 && damage.TotalDamage >= comp.DamageCap)
-                continue;
-
             // Set the next time they can take damage
             comp.NextDamage = curTime + TimeSpan.FromSeconds(1f);
+            Dirty(uid, comp);
 
             // Damage them
             foreach (var allowedState in comp.AllowedStates)
             {
                 if(allowedState == mobState.CurrentState)
-                    _damageable.TryChangeDamage(uid, comp.Damage, true, false, damage);
+                    _damageable.ChangeDamage((uid, damage), comp.Damage, true, false);
             }
         }
     }

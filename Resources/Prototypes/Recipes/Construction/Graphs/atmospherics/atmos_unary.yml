@@ -1,0 +1,104 @@
+- type: constructionGraph
+  id: !type:CreateVariants
+    values: [ GasUnary, GasUnaryAlt1, GasUnaryAlt2 ]
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: ventpump
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: passivevent
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: ventscrubber
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: outletinjector
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+  - node: ventpump
+    entity: !type:CreateVariants
+      values: [ GasVentPump, GasVentPumpAlt1, GasVentPumpAlt2 ]
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tool: Welding
+        doAfter: 1
+
+  - node: passivevent
+    entity: !type:CreateVariants
+      values: [ GasPassiveVent, GasPassiveVentAlt1, GasPassiveVentAlt2 ]
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tool: Welding
+        doAfter: 1
+
+  - node: ventscrubber
+    entity: !type:CreateVariants
+      values: [ GasVentScrubber, GasVentScrubberAlt1, GasVentScrubberAlt2 ]
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tool: Welding
+        doAfter: 1
+
+  - node: outletinjector
+    entity: !type:CreateVariants
+      values: [ GasOutletInjector, GasOutletInjectorAlt1, GasOutletInjectorAlt2 ]
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1

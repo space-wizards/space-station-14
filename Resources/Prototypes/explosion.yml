@@ -1,11 +1,3 @@
-#  Does not currently support prototype hot-reloading. See comments in c# file.
-
-# Note that for every explosion type you define, explosions & nukes will start performing worse
-# You should only define a new explopsion type if you really need to
-#
-# If you just want to modify properties other than `damagePerIntensity`, it'd be better to
-# split off explosion damage & explosion visuals/effects into their own separate prototypes.
-
 - type: explosion
   id: Default
   damagePerIntensity:
@@ -13,27 +5,29 @@
       Heat: 5
       Blunt: 5
       Piercing: 5
-  tileBreakChance: [0, 0.5, 1]
-  tileBreakIntensity: [0, 10, 30]
-  tileBreakRerollReduction: 20
+  tileBreakChance: [ 0, 0.5, 1 ]
+  tileBreakIntensity: [ 0, 50, 75 ]
+  tileBreakRerollReduction: 25
   lightColor: Orange
   texturePath: /Textures/Effects/fire.rsi
   fireStates: 3
+  temperature: 800
 
 - type: explosion
   id: DemolitionCharge
   damagePerIntensity:
     types:
-      Heat: 3
-      Blunt: 3
-      Piercing: 3
+      Heat: 5
+      Blunt: 5
+      Piercing: 5
       Structural: 50
   tileBreakChance: [ 0, 0.5, 1 ]
-  tileBreakIntensity: [ 0, 10, 30 ]
-  tileBreakRerollReduction: 20
+  tileBreakIntensity: [ 0, 50, 75 ]
+  tileBreakRerollReduction: 25
   lightColor: Orange
   texturePath: /Textures/Effects/fire.rsi
   fireStates: 3
+  temperature: 800
 
 - type: explosion
   id: MicroBomb
@@ -50,6 +44,7 @@
   lightColor: Orange
   texturePath: /Textures/Effects/fire.rsi
   fireStates: 3
+  temperature: 800
 
 - type: explosion
   id: Radioactive
@@ -65,12 +60,12 @@
   fireStates: 3
 
 - type: explosion
-  id: Cryo
+  id: Cryo # I'm assuming this is some kind of endothermic implosion explosive? Sci-Fi stuff so the values can be totally made up
   damagePerIntensity:
     types:
       Cold: 5
-      Blunt: 2
-      Structural: 20
+      Blunt: 5
+      Structural: 50
   tileBreakChance: [0]
   tileBreakIntensity: [0]
   lightColor: Blue
@@ -85,12 +80,14 @@
       Heat: 4
       Blunt: 7
       Piercing: 4
+      Structural: 10
   tileBreakChance: [0, 0.5, 1]
-  tileBreakIntensity: [0, 10, 30]
+  tileBreakIntensity: [0, 50, 75]
   tileBreakRerollReduction: 20
   lightColor: Orange
   texturePath: /Textures/Effects/fire.rsi
   fireStates: 3
+  temperature: 800
 
 - type: explosion
   id: PowerSink
@@ -107,6 +104,7 @@
   lightColor: Orange
   texturePath: /Textures/Effects/fire.rsi
   fireStates: 3
+  temperature: 800
 
 - type: explosion
   id: HardBomb
@@ -123,6 +121,7 @@
   lightColor: Orange
   texturePath: /Textures/Effects/fire.rsi
   fireStates: 3
+  temperature: 800
 
 - type: explosion
   id: FireBomb
@@ -135,7 +134,18 @@
   texturePath: /Textures/Effects/fire.rsi
   fireStates: 3
   fireStacks: 2
+  temperature: 1500
 
-# STOP
-# BEFORE YOU ADD MORE EXPLOSION TYPES CONSIDER IF AN EXISTING ONE IS SUITABLE
-# ADDING NEW ONES IS PROHIBITIVELY EXPENSIVE
+- type: explosion
+  id: XenoborgAntiStructureExplosion
+  damagePerIntensity:
+    types:
+      Heat: 4
+      Blunt: 2
+      Piercing: 3
+      Structural: 50
+  lightColor: Blue
+  fireColor: Blue
+  texturePath: /Textures/Effects/fire_greyscale.rsi
+  fireStates: 3
+  temperature: 800

@@ -6,12 +6,13 @@
       rolls: !type:RangeNumberSelector
         range: 2, 4
       children:
-      - id: BoxFolderBlue
+      - id: BoxFolderBase
       - id: BoxFolderRed
+      - id: BoxFolderBlue
       - id: BoxFolderYellow
-      - id: BoxFolderWhite
       - id: BoxFolderGrey
       - id: BoxFolderBlack
+      - id: BoxFolderGreen
     - !type:GroupSelector
       rolls: !type:RangeNumberSelector
         range: 0, 3
@@ -38,7 +39,7 @@
       - id: NanoTaskCartridge
 
 - type: entity
-  parent: [ BaseStructureDynamic, BaseBagOpenClose ]
+  parent: [ BaseStructureDynamic, BaseBagOpenClose, StructureHealthContainerWeak ]
   id: BaseFilingCabinet
   description: A cabinet for all your filing needs.
   suffix: Empty
@@ -74,25 +75,13 @@
     containers:
       storagebase: !type:Container
   - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: Metallic
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 60
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak

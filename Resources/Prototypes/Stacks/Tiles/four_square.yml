@@ -1,0 +1,63 @@
+# Tiles in a 4 square pattern
+
+# Single color
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileFreezer
+  name: stack-freezer-tile
+  spawn: FloorTileItemFreezer
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileLime
+  name: stack-lime-tile
+  spawn: FloorTileItemLime
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileBlue
+  name: stack-blue-floor-tile
+  spawn: FloorTileItemBlue
+
+# Two color
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileSteelCheckerDark
+  name: stack-steel-dark-checker-tile
+  spawn: FloorTileItemSteelCheckerDark
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileSteelCheckerLight
+  name: stack-steel-light-checker-tile
+  spawn: FloorTileItemSteelCheckerLight
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileBar
+  name: stack-item-bar-floor-tile
+  spawn: FloorTileItemBar
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileClown
+  name: stack-clown-floor-tile
+  spawn: FloorTileItemClown
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileMime
+  name: stack-mime-floor-tile
+  spawn: FloorTileItemMime
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileKitchen
+  name: stack-kitchen-floor-tile
+  spawn: FloorTileItemKitchen
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileLaundry
+  name: stack-laundry-floor-tile
+  spawn: FloorTileItemLaundry

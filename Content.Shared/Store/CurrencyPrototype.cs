@@ -1,7 +1,5 @@
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Shared.Store;
 
@@ -14,7 +12,6 @@ namespace Content.Shared.Store;
 [DataDefinition]
 public sealed partial class CurrencyPrototype : IPrototype
 {
-    [ViewVariables]
     [IdDataField]
     public string ID { get; private set; } = default!;
 
@@ -23,18 +20,18 @@ public sealed partial class CurrencyPrototype : IPrototype
     /// doesn't necessarily refer to the full name of the currency, only
     /// that which is displayed to the user.
     /// </summary>
-    [DataField("displayName")]
+    [DataField]
     public string DisplayName { get; private set; } = string.Empty;
 
     /// <summary>
     /// The physical entity of the currency
     /// </summary>
-    [DataField("cash", customTypeSerializer: typeof(PrototypeIdValueDictionarySerializer<FixedPoint2, EntityPrototype>))]
-    public Dictionary<FixedPoint2, string>? Cash { get; private set; }
+    [DataField]
+    public Dictionary<FixedPoint2, EntProtoId>? Cash { get; private set; }
 
     /// <summary>
     /// Whether or not this currency can be withdrawn from a shop by a player. Requires a valid entityId.
     /// </summary>
-    [DataField("canWithdraw")]
+    [DataField]
     public bool CanWithdraw { get; private set; } = true;
 }

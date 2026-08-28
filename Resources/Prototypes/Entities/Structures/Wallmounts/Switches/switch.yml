@@ -1,16 +1,35 @@
+#todo these need a common parent
+
 - type: entity
-  parent: BaseWallmountMetallic
+  parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
   id: SignalSwitch
   name: signal switch
   description: It's a switch for toggling power to things.
   components:
   - type: WallMount
-    arc: 360
+    arc: 175
   - type: StationAiWhitelist
   - type: Sprite
-    drawdepth: SmallObjects
+    offset: 0, -0.25
+    drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/switch.rsi
-    state: on
+    layers:
+    - state: base
+    - map: [ "shaded" ]
+      state: off
+    - map: [ "unshaded" ]
+      state: off-unshaded
+      shader: unshaded
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SwitchVisuals.Visuals:
+        shaded:
+          True: { state: on }
+          False: { state: off }
+        unshaded:
+          True: { state: on-unshaded }
+          False: { state: off-unshaded }
   - type: SignalSwitch
   - type: UseDelay
     delay: 0.5 # prevent light-toggling auto-clickers.
@@ -29,39 +48,38 @@
     - Status
     lastSignals:
       Status: false
+  - type: Transform
+    anchored: false
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 80
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 40
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:PlaySoundBehavior
-            sound:
-              collection: MetalBreak
-              params:
-                volume: -8
+    - trigger: &DamageMachineFlimsy
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - &SoundMetalBreak !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -8
 
 - type: entity
-  parent: BaseWallmountMetallic
+  parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
   id: SignalButton
   name: signal button
   description: It's a button for activating something.
   components:
   - type: WallMount
-    arc: 360
+    arc: 175
   - type: StationAiWhitelist
   - type: Sprite
-    drawdepth: SmallObjects
+    offset: 0, -0.25
+    drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/switch.rsi
-    state: dead
+    layers:
+    - state: base
+    - state: button
+    - state: button-unshaded
+      shader: unshaded
   - type: UseDelay
     delay: 0.5 # prevent light-toggling auto-clickers.
   - type: SignalSwitch
@@ -79,38 +97,43 @@
   - type: DeviceLinkSource
     ports:
       - Pressed
+  - type: Transform
+    anchored: false
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 80
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 40
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:PlaySoundBehavior
-            sound:
-              collection: MetalBreak
-              params:
-                volume: -8
+    - trigger: *DamageMachineFlimsy
+      behaviors:
+      - *SoundMetalBreak
 
 - type: entity
-  parent: BaseWallmountMetallic
+  parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
   id: ApcNetSwitch
   name: apc net switch
   description: It's a switch for toggling lights that are connected to the same apc.
   components:
-  - type: WallMount
-    arc: 360
   - type: Sprite
-    drawdepth: SmallObjects
+    offset: 0, -0.25
+    drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/switch.rsi
-    state: on
+    layers:
+    - state: base
+    - map: [ "shaded" ]
+      state: off
+    - map: [ "unshaded" ]
+      state: off-unshaded
+      shader: unshaded
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SwitchVisuals.Visuals:
+        shaded:
+          True: { state: on }
+          False: { state: off }
+        unshaded:
+          True: { state: on-unshaded }
+          False: { state: off-unshaded }
+  - type: WallMount
+    arc: 175
   - type: Rotatable
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
@@ -118,17 +141,23 @@
     transmitFrequencyId: SmartLight # assuming people want to use it for light switches.
   - type: ApcNetworkConnection
   - type: ApcNetSwitch
+  - type: Transform
+    anchored: false
   - type: Construction
     graph: LightSwitchGraph
     node: LightSwitchNode
+  - type: Destructible
+    thresholds:
+    - trigger: *DamageMachineFlimsy
+      behaviors:
+      - *SoundMetalBreak
 
 #directional
-
 - type: entity
+  parent: SignalSwitch
   id: SignalSwitchDirectional
   name: signal switch
   suffix: directional
-  parent: SignalSwitch
   components:
   - type: WallMount
     arc: 175
@@ -137,10 +166,10 @@
     node: SignalSwitchDirectionalNode
 
 - type: entity
+  parent: SignalButton
   id: SignalButtonDirectional
   name: signal button
   suffix: directional
-  parent: SignalButton
   components:
   - type: WallMount
     arc: 175
@@ -149,10 +178,10 @@
     node: SignalButtonDirectionalNode
 
 - type: entity
+  parent: ApcNetSwitch
   id: ApcNetSwitchDirectional
   name: apc net switch
   suffix: directional
-  parent: ApcNetSwitch
   components:
   - type: WallMount
     arc: 175
@@ -161,270 +190,283 @@
     node: LightSwitchDirectionalNode
 
 # lockable buttons
-
 - type: entity
+  parent: SignalButtonDirectional
   id: LockableButton
   name: lockable button
-  parent: SignalButtonDirectional
   categories: [ HideSpawnMenu ]
   components:
-  - type: Appearance
   - type: Lock
-  - type: LockVisuals
   - type: AccessReader
   - type: Sprite
+    offset: 0, -0.25
     drawdepth: WallMountedItems
-    sprite: Structures/Wallmounts/locked_switch.rsi
+    sprite: Structures/Wallmounts/switch-lockable.rsi
     layers:
     - state: base
-    - state: locked
-      map: ["enum.LockVisualLayers.Lock"]
+    - state: button
+    - state: button-unshaded
       shader: unshaded
+    - map: [ "lock-shaded" ]
+      state: lock-locked
+    - map: [ "lock-unshaded" ]
+      state: lock-locked-unshaded
+      shader: unshaded
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.LockVisuals.Locked:
+        lock-shaded:
+          True: { state: lock-locked }
+          False: { state: lock-unlocked }
+        lock-unshaded:
+          True: { state: lock-locked-unshaded }
+          False: { state: lock-unlocked-unshaded }
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonCaptain
   suffix: Captain
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Captain"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonHeadOfPersonnel
   suffix: HeadOfPersonnel
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonChiefEngineer
   suffix: ChiefEngineer
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["ChiefEngineer"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonChiefMedicalOfficer
   suffix: ChiefMedicalOfficer
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["ChiefMedicalOfficer"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonHeadOfSecurity
   suffix: HeadOfSecurity
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["HeadOfSecurity"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonResearchDirector
   suffix: ResearchDirector
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["ResearchDirector"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonCommand
   suffix: Command
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Command"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonCryogenics
   suffix: Cryogenics
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Cryogenics"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonSecurity
   suffix: Security
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Security"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonDetective
   suffix: Detective
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Detective"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonArmory
   suffix: Armory
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Armory"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonBrig
   suffix: Brig
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Brig"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonLawyer
   suffix: Lawyer
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Lawyer"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonEngineering
   suffix: Engineering
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Engineering"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonMedical
   suffix: Medical
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Medical"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonQuartermaster
   suffix: Quartermaster
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Quartermaster"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonSalvage
   suffix: Salvage
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Salvage"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonCargo
   suffix: Cargo
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Cargo"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonResearch
   suffix: Research
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Research"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonService
   suffix: Service
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Service"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonMaintenance
   suffix: Maintenance
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Maintenance"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonExternal
   suffix: External
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["External"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonJanitor
   suffix: Janitor
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Janitor"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonTheatre
   suffix: Theatre
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Theatre"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonBar
   suffix: Bar
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Bar"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonChemistry
   suffix: Chemistry
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Chemistry"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonKitchen
   suffix: Kitchen
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Kitchen"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonChapel
   suffix: Chapel
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Chapel"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonHydroponics
   suffix: Hydroponics
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Hydroponics"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonAtmospherics
   suffix: Atmospherics
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Atmospherics"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonCentcomm
   suffix: CentComm
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["CentralCommand"]]
@@ -432,23 +474,23 @@
 # button frames
 
 - type: entity
+  parent: StructureHealthFurnitureWeak
   id: ButtonFrame
   name: button frame
   categories: [ HideSpawnMenu ]
   description: It's a frame to help distinguish switches visually.
   placement:
     mode: SnapgridCenter
-    snap:
-    - Wallmount
   components:
   - type: Clickable
   - type: WallMount
-    arc: 360
+    arc: 175
   - type: Physics
     canCollide: false
   - type: Sprite
+    offset: 0, -0.25
     drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/switch_frame.rsi
+    sprite: Structures/Wallmounts/switch-frame.rsi
     state: grey
   - type: Rotatable
   - type: Fixtures
@@ -459,8 +501,6 @@
   suffix: grey
   components:
   - type: Sprite
-    drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/switch_frame.rsi
     state: grey
 
 - type: entity
@@ -469,8 +509,6 @@
   suffix: caution
   components:
   - type: Sprite
-    drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/switch_frame.rsi
     state: caution
 
 - type: entity
@@ -479,19 +517,15 @@
   suffix: caution
   components:
   - type: Sprite
-    drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/switch_frame.rsi
-    state: caution_security
+    state: caution-security
 
 - type: entity
-  id: ButtonFrameExit
+  id: ButtonFrameWhite
   parent: ButtonFrame
-  suffix: exit
+  suffix: white
   components:
   - type: Sprite
-    drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/switch_frame.rsi
-    state: exit
+    state: white
 
 - type: entity
   id: ButtonFrameJanitor
@@ -499,6 +533,4 @@
   suffix: janitor
   components:
   - type: Sprite
-    drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/switch_frame.rsi
     state: janitor
