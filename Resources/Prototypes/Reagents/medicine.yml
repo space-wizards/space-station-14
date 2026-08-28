@@ -521,12 +521,12 @@
       - !type:AdjustTemperature
         conditions:
         - !type:TemperatureCondition
-          max: 293.15
+          max: 306.15
         amount: 1000000 # thermal energy, not temperature!
       - !type:AdjustTemperature
         conditions:
         - !type:TemperatureCondition
-          min: 293.15
+          min: 306.15
         amount: -1000000
       - !type:PopupMessage
         type: Local
@@ -848,6 +848,21 @@
         damage:
           types:
             Poison: -0.5 # Same as what it was before the second coming of offmed
+      - !type:EvenHealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Tricordrazine
+          min: 30
+        damage:
+          Brute: 1.05
+          Burn: 1
+      - !type:HealthChange
+        conditions:
+        - !type:MobStateCondition
+          mobstate: Alive
+        damage:
+          types:
+            Poison: 0.55
 
 - type: reagent
   id: Lipozine
