@@ -234,10 +234,10 @@ public sealed partial class StatusEffectsSystem : EntitySystem
     }
 
     /// <summary>
-    ///  Sets a new delay for a given status effect. Does nothing if the effect has already started. Cannot shorten existing delay; but can make it start instantly.
+    ///  Sets a new delay for a given status effect. Does nothing if the effect has already started. Cannot lengthen existing delay; but can make it start sooner/instantly.
     /// </summary>
     /// <param name="effect">The status effect entity.</param>
-    /// <param name="delay">New delay for the effect (ends at <c>delay</c> time after current time). If null, the effect starts instantly.</param>
+    /// <param name="delay">New delay for the effect (starts at <c>delay</c> time after current time). If null, the effect starts instantly.</param>
     private void UpdateStatusEffectDelay(Entity<StatusEffectComponent?> effect, TimeSpan? delay)
     {
         if (!_effectQuery.Resolve(effect, ref effect.Comp))
