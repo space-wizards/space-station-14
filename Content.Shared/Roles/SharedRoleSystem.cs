@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -16,6 +14,9 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using System.Collections.Frozen;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Content.Shared.Roles;
 
@@ -546,17 +547,19 @@ public abstract partial class SharedRoleSystem : EntitySystem
     /// </summary>
     /// <param name="mind">The mind entity.</param>
     /// <returns>A hashset of <see cref="AntagTagPrototype"/> IDs on the mind.</returns>
-    public HashSet<ProtoId<AntagTagPrototype>> MindGetAllAntagTags(Entity<MindComponent?> mind)
+    public IReadOnlySet<ProtoId<AntagTagPrototype>> MindGetAllAntagTags(Entity<MindComponent?> mind)
     {
-        var antagTags = new HashSet<ProtoId<AntagTagPrototype>>();
-
         if (!Resolve(mind.Owner, ref mind.Comp))
-            return antagTags;
+            return FrozenSet<ProtoId<AntagTagPrototype>>.Empty;
 
-        var roles = MindGetAllRoleInfo(mind).Where(role => role.Antagonist);
+        var roles = MindGetAllRoleInfo(mind);
+        var antagTags = new HashSet<ProtoId<AntagTagPrototype>>();
 
         foreach (var role in roles)
         {
+            if (!role.Antagonist)
+                continue;
+
             if (!ProtoMan.TryIndex<AntagPrototype>(role.Prototype, out var antag))
                 continue;
 
