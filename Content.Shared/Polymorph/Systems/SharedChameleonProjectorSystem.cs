@@ -338,7 +338,7 @@ public abstract partial class SharedChameleonProjectorSystem : EntitySystem
     /// <summary>
     /// Try to get a single component from the source entity/prototype.
     /// </summary>
-    private bool GetSrcComp<T>(ChameleonDisguiseComponent comp, [NotNullWhen(true)] out T? src) where T : Component, new()
+    protected bool GetSrcComp<T>(ChameleonDisguiseComponent comp, [NotNullWhen(true)] out T? src) where T : Component, new()
     {
         if (TryComp(comp.SourceEntity, out src))
             return true;
@@ -350,6 +350,29 @@ public abstract partial class SharedChameleonProjectorSystem : EntitySystem
             return false;
 
         return proto.TryComp(out src, EntityManager.ComponentFactory);
+    }
+
+    /// <summary>
+    /// Try to get a single component, paired with its owning entity, from the source entity/prototype.
+    /// </summary>
+    protected bool GetSrcEntity<T>(ChameleonDisguiseComponent comp, out Entity<T?> src) where T : Component, new()
+    {
+        if (TryComp<T>(comp.SourceEntity, out var liveComp))
+        {
+            src = (comp.SourceEntity, liveComp);
+            return true;
+        }
+
+        if (comp.SourceProto is { } protoId
+            && ProtoMan.TryIndex<EntityPrototype>(protoId, out var proto)
+            && proto.TryComp<T>(out var protoComp, EntityManager.ComponentFactory))
+        {
+            src = (EntityUid.Invalid, protoComp);
+            return true;
+        }
+
+        src = default;
+        return false;
     }
 }
 
