@@ -12,10 +12,10 @@ public static class StatusEffectNewTestPrototypes
     public const string StatusC = "StatusC";
     public const string StatusD = "StatusD";
     
-    public static readonly TimeSpan OneSecond = new TimeSpan(0, 0, 0, 1);
-    public static readonly TimeSpan OneMinute = new TimeSpan(0, 0, 1, 0);
-    public static readonly TimeSpan TenTicks = new TimeSpan(10L);
-    public static readonly TimeSpan MinusTenTicks = new TimeSpan(-10L);
+    public static readonly long One = 1L;
+    public static readonly TimeSpan OneTick = new TimeSpan(One);
+    public static readonly long Ten = One * 10;
+    public static readonly TimeSpan TenTicks = new TimeSpan(Ten);
 
     [TestPrototypes]
     public static readonly string StatusEffectPrototypes = @$"
