@@ -848,22 +848,7 @@
         damage:
           types:
             Poison: -0.5 # Same as what it was before the second coming of offmed
-      - !type:EvenHealthChange
-        conditions:
-        - !type:ReagentCondition
-          reagent: Tricordrazine
-          min: 30
-        damage:
-          Brute: 1.05
-          Burn: 1
-      - !type:HealthChange
-        conditions:
-        - !type:MobStateCondition
-          mobstate: Alive
-        damage:
-          types:
-            Poison: 0.55
-
+     
 - type: reagent
   id: Lipozine
   name: reagent-name-lipozine
