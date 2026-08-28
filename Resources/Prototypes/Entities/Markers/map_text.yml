@@ -6,7 +6,7 @@
     mode: PlaceFree
   components:
   - type: MapText
-    text: "Use VV to change the displayed text"
+    text: "Use VV to change the displayed text" # remove if "null" fields will be editable in component view
   - type: Sprite
     state: pink
 
