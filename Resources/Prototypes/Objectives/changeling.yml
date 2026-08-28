@@ -102,11 +102,7 @@
     conditions:
     - !type:AntagonistTagCondition # Only allow on-station targets.
       tags:
-      - OnStation
-    - !type:AntagonistTagCondition # Exclude things like changelings. Transforming makes mindroles inaccurate and can cause issues.
-      inverted: true
-      tags:
-      - Unkillable
+      - OnStation # Also don't bother checking for unkillable cause here we only need the DEPARTMENT of the target and I don't foresee departments full of unkillable antags in the future.
     - !type:RoleCondition
       whitelist:
         components:
