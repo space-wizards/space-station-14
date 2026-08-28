@@ -25,10 +25,9 @@ public sealed partial class RoundInfo : PanelContainer
     /// <summary>
     /// Updates the displayed round information.
     /// </summary>
-    public void SetRoundInfo(int roundId, int playerCount, string mapName, string gamemodeTitle, TimeSpan roundStartTime, bool isRoundStarted)
+    public void SetRoundInfo(int playerCount, string mapName, string gamemodeTitle, TimeSpan roundStartTime, bool isRoundStarted)
     {
         Visible = true;
-        RoundIdLabel.Text = $"#{roundId.ToString()}";
         PlayerCountLabel.Text = playerCount.ToString();
         MapNameLabel.Text = mapName;
         GamemodeLabel.Text = gamemodeTitle;

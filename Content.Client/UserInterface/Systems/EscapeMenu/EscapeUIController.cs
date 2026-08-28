@@ -64,9 +64,11 @@ public sealed partial class EscapeUIController : UIController, IOnStateEntered<G
         DebugTools.Assert(_escapeWindow == null);
 
         _escapeWindow = UIManager.CreateWindow<Options.UI.EscapeMenu>();
-        var gameTicker = _entityManager.System<ClientGameTicker>();
-        UpdateRoundInfo();
-        gameTicker.InfoBlobUpdated += UpdateRoundInfo;
+        if (_entityManager.SystemOrNull<ClientGameTicker>() is { } gameTicker)
+        {
+            UpdateRoundInfo();
+            gameTicker.InfoBlobUpdated += UpdateRoundInfo;
+        }
 
         _escapeWindow.OnClose += DeactivateButton;
         _escapeWindow.OnOpen += ActivateButton;
@@ -140,7 +142,9 @@ public sealed partial class EscapeUIController : UIController, IOnStateEntered<G
 
         if (_escapeWindow != null)
         {
-            _entityManager.System<ClientGameTicker>().InfoBlobUpdated -= UpdateRoundInfo;
+            if (_entityManager.SystemOrNull<ClientGameTicker>() is { } gameTicker)
+                gameTicker.InfoBlobUpdated -= UpdateRoundInfo;
+
             _escapeWindow.Dispose();
             _escapeWindow = null;
         }
@@ -161,9 +165,11 @@ public sealed partial class EscapeUIController : UIController, IOnStateEntered<G
 
     private void UpdateRoundInfo()
     {
-        var gameTicker = _entityManager.System<ClientGameTicker>();
-        _escapeWindow?.RoundInfo.SetRoundInfo(gameTicker.RoundId, gameTicker.PlayerCount, gameTicker.MapName,
-            gameTicker.GamemodeTitle, gameTicker.RoundStartTimeSpan, gameTicker.IsGameStarted);
+        var gameTicker = _entityManager.SystemOrNull<ClientGameTicker>();
+        if (gameTicker == null)
+            return;
+
+        _escapeWindow?.RoundInfo.SetRoundInfo(gameTicker.PlayerCount, gameTicker.MapName, gameTicker.GamemodeTitle, gameTicker.RoundStartTimeSpan, gameTicker.IsGameStarted);
     }
 
     private void EscapeButtonOnOnPressed(ButtonEventArgs obj)
