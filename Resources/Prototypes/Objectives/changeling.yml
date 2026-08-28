@@ -70,13 +70,13 @@
   - type: ChangelingEscapeIdentityCondition
   - type: PickRandomPerson
     conditions:
-    - !type:NotAntagonistCondition # The only targets we want to roll for this objective are on-station. Everything else is basically impossible to devour.
-      excluded: # Lings are excluded because once they transform their identity is essentially not possible to obtain anymore.
-      - Traitor
-      - TraitorSleeper
-      - Thief
-      - HeadRev
-      - InitialInfected
+    - !type:AntagonistTagCondition # The only targets we want to roll for this objective are on-station.
+      tags:
+      - OnStation
+    - !type:AntagonistTagCondition # We don't want to roll unkillable antagonists, because cannot be devoured.
+      inverted: true
+      tags:
+      - Unkillable
     # Kill and Escape objectives should have different targets.
     - !type:ObjectiveTargetCondition
       inverted: true
@@ -100,13 +100,13 @@
   - type: ChangelingEscapeDepartmentCondition
   - type: PickRandomPerson
     conditions:
-    - !type:NotAntagonistCondition # Only allow on-station targets. This excludes changelings because them transforming makes mindroles inaccurate and makes this objective basically impossible.
-      excluded:
-      - Traitor
-      - TraitorSleeper
-      - Thief
-      - HeadRev
-      - InitialInfected
+    - !type:AntagonistTagCondition # Only allow on-station targets.
+      tags:
+      - OnStation
+    - !type:AntagonistTagCondition # Exclude things like changelings. Transforming makes mindroles inaccurate and can cause issues.
+      inverted: true
+      tags:
+      - Unkillable
     - !type:RoleCondition
       whitelist:
         components:
@@ -125,13 +125,13 @@
     title: objective-condition-kill-maroon-title
   - type: PickRandomPerson
     conditions:
-    - !type:NotAntagonistCondition # Only roll on-station targets.
-      excluded:
-      - Traitor
-      - TraitorSleeper
-      - Thief
-      - HeadRev
-      - InitialInfected
+    - !type:AntagonistTagCondition # Only roll on-station targets.
+      tags:
+      - OnStation
+    - !type:AntagonistTagCondition # Don't roll unkillable targets.
+      inverted: true
+      tags:
+      - Unkillable
     # Kill and Escape objectives should have different targets.
     - !type:ObjectiveTargetCondition
       inverted: true

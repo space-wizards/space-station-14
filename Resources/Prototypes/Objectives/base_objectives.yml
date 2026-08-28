@@ -60,13 +60,9 @@
   components:
   - type: PickRandomPerson
     conditions:
-    - !type:NotAntagonistCondition # Only roll on-station targets.
-      excluded:
-      - Traitor
-      - TraitorSleeper
-      - Thief
-      - HeadRev
-      - InitialInfected
+    - !type:AntagonistTagCondition # Only roll on-station targets.
+      tags:
+      - OnStation
     # Can't have multiple objectives to kill the same person.
     - !type:ObjectiveTargetCondition
       inverted: true

@@ -542,6 +542,34 @@ public abstract partial class SharedRoleSystem : EntitySystem
     }
 
     /// <summary>
+    /// Reads all <see cref="AntagTagPrototype"/> IDs on a mind and returns them.
+    /// </summary>
+    /// <param name="mind">The mind entity.</param>
+    /// <returns>A hashset of <see cref="AntagTagPrototype"/> IDs on the mind.</returns>
+    public HashSet<ProtoId<AntagTagPrototype>> MindGetAllAntagTags(Entity<MindComponent?> mind)
+    {
+        var antagTags = new HashSet<ProtoId<AntagTagPrototype>>();
+
+        if (!Resolve(mind.Owner, ref mind.Comp))
+            return antagTags;
+
+        var roles = MindGetAllRoleInfo(mind).Where(role => role.Antagonist);
+
+        foreach (var role in roles)
+        {
+            if (!ProtoMan.TryIndex<AntagPrototype>(role.Prototype, out var antag))
+                continue;
+
+            foreach (var tag in antag.Tags)
+            {
+                antagTags.Add(tag);
+            }
+        }
+
+        return antagTags;
+    }
+
+    /// <summary>
     /// Reads all Roles of a mind Entity and returns their data as RoleInfo
     /// </summary>
     /// <param name="mind">The mind entity</param>

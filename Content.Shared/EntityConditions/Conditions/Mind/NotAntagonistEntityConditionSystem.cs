@@ -1,38 +1,47 @@
-﻿using System.Linq;
-using Content.Shared.Mind;
+﻿using Content.Shared.Mind;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Mind;
 
-public sealed partial class NotAntagonistEntityConditionSystem : EntityConditionSystem<MindComponent, NotAntagonistCondition>
+public sealed partial class AntagonistTagEntityConditionSystem : EntityConditionSystem<MindComponent, AntagonistTagCondition>
 {
     [Dependency] private SharedRoleSystem _roleSystem = default!;
 
-    protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<NotAntagonistCondition> args)
+    protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<AntagonistTagCondition> args)
     {
-        var excludedProtos = args.Condition.Excluded;
+        var tagProtos = args.Condition.Tags;
 
-        var antagRoles = _roleSystem.MindGetAllRoleInfo(entity.AsNullable()).Where(role => role.Antagonist);
+        var antagTags = _roleSystem.MindGetAllAntagTags(entity.AsNullable());
 
-        var excluded = antagRoles.Any(role => excludedProtos.Contains(role.Prototype));
+        if (args.Condition.AllowNonAntags && antagTags.Count == 0)
+        {
+            args.Result = !args.Condition.Inverted;
+            return;
+        }
 
-        args.Result = !_roleSystem.MindIsAntagonist(entity) || excluded;
+        args.Result = antagTags.Overlaps(tagProtos);
     }
 }
 
 /// <summary>
-/// Checks if the given mind is not an antagonist.
-/// Allows to exclude specific antags from the check.
+/// Checks if the given mind is an antagonist with specified tag.
 /// </summary>
-public sealed partial class NotAntagonistCondition : EntityConditionBase<NotAntagonistCondition>
+public sealed partial class AntagonistTagCondition : EntityConditionBase<AntagonistTagCondition>
 {
     /// <summary>
-    /// The antagonists to exclude from the check.
-    /// For example, if "Traitor" is provided, this condition will pass for every single non-antagonist + traitors.
+    /// The tags this check will succeed for.
+    /// For example, if "OnStation" is provided, all on-station antags will pass the check.
+    /// If <see cref="AllowNonAntags"/> is true, it will additionally allow every non-antag to pass the check.
     /// </summary>
     [DataField]
-    public List<ProtoId<AntagPrototype>> Excluded = new();
+    public HashSet<ProtoId<AntagTagPrototype>> Tags = new();
+
+    /// <summary>
+    /// Whether non-antagonists should always pass this condition.
+    /// </summary>
+    [DataField]
+    public bool AllowNonAntags = true;
 
     public override string EntityConditionGuidebookText(IPrototypeManager prototype)
     {
