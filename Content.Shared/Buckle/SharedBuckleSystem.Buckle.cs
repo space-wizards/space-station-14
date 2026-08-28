@@ -84,7 +84,7 @@ public abstract partial class SharedBuckleSystem
             return;
         }
 
-        if (UnbuckleRequiresExtrication(ent!, args.Puller, strap))
+        if (IsUnbuckleRequiresExtrication(ent!, args.Puller, strap))
         {
             var message = Loc.GetString("buckle-component-resist-rapid-extrication",
                 ("owner", Identity.Entity(ent, EntityManager)));
@@ -439,7 +439,7 @@ public abstract partial class SharedBuckleSystem
         //Same deal as pulling, if it's a complicated extrication with someone who can resist, extricate
         //if they can't resist, just yoink em.
         //Also let the buckled person out immediately
-        if (!UnbuckleRequiresExtrication(buckle, user, strap))
+        if (!IsUnbuckleRequiresExtrication(buckle, user, strap))
         {
             Unbuckle(buckle, user);
             return true;
@@ -463,14 +463,18 @@ public abstract partial class SharedBuckleSystem
 
     /// <summary>
     /// Check if a particular Unbuckle requires Extrication
-    /// I.E If the strap requires a DoAfter to remove someone: check if they're the one doing the unbuckle, dead, or stunned.
+    /// I.E If the strap requires a DoAfter to remove someone: check if they're the one doing the unbuckle, incapacitated, or stunned.
     /// </summary>
     /// <returns>Does the Unbuckle require Extrication</returns>
-    private bool UnbuckleRequiresExtrication(Entity<BuckleComponent?> buckle, EntityUid? user, Entity<StrapComponent> strap)
+    private bool IsUnbuckleRequiresExtrication(Entity<BuckleComponent?> buckle, EntityUid? user, Entity<StrapComponent> strap)
     {
+        var cuffed = !TryComp<CuffableComponent>(buckle, out var targetCuffableComp) &&
+                     targetCuffableComp!.CuffedHandCount > 0;
+
         return !strap.Comp.UnbuckleDoAfterTime.Equals(TimeSpan.Zero)
                && buckle != user
-               && !_mobState.IsDead(buckle)
+               && _mobState.IsIncapacitated(buckle)
+               && !cuffed
                && !HasComp<StunnedComponent>(buckle);
     }
 
