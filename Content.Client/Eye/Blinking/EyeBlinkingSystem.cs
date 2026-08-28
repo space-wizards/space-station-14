@@ -260,6 +260,8 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         foreach (var state in ent.Comp.Eyelids)
         {
             _sprite.RemoveLayer((body, comp), state.LayerKey, false);
+            if (state.DisplacementKey != null)
+                _sprite.RemoveLayer((body, comp), state.DisplacementKey, false);
         }
 
         // Clears eyelid states from the client component, if it already exists.
@@ -306,10 +308,11 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             _sprite.LayerSetColor((body, comp), layerIndex, eyelidColor);
             _sprite.LayerSetVisible((body, comp), layerIndex, false);
 
+            string? displacementKey = null;
             if (displacementProto != null)
-                _displacement.TryAddDisplacement(displacementProto.Displacement, (body, comp), layerIndex, layerId, out _);
+                _displacement.TryAddDisplacement(displacementProto.Displacement, (body, comp), layerIndex, layerId, out displacementKey);
 
-            ent.Comp.Eyelids.Add(new EyelidState(layerId));
+            ent.Comp.Eyelids.Add(new EyelidState(layerId, displacementKey));
             i++;
         }
     }

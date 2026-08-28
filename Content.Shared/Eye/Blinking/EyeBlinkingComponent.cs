@@ -189,12 +189,17 @@ public enum BlinkStatus : byte
 /// such as blink speed or eyelid color, or force closing the eyelid by health eye, or other factors.
 /// </summary>
 [DataRecord]
-public sealed partial class EyelidState(string layerKey)
+public sealed partial class EyelidState(string layerKey, string? displacementKey)
 {
     /// <summary>
     /// The sprite layer associated with this eyelid state.
     /// </summary>
     public string LayerKey = layerKey;
+
+    /// <summary>
+    /// The sprite layer associated with this eyelid's displacement.
+    /// </summary>
+    public string? DisplacementKey = displacementKey;
 
     /// <summary>
     /// Indicates whether the eyelid is currently closed.
