@@ -11,6 +11,5 @@ namespace Content.Client.Options.UI
         {
             RobustXamlLoader.Load(this);
         }
-
     }
 }

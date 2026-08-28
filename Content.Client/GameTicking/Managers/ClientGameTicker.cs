@@ -33,7 +33,7 @@ namespace Content.Client.GameTicking.Managers
         [ViewVariables] public ProtoId<LobbyBackgroundPrototype>? LobbyBackground { get; private set; }
         [ViewVariables] public bool DisallowedLateJoin { get; private set; }
         [ViewVariables] public string? ServerInfoBlob { get; private set; }
-        [ViewVariables] public int RoundId { get; private set; }
+        [ViewVariables] public new int RoundId { get; private set; }
         [ViewVariables] public int PlayerCount { get; private set; }
         [ViewVariables] public int ReadyCount { get; private set; }
         [ViewVariables] public string MapName { get; private set; } = string.Empty;
