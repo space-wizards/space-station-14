@@ -7,18 +7,32 @@
   - type: ChangelingDevour
   - type: ChangelingIdentity
   - type: ChangelingTransform
+  - type: AddMetabolism
+    addedMetabolizer: Changeling
   - type: DestructionResistance
   - type: RevolutionaryImmune
   - type: ZombieImmune
   - type: ActionGrant
+    removeOnShutdown: false
     actions:
     - ActionChangelingStore
+    - ActionChangelingStasis
+  - type: SatiationGrant
+    removeOnShutdown: false
+    satiation:
+      Chemicals:
+        prototype: ChemicalsChangeling
   - type: Store
     balance:
       ChangelingDNA: 60
 
 - type: entity
-  parent: [ SimpleSpaceMobBase, MobNightVision, BaseMobDestructible ]
+  parent:
+  - MobRespirator
+  - MobAtmosStandard
+  - SimpleSpaceMobBase
+  - MobNightVision
+  - BaseMobDestructible
   id: MobHeadSlug
   name: headslug
   description: A small, slug-like creature with a large, gaping maw. It's covered in a thick, slimy mucus.
@@ -44,12 +58,33 @@
     states:
       Alive:
         Base: slug
+      Critical:
+        Base: slug_dead
       Dead:
         Base: slug_dead
+  - type: Deathgasp
+  - type: MobStateActions
+    actions:
+      Critical:
+      - ActionCritSuccumb
+      - ActionCritFakeDeath
+      - ActionCritLastWords
   - type: MobThresholds
     thresholds:
       0: Alive
+      25: Critical
       50: Dead
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 0.25
+    damageRecovery:
+      types:
+        Asphyxiation: -0.25
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.1
   - type: MovementSpeedModifier # Slightly faster than regular mobs
     baseWalkSpeed: 3
     baseSprintSpeed: 5
@@ -60,6 +95,11 @@
         Blunt: 5
         Structural: 15 # to destroy lockers in which bodies could be hidden
   - type: ChangelingSlug
+  - type: ActionGrant
+    actions:
+    - ActionChangelingStasisWeak
+  - type: ReplacementAccent
+    accent: genericAggressive
   - type: Tag # Removes DoorBumpOpener
     tags:
       []
@@ -108,3 +148,15 @@
     noiseMultiplier: 2
     overlayColor: "#AB0808AA"
     prioritized: false # Technically eye augments, so we want things such as NVGs to take priority if able
+
+- type: entity # dummy prototype for the store listing
+  id: ChangelingFakeMindshieldDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: FakeMindShield
+    actionTag: FakeMindShieldChangeling
+    chameleonControllable: false
+    isInnate: true
+    enabledPopup: changeling-fake-mindshield-enabled
+    disabledPopup: changeling-fake-mindshield-disabled
+    action: ActionChangelingFakeMindshieldToggle

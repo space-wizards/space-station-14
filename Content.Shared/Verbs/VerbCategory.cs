@@ -91,5 +91,8 @@ namespace Content.Shared.Verbs
 
         public static readonly VerbCategory Adjust =
             new("verb-categories-adjust", "/Textures/Interface/VerbIcons/screwdriver.png");
+
+        public static readonly VerbCategory Metabolizers =
+            new("verb-categories-select-target", "/Textures/Interface/VerbIcons/group.svg.192dpi.png");
     }
 }

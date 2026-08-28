@@ -8,6 +8,7 @@ using Content.Shared.Speech.EntitySystems;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Armor;
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Body.Systems;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Chat;
 using Content.Shared.Damage.Systems;

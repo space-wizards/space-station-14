@@ -40,9 +40,10 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<BallisticAmmoInteractLoaderComponent, AfterInteractEvent>(OnBallisticAmmoLoad);
     }
 
-    private void OnBallisticRefillerMapInit(Entity<BallisticAmmoSelfRefillerComponent> entity, ref MapInitEvent _)
+    private void OnBallisticRefillerMapInit(Entity<BallisticAmmoSelfRefillerComponent> entity, ref MapInitEvent args)
     {
         entity.Comp.NextAutoRefill = Timing.CurTime + entity.Comp.AutoRefillRate;
+        DirtyField(entity.AsNullable(), nameof(BallisticAmmoSelfRefillerComponent.NextAutoRefill));
     }
 
     private void OnBallisticUse(Entity<BallisticAmmoProviderComponent> ent, ref UseInHandEvent args)
