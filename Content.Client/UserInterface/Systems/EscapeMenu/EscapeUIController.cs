@@ -1,5 +1,6 @@
 using Content.Client.FeedbackPopup;
 using Content.Client.Gameplay;
+using Content.Client.GameTicking.Managers;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Client.UserInterface.Systems.Info;
@@ -28,6 +29,7 @@ public sealed partial class EscapeUIController : UIController, IOnStateEntered<G
     [Dependency] private GuidebookUIController _guidebook = default!;
     [Dependency] private FeedbackPopupUIController _feedback = null!;
     [Dependency] private ILocalizationManager _loc = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
 
     private Options.UI.EscapeMenu? _escapeWindow;
 
@@ -62,6 +64,9 @@ public sealed partial class EscapeUIController : UIController, IOnStateEntered<G
         DebugTools.Assert(_escapeWindow == null);
 
         _escapeWindow = UIManager.CreateWindow<Options.UI.EscapeMenu>();
+        var gameTicker = _entityManager.System<ClientGameTicker>();
+        UpdateRoundInfo();
+        gameTicker.InfoBlobUpdated += UpdateRoundInfo;
 
         _escapeWindow.OnClose += DeactivateButton;
         _escapeWindow.OnOpen += ActivateButton;
@@ -135,6 +140,7 @@ public sealed partial class EscapeUIController : UIController, IOnStateEntered<G
 
         if (_escapeWindow != null)
         {
+            _entityManager.System<ClientGameTicker>().InfoBlobUpdated -= UpdateRoundInfo;
             _escapeWindow.Dispose();
             _escapeWindow = null;
         }
@@ -151,6 +157,13 @@ public sealed partial class EscapeUIController : UIController, IOnStateEntered<G
         _escapeWindow.AdminRemarksButton.ToolTip = !seeOwnNotes
             ? _loc.GetString("ui-escape-remarks-button-disabled")
             : null;
+    }
+
+    private void UpdateRoundInfo()
+    {
+        var gameTicker = _entityManager.System<ClientGameTicker>();
+        _escapeWindow?.RoundInfo.SetRoundInfo(gameTicker.RoundId, gameTicker.PlayerCount, gameTicker.MapName,
+            gameTicker.GamemodeTitle, gameTicker.RoundStartTimeSpan, gameTicker.IsGameStarted);
     }
 
     private void EscapeButtonOnOnPressed(ButtonEventArgs obj)
