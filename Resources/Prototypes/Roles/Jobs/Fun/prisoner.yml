@@ -28,6 +28,7 @@
     jumpsuit: ClothingUniformJumpsuitPrisoner
     neck: ClothingNeckBling
     back: ClothingBackpack # we COULD use the eletropack, but it's probably more suspect to have an electropack that doesn't work and that security doesn't remember handing out
+    gloves: ClothingHandsGlovesColorBlack
     shoes: ClothingShoesColorBlack
     id: PrisonerIDCard
 
