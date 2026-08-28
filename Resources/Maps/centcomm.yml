@@ -25625,7 +25625,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: ClothingShoesBootsVirtualSinger
+- proto: ClothingShoesBootsPerformer
   entities:
   - uid: 6084
     components:
@@ -25677,7 +25677,7 @@ entities:
       parent: 3239
     - type: Physics
       canCollide: False
-- proto: ClothingUniformJumpskirtVirtualSinger
+- proto: ClothingUniformJumpskirtPerformer
   entities:
   - uid: 6083
     components:
