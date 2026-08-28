@@ -28263,7 +28263,7 @@ entities:
     - type: Transform
       parent: 31
       pos: -6.4295473,32.285225
-- proto: ClothingShoesBootsVirtualSinger
+- proto: ClothingShoesBootsPerformer
   entities:
   - uid: 8319
     components:
