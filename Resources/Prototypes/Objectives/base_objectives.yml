@@ -63,6 +63,10 @@
     - !type:AntagonistTagCondition # Only roll on-station targets.
       tags:
       - OnStation
+    - !type:AntagonistTagCondition # Don't roll unkillable targets.
+      inverted: true
+      tags:
+      - Unkillable
     # Can't have multiple objectives to kill the same person.
     - !type:ObjectiveTargetCondition
       inverted: true
