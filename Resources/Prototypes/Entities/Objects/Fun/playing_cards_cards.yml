@@ -6,54 +6,40 @@
 - type: card
   abstract: true
   parent: BaseCard
-  id: Clubs
-  color: "#004000" # the darkest system green is too light
+  id: !type:CreateVariants
+    values:
+    - Clubs
+    - Diamonds
+    - Hearts
+    - Spades
+  color: !type:CreateVariants
+    values:
+    - "#004000" # the darkest system green is too light
+    - firebrick
+    - maroon
+    - midnightblue
 
 - type: card
   abstract: true
-  parent: Clubs
-  id: ClubsIcon
+  parent: !type:CreateVariants
+    values:
+    - Clubs
+    - Diamonds
+    - Hearts
+    - Spades
+  id: !type:CreateVariants
+    values:
+    - ClubsIcon
+    - DiamondsIcon
+    - HeartsIcon
+    - SpadesIcon
   layers:
-  - state: sc_ClubsDiamonds
-
-- type: card
-  abstract: true
-  parent: BaseCard
-  id: Diamonds
-  color: firebrick
-
-- type: card
-  abstract: true
-  parent: Diamonds
-  id: DiamondsIcon
-  layers:
-  - state: sc_ClubsDiamonds
-
-- type: card
-  abstract: true
-  parent: BaseCard
-  id: Hearts
-  color: maroon
-
-- type: card
-  abstract: true
-  parent: Hearts
-  id: HeartsIcon
-  layers:
-  - state: sc_Hearts
-
-- type: card
-  abstract: true
-  parent: BaseCard
-  id: Spades
-  color: midnightblue
-
-- type: card
-  abstract: true
-  parent: Spades
-  id: SpadesIcon
-  layers:
-  - state: sc_Spades
+  - state: !type:CreateVariants
+      values:
+      - sc_ClubsDiamonds
+      - sc_ClubsDiamonds
+      - sc_Hearts
+      - sc_Spades
 
 # Clubs
 - type: card
@@ -64,75 +50,35 @@
 
 - type: card
   parent: ClubsIcon
-  id: two_of_clubs
+  id: !type:CreateVariants
+    values:
+    - two_of_clubs
+    - three_of_clubs
+    - four_of_clubs
+    - five_of_clubs
+    - six_of_clubs
+    - seven_of_clubs
+    - eight_of_clubs
+    - nine_of_clubs
+    - ten_of_clubs
+    - jack_of_clubs
+    - queen_of_clubs
+    - king_of_clubs
   layers:
-  - state: sc_2
-
-- type: card
-  parent: ClubsIcon
-  id: three_of_clubs
-  layers:
-  - state: sc_3
-
-- type: card
-  parent: ClubsIcon
-  id: four_of_clubs
-  layers:
-  - state: sc_4
-
-- type: card
-  parent: ClubsIcon
-  id: five_of_clubs
-  layers:
-  - state: sc_5
-
-- type: card
-  parent: ClubsIcon
-  id: six_of_clubs
-  layers:
-  - state: sc_6
-
-- type: card
-  parent: ClubsIcon
-  id: seven_of_clubs
-  layers:
-  - state: sc_7
-
-- type: card
-  parent: ClubsIcon
-  id: eight_of_clubs
-  layers:
-  - state: sc_8
-
-- type: card
-  parent: ClubsIcon
-  id: nine_of_clubs
-  layers:
-  - state: sc_9
-
-- type: card
-  parent: ClubsIcon
-  id: ten_of_clubs
-  layers:
-  - state: sc_10
-
-- type: card
-  parent: ClubsIcon
-  id: jack_of_clubs
-  layers:
-  - state: sc_Jack
-
-- type: card
-  parent: ClubsIcon
-  id: queen_of_clubs
-  layers:
-  - state: sc_Queen
-
-- type: card
-  parent: ClubsIcon
-  id: king_of_clubs
-  layers:
-  - state: sc_King
+  - state: !type:CreateVariants
+      values:
+      - sc_2
+      - sc_3
+      - sc_4
+      - sc_5
+      - sc_6
+      - sc_7
+      - sc_8
+      - sc_9
+      - sc_10
+      - sc_Jack
+      - sc_Queen
+      - sc_King
 
 # Diamonds
 - type: card
@@ -143,75 +89,35 @@
 
 - type: card
   parent: DiamondsIcon
-  id: two_of_diamonds
+  id: !type:CreateVariants
+    values:
+    - two_of_diamonds
+    - three_of_diamonds
+    - four_of_diamonds
+    - five_of_diamonds
+    - six_of_diamonds
+    - seven_of_diamonds
+    - eight_of_diamonds
+    - nine_of_diamonds
+    - ten_of_diamonds
+    - jack_of_diamonds
+    - queen_of_diamonds
+    - king_of_diamonds
   layers:
-  - state: sc_2
-
-- type: card
-  parent: DiamondsIcon
-  id: three_of_diamonds
-  layers:
-  - state: sc_3
-
-- type: card
-  parent: DiamondsIcon
-  id: four_of_diamonds
-  layers:
-  - state: sc_4
-
-- type: card
-  parent: DiamondsIcon
-  id: five_of_diamonds
-  layers:
-  - state: sc_5
-
-- type: card
-  parent: DiamondsIcon
-  id: six_of_diamonds
-  layers:
-  - state: sc_6
-
-- type: card
-  parent: DiamondsIcon
-  id: seven_of_diamonds
-  layers:
-  - state: sc_7
-
-- type: card
-  parent: DiamondsIcon
-  id: eight_of_diamonds
-  layers:
-  - state: sc_8
-
-- type: card
-  parent: DiamondsIcon
-  id: nine_of_diamonds
-  layers:
-  - state: sc_9
-
-- type: card
-  parent: DiamondsIcon
-  id: ten_of_diamonds
-  layers:
-  - state: sc_10
-
-- type: card
-  parent: DiamondsIcon
-  id: jack_of_diamonds
-  layers:
-  - state: sc_Jack
-
-- type: card
-  parent: DiamondsIcon
-  id: queen_of_diamonds
-  layers:
-  - state: sc_Queen
-
-- type: card
-  parent: DiamondsIcon
-  id: king_of_diamonds
-  layers:
-  - state: sc_King
+  - state: !type:CreateVariants
+      values:
+      - sc_2
+      - sc_3
+      - sc_4
+      - sc_5
+      - sc_6
+      - sc_7
+      - sc_8
+      - sc_9
+      - sc_10
+      - sc_Jack
+      - sc_Queen
+      - sc_King
 
 # Hearts
 - type: card
@@ -222,75 +128,35 @@
 
 - type: card
   parent: HeartsIcon
-  id: two_of_hearts
+  id: !type:CreateVariants
+    values:
+    - two_of_hearts
+    - three_of_hearts
+    - four_of_hearts
+    - five_of_hearts
+    - six_of_hearts
+    - seven_of_hearts
+    - eight_of_hearts
+    - nine_of_hearts
+    - ten_of_hearts
+    - jack_of_hearts
+    - queen_of_hearts
+    - king_of_hearts
   layers:
-  - state: sc_2
-
-- type: card
-  parent: HeartsIcon
-  id: three_of_hearts
-  layers:
-  - state: sc_3
-
-- type: card
-  parent: HeartsIcon
-  id: four_of_hearts
-  layers:
-  - state: sc_4
-
-- type: card
-  parent: HeartsIcon
-  id: five_of_hearts
-  layers:
-  - state: sc_5
-
-- type: card
-  parent: HeartsIcon
-  id: six_of_hearts
-  layers:
-  - state: sc_6
-
-- type: card
-  parent: HeartsIcon
-  id: seven_of_hearts
-  layers:
-  - state: sc_7
-
-- type: card
-  parent: HeartsIcon
-  id: eight_of_hearts
-  layers:
-  - state: sc_8
-
-- type: card
-  parent: HeartsIcon
-  id: nine_of_hearts
-  layers:
-  - state: sc_9
-
-- type: card
-  parent: HeartsIcon
-  id: ten_of_hearts
-  layers:
-  - state: sc_10
-
-- type: card
-  parent: HeartsIcon
-  id: jack_of_hearts
-  layers:
-  - state: sc_Jack
-
-- type: card
-  parent: HeartsIcon
-  id: queen_of_hearts
-  layers:
-  - state: sc_Queen
-
-- type: card
-  parent: HeartsIcon
-  id: king_of_hearts
-  layers:
-  - state: sc_King
+  - state: !type:CreateVariants
+      values:
+      - sc_2
+      - sc_3
+      - sc_4
+      - sc_5
+      - sc_6
+      - sc_7
+      - sc_8
+      - sc_9
+      - sc_10
+      - sc_Jack
+      - sc_Queen
+      - sc_King
 
 # Spades
 - type: card
@@ -301,72 +167,32 @@
 
 - type: card
   parent: SpadesIcon
-  id: two_of_spades
+  id: !type:CreateVariants
+    values:
+    - two_of_spades
+    - three_of_spades
+    - four_of_spades
+    - five_of_spades
+    - six_of_spades
+    - seven_of_spades
+    - eight_of_spades
+    - nine_of_spades
+    - ten_of_spades
+    - jack_of_spades
+    - queen_of_spades
+    - king_of_spades
   layers:
-  - state: sc_2
-
-- type: card
-  parent: SpadesIcon
-  id: three_of_spades
-  layers:
-  - state: sc_3
-
-- type: card
-  parent: SpadesIcon
-  id: four_of_spades
-  layers:
-  - state: sc_4
-
-- type: card
-  parent: SpadesIcon
-  id: five_of_spades
-  layers:
-  - state: sc_5
-
-- type: card
-  parent: SpadesIcon
-  id: six_of_spades
-  layers:
-  - state: sc_6
-
-- type: card
-  parent: SpadesIcon
-  id: seven_of_spades
-  layers:
-  - state: sc_7
-
-- type: card
-  parent: SpadesIcon
-  id: eight_of_spades
-  layers:
-  - state: sc_8
-
-- type: card
-  parent: SpadesIcon
-  id: nine_of_spades
-  layers:
-  - state: sc_9
-
-- type: card
-  parent: SpadesIcon
-  id: ten_of_spades
-  layers:
-  - state: sc_10
-
-- type: card
-  parent: SpadesIcon
-  id: jack_of_spades
-  layers:
-  - state: sc_Jack
-
-- type: card
-  parent: SpadesIcon
-  id: queen_of_spades
-  layers:
-  - state: sc_Queen
-
-- type: card
-  parent: SpadesIcon
-  id: king_of_spades
-  layers:
-  - state: sc_King
+  - state: !type:CreateVariants
+      values:
+      - sc_2
+      - sc_3
+      - sc_4
+      - sc_5
+      - sc_6
+      - sc_7
+      - sc_8
+      - sc_9
+      - sc_10
+      - sc_Jack
+      - sc_Queen
+      - sc_King
