@@ -78,6 +78,8 @@
     bodyType: KinematicController
   - type: Vehicle
     requiresHands: false # you use your feet!
+  - type: Strap # Redeclare strap, you can just get pulled right off a office chair
+    unbuckleDoAfterTime: 0s
   - type: MovementSpeedModifier
     baseAcceleration: 2
     baseFriction: 2

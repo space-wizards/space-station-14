@@ -85,6 +85,9 @@ public sealed partial class StrapComponent : Component
     [DataField]
     public float BuckleDoafterTime = 2f;
 
+    [DataField]
+    public TimeSpan UnbuckleDoAfterTime = TimeSpan.Zero;
+
     /// <summary>
     /// Whether InteractHand will buckle the user to the strap.
     /// </summary>

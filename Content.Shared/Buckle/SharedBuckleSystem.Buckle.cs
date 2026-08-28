@@ -7,6 +7,7 @@ using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Events;
@@ -41,7 +42,6 @@ public abstract partial class SharedBuckleSystem
 
         SubscribeLocalEvent<BuckleComponent, StartPullAttemptEvent>(OnPullAttempt);
         SubscribeLocalEvent<BuckleComponent, BeingPulledAttemptEvent>(OnBeingPulledAttempt);
-        SubscribeLocalEvent<BuckleComponent, PullStartedMessage>(OnPullStarted);
         SubscribeLocalEvent<BuckleComponent, UnbuckleAlertEvent>(OnUnbuckleAlert);
 
         SubscribeLocalEvent<BuckleComponent, InsertIntoEntityStorageAttemptEvent>(OnBuckleInsertIntoEntityStorageAttempt);
@@ -78,13 +78,22 @@ public abstract partial class SharedBuckleSystem
         if (args.Cancelled || !ent.Comp.Buckled)
             return;
 
-        if (!CanUnbuckle(ent!, args.Puller, false))
+        if (!CanUnbuckle(ent!, args.Puller, false, out var strap))
+        {
             args.Cancel();
-    }
+            return;
+        }
 
-    private void OnPullStarted(Entity<BuckleComponent> ent, ref PullStartedMessage args)
-    {
-        Unbuckle(ent!, args.PullerUid);
+        if (UnbuckleRequiresExtrication(ent!, args.Puller, strap))
+        {
+            var message = Loc.GetString("buckle-component-resist-rapid-extrication",
+                ("owner", Identity.Entity(ent, EntityManager)));
+
+            _popup.PopupEntity(message, args.Puller, args.Puller);
+            args.Cancel();
+            return;
+        }
+        Unbuckle(ent!, args.Puller);
     }
 
     private void OnUnbuckleAlert(Entity<BuckleComponent> ent, ref UnbuckleAlertEvent args)
@@ -268,7 +277,7 @@ public abstract partial class SharedBuckleSystem
             return false;
         }
 
-        if (buckleComp.Buckled && !TryUnbuckle(buckleUid, user, buckleComp))
+        if (buckleComp.Buckled)
         {
             if (popup && user != null)
             {
@@ -427,8 +436,54 @@ public abstract partial class SharedBuckleSystem
         if (!CanUnbuckle(buckle, user, popup, out var strap))
             return false;
 
-        Unbuckle(buckle!, strap, user);
+        //Same deal as pulling, if it's a complicated extrication with someone who can resist, extricate
+        //if they can't resist, just yoink em.
+        //Also let the buckled person out immediately
+        if (!UnbuckleRequiresExtrication(buckle, user, strap))
+        {
+            Unbuckle(buckle, user);
+            return true;
+        }
+
+        _doAfter.TryStartDoAfter(new DoAfterArgs(
+                EntityManager,
+                user!.Value,
+                strap.Comp.UnbuckleDoAfterTime,
+                new UnbuckleDoAfterEvent(),
+                buckle,
+                buckle,
+                buckle)
+        {
+                BreakOnMove = true,
+                CancelDuplicate = true,
+                DuplicateCondition = DuplicateConditions.None,
+        });
         return true;
+    }
+
+    /// <summary>
+    /// Check if a particular Unbuckle requires Extrication
+    /// I.E If the strap requires a DoAfter to remove someone: check if they're the one doing the unbuckle, dead, or stunned.
+    /// </summary>
+    /// <returns>Does the Unbuckle require Extrication</returns>
+    private bool UnbuckleRequiresExtrication(Entity<BuckleComponent?> buckle, EntityUid? user, Entity<StrapComponent> strap)
+    {
+        return !strap.Comp.UnbuckleDoAfterTime.Equals(TimeSpan.Zero)
+               && buckle != user
+               && !_mobState.IsDead(buckle)
+               && !HasComp<StunnedComponent>(buckle);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnDoAfterUnbuckle(Entity<BuckleComponent> buckle, ref UnbuckleDoAfterEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        if (!CanUnbuckle(buckle!, args.User, true, out var strap))
+            return;
+
+        Unbuckle(buckle, strap, args.User);
     }
 
     public void Unbuckle(Entity<BuckleComponent?> buckle, EntityUid? user)
