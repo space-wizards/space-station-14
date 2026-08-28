@@ -1,7 +1,7 @@
 # Abilities
 
 - type: listing
-  id: ChangelingArmBlade
+  id: ChangelingArmblade
   name: changeling-catalog-arm-blade-name
   description: changeling-catalog-arm-blade-desc
   applyToMob: true
@@ -12,7 +12,7 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
-  productAction: ActionRetractableItemArmBlade
+  productAction: ActionRetractableItemArmblade
 
 - type: listing
   id: ChangelingFleshClothing

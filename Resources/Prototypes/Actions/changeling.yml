@@ -1,6 +1,6 @@
 - type: entity
   parent: BaseAction
-  id: ActionRetractableItemArmBlade
+  id: ActionRetractableItemArmblade
   name: Arm Blade
   description: Shed your flesh and reform it into a fleshy blade.
   components:
@@ -15,7 +15,7 @@
   - type: InstantAction
     event: !type:OnRetractableItemActionEvent
   - type: RetractableItemAction
-    spawnedPrototype: ArmBlade
+    spawnedPrototype: Armblade
     summonSounds:
       collection: gib # Placeholder
     retractSounds:
@@ -300,6 +300,28 @@
     - !type:AddReagentToBloodstream
       reagent: TaciticAcid
       quantity: 5 # 50s of imperceptible mute
+
+- type: entity
+  parent: BaseActionChangelingSting
+  id: ActionChangelingStingArmblade
+  name: Armblade Sting
+  description: "Silently sting a target and forces one of their arms to grow into an armblade after a short duration. \n\nRequires 30 Chemicals."
+  components:
+  - type: Action
+    useDelay: 30
+    raiseOnAction: true
+    itemIconStyle: BigAction
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: blind_sting
+  - type: EntityEffectAction
+    effects:
+    - !type:ModifyStatusEffect
+      effectProto: StatusEffectForcedItemArmblade
+      type: Update
+      time: 90
+      delay: 30 # No using it for easy combat!
 
 - type: entity
   parent: BaseAction

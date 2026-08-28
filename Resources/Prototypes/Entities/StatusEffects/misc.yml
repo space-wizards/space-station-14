@@ -177,3 +177,16 @@
       - Blindable
       requireAll: true
   - type: FlashedStatusEffect
+
+# Forces fake items into the hands/slots of the target
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectForcedItemArmblade
+  name: forced armblade
+  components:
+  - type: ForcedItemStatusEffect
+    item: Armblade
+    spawnSound:
+      collection: gib # Same as ActionRetractableItemArmblade
+    despawnSound:
+      collection: gib # Same as ActionRetractableItemArmblade
