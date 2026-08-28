@@ -289,9 +289,6 @@ binds:
   type: State
   key: c
   mod1: Alt
-- function: MouseMiddle
-  type: State
-  key: MouseMiddle
   canFocus: true
 - function: RotateObjectClockwise
   type: State
