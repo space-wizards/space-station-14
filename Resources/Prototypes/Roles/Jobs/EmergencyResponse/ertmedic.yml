@@ -1,0 +1,97 @@
+- type: job
+  id: ERTMedical
+  name: job-name-ertmedic
+  description: job-description-ertmedic
+  playTimeTracker: JobERTMedical
+  setPreference: false
+  startingGear: ERTMedicalGearEVA
+  icon: "JobIconERTMedic"
+  supervisors: job-supervisors-centcom
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
+
+- type: startingGear
+  parent: ERTMedicalGearEVA
+  id: ERTMedicalGear
+  equipment:
+    shoes: ClothingShoesBootsJackFilled
+    head: ClothingHeadHelmetERTMedic
+    outerClothing: ClothingOuterArmorBasic
+    pocket2: FlashlightSeclite
+
+- type: startingGear
+  id: ERTMedicalGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTMedic
+    back: ClothingBackpackERTMedical
+    shoes: ClothingShoesBootsMagERT
+    mask: ClothingMaskGasERT
+    eyes: ClothingEyesHudMedical
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitERTMedical
+    id: ERTMedicPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltMilitaryWebbingERT
+    pocket2: CombatKnife
+  storage:
+    back:
+    - Hypospray
+    - BeakerSmallBruiz
+    - BeakerSmallLace
+    - JugPunctTranex
+    - JugPyraDerma
+    - JugDexPlusSaline # End of first line
+    - JugTrico
+    - BeakerSmallArith
+    - BeakerSmallDiph
+    - BeakerSmallSigy
+    - ClothingEyesGlassesChemical
+    - ChemistryBottleOmnizine
+    belt:
+    - DefibrillatorCompact
+    - MedkitCombatFilled
+    - CrowbarRed
+    - WeaponPistolMk58
+    - MagazinePistol
+    - EmergencyMedipen
+
+- type: startingGear
+  parent: ERTMedicalGearEVA
+  id: ERTMedicalGearArmed
+  equipment:
+    suitstorage: WeaponRifleLecter
+    pocket2: WeaponDisabler
+  storage:
+    back:
+    - Hypospray
+    - JugPunctTranex
+    - JugPyraDerma
+    - JugDexPlusSaline
+    - JugTrico # End of first line
+    - BeakerSmallArith
+    - DefibrillatorCompact
+    - MedkitCombatFilled
+    - ClothingEyesGlassesChemical
+    - ChemistryBottleOmnizine
+    belt:
+    - Truncheon
+    - Zipties
+    - CrowbarRed
+    - MagazineRifle
+    - MagazineRifle
+    - MagazineRifleIncendiary
+    - MagazineRifleUranium # End of first line
+    - Zipties
+
+- type: chameleonOutfit
+  id: ERTMedicalChameleonOutfit
+  job: ERTMedical
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHelmetHardsuitERTMedical
+    neck: ClothingNeckStethoscope

@@ -69,6 +69,14 @@
     allowedDepartments: [ CentralCommand ]
 
 - type: entity
+  id: BaseEmergencyResponseContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ EmergencyResponse ]
+
+- type: entity
   id: BaseCommandContraband
   parent: BaseRestrictedContraband
   abstract: true
@@ -182,6 +190,23 @@
     allowedDepartments: [ Medical, Science ]
 
 # contraband restricted by job by some degree
+
+- type: entity
+  id: BaseCBURNContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedJobs: [ CBURN ]
+
+- type: entity
+  id: BaseDeathSquadContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedJobs: [ DeathSquad ]
+
 - type: entity
   id: BaseSecurityBartenderContraband
   parent: BaseRestrictedContraband

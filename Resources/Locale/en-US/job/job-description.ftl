@@ -53,12 +53,18 @@ job-description-tram-driver = Drive around a tram from stop to stop.
 job-description-borg = Use your robotic chassis to perform a wide variety of specialized tasks.
 job-description-station-ai = Remotely interface with the station's cameras, airlocks, radio, and other electronic devices from the safety of your core.
 
-# Misc.
+# Central Command
 job-description-centcommoff = Act as liaison to the newest state-of-the-art space station in Nanotrasen's fleet.
+
+# Emergency Response
+job-description-cburn = Cleanse the station of biological threats.
+job=desctiption-deathsquad = Eliminate any and all threats to Nanotrasen assets.
 job-description-ertchaplain = Ensure that the station's crew have their last rites performed.
 job-description-ertengineer = Ensure that the station has power and clean air.
 job-description-ertjanitor = Ensure that the station is thoroughly cleaned and sterilized.
 job-description-ertleader = Lead the Emergency Response Team to protect and preserve Nanotrasen assets.
 job-description-ertmedic = Ensure that the station's crew have their injuries treated.
 job-description-ertsecurity = Ensure that any threats to the station are eliminated.
+
+# Misc.
 job-description-visitor = Enjoy your visit to the station!

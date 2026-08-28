@@ -54,7 +54,7 @@
     sprite: Clothing/Uniforms/Jumpsuits/Centcomm/centcomformal.rsi
 
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingUniformBase ]
+  parent: [ BaseEmergencyResponseContraband, ClothingUniformBase ]
   id: ClothingUniformJumpsuitERTChaplain
   name: ERT chaplain uniform
   description: A special suit made for Central Command's elite chaplain corps.
@@ -65,7 +65,7 @@
     sprite: Clothing/Uniforms/Jumpsuits/Centcomm/ert_chaplain.rsi
 
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingUniformBase ]
+  parent: [ BaseEmergencyResponseContraband, ClothingUniformBase ]
   id: ClothingUniformJumpsuitERTEngineer
   name: ERT engineering uniform
   description: A special suit made for the elite engineers under CentComm.
@@ -76,7 +76,7 @@
     sprite: Clothing/Uniforms/Jumpsuits/Centcomm/ert_engineer.rsi
 
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingUniformBase ]
+  parent: [ BaseEmergencyResponseContraband, ClothingUniformBase ]
   id: ClothingUniformJumpsuitERTJanitor
   name: ERT janitorial uniform
   description: A special suit made for the elite janitors under CentComm.
@@ -87,7 +87,7 @@
     sprite: Clothing/Uniforms/Jumpsuits/Centcomm/ert_janitor.rsi
 
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingUniformBase ]
+  parent: [ BaseEmergencyResponseContraband, ClothingUniformBase ]
   id: ClothingUniformJumpsuitERTLeader
   name: ERT leader uniform
   description: A special suit made for the best of the elites under CentComm.
@@ -98,7 +98,7 @@
     sprite: Clothing/Uniforms/Jumpsuits/Centcomm/ert_leader.rsi
 
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingUniformBase ]
+  parent: [ BaseEmergencyResponseContraband, ClothingUniformBase ]
   id: ClothingUniformJumpsuitERTMedic
   name: ERT medical uniform
   description: A special suit made for the elite medics under CentComm.
@@ -109,7 +109,7 @@
     sprite: Clothing/Uniforms/Jumpsuits/Centcomm/ert_medic.rsi
 
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingUniformBase ]
+  parent: [ BaseEmergencyResponseContraband, ClothingUniformBase ]
   id: ClothingUniformJumpsuitERTSecurity
   name: ERT security uniform
   description: A special suit made for the elite security under CentComm.

@@ -128,6 +128,15 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Nanotrasen
   icons:
+  - JobIconNanotrasen
+
+- type: jobIconGroup
+  id: EmergencyResponseIconGroup
+  groupName: job-icon-group-emergencyresponse
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: ERTLeader
+  icons:
   - JobIconCBURN
   - JobIconDeathSquad
   - JobIconERTChaplain
@@ -136,7 +145,6 @@
   - JobIconERTLeader
   - JobIconERTMedic
   - JobIconERTSecurity
-  - JobIconNanotrasen
 
 - type: jobIconGroup
   id: SiliconIconGroup

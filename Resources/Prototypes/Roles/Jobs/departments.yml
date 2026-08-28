@@ -33,30 +33,23 @@
   - ServiceWorker
   - TramDriver
 
-# Please kill this
 - type: department
   id: CentralCommand
   name: department-CentralCommand
   description: department-CentralCommand-description
   color: "#0c344d"
+  weight: 120
+  editorHidden: true
   roles:
   - CentralCommandOfficial
-  - CBURN
-  - ERTLeader
-  - ERTChaplain
-  - ERTJanitor
-  - ERTMedical
-  - ERTSecurity
-  - ERTEngineer
-  - DeathSquad
-  editorHidden: true
-  weight: 120
 
 - type: department
   id: Command
   name: department-Command
   description: department-Command-description
   color: "#334E6D"
+  weight: 100
+  primary: false
   roles:
   - Captain
   - ChiefEngineer
@@ -65,8 +58,15 @@
   - HeadOfSecurity
   - ResearchDirector
   - Quartermaster
-  # Please kill these
-  - CentralCommandOfficial
+
+- type: department
+  id: EmergencyResponse
+  name: department-EmergencyResponse
+  description: department-EmergencyResponse-description
+  color: "#0c344d"
+  weight: 110
+  editorHidden: true
+  roles:
   - CBURN
   - ERTLeader
   - ERTChaplain
@@ -75,8 +75,6 @@
   - ERTSecurity
   - ERTEngineer
   - DeathSquad
-  primary: false
-  weight: 100
 
 - type: department
   id: Engineering

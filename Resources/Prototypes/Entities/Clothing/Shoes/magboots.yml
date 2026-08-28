@@ -117,7 +117,7 @@
     price: 1500
 
 - type: entity
-  parent: [BaseCentcommContraband, ClothingShoesBootsMagSyndie]
+  parent: [ BaseEmergencyResponseContraband, ClothingShoesBootsMagSyndie ]
   id: ClothingShoesBootsMagERT
   name: ERT magboots
   description: Upgraded magnetic boots utilized by Nanotrasen's Emergency Response Teams, they have a heavy magnetic pull and integrated thrusters. It can hold 0.75 L of gas.

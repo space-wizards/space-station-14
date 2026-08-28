@@ -288,9 +288,9 @@
 
 - type: entity
   name: pulse pistol
-  parent: [BaseWeaponBatterySmall, BaseCentcommContraband]
+  parent: [BaseWeaponBatterySmall, BaseDeathSquadContraband]
   id: WeaponPulsePistol
-  description: A state of the art energy pistol favoured as a sidearm by the NT operatives.
+  description: A state-of-the-art energy pistol favoured as a sidearm by elite Nanotrasen operatives.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
@@ -328,9 +328,9 @@
 
 - type: entity
   name: pulse carbine
-  parent: [BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband]
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseDeathSquadContraband]
   id: WeaponPulseCarbine
-  description: A high tech energy carbine favoured by the NT-ERT operatives.
+  description: A high-tech energy carbine favoured by elite Nanotrasen operatives.
   components:
   - type: Item
     size: Large
@@ -366,9 +366,9 @@
 
 - type: entity
   name: pulse rifle
-  parent: [BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband]
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseDeathSquadContraband]
   id: WeaponPulseRifle
-  description: A weapon that is almost as infamous as its users.
+  description: A weapon almost as infamous as its users.
   components:
   - type: Item
     size: Huge
@@ -654,7 +654,7 @@
 
 - type: entity
   name: elite taser
-  parent: [ BaseCentcommContraband, WeaponTaser ]
+  parent: [ BaseEmergencyResponseContraband, WeaponTaser ]
   id: WeaponTaserSuper
   suffix: ADMEME
   description: A low-capacity, energy-based stun gun used by elite security teams to disable even the toughest of targets.
@@ -1058,7 +1058,7 @@
   id: WeaponRangeFinderXenoborg
   name: xenoborg range finder
   components:
-  - type: Sprite 
+  - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/xenoborg_range_finder.rsi
     layers:
     - state: icon

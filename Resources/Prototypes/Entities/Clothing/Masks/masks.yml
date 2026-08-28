@@ -444,7 +444,7 @@
         Heat: 0.95
 
 - type: entity
-  parent: [ ClothingMaskGas, BaseCentcommContraband ]
+  parent: [ ClothingMaskGas, BaseEmergencyResponseContraband ]
   id: ClothingMaskGasERT
   name: ert gas mask
   description: The gas mask of the elite squad of the ERT.

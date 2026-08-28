@@ -1,0 +1,96 @@
+- type: job
+  id: ERTLeader
+  name: job-name-ertleader
+  description: job-description-ertleader
+  playTimeTracker: JobERTLeader
+  setPreference: false
+  startingGear: ERTLeaderGearEVA
+  icon: "JobIconERTLeader"
+  supervisors: job-supervisors-centcom
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
+
+- type: startingGear
+  parent: ERTLeaderGearEVA
+  id: ERTLeaderGear
+  equipment:
+    shoes: ClothingShoesBootsJackFilled
+    head: ClothingHeadHelmetERTLeader
+    outerClothing: ClothingOuterArmorBasic
+    pocket2: FlashlightSeclite
+
+- type: startingGear
+  id: ERTLeaderGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTLeader
+    back: ClothingBackpackERTLeader
+    shoes: ClothingShoesBootsMagERT
+    mask: ClothingMaskGasERT
+    eyes: ClothingEyesHudMedSec
+    neck: Whistle
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitERTLeader
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltMilitaryWebbingERT
+    pocket2: CombatKnife
+    suitstorage: WeaponDisablerSMG
+  storage:
+    back:
+    - Binoculars
+    - HoloprojectorField
+    - PhoneInstrument
+    - PinpointerNuclear
+    - PowerCellHigh
+    - PowerCellHigh
+    - MedkitCombatFilled # End of first line
+    - MedkitCombatFilled
+    - TelescopicShield
+    belt:
+    - Stunbaton
+    - Handcuffs
+    - Handcuffs
+    - CrowbarRed
+    - WeaponPistolN1984
+    - MagazineMagnum
+    - EmergencyMedipen
+
+- type: startingGear
+  parent: ERTLeaderGearEVA
+  id: ERTLeaderGearArmed
+  equipment:
+    pocket2: WeaponDisabler
+    suitstorage: WeaponRifleLecterXL8
+  storage:
+    back:
+    - HoloprojectorField
+    - PhoneInstrument
+    - PinpointerNuclear
+    - MagazineRifle
+    - MagazineRifle
+    - MagazineRifleIncendiary
+    - MagazineRifleUranium
+    - MedkitCombatFilled # End of first line
+    - GrenadeShrapnel
+    - EmpGrenade
+    belt:
+    - Truncheon
+    - Handcuffs
+    - Handcuffs
+    - CrowbarRed
+    - WeaponPistolN1984
+    - MagazineMagnum
+    - EmergencyMedipen
+
+- type: chameleonOutfit
+  id: ERTLeaderChameleonOutfit
+  job: ERTLeader
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHelmetHardsuitERTLeader
+    neck: ClothingNeckBronzeheart

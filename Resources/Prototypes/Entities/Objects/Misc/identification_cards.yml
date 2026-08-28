@@ -983,6 +983,7 @@
     - BlankIconGroup
     - ThreatIconGroup
     - CentCommIconGroup
+    - EmergencyResponseIconGroup
   - type: UIRequiresLock
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
@@ -1395,6 +1396,7 @@
     - BlankIconGroup
     - ThreatIconGroup
     - CentCommIconGroup
+    - EmergencyResponseIconGroup
     - AdminIconGroup
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key

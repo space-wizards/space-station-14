@@ -2,6 +2,7 @@
 department-Civilian-description = Attend to the crew's basic physical and psychological needs.
 department-Command-description = Manage the crew and keep them working efficiently.
 department-CentralCommand-description = Manage the crew and keep them working efficiently.
+department-EmergencyResponse-description = Eliminate threats to Nanotrasen assets.
 department-Engineering-description = Maintain and repair the station.
 department-Medical-description = Keep the crew healthy.
 department-Security-description = Protect the station and keep the peace.
