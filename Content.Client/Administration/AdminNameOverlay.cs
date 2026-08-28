@@ -198,7 +198,7 @@ internal sealed class AdminNameOverlay : Overlay
             // Username
             color = Color.Yellow;
             color.A = alpha;
-            args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.Username, uiScale, playerInfo.Connected ? color : colorDisconnected);
+            args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.Username, uiScale, playerInfo.Connected ? color : colorDisconnected, outline);
             currentOffset += lineoffset;
 
             // Playtime
