@@ -121,3 +121,7 @@
           FoodMeatHuman:
             min: 1
             max: 2
+  - type: ReplacementAccent # RAWR!!!!! (This is because polymorph calls makesentient...)
+    accent: genericAggressive
+  - type: Speech
+    speechVerb: LargeMob
