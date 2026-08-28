@@ -1,16 +1,14 @@
-using Content.Server.Changeling.Components;
+using Content.Shared.Station.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
-using Content.Server.Station.Systems;
 using Robust.Shared.Physics.Components;
-using Content.Shared.Station.Components;
 
-namespace Content.Server.Changeling.Systems;
+namespace Content.Shared.Station.Systems;
 
 public sealed partial class FlingTowardStationSystem : EntitySystem
 {
     [Dependency] private SharedPhysicsSystem _physics = default!;
-    [Dependency] private StationSystem _station = default!;
+    [Dependency] private SharedStationSystem _station = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
     [SubscribeLocalEvent]

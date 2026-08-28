@@ -1,6 +1,6 @@
-using Content.Server.Changeling.Systems;
+using Content.Shared.Station.Systems;
 
-namespace Content.Server.Changeling.Components;
+namespace Content.Shared.Station.Components;
 
 /// <summary>
 /// Entities with this component get flinged toward the station on MapInit.
