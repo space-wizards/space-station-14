@@ -198,7 +198,7 @@ public sealed class ClumsyStatusTest : InteractionTest
         
         foreach (var ev in GetEvents<BeforeEquippingHandEvent>(SPlayer))
         {
-            Assert.That(ev.Cancelled, Is.True, "Clumsy mob didn't cancel climb event.");
+            Assert.That(ev.Cancelled, Is.True, "Clumsy mob didn't cancel BeforeEquippingHandEvent.");
         }
     }
 }
