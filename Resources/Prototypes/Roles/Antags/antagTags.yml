@@ -1,7 +1,4 @@
 - type: antagTag
-  id: Unspecified
-
-- type: antagTag
   id: OffStation # The antag comes from space or is otherwise uninvolved in the station gameplay loop. (Ex. Ninja, Nukies, Blob)
 
 - type: antagTag

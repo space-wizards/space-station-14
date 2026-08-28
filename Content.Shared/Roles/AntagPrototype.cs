@@ -63,7 +63,7 @@ public sealed partial class AntagPrototype : IPrototype
     /// Used for filtering purposes.
     /// </summary>
     [DataField]
-    public HashSet<ProtoId<AntagTagPrototype>> Tags = ["Unspecified"];
+    public HashSet<ProtoId<AntagTagPrototype>> Tags = [];
 }
 
 /// <summary>

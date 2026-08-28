@@ -546,15 +546,18 @@ public abstract partial class SharedRoleSystem : EntitySystem
     /// Reads all <see cref="AntagTagPrototype"/> IDs on a mind and returns them.
     /// </summary>
     /// <param name="mind">The mind entity.</param>
+    /// <param name="tags">Antag tags from all roles that mind entity had. Null if mind had no roles marked as antag.</param>
     /// <returns>A hashset of <see cref="AntagTagPrototype"/> IDs on the mind.</returns>
-    public IReadOnlySet<ProtoId<AntagTagPrototype>> MindGetAllAntagTags(Entity<MindComponent?> mind)
+    public bool TryGetAllAntagTags(Entity<MindComponent?> mind, [NotNullWhen(true)] out IReadOnlySet<ProtoId<AntagTagPrototype>>? tags)
     {
+        tags = FrozenSet<ProtoId<AntagTagPrototype>>.Empty;
         if (!Resolve(mind.Owner, ref mind.Comp))
-            return FrozenSet<ProtoId<AntagTagPrototype>>.Empty;
+            return false;
 
         var roles = MindGetAllRoleInfo(mind);
         var antagTags = new HashSet<ProtoId<AntagTagPrototype>>();
 
+        var foundAntag = false;
         foreach (var role in roles)
         {
             if (!role.Antagonist)
@@ -563,13 +566,15 @@ public abstract partial class SharedRoleSystem : EntitySystem
             if (!ProtoMan.TryIndex<AntagPrototype>(role.Prototype, out var antag))
                 continue;
 
+            foundAntag = true;
             foreach (var tag in antag.Tags)
             {
                 antagTags.Add(tag);
             }
         }
 
-        return antagTags;
+        tags = antagTags;
+        return foundAntag;
     }
 
     /// <summary>

@@ -10,17 +10,15 @@ public sealed partial class AntagonistTagEntityConditionSystem : EntityCondition
 
     protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<AntagonistTagCondition> args)
     {
-        var tagProtos = args.Condition.Tags;
+        var conditionTags = args.Condition.Tags;
 
-        var antagTags = _roleSystem.MindGetAllAntagTags(entity.AsNullable());
-
-        if (args.Condition.AllowNonAntags && antagTags.Count == 0)
+        if (!_roleSystem.TryGetAllAntagTags(entity.AsNullable(), out var antagTags))
         {
-            args.Result = !args.Condition.Inverted;
+            args.Result = args.Condition is { AllowNonAntags: true, Inverted: false };
             return;
         }
 
-        args.Result = antagTags.Overlaps(tagProtos);
+        args.Result = antagTags.Overlaps(conditionTags);
     }
 }
 
