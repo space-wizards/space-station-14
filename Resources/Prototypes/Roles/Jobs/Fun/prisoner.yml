@@ -1,0 +1,33 @@
+# Prisoner isn't an actual roundstart role, so these startingGear prototypes are mostly for use with the "Set Outfit" debug verb
+- type: startingGear
+  id: PrisonerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitPrisoner
+    shoes: ClothingShoesColorBlack
+    id: PrisonerIDCard
+
+- type: startingGear
+  id: PrisonerMuzzledGear
+  equipment:
+    mask: ClothingMaskMuzzle
+    jumpsuit: ClothingUniformJumpsuitPrisoner
+    shoes: ClothingShoesColorBlack
+    id: PrisonerIDCard
+
+- type: chameleonOutfit
+  id: PrisonerChameleonOutfit
+  loadoutName: job-name-prisoner
+  name: job-name-prisoner
+  icon: "JobIconPrisoner"
+  equipment: # "real" prisoners obviously have limited access to clothing, so the head/eyes/outerClothing slots just use generic clothes to place *something* in that slot
+    head: ClothingHeadHatOrangesoft
+    eyes: ClothingEyesGlassesCheapSunglasses
+    ears: ClothingHeadsetGrey
+    mask: ClothingMaskMuzzle
+    outerClothing: ClothingOuterWinterColorOrange
+    jumpsuit: ClothingUniformJumpsuitPrisoner
+    neck: ClothingNeckBling
+    back: ClothingBackpack # we COULD use the eletropack, but it's probably more suspect to have an electropack that doesn't work and that security doesn't remember handing out
+    shoes: ClothingShoesColorBlack
+    id: PrisonerIDCard
+
