@@ -1,9 +1,6 @@
-using System.ComponentModel.Design;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.StatusEffectNew.Components;
 using Robust.Shared.Prototypes;
-using YamlDotNet.Core.Tokens;
 
 namespace Content.Shared.StatusEffectNew;
 
@@ -59,7 +56,7 @@ public sealed partial class StatusEffectsSystem
     /// <param name="duration">Duration of status effect. Leave null and the effect will be permanent until it is removed using <c>TryRemoveStatusEffect</c>.</param>
     /// <param name="delay">The delay of the effect. If a start time already exists, the closest time takes precedence. Leave null for the effect to be instant.</param>
     /// <param name="statusEffect">The EntityUid of the status effect we have just created or null if it doesn't exist.</param>
-    /// <returns>True if effect exists and its duration is set properly, false in case effect cannot be applied.</returns>
+    /// <returns>True if effect exists and its duration is set properly, false in case effect cannot be applied. Delay adjustment success/failure is not reported.</returns>
     public bool TrySetStatusEffectDuration(
         EntityUid target,
         EntProtoId effectProto,
@@ -100,10 +97,10 @@ public sealed partial class StatusEffectsSystem
     /// </summary>
     /// <param name="target">The target entity to which the effect should be added.</param>
     /// <param name="effectProto">ProtoId of the status effect entity. Make sure it has StatusEffectComponent on it.</param>
-    /// <param name="duration">Duration of status effect. Leave null and the effect will be permanent until it is removed using <c>TryRemoveStatusEffect</c>.</param>
+    /// <param name="duration">Duration of status effect. Leave null and the effect will be permanent until it is removed using <c>TryRemoveStatusEffect</c>. Method fails if duration ≤ 0.</param>
     /// <param name="delay">The delay of the effect. If a start time already exists, the closest time takes precedence. Leave null for the effect to be instant.</param>
     /// <param name="statusEffect">The EntityUid of the status effect we have just created or null if it doesn't exist.</param>
-    /// <returns>True if effect exists and its duration is set properly, false in case effect cannot be applied.</returns>
+    /// <returns>True if effect exists and its duration is set properly, false in case effect cannot be applied. Delay adjustment success/failure is not reported.</returns>
     public bool TryUpdateStatusEffectDuration(
         EntityUid target,
         EntProtoId effectProto,
