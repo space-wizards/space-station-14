@@ -15,10 +15,11 @@ public sealed partial class ForcedItemStatusEffectSystem : EntitySystem
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private StatusEffectsSystem _status = default!;
 
     public override void Initialize()
     {
-        Subs.SubscribeWithRelay<ForcedItemStatusEffectItemComponent, BeforeTargetHandcuffedEvent>(OnGotHandcuffed);
+        Subs.SubscribeWithRelay<ForcedItemStatusEffectItemComponent, BeforeTargetHandcuffedEvent>(OnBeforeGotHandcuffed);
     }
 
     [SubscribeLocalEvent]
@@ -119,7 +120,7 @@ public sealed partial class ForcedItemStatusEffectSystem : EntitySystem
         Dirty(entity.Comp.StatusEffect.Value, effect);
     }
 
-    private void OnGotHandcuffed(Entity<ForcedItemStatusEffectItemComponent> entity, ref BeforeTargetHandcuffedEvent args)
+    private void OnBeforeGotHandcuffed(Entity<ForcedItemStatusEffectItemComponent> entity, ref BeforeTargetHandcuffedEvent args)
     {
         if (!entity.Comp.RemoveWhenCuffed)
             return;
@@ -131,6 +132,21 @@ public sealed partial class ForcedItemStatusEffectSystem : EntitySystem
             return;
 
         DisposeItem(entity, (entity.Comp.StatusEffect.Value, forcedItem), status.AppliedTo.Value, true, args.User);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnGotHandcuffed(Entity<ForcedItemStatusEffectComponent> entity, ref StatusEffectRelayedEvent<TargetHandcuffedEvent> args)
+    {
+        if (!entity.Comp.RemoveWhenCuffed)
+            return;
+
+        if (!TryComp<StatusEffectComponent>(entity, out var status) || status.AppliedTo == null)
+            return;
+
+        if (MetaData(entity).EntityPrototype?.ID is not { } entProto)
+            return;
+
+        _status.TryRemoveStatusEffect(status.AppliedTo.Value, entProto);
     }
 
     private void DisposeItem(EntityUid entity, Entity<ForcedItemStatusEffectComponent> status, EntityUid holder, bool playSound = true, EntityUid? user = null)
@@ -147,9 +163,9 @@ public sealed partial class ForcedItemStatusEffectSystem : EntitySystem
 
         // We want to predict the audio only if we have a user.
         if (user == null && _net.IsServer)
-            _audio.PlayPvs(status.Comp.DespawnSound, status);
+            _audio.PlayPvs(status.Comp.DespawnSound, holder);
         else if (user != null)
-            _audio.PlayPredicted(status.Comp.DespawnSound, status, user.Value);
+            _audio.PlayPredicted(status.Comp.DespawnSound, holder, user.Value);
     }
 
     private bool SpawnItemInInventory(Entity<ForcedItemStatusEffectComponent> ent, EntityUid target, string slot)

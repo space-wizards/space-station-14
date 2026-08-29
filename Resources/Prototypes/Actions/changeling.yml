@@ -305,10 +305,10 @@
   parent: BaseActionChangelingSting
   id: ActionChangelingStingArmblade
   name: Armblade Sting
-  description: "Silently sting a target and cause them to grow a dull armblade after a lengthy duration. \n\nRequires 50 Chemicals."
+  description: "Silently sting a target and cause them to grow a dull armblade after a lengthy delay. \n\nRequires 50 Chemicals."
   components:
   - type: Action
-    useDelay: 30 # Same as the delay so you can more or less time when its supposed to happen
+    useDelay: 30
     raiseOnAction: true
     itemIconStyle: BigAction
   - type: Sprite

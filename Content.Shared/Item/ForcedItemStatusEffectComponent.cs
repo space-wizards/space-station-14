@@ -60,6 +60,7 @@ public sealed partial class ForcedItemStatusEffectComponent : Component
 
     /// <summary>
     /// Whether the status effect items should be removed when handcuffed.
+    /// Causes the status effect to get removed as well.
     /// </summary>
     [DataField]
     public bool RemoveWhenCuffed = true;
