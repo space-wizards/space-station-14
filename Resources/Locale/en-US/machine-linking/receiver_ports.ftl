@@ -4,7 +4,7 @@ signal-port-description-autoclose = Toggles whether the device should automatica
 signal-port-name-toggle = Toggle
 signal-port-description-toggle = Toggles the state of a device.
 
-signal-port-name-dock-toggle = Toggle Docking
+signal-port-name-dock-toggle = Toggle docking
 signal-port-description-dock-toggle = Toggles the state of the docking clamp of a device.
 
 signal-port-name-on-receiver = On
