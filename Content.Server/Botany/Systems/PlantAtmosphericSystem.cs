@@ -13,6 +13,10 @@ public sealed partial class PlantAtmosphericSystem : SharedPlantAtmosphericSyste
 
     [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery = default!;
 
+
+    /// <summary>
+    /// Calculates the damage that a plant should take due to improper temperature in a given environment
+    /// </summary>
     private static float CalculatePlantTemperatureDamage(Entity<PlantAtmosphericComponent> ent, GasMixture environment)
     {
         var tempThresholdDiff = 0f;
@@ -27,7 +31,8 @@ public sealed partial class PlantAtmosphericSystem : SharedPlantAtmosphericSyste
 
         if (tempThresholdDiff > 0)
         {
-            //Take HeatToleranceDamage at 20 degrees above or below the threshold, increasing as the differential does
+            //Take HeatToleranceDamage at HeatToleranceDifference degrees above or below the threshold, increasing as
+            //the differential increases. A decrease in steepness will increase damage taken at higher differentials
            return (float) (ent.Comp.HeatToleranceDamage *
                   Math.Log(ent.Comp.HeatToleranceSteepness * tempThresholdDiff + 1) /
                   Math.Log(ent.Comp.HeatToleranceSteepness * ent.Comp.HeatToleranceDifference + 1));
@@ -36,6 +41,9 @@ public sealed partial class PlantAtmosphericSystem : SharedPlantAtmosphericSyste
         return 0f;
     }
 
+    /// <summary>
+    /// Calculates the damage that a plant should take due to improper pressure in a given environment
+    /// </summary>
     private static float CalculatePlantPressureDamage(Entity<PlantAtmosphericComponent> ent, GasMixture environment)
     {
         var pressureThresholdDiff = 0f;
@@ -51,7 +59,8 @@ public sealed partial class PlantAtmosphericSystem : SharedPlantAtmosphericSyste
 
         if (pressureThresholdDiff > 0)
         {
-            //Take HeatToleranceDamage at 20 degrees above or below the threshold, increasing as the differential does
+            //Take PressureToleranceDamage at PressureToleranceDifference kPA above or below the threshold, increasing
+            //as the differential increases. A decrease in steepness will increase damage taken at higher differentials
             return (float) (ent.Comp.PressureToleranceDamage *
                             Math.Log(ent.Comp.PressureToleranceSteepness * pressureThresholdDiff + 1) /
                             Math.Log(ent.Comp.PressureToleranceSteepness * ent.Comp.PressureToleranceDifference + 1));
