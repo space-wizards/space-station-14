@@ -75,9 +75,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Clake
-    totalIntensity: 240 # a ~3 tile radius
-    intensitySlope: 4
-    maxIntensity: 25
+    totalIntensity: 150 # a ~3 tile radius
+    intensitySlope: 2
+    maxIntensity: 10
     canCreateVacuum: false
 
 - type: entity
