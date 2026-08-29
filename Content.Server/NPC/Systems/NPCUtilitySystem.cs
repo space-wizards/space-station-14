@@ -197,7 +197,7 @@ public sealed partial class NPCUtilitySystem : EntitySystem
 
                 // only drink when thirsty
                 if (TryComp<SatiationComponent>(owner, out var satiation) &&
-                    _satiation.IsValueInRange((owner, satiation), SatiationSystem.Thirst, below: drinkValueConsideration.ThirstThreshold))
+                    _satiation.IsValueInRange((owner, satiation), SatiationSystem.Thirst, above: drinkValueConsideration.ThirstThreshold))
                     return 0f;
 
                 // no janicow don't drink the blood puddle
