@@ -17,6 +17,7 @@ using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using System.Linq;
 using System.Numerics;
+using Content.Shared.Atmos.Piping.Unary.Systems;
 
 namespace Content.Server.SprayPainter;
 
@@ -32,6 +33,7 @@ public sealed partial class SprayPainterSystem : SharedSprayPainterSystem
     [Dependency] private AudioSystem _audio = default!;
     [Dependency] private ChargesSystem _charges = default!;
     [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private SharedGasCanisterSystem _canister = default!;
 
     public override void Initialize()
     {
@@ -138,6 +140,8 @@ public sealed partial class SprayPainterSystem : SharedSprayPainterSystem
         CopyComp(dummy, ent, destructibleComp);
 
         Del(dummy);
+
+        _canister.UpdateCanisterDescription(ent, args.Prototype);
     }
 
     private void OnPipeDoAfter(Entity<SprayPainterComponent> ent, ref SprayPainterPipeDoAfterEvent args)
