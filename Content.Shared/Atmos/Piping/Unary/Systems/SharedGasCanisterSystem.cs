@@ -43,20 +43,21 @@ public abstract partial class SharedGasCanisterSystem : GasMaxPressureSystem<Gas
 
     public void UpdateCanisterDescription(Entity<GasCanisterComponent> ent, EntProtoId protoId)
     {
+        var isBeingPainted = false;
         if (TryGetCanisterGasName(protoId, out var gasName))
         {
             _label.Label(ent, gasName);
-            _metadata.SetEntityDescription(
-                ent,
-                Loc.GetString("gas-canister-description", ("isBeingPainted", true), ("gas", gasName)));
+            isBeingPainted = true;
         }
         else if (protoId == DefaultCanisterProtoId)
         {
             _label.RemoveLabel(ent.Owner);
-            _metadata.SetEntityDescription(
-                ent,
-                Loc.GetString("gas-canister-description", ("isBeingPainted", false), ("gas", gasName)));
+            isBeingPainted = false;
         }
+
+        _metadata.SetEntityDescription(
+            ent,
+            Loc.GetString("gas-canister-description", ("isBeingPainted", isBeingPainted), ("gas", gasName)));
     }
 
     private bool TryGetCanisterGasName(EntProtoId protoId, out string gasName)
