@@ -18,16 +18,13 @@ public sealed partial class ItemStatusPrototype : IPrototype
     public int Priority;
 
     /// <summary>
-    /// Other item statuses that this status can be displayed alongside.
-    /// If set, any status not in this list will be hidden when this status is present.
-    /// An empty list means this status is shown by itself.
+    /// Defines which item statuses can be displayed alongside this status.
     /// </summary>
     [DataField]
     public List<ProtoId<ItemStatusPrototype>>? Whitelist;
 
     /// <summary>
-    /// Other item statuses that this status cannot be displayed alongside.
-    /// When multiple conflicting statuses are present, the one with higher priority wins.
+    /// Defines which item statuses cannot be displayed alongside this status.
     /// </summary>
     [DataField]
     public List<ProtoId<ItemStatusPrototype>>? Blacklist;
