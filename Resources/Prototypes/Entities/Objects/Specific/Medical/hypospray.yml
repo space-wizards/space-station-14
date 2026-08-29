@@ -259,7 +259,7 @@
   parent: ChemicalMedipen
   id: AntiPoisonMedipen
   name: poison auto-injector
-  description: A single-dose, non-refillable medipen containing Stellibinin and epinephrine, used to quickly and easily treat toxin poisoning.
+  description: A single-dose, non-refillable medipen containing ultravasculine and epinephrine, used to quickly and easily treat toxin poisoning.
   components:
   - type: Item
     inhandVisuals:
@@ -285,7 +285,7 @@
   - type: Solution
     solution:
       reagents:
-      - ReagentId: Stellibinin
+      - ReagentId: Ultravasculine
         Quantity: 15
       - ReagentId: Epinephrine
         Quantity: 5
