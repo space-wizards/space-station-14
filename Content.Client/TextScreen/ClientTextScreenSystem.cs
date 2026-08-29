@@ -1,14 +1,12 @@
 using System.Numerics;
 using Content.Shared.TextScreen.Components;
 using Robust.Client.GameObjects;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.TextScreen.Systems;
 
 /// <inheritdoc/>
 public sealed partial class ClientTextScreenSystem : TextScreenSystem
 {
-    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
     [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
@@ -95,7 +93,7 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
         var timerQuery = EntityQueryEnumerator<TextScreenTimerComponent>();
         while (timerQuery.MoveNext(out var uid, out var timer))
         {
-            if (timer.TargetTime == null || timer.TargetTime <= _timing.CurTime)
+            if (timer.TargetTime == null || timer.TargetTime <= Timing.CurTime)
             {
                 if (timer.ScreenValue == 0)
                     continue;
@@ -105,7 +103,7 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
             }
             else
             {
-                int screenValue = ConvertTimeToScreenValue(timer.TargetTime.Value, _timing.CurTime);
+                int screenValue = ConvertTimeToScreenValue(timer.TargetTime.Value, Timing.CurTime);
                 if (screenValue == 0)
                 {
                     SetTextToDisplay(uid, timer.FinishedText);
@@ -136,7 +134,7 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
                 for (int i = 0; i < screen.RowData.Length; i++)
                 {
                     var rowData = screen.RowData[i];
-                    if (rowData.NextScroll <= _timing.CurTime)
+                    if (rowData.NextScroll <= Timing.CurTime)
                     {
                         ScrollRow(ref rowData);
                         DrawLayers((uid, screen, sprite), rowData, i);
@@ -244,7 +242,7 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
         var newScreenValue = 0;
 
         if (ent.Comp.TargetTime != null)
-            newScreenValue = ConvertTimeToScreenValue(ent.Comp.TargetTime.Value, _timing.CurTime);
+            newScreenValue = ConvertTimeToScreenValue(ent.Comp.TargetTime.Value, Timing.CurTime);
 
         if (newScreenValue == 0)
         {
@@ -338,7 +336,7 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
 
     private void ScrollRow(ref TextScreenRow rowData)
     {
-        var difference = (_timing.CurTime - rowData.NextScroll).TotalSeconds;
+        var difference = (Timing.CurTime - rowData.NextScroll).TotalSeconds;
         var increments = (int)Math.Truncate(difference / rowData.ScrollDelay.TotalSeconds) + 1;
         rowData.ScrollPosition += increments;
         rowData.NextScroll += increments * rowData.ScrollDelay;

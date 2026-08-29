@@ -12,7 +12,7 @@ namespace Content.Shared.TextScreen.Systems;
 /// <seealso cref="TextScreenComponent"/>
 public abstract partial class TextScreenSystem : EntitySystem
 {
-    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] protected IGameTiming Timing = default!;
 
     /// <summary>
     /// The maximum number of characters to display per line when scrolled.
@@ -46,7 +46,7 @@ public abstract partial class TextScreenSystem : EntitySystem
         }
 
         ent.Comp.Text = _builder.ToString();
-        ent.Comp.TextTime = time ?? _timing.CurTime;
+        ent.Comp.TextTime = time ?? Timing.CurTime;
         Dirty(ent);
     }
 
