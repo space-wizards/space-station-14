@@ -31,16 +31,16 @@ signal-port-description-trigger-sender = This port is invoked whenever the devic
 signal-port-name-timer-trigger = Timer
 signal-port-description-timer-trigger = This port is invoked whenever the timer is up.
 
-signal-port-name-timer-start = Timer Start
+signal-port-name-timer-start = Timer start
 signal-port-description-timer-start = This port is invoked whenever the timer starts.
 
 signal-port-name-logic-output = Output
 signal-port-description-logic-output = This port is invoked with HIGH or LOW depending on the selected gate and inputs.
 
-signal-port-name-logic-output-high = High Output
+signal-port-name-logic-output-high = High output
 signal-port-description-logic-output-high = This port is invoked whenever the input has a rising edge.
 
-signal-port-name-logic-output-low = Low Output
+signal-port-name-logic-output-low = Low output
 signal-port-description-logic-output-low = This port is invoked whenever the input has a falling edge.
 
 signal-port-name-air-danger = Danger
