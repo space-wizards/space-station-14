@@ -22,6 +22,8 @@ public abstract partial class SharedGasCanisterSystem : GasMaxPressureSystem<Gas
     [Dependency] protected SharedUserInterfaceSystem UI = default!;
     [Dependency] private LabelSystem _label = default!;
 
+    private const string DefaultCanisterProtoId = "StorageCanister";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -38,22 +40,29 @@ public abstract partial class SharedGasCanisterSystem : GasMaxPressureSystem<Gas
         SubscribeLocalEvent<GasCanisterComponent, GasCanisterChangeReleaseValveMessage>(OnCanisterChangeReleaseValve);
     }
 
-    public void UpdateCanisterDescription(Entity<GasCanisterComponent> ent, EntProtoId proto)
+    public void UpdateCanisterDescription(Entity<GasCanisterComponent> ent, EntProtoId protoId)
     {
-        if (TryGetCanisterGasName(proto, out var gasName))
+        if (TryGetCanisterGasName(protoId, out var gasName))
         {
             _label.Label(ent, gasName);
             _metadata.SetEntityDescription(
                 ent,
                 Loc.GetString("gas-canister-description", ("isBeingPainted", true), ("gas", gasName)));
         }
+        else if (protoId == DefaultCanisterProtoId)
+        {
+            _label.RemoveLabel(ent.Owner);
+            _metadata.SetEntityDescription(
+                ent,
+                Loc.GetString("gas-canister-description", ("isBeingPainted", false), ("gas", gasName)));
+        }
     }
 
-    private bool TryGetCanisterGasName(EntProtoId prototypeId, out string gasName)
+    private bool TryGetCanisterGasName(EntProtoId protoId, out string gasName)
     {
         gasName = string.Empty;
 
-        if (!ProtoMan.TryIndex<EntityPrototype>(prototypeId, out var prototype))
+        if (!ProtoMan.TryIndex<EntityPrototype>(protoId, out var prototype))
             return false;
 
         if (prototype.Components.TryGetValue(Factory.GetComponentName<LabelComponent>(), out var labelEntry)
