@@ -150,7 +150,7 @@
   id: ChangelingStingArmblade
   name: changeling-catalog-armblade-sting-name
   description: changeling-catalog-armblade-sting-desc
-  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: mute_sting }
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: armblade_sting }
   applyToMob: true
   cost:
     ChangelingDNA: 10
