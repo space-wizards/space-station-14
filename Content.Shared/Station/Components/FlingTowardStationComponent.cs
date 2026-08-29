@@ -1,4 +1,5 @@
 using Content.Shared.Station.Systems;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Station.Components;
 
@@ -6,7 +7,7 @@ namespace Content.Shared.Station.Components;
 /// Entities with this component get flinged toward the station on MapInit.
 /// </summary>
 [RegisterComponent]
-[Access(typeof(FlingTowardStationSystem))]
+[Access(typeof(FlingTowardStationSystem)), NetworkedComponent]
 public sealed partial class FlingTowardStationComponent : Component
 {
     /// <summary>

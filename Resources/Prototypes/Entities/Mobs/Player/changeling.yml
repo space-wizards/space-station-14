@@ -61,6 +61,9 @@
   - type: Speech # need these speech comps because it isnt targeted by MakeSentient.
     speechVerb: LargeMob
   - type: Emoting
+  - type: ActionGrant
+    actions:
+    - ActionChangelingStasisWeak
 
 - type: entity
   parent:
@@ -107,9 +110,6 @@
       types:
         Blunt: 5
         Structural: 15 # to destroy lockers in which bodies could be hidden
-  - type: ActionGrant
-    actions:
-    - ActionChangelingStasisWeak
   - type: Tag # Removes DoorBumpOpener
     tags:
       []
@@ -129,17 +129,6 @@
   name: elder headslug
   description: After living a few years, headslugs develop into this state and gain space faring abilities as a part of the changeling's reproduction cycle.
   components:
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.2
-        density: 15
-        mask:
-        - SmallMobMask
-        layer:
-        - SmallMobLayer
   - type: Sprite
     drawdepth: SmallMobs
     layers:
@@ -167,9 +156,6 @@
       types:
         Blunt: 8
         Structural: 25 # to destroy lockers in which bodies could be hidden
-  - type: ActionGrant
-    actions:
-    - ActionChangelingStasis # it is just a buffed headslug
   - type: InteractionPopup
     successChance: 0.01
     interactSuccessString: petting-success-elder-headslug
