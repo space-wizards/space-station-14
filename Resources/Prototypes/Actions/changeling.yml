@@ -314,7 +314,7 @@
   - type: Sprite
     sprite: Interface/Actions/changeling2.rsi
     layers:
-    - state: blind_sting
+    - state: armblade_sting
   - type: ActionRequireSatiation
     amount: 50
   - type: EntityEffectAction
@@ -322,7 +322,7 @@
     - !type:ModifyStatusEffect
       effectProto: StatusEffectForcedItemArmblade
       type: Update
-      time: 90
+      time: 90 # Takes 100s to regain the chemicals, so spam-use is a nat negative.
       delay: 30 # No using it for easy combat!
 
 - type: entity
