@@ -34,8 +34,8 @@ public sealed partial class PlantAtmosphericSystem : SharedPlantAtmosphericSyste
             //Take HeatToleranceDamage at HeatToleranceDifference degrees above or below the threshold, increasing as
             //the differential increases. A decrease in steepness will increase damage taken at higher differentials
            return (float) (ent.Comp.HeatToleranceDamage *
-                  Math.Log(ent.Comp.HeatToleranceSteepness * tempThresholdDiff + 1) /
-                  Math.Log(ent.Comp.HeatToleranceSteepness * ent.Comp.HeatToleranceDifference + 1));
+                  Math.Log(ent.Comp.HeatToleranceInvScaling * tempThresholdDiff + 1) /
+                  Math.Log(ent.Comp.HeatToleranceInvScaling * ent.Comp.HeatToleranceDifference + 1));
         }
 
         return 0f;
@@ -62,8 +62,8 @@ public sealed partial class PlantAtmosphericSystem : SharedPlantAtmosphericSyste
             //Take PressureToleranceDamage at PressureToleranceDifference kPA above or below the threshold, increasing
             //as the differential increases. A decrease in steepness will increase damage taken at higher differentials
             return (float) (ent.Comp.PressureToleranceDamage *
-                            Math.Log(ent.Comp.PressureToleranceSteepness * pressureThresholdDiff + 1) /
-                            Math.Log(ent.Comp.PressureToleranceSteepness * ent.Comp.PressureToleranceDifference + 1));
+                            Math.Log(ent.Comp.PressureToleranceInvScaling * pressureThresholdDiff + 1) /
+                            Math.Log(ent.Comp.PressureToleranceInvScaling * ent.Comp.PressureToleranceDifference + 1));
         }
 
         return 0f;

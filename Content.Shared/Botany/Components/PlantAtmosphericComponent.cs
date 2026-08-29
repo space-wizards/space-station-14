@@ -25,11 +25,11 @@ public sealed partial class PlantAtmosphericComponent : Component
     public float HeatToleranceDamage = 2f;
 
     /// <summary>
-    /// Lower steepness increases plant damage taken at a high temperature differentials and decreases damage at low
-    /// temperature differentials.
+    /// Lower inverse scaling increases plant damage taken if a plant is outside it's ideal temperature by a large
+    /// amount and decreases it if it's very close to ideal conditions.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float HeatToleranceSteepness = 1f;
+    public float HeatToleranceInvScaling = 1f;
 
     /// <summary>
     /// Minimum temperature tolerance for plant growth.
@@ -58,11 +58,11 @@ public sealed partial class PlantAtmosphericComponent : Component
     public float PressureToleranceDamage = 2f;
 
     /// <summary>
-    /// Lower steepness increases plant damage taken at a high pressure differentials and decreases damage at low
-    /// pressure differentials.
+    /// Lower inverse scaling increases plant damage taken if a plant is outside it's ideal pressure by a large
+    /// amount and decreases it if it's very close to ideal conditions.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float PressureToleranceSteepness = 1f;
+    public float PressureToleranceInvScaling = 1f;
 
     /// <summary>
     /// Minimum pressure tolerance for plant growth.
