@@ -131,8 +131,8 @@
   - JobIconNanotrasen
 
 - type: jobIconGroup
-  id: EmergencyResponseIconGroup
-  groupName: job-icon-group-emergencyresponse
+  id: SpecialistIconGroup
+  groupName: job-icon-group-specialist
   sprite:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: ERTLeader

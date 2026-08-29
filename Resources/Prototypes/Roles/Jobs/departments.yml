@@ -38,7 +38,7 @@
   name: department-CentralCommand
   description: department-CentralCommand-description
   color: "#0c344d"
-  weight: 120
+  weight: 120 # Highest weight of all NT departments; Central Command's authority is absolute
   editorHidden: true
   roles:
   - CentralCommandOfficial
@@ -48,7 +48,7 @@
   name: department-Command
   description: department-Command-description
   color: "#334E6D"
-  weight: 100
+  weight: 100 # Highest weight of all "standard" station departments
   primary: false
   roles:
   - Captain
@@ -58,23 +58,6 @@
   - HeadOfSecurity
   - ResearchDirector
   - Quartermaster
-
-- type: department
-  id: EmergencyResponse
-  name: department-EmergencyResponse
-  description: department-EmergencyResponse-description
-  color: "#0c344d"
-  weight: 110
-  editorHidden: true
-  roles:
-  - CBURN
-  - ERTLeader
-  - ERTChaplain
-  - ERTJanitor
-  - ERTMedical
-  - ERTSecurity
-  - ERTEngineer
-  - DeathSquad
 
 - type: department
   id: Engineering
@@ -131,6 +114,23 @@
   roles:
   - Borg
   - StationAi
+
+- type: department
+  id: Specialist
+  name: department-Specialist
+  description: department-Specialist-description
+  color: "#0c344d"
+  weight: 110 # Higher weight than Command, but below Central Command
+  editorHidden: true
+  roles:
+  - CBURN
+  - ERTLeader
+  - ERTChaplain
+  - ERTJanitor
+  - ERTMedical
+  - ERTSecurity
+  - ERTEngineer
+  - DeathSquad
 
 - type: department
   id: Specific
