@@ -92,7 +92,7 @@ public abstract partial class SharedGasCanisterSystem : GasMaxPressureSystem<Gas
         DirtyUI(ent.Owner, ent);
         UpdateAppearance(ent);
 
-        var protoId = MetaData(ent.Owner).EntityPrototype?.ID;
+        var protoId = Prototype(ent.Owner)?.ID;
         if (protoId is not null)
         {
             UpdateCanisterDescription(ent, protoId);
