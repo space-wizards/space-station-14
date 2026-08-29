@@ -15,6 +15,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Systems;
 
 public abstract partial class SharedGasCanisterSystem : GasMaxPressureSystem<GasCanisterComponent>
 {
+    [Dependency] private IComponentFactory _componentFactory = default!;
     [Dependency] private MetaDataSystem _metadata = default!;
     [Dependency] protected ISharedAdminLogManager AdminLogger = default!;
     [Dependency] private ItemSlotsSystem _slots = default!;
@@ -63,11 +64,12 @@ public abstract partial class SharedGasCanisterSystem : GasMaxPressureSystem<Gas
         gasName = string.Empty;
 
         if (!ProtoMan.TryIndex<EntityPrototype>(protoId, out var prototype))
+        {
             return false;
+        }
 
-        if (prototype.Components.TryGetValue(Factory.GetComponentName<LabelComponent>(), out var labelEntry)
-            && labelEntry.Component is LabelComponent { LocalizedLabel: { } localizedLabel }
-            && !string.IsNullOrWhiteSpace(localizedLabel))
+        if (prototype.TryComp<LabelComponent>(out var labelComp, _componentFactory)
+            && labelComp.LocalizedLabel is { } localizedLabel)
         {
             gasName = Loc.GetString(localizedLabel);
             return true;
