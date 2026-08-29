@@ -4,7 +4,7 @@
   mapPath: /Maps/tram2.yml
   maxRandomOffset: 0
   minPlayers: 45
-  maxPlayers: 65
+  maxPlayers: 75
   stations:
     Tram2:
       stationProto: StandardNanotrasenStation
