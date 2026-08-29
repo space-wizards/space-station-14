@@ -195,11 +195,11 @@ namespace Content.Client.Launcher
             if (reason.Message.StringOf("fallbackServers") is not { } fallback)
                 return;
 
-            // The string separates servers by ; and data fields about each server by ,
-            foreach (var server in fallback.Split(";", StringSplitOptions.RemoveEmptyEntries))
+            // The string separates servers by | and data fields about each server by ;
+            foreach (var server in fallback.Split("|", StringSplitOptions.RemoveEmptyEntries))
             {
                 // Each server must have a name, url, playercount and max playercount
-                var members = server.Split(",", StringSplitOptions.RemoveEmptyEntries);
+                var members = server.Split(";", StringSplitOptions.RemoveEmptyEntries);
                 if (members.Length != 4)
                 {
                     Log.Warning($"Fallback server info contained malformed element: '{server}'");

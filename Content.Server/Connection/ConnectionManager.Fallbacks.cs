@@ -32,7 +32,7 @@ public sealed partial class ConnectionManager
 
         foreach (var server in _fallbackServers)
         {
-            result += server.Value.name + "," + server.Key + "," + server.Value.players + "," + server.Value.max + ";";
+            result += server.Value.name + ";" + server.Key + ";" + server.Value.players + ";" + server.Value.max + "|";
         }
 
         return result;
@@ -41,16 +41,16 @@ public sealed partial class ConnectionManager
     /// <summary>
     /// Create the Fallback Server profiles, from the raw cvar value
     /// </summary>
-    private void OnFallbackServersCvar(string fallbackServersRaw) //TODO:ERRANT replace ; , with final choice. Waiting on whether we want names to be definable
+    private void OnFallbackServersCvar(string fallbackServersRaw)
     {
-        foreach (var serverRaw in fallbackServersRaw.Split(";", StringSplitOptions.RemoveEmptyEntries))
+        foreach (var serverRaw in fallbackServersRaw.Split("|", StringSplitOptions.RemoveEmptyEntries))
         {
-            if (serverRaw.Split(",", StringSplitOptions.RemoveEmptyEntries).Length != 2)
+            if (serverRaw.Split(";", StringSplitOptions.RemoveEmptyEntries).Length != 2)
             {
-                _sawmill.Warning($"FallbackServers cvar is malformed - each element must contain exactly one comma character. '{serverRaw}'");
+                _sawmill.Warning($"FallbackServers cvar is malformed - each element must contain exactly one semicolon separator. '{serverRaw}'");
                 continue;
             }
-            var pos = serverRaw.IndexOf(",", StringComparison.Ordinal);
+            var pos = serverRaw.IndexOf(";", StringComparison.Ordinal);
             var uri = serverRaw[(pos+1)..];
             var name = serverRaw[..pos];
 
@@ -115,7 +115,6 @@ public sealed partial class ConnectionManager
             _sawmill.Warning($"Error while trying to query Fallback Server '{uri}'");
         }
     }
-    // TODO:ERRANT Did the hub mods respond about policy questions?
 
     //This is from the launcher's ServerStatusCache.cs. We can't exactly call that, so it has to be duplicated
     /// <summary>
@@ -147,8 +146,8 @@ public sealed partial class ConnectionManager
     }
 }
 
-//TODO:ERRANT where should this be? In the Launcher, it was defined in ServerApi, but in this project that file is for admin API stuff
-//https://docs.spacestation14.io/en/engine/http-api
+//TODO: Move this to a more central place?
+// In the Launcher, it was defined in ServerApi, but in this project that file is for admin API stuff
 public sealed record ServerStatus(
     [property: JsonPropertyName("name")] string? Name,
     [property: JsonPropertyName("players")] int PlayerCount,
