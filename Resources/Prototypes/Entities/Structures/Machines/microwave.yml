@@ -76,6 +76,8 @@
       shader: unshaded
       map: ["bloodyunshaded"]
       visible: false
+  - type: Damageable
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
     - trigger: # Excess damage, don't spawn entities
@@ -85,6 +87,9 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
+      - !type:EmptyContainersBehaviour
+        containers:
+        - microwave_entity_container
   - type: Explosive
     explosionType: Default
     maxIntensity: 10

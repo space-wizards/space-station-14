@@ -122,6 +122,24 @@
           min: 15
 
 - type: reagent
+  id: Pax
+  name: reagent-name-pax
+  group: Narcotics
+  desc: reagent-desc-pax
+  physicalDesc: reagent-physical-desc-soothing
+  allowedDepartments:
+  - Security
+  - Medical
+  color: "#AAAAAA"
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:GenericStatusEffect
+        key: Pacified
+        component: Pacified
+        time: 4
+
+- type: reagent
   id: Stimulants
   name: reagent-name-stimulants
   group: Narcotics
@@ -349,6 +367,24 @@
         time: 10
 
 - type: reagent
+  id: TaciticAcid
+  name: reagent-name-tacitic-acid
+  group: Special
+  desc: reagent-desc-tacitic-acid
+  physicalDesc: reagent-physical-desc-syrupy
+  contrabandSeverity: Major
+  color: "#000000"
+  boilingPoint: 255.0
+  meltingPoint: 36.0
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectChangelingMuted
+        type: Add
+        time: 5
+
+- type: reagent
   id: NorepinephricAcid
   name: reagent-name-norepinephric-acid
   group: Narcotics
@@ -462,6 +498,7 @@
   group: Narcotics
   desc: reagent-desc-StrawberryIce
   physicalDesc: reagent-physical-desc-fizzy
+  contrabandSeverity: Minor
   flavor: fizzy
   color: "#FF36AE"
   metabolisms:
@@ -556,7 +593,10 @@
           max: 0.1
         type: Local
         visualType: MediumCaution
-        messages: [ "You feel a need for fizzy pink flavor" ]
+        messages:
+        - hydroxysomnolene-effect-flavor
+        - hydroxysomnolene-effect-another-hit
+        - hydroxysomnolene-effect-sluggish
         probability: 0.15
 
 - type: reagent
@@ -572,7 +612,7 @@
       effects:
       - !type:Emote
         emote: Laugh
-        showInChat: true
+        showInChat: false
         probability: 0.1
         conditions:
         - !type:ReagentCondition
@@ -580,7 +620,7 @@
           max: 20
       - !type:Emote
         emote: Whistle
-        showInChat: true
+        showInChat: false
         probability: 0.1
         conditions:
         - !type:ReagentCondition
@@ -588,7 +628,7 @@
           max: 20
       - !type:Emote
         emote: Crying
-        showInChat: true
+        showInChat: false
         probability: 0.1
         conditions:
         - !type:ReagentCondition

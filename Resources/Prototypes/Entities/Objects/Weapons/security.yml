@@ -41,6 +41,7 @@
     bluntStaminaDamageFactor: 2.0
     angle: 60
     animation: WeaponArcThrust
+    undamagedAlertThreshold: 0
   - type: MeleeBatteryHitsLeft
   - type: StaminaDamageOnHitRequiresToggle
   - type: StaminaDamageOnHitRequiresCharge

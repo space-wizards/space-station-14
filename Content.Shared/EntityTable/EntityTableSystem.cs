@@ -110,4 +110,22 @@ public sealed class EntityTableContext
         value = castValueData;
         return true;
     }
+
+    /// <summary>
+    /// Sets data into context using provided key.
+    /// </summary>
+    [PublicAPI]
+    public void SetData<T>([ForbidLiteral] string key, T data) where T : notnull
+    {
+        _data[key] = data;
+    }
+
+    /// <summary>
+    /// Removes data from the context, if the key exists.
+    /// </summary>
+    [PublicAPI]
+    public void RemoveData([ForbidLiteral] string key)
+    {
+        _data.Remove(key);
+    }
 }

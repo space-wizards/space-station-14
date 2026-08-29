@@ -1,4 +1,5 @@
 - type: entity
+  parent: StructureHealthMachineFlimsy
   id: ConveyorBelt
   name: conveyor belt
   description: A conveyor belt, commonly used to transport large numbers of items elsewhere quite quickly.
@@ -56,18 +57,24 @@
     graph: ConveyorGraph
     node: entity
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: PlasticMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 50
       behaviors:
-      # if ConveyorBeltAssembly becomes craftable, maybe spawn some of the ingredients?
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlastic1:
+            min: 0
+            max: 1
+          SheetSteel1:
+            min: 0
+            max: 1
 
 - type: entity
   id: ConveyorBeltAssembly

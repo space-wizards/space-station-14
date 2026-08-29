@@ -30,3 +30,13 @@
   ruleWhitelist:
     components:
     - XenoborgsRule
+
+- type: feedbackPopup
+  id: StructureRebalanceFeedback
+  popupOrigin: wizden_master
+  title: "[bold]Feedback for structure health rebalance.[/bold]"
+  description: >-
+    Please share feedback on the changes to damage resistances, health values, and destruction behaviors for structures.
+  responseType: "Feedback Thread"
+  responseLink: "https://forum.spacestation14.com/t/structure-rebalance-discussion-and-feedback/28228"
+  showRoundEnd: true

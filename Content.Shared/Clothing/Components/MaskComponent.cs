@@ -44,4 +44,11 @@ public sealed partial class MaskComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool DisableOnFolded;
+
+    /// <summary>
+    /// Toggle Mask delay when the mask is being toggled by someone other than the wearer.
+    /// </summary>
+    [DataField]
+    public TimeSpan Delay = TimeSpan.FromSeconds(2);
+
 }

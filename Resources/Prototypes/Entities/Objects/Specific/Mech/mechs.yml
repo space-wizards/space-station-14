@@ -1,7 +1,8 @@
 - type: entity
+  abstract: true
+  parent: StructureHealthMachineMassive
   id: BaseMech
   save: false
-  abstract: true
   components:
   - type: MobMover
   - type: Mech
@@ -52,7 +53,7 @@
     damage:
       types:
         Blunt: 25 #thwack
-        Structural: 20
+        Structural: 8
     soundHit:
       collection: MetalThud
   - type: Puller
@@ -90,9 +91,7 @@
       mech-equipment-container: !type:Container
       mech-battery-slot: !type:ContainerSlot
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: Inorganic
+    damageModifierSet: SteelMod
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Mecha/mechmove03.ogg
@@ -108,10 +107,13 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
-      - !type:ChangeConstructionNodeBehavior
-        node: start
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 275
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
 
 - type: entity
   id: MechRipley
@@ -259,7 +261,6 @@
     damage:
       types:
         Blunt: 10 #thwack
-        Structural: 2
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.4
     baseSprintSpeed: 3.7
@@ -330,7 +331,6 @@
     damage:
       types:
         Blunt: 10 #thwack
-        Structural: 2
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.25
     baseSprintSpeed: 3.6
