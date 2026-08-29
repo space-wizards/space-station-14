@@ -51,12 +51,6 @@ public sealed partial class TextScreenComponent : Component
     public Vector2 TimerOffset = Vector2.Zero;
 
     /// <summary>
-    /// Number of rows of text this screen can render.
-    /// </summary>
-    [DataField]
-    public int Rows = 2;
-
-    /// <summary>
     /// Vertical distance between the top pixel of each row.
     /// </summary>
     [DataField]
@@ -132,10 +126,10 @@ public sealed partial class TextScreenComponent : Component
 /// </summary>
 [DataRecord]
 [Serializable, NetSerializable]
-public partial struct TextScreenRow
+public partial struct TextScreenRow()
 {
     /// <summary>
-    /// The time this row should scroll next.
+    /// The time this row should next scroll a pixel.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextScroll;
@@ -143,7 +137,6 @@ public partial struct TextScreenRow
     /// <summary>
     /// The amount of time this screen should spend scrolling.
     /// </summary>
-    [DataField]
     public TimeSpan ScrollDelay;
 
     /// <summary>
@@ -153,8 +146,12 @@ public partial struct TextScreenRow
     public int ScrollPosition;
 
     /// <summary>
-    /// A list with each of the rows in the sprite.
+    /// A list with each of the row's sprite layers, with the key inside of it and the state it's currently on.
     /// </summary>
-    public List<(string Key, string? state)> Layers = new();
-    public string Text;
+    public List<(string Key, string? State)> Layers = new();
+
+    /// <summary>
+    /// The full text currently being drawn on the row.
+    /// </summary>
+    public string Text = string.Empty;
 }

@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.TextScreen.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
@@ -22,7 +23,6 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
         { '>', "angle-r" },
         {'\'', "apostrophe" },
         {'\\', "backslash" },
-        { ' ', "blank" },
         { '[', "bracket-l" },
         { ']', "bracket-r" },
         { '^', "caret" },
@@ -45,8 +45,6 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
         { '*', "star" },
         { '_', "underscore" },
     };
-
-    private const string DefaultState = "blank";
 
     /// <summary>
     /// A string prefix for all text layers.
@@ -94,40 +92,46 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<TextScreenTimerComponent>();
-        while (query.MoveNext(out var uid, out var timer))
+        var timerQuery = EntityQueryEnumerator<TextScreenTimerComponent>();
+        while (timerQuery.MoveNext(out var uid, out var timer))
         {
-            if (timer.DisplayTime == null)
+            if (timer.TargetTime == null || timer.TargetTime <= _timing.CurTime)
             {
-                if (timer.FinishDisplayed)
+                if (timer.ScreenValue == 0)
                     continue;
 
                 SetTextToDisplay(uid, timer.FinishedText);
-                timer.FinishDisplayed = true;
+                timer.ScreenValue = 0;
             }
             else
             {
-                int screenValue = ConvertTimeToScreenValue(timer.DisplayTime.Value, _timing.CurTime);
+                int screenValue = ConvertTimeToScreenValue(timer.TargetTime.Value, _timing.CurTime);
                 if (screenValue == 0)
                 {
                     SetTextToDisplay(uid, timer.FinishedText);
-                    timer.FinishDisplayed = true;
-                    timer.DisplayTime = null;
                     timer.ScreenValue = 0;
                 }
                 else if (screenValue != timer.ScreenValue)
                 {
-                    var timerText = ConstructTimerText(timer);
+                    var timerText = GetTimerString((uid, timer), screenValue);
                     SetTextToDisplay(uid, timerText);
                     timer.ScreenValue = screenValue;
                 }
             }
         }
 
-        var query = EntityQueryEnumerator<TextScreenComponent>();
-        while (query.MoveNext(out var uid, out var screen))
+        var screenQuery = EntityQueryEnumerator<TextScreenComponent>();
+        while (screenQuery.MoveNext(out var uid, out var screen))
         {
-            if (_screenTimerQuery.TryComp(uid, out var timer))
+            if (screen.NewTextToDisplay)
+            {
+                // Update text
+                DrawNewText((uid, screen));
+                screen.NewTextToDisplay = false;
+            }
+
+            // Handle scrolling.
+            if (screen.ScrollEnabled)
             {
                 if (_gameTiming.CurTime < timer.Target)
                 {
@@ -176,6 +180,26 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
         ent.Comp.TextToDisplay = text;
         ent.Comp.NewTextToDisplay = true;
     }
+
+
+    /// <summary>
+    /// Returns the Effects/text.rsi state string based on <paramref name="character"/>, or null if none available.
+    /// </summary>
+    public static string? GetStateFromChar(char? character)
+    {
+        if (character == null)
+            return null;
+
+        // First checks if its one of our special characters
+        if (CharStatePairs.TryGetValue(character.Value, out var value))
+            return value;
+
+        // Or else it checks if its a normal letter or digit
+        if (char.IsLetterOrDigit(character.Value))
+            return character.Value.ToString().ToLower();
+
+        return null;
+    }
     #endregion Public API
 
     #region Event Handlers
@@ -188,7 +212,7 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
         if (!_spriteQuery.TryComp(ent, out var sprite))
             return;
 
-        for (var rowIdx = 0; rowIdx < ent.Comp.Rows; rowIdx++)
+        for (var rowIdx = 0; rowIdx < ent.Comp.RowData.Length; rowIdx++)
         {
             var maxIndex = ent.Comp.ScrollEnabled ? ent.Comp.RowLength + 1 : ent.Comp.RowLength;
             var textScreenRow = ent.Comp.RowData[rowIdx];
@@ -213,8 +237,6 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
     {
         if (_screenTimerQuery.HasComp(ent))
             return;
-
-
     }
 
     /// <summary>
@@ -223,7 +245,126 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
     [SubscribeLocalEvent]
     private void OnAutoHandleState(Entity<TextScreenTimerComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        if (ent.Comp.TargetTime != ent.Comp.DisplayTime)
+        var newScreenValue = 0;
+
+        if (ent.Comp.TargetTime != null)
+            newScreenValue = ConvertTimeToScreenValue(ent.Comp.TargetTime.Value, _timing.CurTime);
+
+        if (newScreenValue == 0)
+        {
+            SetTextToDisplay(ent.Owner, ent.Comp.FinishedText);
+            ent.Comp.ScreenValue = 0;
+        }
+        else
+        {
+            var newScreenText = GetTimerString(ent, newScreenValue);
+            SetTextToDisplay(ent.Owner, newScreenText);
+            ent.Comp.ScreenValue = newScreenValue;
+        }
+    }
+
+    private string GetTimerString(Entity<TextScreenTimerComponent> ent, int newScreenValue)
+    {
+        var strings = ent.Comp.RunningText.Split("\n");
+        if (ent.Comp.TimerRow >= 0 && ent.Comp.TimerRow < strings.Length)
+        {
+            strings[ent.Comp.TimerRow] = $"{newScreenValue / 100:D2}:{newScreenValue % 100:D2}";
+        }
+        return string.Join('\n', strings);
+    }
+
+    private void DrawNewText(Entity<TextScreenComponent> ent)
+    {
+        // No sprite, put in a default state.
+        if (!_spriteQuery.TryComp(ent, out var sprite))
+        {
+            for (var i = 0; i < ent.Comp.RowData.Length; i++)
+            {
+                var rowData = ent.Comp.RowData[i];
+                rowData.NextScroll = TimeSpan.MaxValue;
+                rowData.ScrollDelay = TimeSpan.MaxValue;
+                rowData.ScrollPosition = 0;
+                rowData.Text = "";
+
+                ent.Comp.RowData[i] = rowData;
+            }
+            return;
+        }
+
+        var texts = ent.Comp.Text?.Split("\n") ?? [];
+
+        for (var i = 0; i < ent.Comp.RowData.Length; i++)
+        {
+            var rowData = ent.Comp.RowData[i];
+
+            if (i >= texts.Length || texts[i].Length == 0)
+            {
+                for (var j = 0; j < rowData.Layers.Count; j++)
+                {
+                    var layerTuple = rowData.Layers[j];
+
+                    if (_sprite.LayerMapTryGet((ent, sprite), layerTuple.Key, out var layerIndex, false))
+                        _sprite.LayerSetRsiState((ent, sprite), layerIndex, null);
+
+                    rowData.Layers[j] = new(layerTuple.Key, null);
+                }
+                rowData.ScrollDelay = TimeSpan.MaxValue;
+                rowData.NextScroll = TimeSpan.MaxValue;
+                rowData.ScrollPosition = 0;
+                rowData.Text = "";
+            }
+            else
+            {
+                if (texts[i].Length <= ent.Comp.RowLength)
+                {
+                    rowData.ScrollDelay = TimeSpan.MaxValue;
+                    rowData.NextScroll = TimeSpan.MaxValue;
+                    rowData.ScrollPosition = 0;
+                    rowData.Text = texts[i];
+                }
+                else
+                {
+                    var newMaxScrollTime = MaxMessageScrollTime / texts[i].Length / CharWidth;
+                    rowData.ScrollDelay = newMaxScrollTime < MaxPixelScrollTime ? newMaxScrollTime : MaxPixelScrollTime;
+                    rowData.NextScroll = ent.Comp.TextTime;
+                    rowData.ScrollPosition = 0;
+                    var rowText = texts[i].Substring(0, int.Min(texts[i].Length, MaxScrollingCharacters));
+                    rowData.Text = rowText.PadRight(rowText.Length + ent.Comp.RowLength - 1);
+                    ScrollRow(ref rowData);
+                }
+
+                // TODO: offset layers, draw states onto their respective layers based on the input string.
+                for (var j = 0; j < rowData.Layers.Count; j++)
+                {
+                    var layerTuple = rowData.Layers[j];
+
+                    if (_sprite.LayerMapTryGet((ent, sprite), layerTuple.Key, out var layerIndex, false))
+                        _sprite.LayerSetRsiState((ent, sprite), layerIndex, GetStateFromChar());
+
+                    rowData.Layers[j] = new(layerTuple.Key, DefaultState);
+                }
+                for (var j = 0; j < rowData.Layers.Count; j++)
+                {
+                    var layerTuple = rowData.Layers[j];
+
+                    if (_sprite.LayerMapTryGet((ent, sprite), layerTuple.Key, out var layerIndex, false))
+                        _sprite.LayerSetRsiState((ent, sprite), layerIndex, null);
+
+                    rowData.Layers[j] = new(layerTuple.Key, null);
+                }
+
+                rowData.Text = texts[i];
+            }
+
+            // Set initial states
+        }
+    }
+
+    private void ScrollRow(ref TextScreenRow rowData)
+    {
+        var difference = (_timing.CurTime - rowData.NextScroll).TotalSeconds;
+        var increments = (int)Math.Truncate(difference / rowData.ScrollDelay.TotalSeconds) + 1;
+        rowData.ScrollPosition += increments;
     }
 
     /// <summary>
