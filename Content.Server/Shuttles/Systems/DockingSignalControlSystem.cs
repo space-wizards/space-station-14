@@ -48,9 +48,10 @@ public sealed partial class DockingSignalControlSystem : EntitySystem
             foreach (var dockingEntity in query)
             {
                 if (_dockingSystem.CanDock((ent, dock), dockingEntity))
-                {
-                    _dockingSystem.Dock((ent, dock), dockingEntity);
-                }
+                    continue;
+
+                _dockingSystem.Dock((ent, dock), dockingEntity);
+                break;
             }
         }
         else
