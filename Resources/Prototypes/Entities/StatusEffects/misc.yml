@@ -185,7 +185,7 @@
   name: forced armblade
   components:
   - type: ForcedItemStatusEffect
-    item: Armblade
+    item: ArmbladeDull
     spawnSound:
       collection: gib # Same as ActionRetractableItemArmblade
     despawnSound:

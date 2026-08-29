@@ -29,3 +29,15 @@
   - type: Prying
     speedModifier: 1.5 # Jaws of life speed
     pryPowered: true
+
+- type: entity
+  parent: Armblade
+  id: ArmbladeDull
+  components:
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 5
+        Piercing: 5
+        Caustic: 2.5
+        Structural: 10

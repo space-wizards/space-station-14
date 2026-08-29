@@ -305,16 +305,18 @@
   parent: BaseActionChangelingSting
   id: ActionChangelingStingArmblade
   name: Armblade Sting
-  description: "Silently sting a target and forces one of their arms to grow into an armblade after a short duration. \n\nRequires 30 Chemicals."
+  description: "Silently sting a target and cause them to grow a dull armblade after a lengthy duration. \n\nRequires 50 Chemicals."
   components:
   - type: Action
-    useDelay: 30
+    useDelay: 30 # Same as the delay so you can more or less time when its supposed to happen
     raiseOnAction: true
     itemIconStyle: BigAction
   - type: Sprite
     sprite: Interface/Actions/changeling2.rsi
     layers:
     - state: blind_sting
+  - type: ActionRequireSatiation
+    amount: 50
   - type: EntityEffectAction
     effects:
     - !type:ModifyStatusEffect

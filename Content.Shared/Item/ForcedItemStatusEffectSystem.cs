@@ -91,22 +91,22 @@ public sealed partial class ForcedItemStatusEffectSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnEffectRemoved(Entity<ForcedItemStatusEffectComponent> entity, ref StatusEffectRemovedEvent args)
     {
-        // Same reason as with the event above.
+        // Same reason as above.
         if (!_net.IsServer)
             return;
 
         if (!entity.Comp.SuccessfullySpawned)
             return;
 
+        if (entity.Comp.ItemEntities.Count == 0)
+            return;
+
         foreach (var item in entity.Comp.ItemEntities)
         {
-            PredictedQueueDel(item);
+            DisposeItem(item, entity, args.Target, false);
         }
 
-        entity.Comp.ItemEntities = new();
         _audio.PlayPvs(entity.Comp.DespawnSound, args.Target);
-
-        Dirty(entity);
     }
 
     [SubscribeLocalEvent]
@@ -127,23 +127,29 @@ public sealed partial class ForcedItemStatusEffectSystem : EntitySystem
         if (!TryComp<ForcedItemStatusEffectComponent>(entity.Comp.StatusEffect, out var forcedItem))
             return;
 
-        if (!TryComp<StatusEffectComponent>(entity.Comp.StatusEffect, out var statusEffect))
+        if (!TryComp<StatusEffectComponent>(entity.Comp.StatusEffect, out var status) || status.AppliedTo == null)
             return;
 
-        DisposeItem(entity, (entity.Comp.StatusEffect.Value, forcedItem), statusEffect.AppliedTo);
+        DisposeItem(entity, (entity.Comp.StatusEffect.Value, forcedItem), status.AppliedTo.Value, true, args.User);
     }
 
-    private void DisposeItem(Entity<ForcedItemStatusEffectItemComponent> entity, Entity<ForcedItemStatusEffectComponent> status, EntityUid? user)
+    private void DisposeItem(EntityUid entity, Entity<ForcedItemStatusEffectComponent> status, EntityUid holder, bool playSound = true, EntityUid? user = null)
     {
-        if (status.Comp.Unremovable)
+        // Unremovable causes issues with predicted deletion so we get rid of it first.
+        if (HasComp<UnremoveableComponent>(entity))
             RemComp<UnremoveableComponent>(entity);
 
+        // Cleanup is handled via shutdown of the item.
         PredictedQueueDel(entity);
 
-        if (user == null)
+        if (!playSound)
             return;
 
-        _audio.PlayPredicted(status.Comp.DespawnSound, user.Value, user.Value);
+        // We want to predict the audio only if we have a user.
+        if (user == null && _net.IsServer)
+            _audio.PlayPvs(status.Comp.DespawnSound, status);
+        else if (user != null)
+            _audio.PlayPredicted(status.Comp.DespawnSound, status, user.Value);
     }
 
     private bool SpawnItemInInventory(Entity<ForcedItemStatusEffectComponent> ent, EntityUid target, string slot)
