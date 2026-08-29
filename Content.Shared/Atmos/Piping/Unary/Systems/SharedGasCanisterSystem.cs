@@ -22,7 +22,7 @@ public abstract partial class SharedGasCanisterSystem : GasMaxPressureSystem<Gas
     [Dependency] protected SharedUserInterfaceSystem UI = default!;
     [Dependency] private LabelSystem _label = default!;
 
-    private const string DefaultCanisterProtoId = "StorageCanister";
+    private static readonly EntProtoId DefaultCanisterProtoId = "StorageCanister";
 
     public override void Initialize()
     {
@@ -89,7 +89,7 @@ public abstract partial class SharedGasCanisterSystem : GasMaxPressureSystem<Gas
         DirtyUI(ent.Owner, ent);
         UpdateAppearance(ent);
 
-        var protoId = MetaData(ent.Owner)?.EntityPrototype?.ID;
+        var protoId = MetaData(ent.Owner).EntityPrototype?.ID;
         if (protoId is not null)
         {
             UpdateCanisterDescription(ent, protoId);
