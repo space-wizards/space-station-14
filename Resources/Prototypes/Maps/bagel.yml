@@ -2,7 +2,8 @@
   id: Bagel
   mapName: 'Bagel Station'
   mapPath: /Maps/bagel.yml
-  minPlayers: 45 #removing max players since server already has a max doesnt matter
+  minPlayers: 35
+  maxPlayers: 80
   stations:
     Bagel:
       stationProto: StandardNanotrasenStation
@@ -15,7 +16,7 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_lox.yml
         - type: StationJobs
-          availableJobs:
+          availableJobs: # 60 jobs total w/o latejoins & interns, 77 jobs total w/ latejoins & interns
             #command (7)
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -24,37 +25,37 @@
             ChiefEngineer: [ 1, 1 ]
             ResearchDirector: [ 1, 1 ]
             Quartermaster: [ 1, 1 ]
-            #service (8-11)
+            #service (8-13)
             Bartender: [ 1, 2 ]
             Botanist: [ 2, 2 ]
             Chef: [ 2, 2 ]
             Janitor: [ 2, 2 ]
             Chaplain: [ 1, 1 ]
             Librarian: [ 1, 1 ]
-            ServiceWorker: [ 1, 2 ]
-            Reporter: [ 1, 2 ]
-            #engineering (6-8)
+            ServiceWorker: [ 2, 2 ]
+            Reporter: [ 2, 2 ]
+            #engineering (7)
             AtmosphericTechnician: [ 3, 3 ]
             StationEngineer: [ 4, 4 ]
-            TechnicalAssistant: [ 4, 4 ]
-            #medical (8-8)
+            TechnicalAssistant: [ 4, 4 ]  #intern, not counted
+            #medical (6)
             Chemist: [ 2, 2 ]
             MedicalDoctor: [ 3, 3 ]
             Paramedic: [ 1, 1 ]
-            MedicalIntern: [ 4, 4 ]
-            #science (6-6)
+            MedicalIntern: [ 4, 4 ] #intern, not counted
+            #science (5)
             Scientist: [ 5, 5 ]
-            ResearchAssistant: [ 4, 4 ]
-            #security (9-10)
+            ResearchAssistant: [ 4, 4 ] #intern, not counted
+            #security (10)
             Warden: [ 1, 1 ]
             SecurityOfficer: [ 6, 6 ]
             Detective: [ 1, 1 ]
-            SecurityCadet: [ 4, 4 ]
-            Lawyer: [ 1, 1 ]
+            SecurityCadet: [ 4, 4 ]  #intern, not counted
+            Lawyer: [ 2, 2 ]
             #supply (6)
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 3, 3 ]
-            #civilian (2-3 + overflow)
+            #civilian (3+)
             Passenger: [ -1, -1 ] #infinite, not counted
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
