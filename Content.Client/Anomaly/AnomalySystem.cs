@@ -4,7 +4,9 @@ using Content.Client.Gravity;
 using Content.Client.Items;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
+using Content.Shared.Item;
 using Robust.Client.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Anomaly;
@@ -14,6 +16,8 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private FloatingVisualizerSystem _floating = default!;
     [Dependency] private SpriteSystem _sprite = default!;
+
+    public ProtoId<ItemStatusPrototype> AnomalyItemStatus = "Anomaly";
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -26,7 +30,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
 
         SubscribeLocalEvent<AnomalySupercriticalComponent, ComponentShutdown>(OnShutdown);
 
-        Subs.ItemStatus<CorePoweredThrowerComponent>(entity => new AnomalyStatusControl(entity));
+        Subs.ItemStatus<CorePoweredThrowerComponent>(entity => new AnomalyStatusControl(entity), AnomalyItemStatus);
     }
 
     private void OnStartup(EntityUid uid, AnomalyComponent component, ComponentStartup args)

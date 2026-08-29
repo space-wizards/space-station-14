@@ -2,18 +2,22 @@ using Content.Client.Charges.UI;
 using Content.Client.Items;
 using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
+using Content.Shared.Item;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Charges;
 
 public sealed partial class ChargesSystem : SharedChargesSystem
 {
+    public ProtoId<ItemStatusPrototype> ChargeItemStatus = "Charge";
+
     private Dictionary<EntityUid, int> _lastCharges = new();
     private Dictionary<EntityUid, int> _tempLastCharges = new();
 
     public override void Initialize()
     {
         base.Initialize();
-        Subs.ItemStatus<LimitedChargesComponent>(entity => new ChargeStatusControl(entity));
+        Subs.ItemStatus<LimitedChargesComponent>(entity => new ChargeStatusControl(entity), ChargeItemStatus);
     }
 
     public override void Update(float frameTime)

@@ -1,10 +1,12 @@
 using Content.Client.Items;
 using Content.Client.Light.Components;
+using Content.Client.Light.EntitySystems;
+using Content.Shared.Item;
 using Content.Shared.Light;
 using Content.Shared.Light.Components;
 using Content.Shared.Toggleable;
 using Robust.Client.GameObjects;
-using Content.Client.Light.EntitySystems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Light;
 
@@ -13,11 +15,13 @@ public sealed partial class HandheldLightSystem : SharedHandheldLightSystem
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private LightBehaviorSystem _lightBehavior = default!;
 
+    public ProtoId<ItemStatusPrototype> FlashlightItemStatus = "Flashlight";
+
     public override void Initialize()
     {
         base.Initialize();
 
-        Subs.ItemStatus<HandheldLightComponent>(ent => new HandheldLightStatus(ent));
+        Subs.ItemStatus<HandheldLightComponent>(ent => new HandheldLightStatus(ent), FlashlightItemStatus);
         SubscribeLocalEvent<HandheldLightComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 

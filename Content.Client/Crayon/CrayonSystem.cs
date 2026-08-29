@@ -4,8 +4,10 @@ using Content.Client.Stylesheets;
 using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Crayon;
+using Content.Shared.Item;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Crayon;
@@ -14,11 +16,13 @@ public sealed partial class CrayonSystem : SharedCrayonSystem
 {
     [Dependency] private SharedChargesSystem _charges = default!;
 
+    public ProtoId<ItemStatusPrototype> CrayonItemStatus = "Crayon";
+
     public override void Initialize()
     {
         base.Initialize();
 
-        Subs.ItemStatus<CrayonComponent>(ent => new StatusControl(ent, _charges, EntityManager));
+        Subs.ItemStatus<CrayonComponent>(ent => new StatusControl(ent, _charges, EntityManager), CrayonItemStatus);
     }
 
     private sealed class StatusControl : Control

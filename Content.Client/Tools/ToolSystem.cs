@@ -1,8 +1,11 @@
 using Content.Client.Items;
 using Content.Client.Tools.Components;
 using Content.Client.Tools.UI;
+using Content.Shared.Item;
 using Content.Shared.Tools.Components;
 using Robust.Client.GameObjects;
+using Robust.Shared.Prototypes;
+
 using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
 
 namespace Content.Client.Tools
@@ -11,12 +14,15 @@ namespace Content.Client.Tools
     {
         [Dependency] private SpriteSystem _sprite = default!;
 
+        public ProtoId<ItemStatusPrototype> WelderItemStatus = "Welder";
+        public ProtoId<ItemStatusPrototype> MultipleToolItemStatus = "MultipleTool";
+
         public override void Initialize()
         {
             base.Initialize();
 
-            Subs.ItemStatus<WelderComponent>(ent => new WelderStatusControl(ent, EntityManager, this));
-            Subs.ItemStatus<MultipleToolComponent>(ent => new MultipleToolStatusControl(ent));
+            Subs.ItemStatus<WelderComponent>(ent => new WelderStatusControl(ent, EntityManager, this), WelderItemStatus);
+            Subs.ItemStatus<MultipleToolComponent>(ent => new MultipleToolStatusControl(ent), MultipleToolItemStatus);
         }
 
         public override void SetMultipleTool(EntityUid uid,

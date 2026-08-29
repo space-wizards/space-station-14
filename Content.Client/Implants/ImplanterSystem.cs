@@ -1,7 +1,9 @@
-﻿using Content.Client.Implants.UI;
+using Content.Client.Implants.UI;
 using Content.Client.Items;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
+using Content.Shared.Item;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Implants;
 
@@ -9,12 +11,14 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
 {
     [Dependency] private SharedUserInterfaceSystem _uiSystem = default!;
 
+    public ProtoId<ItemStatusPrototype> ImplanterItemStatus = "Implanter";
+
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<ImplanterComponent, AfterAutoHandleStateEvent>(OnHandleImplanterState);
-        Subs.ItemStatus<ImplanterComponent>(ent => new ImplanterStatusControl(ent));
+        Subs.ItemStatus<ImplanterComponent>(ent => new ImplanterStatusControl(ent), ImplanterItemStatus);
     }
 
     private void OnHandleImplanterState(Entity<ImplanterComponent> ent, ref AfterAutoHandleStateEvent args)

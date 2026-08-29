@@ -32,8 +32,6 @@ public readonly record struct ItemStatusEntry(Control Control, ProtoId<ItemStatu
 /// <seealso cref="ItemStatusCollectMessage"/>
 public static class ItemStatusRegisterExt
 {
-    public static readonly ProtoId<ItemStatusPrototype> ItemStatusDefault = "Default";
-
     /// <summary>
     /// Register an item status control for a component.
     /// </summary>
@@ -50,18 +48,16 @@ public static class ItemStatusRegisterExt
     public static void ItemStatus<TComp>(
         this EntitySystem.Subscriptions subs,
         Func<Entity<TComp>, Control?> createControl,
-        ProtoId<ItemStatusPrototype>? prototype = null)
+        ProtoId<ItemStatusPrototype> prototype)
         where TComp : IComponent
     {
-        var statusPrototype = prototype ?? ItemStatusDefault;
-
         subs.SubscribeLocalEvent((Entity<TComp> entity, ref ItemStatusCollectMessage args) =>
         {
             var control = createControl(entity);
             if (control == null)
                 return;
 
-            args.Add(control, statusPrototype);
+            args.Add(control, prototype);
         });
     }
 }

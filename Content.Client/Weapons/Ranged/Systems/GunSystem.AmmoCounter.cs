@@ -16,14 +16,14 @@ namespace Content.Client.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
-    public ProtoId<ItemStatusPrototype> ItemStatus = "AmmoCounter";
+    public ProtoId<ItemStatusPrototype> AmmoItemStatus = "AmmoCounter";
 
     private void OnAmmoCounterCollect(Entity<AmmoCounterComponent> ent, ref ItemStatusCollectMessage args)
     {
         RefreshControl(ent);
 
         if (ent.Comp.Control != null)
-            args.Add(ent.Comp.Control, ItemStatus);
+            args.Add(ent.Comp.Control, AmmoItemStatus);
     }
 
     /// <summary>

@@ -18,15 +18,16 @@ public sealed partial class BatteryItemStatusSystem : EntitySystem
     [Dependency] private SharedBatterySystem _battery = default!;
     [Dependency] private PowerCellSystem _powerCell = default!;
 
-    public ProtoId<ItemStatusPrototype> ItemStatus = "Battery";
+    public ProtoId<ItemStatusPrototype> BatteryItemStatus = "Battery";
+    public ProtoId<ItemStatusPrototype> CellItemStatus = "Cell";
 
     public override void Initialize()
     {
         base.Initialize();
 
         Subs.ItemStatus<BatteryComponent>(entity =>
-            new BatteryStatusControl(entity.Owner, EntityManager, _battery, _powerCell), ItemStatus);
+            new BatteryStatusControl(entity.Owner, EntityManager, _battery, _powerCell), BatteryItemStatus);
         Subs.ItemStatus<PowerCellSlotComponent>(entity =>
-            new BatteryStatusControl(entity.Owner, EntityManager, _battery, _powerCell), ItemStatus);
+            new BatteryStatusControl(entity.Owner, EntityManager, _battery, _powerCell), CellItemStatus);
     }
 }
