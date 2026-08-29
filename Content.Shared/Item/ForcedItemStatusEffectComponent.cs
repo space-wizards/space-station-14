@@ -59,6 +59,12 @@ public sealed partial class ForcedItemStatusEffectComponent : Component
     public bool Force;
 
     /// <summary>
+    /// Whether the status effect items should be removed when handcuffed.
+    /// </summary>
+    [DataField]
+    public bool RemoveWhenCuffed = true;
+
+    /// <summary>
     /// Whether at least one item was successfully spawned by the effect.
     /// </summary>
     [DataField, AutoNetworkedField]

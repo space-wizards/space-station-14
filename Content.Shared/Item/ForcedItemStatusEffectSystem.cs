@@ -1,7 +1,9 @@
+using Content.Shared.Cuffs;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.StatusEffectNew;
+using Content.Shared.StatusEffectNew.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 
@@ -13,6 +15,11 @@ public sealed partial class ForcedItemStatusEffectSystem : EntitySystem
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
+
+    public override void Initialize()
+    {
+        Subs.SubscribeWithRelay<ForcedItemStatusEffectItemComponent, BeforeTargetHandcuffedEvent>(OnGotHandcuffed);
+    }
 
     [SubscribeLocalEvent]
     private void OnEffectApplied(Entity<ForcedItemStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
@@ -34,13 +41,14 @@ public sealed partial class ForcedItemStatusEffectSystem : EntitySystem
         {
             var spawned = SpawnAtPosition(entity.Comp.Item, Transform(entity).Coordinates);
 
-            if (_hands.TryForcePickupAnyHand(args.Target, spawned))
+            if (_hands.TryForcePickupAnyHand(args.Target, spawned, false))
             {
                 if (entity.Comp.Unremovable)
                     EnsureComp<UnremoveableComponent>(spawned);
 
                 EnsureComp<ForcedItemStatusEffectItemComponent>(spawned, out var spawnedComp);
                 spawnedComp.StatusEffect = entity;
+                spawnedComp.RemoveWhenCuffed = entity.Comp.RemoveWhenCuffed;
                 entity.Comp.ItemEntities.Add(spawned);
 
                 entity.Comp.SuccessfullySpawned = true;
@@ -111,6 +119,33 @@ public sealed partial class ForcedItemStatusEffectSystem : EntitySystem
         Dirty(entity.Comp.StatusEffect.Value, effect);
     }
 
+    private void OnGotHandcuffed(Entity<ForcedItemStatusEffectItemComponent> entity, ref BeforeTargetHandcuffedEvent args)
+    {
+        if (!entity.Comp.RemoveWhenCuffed)
+            return;
+
+        if (!TryComp<ForcedItemStatusEffectComponent>(entity.Comp.StatusEffect, out var forcedItem))
+            return;
+
+        if (!TryComp<StatusEffectComponent>(entity.Comp.StatusEffect, out var statusEffect))
+            return;
+
+        DisposeItem(entity, (entity.Comp.StatusEffect.Value, forcedItem), statusEffect.AppliedTo);
+    }
+
+    private void DisposeItem(Entity<ForcedItemStatusEffectItemComponent> entity, Entity<ForcedItemStatusEffectComponent> status, EntityUid? user)
+    {
+        if (status.Comp.Unremovable)
+            RemComp<UnremoveableComponent>(entity);
+
+        PredictedQueueDel(entity);
+
+        if (user == null)
+            return;
+
+        _audio.PlayPredicted(status.Comp.DespawnSound, user.Value, user.Value);
+    }
+
     private bool SpawnItemInInventory(Entity<ForcedItemStatusEffectComponent> ent, EntityUid target, string slot)
     {
         if (!_inventory.SpawnItemInSlot(target, slot, ent.Comp.Item, out var item, true, force: ent.Comp.Force))
@@ -121,6 +156,7 @@ public sealed partial class ForcedItemStatusEffectSystem : EntitySystem
 
         EnsureComp<ForcedItemStatusEffectItemComponent>(item.Value, out var spawnedComp);
         spawnedComp.StatusEffect = ent;
+        spawnedComp.RemoveWhenCuffed = ent.Comp.RemoveWhenCuffed;
         ent.Comp.ItemEntities.Add(item.Value);
 
         Dirty(item.Value, spawnedComp);

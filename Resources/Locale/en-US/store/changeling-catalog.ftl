@@ -28,6 +28,9 @@ changeling-catalog-hallucinogenic-sting-desc = Causes the target to get high and
 changeling-catalog-mute-sting-name = Mute Sting
 changeling-catalog-mute-sting-desc = Causes the target to be incapable of speech. Imperceptible until the target tries to speak. Can be used on self.
 
+changeling-catalog-armblade-sting-name = Armblade Sting
+changeling-catalog-armblade-sting-desc = Causes the target to spontaneously grow a dulled armblade after a lenghty delay. Can be used on self.
+
 changeling-catalog-screech-name = Screech [TEMPORARY]
 changeling-catalog-screech-desc = We let out a powerful screech that disarms people who hear it without adequate ear protection. THIS ACTION WILL BE MOVED TO THE HORROR FORM WHEN IT IS IMPLEMENTED.
 

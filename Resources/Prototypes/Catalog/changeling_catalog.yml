@@ -147,6 +147,21 @@
   productAction: ActionChangelingStingMute
 
 - type: listing
+  id: ChangelingStingArmblade
+  name: changeling-catalog-armblade-sting-name
+  description: changeling-catalog-armblade-sting-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: mute_sting }
+  applyToMob: true
+  cost:
+    ChangelingDNA: 10
+  categories:
+  - ChangelingStoreUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productAction: ActionChangelingStingArmblade
+
+- type: listing
   id: ChangelingLastResort
   name: changeling-catalog-last-resort-name
   description: changeling-catalog-last-resort-desc

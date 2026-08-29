@@ -15,4 +15,10 @@ public sealed partial class ForcedItemStatusEffectItemComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? StatusEffect;
+
+    /// <summary>
+    /// Whether the item should be removed when the holder is handcuffed.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool RemoveWhenCuffed;
 }
