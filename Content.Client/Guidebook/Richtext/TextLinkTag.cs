@@ -10,8 +10,12 @@ using Content.Client.UserInterface.ControlExtensions;
 namespace Content.Client.Guidebook.RichText;
 
 [UsedImplicitly]
-public sealed class TextLinkTag : IMarkupTagHandler
+public sealed partial class TextLinkTag : IMarkupTagHandler
 {
+    [Dependency] private IUriOpener _uriOpener = default!;
+
+    private readonly ISawmill _sawmill = Logger.GetSawmill("TextLinkTag");
+
     public static Color LinkColor => Color.CornflowerBlue;
 
     public string Name => "textlink";
@@ -50,14 +54,28 @@ public sealed class TextLinkTag : IMarkupTagHandler
         if (control == null)
             return;
 
-        if (control.TryGetParentHandler<ILinkClickHandler>(out var handler))
-            handler.HandleClick(link);
-        else
-            Logger.Warning("Warning! No valid ILinkClickHandler found.");
+        var isHttpLink = link.StartsWith("http://") || link.StartsWith("https://");
+
+        if (!control.TryGetParentHandler<ILinkClickHandler>(out var handler) && !isHttpLink)
+        {
+            _sawmill.Warning("No valid ILinkClickHandler found.");
+            return;
+        }
+
+        if (handler is not null && handler.HandleClick(link))
+            return;
+
+        if (isHttpLink)
+            _uriOpener.OpenUri(link);
     }
 }
 
 public interface ILinkClickHandler
 {
-    public void HandleClick(string link);
+    /// <summary>
+    /// Fired when a nested TextLinkTag is clicked.
+    /// </summary>
+    /// <param name="link">string value of tag's link parameter</param>
+    /// <returns>true to prevent opening HTTP links</returns>
+    bool HandleClick(string link);
 }
