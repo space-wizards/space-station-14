@@ -35,7 +35,6 @@ using Content.Shared.Popups;
 using Content.Shared.Prying.Components;
 using Content.Shared.Roles;
 using Content.Shared.Speech.EntitySystems;
-using Content.Shared.StatusEffect;
 using Content.Shared.Tag;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Traits.Assorted;
@@ -45,7 +44,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using StatusEffectsSystem = Content.Shared.StatusEffectNew.StatusEffectsSystem;
+using Content.Shared.StatusEffectNew.Components;
 
 namespace Content.Server.Zombies;
 
@@ -74,13 +73,11 @@ public sealed partial class ZombieSystem
     [Dependency] private NPCSystem _npc = default!;
     [Dependency] private TagSystem _tag = default!;
     [Dependency] private ISharedPlayerManager _player = default!;
-    [Dependency] private StatusEffectsSystem _statusEffects = default!;
     [Dependency] private SharedCuffableSystem _cuffable = default!;
 
     private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
     private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
     private static readonly ProtoId<NpcFactionPrototype> ZombieFaction = "Zombie";
-    private static readonly ProtoId<StatusEffectPrototype> ZombieClumsy = "StatusEffectClumsyZombie";
     private static readonly string MindRoleZombie = "MindRoleZombie";
     private static readonly List<ProtoId<AntagPrototype>> BannableZombiePrototypes = ["Zombie"];
     internal static readonly HashSet<HumanoidVisualLayers> AdditionalZombieLayers = [HumanoidVisualLayers.Tail, HumanoidVisualLayers.HeadSide, HumanoidVisualLayers.HeadTop, HumanoidVisualLayers.Snout];
@@ -324,7 +321,10 @@ public sealed partial class ZombieSystem
         }
 
         // the zombie is now clumsy. it will drop anything handed to it.
-        _statusEffects.TrySetStatusEffectDuration(target, ZombieClumsy.Id);
+        AddComp<PermanentStatusEffectsComponent>(target, new PermanentStatusEffectsComponent()
+        {
+            StatusEffects = ["StatusEffectClumsyZombie"]
+        });
 
         // Uncuffing the zombie
         while (_cuffable.TryGetLastCuff(target, out var cuff))
