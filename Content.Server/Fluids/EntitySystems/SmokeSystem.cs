@@ -49,18 +49,6 @@ public sealed partial class SmokeSystem : EntitySystem
     [Dependency] private EntityQuery<SmokeAffectedComponent> _smokeAffectedQuery = default!;
 
     /// <inheritdoc/>
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<SmokeComponent, StartCollideEvent>(OnStartCollide);
-        SubscribeLocalEvent<SmokeComponent, EndCollideEvent>(OnEndCollide);
-        SubscribeLocalEvent<SmokeComponent, ReactionAttemptEvent>(OnReactionAttempt);
-        SubscribeLocalEvent<SmokeComponent, SolutionRelayEvent<ReactionAttemptEvent>>(OnReactionAttempt);
-        SubscribeLocalEvent<SmokeComponent, SpreadNeighborsEvent>(OnSmokeSpread);
-    }
-
-    /// <inheritdoc/>
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -77,6 +65,16 @@ public sealed partial class SmokeSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
+    private void OnComponentInit(Entity<SmokeComponent> entity, ref ComponentInit args)
+    {
+        if (entity.Comp.StartingContents == null)
+            return;
+
+        StartSmoke(entity, entity.Comp.StartingContents, entity.Comp.Duration, entity.Comp.SpreadAmount, entity.Comp);
+    }
+
+    [SubscribeLocalEvent]
     private void OnStartCollide(Entity<SmokeComponent> entity, ref StartCollideEvent args)
     {
         if (_smokeAffectedQuery.HasComponent(args.OtherEntity))
@@ -87,6 +85,7 @@ public sealed partial class SmokeSystem : EntitySystem
         smokeAffected.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
     }
 
+    [SubscribeLocalEvent]
     private void OnEndCollide(Entity<SmokeComponent> entity, ref EndCollideEvent args)
     {
         // if we are already in smoke, make sure the thing we are exiting is the current smoke we are in.
@@ -118,6 +117,7 @@ public sealed partial class SmokeSystem : EntitySystem
             RemComp(args.OtherEntity, smokeAffectedComponent);
     }
 
+    [SubscribeLocalEvent]
     private void OnSmokeSpread(Entity<SmokeComponent> entity, ref SpreadNeighborsEvent args)
     {
         if (entity.Comp.SpreadAmount == 0)
@@ -142,7 +142,14 @@ public sealed partial class SmokeSystem : EntitySystem
         foreach (var neighbor in args.NeighborFreeTiles)
         {
             var coords = _map.GridTileToLocal(neighbor.Tile.GridUid, neighbor.Grid, neighbor.Tile.GridIndices);
-            var ent = Spawn(prototype.ID, coords);
+            var ent = EntityManager.CreateEntityUninitialized(prototype.ID, coords);
+            // If the smoke entity has starting contents, new entities spawned from it should not include it.
+            if (entity.Comp.StartingContents != null && TryComp<SmokeComponent>(ent, out var newSmoke))
+            {
+                newSmoke.StartingContents = null;
+            }
+            EntityManager.InitializeAndStartEntity(ent);
+
             var spreadAmount = Math.Max(0, smokePerSpread);
             entity.Comp.SpreadAmount -= args.NeighborFreeTiles.Count;
 
@@ -191,6 +198,7 @@ public sealed partial class SmokeSystem : EntitySystem
 
     }
 
+    [SubscribeLocalEvent]
     private void OnReactionAttempt(Entity<SmokeComponent> entity, ref ReactionAttemptEvent args)
     {
         if (args.Cancelled)
@@ -207,6 +215,7 @@ public sealed partial class SmokeSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnReactionAttempt(Entity<SmokeComponent> entity, ref SolutionRelayEvent<ReactionAttemptEvent> args)
     {
         if (args.Solution.Comp.Id == SmokeComponent.SolutionName)

@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 using Robust.Shared.GameStates;
@@ -13,7 +14,17 @@ namespace Content.Shared.Chemistry.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class SmokeComponent : Component
 {
+    /// <summary>
+    /// Name of the solution used for the shared smoke.
+    /// </summary>
     public const string SolutionName = "solutionArea";
+
+    /// <summary>
+    /// If set, adds the provided reagents to the initial smoke entity spawned.
+    /// If spawned via other smoke, these reagents are not set.
+    /// </summary>
+    [DataField]
+    public Solution? StartingContents;
 
     /// <summary>
     /// The entity containing shared smoke source data and reagents.

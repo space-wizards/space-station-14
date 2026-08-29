@@ -36,8 +36,6 @@
   - type: Sprite
     sprite: Effects/chemsmoke.rsi
     state: chemsmoke
-  - type: TimedDespawn
-    lifetime: 10
   - type: Tag
     tags:
     - HideContextMenu
@@ -51,8 +49,6 @@
   - type: Sprite
     sprite: Effects/chemsmoke.rsi
     state: chemsmoke
-  - type: TimedDespawn
-    lifetime: 10
   - type: Tag
     tags:
     - HideContextMenu
