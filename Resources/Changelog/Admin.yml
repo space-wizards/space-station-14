@@ -1248,15 +1248,15 @@ Entries:
   url: https://github.com/space-wizards/space-station-14/pull/39046
 - author: slarticodefast
   changes:
-  - &o0
-    message: The listplayers command now requires PII permissions due to showing IP addresses.
+  - message: The listplayers command now requires PII permissions due to showing IP addresses.
     type: Tweak
   id: 169
   time: '2025-09-13T15:53:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40324
 - author: slarticodefast
   changes:
-  - *o0
+  - message: The listplayers command now requires PII permissions due to showing IP addresses.
+    type: Tweak
   id: 170
   time: '2025-09-16T07:59:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40395
@@ -1750,5 +1750,177 @@ Entries:
     type: Remove
   id: 234
   time: '2026-08-08T22:59:23.0000000+00:00'
+- author: Zekins3366
+  changes:
+  - message: Construction menu now updates immediately after reloading construction prototypes.
+    type: Fix
+  id: 235
+  time: '2026-06-05T15:24:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44243
+- author: PJB3005
+  changes:
+  - message: When a character name gets mentioned in an adminhelp message, the game will now attempt to provide a "quick info" link for the relevant player/entity.
+    type: Add
+  id: 236
+  time: '2026-06-20T23:47:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44319
+- author: Axionyx
+  changes:
+  - message: Trust score and account creation date are now displayed in the player panel
+    type: Add
+  id: 237
+  time: '2026-06-21T20:23:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44317
+- author: PJB3005
+  changes:
+  - message: admin_overlay command to enable/disable admin overlay from scripts
+    type: Add
+  id: 238
+  time: '2026-06-21T22:16:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44326
+- author: PJB3005
+  changes:
+  - message: Admin logs now have their timezone displayed in local time rather than UTC
+    type: Fix
+  id: 239
+  time: '2026-06-22T14:49:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44332
+- author: PJB3005
+  changes:
+  - message: '"Respawn" admin action has been renamed to "return to lobby." Similar related actions have had tooltips added to clarify behavior.'
+    type: Tweak
+  id: 240
+  time: '2026-06-23T01:10:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44333
+- author: PJB3005
+  changes:
+  - message: '"Admin only" and "Play sound" options when sending bwoinks now work properly if the UI is popped out'
+    type: Fix
+  id: 241
+  time: '2026-06-23T18:21:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44334
+- author: ScarKy0
+  changes:
+  - message: Aghosts can now open several storage UIs at once. To bring back previous behaviour remove your "BypassOpenStorageLimit" tag.
+    type: Add
+  id: 242
+  time: '2026-06-29T09:16:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44404
+- author: Samuka
+  changes:
+  - message: Added a new button to the server tab which toggles dead chat!
+    type: Add
+  id: 243
+  time: '2026-06-29T19:22:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44367
+- author: Samuka
+  changes:
+  - message: Added the Stinky smite, for the stinkiest players
+    type: Add
+  id: 244
+  time: '2026-07-02T22:35:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44394
+- author: Doru991
+  changes:
+  - message: Quick info links in the ahelp window now only trigger for entities that are being or have been controlled by a player.
+    type: Tweak
+  id: 245
+  time: '2026-07-08T08:50:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44373
+- author: Errant
+  changes:
+  - message: The F7 playertab's filter now also works with role (Crew Aligned, Team Antagonist etc) and role subtype (Traitor, Zombie etc).
+    type: Tweak
+  id: 246
+  time: '2026-07-09T18:30:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44592
+- author: w3ryfrate
+  changes:
+  - message: Added "togglechat" command to easily toggle dead, ooc and looc channels on/off.
+    type: Add
+  - message: Removed commands "setdeadchat", "setlooc" and "setooc."
+    type: Remove
+  id: 247
+  time: '2026-07-13T06:06:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44480
+- author: Crude Oil
+  changes:
+  - message: Admin logs command autocompletes on players
+    type: Add
+  - message: Admins now have a "player logs" verb that opens admin logs with that player selected
+    type: Add
+  - message: Added "player logs" button to the ahelp window
+    type: Add
+  - message: Removed "ban list" button from the ahelp window
+    type: Remove
+  - message: Player selection in admin logs remains consistent when selecting different rounds
+    type: Tweak
+  id: 248
+  time: '2026-07-14T21:11:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44604
+- author: Samuka
+  changes:
+  - message: Added the event log button to log events more easily!
+    type: Add
+  id: 249
+  time: '2026-07-15T00:01:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44655
+- author: TriviaSolari, Mixelz
+  changes:
+  - message: Editing ion laws now properly randomizes law numbers
+    type: Fix
+  id: 250
+  time: '2026-07-15T03:04:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42806
+- author: SlamBamActionman
+  changes:
+  - message: Admin ghosts and Godmode are now immune to lube/glue effects on items.
+    type: Fix
+  id: 251
+  time: '2026-07-16T15:31:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44552
+- author: n1-nbt
+  changes:
+  - message: Silicon laws are now admin logged.
+    type: Add
+  id: 252
+  time: '2026-07-18T06:40:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44238
+- author: sowelipililimute
+  changes:
+  - message: '`body:insert` has been added, allowing entities to be inserted as organs into a body.'
+    type: Add
+  - message: '`body:organs` has been added, allowing all organs within a body to be enumerated.'
+    type: Add
+  - message: '`organ:parent` has been added, allowing you to get the parent organ from a child organ (torso from arm, arm from hand.)'
+    type: Add
+  - message: '`organ:children` has been added, allowing you to get all child organs from a parent organ. (hand from arm, internal organs & limbs from torso)'
+    type: Add
+  - message: '`organ:detach` has been added, allowing you to split off an organ from a body into its own body. For debug purposes only; this has no associated game-ready functionality.'
+    type: Add
+  - message: '`organ:attach` has been added, allowing you to attach an organ to a parent organ.'
+    type: Add
+  - message: '`organ:is` has been added, allowing you to test if an entity is an organ of a specific type.'
+    type: Add
+  - message: '`organ:of_type` has been added, allowing you to filter for entities that are organs of a specific type.'
+    type: Add
+  id: 253
+  time: '2026-07-26T09:36:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44812
+- author: Centronias
+  changes:
+  - message: Satiation reduction command "unsatiate"
+    type: Add
+  - message: Hunger reduction command "hungry"
+    type: Remove
+  - message: Thirst reduction command "thirst"
+    type: Remove
+  - message: Satiation setting command "setsatiation"
+    type: Add
+  - message: Hunger / thirst setting command "setnutrit"
+    type: Remove
+  id: 254
+  time: '2026-08-08T22:59:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34166
 Name: Admin
 Order: 3
