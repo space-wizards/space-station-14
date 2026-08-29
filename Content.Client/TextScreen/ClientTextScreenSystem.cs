@@ -1,4 +1,4 @@
-using System.Linq;
+using System.Numerics;
 using Content.Shared.TextScreen.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
@@ -120,8 +120,8 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
             }
         }
 
-        var screenQuery = EntityQueryEnumerator<TextScreenComponent>();
-        while (screenQuery.MoveNext(out var uid, out var screen))
+        var screenQuery = EntityQueryEnumerator<TextScreenComponent, SpriteComponent>();
+        while (screenQuery.MoveNext(out var uid, out var screen, out var sprite))
         {
             if (screen.NewTextToDisplay)
             {
@@ -133,19 +133,15 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
             // Handle scrolling.
             if (screen.ScrollEnabled)
             {
-                if (_gameTiming.CurTime < timer.Target)
+                for (int i = 0; i < screen.RowData.Length; i++)
                 {
-                    BuildTimerLayers((uid, timer, screen));
-                    DrawStaticLayers(uid, timer.LayerStatesToDraw);
+                    var rowData = screen.RowData[i];
+                    if (rowData.NextScroll <= _timing.CurTime)
+                    {
+                        ScrollRow(ref rowData);
+                        DrawLayers((uid, screen, sprite), rowData, i);
+                    }
                 }
-                else
-                {
-                    TeardownTimer((uid, screen));
-                }
-            }
-            else if (screen.ScrollEnabled && screen.NextScrollTime.Any(x => x < _gameTiming.CurTime))
-            {
-                DrawScrolledLayers((uid, screen));
             }
         }
     }
@@ -333,30 +329,10 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
                     ScrollRow(ref rowData);
                 }
 
-                // TODO: offset layers, draw states onto their respective layers based on the input string.
-                for (var j = 0; j < rowData.Layers.Count; j++)
-                {
-                    var layerTuple = rowData.Layers[j];
-
-                    if (_sprite.LayerMapTryGet((ent, sprite), layerTuple.Key, out var layerIndex, false))
-                        _sprite.LayerSetRsiState((ent, sprite), layerIndex, GetStateFromChar());
-
-                    rowData.Layers[j] = new(layerTuple.Key, DefaultState);
-                }
-                for (var j = 0; j < rowData.Layers.Count; j++)
-                {
-                    var layerTuple = rowData.Layers[j];
-
-                    if (_sprite.LayerMapTryGet((ent, sprite), layerTuple.Key, out var layerIndex, false))
-                        _sprite.LayerSetRsiState((ent, sprite), layerIndex, null);
-
-                    rowData.Layers[j] = new(layerTuple.Key, null);
-                }
-
-                rowData.Text = texts[i];
+                DrawLayers((ent.Owner, ent.Comp, sprite), rowData, i);
             }
 
-            // Set initial states
+            ent.Comp.RowData[i] = rowData;
         }
     }
 
@@ -365,6 +341,42 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
         var difference = (_timing.CurTime - rowData.NextScroll).TotalSeconds;
         var increments = (int)Math.Truncate(difference / rowData.ScrollDelay.TotalSeconds) + 1;
         rowData.ScrollPosition += increments;
+        rowData.NextScroll += increments * rowData.ScrollDelay;
+    }
+
+    private void DrawLayers(Entity<TextScreenComponent, SpriteComponent> ent, TextScreenRow rowData, int rowIndex)
+    {
+        Entity<SpriteComponent?> sprite = (ent.Owner, ent.Comp2);
+        var screen = ent.Comp1;
+
+        // TODO: offset layers, draw states onto their respective layers based on the input string.
+        var maxCharIndex = int.Min(rowData.Layers.Count, rowData.Text.Length);
+        for (var j = 0; j < maxCharIndex; j++)
+        {
+            var layerTuple = rowData.Layers[j];
+            var charIndex = (j + rowData.ScrollPosition / CharWidth) % rowData.Text.Length;
+
+            var newState = GetStateFromChar(rowData.Text[charIndex]);
+
+            if (_sprite.LayerMapTryGet(sprite, layerTuple.Key, out var layerIndex, false))
+            {
+                _sprite.LayerSetRsiState(sprite, layerIndex, newState);
+                _sprite.LayerSetOffset(sprite, layerIndex, screen.TextOffset + Vector2.Multiply(
+                        new Vector2((j - maxCharIndex / 2f + 0.5f) * CharWidth, -rowIndex * screen.RowOffset),
+                        TextScreenComponent.PixelSize));
+            }
+
+            rowData.Layers[j] = new(layerTuple.Key, newState);
+        }
+        for (var j = maxCharIndex; j < rowData.Layers.Count; j++)
+        {
+            var layerTuple = rowData.Layers[j];
+
+            if (_sprite.LayerMapTryGet((ent, sprite), layerTuple.Key, out var layerIndex, false))
+                _sprite.LayerSetRsiState((ent, sprite), layerIndex, null);
+
+            rowData.Layers[j] = new(layerTuple.Key, null);
+        }
     }
 
     /// <summary>

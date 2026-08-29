@@ -37,11 +37,11 @@ public abstract partial class TextScreenSystem : EntitySystem
 
         var strings = text.Split(LineBreaks, StringSplitOptions.None);
         _builder.Clear();
-        for (int i = 0; i < ent.Comp.Rows; i++)
+        for (int i = 0; i < ent.Comp.RowData.Length; i++)
         {
             if (i < strings.Length)
                 _builder.Append(strings[i].Substring(0, int.Min(strings[i].Length, MaxScrollingCharacters)));
-            if (i != ent.Comp.Rows - 1)
+            if (i != ent.Comp.RowData.Length - 1)
                 _builder.Append("\n");
         }
 

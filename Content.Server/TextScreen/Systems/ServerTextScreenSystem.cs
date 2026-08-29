@@ -1,4 +1,4 @@
 namespace Content.Shared.TextScreen.Systems;
 
 /// <inheritdoc/>
-public abstract partial class ServerTextScreenSystem : TextScreenSystem;
+public sealed partial class ServerTextScreenSystem : TextScreenSystem;

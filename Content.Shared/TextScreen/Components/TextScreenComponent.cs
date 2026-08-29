@@ -132,12 +132,12 @@ public partial struct TextScreenRow()
     /// The time this row should next scroll a pixel.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan NextScroll;
+    public TimeSpan NextScroll = TimeSpan.MaxValue;
 
     /// <summary>
     /// The amount of time this screen should spend scrolling.
     /// </summary>
-    public TimeSpan ScrollDelay;
+    public TimeSpan ScrollDelay = TimeSpan.MaxValue;
 
     /// <summary>
     /// The current position of the row in the string, in pixels.
