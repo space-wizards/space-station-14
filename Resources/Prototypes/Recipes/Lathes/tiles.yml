@@ -501,3 +501,18 @@
   parent: BasePlasticTileRecipe
   id: FloorTileItemGym
   result: FloorTileItemGym
+
+- type: latheRecipe
+  parent: BasePlasticTileRecipe
+  id: FloorTileItemPlastic
+  result: FloorTileItemPlastic
+
+- type: latheRecipe
+  parent: BasePlasticTileRecipe
+  id: FloorTileItemDarkPlastic
+  result: FloorTileItemDarkPlastic
+
+- type: latheRecipe
+  parent: BasePlasticTileRecipe
+  id: FloorTileItemWhitePlastic
+  result: FloorTileItemWhitePlastic
