@@ -1,0 +1,10 @@
+- type: itemStatus
+  id: Default
+
+- type: itemStatus
+  id: Battery
+
+- type: itemStatus
+  id: AmmoCounter
+  priority: 2
+  override: true

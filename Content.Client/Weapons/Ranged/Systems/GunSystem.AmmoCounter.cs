@@ -5,21 +5,25 @@ using Content.Client.Resources;
 using Content.Client.Stylesheets;
 using Content.Client.Weapons.Ranged.Components;
 using Content.Client.Weapons.Ranged.ItemStatus;
+using Content.Shared.Item;
 using Robust.Client.Animations;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
+    public ProtoId<ItemStatusPrototype> ItemStatus = "AmmoCounter";
+
     private void OnAmmoCounterCollect(Entity<AmmoCounterComponent> ent, ref ItemStatusCollectMessage args)
     {
         RefreshControl(ent);
 
         if (ent.Comp.Control != null)
-            args.Controls.Add(ent.Comp.Control);
+            args.Add(ent.Comp.Control, ItemStatus);
     }
 
     /// <summary>
