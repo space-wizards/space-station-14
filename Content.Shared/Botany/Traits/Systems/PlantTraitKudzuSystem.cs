@@ -11,12 +11,14 @@ public sealed partial class PlantTraitKudzuSystem : EntitySystem
     [Dependency] private PlantHolderSystem _plantHolder = default!;
     [Dependency] private PlantTraySystem _plantTray = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
+    
+    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery = default!;
 
     [SubscribeLocalEvent]
     private void OnPlantGrow(Entity<PlantTraitKudzuComponent> ent, ref PlantGrowEvent args)
     {
         var trayUid = GetEntity(args.Tray);
-        if (!TryComp<PlantTrayComponent>(trayUid, out var trayComp))
+        if (!_trayQuery.TryComp(trayUid, out var trayComp))
             return;
 
         if (trayComp is { WaterLevel: > 10, NutritionLevel: > 5 })

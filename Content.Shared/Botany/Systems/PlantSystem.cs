@@ -18,6 +18,9 @@ public sealed partial class PlantSystem : EntitySystem
     [Dependency] private PlantMutationSystem _mutation = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
 
+    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery = default!;
+    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery = default!;
+
     private readonly List<Entity<PlantHolderComponent>> _holdersToUpdate = [];
 
     public override void Update(float frameTime)
@@ -54,12 +57,12 @@ public sealed partial class PlantSystem : EntitySystem
         if (!_botany.TryGetPlantComponent<PlantComponent>(args.PollenData, args.PollenProtoId, out var pollenData))
             return;
 
-        _mutation.CrossInt(ent, ref ent.Comp.Yield, pollenData.Yield);
-        _mutation.CrossFloat(ent, ref ent.Comp.Endurance, pollenData.Endurance);
-        _mutation.CrossFloat(ent, ref ent.Comp.Lifespan, pollenData.Lifespan);
-        _mutation.CrossFloat(ent, ref ent.Comp.Maturation, pollenData.Maturation);
-        _mutation.CrossFloat(ent, ref ent.Comp.Production, pollenData.Production);
-        _mutation.CrossFloat(ent, ref ent.Comp.Potency, pollenData.Potency);
+        _mutation.CrossInt(ref ent.Comp.Yield, pollenData.Yield);
+        _mutation.CrossFloat(ref ent.Comp.Endurance, pollenData.Endurance);
+        _mutation.CrossFloat(ref ent.Comp.Lifespan, pollenData.Lifespan);
+        _mutation.CrossFloat(ref ent.Comp.Maturation, pollenData.Maturation);
+        _mutation.CrossFloat(ref ent.Comp.Production, pollenData.Production);
+        _mutation.CrossFloat(ref ent.Comp.Potency, pollenData.Potency);
         _mutation.CrossTrait(ent.Owner, args.PollenData);
         Dirty(ent);
     }
@@ -67,7 +70,7 @@ public sealed partial class PlantSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnPlantGrow(Entity<PlantComponent> ent, ref PlantGrowEvent args)
     {
-        if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder))
+        if (!_holderQuery.TryComp(ent.Owner, out var holder))
             return;
 
         // Check if plant is too old.
@@ -81,7 +84,7 @@ public sealed partial class PlantSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder))
+        if (!_holderQuery.TryComp(ent.Owner, out var holder))
             return;
 
         using (args.PushGroup(nameof(PlantComponent)))
@@ -167,7 +170,7 @@ public sealed partial class PlantSystem : EntitySystem
             return false;
 
         trayEnt.Owner = Transform(ent.Owner).ParentUid;
-        if (!TryComp<PlantTrayComponent>(trayEnt.Owner, out var trayComp))
+        if (!_trayQuery.TryComp(trayEnt.Owner, out var trayComp))
             return false;
 
         trayEnt.Comp = trayComp;
@@ -281,7 +284,7 @@ public sealed partial class PlantSystem : EntitySystem
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return 1;
 
-        if (!TryComp<PlantHolderComponent>(ent.Owner, out var plantHolder))
+        if (!_holderQuery.TryComp(ent.Owner, out var plantHolder))
             return 1;
 
         int growthStage;
@@ -302,7 +305,7 @@ public sealed partial class PlantSystem : EntitySystem
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        if (!TryComp<PlantHolderComponent>(ent.Owner, out var plantHolder))
+        if (!_holderQuery.TryComp(ent.Owner, out var plantHolder))
             return;
 
         plantHolder.Health = healthOverride ?? ent.Comp.Endurance;

@@ -37,14 +37,6 @@ public sealed partial class PlantVisualizerSystem : VisualizerSystem<PlantVisual
     }
 
     [SubscribeLocalEvent]
-    private void OnHarvestState(Entity<PlantHarvestComponent> ent, ref AfterAutoHandleStateEvent args)
-    {
-        UpdateSprite(ent.Owner);
-        if (_plant.TryGetTray(ent.Owner, out var trayEnt))
-            _plantTrayVisualizer.UpdateTrayWarnings(trayEnt.AsNullable());
-    }
-
-    [SubscribeLocalEvent]
     private void OnHolderState(Entity<PlantHolderComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         UpdateSprite(ent.Owner);
@@ -56,7 +48,7 @@ public sealed partial class PlantVisualizerSystem : VisualizerSystem<PlantVisual
     private void UpdateSprite(EntityUid plantUid)
     {
         if (!HasComp<PlantVisualsComponent>(plantUid)
-            || !TryComp<PlantHarvestComponent>(plantUid, out var harvest)
+            || !TryComp<PlantHolderComponent>(plantUid, out var holder)
             || !TryComp<SpriteComponent>(plantUid, out var sprite))
         {
             return;
@@ -65,7 +57,7 @@ public sealed partial class PlantVisualizerSystem : VisualizerSystem<PlantVisual
         string state;
 
         var dead = _plantHolder.IsDead(plantUid);
-        var harvestReady = harvest.ReadyForHarvest;
+        var harvestReady = holder.ReadyForHarvest;
         var growthStage = _plant.GetGrowthStageValue(plantUid);
 
         if (dead)

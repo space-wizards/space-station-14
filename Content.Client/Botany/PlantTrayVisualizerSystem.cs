@@ -70,10 +70,8 @@ public sealed partial class PlantTrayVisualizerSystem : VisualizerSystem<PlantTr
                          || plantHolder.MissingGas;
 
                 health = _plantHolder.GetHealthThreshold(plantUid.Value);
+                harvest = plantHolder.ReadyForHarvest;
             }
-
-            if (TryComp<PlantHarvestComponent>(plantUid, out var plantHarvest))
-                harvest = plantHarvest.ReadyForHarvest;
         }
 
         // These are appearance keys consumed by the prototype's <see cref="GenericVisualizerComponent"/>.

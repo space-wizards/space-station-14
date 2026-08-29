@@ -41,6 +41,7 @@ public sealed partial class SignalTimerSystem : EntitySystem
     {
         _appearanceSystem.SetData(uid, TextScreenVisuals.DefaultText, component.Label);
         _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label);
+        _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenTextTime, _gameTiming.CurTime);
         _signalSystem.EnsureSinkPorts(uid, component.Trigger);
     }
 
@@ -140,6 +141,7 @@ public sealed partial class SignalTimerSystem : EntitySystem
             // if you delved deep into appearance update batching
             _appearanceSystem.SetData(uid, TextScreenVisuals.DefaultText, component.Label);
             _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label);
+            _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenTextTime, _gameTiming.CurTime);
         }
     }
 

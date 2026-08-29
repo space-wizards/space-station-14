@@ -138,7 +138,7 @@ public sealed partial class ChangelingDevourComponent : Component
     /// DNA awarded for successfully devouring a new identity.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public Dictionary<string, FixedPoint2> DevourDnaReward = new()
+    public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> DevourDnaReward = new()
     {
         { "ChangelingDNA", 10 }
     };

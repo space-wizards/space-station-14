@@ -160,7 +160,7 @@ public sealed partial class CCVars
     ///     Role bans, whitelists, playtime requirements, and antag restrictions always apply.
     /// </summary>
     public static readonly CVarDef<MinimumJobFallback>
-        GameMinimumJobFallback = CVarDef.Create("game.minimum_job_fallback", MinimumJobFallback.SameDepartment,
+        GameMinimumJobFallback = CVarDef.Create("game.minimum_job_fallback", MinimumJobFallback.None,
             CVar.ARCHIVE | CVar.SERVERONLY);
 
     /// <summary>
@@ -347,10 +347,10 @@ public sealed partial class CCVars
         CVarDef.Create("game.ipintel_alert_admin_warn_rating", 0f, CVar.SERVERONLY);
 
     /// <summary>
-    ///     Make people bonk when trying to climb certain objects like tables.
+    ///     Should clumsy people bonk when trying to climb certain objects like tables?
     /// </summary>
     public static readonly CVarDef<bool> GameTableBonk =
-        CVarDef.Create("game.table_bonk", false, CVar.REPLICATED);
+        CVarDef.Create("game.table_bonk", true, CVar.REPLICATED);
 
     /// <summary>
     ///     Whether or not status icons are rendered for everyone.
