@@ -69,12 +69,12 @@
     allowedDepartments: [ CentralCommand ]
 
 - type: entity
-  id: BaseSpecialistContraband
+  id: BaseTaskForceContraband
   parent: BaseRestrictedContraband
   abstract: true
   components:
   - type: Contraband
-    allowedDepartments: [ Specialist ]
+    allowedDepartments: [ TaskForce ]
 
 - type: entity
   id: BaseCommandContraband

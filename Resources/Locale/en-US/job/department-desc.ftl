@@ -7,5 +7,5 @@ department-Medical-description = Keep the crew healthy.
 department-Security-description = Protect the station and keep the peace.
 department-Science-description = Research and develop new technologies for the station.
 department-Silicon-description = Fulfill the terms of your installed lawset.
-department-Specialist-description = Perform special operations under Central Command's authority.
+department-Task-Force-description = Perform special operations under Central Command's authority.
 department-Specific-description = Jobs that not all stations have.

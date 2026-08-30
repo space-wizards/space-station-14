@@ -56,7 +56,7 @@ job-description-station-ai = Remotely interface with the station's cameras, airl
 # Central Command
 job-description-centcommoff = Act as liaison to the newest state-of-the-art space station in Nanotrasen's fleet.
 
-# Specialist
+# Task Force
 job-description-cburn = Cleanse the station of all biological contaminants.
 job=desctiption-deathsquad = Eliminate any and all threats to Nanotrasen assets.
 job-description-ertchaplain = Ensure that the station's crew have their last rites performed.

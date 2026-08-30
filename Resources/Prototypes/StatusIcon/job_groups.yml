@@ -131,8 +131,8 @@
   - JobIconNanotrasen
 
 - type: jobIconGroup
-  id: SpecialistIconGroup
-  groupName: job-icon-group-specialist
+  id: TaskForceIconGroup
+  groupName: job-icon-group-task-force
   sprite:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: ERTLeader

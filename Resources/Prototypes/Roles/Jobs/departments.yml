@@ -116,9 +116,9 @@
   - StationAi
 
 - type: department
-  id: Specialist
-  name: department-Specialist
-  description: department-Specialist-description
+  id: TaskForce
+  name: department-Task-Force
+  description: department-Task-Force-description
   color: "#0c344d"
   weight: 110 # Higher weight than Command, but below Central Command
   editorHidden: true
