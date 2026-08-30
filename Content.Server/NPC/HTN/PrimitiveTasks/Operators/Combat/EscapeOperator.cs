@@ -10,7 +10,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat.Melee;
 public sealed partial class EscapeOperator : HTNOperator, IHtnConditionalShutdown
 {
     [Dependency] private IEntityManager _entManager = default!;
-    private ContainerSystem _container = default!;
+    private ContainerSystem _containerSystem = default!;
     private EntityStorageSystem _entityStorage = default!;
 
     [DataField("shutdownState")]
@@ -22,7 +22,7 @@ public sealed partial class EscapeOperator : HTNOperator, IHtnConditionalShutdow
     public override void Initialize(IEntitySystemManager sysManager)
     {
         base.Initialize(sysManager);
-        _container = sysManager.GetEntitySystem<ContainerSystem>();
+        _containerSystem = sysManager.GetEntitySystem<ContainerSystem>();
         _entityStorage = sysManager.GetEntitySystem<EntityStorageSystem>();
     }
 
@@ -52,12 +52,12 @@ public sealed partial class EscapeOperator : HTNOperator, IHtnConditionalShutdow
             return (false, null);
         }
 
-        if (!_container.IsEntityInContainer(owner))
+        if (!_containerSystem.TryGetContainingContainer(owner, out var container))
         {
             return (false, null);
         }
 
-        if (_entityStorage.TryOpenStorage(owner, target))
+        if (!_entityStorage.CanOpen(owner, container.Owner))
         {
             return (false, null);
         }
@@ -98,14 +98,14 @@ public sealed partial class EscapeOperator : HTNOperator, IHtnConditionalShutdow
         {
             combat.Target = target;
 
-            // Success
-            if (!_container.IsEntityInContainer(owner))
+            if (!_containerSystem.TryGetContainingContainer(owner, out var container))
             {
+                // Success. We are not in a container.
                 status = HTNOperatorStatus.Finished;
             }
             else
             {
-                if (_entityStorage.TryOpenStorage(owner, target))
+                if (_entityStorage.TryOpenStorage(owner, container.Owner))
                 {
                     status = HTNOperatorStatus.Finished;
                 }
