@@ -242,16 +242,10 @@ public sealed partial class PlantSystem : EntitySystem
         ent.Comp.Maturation = MathF.Max(1f, ent.Comp.Maturation + amount);
         DirtyField(ent, nameof(ent.Comp.Maturation));
 
-        if (ent.Comp.Production < ent.Comp.Maturation)
-        {
-            ent.Comp.Production = ent.Comp.Maturation;
-            DirtyField(ent, nameof(ent.Comp.Production));
-        }
     }
 
     /// <summary>
     /// Adjusts the production time of a plant component.
-    /// Should not be lower than <see cref="PlantComponent.Maturation"/>.
     /// </summary>
     [PublicAPI]
     public void AdjustProduction(Entity<PlantComponent?> ent, float amount)
@@ -259,7 +253,7 @@ public sealed partial class PlantSystem : EntitySystem
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        ent.Comp.Production = MathF.Max(ent.Comp.Maturation, ent.Comp.Production + amount);
+        ent.Comp.Production = MathF.Max(1f, ent.Comp.Production + amount);
         DirtyField(ent, nameof(ent.Comp.Production));
     }
 
