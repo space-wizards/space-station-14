@@ -53,12 +53,6 @@
         Dead:
           Base: dead
           BaseUnshaded: dead_mouth
-    - type: RandomSprite
-      available:
-      - enum.DamageStateVisualLayers.Base:
-          alive: Rainbow
-        enum.DamageStateVisualLayers.BaseUnshaded:
-          mouth: ""
     - type: ToolRefinable
       refineResult:
       - id: FoodMeatFish
@@ -104,6 +98,12 @@
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
       state: mouth
       shader: unshaded
+  - type: RandomSprite
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        alive: Rainbow
+      enum.DamageStateVisualLayers.BaseUnshaded:
+        mouth: ""
 
 - type: entity
   name: magicarp
@@ -229,6 +229,12 @@
       Dead:
         Base: dead
         BaseUnshaded: dead_mouth
+  - type: RandomSprite
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        alive: Rainbow
+      enum.DamageStateVisualLayers.BaseUnshaded:
+        mouth: ""
   - type: ToolRefinable
     refineResult:
     - id: FoodMeatFish
