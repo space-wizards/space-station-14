@@ -190,6 +190,8 @@ namespace Content.Shared.Random.Helpers
             return hash;
         }
 
+        // the well-known public domain murmurhash32 finalization mix function by Austin Appleby
+        // source: https://github.com/aappleby/smhasher/blob/07bb4de10a63e8cc2e1724865454eba635742383/src/MurmurHash3.cpp#L68
         private static int Fmix32(int seed)
         {
             uint h = (uint)seed;
