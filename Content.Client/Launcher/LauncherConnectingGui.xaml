@@ -66,6 +66,7 @@
                     <gfx:StyleBoxFlat BackgroundColor="#444" ContentMarginTopOverride="2" />
                 </PanelContainer.PanelOverride>
             </PanelContainer>
+
             <BoxContainer Orientation="Horizontal" Margin="12 0 4 0" VerticalAlignment="Bottom">
                 <Label Text="{Loc 'connecting-tip'}" StyleClasses="LabelSubText" />
                 <Label Text="{Loc 'connecting-version'}" StyleClasses="LabelSubText"

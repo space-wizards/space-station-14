@@ -105,6 +105,12 @@ namespace Content.Client.Launcher
             }
         }
 
+        /// <summary>
+        /// Tries to connect the client to the specified server, or reconnect to the current server if no target is specified
+        /// </summary>
+        /// <param name="url">The target server</param>
+        /// <param name="infoText">This text will be shown on the connection window</param>
+        /// <returns></returns>
         public bool Redial(string? url = null, string? infoText = null)
         {
             try
@@ -112,17 +118,16 @@ namespace Content.Client.Launcher
                 if (url is not null)
                 {
                     _gameController.Redial(url, infoText);
-
+                    return true;
                 }
-                else if (_gameController.LaunchState.Ss14Address != null)
+
+                if (_gameController.LaunchState.Ss14Address != null)
                 {
                     _gameController.Redial(_gameController.LaunchState.Ss14Address);
                     return true;
                 }
-                else
-                {
-                    _sawmill.Info($"Redial not possible, no Ss14Address");
-                }
+
+                _sawmill.Info($"Redial not possible, no Ss14Address");
             }
             catch (Exception ex)
             {
