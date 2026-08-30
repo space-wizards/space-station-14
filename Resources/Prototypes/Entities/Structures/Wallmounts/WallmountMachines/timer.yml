@@ -24,6 +24,7 @@
   - type: Rotatable
   - type: SignalTimer
     canEditLabel: false
+  - type: TextScreenTimerVisuals
   - type: DeviceLinkSource
     ports:
       - Start

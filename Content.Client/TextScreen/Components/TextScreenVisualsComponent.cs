@@ -1,10 +1,9 @@
 using System.Numerics;
 using Content.Shared.TextScreen.Systems;
-using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.TextScreen.Components;
+namespace Content.Client.TextScreen.Components;
 
 /// <summary>
 /// A component for rendering text on a screen.
@@ -13,9 +12,8 @@ namespace Content.Shared.TextScreen.Components;
 /// <remarks>
 /// Pausing handled manually due to non-trivial TextScreenRow logic.
 /// </remarks>
-[RegisterComponent, NetworkedComponent, Access(typeof(TextScreenSystem))]
-[AutoGenerateComponentState(true, fieldDeltas: true)]
-public sealed partial class TextScreenComponent : Component
+[RegisterComponent, Access(typeof(TextScreenVisualizerSystem))]
+public sealed partial class TextScreenVisualsComponent : Component
 {
     /// <summary>
     /// 1/32 - the size of a pixel in meters.
@@ -82,30 +80,15 @@ public sealed partial class TextScreenComponent : Component
     /// The text to display on the screen.
     /// Each row delimited with a newline (\n) character.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public string? Text;
+    [ViewVariables]
+    public string? LastText;
 
     /// <summary>
     /// The time that the text was sent.
     /// Used for scrolling.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    [AutoNetworkedField]
-    public TimeSpan TextTime;
-
-    /// <summary>
-    /// The last value of <see cref="Text"/> received from the server.
-    /// Only used client-side!
-    /// </summary>
-    [DataField]
-    public string? TextToDisplay;
-
-    /// <summary>
-    /// The last time TextToDisplay was updated.
-    /// Only used client-side!
-    /// </summary>
-    [DataField]
-    public TimeSpan? DisplayTime;
+    [ViewVariables]
+    public TimeSpan LastTextTime;
 
     /// <summary>
     /// If true, text to display has been updated and should redraw.

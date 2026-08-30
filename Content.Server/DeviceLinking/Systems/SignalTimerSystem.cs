@@ -6,8 +6,8 @@ using Content.Shared.MachineLinking;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
-using Content.Shared.TextScreen.Components;
 using Content.Shared.TextScreen.Systems;
+using Content.Shared.TextScreen;
 
 namespace Content.Server.DeviceLinking.Systems;
 
@@ -21,11 +21,12 @@ public sealed partial class SignalTimerSystem : EntitySystem
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private AccessReaderSystem _accessReader = default!;
     [Dependency] private DeviceLinkSystem _deviceLink = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private TextScreenSystem _textScreen = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
 
-    [Dependency] private EntityQuery<TextScreenTimerComponent> _timerScreenQuery = default!;
-    [Dependency] private EntityQuery<ActiveSignalTimerComponent> _activeTimerQuery = default!;
+    [Dependency] private EntityQuery<ActiveSignalTimerComponent> _activeTimerQuery;
+    [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery;
 
     /// <summary>
     /// Per-tick timer cache.
@@ -36,8 +37,12 @@ public sealed partial class SignalTimerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnInit(Entity<SignalTimerComponent> ent, ref ComponentInit args)
     {
-        if (!_timerScreenQuery.TryComp(ent, out var textScreen))
-            _textScreen.SetTimerStrings((ent, textScreen), ent.Comp.Label);
+        if (_appearanceQuery.TryComp(ent, out var appearance))
+        {
+            _appearance.SetData(ent, TextScreenVisuals.DefaultText, ent.Comp.Label, appearance);
+            _appearance.SetData(ent, TextScreenVisuals.ScreenText, ent.Comp.Label, appearance);
+            _appearance.SetData(ent, TextScreenVisuals.ScreenTextTime, _gameTiming.CurTime, appearance);
+        }
 
         _deviceLink.EnsureSinkPorts(ent, ent.Comp.Trigger);
     }
@@ -71,11 +76,15 @@ public sealed partial class SignalTimerSystem : EntitySystem
 
         ent.Comp.Label = args.Text[..Math.Min(ent.Comp.MaxLength, args.Text.Length)];
 
-        if (_activeTimerQuery.HasComp(ent))
+        if (_activeTimerQuery.HasComp(ent) ||
+            _appearanceQuery.TryComp(ent, out var appearance))
             return;
 
-        if (!_timerScreenQuery.TryComp(ent, out var textScreen))
-            _textScreen.SetTimerStrings((ent, textScreen), ent.Comp.Label);
+        // could maybe move the defaulttext update out of this block,
+        // if you delved deep into appearance update batching
+        _appearance.SetData(ent, TextScreenVisuals.DefaultText, ent.Comp.Label, appearance);
+        _appearance.SetData(ent, TextScreenVisuals.ScreenText, ent.Comp.Label, appearance);
+        _appearance.SetData(ent, TextScreenVisuals.ScreenTextTime, _gameTiming.CurTime, appearance);
     }
 
     /// <summary>
@@ -89,8 +98,7 @@ public sealed partial class SignalTimerSystem : EntitySystem
             return;
 
         ent.Comp.Delay = Math.Min(args.Delay.TotalSeconds, ent.Comp.MaxDuration);
-        if (_timerScreenQuery.TryComp(ent, out var textScreen))
-            _textScreen.SetTimerTarget((ent, textScreen), _gameTiming.CurTime + TimeSpan.FromSeconds(ent.Comp.Delay));
+        _appearance.SetData(ent, TextScreenVisuals.TargetTime, _gameTiming.CurTime + TimeSpan.FromSeconds(ent.Comp.Delay));
     }
 
     /// <summary>
@@ -105,7 +113,10 @@ public sealed partial class SignalTimerSystem : EntitySystem
 
         // feedback received: pressing the timer button while a timer is running should cancel the timer.
         if (_activeTimerQuery.HasComp(ent))
+        {
+            _appearance.SetData(ent, TextScreenVisuals.TargetTime, _gameTiming.CurTime);
             Trigger(ent);
+        }
         else
             StartTimer(ent);
     }
@@ -128,9 +139,6 @@ public sealed partial class SignalTimerSystem : EntitySystem
 
         _audio.PlayPvs(ent.Comp.DoneSound, ent);
         _deviceLink.InvokePort(ent, ent.Comp.TriggerPort);
-
-        if (_timerScreenQuery.TryComp(ent, out var textScreen))
-            _textScreen.SetTimerTarget((ent, textScreen), _gameTiming.CurTime);
 
         if (_ui.HasUi(ent, SignalTimerUiKey.Key))
         {
@@ -155,8 +163,11 @@ public sealed partial class SignalTimerSystem : EntitySystem
         var timer = EnsureComp<ActiveSignalTimerComponent>(ent);
         timer.TriggerTime = _gameTiming.CurTime + TimeSpan.FromSeconds(ent.Comp.Delay);
 
-        if (_timerScreenQuery.TryComp(ent, out var textScreen))
-            _textScreen.SetTimerTarget((ent, textScreen), timer.TriggerTime);
+        if (_appearanceQuery.TryComp(ent, out var appearance))
+        {
+            _appearance.SetData(ent, TextScreenVisuals.TargetTime, timer.TriggerTime, appearance);
+            _appearance.SetData(ent, TextScreenVisuals.ScreenText, string.Empty, appearance);
+        }
 
         _deviceLink.InvokePort(ent, ent.Comp.StartPort);
     }

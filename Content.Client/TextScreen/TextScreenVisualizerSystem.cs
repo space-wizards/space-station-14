@@ -1,16 +1,31 @@
 using System.Numerics;
+using Content.Client.TextScreen.Components;
 using Content.Shared.TextScreen.Components;
 using Robust.Client.GameObjects;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.TextScreen.Systems;
 
-/// <inheritdoc/>
-public sealed partial class ClientTextScreenSystem : TextScreenSystem
-{
-    [Dependency] private SpriteSystem _sprite = default!;
+// TODO!
+// GO BACK TO APPEARANCE DATA!
+// should be able to replace AfterAutoHandleState handlers
 
-    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
-    [Dependency] private EntityQuery<TextScreenTimerComponent> _screenTimerQuery = default!;
+/// <summary>
+/// The TextScreenSystem draws text in the game world using 3x5 sprite states for each character.
+/// It optionally supports scrolling text.
+/// </summary>
+/// <remarks>
+/// Not using a VisualizerSystem since this cares about two different components.
+/// </remarks>
+/// <seealso cref="TextScreenVisualsComponent"/>
+/// <seealso cref="TextScreenTimerComponent"/>
+public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextScreenVisualsComponent>
+{
+    [Dependency] private IGameTiming _timing = default!;
+
+    [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery;
+    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery;
+    [Dependency] private EntityQuery<TextScreenTimerVisualsComponent> _screenTimerQuery;
 
     /// <summary>
     /// Contains char/state Key/Value pairs. <br/>
@@ -90,10 +105,10 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
     {
         base.Update(frameTime);
 
-        var timerQuery = EntityQueryEnumerator<TextScreenTimerComponent>();
+        var timerQuery = EntityQueryEnumerator<TextScreenTimerVisualsComponent>();
         while (timerQuery.MoveNext(out var uid, out var timer))
         {
-            if (timer.TargetTime == null || timer.TargetTime <= Timing.CurTime)
+            if (timer.TargetTime == null || timer.TargetTime <= _timing.CurTime)
             {
                 if (timer.ScreenValue == 0)
                     continue;
@@ -103,7 +118,7 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
             }
             else
             {
-                int screenValue = ConvertTimeToScreenValue(timer.TargetTime.Value, Timing.CurTime);
+                int screenValue = ConvertTimeToScreenValue(timer.TargetTime.Value, _timing.CurTime);
                 if (screenValue == 0)
                 {
                     SetTextToDisplay(uid, timer.FinishedText);
@@ -118,7 +133,7 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
             }
         }
 
-        var screenQuery = EntityQueryEnumerator<TextScreenComponent, SpriteComponent>();
+        var screenQuery = EntityQueryEnumerator<TextScreenVisualsComponent, SpriteComponent>();
         while (screenQuery.MoveNext(out var uid, out var screen, out var sprite))
         {
             if (screen.NewTextToDisplay)
@@ -134,7 +149,7 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
                 for (int i = 0; i < screen.RowData.Length; i++)
                 {
                     var rowData = screen.RowData[i];
-                    if (rowData.NextScroll <= Timing.CurTime)
+                    if (rowData.NextScroll <= _timing.CurTime)
                     {
                         ScrollRow(ref rowData);
                         DrawLayers((uid, screen, sprite), rowData, i);
@@ -163,7 +178,7 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
     /// <summary>
     /// Converts the difference between two timespans into a value between 0 and 9999.
     /// </summary>
-    public void SetTextToDisplay(Entity<TextScreenComponent?> ent, string? text)
+    public void SetTextToDisplay(Entity<TextScreenVisualsComponent?> ent, string? text)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
@@ -201,7 +216,7 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
     /// Handles updates from the server.
     /// </summary>
     [SubscribeLocalEvent]
-    private void OnStartup(Entity<TextScreenComponent> ent, ref ComponentStartup args)
+    private void OnStartup(Entity<TextScreenVisualsComponent> ent, ref ComponentStartup args)
     {
         if (!_spriteQuery.TryComp(ent, out var sprite))
             return;
@@ -214,35 +229,46 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
             for (var chr = 0; chr <= maxIndex; chr++)
             {
                 var newKey = TextMapKey + rowIdx + chr;
-                _sprite.LayerMapReserve((ent, sprite), newKey);
+                SpriteSystem.LayerMapReserve((ent, sprite), newKey);
                 textScreenRow.Layers.Add((newKey, null));
             }
         }
 
         if (ent.Comp.FrameState != null)
-            _sprite.AddLayer((ent, sprite), ent.Comp.FrameState, null);
+            SpriteSystem.AddLayer((ent, sprite), ent.Comp.FrameState, null);
     }
 
     /// <summary>
     /// Handles updates from the server.
     /// </summary>
-    [SubscribeLocalEvent]
-    private void OnAutoHandleState(Entity<TextScreenComponent> ent, ref AfterAutoHandleStateEvent args)
+    protected override void OnAppearanceChange(EntityUid uid, TextScreenVisualsComponent comp, ref AppearanceChangeEvent args)
     {
-        if (_screenTimerQuery.HasComp(ent))
-            return;
+        if (!args.AppearanceData.TryGetValue(TextScreenVisuals.Color, out var colorValue)
+            && colorValue is Color color
+            && color != comp.Color)
+        {
+            comp.Color = color;
+            comp.NewTextToDisplay = true;
+        }
+
+        string? newString = null;
+
+        if (_screenTimerQuery.HasComp(uid))
+        {
+
+        }
     }
 
     /// <summary>
     /// Handles updates from the server.
     /// </summary>
     [SubscribeLocalEvent]
-    private void OnAutoHandleState(Entity<TextScreenTimerComponent> ent, ref AfterAutoHandleStateEvent args)
+    private void OnAutoHandleState(Entity<TextScreenTimerVisualsComponent> ent, ref AppearanceChangeEvent args)
     {
         var newScreenValue = 0;
 
         if (ent.Comp.TargetTime != null)
-            newScreenValue = ConvertTimeToScreenValue(ent.Comp.TargetTime.Value, Timing.CurTime);
+            newScreenValue = ConvertTimeToScreenValue(ent.Comp.TargetTime.Value, _timing.CurTime);
 
         if (newScreenValue == 0)
         {
@@ -257,7 +283,7 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
         }
     }
 
-    private string GetTimerString(Entity<TextScreenTimerComponent> ent, int newScreenValue)
+    private string GetTimerString(Entity<TextScreenTimerVisualsComponent> ent, int newScreenValue)
     {
         var strings = ent.Comp.RunningText.Split("\n");
         if (ent.Comp.TimerRow >= 0 && ent.Comp.TimerRow < strings.Length)
@@ -267,7 +293,7 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
         return string.Join('\n', strings);
     }
 
-    private void DrawNewText(Entity<TextScreenComponent> ent)
+    private void DrawNewText(Entity<TextScreenVisualsComponent> ent)
     {
         // No sprite, put in a default state.
         if (!_spriteQuery.TryComp(ent, out var sprite))
@@ -297,8 +323,8 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
                 {
                     var layerTuple = rowData.Layers[j];
 
-                    if (_sprite.LayerMapTryGet((ent, sprite), layerTuple.Key, out var layerIndex, false))
-                        _sprite.LayerSetRsiState((ent, sprite), layerIndex, null);
+                    if (SpriteSystem.LayerMapTryGet((ent, sprite), layerTuple.Key, out var layerIndex, false))
+                        SpriteSystem.LayerSetRsiState((ent, sprite), layerIndex, null);
 
                     rowData.Layers[j] = new(layerTuple.Key, null);
                 }
@@ -336,13 +362,13 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
 
     private void ScrollRow(ref TextScreenRow rowData)
     {
-        var difference = (Timing.CurTime - rowData.NextScroll).TotalSeconds;
+        var difference = (_timing.CurTime - rowData.NextScroll).TotalSeconds;
         var increments = (int)Math.Truncate(difference / rowData.ScrollDelay.TotalSeconds) + 1;
         rowData.ScrollPosition += increments;
         rowData.NextScroll += increments * rowData.ScrollDelay;
     }
 
-    private void DrawLayers(Entity<TextScreenComponent, SpriteComponent> ent, TextScreenRow rowData, int rowIndex)
+    private void DrawLayers(Entity<TextScreenVisualsComponent, SpriteComponent> ent, TextScreenRow rowData, int rowIndex)
     {
         Entity<SpriteComponent?> sprite = (ent.Owner, ent.Comp2);
         var screen = ent.Comp1;
@@ -356,12 +382,12 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
 
             var newState = GetStateFromChar(rowData.Text[charIndex]);
 
-            if (_sprite.LayerMapTryGet(sprite, layerTuple.Key, out var layerIndex, false))
+            if (SpriteSystem.LayerMapTryGet(sprite, layerTuple.Key, out var layerIndex, false))
             {
-                _sprite.LayerSetRsiState(sprite, layerIndex, newState);
-                _sprite.LayerSetOffset(sprite, layerIndex, screen.TextOffset + Vector2.Multiply(
+                SpriteSystem.LayerSetRsiState(sprite, layerIndex, newState);
+                SpriteSystem.LayerSetOffset(sprite, layerIndex, screen.TextOffset + Vector2.Multiply(
                         new Vector2((j - maxCharIndex / 2f + 0.5f) * CharWidth, -rowIndex * screen.RowOffset),
-                        TextScreenComponent.PixelSize));
+                        TextScreenVisualsComponent.PixelSize));
             }
 
             rowData.Layers[j] = new(layerTuple.Key, newState);
@@ -370,21 +396,11 @@ public sealed partial class ClientTextScreenSystem : TextScreenSystem
         {
             var layerTuple = rowData.Layers[j];
 
-            if (_sprite.LayerMapTryGet((ent, sprite), layerTuple.Key, out var layerIndex, false))
-                _sprite.LayerSetRsiState((ent, sprite), layerIndex, null);
+            if (SpriteSystem.LayerMapTryGet((ent, sprite), layerTuple.Key, out var layerIndex, false))
+                SpriteSystem.LayerSetRsiState((ent, sprite), layerIndex, null);
 
             rowData.Layers[j] = new(layerTuple.Key, null);
         }
-    }
-
-    /// <summary>
-    /// Handles non-trivial pause timing for scrolling.
-    /// </summary>
-    [SubscribeLocalEvent]
-    private void OnUnpaused(Entity<TextScreenComponent> ent, ref EntityUnpausedEvent args)
-    {
-        for (int i = 0; i < ent.Comp.RowData.Length; i++)
-            AddTime(ref ent.Comp.RowData[i], args.PausedTime);
     }
 
     /// <summary>
