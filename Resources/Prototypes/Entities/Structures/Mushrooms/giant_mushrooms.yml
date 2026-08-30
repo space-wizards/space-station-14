@@ -40,7 +40,7 @@
   - type: AtmosDevice
     requireAnchored: false
   - type: GasMiner
-    maxExternalPressure: 100
+    maxExternalPressure: 200
     spawnAmount: 0.25
     spawnGas: Fungalin
     showStateOnExamine: false
