@@ -77,3 +77,13 @@
   cost: 8000
   category: cargoproduct-category-name-armory
   group: market
+
+- type: cargoProduct
+  id: ArmoryMosin
+  icon:
+    sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
+    state: icon
+  product: CrateArmoryMosin
+  cost: 4500
+  category: cargoproduct-category-name-armory
+  group: market
