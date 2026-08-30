@@ -1,8 +1,9 @@
+using Content.IntegrationTests.Fixtures;
 using Content.Shared.Cloning;
 
 namespace Content.IntegrationTests.Tests.Cloning;
 
-public sealed class CloningSettingsPrototypeTest
+public sealed class CloningSettingsPrototypeTest : GameTest
 {
     /// <summary>
     /// Checks that the components named in every <see cref="CloningSettingsPrototype"/> are valid components known to the server.
@@ -12,7 +13,7 @@ public sealed class CloningSettingsPrototypeTest
     [Test]
     public async Task ValidatePrototypes()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
         var protoMan = server.ProtoMan;
         var compFactory = server.EntMan.ComponentFactory;
@@ -40,7 +41,5 @@ public sealed class CloningSettingsPrototypeTest
                 }
             });
         });
-
-        await pair.CleanReturnAsync();
     }
 }

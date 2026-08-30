@@ -7,10 +7,10 @@ using Robust.Shared.Map;
 
 namespace Content.Client.Fluids;
 
-public sealed class PuddleSystem : SharedPuddleSystem
+public sealed partial class PuddleSystem : SharedPuddleSystem
 {
-    [Dependency] private readonly IconSmoothSystem _smooth = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private IconSmoothSystem _smooth = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -73,7 +73,19 @@ public sealed class PuddleSystem : SharedPuddleSystem
     // Maybe someday we'll have clientside prediction for entity spawning, but not today.
     // Until then, these methods do nothing on the client.
     /// <inheritdoc/>
-    public override bool TrySplashSpillAt(EntityUid uid, EntityCoordinates coordinates, Solution solution, out EntityUid puddleUid, bool sound = true, EntityUid? user = null)
+    public override bool TrySplashSpillAt(Entity<SpillableComponent?> entity, EntityCoordinates coordinates, out EntityUid puddleUid, out Solution solution, bool sound = true, EntityUid? user = null)
+    {
+        puddleUid = EntityUid.Invalid;
+        solution = new Solution();
+        return false;
+    }
+
+    public override bool TrySplashSpillAt(EntityUid entity,
+        EntityCoordinates coordinates,
+        Solution spilled,
+        out EntityUid puddleUid,
+        bool sound = true,
+        EntityUid? user = null)
     {
         puddleUid = EntityUid.Invalid;
         return false;

@@ -116,6 +116,8 @@
   - FlashPayload
   - ExplosivePayload
   - ChemicalPayload
+  - CableDetStack1
+  - EmptyDetonator
 
 - type: technology
   id: SpecialMeans

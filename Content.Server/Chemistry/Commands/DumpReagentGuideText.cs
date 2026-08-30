@@ -7,9 +7,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Chemistry.Commands;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class DumpReagentGuideText : LocalizedEntityCommands
+public sealed partial class DumpReagentGuideText : LocalizedEntityCommands
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     public override string Command => "dumpreagentguidetext";
 
@@ -35,11 +35,11 @@ public sealed class DumpReagentGuideText : LocalizedEntityCommands
             return;
         }
 
-        foreach (var entry in reagent.Metabolisms.Values)
+        foreach (var entry in reagent.Metabolisms.Metabolisms.Values)
         {
             foreach (var effect in entry.Effects)
             {
-                shell.WriteLine(effect.GuidebookEffectDescription(_prototype, EntityManager.EntitySysManager) ??
+                shell.WriteLine(reagent.GuidebookReagentEffectDescription(_prototype, EntityManager.EntitySysManager, effect, entry.MetabolismRate) ??
                                 Loc.GetString($"cmd-dumpreagentguidetext-skipped", ("effect", effect.GetType())));
             }
         }

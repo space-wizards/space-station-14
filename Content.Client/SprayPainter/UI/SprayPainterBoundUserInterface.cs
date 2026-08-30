@@ -30,6 +30,7 @@ public sealed class SprayPainterBoundUserInterface(EntityUid owner, Enum uiKey) 
             _window.OnDecalColorChanged += OnDecalColorChanged;
             _window.OnDecalAngleChanged += OnDecalAngleChanged;
             _window.OnDecalSnapChanged += OnDecalSnapChanged;
+            _window.OnDecalColorPickerToggled += OnDecalColorPickerToggled;
         }
 
         var sprayPainter = EntMan.System<SprayPainterSystem>();
@@ -56,6 +57,7 @@ public sealed class SprayPainterBoundUserInterface(EntityUid owner, Enum uiKey) 
         _window.SetDecalAngle(sprayPainter.SelectedDecalAngle);
         _window.SetDecalColor(sprayPainter.SelectedDecalColor);
         _window.SetDecalSnap(sprayPainter.SnapDecals);
+        _window.SetDecalColorPicker(sprayPainter.ColorPickerEnabled);
     }
 
     private void OnDecalSnapChanged(bool snap)
@@ -92,5 +94,10 @@ public sealed class SprayPainterBoundUserInterface(EntityUid owner, Enum uiKey) 
     {
         var key = _window?.IndexToColorKey(args.ItemIndex);
         SendPredictedMessage(new SprayPainterSetPipeColorMessage(key));
+    }
+
+    private void OnDecalColorPickerToggled(bool toggle)
+    {
+        SendPredictedMessage(new SprayPainterSetDecalColorPickerMessage(toggle));
     }
 }

@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "briefcase base made by ps3moira (github) and modified by MissKay1994(github), weapon states by MissKay1994(github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon-muzzle"
+    },
+    {
+      "name": "inhand-left-muzzle",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-muzzle",
+      "directions": 4
+    },
+    {
+      "name": "bolt-open"
+    },
+    {
+      "name": "base"
+    }
+  ]
+}

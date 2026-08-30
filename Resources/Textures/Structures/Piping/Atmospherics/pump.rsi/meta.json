@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/tgstation/tgstation at commit 57cd1d59ca019dd0e7811ac451f295f818e573da. Signal valve is a digital valve modified by deltanedas. Manual valve modified by Deerstop at https://github.com/space-wizards/space-station-14/pull/34378. pvalve taken from https://github.com/tgstation/tgstation/commit/584068b59e271c0108557902e8516c70d6ae56f2 and modified by ArtisticRoomba (GitHub)",
+    "copyright": "Taken from https://github.com/tgstation/tgstation at commit 57cd1d59ca019dd0e7811ac451f295f818e573da. Signal valve is a digital valve modified by deltanedas. Manual valve modified by Deerstop at https://github.com/space-wizards/space-station-14/pull/34378. pvalve taken from https://github.com/tgstation/tgstation/commit/584068b59e271c0108557902e8516c70d6ae56f2 and modified by ArtisticRoomba (GitHub), pumpPassiveGate pumpPressure pumpPressureOn pumpPressureRegulator pumpPressureRegulatorOn pumpVolume pumpVolumeBlocked and pumpVolumeOn all modified slightly by war__prophet (GitHub)",
     "size": {
         "x": 32,
         "y": 32

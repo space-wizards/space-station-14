@@ -12,21 +12,21 @@ using Content.Shared.Weapons.Melee;
 
 namespace Content.Shared.RepulseAttract;
 
-public sealed class RepulseAttractSystem : EntitySystem
+public sealed partial class RepulseAttractSystem : EntitySystem
 {
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly ThrowingSystem _throw = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private readonly SharedTransformSystem _xForm = default!;
-    [Dependency] private readonly UseDelaySystem _delay = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private ThrowingSystem _throw = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private SharedTransformSystem _xForm = default!;
+    [Dependency] private UseDelaySystem _delay = default!;
 
-    private EntityQuery<PhysicsComponent> _physicsQuery;
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
+
     private HashSet<EntityUid> _entSet = new();
+
     public override void Initialize()
     {
         base.Initialize();
-
-        _physicsQuery = GetEntityQuery<PhysicsComponent>();
 
         SubscribeLocalEvent<RepulseAttractComponent, MeleeHitEvent>(OnMeleeAttempt, before: [typeof(UseDelayOnMeleeHitSystem)], after: [typeof(SharedWieldableSystem)]);
         SubscribeLocalEvent<RepulseAttractComponent, RepulseAttractActionEvent>(OnRepulseAttractAction);
@@ -44,7 +44,7 @@ public sealed class RepulseAttractSystem : EntitySystem
     {
         if (args.Handled)
             return;
-        
+
         var position = _xForm.GetMapCoordinates(args.Performer);
         args.Handled = TryRepulseAttract(position, args.Performer, ent.Comp.Speed, ent.Comp.Range, ent.Comp.Whitelist, ent.Comp.CollisionMask);
     }

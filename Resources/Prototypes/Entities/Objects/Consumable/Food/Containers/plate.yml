@@ -7,23 +7,13 @@
 # Large Plate
 
 - type: entity
-  name: large plate
+  abstract: true
   parent: BaseItem
-  id: FoodPlate
-  description: A large plate, excellent for bread.
+  id: BaseFoodPlate
   components:
-  - type: Sprite
-    sprite: Objects/Consumable/Food/plates.rsi
-    state: plate
   - type: Item
     shape:
     - 0,0,1,0
-    storedOffset: 0,-6
-    inhandVisuals:
-      left:
-      - state: plate-inhand-left
-      right:
-      - state: plate-inhand-right
   - type: DamageOnLand
     damage:
       types:
@@ -33,6 +23,7 @@
       types:
         Blunt: 5
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
@@ -45,25 +36,48 @@
           collection: GlassBreak
           params:
             volume: -8
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          FoodPlateTrash:
-            min: 1
-            max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Tag
     tags:
     - Trash
-  - type: PhysicalComposition
-    materialComposition:
-      Glass: 60
   - type: SpaceGarbage
 
 - type: entity
-  name: broken plate
+  parent: BaseFoodPlate
+  id: FoodPlate
+  name: large plate
+  description: A large plate, excellent for bread.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: plate
+  - type: Item
+    storedOffset: 0,-6
+    inhandVisuals:
+      left:
+      - state: plate-inhand-left
+      right:
+      - state: plate-inhand-right
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodPlateTrash:
+            min: 1
+            max: 1
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 50
+
+- type: entity
   parent: BaseItem
   id: FoodPlateTrash
+  name: broken plate
   description: A broken plate. Useless.
   components:
   - type: Sprite
@@ -81,9 +95,9 @@
 # Small Plate
 
 - type: entity
-  name: small plate
-  parent: FoodPlate
+  parent: BaseFoodPlate
   id: FoodPlateSmall
+  name: small plate
   description: A small plate. Delicate.
   components:
   - type: Sprite
@@ -96,28 +110,20 @@
       - state: plate-inhand-left
       right:
       - state: plate-inhand-right
-# Needs the full thing because inherting is dumb sometimes.
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-          params:
-            volume: -8
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodPlateSmallTrash:
             min: 1
             max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: PhysicalComposition
     materialComposition:
-      Glass: 30
+      Glass: 25
 
 - type: entity
   parent: FoodPlateTrash
@@ -132,17 +138,15 @@
 # Plastic Plate
 
 - type: entity
-  name: plastic plate
-  parent: BaseItem
+  parent: BaseFoodPlate
   id: FoodPlatePlastic
+  name: large plastic plate
   description: A large blue plastic plate, excellent for a birthday cake.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate-plastic
   - type: Item
-    shape:
-    - 0,0,1,0
     storedOffset: 0,-6
     inhandVisuals:
       left:
@@ -154,17 +158,15 @@
     - Trash
 
 - type: entity
-  name: plastic plate
-  parent: BaseItem
+  parent: BaseFoodPlate
   id: FoodPlateSmallPlastic
+  name: small plastic plate
   description: A blue plastic plate, excellent for slices of birthday cake.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate-small-plastic
   - type: Item
-    shape:
-    - 0,0,1,0
     storedOffset: 0,-3
     inhandVisuals:
       left:
@@ -178,9 +180,9 @@
 # Pie Tin
 
 - type: entity
-  name: pie tin
   parent: BaseItem
   id: FoodPlateTin
+  name: pie tin
   description: A cheap foil tin for pies.
   components:
   - type: Sprite
@@ -196,29 +198,29 @@
     - Trash
   - type: PhysicalComposition
     materialComposition:
-      Steel: 60
+      Steel: 50
   - type: SpaceGarbage
 
 # Muffin Tin
 
 - type: entity
-  name: muffin tin
   parent: BaseItem
   id: FoodPlateMuffinTin
+  name: muffin tin
   description: A cheap foil tin for muffins.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: muffin-tin
   - type: Item
-    size: Small
+    size: Tiny
     shape:
-    - 0,0,1,0
-    storedOffset: 0,-3
+    - 0,0,0,0
+    storedOffset: 0,-2
   - type: Tag
     tags:
     - Trash
   - type: PhysicalComposition
     materialComposition:
-      Steel: 30
+      Steel: 25
   - type: SpaceGarbage

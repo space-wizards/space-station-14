@@ -1,7 +1,7 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                xmlns:ui="clr-namespace:Content.Client.Medical.CrewMonitoring"
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-               Title="{Loc 'crew-monitoring-user-interface-title'}"
+               Title="{Loc crew-monitoring-ui-title}"
                Resizable="False"
                SetSize="1210 700"
                MinSize="1210 700">
@@ -11,12 +11,12 @@
             <BoxContainer Orientation="Vertical" Margin="0 0 10 0">
                 <controls:StripeBack>
                     <PanelContainer>
-                        <Label Name="StationName" Text="Unknown station" Align="Center" Margin="0 5 0 3"/>
+                        <Label Name="StationName" Text="{Loc crew-monitoring-ui-no-station-label}" Align="Center" Margin="0 5 0 3"/>
                     </PanelContainer>
                 </controls:StripeBack>
 
                 <LineEdit Name="SearchLineEdit" HorizontalExpand="True"
-                          PlaceHolder="{Loc crew-monitor-filter-line-placeholder}" />
+                          PlaceHolder="{Loc crew-monitoring-ui-filter-line-placeholder}" />
 
                 <ScrollContainer Name="SensorScroller"
                                  VerticalExpand="True"
@@ -29,7 +29,7 @@
                         <!-- Table rows are filled by code -->
                     </BoxContainer>
                     <Label  Name="NoServerLabel"
-                            Text="{Loc 'crew-monitoring-user-interface-no-server'}"
+                            Text="{Loc crew-monitoring-ui-no-server-label}"
                             StyleClasses="LabelHeading"
                             FontColorOverride="Red"
                             HorizontalAlignment="Center"
@@ -42,8 +42,8 @@
         <BoxContainer Orientation="Vertical">
             <PanelContainer StyleClasses="LowDivider" />
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
-                <Label Text="{Loc 'crew-monitoring-user-interface-flavor-left'}" StyleClasses="WindowFooterText" />
-                <Label Text="{Loc 'crew-monitoring-user-interface-flavor-right'}" StyleClasses="WindowFooterText"
+                <Label Text="{Loc crew-monitoring-ui-flavor-left-label}" StyleClasses="WindowFooterText" />
+                <Label Text="{Loc crew-monitoring-ui-flavor-right-label}" StyleClasses="WindowFooterText"
                         HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
                 <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
                         VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>

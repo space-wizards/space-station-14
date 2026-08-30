@@ -1,10 +1,9 @@
-﻿using Content.Server.Clothing.Systems;
+using Content.Server.Clothing.Systems;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
-using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
@@ -16,30 +15,29 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Implants;
 
-public sealed class ChameleonControllerSystem : SharedChameleonControllerSystem
+public sealed partial class ChameleonControllerSystem : SharedChameleonControllerSystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly SharedStationSpawningSystem _stationSpawningSystem = default!;
-    [Dependency] private readonly ChameleonClothingSystem _chameleonClothingSystem = default!;
-    [Dependency] private readonly IServerPreferencesManager _preferences = default!;
-    [Dependency] private readonly UseDelaySystem _delay = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private SharedStationSpawningSystem _stationSpawningSystem = default!;
+    [Dependency] private ChameleonClothingSystem _chameleonClothingSystem = default!;
+    [Dependency] private IServerPreferencesManager _preferences = default!;
+    [Dependency] private UseDelaySystem _delay = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SubdermalImplantComponent, ChameleonControllerSelectedOutfitMessage>(OnSelected);
+        SubscribeLocalEvent<ChameleonControllerImplantComponent, ChameleonControllerSelectedOutfitMessage>(OnSelected);
 
         SubscribeLocalEvent<ChameleonClothingComponent, InventoryRelayedEvent<ChameleonControllerOutfitSelectedEvent>>(ChameleonControllerOutfitItemSelected);
     }
 
-    private void OnSelected(Entity<SubdermalImplantComponent> ent, ref ChameleonControllerSelectedOutfitMessage args)
+    private void OnSelected(Entity<ChameleonControllerImplantComponent> ent, ref ChameleonControllerSelectedOutfitMessage args)
     {
-        if (!_delay.TryResetDelay(ent.Owner, true) || ent.Comp.ImplantedEntity == null || !HasComp<ChameleonControllerImplantComponent>(ent))
+        if (!TryComp<SubdermalImplantComponent>(ent, out var implantComp) || implantComp.ImplantedEntity == null || !_delay.TryResetDelay(ent.Owner, true))
             return;
 
-        ChangeChameleonClothingToOutfit(ent.Comp.ImplantedEntity.Value, args.SelectedChameleonOutfit);
+        ChangeChameleonClothingToOutfit(implantComp.ImplantedEntity.Value, args.SelectedChameleonOutfit);
     }
 
     /// <summary>
@@ -47,10 +45,10 @@ public sealed class ChameleonControllerSystem : SharedChameleonControllerSystem
     /// </summary>
     private void ChangeChameleonClothingToOutfit(EntityUid user, ProtoId<ChameleonOutfitPrototype> outfit)
     {
-        var outfitPrototype = _proto.Index(outfit);
+        var outfitPrototype = ProtoMan.Index(outfit);
 
-        _proto.TryIndex(outfitPrototype.Job, out var jobPrototype);
-        _proto.TryIndex(outfitPrototype.StartingGear, out var startingGearPrototype);
+        ProtoMan.Resolve(outfitPrototype.Job, out var jobPrototype);
+        ProtoMan.Resolve(outfitPrototype.StartingGear, out var startingGearPrototype);
 
         GetJobEquipmentInformation(jobPrototype, user, out var customRoleLoadout, out var defaultRoleLoadout, out var jobStartingGearPrototype);
 
@@ -81,7 +79,7 @@ public sealed class ChameleonControllerSystem : SharedChameleonControllerSystem
         if (jobPrototype == null)
             return;
 
-        _proto.TryIndex(jobPrototype.StartingGear, out jobStartingGearPrototype);
+        ProtoMan.Resolve(jobPrototype.StartingGear, out jobStartingGearPrototype);
 
         if (!TryComp<ActorComponent>(user, out var actorComponent))
             return;
@@ -96,16 +94,16 @@ public sealed class ChameleonControllerSystem : SharedChameleonControllerSystem
 
         profile.Loadouts.TryGetValue(jobProtoId, out customRoleLoadout);
 
-        if (!_proto.HasIndex<RoleLoadoutPrototype>(jobProtoId))
+        if (!ProtoMan.HasIndex<RoleLoadoutPrototype>(jobProtoId))
             return;
 
         defaultRoleLoadout = new RoleLoadout(jobProtoId);
-        defaultRoleLoadout.SetDefault(profile, null, _proto); // only sets the default if the player has no loadout
+        defaultRoleLoadout.SetDefault(profile, null, ProtoMan); // only sets the default if the player has no loadout
     }
 
     private void ChameleonControllerOutfitItemSelected(Entity<ChameleonClothingComponent> ent, ref InventoryRelayedEvent<ChameleonControllerOutfitSelectedEvent> args)
     {
-        if (!_inventory.TryGetContainingSlot(ent.Owner, out var slot))
+        if (!ent.Comp.CanBeSetByController || !_inventory.TryGetContainingSlot(ent.Owner, out var slot))
             return;
 
         _chameleonClothingSystem.SetSelectedPrototype(ent, GetGearForSlot(args, slot.Name), component: ent.Comp);

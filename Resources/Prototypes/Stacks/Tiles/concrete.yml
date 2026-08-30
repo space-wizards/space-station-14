@@ -1,0 +1,19 @@
+# Tiles made of concrete
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileConcrete
+  name: stack-concrete-tile
+  spawn: FloorTileItemConcrete
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileConcreteMono
+  name: stack-concrete-mono-tile
+  spawn: FloorTileItemConcreteMono
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileConcreteSmooth
+  name: stack-concrete-smooth
+  spawn: FloorTileItemConcreteSmooth

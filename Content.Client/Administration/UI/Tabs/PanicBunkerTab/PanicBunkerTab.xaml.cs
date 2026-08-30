@@ -9,7 +9,7 @@ namespace Content.Client.Administration.UI.Tabs.PanicBunkerTab;
 [GenerateTypedNameReferences]
 public sealed partial class PanicBunkerTab : Control
 {
-    [Dependency] private readonly IConsoleHost _console = default!;
+    [Dependency] private IConsoleHost _console = default!;
 
     private string _minAccountAge;
     private string _minOverallMinutes;

@@ -11,15 +11,15 @@ namespace Content.Server.Xenoarchaeology.Artifact.XAE;
 /// <summary>
 /// System for xeno artifact activation effect that is polymorphing all humanoid entities in range.
 /// </summary>
-public sealed class XAEPolymorphSystem : BaseXAESystem<XAEPolymorphComponent>
+public sealed partial class XAEPolymorphSystem : BaseXAESystem<XAEPolymorphComponent>
 {
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly MobStateSystem _mob = default!;
-    [Dependency] private readonly PolymorphSystem _poly = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private MobStateSystem _mob = default!;
+    [Dependency] private PolymorphSystem _poly = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
 
     /// <summary> Pre-allocated and re-used collection.</summary>
-    private readonly HashSet<Entity<HumanoidAppearanceComponent>> _humanoids = new();
+    private readonly HashSet<Entity<HumanoidProfileComponent>> _humanoids = new();
 
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEPolymorphComponent> ent, ref XenoArtifactNodeActivatedEvent args)

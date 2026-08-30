@@ -1,0 +1,131 @@
+- type: entity
+  parent: [ BaseWallmountMachine, StructureHealthMachineFlimsy ]
+  id: FireAlarm
+  name: fire alarm
+  description: A fire alarm. Spicy!
+  components:
+  - type: LightningTarget
+    priority: 0
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
+  - type: ExtensionCableReceiver
+  - type: DeviceNetwork
+    deviceNetId: AtmosDevices
+    receiveFrequencyId: AtmosMonitor
+    transmitFrequencyId: AtmosMonitor
+    prefix: device-address-prefix-fire-alarm
+    sendBroadcastAttemptEvent: true
+    examinableAddress: true
+  - type: DeviceList
+  - type: WiredNetworkConnection
+  - type: DeviceNetworkRequiresPower
+  - type: AtmosDevice
+  - type: AtmosAlarmable
+    syncWith:
+      - FireAlarm
+      - AirSensor
+      - GasVent
+      - GasScrubber
+    monitorAlertTypes:
+      - Temperature
+  - type: AtmosAlarmableVisuals
+    layerMap: "fireAlarmState"
+    alarmStates:
+      Normal: fire_0
+      Warning: fire_0 # shouldn't be alarming at a warning
+      Danger: fire_2
+      Emagged: fire_emagged
+    hideOnDepowered: [ "fireAlarmState" ]
+  - type: Tag
+    tags:
+      - FireAlarm
+  - type: FireAlarm
+  - type: AtmosAlertsDevice
+    group: FireAlarm
+  - type: ContainerFill
+    containers:
+      board: [ FireAlarmElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+  - type: Appearance
+  - type: WiresVisuals
+  - type: AlertLevelDisplay
+    alertVisuals:
+      Green: fire_0
+      Blue: fire_1
+      Red: fire_2
+      Violet: fire_1
+      Yellow: fire_1
+      DeltaNuke: fire_3
+      # TODO: add missing alarm states
+  - type: UserInterface
+    interfaces:
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: WiresPanel
+  - type: Wires
+    boardName: wires-board-name-firealarm
+    layoutId: FireAlarm
+  - type: Sprite
+    sprite: Structures/Wallmounts/fire-alarm.rsi
+    offset: 0, -0.25
+    layers:
+    - state: base
+      map: ["fireAlarmBase"]
+    - state: fire_0
+      map: ["fireAlarmState"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Transform
+    anchored: true
+  - type: Construction
+    graph: FireAlarm
+    node: fire_alarm
+  - type: Damageable
+    damageModifierSet: PlasticMod
+  - type: GuideHelp
+    guides:
+    - Networking
+  - type: Destructible
+    thresholds:
+    - trigger: &DamageMachineFlimsy
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - &SoundMetalGlassBreak !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+          params:
+            volume: -4
+  - type: StationAiWhitelist
+
+- type: entity
+  parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
+  id: FireAlarmAssembly
+  name: fire alarm assembly
+  description: A fire alarm assembly. Very mild.
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/fire-alarm.rsi
+    layers:
+    - state: frame1
+      map: [ "enum.ConstructionVisuals.Layer" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          assembly: { state: frame1 }
+          electronics: { state: frame2 }
+  - type: Construction
+    graph: FireAlarm
+    node: assembly
+  - type: Damageable
+    damageModifierSet: PlasticMod
+  - type: Destructible
+    thresholds:
+    - trigger: *DamageMachineFlimsy
+      behaviors:
+      - *SoundMetalGlassBreak

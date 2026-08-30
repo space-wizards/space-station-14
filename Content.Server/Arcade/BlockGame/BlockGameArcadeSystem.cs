@@ -7,10 +7,10 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Arcade.BlockGame;
 
-public sealed class BlockGameArcadeSystem : EntitySystem
+public sealed partial class BlockGameArcadeSystem : EntitySystem
 {
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly SpeakOnUIClosedSystem _speakOnUIClosed = default!;
+    [Dependency] private UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private SpeakOnUIClosedSystem _speakOnUIClosed = default!;
 
     public override void Initialize()
     {
@@ -52,12 +52,12 @@ public sealed class BlockGameArcadeSystem : EntitySystem
     private void OnAfterUIOpen(EntityUid uid, BlockGameArcadeComponent component, AfterActivatableUIOpenEvent args)
     {
         if (component.Player == null)
-            component.Player = args.Actor;
+            component.Player = args.User;
         else
-            component.Spectators.Add(args.Actor);
+            component.Spectators.Add(args.User);
 
-        UpdatePlayerStatus(uid, args.Actor, component);
-        component.Game?.UpdateNewPlayerUI(args.Actor);
+        UpdatePlayerStatus(uid, args.User, component);
+        component.Game?.UpdateNewPlayerUI(args.User);
     }
 
     private void OnAfterUiClose(EntityUid uid, BlockGameArcadeComponent component, BoundUIClosedEvent args)

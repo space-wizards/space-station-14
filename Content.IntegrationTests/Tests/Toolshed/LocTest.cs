@@ -19,7 +19,7 @@ public sealed class LocTest : ToolshedTest
         var locStrings = new HashSet<string>();
 
         var ignored = new HashSet<Assembly>()
-            {typeof(LocTest).Assembly, typeof(Robust.UnitTesting.Shared.Toolshed.LocTest).Assembly};
+            {typeof(LocTest).Assembly};
 
         await Server.WaitAssertion(() =>
         {

@@ -249,5 +249,37 @@
   materials:
     Biomass: 18
 
+- type: latheRecipe
+  id: BioGenDiseaseSwab
+  result: DiseaseSwab
+  categories:
+  - Materials
+  completetime: 3
+  materials:
+    Biomass: 2
 
+- type: latheRecipe
+  id: BioGenUnstableMutagen
+  resultReagents:
+    UnstableMutagen: 10
+  categories:
+  - Chemicals
+  icon:
+    sprite: Objects/Specific/Chemistry/bottle.rsi
+    state: bottle-1
+  completetime: 5
+  materials:
+    Biomass: 20
 
+- type: latheRecipe
+  id: BioGenCompostAmmonia
+  resultReagents:
+    Ammonia: 10 # 15 biomass give 10 eznutrient which contain 3 ammonia, but also 2 other components. between 10 and 30 units, going for 15 ammonia sounds the most reasonable. (total nutrient for plants is 15 vs 20 ignoring the slight health boost)
+  categories:
+  - Chemicals
+  icon:
+    sprite: Objects/Specific/Chemistry/bottle.rsi #Structures/Storage/canister.rsi
+    state: bottle-1 #greenys
+  completetime: 1
+  materials:
+    Biomass: 10

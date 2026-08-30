@@ -1,0 +1,25 @@
+- type: constructionGraph
+  id: Cardwall
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: cardwall
+      steps:
+        - material: Cardboard
+          amount: 3
+          doAfter: 3
+  - node: cardwall
+    entity: Cardwall
+    edges:
+    - to: start
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Items/Toys/ToyFall2.ogg
+      - !type:SpawnPrototype
+            prototype: MaterialCardboard1
+            amount: 3
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Slicing
+        doAfter: 1.2

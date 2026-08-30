@@ -18,8 +18,8 @@ namespace Content.Server.ParticleAccelerator.EntitySystems;
 
 public sealed partial class ParticleAcceleratorSystem
 {
-    [Dependency] private readonly IAdminManager _adminManager = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private IAdminManager _adminManager = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
 
     private void InitializeControlBoxSystem()
     {
@@ -190,7 +190,7 @@ public sealed partial class ParticleAcceleratorSystem
                     _audio.PlayGlobal("/Audio/Misc/adminlarm.ogg",
                         Filter.Empty().AddPlayers(_adminManager.ActiveAdmins),
                         false,
-                        AudioParams.Default.WithVolume(-8f));
+                        AudioParams.Default.AddVolume(-8f));
                     comp.EffectCooldown = _gameTiming.CurTime + comp.CooldownDuration;
                 }
             }

@@ -1,7 +1,8 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/6be7633abca9f1a51cab1020500cf0776ce78e5c, inhands by mubururu_ (github), Growth stages, harvest, dead, and produce created by Chaoticaa (GitHub)",
+
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/6be7633abca9f1a51cab1020500cf0776ce78e5c, inhands by mubururu_ (github), Growth stages, harvest, dead, and produce created by Chaoticaa (GitHub), inhands modified by Prole0 (GitHub), On-head sprites by FlipBrooke,.",
     "size": {
         "x": 32,
         "y": 32
@@ -43,6 +44,14 @@
             "name": "baked-peel3"
         },
         {
+            "name": "baked-peel-equipped-HELMET",
+            "directions": 4
+        },
+        {
+            "name": "baked-peel-equipped-HELMET-hamster",
+            "directions": 4
+        },
+        {
             "name": "baked-peel-inhand-left",
             "directions": 4
         },
@@ -70,6 +79,14 @@
         },
         {
             "name": "stage-6"
+        },
+        {
+            "name": "peel-equipped-HELMET",
+            "directions": 4
+        },
+        {
+            "name": "peel-equipped-HELMET-hamster",
+            "directions": 4
         },
         {
             "name": "produce-inhand-left",

@@ -1,24 +1,17 @@
 ﻿- type: entity
+  parent: [ BaseStructureDynamic, StructureHealthContainer ]
   id: OreBox
   name: ore box
   description: A large storage container for holding unprocessed ores.
-  parent: BaseStructureDynamic
   components:
   - type: StaticPrice
     price: 500
   - type: Anchorable
   - type: InteractionOutline
   - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: Wood
+    damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 150
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 100
@@ -29,8 +22,6 @@
           MaterialWoodPlank1:
             min: 3
             max: 5
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Climbable
 
   # orebox-specific

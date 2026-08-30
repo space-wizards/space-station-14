@@ -107,3 +107,9 @@
   license: "CC0-1.0"
   copyright: "Created by Orsoniks, from the game Casualties Unknown"
   source: "https://orsonik.itch.io/scav-prototype"
+
+- files: [card_tube_bonk.ogg]
+  copyright: 'created by Crinkem on Freesound; perryprog (GitHub) downmixed to mono'
+  license: "CC0-1.0"
+  source: https://freesound.org/people/Crinkem/sounds/492027/
+

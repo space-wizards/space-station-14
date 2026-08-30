@@ -1,21 +1,16 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Atmos.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
-public sealed partial class GasTankComponent : Component, IGasMixtureHolder
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), AutoGenerateComponentPause]
+public sealed partial class GasTankComponent : GasMaxPressureHolderComponent
 {
-    public const float MaxExplosionRange = 26f;
-    private const float DefaultLowPressure = 0f;
-    private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
+    private const float DefaultLowPressure = Atmospherics.OneAtmosphere;
 
-    public int Integrity = 3;
     public bool IsLowPressure => Air.Pressure <= TankLowPressure;
-
-    [DataField]
-    public SoundSpecifier RuptureSound = new SoundPathSpecifier("/Audio/Effects/spray.ogg");
 
     [DataField]
     public SoundSpecifier? ConnectSound =
@@ -32,26 +27,11 @@ public sealed partial class GasTankComponent : Component, IGasMixtureHolder
     public EntityUid? ConnectStream;
     public EntityUid? DisconnectStream;
 
-    [DataField]
-    public GasMixture Air { get; set; } = new();
-
     /// <summary>
     ///     Pressure at which tank should be considered 'low' such as for internals.
     /// </summary>
     [DataField]
     public float TankLowPressure = DefaultLowPressure;
-
-    /// <summary>
-    ///     Distributed pressure.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public float OutputPressure = DefaultOutputPressure;
-
-    /// <summary>
-    ///     The maximum allowed output pressure.
-    /// </summary>
-    [DataField]
-    public float MaxOutputPressure = 3 * DefaultOutputPressure;
 
     /// <summary>
     ///     Tank is connected to internals.
@@ -69,30 +49,6 @@ public sealed partial class GasTankComponent : Component, IGasMixtureHolder
     [ViewVariables]
     public bool CheckUser;
 
-    /// <summary>
-    ///     Pressure at which tanks start leaking.
-    /// </summary>
-    [DataField]
-    public float TankLeakPressure = 30 * Atmospherics.OneAtmosphere;
-
-    /// <summary>
-    ///     Pressure at which tank spills all contents into atmosphere.
-    /// </summary>
-    [DataField]
-    public float TankRupturePressure = 40 * Atmospherics.OneAtmosphere;
-
-    /// <summary>
-    ///     Base 3x3 explosion.
-    /// </summary>
-    [DataField]
-    public float TankFragmentPressure = 50 * Atmospherics.OneAtmosphere;
-
-    /// <summary>
-    ///     Increases explosion for each scale kPa above threshold.
-    /// </summary>
-    [DataField]
-    public float TankFragmentScale = 2.25f * Atmospherics.OneAtmosphere;
-
     [DataField]
     public EntProtoId ToggleAction = "ActionToggleInternals";
 
@@ -100,21 +56,8 @@ public sealed partial class GasTankComponent : Component, IGasMixtureHolder
     public EntityUid? ToggleActionEntity;
 
     /// <summary>
-    ///     Valve to release gas from tank
+    ///     Tracks elapsed time between client state updates for <see cref="GasMaxPressureHolderComponent"/>.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool IsValveOpen;
-
-    /// <summary>
-    ///     Gas release rate in L/s
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public float ValveOutputRate = 100f;
-
-    [DataField]
-    public SoundSpecifier ValveSound =
-        new SoundCollectionSpecifier("valveSqueak")
-        {
-            Params = AudioParams.Default.WithVolume(-5f),
-        };
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
+    public TimeSpan NextDirtyTime;
 }

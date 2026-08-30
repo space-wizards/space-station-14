@@ -16,10 +16,4 @@ public sealed partial class MagbootsComponent : Component
     /// </summary>
     [DataField]
     public bool RequiresGrid = true;
-
-    /// <summary>
-    /// Slot the clothing has to be worn in to work.
-    /// </summary>
-    [DataField]
-    public string Slot = "shoes";
 }

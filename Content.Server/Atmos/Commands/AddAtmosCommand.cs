@@ -1,16 +1,16 @@
 using Content.Server.Administration;
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
+using Content.Shared.Atmos.Components;
 using Robust.Shared.Console;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class AddAtmosCommand : IConsoleCommand
+    public sealed partial class AddAtmosCommand : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private IEntityManager _entities = default!;
 
         public string Command => "addatmos";
         public string Description => "Adds atmos support to a grid.";

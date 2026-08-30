@@ -1,5 +1,6 @@
 using Content.Shared.EntityTable.EntitySelectors;
 using JetBrains.Annotations;
+using Robust.Shared.Random;
 
 namespace Content.Shared.EntityTable.ValueSelector;
 
@@ -9,5 +10,20 @@ namespace Content.Shared.EntityTable.ValueSelector;
 [ImplicitDataDefinitionForInheritors, UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
 public abstract partial class NumberSelector
 {
-    public abstract int Get(System.Random rand);
+    /// <summary>
+    /// Returns a value for this selector given a randomizer.
+    /// </summary>
+    public abstract int Get(IRobustRandom rand);
+
+    /// <summary>
+    /// Odds of occurrence
+    /// </summary>
+    /// <returns>An odds multiplier of at least one occurrence</returns>
+    public abstract float Odds();
+
+    /// <summary>
+    /// Average number of occurrences
+    /// </summary>
+    /// <returns>The average amount of occurrences</returns>
+    public abstract float Average();
 }

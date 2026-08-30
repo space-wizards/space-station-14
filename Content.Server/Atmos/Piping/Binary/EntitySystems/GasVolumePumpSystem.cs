@@ -1,10 +1,10 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Monitor.Systems;
-using Content.Server.Atmos.Piping.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Binary.Systems;
 using Content.Shared.Atmos.Piping.Components;
@@ -18,13 +18,13 @@ using Content.Shared.DeviceNetwork.Components;
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class GasVolumePumpSystem : SharedGasVolumePumpSystem
+    public sealed partial class GasVolumePumpSystem : SharedGasVolumePumpSystem
     {
-        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
-        [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
-        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
-        [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
+        [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
+        [Dependency] private SharedAmbientSoundSystem _ambientSoundSystem = default!;
+        [Dependency] private NodeContainerSystem _nodeContainer = default!;
+        [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
 
         public override void Initialize()
         {
@@ -53,13 +53,13 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             pump.Blocked = false;
 
             // Pump mechanism won't do anything if the pressure is too high/too low unless you overclock it.
-            if ((inputStartingPressure < pump.LowerThreshold) || (outputStartingPressure > pump.HigherThreshold) && !pump.Overclocked)
+            if ((inputStartingPressure <= pump.LowerThreshold) || (outputStartingPressure >= pump.HigherThreshold) && !pump.Overclocked)
             {
                 pump.Blocked = true;
             }
 
             // Overclocked pumps can only force gas a certain amount.
-            if ((outputStartingPressure - inputStartingPressure > pump.OverclockThreshold) && pump.Overclocked)
+            if ((outputStartingPressure - inputStartingPressure >= pump.OverclockThreshold) && pump.Overclocked)
             {
                 pump.Blocked = true;
             }
@@ -70,7 +70,16 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
 
             // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
-            var removed = inlet.Air.RemoveVolume(pump.TransferRate * _atmosphereSystem.PumpSpeedup() * args.dt);
+            var transferVol = pump.TransferRate * _atmosphereSystem.PumpSpeedup() * args.dt;
+            var transferRatio = transferVol / inlet.Air.Volume;
+
+            // Make sure we don't pump over the pressure limit.
+            var limitRatio = AtmosphereSystem.FractionToMaxPressure(inlet.Air, outlet.Air, pump.HigherThreshold);
+
+            // This might end up negative under overclock conditions, but such cases are handled correctly by the
+            // `RemoveRatio` method
+            var removedRatio = Math.Min(transferRatio, limitRatio);
+            var removed = inlet.Air.RemoveRatio(removedRatio);
 
             // Some of the gas from the mixture leaks when overclocked.
             if (pump.Overclocked)

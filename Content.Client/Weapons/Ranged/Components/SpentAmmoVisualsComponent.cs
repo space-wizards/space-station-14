@@ -8,9 +8,10 @@ public sealed partial class SpentAmmoVisualsComponent : Component
     /// <summary>
     /// Should we do "{_state}-spent" or just "spent"
     /// </summary>
-    [DataField("suffix")] public bool Suffix = true;
+    [DataField]
+    public bool Suffix = true;
 
-    [DataField("state")]
+    [DataField]
     public string State = "base";
 }
 

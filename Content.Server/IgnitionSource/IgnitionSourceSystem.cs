@@ -5,8 +5,8 @@ namespace Content.Server.IgnitionSource;
 
 public sealed partial class IgnitionSourceSystem : SharedIgnitionSourceSystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private AtmosphereSystem _atmosphere = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     public override void Update(float frameTime)
     {

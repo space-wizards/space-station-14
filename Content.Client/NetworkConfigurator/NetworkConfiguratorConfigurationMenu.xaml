@@ -5,15 +5,15 @@
     <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
         <networkConfigurator:NetworkConfiguratorDeviceList Name="DeviceList" MinHeight="500" />
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="8 8 8 1">
-            <Button Name="Set" Text="Set" Access="Public" ToolTip="{Loc 'network-configurator-tooltip-set'}" HorizontalExpand="True" StyleClasses="ButtonSquare"/>
-            <Button Name="Add" Text="Add" Access="Public" ToolTip="{Loc 'network-configurator-tooltip-add'}" HorizontalExpand="True" StyleClasses="ButtonSquare"/>
+            <Button Name="Set" Text="{Loc 'network-configurator-text-set'}" Access="Public" ToolTip="{Loc 'network-configurator-tooltip-set'}" HorizontalExpand="True" StyleClasses="ButtonSquare"/>
+            <Button Name="Add" Text="{Loc 'network-configurator-text-add'}" Access="Public" ToolTip="{Loc 'network-configurator-tooltip-add'}" HorizontalExpand="True" StyleClasses="ButtonSquare"/>
             <!-- Edit might not be needed  -->
             <!--<Button Name="Edit" Text="Edit" Access="Public" ToolTip="{Loc 'network-configurator-tooltip-edit'}" HorizontalExpand="True" StyleClasses="ButtonSquare"/>-->
-            <Button Name="Clear" Text="Clear" Access="Public" ToolTip="{Loc 'network-configurator-tooltip-clear'}" HorizontalExpand="True"/>
+            <Button Name="Clear" Text="{Loc 'network-configurator-text-clear'}" Access="Public" ToolTip="{Loc 'network-configurator-tooltip-clear'}" HorizontalExpand="True"/>
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="8 0 8 8">
-            <Button Name="Copy" Text="Copy" Access="Public" ToolTip="{Loc 'network-configurator-tooltip-copy'}" HorizontalExpand="True" StyleClasses="OpenRight"/>
-            <Button Name="Show" Text="Show" Access="Public" ToggleMode="True" ToolTip="{Loc 'network-configurator-tooltip-show'}" HorizontalExpand="True" StyleClasses="ButtonSquare"/>
+            <Button Name="Copy" Text="{Loc 'network-configurator-text-copy'}" Access="Public" ToolTip="{Loc 'network-configurator-tooltip-copy'}" HorizontalExpand="True" StyleClasses="OpenRight"/>
+            <Button Name="Show" Text="{Loc 'network-configurator-text-show'}" Access="Public" ToggleMode="True" ToolTip="{Loc 'network-configurator-tooltip-show'}" HorizontalExpand="True" StyleClasses="ButtonSquare"/>
         </BoxContainer>
         <Label Name="Count" StyleClasses="LabelSubText" HorizontalAlignment="Right" Margin="0 0 12 8"/>
     </BoxContainer>

@@ -21,13 +21,11 @@
   - type: Construction
     graph: smokeableJoint
     node: joint
-  - type: SolutionContainerManager
-    solutions:
-      smokable:
-        maxVol: 30
-        reagents:
-          - ReagentId: THC
-            Quantity: 20
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: THC
+        Quantity: 20
   - type: RandomMetadata
     nameSegments: [NamesRollie]
 
@@ -41,23 +39,21 @@
   - type: Construction
     graph: smokeableJointRainbow
     node: jointRainbow
-  - type: SolutionContainerManager
-    solutions:
-      smokable:
-        maxVol: 20
-        reagents:
-        - ReagentId: SpaceDrugs
-          Quantity: 4
-        - ReagentId: Lipolicide
-          Quantity: 4
-        - ReagentId: MindbreakerToxin
-          Quantity: 2.66
-        - ReagentId: Happiness
-          Quantity: 2.66
-#       - ReagentId: ColorfulReagent
-#         Quantity: 1.33
-        - ReagentId: Psicodine
-          Quantity: 0.8
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: SpaceDrugs
+        Quantity: 10
+      - ReagentId: Lipolicide
+        Quantity: 5
+      - ReagentId: MindbreakerToxin
+        Quantity: 5
+      - ReagentId: Happiness
+        Quantity: 5
+  #   - ReagentId: ColorfulReagent
+  #     Quantity: 1.33
+      - ReagentId: Psicodine
+        Quantity: 3.67
 
 - type: entity
   id: Blunt
@@ -82,13 +78,11 @@
   - type: Construction
     graph: smokeableBlunt
     node: blunt
-  - type: SolutionContainerManager
-    solutions:
-      smokable:
-        maxVol: 30
-        reagents:
-          - ReagentId: THC
-            Quantity: 20
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: THC
+        Quantity: 20
   - type: RandomMetadata
     nameSegments: [NamesRollie]
 
@@ -102,20 +96,18 @@
   - type: Construction
     graph: smokeableBluntRainbow
     node: bluntRainbow
-  - type: SolutionContainerManager
-    solutions:
-      smokable:
-        maxVol: 20
-        reagents:
-        - ReagentId: SpaceDrugs
-          Quantity: 4
-        - ReagentId: Lipolicide
-          Quantity: 4
-        - ReagentId: MindbreakerToxin
-          Quantity: 2.66
-        - ReagentId: Happiness
-          Quantity: 2.66
-#       - ReagentId: ColorfulReagent
-#         Quantity: 1.33
-        - ReagentId: Psicodine
-          Quantity: 0.8
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: SpaceDrugs
+        Quantity: 10
+      - ReagentId: Lipolicide
+        Quantity: 5
+      - ReagentId: MindbreakerToxin
+        Quantity: 5
+      - ReagentId: Happiness
+        Quantity: 5
+  #   - ReagentId: ColorfulReagent
+  #     Quantity: 1.33
+      - ReagentId: Psicodine
+        Quantity: 3.67

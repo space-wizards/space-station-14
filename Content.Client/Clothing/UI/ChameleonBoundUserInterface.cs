@@ -10,9 +10,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Clothing.UI;
 
 [UsedImplicitly]
-public sealed class ChameleonBoundUserInterface : BoundUserInterface
+public sealed partial class ChameleonBoundUserInterface : BoundUserInterface
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
     private readonly ChameleonClothingSystem _chameleon;
     private readonly TagSystem _tag;
 
@@ -45,10 +45,10 @@ public sealed class ChameleonBoundUserInterface : BoundUserInterface
             var newTargets = new List<EntProtoId>();
             foreach (var target in targets)
             {
-                if (string.IsNullOrEmpty(target) || !_proto.TryIndex(target, out EntityPrototype? proto))
+                if (string.IsNullOrEmpty(target) || !_proto.Resolve(target, out EntityPrototype? proto))
                     continue;
 
-                if (!proto.TryGetComponent(out TagComponent? tag, EntMan.ComponentFactory) || !_tag.HasTag(tag, st.RequiredTag))
+                if (!proto.TryComp(out TagComponent? tag, EntMan.ComponentFactory) || !_tag.HasTag(tag, st.RequiredTag))
                     continue;
 
                 newTargets.Add(target);

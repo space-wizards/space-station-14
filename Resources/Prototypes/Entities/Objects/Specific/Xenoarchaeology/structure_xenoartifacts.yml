@@ -1,9 +1,8 @@
-﻿- type: entity
+- type: entity
   parent: [BaseStructureDynamic, BaseXenoArtifact]
   id: BaseXenoArtifactStructure
   name: artifact
   abstract: true
-  noSpawn: true
   components:
   # Visual
   - type: Sprite
@@ -19,6 +18,8 @@
     - state: artifact-activation
       map: [ "enum.ArtifactsVisualLayers.ActivationEffect" ]
       visible: false
+  - type: Physics
+    bodyType: KinematicController
   - type: RandomArtifactSprite
     maxSprite: 36
   - type: RandomSprite
@@ -38,6 +39,15 @@
         - Opaque
         mask:
         - MachineMask
+
+- type: entity
+  id: DummyArtifactStructure
+  parent: BaseXenoArtifactStructure
+  name: artifact
+  suffix: Debug
+  components:
+  - type: XenoArtifact
+    isGenerationRequired: false
 
 - type: entity
   parent: BaseXenoArtifactStructure

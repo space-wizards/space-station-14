@@ -20,6 +20,11 @@
   displayName: store-currency-display-wizcoin
   canWithdraw: false
 
+- type: currency
+  id: ChangelingDNA
+  displayName: store-currency-display-dna
+  canWithdraw: false
+
 #debug
 - type: currency
   id: DebugDollar

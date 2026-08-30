@@ -18,13 +18,12 @@ using DebugMessage = Content.Shared.Atmos.EntitySystems.SharedAtmosDebugOverlayS
 namespace Content.Client.Atmos.Overlays;
 
 
-public sealed class AtmosDebugOverlay : Overlay
+public sealed partial class AtmosDebugOverlay : Overlay
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IInputManager _input = default!;
-    [Dependency] private readonly IUserInterfaceManager _ui = default!;
-    [Dependency] private readonly IResourceCache _cache = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IInputManager _input = default!;
+    [Dependency] private IUserInterfaceManager _ui = default!;
+    [Dependency] private IResourceCache _cache = default!;
     private readonly SharedTransformSystem _transform;
     private readonly AtmosDebugOverlaySystem _system;
     private readonly SharedMapSystem _map;
@@ -262,7 +261,7 @@ public sealed class AtmosDebugOverlay : Overlay
     private void GetGrids(MapId mapId, Box2Rotated box)
     {
         _grids.Clear();
-        _mapManager.FindGridsIntersecting(
+        _map.FindGridsIntersecting(
             mapId,
             box,
             ref _grids,

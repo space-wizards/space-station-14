@@ -2,41 +2,44 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Glue;
 
-[RegisterComponent, NetworkedComponent]
-[Access(typeof(SharedGlueSystem))]
+/// <summary>
+/// This component indicates that an item is glue and can be used as such.
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(GlueSystem))]
 public sealed partial class GlueComponent : Component
 {
     /// <summary>
     /// Noise made when glue applied.
     /// </summary>
-    [DataField("squeeze")]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier Squeeze = new SoundPathSpecifier("/Audio/Items/squeezebottle.ogg");
 
     /// <summary>
     /// Solution on the entity that contains the glue.
     /// </summary>
-    [DataField("solution")]
+    [DataField, AutoNetworkedField]
     public string Solution = "drink";
 
     /// <summary>
     /// Reagent that will be used as glue.
     /// </summary>
-    [DataField("reagent", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
-    public string Reagent = "SpaceGlue";
+    [DataField, AutoNetworkedField]
+    public ProtoId<ReagentPrototype> Reagent = "SpaceGlue";
 
     /// <summary>
     /// Reagent consumption per use.
     /// </summary>
-    [DataField("consumptionUnit"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public FixedPoint2 ConsumptionUnit = FixedPoint2.New(5);
 
     /// <summary>
     /// Duration per unit
     /// </summary>
-    [DataField("durationPerUnit"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public TimeSpan DurationPerUnit = TimeSpan.FromSeconds(6);
 }

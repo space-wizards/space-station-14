@@ -6,6 +6,7 @@ namespace Content.Shared.Ensnaring.Components;
 /// Use this on something you want to use to ensnare an entity with
 /// </summary>
 [RegisterComponent, NetworkedComponent]
+[Access(typeof(SharedEnsnareableSystem))]
 public sealed partial class EnsnaringComponent : Component
 {
     /// <summary>
@@ -62,6 +63,9 @@ public sealed partial class EnsnaringComponent : Component
     [DataField]
     public bool CanMoveBreakout;
 
+/// <summary>
+/// The sound to play when being ensnared.
+/// </summary>
     [DataField]
     public SoundSpecifier? EnsnareSound = new SoundPathSpecifier("/Audio/Effects/snap.ogg");
 }

@@ -9,13 +9,14 @@ using LayerChangeOnWeldComponent = Content.Shared.Tools.Components.LayerChangeOn
 
 namespace Content.Shared.Tools.Systems;
 
-public sealed class WeldableSystem : EntitySystem
+public sealed partial class WeldableSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    private EntityQuery<WeldableComponent> _query;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedToolSystem _toolSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+
+    [Dependency] private EntityQuery<WeldableComponent> _query = default!;
 
     public override void Initialize()
     {
@@ -24,8 +25,6 @@ public sealed class WeldableSystem : EntitySystem
         SubscribeLocalEvent<WeldableComponent, WeldFinishedEvent>(OnWeldFinished);
         SubscribeLocalEvent<LayerChangeOnWeldComponent, WeldableChangedEvent>(OnWeldChanged);
         SubscribeLocalEvent<WeldableComponent, ExaminedEvent>(OnExamine);
-
-        _query = GetEntityQuery<WeldableComponent>();
     }
 
     public bool IsWelded(EntityUid uid, WeldableComponent? component = null)

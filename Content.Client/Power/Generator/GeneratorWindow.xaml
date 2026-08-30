@@ -1,4 +1,4 @@
-﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+<controls:FancyWindow xmlns="https://spacestation14.io"
                 xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
                 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                 MinSize="450 250"
@@ -41,7 +41,7 @@
             <Label Margin="2 0 0 0" Name="CloggedLabel" FontColorOverride="Red" Text="{Loc 'portable-generator-ui-clogged'}" />
         </BoxContainer>
         <cc:VSeparator StyleClasses="LowDivider"/>
-        <PanelContainer Margin="12 0 0 0" StyleClasses="Inset" VerticalAlignment="Center">
+        <PanelContainer Margin="12 0 0 0" StyleClasses="BackgroundPanelDark" VerticalAlignment="Center">
             <SpriteView Name="EntityView" SetSize="64 64" Scale="2 2" OverrideDirection="South" Margin="15"/>
         </PanelContainer>
     </BoxContainer>

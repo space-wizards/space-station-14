@@ -1,14 +1,13 @@
 ﻿using System.Linq;
-using Content.Server.Roles;
-using Content.Shared.Roles;
-using Content.Shared.Roles.Jobs;
+using Content.IntegrationTests.Fixtures;
+using Content.Shared.Roles.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Reflection;
 
 namespace Content.IntegrationTests.Tests.Minds;
 
 [TestFixture]
-public sealed class RoleTests
+public sealed class RoleTests : GameTest
 {
     /// <summary>
     /// Check that any prototype with a <see cref="MindRoleComponent"/> is properly configured
@@ -16,7 +15,7 @@ public sealed class RoleTests
     [Test]
     public async Task ValidateRolePrototypes()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
 
         var jobComp = pair.Server.ResolveDependency<IComponentFactory>().GetComponentName<JobRoleComponent>();
 
@@ -37,7 +36,6 @@ public sealed class RoleTests
             }
         });
 
-        await pair.CleanReturnAsync();
     }
 
     /// <summary>
@@ -47,7 +45,7 @@ public sealed class RoleTests
     [Test]
     public async Task ValidateJobPrototypes()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
 
         var mindCompId = pair.Server.ResolveDependency<IComponentFactory>().GetComponentName<MindRoleComponent>();
 
@@ -59,8 +57,6 @@ public sealed class RoleTests
                     Assert.That(((MindRoleComponent)mindComp).JobPrototype, Is.Not.Null);
             }
         });
-
-        await pair.CleanReturnAsync();
     }
 
     /// <summary>
@@ -70,7 +66,7 @@ public sealed class RoleTests
     [Test]
     public async Task ValidateRolesHaveMindRoleComp()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
 
         var refMan = pair.Server.ResolveDependency<IReflectionManager>();
         var mindCompId = pair.Server.ResolveDependency<IComponentFactory>().GetComponentName<MindRoleComponent>();
@@ -89,7 +85,5 @@ public sealed class RoleTests
                 }
             }
         });
-
-        await pair.CleanReturnAsync();
     }
 }

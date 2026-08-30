@@ -1,16 +1,24 @@
 - type: entity
   parent: [AirSensorBase, GasBinaryBase]
-  id: GasPipeSensor
+  id: !type:CreateVariants
+    values: [ GasPipeSensor, GasPipeSensorAlt1, GasPipeSensorAlt2 ]
   name: gas pipe sensor
   description: Reports on the status of the gas in the attached pipe network.
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
   - type: Sprite
-    sprite: Structures/Piping/Atmospherics/gas_pipe_sensor.rsi
+    sprite: !type:CreateVariants
+       values: 
+       - Structures/Piping/Atmospherics/gas_pipe_sensor.rsi
+       - Structures/Piping/Atmospherics/gas_pipe_sensor_alt1.rsi
+       - Structures/Piping/Atmospherics/gas_pipe_sensor_alt2.rsi
     drawdepth: BelowFloor
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+    - sprite: !type:CreateVariants
+        values: [ Structures/Piping/Atmospherics/pipe.rsi, Structures/Piping/Atmospherics/pipe_alt1.rsi, Structures/Piping/Atmospherics/pipe_alt2.rsi ]
       map: [ "enum.PipeVisualLayers.Pipe" ]
       state: pipeStraight
     - map: ["base"]
@@ -19,6 +27,8 @@
       state: lights
       shader: unshaded
   - type: AtmosPipeLayers
+    pipeLayer: !type:CreateVariants
+      values: [ 0, 1, 2 ]
     spriteRsiPaths:
       Primary: Structures/Piping/Atmospherics/gas_pipe_sensor.rsi
       Secondary: Structures/Piping/Atmospherics/gas_pipe_sensor_alt1.rsi
@@ -38,7 +48,8 @@
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Construction
-    graph: GasPipeSensor
+    graph: !type:CreateVariants
+      values: [ GasPipeSensor, GasPipeSensorAlt1, GasPipeSensorAlt2 ]
     node: sensor
   - type: NodeContainer
     nodes:
@@ -56,41 +67,63 @@
     - DeviceMonitoringAndControl
 
 - type: entity
-  parent: GasPipeSensor
-  id: GasPipeSensorDistribution
+  parent: !type:CreateVariants
+    values: [ GasPipeSensor, GasPipeSensorAlt1, GasPipeSensorAlt2 ]
+  id: !type:CreateVariants
+    values: [ GasPipeSensorDistribution, GasPipeSensorDistributionAlt1, GasPipeSensorDistributionAlt2 ]
   suffix: Distribution
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
+  placement:
+    mode: AlignAtmosPipeLayers
   components:
   - type: Label
-    currentLabel: gas-pipe-sensor-distribution-loop
+    localizedLabel: gas-pipe-sensor-distribution-loop
 
 - type: entity
-  parent: GasPipeSensor
-  id: GasPipeSensorWaste
+  parent: !type:CreateVariants
+    values: [ GasPipeSensor, GasPipeSensorAlt1, GasPipeSensorAlt2 ]
+  id: !type:CreateVariants
+    values: [ GasPipeSensorWaste, GasPipeSensorWasteAlt1, GasPipeSensorWasteAlt2 ]
   suffix: Waste
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   components:
   - type: Label
-    currentLabel: gas-pipe-sensor-waste-loop
+    localizedLabel: gas-pipe-sensor-waste-loop
 
 - type: entity
-  parent: GasPipeSensor
-  id: GasPipeSensorMixedAir
+  parent: !type:CreateVariants
+    values: [ GasPipeSensor, GasPipeSensorAlt1, GasPipeSensorAlt2 ]
+  id: !type:CreateVariants
+    values: [ GasPipeSensorMixedAir, GasPipeSensorMixedAirAlt1, GasPipeSensorMixedAirAlt2 ]
   suffix: Mixed air
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   components:
   - type: Label
-    currentLabel: gas-pipe-sensor-mixed-air
+    localizedLabel: gas-pipe-sensor-mixed-air
 
 - type: entity
-  parent: GasPipeSensor
-  id: GasPipeSensorTEGHot
+  parent: !type:CreateVariants
+    values: [ GasPipeSensor, GasPipeSensorAlt1, GasPipeSensorAlt2 ]
+  id: !type:CreateVariants
+    values: [ GasPipeSensorTEGHot, GasPipeSensorTEGHotAlt1, GasPipeSensorTEGHotAlt2 ]
   suffix: TEG hot
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   components:
   - type: Label
-    currentLabel: gas-pipe-sensor-teg-hot-loop
+    localizedLabel: gas-pipe-sensor-teg-hot-loop
 
 - type: entity
-  parent: GasPipeSensor
-  id: GasPipeSensorTEGCold
+  parent: !type:CreateVariants
+    values: [ GasPipeSensor, GasPipeSensorAlt1, GasPipeSensorAlt2 ]
+  id: !type:CreateVariants
+    values: [ GasPipeSensorTEGCold, GasPipeSensorTEGColdAlt1, GasPipeSensorTEGColdAlt2 ]
   suffix: TEG cold
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   components:
   - type: Label
-    currentLabel: gas-pipe-sensor-teg-cold-loop
+    localizedLabel: gas-pipe-sensor-teg-cold-loop

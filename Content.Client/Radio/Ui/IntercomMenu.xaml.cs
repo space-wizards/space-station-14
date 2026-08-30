@@ -11,7 +11,7 @@ namespace Content.Client.Radio.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class IntercomMenu : FancyWindow
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     public event Action<bool>? OnMicPressed;
     public event Action<bool>? OnSpeakerPressed;
@@ -42,7 +42,7 @@ public sealed partial class IntercomMenu : FancyWindow
         for (var i = 0; i < entity.Comp.SupportedChannels.Count; i++)
         {
             var channel = entity.Comp.SupportedChannels[i];
-            if (!_prototype.TryIndex(channel, out var prototype))
+            if (!_prototype.Resolve(channel, out var prototype))
                 continue;
 
             _channels.Add(channel);

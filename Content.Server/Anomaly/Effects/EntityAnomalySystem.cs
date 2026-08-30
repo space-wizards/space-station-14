@@ -3,24 +3,19 @@ using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects;
 using Content.Shared.Anomaly.Effects.Components;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.Anomaly.Effects;
 
-public sealed class EntityAnomalySystem : SharedEntityAnomalySystem
+public sealed partial class EntityAnomalySystem : SharedEntityAnomalySystem
 {
-    [Dependency] private readonly SharedAnomalySystem _anomaly = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-
-    private EntityQuery<PhysicsComponent> _physicsQuery;
+    [Dependency] private SharedAnomalySystem _anomaly = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
-        _physicsQuery = GetEntityQuery<PhysicsComponent>();
-
         SubscribeLocalEvent<EntitySpawnAnomalyComponent, AnomalyPulseEvent>(OnPulse);
         SubscribeLocalEvent<EntitySpawnAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
         SubscribeLocalEvent<EntitySpawnAnomalyComponent, AnomalyStabilityChangedEvent>(OnStabilityChanged);

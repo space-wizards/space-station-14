@@ -11,6 +11,12 @@ public sealed partial class StationAiHolderComponent : Component
 {
     public const string Container = StationAiCoreComponent.Container;
 
+    /// <summary>
+    /// Whether the holder should be renamed to the name of the inserted object.
+    /// </summary>
+    [DataField]
+    public bool RenameOnInsert = true;
+
     [DataField]
     public ItemSlot Slot = new();
 }

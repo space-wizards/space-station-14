@@ -1,19 +1,15 @@
 using Content.Shared.Inventory.Events;
 using Content.Shared.Overlays;
 using Robust.Client.Graphics;
-using System.Linq;
-using Robust.Client.Player;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Overlays;
 
 /// <summary>
 /// Adds a health bar overlay.
 /// </summary>
-public sealed class ShowHealthBarsSystem : EquipmentHudSystem<ShowHealthBarsComponent>
+public sealed partial class ShowHealthBarsSystem : EquipmentHudSystem<ShowHealthBarsComponent>
 {
-    [Dependency] private readonly IOverlayManager _overlayMan = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private IOverlayManager _overlayMan = default!;
 
     private EntityHealthBarOverlay _overlay = default!;
 
@@ -23,7 +19,7 @@ public sealed class ShowHealthBarsSystem : EquipmentHudSystem<ShowHealthBarsComp
 
         SubscribeLocalEvent<ShowHealthBarsComponent, AfterAutoHandleStateEvent>(OnHandleState);
 
-        _overlay = new(EntityManager, _prototype);
+        _overlay = new(EntityManager, ProtoMan);
     }
 
     private void OnHandleState(Entity<ShowHealthBarsComponent> ent, ref AfterAutoHandleStateEvent args)
@@ -34,6 +30,9 @@ public sealed class ShowHealthBarsSystem : EquipmentHudSystem<ShowHealthBarsComp
     protected override void UpdateInternal(RefreshEquipmentHudEvent<ShowHealthBarsComponent> component)
     {
         base.UpdateInternal(component);
+
+        _overlay.DamageContainers.Clear();
+        _overlay.StatusIcon = null;
 
         foreach (var comp in component.Components)
         {

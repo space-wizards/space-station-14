@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible  ]
   id: SurveillanceCameraRouterBase
   name: camera router
   description: A surveillance camera router. It routes. Perhaps.
@@ -33,6 +33,14 @@
           enum.PowerDeviceVisualLayers.Powered:
             True: { visible: true }
             False: { visible: false }
+    - type: Destructible
+      thresholds:
+      - trigger: !type:DamageTrigger
+          damage: 175
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
     - type: Appearance
     - type: AmbientOnPowered
     - type: AmbientSound
@@ -40,7 +48,7 @@
       range: 5
       enabled: false
       sound:
-        path: /Audio/Ambience/Objects/server_fans.ogg
+        collection: ServerFans
     - type: WiresVisuals
     - type: WiresPanel
 
@@ -134,7 +142,7 @@
 
 - type: entity
   abstract: true
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   id: SurveillanceCameraWirelessRouterBase
   name: wireless camera router
   description: A wireless surveillance camera router. It routes. Perhaps.
@@ -167,6 +175,14 @@
           enum.PowerDeviceVisualLayers.Powered:
             True: { visible: true }
             False: { visible: false }
+    - type: Destructible
+      thresholds:
+      - trigger: !type:DamageTrigger
+          damage: 175
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
     - type: Appearance
     - type: AmbientOnPowered
     - type: AmbientSound
@@ -174,7 +190,7 @@
       range: 5
       enabled: false
       sound:
-        path: /Audio/Ambience/Objects/server_fans.ogg
+        collection: ServerFans
     - type: WiresVisuals
     - type: WiresPanel
 
@@ -195,3 +211,19 @@
   components:
     - type: SurveillanceCameraRouter
       subnetFrequency: SurveillanceCameraEntertainment
+
+- type: entity
+  parent: SurveillanceCameraWirelessRouterBase
+  id: SurveillanceCameraWirelessRouterXenoborg
+  name: xenoborg camera wireless router
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: Mothership
+    transmitFrequencyId: Mothership
+  - type: WirelessNetworkConnection
+    range: 2000 # longer range to get xenoborgs even when the mothership is far away
+  - type: SurveillanceCameraRouter
+    subnetFrequency: Xenoborg
+  - type: Machine
+    board: SurveillanceCameraWirelessRouterXenoborgCircuitboard

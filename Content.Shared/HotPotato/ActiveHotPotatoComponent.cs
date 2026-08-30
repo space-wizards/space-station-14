@@ -12,7 +12,7 @@ public sealed partial class ActiveHotPotatoComponent : Component
     /// <summary>
     /// Hot potato effect spawn cooldown in seconds
     /// </summary>
-    [DataField("effectCooldown"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float EffectCooldown = 0.3f;
 
     /// <summary>

@@ -7,9 +7,9 @@ namespace Content.Server.Objectives.Systems;
 /// <summary>
 /// Handles applying the objective component blacklist to the objective entity.
 /// </summary>
-public sealed class ObjectiveBlacklistRequirementSystem : EntitySystem
+public sealed partial class ObjectiveBlacklistRequirementSystem : EntitySystem
 {
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -25,7 +25,7 @@ public sealed class ObjectiveBlacklistRequirementSystem : EntitySystem
 
         foreach (var objective in args.Mind.Objectives)
         {
-            if (_whitelistSystem.IsBlacklistPass(comp.Blacklist, objective))
+            if (_whitelistSystem.IsWhitelistPass(comp.Blacklist, objective))
             {
                 args.Cancelled = true;
                 return;

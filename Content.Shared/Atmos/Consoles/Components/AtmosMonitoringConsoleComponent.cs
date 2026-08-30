@@ -234,9 +234,9 @@ public struct AtmosMonitoringConsoleEntry
 /// </summary>
 /// <param name="NetId">The associated network ID.</param>
 /// <param name="PipeLayer">The associated pipe layer.</param>
-/// <param name="HexCode">The color of the pipe.</param>
+/// <param name="Color">The color of the pipe.</param>
 [Serializable, NetSerializable]
-public record AtmosMonitoringConsoleSubnet(int NetId, AtmosPipeLayer PipeLayer, string HexCode);
+public record AtmosMonitoringConsoleSubnet(int NetId, AtmosPipeLayer PipeLayer, Color Color);
 
 public enum AtmosPipeChunkDataFacing : byte
 {

@@ -8,16 +8,16 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Drowsiness;
 
-public sealed class DrowsinessOverlay : Overlay
+public sealed partial class DrowsinessOverlay : Overlay
 {
     private static readonly ProtoId<ShaderPrototype> Shader = "Drowsiness";
 
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IEntitySystemManager _sysMan = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    private readonly SharedStatusEffectsSystem _statusEffects = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IEntitySystemManager _sysMan = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    private readonly StatusEffectsSystem _statusEffects = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
@@ -33,7 +33,7 @@ public sealed class DrowsinessOverlay : Overlay
     {
         IoCManager.InjectDependencies(this);
 
-        _statusEffects = _sysMan.GetEntitySystem<SharedStatusEffectsSystem>();
+        _statusEffects = _sysMan.GetEntitySystem<StatusEffectsSystem>();
 
         _drowsinessShader = _prototypeManager.Index(Shader).InstanceUnique();
     }

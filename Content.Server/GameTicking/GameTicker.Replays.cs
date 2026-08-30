@@ -12,9 +12,9 @@ namespace Content.Server.GameTicking;
 
 public sealed partial class GameTicker
 {
-    [Dependency] private readonly IReplayRecordingManager _replays = default!;
-    [Dependency] private readonly IResourceManager _resourceManager = default!;
-    [Dependency] private readonly ISerializationManager _serialman = default!;
+    [Dependency] private IReplayRecordingManager _replays = default!;
+    [Dependency] private IResourceManager _resourceManager = default!;
+    [Dependency] private ISerializationManager _serialman = default!;
 
 
     private ISawmill _sawmillReplays = default!;

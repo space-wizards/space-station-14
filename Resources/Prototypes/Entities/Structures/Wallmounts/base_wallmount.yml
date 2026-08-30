@@ -1,0 +1,60 @@
+- type: entity
+  id: BaseWallmount
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
+  components:
+  - type: Anchorable
+    flags:
+    - Anchorable
+  - type: Rotatable
+  - type: Physics
+    canCollide: false
+  - type: Fixtures
+  - type: Clickable
+  - type: WallMount
+  - type: InteractionOutline
+  - type: Transform
+    anchored: true
+  - type: Tag
+    tags:
+    - Structure
+  - type: Sprite
+    drawdepth: WallMountedItems
+
+- type: entity
+  abstract: true
+  parent: BaseWallmount
+  id: BaseWallmountGlass
+  components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        collection: GlassSmash
+  - type: Damageable
+    damageModifierSet: GlassMod
+
+- type: entity
+  abstract: true
+  parent: BaseWallmount
+  id: BaseWallmountMetallic
+  components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        collection: MetalThud
+  - type: Damageable
+    damageModifierSet: SteelMod
+
+- type: entity
+  parent: BaseWallmountMetallic
+  id: BaseWallmountMachine
+  abstract: true
+  components:
+  - type: ApcPowerReceiver
+    powerLoad: 100
+  - type: ExtensionCableReceiver
+  - type: LightningTarget
+    priority: 1

@@ -1,26 +1,41 @@
-﻿namespace Content.Shared.Destructible;
+using Content.Shared.Damage.Systems;
 
-public abstract class SharedDestructibleSystem : EntitySystem
+namespace Content.Shared.Destructible;
+
+public abstract partial class SharedDestructibleSystem : EntitySystem
 {
+    // TODO: I don't really like this but this is out of scope to re-do destructible triggers while refactoring damageable
+    [Dependency] public DamageableSystem Damageable = default!;
+
     /// <summary>
-    ///     Force entity to be destroyed and deleted.
+    /// Force entity to be destroyed and deleted.
     /// </summary>
     public bool DestroyEntity(EntityUid owner)
+    {
+        if (!CanDestroy(owner))
+            return false;
+
+        var eventArgs = new DestructionEventArgs();
+        RaiseLocalEvent(owner, eventArgs);
+
+        PredictedQueueDel(owner);
+        return true;
+    }
+
+    /// <param name="owner">Entity that your checking.</param>
+    /// <returns>If it can be destroyed</returns>
+    public bool CanDestroy(EntityUid owner)
     {
         var ev = new DestructionAttemptEvent();
         RaiseLocalEvent(owner, ev);
         if (ev.Cancelled)
             return false;
 
-        var eventArgs = new DestructionEventArgs();
-        RaiseLocalEvent(owner, eventArgs);
-
-        QueueDel(owner);
         return true;
     }
 
     /// <summary>
-    ///     Force entity to break.
+    /// Force entity to break.
     /// </summary>
     public void BreakEntity(EntityUid owner)
     {
@@ -30,7 +45,7 @@ public abstract class SharedDestructibleSystem : EntitySystem
 }
 
 /// <summary>
-///     Raised before an entity is about to be destroyed and deleted
+/// Raised before an entity is about to be destroyed and deleted
 /// </summary>
 public sealed class DestructionAttemptEvent : CancellableEntityEventArgs
 {
@@ -38,7 +53,7 @@ public sealed class DestructionAttemptEvent : CancellableEntityEventArgs
 }
 
 /// <summary>
-///     Raised when entity is destroyed and about to be deleted.
+/// Raised when entity is destroyed and about to be deleted.
 /// </summary>
 public sealed class DestructionEventArgs : EntityEventArgs
 {
@@ -46,7 +61,7 @@ public sealed class DestructionEventArgs : EntityEventArgs
 }
 
 /// <summary>
-///     Raised when entity was heavy damage and about to break.
+/// Raised when entity was heavy damage and about to break.
 /// </summary>
 public sealed class BreakageEventArgs : EntityEventArgs
 {

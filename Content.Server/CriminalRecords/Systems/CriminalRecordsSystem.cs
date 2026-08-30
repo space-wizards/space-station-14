@@ -1,7 +1,4 @@
 using System.Linq;
-using Content.Server.CartridgeLoader;
-using Content.Server.CartridgeLoader.Cartridges;
-using Content.Server.StationRecords.Systems;
 using Content.Shared.CriminalRecords;
 using Content.Shared.CriminalRecords.Systems;
 using Content.Shared.Security;
@@ -10,6 +7,8 @@ using Content.Server.GameTicking;
 using Content.Server.Station.Systems;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
+using Content.Shared.StationRecords.Events;
+using Content.Shared.StationRecords.Systems;
 
 namespace Content.Server.CriminalRecords.Systems;
 
@@ -21,25 +20,25 @@ namespace Content.Server.CriminalRecords.Systems;
 ///         - See security officers' actions in Criminal Records in the radio
 ///         - See reasons for any action with no need to ask the officer personally
 /// </summary>
-public sealed class CriminalRecordsSystem : SharedCriminalRecordsSystem
+public sealed partial class CriminalRecordsSystem : SharedCriminalRecordsSystem
 {
-    [Dependency] private readonly GameTicker _ticker = default!;
-    [Dependency] private readonly StationRecordsSystem _records = default!;
-    [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly CartridgeLoaderSystem _cartridge = default!;
+    [Dependency] private GameTicker _ticker = default!;
+    [Dependency] private StationRecordsSystem _records = default!;
+    [Dependency] private StationSystem _station = default!;
+    [Dependency] private CartridgeLoaderSystem _cartridge = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AfterGeneralRecordCreatedEvent>(OnGeneralRecordCreated);
+        SubscribeLocalEvent<GeneralRecordCreatedEvent>(OnGeneralRecordCreated);
         SubscribeLocalEvent<WantedListCartridgeComponent, CriminalRecordChangedEvent>(OnRecordChanged);
         SubscribeLocalEvent<WantedListCartridgeComponent, CartridgeUiReadyEvent>(OnCartridgeUiReady);
         SubscribeLocalEvent<WantedListCartridgeComponent, CriminalHistoryAddedEvent>(OnHistoryAdded);
         SubscribeLocalEvent<WantedListCartridgeComponent, CriminalHistoryRemovedEvent>(OnHistoryRemoved);
     }
 
-    private void OnGeneralRecordCreated(AfterGeneralRecordCreatedEvent ev)
+    private void OnGeneralRecordCreated(ref GeneralRecordCreatedEvent ev)
     {
         _records.AddRecordEntry(ev.Key, new CriminalRecord());
         _records.Synchronize(ev.Key);

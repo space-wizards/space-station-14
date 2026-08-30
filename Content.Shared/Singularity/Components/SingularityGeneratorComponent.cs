@@ -1,9 +1,7 @@
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-
 using Content.Shared.Physics;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Singularity.Components;
 
@@ -25,6 +23,13 @@ public sealed partial class SingularityGeneratorComponent : Component
     public float Threshold = 16;
 
     /// <summary>
+    /// An inert generator will never be charged by particles, even if emagged.
+    /// This is normally only used between activating and being destroyed, to avoid creating duplicate teslas.
+    /// </summary>
+    [DataField]
+    public bool Inert;
+
+    /// <summary>
     /// Allows the generator to ignore all the failsafe stuff, e.g. when emagged
     /// </summary>
     [DataField, AutoNetworkedField]
@@ -39,8 +44,8 @@ public sealed partial class SingularityGeneratorComponent : Component
     /// <summary>
     ///     The prototype ID used to spawn a singularity.
     /// </summary>
-    [DataField("spawnId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? SpawnPrototype = "Singularity";
+    [DataField("spawnId")]
+    public EntProtoId? SpawnPrototype = "Singularity";
 
     /// <summary>
     /// The masks the raycast should not go through

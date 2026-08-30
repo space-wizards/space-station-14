@@ -1,0 +1,183 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by FairlySadPanda (GitHub/Discord), based off of sprites taken from https://github.com/DeltaV-Station/Delta-v/commit/65d35d0b3c20aa4e8a0e749a4de8392e53051e86",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "belly_crest",
+            "directions": 4
+        },
+        {
+            "name": "belly_fox",
+            "directions": 4
+        },
+        {
+            "name": "belly_full",
+            "directions": 4
+        },
+        {
+            "name": "claws_l_hand",
+            "directions": 4
+        },
+        {
+            "name": "claws_r_hand",
+            "directions": 4
+        },
+        {
+            "name": "claws_l_foot",
+            "directions": 4
+        },
+        {
+            "name": "claws_r_foot",
+            "directions": 4
+        },
+        {
+            "name": "crests",
+            "directions": 4
+        },
+        {
+            "name": "crest-legs",
+            "directions": 4
+        },
+        {
+            "name": "crest-leg-l",
+            "directions": 4
+        },
+        {
+            "name": "crest-leg-r",
+            "directions": 4
+        },
+        {
+            "name": "crest-foot-l",
+            "directions": 4
+        },
+        {
+            "name": "crest-foot-r",
+            "directions": 4
+        },
+        {
+            "name": "crest-arms",
+            "directions": 4
+        },
+        {
+            "name": "crest-arm-l",
+            "directions": 4
+        },
+        {
+            "name": "crest-arm-r",
+            "directions": 4
+        },
+        {
+            "name": "crest-hand-l",
+            "directions": 4
+        },
+        {
+            "name": "crest-hand-r",
+            "directions": 4
+        },
+        {
+            "name": "points_fade",
+            "directions": 4
+        },
+        {
+            "name": "points_fade-arms",
+            "directions": 4
+        },
+        {
+            "name": "points_fade-arm-l",
+            "directions": 4
+        },
+        {
+            "name": "points_fade-arm-r",
+            "directions": 4
+        },
+        {
+            "name": "points_fade-hand-l",
+            "directions": 4
+        },
+        {
+            "name": "points_fade-hand-r",
+            "directions": 4
+        },
+        {
+            "name": "points_fade-legs",
+            "directions": 4
+        },
+        {
+            "name": "points_fade-leg-l",
+            "directions": 4
+        },
+        {
+            "name": "points_fade-leg-r",
+            "directions": 4
+        },
+        {
+            "name": "points_fade-foot-l",
+            "directions": 4
+        },
+        {
+            "name": "points_fade-foot-r",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-arms",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-arm-l",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-arm-r",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-arms-long",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-arm-long-l",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-arm-long-r",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-hand-l",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-hand-r",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-legs",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-leg-l",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-leg-r",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-foot-l",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-foot-r",
+            "directions": 4
+        }
+    ]
+}

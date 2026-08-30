@@ -1,4 +1,7 @@
+#nullable enable
 using System.Linq;
+using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Actions;
 using Content.Shared.Eye;
 using Robust.Server.GameObjects;
@@ -7,15 +10,18 @@ using Robust.Shared.GameObjects;
 namespace Content.IntegrationTests.Tests.Actions;
 
 [TestFixture]
-public sealed class ActionPvsDetachTest
+public sealed class ActionPvsDetachTest : GameTest
 {
+    [SidedDependency(Side.Server)] private readonly SharedActionsSystem _sActionsSys = null!;
+    [SidedDependency(Side.Client)] private readonly SharedActionsSystem _cActionsSys = null!;
+
     [Test]
     public async Task TestActionDetach()
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
-        var (server, client) = pair;
-        var sys = server.System<SharedActionsSystem>();
-        var cSys = client.System<SharedActionsSystem>();
+        var pair = Pair;
+        var (server, client) = (Server, Client);
+        var sys = _sActionsSys;
+        var cSys = _cActionsSys;
 
         // Spawn mob that has some actions
         EntityUid ent = default;
@@ -60,6 +66,5 @@ public sealed class ActionPvsDetachTest
         Assert.That(cSys.GetActions(cEnt).Count(), Is.EqualTo(initActions));
 
         await server.WaitPost(() => server.EntMan.DeleteEntity(map.MapUid));
-        await pair.CleanReturnAsync();
     }
 }

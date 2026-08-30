@@ -12,17 +12,26 @@ namespace Content.Client.Options.UI.Tabs;
 [GenerateTypedNameReferences]
 public sealed partial class GraphicsTab : Control
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IClyde _clyde = default!;
 
     public GraphicsTab()
     {
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
 
-        Control.AddOptionCheckBox(CVars.DisplayVSync, VSyncCheckBox);
+        var vSync = Control.AddOptionCheckBox(CVars.DisplayVSync, VSyncCheckBox);
+        Control.AddOption(new OptionSliderIntInput(Control, _cfg, CVars.DisplayMaxFPS, MaxFpsInput, 0, 500));
         Control.AddOptionCheckBox(CCVars.AmbientOcclusion, AmbientOcclusionCheckBox);
         Control.AddOption(new OptionFullscreen(Control, _cfg, FullscreenCheckBox));
         Control.AddOption(new OptionLightingQuality(Control, _cfg, DropDownLightingQuality));
+
+        Control.AddOptionSlider(
+            CCVars.ViewportSharpnessStrength,
+            SharpnessSlider,
+            0,
+            20,
+            (_, value) => Loc.GetString("ui-options-value-percent", ("value", value / 10f)));
 
         Control.AddOptionDropDown(
             CVars.DisplayUIScale,
@@ -39,6 +48,14 @@ public sealed partial class GraphicsTab : Control
                 new OptionDropDownCVar<float>.ValueOption(2.00f, Loc.GetString("ui-options-scale-200")),
             ]);
 
+        Control.AddOptionDropDown(
+            CCVars.ViewportScalingFilterMode,
+            DropDownFilterMode,
+            [
+                new OptionDropDownCVar<string>.ValueOption("nearest", Loc.GetString("ui-options-filter-nearest")),
+                new OptionDropDownCVar<string>.ValueOption("bilinear", Loc.GetString("ui-options-filter-bilinear")),
+            ]);
+
         var vpStretch = Control.AddOptionCheckBox(CCVars.ViewportStretch, ViewportStretchCheckBox);
         var vpVertFit = Control.AddOptionCheckBox(CCVars.ViewportVerticalFit, ViewportVerticalFitCheckBox);
         Control.AddOptionSlider(
@@ -48,8 +65,11 @@ public sealed partial class GraphicsTab : Control
             5,
             (_, value) => Loc.GetString("ui-options-vp-scale-value", ("scale", value)));
 
+        vSync.ImmediateValueChanged += _ => UpdateMaxFpsEnabled();
+        MaxFpsDisplayRateButton.OnPressed += _ => SetMaxFpsToDisplayRate();
         vpStretch.ImmediateValueChanged += _ => UpdateViewportSettingsVisibility();
         vpVertFit.ImmediateValueChanged += _ => UpdateViewportSettingsVisibility();
+        IntegerScalingCheckBox.OnToggled += _ => UpdateViewportSettingsVisibility();
 
         Control.AddOptionSlider(
             CCVars.ViewportWidth,
@@ -69,6 +89,24 @@ public sealed partial class GraphicsTab : Control
 
         UpdateViewportWidthRange();
         UpdateViewportSettingsVisibility();
+        UpdateMaxFpsEnabled();
+    }
+
+    private void UpdateMaxFpsEnabled()
+    {
+        var vSync = VSyncCheckBox.Pressed;
+        MaxFpsInput.Disabled = vSync;
+        MaxFpsDisplayRateButton.Disabled = vSync || _clyde.GetMainWindowMonitor() == null;
+        MaxFpsContainer.Modulate = vSync ? Color.FromHex("#FFFFFF80") : Color.White;
+    }
+
+    private void SetMaxFpsToDisplayRate()
+    {
+        if (_clyde.GetMainWindowMonitor() is not { RefreshRate: > 0 } monitor)
+            return;
+
+        MaxFpsInput.MaxValue = Math.Max(MaxFpsInput.MaxValue, monitor.RefreshRate);
+        MaxFpsInput.Value = monitor.RefreshRate;
     }
 
     private void UpdateViewportSettingsVisibility()
@@ -77,6 +115,7 @@ public sealed partial class GraphicsTab : Control
         IntegerScalingCheckBox.Visible = ViewportStretchCheckBox.Pressed;
         ViewportVerticalFitCheckBox.Visible = ViewportStretchCheckBox.Pressed;
         ViewportWidthSlider.Visible = !ViewportStretchCheckBox.Pressed || !ViewportVerticalFitCheckBox.Pressed;
+        DropDownFilterMode.Visible = !IntegerScalingCheckBox.Pressed && ViewportStretchCheckBox.Pressed;
     }
 
     private void UpdateViewportWidthRange()
@@ -203,6 +242,32 @@ public sealed partial class GraphicsTab : Control
             {
                 ValueChanged();
             };
+        }
+    }
+
+    private sealed class OptionSliderIntInput : BaseOptionCVar<int>
+    {
+        private readonly OptionIntInput _input;
+
+        protected override int Value
+        {
+            get => _input.Value;
+            set => _input.Value = value;
+        }
+
+        public OptionSliderIntInput(
+            OptionsTabControlRow controller,
+            IConfigurationManager cfg,
+            CVarDef<int> cVar,
+            OptionIntInput input,
+            int minValue,
+            int maxValue)
+            : base(controller, cfg, cVar)
+        {
+            _input = input;
+            _input.MinValue = minValue;
+            _input.MaxValue = maxValue;
+            _input.OnValueChanged += _ => ValueChanged();
         }
     }
 

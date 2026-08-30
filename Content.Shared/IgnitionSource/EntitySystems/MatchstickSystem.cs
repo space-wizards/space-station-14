@@ -10,12 +10,12 @@ namespace Content.Shared.IgnitionSource.EntitySystems;
 
 public sealed partial class MatchstickSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedItemSystem _item = default!;
-    [Dependency] private readonly SharedPointLightSystem _lights = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedIgnitionSourceSystem _ignition = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedItemSystem _item = default!;
+    [Dependency] private SharedPointLightSystem _lights = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedIgnitionSourceSystem _ignition = default!;
 
     public override void Initialize()
     {

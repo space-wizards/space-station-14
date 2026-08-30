@@ -2,7 +2,6 @@ using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Tools;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Construction.Components
 {
@@ -16,13 +15,11 @@ namespace Content.Shared.Construction.Components
         public AnchorableFlags Flags = AnchorableFlags.Anchorable | AnchorableFlags.Unanchorable;
 
         [DataField]
-        [ViewVariables(VVAccess.ReadWrite)]
         public bool Snap { get; private set; } = true;
 
         /// <summary>
         /// Base delay to use for anchoring.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
         public float Delay = 1f;
     }
@@ -41,16 +38,22 @@ namespace Content.Shared.Construction.Components
         public EntityUid Tool { get; }
 
         /// <summary>
+        /// This is shown to the player after the entity fails to anchor or unanchor as a popup
+        /// </summary>
+        public string? FailMessage;
+
+        /// <summary>
         ///     Extra delay to add to the do_after.
         ///     Add to this, don't replace it.
         ///     Output parameter.
         /// </summary>
         public float Delay { get; set; } = 0f;
 
-        protected BaseAnchoredAttemptEvent(EntityUid user, EntityUid tool)
+        protected BaseAnchoredAttemptEvent(EntityUid user, EntityUid tool, string? failMessage = null)
         {
             User = user;
             Tool = tool;
+            FailMessage = failMessage;
         }
     }
 

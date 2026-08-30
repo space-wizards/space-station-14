@@ -30,31 +30,38 @@
 
 - type: entity
   parent: GasBinaryBase
-  id: GasPressurePump
+  id: !type:CreateVariants
+    values: [ GasPressurePump, GasPressurePumpAlt1, GasPressurePumpAlt2 ]
   name: gas pump
   description: A pump that moves gas by pressure.
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
   - type: ExtensionCableReceiver
   - type: LightningTarget
     priority: 1
   - type: ApcPowerReceiver
     powerLoad: 200
-  - type: Rotatable
   - type: Transform
     noRot: false
   - type: SubFloorHide
     visibleLayers:
     - enum.SubfloorLayers.FirstLayer
   - type: Sprite
-    sprite: Structures/Piping/Atmospherics/pump.rsi
+    sprite: !type:CreateVariants
+      values: [ Structures/Piping/Atmospherics/pump.rsi, Structures/Piping/Atmospherics/pump_alt1.rsi, Structures/Piping/Atmospherics/pump_alt2.rsi ]
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+    - sprite: !type:CreateVariants
+        values: [ Structures/Piping/Atmospherics/pipe.rsi, Structures/Piping/Atmospherics/pipe_alt1.rsi, Structures/Piping/Atmospherics/pipe_alt2.rsi ]
       state: pipeStraight
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: pumpPressure
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+  - type: AtmosPipeLayers
+    pipeLayer: !type:CreateVariants
+      values: [ 0, 1, 2 ]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -73,7 +80,8 @@
       enum.GasPressurePumpUiKey.Key:
         type: GasPressurePumpBoundUserInterface
   - type: Construction
-    graph: GasBinary
+    graph: !type:CreateVariants
+      values: [ GasBinary, GasBinaryAlt1, GasBinaryAlt2 ]
     node: pressurepump
   - type: AmbientSound
     enabled: false
@@ -89,31 +97,38 @@
 
 - type: entity
   parent: GasBinaryBase
-  id: GasVolumePump
+  id: !type:CreateVariants
+    values: [ GasVolumePump, GasVolumePumpAlt1, GasVolumePumpAlt2 ]
   name: volumetric gas pump
   description: A pump that moves gas by volume.
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
     - type: ExtensionCableReceiver
     - type: LightningTarget
       priority: 1
     - type: ApcPowerReceiver
       powerLoad: 200
-    - type: Rotatable
     - type: Transform
       noRot: false
     - type: SubFloorHide
       visibleLayers:
       - enum.SubfloorLayers.FirstLayer
     - type: Sprite
-      sprite: Structures/Piping/Atmospherics/pump.rsi
+      sprite: !type:CreateVariants
+        values: [ Structures/Piping/Atmospherics/pump.rsi, Structures/Piping/Atmospherics/pump_alt1.rsi, Structures/Piping/Atmospherics/pump_alt2.rsi ]
       layers:
-        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+        - sprite: !type:CreateVariants
+            values: [ Structures/Piping/Atmospherics/pipe.rsi, Structures/Piping/Atmospherics/pipe_alt1.rsi, Structures/Piping/Atmospherics/pipe_alt2.rsi ]
           state: pipeStraight
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: pumpVolume
           map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+    - type: AtmosPipeLayers
+      pipeLayer: !type:CreateVariants
+        values: [ 0, 1, 2 ]
     - type: Appearance
     - type: GenericVisualizer
       visuals:
@@ -133,7 +148,8 @@
         enum.GasVolumePumpUiKey.Key:
           type: GasVolumePumpBoundUserInterface
     - type: Construction
-      graph: GasBinary
+      graph: !type:CreateVariants
+        values: [ GasBinary, GasBinaryAlt1, GasBinaryAlt2 ]
       node: volumepump
     - type: AmbientSound
       enabled: false
@@ -157,26 +173,33 @@
 
 - type: entity
   parent: GasBinaryBase
-  id: GasPressureRegulator
+  id: !type:CreateVariants
+    values: [ GasPressureRegulator, GasPressureRegulatorAlt1, GasPressureRegulatorAlt2 ]
   name: inlet pressure regulator
   description: A valve that releases gas when the inlet pressure exceeds a certain threshold.
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
-  - type: Rotatable
   - type: Transform
     noRot: false
   - type: SubFloorHide
     visibleLayers:
     - enum.SubfloorLayers.FirstLayer
   - type: Sprite
-    sprite: Structures/Piping/Atmospherics/pump.rsi
+    sprite: !type:CreateVariants
+      values: [ Structures/Piping/Atmospherics/pump.rsi, Structures/Piping/Atmospherics/pump_alt1.rsi, Structures/Piping/Atmospherics/pump_alt2.rsi ]
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+    - sprite: !type:CreateVariants
+        values: [ Structures/Piping/Atmospherics/pipe.rsi, Structures/Piping/Atmospherics/pipe_alt1.rsi, Structures/Piping/Atmospherics/pipe_alt2.rsi ]
       state: pipeStraight
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: pumpPressureRegulator
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+  - type: AtmosPipeLayers
+    pipeLayer: !type:CreateVariants
+      values: [ 0, 1, 2 ]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -189,7 +212,8 @@
     enabled: false
     threshold: 4500
   - type: Construction
-    graph: GasBinary
+    graph: !type:CreateVariants
+      values: [ GasBinary, GasBinaryAlt1, GasBinaryAlt2 ]
     node: pressureregulator
   - type: ActivatableUI
     key: enum.GasPressureRegulatorUiKey.Key
@@ -213,28 +237,37 @@
 
 - type: entity
   parent: GasBinaryBase
-  id: GasPassiveGate
+  id: !type:CreateVariants
+    values: [ GasPassiveGate, GasPassiveGateAlt1, GasPassiveGateAlt2 ]
   name: passive gate
   description: A one-way air valve that does not require power.
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
     - type: SubFloorHide
       visibleLayers:
       - enum.SubfloorLayers.FirstLayer
     - type: Sprite
-      sprite: Structures/Piping/Atmospherics/pump.rsi
+      sprite: !type:CreateVariants
+        values: [ Structures/Piping/Atmospherics/pump.rsi, Structures/Piping/Atmospherics/pump_alt1.rsi, Structures/Piping/Atmospherics/pump_alt2.rsi ]
       layers:
-        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+        - sprite: !type:CreateVariants
+            values: [ Structures/Piping/Atmospherics/pipe.rsi, Structures/Piping/Atmospherics/pipe_alt1.rsi, Structures/Piping/Atmospherics/pipe_alt2.rsi ]
           state: pipeStraight
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: pumpPassiveGate
           map: [ "enum.SubfloorLayers.FirstLayer" ]
+    - type: AtmosPipeLayers
+      pipeLayer: !type:CreateVariants
+        values: [ 0, 1, 2 ]
     - type: Appearance
     - type: PipeColorVisuals
     - type: GasPassiveGate
     - type: Construction
-      graph: GasBinary
+      graph: !type:CreateVariants
+        values: [ GasBinary, GasBinaryAlt1, GasBinaryAlt2 ]
       node: passivegate
     - type: AmbientSound
       enabled: true
@@ -250,24 +283,32 @@
 
 - type: entity
   parent: GasBinaryBase
-  id: GasValve
+  id: !type:CreateVariants
+    values: [ GasValve, GasValveAlt1, GasValveAlt2 ]
   name: manual valve
   description: A pipe with a valve that can be used to disable the flow of gas through it.
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
     # TODO ATMOS: Give unique sprite.
     - type: SubFloorHide
       visibleLayers:
       - enum.SubfloorLayers.FirstLayer
     - type: Sprite
-      sprite: Structures/Piping/Atmospherics/pump.rsi
+      sprite: !type:CreateVariants
+        values: [ Structures/Piping/Atmospherics/pump.rsi, Structures/Piping/Atmospherics/pump_alt1.rsi, Structures/Piping/Atmospherics/pump_alt2.rsi ]
       layers:
-        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+        - sprite: !type:CreateVariants
+            values: [ Structures/Piping/Atmospherics/pipe.rsi, Structures/Piping/Atmospherics/pipe_alt1.rsi, Structures/Piping/Atmospherics/pipe_alt2.rsi ]
           state: pipeStraight
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: pumpManualValve
           map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+    - type: AtmosPipeLayers
+      pipeLayer: !type:CreateVariants
+        values: [ 0, 1, 2 ]
     - type: Appearance
     - type: GenericVisualizer
       visuals:
@@ -290,7 +331,8 @@
           pipeDirection: South
           volume: 100
     - type: Construction
-      graph: GasBinary
+      graph: !type:CreateVariants
+        values: [ GasBinary, GasBinaryAlt1, GasBinaryAlt2 ]
       node: valve
     - type: AmbientSound
       enabled: true
@@ -306,24 +348,32 @@
 
 - type: entity
   parent: GasBinaryBase
-  id: SignalControlledValve
+  id: !type:CreateVariants
+    values: [ SignalControlledValve, SignalControlledValveAlt1, SignalControlledValveAlt2 ]
   name: signal valve
   description: A pipe with a valve that can be controlled with signals.
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
   - type: StationAiWhitelist
   - type: SubFloorHide
     visibleLayers:
     - enum.SubfloorLayers.FirstLayer
   - type: Sprite
-    sprite: Structures/Piping/Atmospherics/pump.rsi
+    sprite: !type:CreateVariants
+      values: [ Structures/Piping/Atmospherics/pump.rsi, Structures/Piping/Atmospherics/pump_alt1.rsi, Structures/Piping/Atmospherics/pump_alt2.rsi ]
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+    - sprite: !type:CreateVariants
+        values: [ Structures/Piping/Atmospherics/pipe.rsi, Structures/Piping/Atmospherics/pipe_alt1.rsi, Structures/Piping/Atmospherics/pipe_alt2.rsi ]
       state: pipeStraight
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: pumpSignalValve
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+  - type: AtmosPipeLayers
+    pipeLayer: !type:CreateVariants
+      values: [ 0, 1, 2 ]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -357,7 +407,8 @@
         pipeDirection: South
         volume: 100
   - type: Construction
-    graph: GasBinary
+    graph: !type:CreateVariants
+      values: [ GasBinary, GasBinaryAlt1, GasBinaryAlt2 ]
     node: signalvalve
   - type: AmbientSound
     enabled: true
@@ -373,11 +424,14 @@
 
 - type: entity
   parent: GasBinaryBase
-  id: GasPort
+  id: !type:CreateVariants
+    values: [ GasPort, GasPortAlt1, GasPortAlt2 ]
   name: connector port
   description: For connecting portable devices related to atmospherics control.
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
     - type: SubFloorHide
       visibleLayers:
@@ -385,13 +439,16 @@
     - type: Sprite
       sprite: Structures/Piping/Atmospherics/gascanisterport.rsi
       layers:
-        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+        - sprite: !type:CreateVariants
+            values: [ Structures/Piping/Atmospherics/pipe.rsi, Structures/Piping/Atmospherics/pipe_alt1.rsi, Structures/Piping/Atmospherics/pipe_alt2.rsi ]
           state: pipeUnaryConnectors
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: gasCanisterPort
           map: [ "enum.SubfloorLayers.FirstLayer" ]
     - type: AtmosPipeLayers
       spriteRsiPaths: {}
+      pipeLayer: !type:CreateVariants
+        values: [ 0, 1, 2 ]
     - type: Appearance
     - type: PipeColorVisuals
     - type: GasPort
@@ -402,7 +459,8 @@
           nodeGroupID: Pipe
           pipeDirection: South
     - type: Construction
-      graph: GasBinary
+      graph: !type:CreateVariants
+        values: [ GasBinary, GasBinaryAlt1, GasBinaryAlt2 ]
       node: port
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasVentOpening
@@ -412,11 +470,14 @@
 
 - type: entity
   parent: GasVentPump
-  id: GasDualPortVentPump
+  id: !type:CreateVariants
+    values: [ GasDualPortVentPump, GasDualPortVentPumpAlt1, GasDualPortVentPumpAlt2 ]
   name: dual-port air vent
   description: Has a valve and a pump attached to it. There are two ports, one is an input for releasing air, the other is an output when siphoning.
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
     - type: SubFloorHide
       visibleLayers:
@@ -425,13 +486,17 @@
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/vent.rsi
       layers:
-        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+        - sprite: !type:CreateVariants
+            values: [ Structures/Piping/Atmospherics/pipe.rsi, Structures/Piping/Atmospherics/pipe_alt1.rsi, Structures/Piping/Atmospherics/pipe_alt2.rsi ]
           state: pipeBinaryConnectors
           map: [ "enum.PipeVisualLayers.Pipe" ]
+        - state: vent_direction
         - state: vent_off
           map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
     - type: AtmosPipeLayers
       spriteRsiPaths: {}
+      pipeLayer: !type:CreateVariants
+        values: [ 0, 1, 2 ]
     - type: GenericVisualizer
       visuals:
         enum.VentPumpVisuals.State:
@@ -445,18 +510,10 @@
     - type: GasVentPump
       inlet: inlet
       outlet: outlet
-      canLink: true
-    - type: DeviceNetwork
-      deviceNetId: Wireless
-      receiveFrequencyId: BasicDevice
-    - type: WirelessNetworkConnection
-      range: 200
-    - type: DeviceLinkSink
-      ports:
-        - Pressurize
-        - Depressurize
+      canLink: false
     - type: Construction
-      graph: GasBinary
+      graph: !type:CreateVariants
+        values: [ GasBinary, GasBinaryAlt1, GasBinaryAlt2 ]
       node: dualportventpump
     - type: NodeContainer
       nodes:
@@ -477,23 +534,32 @@
       - AirVent
 
 - type: entity
-  parent: [ BaseMachine, ConstructibleMachine ]
-  id: GasRecycler
+  parent: [ BaseMachine, ConstructibleMachine, BaseConstructibleMachineDestructible ]
+  id: !type:CreateVariants
+    values: [ GasRecycler, GasRecyclerAlt1, GasRecyclerAlt2 ]
   name: gas recycler
   description: Recycles carbon dioxide and nitrous oxide. Heater and compressor not included.
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
   - type: Sprite
     sprite: Structures/Machines/gasrecycler.rsi
+    snapCardinals: true
+    granularLayersRendering: true
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+    - sprite: !type:CreateVariants
+        values: [ Structures/Piping/Atmospherics/pipe.rsi, Structures/Piping/Atmospherics/pipe_alt1.rsi, Structures/Piping/Atmospherics/pipe_alt2.rsi ]
       state: pipeBinaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
+      renderingStrategy: Default
     - state: running
     - state: unlit
       shader: unshaded
   - type: AtmosPipeLayers
+    pipeLayer: !type:CreateVariants
+      values: [ 0, 1, 2 ] 
     spriteLayersRsiPaths:
       enum.PipeVisualLayers.Pipe:
         Primary: Structures/Piping/Atmospherics/pipe.rsi
@@ -507,7 +573,6 @@
           True: { state: running }
           False: { state: unlit }
   - type: PipeColorVisuals
-  - type: Rotatable
   - type: GasRecycler
   - type: PipeRestrictOverlap
   - type: NodeContainer
@@ -532,19 +597,21 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 175
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
-      - !type:ChangeConstructionNodeBehavior
-        node: machineFrame
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Machine
     board: GasRecyclerMachineCircuitboard
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasValve
+  - type: Transform
+    noRot: false
+  - type: GuideHelp
+    guides:
+    - GasRecycling
+  - type: TegCirculator
 
 - type: entity
   parent: GasBinaryBase
@@ -554,7 +621,6 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Rotatable
   - type: Transform
     noRot: false
   - type: Sprite

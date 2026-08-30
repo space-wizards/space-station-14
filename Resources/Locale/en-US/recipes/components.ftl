@@ -5,3 +5,4 @@ construction-graph-component-second-flash = second flash
 construction-graph-component-power-cell = power cell
 construction-graph-component-apc-electronics = APC electronics
 construction-graph-component-payload-trigger = trigger
+construction-graph-component-borg-brain = MMI or positronic brain

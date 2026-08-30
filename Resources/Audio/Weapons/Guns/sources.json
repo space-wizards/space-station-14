@@ -34,7 +34,8 @@
         "shotgun.ogg": "https://github.com/discordia-space/CEV-Eris/blob/01f7518e0f8177734a6579aba2bbf76024aa96c4/sound/weapons/guns/fire/shotgunp_fire.ogg",
         "silenced.ogg": "https://github.com/discordia-space/CEV-Eris/blob/01f7518e0f8177734a6579aba2bbf76024aa96c4/sound/weapons/Gunshot_silenced.wav",
         "smg.ogg": "https://github.com/discordia-space/CEV-Eris/blob/01f7518e0f8177734a6579aba2bbf76024aa96c4/sound/weapons/guns/fire/smg_fire.ogg",
-        "sniper.ogg": "https://github.com/discordia-space/CEV-Eris/blob/01f7518e0f8177734a6579aba2bbf76024aa96c4/sound/weapons/guns/fire/sniper_fire.ogg"
+        "sniper.ogg": "https://github.com/discordia-space/CEV-Eris/blob/01f7518e0f8177734a6579aba2bbf76024aa96c4/sound/weapons/guns/fire/sniper_fire.ogg",
+        "energy_crossbowshoot.ogg": "Made on request by Nosrepp (Discord)"
     },
     "MagIn": {
         "batrifle_magin.ogg": "https://github.com/discordia-space/CEV-Eris/blob/01f7518e0f8177734a6579aba2bbf76024aa96c4/sound/weapons/guns/interact/batrifle_magin.ogg",
@@ -47,7 +48,8 @@
         "sfrifle_magin.ogg": "https://github.com/discordia-space/CEV-Eris/blob/01f7518e0f8177734a6579aba2bbf76024aa96c4/sound/weapons/guns/interact/sfrifle_magin.ogg",
         "smg_magin.ogg": "https://github.com/discordia-space/CEV-Eris/blob/01f7518e0f8177734a6579aba2bbf76024aa96c4/sound/weapons/guns/interact/smg_magin.ogg",
         "revolver_magin.ogg": "https://github.com/discordia-space/CEV-Eris/blob/01f7518e0f8177734a6579aba2bbf76024aa96c4/sound/weapons/guns/interact/rev_magin.ogg",
-        "shotgun_insert.ogg": "https://github.com/discordia-space/CEV-Eris/blob/01f7518e0f8177734a6579aba2bbf76024aa96c4/sound/weapons/guns/interact/shotgun_insert.ogg"
+        "shotgun_insert.ogg": "https://github.com/discordia-space/CEV-Eris/blob/01f7518e0f8177734a6579aba2bbf76024aa96c4/sound/weapons/guns/interact/shotgun_insert.ogg",
+        "energy_crossbowreload.ogg": "Made on request by Nosrepp (Discord)"
     },
     "MagOut": {
         "batrifle_magout.ogg": "https://github.com/discordia-space/CEV-Eris/blob/01f7518e0f8177734a6579aba2bbf76024aa96c4/sound/weapons/guns/interact/batrifle_magout.ogg",

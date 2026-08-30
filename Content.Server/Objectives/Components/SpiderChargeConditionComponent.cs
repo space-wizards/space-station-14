@@ -1,5 +1,6 @@
 using Content.Server.Ninja.Systems;
 using Content.Server.Objectives.Systems;
+using Content.Shared.Whitelist;
 
 namespace Content.Server.Objectives.Components;
 
@@ -14,4 +15,16 @@ public sealed partial class SpiderChargeConditionComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? Target;
+
+    /// <summary>
+    /// Which points are in the list of valid bombing targets
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Whitelist;
+
+    /// <summary>
+    /// Which points are in the list of invalid bombing targets
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Blacklist;
 }

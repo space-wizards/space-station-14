@@ -1,4 +1,4 @@
-﻿# Tool closet
+# Tool closet
 - type: entity
   id: ClosetTool
   name: tool closet
@@ -164,9 +164,9 @@
 # Syndicate
 - type: entity
   id: LockerSyndicate
-  name: armory closet
+  name: blood-red closet
   parent: ClosetSteelBase
-  description: It's a storage unit.
+  description: It's a storage unit with a blood-red design.
   components:
   - type: Appearance
   - type: EntityStorageVisuals

@@ -1,0 +1,25 @@
+- type: constructionGraph
+  id: SnapPopExplosiveGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: snapPop #have to make a start step to have the behaviour of clicking on a snap pop with gunpowder to make the fake one. Since there is no recipe for them on the construction menu, the materials bellow have no real meaning.
+      steps:
+      - material: Gunpowder
+        amount: 1
+      - material: Paper
+        amount: 4
+        doAfter: 4
+  - node: snapPop
+    entity: SnapPop
+    edges:
+      - to: snapPopExplosive
+        steps:
+          - material: Gunpowder
+            doAfter: 1
+  - node: snapPopExplosive
+    actions:
+    - !type:AdminLog
+      message: "A fake snap pop was crafted"
+    entity: SnapPopExplosive

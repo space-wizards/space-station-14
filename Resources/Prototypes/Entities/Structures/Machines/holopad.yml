@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   id: Holopad
   name: holopad
   description: "A floor-mounted device for projecting holographic images."
@@ -15,7 +15,10 @@
         mask:
         - Impassable
   - type: ApcPowerReceiver
-    powerLoad: 300
+    powerLoad: 5
+  - type: PowerState
+    idlePowerDraw: 5
+    workingPowerDraw: 300
   - type: StationAiVision
     range: 1
     needsAnchoring: true
@@ -46,10 +49,6 @@
         enum.PowerDeviceVisualLayers.Powered:
           False: { visible: true }
           True: { visible: false }
-      enum.WiresVisuals.MaintenancePanelState:
-        enum.WiresVisualLayers.MaintenancePanel:
-          True: { visible: false }
-          False: { visible: true }
   - type: Machine
     board: HolopadMachineCircuitboard
   - type: StationAiWhitelist
@@ -76,6 +75,7 @@
     speakerVolume: Speak
   - type: AccessReader
     access: [[ "Command" ]]
+    examinationText: access-reader-examination-functionality-restricted
   - type: ActivatableUI
     key: enum.HolopadUiKey.InteractionWindow
   - type: ActivatableUIRequiresPower
@@ -90,19 +90,17 @@
   - type: Wires
     boardName: wires-board-name-holopad
     layoutId: Holopad
+  - type: Damageable
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 175
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          collection: MetalBreak
-      - !type:ChangeConstructionNodeBehavior
-        node: machineFrame
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+          collection: MetalGlassBreak
 
 - type: entity
   name: long-range holopad
@@ -183,7 +181,7 @@
   suffix: Tools
   components:
   - type: Label
-    currentLabel: holopad-general-tools
+    localizedLabel: holopad-general-tools
 
 - type: entity
   parent: Holopad
@@ -191,7 +189,7 @@
   suffix: Cryosleep
   components:
   - type: Label
-    currentLabel: holopad-general-cryosleep
+    localizedLabel: holopad-general-cryosleep
 
 - type: entity
   parent: Holopad
@@ -199,7 +197,7 @@
   suffix: Theater
   components:
   - type: Label
-    currentLabel: holopad-general-theater
+    localizedLabel: holopad-general-theater
 
 - type: entity
   parent: Holopad
@@ -207,7 +205,7 @@
   suffix: Disposals
   components:
   - type: Label
-    currentLabel: holopad-general-disposals
+    localizedLabel: holopad-general-disposals
 
 - type: entity
   parent: Holopad
@@ -215,7 +213,7 @@
   suffix: EVA Storage
   components:
   - type: Label
-    currentLabel: holopad-general-eva
+    localizedLabel: holopad-general-eva
 
 - type: entity
   parent: Holopad
@@ -223,7 +221,7 @@
   suffix: Lounge
   components:
   - type: Label
-    currentLabel: holopad-general-lounge
+    localizedLabel: holopad-general-lounge
 
 - type: entity
   parent: Holopad
@@ -231,7 +229,7 @@
   suffix: Arcade
   components:
   - type: Label
-    currentLabel: holopad-general-arcade
+    localizedLabel: holopad-general-arcade
 
 - type: entity
   parent: Holopad
@@ -239,7 +237,7 @@
   suffix: Evac
   components:
   - type: Label
-    currentLabel: holopad-general-evac
+    localizedLabel: holopad-general-evac
 
 - type: entity
   parent: Holopad
@@ -247,7 +245,7 @@
   suffix: Arrivals
   components:
   - type: Label
-    currentLabel: holopad-general-arrivals
+    localizedLabel: holopad-general-arrivals
 
 # Command
 - type: entity
@@ -256,7 +254,7 @@
   suffix: Bridge
   components:
   - type: Label
-    currentLabel: holopad-command-bridge
+    localizedLabel: holopad-command-bridge
 
 - type: entity
   parent: Holopad
@@ -264,7 +262,7 @@
   suffix: Vault
   components:
   - type: Label
-    currentLabel: holopad-command-vault
+    localizedLabel: holopad-command-vault
 
 - type: entity
   parent: Holopad
@@ -272,7 +270,7 @@
   suffix: Bridge Hallway
   components:
   - type: Label
-    currentLabel: holopad-command-bridge-hallway
+    localizedLabel: holopad-command-bridge-hallway
 
 - type: entity
   parent: Holopad
@@ -280,7 +278,7 @@
   suffix: Command Meeting
   components:
   - type: Label
-    currentLabel: holopad-command-meeting-room
+    localizedLabel: holopad-command-meeting-room
 
 - type: entity
   parent: Holopad
@@ -288,7 +286,7 @@
   suffix: Command Lounge
   components:
   - type: Label
-    currentLabel: holopad-command-lounge
+    localizedLabel: holopad-command-lounge
 
 - type: entity
   parent: Holopad
@@ -296,7 +294,7 @@
   suffix: Captain
   components:
   - type: Label
-    currentLabel: holopad-command-captain
+    localizedLabel: holopad-command-captain
 
 - type: entity
   parent: Holopad
@@ -304,7 +302,7 @@
   suffix: HoP
   components:
   - type: Label
-    currentLabel: holopad-command-hop
+    localizedLabel: holopad-command-hop
 
 - type: entity
   parent: Holopad
@@ -312,7 +310,7 @@
   suffix: CMO
   components:
   - type: Label
-    currentLabel: holopad-command-cmo
+    localizedLabel: holopad-command-cmo
 
 - type: entity
   parent: Holopad
@@ -320,7 +318,7 @@
   suffix: QM
   components:
   - type: Label
-    currentLabel: holopad-command-qm
+    localizedLabel: holopad-command-qm
 
 - type: entity
   parent: Holopad
@@ -328,7 +326,7 @@
   suffix: CE
   components:
   - type: Label
-    currentLabel: holopad-command-ce
+    localizedLabel: holopad-command-ce
 
 - type: entity
   parent: Holopad
@@ -336,7 +334,7 @@
   suffix: RD
   components:
   - type: Label
-    currentLabel: holopad-command-rd
+    localizedLabel: holopad-command-rd
 
 - type: entity
   parent: Holopad
@@ -344,7 +342,7 @@
   suffix: HoS
   components:
   - type: Label
-    currentLabel: holopad-command-hos
+    localizedLabel: holopad-command-hos
 
 # Science
 - type: entity
@@ -353,7 +351,7 @@
   suffix: Anomaly
   components:
   - type: Label
-    currentLabel: holopad-science-anomaly
+    localizedLabel: holopad-science-anomaly
 
 - type: entity
   parent: Holopad
@@ -361,7 +359,7 @@
   suffix: Artifact
   components:
   - type: Label
-    currentLabel: holopad-science-artifact
+    localizedLabel: holopad-science-artifact
 
 - type: entity
   parent: Holopad
@@ -369,7 +367,7 @@
   suffix: Artifact North
   components:
   - type: Label
-    currentLabel: holopad-science-artifact-north
+    localizedLabel: holopad-science-artifact-north
 
 - type: entity
   parent: Holopad
@@ -377,7 +375,7 @@
   suffix: Artifact South
   components:
   - type: Label
-    currentLabel: holopad-science-artifact-south
+    localizedLabel: holopad-science-artifact-south
 
 - type: entity
   parent: Holopad
@@ -385,7 +383,7 @@
   suffix: Robotics
   components:
   - type: Label
-    currentLabel: holopad-science-robotics
+    localizedLabel: holopad-science-robotics
 
 - type: entity
   parent: Holopad
@@ -393,7 +391,7 @@
   suffix: R&D
   components:
   - type: Label
-    currentLabel: holopad-science-rnd
+    localizedLabel: holopad-science-rnd
 
 - type: entity
   parent: Holopad
@@ -401,7 +399,7 @@
   suffix: Sci Front
   components:
   - type: Label
-    currentLabel: holopad-science-front
+    localizedLabel: holopad-science-front
 
 - type: entity
   parent: Holopad
@@ -409,7 +407,7 @@
   suffix: Sci Breakroom
   components:
   - type: Label
-    currentLabel: holopad-science-breakroom
+    localizedLabel: holopad-science-breakroom
 
 # Medical
 - type: entity
@@ -418,7 +416,7 @@
   suffix: Medbay
   components:
   - type: Label
-    currentLabel: holopad-medical-medbay
+    localizedLabel: holopad-medical-medbay
 
 - type: entity
   parent: Holopad
@@ -426,7 +424,7 @@
   suffix: Chemistry
   components:
   - type: Label
-    currentLabel: holopad-medical-chemistry
+    localizedLabel: holopad-medical-chemistry
 
 - type: entity
   parent: Holopad
@@ -434,7 +432,7 @@
   suffix: Cryopods
   components:
   - type: Label
-    currentLabel: holopad-medical-cryopods
+    localizedLabel: holopad-medical-cryopods
 
 - type: entity
   parent: Holopad
@@ -442,7 +440,7 @@
   suffix: Morgue
   components:
   - type: Label
-    currentLabel: holopad-medical-morgue
+    localizedLabel: holopad-medical-morgue
 
 - type: entity
   parent: Holopad
@@ -450,7 +448,7 @@
   suffix: Surgery
   components:
   - type: Label
-    currentLabel: holopad-medical-surgery
+    localizedLabel: holopad-medical-surgery
 
 - type: entity
   parent: Holopad
@@ -458,7 +456,7 @@
   suffix: Paramedic
   components:
   - type: Label
-    currentLabel: holopad-medical-paramedic
+    localizedLabel: holopad-medical-paramedic
 
 - type: entity
   parent: Holopad
@@ -466,7 +464,7 @@
   suffix: Virology
   components:
   - type: Label
-    currentLabel: holopad-medical-virology
+    localizedLabel: holopad-medical-virology
 
 - type: entity
   parent: Holopad
@@ -474,7 +472,7 @@
   suffix: Med Front
   components:
   - type: Label
-    currentLabel: holopad-medical-front
+    localizedLabel: holopad-medical-front
 
 - type: entity
   parent: Holopad
@@ -482,7 +480,7 @@
   suffix: Med Breakroom
   components:
   - type: Label
-    currentLabel: holopad-medical-breakroom
+    localizedLabel: holopad-medical-breakroom
 
 - type: entity
   parent: Holopad
@@ -490,7 +488,7 @@
   suffix: Med Clinic
   components:
   - type: Label
-    currentLabel: holopad-medical-clinic
+    localizedLabel: holopad-medical-clinic
 
 # Cargo
 - type: entity
@@ -499,7 +497,7 @@
   suffix: Cargo Front
   components:
   - type: Label
-    currentLabel: holopad-cargo-front
+    localizedLabel: holopad-cargo-front
 
 - type: entity
   parent: Holopad
@@ -507,7 +505,7 @@
   suffix: Cargo Bay
   components:
   - type: Label
-    currentLabel: holopad-cargo-bay
+    localizedLabel: holopad-cargo-bay
 
 - type: entity
   parent: Holopad
@@ -515,7 +513,7 @@
   suffix: Salvage Bay
   components:
   - type: Label
-    currentLabel: holopad-cargo-salvage-bay
+    localizedLabel: holopad-cargo-salvage-bay
 
 - type: entity
   parent: Holopad
@@ -523,7 +521,7 @@
   suffix: Cargo Breakroom
   components:
   - type: Label
-    currentLabel: holopad-cargo-breakroom
+    localizedLabel: holopad-cargo-breakroom
 
 - type: entity
   parent: Holopad
@@ -531,7 +529,7 @@
   suffix: Cargo Mailroom
   components:
   - type: Label
-    currentLabel: holopad-cargo-mailroom
+    localizedLabel: holopad-cargo-mailroom
 
 # Engineering
 - type: entity
@@ -540,7 +538,7 @@
   suffix: Atmos Front
   components:
   - type: Label
-    currentLabel: holopad-engineering-atmos-front
+    localizedLabel: holopad-engineering-atmos-front
 
 - type: entity
   parent: Holopad
@@ -548,7 +546,7 @@
   suffix: Atmos Main
   components:
   - type: Label
-    currentLabel: holopad-engineering-atmos-main
+    localizedLabel: holopad-engineering-atmos-main
 
 - type: entity
   parent: Holopad
@@ -556,7 +554,7 @@
   suffix: TEG
   components:
   - type: Label
-    currentLabel: holopad-engineering-atmos-teg
+    localizedLabel: holopad-engineering-atmos-teg
 
 - type: entity
   parent: Holopad
@@ -564,7 +562,7 @@
   suffix: Engi Storage
   components:
   - type: Label
-    currentLabel: holopad-engineering-storage
+    localizedLabel: holopad-engineering-storage
 
 - type: entity
   parent: Holopad
@@ -572,7 +570,7 @@
   suffix: Engi Breakroom
   components:
   - type: Label
-    currentLabel: holopad-engineering-breakroom
+    localizedLabel: holopad-engineering-breakroom
 
 - type: entity
   parent: Holopad
@@ -580,7 +578,7 @@
   suffix: Engi Front
   components:
   - type: Label
-    currentLabel: holopad-engineering-front
+    localizedLabel: holopad-engineering-front
 
 - type: entity
   parent: Holopad
@@ -588,7 +586,7 @@
   suffix: Telecoms
   components:
   - type: Label
-    currentLabel: holopad-engineering-telecoms
+    localizedLabel: holopad-engineering-telecoms
 
 - type: entity
   parent: Holopad
@@ -596,7 +594,7 @@
   suffix: Tech Vault
   components:
   - type: Label
-    currentLabel: holopad-engineering-tech-vault
+    localizedLabel: holopad-engineering-tech-vault
 
 - type: entity
   parent: Holopad
@@ -604,7 +602,7 @@
   suffix: AME
   components:
   - type: Label
-    currentLabel: holopad-engineering-ame
+    localizedLabel: holopad-engineering-ame
 
 - type: entity
   parent: Holopad
@@ -612,7 +610,7 @@
   suffix: Power
   components:
   - type: Label
-    currentLabel: holopad-engineering-power
+    localizedLabel: holopad-engineering-power
 
 - type: entity
   parent: Holopad
@@ -620,7 +618,7 @@
   suffix: Engi Main
   components:
   - type: Label
-    currentLabel: holopad-engineering-main
+    localizedLabel: holopad-engineering-main
 
 # Security
 - type: entity
@@ -629,7 +627,7 @@
   suffix: Sec Front
   components:
   - type: Label
-    currentLabel: holopad-security-front
+    localizedLabel: holopad-security-front
 
 - type: entity
   parent: Holopad
@@ -637,7 +635,7 @@
   suffix: Brig
   components:
   - type: Label
-    currentLabel: holopad-security-brig
+    localizedLabel: holopad-security-brig
 
 - type: entity
   parent: Holopad
@@ -645,7 +643,7 @@
   suffix: Warden
   components:
   - type: Label
-    currentLabel: holopad-security-warden
+    localizedLabel: holopad-security-warden
 
 - type: entity
   parent: Holopad
@@ -653,7 +651,7 @@
   suffix: Interrogation
   components:
   - type: Label
-    currentLabel: holopad-security-interrogation
+    localizedLabel: holopad-security-interrogation
 
 - type: entity
   parent: Holopad
@@ -661,7 +659,7 @@
   suffix: Sec Breakroom
   components:
   - type: Label
-    currentLabel: holopad-security-breakroom
+    localizedLabel: holopad-security-breakroom
 
 - type: entity
   parent: Holopad
@@ -669,7 +667,7 @@
   suffix: Detective
   components:
   - type: Label
-    currentLabel: holopad-security-detective
+    localizedLabel: holopad-security-detective
 
 - type: entity
   parent: Holopad
@@ -677,7 +675,7 @@
   suffix: Perma
   components:
   - type: Label
-    currentLabel: holopad-security-perma
+    localizedLabel: holopad-security-perma
 
 - type: entity
   parent: Holopad
@@ -685,7 +683,7 @@
   suffix: Courtroom
   components:
   - type: Label
-    currentLabel: holopad-security-courtroom
+    localizedLabel: holopad-security-courtroom
 
 - type: entity
   parent: Holopad
@@ -693,7 +691,7 @@
   suffix: Lawyer
   components:
   - type: Label
-    currentLabel: holopad-security-lawyer
+    localizedLabel: holopad-security-lawyer
 
 - type: entity
   parent: Holopad
@@ -701,7 +699,7 @@
   suffix: Armory
   components:
   - type: Label
-    currentLabel: holopad-security-armory
+    localizedLabel: holopad-security-armory
 
 - type: entity
   parent: Holopad
@@ -709,7 +707,7 @@
   suffix: Sec Locker Room
   components:
   - type: Label
-    currentLabel: holopad-security-locker-room
+    localizedLabel: holopad-security-locker-room
 
 - type: entity
   parent: Holopad
@@ -717,7 +715,7 @@
   suffix: Brig Med
   components:
   - type: Label
-    currentLabel: holopad-security-brig-med
+    localizedLabel: holopad-security-brig-med
 
 - type: entity
   parent: Holopad
@@ -725,7 +723,7 @@
   suffix: Sec Evac Checkpoint
   components:
   - type: Label
-    currentLabel: holopad-security-evac-checkpoint
+    localizedLabel: holopad-security-evac-checkpoint
 
 - type: entity
   parent: Holopad
@@ -733,7 +731,7 @@
   suffix: Sec Arrivals Checkpoint
   components:
   - type: Label
-    currentLabel: holopad-security-arrivals-checkpoint
+    localizedLabel: holopad-security-arrivals-checkpoint
 
 # Service
 - type: entity
@@ -742,7 +740,7 @@
   suffix: Janitor
   components:
   - type: Label
-    currentLabel: holopad-service-janitor
+    localizedLabel: holopad-service-janitor
 
 - type: entity
   parent: Holopad
@@ -750,7 +748,7 @@
   suffix: Bar
   components:
   - type: Label
-    currentLabel: holopad-service-bar
+    localizedLabel: holopad-service-bar
 
 - type: entity
   parent: Holopad
@@ -758,7 +756,7 @@
   suffix: Kitchen
   components:
   - type: Label
-    currentLabel: holopad-service-kitchen
+    localizedLabel: holopad-service-kitchen
 
 - type: entity
   parent: Holopad
@@ -766,7 +764,7 @@
   suffix: Botany
   components:
   - type: Label
-    currentLabel: holopad-service-botany
+    localizedLabel: holopad-service-botany
 
 - type: entity
   parent: Holopad
@@ -774,7 +772,7 @@
   suffix: Chapel
   components:
   - type: Label
-    currentLabel: holopad-service-chapel
+    localizedLabel: holopad-service-chapel
 
 - type: entity
   parent: Holopad
@@ -782,7 +780,7 @@
   suffix: Library
   components:
   - type: Label
-    currentLabel: holopad-service-library
+    localizedLabel: holopad-service-library
 
 - type: entity
   parent: Holopad
@@ -790,7 +788,7 @@
   suffix: Game Room
   components:
   - type: Label
-    currentLabel: holopad-service-gameroom
+    localizedLabel: holopad-service-gameroom
 
 - type: entity
   parent: Holopad
@@ -798,7 +796,7 @@
   suffix: Newsroom
   components:
   - type: Label
-    currentLabel: holopad-service-newsroom
+    localizedLabel: holopad-service-newsroom
 
 - type: entity
   parent: Holopad
@@ -806,7 +804,7 @@
   suffix: Zookeeper
   components:
   - type: Label
-    currentLabel: holopad-service-zookeeper
+    localizedLabel: holopad-service-zookeeper
 
 - type: entity
   parent: Holopad
@@ -814,7 +812,7 @@
   suffix: Boxer
   components:
   - type: Label
-    currentLabel: holopad-service-boxer
+    localizedLabel: holopad-service-boxer
 
 - type: entity
   parent: Holopad
@@ -822,7 +820,7 @@
   suffix: Clown
   components:
   - type: Label
-    currentLabel: holopad-service-clown
+    localizedLabel: holopad-service-clown
 
 - type: entity
   parent: Holopad
@@ -830,7 +828,7 @@
   suffix: Musician
   components:
   - type: Label
-    currentLabel: holopad-service-musician
+    localizedLabel: holopad-service-musician
 
 - type: entity
   parent: Holopad
@@ -838,7 +836,7 @@
   suffix: Mime
   components:
   - type: Label
-    currentLabel: holopad-service-mime
+    localizedLabel: holopad-service-mime
 
 # AI
 - type: entity
@@ -847,7 +845,7 @@
   suffix: AI Core
   components:
   - type: Label
-    currentLabel: holopad-ai-core
+    localizedLabel: holopad-ai-core
 
 - type: entity
   parent: Holopad
@@ -855,7 +853,7 @@
   suffix: AI Main
   components:
   - type: Label
-    currentLabel: holopad-ai-main
+    localizedLabel: holopad-ai-main
 
 - type: entity
   parent: Holopad
@@ -863,7 +861,7 @@
   suffix: AI Upload
   components:
   - type: Label
-    currentLabel: holopad-ai-upload
+    localizedLabel: holopad-ai-upload
 
 - type: entity
   parent: Holopad
@@ -871,7 +869,7 @@
   suffix: AI Backup Power
   components:
   - type: Label
-    currentLabel: holopad-ai-backup-power
+    localizedLabel: holopad-ai-backup-power
 
 - type: entity
   parent: Holopad
@@ -879,7 +877,7 @@
   suffix: AI Entrance
   components:
   - type: Label
-    currentLabel: holopad-ai-entrance
+    localizedLabel: holopad-ai-entrance
 
 - type: entity
   parent: Holopad
@@ -887,7 +885,7 @@
   suffix: AI Chute
   components:
   - type: Label
-    currentLabel: holopad-ai-chute
+    localizedLabel: holopad-ai-chute
 
 # Long Range
 - type: entity
@@ -896,7 +894,7 @@
   suffix: ATS
   components:
   - type: Label
-    currentLabel: holopad-cargo-ats
+    localizedLabel: holopad-cargo-ats
 
 - type: entity
   parent: HolopadLongRange
@@ -904,7 +902,7 @@
   suffix: Station Bridge
   components:
   - type: Label
-    currentLabel: holopad-station-bridge
+    localizedLabel: holopad-station-bridge
 
 - type: entity
   parent: HolopadLongRange
@@ -912,7 +910,7 @@
   suffix: Station Cargo Bay
   components:
   - type: Label
-    currentLabel: holopad-station-cargo-bay
+    localizedLabel: holopad-station-cargo-bay
 
 - type: entity
   parent: HolopadLongRange
@@ -920,7 +918,7 @@
   suffix: Cargo Shuttle
   components:
   - type: Label
-    currentLabel: holopad-cargo-shuttle
+    localizedLabel: holopad-cargo-shuttle
 
 - type: entity
   parent: HolopadLongRange
@@ -928,7 +926,7 @@
   suffix: Evac Shuttle
   components:
   - type: Label
-    currentLabel: holopad-centcomm-evac
+    localizedLabel: holopad-centcomm-evac
 
 
 # Map Specific
@@ -939,4 +937,4 @@
   suffix: Clown/Mime
   components:
   - type: Label
-    currentLabel: holopad-service-clown-mime
+    localizedLabel: holopad-service-clown-mime

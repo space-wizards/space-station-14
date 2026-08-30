@@ -26,6 +26,20 @@
         maxDistance: 2
   - type: UseDelay
     delay: 1.5
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          vertices:
+          - -0.3,0.1
+          - -0.1,0.3
+          - 0.3,-0.1
+          - 0.1,-0.3
+        density: 20 # derived from base_item
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
 
 - type: entity
   parent: Pen
@@ -65,7 +79,6 @@
     tags:
     - Write
     - WriteIgnoreStamps
-    - Pickaxe
     - Pen
   - type: MeleeWeapon
     wideAnimationRotation: -45
@@ -114,10 +127,10 @@
     state: pen_cap
 
 - type: entity
-  name: hop's fountain pen
+  name: HoP's fountain pen
   parent: PenEmbeddable
   id: PenHop
-  description: A luxurious fountain pen for the hop of the station.
+  description: A luxurious fountain pen for the HoP of the station.
   components:
   - type: Sprite
     state: pen_hop

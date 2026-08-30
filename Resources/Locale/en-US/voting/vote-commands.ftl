@@ -12,8 +12,8 @@ cmd-createvote-arg-vote-type = <vote type>
 
 cmd-customvote-desc = Creates a custom vote
 cmd-customvote-help = Usage: customvote <title> <option1> <option2> [option3...]
-cmd-customvote-on-finished-tie = Tie between {$ties}!
-cmd-customvote-on-finished-win = {$winner} wins!
+cmd-customvote-on-finished-tie = The vote '{$title}' has finished: tie between {$ties}!
+cmd-customvote-on-finished-win = The vote '{$title}' has finished: {$winner} wins!
 cmd-customvote-arg-title = <title>
 cmd-customvote-arg-option-n = <option{ $n }>
 

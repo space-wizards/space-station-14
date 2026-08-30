@@ -3,7 +3,7 @@
                       Title="Loading..."
                       MinSize="400 200">
     <BoxContainer Orientation="Vertical" Margin="4">
-        <TextEdit Name="NoteTextEdit" HorizontalExpand="True" VerticalExpand="True" />
+        <TextEdit Name="NoteTextEdit" Access="Public" HorizontalExpand="True" VerticalExpand="True" />
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
             <Label Name="ExpiryLabel" Text="{Loc admin-note-editor-expiry-label}" Visible="False" />
             <HistoryLineEdit Name="ExpiryLineEdit" PlaceHolder="{Loc admin-note-editor-expiry-placeholder}"
@@ -17,7 +17,7 @@
                       ToolTip="{Loc admin-note-editor-secret-tooltip}" />
             <CheckBox Name="PermanentCheckBox" Pressed="True" Text="{Loc admin-note-editor-expiry-checkbox}"
                       ToolTip="{Loc admin-note-editor-expiry-checkbox-tooltip}" />
-            <Button Name="SubmitButton" Text="{Loc admin-note-editor-submit}" HorizontalAlignment="Right" />
+            <Button Name="SubmitButton" Access="Public" Text="{Loc admin-note-editor-submit}" HorizontalAlignment="Right" />
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

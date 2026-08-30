@@ -27,6 +27,17 @@
     TriggerThrow: 1
     TriggerDeath: 1
     TriggerMagnet: 1
+    TriggerConsumeMoney: 1
+    TriggerConsumeKnowledge: 0.25
+    TriggerConsumeCarbs: 1
+    TriggerConsumeMeat: 0.5
+    TriggerConsumeProduce: 0.5
+    TriggerInteractStamp: 1
+    TriggerInteractShock: 1
+    TriggerAttackParticleEngine: 0.1
+    TriggerAttackParticleAnomaly: 1
+    TriggerAttackStaminaDamage: 1
+    TriggerAttackLaser: 0.5
 
 - type: xenoArchTrigger
   id: TriggerMusic
@@ -149,7 +160,15 @@
   - type: XATDamageThresholdReached
     typesNeeded:
       Radiation: 20
-  # TODO: legendary microwave trigger
+
+- type: xenoArchTrigger
+  id: TriggerMicrowave
+  tip: xenoarch-trigger-tip-microwave
+  whitelist:
+    components:
+    - Item
+  components:
+  - type: XATMicrowave
 
 - type: xenoArchTrigger
   id: TriggerPressureHigh
@@ -242,6 +261,8 @@
     - Slime
     - AmmoniaBlood
     - ZombieBlood
+    - Sap
+    - SulfurBlood
 
 - type: xenoArchTrigger
   id: TriggerThrow
@@ -263,3 +284,152 @@
   tip: xenoarch-trigger-tip-magnet
   components:
   - type: XATMagnet
+
+- type: xenoArchTrigger
+  id: TriggerConsumeMoney
+  tip: xenoarch-trigger-tip-money
+  components:
+  - type: XATInteractWith
+    interactionCount:
+      min: 100
+      max: 200
+    destroyAfter: true
+    interactionTime: 1.5
+    successTriggerSound: /Audio/Machines/machine_vend.ogg
+    whitelist:
+      components:
+      - Cash
+
+- type: xenoArchTrigger
+  id: TriggerConsumeKnowledge
+  tip: xenoarch-trigger-tip-knowledge
+  components:
+  - type: XATInteractWith
+    destroyAfter: true
+    interactionTime: 1.5
+    successTriggerSound: /Audio/Machines/machine_vend.ogg
+    whitelist:
+      components:
+      - TechnologyDisk
+      tags:
+      - Book
+
+- type: xenoArchTrigger
+  id: TriggerConsumeCarbs
+  tip: xenoarch-trigger-tip-carbs
+  components:
+  - type: XATInteractWith
+    destroyAfter: true
+    interactionTime: 1.5
+    successTriggerSound:
+      collection: eating
+      params:
+        volume: 5
+    whitelist:
+      tags:
+      - Bread
+      - Cake
+      - DonkPocket
+      - Donut
+      - Pie
+      - Pizza
+
+- type: xenoArchTrigger
+  id: TriggerConsumeMeat
+  tip: xenoarch-trigger-tip-meat
+  components:
+  - type: XATInteractWith
+    destroyAfter: true
+    interactionTime: 1.5
+    successTriggerSound:
+      collection: eating
+      params:
+        volume: 5
+    whitelist:
+      tags:
+      - Meat
+  - type: XATReactive
+    reagents:
+    - Protein
+    - UncookedAnimalProteins
+
+- type: xenoArchTrigger
+  id: TriggerConsumeProduce
+  tip: xenoarch-trigger-tip-produce
+  components:
+  - type: XATInteractWith
+    destroyAfter: true
+    interactionTime: 1.5
+    successTriggerSound:
+      collection: eating
+      params:
+        volume: 5
+    whitelist:
+      tags:
+      - Fruit
+      - Vegetable
+      - CottonBoll
+      - Ambrosia
+      - Mushroom
+
+- type: xenoArchTrigger
+  id: TriggerInteractStamp
+  tip: xenoarch-trigger-tip-stamp
+  components:
+  - type: XATInteractWith
+    interactionTime: 0.5
+    successTriggerSound:
+      path: /Audio/Items/Stamp/thick_stamp_sub.ogg
+      params:
+        volume: -2
+        maxDistance: 5
+    whitelist:
+      components:
+      - Stamp
+
+- type: xenoArchTrigger
+  id: TriggerInteractShock
+  tip: xenoarch-trigger-tip-shock
+  components:
+  - type: XATShock
+  - type: XATDamageThresholdReached
+    typesNeeded:
+      Shock: 5
+
+- type: xenoArchTrigger
+  id: TriggerAttackParticleEngine
+  tip: xenoarch-trigger-tip-particle
+  components:
+  - type: XATInteractAttack
+    whitelist:
+      components:
+      - ParticleProjectile
+
+- type: xenoArchTrigger
+  id: TriggerAttackParticleAnomaly
+  tip: xenoarch-trigger-tip-anomparticle
+  components:
+  - type: XATInteractAttack
+    whitelist:
+      components:
+      - AnomalousParticle
+
+- type: xenoArchTrigger
+  id: TriggerAttackStaminaDamage
+  tip: xenoarch-trigger-tip-stamina-damage
+  components:
+  - type: XATStaminaDamageThresholdReached
+    damageNeeded: 8 # half a practice disabler capacity
+
+- type: xenoArchTrigger
+  id: TriggerAttackLaser
+  tip: xenoarch-trigger-tip-laser
+  components:
+  - type: XATInteractAttack
+    interactionCount:
+      max: 3
+    whitelist:
+      components:
+      - LaserProjectile
+      tags:
+      - EmitterBolt

@@ -22,26 +22,44 @@
   - type: Tool
     qualities:
       - Prying
-    useSound: /Audio/Items/jaws_pry.ogg
+    useSound: !type:SoundPathSpecifier
+      path: /Audio/Items/jaws_pry.ogg
+      params:
+        volume: -2
   - type: Prying
     speedModifier: 1.5
     pryPowered: true
-    useSound: /Audio/Items/jaws_pry.ogg
+    useSound: !type:SoundPathSpecifier
+      path: /Audio/Items/jaws_pry.ogg
+      params:
+        volume: -2
   - type: MultipleTool
     statusShowBehavior: true
     entries:
-      - behavior: Prying
+      - behavior: [ Prying ]
         sprite:
           sprite: Objects/Tools/jaws_of_life.rsi
           state: jaws_pry
-        useSound: /Audio/Items/jaws_pry.ogg
-        changeSound: /Audio/Items/change_jaws.ogg
-      - behavior: Cutting
+        useSound: !type:SoundPathSpecifier
+          path: /Audio/Items/jaws_pry.ogg
+          params:
+            volume: -2
+        changeSound: !type:SoundPathSpecifier
+          path: /Audio/Items/change_jaws.ogg
+          params:
+            volume: -5
+      - behavior: [ Cutting ]
         sprite:
           sprite: Objects/Tools/jaws_of_life.rsi
           state: jaws_cutter
-        useSound: /Audio/Items/jaws_cut.ogg
-        changeSound: /Audio/Items/change_jaws.ogg
+        useSound: !type:SoundPathSpecifier
+          path: /Audio/Items/jaws_cut.ogg
+          params:
+            volume: -4
+        changeSound: !type:SoundPathSpecifier
+          path: /Audio/Items/change_jaws.ogg
+          params:
+            volume: -5
   - type: MeleeWeapon
     wideAnimationRotation: 90
     damage:
@@ -51,10 +69,10 @@
       collection: MetalThud
 
 - type: entity
-  name: syndicate jaws of life
-  parent: [JawsOfLife, BaseSyndicateContraband]
+  name: syndicate jaws of death
+  parent: [ JawsOfLife, BaseSyndicateContraband]
   id: SyndicateJawsOfLife
-  description: Useful for entering the station or its departments.
+  description: Useful for breaking into secure areas and other nefarious activities.
   components:
   - type: Sprite
     sprite: Objects/Tools/jaws_of_life.rsi
@@ -67,24 +85,87 @@
       - state: syn_inhand-right
     size: Normal
   - type: Prying
+    force: true
     speedModifier: 3.0
   - type: MultipleTool
     entries:
-      - behavior: Prying
+      - behavior: [ Prying ]
         sprite:
           sprite: Objects/Tools/jaws_of_life.rsi
           state: syn_jaws_pry
-        useSound: /Audio/Items/jaws_pry.ogg
-        changeSound: /Audio/Items/change_jaws.ogg
-      - behavior: Cutting
+        useSound: !type:SoundPathSpecifier
+          path: /Audio/Items/jaws_pry.ogg
+          params:
+            volume: -2
+        changeSound: !type:SoundPathSpecifier
+          path: /Audio/Items/change_jaws.ogg
+          params:
+            volume: -5
+      - behavior: [ Cutting ]
         sprite:
           sprite: Objects/Tools/jaws_of_life.rsi
           state: syn_jaws_cutter
-        useSound: /Audio/Items/jaws_cut.ogg
-        changeSound: /Audio/Items/change_jaws.ogg
+        useSound: !type:SoundPathSpecifier
+          path: /Audio/Items/jaws_cut.ogg
+          params:
+            volume: -4
+        changeSound: !type:SoundPathSpecifier
+          path: /Audio/Items/change_jaws.ogg
+          params:
+            volume: -5
   - type: MeleeWeapon
     damage:
       types:
         Blunt: 14
   - type: StaticPrice
     price: 1000
+
+- type: entity
+  name: xenoborg jaws of death
+  parent: [JawsOfLife, BaseXenoborgContraband ]
+  id: XenoborgJawsOfLife
+  description: Useful for prying open bolted doors where organics are hiding.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/jaws_of_life.rsi
+    state: xorg_jaws_pry
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: xorg_inhand-left
+      right:
+      - state: xorg_inhand-right
+    size: Normal
+  - type: Prying
+    force: true
+    speedModifier: 3.0
+  - type: MultipleTool
+    entries:
+    - behavior: [ Prying ]
+      sprite:
+        sprite: Objects/Tools/jaws_of_life.rsi
+        state: xorg_jaws_pry
+      useSound: !type:SoundPathSpecifier
+        path: /Audio/Items/jaws_pry.ogg
+        params:
+          volume: -2
+      changeSound: !type:SoundPathSpecifier
+        path: /Audio/Items/change_jaws.ogg
+        params:
+          volume: -5
+    - behavior: [ Cutting ]
+      sprite:
+        sprite: Objects/Tools/jaws_of_life.rsi
+        state: xorg_jaws_cutter
+      useSound: !type:SoundPathSpecifier
+        path: /Audio/Items/jaws_cut.ogg
+        params:
+          volume: -4
+      changeSound: !type:SoundPathSpecifier
+        path: /Audio/Items/change_jaws.ogg
+        params:
+          volume: -5
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 12

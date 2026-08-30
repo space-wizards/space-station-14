@@ -6,9 +6,9 @@ namespace Content.Shared.MouseRotator;
 /// This handles rotating an entity based on mouse location
 /// </summary>
 /// <see cref="MouseRotatorComponent"/>
-public abstract class SharedMouseRotatorSystem : EntitySystem
+public abstract partial class SharedMouseRotatorSystem : EntitySystem
 {
-    [Dependency] private readonly RotateToFaceSystem _rotate = default!;
+    [Dependency] private RotateToFaceSystem _rotate = default!;
 
     public override void Initialize()
     {
@@ -47,6 +47,11 @@ public abstract class SharedMouseRotatorSystem : EntitySystem
 
     private void OnRequestRotation(RequestMouseRotatorRotationEvent msg, EntitySessionEventArgs args)
     {
+        // Ignore the request if the requested entity is not the user's attached entity.
+        // This can happen when a player switches controlled entities while rotating.
+        if (args.SenderSession.AttachedEntity != GetEntity(msg.User))
+            return;
+
         if (args.SenderSession.AttachedEntity is not { } ent
             || !TryComp<MouseRotatorComponent>(ent, out var rotator))
         {

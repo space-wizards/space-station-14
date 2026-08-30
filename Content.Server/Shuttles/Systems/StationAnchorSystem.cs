@@ -6,10 +6,10 @@ using Content.Shared.Popups;
 
 namespace Content.Server.Shuttles.Systems;
 
-public sealed class StationAnchorSystem : EntitySystem
+public sealed partial class StationAnchorSystem : EntitySystem
 {
-    [Dependency] private readonly ShuttleSystem _shuttleSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private ShuttleSystem _shuttleSystem = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {

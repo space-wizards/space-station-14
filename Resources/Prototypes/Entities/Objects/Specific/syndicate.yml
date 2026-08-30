@@ -123,3 +123,4 @@
   - type: Store
     balance:
       Telecrystal: 99999
+    expectedFaction: #nulls out the expected faction

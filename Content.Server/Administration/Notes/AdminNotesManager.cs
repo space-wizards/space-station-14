@@ -1,6 +1,7 @@
 using System.Text;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
+using Content.Server.Chat.Managers;
 using Content.Server.Database;
 using Content.Server.EUI;
 using Content.Server.GameTicking;
@@ -9,20 +10,26 @@ using Content.Shared.Administration.Notes;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Players.PlayTimeTracking;
+using Robust.Server.Player;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 
 namespace Content.Server.Administration.Notes;
 
-public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
+public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectInit
 {
-    [Dependency] private readonly IAdminManager _admins = default!;
-    [Dependency] private readonly IServerDbManager _db = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
-    [Dependency] private readonly EuiManager _euis = default!;
-    [Dependency] private readonly IEntitySystemManager _systems = default!;
-    [Dependency] private readonly IConfigurationManager _config = default!;
+    [Dependency] private IAdminManager _admins = default!;
+    [Dependency] private IServerDbManager _db = default!;
+    [Dependency] private ILogManager _logManager = default!;
+    [Dependency] private EuiManager _euis = default!;
+    [Dependency] private IEntitySystemManager _systems = default!;
+    [Dependency] private IConfigurationManager _config = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private ILocalizationManager _loc = default!;
+    [Dependency] private IChatManager _chat = default!;
 
     public const string SawmillId = "admin.notes";
 
@@ -31,6 +38,7 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
     public event Action<SharedAdminNote>? NoteDeleted;
 
     private ISawmill _sawmill = default!;
+
 
     public bool CanCreate(ICommonSession admin)
     {
@@ -52,7 +60,7 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
         return _admins.HasAdminFlag(admin, AdminFlags.ViewNotes);
     }
 
-    public async Task OpenEui(ICommonSession admin, Guid notedPlayer)
+    public async Task OpenEui(ICommonSession admin, NetUserId notedPlayer)
     {
         var ui = new AdminNotesEui();
         _euis.OpenEui(ui, admin);
@@ -70,12 +78,13 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
 
     public async Task AddAdminRemark(ICommonSession createdBy, Guid player, NoteType type, string message, NoteSeverity? severity, bool secret, DateTime? expiryTime)
     {
+        var netUserId = (NetUserId)player;
         message = message.Trim();
 
         // There's a foreign key constraint in place here. If there's no player record, it will fail.
         // Not like there's much use in adding notes on accounts that have never connected.
         // You can still ban them just fine, which is why we should allow admins to view their bans with the notes panel
-        if (await _db.GetPlayerRecordByUserId((NetUserId) player) is null)
+        if (await _db.GetPlayerRecordByUserId(netUserId) is null)
             return;
 
         var sb = new StringBuilder($"{createdBy.Name} added a");
@@ -144,8 +153,8 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
 
         var note = new SharedAdminNote(
             noteId,
-            (NetUserId) player,
-            roundId,
+            [(NetUserId) player],
+            roundId.HasValue ? [roundId.Value] : [],
             serverName,
             playtime,
             type,
@@ -163,6 +172,18 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
             seen
         );
         NoteAdded?.Invoke(note);
+
+        // Send a notification to the player that they received a non-secret note.
+        if (!secret && type == NoteType.Note
+            && _player.TryGetSessionById(netUserId, out var session) && _config.GetCVar(CCVars.SeeOwnNotes))
+        {
+            _systems.TryGetEntitySystem(out SharedAudioSystem? audio);
+            var notifMessage = _loc.GetString("admin-notes-manager-note-notification");
+            var notifSound = new SoundPathSpecifier(_config.GetCVar(CCVars.AHelpSound));
+
+            _chat.DispatchServerMessage(session, notifMessage);
+            audio?.PlayGlobal(notifSound, session, AudioParams.Default.AddVolume(-7f));
+        }
     }
 
     private async Task<SharedAdminNote?> GetAdminRemark(int id, NoteType type)
@@ -172,8 +193,7 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
             NoteType.Note => (await _db.GetAdminNote(id))?.ToShared(),
             NoteType.Watchlist => (await _db.GetAdminWatchlist(id))?.ToShared(),
             NoteType.Message => (await _db.GetAdminMessage(id))?.ToShared(),
-            NoteType.ServerBan => (await _db.GetServerBanAsNoteAsync(id))?.ToShared(),
-            NoteType.RoleBan => (await _db.GetServerRoleBanAsNoteAsync(id))?.ToShared(),
+            NoteType.ServerBan or NoteType.RoleBan => (await _db.GetBanAsNoteAsync(id))?.ToShared(),
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown note type")
         };
     }
@@ -200,11 +220,8 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
             case NoteType.Message:
                 await _db.DeleteAdminMessage(noteId, deletedBy.UserId, deletedAt);
                 break;
-            case NoteType.ServerBan:
-                await _db.HideServerBanFromNotes(noteId, deletedBy.UserId, deletedAt);
-                break;
-            case NoteType.RoleBan:
-                await _db.HideServerRoleBanFromNotes(noteId, deletedBy.UserId, deletedAt);
+            case NoteType.ServerBan or NoteType.RoleBan:
+                await _db.HideBanFromNotes(noteId, deletedBy.UserId, deletedAt);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown note type");
@@ -280,15 +297,10 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
             case NoteType.Message:
                 await _db.EditAdminMessage(noteId, message, editedBy.UserId, editedAt, expiryTime);
                 break;
-            case NoteType.ServerBan:
+            case NoteType.ServerBan or NoteType.RoleBan:
                 if (severity is null)
                     throw new ArgumentException("Severity cannot be null for a ban", nameof(severity));
-                await _db.EditServerBan(noteId, message, severity.Value, expiryTime, editedBy.UserId, editedAt);
-                break;
-            case NoteType.RoleBan:
-                if (severity is null)
-                    throw new ArgumentException("Severity cannot be null for a role ban", nameof(severity));
-                await _db.EditServerRoleBan(noteId, message, severity.Value, expiryTime, editedBy.UserId, editedAt);
+                await _db.EditBan(noteId, message, severity.Value, expiryTime, editedBy.UserId, editedAt);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown note type");

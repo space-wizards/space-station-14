@@ -6,21 +6,18 @@ using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
 
 namespace Content.Server.Communications;
 
-public sealed class CommsHackerSystem : SharedCommsHackerSystem
+public sealed partial class CommsHackerSystem : SharedCommsHackerSystem
 {
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private GameTicker _gameTicker = default!;
+    [Dependency] private IRobustRandom _random = default!;
     // TODO: remove when generic check event is used
-    [Dependency] private readonly NinjaGlovesSystem _gloves = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private NinjaGlovesSystem _gloves = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
 
     public override void Initialize()
     {
@@ -62,9 +59,9 @@ public sealed class CommsHackerSystem : SharedCommsHackerSystem
         if (args.Cancelled || args.Handled || args.Target == null)
             return;
 
-        var threats = _proto.Index<WeightedRandomPrototype>(comp.Threats);
+        var threats = ProtoMan.Index<WeightedRandomPrototype>(comp.Threats);
         var threat = threats.Pick(_random);
-        CallInThreat(_proto.Index<NinjaHackingThreatPrototype>(threat));
+        CallInThreat(ProtoMan.Index<NinjaHackingThreatPrototype>(threat));
 
         // prevent calling in multiple threats
         RemComp<CommsHackerComponent>(uid);

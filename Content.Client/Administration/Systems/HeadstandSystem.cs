@@ -1,9 +1,9 @@
-﻿using Content.Client.Administration.Components;
+﻿using Content.Shared.Administration.Components;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Administration.Systems;
 
-public sealed class HeadstandSystem : EntitySystem
+public sealed partial class HeadstandSystem : EntitySystem
 {
     public override void Initialize()
     {

@@ -1,0 +1,58 @@
+# Clear to black.
+[[layers]]
+type = "clear"
+color = "#000000"
+
+# Dim background nebula stars.
+[[layers]]
+type = "points"
+seed = 4920
+closecolor = "#685e50"
+count = 500
+mask = true
+masknoise_type = "fbm"
+maskoctaves = 4
+maskpersistence = "0.5"
+maskpower = "0.35"
+masklacunarity = "1.5"
+maskfrequency = "3"
+maskthreshold = "0.0"
+maskseed = 6734
+
+# Bright background nebula stars.
+[[layers]]
+type = "points"
+closecolor = "#b6ac9c"
+count = 150
+seed = 5848
+mask = true
+masknoise_type = "fbm"
+maskoctaves = 4
+maskpersistence = "0.5"
+maskpower = "0.35"
+masklacunarity = "1.5"
+maskfrequency = "3"
+maskthreshold = "0.37"
+maskseed = 8398
+
+# Bright background nebula stars, dim edge.
+[[layers]]
+type = "points"
+closecolor = "#514e42"
+pointsize = 2
+count = 150
+seed = 5848
+mask = true
+masknoise_type = "fbm"
+maskoctaves = 4
+maskpersistence = "0.5"
+maskpower = "0.35"
+masklacunarity = "1.5"
+maskfrequency = "3"
+maskthreshold = "0.37"
+maskseed = 8398
+
+# Colour-to-alpha.
+[[layers]]
+type = "toalpha"
+

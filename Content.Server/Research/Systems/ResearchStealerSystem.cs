@@ -4,10 +4,10 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Research.Systems;
 
-public sealed class ResearchStealerSystem : SharedResearchStealerSystem
+public sealed partial class ResearchStealerSystem : SharedResearchStealerSystem
 {
-    [Dependency] private readonly SharedResearchSystem _research = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private SharedResearchSystem _research = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
     {

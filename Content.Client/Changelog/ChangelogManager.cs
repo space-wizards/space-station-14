@@ -13,10 +13,10 @@ namespace Content.Client.Changelog
 {
     public sealed partial class ChangelogManager : IPostInjectInit
     {
-        [Dependency] private readonly ILogManager _logManager = default!;
-        [Dependency] private readonly IResourceManager _resource = default!;
-        [Dependency] private readonly ISerializationManager _serialization = default!;
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private ILogManager _logManager = default!;
+        [Dependency] private IResourceManager _resource = default!;
+        [Dependency] private ISerializationManager _serialization = default!;
+        [Dependency] private IConfigurationManager _configManager = default!;
 
         private const string SawmillName = "changelog";
         public const string MainChangelogName = "Changelog";
@@ -52,6 +52,7 @@ namespace Content.Client.Changelog
             // Open changelog purely to compare to the last viewed date.
             var changelogs = await LoadChangelog();
             UpdateChangelogs(changelogs);
+            _configManager.OnValueChanged(CCVars.ServerId, OnServerIdCVarChanged);
         }
 
         private void UpdateChangelogs(List<Changelog> changelogs)
@@ -81,6 +82,11 @@ namespace Content.Client.Changelog
 
             MaxId = changelog.Entries.Max(c => c.Id);
 
+            CheckLastSeenEntry();
+        }
+
+        private void CheckLastSeenEntry()
+        {
             var path = new ResPath($"/changelog_last_seen_{_configManager.GetCVar(CCVars.ServerId)}");
             if (_resource.UserData.TryReadAllText(path, out var lastReadIdText))
             {
@@ -90,6 +96,11 @@ namespace Content.Client.Changelog
             NewChangelogEntries = LastReadId < MaxId;
 
             NewChangelogEntriesChanged?.Invoke();
+        }
+
+        private void OnServerIdCVarChanged(string newValue)
+        {
+            CheckLastSeenEntry();
         }
 
         public Task<List<Changelog>> LoadChangelog()
@@ -184,17 +195,23 @@ namespace Content.Client.Changelog
         [DataDefinition]
         public sealed partial class ChangelogEntry
         {
-            [DataField("id")]
+            [DataField]
             public int Id { get; private set; }
 
-            [DataField("author")]
+            [DataField]
             public string Author { get; private set; } = "";
 
             [DataField]
             public DateTime Time { get; private set; }
 
-            [DataField("changes")]
+            [DataField]
             public List<ChangelogChange> Changes { get; private set; } = default!;
+
+            /// <summary>
+            ///     Labels attached to the related PR, passed on via the SS14.Changelog parser.
+            /// </summary>
+            [DataField]
+            public List<string> Labels { get; private set; } = [];
         }
 
         [DataDefinition]

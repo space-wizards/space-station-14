@@ -1,0 +1,44 @@
+
+- type: tile
+  id: FloorAsteroidIronsandBorderless
+  name: tiles-asteroid-ironsand-borderless
+  sprite: /Textures/Tiles/Ironsand/ironsand.png
+  variants: 5
+  baseTurf: Space
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepAsteroid
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorAsteroidIronsand
+  parent: FloorAsteroidIronsandBorderless
+  name: tiles-asteroid-ironsand
+  edgeSpritePriority: 7
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Ironsand/single_edge_SE.png
+    NorthEast: /Textures/Tiles/Ironsand/single_edge_NE.png
+    NorthWest: /Textures/Tiles/Ironsand/single_edge_NW.png
+    SouthWest: /Textures/Tiles/Ironsand/single_edge_SW.png
+    South: /Textures/Tiles/Ironsand/double_edge_S.png
+    East: /Textures/Tiles/Ironsand/double_edge_E.png
+    North: /Textures/Tiles/Ironsand/double_edge_N.png
+    West: /Textures/Tiles/Ironsand/double_edge_W.png
+
+### ASTRO TILES
+- type: tile
+  parent: [ BaseStationTile, FloorAsteroidIronsand ]
+  id: FloorAstroIronsand
+  name: tiles-astro-ironsand
+  footstepSounds:
+    collection: FootstepAsteroid
+  itemDrop: FloorTileItemAstroIronsand
+
+- type: tile
+  parent: [ BaseStationTile, FloorAsteroidIronsandBorderless ]
+  id: FloorAstroIronsandBorderless
+  name: tiles-astro-ironsand-borderless
+  footstepSounds:
+    collection: FootstepAsteroid
+  itemDrop: FloorTileItemAstroIronsandBorderless

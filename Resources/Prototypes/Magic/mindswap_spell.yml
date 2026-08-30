@@ -5,16 +5,17 @@
   description: Exchange bodies with another person!
   components:
   - type: Action
-    useDelay: 300
+    useDelay: 180
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/staff_animation.ogg
-    icon:
-      sprite: Mobs/Species/Human/organs.rsi
-      state: brain
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    layers:
+    - state: brain
   - type: EntityTargetAction
     whitelist:
       components:
-      - Body # this also allows borgs because that supercode uses Body for no reason
+      - MobState
       - PAI # intended to mindswap pAIs and AIs
       - StationAiCore
     event: !type:MindSwapSpellEvent

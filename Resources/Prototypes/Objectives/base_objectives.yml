@@ -53,6 +53,20 @@
       - SocialObjective
   - type: KillPersonCondition
 
+- type: entity
+  abstract: true
+  parent: BaseKillObjective
+  id: BaseKillRandomObjective
+  components:
+  - type: PickRandomPerson
+    conditions:
+    # Can't have multiple objectives to kill the same person.
+    - !type:ObjectiveTargetCondition
+      inverted: true
+      whitelist:
+        components:
+        - KillPersonCondition
+
 # requires that the player interact socially with someone
 # disables kill objectives and is disabled by kill objectives
 - type: entity
@@ -119,3 +133,12 @@
   id: BaseFreeObjective
   components:
   - type: FreeObjective
+
+# requires the player to perform some action a certain number of times
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseCounterObjective
+  components:
+  - type: CounterCondition
+  - type: NumberObjective # min and max to be set in the inheritor

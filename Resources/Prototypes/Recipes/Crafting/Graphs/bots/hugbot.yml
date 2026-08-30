@@ -1,0 +1,33 @@
+﻿- type: constructionGraph
+  id: HugBot
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: bot
+      steps:
+      - tag: BoxHug
+        icon:
+          sprite: Objects/Storage/boxes.rsi
+          state: box_hug
+        name: construction-graph-tag-boxhug
+      - tag: ProximitySensor
+        icon:
+          sprite: Objects/Misc/proximity_sensor.rsi
+          state: icon
+        name: construction-graph-tag-proximity-sensor
+        doAfter: 2
+      - tag: BorgArm
+        icon:
+          sprite: Mobs/Silicon/drone.rsi
+          state: l_hand
+        name: construction-graph-tag-borg-arm
+        doAfter: 2
+      - tag: BorgArm
+        icon:
+          sprite: Mobs/Silicon/drone.rsi
+          state: l_hand
+        name: construction-graph-tag-borg-arm
+        doAfter: 2
+  - node: bot
+    entity: MobHugBot

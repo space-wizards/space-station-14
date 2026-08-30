@@ -8,11 +8,11 @@ using System.Linq;
 
 namespace Content.Shared.Magic.Systems;
 
-public sealed class AnimateSpellSystem : EntitySystem
+public sealed partial class AnimateSpellSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
 
     public override void Initialize()
     {

@@ -123,7 +123,10 @@
   icon:
     sprite: Objects/Misc/monkeycube.rsi
     state: box
-  product: CrateNPCMonkeyCube
+  product: MonkeyCubeBox
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 2000
   category: cargoproduct-category-name-livestock
   group: market
@@ -133,7 +136,10 @@
   icon:
     sprite: Objects/Misc/monkeycube.rsi
     state: box_kobold
-  product: CrateNPCKoboldCube
+  product: KoboldCubeBox
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 2000
   category: cargoproduct-category-name-livestock
   group: market
@@ -175,6 +181,16 @@
     state: pig
   product: CrateNPCPig
   cost: 1100
+  category: cargoproduct-category-name-livestock
+  group: market
+
+- type: cargoProduct
+  id: LivestockSheep
+  icon:
+    sprite: Mobs/Animals/sheep.rsi
+    state: icon
+  product: CrateNPCSheep
+  cost: 1300
   category: cargoproduct-category-name-livestock
   group: market
 

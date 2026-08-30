@@ -10,10 +10,10 @@ namespace Content.Shared.Clothing.EntitySystems;
 /// <summary>
 /// Handles adding and using a toggle action for <see cref="ToggleClothingComponent"/>.
 /// </summary>
-public sealed class ToggleClothingSystem : EntitySystem
+public sealed partial class ToggleClothingSystem : EntitySystem
 {
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly ItemToggleSystem _toggle = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private ItemToggleSystem _toggle = default!;
 
     public override void Initialize()
     {

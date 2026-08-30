@@ -1,56 +1,55 @@
 - type: entity
-  id: BaseGenericTabletopPiece
-  parent: BaseTabletopPiece
   abstract: true
+  parent: BaseTabletopPiece
+  id: BaseGenericTabletopPiece
   components:
   - type: Sprite
-    noRot: true
     sprite: Objects/Fun/Tabletop/generic_pieces.rsi
 
 - type: entity
+  parent: BaseGenericTabletopPiece
   id: RedTabletopPiece
   name: red piece
-  parent: BaseGenericTabletopPiece
   components:
   - type: Sprite
     state: red
 
 - type: entity
+  parent: BaseGenericTabletopPiece
   id: GreenTabletopPiece
   name: green piece
-  parent: BaseGenericTabletopPiece
   components:
   - type: Sprite
     state: green
 
 - type: entity
+  parent: BaseGenericTabletopPiece
   id: YellowTabletopPiece
   name: yellow piece
-  parent: BaseGenericTabletopPiece
   components:
   - type: Sprite
     state: yellow
 
 - type: entity
+  parent: BaseGenericTabletopPiece
   id: BlueTabletopPiece
   name: blue piece
-  parent: BaseGenericTabletopPiece
   components:
   - type: Sprite
     state: blue
 
 - type: entity
+  parent: BaseGenericTabletopPiece
   id: WhiteTabletopPiece
   name: white piece
-  parent: BaseGenericTabletopPiece
   components:
   - type: Sprite
     state: white
 
 - type: entity
+  parent: BaseGenericTabletopPiece
   id: BlackTabletopPiece
   name: black piece
-  parent: BaseGenericTabletopPiece
   components:
   - type: Sprite
     state: black

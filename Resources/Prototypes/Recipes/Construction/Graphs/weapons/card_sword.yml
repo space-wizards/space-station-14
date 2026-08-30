@@ -1,0 +1,14 @@
+- type: constructionGraph
+  id: CardSword
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: cardSword
+      steps:
+      - material: Cardboard
+        amount: 6
+        doAfter: 3
+
+  - node: cardSword
+    entity: CardSword

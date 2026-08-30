@@ -5,6 +5,10 @@
     - node: start
       edges:
         - to: msstunprod
+          completed:
+          - !type:AdminLog
+            message: "Construction"
+            impact: High
           steps:
             - material: MetalRod
               amount: 1

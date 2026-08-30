@@ -1,0 +1,85 @@
+## Base prototypes for DeltaPressureComponent settings, to make it easy to just
+## parent to them and just them globally here.
+
+## For reinforced plasma windows
+- type: entity
+  abstract: true
+  id: BaseDeltaPressureReinforcedPlasma
+  components:
+  - type: DeltaPressure
+    minPressure: 150000
+    minPressureDelta: 100000
+    scalingType: Linear
+    scalingPower: 0.0001
+
+## For quarter reinforced plasma windows
+- type: entity
+  abstract: true
+  id: BaseDeltaPressureReinforcedPlasmaQuarter
+  components:
+  - type: DeltaPressure
+    minPressure: 37500
+    minPressureDelta: 25000
+    scalingType: Threshold
+
+## For plasma windows
+- type: entity
+  abstract: true
+  id: BaseDeltaPressurePlasma
+  components:
+  - type: DeltaPressure
+    minPressure: 75000
+    minPressureDelta: 50000
+    scalingType: Linear
+    scalingPower: 0.0005
+
+## For quarter plasma windows
+- type: entity
+  abstract: true
+  id: BaseDeltaPressurePlasmaQuarter
+  components:
+  - type: DeltaPressure
+    minPressure: 18750
+    minPressureDelta: 12500
+    scalingType: Threshold
+
+## For reinforced glass windows
+- type: entity
+  abstract: true
+  id: BaseDeltaPressureReinforcedGlass
+  components:
+  - type: DeltaPressure
+    minPressure: 15000
+    minPressureDelta: 10000
+    scalingType: Threshold
+
+## For quarter reinforced glass windows
+- type: entity
+  abstract: true
+  id: BaseDeltaPressureReinforcedGlassQuarter
+  components:
+  - type: DeltaPressure
+    minPressure: 3750
+    minPressureDelta: 2500
+
+## For glass windows
+- type: entity
+  abstract: true
+  id: BaseDeltaPressureGlass
+  components:
+  - type: DeltaPressure
+    minPressure: 1000
+    minPressureDelta: 750
+    scalingType: Linear
+    scalingPower: 0.0005
+
+## For quarter glass windows
+- type: entity
+  abstract: true
+  id: BaseDeltaPressureGlassQuarter
+  components:
+  - type: DeltaPressure
+    minPressure: 250
+    minPressureDelta: 187.5
+    scalingType: Threshold
+
