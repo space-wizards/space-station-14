@@ -91,8 +91,8 @@ public sealed partial class ChangelingDevourComponent : Component
     {
         DamageDict = new()
         {
-            { "Slash", 25},
-            { "Piercing", 25 },
+            { "Slash", 15},
+            { "Piercing", 15 },
         },
     };
 
@@ -104,8 +104,8 @@ public sealed partial class ChangelingDevourComponent : Component
     {
         DamageDict = new()
         {
-            { "Slash", 50},
-            { "Piercing", 50 },
+            { "Slash", 60},
+            { "Piercing", 60 },
             { "Caustic", 100 },
         },
     };
