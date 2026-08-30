@@ -46,7 +46,7 @@
   parent: BaseBullet
   id: BulletGrenadeBaton
   categories: [ HideSpawnMenu ]
-  name: baton grenade
+  name: baton grenade round
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi

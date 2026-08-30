@@ -33,7 +33,7 @@
 - type: entity
   parent: [ BaseWeaponLauncher, BaseSyndicateContraband ]
   id: WeaponLauncherChinaLake
-  name: china lake
+  name: China Lake
   description: PLOOP.
   components:
   - type: Sprite
