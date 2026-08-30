@@ -13,7 +13,7 @@ public sealed partial class SpecialDeathCauseEffectSystem : EntityEffectSystem<S
     [Dependency] private StoreDamageTakenOnMindSystem _storeSystem = default!;
     protected override void Effect(Entity<StoreDamageTakenOnMindComponent> entity, ref EntityEffectEvent<SpecialDeathCause> args)
     {
-        _storeSystem.SaveSpecialCauseOfDeath(entity, args.Effect.DeathCause);
+        _storeSystem.SaveSpecialCauseOfDeath(ent, args.Effect.DeathCause);
     }
 }
 
@@ -25,4 +25,7 @@ public sealed partial class SpecialDeathCause : EntityEffectBase<SpecialDeathCau
     /// </summary>
     [DataField(required: true)]
     public ProtoId<SpecialCauseOfDeathPrototype> DeathCause;
+
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("entity-effect-guidebook-death-cause", ("cause", DeathCause));
 }
