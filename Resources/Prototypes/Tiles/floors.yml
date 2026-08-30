@@ -360,22 +360,3 @@
     collection: FootstepHull
   itemDrop: PartRodMetal1 #same case as FloorHull
 
-- type: tile
-  id: FloorWhiteMarble
-  parent: BaseStationTile
-  name: tiles-white-marble
-  sprite: /Textures/Tiles/Marble/white-marble.png
-  footstepSounds:
-    collection: FootstepTile
-  friction: 0.8
-  itemDrop: FloorTileItemWhiteMarble
-
-- type: tile
-  id: FloorDarkMarble
-  parent: BaseStationTile
-  name: tiles-dark-marble
-  sprite: /Textures/Tiles/Marble/dark-marble.png
-  footstepSounds:
-    collection: FootstepTile
-  friction: 0.8
-  itemDrop: FloorTileItemDarkMarble

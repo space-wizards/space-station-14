@@ -85,7 +85,7 @@ public sealed partial class GridStencilSystem : EntitySystem
                 foreach (var grid in _grids)
                 {
                     var worldToTextureMatrix = Matrix3x2.Multiply(_xform.GetWorldMatrix(grid.Owner), invMatrix);
-                    var tiles = _map.GetTilesEnumerator(grid.Owner, grid, worldBounds);
+                    var tiles = _map.GetTilesIntersecting(grid.Owner, grid, worldBounds);
                     worldHandle.SetTransform(worldToTextureMatrix);
                     _rects.Clear();
 
@@ -155,7 +155,7 @@ public sealed partial class GridStencilSystem : EntitySystem
                 {
                     var transform = _xform.GetWorldMatrix(grid.Owner);
                     var worldToTextureMatrix = Matrix3x2.Multiply(transform, invMatrix);
-                    var tiles = _map.GetTilesEnumerator(grid.Owner, grid, worldBounds);
+                    var tiles = _map.GetTilesIntersecting(grid.Owner, grid, worldBounds);
                     worldHandle.SetTransform(worldToTextureMatrix);
                     _rects.Clear();
 

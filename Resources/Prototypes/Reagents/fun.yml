@@ -341,7 +341,7 @@
       effects:
       - !type:Emote
         emote: Weh
-        showInChat: true
+        showInChat: false
         showInGuidebook: true
         force: true
         probability: 0.5
@@ -376,7 +376,7 @@
       effects:
       - !type:Emote
         emote: Hew
-        showInChat: true
+        showInChat: false
         showInGuidebook: true
         force: true
         probability: 0.5
@@ -438,7 +438,6 @@
           reagent: Felinase
           min: 10
         emote: Cough
-        showInChat: true
         showInGuidebook: true
         force: true
         probability: 0.05
@@ -489,7 +488,6 @@
           reagent: Caninase
           min: 10
         emote: Cough
-        showInChat: true
         showInGuidebook: true
         force: true
         probability: 0.05

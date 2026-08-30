@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Cloning.Events;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
@@ -30,6 +31,7 @@ public abstract partial class SharedHandsSystem
     public event Action<Entity<HandsComponent>, string, HandLocation>? OnPlayerAddHand;
     public event Action<Entity<HandsComponent>, string>? OnPlayerRemoveHand;
     protected event Action<Entity<HandsComponent>?>? OnHandSetActive;
+    protected byte ActiveHandIdIndex;
 
     public override void Initialize()
     {
@@ -43,6 +45,20 @@ public abstract partial class SharedHandsSystem
 
         SubscribeLocalEvent<HandsComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<HandsComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<HandsComponent, CloningEvent>(OnClone);
+
+        // Needed for manual delta states.
+        EntityManager.ComponentFactory.RegisterNetworkedFields<HandsComponent>(
+            nameof(HandsComponent.ActiveHandId),
+            nameof(HandsComponent.Hands),
+            nameof(HandsComponent.SortedHands),
+            nameof(HandsComponent.ShowInHands),
+            nameof(HandsComponent.HandDisplacement),
+            nameof(HandsComponent.LeftHandDisplacement),
+            nameof(HandsComponent.RightHandDisplacement),
+            nameof(HandsComponent.CanBeStripped));
+
+        ActiveHandIdIndex = 0; // Corresponds to HandsComponentActiveHandDeltaState
     }
 
     public override void Shutdown()
@@ -63,8 +79,36 @@ public abstract partial class SharedHandsSystem
 
     private void OnMapInit(Entity<HandsComponent> ent, ref MapInitEvent args)
     {
+        foreach (var (handId, hand) in ent.Comp.StartingHands)
+            AddHand(ent.AsNullable(), handId, hand);
+
         if (ent.Comp.ActiveHandId == null)
             SetActiveHand(ent.AsNullable(), ent.Comp.SortedHands.FirstOrDefault());
+    }
+
+    private void OnClone(Entity<HandsComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        var targetComp = EnsureComp<HandsComponent>(args.CloneUid);
+        // Don't copy the Hands or SortedHands datafields since those are dynamically added and removed on map init or through other components
+        // targetComp.StartingHands = ent.Comp.StartingHands;
+        // A lot of hand related stuff is done via organs.
+        // Because of that we cannot sanely clone hands, but we can still clone over displacements etc.
+        // Organ cloning logic cannot be worked on until body system work progresses enough to allow us to do that.
+        // TODO: Clone hands properly once we can do organ cloning.
+        targetComp.DisableExplosionRecursion = ent.Comp.DisableExplosionRecursion;
+        targetComp.BaseThrowspeed = ent.Comp.BaseThrowspeed;
+        targetComp.ThrowRange = ent.Comp.ThrowRange;
+        targetComp.ShowInHands = ent.Comp.ShowInHands;
+        targetComp.ThrowCooldown = ent.Comp.ThrowCooldown;
+        targetComp.HandDisplacement = ent.Comp.HandDisplacement;
+        targetComp.LeftHandDisplacement = ent.Comp.LeftHandDisplacement;
+        targetComp.RightHandDisplacement = ent.Comp.RightHandDisplacement;
+        targetComp.CanBeStripped = ent.Comp.CanBeStripped;
+
+        Dirty(args.CloneUid, targetComp);
     }
 
     /// <summary>
@@ -338,7 +382,7 @@ public abstract partial class SharedHandsSystem
         if (TryGetHeldItem(ent, handId, out var newHeld))
             RaiseLocalEvent(newHeld.Value, new HandSelectedEvent(ent));
 
-        Dirty(ent);
+        DirtyField(ent, nameof(HandsComponent.ActiveHandId));
         return true;
     }
 

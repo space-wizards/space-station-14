@@ -941,40 +941,39 @@ CrateEngineeringThruster: CrateSpaceThruster
 BlastDoorXenoborg: BlastDoorXeno
 BlastDoorXenoborgOpen: BlastDoorXenoOpen
 
-# Dark
+### Dark Tiles
 FloorTileItemDarkDiagonalMini: FloorTileItemDark
 FloorTileItemDarkDiagonal: FloorTileItemDark
 FloorTileItemDarkOffset: FloorTileItemDark
-FloorTileItemDarkSlatsContinuous: FloorTileItemDark
+FloorTileItemDarkSlatsContinuous: FloorTileItemDarkVerticalSlatsBordered
 
-# Steel
+### Steel Tiles
 FloorTileItemSteelDiagonalMini: FloorTileItemSteel
 FloorTileItemSteelDiagonal: FloorTileItemSteel
 FloorTileItemSteelOffset: FloorTileItemSteel
-FloorTileItemSteelMono: FloorTileItemSteel
 FloorTileItemShowroom: FloorTileItemSteel
-FloorTileItemSteelSlatsContinuous: FloorTileItemSteel
+FloorTileItemSteelSlatsContinuous: FloorTileItemSteelVerticalSlatsBordered
 
-# White
+### White Tiles
 FloorTileItemWhiteDiagonalMini: FloorTileItemWhite
 FloorTileItemWhiteDiagonal: FloorTileItemWhite
 FloorTileItemWhiteOffset: FloorTileItemWhite
-FloorTileItemWhiteSlatsContinuous: FloorTileItemWhite
+FloorTileItemWhiteSlatsContinuous: FloorTileItemWhiteVerticalSlatsBordered
 
-# Misc
+### Misc Tiles
 FloorTileItemUraniumMarble: FloorTileItemDarkMarble
 FloorTileItemPlasmaMarble: FloorTileItemWhiteMarble
 FloorTileItemEighties: FloorTileItemArcadeBlue
 FloorTileItemArcadeBlue2: FloorTileItemArcadeBlue
-FloorTileItemElevatorShaft: null
-FloorTileItemMining: null
-FloorTileItemMiningLight: null
-FloorTileItemMiningDark: null
-FloorTileItemRockVault: null
+FloorTileItemElevatorShaft: FloorTileItemDark
+FloorTileItemMining: FloorTileItemDarkPlastic
+FloorTileItemMiningLight: FloorTileItemDarkPlastic
+FloorTileItemMiningDark: FloorTileItemDarkPlastic
+FloorTileItemRockVault: FloorTileItemSteel
 FloorTileItemBrassReebe: null
 FloorTileItemBrassFilled: null
 FloorBananiumEntity: null
-FloorTileItemMono: null
+FloorTileItemMono: FloorTileItemSteel
 
 # 2026-07-23
 AirAlarmAssemblyXeno: AirAlarmAssembly
@@ -994,13 +993,13 @@ Turnstile: EnergyGate
 MetalDoor: SilverDoor
 MiningWindow: ReinforcedWindow
 MiningWindowDiagonal: ReinforcedWindowDiagonal
-FloorTileItemLightAstroGrass: null
-FloorTileItemGrayConcrete: null
-FloorTileItemGrayConcreteMono: null
-FloorTileItemGrayConcreteSmooth: null
-FloorTileItemOldConcrete: null
-FloorTileItemOldConcreteMono: null
-FloorTileItemOldConcreteSmooth: null
+FloorTileItemLightAstroGrass: FloorTileItemAstroGrass
+FloorTileItemGrayConcrete: FloorTileItemConcrete
+FloorTileItemGrayConcreteMono: FloorTileItemConcreteMono
+FloorTileItemGrayConcreteSmooth: FloorTileItemConcreteSmooth
+FloorTileItemOldConcrete: FloorTileItemConcrete
+FloorTileItemOldConcreteMono: FloorTileItemConcreteMono
+FloorTileItemOldConcreteSmooth: FloorTileItemConcreteSmooth
 FloorTileItemIronsandConcrete: null
 FloorTileItemIronsandConcreteMono: null
 FloorTileItemIronsandConcreteSmooth: null
@@ -1052,7 +1051,7 @@ FloorDesertChasm: FloorChasmEntity
 FloorChromiteChasm: FloorChasmEntity
 
 # 2026-08-06
-FloorTileItemHydro: null
+FloorTileItemHydro: FloorTileItemSteel
 WallRiveted: WallMarble
 WallSpawnAsteroidBananium: null
 WallSpawnAsteroidBananiumCrab: null
@@ -1111,6 +1110,7 @@ UraniumWindoorSecureNukeopLocked: UraniumWindoorNukeopLocked
 WindoorAssemblySecure: WindoorAssembly
 WindoorAssemblySecurePlasma: WindoorAssemblyPlasma
 WindoorAssemblySecureUranium: WindoorAssemblyUranium
+LightReplacer: LightReplacerFilled
 
 #2026-08-14
 MeteorRock: AsteroidRock
@@ -1122,3 +1122,11 @@ MeteorRockGold: AsteroidRockGold
 MeteorRockPlasma: AsteroidRockPlasma
 MeteorRockDiamond: AsteroidRockDiamond
 MeteorRockUranium: AsteroidRockUranium
+StatueBananiumClown: StatueOrnateClown
+
+#2026-08-18
+DrinkNeurotoxinGlass: null
+
+#2026-08-19
+JanitorServiceLight: null
+
