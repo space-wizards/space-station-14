@@ -243,19 +243,31 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
     /// </summary>
     protected override void OnAppearanceChange(EntityUid uid, TextScreenVisualsComponent comp, ref AppearanceChangeEvent args)
     {
-        if (!args.AppearanceData.TryGetValue(TextScreenVisuals.Color, out var colorValue)
-            && colorValue is Color color
+        bool anyChange = false;
+        if (!args.TryGetData<Color>(TextScreenVisuals.Color, out var color)
             && color != comp.Color)
         {
             comp.Color = color;
-            comp.NewTextToDisplay = true;
+            anyChange = true;
         }
 
-        string? newString = null;
-
-        if (_screenTimerQuery.HasComp(uid))
+        //
+        if (!args.TryGetData(TextScreenVisuals.ScreenText, out string? text))
         {
+            args.TryGetData(TextScreenVisuals.DefaultText, out text);
+        }
 
+        if (!args.TryGetData(TextScreenVisuals.ScreenTextTime, out TimeSpan? scrollTime))
+            scrollTime = _timing.CurTime;
+
+        if (_screenTimerQuery.HasComp(uid)
+            && args.TryGetData(TextScreenVisuals.TargetTime, out TimeSpan? textTime))
+        {
+            // If we have a valid timer, draw the timer.
+        }
+        else if (text is { } newText)
+        {
+            // Otherwise, if we have text, draw our text.
         }
     }
 
