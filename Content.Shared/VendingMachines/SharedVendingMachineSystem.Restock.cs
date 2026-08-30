@@ -2,60 +2,13 @@ using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.VendingMachines.Components;
 using Content.Shared.Wires;
 
 namespace Content.Shared.VendingMachines;
 
 public abstract partial class SharedVendingMachineSystem
 {
-    public bool TryAccessMachine(EntityUid uid,
-        VendingMachineRestockComponent restock,
-        VendingMachineComponent machineComponent,
-        EntityUid user,
-        EntityUid target)
-    {
-        if (!TryComp<WiresPanelComponent>(target, out var panel) || !panel.Open)
-        {
-            Popup.PopupCursor(Loc.GetString("vending-machine-restock-needs-panel-open",
-                    ("this", uid),
-                    ("user", user),
-                    ("target", target)),
-                user);
-
-            return false;
-        }
-
-        return true;
-    }
-
-    public bool TryMatchPackageToMachine(EntityUid uid,
-        VendingMachineRestockComponent component,
-        VendingMachineComponent machineComponent,
-        EntityUid user,
-        EntityUid target)
-    {
-        if (!component.CanRestock.Contains(machineComponent.PackPrototypeId))
-        {
-            Popup.PopupCursor(Loc.GetString("vending-machine-restock-invalid-inventory", ("this", uid), ("user", user),
-                ("target", target)), user);
-
-            return false;
-        }
-
-        return true;
-    }
-
-    public void TryRestockInventory(EntityUid uid, VendingMachineComponent? vendComponent = null)
-    {
-        if (!Resolve(uid, ref vendComponent))
-            return;
-
-        RestockInventoryFromPrototype(uid, vendComponent);
-
-        Dirty(uid, vendComponent);
-        TryUpdateVisualState((uid, vendComponent));
-    }
-
     [SubscribeLocalEvent]
     private void OnAfterInteract(EntityUid uid, VendingMachineRestockComponent component, AfterInteractEvent args)
     {
@@ -134,5 +87,44 @@ public abstract partial class SharedVendingMachineSystem
         Audio.PlayPredicted(restockComponent.SoundRestockDone, ent, args.User);
 
         PredictedQueueDel(args.Used.Value);
+    }
+
+    public bool TryAccessMachine(EntityUid uid,
+        VendingMachineRestockComponent restock,
+        VendingMachineComponent machineComponent,
+        EntityUid user,
+        EntityUid target)
+    {
+        if (TryComp<WiresPanelComponent>(target, out var panel) && panel.Open) return true;
+        Popup.PopupCursor(Loc.GetString("vending-machine-restock-needs-panel-open",
+                ("this", uid),
+                ("user", user),
+                ("target", target)),
+            user);
+
+        return false;
+    }
+
+    public bool TryMatchPackageToMachine(EntityUid uid,
+        VendingMachineRestockComponent component,
+        VendingMachineComponent machineComponent,
+        EntityUid user,
+        EntityUid target)
+    {
+        if (component.CanRestock.Contains(machineComponent.PackPrototypeId)) return true;
+        Popup.PopupCursor(Loc.GetString("vending-machine-restock-invalid-inventory", ("this", uid), ("user", user),
+            ("target", target)), user);
+
+        return false;
+    }
+
+    public void TryRestockInventory(EntityUid uid, VendingMachineComponent? vendComponent = null)
+    {
+        if (!Resolve(uid, ref vendComponent))
+            return;
+
+        RestockInventoryFromPrototype(uid, vendComponent);
+
+        Dirty(uid, vendComponent);
     }
 }

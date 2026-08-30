@@ -1,7 +1,7 @@
 - type: entity
-  parent: BaseStructure
-  id: BaseRailing
   abstract: true
+  parent: [ BaseStructure, StructureHealthBarrierWeak ]
+  id: BaseRailing
   name: railing
   description: Basic railing meant to protect idiots like you from falling.
   components:
@@ -15,9 +15,23 @@
   - type: InteractionOutline
   - type: Repairable
   - type: Damageable
-    damageModifierSet: FlimsyMetallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: SteelMod
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -6
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PartRodMetal1:
+            min: 0
+            max: 1
   - type: Climbable
   - type: Construction
     graph: Railing
@@ -45,24 +59,6 @@
         - TableMask
         layer:
         - TableLayer
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 20
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-          params:
-            volume: -6
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PartRodMetal1:
-            min: 0
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Construction
     node: railing
 
@@ -94,24 +90,6 @@
         - TableMask
         layer:
         - TableLayer
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 20
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-          params:
-            volume: -6
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PartRodMetal1:
-            min: 0
-            max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Construction
     node: railingCorner
 
@@ -134,24 +112,6 @@
         - TableMask
         layer:
         - TableLayer
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 20
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-          params:
-            volume: -6
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PartRodMetal1:
-            min: 0
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Construction
     node: railingCornerSmall
 
@@ -192,23 +152,5 @@
           - TableMask
         layer:
           - TableLayer
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 20
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-          params:
-            volume: -6
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PartRodMetal1:
-            min: 0
-            max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Construction
     node: railingRound

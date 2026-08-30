@@ -37,13 +37,8 @@ public sealed partial class HandheldLightSystem : SharedHandheldLightSystem
         return true;
     }
 
-    private void OnAppearanceChange(EntityUid uid, HandheldLightComponent? component, ref AppearanceChangeEvent args)
+    private void OnAppearanceChange(EntityUid uid, HandheldLightComponent component, ref AppearanceChangeEvent args)
     {
-        if (!Resolve(uid, ref component))
-        {
-            return;
-        }
-
         if (!_appearance.TryGetData<bool>(uid, ToggleableVisuals.Enabled, out var enabled, args.Component))
         {
             return;

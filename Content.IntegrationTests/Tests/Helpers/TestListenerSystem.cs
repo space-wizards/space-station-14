@@ -9,7 +9,7 @@ namespace Content.IntegrationTests.Tests.Helpers;
 /// <summary>
 /// Generic system that listens for and records any received events of a given type.
 /// </summary>
-public abstract class TestListenerSystem<TEvent> : EntitySystem where TEvent : notnull
+public abstract partial class TestListenerSystem<TEvent> : EntitySystem where TEvent : notnull
 {
     public override void Initialize()
     {

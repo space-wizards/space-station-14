@@ -7,6 +7,7 @@ using Content.Shared.Store;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.Fluids;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
@@ -32,6 +33,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private SharedStoreSystem _store = default!;
+    [Dependency] private SharedPuddleSystem _puddle = default!;
 
     public override void Initialize()
     {
@@ -183,6 +185,9 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
         RaiseLocalEvent(target, ref devouredEv); // Don't broadcast this one, all neccessary data is in the previous event already. Just use that one if a broadcast is needed.
 
         EnsureComp<RecentlyDevouredComponent>(target);
+
+        if (ent.Comp.DevourSpill != null)
+            _puddle.TrySpillAt(target, ent.Comp.DevourSpill, out _, false);
 
         // Grants the DNA reward associated with a successful unique devour.
         if (willGrantDna && TryComp<StoreComponent>(ent, out var store))

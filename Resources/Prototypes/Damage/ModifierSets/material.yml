@@ -1,0 +1,250 @@
+# Modifier sets for entities that can be described as fully (or mostly) composed of some specific material
+
+#region Metallic
+## Metals resist brute, making them resilient to common attacks and especially bullets.
+## Neutral against burns, making burn the preferred damage to destroy it.
+
+# Extremely strong metal that's unavailable to crew.
+- type: damageModifierSet
+  id: PlastitaniumMod
+  coefficients:
+    Piercing: 0.7 # Bullets aren't a good option against metal
+  flatReductions:
+    Blunt: 20
+    Slash: 20
+    Piercing: 20
+    Heat: 20
+    Cold: 20
+    Shock: 20
+    Caustic: 20
+    Structural: 9
+
+# Strong metal used by crew to protect important areas and items.
+- type: damageModifierSet
+  id: PlasteelMod
+  coefficients:
+    Piercing: 0.7 # Bullets aren't a good option against metal
+  flatReductions:
+    Blunt: 15
+    Slash: 15
+    Piercing: 15
+    Heat: 15
+    Cold: 15
+    Shock: 15
+    Caustic: 15
+    Structural: 6
+
+# Common metal found all over the place.
+- type: damageModifierSet
+  id: SteelMod
+  coefficients:
+    Piercing: 0.7 # Bullets aren't a good option against metal
+  flatReductions:
+    Blunt: 10
+    Slash: 10
+    Piercing: 10
+    Heat: 15
+    Cold: 15
+    Shock: 15
+    Caustic: 15
+    Structural: 3
+
+# Weak metal with an orange hue
+- type: damageModifierSet
+  id: BrassMod
+  coefficients:
+    Piercing: 0.7 # Bullets aren't a good option against metal
+    Heat: 1.2
+    Cold: 1.2
+    Shock: 0.5
+  flatReductions:
+    Blunt: 5
+    Slash: 5
+    Piercing: 5
+    Shock: 30 # Way less electrical resistance compared to steel
+    Caustic: 10
+
+# Metals that you really shouldn't be building things out of. Gold, silver, etc.
+- type: damageModifierSet
+  id: PreciousMetalMod
+  coefficients:
+    Blunt: 1.2
+    Slash: 1.2
+    Heat: 1.5
+    Cold: 1.5
+    Shock: 1.5
+
+#endregion
+#region Glass
+## Glass acts somewhat like an inverse to metal. Resists burns, but weak to brutes.
+
+# Inverse of metal. Weak to brute but resists burns.
+- type: damageModifierSet
+  id: GlassMod
+  coefficients:
+    Blunt: 1.5
+    Heat: 0.7
+    Cold: 0.7
+    Shock: 0.7
+  flatReductions:
+    Heat: 20
+    Cold: 20
+    Shock: 20
+    Caustic: 20
+
+# Halfway between steel and glass.
+- type: damageModifierSet
+  id: GlassReinforcedMod
+  coefficients:
+    Blunt: 1.3
+    Piercing: 0.8
+  flatReductions:
+    Blunt: 5
+    Slash: 5
+    Piercing: 5
+    Heat: 20
+    Cold: 20
+    Shock: 20
+    Caustic: 20
+    Structural: 2
+
+# Halfway between plasma and glass.
+- type: damageModifierSet
+  id: GlassPlasmaMod
+  coefficients:
+    Blunt: 1.5
+    Piercing: 1.5
+    Heat: 0.7
+    Cold: 1.3
+    Shock: 1.3
+  flatReductions:
+    Blunt: 3
+    Slash: 3
+    Heat: 30
+    Cold: 20
+    Shock: 20
+    Caustic: 20
+
+# Halfway between reinforced glass and plasma.
+- type: damageModifierSet
+  id: GlassReinforcedPlasmaMod
+  coefficients:
+    Blunt: 1.3
+    Piercing: 1.2
+    Heat: 0.8
+    Cold: 1.3
+    Shock: 1.3
+  flatReductions:
+    Blunt: 8
+    Slash: 8
+    Piercing: 5
+    Heat: 30
+    Cold: 20
+    Shock: 20
+    Caustic: 20
+    Structural: 2
+
+#endregion
+#region Organic
+## Poor resistances with specific, obvious weaknesses.
+
+- type: damageModifierSet
+  id: CardboardMod
+  coefficients:
+    Blunt: 1.5
+    Slash: 2
+    Heat: 2
+    Structural: 2 # Falls apart no matter what you do to it
+
+- type: damageModifierSet
+  id: WoodMod
+  coefficients:
+    Slash: 1.5
+    Heat: 1.5
+  flatReductions:
+    Blunt: 4 # Minecraft reference
+    Piercing: 4
+
+# Silk, cloth, and other woven materials.
+- type: damageModifierSet
+  id: ThreadMod
+  coefficients:
+    Slash: 2
+    Piercing: 1.5
+    Heat: 2
+
+# Halfway between thread and plastic.
+- type: damageModifierSet
+  id: DurathreadMod
+  coefficients:
+    Slash: 1.5
+    Piercing: 1.2
+    Heat: 1.5
+    Caustic: 1.5
+  flatReductions:
+    Blunt: 2
+    Cold: 2
+    Shock: 2
+
+# A little bit resistant to everything.
+- type: damageModifierSet
+  id: PlasticMod
+  coefficients:
+    Caustic: 2
+  flatReductions:
+    Blunt: 2
+    Slash: 2
+    Piercing: 2
+    Heat: 2
+    Cold: 2
+    Shock: 2
+
+# Durable material with an extreme weakness to structural.
+- type: damageModifierSet
+  id: RockMod # And dirt and porcelain
+  coefficients:
+    Structural: 3
+  flatReductions:
+    Blunt: 6
+    Slash: 6
+    Piercing: 6
+    Heat: 10
+    Cold: 10
+    Shock: 10
+    Caustic: 10
+
+# A weird space rock which fills gaps for unusual weaknesses.
+- type: damageModifierSet
+  id: PlasmaMod
+  coefficients:
+    Piercing: 2
+    Cold: 2
+    Shock: 2
+  flatReductions:
+    Blunt: 10
+    Slash: 10
+    Heat: 10
+    Caustic: 10
+
+# The least durable material in the universe. You'd need to be some sort of clown to build with this :o)
+- type: damageModifierSet
+  id: BananiumMod
+  coefficients:
+    Blunt: 2
+    Slash: 2
+    Piercing: 2
+    Heat: 2
+    Cold: 2
+    Shock: 2
+    Caustic: 2
+    Poison: 2
+    Radiation: 2
+    Asphyxiation: 2
+    Bloodloss: 2
+    Cellular: 2
+    Holy: 2
+    Structural: 2
+  flatReductions:
+    Structural: -5 # Destroyed by a soft breeze
+
+#endregion

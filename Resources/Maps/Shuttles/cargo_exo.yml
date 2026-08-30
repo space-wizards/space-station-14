@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 259.0.0
+  engineVersion: 277.0.0
   forkId: ""
   forkVersion: ""
-  time: 05/16/2025 14:17:40
-  entityCount: 199
+  time: 05/27/2026 15:09:40
+  entityCount: 211
 maps: []
 grids:
 - 173
@@ -137,13 +137,15 @@ entities:
           -2,2:
             0: 136
           -2,-1:
-            0: 32836
+            0: 32768
+            1: 68
           -1,0:
             0: 65535
           -1,1:
             0: 65535
           -1,2:
-            0: 179
+            0: 51
+            1: 128
           -1,-1:
             0: 65526
           0,0:
@@ -151,29 +153,23 @@ entities:
           0,1:
             0: 305
           0,2:
-            0: 18
+            1: 18
           0,-1:
-            0: 12290
+            0: 12288
+            1: 2
           -2,-2:
-            0: 32768
+            1: 32768
           0,-2:
-            0: 4096
+            1: 4096
         uniqueMixes:
         - volume: 2500
           temperature: 293.15
           moles:
-          - 21.824879
-          - 82.10312
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
+            Oxygen: 21.824879
+            Nitrogen: 82.10312
+        - volume: 2500
+          temperature: 293.15
+          moles: {}
         chunkSize: 4
     - type: OccluderTree
     - type: Shuttle
@@ -184,13 +180,20 @@ entities:
     - type: GravityShake
       shakeTimes: 10
     - type: GasTileOverlay
+    - type: TileHistory
+      chunkHistory: {}
+    - type: ImplicitRoof
+    - type: ExplosionAirtightGrid
 - proto: AirCanister
   entities:
   - uid: 172
     components:
     - type: Transform
+      anchored: True
       pos: -3.5,-1.5
       parent: 173
+    - type: Physics
+      bodyType: Static
 - proto: AirlockExternalLocked
   entities:
   - uid: 1
@@ -241,6 +244,8 @@ entities:
     - type: Transform
       pos: -0.5,8.5
       parent: 173
+    - type: Fixtures
+      fixtures: {}
 - proto: AtmosDeviceFanDirectional
   entities:
   - uid: 6
@@ -284,6 +289,48 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 1.5,5.5
+      parent: 173
+- proto: AtmosFixBlockerMarker
+  entities:
+  - uid: 204
+    components:
+    - type: Transform
+      pos: -5.5,-2.5
+      parent: 173
+  - uid: 205
+    components:
+    - type: Transform
+      pos: -5.5,-3.5
+      parent: 173
+  - uid: 206
+    components:
+    - type: Transform
+      pos: -4.5,-4.5
+      parent: 173
+  - uid: 207
+    components:
+    - type: Transform
+      pos: 0.5,-4.5
+      parent: 173
+  - uid: 208
+    components:
+    - type: Transform
+      pos: 1.5,-3.5
+      parent: 173
+  - uid: 209
+    components:
+    - type: Transform
+      pos: 1.5,8.5
+      parent: 173
+  - uid: 210
+    components:
+    - type: Transform
+      pos: 0.5,9.5
+      parent: 173
+  - uid: 211
+    components:
+    - type: Transform
+      pos: -0.5,9.5
       parent: 173
 - proto: BlastDoor
   entities:
@@ -803,6 +850,16 @@ entities:
       rot: 3.141592653589793 rad
       pos: -4.5,9.5
       parent: 173
+- proto: GasPassiveVent
+  entities:
+  - uid: 200
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -0.5,9.5
+      parent: 173
+    - type: AtmosPipeColor
+      color: '#990000FF'
 - proto: GasPipeBend
   entities:
   - uid: 134
@@ -811,6 +868,16 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -2.5,-1.5
       parent: 173
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 201
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -2.5,9.5
+      parent: 173
+    - type: AtmosPipeColor
+      color: '#990000FF'
 - proto: GasPipeStraight
   entities:
   - uid: 136
@@ -819,24 +886,47 @@ entities:
       rot: 3.141592653589793 rad
       pos: -2.5,0.5
       parent: 173
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
   - uid: 137
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -2.5,1.5
       parent: 173
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
   - uid: 140
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -2.5,-0.5
       parent: 173
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
   - uid: 169
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -2.5,2.5
       parent: 173
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 202
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -1.5,9.5
+      parent: 173
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 203
+    components:
+    - type: Transform
+      pos: -2.5,8.5
+      parent: 173
+    - type: AtmosPipeColor
+      color: '#990000FF'
 - proto: GasPort
   entities:
   - uid: 135
@@ -845,6 +935,8 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -3.5,-1.5
       parent: 173
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
 - proto: GasVentPump
   entities:
   - uid: 199
@@ -852,6 +944,18 @@ entities:
     - type: Transform
       pos: -2.5,3.5
       parent: 173
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+- proto: GasVentScrubber
+  entities:
+  - uid: 138
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -2.5,7.5
+      parent: 173
+    - type: AtmosPipeColor
+      color: '#990000FF'
 - proto: GeneratorBasic15kW
   entities:
   - uid: 83
@@ -1053,6 +1157,8 @@ entities:
         196:
         - - Pressed
           - Toggle
+    - type: Fixtures
+      fixtures: {}
   - uid: 192
     components:
     - type: Transform
@@ -1064,6 +1170,8 @@ entities:
         195:
         - - Pressed
           - Toggle
+    - type: Fixtures
+      fixtures: {}
   - uid: 197
     components:
     - type: Transform
@@ -1087,6 +1195,8 @@ entities:
           - Toggle
         - - Pressed
           - AutoClose
+    - type: Fixtures
+      fixtures: {}
 - proto: SMESBasic
   entities:
   - uid: 167

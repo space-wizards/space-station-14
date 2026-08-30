@@ -11,6 +11,8 @@
     - type: Item
       sprite: Objects/Weapons/Melee/shields.rsi
       size: Ginormous
+      shape:
+      - 0,0,4,5
       heldPrefix: riot
     - type: Blocking
       passiveBlockModifier:
@@ -331,6 +333,7 @@
   id: EnergyShield
   description: Exotic energy shield, when folded, can even fit in your pocket.
   components:
+    - type: ItemToggleExaminableStatus
     - type: ItemToggle
       soundActivate:
         path: /Audio/Weapons/ebladeon.ogg
@@ -341,6 +344,8 @@
         path: /Audio/Weapons/ebladehum.ogg
     - type: ItemToggleSize
       activatedSize: Huge
+      activatedShape:
+      - 0,0,3,3
     - type: ComponentToggler
       components:
       - type: DisarmMalus
@@ -434,6 +439,9 @@
   id: TelescopicShield
   description: An advanced riot shield made of lightweight materials that collapses for easy storage.
   components:
+    - type: ItemToggleExaminableStatus
+      onText: item-toggle-examined-active
+      offText: item-toggle-examined-not-active
     - type: ItemToggle
       soundActivate:
         path: /Audio/Weapons/telescopicon.ogg
@@ -449,6 +457,8 @@
         malus: 0.6
     - type: ItemToggleSize
       activatedSize: Huge
+      activatedShape:
+      - 0,0,3,3
     - type: Sprite
       sprite: Objects/Weapons/Melee/teleriot_shield.rsi
       layers:
@@ -458,6 +468,8 @@
           map: [ "shield" ]
     - type: Item
       size: Small
+      shape:
+      - 0,0,1,1
       sprite: Objects/Weapons/Melee/teleriot_shield.rsi
       heldPrefix: teleriot
     - type: UseDelay

@@ -43,7 +43,8 @@ public sealed partial class NetProbeCartridgeSystem : EntitySystem
 
         // Play scanning sound with slightly randomized pitch
         // Why is there no NextFloat(float min, float max)???
-        var audioParams = AudioParams.Default.WithVolume(-2f).WithVariation(0.2f);
+        var audioParams = component.SoundScan?.Params ?? AudioParams.Default;
+        audioParams = audioParams.AddVolume(-2f).WithVariation(0.2f);
         _audioSystem.PlayPredicted(component.SoundScan, target, args.Args.User, audioParams);
         _popupSystem.PopupCursor(Loc.GetString("net-probe-scan", ("device", target)), args.Args.User);
 

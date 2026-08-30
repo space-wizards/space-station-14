@@ -263,6 +263,10 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             // If the user changes which hand is active at all, interrupt the do-after
             if (args.BreakOnHandChange && hands.ActiveHandId != doAfter.InitialHand)
                 return true;
+
+            //If the user's hand is no longer empty, interrupt the do-after.
+            if (args.NeedFreeHand & !_hands.ActiveHandIsEmpty(args.User))
+                return true;
         }
 
         if (args.RequireCanInteract && !_actionBlocker.CanInteract(args.User, args.Target))

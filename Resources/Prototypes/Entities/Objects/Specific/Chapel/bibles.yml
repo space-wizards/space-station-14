@@ -102,8 +102,11 @@
   description: Summon a familiar that will aid you and gain humanlike intelligence once inhabited by a soul.
   components:
   - type: Action
-    icon: { sprite: Clothing/Head/Hats/witch.rsi, state: icon }
     useDelay: 1
+  - type: Sprite
+    sprite: Clothing/Head/Hats/witch.rsi
+    layers:
+    - state: icon
   - type: InstantAction
     event: !type:SummonActionEvent
 

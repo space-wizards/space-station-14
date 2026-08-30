@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: BaseStructure
+  parent: [ BaseStructure, StructureHealthBarrier ]
   id: BaseFenceMetal
   name: chain link fence
   description: A metal piece of fencing cordoning off something likely very important.
@@ -18,14 +18,12 @@
   - type: Transform
     anchored: true
   - type: Damageable
-    damageModifierSet: FlimsyMetallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger:
+    - trigger: &DamageBarrierNormal
         !type:DamageTrigger
-        damage: 150
+        damage: 80
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -35,8 +33,6 @@
           PartRodMetal1:
             min: 1
             max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Climbable
     delay: 5.0
     startClimbSound:
@@ -147,9 +143,7 @@
       collection: FenceRattle
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 150
+    - trigger: *DamageBarrierNormal
       behaviors:
       - !type:ChangeConstructionNodeBehavior
         node: broken

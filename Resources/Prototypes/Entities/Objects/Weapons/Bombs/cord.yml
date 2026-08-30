@@ -64,9 +64,9 @@
     # whitelist:
       # components:
       # - Airlock
+      # - Wall
       # tags:
       # - Window
-      # - Wall
   # - type: StickyVisualizer
 
 - type: entity

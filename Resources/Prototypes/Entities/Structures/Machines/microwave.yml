@@ -76,6 +76,8 @@
       shader: unshaded
       map: ["bloodyunshaded"]
       visible: false
+  - type: Damageable
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
     - trigger: # Excess damage, don't spawn entities
@@ -85,6 +87,9 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
+      - !type:EmptyContainersBehaviour
+        containers:
+        - microwave_entity_container
   - type: Explosive
     explosionType: Default
     maxIntensity: 10
@@ -114,6 +119,9 @@
   - type: Item
     sprite: Structures/Machines/microwave.rsi
     size: Ginormous
+    shape:
+    - 0,0,5,4
+    storedOffset: 0,7
   - type: MultiHandedItem
   - type: MeleeWeapon
     attackRate: 0.5
@@ -169,6 +177,9 @@
   - type: Item
     sprite: Structures/Machines/microwave_syndie.rsi
     size: Ginormous
+    shape:
+    - 0,0,5,4
+    storedOffset: 0,7
   - type: MeleeWeapon
     attackRate: 0.75
     damage:
