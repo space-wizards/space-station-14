@@ -161,6 +161,19 @@ public sealed partial class PlantHarvestSystem : EntitySystem
     }
 
     /// <summary>
+    /// Resets harvest progress to the plant's current age.
+    /// </summary>
+    [PublicAPI]
+    public void ResetHarvestProgress(Entity<PlantHolderComponent?> ent)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
+            return;
+
+        ent.Comp.LastHarvest = ent.Comp.Age;
+        DirtyField(ent, nameof(ent.Comp.LastHarvest));
+    }
+
+    /// <summary>
     /// Affects the growth of a plant by modifying its age or production timing.
     /// </summary>
     [PublicAPI]

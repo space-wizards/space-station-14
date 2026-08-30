@@ -179,4 +179,30 @@ public sealed partial class BotanySystem : EntitySystem
         _hands.TryPickupAnyHand(user, seedItem);
         return seedItem;
     }
+    /// <summary>
+    /// Reverts a planted plant back into a seed packet while preserving its genetics.
+    /// </summary>
+    [PublicAPI]
+    public bool TryRevertPlantToSeed(Entity<PlantComponent?, PlantDataComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp1, ref ent.Comp2, false))
+            return false;
+
+        if (!_plant.TryGetTray(ent.Owner, out var tray))
+            return false;
+
+        var plantProto = MetaData(ent.Owner).EntityPrototype;
+        if (plantProto == null)
+            return false;
+
+        SpawnSeedPacket(
+            ent.Comp2,
+            plantProto.ID,
+            ent.Owner,
+            Transform(tray.Owner).Coordinates,
+            tray.Owner);
+
+        _plant.RemovePlant(ent.Owner);
+        return true;
+    }
 }
