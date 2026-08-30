@@ -166,27 +166,13 @@
   name: space carp
   id: MobCarpDragon
   suffix: DragonBrood
-  parent: MobCarp
+  parent: [ MobDragonBrood, MobCarp ]
   components:
-    - type: GhostRole
-      allowMovement: true
-      allowSpeech: true
-      makeSentient: true
-      name: ghost-role-information-sentient-carp-name
-      description: ghost-role-information-sentient-carp-description
-      rules: ghost-role-information-space-dragon-summoned-carp-rules
-      mindRoles:
-      - MindRoleGhostRoleTeamAntagonistFlock
-    - type: GhostTakeoverAvailable
-    - type: HTN
-      rootTask:
-        task: DragonCarpCompound
-    - type: Flammable
-      damage:
-       types: {}
-    - type: Temperature
-    - type: TemperatureDamage
-      heatDamageThreshold: 1200
+  - type: GhostRole
+    name: ghost-role-information-sentient-carp-name
+    description: ghost-role-information-sentient-carp-description
+    rules: ghost-role-information-space-dragon-summoned-carp-rules
+
 - type: entity
   id: MobCarpDungeon
   parent: MobCarp
@@ -232,7 +218,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      82: Dead # Might seem random, but this brings up the hits to kill with a crusher mark to 3
+      150: Dead
   - type: Stamina
     baseCritThreshold: 150
   - type: DamageStateVisuals
@@ -261,3 +247,18 @@
   suffix: "Salvage Ruleset"
   components:
   - type: SalvageMobRestrictions
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      82: Dead # Might seem random, but this brings up the hits to kill with a crusher mark to 3
+
+- type: entity
+  id: MobSharkDragon
+  suffix: DragonBrood
+  parent: [ MobDragonBrood, MobShark ]
+  components:
+  - type: GhostRole
+    name: ghost-role-information-sentient-sharkminnow-name
+    description: ghost-role-information-sentient-carp-description
+    rules: ghost-role-information-space-dragon-summoned-carp-rules
+
