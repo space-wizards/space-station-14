@@ -187,7 +187,6 @@
   - PlantTraitKudzu
   - PlantTraitLigneous
   - PlantTraitScream
-  - PlantTraitSeedless
   - PlantTraitUnviable
 
 # for plant lifecycle clones
@@ -197,5 +196,6 @@
   components:
   # traits
   - PlantTraitSampled
+  - PlantTraitSeedless
   eventComponents:
   - PlantHolder
