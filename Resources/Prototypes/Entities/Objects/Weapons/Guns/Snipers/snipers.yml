@@ -84,7 +84,7 @@
     speedModifier: 0.5 #It's a bayonet
   - type: GunRequiresWield
   - type: StaticPrice
-    price: 500
+    price: 50
 
 - type: entity
   name: Hristov
