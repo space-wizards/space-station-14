@@ -64,6 +64,9 @@
   - type: ActionGrant
     actions:
     - ActionChangelingStasisWeak
+  - type: Tag # Removes DoorBumpOpener
+    tags:
+      [ ]
 
 - type: entity
   parent:
@@ -110,9 +113,6 @@
       types:
         Blunt: 5
         Structural: 15 # to destroy lockers in which bodies could be hidden
-  - type: Tag # Removes DoorBumpOpener
-    tags:
-      []
   - type: InteractionPopup
     successChance: 0.2
     interactSuccessString: petting-success-headslug
@@ -154,7 +154,7 @@
     altDisarm: false
     damage:
       types:
-        Blunt: 8
+        Blunt: 10
         Structural: 25 # to destroy lockers in which bodies could be hidden
   - type: InteractionPopup
     successChance: 0.01
@@ -163,9 +163,6 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/cat_meow.ogg # meow
-  - type: Tag # Removes DoorBumpOpener
-    tags:
-      []
 
 - type: entity # dummy prototype for the store listing
   id: ChangelingFleshClothingAbilityStoreDummy
