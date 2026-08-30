@@ -1005,14 +1005,6 @@ FloorTileItemIronsandConcreteMono: null
 FloorTileItemIronsandConcreteSmooth: null
 IronSandstone: IronRock
 IronSandstoneMining: IronRock
-AsteroidRockBananium: AsteroidRock
-AsteroidRockBananiumCrab: AsteroidRock
-IronRockBananium: IronRock
-WallRockBananium: WallRock
-WallRockChromiteBananium: WallRockChromite
-WallRockSandBananium: WallRockSand
-WallRockSnowBananium: WallRockSnow
-MeteorRockBananium: AsteroidRock
 WallRockBasalt: WallRock
 WallRockBasaltCoal: WallRockCoal
 WallRockBasaltGold: WallRockGold
@@ -1059,7 +1051,6 @@ WallSpawnAsteroidBananiumCrab: null
 # 2026-08-11
 FloorTileItemDirty: null
 PinionAirlockAssemblyGlass: AirlockAssemblyGlass
-AnomalyRockBananium: AnomalyRockCoal
 ClockworkGirder: Girder
 BaseAsteroidRock: AsteroidRock
 ButtonFrameExit: ButtonFrameWhite
