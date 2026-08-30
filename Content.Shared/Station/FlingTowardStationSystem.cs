@@ -5,7 +5,7 @@ using Robust.Shared.Physics.Components;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.Station.Systems;
+namespace Content.Shared.Station;
 
 public sealed partial class FlingTowardStationSystem : EntitySystem
 {
