@@ -92,7 +92,6 @@ public sealed partial class TextScreenVisualsComponent : Component
 
     /// <summary>
     /// The list of row data for the text screens.
-    /// Only useful client-side.
     /// </summary>
     [DataField]
     public TextScreenRow[] RowData = { new(), new() };

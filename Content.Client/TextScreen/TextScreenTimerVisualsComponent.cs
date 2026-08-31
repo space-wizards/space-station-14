@@ -46,7 +46,6 @@ public sealed partial class TextScreenTimerVisualsComponent : Component
     /// The last value being displayed on the screen, (hundreds):(ones).
     /// e.g. 12:34 would be a value of 1234.
     /// 0 indicates that the timer has finished, and should display FinishedText instead.
-    /// Only used client-side.
     /// </summary>
     [DataField]
     public int ScreenValue;
