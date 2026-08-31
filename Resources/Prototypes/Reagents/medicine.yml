@@ -1315,7 +1315,7 @@
         - !type:ReduceRotting
           seconds: 20
           conditions:
-          #A stressful process on the body, it should
+          #A stressful process on the body, it should hurt.
           - !type:TemperatureCondition
             max: 203.15
           - !type:MobStateCondition
