@@ -5,14 +5,14 @@
     <GuideEntityEmbed Entity="MobDiona" Caption=""/>
   </Box>
 
-  They can't wear shoes, but are not slowed by Kudzu.
+  Diona can't wear shoes, but are not slowed by Kudzu.
   They get hungry slower than most species, but get thirsty faster.
-  Their "blood" is tree sap and can't be metabolised from Iron.
+  Diona have tree sap for blood, which can't be metabolized from Iron.
   Being plants, Weed Killer poisons them, while Robust Harvest heals them (but not without risk when overused!)
 
   They take [color=#1e90ff]30% less Blunt damage and 20% less Slash damage[/color];
   but [color=#ffa500]50% more Heat damage, 20% more Shock damage, and they can easily
-  catch on fire when receiving enough Heat damage from *any* source.[/color]
+  catch on fire when receiving enough Heat damage from [bold]any[/bold] source.[/color]
 
   ## Make Like A Tree And Leave
   <Box>
