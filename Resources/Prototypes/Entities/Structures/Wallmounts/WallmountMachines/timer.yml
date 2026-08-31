@@ -61,7 +61,7 @@
   components:
   - type: SignalTimer
     canEditLabel: true
-  - type: TextScreenTimer
+  - type: TextScreenTimerVisuals
     runningState: running
     finishedState: finished
   - type: TextScreenVisuals

@@ -8,7 +8,7 @@ namespace Content.Client.TextScreen;
 /// </summary>
 [RegisterComponent, Access(typeof(TextScreenSystem))]
 [AutoGenerateComponentPause]
-public sealed partial class TextScreenTimerComponent : Component
+public sealed partial class TextScreenTimerVisualsComponent : Component
 {
     /// <summary>
     /// The time that the timer is counting down to.

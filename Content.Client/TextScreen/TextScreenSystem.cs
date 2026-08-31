@@ -19,13 +19,13 @@ namespace Content.Client.TextScreen;
 /// screens that support scrolling.
 /// </summary>
 /// <seealso cref="TextScreenVisualsComponent"/>
-/// <seealso cref="TextScreenTimerComponent"/>
+/// <seealso cref="TextScreenTimerVisualsComponent"/>
 public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisualsComponent>
 {
     [Dependency] private IGameTiming _timing = default!;
 
     [Dependency] private EntityQuery<SpriteComponent> _spriteQuery;
-    [Dependency] private EntityQuery<TextScreenTimerComponent> _screenTimerQuery;
+    [Dependency] private EntityQuery<TextScreenTimerVisualsComponent> _screenTimerQuery;
 
     /// <summary>
     /// Contains char/state Key/Value pairs. <br/>
@@ -89,7 +89,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     /// </summary>
     private static readonly TimeSpan MaxPixelScrollTime = TimeSpan.FromMilliseconds(100);
 
-    #region Public API
+    #region Inherited
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -99,6 +99,80 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     }
 
     /// <summary>
+    /// Appearance data handler - drives the actual text/timer.
+    /// Sets <see cref="TextScreenVisualsComponent.NewTextToDisplay"/> on any change,
+    /// which will be picked up in the next Update.
+    /// Color data, being simpler, is updated on the layers in the call directly.
+    /// </summary>
+    protected override void OnAppearanceChange(EntityUid uid, TextScreenVisualsComponent comp, ref AppearanceChangeEvent args)
+    {
+        bool anyChange;
+        if (args.TryGetData(TextScreenVisuals.Color, out Color color))
+        {
+            anyChange = comp.CurrentColor != color;
+            comp.CurrentColor = color;
+        }
+        else
+        {
+            anyChange = comp.CurrentColor != comp.Color;
+            comp.CurrentColor = comp.Color;
+        }
+
+        // Update layer color - less frequent to change, no need to change in update.
+        if (anyChange && _spriteQuery.TryComp(uid, out var sprite))
+        {
+            foreach (var row in comp.RowData)
+            {
+                foreach (var layer in row.Layers)
+                    SpriteSystem.LayerSetColor((uid, sprite), layer.Key, comp.CurrentColor);
+            }
+        }
+
+        args.TryGetData(TextScreenVisuals.ScreenText, out string? screenTextValue);
+        args.TryGetData(TextScreenVisuals.DefaultText, out string? defaultTextValue);
+
+        if (!args.TryGetData(TextScreenVisuals.ScreenTextTime, out TimeSpan? scrollTime))
+            scrollTime = _timing.CurTime;
+
+        if (_screenTimerQuery.TryComp(uid, out var timer)
+            && args.TryGetData(TextScreenVisuals.TargetTime, out TimeSpan? textTime))
+        {
+            // If we have a valid timer, draw the timer.
+            if (defaultTextValue is { } defaultText && defaultText != timer.FinishedText)
+            {
+                timer.FinishedText = defaultText;
+                anyChange = true;
+            }
+            if (screenTextValue is { } screenText && screenText != timer.RunningText)
+            {
+                timer.RunningText = screenText;
+                anyChange = true;
+            }
+            if (textTime != timer.TargetTime)
+            {
+                timer.TargetTime = textTime;
+                anyChange = true;
+            }
+            comp.TextTime = scrollTime.Value;
+            comp.NewTextToDisplay = anyChange;
+        }
+        else
+        {
+            // Otherwise, if we have text, draw our text.
+            var newTextValue = screenTextValue ?? defaultTextValue;
+            if (newTextValue != comp.TextToDisplay)
+            {
+                comp.TextToDisplay = newTextValue;
+                anyChange = true;
+            }
+            comp.TextTime = scrollTime.Value;
+            comp.NewTextToDisplay = anyChange;
+        }
+    }
+    #endregion Inherited
+
+    #region Public API
+    /// <summary>
     /// Update handler - keep timers and scrolling text up to date.
     /// </summary>
     public override void Update(float frameTime)
@@ -106,7 +180,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
         base.Update(frameTime);
 
         // Timers: update the printed value before handling text screen logic.
-        var timerQuery = EntityQueryEnumerator<TextScreenTimerComponent>();
+        var timerQuery = EntityQueryEnumerator<TextScreenTimerVisualsComponent>();
         while (timerQuery.MoveNext(out var uid, out var timer))
         {
             if (timer.TargetTime == null)
@@ -282,79 +356,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
             SpriteSystem.AddLayer((ent, sprite), ent.Comp.FrameState, null);
     }
 
-    /// <summary>
-    /// Appearance data handler - drives the actual text/timer.
-    /// Sets <see cref="TextScreenVisualsComponent.NewTextToDisplay"/> on any change,
-    /// which will be picked up in the next Update.
-    /// Color data, being simpler, is updated on the layers in the call directly.
-    /// </summary>
-    protected override void OnAppearanceChange(EntityUid uid, TextScreenVisualsComponent comp, ref AppearanceChangeEvent args)
-    {
-        bool anyChange;
-        if (args.TryGetData(TextScreenVisuals.Color, out Color color))
-        {
-            anyChange = comp.CurrentColor != color;
-            comp.CurrentColor = color;
-        }
-        else
-        {
-            anyChange = comp.CurrentColor != comp.Color;
-            comp.CurrentColor = comp.Color;
-        }
-
-        // Update layer color - less frequent to change, no need to change in update.
-        if (anyChange && _spriteQuery.TryComp(uid, out var sprite))
-        {
-            foreach (var row in comp.RowData)
-            {
-                foreach (var layer in row.Layers)
-                    SpriteSystem.LayerSetColor((uid, sprite), layer.Key, comp.CurrentColor);
-            }
-        }
-
-        args.TryGetData(TextScreenVisuals.ScreenText, out string? screenTextValue);
-        args.TryGetData(TextScreenVisuals.DefaultText, out string? defaultTextValue);
-
-        if (!args.TryGetData(TextScreenVisuals.ScreenTextTime, out TimeSpan? scrollTime))
-            scrollTime = _timing.CurTime;
-
-        if (_screenTimerQuery.TryComp(uid, out var timer)
-            && args.TryGetData(TextScreenVisuals.TargetTime, out TimeSpan? textTime))
-        {
-            // If we have a valid timer, draw the timer.
-            if (defaultTextValue is { } defaultText && defaultText != timer.FinishedText)
-            {
-                timer.FinishedText = defaultText;
-                anyChange = true;
-            }
-            if (screenTextValue is { } screenText && screenText != timer.RunningText)
-            {
-                timer.RunningText = screenText;
-                anyChange = true;
-            }
-            if (textTime != timer.TargetTime)
-            {
-                timer.TargetTime = textTime;
-                anyChange = true;
-            }
-            comp.TextTime = scrollTime.Value;
-            comp.NewTextToDisplay = anyChange;
-        }
-        else
-        {
-            // Otherwise, if we have text, draw our text.
-            var newTextValue = screenTextValue ?? defaultTextValue;
-            if (newTextValue != comp.TextToDisplay)
-            {
-                comp.TextToDisplay = newTextValue;
-                anyChange = true;
-            }
-            comp.TextTime = scrollTime.Value;
-            comp.NewTextToDisplay = anyChange;
-        }
-    }
-
-    private string GetTimerString(Entity<TextScreenTimerComponent> ent, int newScreenValue)
+    private string GetTimerString(Entity<TextScreenTimerVisualsComponent> ent, int newScreenValue)
     {
         if (ent.Comp.TimerRow < 0)
             return ent.Comp.RunningText;
@@ -538,7 +540,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     /// <summary>
     /// Updates the light on a timer's sprite based on whether or not it's currently running.
     /// </summary>
-    private void UpdateTimerSprite(Entity<TextScreenTimerComponent> ent, bool running)
+    private void UpdateTimerSprite(Entity<TextScreenTimerVisualsComponent> ent, bool running)
     {
         if (_spriteQuery.TryComp(ent, out var sprite)
             && SpriteSystem.LayerMapTryGet((ent, sprite), TimerVisualLayers.Light, out var layerIndex, logMissing: false))

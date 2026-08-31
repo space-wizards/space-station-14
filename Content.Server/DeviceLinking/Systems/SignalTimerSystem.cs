@@ -13,7 +13,7 @@ namespace Content.Server.DeviceLinking.Systems;
 /// <summary>
 /// A system for signallable timers. This is a timer with a screen
 /// </summary>
-/// <seealso cref="TextScreenTimerComponent"/>
+/// <seealso cref="TextScreenTimerVisualsComponent"/>
 public sealed partial class SignalTimerSystem : EntitySystem
 {
     [Dependency] private SharedAudioSystem _audio = default!;
