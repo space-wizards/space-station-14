@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Modified from Space Station 14 sugar bag sprites by Aischylos",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "franks-fertilizer"
+    },
+    {
+      "name": "franks-fertilizer_open"
+    }
+  ]
+}
