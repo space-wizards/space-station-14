@@ -1,14 +1,29 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Made by brainfood1183 (Github) for Space Station 14 and modified by Flareguy. Revamped by AftrLite.",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "signalscreen"
-    }
-  ]
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by brainfood1183 (Github) for Space Station 14 and modified by Flareguy. Revamped by AftrLite.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "finished",
+            "delays": [
+                [
+                    0.25,
+                    0.25
+                ]
+            ]
+        },
+        {
+            "name": "outer-frame"
+        },
+        {
+            "name": "running"
+        },
+        {
+            "name": "signalscreen"
+        }
+    ]
 }

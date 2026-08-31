@@ -6,7 +6,6 @@ using Content.Shared.MachineLinking;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
-using Content.Shared.TextScreen.Systems;
 using Content.Shared.TextScreen;
 
 namespace Content.Server.DeviceLinking.Systems;
@@ -22,7 +21,6 @@ public sealed partial class SignalTimerSystem : EntitySystem
     [Dependency] private AccessReaderSystem _accessReader = default!;
     [Dependency] private DeviceLinkSystem _deviceLink = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private TextScreenSystem _textScreen = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
 
     [Dependency] private EntityQuery<ActiveSignalTimerComponent> _activeTimerQuery;
@@ -77,7 +75,7 @@ public sealed partial class SignalTimerSystem : EntitySystem
         ent.Comp.Label = args.Text[..Math.Min(ent.Comp.MaxLength, args.Text.Length)];
 
         if (_activeTimerQuery.HasComp(ent) ||
-            _appearanceQuery.TryComp(ent, out var appearance))
+            !_appearanceQuery.TryComp(ent, out var appearance))
             return;
 
         // could maybe move the defaulttext update out of this block,

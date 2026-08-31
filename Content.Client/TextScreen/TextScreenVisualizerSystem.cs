@@ -1,8 +1,11 @@
 using System.Numerics;
 using Content.Client.TextScreen.Components;
+using Content.Client.Trigger.Components;
 using Content.Shared.TextScreen.Components;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.TextScreen.Systems;
 
@@ -23,7 +26,6 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
 {
     [Dependency] private IGameTiming _timing = default!;
 
-    [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery;
     [Dependency] private EntityQuery<SpriteComponent> _spriteQuery;
     [Dependency] private EntityQuery<TextScreenTimerVisualsComponent> _screenTimerQuery;
 
@@ -114,6 +116,7 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
                     continue;
 
                 SetTextToDisplay(uid, timer.FinishedText);
+                UpdateTimerSprite((uid, timer), false);
                 timer.ScreenValue = 0;
             }
             else
@@ -122,12 +125,14 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
                 if (screenValue == 0)
                 {
                     SetTextToDisplay(uid, timer.FinishedText);
+                    UpdateTimerSprite((uid, timer), false);
                     timer.ScreenValue = 0;
                 }
                 else if (screenValue != timer.ScreenValue)
                 {
                     var timerText = GetTimerString((uid, timer), screenValue);
                     SetTextToDisplay(uid, timerText);
+                    UpdateTimerSprite((uid, timer), true);
                     timer.ScreenValue = screenValue;
                 }
             }
@@ -209,6 +214,38 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
 
         return null;
     }
+    /// <summary>
+    /// Returns the <paramref name="timeSpan"/> converted to a string in either HH:MM, MM:SS or potentially SS:mm format.
+    /// </summary>
+    /// <param name="timeSpan">TimeSpan to convert into string.</param>
+    /// <param name="getMilliseconds">Should the string be ss:ms if minutes are less than 1?</param>
+    /// <remarks>
+    /// hours, minutes, seconds, and centiseconds are each set to 2 decimal places by default.
+    /// </remarks>
+    public static string TimeToString(TimeSpan timeSpan, bool getMilliseconds = true, string hours = "D2", string minutes = "D2", string seconds = "D2", string cs = "D2")
+    {
+        string firstString;
+        string lastString;
+
+        if (timeSpan.TotalHours >= 1)
+        {
+            firstString = timeSpan.Hours.ToString(hours);
+            lastString = timeSpan.Minutes.ToString(minutes);
+        }
+        else if (timeSpan.TotalMinutes >= 1 || !getMilliseconds)
+        {
+            firstString = timeSpan.Minutes.ToString(minutes);
+            lastString = timeSpan.Seconds.ToString(seconds);
+        }
+        else
+        {
+            firstString = timeSpan.Seconds.ToString(seconds);
+            var centiseconds = timeSpan.Milliseconds / 10;
+            lastString = centiseconds.ToString(cs);
+        }
+
+        return firstString + ':' + lastString;
+    }
     #endregion Public API
 
     #region Event Handlers
@@ -252,22 +289,45 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
         }
 
         //
-        if (!args.TryGetData(TextScreenVisuals.ScreenText, out string? text))
-        {
-            args.TryGetData(TextScreenVisuals.DefaultText, out text);
-        }
+        args.TryGetData(TextScreenVisuals.ScreenText, out string? screenTextValue);
+        args.TryGetData(TextScreenVisuals.DefaultText, out string? defaultTextValue);
 
         if (!args.TryGetData(TextScreenVisuals.ScreenTextTime, out TimeSpan? scrollTime))
             scrollTime = _timing.CurTime;
 
-        if (_screenTimerQuery.HasComp(uid)
+        if (_screenTimerQuery.TryComp(uid, out var timer)
             && args.TryGetData(TextScreenVisuals.TargetTime, out TimeSpan? textTime))
         {
             // If we have a valid timer, draw the timer.
+            if (defaultTextValue is { } defaultText && defaultText != timer.FinishedText)
+            {
+                timer.FinishedText = defaultText;
+                // TODO: assign anyChange
+            }
+            if (screenTextValue is { } screenText && screenText != timer.RunningText)
+            {
+                timer.RunningText = screenText;
+                anyChange = true;
+            }
+            if (textTime != timer.TargetTime)
+            {
+                timer.TargetTime = textTime;
+                anyChange = true;
+            }
+            comp.TextTime = scrollTime.Value;
+            comp.NewTextToDisplay = anyChange;
         }
-        else if (text is { } newText)
+        else
         {
             // Otherwise, if we have text, draw our text.
+            var newTextValue = screenTextValue ?? defaultTextValue;
+            if (newTextValue != comp.TextToDisplay)
+            {
+                comp.TextToDisplay = newTextValue;
+                anyChange = true;
+            }
+            comp.TextTime = scrollTime.Value;
+            comp.NewTextToDisplay = anyChange;
         }
     }
 
@@ -323,7 +383,8 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
             return;
         }
 
-        var texts = ent.Comp.Text?.Split("\n") ?? [];
+        var texts = ent.Comp.TextToDisplay?.Split("\n") ?? [];
+        var rsiPath = new ResPath(TextPath);
 
         for (var i = 0; i < ent.Comp.RowData.Length; i++)
         {
@@ -336,7 +397,7 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
                     var layerTuple = rowData.Layers[j];
 
                     if (SpriteSystem.LayerMapTryGet((ent, sprite), layerTuple.Key, out var layerIndex, false))
-                        SpriteSystem.LayerSetRsiState((ent, sprite), layerIndex, null);
+                        SpriteSystem.LayerSetRsi((ent, sprite), layerIndex, rsiPath, null);
 
                     rowData.Layers[j] = new(layerTuple.Key, null);
                 }
@@ -421,6 +482,15 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
     private void AddTime(ref TextScreenRow row, TimeSpan time)
     {
         row.NextScroll += time;
+    }
+
+    private void UpdateTimerSprite(Entity<TextScreenTimerVisualsComponent> ent, bool running)
+    {
+        if (_spriteQuery.TryComp(ent, out var sprite)
+            && SpriteSystem.LayerMapTryGet((ent, sprite), TimerVisualLayers.Light, out var layerIndex, logMissing: false))
+        {
+            SpriteSystem.LayerSetRsiState((ent, sprite), layerIndex, running ? ent.Comp.RunningState : ent.Comp.FinishedState);
+        }
     }
     #endregion Event Handlers
 }

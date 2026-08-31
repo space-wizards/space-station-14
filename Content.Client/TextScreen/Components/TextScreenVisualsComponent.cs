@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared.TextScreen.Systems;
+using Robust.Client.Graphics;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -19,7 +20,7 @@ public sealed partial class TextScreenVisualsComponent : Component
     /// 1/32 - the size of a pixel in meters.
     /// NOTE: the magical EyeManager size isn't available
     /// </summary>
-    public const float PixelSize = 1f / 32f;
+    public const float PixelSize = 1f / EyeManager.PixelsPerMeter;
 
     /// <summary>
     /// The color of the text drawn.
@@ -29,12 +30,6 @@ public sealed partial class TextScreenVisualsComponent : Component
     /// </remarks>
     [DataField, AutoNetworkedField]
     public Color Color = new Color(15, 151, 251);
-
-    /// <summary>
-    /// The last received color, useful on the client.
-    /// </summary>
-    [DataField]
-    public Color LastColor;
 
     /// <summary>
     /// Offset for centering the text.
@@ -74,21 +69,21 @@ public sealed partial class TextScreenVisualsComponent : Component
     /// Only useful client-side.
     /// </summary>
     [DataField]
-    public TextScreenRow[] RowData = new TextScreenRow[2];
+    public TextScreenRow[] RowData = { new(), new() };
 
     /// <summary>
     /// The text to display on the screen.
     /// Each row delimited with a newline (\n) character.
     /// </summary>
     [ViewVariables]
-    public string? LastText;
+    public string? TextToDisplay;
 
     /// <summary>
     /// The time that the text was sent.
     /// Used for scrolling.
     /// </summary>
     [ViewVariables]
-    public TimeSpan LastTextTime;
+    public TimeSpan TextTime;
 
     /// <summary>
     /// If true, text to display has been updated and should redraw.
@@ -108,7 +103,7 @@ public sealed partial class TextScreenVisualsComponent : Component
 /// All information about a given row of text.
 /// </summary>
 [DataRecord]
-[Serializable, NetSerializable]
+[Serializable]
 public partial struct TextScreenRow()
 {
     /// <summary>

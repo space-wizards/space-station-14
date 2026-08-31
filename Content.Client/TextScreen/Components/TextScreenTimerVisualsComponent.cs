@@ -44,4 +44,26 @@ public sealed partial class TextScreenTimerVisualsComponent : Component
     /// </summary>
     [DataField]
     public int ScreenValue;
+
+    /// <summary>
+    /// The state to use for the <see cref="TimerVisualLayers.Light"/> layer when the timer is in progress.
+    /// </summary>
+    [DataField]
+    public string? RunningState;
+
+    /// <summary>
+    /// The state to use for the <see cref="TimerVisualLayers.Light"/> layer when the timer elapses.
+    /// </summary>
+    [DataField]
+    public string? FinishedState;
+}
+
+/// <summary>
+/// Sprite layers for text screen timers.
+/// </summary>
+[Serializable]
+public enum TimerVisualLayers : byte
+{
+    /// <summary>A light that lights up with the status of the timer.</summary>
+    Light
 }
