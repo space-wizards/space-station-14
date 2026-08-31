@@ -22,13 +22,24 @@
     RobustHarvest: 1
 
 - type: reaction
+  id: MutagenicFertilizer
+  reactants:
+    EZNutrient:
+      amount: 1
+    UnstableMutagen:
+      amount: 1
+      catalyst: true
+  products:
+    MutagenicFertilizer: 1
+
+- type: reaction
   id: Sedin
   reactants:
     Cryoxadone:
       amount: 1
     RobustHarvest:
       amount: 3
-    Diethylamine: 
+    Diethylamine:
       amount: 3
   products:
     Sedin: 1
@@ -53,7 +64,7 @@
       amount: 4
   products:
     PlantBGone: 5
-    
+
 - type: reaction
   id: PestKillerBreakdown
   source: true
@@ -66,4 +77,4 @@
     Ethanol: 2
     Mercury: 1.5
     Chlorine: 1.5
-    
+
