@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Station.Components;
 
 /// <summary>
-/// Entities with this component get flinged toward the station on MapInit.
+/// Entities with this component get flung toward the station on MapInit.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(FlingTowardStationSystem))]
