@@ -397,6 +397,11 @@
       persists: false
       effect: !type:PlantChangeTraits
         trait: PlantTraitScream
+    - name: Slippery
+      description: mutation-plant-slippery
+      baseOdds: 0.01
+      appliesToPlant: false
+      effect: !type:Slipify
 
 
 
