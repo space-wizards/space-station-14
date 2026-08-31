@@ -80,7 +80,7 @@ public sealed class TraitorRuleTest : GameTest
 
         // Add the game rule
         TraitorRuleComponent? traitorRule = null!;
-        await Server.WaitPost(() =>
+        await Server.WaitAssertion(() =>
         {
             var gameRuleEnt = _sTicker.AddGameRule(TraitorGameRuleProtoId);
             Assert.That(STryComp(gameRuleEnt, out traitorRule));
