@@ -242,7 +242,7 @@
       baseOdds: 0.072
       persists: false
       effect: !type:PlantMutateChemicals
-        randomPickBotanyReagent:
+        RandomChemTables:
         - RandomPickBotanyGeneralReagent
         - RandomPickBotanyFarmingReagent
 
@@ -267,5 +267,5 @@
     baseOdds: 1
     persists: false
     effect: !type:PlantMutateChemicals
-      randomPickBotanyReagent:
+      RandomChemTables:
       - EvilRandomFillSolution
