@@ -1,9 +1,9 @@
+#nullable enable
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Reflection;
 using Content.Shared.DeviceNetwork.Components;
-using Robust.Shared.Analyzers;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.IntegrationTests.Tests.DeviceNetwork;
@@ -21,7 +21,7 @@ public sealed partial class DeviceNetworkTestSystem : EntitySystem
 
     public TestPayload LastPayload = default;
     public SecondTestPayload LastPayloadSecond = default;
-    public TestPayloadClass LastPayloadClass = default;
+    public TestPayloadClass LastPayloadClass = default!;
 
     public void SendBaselineTestEvent(EntityUid uid)
     {
@@ -44,6 +44,15 @@ public sealed partial class DeviceNetworkTestSystem : EntitySystem
         LastPayloadSecond = args.Data;
     }
 }
+
+[ByRefEvent]
+public record struct DeviceNetworkPacketData(
+    int NetId,
+    string? Address,
+    uint Frequency,
+    string SenderAddress,
+    EntityUid Sender,
+    INetworkPayload Data);
 
 public readonly partial record struct TestPayload(string TestString, int TestNumber, bool TestBool) : INetworkPayload;
 

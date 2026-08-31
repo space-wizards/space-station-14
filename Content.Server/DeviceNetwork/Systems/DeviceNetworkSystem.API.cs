@@ -15,7 +15,7 @@ public sealed partial class DeviceNetworkSystem
         uint? frequency = null,
         int? network = null)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp, false))
+        if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return false;
 
         var device = ent.Comp;
@@ -41,7 +41,7 @@ public sealed partial class DeviceNetworkSystem
     [PublicAPI]
     public bool ConnectDevice(Entity<DeviceNetworkComponent?> ent)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp, false))
+        if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return false;
 
         if (!TryEnsureNetwork(ent.Comp.DeviceNetId, out var deviceNet))
@@ -64,7 +64,7 @@ public sealed partial class DeviceNetworkSystem
     [PublicAPI]
     public bool DisconnectDevice(Entity<DeviceNetworkComponent?> ent, bool preventAutoConnect = true)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp, false))
+        if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return false;
 
         if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
@@ -85,7 +85,7 @@ public sealed partial class DeviceNetworkSystem
     public bool IsDeviceConnected(Entity<DeviceNetworkComponent?> ent)
     {
         var (uid, deviceComp) = ent;
-        if (!Resolve(uid, ref deviceComp, false))
+        if (!_deviceQuery.Resolve(uid, ref deviceComp, false))
             return false;
 
         if (!_networks.TryGetValue(deviceComp.DeviceNetId, out var deviceNet))
@@ -116,7 +116,7 @@ public sealed partial class DeviceNetworkSystem
     [PublicAPI]
     public void SetReceiveFrequency(Entity<DeviceNetworkComponent?> ent, uint? frequency)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp, false))
+        if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
         if (ent.Comp.ReceiveFrequency == frequency)
@@ -144,7 +144,7 @@ public sealed partial class DeviceNetworkSystem
     [PublicAPI]
     public void SetTransmitFrequency(Entity<DeviceNetworkComponent?> ent, uint? frequency)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp, false))
+        if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
         var oldFrequency = ent.Comp.TransmitFrequency;
@@ -160,7 +160,7 @@ public sealed partial class DeviceNetworkSystem
     [PublicAPI]
     public void SetReceiveAll(Entity<DeviceNetworkComponent?> ent, bool receiveAll)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp, false))
+        if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
         if (ent.Comp.ReceiveAll == receiveAll)
@@ -185,7 +185,7 @@ public sealed partial class DeviceNetworkSystem
     [PublicAPI]
     public void SetAddress(Entity<DeviceNetworkComponent?> ent, string address)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp, false))
+        if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
         if (ent.Comp.Address == address && ent.Comp.CustomAddress)
@@ -212,7 +212,7 @@ public sealed partial class DeviceNetworkSystem
     [PublicAPI]
     public void RandomizeAddress(Entity<DeviceNetworkComponent?> ent)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp, false))
+        if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
         if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))

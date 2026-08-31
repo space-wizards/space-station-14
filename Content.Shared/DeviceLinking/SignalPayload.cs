@@ -4,7 +4,7 @@ using Content.Shared.DeviceNetwork;
 namespace Content.Shared.DeviceLinking;
 
 /// <summary>
-///
+/// A network payload that can be nested inside <see cref="SignalPayload{T}"/>.
 /// </summary>
 public partial interface ISignalNetworkPayload : INetworkPayload;
 

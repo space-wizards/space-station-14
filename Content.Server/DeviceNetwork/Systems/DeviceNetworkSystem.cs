@@ -16,6 +16,8 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
     [Dependency] private DeviceListSystem _deviceLists = default!;
     [Dependency] private NetworkConfiguratorSystem _configurator = default!;
 
+    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceQuery = default!;
+
     /// <summary>
     /// Basically a cache of devices to connect them together faster.
     /// </summary>
