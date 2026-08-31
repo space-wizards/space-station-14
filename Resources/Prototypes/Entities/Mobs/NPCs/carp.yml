@@ -218,7 +218,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      150: Dead
+      100: Dead
   - type: Stamina
     baseCritThreshold: 150
   - type: DamageStateVisuals
