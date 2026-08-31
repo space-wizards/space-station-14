@@ -11,7 +11,7 @@
       by: # (OG / username(s)) # dont include include if not nessesary
 ### EXAMPLE end
 
-# All Wizden maps are under CC-BY-SA-4.0 lisence
+# All Wizden maps are under MIT lisence
 # Wizden Maps
 
 - name:
@@ -28,7 +28,7 @@
 # [Insert Fork Name] Maps
 # All [Insert Frok Name] maps are under [Insert Licence] lisence
 
-
+###
 
 # General Mapping Contributiors for Wizden
 - Contributors:
