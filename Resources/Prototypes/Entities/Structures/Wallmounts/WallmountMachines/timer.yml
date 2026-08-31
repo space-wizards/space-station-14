@@ -72,7 +72,7 @@
     leftInvisiblePixels: 2
     rightInvisiblePixels: 1
     frameState:
-      state: outer-frame
+      state: outer_frame
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/signalscreen.rsi
