@@ -260,25 +260,25 @@
 
 - type: randomPlantMutationList
   id: FarmingPlantMutations
-  ignoreMutationMod: false
+  ignoreMutationMod: true
   mutations:
     - name: MutateFarmingChemicals
-      baseOdds: 0.04
+      baseOdds: 0.15
       persists: false
       effect: !type:PlantMutateChemicals
         randomPickBotanyReagent:
         - RandomPickBotanyFarmingReagent
     - name: ChangeHarvest
-      baseOdds: 0.005
+      baseOdds: 0.01
       persists: false
       effect: !type:PlantMutateHarvest
     - name: ChangeSeedless
-      baseOdds: 0.005
+      baseOdds: 0.01
       persists: false
       effect: !type:PlantChangeTraits
         trait: PlantTraitSeedless
     - name: ChangePotency
-      baseOdds: 0.02
+      baseOdds: 0.15 # higher chance relatively, but lower adjustment amount
       persists: false
       effect: !type:PlantChangeStat
         targetComponent: Plant
@@ -291,7 +291,7 @@
         down: !type:PlantAdjustPotency
           amount: -5
     - name: ChangeYield
-      baseOdds: 0.01
+      baseOdds: 0.02
       persists: false
       effect: !type:PlantChangeStat
         targetComponent: Plant
@@ -329,21 +329,8 @@
           amount: 0.25
         down: !type:PlantAdjustNutrientConsumption
           amount: -0.25
-    - name: ChangeToxinsTolerance
-      baseOdds: 0.01
-      persists: false
-      effect: !type:PlantChangeStat
-        targetComponent: PlantToxins
-        targetDataField: ToxinsTolerance
-        applyRange:
-          min: 1
-          max: 10
-        up: !type:PlantAdjustToxinsTolerance
-          amount: 2
-        down: !type:PlantAdjustToxinsTolerance
-          amount: -2
     - name: ChangeLifespan
-      baseOdds: 0.01
+      baseOdds: 0.03
       persists: false
       effect: !type:PlantChangeStat
         targetComponent: Plant
@@ -356,7 +343,7 @@
         down: !type:PlantAdjustLifespan
           amount: -15
     - name: ChangeMaturation
-      baseOdds: 0.01
+      baseOdds: 0.03
       persists: false
       effect: !type:PlantChangeStat
         targetComponent: Plant
@@ -369,7 +356,7 @@
         down: !type:PlantAdjustMaturation
           amount: -1
     - name: ChangeProduction
-      baseOdds: 0.01
+      baseOdds: 0.03
       persists: false
       effect: !type:PlantChangeStat
         targetComponent: Plant
@@ -382,7 +369,7 @@
         down: !type:PlantAdjustProduction
           amount: -1
     - name: ChangeEndurance
-      baseOdds: 0.01
+      baseOdds: 0.05
       persists: false
       effect: !type:PlantChangeStat
         targetComponent: Plant
@@ -395,17 +382,17 @@
         down: !type:PlantAdjustEndurance
           amount: -5
     - name: Lignification
-      baseOdds: 0.02
+      baseOdds: 0.05
       persists: false
       effect: !type:PlantChangeTraits
         trait: PlantTraitLigneous
     - name: Kudzufication
-      baseOdds: 0.01
+      baseOdds: 0.03
       persists: false
       effect: !type:PlantChangeTraits
         trait: PlantTraitKudzu
     - name: ChangeScreaming
-      baseOdds: 0.03
+      baseOdds: 0.1
       persists: false
       effect: !type:PlantChangeTraits
         trait: PlantTraitScream
