@@ -39,8 +39,7 @@ public sealed partial class PlantMutationSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
-        if (!ProtoMan.TryIndex(mutationTableId, out var mutationTable))
-            return;
+        var mutationTable = ProtoMan.Index(mutationTableId);
 
         foreach (var mutation in mutationTable.Mutations)
         {
