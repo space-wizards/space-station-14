@@ -1,11 +1,10 @@
-using Content.Shared.TextScreen.Systems;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.TextScreen.Components;
+namespace Content.Client.TextScreen;
 
 /// <summary>
 /// Additional visual data for text screens that support countdown timers with frame-by-frame updates.
-/// Entities must have <see cref="TextScreenComponent"/> to work!
+/// Entities must have <see cref="TextScreenVisualsComponent"/> to work!
 /// </summary>
 [RegisterComponent, Access(typeof(TextScreenSystem))]
 [AutoGenerateComponentPause]

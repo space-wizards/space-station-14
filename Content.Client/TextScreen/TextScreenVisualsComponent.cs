@@ -1,9 +1,8 @@
 using System.Numerics;
-using Content.Shared.TextScreen.Systems;
 using Robust.Client.Graphics;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Client.TextScreen.Components;
+namespace Content.Client.TextScreen;
 
 /// <summary>
 /// A component for rendering text on a screen.
@@ -133,18 +132,19 @@ public sealed partial class TextScreenComponent : Component
 public partial struct TextScreenRow()
 {
     /// <summary>
-    /// The time this row should next scroll a pixel.
+    /// The time this row should next scroll the text by a pixel.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextScroll = TimeSpan.MaxValue;
 
     /// <summary>
-    /// The amount of time this screen should spend scrolling.
+    /// The delay between each pixel scrolled on this screen.
     /// </summary>
     public TimeSpan ScrollDelay = TimeSpan.MaxValue;
 
     /// <summary>
     /// The current position of the row in the string, in pixels.
+    /// Increases monotonically, should be taken modulo the text length.
     /// Each character is a fixed size (assumed 4 pixels wide)
     /// </summary>
     public int ScrollPosition;
