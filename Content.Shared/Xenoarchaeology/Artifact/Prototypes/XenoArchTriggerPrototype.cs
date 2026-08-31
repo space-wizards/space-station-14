@@ -1,7 +1,6 @@
 using Content.Shared.Random;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.Prototypes;
 
@@ -36,11 +35,11 @@ public sealed partial class XenoArchTriggerPrototype : IPrototype
 /// Container for list of xeno artifact triggers and their respective weights to be used in case randomly rolling trigger is required.
 /// </summary>
 [Prototype]
-public sealed partial class WeightedRandomXenoArchTriggerPrototype : IWeightedRandomPrototype
+public sealed partial class WeightedRandomXenoArchTriggerPrototype : IWeightedRandomPrototype<XenoArchTriggerPrototype>
 {
     [IdDataField]
     public string ID { get; private set; } = default!;
 
-    [DataField(customTypeSerializer: typeof(PrototypeIdDictionarySerializer<float, XenoArchTriggerPrototype>))]
-    public Dictionary<string, float> Weights { get; private set; } = new();
+    [DataField]
+    public Dictionary<ProtoId<XenoArchTriggerPrototype>, float> Weights { get; private set; } = new();
 }

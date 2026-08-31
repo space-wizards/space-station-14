@@ -51,6 +51,7 @@ public partial class SharedGunSystem
             return;
 
         Appearance.SetData(ent, AmmoVisuals.HasAmmo, ent.Comp.Shots != 0, appearance);
+        Appearance.SetData(ent, AmmoVisuals.IsFull, ent.Comp.Shots == ent.Comp.MaxShots, appearance);
         Appearance.SetData(ent, AmmoVisuals.AmmoCount, ent.Comp.Shots, appearance);
         Appearance.SetData(ent, AmmoVisuals.AmmoMax, ent.Comp.MaxShots, appearance);
     }

@@ -14,6 +14,7 @@
   description: department-Civilian-description
   color: "#9FED58"
   weight: -10
+  ignoreForDepartmentFallback: true
   roles:
   - Bartender
   - Botanist
@@ -30,7 +31,9 @@
   - Reporter
   - Visitor
   - ServiceWorker
+  - TramDriver
 
+# Please kill this
 - type: department
   id: CentralCommand
   name: department-CentralCommand
@@ -62,6 +65,7 @@
   - HeadOfSecurity
   - ResearchDirector
   - Quartermaster
+  # Please kill these
   - CentralCommandOfficial
   - CBURN
   - ERTLeader
@@ -136,7 +140,9 @@
   description: department-Specific-description
   color: "#9FED58"
   weight: 10
+  ignoreForDepartmentFallback: true
   roles:
   - Reporter
   - Psychologist
+  - TramDriver
   primary: false

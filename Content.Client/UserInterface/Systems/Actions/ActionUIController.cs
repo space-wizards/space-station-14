@@ -633,6 +633,18 @@ public sealed partial class ActionUIController : UIController, IOnStateChanged<G
     {
         _dragShadow.Texture = null;
         _dragShadow.Visible = false;
+        UpdateActionBarBackgrounds();
+    }
+
+    private void UpdateActionBarBackgrounds()
+    {
+        if (_container == null)
+            return;
+
+        foreach (var button in _container.GetButtons())
+        {
+            button.UpdateBackground();
+        }
     }
 
     private void UnloadGui()
@@ -734,7 +746,11 @@ public sealed partial class ActionUIController : UIController, IOnStateChanged<G
 
     public override void FrameUpdate(FrameEventArgs args)
     {
+        var wasDragging = IsDragging;
         _menuDragHelper.Update(args.DeltaSeconds);
+
+        if (wasDragging != IsDragging)
+            UpdateActionBarBackgrounds();
         if (_window is {UpdateNeeded: true})
             SearchAndDisplay();
     }

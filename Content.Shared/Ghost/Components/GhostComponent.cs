@@ -1,0 +1,139 @@
+using Content.Shared.Actions;
+using Content.Shared.Ghost.Systems;
+using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
+
+namespace Content.Shared.Ghost.Components;
+
+/// <summary>
+/// Represents an observer ghost.
+/// Handles limiting interactions, using ghost abilities, ghost visibility, and ghost warping.
+/// </summary>
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedGhostSystem))]
+[AutoGenerateComponentState(true)]
+public sealed partial class GhostComponent : Component
+{
+    // Actions
+    [DataField]
+    public EntProtoId ToggleLightingAction = "ActionToggleLighting";
+
+    [DataField, AutoNetworkedField]
+    public EntityUid? ToggleLightingActionEntity;
+
+    [DataField]
+    public EntProtoId ToggleFoVAction = "ActionToggleFov";
+
+    [DataField, AutoNetworkedField]
+    public EntityUid? ToggleFoVActionEntity;
+
+    [DataField]
+    public EntProtoId ToggleGhostsAction = "ActionToggleGhosts";
+
+    [DataField, AutoNetworkedField]
+    public EntityUid? ToggleGhostsActionEntity;
+
+    [DataField]
+    public EntProtoId ToggleGhostHearingAction = "ActionToggleGhostHearing";
+
+    [DataField]
+    public EntityUid? ToggleGhostHearingActionEntity;
+
+    [DataField]
+    public EntProtoId BooAction = "ActionGhostBoo";
+
+    [DataField, AutoNetworkedField]
+    public EntityUid? BooActionEntity;
+
+    // End actions
+
+    /// <summary>
+    /// Time at which the player died and created this ghost.
+    /// Used to determine votekick eligibility.
+    /// </summary>
+    /// <remarks>
+    /// May not reflect actual time of death if this entity has been paused,
+    /// but will give an accurate length of time <i>since</i> death.
+    /// </remarks>
+    [DataField, AutoNetworkedField]
+    public TimeSpan TimeOfDeath = TimeSpan.Zero;
+
+    /// <summary>
+    /// Range of the Boo action.
+    /// </summary>
+    [DataField]
+    public float BooRadius = 3;
+
+    /// <summary>
+    /// The maximum total intensity of a Boo action (total sum of responses, possible values in <see cref="GhostBooIntensity"/>).
+    /// </summary>
+    [DataField]
+    public int BooIntensity = 6;
+
+    /// <summary>
+    /// Is this ghost allowed to interact with entities?
+    /// </summary>
+    /// <remarks>
+    /// Used to allow admins ghosts to interact with the world.
+    /// Changed by <see cref="SharedGhostSystem.SetCanGhostInteract"/>.
+    /// </remarks>
+    [DataField("canInteract"), AutoNetworkedField]
+    public bool CanGhostInteract;
+
+    /// <summary>
+    /// Is this ghost player allowed to return to their original body?
+    /// </summary>
+    /// <remarks>
+    /// Changed by <see cref="SharedGhostSystem.SetCanReturnToBody"/>.
+    /// </remarks>
+    [DataField, AutoNetworkedField]
+    public bool CanReturnToBody;
+
+    /// <summary>
+    /// Ghost color
+    /// </summary>
+    /// <remarks>Used to allow admins to change ghost colors. Should be removed if the capability to edit existing sprite colors is ever added back.</remarks>
+    [DataField, AutoNetworkedField]
+    public Color Color = Color.White;
+}
+
+/// <summary>
+/// Ghost sprites dependent on damage by the player body
+/// </summary>
+/// <remarks>Used to change a ghost sprite to better visually represent their cause of death</remarks>
+[Serializable, NetSerializable]
+public enum GhostVisuals : byte
+{
+    Damage
+}
+
+/// <summary>
+/// The intensity of a given response to a boo action.
+/// </summary>
+/// <remarks>
+/// Using sbyte to avoid subtraction underflow issues.
+/// </remarks>
+[Serializable, NetSerializable]
+public enum GhostBooIntensity : sbyte
+{
+    /// <summary>No response at all.</summary>
+    None = 0,
+    /// <summary>A subtle response - short in duration or small in effect.</summary>
+    Subtle = 1,
+    /// <summary>A normal response - moderate in duration, attention-grabbing.</summary>
+    Normal = 2,
+    /// <summary>An extreme response - very intense, should be the only response for a typical ghost.</summary>
+    Extreme = 6,
+}
+
+public sealed partial class ToggleFoVActionEvent : InstantActionEvent { }
+
+public sealed partial class ToggleGhostsActionEvent : InstantActionEvent { }
+
+public sealed partial class ToggleLightingActionEvent : InstantActionEvent { }
+
+public sealed partial class ToggleGhostHearingActionEvent : InstantActionEvent { }
+
+public sealed partial class ToggleGhostVisibilityToAllEvent : InstantActionEvent { }
+
+public sealed partial class BooActionEvent : InstantActionEvent { }

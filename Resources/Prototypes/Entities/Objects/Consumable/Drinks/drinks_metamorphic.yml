@@ -1288,20 +1288,6 @@
 
 - type: entity
   parent: DrinkGlass
-  id: DrinkNeurotoxinGlass
-  suffix: neurotoxin
-  components:
-  - type: Solution
-    solution:
-        reagents:
-        - ReagentId: Neurotoxin
-          Quantity: 30
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/neurotoxinglass.rsi
-    state: icon
-
-- type: entity
-  parent: DrinkGlass
   id: DrinkNothing
   suffix: nothing
   components:

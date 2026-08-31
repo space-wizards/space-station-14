@@ -62,6 +62,9 @@
   components:
   - type: TriggerOnLand
   - type: LandAtCursor
+  - type: TriggerOnCollide
+    fixtureID: fix1
+    maxTriggers: 1
 
 - type: entity # Instantly detonates/activates after taking 45 damage.
   abstract: true
