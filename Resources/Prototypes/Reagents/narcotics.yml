@@ -653,9 +653,9 @@
 
 - type: reagent
   id: Nyctalon
-  name: reagent-name-Nyctalon
+  name: reagent-name-nyctalon
   group: Narcotics
-  desc: reagent-desc-Nyctalon
+  desc: reagent-desc-nyctalon
   physicalDesc: reagent-physical-desc-translucent
   flavor: bitter
   color: "#1A0A2E"
