@@ -10,7 +10,7 @@
       children:
       - id: MobCarpDragon
       - id: MobSharkDragon
-        weight: 0.14
+        weight: 0.15
   - type: Transform
     anchored: true
   - type: Physics
