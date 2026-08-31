@@ -302,6 +302,29 @@
       quantity: 5 # 50s of imperceptible mute
 
 - type: entity
+  parent: BaseActionChangelingSting
+  id: ActionChangelingStingStimulants
+  name: Stimulant Sting
+  description: "Sting yourself, or a target with chemicals that give you enough adrenaline for any fight.  \n\nRequires 60 Chemicals."
+  components:
+  - type: Action
+    useDelay: 240
+    raiseOnAction: true
+    itemIconStyle: BigAction
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: stimulant_sting
+  - type: ActionRequireSatiation
+    satiation: Chemicals
+    amount: 60
+  - type: EntityEffectAction
+    effects:
+    - !type:AddReagentToBloodstream
+      reagent: Stimulants
+      quantity: 30 # 60s of hyperzine effect
+
+- type: entity
   parent: BaseAction
   id: ActionChangelingLastResort
   name: "[color=red]Last Resort[/color]"

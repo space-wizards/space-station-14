@@ -147,6 +147,21 @@
   productAction: ActionChangelingStingMute
 
 - type: listing
+  id: ChangelingStingStimulants
+  name: changeling-catalog-stimulant-sting-name
+  description: changeling-catalog-stimulant-sting-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: stimulant_sting }
+  applyToMob: true
+  cost:
+    ChangelingDNA: 15
+  categories:
+  - ChangelingStoreCombat
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productAction: ActionChangelingStingStimulants
+
+- type: listing
   id: ChangelingLastResort
   name: changeling-catalog-last-resort-name
   description: changeling-catalog-last-resort-desc
