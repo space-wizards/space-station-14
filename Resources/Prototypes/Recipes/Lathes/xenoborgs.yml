@@ -71,6 +71,34 @@
   materials:
     XenoborgCrystal: 200
 
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleDeflectorFieldRecipe
+  result: XenoborgModuleDeflectorField
+  materials:
+    XenoborgCrystal: 100
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleZapRecipe
+  result: XenoborgModuleZap
+  materials:
+    XenoborgCrystal: 100
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleOilGunRecipe
+  result: XenoborgModuleOilGun
+  materials:
+    XenoborgCrystal: 300
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleNaniteGunRecipe
+  result: XenoborgModuleNaniteGun
+  materials:
+    XenoborgCrystal: 200
+
 ## heavy xenoborg modules
 
 - type: latheRecipe
@@ -80,6 +108,34 @@
   materials:
     XenoborgCrystal: 200
 
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleGuidedMissileLauncherRecipe
+  result: XenoborgModuleGuidedMissileLauncher
+  materials:
+    XenoborgCrystal: 300
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleRocketRecipe
+  result: XenoborgModuleRocket
+  materials:
+    XenoborgCrystal: 400
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleBurstFireLaserRecipe
+  result: XenoborgModuleBurstFireLaser
+  materials:
+    XenoborgCrystal: 200
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleHeavyRadioactiveRecipe
+  result: XenoborgModuleHeavyRadioactive
+  materials:
+    XenoborgCrystal: 100
+
 ## scout xenoborg modules
 
 - type: latheRecipe
@@ -88,6 +144,20 @@
   result: XenoborgModuleEnergySword
   materials:
     XenoborgCrystal: 300
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleJumpRecipe
+  result: XenoborgModuleJump
+  materials:
+    XenoborgCrystal: 100
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleBioKinfeRecipe
+  result: XenoborgModuleBioKinfe
+  materials:
+    XenoborgCrystal: 200
 
 ## stealth xenoborg modules
 

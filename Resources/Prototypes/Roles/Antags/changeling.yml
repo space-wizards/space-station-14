@@ -2,8 +2,16 @@
   id: Changeling
   name: roles-antag-changeling-name
   antagonist: true
-  setPreference: false # TODO: set this to true once Changeling exits WIP status
+  setPreference: true
   objective: roles-antag-changeling-objective
+  guides: [ Changelings ]
+  tags:
+  - OnStation
+  - Roundstart
+  - Unkillable
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 5h
 
 - type: antagSpecifier
   parent: RestrictedAntag
@@ -23,9 +31,15 @@
   - type: RevolutionaryImmune
   - type: ZombieImmune
   - type: ActionGrant
+    removeOnShutdown: false
     actions:
     - ActionChangelingStore
     - ActionChangelingStasis
+  - type: SatiationGrant
+    removeOnShutdown: false
+    satiation:
+      Chemicals:
+        prototype: ChemicalsChangeling
   - type: Store
     name: store-preset-name-changeling
     categories:
@@ -36,5 +50,6 @@
     - ChangelingDNA
     balance:
       ChangelingDNA: 60
+    inputValidation: false
   mindRoles:
   - MindRoleChangeling
