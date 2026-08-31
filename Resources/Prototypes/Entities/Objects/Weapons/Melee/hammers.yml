@@ -12,7 +12,7 @@
     damage:
       types:
         Blunt: 10
-        Structural: 10
+        Structural: 6
     soundHit:
       collection: MetalThud
   - type: Wieldable
@@ -20,7 +20,7 @@
     damage:
       types:
         Blunt: 10
-        Structural: 10
+        Structural: 6
   - type: Item
     size: Large
 
@@ -58,12 +58,12 @@
     damage:
       types:
         Blunt: 20
-        Structural: 25
+        Structural: 55 # The mighty muscle wizard shatters windows in a single blow
   - type: DamageOtherOnHit
     damage:
       types:
         Blunt: 15
-        Structural: 15
+        Structural: 40
   - type: Item
     size: Ginormous
     shape:
@@ -99,7 +99,6 @@
     damage:
       types:
         Blunt: 5
-        Structural: 5
     soundHit:
       path: /Audio/Effects/radpulse5.ogg
       params:
@@ -108,7 +107,6 @@
     damage:
       types:
         Blunt: 15
-        Structural: 15
   - type: Item
     size: Ginormous
     shape:

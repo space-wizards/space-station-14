@@ -76,6 +76,12 @@
   defaultLinks: [ ArtifactAnalyzerReceiver ]
 
 - type: sourcePort
+  id: TargetSource
+  name: signal-port-name-target-source
+  description: signal-port-description-target-source
+  defaultLinks: [ TargetReceiver ]
+
+- type: sourcePort
   id: Timer
   name: signal-port-name-timer-trigger
   description: signal-port-description-timer-trigger

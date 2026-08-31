@@ -89,7 +89,7 @@
     children:
     - id: WetFloorSign
       amount: 3
-    - id: LightReplacer
+    - id: LightReplacerFilled
     - id: BoxLightMixed
     - id: Holoprojector
     - id: WireBrush

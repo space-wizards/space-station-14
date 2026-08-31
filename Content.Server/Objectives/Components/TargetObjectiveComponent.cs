@@ -7,7 +7,8 @@ public sealed partial class TargetObjectiveComponent : Component
 {
     /// <summary>
     /// Locale id for the objective title.
-    /// It is passed "targetName" and "job" arguments.
+    /// It is passed "targetName", "job" and "department" arguments.
+    /// Standing for the name of the target, their job, and their job's department.
     /// </summary>
     [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
     public string Title = string.Empty;

@@ -1,4 +1,5 @@
 - type: entity
+  parent: StructureHealthContainerWeak
   id: CableTerminal
   name: cable terminal
   description: You see a small warning on the red cables in grungy black ink. "CONNECT RED TO BATTERY FOR CHARGE."
@@ -15,21 +16,20 @@
   - type: Transform
     anchored: true
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
-  - type: RCDDeconstructable
-    cost: 2
-    delay: 0
-    fx: EffectRCDConstruct0
+    damageModifierSet: RodMetalMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 60
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/cig_snuff.ogg # Temporary but fits weirdly well
+  - type: RCDDeconstructable
+    cost: 2
+    delay: 0
+    fx: EffectRCDConstruct0
   - type: Visibility
     layer: 1
   - type: Appearance

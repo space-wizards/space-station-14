@@ -3,7 +3,7 @@ using Robust.Shared.Player;
 
 namespace Content.Client.Players;
 
-public sealed class PlayerSystem : SharedPlayerSystem
+public sealed partial class PlayerSystem : SharedPlayerSystem
 {
     public override ContentPlayerData? ContentData(ICommonSession? session)
     {

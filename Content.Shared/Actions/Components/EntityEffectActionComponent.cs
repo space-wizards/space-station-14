@@ -14,10 +14,15 @@ public sealed partial class EntityEffectActionComponent : Component
     /// List of entity effects to apply to the target when this action is performed.
     /// </summary>
     [DataField(required: true)]
-    public List<EntityEffect> Effects = [];
+    public EntityEffect[]? Effects;
 }
 
 /// <summary>
 /// Event raised when an entity effect action is performed.
 /// </summary>
 public sealed partial class EntityEffectActionEvent : EntityTargetActionEvent;
+
+/// <summary>
+/// Event raised to link between instant actions & the entity effect action.
+/// </summary>
+public sealed partial class EntityEffectInstantActionEvent : InstantActionEvent;

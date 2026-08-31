@@ -19,41 +19,41 @@ namespace Content.Shared.Disposal.Holder;
 /// </summary>
 public abstract partial class SharedDisposalHolderSystem : EntitySystem
 {
+    [Dependency] private INetManager _net = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private DisposalTubeSystem _disposalTube = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedEyeSystem _eye = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedTransformSystem _xform = default!;
-    [Dependency] private INetManager _net = default!;
-    [Dependency] private SharedEyeSystem _eye = default!;
 
-    private EntityQuery<TransformComponent> _xformQuery;
+    [Dependency] private EntityQuery<TransformComponent> _xformQuery;
 
     /// <summary>
     /// Allowed characters for tagging disposed entities.
     /// </summary>
     public static readonly Regex TagRegex = new("^[a-zA-Z0-9, ]*$", RegexOptions.Compiled);
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _xformQuery = GetEntityQuery<TransformComponent>();
-
-        SubscribeLocalEvent<DisposalHolderComponent, ComponentStartup>(OnComponentStartup);
-        SubscribeLocalEvent<DisposalHolderComponent, BeforeExplodeEvent>(OnExploded);
-
-        SubscribeLocalEvent<ActorComponent, DisposalSystemTransitionEvent>(OnActorTransition);
-        SubscribeLocalEvent<BeingDisposedComponent, GetVisMaskEvent>(OnGetVisibility);
-    }
-
+    [SubscribeLocalEvent]
     private void OnComponentStartup(Entity<DisposalHolderComponent> ent, ref ComponentStartup args)
     {
         // Ensure the holder will have its container
         ent.Comp.Container = _container.EnsureContainer<Container>(ent, nameof(DisposalHolderComponent));
     }
 
+    [SubscribeLocalEvent]
+    private void OnComponentRemove(Entity<DisposalHolderComponent> ent, ref ComponentRemove args)
+    {
+        if (ent.Comp.Container is not { } container)
+            return;
+
+        // Inform the contained entities that they aren't in disposals anymore.
+        foreach (var contained in container.ContainedEntities)
+            DetachEntity(contained);
+    }
+
+    [SubscribeLocalEvent]
     private void OnExploded(Entity<DisposalHolderComponent> ent, ref BeforeExplodeEvent args)
     {
         if (ent.Comp.Container == null)
@@ -62,18 +62,27 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         args.Contents.AddRange(ent.Comp.Container.ContainedEntities);
     }
 
+    [SubscribeLocalEvent]
     private void OnActorTransition(Entity<ActorComponent> ent, ref DisposalSystemTransitionEvent args)
     {
         // Refreshes visibility mask of a player, leading to OnGetVisibility being called
         _eye.RefreshVisibilityMask(ent.Owner);
     }
 
+    [SubscribeLocalEvent]
     private void OnGetVisibility(Entity<BeingDisposedComponent> entity, ref GetVisMaskEvent ev)
     {
         // Prevents mispredictions by allowing players in the disposal system
         // to be sent any entities that are hidden under subfloors
         if (HasComp<BeingDisposedComponent>(ev.Entity))
             ev.VisibilityMask |= (int)VisibilityFlags.Subfloor;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnDisposedRemovedFromContainer(Entity<BeingDisposedComponent> ent, ref EntGotRemovedFromContainerMessage args)
+    {
+        if (args.Container.Owner == ent.Comp.Holder)
+            DetachEntity(ent);
     }
 
     /// <summary>

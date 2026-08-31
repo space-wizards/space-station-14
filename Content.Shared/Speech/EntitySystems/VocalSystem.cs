@@ -6,6 +6,7 @@ using Content.Shared.Random.Helpers;
 using Content.Shared.Speech.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -15,6 +16,7 @@ namespace Content.Shared.Speech.EntitySystems;
 public sealed partial class VocalSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private INetManager _net = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedChatSystem _chat = default!;
     [Dependency] private SharedActionsSystem _actions = default!;
@@ -81,13 +83,13 @@ public sealed partial class VocalSystem : EntitySystem
         if (!Resolve(source, ref source.Comp))
             return;
 
-        var targetComp = EnsureComp<VocalComponent>(target);
+        var targetComp = Factory.GetComponent<VocalComponent>();
         targetComp.ScreamId = source.Comp.ScreamId;
         targetComp.Wilhelm = source.Comp.Wilhelm;
         targetComp.WilhelmProbability = source.Comp.WilhelmProbability;
-        LoadSounds((target, targetComp));
-
-        Dirty(target, targetComp);
+        targetComp.EmoteAction = source.Comp.EmoteAction;
+        targetComp.EmoteSounds = source.Comp.EmoteSounds;
+        AddComp(target, targetComp, true);
     }
 
     private bool TryPlayScreamSound(Entity<VocalComponent> ent, EntityUid user)
@@ -95,7 +97,8 @@ public sealed partial class VocalSystem : EntitySystem
         var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent.Owner), GetNetEntity(user));
         if (random.Prob(ent.Comp.WilhelmProbability))
         {
-            _audio.PlayPredicted(ent.Comp.Wilhelm, ent.Owner, user, ent.Comp.Wilhelm.Params);
+            if (_net.IsServer) // TODO: replace this call with PlayPredicted when chat is predicted. (Remember to pass `user` and not `ent` as user)
+                _audio.PlayPvs(ent.Comp.Wilhelm, ent.Owner, ent.Comp.Wilhelm.Params);
             return true;
         }
 

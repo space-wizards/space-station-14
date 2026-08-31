@@ -1,9 +1,12 @@
-using System.Linq;
-using System.Numerics;
 using Content.Shared.EntityTable;
+using Content.Shared.EntityTable.Conditions;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
+using System;
+using System.Linq;
+using System.Numerics;
 
 namespace Content.Shared.Containers;
 
@@ -71,7 +74,19 @@ public sealed partial class ContainerFillSystem : EntitySystem
                 continue;
             }
 
-            var spawns = _entityTable.GetSpawns(table).ToList();
+            EntityTableContext? ctx = null;
+            if (ent.Comp.ContextContainers)
+            {
+                // Pass in the container being filled so conditions can look at it
+                ctx = new EntityTableContext(
+                    new Dictionary<string, object>
+                    {
+                        [EmptyContainerCondition.ContainerContextKey] = container,
+                    }
+                );
+            }
+
+            var spawns = _entityTable.GetSpawns(table, ctx: ctx).ToList();
 
             if (ent.Comp.Sort)
             {

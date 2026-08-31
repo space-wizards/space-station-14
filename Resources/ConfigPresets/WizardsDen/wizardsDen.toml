@@ -4,7 +4,7 @@
 [game]
 desc             = "Official English Space Station 14 servers. Vanilla, roleplay ruleset."
 lobbyenabled     = true
-soft_max_players = 65
+soft_max_players = 80
 lobbyduration    = 300 # 5 minutes lobby timer
 panic_bunker.enabled = true
 panic_bunker.min_overall_minutes = 120
