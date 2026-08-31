@@ -17,6 +17,7 @@ public sealed partial class RandomPlantMutationListPrototype : IPrototype
     /// </summary>
     [DataField]
     public bool IgnoreMutationMod = false;
+
     /// <summary>
     /// List of RandomFills that can be picked from.
     /// </summary>

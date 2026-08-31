@@ -38,7 +38,8 @@ public sealed partial class PlantHolderComponent : Component
     public int MaxYieldMod = 2;
 
     /// <summary>
-    /// Current mutation level.
+    /// Current mutation level buildup per mutation table.
+    /// Levels are consumed (reset to zero) each time the plant ages and processes its mutations.
     /// </summary>
     [DataField, AutoNetworkedField]
     public Dictionary<ProtoId<RandomPlantMutationListPrototype>, float> MutationLevels = [];

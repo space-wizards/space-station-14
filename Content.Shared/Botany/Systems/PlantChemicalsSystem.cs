@@ -46,7 +46,9 @@ public sealed partial class PlantChemicalsSystem : EntitySystem
         foreach (var table in randomChemTables)
         {
             foreach (var fill in ProtoMan.Index(table).Fills)
+            {
                 totalWeight += fill.Weight;
+            }
         }
 
         if (totalWeight <= 0f)
@@ -58,12 +60,15 @@ public sealed partial class PlantChemicalsSystem : EntitySystem
 
         foreach (var table in randomChemTables)
         {
-            foreach (var fill in ProtoMan.Index(table).Fills)
+            var tableProto = ProtoMan.Index(table);
+            foreach (var fill in tableProto.Fills)
+            {
                 accumulatedWeight += fill.Weight;
+            }
 
             if (accumulatedWeight > selectedWeight)
             {
-                selectedTable = ProtoMan.Index(table);
+                selectedTable = tableProto;
                 break;
             }
         }
