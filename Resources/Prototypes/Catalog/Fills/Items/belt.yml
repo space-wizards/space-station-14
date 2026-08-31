@@ -92,7 +92,7 @@
         - id: CleanerGrenade
           amount: 2
         - id: FlashlightLantern
-        - id: LightReplacer
+        - id: LightReplacerFilled
         - id: WireBrush
 
 - type: entity
