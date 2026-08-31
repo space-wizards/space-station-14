@@ -60,8 +60,7 @@ public sealed partial class PlantHolderSystem : EntitySystem
         if (!Resolve(ent.Owner, ref ent.Comp))
             return;
 
-        if (!ProtoMan.TryIndex(mutationTableId, out var mutationTable))
-            return;
+        var mutationTable = ProtoMan.Index(mutationTableId);
 
         var current = ent.Comp.MutationLevels.GetValueOrDefault(mutationTableId);
         var adjustmentAmount = mutationTable.IgnoreMutationMod ? amount : amount * ent.Comp.MutationMod;
