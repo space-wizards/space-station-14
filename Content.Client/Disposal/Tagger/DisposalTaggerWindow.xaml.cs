@@ -12,31 +12,25 @@ namespace Content.Client.Disposal.Tagger;
 [GenerateTypedNameReferences]
 public sealed partial class DisposalTaggerWindow : DefaultWindow
 {
-    [Dependency] private IEntityManager _entManager = default!;
-
     public event Action<string>? OnRouteChanged;
 
     public DisposalTaggerWindow()
     {
         RobustXamlLoader.Load(this);
-        IoCManager.InjectDependencies(this);
 
-        var disposalHolder = _entManager.System<SharedDisposalHolderSystem>();
-
-        TagInput.IsValid = tag => disposalHolder.TagIsValid(tag);
+        TagInput.IsValid = s => SharedDisposalHolderSystem.TagRegex.IsMatch(s);
 
         Confirm.OnPressed += _ => NewRoute(TagInput.Text);
         TagInput.OnTextEntered += args => NewRoute(args.Text);
     }
 
-    public void StateUpdate(DisposalTaggerComponent comp)
+    public void Populate(string route, bool editable)
     {
-        TagInput.Text = comp.Tag;
-        TagInput.Editable = comp.Editable;
+        TagInput.Text = route;
+        TagInput.Editable = editable;
 
-        Confirm.Disabled = !comp.Editable;
-        Confirm.Text =
-            comp.Editable ? Loc.GetString("generic-confirm") : Loc.GetString("generic-disabled");
+        Confirm.Disabled = !editable;
+        Confirm.Text = Loc.GetString(editable ? "generic-confirm" : "generic-disabled");
     }
 
     private void NewRoute(string route)

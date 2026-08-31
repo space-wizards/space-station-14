@@ -37,7 +37,7 @@ namespace Content.Client.Disposal.Tagger
             if (_window == null || !EntMan.TryGetComponent<DisposalTaggerComponent>(Owner, out var tagger))
                 return;
 
-            _window.StateUpdate(tagger);
+            _window.Populate(tagger.Tag, tagger.Editable);
         }
     }
 }
