@@ -23,10 +23,7 @@ public sealed partial class FlingTowardStationSystem : EntitySystem
         // fetch the station's grid
         var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent.Owner));
         var station = random.Pick(_station.GetStations());
-        if (!TryComp<StationDataComponent>(station, out var stationComp))
-            return;
-
-        var grid = _station.GetLargestGrid((station, stationComp));
+        var grid = _station.GetLargestGrid(station);
         if (grid == null)
             return;
 
