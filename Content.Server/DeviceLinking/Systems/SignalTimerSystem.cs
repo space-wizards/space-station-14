@@ -16,11 +16,11 @@ namespace Content.Server.DeviceLinking.Systems;
 /// <seealso cref="TextScreenTimerVisualsComponent"/>
 public sealed partial class SignalTimerSystem : EntitySystem
 {
-    [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private AccessReaderSystem _accessReader = default!;
     [Dependency] private DeviceLinkSystem _deviceLink = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
 
     [Dependency] private EntityQuery<ActiveSignalTimerComponent> _activeTimerQuery;
