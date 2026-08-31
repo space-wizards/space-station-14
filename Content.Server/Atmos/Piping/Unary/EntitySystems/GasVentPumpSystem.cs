@@ -1,4 +1,5 @@
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Monitor.Payloads;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.DeviceLinking.Systems;
@@ -17,8 +18,6 @@ using Content.Shared.Atmos.Visuals;
 using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Events;
-using Content.Shared.DeviceNetwork;
-using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Examine;
@@ -45,6 +44,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private IGameTiming _timing = default!;
         [Dependency] private PowerReceiverSystem _powerReceiverSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -54,7 +54,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasVentPumpComponent, AtmosDeviceEnabledEvent>(OnGasVentPumpEnterAtmosphere);
             SubscribeLocalEvent<GasVentPumpComponent, AtmosAlarmEvent>(OnAtmosAlarm);
             SubscribeLocalEvent<GasVentPumpComponent, PowerChangedEvent>(OnPowerChanged);
-            SubscribeLocalEvent<GasVentPumpComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
             SubscribeLocalEvent<GasVentPumpComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<GasVentPumpComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<GasVentPumpComponent, SignalReceivedEvent>(OnSignalReceived);
@@ -216,70 +215,67 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             UpdateState(uid, component);
         }
 
-        private void OnPacketRecv(EntityUid uid, GasVentPumpComponent component, DeviceNetworkPacketEvent args)
+        [SubscribeLocalEvent]
+        private void OnSyncPayload(Entity<GasVentPumpComponent> ent, ref DeviceNetworkPacketEvent<AtmosSyncPayload> args)
         {
-            if (!TryComp(uid, out DeviceNetworkComponent? netConn)
-                || !args.Data.TryGetValue(DeviceNetworkConstants.Command, out var cmd))
-                return;
-
-            var payload = new NetworkPayload();
-
-            switch (cmd)
+            var data = ent.Comp.ToAirAlarmData();
+            var airAlarm = new AirAlarmSetDataPayload
             {
-                case AtmosDeviceNetworkSystem.SyncData:
-                    payload.Add(DeviceNetworkConstants.Command, AtmosDeviceNetworkSystem.SyncData);
-                    payload.Add(AtmosDeviceNetworkSystem.SyncData, component.ToAirAlarmData());
+                Payload = data,
+            };
+            _deviceNetSystem.SendPacket(ent.Owner, args.SenderAddress, ref airAlarm);
+        }
 
-                    _deviceNetSystem.QueuePacket(uid, args.SenderAddress, payload, device: netConn);
+        [SubscribeLocalEvent]
+        private void OnSetPayload(Entity<GasVentPumpComponent> ent, ref DeviceNetworkPacketEvent<GasVentPumpSetDataPayload> args)
+        {
+            var setData = args.Data.Data;
+            var previous = ent.Comp.ToAirAlarmData();
 
-                    return;
-                case DeviceNetworkConstants.CmdSetState:
-                    if (!args.Data.TryGetValue(DeviceNetworkConstants.CmdSetState, out GasVentPumpData? setData))
-                        break;
-
-                    var previous = component.ToAirAlarmData();
-
-                    if (previous.Enabled != setData.Enabled)
-                    {
-                        string enabled = setData.Enabled ? "enabled" : "disabled" ;
-                        _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(uid)} {enabled}");
-                    }
-
-                    if (previous.PumpDirection != setData.PumpDirection)
-                        _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(uid)} direction changed to {setData.PumpDirection}");
-
-                    if (previous.PressureChecks != setData.PressureChecks)
-                        _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(uid)} pressure check changed to {setData.PressureChecks}");
-
-                    if (previous.ExternalPressureBound != setData.ExternalPressureBound)
-                    {
-                        _adminLogger.Add(
-                            LogType.AtmosDeviceSetting,
-                            LogImpact.Medium,
-                            $"{ToPrettyString(uid)} external pressure bound changed from {previous.ExternalPressureBound} kPa to {setData.ExternalPressureBound} kPa"
-                        );
-                    }
-
-                    if (previous.InternalPressureBound != setData.InternalPressureBound)
-                    {
-                        _adminLogger.Add(
-                            LogType.AtmosDeviceSetting,
-                            LogImpact.Medium,
-                            $"{ToPrettyString(uid)} internal pressure bound changed from {previous.InternalPressureBound} kPa to {setData.InternalPressureBound} kPa"
-                        );
-                    }
-
-                    if (previous.PressureLockoutOverride != setData.PressureLockoutOverride)
-                    {
-                        string enabled = setData.PressureLockoutOverride ? "enabled" : "disabled" ;
-                        _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(uid)} pressure lockout override {enabled}");
-                    }
-
-                    component.FromAirAlarmData(setData);
-                    UpdateState(uid, component);
-
-                    return;
+            if (previous.Enabled != setData.Enabled)
+            {
+                string enabled = setData.Enabled ? "enabled" : "disabled";
+                _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(ent)} {enabled}");
             }
+
+            if (previous.PumpDirection != setData.PumpDirection)
+                _adminLogger.Add(LogType.AtmosDeviceSetting,
+                    LogImpact.Medium,
+                    $"{ToPrettyString(ent)} direction changed to {setData.PumpDirection}");
+
+            if (previous.PressureChecks != setData.PressureChecks)
+                _adminLogger.Add(LogType.AtmosDeviceSetting,
+                    LogImpact.Medium,
+                    $"{ToPrettyString(ent)} pressure check changed to {setData.PressureChecks}");
+
+            if (previous.ExternalPressureBound != setData.ExternalPressureBound)
+            {
+                _adminLogger.Add(
+                    LogType.AtmosDeviceSetting,
+                    LogImpact.Medium,
+                    $"{ToPrettyString(ent)} external pressure bound changed from {previous.ExternalPressureBound} kPa to {setData.ExternalPressureBound} kPa"
+                );
+            }
+
+            if (previous.InternalPressureBound != setData.InternalPressureBound)
+            {
+                _adminLogger.Add(
+                    LogType.AtmosDeviceSetting,
+                    LogImpact.Medium,
+                    $"{ToPrettyString(ent)} internal pressure bound changed from {previous.InternalPressureBound} kPa to {setData.InternalPressureBound} kPa"
+                );
+            }
+
+            if (previous.PressureLockoutOverride != setData.PressureLockoutOverride)
+            {
+                string enabled = setData.PressureLockoutOverride ? "enabled" : "disabled";
+                _adminLogger.Add(LogType.AtmosDeviceSetting,
+                    LogImpact.Medium,
+                    $"{ToPrettyString(ent)} pressure lockout override {enabled}");
+            }
+
+            ent.Comp.FromAirAlarmData(setData);
+            UpdateState(ent, ent.Comp);
         }
 
         private void OnInit(EntityUid uid, GasVentPumpComponent component, ComponentInit args)
