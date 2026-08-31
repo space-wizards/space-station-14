@@ -8,7 +8,7 @@ namespace Content.Shared.Toolshed.TypeParsers.XenoArtifact;
 
 /// <summary>
 /// Custom type parser for toolshed commands
-/// that lets choose entity prototype of XenoArtifact effect.
+/// that lets choose entity prototype of XenoArtifact trigger.
 /// </summary>
 public sealed partial class XenoArtifactTriggerParser : CustomCompletionParser<ProtoId<EntityPrototype>>
 {
