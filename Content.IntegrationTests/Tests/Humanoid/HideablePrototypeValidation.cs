@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
@@ -8,15 +9,13 @@ using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Humanoid;
 
-[TestFixture]
 public sealed class HideablePrototypeValidation : GameTest
 {
     [Test]
     public async Task NoOrgansWithoutClothing()
     {
-        var pair = Pair;
         var requirements = new Dictionary<Enum, HashSet<EntProtoId>>();
-        foreach (var (proto, component) in pair.GetPrototypesWithComponent<VisualOrganMarkingsComponent>())
+        foreach (var (proto, component) in Pair.GetPrototypesWithComponent<VisualOrganMarkingsComponent>())
         {
             foreach (var layer in component.HideableLayers)
             {
@@ -26,7 +25,7 @@ public sealed class HideablePrototypeValidation : GameTest
         }
 
         var provided = new HashSet<HumanoidVisualLayers>();
-        foreach (var (_, component) in pair.GetPrototypesWithComponent<HideLayerClothingComponent>())
+        foreach (var (_, component) in Pair.GetPrototypesWithComponent<HideLayerClothingComponent>())
         {
 #pragma warning disable CS0618 // Type or member is obsolete
             if (component.Slots is { } slots)
@@ -47,10 +46,8 @@ public sealed class HideablePrototypeValidation : GameTest
     [Test]
     public async Task NoClothingWithoutOrgans()
     {
-        var pair = Pair;
-
         var requirements = new Dictionary<Enum, HashSet<EntProtoId>>();
-        foreach (var (proto, component) in pair.GetPrototypesWithComponent<HideLayerClothingComponent>())
+        foreach (var (proto, component) in Pair.GetPrototypesWithComponent<HideLayerClothingComponent>())
         {
 #pragma warning disable CS0618 // Type or member is obsolete
             foreach (var layer in component.Layers.Keys.Concat(component.Slots ?? []))
@@ -62,7 +59,7 @@ public sealed class HideablePrototypeValidation : GameTest
         }
 
         var provided = new HashSet<Enum>();
-        foreach (var (_, component) in pair.GetPrototypesWithComponent<VisualOrganMarkingsComponent>())
+        foreach (var (_, component) in Pair.GetPrototypesWithComponent<VisualOrganMarkingsComponent>())
         {
             provided.UnionWith(component.HideableLayers);
         }
