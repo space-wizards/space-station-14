@@ -266,7 +266,7 @@
       baseOdds: 0.15
       persists: false
       effect: !type:PlantMutateChemicals
-        randomPickBotanyReagent:
+        randomChemTables:
         - RandomPickBotanyFarmingReagent
     - name: ChangeHarvest
       baseOdds: 0.01
