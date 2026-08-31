@@ -8,7 +8,7 @@
   - type: TextScreenTimer
     timerRow: 1
     showCentiseconds: false # Distracting when too common.
-  - type: TextScreen
+  - type: TextScreenVisuals
     textOffset: 0,3
     timerOffset: 0,-4
     rowData: [{},{}]

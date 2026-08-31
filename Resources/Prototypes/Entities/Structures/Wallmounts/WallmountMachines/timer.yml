@@ -64,7 +64,7 @@
   - type: TextScreenTimer
     runningState: running
     finishedState: finished
-  - type: TextScreen
+  - type: TextScreenVisuals
     color: FloralWhite
     scrollEnabled: true
     rowData: [{}]

@@ -9,13 +9,18 @@ namespace Content.Client.TextScreen;
 /// <summary>
 /// The TextScreenSystem draws text in the game world using 3x5 sprite states for each character.
 /// It optionally supports scrolling text.
+/// <br/>
+/// Data is passed from server to client through <see cref="SharedAppearanceSystem.SetData"/>,
+/// calling <see cref="OnAppearanceChange"/>.  This sets <see cref="TextScreenVisualsComponent.RowData"/>,
+/// which will be drawn in the next Update call.
+/// <br/>
+/// Layers for the text screen are set up on the ComponentStartup event, and stored in tuples
+/// in the <see cref="TextScreenVisualsComponent.RowData"/>.  An additional character per row is used for
+/// screens that support scrolling.
 /// </summary>
-/// <remarks>
-/// Not using a VisualizerSystem since this cares about two different components.
-/// </remarks>
-/// <seealso cref="TextScreenComponent"/>
+/// <seealso cref="TextScreenVisualsComponent"/>
 /// <seealso cref="TextScreenTimerComponent"/>
-public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenComponent>
+public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisualsComponent>
 {
     [Dependency] private IGameTiming _timing = default!;
 
@@ -112,10 +117,10 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenCompon
                 // Check if we need to update our time.
                 SetTextToDisplay(uid, timer.FinishedText);
                 UpdateTimerSprite((uid, timer), false);
-                timer.ScreenValue = 0;
 
-                // Timer finished, reset to null.
+                // Timer finished, reset state.
                 timer.TargetTime = null;
+                timer.ScreenValue = 0;
             }
             else
             {
@@ -132,7 +137,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenCompon
         }
 
         // Text screens: update layers on changed, scroll if needed.
-        var screenQuery = EntityQueryEnumerator<TextScreenComponent, SpriteComponent>();
+        var screenQuery = EntityQueryEnumerator<TextScreenVisualsComponent, SpriteComponent>();
         while (screenQuery.MoveNext(out var uid, out var screen, out var sprite))
         {
             if (screen.NewTextToDisplay)
@@ -177,7 +182,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenCompon
     /// <summary>
     /// Converts the difference between two timespans into a value between 0 and 9999.
     /// </summary>
-    public void SetTextToDisplay(Entity<TextScreenComponent?> ent, string? text)
+    public void SetTextToDisplay(Entity<TextScreenVisualsComponent?> ent, string? text)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
@@ -247,7 +252,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenCompon
     /// Handles updates from the server.
     /// </summary>
     [SubscribeLocalEvent]
-    private void OnStartup(Entity<TextScreenComponent> ent, ref ComponentStartup args)
+    private void OnStartup(Entity<TextScreenVisualsComponent> ent, ref ComponentStartup args)
     {
         if (!_spriteQuery.TryComp(ent, out var sprite))
             return;
@@ -278,10 +283,12 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenCompon
     }
 
     /// <summary>
-    /// Appearance data handler - this drives the actual timer machine.
-    ///
+    /// Appearance data handler - drives the actual text/timer.
+    /// Sets <see cref="TextScreenVisualsComponent.NewTextToDisplay"/> on any change,
+    /// which will be picked up in the next Update.
+    /// Color data, being simpler, is updated on the layers in the call directly.
     /// </summary>
-    protected override void OnAppearanceChange(EntityUid uid, TextScreenComponent comp, ref AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(EntityUid uid, TextScreenVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         bool anyChange;
         if (args.TryGetData(TextScreenVisuals.Color, out Color color))
@@ -378,7 +385,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenCompon
     /// Should be called whenever the screen has updates to its text strings.
     /// If only scrolling the existing text, DrawLayers can be used directly.
     /// </summary>
-    private void UpdateAndDrawText(Entity<TextScreenComponent> ent)
+    private void UpdateAndDrawText(Entity<TextScreenVisualsComponent> ent)
     {
         // No sprite, set TextRowData into a default state.
         if (!_spriteQuery.TryComp(ent, out var sprite))
@@ -472,7 +479,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenCompon
     /// <summary>
     /// Draws sprite layers for the given row on the given entity.
     /// </summary>
-    private void DrawLayers(Entity<TextScreenComponent, SpriteComponent> ent, TextScreenRow rowData, int rowIndex)
+    private void DrawLayers(Entity<TextScreenVisualsComponent, SpriteComponent> ent, TextScreenRow rowData, int rowIndex)
     {
         Entity<SpriteComponent?> sprite = (ent.Owner, ent.Comp2);
         var screen = ent.Comp1;
@@ -499,7 +506,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenCompon
                 SpriteSystem.LayerSetOffset(sprite, layerIndex, Vector2.Multiply(
                     screen.TextOffset +
                     new Vector2((j - maxCharIndex / 2f + 0.5f) * CharWidth - subCharOffset + scrollOffset, -rowIndex * screen.RowOffset),
-                    TextScreenComponent.PixelSize));
+                    TextScreenVisualsComponent.PixelSize));
             }
 
             rowData.Layers[j] = new(layerTuple.Key, newState);

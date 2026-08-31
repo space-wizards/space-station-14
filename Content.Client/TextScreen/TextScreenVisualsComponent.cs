@@ -12,7 +12,7 @@ namespace Content.Client.TextScreen;
 /// Pausing handled manually due to manual TextScreenRow logic.
 /// </remarks>
 [RegisterComponent, Access(typeof(TextScreenSystem))]
-public sealed partial class TextScreenComponent : Component
+public sealed partial class TextScreenVisualsComponent : Component
 {
     /// <summary>
     /// 1/32 - the size of a pixel in meters.
