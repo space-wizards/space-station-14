@@ -122,10 +122,10 @@ public sealed partial class ExpendableLightComponent : Component
     /// <summary>
     ///     Time when next change of CurrentState happens. It's current time + how long light will spend in current state.
     /// </summary>
-    [ViewVariables]
-    [AutoNetworkedField]
+
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan? StateExpiryTime;
+    [AutoPausedField, AutoNetworkedField]
+    public TimeSpan StateExpiryTime = TimeSpan.Zero;
 }
 
 [Serializable, NetSerializable]

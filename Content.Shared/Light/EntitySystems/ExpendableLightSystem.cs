@@ -46,7 +46,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
     {
         var component = ent.Comp;
 
-        if (_timing.CurTime < component.StateExpiryTime) // Checks if any timer is expired
+        if (component.StateExpiryTime == TimeSpan.Zero || _timing.CurTime < component.StateExpiryTime) // Checks if any timer is expired
             return;
 
         switch (component.CurrentState) // State change time
@@ -62,7 +62,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
             case ExpendableLightState.Fading:
             default:
                 component.CurrentState = ExpendableLightState.Dead;
-                component.StateExpiryTime = null;
+                component.StateExpiryTime = TimeSpan.Zero;
 
                 _nameModifier.RefreshNameModifiers(ent.Owner);
                 _tagSystem.AddTag(ent, TrashTag);
@@ -136,8 +136,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
                 break;
 
             case ExpendableLightState.Fading:
-                if (component.StateExpiryTime == null) return;
-                var glowTimeLeft = component.StateExpiryTime.Value - _timing.CurTime; // how long until the light goes out
+                var glowTimeLeft = component.StateExpiryTime - _timing.CurTime; // how long until the light goes out
                 if (glowTimeLeft + component.RefuelMaterialTime > component.FadeOutDuration) //enough fuel to go from fading into lit state
                 {
                     var newGlowTime = glowTimeLeft + component.RefuelMaterialTime - component.FadeOutDuration;
@@ -150,9 +149,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
                 break;
 
             case ExpendableLightState.Lit:
-                if (component.StateExpiryTime == null) return;
-
-                var timeLeft = component.StateExpiryTime.Value - _timing.CurTime;
+                var timeLeft = component.StateExpiryTime - _timing.CurTime;
                 if (timeLeft + component.RefuelMaterialTime >= component.RefuelMaximumDuration) // light cannot hold more fuel
                     return;
 
