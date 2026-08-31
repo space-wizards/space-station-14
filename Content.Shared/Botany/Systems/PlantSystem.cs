@@ -136,19 +136,16 @@ public sealed partial class PlantSystem : EntitySystem
 
         // Process mutations.
         var mutationLevels = ent.Comp.MutationLevels.ToArray();
-
         foreach (var (mutationTable, mutationBuildup) in mutationLevels)
         {
             if (mutationBuildup <= 0)
                 continue;
 
-            if (ent.Comp.MutationLevels[mutationTable] > 0)
-            {
-                _mutation.CheckRandomMutations(ent.Owner, mutationTable, Math.Min(ent.Comp.MutationLevels[mutationTable], ent.Comp.MaxMutationLevel));
-                ent.Comp.MutationLevels[mutationTable] = 0;
-                DirtyField(ent, ent.Comp, nameof(ent.Comp.MutationLevels));
-            }
+            ent.Comp.MutationLevels[mutationTable] = 0;
+            DirtyField(ent, ent.Comp, nameof(ent.Comp.MutationLevels));
+            _mutation.CheckRandomMutations(ent.Owner, mutationTable, Math.Min(mutationBuildup, ent.Comp.MaxMutationLevel));
         }
+
         if (ent.Comp.Health <= 0)
             _plantHolder.KillPlant(ent.Owner);
     }

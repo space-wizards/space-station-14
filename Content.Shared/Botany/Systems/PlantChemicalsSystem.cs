@@ -4,8 +4,8 @@ using Content.Shared.Botany.Events;
 using Content.Shared.FixedPoint;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
-using Robust.Shared.Timing;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Botany.Systems;
 
@@ -37,12 +37,7 @@ public sealed partial class PlantChemicalsSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
-        var random = SharedRandomExtensions.PredictedRandom(
-            _timing,
-            GetNetEntity(ent));
-
         var totalWeight = 0f;
-
         foreach (var table in randomChemTables)
         {
             foreach (var fill in ProtoMan.Index(table).Fills)
@@ -54,6 +49,7 @@ public sealed partial class PlantChemicalsSystem : EntitySystem
         if (totalWeight <= 0f)
             return;
 
+        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
         var selectedWeight = random.NextFloat() * totalWeight;
         var accumulatedWeight = 0f;
         WeightedRandomFillSolutionPrototype? selectedTable = null;

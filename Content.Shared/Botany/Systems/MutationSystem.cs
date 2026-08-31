@@ -7,8 +7,8 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Shared.Botany.Systems;
 
@@ -40,13 +40,12 @@ public sealed partial class PlantMutationSystem : EntitySystem
             return;
 
         var mutationTable = ProtoMan.Index(mutationTableId);
-
         foreach (var mutation in mutationTable.Mutations)
         {
             var triggers = 0;
             while (mutation.BaseOdds * severity > triggers) // If the odds are greater than one, potentially trigger the mutation multiple times
             {
-                var odds = (mutation.BaseOdds * severity) - triggers;
+                var odds = mutation.BaseOdds * severity - triggers;
                 triggers++;
                 if (Random(Math.Min(odds, 1.0f)))
                 {

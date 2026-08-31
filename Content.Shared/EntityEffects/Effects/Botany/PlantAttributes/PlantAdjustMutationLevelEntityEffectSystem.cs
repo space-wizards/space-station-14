@@ -24,7 +24,11 @@ public sealed partial class PlantAdjustMutationLevelEntityEffectSystem : EntityE
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class PlantAdjustMutationLevel : BasePlantAdjustAttribute<PlantAdjustMutationLevel>
 {
+    /// <summary>
+    /// The mutation table whose level is adjusted.
+    /// </summary>
     [DataField(required: true)]
     public ProtoId<RandomPlantMutationListPrototype> MutationTable;
+
     public override string GuidebookAttributeName { get; set; } = "plant-attribute-mutation-level";
 }
