@@ -136,7 +136,7 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
     [CommandImplementation("createnode")]
     public void CreateNodeNew(
         [CommandArgument] Entity<XenoArtifactComponent> artifact,
-        [CommandArgument(typeof(XenoArtifcatEffectParser))] ProtoId<EntityPrototype> effect,
+        [CommandArgument(typeof(XenoArtifactEffectParser))] ProtoId<EntityPrototype> effect,
         [CommandArgument(typeof(XenoArtifactTriggerParser))] ProtoId<EntityPrototype> trigger
     )
     {
@@ -147,7 +147,7 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
     [CommandImplementation("createnodeatdepth")]
     public void CreateNodeAtDepth(
         [CommandArgument(typeof(XenoArtifactNodeParser))] (Entity<XenoArtifactComponent> Artifact, Entity<XenoArtifactNodeComponent> Node) tuple,
-        [CommandArgument(typeof(XenoArtifcatEffectParser))] ProtoId<EntityPrototype> effect,
+        [CommandArgument(typeof(XenoArtifactEffectParser))] ProtoId<EntityPrototype> effect,
         [CommandArgument(typeof(XenoArtifactTriggerParser))] ProtoId<EntityPrototype> trigger
     )
     {
@@ -159,7 +159,7 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
     public void SpawnArtifactWithNode(
         [CommandArgument] ICommonSession target,
         [CommandArgument(typeof(XenoArtifactTypeParser))] ProtoId<EntityPrototype> artifactType,
-        [CommandArgument(typeof(XenoArtifcatEffectParser))] ProtoId<EntityPrototype> effect,
+        [CommandArgument(typeof(XenoArtifactEffectParser))] ProtoId<EntityPrototype> effect,
         [CommandArgument(typeof(XenoArtifactTriggerParser))] ProtoId<EntityPrototype> trigger
     )
     {

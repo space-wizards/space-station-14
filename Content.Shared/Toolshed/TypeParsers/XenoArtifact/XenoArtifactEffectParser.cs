@@ -1,4 +1,3 @@
-using System.Linq;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
@@ -11,7 +10,7 @@ namespace Content.Shared.Toolshed.TypeParsers.XenoArtifact;
 /// Custom type parser for toolshed commands
 /// that lets choose entity prototype of XenoArtifact effect.
 /// </summary>
-public sealed partial class XenoArtifcatEffectParser : CustomCompletionParser<ProtoId<EntityPrototype>>
+public sealed partial class XenoArtifactEffectParser : CustomCompletionParser<ProtoId<EntityPrototype>>
 {
     private static readonly ProtoId<EntityCategoryPrototype> EffectCategoryId = "XenoArtifactEffects";
 
