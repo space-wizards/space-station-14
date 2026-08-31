@@ -5,6 +5,10 @@
   setPreference: true
   objective: roles-antag-changeling-objective
   guides: [ Changelings ]
+  tags:
+  - OnStation
+  - Roundstart
+  - Unkillable
   requirements:
   - !type:OverallPlaytimeRequirement
     time: 5h
