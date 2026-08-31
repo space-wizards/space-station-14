@@ -61,10 +61,10 @@
   components:
   - type: SignalTimer
     canEditLabel: true
-  - type: TextScreenTimerVisuals
+  - type: TextScreenTimer
     runningState: running
     finishedState: finished
-  - type: TextScreenVisuals
+  - type: TextScreen
     color: FloralWhite
     scrollEnabled: true
     rowData: [{}]

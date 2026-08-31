@@ -12,8 +12,8 @@ namespace Content.Client.TextScreen.Components;
 /// <remarks>
 /// Pausing handled manually due to manual TextScreenRow logic.
 /// </remarks>
-[RegisterComponent, Access(typeof(TextScreenVisualizerSystem))]
-public sealed partial class TextScreenVisualsComponent : Component
+[RegisterComponent, Access(typeof(TextScreenSystem))]
+public sealed partial class TextScreenComponent : Component
 {
     /// <summary>
     /// 1/32 - the size of a pixel in meters.
@@ -65,7 +65,7 @@ public sealed partial class TextScreenVisualsComponent : Component
     /// <summary>
     /// When scrolling, a horizontal offset for the scrolling, in pixels
     /// </summary>
-    /// <seealso cref="TextScreenVisualizerSystem.CharWidth"/>
+    /// <seealso cref="TextScreenSystem.CharWidth"/>
     [DataField]
     public int HorizontalScrollOffset;
 
@@ -73,7 +73,7 @@ public sealed partial class TextScreenVisualsComponent : Component
     /// When scrolling, the number of pixels that the leftmost letters should be invisible for.
     /// Value should be between [0,CharWidth)
     /// </summary>
-    /// <seealso cref="TextScreenVisualizerSystem.CharWidth"/>
+    /// <seealso cref="TextScreenSystem.CharWidth"/>
     [DataField]
     public int LeftInvisiblePixels;
 
@@ -81,7 +81,7 @@ public sealed partial class TextScreenVisualsComponent : Component
     /// When scrolling, the number of pixels that the rightmost letters should be invisible for.
     /// Value should be between [0,CharWidth)
     /// </summary>
-    /// <seealso cref="TextScreenVisualizerSystem.CharWidth"/>
+    /// <seealso cref="TextScreenSystem.CharWidth"/>
     [DataField]
     public int RightInvisiblePixels;
 

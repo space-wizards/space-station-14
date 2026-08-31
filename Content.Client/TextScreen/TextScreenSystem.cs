@@ -14,14 +14,14 @@ namespace Content.Shared.TextScreen.Systems;
 /// <remarks>
 /// Not using a VisualizerSystem since this cares about two different components.
 /// </remarks>
-/// <seealso cref="TextScreenVisualsComponent"/>
+/// <seealso cref="TextScreenComponent"/>
 /// <seealso cref="TextScreenTimerComponent"/>
-public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextScreenVisualsComponent>
+public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenComponent>
 {
     [Dependency] private IGameTiming _timing = default!;
 
     [Dependency] private EntityQuery<SpriteComponent> _spriteQuery;
-    [Dependency] private EntityQuery<TextScreenTimerVisualsComponent> _screenTimerQuery;
+    [Dependency] private EntityQuery<TextScreenTimerComponent> _screenTimerQuery;
 
     /// <summary>
     /// Contains char/state Key/Value pairs. <br/>
@@ -101,7 +101,7 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
     {
         base.Update(frameTime);
 
-        var timerQuery = EntityQueryEnumerator<TextScreenTimerVisualsComponent>();
+        var timerQuery = EntityQueryEnumerator<TextScreenTimerComponent>();
         while (timerQuery.MoveNext(out var uid, out var timer))
         {
             if (timer.TargetTime == null)
@@ -127,7 +127,7 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
             }
         }
 
-        var screenQuery = EntityQueryEnumerator<TextScreenVisualsComponent, SpriteComponent>();
+        var screenQuery = EntityQueryEnumerator<TextScreenComponent, SpriteComponent>();
         while (screenQuery.MoveNext(out var uid, out var screen, out var sprite))
         {
             if (screen.NewTextToDisplay)
@@ -174,7 +174,7 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
     /// <summary>
     /// Converts the difference between two timespans into a value between 0 and 9999.
     /// </summary>
-    public void SetTextToDisplay(Entity<TextScreenVisualsComponent?> ent, string? text)
+    public void SetTextToDisplay(Entity<TextScreenComponent?> ent, string? text)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
@@ -244,7 +244,7 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
     /// Handles updates from the server.
     /// </summary>
     [SubscribeLocalEvent]
-    private void OnStartup(Entity<TextScreenVisualsComponent> ent, ref ComponentStartup args)
+    private void OnStartup(Entity<TextScreenComponent> ent, ref ComponentStartup args)
     {
         if (!_spriteQuery.TryComp(ent, out var sprite))
             return;
@@ -277,7 +277,7 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
     /// <summary>
     /// Handles updates from the server.
     /// </summary>
-    protected override void OnAppearanceChange(EntityUid uid, TextScreenVisualsComponent comp, ref AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(EntityUid uid, TextScreenComponent comp, ref AppearanceChangeEvent args)
     {
         bool anyChange;
         if (args.TryGetData(TextScreenVisuals.Color, out Color color))
@@ -344,7 +344,7 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
         }
     }
 
-    private string GetTimerString(Entity<TextScreenTimerVisualsComponent> ent, int newScreenValue)
+    private string GetTimerString(Entity<TextScreenTimerComponent> ent, int newScreenValue)
     {
         if (ent.Comp.TimerRow < 0)
             return ent.Comp.RunningText;
@@ -370,7 +370,7 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
         return string.Join('\n', strings);
     }
 
-    private void DrawNewText(Entity<TextScreenVisualsComponent> ent)
+    private void DrawNewText(Entity<TextScreenComponent> ent)
     {
         // No sprite, put in a default state.
         if (!_spriteQuery.TryComp(ent, out var sprite))
@@ -445,7 +445,7 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
         rowData.NextScroll += increments * rowData.ScrollDelay;
     }
 
-    private void DrawLayers(Entity<TextScreenVisualsComponent, SpriteComponent> ent, TextScreenRow rowData, int rowIndex)
+    private void DrawLayers(Entity<TextScreenComponent, SpriteComponent> ent, TextScreenRow rowData, int rowIndex)
     {
         Entity<SpriteComponent?> sprite = (ent.Owner, ent.Comp2);
         var screen = ent.Comp1;
@@ -468,7 +468,7 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
                 SpriteSystem.LayerSetOffset(sprite, layerIndex, Vector2.Multiply(
                     screen.TextOffset +
                     new Vector2((j - maxCharIndex / 2f + 0.5f) * CharWidth - subCharOffset + scrollOffset, -rowIndex * screen.RowOffset),
-                    TextScreenVisualsComponent.PixelSize));
+                    TextScreenComponent.PixelSize));
             }
 
             rowData.Layers[j] = new(layerTuple.Key, newState);
@@ -492,7 +492,7 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
         }
     }
 
-    private void UpdateTimerSprite(Entity<TextScreenTimerVisualsComponent> ent, bool running)
+    private void UpdateTimerSprite(Entity<TextScreenTimerComponent> ent, bool running)
     {
         if (_spriteQuery.TryComp(ent, out var sprite)
             && SpriteSystem.LayerMapTryGet((ent, sprite), TimerVisualLayers.Light, out var layerIndex, logMissing: false))

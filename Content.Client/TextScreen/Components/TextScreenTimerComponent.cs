@@ -5,11 +5,11 @@ namespace Content.Shared.TextScreen.Components;
 
 /// <summary>
 /// Additional visual data for text screens that support countdown timers with frame-by-frame updates.
-/// Entities must have <see cref="TextScreenVisualsComponent"/> to work!
+/// Entities must have <see cref="TextScreenComponent"/> to work!
 /// </summary>
-[RegisterComponent, Access(typeof(TextScreenVisualizerSystem))]
+[RegisterComponent, Access(typeof(TextScreenSystem))]
 [AutoGenerateComponentPause]
-public sealed partial class TextScreenTimerVisualsComponent : Component
+public sealed partial class TextScreenTimerComponent : Component
 {
     /// <summary>
     /// The time that the timer is counting down to.
