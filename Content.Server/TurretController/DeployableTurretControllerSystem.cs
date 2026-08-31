@@ -34,6 +34,31 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
         SubscribeLocalEvent<DeployableTurretControllerComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
     }
 
+    [SubscribeLocalEvent]
+    private void OnNetworkConnection(Entity<DeployableTurretControllerComponent> ent, ref DeviceNetworkConnectedEvent args)
+    {
+        if (!TryComp<DeviceNetworkComponent>(ent, out var device))
+            return;
+
+        // On a new network, so find new connected devices
+        ent.Comp.LinkedTurrets = new();
+
+        var payload = new NetworkPayload
+        {
+            [DeviceNetworkConstants.Command] = DeviceNetworkConstants.CmdUpdatedState,
+        };
+
+        _deviceNetwork.QueuePacket(ent, null, payload, device: device);
+        UpdateUIState(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnNetworkDisconnect(Entity<DeployableTurretControllerComponent> ent, ref DeviceNetworkDisconnectedEvent args)
+    {
+        ent.Comp.LinkedTurrets = new();
+        UpdateUIState(ent);
+    }
+
     private void OnBUIOpened(Entity<DeployableTurretControllerComponent> ent, ref BoundUIOpenedEvent args)
     {
         UpdateUIState(ent);
