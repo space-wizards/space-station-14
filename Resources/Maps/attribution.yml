@@ -1,0 +1,38 @@
+### EXAMPLE
+- Map: # OG-Relic Station SS13 # name of the map
+  - file: # /relic.yml # name of the file
+  - sourse: # link to PR from which a map first appeared in the repo
+      original sourse: # link to a PR from which the map was originally taken from
+        ported by: # username / github username of a person who ported from a fork/ss13
+  - original author: # username of the original creator(s)
+  - in rotation: # (yes/no)  # if the map is currently in map rotation
+      since: # (DD.MM.YYYY) [to DD.MM.YYYY] # (date-first in rotation)-[date-last in rotation]
+  - maintained: # (yes/no) # if the map is maintained by original author/porter # if no there is none, no need to ask if it needs to be modifed
+      by: # (OG / username(s)) # dont include include if not nessesary
+### EXAMPLE end
+
+# All Wizden maps are under CC-BY-SA-4.0 lisence
+# Wizden Maps
+
+- name:
+  - file name:
+  - sourse:
+    original sourse:
+      ported by:
+  - original author:
+  - in rotation:
+    since:
+  - maintained:
+    by:
+
+# [Insert Fork Name] Maps
+# All [Insert Frok Name] maps are under [Insert Licence] lisence
+
+
+
+# General Mapping Contributiors for Wizden
+- Contributors:
+  - (Username) [Github username/link]
+
+# General Mapping Contributions for [Insert Fork Name]
+- Contributors: # Leave empty if not for
