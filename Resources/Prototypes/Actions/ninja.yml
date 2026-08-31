@@ -92,6 +92,7 @@
     - state: blink
   - type: TargetAction
     checkCanAccess: false
+    checkCanSee: true
     range: 0
   - type: WorldTargetAction
     event: !type:TeleportActionEvent
