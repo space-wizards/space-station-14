@@ -650,3 +650,20 @@
         effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 5
+
+- type: reagent
+  id: Nyctalon
+  name: reagent-name-Nyctalon
+  group: Narcotics
+  desc: reagent-desc-Nyctalon
+  physicalDesc: reagent-physical-desc-translucent
+  flavor: bitter
+  color: "#1A0A2E"
+  metabolisms:
+    Bloodstream:
+      metabolismRate: 0.5
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectNightVision
+        time: 2
+        type: Add

@@ -587,3 +587,19 @@
       amount: 3
   products:
     PhosphoricAcid: 10
+
+- type: reaction
+  id: Nyctalon
+  reactants:
+    Oculine:
+      amount: 1
+    Radium:
+      amount: 1
+    Carbon:
+      amount: 3
+    Uranium:
+      amount: 1
+    Plasma:
+      amount: 1
+  products:
+    Nyctalon: 1
