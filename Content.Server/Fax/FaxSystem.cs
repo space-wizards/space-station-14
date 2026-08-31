@@ -2,6 +2,7 @@ using Content.Server.Administration;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.Paper;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Tools;
@@ -17,8 +18,6 @@ using Content.Shared.Fax.Components;
 using Content.Shared.Fax.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
-using Content.Shared.Labels.Components;
-using Content.Shared.Labels.EntitySystems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.NameModifier.Components;
 using Content.Shared.Paper;
@@ -45,7 +44,6 @@ public sealed partial class FaxSystem : EntitySystem
     [Dependency] private PopupSystem _popupSystem = default!;
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private PaperSystem _paperSystem = default!;
-    [Dependency] private LabelSystem _labelSystem = default!;
     [Dependency] private SharedAudioSystem _audioSystem = default!;
     [Dependency] private ToolSystem _toolSystem = default!;
     [Dependency] private QuickDialogSystem _quickDialog = default!;
@@ -298,14 +296,14 @@ public sealed partial class FaxSystem : EntitySystem
                         !args.Data.TryGetValue(FaxConstants.FaxPaperContentData, out string? content))
                         return;
 
-                    args.Data.TryGetValue(FaxConstants.FaxPaperLabelData, out string? label);
+                    args.Data.TryGetValue(FaxConstants.FaxPaperOriginalEntity, out EntityUid? originalEntity);
                     args.Data.TryGetValue(FaxConstants.FaxPaperStampStateData, out string? stampState);
                     args.Data.TryGetValue(FaxConstants.FaxPaperStampedByData, out List<StampDisplayInfo>? stampedBy);
                     args.Data.TryGetValue(FaxConstants.FaxPaperPrototypeData, out string? prototypeId);
                     args.Data.TryGetValue(FaxConstants.FaxPaperLockedData, out bool? locked);
                     args.Data.TryGetValue(FaxConstants.FaxPaperSenderFaxNameData, out string? senderFaxName);
 
-                    var printout = new FaxPrintout(content, name, label, prototypeId, stampState, stampedBy, locked ?? false, senderFaxName);
+                    var printout = new FaxPrintout(content, name, prototypeId, stampState, stampedBy, locked ?? false, senderFaxName, originalEntity);
                     Receive(uid, printout, args.SenderAddress);
 
                     break;
@@ -469,17 +467,16 @@ public sealed partial class FaxSystem : EntitySystem
             !TryComp<PaperComponent>(sendEntity, out var paper))
             return;
 
-        TryComp<LabelComponent>(sendEntity, out var labelComponent);
         TryComp<NameModifierComponent>(sendEntity, out var nameMod);
 
         // TODO: See comment in 'Send()' about not being able to copy whole entities
         var printout = new FaxPrintout(paper.Content,
                                        nameMod?.BaseName ?? metadata.EntityName,
-                                       labelComponent?.CurrentLabel,
                                        metadata.EntityPrototype?.ID ?? component.PrintPaperId,
                                        paper.StampState,
                                        paper.StampedBy,
-                                       paper.EditingDisabled);
+                                       paper.EditingDisabled,
+                                       originalEntity: sendEntity);
 
         component.PrintingQueue.Enqueue(printout);
         component.SendTimeoutRemaining += component.SendTimeout;
@@ -524,8 +521,6 @@ public sealed partial class FaxSystem : EntitySystem
 
         TryComp<NameModifierComponent>(sendEntity, out var nameMod);
 
-        TryComp<LabelComponent>(sendEntity, out var labelComponent);
-
         var content = paper.Content;
 
         if (component.AddSenderInfo)
@@ -551,7 +546,7 @@ public sealed partial class FaxSystem : EntitySystem
         {
             { DeviceNetworkConstants.Command, FaxConstants.FaxPrintCommand },
             { FaxConstants.FaxPaperNameData, nameMod?.BaseName ?? metadata.EntityName },
-            { FaxConstants.FaxPaperLabelData, labelComponent?.CurrentLabel },
+            { FaxConstants.FaxPaperOriginalEntity, sendEntity },
             { FaxConstants.FaxPaperContentData, content },
             { FaxConstants.FaxPaperLockedData, paper.EditingDisabled },
             { FaxConstants.FaxPaperSenderFaxNameData, component.FaxName ?? Loc.GetString("fax-machine-popup-source-unknown") }
@@ -636,9 +631,11 @@ public sealed partial class FaxSystem : EntitySystem
 
         _metaData.SetEntityName(printed, printout.Name);
 
-        if (printout.Label is { } label)
+        if (printout.OriginalEntity != null)
         {
-            _labelSystem.Label(printed, label);
+            // If the item in the queue is generated as a copy of an existing entity,
+            // raise an event so any systems with extra components can copy them
+            RaiseLocalEvent(printout.OriginalEntity.Value, new PaperCopiedEvent(printed));
         }
 
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"\"{component.FaxName}\" {ToPrettyString(uid):tool} printed {ToPrettyString(printed):subject}: {printout.Content}");
