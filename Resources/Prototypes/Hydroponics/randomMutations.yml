@@ -260,7 +260,7 @@
 
 - type: randomPlantMutationList
   id: FarmingPlantMutations
-  ignoreMutationMod: false
+  ignoreMutationMod: true
   mutations:
     - name: MutateFarmingChemicals
       baseOdds: 0.04
