@@ -6,6 +6,7 @@ using Content.Shared.StatusEffectNew;
 using Content.Shared.StatusEffectNew.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Item;
 
@@ -38,9 +39,9 @@ public sealed partial class ForcedItemStatusEffectSystem : EntitySystem
         if (entity.Comp.SuccessfullySpawned)
             return;
 
-        if (entity.Comp.Hands)
+        foreach (var item in entity.Comp.HandItems)
         {
-            var spawned = SpawnAtPosition(entity.Comp.Item, Transform(entity).Coordinates);
+            var spawned = SpawnAtPosition(item, Transform(entity).Coordinates);
 
             if (_hands.TryForcePickupAnyHand(args.Target, spawned, false))
             {
@@ -61,29 +62,28 @@ public sealed partial class ForcedItemStatusEffectSystem : EntitySystem
             }
         }
 
-        if (entity.Comp.Slots != SlotFlags.NONE)
+        foreach (var slot in entity.Comp.InventoryItems)
         {
-            var slots = _inventory.GetSlotEnumerator(args.Target, entity.Comp.Slots);
+            var slots = _inventory.GetSlotEnumerator(args.Target, slot.Key);
             while (slots.MoveNext(out var container))
             {
                 if (container.ContainedEntity != null && entity.Comp.DropExisting)
                 {
                     if (_inventory.TryUnequip(args.Target, container.ID, true, entity.Comp.Force) &&
-                        SpawnItemInInventory(entity, args.Target, container.ID))
+                        SpawnItemInInventory(entity, slot.Value, args.Target, container.ID))
                     {
                         entity.Comp.SuccessfullySpawned = true;
                         continue;
                     }
                 }
 
-                if (container.ContainedEntities.Count == 0 && SpawnItemInInventory(entity, args.Target, container.ID))
+                if (container.ContainedEntities.Count == 0 && SpawnItemInInventory(entity, slot.Value, args.Target, container.ID))
                     entity.Comp.SuccessfullySpawned = true;
             }
         }
 
         if (!entity.Comp.SuccessfullySpawned)
             return;
-
 
         _audio.PlayPvs(entity.Comp.SpawnSound, args.Target);
         Dirty(entity);
@@ -168,20 +168,20 @@ public sealed partial class ForcedItemStatusEffectSystem : EntitySystem
             _audio.PlayPredicted(status.Comp.DespawnSound, holder, user.Value);
     }
 
-    private bool SpawnItemInInventory(Entity<ForcedItemStatusEffectComponent> ent, EntityUid target, string slot)
+    private bool SpawnItemInInventory(Entity<ForcedItemStatusEffectComponent> ent, EntProtoId item, EntityUid target, string slot)
     {
-        if (!_inventory.SpawnItemInSlot(target, slot, ent.Comp.Item, out var item, true, force: ent.Comp.Force))
+        if (!_inventory.SpawnItemInSlot(target, slot, item, out var itemUid, true, force: ent.Comp.Force))
             return false;
 
         if (ent.Comp.Unremovable)
-            EnsureComp<UnremoveableComponent>(item.Value);
+            EnsureComp<UnremoveableComponent>(itemUid.Value);
 
-        EnsureComp<ForcedItemStatusEffectItemComponent>(item.Value, out var spawnedComp);
+        EnsureComp<ForcedItemStatusEffectItemComponent>(itemUid.Value, out var spawnedComp);
         spawnedComp.StatusEffect = ent;
         spawnedComp.RemoveWhenCuffed = ent.Comp.RemoveWhenCuffed;
-        ent.Comp.ItemEntities.Add(item.Value);
+        ent.Comp.ItemEntities.Add(itemUid.Value);
 
-        Dirty(item.Value, spawnedComp);
+        Dirty(itemUid.Value, spawnedComp);
         return true;
     }
 }

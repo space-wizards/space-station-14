@@ -14,10 +14,18 @@ namespace Content.Shared.Item;
 public sealed partial class ForcedItemStatusEffectComponent : Component
 {
     /// <summary>
-    /// The entity to spawn in the desired slots.
+    /// The entities to spawn in the hands of the user.
+    /// If the hands are unavailable, they will not be spawned.
     /// </summary>
-    [DataField(required: true)]
-    public EntProtoId Item;
+    [DataField]
+    public List<EntProtoId> HandItems;
+
+    /// <summary>
+    /// The entities to spawn in the inventory of the user.
+    /// If the slots are unavailable, they will not be spawned.
+    /// </summary>
+    [DataField]
+    public Dictionary<SlotFlags, EntProtoId> InventoryItems;
 
     /// <summary>
     /// <see cref="EntityUid"/>s of the spawned items. Used to remove them when the status effect expires.
@@ -32,27 +40,13 @@ public sealed partial class ForcedItemStatusEffectComponent : Component
     public bool Unremovable = true;
 
     /// <summary>
-    /// The slots to put the provided item into.
-    /// Will fill all the applicable slots.
-    /// </summary>
-    [DataField]
-    public SlotFlags Slots = SlotFlags.NONE;
-
-    /// <summary>
-    /// Whether the item should be put in hands.
-    /// </summary>
-    [DataField]
-    public bool Hands = true;
-
-    /// <summary>
     /// If the item in the existing slots/hands should be dropped to make space.
     /// </summary>
     [DataField]
     public bool DropExisting = true;
 
     /// <summary>
-    /// Forces the items to spawn in their respective spots.
-    /// If trying to equip to a slot with an unremovable item, it will be deleted if this is true.
+    /// Forces the items to spawn in their respective slots, even if usually not possible to equip there.
     /// Only affects inventory slots.
     /// </summary>
     [DataField]
