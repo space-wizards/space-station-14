@@ -531,7 +531,7 @@
     tags:
     - waste
   - type: Flippable
-    mirrorEntity: DisposalRouterWaste
+    mirrorEntity: DisposalRouterFlippedWaste
 
 - type: entity
   parent: DisposalRouterFlipped
@@ -542,4 +542,4 @@
     tags:
     - waste
   - type: Flippable
-    mirrorEntity: DisposalRouterFlippedWaste
+    mirrorEntity: DisposalRouterWaste
