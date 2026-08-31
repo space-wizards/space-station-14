@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Numerics;
 using Content.Shared.TextScreen;
 using Robust.Client.GameObjects;
@@ -31,7 +32,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     /// Contains char/state Key/Value pairs. <br/>
     /// The states in Textures/Effects/text.rsi that special character should be replaced with.
     /// </summary>
-    private static readonly Dictionary<char, string> CharStatePairs = new() {
+    private static readonly FrozenDictionary<char, string> CharStatePairs = new Dictionary<char, string>() {
         { '<', "angle-l" },
         { '>', "angle-r" },
         {'\'', "apostrophe" },
@@ -57,7 +58,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
         { '$', "speso" },
         { '*', "star" },
         { '_', "underscore" },
-    };
+    }.ToFrozenDictionary();
 
     /// <summary>
     /// A string prefix for all text layers.
@@ -169,9 +170,6 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
             comp.NewTextToDisplay = anyChange;
         }
     }
-    #endregion Inherited
-
-    #region Public API
     /// <summary>
     /// Update handler - keep timers and scrolling text up to date.
     /// </summary>
@@ -234,7 +232,9 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
             }
         }
     }
+    #endregion Inherited
 
+    #region Public API
     /// <summary>
     /// Converts the difference between two timespans into a value between 0 and 9999.
     /// </summary>
@@ -287,6 +287,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
 
         return null;
     }
+
     /// <summary>
     /// Returns the <paramref name="timeSpan"/> converted to a string in either HH:MM, MM:SS or potentially SS:mm format.
     /// </summary>
@@ -355,7 +356,9 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
         if (ent.Comp.FrameState != null)
             SpriteSystem.AddLayer((ent, sprite), ent.Comp.FrameState, null);
     }
+    #endregion Event Handlers
 
+    #region Internal
     private string GetTimerString(Entity<TextScreenTimerVisualsComponent> ent, int newScreenValue)
     {
         if (ent.Comp.TimerRow < 0)
@@ -548,5 +551,5 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
             SpriteSystem.LayerSetRsiState((ent, sprite), layerIndex, running ? ent.Comp.RunningState : ent.Comp.FinishedState);
         }
     }
-    #endregion Event Handlers
+    #endregion Internal
 }
