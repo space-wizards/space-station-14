@@ -1,4 +1,6 @@
+#nullable enable
 using System.Numerics;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Charges.Systems;
 using Content.Shared.RCD;
@@ -19,6 +21,9 @@ public sealed class RCDTest : InteractionTest
     private static readonly ProtoId<RCDPrototype> RCDSettingDeconstruct = "Deconstruct";
     private static readonly ProtoId<RCDPrototype> RCDSettingDeconstructTile = "DeconstructTile";
     private static readonly ProtoId<RCDPrototype> RCDSettingDeconstructLattice = "DeconstructLattice";
+
+    [SidedDependency(Side.Server)]
+    private SharedChargesSystem _sChargesSystem = default!;
 
     /// <summary>
     /// Tests RCD construction and deconstruction, as well as selecting options from the radial menu.
@@ -43,27 +48,26 @@ public sealed class RCDTest : InteractionTest
         await SetTile(PlatingRCD, SEntMan.GetNetCoordinates(pEast), MapData.Grid);
         await SetTile(Lattice, SEntMan.GetNetCoordinates(pWest), MapData.Grid);
 
-        Assert.That(ProtoMan.TryIndex(RCDSettingWall, out var settingWall), $"RCDPrototype not found: {RCDSettingWall}.");
-        Assert.That(settingWall.Prototype, Is.Not.Null, "RCDPrototype has a null spawning prototype.");
-        Assert.That(ProtoMan.TryIndex(RCDSettingAirlock, out var settingAirlock), $"RCDPrototype not found: {RCDSettingAirlock}.");
-        Assert.That(settingAirlock.Prototype, Is.Not.Null, $"RCDPrototype has a null spawning prototype.");
-        Assert.That(ProtoMan.TryIndex(RCDSettingPlating, out var settingPlating), $"RCDPrototype not found: {RCDSettingPlating}.");
-        Assert.That(settingPlating.Prototype, Is.Not.Null, "RCDPrototype has a null spawning prototype.");
-        Assert.That(ProtoMan.TryIndex(RCDSettingFloorSteel, out var settingFloorSteel), $"RCDPrototype not found: {RCDSettingFloorSteel}.");
-        Assert.That(settingFloorSteel.Prototype, Is.Not.Null, "RCDPrototype has a null spawning prototype.");
-        Assert.That(ProtoMan.TryIndex(RCDSettingDeconstructTile, out var settingDeconstructTile), $"RCDPrototype not found: {RCDSettingDeconstructTile}.");
-        Assert.That(ProtoMan.TryIndex(RCDSettingDeconstructLattice, out var settingDeconstructLattice), $"RCDPrototype not found: {RCDSettingDeconstructLattice}.");
+        Assert.That(ProtoMan.TryIndex(RCDSettingWall, out var settingWall), $"{nameof(RCDPrototype)} not found: {RCDSettingWall}.");
+        Assert.That(settingWall?.Prototype, Is.Not.Null, $"{nameof(RCDPrototype)} has a null spawning prototype.");
+        Assert.That(ProtoMan.TryIndex(RCDSettingAirlock, out var settingAirlock), $"{nameof(RCDPrototype)} not found: {RCDSettingAirlock}.");
+        Assert.That(settingAirlock?.Prototype, Is.Not.Null, $"{nameof(RCDPrototype)} has a null spawning prototype.");
+        Assert.That(ProtoMan.TryIndex(RCDSettingPlating, out var settingPlating), $"{nameof(RCDPrototype)} not found: {RCDSettingPlating}.");
+        Assert.That(settingPlating?.Prototype, Is.Not.Null, $"{nameof(RCDPrototype)} has a null spawning prototype.");
+        Assert.That(ProtoMan.TryIndex(RCDSettingFloorSteel, out var settingFloorSteel), $"{nameof(RCDPrototype)} not found: {RCDSettingFloorSteel}.");
+        Assert.That(settingFloorSteel?.Prototype, Is.Not.Null, $"{nameof(RCDPrototype)} has a null spawning prototype.");
+        Assert.That(ProtoMan.TryIndex(RCDSettingDeconstructTile, out var settingDeconstructTile), $"{nameof(RCDPrototype)} not found: {RCDSettingDeconstructTile}.");
+        Assert.That(ProtoMan.TryIndex(RCDSettingDeconstructLattice, out var settingDeconstructLattice), $"{nameof(RCDPrototype)} not found: {RCDSettingDeconstructLattice}.");
 
         var rcd = await PlaceInHands(RCDProtoId);
 
         // Give the RCD enough charges to do everything.
-        var sCharges = SEntMan.System<SharedChargesSystem>();
         await Server.WaitPost(() =>
         {
-            sCharges.SetMaxCharges(ToServer(rcd), 10000);
-            sCharges.SetCharges(ToServer(rcd), 10000);
+            _sChargesSystem.SetMaxCharges(ToServer(rcd), 10000);
+            _sChargesSystem.SetCharges(ToServer(rcd), 10000);
         });
-        var initialCharges = sCharges.GetCurrentCharges(ToServer(rcd));
+        var initialCharges = _sChargesSystem.GetCurrentCharges(ToServer(rcd));
         Assert.That(initialCharges, Is.EqualTo(10000), "RCD did not have the correct amount of charges.");
 
         // Make sure that picking it up did not open the UI.
@@ -77,7 +81,7 @@ public sealed class RCDTest : InteractionTest
 
         // Check that there is exactly one wall.
         await RunSeconds(settingWall.Delay + 1); // wait for the construction to finish
-        await AssertEntityLookup((settingWall.Prototype, 1));
+        await AssertEntityLookup((settingWall.Prototype!, 1));
 
         // Check that the wall is in the correct tile.
         var wallUid = await FindEntity(settingWall.Prototype);
@@ -85,7 +89,7 @@ public sealed class RCDTest : InteractionTest
         AssertLocation(wallNetUid, FromServer(pNorth));
 
         // Check that the cost of the wall was subtracted from the current charges.
-        var newCharges = sCharges.GetCurrentCharges(ToServer(rcd));
+        var newCharges = _sChargesSystem.GetCurrentCharges(ToServer(rcd));
         Assert.That(initialCharges - settingWall.Cost, Is.EqualTo(newCharges), "RCD has wrong amount of charges after building something.");
         initialCharges = newCharges;
 
@@ -97,7 +101,7 @@ public sealed class RCDTest : InteractionTest
         await AssertEntityLookup((settingWall.Prototype, 1));
 
         // Check that the failed construction did not cost us any charges.
-        newCharges = sCharges.GetCurrentCharges(ToServer(rcd));
+        newCharges = _sChargesSystem.GetCurrentCharges(ToServer(rcd));
         Assert.That(initialCharges, Is.EqualTo(newCharges), "RCD has wrong amount of charges after failing to build something.");
 
         // Switch to building airlocks.
@@ -110,7 +114,7 @@ public sealed class RCDTest : InteractionTest
         await RunSeconds(settingAirlock.Delay + 1); // wait for the construction to finish
         await AssertEntityLookup(
             (settingWall.Prototype, 1),
-            (settingAirlock.Prototype, 1)
+            (settingAirlock.Prototype!, 1)
             );
 
         // Check that the airlock is in the correct tile.
@@ -119,7 +123,7 @@ public sealed class RCDTest : InteractionTest
         AssertLocation(airlockNetUid, FromServer(pSouth));
 
         // Check that the cost of the airlock was subtracted from the current charges.
-        newCharges = sCharges.GetCurrentCharges(ToServer(rcd));
+        newCharges = _sChargesSystem.GetCurrentCharges(ToServer(rcd));
         Assert.That(initialCharges - settingAirlock.Cost, Is.EqualTo(newCharges), "RCD has wrong amount of charges after building something.");
         initialCharges = newCharges;
 
@@ -135,7 +139,7 @@ public sealed class RCDTest : InteractionTest
 
         // Check that the failed construction did not cost us any charges.
         await RunSeconds(settingPlating.Delay + 1); // wait for the construction to finish
-        newCharges = sCharges.GetCurrentCharges(ToServer(rcd));
+        newCharges = _sChargesSystem.GetCurrentCharges(ToServer(rcd));
         Assert.That(initialCharges, Is.EqualTo(newCharges), "RCD has wrong amount of charges after failing to build something.");
 
         // Try building plating on top of lattice.
@@ -147,7 +151,7 @@ public sealed class RCDTest : InteractionTest
         await AssertTile(settingPlating.Prototype, FromServer(pWest));
 
         // Check that the cost of the plating was subtracted from the current charges.
-        newCharges = sCharges.GetCurrentCharges(ToServer(rcd));
+        newCharges = _sChargesSystem.GetCurrentCharges(ToServer(rcd));
         Assert.That(initialCharges - settingPlating.Cost, Is.EqualTo(newCharges), "RCD has wrong amount of charges after building something.");
         initialCharges = newCharges;
 
@@ -162,7 +166,7 @@ public sealed class RCDTest : InteractionTest
         await AssertTile(settingFloorSteel.Prototype, FromServer(pEast));
 
         // Check that the cost of the plating was subtracted from the current charges.
-        newCharges = sCharges.GetCurrentCharges(ToServer(rcd));
+        newCharges = _sChargesSystem.GetCurrentCharges(ToServer(rcd));
         Assert.That(initialCharges - settingFloorSteel.Cost, Is.EqualTo(newCharges), "RCD has wrong amount of charges after building something.");
         initialCharges = newCharges;
 
@@ -170,34 +174,34 @@ public sealed class RCDTest : InteractionTest
         await SetRcdProto(rcd, RCDSettingDeconstruct);
 
         // Deconstruct the wall.
-        Assert.That(SEntMan.TryGetComponent<RCDDeconstructableComponent>(wallUid, out var wallComp), "Wall entity did not have the RCDDeconstructableComponent.");
+        Assert.That(STryComp<RCDDeconstructableComponent>(wallUid, out var wallComp), "Wall entity did not have the RCDDeconstructableComponent.");
         await Interact(wallUid, pNorth);
-        await RunSeconds(wallComp.Delay + 1); // wait for the deconstruction to finish
+        await RunSeconds(wallComp!.Delay + 1); // wait for the deconstruction to finish
         AssertDeleted(wallNetUid);
 
         // Check that the cost of the deconstruction was subtracted from the current charges.
-        newCharges = sCharges.GetCurrentCharges(ToServer(rcd));
+        newCharges = _sChargesSystem.GetCurrentCharges(ToServer(rcd));
         Assert.That(initialCharges - wallComp.Cost, Is.EqualTo(newCharges), "RCD has wrong amount of charges after deconstructing something.");
         initialCharges = newCharges;
 
         // Deconstruct the airlock.
-        Assert.That(SEntMan.TryGetComponent<RCDDeconstructableComponent>(airlockUid, out var airlockComp), "Wall entity did not have the RCDDeconstructableComponent.");
+        Assert.That(STryComp<RCDDeconstructableComponent>(airlockUid, out var airlockComp), "Wall entity did not have the RCDDeconstructableComponent.");
         await Interact(airlockUid, pSouth);
-        await RunSeconds(airlockComp.Delay + 1); // wait for the deconstruction to finish
+        await RunSeconds(airlockComp!.Delay + 1); // wait for the deconstruction to finish
         AssertDeleted(airlockNetUid);
 
         // Check that the cost of the deconstruction was subtracted from the current charges.
-        newCharges = sCharges.GetCurrentCharges(ToServer(rcd));
+        newCharges = _sChargesSystem.GetCurrentCharges(ToServer(rcd));
         Assert.That(initialCharges - airlockComp.Cost, Is.EqualTo(newCharges), "RCD has wrong amount of charges after deconstructing something.");
         initialCharges = newCharges;
 
         // Deconstruct the steel tile.
         await Interact(null, pEast);
-        await RunSeconds(settingDeconstructTile.Delay + 1); // wait for the deconstruction to finish
+        await RunSeconds(settingDeconstructTile!.Delay + 1); // wait for the deconstruction to finish
         await AssertTile(PlatingRCD, FromServer(pEast));
 
         // Check that the cost of the deconstruction was subtracted from the current charges.
-        newCharges = sCharges.GetCurrentCharges(ToServer(rcd));
+        newCharges = _sChargesSystem.GetCurrentCharges(ToServer(rcd));
         Assert.That(initialCharges - settingDeconstructTile.Cost, Is.EqualTo(newCharges), "RCD has wrong amount of charges after deconstructing something.");
         initialCharges = newCharges;
 
@@ -207,17 +211,17 @@ public sealed class RCDTest : InteractionTest
         await AssertTile(Lattice, FromServer(pWest));
 
         // Check that the cost of the deconstruction was subtracted from the current charges.
-        newCharges = sCharges.GetCurrentCharges(ToServer(rcd));
+        newCharges = _sChargesSystem.GetCurrentCharges(ToServer(rcd));
         Assert.That(initialCharges - settingDeconstructTile.Cost, Is.EqualTo(newCharges), "RCD has wrong amount of charges after deconstructing something.");
         initialCharges = newCharges;
 
         // Deconstruct the lattice.
         await Interact(null, pWest);
-        await RunSeconds(settingDeconstructLattice.Delay + 1); // wait for the deconstruction to finish
+        await RunSeconds(settingDeconstructLattice!.Delay + 1); // wait for the deconstruction to finish
         await AssertTile(null, FromServer(pWest));
 
         // Check that the cost of the deconstruction was subtracted from the current charges.
-        newCharges = sCharges.GetCurrentCharges(ToServer(rcd));
+        newCharges = _sChargesSystem.GetCurrentCharges(ToServer(rcd));
         Assert.That(initialCharges - settingDeconstructLattice.Cost, Is.EqualTo(newCharges), "RCD has wrong amount of charges after deconstructing something.");
 
         // Wait for the visual effect to disappear.

@@ -1,4 +1,6 @@
+#nullable enable
 using System.Linq;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Server.VendingMachines;
 using Content.Shared.Damage;
@@ -7,19 +9,22 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.VendingMachines;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Vending;
 
 public sealed class VendingInteractionTest : InteractionTest
 {
+    // Entity prototypes
     private const string VendingMachineProtoId = "InteractionTestVendingMachine";
-
     private const string VendedItemProtoId = "InteractionTestItem";
-
     private const string RestockBoxProtoId = "InteractionTestRestockBox";
-
     private const string RestockBoxOtherProtoId = "InteractionTestRestockBoxOther";
+    private const string APCProtoId = "APCBasic";
+    // Vending machine inventory prototypes
+    private const string Pack1 = "InteractionTestVendingInventory";
+    private const string Pack2 = "InteractionTestVendingInventoryOther";
     private static readonly ProtoId<DamageTypePrototype> TestDamageType = "Blunt";
 
     [TestPrototypes]
@@ -30,12 +35,12 @@ public sealed class VendingInteractionTest : InteractionTest
   name: {VendedItemProtoId}
 
 - type: vendingMachineInventory
-  id: InteractionTestVendingInventory
+  id: {Pack1}
   startingInventory:
     {VendedItemProtoId}: 5
 
 - type: vendingMachineInventory
-  id: InteractionTestVendingInventoryOther
+  id: {Pack2}
   startingInventory:
     {VendedItemProtoId}: 5
 
@@ -45,7 +50,7 @@ public sealed class VendingInteractionTest : InteractionTest
   components:
   - type: VendingMachineRestock
     canRestock:
-    - InteractionTestVendingInventory
+    - {Pack1}
 
 - type: entity
   parent: BaseVendingMachineRestock
@@ -53,21 +58,27 @@ public sealed class VendingInteractionTest : InteractionTest
   components:
   - type: VendingMachineRestock
     canRestock:
-    - InteractionTestVendingInventoryOther
+    - {Pack2}
 
 - type: entity
-  id: {VendingMachineProtoId}
   parent: BaseVendingMachine
+  id: {VendingMachineProtoId}
   components:
   - type: VendingMachine
-    pack: InteractionTestVendingInventory
+    pack: {Pack1}
   - type: VendingMachineEject
     ejectDelay: 0 # no delay to speed up tests
   - type: Sprite
     sprite: error.rsi
 ";
 
+    [SidedDependency(Side.Server)] private DamageableSystem _sDamageable = default!;
+    [SidedDependency(Side.Server)] private VendingMachineSystem _sVending = default!;
+
+    [SidedDependency(Side.Server)] private EntityQuery<DamageableComponent> _sQuery = default!;
+
     [Test]
+    [Description("Tests that vending machines' UI opens when used in the world.")]
     public async Task InteractUITest()
     {
         await SpawnTarget(VendingMachineProtoId);
@@ -80,7 +91,7 @@ public sealed class VendingInteractionTest : InteractionTest
         Assert.That(IsUiOpen(VendingMachineUiKey.Key), Is.False, "BUI opened without power.");
 
         // Power the vending machine
-        var apc = await SpawnEntity("APCBasic", SEntMan.GetCoordinates(TargetCoords));
+        var apc = await SpawnEntity(APCProtoId, SEntMan.GetCoordinates(TargetCoords));
         await RunTicks(1);
 
         // Interacting with powered vending machine opens BUI
@@ -104,20 +115,20 @@ public sealed class VendingInteractionTest : InteractionTest
     }
 
     [Test]
+    [Description("Tests that vending machines can dispense items and account for them properly.")]
     public async Task DispenseItemTest()
     {
         await SpawnTarget(VendingMachineProtoId);
         var vendorEnt = SEntMan.GetEntity(Target.Value);
 
-        var vendingSystem = SEntMan.System<VendingMachineSystem>();
-        var items = vendingSystem.GetAllInventory(vendorEnt);
+        var items = _sVending.GetAllInventory(vendorEnt);
 
         // Verify initial item count
         Assert.That(items, Is.Not.Empty, $"{VendingMachineProtoId} spawned with no items.");
         Assert.That(items.First().Amount, Is.EqualTo(5), $"{VendingMachineProtoId} spawned with unexpected item count.");
 
         // Power the vending machine
-        await SpawnEntity("APCBasic", SEntMan.GetCoordinates(TargetCoords));
+        await SpawnEntity(APCProtoId, SEntMan.GetCoordinates(TargetCoords));
         await RunTicks(1);
 
         // Open the BUI
@@ -132,20 +143,19 @@ public sealed class VendingInteractionTest : InteractionTest
         Assert.That(items.First().Amount, Is.EqualTo(4), "Stocked item count did not decrease.");
         // Make sure the dispensed item was spawned in to the world
         await AssertEntityLookup(
-            ("APCBasic", 1),
+            (APCProtoId, 1),
             (VendedItemProtoId, 1)
         );
     }
 
     [Test]
+    [Description("Tests that vending machines can be restocked.")]
     public async Task RestockTest()
     {
-        var vendingSystem = SEntMan.System<VendingMachineSystem>();
-
         await SpawnTarget(VendingMachineProtoId);
-        var vendorEnt = SEntMan.GetEntity(Target.Value);
+        var vendorEnt = ToServer(Target.Value);
 
-        var items = vendingSystem.GetAllInventory(vendorEnt);
+        var items = _sVending.GetAllInventory(vendorEnt);
 
         Assert.That(items, Is.Not.Empty, $"{VendingMachineProtoId} spawned with no items.");
         Assert.That(items.First().Amount, Is.EqualTo(5), $"{VendingMachineProtoId} spawned with unexpected item count.");
@@ -170,12 +180,13 @@ public sealed class VendingInteractionTest : InteractionTest
     }
 
     [Test]
+    [Description("Tests that vending machines' interfaces work after being repaired.")]
     public async Task RepairTest()
     {
         await SpawnTarget(VendingMachineProtoId);
 
         // Power the vending machine
-        await SpawnEntity("APCBasic", SEntMan.GetCoordinates(TargetCoords));
+        await SpawnEntity(APCProtoId, SEntMan.GetCoordinates(TargetCoords));
         await RunTicks(1);
 
         // Break it
@@ -196,15 +207,15 @@ public sealed class VendingInteractionTest : InteractionTest
 
     private async Task BreakVendor()
     {
-        var damageableSys = SEntMan.System<DamageableSystem>();
-        Assert.That(HasComp<DamageableComponent>(), $"{VendingMachineProtoId} does not have DamageableComponent.");
-        Assert.That(damageableSys.GetAllDamage(STarget!.Value).GetTotal(), Is.EqualTo(FixedPoint2.Zero), $"{VendingMachineProtoId} started with unexpected damage.");
+        Assert.That(_sQuery.TryComp(STarget, out var damageable), Is.True, $"{VendingMachineProtoId} does not have DamageableComponent.");
+        Entity<DamageableComponent> sDamageableTarget = (STarget!.Value, damageable!);
+        Assert.That(_sDamageable.GetPositiveDamage(sDamageableTarget).GetTotal(), Is.EqualTo(FixedPoint2.Zero), $"{VendingMachineProtoId} started with unexpected damage.");
 
         // Damage the vending machine to the point that it breaks
         var damageType = ProtoMan.Index(TestDamageType);
         var damage = new DamageSpecifier(damageType, FixedPoint2.New(100));
-        await Server.WaitPost(() => damageableSys.TryChangeDamage(SEntMan.GetEntity(Target).Value, damage, ignoreResistances: true));
+        await Server.WaitPost(() => _sDamageable.TryChangeDamage(sDamageableTarget.AsNullable(), damage, ignoreResistances: true));
         await RunTicks(5);
-        Assert.That(damageableSys.GetAllDamage(STarget!.Value).GetTotal(), Is.GreaterThan(FixedPoint2.Zero), $"{VendingMachineProtoId} did not take damage.");
+        Assert.That(_sDamageable.GetPositiveDamage(sDamageableTarget).GetTotal(), Is.GreaterThan(FixedPoint2.Zero), $"{VendingMachineProtoId} did not take damage.");
     }
 }

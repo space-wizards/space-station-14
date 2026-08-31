@@ -1,6 +1,7 @@
-﻿using System.Linq;
+﻿#nullable enable
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
+using Content.IntegrationTests.NUnit.Constraints;
 using Content.Server.Antag;
 using Content.Server.GameTicking;
 using Content.Server.Mind;
@@ -44,7 +45,7 @@ public abstract partial class AntagTest : GameTest
         var ent = mindComp.CurrentEntity!.Value;
 
         // We don't necessarily know if an antag should spawn on the station, but we know they shouldn't spawn in nullspace.
-        var xform = SEntMan.GetComponent<TransformComponent>(ent);
+        var xform = SComp<TransformComponent>(ent);
         Assert.That(xform.MapUid, Is.Not.Null);
         Assert.That(xform.MapID, Is.Not.EqualTo(MapId.Nullspace));
 
@@ -52,27 +53,27 @@ public abstract partial class AntagTest : GameTest
         foreach (var comp in antag.Components)
         {
             Assert.That(SEntMan.HasComponent(ent, comp.Value.Component.GetType()),
-                $"Entity {SEntMan.ToPrettyString(ent)} owned by {session} failed to acquire {comp.Key} component, while becoming {antag.ID}");
+                $"Entity {SToPrettyString(ent)} owned by {session} failed to acquire {comp.Key} component, while becoming {antag.ID}");
         }
 
         // Make sure all mind components were added
         foreach (var comp in antag.MindComponents)
         {
             Assert.That(SEntMan.HasComponent(mindEnt, comp.Value.Component.GetType()),
-                $"Mind {SEntMan.ToPrettyString(mindEnt)} owned by {session} failed to acquire {comp.Key} component, while becoming {antag.ID}");
+                $"Mind {SToPrettyString(mindEnt)} owned by {session} failed to acquire {comp.Key} component, while becoming {antag.ID}");
         }
 
         if (antag.MindRoles != null)
         {
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 foreach (var role in antag.MindRoles)
                 {
                     Assert.That(mindComp!.MindRoleContainer.ContainedEntities,
-                        Has.Exactly(1).Matches<EntityUid>(x => SComp<MetaDataComponent>(x).EntityPrototype?.ID == role),
+                        Has.Exactly(1).Matches<EntityUid>(x => SComp<MetaDataComponent>(x).EntityPrototype?.ID! == role),
                         $"{SToPrettyString(mindEnt)} owned by {session}, failed to acquire role {role} for antagonist {antag}");
                 }
-            });
+            }
         }
     }
 }

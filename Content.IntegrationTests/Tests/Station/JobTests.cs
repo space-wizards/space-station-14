@@ -1,48 +1,36 @@
+#nullable enable
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
-using Robust.Shared.Prototypes;
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
+using Content.IntegrationTests.Utility;
 
 namespace Content.IntegrationTests.Tests.Station;
 
-[TestFixture]
 [TestOf(typeof(SharedJobSystem))]
 public sealed class JobTest : GameTest
 {
+    private static readonly string[] JobPrototypes = GameDataScrounger.PrototypesOfKind<JobPrototype>();
+
     /// <summary>
     /// Ensures that every job belongs to at most 1 primary department.
     /// Having no primary department is ok.
     /// </summary>
     [Test]
-    public async Task PrimaryDepartmentsTest()
+    [TestCaseSource(nameof(JobPrototypes))]
+    [Description("Ensures that every job belongs to at most 1 primary department.")]
+    [RunOnSide(Side.Server)]
+    public async Task PrimaryDepartmentsTest(string jobId)
     {
-        var pair = Pair;
-        var server = pair.Server;
+        // Only checking primary departments, so don't bother with others.
+        // Not actually using the jobs system since that will return the first department
+        // and we need to test that there is never more than 1, so it not sorting them is correct.
+        var departments = SProtoMan.EnumeratePrototypes<DepartmentPrototype>()
+            .Where(department => department.Primary && department.Roles.Contains(jobId))
+            .Select(department => department.ID)
+            .ToList();
 
-        var prototypeManager = server.ResolveDependency<IPrototypeManager>();
-
-        await server.WaitAssertion(() =>
-        {
-            // only checking primary departments so don't bother with others
-            var departments = prototypeManager.EnumeratePrototypes<DepartmentPrototype>()
-                .Where(department => department.Primary)
-                .ToList();
-            var jobs = prototypeManager.EnumeratePrototypes<JobPrototype>();
-            foreach (var job in jobs)
-            {
-                // not actually using the jobs system since that will return the first department
-                // and we need to test that there is never more than 1, so it not sorting them is correct
-                var primaries = 0;
-                foreach (var department in departments)
-                {
-                    if (!department.Roles.Contains(job.ID))
-                        continue;
-
-                    primaries++;
-                    Assert.That(primaries, Is.EqualTo(1), $"The job {job.ID} has more than 1 primary department!");
-                }
-            }
-        });
+        Assert.That(departments, Has.Count.LessThanOrEqualTo(1), $"{jobId} belongs to multiple primary departments: {string.Join(", ", departments)}");
     }
 }

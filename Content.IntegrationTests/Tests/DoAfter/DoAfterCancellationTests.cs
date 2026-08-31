@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.IntegrationTests.Tests.Construction.Interaction;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.IntegrationTests.Tests.Weldable;
 using Content.Shared.Tools.Components;
@@ -15,23 +14,23 @@ public sealed class DoAfterCancellationTests : InteractionTest
     [Test]
     public async Task CancelWallDeconstruct()
     {
-        await StartDeconstruction(WallConstruction.WallSolid);
+        await StartDeconstruction(WallSolid);
         await InteractUsing(Weld, awaitDoAfters: false);
 
         // Failed do-after has no effect
         await CancelDoAfters();
-        AssertPrototype(WallConstruction.WallSolid);
+        AssertPrototype(WallSolid);
 
         // Second attempt works fine
         await InteractUsing(Weld);
-        AssertPrototype(WallConstruction.Girder);
+        AssertPrototype(Girder);
 
         // Repeat for wrenching interaction
         AssertAnchored();
         await InteractUsing(Wrench, awaitDoAfters: false);
         await CancelDoAfters();
         AssertAnchored();
-        AssertPrototype(WallConstruction.Girder);
+        AssertPrototype(Girder);
         await InteractUsing(Wrench);
         AssertAnchored(false);
 
@@ -47,18 +46,18 @@ public sealed class DoAfterCancellationTests : InteractionTest
     [Test]
     public async Task CancelWallConstruct()
     {
-        await StartConstruction(WallConstruction.Wall);
+        await StartConstruction(Wall);
         await InteractUsing(Steel, 5, awaitDoAfters: false);
         await CancelDoAfters();
 
         await InteractUsing(Steel, 5);
-        ClientAssertPrototype(WallConstruction.Girder, Target);
+        ClientAssertPrototype(Girder, Target);
         await InteractUsing(Steel, 5, awaitDoAfters: false);
         await CancelDoAfters();
-        AssertPrototype(WallConstruction.Girder);
+        AssertPrototype(Girder);
 
         await InteractUsing(Steel, 5);
-        AssertPrototype(WallConstruction.WallSolid);
+        AssertPrototype(WallSolid);
     }
 
     [Test]
@@ -83,13 +82,13 @@ public sealed class DoAfterCancellationTests : InteractionTest
         await AssertTile(Floor);
 
         // Second DoAfter cancels the first.
-        await Server.WaitPost(() => InteractSys.UserInteraction(SEntMan.GetEntity(Player), SEntMan.GetCoordinates(TargetCoords), SEntMan.GetEntity(Target)));
-        Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));
+        await Server.WaitPost(() => InteractSys.UserInteraction(SPlayer, SEntMan.GetCoordinates(TargetCoords), STarget));
+        Assert.That(ActiveDoAfters.Count(), Is.Zero);
         await AssertTile(Floor);
 
         // Third do after will work fine
         await InteractUsing(Pry);
-        Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));
+        Assert.That(ActiveDoAfters.Count(), Is.Zero);
         await AssertTile(Plating);
     }
 
@@ -103,48 +102,48 @@ public sealed class DoAfterCancellationTests : InteractionTest
 
         await InteractUsing(Weld, awaitDoAfters: false);
         await RunTicks(1);
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(ActiveDoAfters.Count(), Is.EqualTo(1));
             Assert.That(comp.IsWelded, Is.False);
-        });
+        }
 
         // Second DoAfter cancels the first.
         // Not using helper, because it runs too many ticks & causes the do-after to finish.
-        await Server.WaitPost(() => InteractSys.UserInteraction(SEntMan.GetEntity(Player), SEntMan.GetCoordinates(TargetCoords), SEntMan.GetEntity(Target)));
-        Assert.Multiple(() =>
+        await Server.WaitPost(() => InteractSys.UserInteraction(SPlayer, SEntMan.GetCoordinates(TargetCoords), STarget));
+        using (Assert.EnterMultipleScope())
         {
-            Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));
+            Assert.That(ActiveDoAfters.Count(), Is.Zero);
             Assert.That(comp.IsWelded, Is.False);
-        });
+        }
 
         // Third do after will work fine
         await InteractUsing(Weld);
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
-            Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));
+            Assert.That(ActiveDoAfters.Count(), Is.Zero);
             Assert.That(comp.IsWelded, Is.True);
-        });
+        }
 
         // Repeat test for un-welding
         await InteractUsing(Weld, awaitDoAfters: false);
         await RunTicks(1);
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(ActiveDoAfters.Count(), Is.EqualTo(1));
             Assert.That(comp.IsWelded, Is.True);
-        });
-        await Server.WaitPost(() => InteractSys.UserInteraction(SEntMan.GetEntity(Player), SEntMan.GetCoordinates(TargetCoords), SEntMan.GetEntity(Target)));
-        Assert.Multiple(() =>
+        }
+        await Server.WaitPost(() => InteractSys.UserInteraction(SPlayer, SEntMan.GetCoordinates(TargetCoords), STarget));
+        using (Assert.EnterMultipleScope())
         {
-            Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));
+            Assert.That(ActiveDoAfters.Count(), Is.Zero);
             Assert.That(comp.IsWelded, Is.True);
-        });
+        }
         await InteractUsing(Weld);
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
-            Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));
+            Assert.That(ActiveDoAfters.Count(), Is.Zero);
             Assert.That(comp.IsWelded, Is.False);
-        });
+        }
     }
 }

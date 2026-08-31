@@ -1,18 +1,19 @@
+#nullable enable
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Body;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Body;
 
-[TestFixture]
 [TestOf(typeof(InitialBodySystem))]
 public sealed class InitialBodySpawnTest : GameTest
 {
+    private const string InitialBodySpawnTestBody = "InitialBodySpawnTestBody";
+
     [TestPrototypes]
-    private const string Prototypes = @"
+    private const string Prototypes = $@"
 - type: organCategory
   id: InitialBodySpawnTestParent
 
@@ -20,7 +21,7 @@ public sealed class InitialBodySpawnTest : GameTest
   id: InitialBodySpawnTestChild
 
 - type: entity
-  id: InitialBodySpawnTestBody
+  id: {InitialBodySpawnTestBody}
   components:
   - type: Body
   - type: InitialBody
@@ -49,7 +50,7 @@ public sealed class InitialBodySpawnTest : GameTest
     [RunOnSide(Side.Server)]
     public void SpawningWiresUpOrganRelations()
     {
-        var body = SSpawn("InitialBodySpawnTestBody");
+        var body = SSpawn(InitialBodySpawnTestBody);
 
         var bodyContainer = _container.GetContainer(body, BodyComponent.ContainerID);
         var contained = bodyContainer.ContainedEntities.ToList();

@@ -12,7 +12,6 @@ using Robust.Server.Player;
 
 namespace Content.IntegrationTests.Tests.Administration.Logs;
 
-[TestFixture]
 [TestOf(typeof(AdminLogSystem))]
 public sealed class AddTests : GameTest
 {

@@ -1,18 +1,21 @@
+#nullable enable
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
+using Content.IntegrationTests.NUnit.Constraints;
 using Content.Shared.Body;
 using Content.Shared.Gibbing;
-using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Body;
 
-[TestFixture]
 [TestOf(typeof(GibbableOrganSystem))]
 public sealed class GibletTest : GameTest
 {
+    private const string GibbingBody = "GibbingBody";
+
     [TestPrototypes]
-    private const string Prototypes = @"
+    private const string Prototypes = $@"
 - type: entity
-  id: GibbingBody
+  id: {GibbingBody}
   components:
   - type: Body
   - type: EntityTableContainerFill
@@ -31,28 +34,24 @@ public sealed class GibletTest : GameTest
   - type: Physics
 ";
 
+    [SidedDependency(Side.Server)] private GibbingSystem _sGibbing = null!;
+
     [Test]
+    [Description("Checks that gibbing a body produces the expected giblets.")]
     public async Task GibletCountTest()
     {
-        var pair = Pair;
-        var server = pair.Server;
+        await Pair.CreateTestMap();
 
-        await server.WaitIdleAsync();
-
-        var entityManager = server.ResolveDependency<IEntityManager>();
-        var mapData = await pair.CreateTestMap();
-
-        await server.WaitAssertion(() =>
+        await Server.WaitAssertion(() =>
         {
-            var body = entityManager.SpawnEntity("GibbingBody", mapData.GridCoords);
-            var gibbing = entityManager.System<GibbingSystem>();
-            var giblets = gibbing.Gib(body);
+            var body = SSpawnAtPosition(GibbingBody, TestMap!.GridCoords);
+            var giblets = _sGibbing.Gib(body);
 
-            Assert.That(giblets.Count, Is.EqualTo(3));
+            Assert.That(giblets, Has.Count.EqualTo(3));
 
             foreach (var giblet in giblets)
             {
-                Assert.That(entityManager.HasComponent<GibbableOrganComponent>(giblet), Is.True);
+                Assert.That(giblet, Has.Comp<GibbableOrganComponent>(Server));
             }
         });
     }

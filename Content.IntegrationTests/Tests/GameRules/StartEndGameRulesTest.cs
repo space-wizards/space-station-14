@@ -1,55 +1,54 @@
+#nullable enable
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
-using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.GameRules;
 
-[TestFixture]
 public sealed class StartEndGameRulesTest : GameTest
 {
-    public override PoolSettings PoolSettings => new PoolSettings
+    public override PoolSettings PoolSettings => new()
     {
         Dirty = true,
         DummyTicker = false,
         Map = PoolManager.TestStation
     };
 
+    [SidedDependency(Side.Server)] private GameTicker _sGameTicker = null!;
+
     /// <summary>
-    ///     Tests that all game rules can be added/started/ended at the same time without exceptions.
+    /// Tests that all game rules can be added/started/ended at the same time without exceptions.
     /// </summary>
     [Test]
+    [Description("Tests that all game rules can be added/started/ended at the same time without exceptions.")]
+    [EnsureCVar(Side.Server, typeof(CCVars), nameof(CCVars.GridFill), false)]
     public async Task TestAllConcurrent()
     {
-        var pair = Pair;
-        var server = pair.Server;
-        await server.WaitIdleAsync();
-        var gameTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
-        var cfg = server.ResolveDependency<IConfigurationManager>();
-        Assert.That(cfg.GetCVar(CCVars.GridFill), Is.False);
-
-        await server.WaitAssertion(() =>
+        await Server.WaitAssertion(() =>
         {
-            var rules = gameTicker.GetAllGameRulePrototypes().ToList();
+            var rules = _sGameTicker.GetAllGameRulePrototypes().ToList();
+            Assume.That(rules, Is.Not.Empty);
             rules.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
 
             // Start all rules
             foreach (var rule in rules)
             {
-                gameTicker.StartGameRule(rule.ID);
+                _sGameTicker.StartGameRule(rule.ID);
             }
+
+            Assert.That(_sGameTicker.GetAddedGameRules(), Is.Not.Empty);
         });
 
         // Wait three ticks for any random update loops that might happen
-        await server.WaitRunTicks(3);
+        await RunTicksSync(3);
 
-        await server.WaitAssertion(() =>
+        await Server.WaitAssertion(() =>
         {
             // End all rules
-            gameTicker.ClearGameRules();
-            Assert.That(!gameTicker.GetAddedGameRules().Any());
+            _sGameTicker.ClearGameRules();
+            Assert.That(_sGameTicker.GetAddedGameRules(), Is.Empty);
         });
     }
 }

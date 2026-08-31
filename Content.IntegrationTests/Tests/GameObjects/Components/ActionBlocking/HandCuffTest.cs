@@ -1,23 +1,27 @@
 #nullable enable
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
+using Content.IntegrationTests.NUnit.Constraints;
 using Content.Server.Cuffs;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Hands.Components;
 using Robust.Server.Console;
 using Robust.Shared.GameObjects;
 
-namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
+namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking;
+
+[TestOf(typeof(CuffableComponent))]
+[TestOf(typeof(HandcuffComponent))]
+public sealed class HandCuffTest : GameTest
 {
-    [TestFixture]
-    [TestOf(typeof(CuffableComponent))]
-    [TestOf(typeof(HandcuffComponent))]
-    public sealed class HandCuffTest : GameTest
-    {
-        [TestPrototypes]
-        private const string Prototypes = @"
+    private const string HumanHandcuffDummy = "HumanHandcuffDummy";
+    private const string HandcuffsDummy = "HandcuffsDummy";
+
+    [TestPrototypes]
+    private const string Prototypes = $@"
 - type: entity
-  name: HumanHandcuffDummy
-  id: HumanHandcuffDummy
+  name: {HumanHandcuffDummy}
+  id: {HumanHandcuffDummy}
   components:
   - type: Cuffable
   - type: Hands
@@ -32,78 +36,52 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
   - type: ComplexInteraction
 
 - type: entity
-  name: HandcuffsDummy
-  id: HandcuffsDummy
+  name: {HandcuffsDummy}
+  id: {HandcuffsDummy}
   components:
   - type: Handcuff
 ";
 
-        [Test]
-        public async Task Test()
+    [SidedDependency(Side.Server)] private IServerConsoleHost _sConsoleHost = default!;
+    [SidedDependency(Side.Server)] private CuffableSystem _sCuffableSystem = default!;
+
+    [Test]
+    [RunOnSide(Side.Server)]
+    public async Task Test()
+    {
+        // Spawn the entities
+        var human = SSpawn(HumanHandcuffDummy);
+        var otherHuman = SSpawn(HumanHandcuffDummy);
+        var cuffs = SSpawn(HandcuffsDummy);
+        var secondCuffs = SSpawn(HandcuffsDummy);
+
+        // Test for components existing
+        Assert.That(STryComp<CuffableComponent>(human, out var cuffed), $"Human has no {nameof(CuffableComponent)}");
+        Assert.That(STryComp<HandsComponent>(human, out var hands), $"Human has no {nameof(HandsComponent)}");
+        Assert.That(cuffs, Has.Comp<HandcuffComponent>(Server));
+        Assert.That(secondCuffs, Has.Comp<HandcuffComponent>(Server));
+
+        // Test to ensure cuffed players register the handcuffs
+        _sCuffableSystem.TryAddNewCuffs(human, human, cuffs, cuffed);
+        Assert.That(cuffed!.CuffedHandCount, Is.GreaterThan(0), "Handcuffing a player did not result in their hands being cuffed");
+
+        // Test to ensure a player with 4 hands will still only have 2 hands cuffed
+        AddHand(SEntMan.GetNetEntity(human), _sConsoleHost);
+        AddHand(SEntMan.GetNetEntity(human), _sConsoleHost);
+
+        using (Assert.EnterMultipleScope())
         {
-            var pair = Pair;
-            var server = pair.Server;
-
-            EntityUid human;
-            EntityUid otherHuman;
-            EntityUid cuffs;
-            EntityUid secondCuffs;
-            CuffableComponent cuffed = default!;
-            HandsComponent hands = default!;
-
-            var entityManager = server.ResolveDependency<IEntityManager>();
-            var host = server.ResolveDependency<IServerConsoleHost>();
-
-            var map = await pair.CreateTestMap();
-
-            await server.WaitAssertion(() =>
-            {
-                var coordinates = map.MapCoords;
-
-                var cuffableSys = entityManager.System<CuffableSystem>();
-                var xformSys = entityManager.System<SharedTransformSystem>();
-
-                // Spawn the entities
-                human = entityManager.SpawnEntity("HumanHandcuffDummy", coordinates);
-                otherHuman = entityManager.SpawnEntity("HumanHandcuffDummy", coordinates);
-                cuffs = entityManager.SpawnEntity("HandcuffsDummy", coordinates);
-                secondCuffs = entityManager.SpawnEntity("HandcuffsDummy", coordinates);
-
-                var coords = xformSys.GetWorldPosition(otherHuman);
-                xformSys.SetWorldPosition(human, coords);
-
-                // Test for components existing
-                Assert.Multiple(() =>
-                {
-                    Assert.That(entityManager.TryGetComponent(human, out cuffed!), $"Human has no {nameof(CuffableComponent)}");
-                    Assert.That(entityManager.TryGetComponent(human, out hands!), $"Human has no {nameof(HandsComponent)}");
-                    Assert.That(entityManager.TryGetComponent(cuffs, out HandcuffComponent? _), $"Handcuff has no {nameof(HandcuffComponent)}");
-                    Assert.That(entityManager.TryGetComponent(secondCuffs, out HandcuffComponent? _), $"Second handcuffs has no {nameof(HandcuffComponent)}");
-                });
-
-                // Test to ensure cuffed players register the handcuffs
-                cuffableSys.TryAddNewCuffs(human, human, cuffs, cuffed);
-                Assert.That(cuffed.CuffedHandCount, Is.GreaterThan(0), "Handcuffing a player did not result in their hands being cuffed");
-
-                // Test to ensure a player with 4 hands will still only have 2 hands cuffed
-                AddHand(entityManager.GetNetEntity(human), host);
-                AddHand(entityManager.GetNetEntity(human), host);
-
-                Assert.Multiple(() =>
-                {
-                    Assert.That(cuffed.CuffedHandCount, Is.EqualTo(2));
-                    Assert.That(hands.SortedHands, Has.Count.EqualTo(4));
-                });
-
-                // Test to give a player with 4 hands 2 sets of cuffs
-                cuffableSys.TryAddNewCuffs(human, human, secondCuffs, cuffed);
-                Assert.That(cuffed.CuffedHandCount, Is.EqualTo(4), "Player doesn't have correct amount of hands cuffed");
-            });
+            Assert.That(cuffed.CuffedHandCount, Is.EqualTo(2));
+            Assert.That(hands!.SortedHands, Has.Count.EqualTo(4));
         }
 
-        private static void AddHand(NetEntity to, IServerConsoleHost host)
-        {
-            host.ExecuteCommand(null, $"addhand {to}");
-        }
+        // Test to give a player with 4 hands 2 sets of cuffs
+        _sCuffableSystem.TryAddNewCuffs(human, human, secondCuffs, cuffed);
+        Assert.That(cuffed.CuffedHandCount, Is.EqualTo(4), "Player doesn't have correct amount of hands cuffed");
+    }
+
+    private static void AddHand(NetEntity to, IServerConsoleHost host)
+    {
+        host.ExecuteCommand(null, $"addhand {to}");
     }
 }

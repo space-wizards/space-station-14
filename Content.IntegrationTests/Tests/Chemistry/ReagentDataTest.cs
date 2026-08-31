@@ -1,5 +1,6 @@
+#nullable enable
 using Content.IntegrationTests.Fixtures;
-using Content.IntegrationTests.Tests.Interaction;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
@@ -7,23 +8,21 @@ using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.Chemistry;
 
-[TestFixture]
 [TestOf(typeof(ReagentData))]
 public sealed class ReagentDataTest : GameTest
 {
+    [SidedDependency(Side.Server)] private IReflectionManager _sReflection = null!;
+
     [Test]
     public async Task ReagentDataIsSerializable()
     {
-        var pair = Pair;
-        var reflection = pair.Server.ResolveDependency<IReflectionManager>();
-
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
-            foreach (var instance in reflection.GetAllChildren(typeof(ReagentData)))
+            foreach (var instance in _sReflection.GetAllChildren<ReagentData>())
             {
-                Assert.That(instance.HasCustomAttribute<NetSerializableAttribute>(), $"{instance} must have the NetSerializable attribute.");
-                Assert.That(instance.HasCustomAttribute<SerializableAttribute>(), $"{instance} must have the serializable attribute.");
+                Assert.That(instance.HasCustomAttribute<NetSerializableAttribute>(), $"{instance} must have {nameof(NetSerializableAttribute)}.");
+                Assert.That(instance.HasCustomAttribute<SerializableAttribute>(), $"{instance} must have {nameof(SerializableAttribute)}.");
             }
-        });
+        }
     }
 }

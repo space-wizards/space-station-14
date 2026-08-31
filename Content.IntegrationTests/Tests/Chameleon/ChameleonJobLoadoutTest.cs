@@ -19,7 +19,7 @@ public sealed class ChameleonJobLoadoutTest : InteractionTest
     ];
 
     [Test]
-    public Task CheckAllJobs()
+    public void CheckAllJobs()
     {
         var alljobs = ProtoMan.EnumeratePrototypes<JobPrototype>();
 
@@ -45,16 +45,14 @@ public sealed class ChameleonJobLoadoutTest : InteractionTest
             validJobs[chameleon.Job.Value] += 1;
         }
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             foreach (var job in validJobs)
             {
                 Assert.That(job.Value, Is.Not.Zero,
                     $"{job.Key} has no chameleonOutfit prototype.");
             }
-        });
-
-        return Task.CompletedTask;
+        }
     }
 
     /// <summary>

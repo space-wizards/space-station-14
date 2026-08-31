@@ -1,16 +1,15 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Shared.Database;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 
 namespace Content.IntegrationTests.Tests.Administration.Logs;
 
-[TestFixture]
 [TestOf(typeof(AdminLogSystem))]
 public sealed class QueryTests : GameTest
 {
@@ -21,42 +20,37 @@ public sealed class QueryTests : GameTest
         Connected = true
     };
 
+    [SidedDependency(Side.Server)] private IAdminLogManager _sLogManager = default!;
+    [SidedDependency(Side.Server)] private IPlayerManager _sPlayerManager = default!;
+    [SidedDependency(Side.Server)] private GameTicker _sTicker = default!;
+
     [Test]
     public async Task QuerySingleLog()
     {
-        var pair = Pair;
-        var server = pair.Server;
-
-        var sSystems = server.ResolveDependency<IEntitySystemManager>();
-        var sPlayers = server.ResolveDependency<IPlayerManager>();
-
-        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
-        var sGamerTicker = sSystems.GetEntitySystem<GameTicker>();
-
         var date = DateTime.UtcNow;
         var guid = Guid.NewGuid();
 
-        ICommonSession player = default;
+        ICommonSession player = default!;
 
-        await server.WaitPost(() =>
+        await Server.WaitPost(() =>
         {
-            player = sPlayers.Sessions.First();
+            player = _sPlayerManager.Sessions.First();
 
-            sAdminLogSystem.Add(LogType.Unknown, $"{player.AttachedEntity:Entity} test log: {guid}");
+            _sLogManager.Add(LogType.Unknown, $"{player.AttachedEntity:Entity} test log: {guid}");
         });
 
         var filter = new LogFilter
         {
-            Round = sGamerTicker.RoundId,
+            Round = _sTicker.RoundId,
             Search = guid.ToString(),
-            Types = new HashSet<LogType> { LogType.Unknown },
+            Types = [LogType.Unknown],
             After = date,
-            AnyPlayers = new[] { player.UserId.UserId }
+            AnyPlayers = [player.UserId.UserId]
         };
 
-        await PoolManager.WaitUntil(server, async () =>
+        await PoolManager.WaitUntil(Server, async () =>
         {
-            foreach (var _ in await sAdminLogSystem.All(filter))
+            foreach (var _ in await _sLogManager.All(filter))
             {
                 return true;
             }

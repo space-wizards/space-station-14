@@ -1,12 +1,12 @@
+#nullable enable
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
-using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Administration.Logs;
 
-[TestFixture]
 [TestOf(typeof(AdminLogSystem))]
 public sealed class FilterTests : GameTest
 {
@@ -17,41 +17,36 @@ public sealed class FilterTests : GameTest
         Connected = true
     };
 
+    [SidedDependency(Side.Server)] private readonly IAdminLogManager _sAdminLogManager = null!;
+
     [Test]
     [TestCase(DateOrder.Ascending)]
     [TestCase(DateOrder.Descending)]
     public async Task Date(DateOrder order)
     {
-        var pair = Pair;
-        var server = pair.Server;
-
-        var sEntities = server.ResolveDependency<IEntityManager>();
-
-        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
-
         var commonGuid = Guid.NewGuid();
         var firstGuid = Guid.NewGuid();
         var secondGuid = Guid.NewGuid();
-        var testMap = await pair.CreateTestMap();
-        var coordinates = testMap.GridCoords;
+        await Pair.CreateTestMap();
+        var coordinates = TestMap!.GridCoords;
 
-        await server.WaitPost(() =>
+        await Server.WaitPost(() =>
         {
-            var entity = sEntities.SpawnEntity(null, coordinates);
+            var entity = SSpawnAtPosition(null, coordinates);
 
-            sAdminLogSystem.Add(LogType.Unknown, $"{entity:Entity} test log: {commonGuid} {firstGuid}");
+            _sAdminLogManager.Add(LogType.Unknown, $"{entity:Entity} test log: {commonGuid} {firstGuid}");
         });
 
         await Task.Delay(2000);
 
-        await server.WaitPost(() =>
+        await Server.WaitPost(() =>
         {
-            var entity = sEntities.SpawnEntity(null, coordinates);
+            var entity = SSpawnAtPosition(null, coordinates);
 
-            sAdminLogSystem.Add(LogType.Unknown, $"{entity:Entity} test log: {commonGuid} {secondGuid}");
+            _sAdminLogManager.Add(LogType.Unknown, $"{entity:Entity} test log: {commonGuid} {secondGuid}");
         });
 
-        await PoolManager.WaitUntil(server, async () =>
+        await PoolManager.WaitUntil(Server, async () =>
         {
             var commonGuidStr = commonGuid.ToString();
 
@@ -77,7 +72,7 @@ public sealed class FilterTests : GameTest
             var firstFound = false;
             var secondFound = false;
 
-            var both = await sAdminLogSystem.CurrentRoundLogs(new LogFilter
+            var both = await _sAdminLogManager.CurrentRoundLogs(new LogFilter
             {
                 Search = commonGuidStr,
                 DateOrder = order

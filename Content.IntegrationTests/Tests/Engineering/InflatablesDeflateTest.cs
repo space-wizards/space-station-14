@@ -3,7 +3,6 @@ using Content.Shared.Engineering.Systems;
 
 namespace Content.IntegrationTests.Tests.Engineering;
 
-[TestFixture]
 [TestOf(typeof(InflatableSafeDisassemblySystem))]
 public sealed class InflatablesDeflateTest : InteractionTest
 {

@@ -1,134 +1,89 @@
+#nullable enable
 using System.Collections.Generic;
-using System.Linq;
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
+using Content.IntegrationTests.Utility;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
-using Content.Shared.Prototypes;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.Whitelist;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Lathe;
 
-[TestFixture]
 public sealed class LatheTest : GameTest
 {
+    [SidedDependency(Side.Server)] private EntityWhitelistSystem _sWhitelistSystem = null!;
+    [SidedDependency(Side.Server)] private SharedLatheSystem _sLatheSystem = null!;
+
+    private static readonly string[] LatheProtos = GameDataScrounger.EntitiesWithComponent("Lathe");
+    private static readonly string[] MaterialEntityProtos = GameDataScrounger.EntitiesWithComponent("PhysicalComposition");
+    private static readonly string[] LatheRecipes = GameDataScrounger.PrototypesOfKind<LatheRecipePrototype>();
+
     [Test]
-    public async Task TestLatheRecipeIngredientsFitLathe()
+    [TestCaseSource(nameof(LatheProtos))]
+    [Description("Checks a lathe can accept ingredients containing the materials required for its recipes.")]
+    [RunOnSide(Side.Server)]
+    public async Task TestLatheRecipeIngredientsFitLathe(string latheProtoId)
     {
-        var pair = Pair;
-        var server = pair.Server;
+        var latheProto = SProtoMan.Index(latheProtoId);
 
-        var mapData = await pair.CreateTestMap();
+        Assert.That(latheProto.TryComp<LatheComponent>(out var latheComp, SEntMan.ComponentFactory));
+        Assert.That(latheProto.TryComp<MaterialStorageComponent>(out var storageComp, SEntMan.ComponentFactory));
 
-        var entMan = server.EntMan;
-        var protoMan = server.ProtoMan;
-        var compFactory = server.ResolveDependency<IComponentFactory>();
-        var materialStorageSystem = server.System<SharedMaterialStorageSystem>();
-        var whitelistSystem = server.System<EntityWhitelistSystem>();
-        var latheSystem = server.System<SharedLatheSystem>();
-
-        await server.WaitAssertion(() =>
+        // Test which material-containing entities are accepted by this lathe
+        var acceptedMaterials = new HashSet<ProtoId<MaterialPrototype>>();
+        foreach (var materialProtoId in MaterialEntityProtos)
         {
-            // Find all the lathes
-            var latheProtos = protoMan.EnumeratePrototypes<EntityPrototype>()
-                .Where(p => !p.Abstract)
-                .Where(p => !pair.IsTestPrototype(p))
-                .Where(p => p.HasComponent<LatheComponent>());
+            if (_sWhitelistSystem.IsWhitelistFail(storageComp!.Whitelist, materialProtoId))
+                continue;
 
-            // Find every EntityPrototype that can be inserted into a MaterialStorage
-            var materialEntityProtos = protoMan.EnumeratePrototypes<EntityPrototype>()
-                .Where(p => !p.Abstract)
-                .Where(p => !pair.IsTestPrototype(p))
-                .Where(p => p.HasComponent<PhysicalCompositionComponent>());
+            Assert.That(SProtoMan.Index(materialProtoId).TryComp<PhysicalCompositionComponent>(out var compositionComponent, SEntMan.ComponentFactory));
 
-            // Spawn all of the above material EntityPrototypes - we need actual entities to do whitelist checks
-            var materialEntities = new List<EntityUid>(materialEntityProtos.Count());
-            foreach (var materialEntityProto in materialEntityProtos)
+            // Mark the lathe as accepting each material in the entity
+            foreach (var (material, _) in compositionComponent!.MaterialComposition)
             {
-                materialEntities.Add(entMan.SpawnEntity(materialEntityProto.ID, mapData.GridCoords));
+                acceptedMaterials.Add(material);
             }
+        }
 
-            Assert.Multiple(() =>
+        // Collect all possible recipes assigned to this lathe
+        var recipes = new HashSet<ProtoId<LatheRecipePrototype>>();
+        _sLatheSystem.AddRecipesFromPacks(recipes, latheComp!.StaticPacks);
+        _sLatheSystem.AddRecipesFromPacks(recipes, latheComp.DynamicPacks);
+        if (latheProto.TryComp<EmagLatheRecipesComponent>(out var emagRecipesComp, SEntMan.ComponentFactory))
+        {
+            _sLatheSystem.AddRecipesFromPacks(recipes, emagRecipesComp.EmagStaticPacks);
+            _sLatheSystem.AddRecipesFromPacks(recipes, emagRecipesComp.EmagDynamicPacks);
+        }
+
+        // Check each recipe assigned to this lathe
+        foreach (var recipeId in recipes)
+        {
+            var recipeProto = SProtoMan.Index(recipeId);
+
+            // Track the total material volume of the recipe
+            var totalQuantity = 0;
+            // Check each material called for by the recipe
+            foreach (var (materialId, quantity) in recipeProto.Materials)
             {
-                // Check each lathe individually
-                foreach (var latheProto in latheProtos)
-                {
-                    if (!latheProto.TryComp<LatheComponent>(out var latheComp, compFactory))
-                        continue;
-
-                    if (!latheProto.TryComp<MaterialStorageComponent>(out var storageComp, compFactory))
-                        continue;
-
-                    // Test which material-containing entities are accepted by this lathe
-                    var acceptedMaterials = new HashSet<ProtoId<MaterialPrototype>>();
-                    foreach (var materialEntity in materialEntities)
-                    {
-                        Assert.That(entMan.TryGetComponent<PhysicalCompositionComponent>(materialEntity, out var compositionComponent));
-                        if (whitelistSystem.IsWhitelistFail(storageComp.Whitelist, materialEntity))
-                            continue;
-
-                        // Mark the lathe as accepting each material in the entity
-                        foreach (var (material, _) in compositionComponent.MaterialComposition)
-                        {
-                            acceptedMaterials.Add(material);
-                        }
-                    }
-
-                    // Collect all possible recipes assigned to this lathe
-                    var recipes = new HashSet<ProtoId<LatheRecipePrototype>>();
-                    latheSystem.AddRecipesFromPacks(recipes, latheComp.StaticPacks);
-                    latheSystem.AddRecipesFromPacks(recipes, latheComp.DynamicPacks);
-                    if (latheProto.TryComp<EmagLatheRecipesComponent>(out var emagRecipesComp, compFactory))
-                    {
-                        latheSystem.AddRecipesFromPacks(recipes, emagRecipesComp.EmagStaticPacks);
-                        latheSystem.AddRecipesFromPacks(recipes, emagRecipesComp.EmagDynamicPacks);
-                    }
-
-                    // Check each recipe assigned to this lathe
-                    foreach (var recipeId in recipes)
-                    {
-                        if (!protoMan.TryIndex(recipeId, out var recipeProto))
-                        {
-                            Assert.Fail($"Lathe recipe '{recipeId}' does not exist");
-                            continue;
-                        }
-
-                        // Track the total material volume of the recipe
-                        var totalQuantity = 0;
-                        // Check each material called for by the recipe
-                        foreach (var (materialId, quantity) in recipeProto.Materials)
-                        {
-                            Assert.That(protoMan.HasIndex(materialId), $"Material '{materialId}' does not exist");
-                            // Make sure the material is accepted by the lathe
-                            Assert.That(acceptedMaterials, Does.Contain(materialId), $"Lathe {latheProto.ID} has recipe {recipeId} but does not accept any materials containing {materialId}");
-                            totalQuantity += quantity;
-                        }
-                        // Make sure the recipe doesn't call for more material than the lathe can hold
-                        if (storageComp.StorageLimit != null)
-                            Assert.That(totalQuantity, Is.LessThanOrEqualTo(storageComp.StorageLimit), $"Lathe {latheProto.ID} has recipe {recipeId} which calls for {totalQuantity} units of materials but can only hold {storageComp.StorageLimit}");
-                    }
-                }
-            });
-        });
+                Assert.That(SProtoMan.HasIndex(materialId), $"Material '{materialId}' does not exist");
+                // Make sure the material is accepted by the lathe
+                Assert.That(acceptedMaterials, Does.Contain(materialId), $"Lathe {latheProto.ID} has recipe {recipeId} but does not accept any materials containing {materialId}");
+                totalQuantity += quantity;
+            }
+            // Make sure the recipe doesn't call for more material than the lathe can hold
+            if (storageComp!.StorageLimit != null)
+                Assert.That(totalQuantity, Is.LessThanOrEqualTo(storageComp.StorageLimit), $"Lathe {latheProto.ID} has recipe {recipeId} which calls for {totalQuantity} units of materials but can only hold {storageComp.StorageLimit}");
+        }
     }
 
-    [Test]
-    public async Task AllLatheRecipesValidTest()
+    [TestCaseSource(nameof(LatheRecipes))]
+    [Description($"Checks that all recipes produce either a {nameof(LatheRecipePrototype.Result)} entity or {nameof(LatheRecipePrototype.ResultReagents)}.")]
+    public async Task AllLatheRecipesValidTest(string recipeProtoId)
     {
-        var pair = Pair;
-
-        var server = pair.Server;
-        var proto = server.ProtoMan;
-
-        Assert.Multiple(() =>
-        {
-            foreach (var recipe in proto.EnumeratePrototypes<LatheRecipePrototype>())
-            {
-                if (recipe.Result == null)
-                    Assert.That(recipe.ResultReagents, Is.Not.Null, $"Recipe '{recipe.ID}' has no result or result reagents.");
-            }
-        });
+        var recipe = SProtoMan.Index<LatheRecipePrototype>(recipeProtoId);
+        if (recipe.Result == null)
+            Assert.That(recipe.ResultReagents, Is.Not.Null, $"Recipe '{recipe.ID}' has no result or result reagents.");
     }
 }

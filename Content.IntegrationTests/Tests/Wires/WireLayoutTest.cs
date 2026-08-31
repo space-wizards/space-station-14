@@ -1,14 +1,13 @@
-﻿using Content.IntegrationTests.Fixtures;
+﻿#nullable enable
+using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Doors;
 using Content.Server.Power;
 using Content.Server.Wires;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Wires;
 
-[TestFixture]
 [Parallelizable(ParallelScope.All)]
 [TestOf(typeof(WiresSystem))]
 public sealed class WireLayoutTest : GameTest
@@ -51,52 +50,49 @@ public sealed class WireLayoutTest : GameTest
             layoutId: WireLayoutTest3
         """;
 
+    [SidedDependency(Side.Server)] private EntityQuery<WiresComponent> _sQuery = default!;
+
     [Test]
     public async Task TestLayoutInheritance()
     {
-        var pair = Pair;
-        var server = pair.Server;
-        var testMap = await pair.CreateTestMap();
+        await Pair.CreateTestMap();
 
-        await server.WaitAssertion(() =>
+        await Server.WaitAssertion(() =>
         {
-            var wires = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<WiresSystem>();
-
             // Need to spawn these entities to make sure the wire layouts are initialized.
-            var ent1 = SpawnWithComp<WiresComponent>(server.EntMan, "WireLayoutTest", testMap.MapCoords);
-            var ent2 = SpawnWithComp<WiresComponent>(server.EntMan, "WireLayoutTest2", testMap.MapCoords);
-            var ent3 = SpawnWithComp<WiresComponent>(server.EntMan, "WireLayoutTest3", testMap.MapCoords);
+            var ent1 = SSpawnAtPosition("WireLayoutTest", TestMap!.GridCoords);
+            var ent2 = SSpawnAtPosition("WireLayoutTest2", TestMap!.GridCoords);
+            var ent3 = SSpawnAtPosition("WireLayoutTest3", TestMap!.GridCoords);
 
-            // Assert.That(wires.TryGetLayout("WireLayoutTest", out var layout1));
-            // Assert.That(wires.TryGetLayout("WireLayoutTest2", out var layout2));
-            // Assert.That(wires.TryGetLayout("WireLayoutTest3", out var layout3));
-
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
-                // Entity 1.
-                Assert.That(ent1.Comp.WiresList, Has.Count.EqualTo(4));
-                Assert.That(ent1.Comp.WiresList, Has.Exactly(2).With.Property("Action").Null, "2 dummy wires");
-                Assert.That(ent1.Comp.WiresList, Has.One.With.Property("Action").InstanceOf<PowerWireAction>(), "1 power wire");
-                Assert.That(ent1.Comp.WiresList, Has.One.With.Property("Action").InstanceOf<DoorBoltWireAction>(), "1 door bolt wire");
+                Assert.That(_sQuery.TryComp(ent1, out var wires1), Is.True);
+                if (wires1 is not null)
+                {
+                    Assert.That(wires1.WiresList, Has.Count.EqualTo(4));
+                    Assert.That(wires1.WiresList, Has.Exactly(2).With.Property("Action").Null, "Should have 2 dummy wires.");
+                    Assert.That(wires1.WiresList, Has.One.With.Property("Action").InstanceOf<PowerWireAction>(), "Should have 1 power wire.");
+                    Assert.That(wires1.WiresList, Has.One.With.Property("Action").InstanceOf<DoorBoltWireAction>(), "Should have 1 door bolt wire.");
+                }
 
-                Assert.That(ent2.Comp.WiresList, Has.Count.EqualTo(5));
-                Assert.That(ent2.Comp.WiresList, Has.Exactly(2).With.Property("Action").Null, "2 dummy wires");
-                Assert.That(ent2.Comp.WiresList, Has.Exactly(2).With.Property("Action").InstanceOf<PowerWireAction>(), "2 power wire");
-                Assert.That(ent2.Comp.WiresList, Has.One.With.Property("Action").InstanceOf<DoorBoltWireAction>(), "1 door bolt wire");
+                Assert.That(_sQuery.TryComp(ent2, out var wires2), Is.True);
+                if (wires2 is not null)
+                {
+                    Assert.That(wires2.WiresList, Has.Count.EqualTo(5));
+                    Assert.That(wires2.WiresList, Has.Exactly(2).With.Property("Action").Null, "Should have 2 dummy wires.");
+                    Assert.That(wires2.WiresList, Has.Exactly(2).With.Property("Action").InstanceOf<PowerWireAction>(), "Should have 2 power wires.");
+                    Assert.That(wires2.WiresList, Has.One.With.Property("Action").InstanceOf<DoorBoltWireAction>(), "Should have 1 door bolt wire.");
+                }
 
-                Assert.That(ent3.Comp.WiresList, Has.Count.EqualTo(4));
-                Assert.That(ent3.Comp.WiresList, Has.Exactly(2).With.Property("Action").Null, "2 dummy wires");
-                Assert.That(ent3.Comp.WiresList, Has.One.With.Property("Action").InstanceOf<PowerWireAction>(), "1 power wire");
-                Assert.That(ent3.Comp.WiresList, Has.One.With.Property("Action").InstanceOf<DoorBoltWireAction>(), "1 door bolt wire");
-            });
+                Assert.That(_sQuery.TryComp(ent3, out var wires3), Is.True);
+                if (wires3 is not null)
+                {
+                    Assert.That(wires3.WiresList, Has.Count.EqualTo(4));
+                    Assert.That(wires3.WiresList, Has.Exactly(2).With.Property("Action").Null, "Should have 2 dummy wires.");
+                    Assert.That(wires3.WiresList, Has.One.With.Property("Action").InstanceOf<PowerWireAction>(), "Should have 1 power wire.");
+                    Assert.That(wires3.WiresList, Has.One.With.Property("Action").InstanceOf<DoorBoltWireAction>(), "Should have 1 door bolt wire.");
+                }
+            }
         });
-    }
-
-    private static Entity<T> SpawnWithComp<T>(IEntityManager entityManager, string prototype, MapCoordinates coords)
-        where T : IComponent, new()
-    {
-        var ent = entityManager.Spawn(prototype, coords);
-        var comp = entityManager.EnsureComponent<T>(ent);
-        return new Entity<T>(ent, comp);
     }
 }
