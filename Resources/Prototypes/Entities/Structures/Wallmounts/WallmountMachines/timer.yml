@@ -68,6 +68,9 @@
     color: FloralWhite
     scrollEnabled: true
     rowData: [{}]
+    horizontalScrollOffset: 1
+    leftInvisiblePixels: 2
+    rightInvisiblePixels: 1
     frameState:
       state: outer-frame
   - type: Sprite

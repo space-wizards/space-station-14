@@ -27,8 +27,17 @@ public sealed partial class TextScreenVisualsComponent : Component
     /// <remarks>
     /// 15,151,251 is the old ss13 color, from tg
     /// </remarks>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public Color Color = new Color(15, 151, 251);
+
+    /// <summary>
+    /// The current color being drawn on the screen.
+    /// </summary>
+    /// <remarks>
+    /// 15,151,251 is the old ss13 color, from tg
+    /// </remarks>
+    [ViewVariables]
+    public Color CurrentColor;
 
     /// <summary>
     /// Offset for centering the text.
@@ -56,6 +65,29 @@ public sealed partial class TextScreenVisualsComponent : Component
     /// </remarks>
     [DataField]
     public int RowLength = 5;
+
+    /// <summary>
+    /// When scrolling, a horizontal offset for the scrolling, in pixels
+    /// </summary>
+    /// <seealso cref="TextScreenVisualizerSystem.CharWidth"/>
+    [DataField]
+    public int HorizontalScrollOffset;
+
+    /// <summary>
+    /// When scrolling, the number of pixels that the leftmost letters should be invisible for.
+    /// Value should be between [0,CharWidth)
+    /// </summary>
+    /// <seealso cref="TextScreenVisualizerSystem.CharWidth"/>
+    [DataField]
+    public int LeftInvisiblePixels;
+
+    /// <summary>
+    /// When scrolling, the number of pixels that the rightmost letters should be invisible for.
+    /// Value should be between [0,CharWidth)
+    /// </summary>
+    /// <seealso cref="TextScreenVisualizerSystem.CharWidth"/>
+    [DataField]
+    public int RightInvisiblePixels;
 
     /// <summary>
     /// If true, the screen is able to scroll its text.

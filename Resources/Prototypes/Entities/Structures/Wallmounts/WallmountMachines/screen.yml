@@ -12,6 +12,9 @@
     timerOffset: 0,-4
     rows: 2
     rowLength: 6
+    horizontalScrollOffset: 1
+    leftInvisiblePixels: 2
+    rightInvisiblePixels: 1
     scrollEnabled: true
     frameState:
       sprite: Structures/Wallmounts/screen.rsi

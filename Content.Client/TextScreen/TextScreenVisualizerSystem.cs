@@ -249,6 +249,10 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
         if (!_spriteQuery.TryComp(ent, out var sprite))
             return;
 
+        if (ent.Comp.CurrentColor == default)
+            ent.Comp.CurrentColor = ent.Comp.Color;
+
+        // Create text layers
         var textRsiPath = new ResPath(TextPath);
         for (var rowIdx = 0; rowIdx < ent.Comp.RowData.Length; rowIdx++)
         {
@@ -260,10 +264,12 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
                 var newKey = TextMapKey + rowIdx + chr;
                 var layerIndex = SpriteSystem.LayerMapReserve((ent, sprite), newKey);
                 SpriteSystem.LayerSetRsi((ent, sprite), layerIndex, textRsiPath, null);
+                SpriteSystem.LayerSetColor((ent, sprite), layerIndex, ent.Comp.CurrentColor);
                 textScreenRow.Layers.Add((newKey, null));
             }
         }
 
+        // Place frame on top of text layers (obscuring the scroll trick)
         if (ent.Comp.FrameState != null)
             SpriteSystem.AddLayer((ent, sprite), ent.Comp.FrameState, null);
     }
@@ -273,12 +279,26 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
     /// </summary>
     protected override void OnAppearanceChange(EntityUid uid, TextScreenVisualsComponent comp, ref AppearanceChangeEvent args)
     {
-        bool anyChange = false;
-        if (args.TryGetData(TextScreenVisuals.Color, out Color color)
-            && color != comp.Color)
+        bool anyChange;
+        if (args.TryGetData(TextScreenVisuals.Color, out Color color))
         {
-            comp.Color = color;
-            anyChange = true;
+            anyChange = comp.CurrentColor != color;
+            comp.CurrentColor = color;
+        }
+        else
+        {
+            anyChange = comp.CurrentColor != comp.Color;
+            comp.CurrentColor = comp.Color;
+        }
+
+        // Update layer color - less frequent to change, no need to change in update.
+        if (anyChange && _spriteQuery.TryComp(uid, out var sprite))
+        {
+            foreach (var row in comp.RowData)
+            {
+                foreach (var layer in row.Layers)
+                    SpriteSystem.LayerSetColor((uid, sprite), layer.Key, comp.CurrentColor);
+            }
         }
 
         //
@@ -414,7 +434,9 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
         Entity<SpriteComponent?> sprite = (ent.Owner, ent.Comp2);
         var screen = ent.Comp1;
 
-        // TODO: offset layers, draw states onto their respective layers based on the input string.
+        var textIsScrolling = rowData.Text.Length > screen.RowLength;
+        var scrollOffset = textIsScrolling ? screen.HorizontalScrollOffset : 0;
+
         var maxCharIndex = int.Min(rowData.Layers.Count, rowData.Text.Length);
         var subCharOffset = rowData.ScrollPosition % CharWidth;
         for (var j = 0; j < maxCharIndex; j++)
@@ -427,9 +449,10 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
             if (SpriteSystem.LayerMapTryGet(sprite, layerTuple.Key, out var layerIndex, false))
             {
                 SpriteSystem.LayerSetRsiState(sprite, layerIndex, newState);
-                SpriteSystem.LayerSetOffset(sprite, layerIndex, screen.TextOffset + Vector2.Multiply(
-                        new Vector2((j - maxCharIndex / 2f + 0.5f) * CharWidth - subCharOffset, -rowIndex * screen.RowOffset),
-                        TextScreenVisualsComponent.PixelSize));
+                SpriteSystem.LayerSetOffset(sprite, layerIndex, Vector2.Multiply(
+                    screen.TextOffset +
+                    new Vector2((j - maxCharIndex / 2f + 0.5f) * CharWidth - subCharOffset + scrollOffset, -rowIndex * screen.RowOffset),
+                    TextScreenVisualsComponent.PixelSize));
             }
 
             rowData.Layers[j] = new(layerTuple.Key, newState);
@@ -442,6 +465,14 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
                 SpriteSystem.LayerSetRsiState((ent, sprite), layerIndex, null);
 
             rowData.Layers[j] = new(layerTuple.Key, null);
+        }
+
+        if (rowData.Layers.Count > 0)
+        {
+            var hideLeft = textIsScrolling && subCharOffset >= CharWidth - screen.LeftInvisiblePixels;
+            var hideRight = textIsScrolling && subCharOffset < screen.RightInvisiblePixels;
+            SpriteSystem.LayerSetVisible((ent, sprite), rowData.Layers[0].Key, !hideLeft);
+            SpriteSystem.LayerSetVisible((ent, sprite), rowData.Layers[^1].Key, !hideRight);
         }
     }
 
