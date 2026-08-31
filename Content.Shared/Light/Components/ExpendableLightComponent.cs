@@ -13,7 +13,7 @@ namespace Content.Shared.Light.Components;
 /// Component that represents a handheld expendable light which can be activated and eventually dies over time.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState]
+[AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class ExpendableLightComponent : Component
 {
 
