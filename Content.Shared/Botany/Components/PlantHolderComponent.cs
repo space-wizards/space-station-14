@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Botany.Components;
@@ -40,7 +41,7 @@ public sealed partial class PlantHolderComponent : Component
     /// Current mutation level.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float MutationLevel;
+    public Dictionary<ProtoId<RandomPlantMutationListPrototype>, float> MutationLevels = [];
 
     [DataField, AutoNetworkedField]
     public float MaxMutationLevel = 25f;

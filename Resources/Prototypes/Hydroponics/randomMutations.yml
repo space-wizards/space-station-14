@@ -1,5 +1,6 @@
 - type: randomPlantMutationList
   id: RandomPlantMutations
+  ignoreMutationMod: false
   mutations:
     - name: Sentient
       description: mutation-plant-sentient
@@ -253,3 +254,13 @@
       baseOdds: 0.036
       persists: false
       effect: !type:PlantMutateHarvest
+
+- type: randomPlantMutationList
+  id: EvilPlantMutations
+  ignoreMutationMod: true
+  mutations:
+  - name: MutateEvilChemicals
+    baseOdds: 1
+    persists: false
+    effect: !type:PlantMutateChemicals
+      randomPickBotanyReagent: EvilRandomFillSolution
