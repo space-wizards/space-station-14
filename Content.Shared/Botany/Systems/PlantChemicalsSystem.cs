@@ -5,6 +5,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Timing;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Botany.Systems;
 
@@ -31,13 +32,47 @@ public sealed partial class PlantChemicalsSystem : EntitySystem
     /// Adds a random chemical to the plant chemicals.
     /// </summary>
     [PublicAPI]
-    public void MutateRandomChemical(Entity<PlantChemicalsComponent?> ent, WeightedRandomFillSolutionPrototype randomChems)
+    public void MutateRandomChemical(Entity<PlantChemicalsComponent?> ent, IReadOnlyList<ProtoId<WeightedRandomFillSolutionPrototype>> randomChemTables)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
-        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
-        var (chemicalId, quantity) = randomChems.Pick(random);
+        var random = SharedRandomExtensions.PredictedRandom(
+            _timing,
+            GetNetEntity(ent));
+
+        var totalWeight = 0f;
+
+        foreach (var table in randomChemTables)
+        {
+            foreach (var fill in ProtoMan.Index(table).Fills)
+                totalWeight += fill.Weight;
+        }
+
+        if (totalWeight <= 0f)
+            return;
+
+        var selectedWeight = random.NextFloat() * totalWeight;
+        var accumulatedWeight = 0f;
+        WeightedRandomFillSolutionPrototype? selectedTable = null;
+
+        foreach (var table in randomChemTables)
+        {
+            foreach (var fill in ProtoMan.Index(table).Fills)
+                accumulatedWeight += fill.Weight;
+
+            if (accumulatedWeight > selectedWeight)
+            {
+                selectedTable = ProtoMan.Index(table);
+                break;
+            }
+        }
+
+        if (selectedTable == null)
+            return;
+
+        var (chemicalId, quantity) = selectedTable.Pick(random);
+
         var amount = FixedPoint2.Max(random.NextFloat(0f, 1f) * quantity, FixedPoint2.Epsilon);
         var seedChemQuantity = new PlantChemQuantity();
         if (ent.Comp.Chemicals.TryGetValue(chemicalId, out var value))
