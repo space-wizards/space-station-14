@@ -76,7 +76,7 @@ public sealed partial class ScreenSystem : EntitySystem
         if (timerXform.MapUid == null)
             return;
 
-        // Need to have a screen to do anything.
+        // Need to have AppearanceData to do anything.
         if (!_appearanceQuery.TryComp(ent, out var appearance))
             return;
 

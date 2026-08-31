@@ -74,8 +74,7 @@ public sealed partial class SignalTimerSystem : EntitySystem
 
         ent.Comp.Label = args.Text[..Math.Min(ent.Comp.MaxLength, args.Text.Length)];
 
-        if (_activeTimerQuery.HasComp(ent) ||
-            !_appearanceQuery.TryComp(ent, out var appearance))
+        if (!_appearanceQuery.TryComp(ent, out var appearance))
             return;
 
         // could maybe move the defaulttext update out of this block,

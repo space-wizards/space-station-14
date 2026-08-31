@@ -7,6 +7,7 @@
   - type: Rotatable
   - type: TextScreenTimerVisuals
     timerRow: 1
+    showCentiseconds: false # Distracting when too common.
   - type: TextScreenVisuals
     textOffset: 0,3
     timerOffset: 0,-4

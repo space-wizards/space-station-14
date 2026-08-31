@@ -37,6 +37,13 @@ public sealed partial class TextScreenTimerVisualsComponent : Component
     public int TimerRow;
 
     /// <summary>
+    /// Whether or not the timer will show times with centisecond precision.
+    /// If false, times will be shown with second precision at most.
+    /// </summary>
+    [DataField]
+    public bool ShowCentiseconds = true;
+
+    /// <summary>
     /// The last value being displayed on the screen, (hundreds):(ones).
     /// e.g. 12:34 would be a value of 1234.
     /// 0 indicates that the timer has finished, and should display FinishedText instead.

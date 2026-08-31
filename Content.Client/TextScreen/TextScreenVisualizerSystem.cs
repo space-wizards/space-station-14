@@ -116,7 +116,7 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
             }
             else
             {
-                int screenValue = ConvertTimeToScreenValue(timer.TargetTime.Value, _timing.CurTime);
+                int screenValue = ConvertTimeToScreenValue(timer.TargetTime.Value, _timing.CurTime, timer.ShowCentiseconds);
                 if (screenValue != timer.ScreenValue)
                 {
                     var timerText = GetTimerString((uid, timer), screenValue);
@@ -156,14 +156,14 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
     /// <summary>
     /// Converts the difference between two timespans into a value between 0 and 9999.
     /// </summary>
-    public int ConvertTimeToScreenValue(TimeSpan targetTime, TimeSpan curTime)
+    public int ConvertTimeToScreenValue(TimeSpan targetTime, TimeSpan curTime, bool showCentiseconds)
     {
         if (targetTime <= curTime)
             return 0;
 
         var difference = targetTime - curTime;
         var millis = difference.TotalMilliseconds;
-        if (millis < 100_000) // 9999 centiseconds, 99:99, the largest value that could fit in two fields.
+        if (showCentiseconds && millis < 100_000) // 9999 centiseconds, 99:99, the largest value that could fit in two fields.
             return (int)millis / 10;
         else if (millis < TimeSpan.MillisecondsPerHour)
             return difference.Minutes * 100 + difference.Seconds;
@@ -346,10 +346,26 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
 
     private string GetTimerString(Entity<TextScreenTimerVisualsComponent> ent, int newScreenValue)
     {
+        if (ent.Comp.TimerRow < 0)
+            return ent.Comp.RunningText;
+
         var strings = ent.Comp.RunningText.Split("\n");
-        if (ent.Comp.TimerRow >= 0 && ent.Comp.TimerRow < strings.Length)
+        var timerString = $"{newScreenValue / 100:D2}:{newScreenValue % 100:D2}";
+        if (ent.Comp.TimerRow < strings.Length)
         {
-            strings[ent.Comp.TimerRow] = $"{newScreenValue / 100:D2}:{newScreenValue % 100:D2}";
+            strings[ent.Comp.TimerRow] = timerString;
+        }
+        else
+        {
+            // Extend our array until we have a timer row.
+            var newStrings = new string[ent.Comp.TimerRow + 1];
+            for (int i = 0; i < strings.Length; i++)
+                newStrings[i] = strings[i];
+            for (int i = strings.Length; i < ent.Comp.TimerRow; i++)
+                newStrings[i] = "";
+            newStrings[ent.Comp.TimerRow] = timerString;
+
+            strings = newStrings;
         }
         return string.Join('\n', strings);
     }
