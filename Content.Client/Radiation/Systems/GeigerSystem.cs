@@ -9,7 +9,7 @@ namespace Content.Client.Radiation.Systems;
 
 public sealed partial class GeigerSystem : SharedGeigerSystem
 {
-    public ProtoId<ItemStatusPrototype> GeigerItemStatus = "Geiger";
+    public static readonly ProtoId<ItemStatusPrototype> GeigerItemStatus = "Geiger";
 
     public override void Initialize()
     {

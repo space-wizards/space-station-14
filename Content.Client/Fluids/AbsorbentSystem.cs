@@ -9,7 +9,7 @@ namespace Content.Client.Fluids;
 /// <inheritdoc/>
 public sealed partial class AbsorbentSystem : SharedAbsorbentSystem
 {
-    public ProtoId<ItemStatusPrototype> AbsorbentItemStatus = "Mop";
+    public static readonly ProtoId<ItemStatusPrototype> AbsorbentItemStatus = "Mop";
 
     public override void Initialize()
     {

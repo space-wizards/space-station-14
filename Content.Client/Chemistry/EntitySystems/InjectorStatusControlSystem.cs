@@ -11,7 +11,7 @@ public sealed partial class InjectorStatusControlSystem : EntitySystem
 {
     [Dependency] private SharedSolutionContainerSystem _solutionContainers = default!;
 
-    public ProtoId<ItemStatusPrototype> InjectorItemStatus = "Injector";
+    public static readonly ProtoId<ItemStatusPrototype> InjectorItemStatus = "Injector";
 
     public override void Initialize()
     {

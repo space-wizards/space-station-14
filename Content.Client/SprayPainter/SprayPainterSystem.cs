@@ -23,7 +23,7 @@ public sealed partial class SprayPainterSystem : SharedSprayPainterSystem
 {
     [Dependency] private UserInterfaceSystem _ui = default!;
 
-    public ProtoId<ItemStatusPrototype> SprayPainterItemStatus = "SprayPainter";
+    public static readonly ProtoId<ItemStatusPrototype> SprayPainterItemStatus = "SprayPainter";
 
     public List<SprayPainterDecalEntry> Decals = [];
     public Dictionary<string, List<string>> PaintableGroupsByCategory = new();

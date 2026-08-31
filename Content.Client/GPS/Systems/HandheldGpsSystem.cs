@@ -8,7 +8,7 @@ namespace Content.Client.GPS.Systems;
 
 public sealed partial class HandheldGpsSystem : EntitySystem
 {
-    public ProtoId<ItemStatusPrototype> GpsItemStatus = "GPS";
+    public static readonly ProtoId<ItemStatusPrototype> GpsItemStatus = "GPS";
 
     public override void Initialize()
     {

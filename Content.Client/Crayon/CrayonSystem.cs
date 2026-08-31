@@ -16,7 +16,7 @@ public sealed partial class CrayonSystem : SharedCrayonSystem
 {
     [Dependency] private SharedChargesSystem _charges = default!;
 
-    public ProtoId<ItemStatusPrototype> CrayonItemStatus = "Crayon";
+    public static readonly ProtoId<ItemStatusPrototype> CrayonItemStatus = "Crayon";
 
     public override void Initialize()
     {

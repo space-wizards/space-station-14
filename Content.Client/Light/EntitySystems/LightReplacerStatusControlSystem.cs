@@ -11,7 +11,7 @@ namespace Content.Client.Light.EntitySystems;
 /// </summary>
 public sealed class LightReplacerStatusControlSystem : EntitySystem
 {
-    public ProtoId<ItemStatusPrototype> LightReplacerItemStatus = "LightReplacer";
+    public static readonly ProtoId<ItemStatusPrototype> LightReplacerItemStatus = "LightReplacer";
 
     public override void Initialize()
     {

@@ -15,7 +15,7 @@ public sealed partial class HandheldLightSystem : SharedHandheldLightSystem
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private LightBehaviorSystem _lightBehavior = default!;
 
-    public ProtoId<ItemStatusPrototype> FlashlightItemStatus = "Flashlight";
+    public static readonly ProtoId<ItemStatusPrototype> FlashlightItemStatus = "Flashlight";
 
     public override void Initialize()
     {

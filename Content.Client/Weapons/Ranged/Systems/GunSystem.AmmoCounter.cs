@@ -16,7 +16,7 @@ namespace Content.Client.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
-    public ProtoId<ItemStatusPrototype> AmmoItemStatus = "AmmoCounter";
+    public static readonly ProtoId<ItemStatusPrototype> AmmoItemStatus = "AmmoCounter";
 
     private void OnAmmoCounterCollect(Entity<AmmoCounterComponent> ent, ref ItemStatusCollectMessage args)
     {

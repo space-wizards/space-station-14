@@ -12,7 +12,7 @@ namespace Content.Client.Trigger.Systems;
 /// <seealso cref="TimerTriggerStatusControl"/>
 public sealed partial class TimerTriggerItemStatusSystem : EntitySystem
 {
-    public ProtoId<ItemStatusPrototype> TimerTriggerItemStatus = "TimerTrigger";
+    public static readonly ProtoId<ItemStatusPrototype> TimerTriggerItemStatus = "TimerTrigger";
 
     public override void Initialize()
     {

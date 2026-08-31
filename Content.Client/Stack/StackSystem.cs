@@ -15,7 +15,7 @@ namespace Content.Client.Stack
         [Dependency] private AppearanceSystem _appearanceSystem = default!;
         [Dependency] private ItemCounterSystem _counterSystem = default!;
 
-        public ProtoId<ItemStatusPrototype> StackItemStatus = "Stack";
+        public static readonly ProtoId<ItemStatusPrototype> StackItemStatus = "Stack";
 
         public override void Initialize()
         {

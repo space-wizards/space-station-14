@@ -26,7 +26,7 @@ public sealed partial class NetworkConfiguratorSystem : SharedNetworkConfigurato
 
     private static readonly EntProtoId Action = "ActionClearNetworkLinkOverlays";
 
-    public ProtoId<ItemStatusPrototype> NetworkConfiguratorItemStatus = "NetworkConfigurator";
+    public static readonly ProtoId<ItemStatusPrototype> NetworkConfiguratorItemStatus = "NetworkConfigurator";
 
     public override void Initialize()
     {

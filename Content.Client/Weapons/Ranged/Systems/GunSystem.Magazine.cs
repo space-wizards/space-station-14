@@ -9,7 +9,7 @@ namespace Content.Client.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
-    public ProtoId<ItemStatusPrototype> MagazineItemStatus = "Magazine";
+    public static readonly ProtoId<ItemStatusPrototype> MagazineItemStatus = "Magazine";
 
     protected override void InitializeMagazine()
     {

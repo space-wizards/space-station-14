@@ -8,7 +8,7 @@ namespace Content.Client.Inventory;
 
 public sealed partial class VirtualItemSystem : SharedVirtualItemSystem
 {
-    public ProtoId<ItemStatusPrototype> VirtualItemItemStatus = "VirtualItem";
+    public static readonly ProtoId<ItemStatusPrototype> VirtualItemItemStatus = "VirtualItem";
 
     public override void Initialize()
     {

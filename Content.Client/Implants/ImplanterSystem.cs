@@ -11,7 +11,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
 {
     [Dependency] private SharedUserInterfaceSystem _uiSystem = default!;
 
-    public ProtoId<ItemStatusPrototype> ImplanterItemStatus = "Implanter";
+    public static readonly ProtoId<ItemStatusPrototype> ImplanterItemStatus = "Implanter";
 
     public override void Initialize()
     {

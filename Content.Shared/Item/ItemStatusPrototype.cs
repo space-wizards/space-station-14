@@ -19,6 +19,7 @@ public sealed partial class ItemStatusPrototype : IPrototype
 
     /// <summary>
     /// Defines which item statuses can be displayed alongside this status.
+    /// An empty list means this status is displayed by itself.
     /// </summary>
     [DataField]
     public List<ProtoId<ItemStatusPrototype>>? Whitelist;

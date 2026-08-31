@@ -18,8 +18,8 @@ public sealed partial class BatteryItemStatusSystem : EntitySystem
     [Dependency] private SharedBatterySystem _battery = default!;
     [Dependency] private PowerCellSystem _powerCell = default!;
 
-    public ProtoId<ItemStatusPrototype> BatteryItemStatus = "Battery";
-    public ProtoId<ItemStatusPrototype> CellItemStatus = "Cell";
+    public static readonly ProtoId<ItemStatusPrototype> BatteryItemStatus = "Battery";
+    public static readonly ProtoId<ItemStatusPrototype> CellItemStatus = "Cell";
 
     public override void Initialize()
     {

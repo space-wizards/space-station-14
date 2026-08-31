@@ -14,8 +14,8 @@ namespace Content.Client.Tools
     {
         [Dependency] private SpriteSystem _sprite = default!;
 
-        public ProtoId<ItemStatusPrototype> WelderItemStatus = "Welder";
-        public ProtoId<ItemStatusPrototype> MultipleToolItemStatus = "MultipleTool";
+        public static readonly ProtoId<ItemStatusPrototype> WelderItemStatus = "Welder";
+        public static readonly ProtoId<ItemStatusPrototype> MultipleToolItemStatus = "MultipleTool";
 
         public override void Initialize()
         {

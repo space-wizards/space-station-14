@@ -35,7 +35,7 @@ public sealed partial class TrayScannerSystem : SharedTrayScannerSystem
     [Dependency] private EntityQuery<TrayScannerComponent> _trayScannerQuery = default!;
     [Dependency] private EntityQuery<SubFloorHideComponent> _subFloorHideQuery = default!;
 
-    public ProtoId<ItemStatusPrototype> TrayScannerItemStatus = "TrayScanner";
+    public static readonly ProtoId<ItemStatusPrototype> TrayScannerItemStatus = "TrayScanner";
 
     private const string TRayAnimationKey = "trays";
     private const double AnimationLength = 0.3;

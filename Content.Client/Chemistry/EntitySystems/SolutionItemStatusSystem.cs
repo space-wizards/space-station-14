@@ -15,7 +15,7 @@ public sealed partial class SolutionItemStatusSystem : EntitySystem
 {
     [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
-    public ProtoId<ItemStatusPrototype> SolutionItemStatus = "Solution";
+    public static readonly ProtoId<ItemStatusPrototype> SolutionItemStatus = "Solution";
 
     public override void Initialize()
     {

@@ -9,7 +9,7 @@ namespace Content.Client.Atmos.EntitySystems;
 
 public sealed partial class GasTankSystem : SharedGasTankSystem
 {
-    public ProtoId<ItemStatusPrototype> GasTankItemStatus = "GasTank";
+    public static readonly ProtoId<ItemStatusPrototype> GasTankItemStatus = "GasTank";
 
     public override void Initialize()
     {

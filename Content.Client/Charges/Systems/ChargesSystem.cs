@@ -9,7 +9,7 @@ namespace Content.Client.Charges;
 
 public sealed partial class ChargesSystem : SharedChargesSystem
 {
-    public ProtoId<ItemStatusPrototype> ChargeItemStatus = "Charge";
+    public static readonly ProtoId<ItemStatusPrototype> ChargeItemStatus = "Charge";
 
     private Dictionary<EntityUid, int> _lastCharges = new();
     private Dictionary<EntityUid, int> _tempLastCharges = new();

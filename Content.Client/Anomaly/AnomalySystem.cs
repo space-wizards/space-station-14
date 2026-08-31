@@ -17,7 +17,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
     [Dependency] private FloatingVisualizerSystem _floating = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
-    public ProtoId<ItemStatusPrototype> AnomalyItemStatus = "Anomaly";
+    public static readonly ProtoId<ItemStatusPrototype> AnomalyItemStatus = "Anomaly";
 
     /// <inheritdoc/>
     public override void Initialize()
