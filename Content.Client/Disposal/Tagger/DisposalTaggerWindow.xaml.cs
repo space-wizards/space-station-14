@@ -14,15 +14,33 @@ public sealed partial class DisposalTaggerWindow : DefaultWindow
 {
     [Dependency] private IEntityManager _entManager = default!;
 
-    private readonly SharedDisposalHolderSystem _disposalHolder;
+    public event Action<string>? OnRouteChanged;
 
     public DisposalTaggerWindow()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        _disposalHolder = _entManager.System<SharedDisposalHolderSystem>();
+        var disposalHolder = _entManager.System<SharedDisposalHolderSystem>();
 
-        TagInput.IsValid = tag => _disposalHolder.TagIsValid(tag);
+        TagInput.IsValid = tag => disposalHolder.TagIsValid(tag);
+
+        Confirm.OnPressed += _ => NewRoute(TagInput.Text);
+        TagInput.OnTextEntered += args => NewRoute(args.Text);
+    }
+
+    public void StateUpdate(DisposalTaggerComponent comp)
+    {
+        TagInput.Text = comp.Tag;
+        TagInput.Editable = comp.Editable;
+
+        Confirm.Disabled = !comp.Editable;
+        Confirm.Text =
+            comp.Editable ? Loc.GetString("generic-confirm") : Loc.GetString("generic-disabled");
+    }
+
+    private void NewRoute(string route)
+    {
+        OnRouteChanged?.Invoke(route);
     }
 }
