@@ -17,6 +17,7 @@ public sealed partial class PlantCryoxadoneEntityEffectSystem : EntityEffectSyst
     [Dependency] private PlantHarvestSystem _plantHarvest = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private BotanySystem _botany = default!;
+
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantCryoxadone> args)
     {
         if (_plantHolder.IsDead(entity.Owner))

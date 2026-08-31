@@ -200,6 +200,5 @@
   components:
   # traits
   - PlantTraitSampled
-
   eventComponents:
   - PlantHolder

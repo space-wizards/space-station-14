@@ -179,6 +179,7 @@ public sealed partial class BotanySystem : EntitySystem
         _hands.TryPickupAnyHand(user, seedItem);
         return seedItem;
     }
+
     /// <summary>
     /// Reverts a planted plant back into a seed packet while preserving its genetics.
     /// </summary>
@@ -191,13 +192,13 @@ public sealed partial class BotanySystem : EntitySystem
         if (!_plant.TryGetTray(ent.Owner, out var tray))
             return false;
 
-        var plantProto = MetaData(ent.Owner).EntityPrototype;
-        if (plantProto == null)
+        if (!ProtoMan.TryIndex(ent.Comp2.PacketPrototype, out var seedProto)
+            || !seedProto.TryComp(out SeedComponent? seedComp, _componentFactory))
             return false;
 
         SpawnSeedPacket(
             ent.Comp2,
-            plantProto.ID,
+            seedComp.PlantProtoId,
             ent.Owner,
             Transform(tray.Owner).Coordinates,
             tray.Owner);
