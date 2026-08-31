@@ -18,14 +18,14 @@ public sealed partial class ForcedItemStatusEffectComponent : Component
     /// If the hands are unavailable, they will not be spawned.
     /// </summary>
     [DataField]
-    public List<EntProtoId> HandItems;
+    public List<EntProtoId> HandItems = new ();
 
     /// <summary>
     /// The entities to spawn in the inventory of the user.
     /// If the slots are unavailable, they will not be spawned.
     /// </summary>
     [DataField]
-    public Dictionary<SlotFlags, EntProtoId> InventoryItems;
+    public Dictionary<SlotFlags, EntProtoId> InventoryItems = new ();
 
     /// <summary>
     /// <see cref="EntityUid"/>s of the spawned items. Used to remove them when the status effect expires.
