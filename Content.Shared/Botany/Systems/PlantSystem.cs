@@ -246,7 +246,7 @@ public sealed partial class PlantSystem : EntitySystem
 
     /// <summary>
     /// Adjusts the production time of a plant component.
-    /// Must be at least 1. The number of age cycles after maturity before harvestable. The number of age cycles between harvests.
+    /// Must be at least 1.
     /// </summary>
     [PublicAPI]
     public void AdjustProduction(Entity<PlantComponent?> ent, float amount)

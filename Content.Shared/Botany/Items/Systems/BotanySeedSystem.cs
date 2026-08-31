@@ -64,8 +64,7 @@ public sealed partial class BotanySeedSystem : EntitySystem
         _popup.PopupCursor(Loc.GetString("plant-component-plant-success-popup",
                 ("seedName", name),
                 ("seedNoun", noun)),
-            args.User,
-            PopupType.Medium);
+            args.User);
 
         if (_labelQuery.TryComp(args.Seed, out var paperLabel))
             _itemSlots.TryEjectToHands(args.Seed, paperLabel.LabelSlot, args.User);

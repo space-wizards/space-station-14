@@ -192,15 +192,15 @@ public sealed partial class BotanySystem : EntitySystem
         if (!_plant.TryGetTray(ent.Owner, out var tray))
             return false;
 
-        if (!ProtoMan.TryIndex(ent.Comp2.PacketPrototype, out var seedProto)
-            || !seedProto.TryComp(out SeedComponent? seedComp, _componentFactory))
+        if (!ProtoMan.Resolve(ent.Comp2.PacketPrototype, out var seedProto)
+            || !seedProto.TryComp<SeedComponent>(out var seedComp, _componentFactory))
             return false;
 
         SpawnSeedPacket(
             ent.Comp2,
             seedComp.PlantProtoId,
             ent.Owner,
-            Transform(tray.Owner).Coordinates,
+            Transform(tray).Coordinates,
             tray.Owner);
 
         _plant.RemovePlant(ent.Owner);

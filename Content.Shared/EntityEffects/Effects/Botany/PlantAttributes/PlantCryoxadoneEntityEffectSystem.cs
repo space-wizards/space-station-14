@@ -35,6 +35,7 @@ public sealed partial class PlantCryoxadoneEntityEffectSystem : EntityEffectSyst
             _botany.TryRevertPlantToSeed(entity.Owner);
             return;
         }
+
         _plantHolder.AdjustsAge((entity.Owner, plantHolder), -deviation);
         _plantHarvest.ResetHarvestProgress((entity.Owner, plantHolder));
         _plant.ForceUpdate(entity.AsNullable());
