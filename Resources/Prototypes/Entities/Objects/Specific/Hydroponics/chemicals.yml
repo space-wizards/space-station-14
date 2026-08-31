@@ -12,6 +12,7 @@
           True: {state: "franks-fertilizer_open"}
           False: {state: "franks-fertilizer"}
   - type: Sprite
+    sprite: Objects/Specific/Hydroponics/Equipment/franks_fertilizer.rsi
     layers:
     - state: franks-fertilizer
       map: ["enum.OpenableVisuals.Layer"]
@@ -19,4 +20,4 @@
     solution:
       reagents:
       - ReagentId: MutagenicFertilizer
-        Quantity: 60
+        Quantity: 120
