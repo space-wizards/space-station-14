@@ -104,6 +104,13 @@
   - type: MutedStatusEffect
     speakPopup: ventriloquist-puppet-cant-speak
 
+- type: entity
+  parent: [ MobStatusEffectBase, MobStatusEffectDebuff ]
+  id: StatusEffectChangelingMuted
+  name: imperceptibly muted
+  components:
+  - type: MutedStatusEffect
+
 # Blurs your vision and makes you randomly fall asleep
 - type: entity
   parent: MobStatusEffectDebuff

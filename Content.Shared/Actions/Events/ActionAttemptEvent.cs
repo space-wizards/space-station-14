@@ -1,3 +1,5 @@
+using Content.Shared.Popups;
+
 namespace Content.Shared.Actions.Events;
 
 /// <summary>
@@ -5,4 +7,4 @@ namespace Content.Shared.Actions.Events;
 /// Allowed to have side effects like modifying the action components.
 /// </summary>
 [ByRefEvent]
-public record struct ActionAttemptEvent(EntityUid User, bool Cancelled = false);
+public record struct ActionAttemptEvent(EntityUid User, bool Cancelled = false, string? Reason = null, PopupType Type = PopupType.SmallCaution);
