@@ -5,15 +5,11 @@
       - !type:ExcludeEntitiesFromContextCondition
     children:
     - id: TriggerMusic
-      weight: 1
     - id: TriggerHeat
-      weight: 1
     - id: TriggerCold
       weight: 0.5
     - id: TriggerNoOxygen
-      weight: 1
     - id: TriggerWater
-      weight: 1
     - id: TriggerCO2
       weight: 0.5
     - id: TriggerPlasma
@@ -27,17 +23,12 @@
     - id: TriggerFrezon
       weight: 0.1
     - id: TriggerRadiation
-      weight: 1
     - id: TriggerPressureHigh
       weight: 0.5
     - id: TriggerPressureLow
-      weight: 1
     - id: TriggerExamine
-      weight: 1
     - id: TriggerBruteDamage
-      weight: 1
-    #- id: TriggerInteraction
-    #  weight: 1 #this one interferes with activating artifact AND brute dmg!
+    #- id: TriggerInteraction #this one interferes with activating artifact AND brute dmg!
     - id: TriggerWrenching
       weight: 0.5
     - id: TriggerPrying
@@ -49,29 +40,20 @@
     - id: TriggerTimer
       weight: 0.25
     - id: TriggerBlood
-      weight: 1
     - id: TriggerDeath
-      weight: 1
     - id: TriggerMagnet
-      weight: 1
     - id: TriggerConsumeMoney
-      weight: 1
     - id: TriggerConsumeKnowledge
       weight: 0.25
     - id: TriggerConsumeCarbs
-      weight: 1
     - id: TriggerConsumeMeat
       weight: 0.5
     - id: TriggerConsumeProduce
       weight: 0.5
     - id: TriggerInteractStamp
-      weight: 1
     - id: TriggerInteractShock
-      weight: 1
     - id: TriggerAttackParticleAnomaly
-      weight: 1
     - id: TriggerAttackStaminaDamage
-      weight: 1
     - id: TriggerAttackLaser
       weight: 0.5
     - id: TriggerAttackParticleEngine
@@ -86,28 +68,24 @@
     - !type:NestedSelector
       tableId: XenoArtifactTriggerDefaultTable
       weight: 35
-    - !type:NestedSelector
-      tableId: XenoArtifactTriggerHandheldOnlyTable
+    - !type:GroupSelector # Handheld exclusive
       weight: 2
-
-- type: entityTable
-  id: XenoArtifactTriggerHandheldOnlyTable
-  table: !type:GroupSelector
-    children:
-    - id: TriggerThrow
-      weight: 1
-    - id: TriggerMicrowave
-      weight: 1
+      children:
+      - id: TriggerThrow
+      - id: TriggerMicrowave
 
 - type: entity
+  abstract: true
   id: BaseXenoArtifactTrigger
   name: Unknown
   categories: [XenoArtifactTriggers]
-  abstract: true
+
+#region Standard triggers
 
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerMusic
+  name: Harmonical sound vibrations
   components:
   - type: XATCompNearby
     requireComponentWithName: ActiveInstrument
@@ -116,6 +94,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerHeat
+  name: High temperature gas
   components:
   - type: XATTemperature
     targetTemperature: 373
@@ -132,6 +111,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerCold
+  name: Low temperature gas
   components:
   - type: XATTemperature
     targetTemperature: 255
@@ -143,6 +123,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerNoOxygen
+  name: Oxygen-free environment
   components:
   - type: XATGas
     targetGas: Oxygen
@@ -152,6 +133,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerWater
+  name: Water
   components:
   - type: XATGas
     targetGas: WaterVapor
@@ -162,6 +144,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerCO2
+  name: Carbon dioxide
   components:
   - type: XATGas
     targetGas: CarbonDioxide
@@ -172,6 +155,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerPlasma
+  name: Non-solid plasma
   components:
   - type: XATGas
     targetGas: Plasma
@@ -182,6 +166,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerTritium
+  name: Tritium
   components:
   - type: XATGas
     targetGas: Tritium
@@ -192,6 +177,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerAmmonia
+  name: Ammonia
   components:
   - type: XATGas
     targetGas: Ammonia
@@ -202,6 +188,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerN2O
+  name: Nitrous oxide
   components:
   - type: XATGas
     targetGas: NitrousOxide
@@ -212,6 +199,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerFrezon
+  name: Frezon
   components:
   - type: XATGas
     targetGas: Frezon
@@ -222,20 +210,16 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerRadiation
+  name: Heavy-ion radiation
   components:
   - type: XATDamageThresholdReached
     typesNeeded:
       Radiation: 20
 
 - type: entity
-  id: TriggerMicrowave
   parent: BaseXenoArtifactTrigger
-  components:
-  - type: XATMicrowave
-
-- type: entity
   id: TriggerPressureHigh
-  parent: BaseXenoArtifactTrigger
+  name: High pressure
   components:
   - type: XATPressure
     maxPressureThreshold: 385
@@ -243,6 +227,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerPressureLow
+  name: Low pressure
   components:
   - type: XATPressure
     minPressureThreshold: 50
@@ -250,12 +235,14 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerExamine
+  name: Close inspection
   components:
   - type: XATExamine
 
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerBruteDamage
+  name: Physical damage
   components:
   - type: XATDamageThresholdReached
     groupsNeeded:
@@ -264,12 +251,14 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerInteraction
+  name: Physical interaction
   components:
   - type: XATInteraction
 
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerWrenching
+  name: Tightening
   components:
   - type: XATToolUse
     requiredTool: Anchoring
@@ -279,6 +268,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerPrying
+  name: Prying
   components:
   - type: XATToolUse
     requiredTool: Prying
@@ -288,6 +278,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerScrewing
+  name: Screwing
   components:
   - type: XATToolUse
     requiredTool: Screwing
@@ -297,6 +288,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerPulsing
+  name: Pulsing
   components:
   - type: XATToolUse
     requiredTool: Pulsing
@@ -306,6 +298,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerTimer
+  name: Regular self-activation
   components:
   - type: XATTimer
     possibleDelayInSeconds:
@@ -315,6 +308,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerBlood
+  name: Blood
   components:
   - type: XATReactive
     reagents:
@@ -329,25 +323,22 @@
 
 - type: entity
   parent: BaseXenoArtifactTrigger
-  id: TriggerThrow
-  components:
-  - type: XATItemLand
-
-- type: entity
-  parent: BaseXenoArtifactTrigger
   id: TriggerDeath
+  name: Death
   components:
   - type: XATDeath
 
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerMagnet
+  name: Magnetic waves
   components:
   - type: XATMagnet
 
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerConsumeMoney
+  name: Bribery
   components:
   - type: XATInteractWith
     interactionCount:
@@ -363,6 +354,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerConsumeKnowledge
+  name: Knowledge intake
   components:
   - type: XATInteractWith
     destroyAfter: true
@@ -377,6 +369,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerConsumeCarbs
+  name: Carbohydrate intake
   components:
   - type: XATInteractWith
     destroyAfter: true
@@ -397,6 +390,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerConsumeMeat
+  name: Protein intake
   components:
   - type: XATInteractWith
     destroyAfter: true
@@ -416,6 +410,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerConsumeProduce
+  name: Healthy produce intake
   components:
   - type: XATInteractWith
     destroyAfter: true
@@ -435,6 +430,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerInteractStamp
+  name: Bureaucratic approval
   components:
   - type: XATInteractWith
     interactionTime: 0.5
@@ -450,6 +446,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerInteractShock
+  name: Electrical shock
   components:
   - type: XATShock
   - type: XATDamageThresholdReached
@@ -459,6 +456,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerAttackParticleEngine
+  name: Singularity-Effecting particles
   components:
   - type: XATInteractAttack
     whitelist:
@@ -468,6 +466,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerAttackParticleAnomaly
+  name: Anomaly-Effecting particles
   components:
   - type: XATInteractAttack
     whitelist:
@@ -477,6 +476,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerAttackStaminaDamage
+  name: Organic exhaustion
   components:
   - type: XATStaminaDamageThresholdReached
     damageNeeded: 8 # half a practice disabler capacity
@@ -484,6 +484,7 @@
 - type: entity
   parent: BaseXenoArtifactTrigger
   id: TriggerAttackLaser
+  name: High-Intensity photon impacts
   components:
   - type: XATInteractAttack
     interactionCount:
@@ -493,3 +494,22 @@
       - LaserProjectile
       tags:
       - EmitterBolt
+
+#endregion
+#region Handheld triggers
+
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: TriggerMicrowave
+  name: Microwave radiation
+  components:
+  - type: XATMicrowave
+
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: TriggerThrow
+  name: Being thrown
+  components:
+  - type: XATItemLand
+
+#endregion

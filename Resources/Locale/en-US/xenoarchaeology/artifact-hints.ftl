@@ -22,65 +22,6 @@ artifact-effect-hint-polymorph = Transmogrificational activity
 artifact-effect-hint-magnet = Magnetic waves
 artifact-effect-hint-visual = Visual distortions
 
-# the triggers should be more obvious than the effects
-# gives people an idea of what to do: don't be too specific (i.e. no "welders")
-
-artifact-trigger-hint-electricity = Electricity
-artifact-trigger-hint-heat = High temperatures
-artifact-trigger-hint-physical = Physical trauma
-artifact-trigger-hint-tool = Tool usage
-artifact-trigger-hint-music = Sonic vibrations
-artifact-trigger-hint-water = Hydro-reactive
-artifact-trigger-hint-blood = Reaction with hematological fluid
-artifact-trigger-hint-magnet = Magnetic waves
-artifact-trigger-hint-death = Life essence
-artifact-trigger-hint-radiation = Radiation
-artifact-trigger-hint-pressure = Extreme pressure
-artifact-trigger-hint-regular-gases = Standard atmospheric gases
-artifact-trigger-hint-plasma = Gaseous plasma
-artifact-trigger-hint-land = Active deceleration
-artifact-trigger-hint-examine = Examination
-artifact-trigger-hint-medical = Therapeutic chemicals
-
-ent-TriggerMusic = Harmonical sound vibrations
-ent-TriggerHeat = High temperature gas
-ent-TriggerCold = Low temperature gas
-ent-TriggerNoOxygen = Oxygen-free environment
-ent-TriggerWater = Water
-ent-TriggerCO2 = Carbon dioxide
-ent-TriggerPlasma = Non-solid plasma
-ent-TriggerTritium = Tritium
-ent-TriggerAmmonia = Ammonia
-ent-TriggerN2O = Nitrous oxide
-ent-TriggerFrezon = Frezon
-ent-TriggerRadiation = Heavy-ion radiation
-ent-TriggerMicrowave = Microwave radiation
-ent-TriggerBruteDamage = Physical damage
-ent-TriggerInteraction = Physical interaction
-ent-TriggerWrenching = Tightening
-ent-TriggerPrying = Prying
-ent-TriggerScrewing = Screwing
-ent-TriggerPulsing = Pulsing
-ent-TriggerPressureLow = Low pressure
-ent-TriggerPressureHigh = High pressure
-ent-TriggerExamine = Close inspection
-ent-TriggerTimer = Regular self-activation
-ent-TriggerBlood = Blood
-ent-TriggerThrow = Being thrown
-ent-TriggerDeath = Death
-ent-TriggerMagnet = Magnetic waves
-ent-TriggerConsumeMoney = Bribery
-ent-TriggerConsumeKnowledge = Knowledge Intake
-ent-TriggerConsumeCarbs = Carbohydrate Intake
-ent-TriggerConsumeMeat = Protein Intake
-ent-TriggerConsumeProduce = Healthy Produce Intake
-ent-TriggerInteractStamp = Bureaucratic Approval
-ent-TriggerInteractShock = Electrical Shock
-ent-TriggerAttackParticleEngine = Singularity-Effecting Particles
-ent-TriggerAttackParticleAnomaly = Anomaly-Effecting Particles
-ent-TriggerAttackStaminaDamage = Organic Exhaustion
-ent-TriggerAttackLaser = High-Intensity photon impacts
-
 ### Description hints
 xenoarch-trigger-examine-wrenching = There's a loose bit spinning around.
 xenoarch-trigger-examine-prying = There's a panel coming up from the surface.
