@@ -96,7 +96,6 @@ public sealed partial class SignalTimerSystem : EntitySystem
             return;
 
         ent.Comp.Delay = Math.Min(args.Delay.TotalSeconds, ent.Comp.MaxDuration);
-        _appearance.SetData(ent, TextScreenVisuals.TargetTime, _gameTiming.CurTime + TimeSpan.FromSeconds(ent.Comp.Delay));
     }
 
     /// <summary>
