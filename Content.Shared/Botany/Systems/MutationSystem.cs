@@ -18,9 +18,6 @@ namespace Content.Shared.Botany.Systems;
 /// </summary>
 public sealed partial class PlantMutationSystem : EntitySystem
 {
-    private static readonly ProtoId<RandomPlantMutationListPrototype> RandomPlantMutations = "RandomPlantMutations";
-    private RandomPlantMutationListPrototype _randomMutations = default!;
-
     [Dependency] private INetManager _net = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private BotanySystem _botany = default!;
@@ -32,30 +29,35 @@ public sealed partial class PlantMutationSystem : EntitySystem
     [Dependency] private EntityQuery<PlantChemicalsComponent> _chemicalsQuery = default!;
     [Dependency] private EntityQuery<PlantComponent> _plantQuery = default!;
 
-    public override void Initialize()
-    {
-        _randomMutations = ProtoMan.Index(RandomPlantMutations);
-    }
-
     /// <summary>
+    /// For each mutation table, go through each mutation.
     /// For each random mutation, see if it occurs on this plant this check.
     /// </summary>
     [PublicAPI]
-    public void CheckRandomMutations(Entity<PlantComponent?> ent, float severity)
+    public void CheckRandomMutations(Entity<PlantComponent?> ent, ProtoId<RandomPlantMutationListPrototype> mutationTableId, float severity)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
-        foreach (var mutation in _randomMutations.Mutations)
-        {
-            if (Random(Math.Min(mutation.BaseOdds * severity, 1.0f)))
-            {
-                if (mutation.AppliesToPlant)
-                    _entityEffects.TryApplyEffect(ent, mutation.Effect);
+        if (!ProtoMan.TryIndex(mutationTableId, out var mutationTable))
+            return;
 
-                // Stat adjustments do not persist by being an attached effect, they just change the stat.
-                if (mutation.Persists && ent.Comp.Mutations.All(m => m.Name != mutation.Name))
-                    ent.Comp.Mutations.Add(mutation);
+        foreach (var mutation in mutationTable.Mutations)
+        {
+            var triggers = 0;
+            while (mutation.BaseOdds * severity > triggers) // If the odds are greater than one, potentially trigger the mutation multiple times
+            {
+                var odds = (mutation.BaseOdds * severity) - triggers;
+                triggers++;
+                if (Random(Math.Min(odds, 1.0f)))
+                {
+                    if (mutation.AppliesToPlant)
+                        _entityEffects.TryApplyEffect(ent, mutation.Effect);
+
+                    // Stat adjustments do not persist by being an attached effect, they just change the stat.
+                    if (mutation.Persists && ent.Comp.Mutations.All(m => m.Name != mutation.Name))
+                        ent.Comp.Mutations.Add(mutation);
+                }
             }
         }
     }
