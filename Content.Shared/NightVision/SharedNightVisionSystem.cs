@@ -25,7 +25,6 @@ public abstract partial class SharedNightVisionSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-
     private void OnRefreshStatusEffect(Entity<NightVisionComponent> ent, ref StatusEffectRelayedEvent<RefreshNightVisionEvent> args)
     {
         if (!ent.Comp.Enabled)
