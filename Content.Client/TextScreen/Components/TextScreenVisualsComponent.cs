@@ -10,14 +10,13 @@ namespace Content.Client.TextScreen.Components;
 /// Can show scrolling text, timers, or other specific-use information (e.g. arrivals timer)
 /// </summary>
 /// <remarks>
-/// Pausing handled manually due to non-trivial TextScreenRow logic.
+/// Pausing handled manually due to manual TextScreenRow logic.
 /// </remarks>
 [RegisterComponent, Access(typeof(TextScreenVisualizerSystem))]
 public sealed partial class TextScreenVisualsComponent : Component
 {
     /// <summary>
     /// 1/32 - the size of a pixel in meters.
-    /// NOTE: the magical EyeManager size isn't available
     /// </summary>
     public const float PixelSize = 1f / EyeManager.PixelsPerMeter;
 
@@ -33,9 +32,6 @@ public sealed partial class TextScreenVisualsComponent : Component
     /// <summary>
     /// The current color being drawn on the screen.
     /// </summary>
-    /// <remarks>
-    /// 15,151,251 is the old ss13 color, from tg
-    /// </remarks>
     [ViewVariables]
     public Color CurrentColor;
 
