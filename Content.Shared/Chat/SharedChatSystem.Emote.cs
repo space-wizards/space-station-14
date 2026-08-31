@@ -221,7 +221,7 @@ public abstract partial class SharedChatSystem
     private bool TryInvokeEmoteEvent(EntityUid uid, EmotePrototype proto)
     {
         var beforeEv = new BeforeEmoteEvent(uid, proto);
-        RaiseLocalEvent(uid, ref beforeEv);
+        RaiseLocalEvent(uid, ref beforeEv, true);
 
         if (beforeEv.Cancelled)
         {

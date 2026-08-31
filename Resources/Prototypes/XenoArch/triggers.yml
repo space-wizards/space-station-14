@@ -22,6 +22,7 @@
     TriggerPrying: 0.5
     TriggerScrewing: 0.5
     TriggerPulsing: 0.5
+    TriggerHonking: 0.25
     TriggerTimer: 0.25
     TriggerBlood: 1
     TriggerThrow: 1
@@ -38,6 +39,8 @@
     TriggerAttackParticleAnomaly: 1
     TriggerAttackStaminaDamage: 1
     TriggerAttackLaser: 0.5
+    TriggerEmoteDistress: 0.1
+    TriggerEmoteChitter: 0.1
 
 - type: xenoArchTrigger
   id: TriggerMusic
@@ -241,6 +244,18 @@
     examineText: xenoarch-trigger-examine-pulsing
 
 - type: xenoArchTrigger
+  id: TriggerHonking
+  tip: xenoarch-trigger-tip-honking
+  components:
+  - type: XATToolUse
+    requiredTool: Honking
+  - type: XATEmote
+    emotes:
+    - Honk
+  - type: XATExaminableText
+    examineText: xenoarch-trigger-examine-honking
+
+- type: xenoArchTrigger
   id: TriggerTimer
   tip: xenoarch-trigger-tip-timer
   components:
@@ -433,3 +448,22 @@
       - LaserProjectile
       tags:
       - EmitterBolt
+
+- type: xenoArchTrigger
+  id: TriggerEmoteDistress
+  tip: xenoarch-trigger-tip-distress
+  components:
+  - type: XATEmote #no deathgasp to avoid mixing with death trigger
+    emotes:
+    - Scream
+    - Gasp
+    - Crying
+    - Whine
+
+- type: xenoArchTrigger
+  id: TriggerEmoteChitter
+  tip: xenoarch-trigger-tip-chitter
+  components:
+  - type: XATEmote
+    emotes:
+    - Chitter
