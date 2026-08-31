@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: OptionsVisualizerTest
   suffix: DEBUG
   components:
@@ -18,4 +18,3 @@
         data: { state: motion }
       - options: [Test, ReducedMotion]
         data: { state: both }
-
