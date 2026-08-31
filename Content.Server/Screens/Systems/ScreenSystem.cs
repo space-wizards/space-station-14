@@ -27,11 +27,11 @@ public sealed partial class ScreenSystem : EntitySystem
         if (text == null)
             return;
 
-        // don't allow text updates if there's an active timer
-        // (and just check here so the server doesn't have to track them)
         if (!_appearanceQuery.TryComp(ent, out var appearance))
             return;
 
+        // don't allow text updates if there's an active timer
+        // (and just check here so the server doesn't have to track them)
         if (_appearance.TryGetData(ent, TextScreenVisuals.TargetTime, out TimeSpan target, appearance)
             && target > _gameTiming.CurTime)
             return;
@@ -40,8 +40,7 @@ public sealed partial class ScreenSystem : EntitySystem
         if (screenMap == null)
             return;
 
-        var argsMap = Transform(args.Sender).MapUid;
-        if (screenMap != argsMap)
+        if (screenMap != Transform(args.Sender).MapUid)
             return;
 
         _appearance.SetData(ent, TextScreenVisuals.DefaultText, text, appearance);

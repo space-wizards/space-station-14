@@ -134,7 +134,7 @@ public sealed partial class SignalTimerSystem : EntitySystem
         RemComp<ActiveSignalTimerComponent>(ent);
 
         _audio.PlayPvs(ent.Comp.DoneSound, ent);
-        _deviceLink.InvokePort(ent, ent.Comp.TriggerPort);
+        _deviceLink.InvokePort(ent.Owner, ent.Comp.TriggerPort);
 
         if (_ui.HasUi(ent, SignalTimerUiKey.Key))
         {
@@ -165,7 +165,7 @@ public sealed partial class SignalTimerSystem : EntitySystem
             _appearance.SetData(ent, TextScreenVisuals.ScreenText, string.Empty, appearance);
         }
 
-        _deviceLink.InvokePort(ent, ent.Comp.StartPort);
+        _deviceLink.InvokePort(ent.Owner, ent.Comp.StartPort);
     }
     #endregion Public API
 
