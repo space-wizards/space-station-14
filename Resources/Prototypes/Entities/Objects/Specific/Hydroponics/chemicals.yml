@@ -1,0 +1,22 @@
+- type: entity
+  parent: [ReagentPacket, ItemHeftyBase]
+  id: ReagentContainerMutagenicFertilizer
+  name: Frank's Funky Fertilizer
+  description: A sack of questionably sourced fertilizer. Frank guarantees results, but not which results.
+  components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "franks-fertilizer_open"}
+          False: {state: "franks-fertilizer"}
+  - type: Sprite
+    layers:
+    - state: franks-fertilizer
+      map: ["enum.OpenableVisuals.Layer"]
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: MutagenicFertilizer
+        Quantity: 60
