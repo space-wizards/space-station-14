@@ -34,7 +34,7 @@ public sealed partial class SignalTimerComponent : Component
     /// Default max width of a label (how many letters can this render?)
     /// </summary>
     [DataField]
-    public int MaxLength = 5;
+    public int MaxLength = 16;
 
     /// <summary>
     /// The port that gets signaled when the timer triggers.

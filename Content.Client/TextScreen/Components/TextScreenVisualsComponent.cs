@@ -1,7 +1,6 @@
 using System.Numerics;
 using Content.Shared.TextScreen.Systems;
 using Robust.Client.Graphics;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Client.TextScreen.Components;
@@ -102,8 +101,7 @@ public sealed partial class TextScreenVisualsComponent : Component
 /// <summary>
 /// All information about a given row of text.
 /// </summary>
-[DataRecord]
-[Serializable]
+[DataRecord, Serializable]
 public partial struct TextScreenRow()
 {
     /// <summary>

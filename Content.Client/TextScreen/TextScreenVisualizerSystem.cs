@@ -1,17 +1,11 @@
 using System.Numerics;
 using Content.Client.TextScreen.Components;
-using Content.Client.Trigger.Components;
 using Content.Shared.TextScreen.Components;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.TextScreen.Systems;
-
-// TODO!
-// GO BACK TO APPEARANCE DATA!
-// should be able to replace AfterAutoHandleState handlers
 
 /// <summary>
 /// The TextScreenSystem draws text in the game world using 3x5 sprite states for each character.
@@ -110,25 +104,20 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
         var timerQuery = EntityQueryEnumerator<TextScreenTimerVisualsComponent>();
         while (timerQuery.MoveNext(out var uid, out var timer))
         {
-            if (timer.TargetTime == null || timer.TargetTime <= _timing.CurTime)
-            {
-                if (timer.ScreenValue == 0)
-                    continue;
+            if (timer.TargetTime == null)
+                continue;
 
+            if (timer.TargetTime <= _timing.CurTime)
+            {
                 SetTextToDisplay(uid, timer.FinishedText);
                 UpdateTimerSprite((uid, timer), false);
+                timer.TargetTime = null;
                 timer.ScreenValue = 0;
             }
             else
             {
                 int screenValue = ConvertTimeToScreenValue(timer.TargetTime.Value, _timing.CurTime);
-                if (screenValue == 0)
-                {
-                    SetTextToDisplay(uid, timer.FinishedText);
-                    UpdateTimerSprite((uid, timer), false);
-                    timer.ScreenValue = 0;
-                }
-                else if (screenValue != timer.ScreenValue)
+                if (screenValue != timer.ScreenValue)
                 {
                     var timerText = GetTimerString((uid, timer), screenValue);
                     SetTextToDisplay(uid, timerText);
@@ -171,13 +160,15 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
     {
         if (targetTime <= curTime)
             return 0;
-        var milliseconds = (targetTime - curTime).TotalMilliseconds;
-        if (milliseconds < 10_000) // 9999, 99:99, the largest value that could fit in two fields.
-            return (int)milliseconds;
-        else if (milliseconds <= TimeSpan.MillisecondsPerHour)
-            return targetTime.Minutes * 100 + targetTime.Seconds;
+
+        var difference = targetTime - curTime;
+        var millis = difference.TotalMilliseconds;
+        if (millis < 100_000) // 9999 centiseconds, 99:99, the largest value that could fit in two fields.
+            return (int)millis / 10;
+        else if (millis < TimeSpan.MillisecondsPerHour)
+            return difference.Minutes * 100 + difference.Seconds;
         else
-            return targetTime.Hours * 100 + targetTime.Minutes;
+            return difference.Hours * 100 + difference.Minutes;
     }
 
     /// <summary>
@@ -258,15 +249,17 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
         if (!_spriteQuery.TryComp(ent, out var sprite))
             return;
 
+        var textRsiPath = new ResPath(TextPath);
         for (var rowIdx = 0; rowIdx < ent.Comp.RowData.Length; rowIdx++)
         {
             var maxIndex = ent.Comp.ScrollEnabled ? ent.Comp.RowLength + 1 : ent.Comp.RowLength;
             var textScreenRow = ent.Comp.RowData[rowIdx];
 
-            for (var chr = 0; chr <= maxIndex; chr++)
+            for (var chr = 0; chr < maxIndex; chr++)
             {
                 var newKey = TextMapKey + rowIdx + chr;
-                SpriteSystem.LayerMapReserve((ent, sprite), newKey);
+                var layerIndex = SpriteSystem.LayerMapReserve((ent, sprite), newKey);
+                SpriteSystem.LayerSetRsi((ent, sprite), layerIndex, textRsiPath, null);
                 textScreenRow.Layers.Add((newKey, null));
             }
         }
@@ -281,7 +274,7 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
     protected override void OnAppearanceChange(EntityUid uid, TextScreenVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         bool anyChange = false;
-        if (!args.TryGetData<Color>(TextScreenVisuals.Color, out var color)
+        if (args.TryGetData(TextScreenVisuals.Color, out Color color)
             && color != comp.Color)
         {
             comp.Color = color;
@@ -331,30 +324,6 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
         }
     }
 
-    /// <summary>
-    /// Handles updates from the server.
-    /// </summary>
-    [SubscribeLocalEvent]
-    private void OnAutoHandleState(Entity<TextScreenTimerVisualsComponent> ent, ref AppearanceChangeEvent args)
-    {
-        var newScreenValue = 0;
-
-        if (ent.Comp.TargetTime != null)
-            newScreenValue = ConvertTimeToScreenValue(ent.Comp.TargetTime.Value, _timing.CurTime);
-
-        if (newScreenValue == 0)
-        {
-            SetTextToDisplay(ent.Owner, ent.Comp.FinishedText);
-            ent.Comp.ScreenValue = 0;
-        }
-        else
-        {
-            var newScreenText = GetTimerString(ent, newScreenValue);
-            SetTextToDisplay(ent.Owner, newScreenText);
-            ent.Comp.ScreenValue = newScreenValue;
-        }
-    }
-
     private string GetTimerString(Entity<TextScreenTimerVisualsComponent> ent, int newScreenValue)
     {
         var strings = ent.Comp.RunningText.Split("\n");
@@ -384,7 +353,6 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
         }
 
         var texts = ent.Comp.TextToDisplay?.Split("\n") ?? [];
-        var rsiPath = new ResPath(TextPath);
 
         for (var i = 0; i < ent.Comp.RowData.Length; i++)
         {
@@ -397,7 +365,7 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
                     var layerTuple = rowData.Layers[j];
 
                     if (SpriteSystem.LayerMapTryGet((ent, sprite), layerTuple.Key, out var layerIndex, false))
-                        SpriteSystem.LayerSetRsi((ent, sprite), layerIndex, rsiPath, null);
+                        SpriteSystem.LayerSetRsiState((ent, sprite), layerIndex, null);
 
                     rowData.Layers[j] = new(layerTuple.Key, null);
                 }
@@ -448,6 +416,7 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
 
         // TODO: offset layers, draw states onto their respective layers based on the input string.
         var maxCharIndex = int.Min(rowData.Layers.Count, rowData.Text.Length);
+        var subCharOffset = rowData.ScrollPosition % CharWidth;
         for (var j = 0; j < maxCharIndex; j++)
         {
             var layerTuple = rowData.Layers[j];
@@ -459,7 +428,7 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
             {
                 SpriteSystem.LayerSetRsiState(sprite, layerIndex, newState);
                 SpriteSystem.LayerSetOffset(sprite, layerIndex, screen.TextOffset + Vector2.Multiply(
-                        new Vector2((j - maxCharIndex / 2f + 0.5f) * CharWidth, -rowIndex * screen.RowOffset),
+                        new Vector2((j - maxCharIndex / 2f + 0.5f) * CharWidth - subCharOffset, -rowIndex * screen.RowOffset),
                         TextScreenVisualsComponent.PixelSize));
             }
 
@@ -474,14 +443,6 @@ public sealed partial class TextScreenVisualizerSystem : VisualizerSystem<TextSc
 
             rowData.Layers[j] = new(layerTuple.Key, null);
         }
-    }
-
-    /// <summary>
-    /// Adds <paramref name="time"/> to the row's scrolling timer.
-    /// </summary>
-    private void AddTime(ref TextScreenRow row, TimeSpan time)
-    {
-        row.NextScroll += time;
     }
 
     private void UpdateTimerSprite(Entity<TextScreenTimerVisualsComponent> ent, bool running)

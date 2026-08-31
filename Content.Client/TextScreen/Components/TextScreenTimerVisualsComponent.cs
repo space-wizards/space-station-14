@@ -8,7 +8,7 @@ namespace Content.Shared.TextScreen.Components;
 /// Entities must have <see cref="TextScreenVisualsComponent"/> to work!
 /// </summary>
 [RegisterComponent, Access(typeof(TextScreenVisualizerSystem))]
-[AutoGenerateComponentState, AutoGenerateComponentPause]
+[AutoGenerateComponentPause]
 public sealed partial class TextScreenTimerVisualsComponent : Component
 {
     /// <summary>

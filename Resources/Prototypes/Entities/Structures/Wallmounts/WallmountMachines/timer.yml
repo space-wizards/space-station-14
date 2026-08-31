@@ -66,6 +66,7 @@
     finishedState: finished
   - type: TextScreenVisuals
     color: FloralWhite
+    scrollEnabled: true
     rowData: [{}]
     frameState:
       state: outer-frame
