@@ -457,6 +457,7 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: CrewMonitor
+    prefix: device-address-prefix-crew-monitor
   - type: WirelessNetworkConnection
     range: 1200
   - type: AmbientMusicMarkerMedical
@@ -1405,6 +1406,7 @@
     deviceNetId: Wired
     receiveFrequencyId: SurveillanceCamera
     transmitFrequencyId: SurveillanceCamera
+    prefix: device-address-prefix-camera-monitor
   - type: WiredNetworkConnection
   - type: DeviceNetworkRequiresPower
   - type: SurveillanceCameraMonitor
@@ -1444,6 +1446,7 @@
     deviceNetId: Wireless
     receiveFrequencyId: SurveillanceCamera
     transmitFrequencyId: SurveillanceCamera
+    prefix: device-address-prefix-camera-monitor
   - type: WirelessNetworkConnection
     range: 200
   - type: DeviceNetworkRequiresPower
