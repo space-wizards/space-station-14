@@ -3769,3 +3769,12 @@ Entries:
   id: 10056
   time: '2026-08-28T15:41:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/45673
+- author: ScarKy0
+  changes:
+  - message: On-Station antagonists (Traitor, Ling, Sleeper, etc) can no longer roll Off-Station antagonists (Nukie, Ninja, Clone, etc) as objective targets.
+    type: Tweak
+  - message: Changelings can no longer have the same target for their "Kill" and "Escape As" objectives.
+    type: Tweak
+  id: 10057
+  time: '2026-08-31T09:34:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45692
