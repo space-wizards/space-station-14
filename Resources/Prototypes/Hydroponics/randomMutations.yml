@@ -260,6 +260,19 @@
       effect: !type:PlantMutateHarvest
 
 - type: randomPlantMutationList
+  id: FarmingPlantMutations
+  ignoreMutationMod: false
+  mutations:
+  - name: MutateFarmingChemicals
+    baseOdds: 0.072
+    persists: false
+    effect: !type:PlantMutateChemicals
+      randomPickBotanyReagent:
+      - RandomPickBotanyFarmingReagent
+
+
+
+- type: randomPlantMutationList
   id: EvilPlantMutations
   ignoreMutationMod: true
   mutations:
