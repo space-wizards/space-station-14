@@ -91,22 +91,21 @@ public sealed partial class DragonRiftSystem : EntitySystem
             {
                 comp.SpawnAccumulator -= comp.SpawnCooldown;
 
-                var ent = EntityUid.Invalid;
                 foreach (var spawn in _entityTable.GetSpawns(comp.Spawn))
                 {
-                    ent = Spawn(spawn, xform.Coordinates);
-                }
+                    var ent = Spawn(spawn, xform.Coordinates);
 
-                // Update their look to match the leader.
-                if (TryComp<RandomSpriteComponent>(comp.Dragon, out var randomSprite))
-                {
-                    var spawnedSprite = EnsureComp<RandomSpriteComponent>(ent);
-                    _serManager.CopyTo(randomSprite, ref spawnedSprite, notNullableOverride: true);
-                    Dirty(ent, spawnedSprite);
-                }
+                    // Update their look to match the leader.
+                    if (TryComp<RandomSpriteComponent>(comp.Dragon, out var randomSprite))
+                    {
+                        var spawnedSprite = EnsureComp<RandomSpriteComponent>(ent);
+                        _serManager.CopyTo(randomSprite, ref spawnedSprite, notNullableOverride: true);
+                        Dirty(ent, spawnedSprite);
+                    }
 
-                if (comp.Dragon != null)
-                    _npc.SetBlackboard(ent, NPCBlackboard.FollowTarget, new EntityCoordinates(comp.Dragon.Value, Vector2.Zero));
+                    if (comp.Dragon != null)
+                        _npc.SetBlackboard(ent, NPCBlackboard.FollowTarget, new EntityCoordinates(comp.Dragon.Value, Vector2.Zero));
+                }
             }
         }
     }
