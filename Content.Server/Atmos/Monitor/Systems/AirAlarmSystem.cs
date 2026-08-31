@@ -409,14 +409,12 @@ public sealed partial class AirAlarmSystem : EntitySystem
 
         if (component.State != args.AlarmType)
         {
-            TryComp<DeviceLinkSourceComponent>(uid, out var source);
-
             // send low to old state's port
-            _deviceLink.SendSignal(uid, GetPort(component), false, source);
+            _deviceLink.SendSignal(uid, GetPort(component), false);
 
             // send high to new state's port, along with updating the cached state
             component.State = args.AlarmType;
-            _deviceLink.SendSignal(uid, GetPort(component), true, source);
+            _deviceLink.SendSignal(uid, GetPort(component), true);
         }
 
         UpdateUI(uid, component);

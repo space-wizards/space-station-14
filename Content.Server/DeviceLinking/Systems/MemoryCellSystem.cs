@@ -69,9 +69,6 @@ public sealed partial class MemoryCellSystem : EntitySystem
 
     private void UpdateOutput(Entity<MemoryCellComponent, DeviceLinkSourceComponent?> ent)
     {
-        if (!Resolve(ent, ref ent.Comp2))
-            return;
-
         if (ent.Comp1.EnableState == SignalState.Low)
             return;
 
@@ -80,6 +77,6 @@ public sealed partial class MemoryCellSystem : EntitySystem
             return;
 
         ent.Comp1.LastOutput = value;
-        _deviceLink.SendSignal(ent, ent.Comp1.OutputPort, value, ent.Comp2);
+        _deviceLink.SendSignal((ent.Owner, ent.Comp2), ent.Comp1.OutputPort, value);
     }
 }
