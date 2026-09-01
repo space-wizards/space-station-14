@@ -473,3 +473,19 @@
         - id: ClothingHeadHatHardhatYellow
         - id: ClothingNeckMantleQM
         - id: ClothingHeadsetCargo
+
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateVirtualSingerOutfits
+  name: virtual singer outfit crate
+  description: An assortment of various virtual singers’ outfits, perfect for a grand performance! The set also includes signature items.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingBackpackDuffelVirtualSinger
+        - id: ClothingBackpackDuffelVirtualChimera
+        - id: ClothingBackpackDuffelVirtualFan
+        - id: ClothingBackpackDuffelVirtualForeigner
+        - id: ClothingBackpackDuffelVirtualTaro

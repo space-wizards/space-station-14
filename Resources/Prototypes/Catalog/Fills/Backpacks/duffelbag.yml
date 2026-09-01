@@ -450,8 +450,8 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelVirtualSinger
-  name: virtual singer costume bag
-  description: Contains the famous virtual singer's costume. Have a great performance!
+  name: virtual singer outfit bag
+  description: Contains the famous virtual singer's outfit. Have a great performance!
   components:
   - type: EntityTableContainerFill
     containers:
@@ -466,8 +466,8 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelVirtualChimera
-  name: chimera singer costume bag
-  description: Contains the famous chimera singer's costume. Have a great performance!
+  name: chimera singer outfit bag
+  description: Contains the famous chimera singer's outfit. Have a great performance!
   components:
   - type: EntityTableContainerFill
     containers:
@@ -482,8 +482,8 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelVirtualFan
-  name: singer's fan costume bag
-  description: Contains the singer's fan costume. Have a great performance!
+  name: singer's fan outfit bag
+  description: Contains the singer's fan outfit. Have a great performance!
   components:
   - type: EntityTableContainerFill
     containers:
@@ -497,8 +497,8 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelVirtualForeigner
-  name: foreign singer costume bag
-  description: Contains the famous foreign singer's costume. Have a great performance!
+  name: foreign singer outfit bag
+  description: Contains the famous foreign singer's outfit. Have a great performance!
   components:
   - type: EntityTableContainerFill
     containers:
@@ -513,8 +513,8 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelVirtualTaro
-  name: Taro costume bag
-  description: Contains the Taro's costume. Have a great performance!
+  name: Taro outfit bag
+  description: Contains the Taro's outfit. Have a great performance!
   components:
   - type: EntityTableContainerFill
     containers:

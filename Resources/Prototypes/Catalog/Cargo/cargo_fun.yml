@@ -192,51 +192,11 @@
   group: market
 
 - type: cargoProduct
-  id: ClothingBackpackDuffelVirtualSinger
+  id: VirtualSingerOutfits
   icon:
-    sprite: Clothing/Head/Misc/virtual-singer-wig.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/virtual_singer.rsi
     state: icon
-  product: ClothingBackpackDuffelVirtualSinger
-  cost: 500
-  category: cargoproduct-category-name-fun
-  group: market
-
-- type: cargoProduct
-  id: ClothingBackpackDuffelVirtualChimera
-  icon:
-    sprite: Clothing/Head/Misc/virtual-chimera-wig.rsi
-    state: icon
-  product: ClothingBackpackDuffelVirtualChimera
-  cost: 500
-  category: cargoproduct-category-name-fun
-  group: market
-
-- type: cargoProduct
-  id: ClothingBackpackDuffelVirtualFan
-  icon:
-    sprite: Clothing/Head/Misc/virtual-fan-wig.rsi
-    state: icon
-  product: ClothingBackpackDuffelVirtualFan
-  cost: 500
-  category: cargoproduct-category-name-fun
-  group: market
-
-- type: cargoProduct
-  id: ClothingBackpackDuffelVirtualForeigner
-  icon:
-    sprite: Clothing/Head/Misc/virtual-foreigner-wig.rsi
-    state: icon
-  product: ClothingBackpackDuffelVirtualForeigner
-  cost: 500
-  category: cargoproduct-category-name-fun
-  group: market
-
-- type: cargoProduct
-  id: ClothingBackpackDuffelVirtualTaro
-  icon:
-    sprite: Clothing/Head/Misc/virtual-taro-wig.rsi
-    state: icon
-  product: ClothingBackpackDuffelVirtualTaro
-  cost: 500
+  product: CrateVirtualSingerOutfits
+  cost: 2500
   category: cargoproduct-category-name-fun
   group: market
