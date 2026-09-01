@@ -111,9 +111,9 @@
   id: ActionChangelingStasisWeak
   components:
   - type: RegenerativeStasisAction
-    bonusCooldownPerDamage: 1.2 # 50 damage should bring you to 120
+    bonusCooldownPerDamage: 2.4 # 50 damage should bring you to 180
     minStasisCooldown: 60
-    maxStasisCooldown: 120
+    maxStasisCooldown: 180
 
 - type: entity
   parent: ActionIntrinsicStore

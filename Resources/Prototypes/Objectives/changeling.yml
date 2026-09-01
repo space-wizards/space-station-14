@@ -70,11 +70,20 @@
   - type: ChangelingEscapeIdentityCondition
   - type: PickRandomPerson
     conditions:
-    - !type:RoleCondition
-      inverted: true # Do not roll changelings here. Their initial identity will be basically impossible to get after they transform.
+    - !type:AntagonistTagCondition # The only targets we want to roll for this objective are on-station.
+      tags:
+      - OnStation
+    - !type:AntagonistTagCondition # We don't want to roll unkillable antagonists, because cannot be devoured.
+      inverted: true
+      tags:
+      - Unkillable
+    # Kill and Escape objectives should have different targets.
+    - !type:ObjectiveTargetCondition
+      inverted: true
       whitelist:
         components:
-        - ChangelingRole
+        - KillPersonCondition
+        - ChangelingEscapeIdentityCondition
 
 - type: entity
   parent: [BaseChangelingObjective, BaseLivingObjective]
@@ -91,11 +100,9 @@
   - type: ChangelingEscapeDepartmentCondition
   - type: PickRandomPerson
     conditions:
-    - !type:RoleCondition # Do not roll changelings here. It will cause problems with weird job mindroles as they transform n stuff.
-      inverted: true
-      whitelist:
-        components:
-        - ChangelingRole
+    - !type:AntagonistTagCondition # Only allow on-station targets.
+      tags:
+      - OnStation # Also don't bother checking for unkillable cause here we only need the DEPARTMENT of the target and I don't foresee departments full of unkillable antags in the future.
     - !type:RoleCondition
       whitelist:
         components:
@@ -114,12 +121,20 @@
     title: objective-condition-kill-maroon-title
   - type: PickRandomPerson
     conditions:
-    # Can't have multiple objectives to kill the same person.
+    - !type:AntagonistTagCondition # Only roll on-station targets.
+      tags:
+      - OnStation
+    - !type:AntagonistTagCondition # Don't roll unkillable targets.
+      inverted: true
+      tags:
+      - Unkillable
+    # Kill and Escape objectives should have different targets.
     - !type:ObjectiveTargetCondition
       inverted: true
       whitelist:
         components:
         - KillPersonCondition
+        - ChangelingEscapeIdentityCondition
   - type: KillPersonCondition
     requireDead: true
     requireMaroon: true
