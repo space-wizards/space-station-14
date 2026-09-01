@@ -154,7 +154,8 @@
   - type: RequireProjectileTarget
   - type: DisposalTagger
     tag: waste
-    editable: false # Too easy to break disposals when the tag can be edited so easily
+  - type: AccessReader
+    access: [["Engineering"]] # Too easy to break disposals when the tag can be edited by anyone
 
 - type: entity
   id: MailingUnit

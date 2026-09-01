@@ -47,7 +47,7 @@ public sealed class DisposalTaggerUiActionMessage : BoundUserInterfaceMessage
 }
 
 /// <summary>
-/// A message to opens the disposal tagger UI sent from a separate UI.
+/// A message to open the disposal tagger UI sent from a separate UI.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class DisposalTaggerOpenUiMessage : BoundUserInterfaceMessage;

@@ -49,9 +49,12 @@ namespace Content.Client.Disposal.Unit
             Engage.Pressed = engaged;
         }
 
-        public void PopulateRouting(bool editable)
+        public void PopulateRouting(bool editable, bool accessible)
         {
             Routing.Visible = editable;
+
+            Routing.Disabled = !accessible;
+            Routing.ToolTip = accessible ? null : Loc.GetString("generic-no-access");
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 using Content.Client.Power.EntitySystems;
 using Content.Client.UserInterface.Controls;
+using Content.Shared.Access.Systems;
 using Content.Shared.Disposal.Components;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
@@ -35,6 +36,7 @@ namespace Content.Client.Disposal.Unit
             if (_disposalUnitWindow == null)
                 return;
 
+            // Update general fields
             if (!EntMan.TryGetComponent<DisposalUnitComponent>(Owner, out var component))
                 return;
 
@@ -46,8 +48,21 @@ namespace Content.Client.Disposal.Unit
                     disposalSystem.EstimatedFullPressure((Owner, component)),
                     component.PressurePerSecond);
 
-            if (EntMan.TryGetComponent<DisposalTaggerComponent>(Owner, out var tagger))
-                _disposalUnitWindow.PopulateRouting(tagger.Editable);
+            // Update if routing is enabled or accessible
+            if (!EntMan.TryGetComponent<DisposalTaggerComponent>(Owner, out var tagger))
+            {
+                _disposalUnitWindow.PopulateRouting(false, false);
+                return;
+            }
+
+            var hasAccess = false;
+            if (PlayerManager.LocalEntity != null)
+            {
+                var accessReader = EntMan.System<AccessReaderSystem>();
+                hasAccess = accessReader.IsAllowed((EntityUid)PlayerManager.LocalEntity, Owner);
+            }
+
+            _disposalUnitWindow.PopulateRouting(tagger.Editable, hasAccess);
         }
 
         private void ButtonPressed(DisposalUnitUiButton button)
