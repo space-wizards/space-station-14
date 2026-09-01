@@ -19,4 +19,6 @@ public record struct SpreadNeighborsEvent
     /// Subscribers can handle as they wish.
     /// </summary>
     public int Updates;
+    
+    public TimeSpan NextSpreadTime;
 }

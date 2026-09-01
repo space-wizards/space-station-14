@@ -141,7 +141,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                     continue;
 
                 args.Updates--;
-                EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
+                EnsureComp<ActiveEdgeSpreaderComponent>(neighbor).NextSpreadTime = args.NextSpreadTime;
 
                 if (args.Updates <= 0)
                     break;
@@ -222,8 +222,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                 if (puddle.Solution != null && !_solutionContainerSystem.TryAddSolution(puddle.Solution.Value, split))
                     continue;
 
-                // If we succeed, then ensure that this neighbour is also able to spread it's overflow onwards
-                EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
+                // If we succeed, then ensure that this neighbour is also able to spread its overflow onwards
+                EnsureComp<ActiveEdgeSpreaderComponent>(neighbor).NextSpreadTime = args.NextSpreadTime;
                 args.Updates--;
 
                 if (args.Updates <= 0)

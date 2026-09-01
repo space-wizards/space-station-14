@@ -168,7 +168,7 @@ public sealed partial class SmokeSystem : EntitySystem
 
             smoke.SpreadAmount++;
             entity.Comp.SpreadAmount--;
-            EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
+            EnsureComp<ActiveEdgeSpreaderComponent>(neighbor).NextSpreadTime = args.NextSpreadTime;
 
             if (entity.Comp.SpreadAmount == 0)
             {
