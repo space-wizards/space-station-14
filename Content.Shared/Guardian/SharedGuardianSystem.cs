@@ -51,42 +51,14 @@ public abstract partial class SharedGuardianSystem : EntitySystem
     [Dependency] private EntityQuery<GuardianHostComponent> _guardianHostQuery;
 
     private static readonly string GuardianPickerBuiXmlGeneratedName = "GuardianPickerBoundUserInterface";
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<GuardianCreatorComponent, MapInitEvent>(OnCreatorInit);
-        SubscribeLocalEvent<GuardianCreatorComponent, UseInHandEvent>(OnCreatorUse);
-        SubscribeLocalEvent<GuardianCreatorComponent, AfterInteractEvent>(OnCreatorInteract);
-        SubscribeLocalEvent<GuardianCreatorComponent, ExaminedEvent>(OnCreatorExamine);
-        SubscribeLocalEvent<GuardianCreatorComponent, GuardianCreatorDoAfterEvent>(OnDoAfter);
-        SubscribeLocalEvent<GuardianCreatorComponent, GuardianPickedMessage>(OnGuardianPicked);
 
-        SubscribeLocalEvent<GuardianComponent, ComponentShutdown>(OnGuardianShutdown);
-        SubscribeLocalEvent<GuardianComponent, MoveEvent>(OnGuardianMove);
-        SubscribeLocalEvent<GuardianComponent, DamageDealtEvent>(OnGuardianDamaged);
-        SubscribeLocalEvent<GuardianComponent, PlayerAttachedEvent>(OnGuardianPlayerAttached);
-        SubscribeLocalEvent<GuardianComponent, PlayerDetachedEvent>(OnGuardianPlayerDetached);
-
-        SubscribeLocalEvent<GuardianHostComponent, ComponentInit>(OnHostInit);
-        SubscribeLocalEvent<GuardianHostComponent, MoveEvent>(OnHostMove);
-        SubscribeLocalEvent<GuardianHostComponent, MobStateChangedEvent>(OnHostStateChange);
-        SubscribeLocalEvent<GuardianHostComponent, ComponentShutdown>(OnHostShutdown);
-
-        SubscribeLocalEvent<GuardianHostComponent, GuardianToggleActionEvent>(OnPerformAction);
-
-        SubscribeLocalEvent<GuardianComponent, AttackAttemptEvent>(OnGuardianAttackAttempt);
-
-        SubscribeLocalEvent<GuardianHostComponent, MechPilotRelayedEvent<GettingAttackedAttemptEvent>>(OnPilotAttackAttempt);
-
-        SubscribeLocalEvent<GuardianTrappedStatusEffectComponent, StatusEffectRelayedEvent<ContactInteractionEvent>>(OnTrapContact);
-        SubscribeLocalEvent<GuardianTrappedStatusEffectComponent, StatusEffectRelayedEvent<StartCollideEvent>>(OnTrapCollide);
-    }
-
+    [SubscribeLocalEvent]
     private void OnTrapCollide(Entity<GuardianTrappedStatusEffectComponent> ent, ref StatusEffectRelayedEvent<StartCollideEvent> args)
     {
         TriggerTrap(ent.Comp, ent.Owner, args.Args.OtherEntity);
     }
 
+    [SubscribeLocalEvent]
     private void OnTrapContact(Entity<GuardianTrappedStatusEffectComponent> ent, ref StatusEffectRelayedEvent<ContactInteractionEvent> args)
     {
         TriggerTrap(ent.Comp, ent.Owner, args.Args.Other);
@@ -111,6 +83,7 @@ public abstract partial class SharedGuardianSystem : EntitySystem
         _status.TryRemoveStatusEffect(source, comp.SelfPrototype);
     }
 
+    [SubscribeLocalEvent]
     private void OnGuardianPicked(Entity<GuardianCreatorComponent> ent, ref GuardianPickedMessage args)
     {
         if (ent.Comp.CanChoose && ent.Comp.Guardians.Count > args.ChosenGuardian)
@@ -149,6 +122,7 @@ public abstract partial class SharedGuardianSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnCreatorInit(Entity<GuardianCreatorComponent> ent, ref MapInitEvent args)
     {
         var userInterfaceComp = EnsureComp<UserInterfaceComponent>(ent);
