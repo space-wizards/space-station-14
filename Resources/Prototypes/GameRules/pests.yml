@@ -77,6 +77,8 @@
       prob: 0.008
     - id: MobMoproach
       prob: 0.004
+    - id: MobTacticalMothroach
+      prob: 0.001 # as rare as the cancer mouse
 
 - type: entity
   id: SnailMigrationLowPop

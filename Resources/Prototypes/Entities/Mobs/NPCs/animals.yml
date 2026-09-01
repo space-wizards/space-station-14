@@ -500,6 +500,76 @@
     - SimpleHostile
 
 - type: entity
+  name: tactical mothroach
+  parent: [MobMothroach, BaseSecurityContraband] # it is contraband because it has a gun!
+  id: MobTacticalMothroach
+  description: For some reason, this mothroach was trained for warfare under a special Nanotrasen mercenary program.
+  components:
+  - type: GhostRole
+    name: ghost-role-information-tactical-mothroach-name
+    description: ghost-role-information-tactical-mothroach-description
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      45: Critical
+      65: Dead
+  - type: Hands
+    activeHandId: Hand
+    hands:
+      Hand:
+        location: Left
+    canBeStripped: false
+  - type: Loadout
+    prototypes: [ TacticalMothroachGear ]
+  - type: InteractionPopup
+    interactSuccessString: petting-success-tactical-mothroach
+    interactFailureString: petting-failure-tactical-mothroach
+  - type: Item
+    size: Normal
+
+- type: startingGear
+  id: TacticalMothroachGear
+  inhand:
+   - WeaponPistolTacticalMothroach
+
+- type: entity
+  name: tactical mothroach pistol
+  parent: BaseItem
+  id: WeaponPistolTacticalMothroach
+  description: Oh no.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
+    layers:
+      - state: base
+      - state: mag-0
+  - type: Gun
+    fireRate: 5
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - CartridgePistol
+    capacity: 10
+    proto: CartridgePistol
+    cycleable: false # So no infinite ammo
+  - type: AmmoCounter
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+  - type: Unremoveable
+  - type: BallisticAmmoSelfRefiller # the glockroach needs its ammo!
+    autoRefillRate: 4s
+
+- type: entity
   name: mothroach
   parent: [ BaseMobMothroach, BaseCockroach, BaseSlicingRefinable ]
   id: MobMothroach
