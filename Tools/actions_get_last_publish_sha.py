@@ -15,16 +15,9 @@ import actions_changelog_github
 
 
 def get_last_publish_sha() -> str:
-    github_repository = os.environ.get("GITHUB_REPOSITORY")
-    github_run = os.environ.get("GITHUB_RUN_ID")
-    github_token = os.environ.get("GITHUB_TOKEN")
-
-    if not github_repository:
-        raise RuntimeError("GITHUB_REPOSITORY is not set")
-    if not github_run:
-        raise RuntimeError("GITHUB_RUN_ID is not set")
-    if not github_token:
-        raise RuntimeError("GITHUB_TOKEN is not set")
+    github_repository, github_run, github_token = (
+        actions_changelog_github.get_required_github_env()
+    )
 
     session = actions_changelog_github.make_github_session(github_token)
     return actions_changelog_github.get_last_publish_sha(

@@ -67,9 +67,9 @@ def main():
 
 
 def get_last_changelog() -> str:
-    github_repository = os.environ["GITHUB_REPOSITORY"]
-    github_run = os.environ["GITHUB_RUN_ID"]
-    github_token = os.environ["GITHUB_TOKEN"]
+    github_repository, github_run, github_token = (
+        actions_changelog_github.get_required_github_env()
+    )
 
     session = actions_changelog_github.make_github_session(github_token)
 
@@ -79,11 +79,9 @@ def get_last_changelog() -> str:
     if last_sha:
         print(f"Using last publish SHA from environment: {last_sha}")
     else:
-        most_recent = actions_changelog_github.get_most_recent_workflow(
+        last_sha = actions_changelog_github.get_last_publish_sha(
             session, github_repository, github_run
         )
-        last_sha = most_recent["head_commit"]["id"]
-        print(f"Last successful publish job was {most_recent['id']}: {last_sha}")
 
     return get_last_changelog_by_sha(session, last_sha, github_repository)
 

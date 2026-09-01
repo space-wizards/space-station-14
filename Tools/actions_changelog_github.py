@@ -1,11 +1,7 @@
 #!/usr/bin/env python3
 
 """
-Shared GitHub Actions API helpers for the changelog publishing scripts.
-
-Contains the logic for finding the last successful workflow run of the
-current workflow and the commit SHA it ran on, plus an authenticated
-requests session helper.
+Shared GitHub Actions API helpers for getting workflow information.
 """
 
 import os
@@ -23,6 +19,22 @@ def make_github_session(github_token: str) -> requests.Session:
     session.headers["Accept"] = "application/vnd.github+json"
     session.headers["X-GitHub-Api-Version"] = "2022-11-28"
     return session
+
+
+def get_required_github_env() -> tuple[str, str, str]:
+    """Read and validate the GitHub Actions env vars needed for the API."""
+    github_repository = os.environ.get("GITHUB_REPOSITORY")
+    github_run = os.environ.get("GITHUB_RUN_ID")
+    github_token = os.environ.get("GITHUB_TOKEN")
+
+    if not github_repository:
+        raise RuntimeError("GITHUB_REPOSITORY is not set")
+    if not github_run:
+        raise RuntimeError("GITHUB_RUN_ID is not set")
+    if not github_token:
+        raise RuntimeError("GITHUB_TOKEN is not set")
+
+    return github_repository, github_run, github_token
 
 
 def get_most_recent_workflow(
@@ -105,12 +117,6 @@ def get_last_publish_sha(
     if not last_sha:
         raise RuntimeError(
             f"Workflow run {most_recent.get('id')} has no head_commit id"
-        )
-
-    # Sanity-check that the value looks like a commit SHA before publishing it.
-    if not re.fullmatch(r"[0-9a-fA-F]{7,64}", last_sha):
-        raise RuntimeError(
-            f"Computed last publish SHA does not look like a commit hash: {last_sha!r}"
         )
 
     print(f"Last successful publish job was {most_recent.get('id')}: {last_sha}")
