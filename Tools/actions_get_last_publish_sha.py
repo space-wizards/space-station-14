@@ -1,94 +1,72 @@
 #!/usr/bin/env python3
 
 """
-Computes the SHA of the last successful GitHub Actions workflow run.
+Computes the SHA of the last successful GitHub Actions workflow run (on any branch).
+Stores found SHA into last_publish_sha output variable for later steps to use.
 
-This is meant to run as its own step in a workflow and write the result to
-GITHUB_OUTPUT, so that other steps (changelog publishing, changelog updates,
-etc.) can reuse it instead of each querying the GitHub API for the same thing.
+remark: if previous launch was done on branch that was deleted and commits from there were
+not added to tree - this WILL FAIL.
 """
 
 import os
 import sys
-from typing import Any, Iterable
 
-import requests
-
-GITHUB_API_URL = os.environ.get("GITHUB_API_URL", "https://api.github.com")
-
-
-def get_most_recent_workflow(
-    sess: requests.Session, github_repository: str, github_run: str
-) -> Any:
-    workflow_run = get_current_run(sess, github_repository, github_run)
-    past_runs = get_past_runs(sess, workflow_run)
-    for run in past_runs:
-        return run
-
-    raise RuntimeError("Could not find a previous successful workflow run")
-
-
-def get_current_run(
-    sess: requests.Session, github_repository: str, github_run: str
-) -> Any:
-    resp = sess.get(
-        f"{GITHUB_API_URL}/repos/{github_repository}/actions/runs/{github_run}"
-    )
-    resp.raise_for_status()
-    return resp.json()
-
-
-def get_past_runs(sess: requests.Session, current_run: Any) -> Iterable[Any]:
-    """
-    Get all successful workflow runs before our current one.
-    """
-    params = {
-        "status": "success",
-        "created": f"<={current_run['created_at']}",
-        "per_page": 100,
-    }
-    url = f"{current_run['workflow_url']}/runs"
-
-    while url:
-        resp = sess.get(url, params=params)
-        resp.raise_for_status()
-
-        for run in resp.json()["workflow_runs"]:
-            # First past successful run that isn't our current run.
-            if run["id"] == current_run["id"]:
-                continue
-
-            yield run
-
-        next_url = resp.links.get("next", {}).get("url")
-        if not next_url:
-            break
-
-        url = next_url
-        params = None
+import actions_changelog_github
 
 
 def get_last_publish_sha() -> str:
-    github_repository = os.environ["GITHUB_REPOSITORY"]
-    github_run = os.environ["GITHUB_RUN_ID"]
-    github_token = os.environ["GITHUB_TOKEN"]
+    github_repository = os.environ.get("GITHUB_REPOSITORY")
+    github_run = os.environ.get("GITHUB_RUN_ID")
+    github_token = os.environ.get("GITHUB_TOKEN")
 
-    session = requests.Session()
-    session.headers["Authorization"] = f"Bearer {github_token}"
-    session.headers["Accept"] = "application/vnd.github+json"
-    session.headers["X-GitHub-Api-Version"] = "2022-11-28"
+    if not github_repository:
+        raise RuntimeError("GITHUB_REPOSITORY is not set")
+    if not github_run:
+        raise RuntimeError("GITHUB_RUN_ID is not set")
+    if not github_token:
+        raise RuntimeError("GITHUB_TOKEN is not set")
 
-    most_recent = get_most_recent_workflow(session, github_repository, github_run)
-    last_sha = most_recent["head_commit"]["id"]
-    print(f"Last successful publish job was {most_recent['id']}: {last_sha}")
-
-    return last_sha
+    session = actions_changelog_github.make_github_session(github_token)
+    return actions_changelog_github.get_last_publish_sha(
+        session, github_repository, github_run
+    )
 
 
 def main():
+    github_output = os.environ.get("GITHUB_OUTPUT")
+
+    # Don't overwrite if the value was already set by an earlier step/run.
+    if os.environ.get("LAST_PUBLISH_SHA"):
+        print("LAST_PUBLISH_SHA is already set, skipping")
+        return
+
+    if github_output and os.path.exists(github_output):
+        with open(github_output, "r", encoding="utf-8") as f:
+            lines = f.readlines()
+
+        remaining_lines = []
+        already_set = False
+        for line in lines:
+            stripped = line.strip()
+            if stripped.startswith("last_publish_sha="):
+                existing_sha = stripped[len("last_publish_sha="):].strip()
+                if existing_sha:
+                    already_set = True
+                    remaining_lines.append(line)
+                # else: empty stale marker, drop it so it can't shadow the real value.
+            else:
+                remaining_lines.append(line)
+
+        if already_set:
+            print("last_publish_sha is already set in GITHUB_OUTPUT, skipping")
+            return
+
+        if len(remaining_lines) != len(lines):
+            with open(github_output, "w", encoding="utf-8") as f:
+                f.writelines(remaining_lines)
+
     last_sha = get_last_publish_sha()
 
-    github_output = os.environ.get("GITHUB_OUTPUT")
     if github_output:
         # Write to the action step output so later steps can reuse it.
         with open(github_output, "a") as f:
