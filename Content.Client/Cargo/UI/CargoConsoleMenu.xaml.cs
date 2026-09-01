@@ -18,10 +18,10 @@ namespace Content.Client.Cargo.UI
     [GenerateTypedNameReferences]
     public sealed partial class CargoConsoleMenu : FancyWindow
     {
+        [Dependency] private IEntityManager _entityManager = default!;
         [Dependency] private IGameTiming _timing = default!;
+        [Dependency] private IPrototypeManager _protoManager = default!;
 
-        private readonly IEntityManager _entityManager;
-        private readonly IPrototypeManager _protoManager;
         private readonly CargoSystem _cargoSystem;
         private readonly SpriteSystem _spriteSystem;
         private EntityUid _owner;
@@ -43,32 +43,18 @@ namespace Content.Client.Cargo.UI
 
         public List<ProtoId<CargoProductPrototype>> ProductCatalogue = new();
 
-        public CargoConsoleMenu(EntityUid owner, IEntityManager entMan, IPrototypeManager protoManager, SpriteSystem spriteSystem)
+        public CargoConsoleMenu()
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
-            _entityManager = entMan;
-            _protoManager = protoManager;
-            _cargoSystem = entMan.System<CargoSystem>();
-            _spriteSystem = spriteSystem;
-            _owner = owner;
+            _cargoSystem = _entityManager.System<CargoSystem>();
+            _spriteSystem = _entityManager.System<SpriteSystem>();
 
             _orderConsoleQuery = _entityManager.GetEntityQuery<CargoOrderConsoleComponent>();
             _bankQuery = _entityManager.GetEntityQuery<StationBankAccountComponent>();
 
-            Title = entMan.GetComponent<MetaDataComponent>(owner).EntityName;
-
             SearchBar.OnTextChanged += OnSearchBarTextChanged;
             Categories.OnItemSelected += OnCategoryItemSelected;
-
-            if (entMan.TryGetComponent<CargoOrderConsoleComponent>(owner, out var orderConsole))
-            {
-                var accountProto = _protoManager.Index(orderConsole.Account);
-                AccountNameLabel.Text = Loc.GetString("cargo-console-menu-account-name-format",
-                    ("color", accountProto.Color),
-                    ("name", Loc.GetString(accountProto.Name)),
-                    ("code", Loc.GetString(accountProto.Code)));
-            }
 
             TabContainer.SetTabTitle(0, Loc.GetString("cargo-console-menu-tab-title-orders"));
             TabContainer.SetTabTitle(1, Loc.GetString("cargo-console-menu-tab-title-funds"));
@@ -80,11 +66,11 @@ namespace Content.Client.Cargo.UI
 
             TransferSpinBox.IsValid = val =>
             {
-                if (!_entityManager.TryGetComponent<CargoOrderConsoleComponent>(owner, out var console) ||
+                if (!_entityManager.TryGetComponent<CargoOrderConsoleComponent>(_owner, out var console) ||
                     !_entityManager.TryGetComponent<StationBankAccountComponent>(_station, out var bank))
                     return true;
 
-                return val >= 0 && val <= (int) (console.TransferLimit * bank.Accounts[console.Account]);
+                return val >= 0 && val <= (int)(console.TransferLimit * bank.Accounts[console.Account]);
             };
 
             AccountActionButton.OnPressed += _ =>
@@ -97,6 +83,22 @@ namespace Content.Client.Cargo.UI
             {
                 OnToggleUnboundedLimit?.Invoke(a);
             };
+        }
+
+        public void SetOwner(EntityUid owner)
+        {
+            _owner = owner;
+
+            Title = _entityManager.GetComponent<MetaDataComponent>(owner).EntityName;
+
+            if (_orderConsoleQuery.TryGetComponent(owner, out var orderConsole))
+            {
+                var accountProto = _protoManager.Index(orderConsole.Account);
+                AccountNameLabel.Text = Loc.GetString("cargo-console-menu-account-name-format",
+                    ("color", accountProto.Color),
+                    ("name", Loc.GetString(accountProto.Name)),
+                    ("code", Loc.GetString(accountProto.Code)));
+            }
         }
 
         private void OnCategoryItemSelected(OptionButton.ItemSelectedEventArgs args)

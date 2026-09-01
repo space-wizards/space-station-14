@@ -1,4 +1,5 @@
 using Content.Shared.Atmos.Components;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Atmos.Consoles;
 
@@ -13,9 +14,12 @@ public sealed class AtmosAlertsComputerBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _menu = new AtmosAlertsComputerWindow(this, Owner);
-        _menu.OpenCentered();
-        _menu.OnClose += Close;
+        _menu = this.CreateWindow<AtmosAlertsComputerWindow>();
+        _menu.SetOwner(Owner);
+
+        // Set atmos monitoring message action
+        _menu.SendFocusChangeMessageAction += SendFocusChangeMessage;
+        _menu.SendDeviceSilencedMessageAction += SendDeviceSilencedMessage;
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -36,14 +40,5 @@ public sealed class AtmosAlertsComputerBoundUserInterface : BoundUserInterface
     public void SendDeviceSilencedMessage(NetEntity netEntity, bool silenceDevice)
     {
         SendMessage(new AtmosAlertsComputerDeviceSilencedMessage(netEntity, silenceDevice));
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing)
-            return;
-
-        _menu?.Dispose();
     }
 }

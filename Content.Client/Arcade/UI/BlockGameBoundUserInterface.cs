@@ -1,9 +1,12 @@
 ﻿using Content.Shared.Arcade;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Arcade.UI;
 
+/// <summary>
+/// A BUI for the block game arcade machine.
+/// Handles communication between the BlockGameMenu and the server.
+/// </summary>
 public sealed class BlockGameBoundUserInterface : BoundUserInterface
 {
     private BlockGameMenu? _menu;
@@ -63,14 +66,5 @@ public sealed class BlockGameBoundUserInterface : BoundUserInterface
     public void SendAction(BlockGamePlayerAction action)
     {
         SendMessage(new BlockGameMessages.BlockGamePlayerActionMessage(action));
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing)
-            return;
-
-        _menu?.Dispose();
     }
 }

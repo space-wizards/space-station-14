@@ -55,49 +55,22 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
     private Color _warningColor = new Color(255, 182, 72);
     private Color _dangerColor = new Color(255, 67, 67);
 
-    public AtmosAlertsComputerWindow(AtmosAlertsComputerBoundUserInterface userInterface, EntityUid? owner)
+    public AtmosAlertsComputerWindow()
     {
         RobustXamlLoader.Load(this);
         _entManager = IoCManager.Resolve<IEntityManager>();
         _spriteSystem = _entManager.System<SpriteSystem>();
         _navMapSystem = _entManager.System<SharedNavMapSystem>();
 
-        // Pass the owner to nav map
-        _owner = owner;
-        NavMap.Owner = _owner;
-
         // Set nav map colors
         NavMap.WallColor = _wallColor;
         NavMap.TileColor = _tileColor;
 
-        // Set nav map grid uid
-        var stationName = Loc.GetString("atmos-alerts-window-unknown-location");
-
-        if (_entManager.TryGetComponent<TransformComponent>(owner, out var xform))
-        {
-            NavMap.MapUid = xform.GridUid;
-
-            // Assign station name      
-            if (_entManager.TryGetComponent<MetaDataComponent>(xform.GridUid, out var stationMetaData))
-                stationName = stationMetaData.EntityName;
-
-            var msg = new FormattedMessage();
-            msg.TryAddMarkup(Loc.GetString("atmos-alerts-window-station-name", ("stationName", stationName)), out _);
-
-            StationName.SetMessage(msg);
-        }
-
-        else
-        {
-            StationName.SetMessage(stationName);
-            NavMap.Visible = false;
-        }
+        StationName.SetMessage(Loc.GetString("atmos-alerts-window-unknown-location"));
+        NavMap.Visible = false;
 
         // Set trackable entity selected action
         NavMap.TrackedEntitySelectedAction += SetTrackedEntityFromNavMap;
-
-        // Update nav map
-        NavMap.ForceNavMapUpdate();
 
         // Set tab container headers
         MasterTabContainer.SetTabTitle(0, Loc.GetString("atmos-alerts-window-tab-no-alerts"));
@@ -109,10 +82,39 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         ShowNormalAlarms.OnToggled += _ => OnShowAlarmsToggled(ShowNormalAlarms, AtmosAlarmType.Normal);
         ShowWarningAlarms.OnToggled += _ => OnShowAlarmsToggled(ShowWarningAlarms, AtmosAlarmType.Warning);
         ShowDangerAlarms.OnToggled += _ => OnShowAlarmsToggled(ShowDangerAlarms, AtmosAlarmType.Danger);
+    }
 
-        // Set atmos monitoring message action
-        SendFocusChangeMessageAction += userInterface.SendFocusChangeMessage;
-        SendDeviceSilencedMessageAction += userInterface.SendDeviceSilencedMessage;
+    public void SetOwner(EntityUid owner)
+    {
+        // Pass the owner to nav map
+        _owner = owner;
+        NavMap.Owner = _owner;
+
+        // Set nav map grid uid
+        var stationName = Loc.GetString("atmos-alerts-window-unknown-location");
+
+        if (_entManager.TryGetComponent<TransformComponent>(owner, out var xform))
+        {
+            NavMap.MapUid = xform.GridUid;
+
+            // Assign station name
+            if (_entManager.TryGetComponent<MetaDataComponent>(xform.GridUid, out var stationMetaData))
+                stationName = stationMetaData.EntityName;
+
+            var msg = new FormattedMessage();
+            msg.TryAddMarkup(Loc.GetString("atmos-alerts-window-station-name", ("stationName", stationName)), out _);
+
+            StationName.SetMessage(msg);
+            NavMap.Visible = true;
+        }
+        else
+        {
+            StationName.SetMessage(stationName);
+            NavMap.Visible = false;
+        }
+
+        // Update nav map
+        NavMap.ForceNavMapUpdate();
     }
 
     #region Toggle handling

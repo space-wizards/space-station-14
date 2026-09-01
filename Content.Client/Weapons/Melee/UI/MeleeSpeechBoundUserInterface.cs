@@ -1,4 +1,3 @@
-using Robust.Client.GameObjects;
 using Content.Shared.Speech.Components;
 using Robust.Client.UserInterface;
 
@@ -50,14 +49,5 @@ public sealed partial class MeleeSpeechBoundUserInterface : BoundUserInterface
             return;
 
         _window.SetCurrentBattlecry(cast.CurrentBattlecry);
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing)
-            return;
-
-        _window?.Dispose();
     }
 }

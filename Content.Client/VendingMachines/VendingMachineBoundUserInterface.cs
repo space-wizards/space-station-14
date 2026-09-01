@@ -63,18 +63,4 @@ public sealed class VendingMachineBoundUserInterface(EntityUid owner, Enum uiKey
 
         SendPredictedMessage(new VendingMachineEjectMessage(selectedItem.Type, selectedItem.ID));
     }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing)
-            return;
-
-        if (_menu == null)
-            return;
-
-        _menu.OnItemSelected -= OnItemSelected;
-        _menu.OnClose -= Close;
-        _menu.Dispose();
-    }
 }

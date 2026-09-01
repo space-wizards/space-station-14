@@ -7,6 +7,7 @@ using Content.Shared.Cargo.Prototypes;
 using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -48,17 +49,17 @@ namespace Content.Client.Cargo.BUI
         {
             base.Open();
 
-            var spriteSystem = EntMan.System<SpriteSystem>();
-            var dependencies = IoCManager.Instance!;
-            _menu = new CargoConsoleMenu(Owner, EntMan, dependencies.Resolve<IPrototypeManager>(), spriteSystem);
-            var localPlayer = dependencies.Resolve<IPlayerManager>().LocalEntity;
+            _menu = this.CreateWindow<CargoConsoleMenu>();
+            _menu.SetOwner(Owner);
+
+            var localPlayer = IoCManager.Resolve<IPlayerManager>().LocalEntity;
             var description = new FormattedMessage();
 
             var orderRequester = Loc.GetString("cargo-console-paper-approver-default");
             if (EntMan.EntityExists(localPlayer))
                 orderRequester = _identity.GetIdentityShortInfo(localPlayer.Value, Owner) ?? orderRequester;
 
-            _orderMenu = new CargoConsoleOrderMenu();
+            _orderMenu = this.CreateDisposableControl<CargoConsoleOrderMenu>();
 
             _menu.OnClose += Close;
 
@@ -102,8 +103,6 @@ namespace Content.Client.Cargo.BUI
             {
                 SendMessage(new CargoConsoleToggleLimitMessage());
             };
-
-            _menu.OpenCentered();
         }
 
         private void Populate(List<CargoOrderData> orders)
@@ -143,17 +142,6 @@ namespace Content.Client.Cargo.BUI
 
             _menu?.UpdateStation(station);
             Populate(cState.Orders);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            if (!disposing)
-                return;
-
-            _menu?.Dispose();
-            _orderMenu?.Dispose();
         }
 
         private bool AddOrder()

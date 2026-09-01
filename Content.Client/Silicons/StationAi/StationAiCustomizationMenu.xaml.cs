@@ -15,6 +15,7 @@ public sealed partial class StationAiCustomizationMenu : FancyWindow
 {
     [Dependency] private IEntityManager _entManager = default!;
     [Dependency] private IPrototypeManager _protoManager = default!;
+    private SharedStationAiSystem _stationAiSystem;
 
     private Dictionary<ProtoId<StationAiCustomizationGroupPrototype>, StationAiCustomizationGroupContainer> _groupContainers = new();
     private Dictionary<ProtoId<StationAiCustomizationGroupPrototype>, ButtonGroup> _buttonGroups = new();
@@ -23,21 +24,24 @@ public sealed partial class StationAiCustomizationMenu : FancyWindow
 
     private const float IconScale = 1.75f;
 
-    public StationAiCustomizationMenu(EntityUid owner)
+    public StationAiCustomizationMenu()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        var stationAiSystem = _entManager.System<SharedStationAiSystem>();
+        _stationAiSystem = _entManager.System<SharedStationAiSystem>();
+    }
 
-        // Load customziation data
+    public void SetOwner(EntityUid owner)
+    {
+        // Load customization data
         _entManager.TryGetComponent<StationAiCoreComponent>(owner, out var stationAiCore);
-        stationAiSystem.TryGetHeld((owner, stationAiCore), out var insertedAi);
+        _stationAiSystem.TryGetHeld((owner, stationAiCore), out var insertedAi);
         _entManager.TryGetComponent<StationAiCustomizationComponent>(insertedAi, out var stationAiCustomization);
 
-        // Create UI entires for each group of customizations
+        // Create UI entries for each group of customizations
         var groupPrototypes = _protoManager.EnumeratePrototypes<StationAiCustomizationGroupPrototype>();
-        groupPrototypes = groupPrototypes.OrderBy(x => x.ID); // To ensure consistency in presentation
+        groupPrototypes = groupPrototypes.OrderBy(x => Loc.GetString(x.Name)); // To ensure consistency in presentation
 
         foreach (var groupPrototype in groupPrototypes)
         {
@@ -50,8 +54,6 @@ public sealed partial class StationAiCustomizationMenu : FancyWindow
             _groupContainers[groupPrototype] = new StationAiCustomizationGroupContainer(groupPrototype, selectedPrototype, _buttonGroups[groupPrototype], this, _protoManager);
             CustomizationGroupsContainer.AddTab(_groupContainers[groupPrototype], Loc.GetString(groupPrototype.Name));
         }
-
-        Title = Loc.GetString("station-ai-customization-menu");
     }
 
     public void OnSendStationAiCustomizationMessage

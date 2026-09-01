@@ -1,77 +1,45 @@
-using Content.Shared.Access;
-using Content.Shared.Access.Components;
-using Content.Shared.Access.Systems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.CrewManifest;
-using Content.Shared.Roles;
-using Robust.Shared.Prototypes;
+using Robust.Client.UserInterface;
 using static Content.Shared.Access.Components.IdCardConsoleComponent;
 
-namespace Content.Client.Access.UI
+namespace Content.Client.Access.UI;
+
+public sealed partial class IdCardConsoleBoundUserInterface : BoundUserInterface
 {
-    public sealed partial class IdCardConsoleBoundUserInterface : BoundUserInterface
+    private IdCardConsoleWindow? _window;
+
+    public IdCardConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
-        [Dependency] private IPrototypeManager _prototypeManager = default!;
-        private readonly SharedIdCardConsoleSystem _idCardConsoleSystem = default!;
+    }
 
-        private IdCardConsoleWindow? _window;
+    protected override void Open()
+    {
+        base.Open();
 
-        public IdCardConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-        {
-            _idCardConsoleSystem = EntMan.System<SharedIdCardConsoleSystem>();
-        }
+        _window = this.CreateWindow<IdCardConsoleWindow>();
+        _window.SetOwner(Owner);
 
-        protected override void Open()
-        {
-            base.Open();
-            List<ProtoId<AccessLevelPrototype>> accessLevels;
+        _window.OnDataSubmitted += SubmitData;
+        _window.CrewManifestButton.OnPressed += _ => SendMessage(new CrewManifestOpenUiMessage());
+        _window.PrivilegedIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(PrivilegedIdCardSlotId));
+        _window.TargetIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(TargetIdCardSlotId));
+    }
 
-            if (EntMan.TryGetComponent<IdCardConsoleComponent>(Owner, out var idCard))
-            {
-                accessLevels = idCard.AccessLevels;
-            }
-            else
-            {
-                accessLevels = new List<ProtoId<AccessLevelPrototype>>();
-                _idCardConsoleSystem.Log.Error($"No IdCardConsole component found for {EntMan.ToPrettyString(Owner)}!");
-            }
+    protected override void UpdateState(BoundUserInterfaceState state)
+    {
+        base.UpdateState(state);
+        var castState = (IdCardConsoleBoundUserInterfaceState)state;
+        _window?.UpdateState(castState);
+    }
 
-            _window = new IdCardConsoleWindow(this, _prototypeManager, accessLevels)
-            {
-                Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName
-            };
-
-            _window.CrewManifestButton.OnPressed += _ => SendMessage(new CrewManifestOpenUiMessage());
-            _window.PrivilegedIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(PrivilegedIdCardSlotId));
-            _window.TargetIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(TargetIdCardSlotId));
-
-            _window.OnClose += Close;
-            _window.OpenCentered();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing)
-                return;
-
-            _window?.Dispose();
-        }
-
-        protected override void UpdateState(BoundUserInterfaceState state)
-        {
-            base.UpdateState(state);
-            var castState = (IdCardConsoleBoundUserInterfaceState) state;
-            _window?.UpdateState(castState);
-        }
-
-        public void SubmitData(string newFullName, string newJobTitle, List<ProtoId<AccessLevelPrototype>> newAccessList, ProtoId<JobPrototype>? newJobPrototype)
-        {
-            SendMessage(new WriteToTargetIdMessage(
-                newFullName,
-                newJobTitle,
-                newAccessList,
-                newJobPrototype));
-        }
+    public void SubmitData(IdCardData data)
+    {
+        SendMessage(new WriteToTargetIdMessage(
+            data.FullName,
+            data.JobTitle,
+            data.Accesses,
+            data.JobPrototype));
     }
 }
+

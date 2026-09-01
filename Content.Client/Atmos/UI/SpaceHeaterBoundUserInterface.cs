@@ -6,7 +6,7 @@ using Robust.Client.UserInterface.Controls;
 namespace Content.Client.Atmos.UI;
 
 /// <summary>
-///     Initializes a <see cref="SpaceHeaterWindow"/> and updates it when new server messages are received.
+/// Initializes a <see cref="SpaceHeaterWindow"/> and updates it when new server messages are received.
 /// </summary>
 [UsedImplicitly]
 public sealed class SpaceHeaterBoundUserInterface : BoundUserInterface
@@ -71,13 +71,5 @@ public sealed class SpaceHeaterBoundUserInterface : BoundUserInterface
         _window.MinTemp = cast.MinTemperature;
         _window.MaxTemp = cast.MaxTemperature;
         _window.SetTemperature(cast.TargetTemperature);
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing)
-            return;
-        _window?.Dispose();
     }
 }

@@ -1,4 +1,5 @@
 using Content.Shared.Atmos.Components;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Atmos.Consoles;
 
@@ -13,9 +14,8 @@ public sealed class AtmosMonitoringConsoleBoundUserInterface : BoundUserInterfac
     {
         base.Open();
 
-        _menu = new AtmosMonitoringConsoleWindow(this, Owner);
-        _menu.OpenCentered();
-        _menu.OnClose += Close;
+        _menu = this.CreateWindow<AtmosMonitoringConsoleWindow>();
+        _menu.SetOwner(Owner);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -27,14 +27,5 @@ public sealed class AtmosMonitoringConsoleBoundUserInterface : BoundUserInterfac
 
         EntMan.TryGetComponent<TransformComponent>(Owner, out var xform);
         _menu?.UpdateUI(xform?.Coordinates, castState.AtmosNetworks);
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing)
-            return;
-
-        _menu?.Dispose();
     }
 }

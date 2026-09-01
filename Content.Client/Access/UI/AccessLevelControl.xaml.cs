@@ -28,6 +28,8 @@ public sealed partial class AccessLevelControl : GridContainer
 
     public void Populate(List<ProtoId<AccessLevelPrototype>> accessLevels, IPrototypeManager prototypeManager)
     {
+        RemoveAllChildren();
+
         foreach (var access in accessLevels)
         {
             if (!prototypeManager.TryIndex(access, out var accessLevel))
