@@ -222,7 +222,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                 if (puddle.Solution != null && !_solutionContainerSystem.TryAddSolution(puddle.Solution.Value, split))
                     continue;
 
-                // If we succeed, then ensure that this neighbour is also able to spread its overflow onwards
+                // If we succeed, then ensure that this neighbour is also able to spread it's overflow onwards
                 EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
                 args.Updates--;
 
