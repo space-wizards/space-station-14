@@ -7,8 +7,5 @@ namespace Content.Server.Spreader;
 public sealed partial class SpreaderGridComponent : Component
 {
     [DataField]
-    public float UpdateAccumulator = SpreaderSystem.SpreadCooldownSeconds;
-
-    [DataField]
     public Dictionary<ProtoId<EdgeSpreaderPrototype>, float> ProtoUpdateAccumulators =  new Dictionary<ProtoId<EdgeSpreaderPrototype>, float>();
 }

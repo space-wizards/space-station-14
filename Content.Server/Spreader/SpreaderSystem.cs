@@ -25,8 +25,6 @@ public sealed partial class SpreaderSystem : EntitySystem
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private TagSystem _tag = default!;
     [Dependency] private TurfSystem _turf = default!;
-    
-    [Dependency] private IGameTiming _timing = default!;
 
     [Dependency] private EntityQuery<EdgeSpreaderComponent> _edgeSpreaderQuery = default!;
     [Dependency] private EntityQuery<AirtightComponent> _airtightQuery = default!;
@@ -47,8 +45,6 @@ public sealed partial class SpreaderSystem : EntitySystem
     /// TODO PERFORMANCE Assign each prototype to an index and convert dictionary to array
     /// </summary>
     private readonly Dictionary<EntityUid, Dictionary<string, int>> _gridUpdates = [];
-
-    public const float SpreadCooldownSeconds = 1;
 
     private static readonly ProtoId<TagPrototype> IgnoredTag = "SpreaderIgnore";
 
