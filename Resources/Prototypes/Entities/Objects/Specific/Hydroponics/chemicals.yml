@@ -5,6 +5,8 @@
   description: A sack of questionably sourced fertilizer. Frank guarantees results, but not which results.
   components:
   - type: Appearance
+  - type: Openable
+    closeable: true
   - type: GenericVisualizer
     visuals:
       enum.OpenableVisuals.Opened:
