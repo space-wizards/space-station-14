@@ -75,7 +75,6 @@ public sealed partial class KudzuSystem : EntitySystem
             var neighborUid = Spawn(prototype, _map.GridTileToLocal(neighbor.Tile.GridUid, neighbor.Grid, neighbor.Tile.GridIndices));
             DebugTools.Assert(HasComp<EdgeSpreaderComponent>(neighborUid));
             DebugTools.Assert(HasComp<ActiveEdgeSpreaderComponent>(neighborUid));
-            EnsureComp<ActiveEdgeSpreaderComponent>(neighborUid).NextSpreadTime = args.NextSpreadTime;
             DebugTools.Assert(Comp<EdgeSpreaderComponent>(neighborUid).Id == KudzuGroup);
             args.Updates--;
             if (args.Updates <= 0)
