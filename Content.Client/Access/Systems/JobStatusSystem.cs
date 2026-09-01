@@ -1,4 +1,4 @@
-﻿using Content.Client.Overlays;
+using Content.Client.Overlays;
 using Content.Shared.Access.Systems;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;

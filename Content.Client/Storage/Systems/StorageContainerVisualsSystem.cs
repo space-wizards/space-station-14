@@ -1,4 +1,4 @@
-﻿using Content.Client.Storage.Components;
+using Content.Client.Storage.Components;
 using Content.Shared.Rounding;
 using Content.Shared.Storage;
 using Robust.Client.GameObjects;

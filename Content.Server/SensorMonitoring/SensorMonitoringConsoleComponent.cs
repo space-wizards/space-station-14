@@ -1,4 +1,4 @@
-﻿using Content.Shared.SensorMonitoring;
+using Content.Shared.SensorMonitoring;
 using Robust.Server.Player;
 using Robust.Shared.Collections;
 using Robust.Shared.Player;

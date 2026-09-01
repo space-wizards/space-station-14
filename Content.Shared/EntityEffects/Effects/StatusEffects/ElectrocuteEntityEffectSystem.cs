@@ -1,4 +1,4 @@
-﻿using Content.Shared.Electrocution;
+using Content.Shared.Electrocution;
 using Content.Shared.StatusEffect;
 using Robust.Shared.Prototypes;
 

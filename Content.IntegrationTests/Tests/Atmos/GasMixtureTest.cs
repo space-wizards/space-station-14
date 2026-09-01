@@ -1,4 +1,4 @@
-﻿using Content.IntegrationTests.Fixtures.Attributes;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Atmos;
 
 namespace Content.IntegrationTests.Tests.Atmos;

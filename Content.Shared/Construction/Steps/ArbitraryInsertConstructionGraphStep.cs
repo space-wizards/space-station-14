@@ -1,4 +1,4 @@
-﻿using Content.Shared.Examine;
+using Content.Shared.Examine;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction.Steps

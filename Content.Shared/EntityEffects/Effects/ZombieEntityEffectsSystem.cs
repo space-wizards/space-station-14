@@ -1,4 +1,4 @@
-﻿using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
 

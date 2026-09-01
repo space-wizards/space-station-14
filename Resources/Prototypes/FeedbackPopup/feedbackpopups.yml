@@ -1,4 +1,4 @@
-﻿- type: feedbackPopup
+- type: feedbackPopup
   id: FeedbackPopup
   popupOrigin: wizden_master
   title: "[bold]Feedback on the new feedback popup system[/bold]"

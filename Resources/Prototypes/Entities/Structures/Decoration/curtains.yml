@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BaseCurtains
   parent: BaseStructure
   name: curtains

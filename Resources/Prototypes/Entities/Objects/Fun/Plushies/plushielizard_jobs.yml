@@ -1,4 +1,4 @@
-﻿# This base is created so we don't have to define the different sprite path for each plushie job.
+# This base is created so we don't have to define the different sprite path for each plushie job.
 - type: entity
   parent: PlushieLizard
   id: BasePlushieLizardJob

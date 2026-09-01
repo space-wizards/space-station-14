@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Mobs;
+namespace Content.Shared.Mobs;
 
 /// <see cref="DeathgaspComponent"/>
 public abstract partial class SharedDeathgaspSystem : EntitySystem

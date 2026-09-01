@@ -1,4 +1,4 @@
-﻿using Content.Server.Atmos.Monitor.Components;
+using Content.Server.Atmos.Monitor.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.DeviceNetwork;

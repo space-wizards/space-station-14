@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.StationRecords.Events;
+namespace Content.Shared.StationRecords.Events;
 
 /// <summary>
 /// Base event for station record events.

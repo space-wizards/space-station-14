@@ -1,4 +1,4 @@
-﻿using Content.Client.Message;
+using Content.Client.Message;
 using Content.Client.RichText;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.RichText;

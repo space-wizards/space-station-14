@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: [ BaseStructureDynamic, StructureHealthContainer ]
   id: OreBox
   name: ore box

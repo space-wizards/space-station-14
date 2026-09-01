@@ -1,4 +1,4 @@
-﻿using Content.Client.Chemistry.Visualizers;
+using Content.Client.Chemistry.Visualizers;
 using Content.Shared.Chemistry.Components;
 
 namespace Content.Client.Storage.Components;

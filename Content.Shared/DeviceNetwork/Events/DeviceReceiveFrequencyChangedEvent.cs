@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.DeviceNetwork.Events;
+namespace Content.Shared.DeviceNetwork.Events;
 
 /// <summary>
 /// Raised when the <see cref="DeviceData.ReceiveFrequency"/> was changed.

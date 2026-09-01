@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: Solution # Not abstract because it's a fallback for missing solution protos!
   categories: [ HideSpawnMenu ]
   name: solution

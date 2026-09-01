@@ -1,4 +1,4 @@
-﻿using Content.Shared.Medical.SuitSensors;
+using Content.Shared.Medical.SuitSensors;
 
 namespace Content.Server.Medical.CrewMonitoring;
 

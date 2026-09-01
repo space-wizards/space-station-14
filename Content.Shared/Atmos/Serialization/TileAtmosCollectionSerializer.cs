@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;

@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: AI Timed Spawner
   id: AITimedSpawner
   parent: MarkerBase

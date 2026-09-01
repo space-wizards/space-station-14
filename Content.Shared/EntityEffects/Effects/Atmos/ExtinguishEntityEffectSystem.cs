@@ -1,4 +1,4 @@
-﻿using Content.Shared.Atmos;
+using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Robust.Shared.Prototypes;
 

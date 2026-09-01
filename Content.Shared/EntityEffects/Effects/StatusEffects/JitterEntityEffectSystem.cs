@@ -1,4 +1,4 @@
-﻿using Content.Shared.Jittering;
+using Content.Shared.Jittering;
 using Content.Shared.StatusEffect;
 using Robust.Shared.Prototypes;
 

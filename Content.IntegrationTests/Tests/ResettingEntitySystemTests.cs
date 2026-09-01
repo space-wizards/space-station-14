@@ -1,4 +1,4 @@
-﻿using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.GameTicking;
 using Content.Shared.GameTicking;
 using Robust.Shared.GameObjects;

@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using System.Text.RegularExpressions;
 using Content.Shared.Configurable;
 using Robust.Client.UserInterface;

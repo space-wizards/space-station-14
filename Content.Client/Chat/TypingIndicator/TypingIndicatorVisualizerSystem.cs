@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chat.TypingIndicator;
+using Content.Shared.Chat.TypingIndicator;
 using Robust.Client.GameObjects;
 using Content.Shared.Inventory;
 

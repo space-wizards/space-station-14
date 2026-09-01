@@ -1,4 +1,4 @@
-﻿using Content.Shared.Inventory;
+using Content.Shared.Inventory;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.GameStates;
 

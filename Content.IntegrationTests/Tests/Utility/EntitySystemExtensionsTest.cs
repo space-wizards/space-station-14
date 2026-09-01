@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.IntegrationTests.Fixtures;
 using Content.Shared.Physics;
 using Content.Shared.Spawning;

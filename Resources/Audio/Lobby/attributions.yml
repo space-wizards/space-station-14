@@ -1,4 +1,4 @@
-﻿- files: ["thunderdome.ogg"]
+- files: ["thunderdome.ogg"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "-Sector11 by MashedByMachines. Converted from MP3 to OGG."
   source: "https://www.newgrounds.com/audio/listen/312622"
@@ -33,7 +33,7 @@
 
 - files: ["singuloose.ogg"]
   license: "CC-BY-NC-SA-3.0"
-  copyright: "Singuloose by Janis Schiedková. Converted from MP3 to OGG."
+  copyright: "Singuloose by Janis Schiedkov�. Converted from MP3 to OGG."
   source: "https://soundcloud.com/js_m/singuloose"
 
 - files: ["title2.ogg"]
