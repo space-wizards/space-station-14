@@ -899,15 +899,15 @@
 - type: entity
   parent: BasePlant
   id: ApplePlants
-  name: apple tree
+  name: red apple tree
   components:
   - type: Sprite
-    sprite: Objects/Specific/Hydroponics/apple.rsi
+    sprite: Objects/Specific/Hydroponics/apple_red.rsi
   - type: PlantData
     name: seeds-apple-name
     packetPrototype: AppleSeeds
     productPrototypes: [ FoodApple ]
-    mutationPrototypes: [ GoldenApplePlants ]
+    mutationPrototypes: [ GoldenApplePlants, AppleYellowPlants, AppleGreenPlants ]
   - type: Plant
     lifespan: 55
     maturation: 6
@@ -926,6 +926,32 @@
         min: 1
         max: 4
         potencyDivisor: 25
+
+- type: entity
+  parent: ApplePlants
+  id: AppleYellowPlants
+  name: yellow apple tree
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/apple_yellow.rsi
+  - type: PlantData
+    name: seeds-apple-yellow-name
+    packetPrototype: AppleYellowSeeds
+    productPrototypes: [ FoodAppleYellow ]
+    mutationPrototypes: [ GoldenApplePlants, ApplePlants, AppleGreenPlants ]
+
+- type: entity
+  parent: ApplePlants
+  id: AppleGreenPlants
+  name: green apple tree
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/apple_green.rsi
+  - type: PlantData
+    name: seeds-apple-green-name
+    packetPrototype: AppleGreenSeeds
+    productPrototypes: [ FoodAppleGreen ]
+    mutationPrototypes: [ GoldenApplePlants, AppleYellowPlants, ApplePlants ]
 
 - type: entity
   parent: BasePlant

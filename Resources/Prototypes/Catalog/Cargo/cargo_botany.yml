@@ -31,7 +31,7 @@
 - type: cargoProduct
   id: HydroponicsSeeds
   icon:
-    sprite: Objects/Specific/Hydroponics/apple.rsi
+    sprite: Objects/Specific/Hydroponics/apple_red.rsi
     state: seed
   product: CrateHydroponicsSeeds
   cost: 600
