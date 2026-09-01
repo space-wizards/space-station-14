@@ -32,7 +32,7 @@ holopad-window-contact-label = {CAPITALIZE($label)}
 holopad-window-filter-line-placeholder = Search for a contact
 
 # Flavor
-holopad-window-flavor-left = ? Do not enter while projector is active
+holopad-window-flavor-left = ⚠ Do not enter while projector is active
 holopad-window-flavor-right = v3.0.9
 
 # Holograms
