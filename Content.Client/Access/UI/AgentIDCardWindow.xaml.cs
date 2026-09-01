@@ -14,6 +14,10 @@ using System.Numerics;
 
 namespace Content.Client.Access.UI;
 
+/// <summary>
+/// A window for configuring an agent ID card.
+/// This allows the user to rename their ID card and choose a job icon that appears when equipped.
+/// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class AgentIDCardWindow : FancyWindow
 {
@@ -22,9 +26,19 @@ public sealed partial class AgentIDCardWindow : FancyWindow
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     private readonly SpriteSystem _spriteSystem;
 
+    /// <summary>
+    /// An event raised when the name for the ID card changes.
+    /// </summary>
     public event Action<string>? OnNameChanged;
+
+    /// <summary>
+    /// An event raised when the job title for the ID card changes.
+    /// </summary>
     public event Action<string>? OnJobChanged;
 
+    /// <summary>
+    /// An event raised when the job icon for the ID card changes.
+    /// </summary>
     public event Action<ProtoId<JobIconPrototype>>? OnJobIconChanged;
 
     public AgentIDCardWindow()

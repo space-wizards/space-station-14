@@ -13,15 +13,21 @@ using static Content.Shared.Access.Components.IdCardConsoleComponent;
 
 namespace Content.Client.Access.UI
 {
+    /// <summary>
+    /// A window for the ID card computer.
+    /// Allows renaming an ID card, giving out new job titles and reassigning its accesses.
+    /// </summary>
     [GenerateTypedNameReferences]
     public sealed partial class IdCardConsoleWindow : DefaultWindow
     {
         [Dependency] private IConfigurationManager _cfgManager = default!;
         [Dependency] private IEntityManager _entManager = default!;
         [Dependency] private IPrototypeManager _prototypeManager = default!;
-        [Dependency] private ILogManager _logManager = default!;
 
-        public Action<IdCardData>? OnDataSubmitted;
+        /// <summary>
+        /// An event raised when the ID card's data (e.g. name, job title, accesses) changes.
+        /// </summary>
+        public Action<IdCardData>? OnDataChanged;
 
         private EntityUid _owner;
 
@@ -231,7 +237,7 @@ namespace Content.Client.Access.UI
             if (jobProtoDirty)
                 jobProto = _jobPrototypeIds[JobPresetOptionButton.SelectedId];
 
-            OnDataSubmitted?.Invoke(new(
+            OnDataChanged?.Invoke(new(
                 FullNameLineEdit.Text,
                 JobTitleLineEdit.Text,
                 // Iterate over the buttons dictionary, filter by `Pressed`, only get key from the key/value pair

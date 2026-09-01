@@ -5,6 +5,11 @@ using static Content.Shared.Access.Components.IdCardConsoleComponent;
 
 namespace Content.Client.Access.UI;
 
+/// <summary>
+/// A BUI for the ID card computer.
+/// Creates an <see cref="IdCardConsoleWindow"/>, updates it with state from the server,
+/// and sends network messages on events from the window.
+/// </summary>
 public sealed partial class IdCardConsoleBoundUserInterface : BoundUserInterface
 {
     private IdCardConsoleWindow? _window;
@@ -20,7 +25,7 @@ public sealed partial class IdCardConsoleBoundUserInterface : BoundUserInterface
         _window = this.CreateWindow<IdCardConsoleWindow>();
         _window.SetOwner(Owner);
 
-        _window.OnDataSubmitted += SubmitData;
+        _window.OnDataChanged += SubmitData;
         _window.CrewManifestButton.OnPressed += _ => SendMessage(new CrewManifestOpenUiMessage());
         _window.PrivilegedIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(PrivilegedIdCardSlotId));
         _window.TargetIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(TargetIdCardSlotId));

@@ -3,6 +3,11 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Atmos.Consoles;
 
+/// <summary>
+/// A BUI for the atmos alerts computer.
+/// Updates a <see cref="AtmosAlertsComputerWindow"/> with state from the server,
+/// and sends off network messages when it raises events.
+/// </summary>
 public sealed class AtmosAlertsComputerBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
