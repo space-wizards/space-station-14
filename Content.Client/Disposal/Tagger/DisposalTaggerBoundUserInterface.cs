@@ -12,7 +12,7 @@ namespace Content.Client.Disposal.Tagger
     {
         private DisposalTaggerWindow? _window;
 
-        private const int TagLimit = 30;
+        public const int TagLimit = 30;
 
         protected override void Open()
         {

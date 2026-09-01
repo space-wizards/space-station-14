@@ -12,13 +12,18 @@ namespace Content.Client.Disposal.Tagger;
 [GenerateTypedNameReferences]
 public sealed partial class DisposalTaggerWindow : DefaultWindow
 {
+    [Dependency] private IEntityManager _entManager = default!;
+
     public event Action<string>? OnRouteChanged;
 
     public DisposalTaggerWindow()
     {
         RobustXamlLoader.Load(this);
 
-        TagInput.IsValid = s => SharedDisposalHolderSystem.TagRegex.IsMatch(s);
+        IoCManager.InjectDependencies(this);
+
+        var disposalHolder = _entManager.System<SharedDisposalHolderSystem>();
+        TagInput.IsValid = s => disposalHolder.TagIsValid(s) && s.Length <= DisposalTaggerBoundUserInterface.TagLimit;
 
         Confirm.OnPressed += _ => NewRoute(TagInput.Text);
         TagInput.OnTextEntered += args => NewRoute(args.Text);
