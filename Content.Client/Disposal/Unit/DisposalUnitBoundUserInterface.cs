@@ -7,38 +7,23 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Disposal.Unit
 {
     [UsedImplicitly]
-    public sealed class DisposalUnitBoundUserInterface : BoundUserInterface
+    public sealed class DisposalUnitBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
     {
         [ViewVariables]
         private DisposalUnitWindow? _disposalUnitWindow;
 
-        public DisposalUnitBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-        {
-        }
-
-        private void ButtonPressed(DisposalUnitUiButton button)
-        {
-            SendPredictedMessage(new DisposalUnitUiButtonPressedMessage(button));
-        }
-
         protected override void Open()
         {
             base.Open();
-
             _disposalUnitWindow = this.CreateWindow<DisposalUnitWindow>();
             _disposalUnitWindow.OpenCenteredRight();
-
             _disposalUnitWindow.SetInfoFromEntity(EntMan, Owner);
 
-            _disposalUnitWindow.Eject.OnPressed += _ => ButtonPressed(DisposalUnitUiButton.Eject);
-            _disposalUnitWindow.Engage.OnPressed += _ => ButtonPressed(DisposalUnitUiButton.Engage);
-            _disposalUnitWindow.Power.OnPressed += _ =>
-            {
-                ButtonPressed(DisposalUnitUiButton.Power);
-                ToggleStateText(_disposalUnitWindow, _disposalUnitWindow.Power.Pressed);
-            };
+            _disposalUnitWindow.OnTogglePower += ButtonPressed;
+            _disposalUnitWindow.OnEject += ButtonPressed;
+            _disposalUnitWindow.OnEngage += ButtonPressed;
 
-            _disposalUnitWindow.Routing.OnPressed += _ => SendPredictedMessage(new DisposalTaggerOpenUiMessage());
+            _disposalUnitWindow.OnChangeRouting += OpenRoutingWindow;
 
             Update();
         }
@@ -47,44 +32,32 @@ namespace Content.Client.Disposal.Unit
         {
             base.Update();
 
-            if (EntMan.TryGetComponent(Owner, out DisposalUnitComponent? component))
-            {
-                Refresh((Owner, component));
-            }
-        }
-
-        public void Refresh(Entity<DisposalUnitComponent> entity)
-        {
             if (_disposalUnitWindow == null)
                 return;
 
-            var disposalUnit = EntMan.System<DisposalUnitSystem>();
+            if (!EntMan.TryGetComponent<DisposalUnitComponent>(Owner, out var component))
+                return;
 
-            var powered = EntMan.System<PowerReceiverSystem>().IsPowered(Owner);
-            var disposalState = disposalUnit.GetState(entity);
-            var fullPressure = disposalUnit.EstimatedFullPressure(entity);
-            var pressurePerSecond = entity.Comp.PressurePerSecond;
+            var disposalSystem = EntMan.System<DisposalUnitSystem>();
+            _disposalUnitWindow.Populate(
+                    EntMan.System<PowerReceiverSystem>().IsPowered(Owner),
+                    component.Engaged,
+                    disposalSystem.GetState((Owner, component)),
+                    disposalSystem.EstimatedFullPressure((Owner, component)),
+                    component.PressurePerSecond);
 
-            ToggleStateText(_disposalUnitWindow, powered);
-            _disposalUnitWindow.UnitState.Text = Loc.GetString($"disposal-unit-state-{disposalState}");
-            _disposalUnitWindow.FullPressure = disposalUnit.EstimatedFullPressure(entity);
-            _disposalUnitWindow.PressurePerSecond = entity.Comp.PressurePerSecond;
-            _disposalUnitWindow.PressureBar.UpdatePressure(fullPressure, pressurePerSecond);
-            _disposalUnitWindow.Power.Pressed = powered;
-            _disposalUnitWindow.Engage.Pressed = entity.Comp.Engaged;
-
-            // Hide the button if there's nothing for it to do
-            _disposalUnitWindow.Routing.Visible =
-                EntMan.TryGetComponent<DisposalTaggerComponent>(Owner, out var tagger) && tagger.Editable;
+            if (EntMan.TryGetComponent<DisposalTaggerComponent>(Owner, out var tagger))
+                _disposalUnitWindow.PopulateRouting(tagger.Editable);
         }
 
-        /// <summary>
-        /// This trick is used to hide power being unpredicted so the UI feels responsive.
-        /// </summary>
-        private void ToggleStateText(DisposalUnitWindow window, bool powered)
+        private void ButtonPressed(DisposalUnitUiButton button)
         {
-            window.UnitState.Visible = powered;
-            window.UnitStateUnpowered.Visible = !powered;
+            SendPredictedMessage(new DisposalUnitUiButtonPressedMessage(button));
+        }
+
+        private void OpenRoutingWindow()
+        {
+            SendPredictedMessage(new DisposalTaggerOpenUiMessage());
         }
     }
 }
