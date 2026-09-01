@@ -166,12 +166,11 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
 
     public static HumanoidCharacterAppearance EnsureValid(HumanoidCharacterAppearance appearance, ProtoId<SpeciesPrototype> species, Sex sex)
     {
-
         var proto = IoCManager.Resolve<IPrototypeManager>();
         var markingManager = IoCManager.Resolve<MarkingManager>();
 
         var skinColor = appearance.SkinColor;
-        var eyeColor = appearance.EyeColor;
+        var eyeColor = ClampColor(appearance.EyeColor); // not using ClampEyeColorToStrategy so characters can have fun eye colours
         var validatedMarkings = appearance.Markings.ShallowClone();
 
         if (proto.TryIndex(species, out var speciesProto))
@@ -179,7 +178,6 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
             var coloration = proto.Index(speciesProto.SkinColoration);
             var organs = markingManager.GetOrgans(species);
             skinColor = coloration.Strategy.EnsureVerified(skinColor);
-            eyeColor = ClampEyeColorToStrategy(eyeColor, coloration);
 
             foreach (var (organ, _) in appearance.Markings)
             {

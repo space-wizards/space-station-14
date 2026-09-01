@@ -1,7 +1,5 @@
-using Content.Client.Actions;
 using Content.Client.Charges.UI;
 using Content.Client.Items;
-using Content.Shared.Actions;
 using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 
@@ -9,8 +7,6 @@ namespace Content.Client.Charges;
 
 public sealed partial class ChargesSystem : SharedChargesSystem
 {
-    [Dependency] private ActionsSystem _actions = default!;
-
     private Dictionary<EntityUid, int> _lastCharges = new();
     private Dictionary<EntityUid, int> _tempLastCharges = new();
 
@@ -33,14 +29,11 @@ public sealed partial class ChargesSystem : SharedChargesSystem
 
         while (query.MoveNext(out var uid, out var recharge, out var charges))
         {
-            if (_actions.GetAction(uid, false) is not {} action)
-                continue;
-
             var current = GetCurrentCharges((uid, charges, recharge));
 
             if (!_lastCharges.TryGetValue(uid, out var last) || current != last)
             {
-                _actions.UpdateAction(action);
+                UpdateChargeVisuals((uid, charges, recharge));
             }
 
             _tempLastCharges[uid] = current;

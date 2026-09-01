@@ -208,3 +208,8 @@ loadout-group-reporter-head = Reporter hat
 loadout-group-reporter-outerclothing = Reporter vest
 
 loadout-group-psychologist-jumpsuit = Psychologist jumpsuit
+
+loadout-group-tramdriver-jumpsuit = Tram driver jumpsuit
+loadout-group-tramdriver-outerclothing = Tram driver suit
+loadout-group-tramdriver-hat = Tram driver hat
+loadout-group-tramdriver-gloves = Tram driver gloves

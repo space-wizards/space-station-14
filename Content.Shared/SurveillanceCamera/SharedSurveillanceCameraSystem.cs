@@ -9,6 +9,7 @@ public abstract partial class SharedSurveillanceCameraSystem : EntitySystem
 {
     public override void Initialize()
     {
+        base.Initialize();
         SubscribeLocalEvent<SurveillanceCameraComponent, GetVerbsEvent<AlternativeVerb>>(AddVerbs);
         SubscribeLocalEvent<SurveillanceCameraComponent, EmpPulseEvent>(OnEmpPulse);
         SubscribeLocalEvent<SurveillanceCameraComponent, EmpDisabledRemovedEvent>(OnEmpDisabledRemoved);

@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseControllable, BaseStructure ]
+  parent: [ BaseControllable, BaseStructure, StructureHealthMachineStrong ]
   id: MothershipCore
   name: mothership core
   description: A sentient machine that can produce Xenoborgs. Without this the Xenoborgs are doomed.
@@ -10,9 +10,6 @@
     blockUse: false
   - type: Appearance
   - type: WiresVisuals
-  - type: Damageable
-  - type: Injurable
-    damageContainer: Inorganic
   - type: Fixtures
     fixtures:
       fix1:
@@ -42,14 +39,14 @@
     idleState: core-idle
     runningState: core-active
     staticPacks:
+    - XenoborgMachines
     - EmptyXenoborgs
     - XenoborgUpgradeModules
   - type: MaterialStorage
     whitelist:
       tags:
+      - XenoborgCrystal
       - Sheet
-      - RawMaterial
-      - Ingot
   - type: PointLight
     color: "#0033ff"
     enabled: true
@@ -58,14 +55,14 @@
   - type: Anchorable
     flags:
     - Anchorable
+  - type: Damageable
+    damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 275
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
@@ -124,7 +121,7 @@
   - type: StaticPrice
     price: 800
   - type: WarpPoint
-    location: Mothership Core
+    location: location-mothership-core
     follow: true
   - type: VoiceOverride
     nameOverride: MOTHERSHIP CORE
@@ -179,12 +176,10 @@
     moduleWhitelist:
       tags:
       - MothershipModule
-      - BorgModuleEngineering
   - type: ContainerFill
     containers:
       borg_module:
       - MothershipModule
-      - BorgModuleAdvancedTool
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot { }
@@ -243,10 +238,12 @@
   description: View the Xenoborgs Control Console
   components:
   - type: Action
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-control-computer }
-    iconOn: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-control-computer }
     keywords: [ "Mothership Core", "console", "interface" ]
     priority: -6
+  - type: Sprite
+    sprite: Interface/Actions/actions_borg.rsi
+    layers:
+    - state: xenoborg-control-computer
   - type: InstantAction
     event: !type:ToggleIntrinsicUIEvent { key: enum.RoboticsConsoleUiKey.Key }
 
@@ -257,9 +254,11 @@
   description: View the Xenoborgs Camera Monitor
   components:
   - type: Action
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-camera-computer }
-    iconOn: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-camera-computer }
     keywords: [ "Mothership Core", "console", "interface" ]
     priority: -6
+  - type: Sprite
+    sprite: Interface/Actions/actions_borg.rsi
+    layers:
+    - state: xenoborg-camera-computer
   - type: InstantAction
     event: !type:ToggleIntrinsicUIEvent { key: enum.SurveillanceCameraMonitorUiKey.Key }

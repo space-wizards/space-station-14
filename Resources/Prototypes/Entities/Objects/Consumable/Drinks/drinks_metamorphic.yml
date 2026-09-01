@@ -21,6 +21,18 @@
     metamorphicDefaultSprite:
       sprite: Objects/Consumable/Drinks/glass_clear.rsi
       state: icon
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
+        transferForensics: true
 
 - type: entity
   parent: DrinkGlass
@@ -1272,20 +1284,6 @@
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/monkeybusiness.rsi
-    state: icon
-
-- type: entity
-  parent: DrinkGlass
-  id: DrinkNeurotoxinGlass
-  suffix: neurotoxin
-  components:
-  - type: Solution
-    solution:
-        reagents:
-        - ReagentId: Neurotoxin
-          Quantity: 30
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/neurotoxinglass.rsi
     state: icon
 
 - type: entity

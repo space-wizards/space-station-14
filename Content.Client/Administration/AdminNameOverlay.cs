@@ -5,7 +5,7 @@ using Content.Client.Administration.Systems;
 using Content.Client.Stylesheets;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
-using Content.Shared.Ghost;
+using Content.Shared.Ghost.Components;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
 using Robust.Client.Graphics;

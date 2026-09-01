@@ -34,7 +34,7 @@
   - type: Prayable
     bibleUserOnly: true
   - type: Summonable
-    specialItem: SpawnPointGhostRemilia
+    summonEntity: SpawnPointGhostRemilia
   - type: ReactionMixer
     mixMessage: "bible-mixing-success"
     reactionTypes:
@@ -81,11 +81,14 @@
       types:
         Caustic: 50
     failChance: 0
-    locPrefix: "necro"
+    healFailOthersText: necro-heal-fail-others
+    healFailSelfText: necro-heal-fail-self
+    healSuccessOthersText: necro-heal-success-others
+    healSuccessSelfText: necro-heal-success-self
     healSound: "/Audio/Effects/lightburn.ogg"
     healingLightEffect: EvilLightEffect
   - type: Summonable
-    specialItem: SpawnPointGhostCerberus
+    summonEntity: SpawnPointGhostCerberus
     respawnTime: 300
   - type: Sprite
     sprite: Objects/Specific/Chapel/necronomicon.rsi
@@ -99,8 +102,11 @@
   description: Summon a familiar that will aid you and gain humanlike intelligence once inhabited by a soul.
   components:
   - type: Action
-    icon: { sprite: Clothing/Head/Hats/witch.rsi, state: icon }
     useDelay: 1
+  - type: Sprite
+    sprite: Clothing/Head/Hats/witch.rsi
+    layers:
+    - state: icon
   - type: InstantAction
     event: !type:SummonActionEvent
 
