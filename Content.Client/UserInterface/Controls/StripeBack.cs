@@ -71,19 +71,13 @@ namespace Content.Client.UserInterface.Controls
 
         protected override Vector2 ArrangeOverride(Vector2 finalSize)
         {
-            var box = new UIBox2(Vector2.Zero, finalSize);
-
             var padSize = HasMargins ? PadSize : 0;
+            var top = HasTopEdge ? padSize + EdgeSize : 0;
+            var bottom = HasBottomEdge ? padSize + EdgeSize : 0;
 
-            if (HasTopEdge)
-            {
-                box += (0, padSize + EdgeSize, 0, 0);
-            }
-
-            if (HasBottomEdge)
-            {
-                box += (0, 0, 0, -(padSize + EdgeSize));
-            }
+            // Clamp so the box stays valid when finalSize is smaller than the edge insets
+            top = MathF.Min(top, finalSize.Y);
+            var box = new UIBox2(0, top, finalSize.X, MathF.Max(top, finalSize.Y - bottom));
 
             foreach (var child in Children)
             {
@@ -96,19 +90,24 @@ namespace Content.Client.UserInterface.Controls
 
         protected override void Draw(DrawingHandleScreen handle)
         {
-            UIBox2 centerBox = PixelSizeBox;
-
             var padSize = HasMargins ? PadSize : 0;
+            var edgeSize = (padSize + EdgeSize) * UIScale;
+            var top = HasTopEdge ? edgeSize : 0;
+            var bottom = HasBottomEdge ? edgeSize : 0;
+
+            // Too small to fit the edges, don't draw anything
+            if (top + bottom > PixelHeight)
+                return;
+
+            var centerBox = new UIBox2(0, top, PixelWidth, PixelHeight - bottom);
 
             if (HasTopEdge)
             {
-                centerBox += (0, (padSize + EdgeSize) * UIScale, 0, 0);
                 handle.DrawRect(new UIBox2(0, padSize * UIScale, PixelWidth, centerBox.Top), EdgeColor);
             }
 
             if (HasBottomEdge)
             {
-                centerBox += (0, 0, 0, -((padSize + EdgeSize) * UIScale));
                 handle.DrawRect(new UIBox2(0, centerBox.Bottom, PixelWidth, PixelHeight - padSize * UIScale),
                     EdgeColor);
             }
