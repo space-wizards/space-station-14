@@ -1,4 +1,4 @@
-﻿# Window headers
+# Window headers
 holopad-window-title = {CAPITALIZE($title)}
 holopad-window-subtitle = [color=white][bold]Holographic communication system[/bold][/color]
 holopad-window-options = [color=darkgray][font size=10][italic]Please select an option from the list below[/italic][/font][/color]
@@ -32,7 +32,7 @@ holopad-window-contact-label = {CAPITALIZE($label)}
 holopad-window-filter-line-placeholder = Search for a contact
 
 # Flavor
-holopad-window-flavor-left = ⚠ Do not enter while projector is active
+holopad-window-flavor-left = ? Do not enter while projector is active
 holopad-window-flavor-right = v3.0.9
 
 # Holograms

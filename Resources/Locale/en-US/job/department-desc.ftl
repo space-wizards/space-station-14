@@ -1,4 +1,4 @@
-﻿department-Cargo-description = Acquire and deliver useful supplies for the rest of the station.
+department-Cargo-description = Acquire and deliver useful supplies for the rest of the station.
 department-Civilian-description = Attend to the crew's basic physical and psychological needs.
 department-Command-description = Manage the crew and keep them working efficiently.
 department-CentralCommand-description = Manage the crew and keep them working efficiently.
