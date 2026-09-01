@@ -28,35 +28,15 @@ def get_last_publish_sha() -> str:
 def main():
     github_output = os.environ.get("GITHUB_OUTPUT")
 
-    # Don't overwrite if the value was already set by an earlier step/run.
-    if os.environ.get("LAST_PUBLISH_SHA"):
-        print("LAST_PUBLISH_SHA is already set, skipping")
+    # If the value was already provided via the environment, propagate it to the
+    # step output instead of recomputing it.
+    last_sha = os.environ.get("LAST_PUBLISH_SHA")
+    if last_sha:
+        print(f"LAST_PUBLISH_SHA is already set, using it: {last_sha}")
+        if github_output:
+            with open(github_output, "a") as f:
+                f.write(f"last_publish_sha={last_sha}\n")
         return
-
-    if github_output and os.path.exists(github_output):
-        with open(github_output, "r", encoding="utf-8") as f:
-            lines = f.readlines()
-
-        remaining_lines = []
-        already_set = False
-        for line in lines:
-            stripped = line.strip()
-            if stripped.startswith("last_publish_sha="):
-                existing_sha = stripped[len("last_publish_sha="):].strip()
-                if existing_sha:
-                    already_set = True
-                    remaining_lines.append(line)
-                # else: empty stale marker, drop it so it can't shadow the real value.
-            else:
-                remaining_lines.append(line)
-
-        if already_set:
-            print("last_publish_sha is already set in GITHUB_OUTPUT, skipping")
-            return
-
-        if len(remaining_lines) != len(lines):
-            with open(github_output, "w", encoding="utf-8") as f:
-                f.writelines(remaining_lines)
 
     last_sha = get_last_publish_sha()
 
