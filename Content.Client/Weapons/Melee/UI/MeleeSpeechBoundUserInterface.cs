@@ -8,8 +8,6 @@ namespace Content.Client.Weapons.Melee.UI;
 /// </summary>
 public sealed partial class MeleeSpeechBoundUserInterface : BoundUserInterface
 {
-    [Dependency] private IEntityManager _entManager = default!;
-
     [ViewVariables]
     private MeleeSpeechWindow? _window;
 
@@ -24,7 +22,7 @@ public sealed partial class MeleeSpeechBoundUserInterface : BoundUserInterface
 
         _window = this.CreateWindow<MeleeSpeechWindow>();
 
-        if (_entManager.TryGetComponent(Owner, out MeleeSpeechComponent? speech))
+        if (EntMan.TryGetComponent(Owner, out MeleeSpeechComponent? speech))
         {
             _window.SetInitialBattlecry(speech!.Battlecry);
             _window.SetMaxBattlecryLength(speech!.MaxBattlecryLength);
