@@ -499,6 +499,7 @@
   - type: StationTeleporterConsole
     portalColor: "#81ddeb"
   - type: Storage
+    clickInsert: false
     grid:
     - 0,0,4,2
     maxItemSize: Small
@@ -532,7 +533,7 @@
   components:
   - type: StationTeleporterConsole
     autoLinkKey: Nanotrasen
-  
+
 - type: entity
   parent: ComputerStationTeleportersControl
   id: ComputerSyndicateTeleportersControl
@@ -558,7 +559,7 @@
     access: [["SyndicateAgent"]]
   - type: StationTeleporterConsole
     portalColor: "#c61414"
-  
+
 - type: entity
   parent: BaseComputerAiAccess
   id: ComputerResearchAndDevelopment
