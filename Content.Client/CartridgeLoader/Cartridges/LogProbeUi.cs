@@ -16,7 +16,7 @@ public sealed partial class LogProbeUi : UIFragment
 
     public override void Setup(BoundUserInterface ui, EntityUid? fragmentOwner)
     {
-        _fragment = new LogProbeUiFragment();
+        _fragment = ui.CreateDisposableControl<LogProbeUiFragment>();
 
         _fragment.OnPrintPressed += () =>
         {

@@ -15,7 +15,7 @@ public sealed partial class WantedListUi : UIFragment
 
     public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
     {
-        _fragment = new WantedListUiFragment();
+        _fragment = userInterface.CreateDisposableControl<WantedListUiFragment>();
     }
 
     public override void UpdateState(BoundUserInterfaceState state)

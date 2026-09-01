@@ -44,6 +44,11 @@ public sealed partial class ArticleEditorPanel : Control
             return tooltip;
         };
 
+        ButtonPreview.OnPressed += OnPreview;
+        ButtonCancel.OnPressed += OnCancel;
+        ButtonPublish.OnPressed += OnPublish;
+        ButtonSaveDraft.OnPressed += OnDraftSaved;
+
         TitleField.OnTextChanged += args => OnTextChanged(args.Text.Length, args.Control, SharedNewsSystem.MaxTitleLength);
         ContentField.OnTextChanged += args => OnTextChanged(Rope.CalcTotalLength(args.TextRope), args.Control, SharedNewsSystem.MaxContentLength);
     }
@@ -110,16 +115,6 @@ public sealed partial class ArticleEditorPanel : Control
         TitleField.Text = "";
         ContentField.TextRope = Rope.Leaf.Empty;
         ArticleDraftUpdated?.Invoke(string.Empty, string.Empty);
-    }
-
-    protected override void EnteredTree()
-    {
-        base.EnteredTree();
-
-        ButtonPreview.OnPressed += OnPreview;
-        ButtonCancel.OnPressed += OnCancel;
-        ButtonPublish.OnPressed += OnPublish;
-        ButtonSaveDraft.OnPressed += OnDraftSaved;
     }
 
     protected override void ExitedTree()

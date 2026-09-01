@@ -5,14 +5,17 @@ using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.IdentityManagement;
-using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Cargo.BUI
 {
+    /// <summary>
+    /// A BUI for the cargo request computer.
+    /// Handles sending messages to the server from events from the CargoConsoleMenu and CargoConsoleOrderMenu it owns,
+    /// and updating those windows when updated by the server.
+    /// </summary>
     public sealed partial class CargoOrderConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
     {
         [Dependency] private SharedCargoSystem _cargoSystem = default!;

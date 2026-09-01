@@ -16,7 +16,7 @@ public sealed partial class CrewManifestUi : UIFragment
 
     public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
     {
-        _fragment = new CrewManifestUiFragment();
+        _fragment = userInterface.CreateDisposableControl<CrewManifestUiFragment>();
     }
 
     public override void UpdateState(BoundUserInterfaceState state)

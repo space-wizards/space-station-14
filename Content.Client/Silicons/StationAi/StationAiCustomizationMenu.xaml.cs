@@ -41,7 +41,7 @@ public sealed partial class StationAiCustomizationMenu : FancyWindow
 
         // Create UI entries for each group of customizations
         var groupPrototypes = _protoManager.EnumeratePrototypes<StationAiCustomizationGroupPrototype>();
-        groupPrototypes = groupPrototypes.OrderBy(x => Loc.GetString(x.Name)); // To ensure consistency in presentation
+        groupPrototypes = groupPrototypes.OrderBy(x => x.ID); // To ensure consistency in presentation
 
         foreach (var groupPrototype in groupPrototypes)
         {

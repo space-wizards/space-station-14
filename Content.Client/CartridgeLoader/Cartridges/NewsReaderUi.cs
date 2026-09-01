@@ -16,7 +16,7 @@ public sealed partial class NewsReaderUi : UIFragment
 
     public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
     {
-        _fragment = new NewsReaderUiFragment();
+        _fragment = userInterface.CreateDisposableControl<NewsReaderUiFragment>();
 
         _fragment.OnNextButtonPressed += () =>
         {

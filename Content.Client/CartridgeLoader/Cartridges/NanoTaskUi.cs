@@ -20,8 +20,8 @@ public sealed partial class NanoTaskUi : UIFragment
 
     public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
     {
-        _fragment = new NanoTaskUiFragment();
-        _popup = new NanoTaskItemPopup();
+        _fragment = userInterface.CreateDisposableControl<NanoTaskUiFragment>();
+        _popup = userInterface.CreateDisposableControl<NanoTaskItemPopup>();
         _fragment.NewTask += () =>
         {
             _popup.ResetInputs(null);

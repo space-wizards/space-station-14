@@ -116,14 +116,6 @@ public abstract class CartridgeLoaderBoundUserInterface : BoundUserInterface
 
     protected abstract void UpdateAvailablePrograms(List<(EntityUid, CartridgeComponent)> programs);
 
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-
-        if (disposing)
-            _activeUiFragment?.Orphan();
-    }
-
     protected CartridgeComponent? RetrieveCartridgeComponent(EntityUid? cartridgeUid)
     {
         return EntMan.GetComponentOrNull<CartridgeComponent>(cartridgeUid);

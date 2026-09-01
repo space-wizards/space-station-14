@@ -15,6 +15,10 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.Cargo.UI
 {
+    /// <summary>
+    /// A cargo console menu. Allows a player to place orders for items from one or a catalog of offerings.
+    /// Displays the currently outstanding orders, available funds, and the cost of each available item on sale.
+    /// </summary>
     [GenerateTypedNameReferences]
     public sealed partial class CargoConsoleMenu : FancyWindow
     {
