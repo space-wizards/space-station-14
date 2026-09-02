@@ -78,7 +78,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
         if (fromEnt.EntityId == EntityUid.Invalid)
         {
-            Log.Warning($"Tried to fire gun {ToPrettyString(gun)} from an invalid parent EntityUid.");
+            Log.Warning($"Tried to fire gun {ToPrettyString(gun)} at entity coordinates with an invalid EntityUid.");
             return;
         }
 
