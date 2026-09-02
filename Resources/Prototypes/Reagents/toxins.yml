@@ -552,24 +552,6 @@
             Poison: 0.06
 
 - type: reagent
-  id: Pax
-  name: reagent-name-pax
-  group: Narcotics
-  desc: reagent-desc-pax
-  physicalDesc: reagent-physical-desc-soothing
-  allowedDepartments:
-  - Security
-  - Medical
-  color: "#AAAAAA"
-  metabolisms:
-    Bloodstream:
-      effects:
-      - !type:GenericStatusEffect
-        key: Pacified
-        component: Pacified
-        time: 4
-
-- type: reagent
   id: Honk
   name: reagent-name-honk
   group: Toxins

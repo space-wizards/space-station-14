@@ -12,12 +12,20 @@
   id: AirSensorFreezer
 
 - type: entity
-  parent: [AirSensorFreezerBase, GasVentPump]
-  id: GasVentPumpFreezer
-
+  parent: !type:CreateVariants
+    sequences: [ [AirSensorFreezerBase, GasVentPump], [AirSensorFreezerBase, GasVentPumpAlt1], [AirSensorFreezerBase, GasVentPumpAlt2] ]
+  id: !type:CreateVariants
+    values: [ GasVentPumpFreezer, GasVentPumpFreezerAlt1, GasVentPumpFreezerAlt2 ]
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
+    
 - type: entity
-  parent: [AirSensorFreezerBase, GasVentScrubber]
-  id: GasVentScrubberFreezer
+  parent: !type:CreateVariants
+    sequences: [ [AirSensorFreezerBase, GasVentScrubber], [AirSensorFreezerBase, GasVentScrubberAlt1], [AirSensorFreezerBase, GasVentScrubberAlt2] ]
+  id: !type:CreateVariants
+    values: [ GasVentScrubberFreezer, GasVentScrubberFreezerAlt1, GasVentScrubberFreezerAlt2 ]
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
 
 # air alarm proto with auto: false to prevent the automatic switching of modes overriding the default values
 - type: entity
