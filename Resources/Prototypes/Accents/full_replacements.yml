@@ -9,7 +9,6 @@
   - accent-words-cat-4
   - accent-words-cat-5
   - accent-words-cat-6
-  - accent-words-cat-7
 
 - type: accent
   id: dog
@@ -19,6 +18,7 @@
   - accent-words-dog-3
   - accent-words-dog-4
   - accent-words-dog-5
+  defaultPunctuation: '!'
 
 - type: accent
   id: mouse
@@ -30,6 +30,7 @@
   - accent-words-mouse-5
   - accent-words-mouse-6
   - accent-words-mouse-7
+  defaultPunctuation: '!'
 
 - type: accent
   id: mothroach
@@ -39,6 +40,7 @@
   - accent-words-mouse-2
   - accent-words-mouse-3
   - accent-words-mouse-4
+  defaultPunctuation: '!'
 
 - type: accent
   id: mumble
@@ -46,6 +48,7 @@
   - accent-words-mumble-1
   - accent-words-mumble-2
   - accent-words-mumble-3
+  defaultPunctuation: '!'
 
 - type: accent
   id: silicon
@@ -76,6 +79,7 @@
   - accent-words-zombie-8
   - accent-words-zombie-9
   - accent-words-zombie-10
+  defaultPunctuation: '...'
 
 - type: accent
   id: zombieMoth
@@ -94,6 +98,7 @@
   - accent-words-zombie-8
   - accent-words-zombie-9
   - accent-words-zombie-10
+  defaultPunctuation: '...'
 
 - type: accent
   id: genericAggressive
@@ -101,7 +106,7 @@
   - accent-words-generic-aggressive-1
   - accent-words-generic-aggressive-2
   - accent-words-generic-aggressive-3
-  - accent-words-generic-aggressive-4
+  defaultPunctuation: '!'
 
 - type: accent
   id: duck
@@ -109,7 +114,6 @@
   - accent-words-duck-1
   - accent-words-duck-2
   - accent-words-duck-3
-  - accent-words-duck-4
 
 - type: accent
   id: chicken
@@ -117,7 +121,6 @@
   - accent-words-chicken-1
   - accent-words-chicken-2
   - accent-words-chicken-3
-  - accent-words-chicken-4
 
 - type: accent
   id: pig
@@ -125,7 +128,6 @@
   - accent-words-pig-1
   - accent-words-pig-2
   - accent-words-pig-3
-  - accent-words-pig-4
 
 - type: accent
   id: kangaroo
@@ -134,6 +136,7 @@
   - accent-words-kangaroo-2
   - accent-words-kangaroo-3
   - accent-words-kangaroo-4
+  defaultPunctuation: '!'
 
 - type: accent
   id: slimes
@@ -165,7 +168,6 @@
   - accent-words-kobold-6
   - accent-words-kobold-7
   - accent-words-kobold-8
-  - accent-words-kobold-9
 
 - type: accent
   id: nymph
@@ -192,18 +194,3 @@
   - accent-words-scurret-3
   - accent-words-scurret-4
   - accent-words-scurret-5
-  - accent-words-scurret-6
-  - accent-words-scurret-7
-  - accent-words-scurret-8
-  - accent-words-scurret-9
-  - accent-words-scurret-10
-  - accent-words-scurret-11
-  - accent-words-scurret-12
-  - accent-words-scurret-13
-  - accent-words-scurret-14
-  - accent-words-scurret-15
-  - accent-words-scurret-16
-  - accent-words-scurret-17
-  - accent-words-scurret-18
-  - accent-words-scurret-19
-  - accent-words-scurret-20
