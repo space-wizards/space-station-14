@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Botany.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -6,6 +5,7 @@ using Content.Shared.EntityEffects;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Random.Helpers;
+using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
@@ -26,9 +26,8 @@ public sealed partial class PlantTraySystem : EntitySystem
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
-    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery = default!;
-    [Dependency] private EntityQuery<PlantDataComponent> _dataQuery = default!;
-    [Dependency] private EntityQuery<PlantWeedPestComponent> _weedPestQuery = default!;
+    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery;
+    [Dependency] private EntityQuery<PlantDataComponent> _dataQuery;
 
     [SubscribeLocalEvent]
     private void OnExamine(Entity<PlantTrayComponent> ent, ref ExaminedEvent args)
@@ -150,15 +149,6 @@ public sealed partial class PlantTraySystem : EntitySystem
 
         if (ent.Comp is not { WaterLevel: > 10, NutritionLevel: > 5 })
             return;
-
-        if (TryGetPlant(ent, out var plantUid))
-        {
-            if (!_weedPestQuery.TryComp(plantUid.Value, out var weedPestGrowth))
-                return;
-
-            if (ent.Comp.WeedLevel > weedPestGrowth.WeedTolerance)
-                _plantHolder.AdjustsHealth(plantUid.Value, -weedPestGrowth.WeedDamageAmount);
-        }
 
         if (SharedRandomExtensions.PredictedProb(_timing, ent.Comp.WeedGrowthChance, GetNetEntity(ent)))
             AdjustWeed(ent, ent.Comp.WeedGrowthAmount);

@@ -22,9 +22,9 @@ public sealed partial class BotanySeedSystem : EntitySystem
     [Dependency] private PlantTraySystem _plantTray = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
-    [Dependency] private EntityQuery<PlantDataComponent> _dataQuery = default!;
-    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery = default!;
-    [Dependency] private EntityQuery<PaperLabelComponent> _labelQuery = default!;
+    [Dependency] private EntityQuery<PlantDataComponent> _dataQuery;
+    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery;
+    [Dependency] private EntityQuery<PaperLabelComponent> _labelQuery;
 
     [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<SeedComponent> ent, ref AfterInteractEvent args)

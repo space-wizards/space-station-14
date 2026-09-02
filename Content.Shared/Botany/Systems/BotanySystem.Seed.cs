@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Items.Components;
@@ -7,6 +6,7 @@ using Content.Shared.Cloning;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Random;
+using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;

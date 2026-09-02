@@ -16,7 +16,7 @@ public sealed partial class PlantTraitLigneousSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedToolSystem _tool = default!;
 
-    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery = default!;
+    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery;
 
     [SubscribeLocalEvent]
     private void OnInteractUsing(Entity<PlantTraitLigneousComponent> ent, ref InteractUsingEvent args)

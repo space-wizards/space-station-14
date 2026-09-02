@@ -1,10 +1,10 @@
-using JetBrains.Annotations;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using JetBrains.Annotations;
 
 namespace Content.Shared.Botany.Systems;
 
@@ -21,10 +21,10 @@ public sealed partial class PlantHarvestSystem : EntitySystem
     [Dependency] private PlantHolderSystem _plantHolder = default!;
     [Dependency] private PlantTraySystem _plantTray = default!;
 
-    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery = default!;
-    [Dependency] private EntityQuery<PlantHarvestComponent> _harvestQuery = default!;
-    [Dependency] private EntityQuery<PlantComponent> _plantQuery = default!;
-    [Dependency] private EntityQuery<PlantDataComponent> _dataQuery = default!;
+    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery;
+    [Dependency] private EntityQuery<PlantHarvestComponent> _harvestQuery;
+    [Dependency] private EntityQuery<PlantComponent> _plantQuery;
+    [Dependency] private EntityQuery<PlantDataComponent> _dataQuery;
 
     [SubscribeLocalEvent]
     private void OnInteractHand(Entity<PlantTrayComponent> ent, ref InteractHandEvent args)

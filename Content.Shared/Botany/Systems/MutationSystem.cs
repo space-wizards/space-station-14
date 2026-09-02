@@ -1,14 +1,14 @@
-using JetBrains.Annotations;
 using System.Linq;
 using Content.Shared.Atmos;
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
+using JetBrains.Annotations;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Shared.Botany.Systems;
 
@@ -29,8 +29,8 @@ public sealed partial class PlantMutationSystem : EntitySystem
     [Dependency] private PlantTraySystem _plantTray = default!;
     [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
 
-    [Dependency] private EntityQuery<PlantChemicalsComponent> _chemicalsQuery = default!;
-    [Dependency] private EntityQuery<PlantComponent> _plantQuery = default!;
+    [Dependency] private EntityQuery<PlantChemicalsComponent> _chemicalsQuery;
+    [Dependency] private EntityQuery<PlantComponent> _plantQuery;
 
     public override void Initialize()
     {
