@@ -6,17 +6,14 @@ using Robust.Client.UserInterface.Controls;
 namespace Content.Client.Atmos.UI;
 
 /// <summary>
-/// Initializes a <see cref="SpaceHeaterWindow"/> and updates it when new server messages are received.
+/// A BUI for space heaters, wraps a <see cref="SpaceHeaterWindow"/>
 /// </summary>
+/// <seealso cref="SpaceHeaterComponent"/>
 [UsedImplicitly]
-public sealed class SpaceHeaterBoundUserInterface : BoundUserInterface
+public sealed class SpaceHeaterBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private SpaceHeaterWindow? _window;
-
-    public SpaceHeaterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
 
     protected override void Open()
     {

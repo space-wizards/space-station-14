@@ -11,6 +11,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.MassMedia.Ui;
 
+/// <summary>
+/// A window for writing, previewing and publishing news articles.
+/// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class ArticleEditorPanel : Control
 {
@@ -119,11 +122,11 @@ public sealed partial class ArticleEditorPanel : Control
 
     protected override void ExitedTree()
     {
+        base.ExitedTree();
+
         ButtonPreview.OnPressed -= OnPreview;
         ButtonCancel.OnPressed -= OnCancel;
         ButtonPublish.OnPressed -= OnPublish;
         ButtonSaveDraft.OnPressed -= OnDraftSaved;
-
-        base.ExitedTree();
     }
 }

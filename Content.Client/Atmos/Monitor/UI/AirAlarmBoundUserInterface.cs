@@ -6,16 +6,12 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Atmos.Monitor.UI;
 
 /// <summary>
-/// A BUI for air alarms.
-/// Sends messages to the server on events from the AirAlarmWindow, updates the window with new state when received.
+/// A BUI for air alarms, wraps an <see cref="AirAlarmWindow"/>.
 /// </summary>
-public sealed class AirAlarmBoundUserInterface : BoundUserInterface
+/// <seealso cref="AirAlarmComponent"/>
+public sealed class AirAlarmBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     private AirAlarmWindow? _window;
-
-    public AirAlarmBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
 
     protected override void Open()
     {

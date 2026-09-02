@@ -8,6 +8,10 @@ using Content.Shared.VendingMachines.Components;
 
 namespace Content.Client.VendingMachines;
 
+/// <summary>
+/// A BUI for a vending machine. Wraps <see cref="VendingMachineMenu"/>.
+/// </summary>
+/// <seealso cref="VendingMachineComponent"/>
 public sealed class VendingMachineBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]

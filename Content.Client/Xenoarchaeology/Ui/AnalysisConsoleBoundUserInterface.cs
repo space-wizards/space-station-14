@@ -6,9 +6,12 @@ using JetBrains.Annotations;
 namespace Content.Client.Xenoarchaeology.Ui;
 
 /// <summary>
-/// BUI for artifact analysis console, proxies server-provided UI updates
-/// (related to device, connected artifact analyzer, and artifact lying on it).
+/// A BUI for the artifact analysis console. Wraps a <see cref="AnalysisConsoleMenu"/>.
 /// </summary>
+/// <remarks>
+/// Proxies server-provided UI updates related to the console, a connected artifact analyzer, and an artifact lying on it.
+/// </remarks>
+/// <seealso cref="ArtifactAnalyzerComponent"/>
 [UsedImplicitly]
 public sealed class AnalysisConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {

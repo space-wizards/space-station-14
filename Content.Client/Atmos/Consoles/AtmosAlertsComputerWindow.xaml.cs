@@ -18,6 +18,9 @@ using System.Linq;
 
 namespace Content.Client.Atmos.Consoles;
 
+/// <summary>
+/// A window to display current atmospheric alerts and query the status of air alarms.
+/// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class AtmosAlertsComputerWindow : FancyWindow
 {
@@ -28,8 +31,6 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
     private EntityUid? _owner;
     private NetEntity? _trackedEntity;
 
-    private AtmosAlertsComputerEntry[]? _airAlarms = null;
-    private AtmosAlertsComputerEntry[]? _fireAlarms = null;
     private IEnumerable<AtmosAlertsComputerEntry>? _allAlarms = null;
 
     private IEnumerable<AtmosAlertsComputerEntry>? _activeAlarms = null;
@@ -55,6 +56,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
     private Color _warningColor = new Color(255, 182, 72);
     private Color _dangerColor = new Color(255, 67, 67);
 
+    /// <inheritdoc cref="AtmosAlertsComputerWindow"/>
     public AtmosAlertsComputerWindow()
     {
         RobustXamlLoader.Load(this);
@@ -84,6 +86,12 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         ShowDangerAlarms.OnToggled += _ => OnShowAlarmsToggled(ShowDangerAlarms, AtmosAlarmType.Danger);
     }
 
+    /// <summary>
+    /// Sets the owning entity for this window.
+    /// </summary>
+    /// <remarks>
+    /// Populates the nav map data on call.
+    /// </remarks>
     public void SetOwner(EntityUid owner)
     {
         // Pass the owner to nav map
@@ -179,8 +187,6 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         }
 
         // Retain alarm data for use inbetween updates
-        _airAlarms = airAlarms;
-        _fireAlarms = fireAlarms;
         _allAlarms = airAlarms.Concat(fireAlarms);
 
         var silenced = console.SilencedDevices;

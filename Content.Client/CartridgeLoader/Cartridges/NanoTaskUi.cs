@@ -6,7 +6,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.CartridgeLoader.Cartridges;
 
 /// <summary>
-///     UI fragment responsible for displaying NanoTask controls in a PDA and coordinating with the NanoTaskCartridgeSystem for state
+/// UI fragment for the NanoTask PDA app. Coordinates with the NanoTaskCartridgeSystem for state.
 /// </summary>
 public sealed partial class NanoTaskUi : UIFragment
 {

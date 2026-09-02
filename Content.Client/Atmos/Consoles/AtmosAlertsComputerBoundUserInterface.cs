@@ -4,16 +4,13 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Atmos.Consoles;
 
 /// <summary>
-/// A BUI for the atmos alerts computer.
-/// Updates a <see cref="AtmosAlertsComputerWindow"/> with state from the server,
-/// and sends off network messages when it raises events.
+/// A BUI for the atmos alerts computer, wraps an <see cref="AtmosAlertsComputerWindow"/>.
 /// </summary>
-public sealed class AtmosAlertsComputerBoundUserInterface : BoundUserInterface
+/// <seealso cref="AtmosAlertsComputerComponent"/>
+public sealed class AtmosAlertsComputerBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private AtmosAlertsComputerWindow? _menu;
-
-    public AtmosAlertsComputerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey) { }
 
     protected override void Open()
     {
@@ -37,12 +34,12 @@ public sealed class AtmosAlertsComputerBoundUserInterface : BoundUserInterface
         _menu?.UpdateUI(xform?.Coordinates, castState.AirAlarms, castState.FireAlarms, castState.FocusData);
     }
 
-    public void SendFocusChangeMessage(NetEntity? netEntity)
+    private void SendFocusChangeMessage(NetEntity? netEntity)
     {
         SendMessage(new AtmosAlertsComputerFocusChangeMessage(netEntity));
     }
 
-    public void SendDeviceSilencedMessage(NetEntity netEntity, bool silenceDevice)
+    private void SendDeviceSilencedMessage(NetEntity netEntity, bool silenceDevice)
     {
         SendMessage(new AtmosAlertsComputerDeviceSilencedMessage(netEntity, silenceDevice));
     }

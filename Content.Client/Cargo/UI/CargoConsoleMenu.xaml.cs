@@ -16,9 +16,11 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 namespace Content.Client.Cargo.UI
 {
     /// <summary>
-    /// A cargo console menu. Allows a player to place orders for items from one or a catalog of offerings.
-    /// Displays the currently outstanding orders, available funds, and the cost of each available item on sale.
+    /// A window for placing cargo orders. Shows the console account's balance and the current list of orders.
     /// </summary>
+    /// <seealso cref="CargoOrderConsoleComponent"/>
+    /// <seealso cref="StationBankAccountComponent"/>
+    /// <seealso cref="CargoProductPrototype"/>
     [GenerateTypedNameReferences]
     public sealed partial class CargoConsoleMenu : FancyWindow
     {
@@ -47,6 +49,7 @@ namespace Content.Client.Cargo.UI
 
         public List<ProtoId<CargoProductPrototype>> ProductCatalogue = new();
 
+        /// <inheritdoc cref="CargoConsoleMenu" />
         public CargoConsoleMenu()
         {
             RobustXamlLoader.Load(this);

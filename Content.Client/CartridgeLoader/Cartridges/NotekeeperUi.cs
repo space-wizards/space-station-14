@@ -5,6 +5,9 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.CartridgeLoader.Cartridges;
 
+/// <summary>
+/// A UI fragment for the Notekeeper PDA app.
+/// </summary>
 public sealed partial class NotekeeperUi : UIFragment
 {
     private NotekeeperUiFragment? _fragment;

@@ -5,16 +5,12 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Silicons.StationAi;
 
 /// <summary>
-/// A BUI for customizing appearance for the station AI.
-/// Sends messages to the server based on actions from a StationAiCustomizationMenu.
+/// A BUI for customizing the station AI appearance. Wraps a <see cref="StationAiCustomizationMenu"/>.
 /// </summary>
-public sealed class StationAiCustomizationBoundUserInterface : BoundUserInterface
+/// <seealso cref="StationAiCustomizationComponent"/>
+public sealed class StationAiCustomizationBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     private StationAiCustomizationMenu? _menu;
-
-    public StationAiCustomizationBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
 
     protected override void Open()
     {

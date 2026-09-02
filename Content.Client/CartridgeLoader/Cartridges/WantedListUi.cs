@@ -4,6 +4,9 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.CartridgeLoader.Cartridges;
 
+/// <summary>
+/// A UI fragment for the wanted list PDA app.
+/// </summary>
 public sealed partial class WantedListUi : UIFragment
 {
     private WantedListUiFragment? _fragment;

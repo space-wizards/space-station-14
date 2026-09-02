@@ -21,6 +21,7 @@ namespace Content.Client.Atmos.UI
         public event Action? ReleaseValveCloseButtonPressed;
         public event Action? ReleaseValveOpenButtonPressed;
 
+        /// <inheritdoc cref="GasCanisterWindow"/>
         public GasCanisterWindow()
         {
             RobustXamlLoader.Load(this);

@@ -5,17 +5,13 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Anomaly.Ui;
 
 /// <summary>
-/// A BUI for the anomaly scanner.
-/// Updates an AnomalyScannerMenu with state received from the server.
+/// A BUI for the anomaly scanner, wraps an <see cref="AnomalyScannerMenu"/>.
 /// </summary>
+/// <seealso cref="AnomalyScannerComponent"/>
 [UsedImplicitly]
-public sealed class AnomalyScannerBoundUserInterface : BoundUserInterface
+public sealed class AnomalyScannerBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     private AnomalyScannerMenu? _menu;
-
-    public AnomalyScannerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
 
     protected override void Open()
     {

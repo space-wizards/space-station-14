@@ -17,6 +17,9 @@ using System.Numerics;
 
 namespace Content.Client.Atmos.Consoles;
 
+/// <summary>
+/// A window for monitoring the atmos pipe network and querying the gas pipe sensors on a station.
+/// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 {
@@ -36,6 +39,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
     private readonly Vector2[] _pipeLayerOffsets = { new Vector2(0f, 0f), new Vector2(0.25f, 0.25f), new Vector2(-0.25f, -0.25f) };
 
+    /// <inheritdoc cref="AtmosMonitoringConsoleWindow" />
     public AtmosMonitoringConsoleWindow()
     {
         RobustXamlLoader.Load(this);

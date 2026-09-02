@@ -4,17 +4,16 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Wires.UI;
 
 /// <summary>
-/// BUI for wire panels in doors, machines, etc.
-/// Sends messages to the server when wires are cut/pulsed/mended.
+/// A BUI for maintenance panel wire interaction. Wraps a <see cref="WiresMenu"/>.
 /// </summary>
-public sealed class WiresBoundUserInterface : BoundUserInterface
+/// <remarks>
+/// Sends messages to the server when wires are cut/pulsed/mended.
+/// </remarks>
+/// <seealso cref="WiresPanelComponent"/>
+public sealed class WiresBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private WiresMenu? _menu;
-
-    public WiresBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
 
     protected override void Open()
     {

@@ -4,6 +4,9 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Mech.Ui.Equipment;
 
+/// <summary>
+/// A UI fragment for hydraulic clamp mech controls.
+/// </summary>
 public sealed partial class MechGrabberUi : UIFragment
 {
     private MechGrabberUiFragment? _fragment;

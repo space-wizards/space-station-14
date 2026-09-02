@@ -12,14 +12,14 @@ using Robust.Shared.Utility;
 namespace Content.Client.Cargo.BUI
 {
     /// <summary>
-    /// A BUI for the cargo request computer.
-    /// Handles sending messages to the server from events from the CargoConsoleMenu and CargoConsoleOrderMenu it owns,
-    /// and updating those windows when updated by the server.
+    /// A BUI for the cargo request computer, wraps a <see cref="CargoConsoleMenu"/>.
     /// </summary>
+    /// <seealso cref="CargoOrderConsoleComponent"/>
     public sealed partial class CargoOrderConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
     {
-        [Dependency] private SharedCargoSystem _cargoSystem = default!;
+        [Dependency] private IPlayerManager _playerMan = default!;
         [Dependency] private IdentitySystem _identity = default!;
+        [Dependency] private SharedCargoSystem _cargoSystem = default!;
 
         [ViewVariables]
         private CargoConsoleMenu? _menu;
@@ -55,7 +55,7 @@ namespace Content.Client.Cargo.BUI
             _menu = this.CreateWindow<CargoConsoleMenu>();
             _menu.SetOwner(Owner);
 
-            var localPlayer = IoCManager.Resolve<IPlayerManager>().LocalEntity;
+            var localPlayer = _playerMan.LocalEntity;
             var description = new FormattedMessage();
 
             var orderRequester = Loc.GetString("cargo-console-paper-approver-default");
@@ -63,8 +63,6 @@ namespace Content.Client.Cargo.BUI
                 orderRequester = _identity.GetIdentityShortInfo(localPlayer.Value, Owner) ?? orderRequester;
 
             _orderMenu = this.CreateDisposableControl<CargoConsoleOrderMenu>();
-
-            _menu.OnClose += Close;
 
             _menu.OnItemSelected += (row) =>
             {

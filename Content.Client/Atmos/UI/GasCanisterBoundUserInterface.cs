@@ -7,17 +7,14 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Atmos.UI;
 
 /// <summary>
-/// Initializes a <see cref="GasCanisterWindow"/> and updates it when new server messages are received.
+/// A BUI for gas canisters, wraps a <see cref="GasCanisterWindow"/>.
 /// </summary>
+/// <seealso cref="GasCanisterComponent"/>
 [UsedImplicitly]
-public sealed class GasCanisterBoundUserInterface : BoundUserInterface
+public sealed class GasCanisterBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private GasCanisterWindow? _window;
-
-    public GasCanisterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
 
     protected override void Open()
     {

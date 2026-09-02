@@ -6,13 +6,15 @@ namespace Content.Client.Cargo.UI;
 
 // TODO: separate concerns between order console BUI and this
 /// <summary>
-/// A simple menu that allows a user to set the quantity of an item to purchase,
-/// and enter reason for purchasing it.
-/// Logic mostly exists inside <see cref="CargoOrderConsoleBoundUserInterface"/>
+/// A popup menu for entering order info, including quantity and reason for purchase.
 /// </summary>
+/// <remarks>
+/// Current business logic mostly exists inside <see cref="CargoOrderConsoleBoundUserInterface"/>.
+/// </remarks>
 [GenerateTypedNameReferences]
 sealed partial class CargoConsoleOrderMenu : DefaultWindow
 {
+    /// <inheritdoc cref="CargoConsoleOrderMenu"/>
     public CargoConsoleOrderMenu()
     {
         RobustXamlLoader.Load(this);

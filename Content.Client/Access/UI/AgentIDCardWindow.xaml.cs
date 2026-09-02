@@ -15,8 +15,7 @@ using System.Numerics;
 namespace Content.Client.Access.UI;
 
 /// <summary>
-/// A window for configuring an agent ID card.
-/// This allows the user to rename their ID card and choose a job icon that appears when equipped.
+/// A window for configuring an agent ID card, allows setting name, job title and job icon.
 /// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class AgentIDCardWindow : FancyWindow

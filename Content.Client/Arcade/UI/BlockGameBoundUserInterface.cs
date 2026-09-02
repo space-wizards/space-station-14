@@ -4,16 +4,12 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Arcade.UI;
 
 /// <summary>
-/// A BUI for the block game arcade machine.
-/// Handles communication between the BlockGameMenu and the server.
+/// A BUI for the block game arcade machine, wraps an <see cref="BlockGameMenu"/>.
 /// </summary>
-public sealed class BlockGameBoundUserInterface : BoundUserInterface
+/// <seealso cref="BlockGameArcadeComponent"/>
+public sealed class BlockGameBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     private BlockGameMenu? _menu;
-
-    public BlockGameBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
 
     protected override void Open()
     {

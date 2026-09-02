@@ -4,6 +4,9 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Mech.Ui.Equipment;
 
+/// <summary>
+/// A UI fragment for soundboard mech controls.
+/// </summary>
 public sealed partial class MechSoundboardUi : UIFragment
 {
     private MechSoundboardUiFragment? _fragment;

@@ -10,6 +10,9 @@ using System.Numerics;
 
 namespace Content.Client.Silicons.StationAi;
 
+/// <summary>
+/// A window to allow picking a sprite to represent the station AI.
+/// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class StationAiCustomizationMenu : FancyWindow
 {
@@ -24,6 +27,7 @@ public sealed partial class StationAiCustomizationMenu : FancyWindow
 
     private const float IconScale = 1.75f;
 
+    /// <inheritdoc cref="StationAiCustomizationMenu"/>
     public StationAiCustomizationMenu()
     {
         RobustXamlLoader.Load(this);
@@ -32,6 +36,9 @@ public sealed partial class StationAiCustomizationMenu : FancyWindow
         _stationAiSystem = _entManager.System<SharedStationAiSystem>();
     }
 
+    /// <summary>
+    /// Sets the owning entity and populates the set of acceptable customizations.
+    /// </summary>
     public void SetOwner(EntityUid owner)
     {
         // Load customization data
@@ -43,6 +50,7 @@ public sealed partial class StationAiCustomizationMenu : FancyWindow
         var groupPrototypes = _protoManager.EnumeratePrototypes<StationAiCustomizationGroupPrototype>();
         groupPrototypes = groupPrototypes.OrderBy(x => x.ID); // To ensure consistency in presentation
 
+        CustomizationGroupsContainer.RemoveAllChildren();
         foreach (var groupPrototype in groupPrototypes)
         {
             StationAiCustomizationPrototype? selectedPrototype = null;

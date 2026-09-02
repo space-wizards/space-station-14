@@ -4,17 +4,16 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Weapons.Melee.UI;
 
 /// <summary>
-/// Initializes a <see cref="MeleeSpeechWindow"/> and updates it when new server messages are received.
+/// A BUI to set the battlecry for an entity.
 /// </summary>
-public sealed partial class MeleeSpeechBoundUserInterface : BoundUserInterface
+/// <remarks>
+/// Initializes a <see cref="MeleeSpeechWindow"/> and updates it when new server messages are received.
+/// </remarks>
+/// <seealso cref="MeleeSpeechComponent"/>
+public sealed partial class MeleeSpeechBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private MeleeSpeechWindow? _window;
-
-    public MeleeSpeechBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-        IoCManager.InjectDependencies(this);
-    }
 
     protected override void Open()
     {
