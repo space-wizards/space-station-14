@@ -2,9 +2,11 @@ namespace Content.Client.Computer.Visualizers;
 
 /// <summary>
 /// A component to set up visuals for computers.
-/// Sets up initial states (RSI expected to be correct).
-/// Hides and shows screen, handles key shading with power updates.
 /// </summary>
+/// <remarks>
+/// Sets up initial states (RSI not specified, each layer is expected to be correct and unchanging).
+/// Hides and shows screen, handles key shading with power updates.
+/// </remarksy>
 [RegisterComponent]
 [Access(typeof(ComputerVisualizerSystem))]
 public sealed partial class ComputerVisualsComponent : Component
