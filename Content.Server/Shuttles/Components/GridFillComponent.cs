@@ -1,4 +1,5 @@
 using Content.Server.Shuttles.Systems;
+using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -10,7 +11,7 @@ namespace Content.Server.Shuttles.Components;
 [RegisterComponent, Access(typeof(ShuttleSystem))]
 public sealed partial class GridFillComponent : Component
 {
-    [DataField]
+    [DataField(customTypeSerializer: typeof(MapResPathSerializer))]
     public ResPath Path = new("/Maps/Shuttles/escape_pod_small.yml");
 
     /// <summary>

@@ -31,6 +31,7 @@ using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -267,7 +268,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             {
                 if (!comp.PreSelectedSessions.TryGetValue(antag, out var session))
                     break;
-                session.Remove(args.Player);
+                session.Remove(args.Player.UserId);
             }
         }
     }
@@ -575,10 +576,10 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     private void PreSelectSession(Entity<AntagSelectionComponent> gameRule, ProtoId<AntagSpecifierPrototype> protoId, ICommonSession player)
     {
         if (!gameRule.Comp.PreSelectedSessions.TryGetValue(protoId, out var set))
-            gameRule.Comp.PreSelectedSessions.Add(protoId, set = new HashSet<ICommonSession>());
+            gameRule.Comp.PreSelectedSessions.Add(protoId, set = new HashSet<NetUserId>());
 
         // Element already exists, don't need to log it twice, this typically happens when a pre-selected antag is initialized!
-        if (!set.Add(player))
+        if (!set.Add(player.UserId))
             return;
 
         Log.Debug($"Pre-selected {player.Name} as antagonist: {ToPrettyString(gameRule)}, {protoId}");
@@ -608,9 +609,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     private void DeSelectSession(Entity<AntagSelectionComponent> gameRule,
         ProtoId<AntagSpecifierPrototype> protoId,
         ICommonSession player,
-        HashSet<ICommonSession> set)
+        HashSet<NetUserId> set)
     {
-        if (!set.Remove(player))
+        if (!set.Remove(player.UserId))
         {
             Log.Error($"Attempted to remove {player.Name} from antag pre-selection, but they weren't pre-selected in the first place!");
             return;
@@ -727,8 +728,11 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             if (!ProtoMan.Resolve(proto, out var def))
                 continue;
 
-            foreach (var session in set)
+            foreach (var userId in set)
             {
+                if (!_playerManager.SessionsDict.TryGetValue(userId, out var session))
+                    continue;
+
                 _adminLogger.Add(LogType.AntagSelection, $"Start trying to make {session} become the antagonist: {ToPrettyString(gameRule)}, {proto}");
 
                 if (!IsSessionValid(session, gameRule, def))
@@ -777,7 +781,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     private void InitializeAntag(Entity<AntagSelectionComponent> gameRule, AntagSpecifierPrototype prototype, EntityUid antag, ICommonSession player)
     {
         // Make sure player was properly pre-selected.
-        Debug.Assert(gameRule.Comp.PreSelectedSessions.TryGetValue(prototype.ID, out var value) && value.Contains(player),
+        Debug.Assert(gameRule.Comp.PreSelectedSessions.TryGetValue(prototype.ID, out var value) && value.Contains(player.UserId),
             $"Game rule {ToPrettyString(gameRule)}, failed to pre-assign {player.Name} to antag {prototype.ID}");
 
         // The following is where we apply components, equipment, and other changes to our antagonist entity.

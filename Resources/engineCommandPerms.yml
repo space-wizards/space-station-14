@@ -86,6 +86,9 @@
   - tpgrid
   - gridtc
   - togglespritenetsync
+  - savegame
+  - loadgame
+  - convertsavefile
 
 - Flags: ADMIN
   Commands:

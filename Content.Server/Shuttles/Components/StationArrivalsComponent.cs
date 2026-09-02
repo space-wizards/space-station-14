@@ -1,4 +1,5 @@
 using Content.Server.Shuttles.Systems;
+using Content.Shared.Maps;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Components;
@@ -9,8 +10,9 @@ namespace Content.Server.Shuttles.Components;
 [RegisterComponent, Access(typeof(ArrivalsSystem))]
 public sealed partial class StationArrivalsComponent : Component
 {
-    [DataField("shuttle")]
-    public EntityUid Shuttle;
+    [DataField]
+    public EntityUid? Shuttle;
 
-    [DataField("shuttlePath")] public ResPath ShuttlePath = new("/Maps/Shuttles/arrivals.yml");
+    [DataField(customTypeSerializer: typeof(MapResPathSerializer))]
+    public ResPath ShuttlePath = new("/Maps/Shuttles/arrivals.yml");
 }

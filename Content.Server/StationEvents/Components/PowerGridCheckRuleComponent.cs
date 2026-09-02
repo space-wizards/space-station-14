@@ -20,11 +20,6 @@ public sealed partial class PowerGridCheckRuleComponent : Component
     public SoundSpecifier PowerOnSound = new SoundCollectionSpecifier(DefaultPowerOn, AudioParams.Default.AddVolume(-4f));
 
     /// <summary>
-    /// Token source for cancelling the power restoration announcement.
-    /// </summary>
-    public CancellationTokenSource? AnnounceCancelToken;
-
-    /// <summary>
     /// Station affected by the power grid event.
     /// </summary>
     [DataField]

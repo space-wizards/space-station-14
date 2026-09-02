@@ -14,9 +14,7 @@ namespace Content.Shared.Shuttles.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class FTLComponent : Component
 {
-    // TODO Full game save / add datafields
-
-    [ViewVariables]
+    [DataField]
     public FTLState State = FTLState.Available;
 
     [ViewVariables(VVAccess.ReadWrite)]
@@ -47,10 +45,10 @@ public sealed partial class FTLComponent : Component
     /// <summary>
     /// If we're docking after FTL what is the prioritised dock tag (if applicable).
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    [DataField]
     public ProtoId<TagPrototype>? PriorityTag;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("soundTravel")]
+    [DataField]
     public SoundSpecifier? TravelSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_progress.ogg")
     {
         Params = AudioParams.Default.AddVolume(-3f).WithLoop(true)

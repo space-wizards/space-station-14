@@ -1,3 +1,4 @@
+using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -13,7 +14,7 @@ public sealed partial class PreloadedGridPrototype : IPrototype
 {
     [IdDataField] public string ID { get; private set; } = string.Empty;
 
-    [DataField(required: true)]
+    [DataField(required: true, customTypeSerializer: typeof(MapResPathSerializer))]
     public ResPath Path;
 
     [DataField]

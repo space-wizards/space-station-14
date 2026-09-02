@@ -137,7 +137,9 @@ public sealed partial class SalvageSystem
 
             while (query.MoveNext(out var salvUid, out var salvMob, out var salvMobState))
             {
-                if (data.Comp.ActiveEntities.Contains(salvMob.LinkedEntity) && _mobState.IsAlive(salvUid, salvMobState))
+                if (salvMob.LinkedEntity != null
+                    && data.Comp.ActiveEntities.Contains(salvMob.LinkedEntity.Value)
+                    && _mobState.IsAlive(salvUid, salvMobState))
                 {
                     QueueDel(salvUid);
                 }
