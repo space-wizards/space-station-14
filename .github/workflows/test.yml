@@ -18,9 +18,10 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          WORKFLOW_FILENAME=$(echo "${{ github.workflow_ref }}" | grep -oP '(?<=.github/workflows/)[^@]+')
           PREVIOUS_SHA=$(gh api \
             -H "Accept: application/vnd.github+json" \
-            '/repos/${{ github.repository }}/actions/workflows/${{ github.workflow }}/runs?branch=${{ github.ref_name }}&status=success&per_page=2' \
+            '/repos/${{ github.repository }}/actions/workflows/${WORKFLOW_FILENAME}/runs?branch=${{ github.ref_name }}&status=success&per_page=2' \
             --jq '.workflow_runs[1].head_sha')
 
           # If there is no previous run, .workflow_runs[1] will return null
