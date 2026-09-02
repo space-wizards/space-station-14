@@ -1,4 +1,4 @@
-﻿<BoxContainer Orientation="Vertical" xmlns="https://spacestation14.io">
+<BoxContainer Orientation="Vertical" xmlns="https://spacestation14.io">
     <SplitContainer Orientation="Horizontal" Margin="5">
         <Label Name="Label" Align="Center"/>
         <Button Name="EjectButton" Access="Public" TextAlign="Center"/>
