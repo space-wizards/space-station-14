@@ -25,7 +25,7 @@ jobs:
           PREVIOUS_SHA=$(gh api \
             -H "Accept: application/vnd.github+json" \
             "/repos/${{ github.repository }}/actions/workflows/${WORKFLOW_FILENAME}/runs?branch=${{ github.ref_name }}&status=success&per_page=2" \
-            --jq '.workflow_runs[1].head_sha')
+            --jq '.workflow_runs[0].head_sha')
 
           # If there is no previous run, .workflow_runs[1] will return null
           if [ "$PREVIOUS_SHA" = "null" ] || [ -z "$PREVIOUS_SHA" ]; then
