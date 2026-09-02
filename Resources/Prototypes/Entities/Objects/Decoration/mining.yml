@@ -148,6 +148,8 @@
 - type: entity
   parent: BaseWoodenSupport
   id: WoodenSupportWallBroken
+  name: broken wooden support wall
+  description: A broken, no good, lousy old rotten wall.
   components:
   - type: Wall
   - type: Sprite
