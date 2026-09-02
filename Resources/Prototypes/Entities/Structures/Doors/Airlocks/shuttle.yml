@@ -9,8 +9,8 @@
   - type: DockingSignalControl
   - type: DeviceLinkSource
     ports:
-      - DoorStatus
-      - DockStatus
+    - DoorStatus
+    - DockStatus
   - type: Fixtures
     fixtures:
       fix1:
