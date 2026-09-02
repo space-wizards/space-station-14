@@ -1,9 +1,9 @@
 - type: entity
   parent: [ BaseWallmountMachine, StructureHealthMachineWeak ]
   id: WallmountTelescreen
-  suffix: camera monitor
-  name: telescreen
-  description: Finally, some decent reception around here...
+  name: camera monitor
+  suffix: Wallmount
+  description: A wallmounted surveillance camera monitor. You're watching them. Maybe.
   components:
   - type: Sprite
     sprite: Structures/Machines/computers.rsi
@@ -70,8 +70,9 @@
 - type: entity
   parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
   id: WallmountTelescreenFrame
-  name: telescreen frame
-  description: Finally, some decent reception around here...
+  name: camera monitor frame
+  suffix: Wallmount
+  description: A frame for a wallmounted surveillance camera monitor.
   components:
   - type: Construction
     graph: WallmountTelescreen

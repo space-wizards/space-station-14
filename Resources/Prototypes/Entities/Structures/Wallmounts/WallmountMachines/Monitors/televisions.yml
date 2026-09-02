@@ -75,7 +75,7 @@
   parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
   id: WallmountTelevisionFrame
   name: television frame
-  description: Finally, some decent reception around here...
+  description: Ooh, flatscreen. Still, just a frame...
   components:
   - type: Construction
     graph: WallmountTelevision

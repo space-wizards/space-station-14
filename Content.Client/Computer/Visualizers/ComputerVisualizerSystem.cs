@@ -7,10 +7,15 @@ namespace Content.Client.Computer.Visualizers;
 
 /// <summary>
 /// A visualizer used to draw the different states of computers.
-/// Helps reduce YAML redundancy in computer sprite definitions.
 /// </summary>
+/// <remarks>
+/// Helps reduce YAML redundancy in computer sprite definitions.
+/// </remarks>
+/// <seealso cref="ComputerVisualsComponent"/>
 public sealed partial class ComputerVisualizerSystem : VisualizerSystem<ComputerVisualsComponent>
 {
+    [Dependency] EntityQuery<SpriteComponent> _spriteQuery;
+
     private ShaderInstance _unshadedShader = default!;
 
     public override void Initialize()
@@ -25,7 +30,7 @@ public sealed partial class ComputerVisualizerSystem : VisualizerSystem<Computer
         ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null
-            || !AppearanceSystem.TryGetData<bool>(uid, ComputerVisuals.Powered, out var powered, args.Component))
+            || !args.TryGetData<bool>(ComputerVisuals.Powered, out var powered))
             return;
 
         // Need to get the index first because the mapped LayerSetShader doesn't accept null shader instances.
@@ -42,12 +47,12 @@ public sealed partial class ComputerVisualizerSystem : VisualizerSystem<Computer
     }
 
     /// <summary>
-    /// Sets the base sprite to this layer. Exists to reduce computer sprite boilerplate.
+    /// Sets up the sprite from this component's state. Exists to reduce computer sprite boilerplate.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnComponentStartup(Entity<ComputerVisualsComponent> ent, ref ComponentStartup args)
     {
-        if (!TryComp<SpriteComponent>(ent, out var sprite))
+        if (!_spriteQuery.TryComp(ent, out var sprite))
             return;
 
         Entity<SpriteComponent?> spriteEnt = (ent, sprite);
@@ -61,8 +66,8 @@ public sealed partial class ComputerVisualizerSystem : VisualizerSystem<Computer
 
     private void TrySetLayerState(Entity<SpriteComponent?> ent, Enum key, string? state)
     {
-        if (SpriteSystem.LayerMapTryGet(ent, key, out var layer, logMissing: false))
-            SpriteSystem.LayerSetRsiState(ent, layer, state);
+        if (SpriteSystem.LayerMapTryGet(ent, key, out var layerIndex, logMissing: false))
+            SpriteSystem.LayerSetRsiState(ent, layerIndex, state);
     }
 }
 
