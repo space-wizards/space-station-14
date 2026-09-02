@@ -86,7 +86,7 @@ public sealed partial class ReplacementAccentSystem : RelayAccentSystem<Replacem
             var punctuation = PunctuationRegex.Match(message).ToString();
 
             // no special punctuation
-            if (punctuation == null || punctuation == ".")
+            if (string.IsNullOrEmpty(punctuation) || punctuation == ".")
                 return replacement + prototype.DefaultPunctuation;
 
             return replacement + punctuation;
