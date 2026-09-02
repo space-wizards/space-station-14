@@ -2,7 +2,7 @@
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
-namespace Content.Client.Administration.UI.CustomControls;
+namespace Content.Client.UserInterface.Controls;
 
 public sealed class HSeparator : Control
 {

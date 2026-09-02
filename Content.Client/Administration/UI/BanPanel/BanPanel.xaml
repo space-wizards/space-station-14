@@ -1,6 +1,7 @@
 <DefaultWindow
     xmlns="https://spacestation14.io"
     xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     Title="{Loc ban-panel-title}" MinSize="410 500">
     <BoxContainer Orientation="Vertical">
         <TabContainer Name="Tabs" VerticalExpand="True">
@@ -35,7 +36,7 @@
                     <Label Text="{Loc ban-panel-severity}" />
                     <OptionButton Name="SeverityOption" />
                 </BoxContainer>
-                <cc:HSeparator Margin="1"/>
+                <controls:HSeparator Margin="1"/>
                 <TextEdit Name="ReasonTextEdit" MinHeight="100" VerticalExpand="True" HorizontalExpand="True" />
             </BoxContainer>
             <!-- Player List -->

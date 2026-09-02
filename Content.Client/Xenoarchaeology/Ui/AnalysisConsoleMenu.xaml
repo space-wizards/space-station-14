@@ -1,7 +1,6 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
     xmlns:ui="clr-namespace:Content.Client.Xenoarchaeology.Ui"
     Title="{Loc 'analysis-console-menu-title'}"
     MinSize="700 350"
@@ -16,7 +15,7 @@
                     <SpriteView Name="ArtifactView" Scale="4 4" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalExpand="True" VerticalExpand="True"/>
                 </BoxContainer>
             </PanelContainer>
-            <customControls:HSeparator StyleClasses="HighDivider" Margin="0 15 0 10"/>
+            <controls:HSeparator StyleClasses="HighDivider" Margin="0 15 0 10"/>
             <BoxContainer Name="ExtractContainer" Orientation="Vertical" VerticalExpand="True" Visible="False">
                 <PanelContainer HorizontalExpand="True" VerticalExpand="True" RectClipContent="True">
                     <PanelContainer.PanelOverride>
