@@ -76,6 +76,12 @@ public sealed partial class GunSystem : SharedGunSystem
             ? TransformSystem.WithEntityId(fromCoordinates, gridUid)
             : new EntityCoordinates(_map.GetMapOrInvalid(fromMap.MapId), fromMap.Position);
 
+        if (fromEnt.EntityId == EntityUid.Invalid)
+        {
+            Log.Warning($"Tried to fire gun {ToPrettyString(gun)} from an invalid parent EntityUid.");
+            return;
+        }
+
         // Update shot based on the recoil
         toMap = fromMap.Position + angle.ToVec() * mapDirection.Length();
         mapDirection = toMap - fromMap.Position;
