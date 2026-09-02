@@ -46,14 +46,32 @@ public sealed partial class ArticleEditorPanel : Control
 
             return tooltip;
         };
+    }
+
+    protected override void EnteredTree()
+    {
+        base.EnteredTree();
 
         ButtonPreview.OnPressed += OnPreview;
         ButtonCancel.OnPressed += OnCancel;
         ButtonPublish.OnPressed += OnPublish;
         ButtonSaveDraft.OnPressed += OnDraftSaved;
 
-        TitleField.OnTextChanged += args => OnTextChanged(args.Text.Length, args.Control, SharedNewsSystem.MaxTitleLength);
-        ContentField.OnTextChanged += args => OnTextChanged(Rope.CalcTotalLength(args.TextRope), args.Control, SharedNewsSystem.MaxContentLength);
+        TitleField.OnTextChanged += OnTitleChanged;
+        ContentField.OnTextChanged += OnContentChanged;
+    }
+
+    protected override void ExitedTree()
+    {
+        base.ExitedTree();
+
+        ButtonPreview.OnPressed -= OnPreview;
+        ButtonCancel.OnPressed -= OnCancel;
+        ButtonPublish.OnPressed -= OnPublish;
+        ButtonSaveDraft.OnPressed -= OnDraftSaved;
+
+        TitleField.OnTextChanged -= OnTitleChanged;
+        ContentField.OnTextChanged -= OnContentChanged;
     }
 
     private void OnTextChanged(long length, Control control, long maxLength)
@@ -120,13 +138,13 @@ public sealed partial class ArticleEditorPanel : Control
         ArticleDraftUpdated?.Invoke(string.Empty, string.Empty);
     }
 
-    protected override void ExitedTree()
+    private void OnTitleChanged(LineEdit.LineEditEventArgs args)
     {
-        base.ExitedTree();
+        OnTextChanged(args.Text.Length, args.Control, SharedNewsSystem.MaxTitleLength);
+    }
 
-        ButtonPreview.OnPressed -= OnPreview;
-        ButtonCancel.OnPressed -= OnCancel;
-        ButtonPublish.OnPressed -= OnPublish;
-        ButtonSaveDraft.OnPressed -= OnDraftSaved;
+    private void OnContentChanged(TextEdit.TextEditEventArgs args)
+    {
+        OnTextChanged(Rope.CalcTotalLength(args.TextRope), args.Control, SharedNewsSystem.MaxContentLength);
     }
 }
