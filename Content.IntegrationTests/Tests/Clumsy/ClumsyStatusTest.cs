@@ -9,7 +9,6 @@ using Content.Shared.Climbing.Events;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Clumsy;
 using Content.Shared.Hands;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Medical;
 using Content.Shared.Mobs.Components;
 using Content.Shared.StatusEffectNew;
@@ -35,7 +34,6 @@ public sealed class ClumsyStatusTest : InteractionTest
     [SidedDependency(Side.Server)] private readonly ClimbSystem _sClimbSystem = default!;
     [SidedDependency(Side.Server)] private readonly StatusEffectsSystem _sStatusSystem = default!;
     [SidedDependency(Side.Server)] private readonly ThrowingSystem _sThrowSystem = default!;
-    [SidedDependency(Side.Server)] private readonly SharedHandsSystem _sHandsSystem = default!;
 
     [Test, Description("Test that a ball thrown at someone clumsy is not caught.")]
     public async Task TestClumsyCatch()
@@ -169,7 +167,7 @@ public sealed class ClumsyStatusTest : InteractionTest
         }
     }
     
-    [Test, Description("Test that a mob with the ClumsyGrab status will drop things.")]
+    [Test, Description("Test that a mob with the ClumsyGrab status will be unable to hold items in hands.")]
     public async Task TestClumsyGrab()
     {
         await Server.WaitPost(() =>
@@ -177,25 +175,22 @@ public sealed class ClumsyStatusTest : InteractionTest
             SEntMan.EnsureComponent<TestListenerComponent>(SPlayer);
             _sStatusSystem.TrySetStatusEffectDuration(SPlayer, ClumsyGrabProto);
         });
-        
-        Assume.That(_sStatusSystem.HasStatusEffect(SPlayer, ClumsyGrabProto), Is.True);
-        Assume.That(_sHandsSystem.CountFreeHands(SPlayer), Is.EqualTo(_sHandsSystem.GetHandCount(SPlayer)), "Clumsy mob does not have all hands free before doing anything");
 
-        
+        Assume.That(_sStatusSystem.HasStatusEffect(SPlayer, ClumsyGrabProto), Is.True);
+        Assume.That(HandSys.ActiveHandIsEmpty(SPlayer), Is.True, "Clumsy mob was already holding something!");
+        var freeHands = HandSys.CountFreeHands(SPlayer); //"before" free hands
+
+        // can't use PlaceInHands, that method will fail an assertion under this status effect.
         await Server.WaitPost(() =>
         {
             var location = SEntMan.EnsureComponent<TransformComponent>(SPlayer).Coordinates;
             var item = SSpawnAtPosition(ItemProto, location);
-            var playerEnt = SEntMan.GetEntity(Player);
-            Assume.That(Hands,Is.Not.Null);
-            Assume.That(Hands!.ActiveHandId, Is.Not.Null);
-            HandSys.TryPickup(playerEnt, item, Hands.ActiveHandId, false, false, false, Hands);
+            HandSys.TryPickup(SPlayer, item, handsComp: Hands);
         });
-        
-        await AwaitDoAfters();
-        Assert.That(HandSys.TryGetActiveItem(SPlayer, out _), Is.False, "The clumsy mob picked up the item!?");
-        Assert.That(_sHandsSystem.CountFreeHands(SPlayer), Is.EqualTo(_sHandsSystem.GetHandCount(SPlayer)), "Clumsy mob does not have all hands free");
-        
+
+        Assert.That(HandSys.ActiveHandIsEmpty(SPlayer), Is.True, "The clumsy mob has something in their active hand (they picked up the item!?)");
+        Assert.That(HandSys.CountFreeHands(SPlayer), Is.EqualTo(freeHands), "A hand became occupied ('before' and 'after' free hand count has changed)");
+
         foreach (var ev in GetEvents<BeforeEquippingHandEvent>(SPlayer))
         {
             Assert.That(ev.Cancelled, Is.True, "Clumsy mob didn't cancel BeforeEquippingHandEvent.");

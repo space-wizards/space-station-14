@@ -60,15 +60,6 @@
   - type: ClumsyVaultStatusEffect
     clumsySound: *SoundReptileScream
 
-
-# Zombies don't know how to hold things in their hands.
-- type: entity
-  parent: [ StatusEffectBase, MobStatusEffectBase ]
-  id: StatusEffectClumsyZombie
-  components:
-  - type: ClumsyGrabStatusEffect
-    clumsyChance: 1
-
 #endregion
 #region Debuffs
 
@@ -142,5 +133,13 @@
   - type: ClumsyVaultStatusEffect
     clumsyChance: *ChanceDrunk
     clumsySound: *SoundGlug
+
+# gruhhhhh (Zombies don't know how to hold things in their hands.)
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectClumsyZombie
+  components:
+    - type: ClumsyGrabStatusEffect
+      clumsyChance: *Chance100
 
 #endregion

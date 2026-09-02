@@ -9,12 +9,11 @@ public static class ClumsyTestPrototypes
     public static readonly EntProtoId SyringeProto = "Syringe";
 
     public const string ClumsyStatusAll100 = "ClumsyStatusAll100";
+    public const string ClumsyGrabProto = "ClumsyGrabProto";
     public const string BallProto = "BallProto";
     public const string DefibProto = "DefibProto";
     public const string TableProto = "TableProto";
     public const string ItemProto = "ItemProto";
-    
-    public const string ClumsyGrabProto = "ClumsyGrabProto";
 
     [TestPrototypes]
     public static readonly string ClumsyPrototypes = @$"
@@ -31,6 +30,13 @@ public static class ClumsyTestPrototypes
   - type: ClumsyInjectorStatusEffect
     clumsyChance: 1
   - type: ClumsyVaultStatusEffect
+    clumsyChance: 1
+
+- type: entity
+  id: {ClumsyGrabProto}
+  components:
+  - type: StatusEffect
+  - type: ClumsyGrabStatusEffect
     clumsyChance: 1
 
 - type: entity
@@ -63,12 +69,5 @@ public static class ClumsyTestPrototypes
   id: {ItemProto}
   components:
   - type: Item
-
-- type: entity
-  id: {ClumsyGrabProto}
-  components:
-  - type: StatusEffect
-  - type: ClumsyGrabStatusEffect
-    clumsyChance: 1
 ";
 }

@@ -45,6 +45,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Content.Shared.StatusEffectNew.Components;
+using Content.Shared.StatusEffectNew;
 
 namespace Content.Server.Zombies;
 
@@ -74,6 +75,7 @@ public sealed partial class ZombieSystem
     [Dependency] private TagSystem _tag = default!;
     [Dependency] private ISharedPlayerManager _player = default!;
     [Dependency] private SharedCuffableSystem _cuffable = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
     private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
     private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
@@ -81,6 +83,7 @@ public sealed partial class ZombieSystem
     private static readonly string MindRoleZombie = "MindRoleZombie";
     private static readonly List<ProtoId<AntagPrototype>> BannableZombiePrototypes = ["Zombie"];
     internal static readonly HashSet<HumanoidVisualLayers> AdditionalZombieLayers = [HumanoidVisualLayers.Tail, HumanoidVisualLayers.HeadSide, HumanoidVisualLayers.HeadTop, HumanoidVisualLayers.Snout];
+    private static readonly EntProtoId<StatusEffectComponent> ClumsyZombieStatus = "StatusEffectClumsyZombie";
 
     /// <summary>
     /// Handles an entity turning into a zombie when they die or go into crit
@@ -321,10 +324,7 @@ public sealed partial class ZombieSystem
         }
 
         // the zombie is now clumsy. it will drop anything handed to it.
-        AddComp<PermanentStatusEffectsComponent>(target, new PermanentStatusEffectsComponent()
-        {
-            StatusEffects = ["StatusEffectClumsyZombie"]
-        });
+        _statusEffects.TrySetStatusEffectDuration(target, ClumsyZombieStatus);
 
         // Uncuffing the zombie
         while (_cuffable.TryGetLastCuff(target, out var cuff))

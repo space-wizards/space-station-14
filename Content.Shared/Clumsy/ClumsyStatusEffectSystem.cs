@@ -5,8 +5,6 @@ using Content.Shared.Climbing.Systems;
 using Content.Shared.Clumsy.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Hands;
-using Content.Shared.Hands.Components;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Medical;
 using Content.Shared.Popups;
@@ -30,7 +28,6 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
     [Dependency] private SharedStunSystem _stun = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private SharedHandsSystem _hands = default!;
 
     [Dependency] private ClimbSystem _climb = default!;
     [Dependency] private DamageableSystem _damageable = default!;
@@ -93,22 +90,20 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
     
     /// <summary> Especially clumsy people may sometimes fail to pick things up, and fail to hold on to things they are given.</summary>
     [SubscribeLocalEvent]
-    private void OnEquippedHandEvent(Entity<ClumsyGrabStatusEffectComponent> status,
+    private void OnBeforeEquippingHandEvent(Entity<ClumsyGrabStatusEffectComponent> status,
         ref StatusEffectRelayedEvent<BeforeEquippingHandEvent> args)
     {
         if (args.Args.Cancelled
             || !SharedRandomExtensions.PredictedProb(_timing, status.Comp.ClumsyChance, GetNetEntity(status), GetNetEntity(args.AppliedTo)))
             return;
-        
-        var ev = args.Args;
 
+        var ev = args.Args;
         ev.Cancelled = true;
         args.Args = ev;
-        
+
         var selfMessage = status.Comp.SelfFailedMessage == null ? null : Loc.GetString(status.Comp.SelfFailedMessage, ("item", args.Args.Item));
         var othersMessage = status.Comp.OtherFailedMessage == null ? null : Loc.GetString(status.Comp.OtherFailedMessage, ("item", args.Args.Item));
         _popup.PopupEntity(selfMessage, othersMessage, args.AppliedTo, args.AppliedTo);
-        
     }
 
     /// <summary> Clumsy people can't be trusted with guns! </summary>
