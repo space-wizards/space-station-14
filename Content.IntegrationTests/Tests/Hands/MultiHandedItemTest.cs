@@ -141,7 +141,7 @@ public abstract class BaseMultiHandedItemTest : InteractionTest
 
     [SidedDependency(Side.Client)] protected SharedHandsSystem CHands = default!;
     [SidedDependency(Side.Server)] protected SharedHandsSystem SHands = default!;
-    [SidedDependency(Side.Client)] protected SharedWieldableSystem SWieldable = default!;
+    [SidedDependency(Side.Server)] protected SharedWieldableSystem SWieldable = default!;
 
     protected async Task AssertHandItems(int hands, int freeHands, int items, int virtualItems)
     {
