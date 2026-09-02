@@ -6,6 +6,13 @@
       actions:
         - !type:DestroyEntity {}
       edges:
+        - to: steelDoor
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Steel
+              amount: 10
+              doAfter: 8
         - to: woodDoor
           completed:
             - !type:SnapToGrid { }
@@ -47,6 +54,17 @@
           steps:
             - material: Cardboard
               amount: 10
+              doAfter: 8
+    - node: steelDoor
+      entity: SteelDoor
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 10
+          steps:
+            - tool: Anchoring
               doAfter: 8
     - node: woodDoor
       entity: WoodDoor
