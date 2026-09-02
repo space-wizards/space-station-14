@@ -173,7 +173,7 @@ public sealed class SuicideCommandTests : GameTest
     /// Run the suicide command while the player is holding an execution-capable weapon
     /// </summary>
     [Test]
-    [Describe("Tests that the suicide command executes a player when they're holding an execution-capable weapon with slash damage.")]
+    [Description("Tests that the suicide command executes a player when they're holding an execution-capable weapon with slash damage.")]
     public async Task TestSuicideByHeldItem()
     {
         // We need to know the player and whether they can be hurt, killed, and whether they have a mind
@@ -224,7 +224,7 @@ public sealed class SuicideCommandTests : GameTest
     /// with damage spread between slash and blunt
     /// </summary>
     [Test]
-    [Describe("Tests that the suicide command executes a player when they're holding an execution-capable weapon with slash & blunt damage.")]
+    [Description("Tests that the suicide command executes a player when they're holding an execution-capable weapon with slash & blunt damage.")]
     public async Task TestSuicideByHeldItemSpreadDamage()
     {
         var player = ServerSession!.AttachedEntity!.Value;

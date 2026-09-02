@@ -19,7 +19,7 @@ public sealed class CraftingTests : InteractionTest
     /// Craft a simple instant recipe
     /// </summary>
     [Test]
-    [Describe("Tries to craft metal rods - a simple, instant recipe.")]
+    [Description("Tries to craft metal rods - a simple, instant recipe.")]
     public async Task CraftRods()
     {
         await PlaceInHands(Steel);
@@ -31,7 +31,7 @@ public sealed class CraftingTests : InteractionTest
     /// Craft a simple recipe with a DoAfter
     /// </summary>
     [Test]
-    [Describe("Tries to craft a grenade - a simple recipe with a doafter.")]
+    [Description("Tries to craft a grenade - a simple recipe with a doafter.")]
     public async Task CraftGrenade()
     {
         await PlaceInHands(Steel, 5);
