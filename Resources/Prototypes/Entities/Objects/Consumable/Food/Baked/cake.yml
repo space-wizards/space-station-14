@@ -1071,6 +1071,10 @@
     horizontalRotation: 0
   - type: Item
     size: Ginormous
+    shape:
+    - 0,0,4,4
+    - 0,5,0,6
+    - 4,5,4,6
     heldPrefix: cak
   - type: Clothing
     quickEquip: false

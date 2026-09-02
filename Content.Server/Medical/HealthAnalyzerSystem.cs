@@ -19,6 +19,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using Content.Server.Body.Systems;
+using Content.Shared.Body.Systems;
 
 namespace Content.Server.Medical;
 
@@ -231,7 +232,7 @@ public sealed partial class HealthAnalyzerSystem : EntitySystem
         var bodyTemperature = float.NaN;
 
         if (TryComp<TemperatureComponent>(entity, out var temp))
-            bodyTemperature = temp.CurrentTemperature;
+            bodyTemperature = temp.Temperature;
 
         var bloodAmount = float.NaN;
         var bleeding = false;

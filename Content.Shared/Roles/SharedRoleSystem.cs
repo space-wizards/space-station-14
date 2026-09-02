@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -11,10 +9,14 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using System.Collections.Frozen;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Content.Shared.Roles;
 
@@ -257,14 +259,7 @@ public abstract partial class SharedRoleSystem : EntitySystem
         comp.Subtype = subtype;
         Dirty(mind, comp);
 
-        // Update player character window
-        if (Player.TryGetSessionById(comp.UserId, out var session))
-            RaiseNetworkEvent(new MindRoleTypeChangedEvent(), session.Channel);
-        else
-        {
-            var error = $"The Character Window of {_minds.MindOwnerLoggingString(comp)} potentially did not update immediately : session error";
-            _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{error}");
-        }
+        UpdateCharacterWindow(comp.UserId, _minds.MindOwnerLoggingString(comp));
 
         if (comp.OwnedEntity is null)
         {
@@ -279,6 +274,14 @@ public abstract partial class SharedRoleSystem : EntitySystem
             LogImpact.High,
             $"Role Type of {ToPrettyString(comp.OwnedEntity)} changed to {roleTypeId}, {subtype}");
     }
+
+    /// <summary>
+    /// Server only. Informs the specified player's CharacterUIController that their mind role has changed,
+    /// So that their Character window gets updated if it is currently open.
+    /// </summary>
+    /// <param name="user">The player that will be updated.</param>
+    /// <param name="mindString">The name of the mob's controlling mind. Only used for logging.</param>
+    protected virtual void UpdateCharacterWindow(NetUserId? user, MindStringRepresentation mindString) { }
 
     /// <summary>
     /// Finds and removes all mind roles of a specific type
@@ -537,6 +540,41 @@ public abstract partial class SharedRoleSystem : EntitySystem
                 result = (uid, comp);
         }
         return result;
+    }
+
+    /// <summary>
+    /// Reads all <see cref="AntagTagPrototype"/> IDs on a mind and returns them.
+    /// </summary>
+    /// <param name="mind">The mind entity.</param>
+    /// <param name="tags">Antag tags from all roles that mind entity had. Null if mind had no roles marked as antag.</param>
+    /// <returns>A hashset of <see cref="AntagTagPrototype"/> IDs on the mind.</returns>
+    public bool TryGetAllAntagTags(Entity<MindComponent?> mind, [NotNullWhen(true)] out IReadOnlySet<ProtoId<AntagTagPrototype>>? tags)
+    {
+        tags = FrozenSet<ProtoId<AntagTagPrototype>>.Empty;
+        if (!Resolve(mind.Owner, ref mind.Comp))
+            return false;
+
+        var roles = MindGetAllRoleInfo(mind);
+        var antagTags = new HashSet<ProtoId<AntagTagPrototype>>();
+
+        var foundAntag = false;
+        foreach (var role in roles)
+        {
+            if (!role.Antagonist)
+                continue;
+
+            if (!ProtoMan.TryIndex<AntagPrototype>(role.Prototype, out var antag))
+                continue;
+
+            foundAntag = true;
+            foreach (var tag in antag.Tags)
+            {
+                antagTags.Add(tag);
+            }
+        }
+
+        tags = antagTags;
+        return foundAntag;
     }
 
     /// <summary>

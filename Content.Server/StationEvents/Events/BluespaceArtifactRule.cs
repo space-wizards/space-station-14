@@ -4,7 +4,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed class BluespaceArtifactRule : StationEventSystem<BluespaceArtifactRuleComponent>
+public sealed partial class BluespaceArtifactRule : StationEventSystem<BluespaceArtifactRuleComponent>
 {
     protected override void Added(EntityUid uid, BluespaceArtifactRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
@@ -12,7 +12,7 @@ public sealed class BluespaceArtifactRule : StationEventSystem<BluespaceArtifact
             return;
 
         var str = Loc.GetString("bluespace-artifact-event-announcement",
-            ("sighting", Loc.GetString(RobustRandom.Pick(component.PossibleSighting))));
+            ("sighting", Loc.GetString(RobustRandom.Pick(component.PossibleSightings))));
         stationEvent.StartAnnouncement = str;
 
         base.Added(uid, component, gameRule, args);

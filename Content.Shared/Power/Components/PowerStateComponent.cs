@@ -1,3 +1,5 @@
+using Content.Shared.Power.EntitySystems;
+
 namespace Content.Shared.Power.Components;
 
 /// <summary>
@@ -10,6 +12,7 @@ namespace Content.Shared.Power.Components;
 /// <para>This is also applicable if you would like to add
 /// more complex power behavior that is tied to a generic component.</para></remarks>
 [RegisterComponent]
+[Access(typeof(SharedPowerStateSystem))]
 public sealed partial class PowerStateComponent : Component
 {
     /// <summary>
@@ -29,4 +32,11 @@ public sealed partial class PowerStateComponent : Component
     /// </summary>
     [DataField]
     public float WorkingPowerDraw = 350f;
+
+    /// <summary>
+    /// Needs to ensure ApcPowerReceiverComponent is attached to entity on startup.
+    /// Entities which work with PowerConsumerComponent do not need that.
+    /// </summary>
+    [DataField]
+    public bool EnsureApc = true;
 }

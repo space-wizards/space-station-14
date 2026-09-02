@@ -1,7 +1,7 @@
 - type: entity
-  name: "item"
-  id: BaseItem
   abstract: true
+  id: BaseItem
+  name: "item"
   components:
   - type: Item
     size: Small
@@ -46,6 +46,22 @@
   - type: DamageExaminable
   - type: Rotatable
     increment: 30
+
+- type: entity
+  abstract: true
+  id: BaseItemDestructible # Should be replaced by a variety of destruction bases, possibly combined with drink_base_materials.yml
+  components:
+  - type: Damageable
+  - type: Injurable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
 
 - type: entity
   name: "storage item"

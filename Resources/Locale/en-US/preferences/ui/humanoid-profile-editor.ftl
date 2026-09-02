@@ -6,6 +6,7 @@ humanoid-profile-editor-randomize-age-button = Age
 humanoid-profile-editor-randomize-sex-button = Sex
 humanoid-profile-editor-randomize-skin-button = Skin color
 humanoid-profile-editor-randomize-eye-button = Eye color
+humanoid-profile-editor-randomize-markings-button = Markings
 humanoid-profile-editor-name-label = Name:
 humanoid-profile-editor-appearance-tab = Appearance
 humanoid-profile-editor-clothing = Show clothing

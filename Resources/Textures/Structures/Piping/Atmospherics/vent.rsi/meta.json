@@ -32,6 +32,10 @@
       {
          "name":"vent_lockout",
          "directions" : 4
+      },
+	  {
+         "name":"vent_direction",
+         "directions" : 4
       }
    ]
 }

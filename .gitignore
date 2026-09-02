@@ -295,6 +295,10 @@ ehthumbs.db
 # Merge driver stuff
 Content.Tools/test/out.yml
 
+# Local changelog Discord debug files.
+Resources/Changelog/Old.yml
+Resources/Changelog/DiscordDebug.md
+
 # Windows
 desktop.ini
 

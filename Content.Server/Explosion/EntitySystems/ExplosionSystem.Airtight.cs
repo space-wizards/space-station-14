@@ -97,7 +97,7 @@ public sealed partial class ExplosionSystem
         var tolerance = new FixedPoint2[_explosionTypes.Count];
         var blockedDirections = AtmosDirection.Invalid;
 
-        var anchoredEnumerator = _map.GetAnchoredEntitiesEnumerator(gridId, grid, tile);
+        var anchoredEnumerator = _map.GetAnchoredEntities(gridId, grid, tile);
 
         while (anchoredEnumerator.MoveNext(out var uid))
         {
@@ -279,7 +279,7 @@ public sealed partial class ExplosionSystem
                     if (modifiers.Coefficients.TryGetValue(type, out var armorMod))
                         modifier *= armorMod;
 
-                    if (modifiers.FlatReduction.TryGetValue(type, out var flat))
+                    if (modifiers.FlatReductions.TryGetValue(type, out var flat))
                     {
                         if (flat > 0)
                         {

@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: [BaseStructureDynamic, ConstructibleMachine, BaseMachinePowered]
+  parent: [BaseStructureDynamic, ConstructibleMachine, BaseMachinePowered, BaseConstructibleMachineDestructible]
   id: SmartFridge
   name: SmartFridge
   description: A refrigerated storage unit for keeping items cold and fresh.
@@ -96,23 +96,16 @@
   - type: Anchorable
     delay: 2
   - type: InteractionOutline
+  - type: Damageable
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
+    - trigger: !type:DamageTrigger
+        damage: 175
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          collection: MetalBreak
-      - !type:ChangeConstructionNodeBehavior
-        node: machineFrame
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-  - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+          collection: MetalGlassBreak
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -120,7 +113,7 @@
     soundHit:
       collection: MetalThud
   - type: ExplosionResistance
-    damageCoefficient: 0.1
+    damageCoefficient: 0.2
   - type: Airtight
   - type: GenericVisualizer
     visuals:

@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Server.MapText;
 
 /// <inheritdoc/>
-public sealed class MapTextSystem : SharedMapTextSystem
+public sealed partial class MapTextSystem : SharedMapTextSystem
 {
     /// <inheritdoc/>
     public override void Initialize()

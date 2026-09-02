@@ -1,0 +1,65 @@
+# Marble
+- type: entity
+  name: white marble tile
+  description: A chiseled, polished tile of the finest Space Marble. Best not to lose it.
+  parent: FloorTileItemBase
+  id: FloorTileItemWhiteMarble
+  components:
+  - type: Sprite
+    state: white-marble
+  - type: Item
+    heldPrefix: white-marble
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorWhiteMarble
+  - type: Stack
+    stackType: FloorTileWhiteMarble
+
+- type: entity
+  name: white marble mono tile
+  parent: FloorTileItemWhiteMarble
+  id: FloorTileItemWhiteMarbleMono
+  components:
+  - type: Sprite
+    state: white-marble
+  - type: Item
+    heldPrefix: white-marble-mono
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorWhiteMarbleMono
+  - type: Stack
+    stackType: FloorTileWhiteMarbleMono
+
+- type: entity
+  name: dark marble tile
+  parent: FloorTileItemWhiteMarble
+  id: FloorTileItemDarkMarble
+  components:
+  - type: Sprite
+    state: dark-marble
+  - type: Item
+    heldPrefix: dark-marble
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorDarkMarble
+  - type: Stack
+    stackType: FloorTileDarkMarble
+
+- type: entity
+  name: dark marble mono tile
+  parent: FloorTileItemWhiteMarble
+  id: FloorTileItemDarkMarbleMono
+  components:
+  - type: Sprite
+    state: dark-marble
+  - type: Item
+    heldPrefix: dark-marble-mono
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorDarkMarbleMono
+  - type: Stack
+    stackType: FloorTileDarkMarbleMono

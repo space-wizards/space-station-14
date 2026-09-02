@@ -14,7 +14,7 @@
   components:
   - type: NavMapBeacon
   - type: WarpPoint
-    location: beacon
+    location: location-beacon
 
 - type: entity
   id: TeleportScrollWarpPoint # You can teleport to this warp point using a teleport scroll.

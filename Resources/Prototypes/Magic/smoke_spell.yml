@@ -7,9 +7,10 @@
   - type: Action
     useDelay: 10
     itemIconStyle: BigAction
-    icon:
-      sprite: Actions/smokeaction.rsi
-      state: smokeaction
+  - type: Sprite
+    sprite: Actions/smokeaction.rsi
+    layers:
+    - state: smokeaction
   - type: InstantAction
     event: !type:InstantSpawnSpellEvent
       prototype: WizardSmoke

@@ -223,18 +223,6 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
     }
 
     /// <summary>
-    /// Try to find an entity prototype associated with a specified <see cref="AtmosPipeLayer"/>.
-    /// </summary>
-    /// <param name="component">The <see cref="AtmosPipeLayersComponent"/> with the alternative prototypes data.</param>
-    /// <param name="layer">The atmos pipe layer associated with the entity prototype.</param>
-    /// <param name="proto">The returned entity prototype.</param>
-    /// <returns>True if there was an entity prototype associated with the layer.</returns>
-    public bool TryGetAlternativePrototype(AtmosPipeLayersComponent component, AtmosPipeLayer layer, out EntProtoId proto)
-    {
-        return component.AlternativePrototypes.TryGetValue(layer, out proto);
-    }
-
-    /// <summary>
     /// Checks a player entity's hands to see if they are holding a tool with a specified quality
     /// </summary>
     /// <param name="user">The player entity</param>
