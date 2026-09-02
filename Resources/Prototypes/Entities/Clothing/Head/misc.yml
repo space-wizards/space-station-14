@@ -387,14 +387,104 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadPerformerWig
-  name: performer's wig
-  description: On a closer inspection, it appears that it is made from optic fiber.
+  id: ClothingHeadVirtualSingerWig
+  name: virtual singer's wig
+  description: These twintails have earned the title "best reflecting the dawn of the future".
   components:
   - type: Sprite
-    sprite: Clothing/Head/Misc/performer-wig.rsi
+    sprite: Clothing/Head/Misc/virtual-singer-wig.rsi
   - type: Clothing
-    sprite: Clothing/Head/Misc/performer-wig.rsi
+    sprite: Clothing/Head/Misc/virtual-singer-wig.rsi
+  - type: Item
+    storedRotation: 0
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - HeadTop
+    - HeadSide
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadVirtualChimeraWig
+  name: chimera singer's wig
+  description: The sides feature swirls that look a lot like drill bits. Come to think of it, you could use them to drill a hole in the wall and more.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/virtual-chimera-wig.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/virtual-chimera-wig.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - HeadTop
+    - HeadSide
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadVirtualFanWig
+  name: singer's fan wig
+  description: A wig consisting of a strange mix of short and long strands of hair. The long strands are pulled back into a ponytail on the left side.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/virtual-fan-wig.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/virtual-fan-wig.rsi
+  - type: Item
+    storedRotation: 0
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - HeadTop
+    - HeadSide
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadVirtualForeignerWig
+  name: foreign singer's wig
+  description: Long hair reaching the hips, with a small curl falling over the left shoulder. Retro headphones sit atop the head.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/virtual-foreigner-wig.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/virtual-foreigner-wig.rsi
+  - type: Item
+    storedRotation: 0
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - HeadTop
+    - HeadSide
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadVirtualTaroWig
+  name: Taro's wig
+  description: Short blue hair with a hint of frost visible at the tips.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/virtual-taro-wig.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/virtual-taro-wig.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
   - type: HideLayerClothing
     slots:
     - Hair

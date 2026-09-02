@@ -479,3 +479,19 @@
   parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatExpensive]
   id: ClothingOuterCoatExpensiveOpened
   name: expensive coat
+
+- type: entity
+  parent: ClothingOuterStorageFoldableBase
+  id: ClothingOuterCoatVirtualTaro
+  name: Taro's coat
+  description: A white coat with blue trim, designed to protect against strong winds. The code 'CRV2' is printed on the chest.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/virtual_taro.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/virtual_taro.rsi
+
+- type: entity
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatVirtualTaro]
+  id: ClothingOuterCoatVirtualTaroOpened
+  name: Taro's coat

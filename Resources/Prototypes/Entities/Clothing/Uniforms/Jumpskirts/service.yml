@@ -88,17 +88,6 @@
 
 - type: entity
   parent: ClothingUniformSkirtBase
-  id: ClothingUniformJumpskirtPerformer
-  name: performer's jumpskirt
-  description: Hi, I'm Scott, president of Donk Pizza. Have you heard of [FAMOUS VIRTUAL PERFORMER]?
-  components:
-  - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirts/Service/performer.rsi
-  - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirts/Service/performer.rsi
-
-- type: entity
-  parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtJanimaid
   name: janitorial maid uniform
   description: For professionals, not the posers.
@@ -210,3 +199,47 @@
     sprite: Clothing/Uniforms/Jumpskirts/Service/lawyergood.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirts/Service/lawyergood.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtVirtualSinger
+  name: virtual singer's sleeveless shirt
+  description: A sleeveless shirt with a bright turquoise tie and the code 'CV01' somewhere on it. The design itself resembles a trendy synthesizer.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirts/Service/virtual_singer.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirts/Service/virtual_singer.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtVirtualChimera
+  name: chimera singer's sleeveless shirt
+  description: Military-style clothing with pink trim. A pink sash is attached to the side of the skirt. There should be wings somewhere on the back.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirts/Service/virtual_chimera.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirts/Service/virtual_chimera.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtVirtualFan
+  name: singer's fan sleeveless shirt
+  description: The outfit is made from materials bought at an "everything for 100 speso" store. Even so, there wasn't enough fabric, which is why the top is open at the stomach, the tie is short, and there are two holes in the back.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirts/Service/virtual_fan.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirts/Service/virtual_fan.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtVirtualForeigner
+  name: foreign singer's dress
+  description: The dress was designed to look old-fashioned and remind fans of the past. If you look closely, you can see the code 'CV03' on the shoulder.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirts/Service/virtual_foreigner.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirts/Service/virtual_foreigner.rsi

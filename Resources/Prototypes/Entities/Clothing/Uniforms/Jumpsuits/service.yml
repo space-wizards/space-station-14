@@ -324,3 +324,14 @@
     sprite: Clothing/Uniforms/Jumpsuits/Service/overalls.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuits/Service/overalls.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitVirtualTaro
+  name: Taro's sleeveless shirt
+  description: This sleeveless shirt was custom-made for a certain Taro Yamada to wear during performances and training sessions.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/virtual_taro.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/virtual_taro.rsi

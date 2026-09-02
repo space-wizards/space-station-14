@@ -1130,3 +1130,6 @@ DrinkNeurotoxinGlass: null
 #2026-08-19
 JanitorServiceLight: null
 
+#2026-08-28
+ClothingUniformJumpskirtPerformer: ClothingUniformJumpskirtVirtualSinger
+ClothingShoesBootsPerformer: ClothingShoesBootsVirtualSinger

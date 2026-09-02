@@ -190,3 +190,13 @@
   cost: 1000
   category: cargoproduct-category-name-fun
   group: market
+
+- type: cargoProduct
+  id: VirtualSingerOutfits
+  icon:
+    sprite: Clothing/Uniforms/Jumpskirts/Service/virtual_singer.rsi
+    state: icon
+  product: CrateVirtualSingerOutfits
+  cost: 2500
+  category: cargoproduct-category-name-fun
+  group: market

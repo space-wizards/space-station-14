@@ -14,3 +14,37 @@
     - id: ClothingHeadHatSurgcapBlue
     - id: ClothingHeadHatSurgcapPurple
     - id: ClothingHeadHatSurgcapGreen
+
+- type: entityTable
+  id: RandomVirtualSingerOutfitTable
+  table: !type:GroupSelector
+    children:
+      - !type:AllSelector
+        children:
+        - id: ClothingHeadVirtualSingerWig
+        - id: ClothingUniformJumpskirtVirtualSinger
+        - id: ClothingBackpackDuffelVirtualFan
+        - id: ClothingShoesBootsVirtualSinger
+      - !type:AllSelector
+        children:
+        - id: ClothingHeadVirtualChimeraWig
+        - id: ClothingUniformJumpskirtVirtualChimera
+        - id: ClothingShoesBootsVirtualChimera
+      - !type:AllSelector
+        children:
+        - id: ClothingHeadVirtualFanWig
+        - id: ClothingUniformJumpskirtVirtualFan
+        - id: ClothingShoesBootsVirtualFan
+      - !type:AllSelector
+        children:
+        - id: ClothingHeadVirtualForeignerWig
+        - id: ClothingUniformJumpskirtVirtualForeigner
+        - id: ClothingShoesBootsVirtualForeigner
+      - !type:AllSelector
+        children:
+        - id: ClothingOuterCoatVirtualTaro
+        - id: ClothingUniformJumpsuitVirtualTaro
+        - id: ClothingShoesBootsVirtualTaro
+        - id: ClothingHeadVirtualTaroWig
+        - id: ClothingNeckScarfVirtualTaro
+        - id: ClothingHandsGlovesFingerless

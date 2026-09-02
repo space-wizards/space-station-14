@@ -36,17 +36,6 @@
   - type: Matchbox
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
-  id: ClothingShoesBootsPerformer
-  name: performer's boots
-  description: These boots provide great traction for when you're up on stage.
-  components:
-  - type: Sprite
-    sprite: Clothing/Shoes/Boots/performer.rsi
-  - type: Clothing
-    sprite: Clothing/Shoes/Boots/performer.rsi
-
-- type: entity
   parent: [ClothingShoesMilitaryBase, BaseSecurityContraband]
   id: ClothingShoesBootsCombat
   name: combat boots
@@ -249,3 +238,58 @@
     sprite: Clothing/Shoes/Boots/cowboybootsfancy.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/cowboybootsfancy.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesBootsVirtualSinger
+  name: virtual singer's boots
+  description: The superposition of boots and stockings is possible!
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/virtual_singer.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/virtual_singer.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesBootsVirtualChimera
+  name: chimera singer's boots
+  description: These boots are reminiscent of military combat boots, but they make you want to dance. They come in the unusual size 0401.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/virtual_chimera.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/virtual_chimera.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesBootsVirtualFan
+  name: singer's fan boots
+  description: Knee-high boots with yellow soles. If things get really boring, you can just go to sleep in them.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/virtual_fan.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/virtual_fan.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesBootsVirtualForeigner
+  name: foreign singer's boots
+  description: Stylish and unique shoes that complement a futuristic look.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/virtual_foreigner.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/virtual_foreigner.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesBootsVirtualTaro
+  name: Taro's boots
+  description: What was originally conceived as sneakers turned into tall, black boots for a virtual singer.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/virtual_taro.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/virtual_taro.rsi
