@@ -1,4 +1,4 @@
-name: Test
+name: Publish Testing Backup
 
 on:
   workflow_dispatch:
