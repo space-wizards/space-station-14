@@ -69,7 +69,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
         var stationName = Loc.GetString("atmos-monitoring-window-unknown-location");
         EntityCoordinates? consoleCoords = null;
 
-        if (_entManager.TryGetComponent<TransformComponent>(owner, out var xform))
+        if (_entManager.TryGetComponent<TransformComponent>(_owner, out var xform))
         {
             consoleCoords = xform.Coordinates;
             NavMap.MapUid = xform.GridUid;
