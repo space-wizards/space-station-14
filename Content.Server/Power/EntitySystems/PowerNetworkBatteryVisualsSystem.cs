@@ -25,7 +25,6 @@ public sealed partial class PowerNetworkBatteryVisualsSystem : EntitySystem
     /// </summary>
     private const float MinPowerThreshold = 1;
 
-    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
@@ -33,16 +32,13 @@ public sealed partial class PowerNetworkBatteryVisualsSystem : EntitySystem
         UpdatesAfter.Add(typeof(PowerNetSystem));
     }
 
-    /// <inheritdoc/>
     public override void Update(float frameTime)
     {
         var batteryQuery = EntityQueryEnumerator<PowerNetworkBatteryVisualsComponent>();
         while (batteryQuery.MoveNext(out var uid, out var batteryComp))
         {
             if (batteryComp.NextUpdateTime <= _gameTiming.CurTime)
-            {
                 UpdateChargeState((uid, batteryComp));
-            }
         }
     }
 

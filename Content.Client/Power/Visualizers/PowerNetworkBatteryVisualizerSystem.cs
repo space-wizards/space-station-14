@@ -9,13 +9,12 @@ namespace Content.Client.Power.Visualizers;
 /// </summary>
 public sealed partial class PowerNetworkBatteryVisualizerSystem : VisualizerSystem<PowerNetworkBatteryVisualsComponent>
 {
-    /// <inheritdoc />
     protected override void OnAppearanceChange(EntityUid uid, PowerNetworkBatteryVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        if (AppearanceSystem.TryGetData<int>(uid, PowerNetworkBatteryVisuals.LastChargeLevel, out var chargeLevel, args.Component)
+        if (args.TryGetData<int>(PowerNetworkBatteryVisuals.LastChargeLevel, out var chargeLevel)
             && SpriteSystem.LayerMapTryGet(uid, PowerNetworkBatteryVisualLayers.ChargeLevel, out var layerIndex, logMissing: false))
         {
             if (chargeLevel == 0 && !component.ChargeLevelZeroVisible)
@@ -29,12 +28,12 @@ public sealed partial class PowerNetworkBatteryVisualizerSystem : VisualizerSyst
             }
         }
 
-        if (AppearanceSystem.TryGetData<ChargeState>(uid, PowerNetworkBatteryVisuals.LastChargeState, out var chargeState, args.Component))
+        if (args.TryGetData<ChargeState>(PowerNetworkBatteryVisuals.LastChargeState, out var chargeState))
         {
             SpriteSystem.LayerSetRsiState((uid, args.Sprite), PowerNetworkBatteryVisualLayers.ChargeState, component.ChargeStatePrefix + chargeState.ToString().ToLowerInvariant());
         }
 
-        if (AppearanceSystem.TryGetData<PowerNetworkBatteryChargeCapabilities>(uid, PowerNetworkBatteryVisuals.LastChargeCapabilities, out var chargeCapabilities, args.Component))
+        if (args.TryGetData<PowerNetworkBatteryChargeCapabilities>(PowerNetworkBatteryVisuals.LastChargeCapabilities, out var chargeCapabilities))
         {
             SpriteSystem.LayerSetVisible((uid, args.Sprite), PowerNetworkBatteryVisualLayers.CanCharge, chargeCapabilities.HasFlag(PowerNetworkBatteryChargeCapabilities.CanCharge));
             SpriteSystem.LayerSetVisible((uid, args.Sprite), PowerNetworkBatteryVisualLayers.CanDischarge, chargeCapabilities.HasFlag(PowerNetworkBatteryChargeCapabilities.CanDischarge));

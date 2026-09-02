@@ -28,9 +28,6 @@ public sealed partial class BatteryInterfaceSystem : EntitySystem
     [Dependency] private UserInterfaceSystem _uiSystem = null!;
     [Dependency] private SharedBatterySystem _battery = null!;
 
-    private PowerNetworkBatteryCanChargeChangedEvent _chargedEvent;
-    private PowerNetworkBatteryCanDischargeChangedEvent _dischargedEvent;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -56,8 +53,8 @@ public sealed partial class BatteryInterfaceSystem : EntitySystem
 
         _adminLog.Add(LogType.Action, $"{ToPrettyString(args.Actor):actor} set input breaker to {args.On} on {ToPrettyString(ent):target}");
 
-        _chargedEvent.On = args.On;
-        RaiseLocalEvent(ent, ref _chargedEvent);
+        var chargedEvent = new PowerNetworkBatteryCanChargeChangedEvent(args.On);
+        RaiseLocalEvent(ent, ref chargedEvent);
     }
 
     private void HandleSetOutputBreaker(Entity<BatteryInterfaceComponent> ent, ref BatterySetOutputBreakerMessage args)
@@ -67,8 +64,8 @@ public sealed partial class BatteryInterfaceSystem : EntitySystem
 
         _adminLog.Add(LogType.Action, $"{ToPrettyString(args.Actor):actor} set output breaker to {args.On} on {ToPrettyString(ent):target}");
 
-        _dischargedEvent.On = args.On;
-        RaiseLocalEvent(ent, ref _dischargedEvent);
+        var dischargedEvent = new PowerNetworkBatteryCanDischargeChangedEvent(args.On);
+        RaiseLocalEvent(ent, ref dischargedEvent);
     }
 
     private void HandleSetChargeRate(Entity<BatteryInterfaceComponent> ent, ref BatterySetChargeRateMessage args)
