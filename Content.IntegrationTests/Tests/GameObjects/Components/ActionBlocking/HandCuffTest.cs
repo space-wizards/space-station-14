@@ -47,7 +47,7 @@ public sealed class HandCuffTest : GameTest
 
     [Test]
     [RunOnSide(Side.Server)]
-    [Description("Tests that a player can be handcuffed, and tests that handcuffing works on entities with several arms.")
+    [Description("Tests that a player can be handcuffed, and tests that handcuffing works on entities with several arms.")]
     public async Task Test()
     {
         // Spawn the entities

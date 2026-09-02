@@ -119,9 +119,8 @@ public sealed class SolutionSystemTests : GameTest
     // This test mimics current behavior
     // i.e. if adding too much `TryAddSolution` adding will fail
     [Test]
-[Test]
-[Description("Tests that TryAddSolution will fail if adding too much of a second, unreactive reagent to a container.")]
-public async Task TryAddTooMuchNonReactiveReagent()
+    [Description("Tests that TryAddSolution will fail if adding too much of a second, unreactive reagent to a container.")]
+    public async Task TryAddTooMuchNonReactiveReagent()
     {
         await Pair.CreateTestMap();
         var coordinates = TestMap!.GridCoords;
@@ -240,7 +239,7 @@ public async Task TryAddTooMuchNonReactiveReagent()
     }
 
     [Test]
-    [Description("Tests that TryMixAndOverflow will fail if the given threshold is larger than the maximum volume of the solution.")
+    [Description("Tests that TryMixAndOverflow will fail if the given threshold is larger than the maximum volume of the solution.")]
     public async Task TryMixAndOverflowTooBigOverflow()
     {
         await Pair.CreateTestMap();
