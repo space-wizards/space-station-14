@@ -8,10 +8,11 @@ jobs:
     name: Update Master Backup Branch
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-        #with:
-        #  fetch-depth: 1
+      - uses: actions/checkout@v7
+        with:
+          submodules: 'recursive'
+          fetch-depth: 0
+          filter: blob:none
 
       - name: Get Previous Successful Run Commit
         id: get_commit
