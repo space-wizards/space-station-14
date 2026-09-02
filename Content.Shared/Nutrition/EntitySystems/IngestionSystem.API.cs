@@ -161,21 +161,15 @@ public sealed partial class IngestionSystem
         if (entity.Comp.Trash.Count == 0)
             return;
 
-        var position = _transform.GetMapCoordinates(entity);
-        var trashes = entity.Comp.Trash;
-        string? hand = null;
-        var pickup = user is not null && _hands.IsHolding(user.Value, entity, out hand);
-
-        foreach (var trash in trashes)
+        foreach (var trash in entity.Comp.Trash)
         {
-            var spawnedTrash = EntityManager.PredictedSpawn(trash, position);
+            var spawnedTrash = PredictedSpawnNextToOrDrop(trash, entity);
 
             // Can't or shouldn't pick this up, skip.
-            if (!pickup || user is null)
+            if (user is null || !_hands.IsHolding(user.Value, entity, out var hand))
                 continue;
 
-            if (replace &&
-                (hand is null || !_hands.TryForcePickup(user.Value, spawnedTrash, hand)))
+            if (!replace || !_hands.TryForcePickup(user.Value, spawnedTrash, hand))
             {
                 _hands.TryPickupAnyHand(user.Value, spawnedTrash);
             }
