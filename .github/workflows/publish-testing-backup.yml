@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  update-secondary-branch:
+  update-backup-branch:
+    name: Update Master Backup Branch
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -18,6 +18,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # Github doesn't support giving workflow filenames, despite needing it for the REST API. So we gotta regex it out.
+          # Yes, there's a 4 year old issue for it... https://github.com/orgs/community/discussions/10052
           WORKFLOW_FILENAME=$(echo "${{ github.workflow_ref }}" | grep -oP '(?<=.github/workflows/)[^@]+')
           PREVIOUS_SHA=$(gh api \
             -H "Accept: application/vnd.github+json" \
@@ -37,7 +39,7 @@ jobs:
       - name: Force Update Second Branch
         if: steps.get_commit.outputs.update == 'true'
         run: |
-          TARGET_BRANCH="test-publish-backup"
+          TARGET_BRANCH="master-publish-backup"
           COMMIT_SHA="${{ steps.get_commit.outputs.sha }}"
 
           git fetch origin $COMMIT_SHA --depth=1
