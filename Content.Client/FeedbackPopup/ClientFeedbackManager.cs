@@ -34,7 +34,6 @@ public sealed class ClientFeedbackManager : SharedFeedbackManager
         if (prototypes == null)
             return;
 
-        var count = _displayedPopups.Count;
         _displayedPopups.UnionWith(prototypes);
         InvokeDisplayedPopupsChanged(false);
     }
