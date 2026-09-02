@@ -158,14 +158,10 @@ public sealed partial class IngestionSystem
     /// <param name="replace">When true, tries to replace <paramref name="entity"/> with spawned trash if <paramref name="user"/> is holding it.</param>
     public void SpawnTrash(Entity<EdibleComponent> entity, EntityUid? user = null, bool replace = false)
     {
-        if (entity.Comp.Trash.Count == 0)
-            return;
-
         foreach (var trash in entity.Comp.Trash)
         {
             var spawnedTrash = PredictedSpawnNextToOrDrop(trash, entity);
 
-            // Can't or shouldn't pick this up, skip.
             if (user is null || !_hands.IsHolding(user.Value, entity, out var hand))
                 continue;
 
