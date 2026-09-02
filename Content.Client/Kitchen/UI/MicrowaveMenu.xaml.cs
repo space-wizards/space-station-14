@@ -94,7 +94,6 @@ public sealed partial class MicrowaveMenu : FancyWindow
         var newButton = new Button
         {
             Text = cookTime.ToString(),
-            TextAlign = Label.AlignMode.Center,
             ToggleMode = true,
             Group = CookTimeButtonGroup,
             HorizontalExpand = true,
