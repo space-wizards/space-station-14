@@ -1,7 +1,6 @@
 using Content.Client.Wires.Visualizers;
 using Content.Shared.Computer;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
 
 namespace Content.Client.Computer.Visualizers;
 
@@ -16,15 +15,6 @@ public sealed partial class ComputerVisualizerSystem : VisualizerSystem<Computer
 {
     [Dependency] EntityQuery<SpriteComponent> _spriteQuery;
 
-    private ShaderInstance _unshadedShader = default!;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _unshadedShader = ProtoMan.Index(SpriteSystem.UnshadedId).Instance();
-    }
-
     protected override void OnAppearanceChange(EntityUid uid,
         ComputerVisualsComponent comp,
         ref AppearanceChangeEvent args)
@@ -37,12 +27,12 @@ public sealed partial class ComputerVisualizerSystem : VisualizerSystem<Computer
         if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), ComputerVisualLayers.Screen, out var screenLayer, logMissing: false))
         {
             SpriteSystem.LayerSetVisible((uid, args.Sprite), screenLayer, powered);
-            args.Sprite.LayerSetShader(screenLayer, powered ? _unshadedShader : null);
+            SetLayerShader(args.Sprite, screenLayer, powered);
         }
 
         if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), ComputerVisualLayers.Keys, out var keysLayer, logMissing: false))
         {
-            args.Sprite.LayerSetShader(keysLayer, powered ? _unshadedShader : null);
+            SetLayerShader(args.Sprite, keysLayer, powered);
         }
     }
 
@@ -68,6 +58,14 @@ public sealed partial class ComputerVisualizerSystem : VisualizerSystem<Computer
     {
         if (SpriteSystem.LayerMapTryGet(ent, key, out var layerIndex, logMissing: false))
             SpriteSystem.LayerSetRsiState(ent, layerIndex, state);
+    }
+
+    private void SetLayerShader(SpriteComponent sprite, int layerIndex, bool unshaded)
+    {
+        if (unshaded)
+            sprite.LayerSetShader(layerIndex, SpriteSystem.UnshadedId);
+        else
+            sprite.LayerSetShader(layerIndex, null, null);
     }
 }
 
