@@ -50,7 +50,7 @@ whitespace before newlines are ignored.
     public async Task ParseTestDocument()
     {
         Control ctrl = default!;
-        await Client.WaitPost(() =>
+        await Client.WaitAssertion(() =>
         {
             ctrl = new Control();
             Assert.That(_cParser.TryAddMarkup(ctrl, TestDocument));

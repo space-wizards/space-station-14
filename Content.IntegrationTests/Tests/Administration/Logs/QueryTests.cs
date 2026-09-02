@@ -25,6 +25,7 @@ public sealed class QueryTests : GameTest
     [SidedDependency(Side.Server)] private GameTicker _sTicker = default!;
 
     [Test]
+    [Description("Creates and queries a single admin log with a filter by user ID.")]
     public async Task QuerySingleLog()
     {
         var date = DateTime.UtcNow;

@@ -13,7 +13,7 @@ public sealed class AnchorPrototypeTest : GameTest
     /// Asserts that entityprototypes marked as anchored are also static physics bodies.
     /// </summary>
     [Test]
-    [Description("Asserts that entityprototypes marked as anchored are also static physics bodies.")]
+    [Description("Asserts that EntityPrototypes marked as anchored are also static physics bodies.")]
     [RunOnSide(Side.Server)]
     public async Task TestStaticAnchorPrototypes()
     {

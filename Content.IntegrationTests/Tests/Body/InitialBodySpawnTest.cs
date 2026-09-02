@@ -48,6 +48,7 @@ public sealed class InitialBodySpawnTest : GameTest
 
     [Test]
     [RunOnSide(Side.Server)]
+    [Description("Tests that organs have correct relations in a body spawned from a prototype.")]
     public void SpawningWiresUpOrganRelations()
     {
         var body = SSpawn(InitialBodySpawnTestBody);

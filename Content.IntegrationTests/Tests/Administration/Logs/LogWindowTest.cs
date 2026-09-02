@@ -26,6 +26,7 @@ public sealed class LogWindowTest : InteractionTest
     [SidedDependency(Side.Server)] private IAdminLogManager _sLogManager = default!;
 
     [Test]
+    [Description("Tries to use the Admin Logs window to add and search for logs.")]
     public async Task TestAdminLogsWindow()
     {
         // First, generate a new log

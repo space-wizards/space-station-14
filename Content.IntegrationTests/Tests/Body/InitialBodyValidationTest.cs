@@ -13,6 +13,7 @@ public sealed class InitialBodyValidationTest : GameTest
 {
     [Test]
     [RunOnSide(Side.Server)]
+    [Description("Tests the relationship between organs in all entities with an InitialBodyComponent.")]
     public void RelatedOrgansCanBeRelated()
     {
         using var scope = Assert.EnterMultipleScope();

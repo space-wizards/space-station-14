@@ -76,6 +76,7 @@ public sealed class SolutionSystemTests : GameTest
     [SidedDependency(Side.Server)] private SharedSolutionContainerSystem _solutionContainer = default!;
 
     [Test]
+    [Description("Tests that two non-reactive reagents can be added to a solution without effect.")]
     public async Task TryAddTwoNonReactiveReagent()
     {
         await Pair.CreateTestMap();
@@ -118,7 +119,9 @@ public sealed class SolutionSystemTests : GameTest
     // This test mimics current behavior
     // i.e. if adding too much `TryAddSolution` adding will fail
     [Test]
-    public async Task TryAddTooMuchNonReactiveReagent()
+[Test]
+[Description("Tests that TryAddSolution will fail if adding too much of a second, unreactive reagent to a container.")]
+public async Task TryAddTooMuchNonReactiveReagent()
     {
         await Pair.CreateTestMap();
         var coordinates = TestMap!.GridCoords;
@@ -185,6 +188,7 @@ public sealed class SolutionSystemTests : GameTest
 
     // Unlike TryAddSolution this adds and two solution without then splits leaving only threshold in original
     [Test]
+    [Description("Tests the proportions of TryMixAndOverflow with two quantities of reagents.")]
     public async Task TryMixAndOverflowTooMuchReagent()
     {
         await Pair.CreateTestMap();
@@ -235,8 +239,8 @@ public sealed class SolutionSystemTests : GameTest
         });
     }
 
-    // TryMixAndOverflow will fail if Threshold larger than MaxVolume
     [Test]
+    [Description("Tests that TryMixAndOverflow will fail if the given threshold is larger than the maximum volume of the solution.")
     public async Task TryMixAndOverflowTooBigOverflow()
     {
         await Pair.CreateTestMap();

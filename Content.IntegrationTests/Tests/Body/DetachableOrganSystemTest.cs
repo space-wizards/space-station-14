@@ -64,6 +64,7 @@ public sealed class DetachableOrganSystemTest : GameTest
 
     [Test]
     [RunOnSide(Side.Server)]
+    [Description("Tests that organs maintain their relations when detached from their body.")]
     public void Detach()
     {
         var oldBody = SSpawn(DetachTestOldBody);

@@ -67,7 +67,7 @@ public sealed class FailAndStartPresetTest : GameTest
     [SidedDependency(Side.Server)] private GameTicker _sTicker = default!;
 
     /// <summary>
-    ///     Test that a nuke ops gamemode can start after failing to start once.
+    /// Test that a nuke ops gamemode can start after failing to start once.
     /// </summary>
     [Test]
     [Description("Tests that a nuke ops gamemode can start after failing to start once.")]

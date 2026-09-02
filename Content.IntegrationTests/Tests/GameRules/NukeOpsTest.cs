@@ -63,6 +63,7 @@ public sealed class NukeOpsTest : GameTest
     /// </summary>
     [Test]
     [EnsureCVar(Side.Server, typeof(CCVars), nameof(CCVars.GridFill), true)]
+    [Description("Check that a nuke ops game mode can start without issue - that the nuke station and such all get loaded.")]
     public async Task TryStopNukeOpsFromConstantlyFailing()
     {
         // Initially in the lobby

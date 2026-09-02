@@ -41,10 +41,8 @@ public sealed class DrainTest : InteractionTest
     [SidedDependency(Side.Server)] private SharedSolutionContainerSystem _sSolutionContainerSystem = default!;
 
 
-    /// <summary>
-    /// Tests that drag drop interactions with drains are working as intended.
-    /// </summary>
-    [Test]
+[Test]
+[Description("Tests that drag & drop interactions with drains are working as intended.")]
     public async Task DragDropOntoDrainTest()
     {
         // Spawn a drain one tile away.
@@ -93,9 +91,8 @@ public sealed class DrainTest : InteractionTest
     }
 
     /// <summary>
-    /// Tests that drains make puddles next to them disappear.
-    /// </summary>
-    [Test]
+[Test]
+[Description("Tests that drains make puddles next to them disappear.")]
     public async Task DrainPuddleTest()
     {
         // Spawn a puddle at the player coordinates;

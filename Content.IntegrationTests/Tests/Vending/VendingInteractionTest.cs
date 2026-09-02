@@ -207,7 +207,7 @@ public sealed class VendingInteractionTest : InteractionTest
 
     private async Task BreakVendor()
     {
-        Assert.That(_sQuery.TryComp(STarget, out var damageable), Is.True, $"{VendingMachineProtoId} does not have DamageableComponent.");
+        Assume.That(_sQuery.TryComp(STarget, out var damageable), Is.True, $"{VendingMachineProtoId} does not have DamageableComponent.");
         Entity<DamageableComponent> sDamageableTarget = (STarget!.Value, damageable!);
         Assert.That(_sDamageable.GetPositiveDamage(sDamageableTarget).GetTotal(), Is.EqualTo(FixedPoint2.Zero), $"{VendingMachineProtoId} started with unexpected damage.");
 

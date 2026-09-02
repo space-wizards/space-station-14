@@ -73,6 +73,7 @@ public sealed class SuicideCommandTests : GameTest
     /// Should successfully kill the player and ghost them.
     /// </summary>
     [Test]
+    [Description("Tests that the suicide command kills the player, turning them into a ghost.")]
     public async Task TestSuicide()
     {
         // We need to know the player and whether they can be hurt, killed, and whether they have a mind
@@ -101,6 +102,7 @@ public sealed class SuicideCommandTests : GameTest
     /// This should only deal as much damage as necessary to get to the dead threshold.
     /// </summary>
     [Test]
+    [Description("Tests that the suicide command will only deal as much damage to a player as will kill them.")]
     public async Task TestSuicideWhileDamaged()
     {
         var player = ServerSession!.AttachedEntity!.Value;
@@ -140,6 +142,7 @@ public sealed class SuicideCommandTests : GameTest
     /// Should only ghost the player but not kill them.
     /// </summary>
     [Test]
+    [Description("Tests that the suicide command does not kill an entity with the CannotSuicide tag, only ghosting the player.")]
     public async Task TestSuicideWhenCannotSuicide()
     {
         // We need to know the player and whether they can be hurt, killed, and whether they have a mind
@@ -170,6 +173,7 @@ public sealed class SuicideCommandTests : GameTest
     /// Run the suicide command while the player is holding an execution-capable weapon
     /// </summary>
     [Test]
+    [Describe("Tests that the suicide command executes a player when they're holding an execution-capable weapon with slash damage.")]
     public async Task TestSuicideByHeldItem()
     {
         // We need to know the player and whether they can be hurt, killed, and whether they have a mind
@@ -220,6 +224,7 @@ public sealed class SuicideCommandTests : GameTest
     /// with damage spread between slash and blunt
     /// </summary>
     [Test]
+    [Describe("Tests that the suicide command executes a player when they're holding an execution-capable weapon with slash & blunt damage.")]
     public async Task TestSuicideByHeldItemSpreadDamage()
     {
         var player = ServerSession!.AttachedEntity!.Value;

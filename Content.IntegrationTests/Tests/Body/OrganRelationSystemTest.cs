@@ -46,6 +46,7 @@ public sealed class OrganRelationSystemTest : GameTest
 
     [Test]
     [RunOnSide(Side.Server)]
+    [Description("Tests that AllChildren returns the children of children, and AllParents, the parents of parents.")]
     public void Traversal()
     {
         var grandParent = SSpawn(OrganRelationTestOrgan);

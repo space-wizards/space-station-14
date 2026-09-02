@@ -94,7 +94,7 @@ public sealed class ChasmTest : MovementTest
 
         // Give the player a grappling gun.
         var grapplingGun = await PlaceInHands(GrapplingGunProto);
-        await Pair.RunSeconds(2f); // guns have a cooldown when picking them up
+        await RunSeconds(2f); // guns have a cooldown when picking them up
 
         // Shoot at the wall to the right.
         Assert.That(WallRight, Is.Not.Null, "No wall to shoot at!");

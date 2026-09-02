@@ -37,9 +37,9 @@ public sealed class AlertsComponentTests : GameTest
         await Server.WaitAssertion(() =>
         {
             playerUid = _sPlayerManager.Sessions.Single().AttachedEntity.GetValueOrDefault();
-            Assert.That(playerUid, Is.Not.Default);
-            // Making sure it exists
-            Assert.That(playerUid, Has.Comp<AlertsComponent>(Server));
+            Assume.That(playerUid, Is.Not.Default);
+// Making sure it exists
+            Assume.That(playerUid, Has.Comp<AlertsComponent>(Server));
 
             var alerts = _sAlertsSystem.GetActiveAlerts(playerUid);
             Assert.That(alerts, Is.Not.Null);

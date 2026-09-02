@@ -4,7 +4,6 @@ using Content.IntegrationTests.Fixtures;
 
 namespace Content.IntegrationTests.Tests.Networking;
 
-[TestFixture]
 public sealed class NetworkIdsMatchTest : GameTest
 {
     [Test]

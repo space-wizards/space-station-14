@@ -19,6 +19,7 @@ public sealed class CraftingTests : InteractionTest
     /// Craft a simple instant recipe
     /// </summary>
     [Test]
+    [Describe("Tries to craft metal rods - a simple, instant recipe.")]
     public async Task CraftRods()
     {
         await PlaceInHands(Steel);
@@ -30,6 +31,7 @@ public sealed class CraftingTests : InteractionTest
     /// Craft a simple recipe with a DoAfter
     /// </summary>
     [Test]
+    [Describe("Tries to craft a grenade - a simple recipe with a doafter.")]
     public async Task CraftGrenade()
     {
         await PlaceInHands(Steel, 5);
@@ -41,6 +43,7 @@ public sealed class CraftingTests : InteractionTest
     /// Craft a complex recipe (more than one ingredient).
     /// </summary>
     [Test]
+    [Description("Tries to craft a spear - a recipe with multiple ingredients.")]
     public async Task CraftSpear()
     {
         // Spawn a full tack of rods in the user's hands.
@@ -70,6 +73,7 @@ public sealed class CraftingTests : InteractionTest
     /// Cancel crafting a complex recipe.
     /// </summary>
     [Test]
+    [Description("Tests cancelling a complex recipe.")]
     public async Task CancelCraft()
     {
         var serverTargetCoords = SEntMan.GetCoordinates(TargetCoords);

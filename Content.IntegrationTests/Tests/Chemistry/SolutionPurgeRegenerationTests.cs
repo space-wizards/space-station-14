@@ -21,6 +21,7 @@ public sealed class SolutionPurgeRegenerationTests : GameTest
     [SidedDependency(Side.Server)] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
     [Test]
+    [Description("Tests that an advanced mop can absorb reagents, purge them automatically, and refill with water.")]
     public async Task TestMop()
     {
         await Pair.CreateTestMap();

@@ -22,6 +22,7 @@ public sealed class FilterTests : GameTest
     [Test]
     [TestCase(DateOrder.Ascending)]
     [TestCase(DateOrder.Descending)]
+    [Description("Tests that admin logs are returned correctly when ordered by date.")]
     public async Task Date(DateOrder order)
     {
         var commonGuid = Guid.NewGuid();
