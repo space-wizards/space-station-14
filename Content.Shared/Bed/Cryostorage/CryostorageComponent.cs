@@ -63,9 +63,9 @@ public record struct CryostorageContainedPlayerData()
     public NetEntity PlayerEnt = NetEntity.Invalid;
 
     /// <summary>
-    /// A dictionary relating a slot definition name to the name of the item inside of it.
+    /// A list containing item data (id of the slot, user friendly display name of the slot, the name of the item inside of it)
     /// </summary>
-    public Dictionary<string, string> ItemSlots = new();
+    public List<(string, string, string)> ItemSlots = new();
 
     /// <summary>
     /// A dictionary relating a hand ID to the hand name and the name of the item being held.

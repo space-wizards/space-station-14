@@ -39,7 +39,7 @@ public abstract partial class SharedResearchStealerSystem : EntitySystem
         // fail fast if theres no techs to steal right now
         if (database.UnlockedTechnologies.Count == 0)
         {
-            _popup.PopupClient(Loc.GetString("ninja-download-fail"), uid, uid);
+            _popup.PopupEntity(Loc.GetString("ninja-download-fail"), uid, uid);
             return;
         }
 

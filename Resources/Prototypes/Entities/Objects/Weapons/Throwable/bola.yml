@@ -1,8 +1,8 @@
 - type: entity
-  name: bola
+  abstract: true
   parent: [BaseItem, BaseSecurityContraband]
-  id: Bola
-  description: Linked together with some spare cuffs and metal.
+  id: BaseBola
+  name: bola
   components:
   - type: Item
     size: Normal
@@ -13,20 +13,11 @@
     sound: /Audio/Weapons/bolathrow.ogg
   - type: EmitSoundOnLand
     sound: /Audio/Effects/snap.ogg
-  - type: Construction
-    graph: Bola
-    node: bola
   - type: Damageable
   - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 75
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 15
@@ -60,3 +51,36 @@
         - ItemMask
         restitution: 0.3
         friction: 0.2
+
+- type: entity
+  parent: BaseBola
+  id: Bola
+  name: makeshift bola
+  description: A makeshift bola, cobbled together with some spare cuffs and metal. It doesn't look like it's going to stay together for very long.
+  components:
+  - type: Construction
+    graph: Bola
+    node: bola
+
+- type: entity
+  parent: BaseBola
+  id: SecurityBola
+  name: tactical bola
+  description: A bola, comprised of steel anchors linked together with a wire cable. Reliable and reusable.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Throwable/securitybola.rsi
+    state: icon
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 0 #reusable, in contrast to makeshift
+  - type: Ensnaring
+    freeTime: 2.5 #slightly slower free time than makeshift
+    breakoutTime: 4.0 #slightly slower breakout time than makeshift
+    walkSpeed: 0.5
+    sprintSpeed: 0.5
+    staminaDamage: 0 # anything but this is gamebreaking
+    canThrowTrigger: true
+    canMoveBreakout: true
+    maxEnsnares: 1

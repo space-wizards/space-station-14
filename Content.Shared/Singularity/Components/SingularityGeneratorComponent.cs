@@ -1,9 +1,7 @@
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-
 using Content.Shared.Physics;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Singularity.Components;
 
@@ -46,8 +44,8 @@ public sealed partial class SingularityGeneratorComponent : Component
     /// <summary>
     ///     The prototype ID used to spawn a singularity.
     /// </summary>
-    [DataField("spawnId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? SpawnPrototype = "Singularity";
+    [DataField("spawnId")]
+    public EntProtoId? SpawnPrototype = "Singularity";
 
     /// <summary>
     /// The masks the raycast should not go through

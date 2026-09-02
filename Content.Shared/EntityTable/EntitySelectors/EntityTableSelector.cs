@@ -1,4 +1,4 @@
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.EntityTable.Conditions;
 using Content.Shared.EntityTable.ValueSelector;
 using JetBrains.Annotations;
@@ -10,6 +10,11 @@ namespace Content.Shared.EntityTable.EntitySelectors;
 [ImplicitDataDefinitionForInheritors, UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
 public abstract partial class EntityTableSelector
 {
+    /// <summary>
+    /// Key for <see cref="EntityTableContext"/>, under which additional scoped conditions should be stored.
+    /// </summary>
+    public const string AdditionalConditionsKey = "AdditionalConditions";
+
     /// <summary>
     /// The number of times this selector is run
     /// </summary>
@@ -26,7 +31,7 @@ public abstract partial class EntityTableSelector
     /// A simple chance that the selector will run.
     /// </summary>
     [DataField]
-    public double Prob = 1;
+    public float Prob = 1;
 
     /// <summary>
     /// A list of conditions that must evaluate to 'true' for the selector to apply.
@@ -41,7 +46,11 @@ public abstract partial class EntityTableSelector
     [DataField]
     public bool RequireAll = true;
 
-    public IEnumerable<EntProtoId> GetSpawns(System.Random rand,
+    /// <summary>
+    /// Samples an output for this selector.
+    /// </summary>
+    public IEnumerable<EntProtoId> GetSpawns(
+        IRobustRandom rand,
         IEntityManager entMan,
         IPrototypeManager proto,
         EntityTableContext ctx)
@@ -62,13 +71,17 @@ public abstract partial class EntityTableSelector
         }
     }
 
-    public bool CheckConditions(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
+    /// <summary>
+    /// Check if the condition for this selector are met.
+    /// </summary>
+    public virtual bool CheckConditions(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
     {
-        if (Conditions.Count == 0)
+        // No conditions to evaluate (own or injected into the context) => always valid.
+        if (!TryGetConditions(ctx, out var conditions))
             return true;
 
         var success = false;
-        foreach (var condition in Conditions)
+        foreach (var condition in conditions)
         {
             var res = condition.Evaluate(this, entMan, proto, ctx);
 
@@ -112,7 +125,7 @@ public abstract partial class EntityTableSelector
         }
     }
 
-    protected abstract IEnumerable<EntProtoId> GetSpawnsImplementation(System.Random rand,
+    protected abstract IEnumerable<EntProtoId> GetSpawnsImplementation(IRobustRandom rand,
         IEntityManager entMan,
         IPrototypeManager proto,
         EntityTableContext ctx);
@@ -124,4 +137,30 @@ public abstract partial class EntityTableSelector
     protected abstract IEnumerable<(EntProtoId spawn, double)> AverageSpawnsImplementation(IEntityManager entMan,
         IPrototypeManager proto,
         EntityTableContext ctx);
+
+    /// <summary>
+    /// Gets the effective conditions for this selector, respecting conditions injected into the context.
+    /// Returns false when there are no conditions to evaluate.
+    /// </summary>
+    private bool TryGetConditions(EntityTableContext ctx, [NotNullWhen(true)] out List<EntityTableCondition>? conditions)
+    {
+        var hasAdditionalConditions = ctx.TryGetData<List<EntityTableCondition>>(AdditionalConditionsKey, out var additionalConditions);
+
+        if (Conditions.Count == 0 && !hasAdditionalConditions)
+        {
+            conditions = null;
+            return false;
+        }
+
+        if (!hasAdditionalConditions)
+        {
+            conditions = Conditions;
+            return true;
+        }
+
+        conditions = new List<EntityTableCondition>(Conditions.Count + additionalConditions!.Count);
+        conditions.AddRange(Conditions);
+        conditions.AddRange(additionalConditions);
+        return true;
+    }
 }

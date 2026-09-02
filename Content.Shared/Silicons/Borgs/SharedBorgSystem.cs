@@ -4,6 +4,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Events;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Gibbing;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
@@ -63,6 +64,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
     [Dependency] private INetManager _net = default!;
     [Dependency] private SharedHandheldLightSystem _handheldLight = default!;
     [Dependency] private SharedAccessSystem _access = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
 
     /// <inheritdoc/>
@@ -75,7 +77,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
         InitializeRelay();
         InitializeUI();
 
-        SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
+        SubscribeLocalEvent<BorgChassisComponent, TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
 
         SubscribeLocalEvent<BorgChassisComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<BorgChassisComponent, MapInitEvent>(OnMapInit);
@@ -100,21 +102,12 @@ public abstract partial class SharedBorgSystem : EntitySystem
 
     }
 
-    private void OnTryGetIdentityShortInfo(TryGetIdentityShortInfoEvent args)
+    private void OnTryGetIdentityShortInfo(Entity<BorgChassisComponent> chassis, ref TryGetIdentityShortInfoEvent args)
     {
         if (args.Handled)
-        {
             return;
-        }
 
-        // TODO: Why the hell is this only broadcasted and not raised directed on the entity?
-        // This is doing a ton of HasComps/TryComps.
-        if (!HasComp<BorgChassisComponent>(args.ForActor))
-        {
-            return;
-        }
-
-        args.Title = Name(args.ForActor).Trim();
+        args.Title = Name(args.Target).Trim();
         args.Handled = true;
     }
 
@@ -233,7 +226,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
         {
             if (brain != null || module != null)
             {
-                _popup.PopupClient(Loc.GetString("borg-panel-not-open"), chassis, args.User);
+                _popup.PopupEntity(Loc.GetString("borg-panel-not-open"), chassis, args.User);
             }
             return;
         }
@@ -243,7 +236,6 @@ public abstract partial class SharedBorgSystem : EntitySystem
         {
             if (TryComp<ActorComponent>(used, out var actor) && !CanPlayerBeBorged(actor.PlayerSession))
             {
-                // Don't use PopupClient because CanPlayerBeBorged is not predicted.
                 _popup.PopupEntity(Loc.GetString("borg-player-not-allowed"), used, args.User);
                 return;
             }
@@ -334,7 +326,6 @@ public abstract partial class SharedBorgSystem : EntitySystem
 
         if (!CanPlayerBeBorged(session))
         {
-            // Don't use PopupClient because MindAddedMessage and CanPlayerBeBorged are not predicted.
             _popup.PopupEntity(Loc.GetString("borg-player-not-allowed-eject"), brain);
             _container.RemoveEntity(borg, brain);
             _throwing.TryThrow(brain, _random.NextVector2() * 5, 5f);

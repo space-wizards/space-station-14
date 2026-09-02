@@ -1,5 +1,4 @@
 ﻿<controls:FancyWindow xmlns="https://spacestation14.io"
-                      xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       Title="{Loc 'mech-menu-title'}"
                       MinSize="350 440"
@@ -47,10 +46,7 @@
             </SpriteView>
         </BoxContainer>
         <BoxContainer VerticalExpand="True" Margin="10 0 10 10" Orientation="Vertical">
-            <PanelContainer VerticalExpand="True" MinSize="0 200">
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
-                </PanelContainer.PanelOverride>
+            <PanelContainer VerticalExpand="True" MinSize="0 200" StyleClasses="PanelDeep">
                 <ScrollContainer
                     HScrollEnabled="False"
                     HorizontalExpand="True"

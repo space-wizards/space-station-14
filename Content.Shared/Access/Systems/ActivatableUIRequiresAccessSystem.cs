@@ -24,7 +24,7 @@ public sealed partial class ActivatableUIRequiresAccessSystem : EntitySystem
         {
             args.Cancel();
             if (activatableUI.Comp.PopupMessage != null && !args.Silent)
-                _popup.PopupClient(Loc.GetString(activatableUI.Comp.PopupMessage), activatableUI, args.User);
+                _popup.PopupEntity(Loc.GetString(activatableUI.Comp.PopupMessage), activatableUI, args.User);
         }
     }
 }

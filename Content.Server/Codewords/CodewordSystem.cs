@@ -13,7 +13,6 @@ namespace Content.Server.Codewords;
 /// </summary>
 public sealed partial class CodewordSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private IRobustRandom _random = default!;
 
@@ -53,7 +52,7 @@ public sealed partial class CodewordSystem : EntitySystem
 
     private string[] GenerateForFaction(ProtoId<CodewordFactionPrototype> faction, ref CodewordManagerComponent manager)
     {
-        var factionProto = _prototypeManager.Index<CodewordFactionPrototype>(faction.Id);
+        var factionProto = ProtoMan.Index<CodewordFactionPrototype>(faction.Id);
 
         var codewords = GenerateCodewords(factionProto.Generator);
         var codewordsContainer = Spawn(prototype: null, MapCoordinates.Nullspace);
@@ -70,11 +69,11 @@ public sealed partial class CodewordSystem : EntitySystem
     /// </summary>
     public string[] GenerateCodewords(ProtoId<CodewordGeneratorPrototype> generatorId)
     {
-        var generator = _prototypeManager.Index(generatorId);
+        var generator = ProtoMan.Index(generatorId);
 
         var codewordPool = new List<string>();
         foreach (var dataset in generator.Words
-                     .Select(datasetPrototype => _prototypeManager.Index(datasetPrototype)))
+                     .Select(datasetPrototype => ProtoMan.Index(datasetPrototype)))
         {
             codewordPool.AddRange(dataset.Values);
         }

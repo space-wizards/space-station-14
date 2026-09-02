@@ -1,3 +1,4 @@
+using Content.Shared.Item;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Events;
@@ -15,15 +16,6 @@ public abstract partial class SharedSpaceNinjaSystem : EntitySystem
     [Dependency] protected SharedPopupSystem Popup = default!;
 
     [Dependency] public EntityQuery<SpaceNinjaComponent> NinjaQuery = default!;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<SpaceNinjaComponent, AttackedEvent>(OnNinjaAttacked);
-        SubscribeLocalEvent<SpaceNinjaComponent, MeleeAttackEvent>(OnNinjaAttack);
-        SubscribeLocalEvent<SpaceNinjaComponent, ShotAttemptedEvent>(OnShotAttempted);
-    }
 
     public bool IsNinja([NotNullWhen(true)] EntityUid? uid)
     {
@@ -54,17 +46,14 @@ public abstract partial class SharedSpaceNinjaSystem : EntitySystem
         Dirty(ent, ent.Comp);
     }
 
-    /// <summary>
-    /// Bind a katana entity to a ninja, letting it be recalled and dash.
-    /// Does nothing if the player is not a ninja or already has a katana bound.
-    /// </summary>
-    public void BindKatana(Entity<SpaceNinjaComponent?> ent, EntityUid katana)
+    [SubscribeLocalEvent]
+    private void OnBindItem(Entity<SpaceNinjaComponent> ent, ref BindItemEvent args)
     {
-        if (!NinjaQuery.Resolve(ent, ref ent.Comp, false) || ent.Comp.Katana != null)
+        if (ent.Comp.Katana != null)
             return;
 
-        ent.Comp.Katana = katana;
-        Dirty(ent, ent.Comp);
+        ent.Comp.Katana = args.Item;
+        Dirty(ent);
     }
 
     /// <summary>
@@ -79,6 +68,7 @@ public abstract partial class SharedSpaceNinjaSystem : EntitySystem
     /// <summary>
     /// Handle revealing ninja if cloaked when attacked.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnNinjaAttacked(Entity<SpaceNinjaComponent> ent, ref AttackedEvent args)
     {
         TryRevealNinja(ent, disable: true);
@@ -88,6 +78,7 @@ public abstract partial class SharedSpaceNinjaSystem : EntitySystem
     /// Handle revealing ninja if cloaked when attacking.
     /// Only reveals, there is no cooldown.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnNinjaAttack(Entity<SpaceNinjaComponent> ent, ref MeleeAttackEvent args)
     {
         TryRevealNinja(ent, disable: false);
@@ -102,9 +93,10 @@ public abstract partial class SharedSpaceNinjaSystem : EntitySystem
     /// <summary>
     /// Require ninja to fight with HONOR, no guns!
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnShotAttempted(Entity<SpaceNinjaComponent> ent, ref ShotAttemptedEvent args)
     {
-        Popup.PopupClient(Loc.GetString("gun-disabled"), ent, ent);
+        Popup.PopupEntity(Loc.GetString("gun-disabled"), ent, ent);
         args.Cancel();
     }
 }

@@ -48,6 +48,12 @@ public sealed partial class CCVars
         CVarDef.Create("discord.votekick_webhook", string.Empty, CVar.SERVERONLY);
 
     /// <summary>
+    ///     URL of the Discord webhook which will relay event logs. If left empty, disables the webhook.
+    /// </summary>
+    public static readonly CVarDef<string> DiscordEventWebhook =
+        CVarDef.Create("discord.event_webhook", string.Empty, CVar.SERVERONLY);
+
+    /// <summary>
     ///     URL of the Discord webhook which will relay round restart messages.
     /// </summary>
     public static readonly CVarDef<string> DiscordRoundUpdateWebhook =

@@ -19,7 +19,8 @@
       metabolites:
         UncookedAnimalProteins: 0.2
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: 1.0
         conditions:
           - !type:MetabolizerTypeCondition
@@ -74,7 +75,8 @@
     Digestion:
       # Delicious!
       effects:
-      - !type:SatiateHunger
+      - !type:Satiate
+        satiationType: Hunger
         factor: 1
         conditions:
         - !type:MetabolizerTypeCondition
@@ -106,9 +108,11 @@
     Digestion:
       # Sweet!
       effects:
-      - !type:SatiateHunger
+      - !type:Satiate
+        satiationType: Hunger
         factor: 1
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: 1
   footstepSound:
     collection: FootstepSlime
@@ -160,7 +164,8 @@
     Digestion:
       # Disgusting!
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: -0.5
     Bloodstream:
       effects:
@@ -170,6 +175,31 @@
             Poison: 4
       - !type:Vomit
         probability: 0.25
+
+- type: reagent
+  id: Romerodone
+  name: reagent-name-romerodone
+  group: Biological
+  desc: reagent-desc-romerodone
+  physicalDesc: reagent-physical-desc-necrotic
+  flavor: metallic
+  color: "#e62600"
+  metabolisms:
+    Digestion:
+      # Disgusting!
+      effects:
+      - !type:Satiate
+        satiationType: Thirst
+        factor: -0.5
+    Bloodstream:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 2
+      - !type:Vomit
+        probability: 0.5
+
 
 - type: reagent
   id: Ichor
@@ -183,7 +213,8 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: 1.5
     # Dragon doesn't require airloss healing, so omnizine is still best for humans.
       - !type:ModifyBloodLevel
@@ -237,7 +268,8 @@
       metabolites:
         Nutriment: 0.1
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: 0.5
   footstepSound:
     collection: FootstepBlood
@@ -255,9 +287,23 @@
   metabolisms:
     Digestion:
       effects:
-      - !type:SatiateHunger
+      - !type:Satiate
+        satiationType: Hunger
         factor: 1.5
       - !type:HealthChange
         damage:
           types:
             Cellular: 2
+
+- type: reagent
+  id: LivingTissue
+  name: reagent-name-living-tissue
+  group: Biological
+  desc: reagent-desc-living-tissue
+  flavor: metallic
+  color: "#800000"
+  physicalDesc: reagent-physical-desc-ferrous
+  footstepSound:
+    collection: FootstepBlood
+    params:
+      volume: 6

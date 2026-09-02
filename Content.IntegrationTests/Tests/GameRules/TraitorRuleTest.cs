@@ -56,10 +56,10 @@ public sealed class TraitorRuleTest : GameTest
             Assert.That(protoMan.TryIndex<EntityPrototype>(TraitorGameRuleProtoId, out var gameRuleEnt),
             $"Failed to lookup traitor game rule entity prototype with ID \"{TraitorGameRuleProtoId}\"!");
 
-            Assert.That(gameRuleEnt.TryGetComponent<GameRuleComponent>(out var gameRule, compFact),
+            Assert.That(gameRuleEnt.TryComp<GameRuleComponent>(out var gameRule, compFact),
             $"Game rule entity {TraitorGameRuleProtoId} does not have a GameRuleComponent!");
 
-            Assert.That(gameRuleEnt.TryGetComponent<AntagRandomObjectivesComponent>(out var randomObjectives, compFact),
+            Assert.That(gameRuleEnt.TryComp<AntagRandomObjectivesComponent>(out var randomObjectives, compFact),
             $"Game rule entity {TraitorGameRuleProtoId} does not have an AntagRandomObjectivesComponent!");
 
             minPlayers = gameRule.MinPlayers;
@@ -87,7 +87,7 @@ public sealed class TraitorRuleTest : GameTest
         await server.WaitPost(() =>
         {
             var gameRuleEnt = ticker.AddGameRule(TraitorGameRuleProtoId);
-            Assert.That(entMan.TryGetComponent<TraitorRuleComponent>(gameRuleEnt, out traitorRule));
+            Assert.That(entMan.TryGetComponent(gameRuleEnt, out traitorRule));
 
             // Ready up
             ticker.ToggleReadyAll(true);

@@ -13,7 +13,7 @@ public abstract partial class SharedChatSystem
     private void CacheEmotes()
     {
         var dict = new Dictionary<string, EmotePrototype>();
-        var emotes = _prototypeManager.EnumeratePrototypes<EmotePrototype>();
+        var emotes = ProtoMan.EnumeratePrototypes<EmotePrototype>();
         foreach (var emote in emotes)
         {
             foreach (var word in emote.ChatTriggers)
@@ -57,7 +57,7 @@ public abstract partial class SharedChatSystem
         bool forceEmote = false
     )
     {
-        if (!_prototypeManager.Resolve<EmotePrototype>(emoteId, out var proto))
+        if (!ProtoMan.Resolve<EmotePrototype>(emoteId, out var proto))
             return false;
 
         return TryEmoteWithChat(source, proto, range, hideLog: hideLog, nameOverride, ignoreActionBlocker: ignoreActionBlocker, forceEmote: forceEmote);
@@ -109,7 +109,7 @@ public abstract partial class SharedChatSystem
     /// <returns>True if an emote was performed. False if the emote is unavailable, cancelled, etc.</returns>
     public bool TryEmoteWithoutChat(EntityUid uid, string emoteId, bool ignoreActionBlocker = false)
     {
-        if (!_prototypeManager.Resolve<EmotePrototype>(emoteId, out var proto))
+        if (!ProtoMan.Resolve<EmotePrototype>(emoteId, out var proto))
             return false;
 
         return TryEmoteWithoutChat(uid, proto, ignoreActionBlocker);
@@ -156,7 +156,10 @@ public abstract partial class SharedChatSystem
 
         // optional override params > general params for all sounds in set > individual sound params
         var param = audioParams ?? proto.GeneralParams ?? sound.Params;
-        _audio.PlayPvs(sound, uid, param);
+
+        if (_net.IsServer) // TODO: replace this call with PlayPredicted when chat is predicted.
+            _audio.PlayPvs(sound, uid, param);
+
         return true;
     }
     /// <summary>
@@ -222,10 +225,6 @@ public abstract partial class SharedChatSystem
 
         if (beforeEv.Cancelled)
         {
-            // Chat is not predicted anyways, so no need to predict this popup either.
-            if (_net.IsClient)
-                return false;
-
             if (beforeEv.Blocker != null)
             {
                 _popup.PopupEntity(
@@ -251,7 +250,7 @@ public abstract partial class SharedChatSystem
             return false;
         }
 
-        var ev = new EmoteEvent(proto);
+        var ev = new EmoteEvent(GetNetEntity(uid), proto);
         RaiseLocalEvent(uid, ref ev);
 
         return true;

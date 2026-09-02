@@ -2,11 +2,14 @@ using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Armor;
 using Content.Shared.Atmos.Rotting;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Store;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.Fluids;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
@@ -21,6 +24,7 @@ namespace Content.Shared.Changeling.Systems;
 
 public sealed partial class ChangelingDevourSystem : EntitySystem
 {
+    [Dependency] private BloodstreamSystem _bloodstream = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private INetManager _net = default!;
@@ -32,6 +36,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private SharedStoreSystem _store = default!;
+    [Dependency] private SharedPuddleSystem _puddle = default!;
 
     public override void Initialize()
     {
@@ -88,7 +93,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
 
         var selfMessage = Loc.GetString("changeling-devour-begin-windup-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
         var othersMessage = Loc.GetString("changeling-devour-begin-windup-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
-        _popupSystem.PopupPredicted(
+        _popupSystem.PopupEntity(
             selfMessage,
             othersMessage,
             args.Performer,
@@ -113,7 +118,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
 
         var selfMessage = Loc.GetString("changeling-devour-begin-consume-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
         var othersMessage = Loc.GetString("changeling-devour-begin-consume-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
-        _popupSystem.PopupPredicted(
+        _popupSystem.PopupEntity(
             selfMessage,
             othersMessage,
             ent.Owner,
@@ -160,7 +165,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
 
         var selfMessage = Loc.GetString("changeling-devour-consume-complete-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
         var othersMessage = Loc.GetString("changeling-devour-consume-complete-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
-        _popupSystem.PopupPredicted(
+        _popupSystem.PopupEntity(
             selfMessage,
             othersMessage,
             ent.Owner,
@@ -184,6 +189,16 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
 
         EnsureComp<RecentlyDevouredComponent>(target);
 
+        if (ent.Comp.DevourSpill != null)
+        {
+            // Spilled solution should have the same DNA as the changeling at the time of devouring
+            var spill = ent.Comp.DevourSpill.Clone();
+            if (TryComp<BloodstreamComponent>(ent, out var bloodstream))
+                spill.SetReagentData(_bloodstream.GetEntityBloodData((ent, bloodstream)));
+
+            _puddle.TrySpillAt(target, spill, out _, false);
+        }
+
         // Grants the DNA reward associated with a successful unique devour.
         if (willGrantDna && TryComp<StoreComponent>(ent, out var store))
             _store.TryAddCurrency(ent.Comp.DevourDnaReward, ent.Owner, store);
@@ -203,42 +218,42 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
         if (!HasComp<HumanoidProfileComponent>(victim))
         {
             if (showPopup)
-                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-cannot-devour"), changeling.Owner, changeling.Owner, PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("changeling-devour-attempt-failed-cannot-devour"), changeling.Owner, changeling.Owner, PopupType.Medium);
             return false;
         }
 
         if (HasComp<RecentlyDevouredComponent>(victim))
         {
             if (showPopup)
-                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-devoured-recently"), changeling.Owner, changeling.Owner, PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("changeling-devour-attempt-failed-devoured-recently"), changeling.Owner, changeling.Owner, PopupType.Medium);
             return false;
         }
 
         if (checkDead && !_mobState.IsDead(victim))
         {
             if (showPopup)
-                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-not-dead"), changeling.Owner, changeling.Owner, PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("changeling-devour-attempt-failed-not-dead"), changeling.Owner, changeling.Owner, PopupType.Medium);
             return false;
         }
 
         if (HasComp<RottingComponent>(victim))
         {
             if (showPopup)
-                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-rotting"), changeling.Owner, changeling.Owner, PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("changeling-devour-attempt-failed-rotting"), changeling.Owner, changeling.Owner, PopupType.Medium);
             return false;
         }
 
         if (checkProtected && IsTargetProtected(victim, changeling))
         {
             if (showPopup)
-                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-protected"), changeling.Owner, changeling.Owner, PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("changeling-devour-attempt-failed-protected"), changeling.Owner, changeling.Owner, PopupType.Medium);
             return false;
         }
 
         if (!_changelingIdentity.HasIdentity(changeling.Owner, victim) && !_changelingIdentity.HasFreeDisguiseSlot(changeling.Owner))
         {
             if (showPopup)
-                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-no-space"), changeling.Owner, changeling.Owner, PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("changeling-devour-attempt-failed-no-space"), changeling.Owner, changeling.Owner, PopupType.Medium);
             return false;
         }
 

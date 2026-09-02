@@ -8,7 +8,6 @@ using Content.Shared.Station.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
-using Robust.Shared.Collections;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -25,30 +24,20 @@ namespace Content.Server.Station.Systems;
 [PublicAPI]
 public sealed partial class StationSystem : SharedStationSystem
 {
-    [Dependency] private ILogManager _logManager = default!;
     [Dependency] private IPlayerManager _player = default!;
     [Dependency] private ChatSystem _chatSystem = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
     [Dependency] private PvsOverrideSystem _pvsOverride = default!;
+    [Dependency] private EntityQuery<MapGridComponent> _gridQuery = default!;
 
     private ISawmill _sawmill = default!;
-
-    private EntityQuery<MapGridComponent> _gridQuery;
-    private EntityQuery<TransformComponent> _xformQuery;
-
-    private ValueList<MapId> _mapIds;
-    private ValueList<(Box2Rotated Bounds, MapId MapId)> _gridBounds;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
 
-        _sawmill = _logManager.GetSawmill("station");
-
-        _gridQuery = GetEntityQuery<MapGridComponent>();
-        _xformQuery = GetEntityQuery<TransformComponent>();
+        _sawmill = LogManager.GetSawmill("station");
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRoundEnd);
         SubscribeLocalEvent<PostGameMapLoad>(OnPostGameMapLoad);
@@ -159,7 +148,7 @@ public sealed partial class StationSystem : SharedStationSystem
                 continue;
             }
 
-            InitializeNewStation(stationConfig, gridIds, ev.StationName);
+            InitializeNewStation(stationConfig, gridIds, ev.StationName, ev.GameMap);
         }
     }
 
@@ -190,113 +179,19 @@ public sealed partial class StationSystem : SharedStationSystem
     #endregion Event handlers
 
     /// <summary>
-    /// Tries to retrieve a filter for everything in the station the source is on.
-    /// </summary>
-    /// <param name="source">The entity to use to find the station.</param>
-    /// <param name="range">The range around the station</param>
-    /// <returns></returns>
-    public Filter GetInOwningStation(EntityUid source, float range = 32f)
-    {
-        var station = GetOwningStation(source);
-
-        if (TryComp<StationDataComponent>(station, out var data))
-        {
-            return GetInStation(data);
-        }
-
-        return Filter.Empty();
-    }
-
-    /// <summary>
-    /// Retrieves a filter for everything in a particular station or near its member grids.
-    /// </summary>
-    public Filter GetInStation(StationDataComponent dataComponent, float range = 32f)
-    {
-        var filter = Filter.Empty();
-        _mapIds.Clear();
-
-        // First collect all valid map IDs where station grids exist
-        foreach (var gridUid in dataComponent.Grids)
-        {
-            if (!_xformQuery.TryGetComponent(gridUid, out var xform))
-                continue;
-
-            var mapId = xform.MapID;
-            if (!_mapIds.Contains(mapId))
-                _mapIds.Add(mapId);
-        }
-
-        // Cache the rotated bounds for each grid
-        _gridBounds.Clear();
-
-        foreach (var gridUid in dataComponent.Grids)
-        {
-            if (!_gridQuery.TryComp(gridUid, out var grid) ||
-                !_xformQuery.TryGetComponent(gridUid, out var gridXform))
-            {
-                continue;
-            }
-
-            var (worldPos, worldRot) = _transform.GetWorldPositionRotation(gridXform);
-            var localBounds = grid.LocalAABB.Enlarged(range);
-
-            // Create a rotated box using the grid's transform
-            var rotatedBounds = new Box2Rotated(
-                localBounds,
-                worldRot,
-                worldPos);
-
-            _gridBounds.Add((rotatedBounds, gridXform.MapID));
-        }
-
-        foreach (var session in Filter.GetAllPlayers(_player))
-        {
-            var entity = session.AttachedEntity;
-            if (entity == null || !_xformQuery.TryGetComponent(entity, out var xform))
-                continue;
-
-            var mapId = xform.MapID;
-
-            if (!_mapIds.Contains(mapId))
-                continue;
-
-            // Check if the player is directly on any station grid
-            var gridUid = xform.GridUid;
-            if (gridUid != null && dataComponent.Grids.Contains(gridUid.Value))
-            {
-                filter.AddPlayer(session);
-                continue;
-            }
-
-            // If not directly on a grid, check against cached rotated bounds
-            var position = _transform.GetWorldPosition(xform);
-
-            foreach (var (bounds, boundsMapId) in _gridBounds)
-            {
-                // Skip bounds on different maps
-                if (boundsMapId != mapId)
-                    continue;
-
-                if (!bounds.Contains(position))
-                    continue;
-
-                filter.AddPlayer(session);
-                break;
-            }
-        }
-
-        return filter;
-    }
-
-    /// <summary>
     /// Initializes a new station with the given information.
     /// </summary>
-    /// <param name="stationConfig">The game map prototype used, if any.</param>
+    /// <param name="stationConfig">The station configuration to use.</param>
     /// <param name="gridIds">All grids that should be added to the station.</param>
     /// <param name="name">Optional override for the station name.</param>
+    /// <param name="gameMap">The game map that created this station, if any.</param>
     /// <remarks>This is for ease of use, manually spawning the entity works just fine.</remarks>
     /// <returns>The initialized station.</returns>
-    public EntityUid InitializeNewStation(StationConfig stationConfig, IEnumerable<EntityUid>? gridIds, string? name = null)
+    public EntityUid InitializeNewStation(
+        StationConfig stationConfig,
+        IEnumerable<EntityUid>? gridIds,
+        string? name = null,
+        Content.Shared.Maps.GameMapPrototype? gameMap = null)
     {
         // Use overrides for setup.
         var station = EntityManager.SpawnEntity(stationConfig.StationPrototype, MapCoordinates.Nullspace, stationConfig.StationComponentOverrides);
@@ -307,6 +202,8 @@ public sealed partial class StationSystem : SharedStationSystem
         DebugTools.Assert(HasComp<StationDataComponent>(station), "Stations should have StationData in their prototype.");
 
         var data = Comp<StationDataComponent>(station);
+        data.JobWeights = gameMap?.JobWeights;
+        Dirty(station, data);
         name ??= MetaData(station).EntityName;
 
         foreach (var grid in gridIds ?? Array.Empty<EntityUid>())

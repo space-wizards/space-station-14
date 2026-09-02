@@ -3,15 +3,12 @@ using Content.Shared.Doors.Systems;
 using Content.Shared.SprayPainter.Prototypes;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Doors;
 
 public sealed partial class DoorSystem : SharedDoorSystem
 {
     [Dependency] private AnimationPlayerSystem _animationSystem = default!;
-    [Dependency] private IComponentFactory _componentFactory = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
     public override void Initialize()
@@ -209,10 +206,10 @@ public sealed partial class DoorSystem : SharedDoorSystem
 
     private void UpdateSpriteLayers(Entity<SpriteComponent> sprite, string targetProto)
     {
-        if (!_prototypeManager.Resolve(targetProto, out var target))
+        if (!ProtoMan.Resolve(targetProto, out var target))
             return;
 
-        if (!target.TryGetComponent(out SpriteComponent? targetSprite, _componentFactory))
+        if (!target.TryComp(out SpriteComponent? targetSprite, Factory))
             return;
 
         _sprite.SetBaseRsi(sprite.AsNullable(), targetSprite.BaseRSI);

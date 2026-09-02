@@ -13,7 +13,7 @@ public sealed partial class PlayerPanelCommand : LocalizedCommands
     [Dependency] private EuiManager _euis = default!;
     [Dependency] private IPlayerManager _players = default!;
 
-    public override string Command => "playerpanel";
+    public override string Command => AdminCommandSyntax.NamePlayerPanel;
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {

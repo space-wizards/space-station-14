@@ -21,7 +21,6 @@ namespace Content.Shared.Fluids.EntitySystems;
 /// <seealso cref="DrainableSolutionComponent" />
 public sealed partial class SolutionDumpingSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _protoMan = default!;
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private OpenableSystem _openable = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
@@ -95,7 +94,7 @@ public sealed partial class SolutionDumpingSystem : EntitySystem
             // TODO: This should be replaced with proper support for unlimited solutions, rather than cheating by bypassing UpdateChemicals using AddSolution. We can already avoid reactions using CanReact = false, this cheat just bypasses solution overflow.
             targetSol.AddSolution(
                 _solContainer.SplitSolution(sourceEnt.Value, sourceEnt.Value.Comp.Solution.Volume),
-                _protoMan);
+                ProtoMan);
             // Solution.AddSolution doesn't dirty targetSol for us
             Dirty(targetSolEnt.Value);
         }
@@ -120,14 +119,14 @@ public sealed partial class SolutionDumpingSystem : EntitySystem
         sourceSolEnt = null;
         if (!_actionBlocker.CanComplexInteract(user))
         {
-            _popup.PopupClient(Loc.GetString("mopping-system-no-hands"), user, user);
+            _popup.PopupEntity(Loc.GetString("mopping-system-no-hands"), user, user);
             return false;
         }
 
         if (!_solContainer.TryGetSolution(sourceContainer, sourceSolutionName, out sourceSolEnt)
             || sourceSolEnt.Value.Comp.Solution.Volume == FixedPoint2.Zero)
         {
-            _popup.PopupClient(Loc.GetString("mopping-system-empty", ("used", sourceContainer)),
+            _popup.PopupEntity(Loc.GetString("mopping-system-empty", ("used", sourceContainer)),
                 sourceContainer,
                 user);
             return false;
@@ -135,7 +134,7 @@ public sealed partial class SolutionDumpingSystem : EntitySystem
 
         if (checkAvailableVolume && targetSol.AvailableVolume == FixedPoint2.Zero)
         {
-            _popup.PopupClient(Loc.GetString("mopping-system-full", ("used", targetContainer)), targetContainer, user);
+            _popup.PopupEntity(Loc.GetString("mopping-system-full", ("used", targetContainer)), targetContainer, user);
             return false;
         }
 

@@ -114,11 +114,10 @@
   quantized: true
   conserveEnergy: false
   reactants:
-    Milk:
+    Cream:
       amount: 30
     TableSalt:
-      amount: 5
-      catalyst: true
+      amount: 1
   effects:
     - !type:SpawnEntity
       entity: FoodButter

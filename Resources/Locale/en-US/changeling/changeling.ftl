@@ -42,8 +42,21 @@ changeling-flesh-clothing-alert-desc = Whether clothing transformation is enable
 changeling-biodegrade-used-popup = {CAPITALIZE(THE($user))} vomits acid over {POSS-ADJ($user)} {$restraint}!
 changeling-biodegrade-used-popup-self = We vomit acid over our {$restraint}!
 
+# last resort
+changeling-takeover-not-dead = This body yet lives! We cannot infest it alive.
+changeling-takeover-is-changeling = This body rejects our attempts to take over!
+changeling-takeover-start-others = {CAPITALIZE(THE($user))} begins to crawl inside the corpse!
+changeling-takeover-success-self = We have successfully infested the body and assumed its form.
+
 # stings
 changeling-sting-success = We silently sting {THE($target)}!
+
+# mindshield
+changeling-fake-mindshield-enabled = We emit fake mindshield waves.
+changeling-fake-mindshield-disabled = We stop emitting fake mindshield waves.
+
+# chemicals
+changeling-not-enough-chemicals = We don't have enough Chemicals.
 
 # other
 changeling-paused-map-name = Changeling identity storage map

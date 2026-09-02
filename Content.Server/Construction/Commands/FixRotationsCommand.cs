@@ -28,6 +28,7 @@ public sealed partial class FixRotationsCommand : IConsoleCommand
         var player = shell.Player;
         EntityUid? gridId;
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
+        var xformSystem = _entManager.System<SharedTransformSystem>();
 
         switch (args.Length)
         {
@@ -104,7 +105,7 @@ public sealed partial class FixRotationsCommand : IConsoleCommand
 
             if (childXform.LocalRotation != Angle.Zero)
             {
-                childXform.LocalRotation = Angle.Zero;
+                xformSystem.SetLocalRotationNoLerp(child, Angle.Zero, childXform);
                 changed++;
             }
         }
