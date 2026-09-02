@@ -1,0 +1,43 @@
+name: Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update-secondary-branch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        #with:
+        #  fetch-depth: 1
+
+      - name: Get Previous Successful Run Commit
+        id: get_commit
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PREVIOUS_SHA=$(gh api \
+            -H "Accept: application/vnd.github+json" \
+            /repos/${{ github.repository }}/actions/workflows/${{ github.workflow }}/runs?branch=${{ github.ref_name }}\&status=success\&per_page=2 \
+            --jq '.workflow_runs[1].head_sha')
+
+          # If there is no previous run, .workflow_runs[1] will return null
+          if [ "$PREVIOUS_SHA" = "null" ] || [ -z "$PREVIOUS_SHA" ]; then
+            echo "No previous successful workflow run found."
+            echo "update=false" >> $GITHUB_OUTPUT
+          else
+            echo "Found previous successful commit: $PREVIOUS_SHA"
+            echo "update=true" >> $GITHUB_OUTPUT
+            echo "sha=$PREVIOUS_SHA" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Force Update Second Branch
+        if: steps.get_commit.outputs.update == 'true'
+        run: |
+          TARGET_BRANCH="test-publish-backup"
+          COMMIT_SHA="${{ steps.get_commit.outputs.sha }}"
+
+          git fetch origin $COMMIT_SHA --depth=1
+          git push origin $COMMIT_SHA:refs/heads/$TARGET_BRANCH --force
