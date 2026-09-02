@@ -4,7 +4,6 @@ using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
-using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
@@ -18,7 +17,6 @@ namespace Content.Server.Implants;
 
 public sealed partial class ChameleonControllerSystem : SharedChameleonControllerSystem
 {
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SharedStationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private ChameleonClothingSystem _chameleonClothingSystem = default!;
@@ -47,10 +45,10 @@ public sealed partial class ChameleonControllerSystem : SharedChameleonControlle
     /// </summary>
     private void ChangeChameleonClothingToOutfit(EntityUid user, ProtoId<ChameleonOutfitPrototype> outfit)
     {
-        var outfitPrototype = _proto.Index(outfit);
+        var outfitPrototype = ProtoMan.Index(outfit);
 
-        _proto.Resolve(outfitPrototype.Job, out var jobPrototype);
-        _proto.Resolve(outfitPrototype.StartingGear, out var startingGearPrototype);
+        ProtoMan.Resolve(outfitPrototype.Job, out var jobPrototype);
+        ProtoMan.Resolve(outfitPrototype.StartingGear, out var startingGearPrototype);
 
         GetJobEquipmentInformation(jobPrototype, user, out var customRoleLoadout, out var defaultRoleLoadout, out var jobStartingGearPrototype);
 
@@ -81,7 +79,7 @@ public sealed partial class ChameleonControllerSystem : SharedChameleonControlle
         if (jobPrototype == null)
             return;
 
-        _proto.Resolve(jobPrototype.StartingGear, out jobStartingGearPrototype);
+        ProtoMan.Resolve(jobPrototype.StartingGear, out jobStartingGearPrototype);
 
         if (!TryComp<ActorComponent>(user, out var actorComponent))
             return;
@@ -96,11 +94,11 @@ public sealed partial class ChameleonControllerSystem : SharedChameleonControlle
 
         profile.Loadouts.TryGetValue(jobProtoId, out customRoleLoadout);
 
-        if (!_proto.HasIndex<RoleLoadoutPrototype>(jobProtoId))
+        if (!ProtoMan.HasIndex<RoleLoadoutPrototype>(jobProtoId))
             return;
 
         defaultRoleLoadout = new RoleLoadout(jobProtoId);
-        defaultRoleLoadout.SetDefault(profile, null, _proto); // only sets the default if the player has no loadout
+        defaultRoleLoadout.SetDefault(profile, null, ProtoMan); // only sets the default if the player has no loadout
     }
 
     private void ChameleonControllerOutfitItemSelected(Entity<ChameleonClothingComponent> ent, ref InventoryRelayedEvent<ChameleonControllerOutfitSelectedEvent> args)

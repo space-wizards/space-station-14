@@ -1,4 +1,5 @@
 ﻿construction-category-all = All
+construction-category-atmospherics = Atmospherics
 construction-category-furniture = Furniture
 construction-category-storage = Storage
 construction-category-tools = Tools

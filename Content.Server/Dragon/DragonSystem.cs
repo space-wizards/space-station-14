@@ -9,7 +9,6 @@ using Content.Shared.Dragon;
 using Content.Shared.Gibbing;
 using Content.Shared.Maps;
 using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
@@ -40,7 +39,7 @@ public sealed partial class DragonSystem : EntitySystem
     [Dependency] private AlertsSystem _alerts = default!;
     [Dependency] private IGameTiming _timing = default!;
 
-    private EntityQuery<CarpRiftsConditionComponent> _objQuery;
+    [Dependency] private EntityQuery<CarpRiftsConditionComponent> _carpRiftsConditionQuery = default!;
 
     /// <summary>
     /// Minimum distance between 2 rifts allowed.
@@ -55,20 +54,6 @@ public sealed partial class DragonSystem : EntitySystem
     private const int RiftsAllowed = 3;
 
     private TimeSpan _thresholdCheck;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _objQuery = GetEntityQuery<CarpRiftsConditionComponent>();
-
-        SubscribeLocalEvent<DragonComponent, MapInitEvent>(OnInit);
-        SubscribeLocalEvent<DragonComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<DragonComponent, DragonSpawnRiftActionEvent>(OnSpawnRift);
-        SubscribeLocalEvent<DragonComponent, RefreshMovementSpeedModifiersEvent>(OnDragonMove);
-        SubscribeLocalEvent<DragonComponent, MobStateChangedEvent>(OnMobStateChanged);
-        SubscribeLocalEvent<DragonComponent, EntityZombifiedEvent>(OnZombified);
-    }
 
     public override void Update(float frameTime)
     {
@@ -140,6 +125,7 @@ public sealed partial class DragonSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnInit(EntityUid uid, DragonComponent component, MapInitEvent args)
     {
         Roar(uid, component);
@@ -148,12 +134,14 @@ public sealed partial class DragonSystem : EntitySystem
         StartRiftTimerAlert((uid, component));
     }
 
+    [SubscribeLocalEvent]
     private void OnShutdown(EntityUid uid, DragonComponent component, ComponentShutdown args)
     {
         DeleteRifts(uid, false, component);
         _alerts.ClearAlert(uid, component.RiftTimerAlert);
     }
 
+    [SubscribeLocalEvent]
     private void OnSpawnRift(EntityUid uid, DragonComponent component, DragonSpawnRiftActionEvent args)
     {
         if (component.Weakened)
@@ -193,8 +181,10 @@ public sealed partial class DragonSystem : EntitySystem
             }
         }
 
+        var position = _transform.GetWorldPosition(xform);
+
         // cant put a rift on solars
-        foreach (var tile in _map.GetTilesIntersecting(xform.GridUid.Value, grid, new Circle(_transform.GetWorldPosition(xform), RiftTileRadius), false))
+        foreach (var tile in _map.GetTilesIntersecting(xform.GridUid.Value, grid, new Circle(position, RiftTileRadius), false))
         {
             if (!_turf.IsSpace(tile))
                 continue;
@@ -203,8 +193,7 @@ public sealed partial class DragonSystem : EntitySystem
             return;
         }
 
-        var carpUid = Spawn(component.RiftPrototype, _transform.GetMapCoordinates(uid, xform: xform));
-        Transform(carpUid).LocalRotation = Angle.Zero;
+        var carpUid = Spawn(component.RiftPrototype, new MapCoordinates(position, xform.MapID), rotation: Transform(xform.GridUid.Value).LocalRotation);
 
         component.Rifts.Add(carpUid);
         Comp<DragonRiftComponent>(carpUid).Dragon = uid;
@@ -213,6 +202,7 @@ public sealed partial class DragonSystem : EntitySystem
     }
 
     // TODO: just make this a move speed modifier component???
+    [SubscribeLocalEvent]
     private void OnDragonMove(EntityUid uid, DragonComponent component, RefreshMovementSpeedModifiersEvent args)
     {
         if (component.Weakened)
@@ -221,6 +211,7 @@ public sealed partial class DragonSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnMobStateChanged(EntityUid uid, DragonComponent component, MobStateChangedEvent args)
     {
         // Deletes all rifts after dying
@@ -234,6 +225,7 @@ public sealed partial class DragonSystem : EntitySystem
         DeleteRifts(uid, false, component);
     }
 
+    [SubscribeLocalEvent]
     private void OnZombified(Entity<DragonComponent> ent, ref EntityZombifiedEvent args)
     {
         // prevent carp attacking zombie dragon
@@ -275,7 +267,7 @@ public sealed partial class DragonSystem : EntitySystem
 
         foreach (var objId in mind.Objectives)
         {
-            if (_objQuery.TryGetComponent(objId, out var obj))
+            if (_carpRiftsConditionQuery.TryGetComponent(objId, out var obj))
             {
                 _carpRifts.ResetRifts(objId, obj);
                 break;
@@ -296,7 +288,7 @@ public sealed partial class DragonSystem : EntitySystem
 
         foreach (var objId in mind.Objectives)
         {
-            if (_objQuery.TryGetComponent(objId, out var obj))
+            if (_carpRiftsConditionQuery.TryGetComponent(objId, out var obj))
             {
                 _carpRifts.RiftCharged(objId, obj);
                 break;

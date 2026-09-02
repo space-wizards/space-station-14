@@ -1,22 +1,22 @@
 using System.Linq;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Shared.EntityTable.EntitySelectors;
 
 /// <summary>
 /// Gets the spawns from one of the child selectors, based on the weight of the children
 /// </summary>
-public sealed partial class GroupSelector : EntityTableSelector
+public sealed partial class GroupSelector : EntityTableSelectorWithChildrenBase
 {
-    [DataField(required: true)]
-    public List<EntityTableSelector> Children = new();
-
-    protected override IEnumerable<EntProtoId> GetSpawnsImplementation(System.Random rand,
+    protected override IEnumerable<EntProtoId> GetSpawnsImplementation(IRobustRandom rand,
         IEntityManager entMan,
         IPrototypeManager proto,
         EntityTableContext ctx)
     {
+        using var scoped = ScopedConditions(ctx);
+
         var children = new Dictionary<EntityTableSelector, float>(Children.Count);
         foreach (var child in Children)
         {
@@ -28,11 +28,14 @@ public sealed partial class GroupSelector : EntityTableSelector
         }
 
         if (children.Count == 0)
-            return Array.Empty<EntProtoId>();
+            yield break;
 
         var pick = SharedRandomExtensions.Pick(children, rand);
 
-        return pick.GetSpawns(rand, entMan, proto, ctx);
+        foreach (var spawn in pick.GetSpawns(rand, entMan, proto, ctx))
+        {
+            yield return spawn;
+        }
     }
 
     protected override IEnumerable<(EntProtoId spawn, double)> ListSpawnsImplementation(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
@@ -61,5 +64,11 @@ public sealed partial class GroupSelector : EntityTableSelector
                 yield return (ent, prob);
             }
         }
+    }
+
+    /// <inheritdoc/>
+    public override string ToString()
+    {
+        return $"Group({string.Join(", ", Children.Select(x => $"{x}: {x.Weight}"))})";
     }
 }

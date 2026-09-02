@@ -42,9 +42,10 @@ public sealed partial class ClimbSystem : VirtualController
     [Dependency] private SharedStunSystem _stunSystem = default!;
     [Dependency] private SharedTransformSystem _xformSystem = default!;
 
-    [Dependency] private EntityQuery<ClimbableComponent> _climbableQuery = default!;
-    [Dependency] private EntityQuery<FixturesComponent> _fixturesQuery = default!;
-    [Dependency] private EntityQuery<TransformComponent> _xformQuery = default!;
+    [Dependency] private EntityQuery<BonkableComponent> _bonkQuery;
+    [Dependency] private EntityQuery<ClimbableComponent> _climbableQuery;
+    [Dependency] private EntityQuery<FixturesComponent> _fixturesQuery;
+    [Dependency] private EntityQuery<TransformComponent> _xformQuery;
 
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
@@ -207,7 +208,7 @@ public sealed partial class ClimbSystem : VirtualController
              : CanVault(comp, user, entityToMove, climbable, out reason);
         if (!canVault)
         {
-            _popupSystem.PopupClient(reason, user, user);
+            _popupSystem.PopupEntity(reason, user, user);
             return false;
         }
 
@@ -339,7 +340,7 @@ public sealed partial class ClimbSystem : VirtualController
                 ("climbable", climbable));
         }
 
-        _popupSystem.PopupPredicted(selfMessage, othersMessage, uid, user);
+        _popupSystem.PopupEntity(selfMessage, othersMessage, uid, user);
     }
 
     /// <summary>

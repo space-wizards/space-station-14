@@ -2,4 +2,4 @@
 
 namespace Content.Server.Chemistry.EntitySystems;
 
-public sealed class SolutionContainerSystem : SharedSolutionContainerSystem;
+public sealed partial class SolutionContainerSystem : SharedSolutionContainerSystem;

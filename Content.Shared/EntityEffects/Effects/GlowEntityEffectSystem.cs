@@ -47,9 +47,15 @@ public sealed partial class GlowEntityEffectSystem : EntityEffectSystem<MetaData
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class Glow : EntityEffectBase<Glow>
 {
+    /// <summary>
+    /// Radius of the glow.
+    /// </summary>
     [DataField]
     public float Radius = 2f;
 
+    /// <summary>
+    /// Color of the glow.
+    /// </summary>
     [DataField]
     public Color Color = Color.Black;
 }

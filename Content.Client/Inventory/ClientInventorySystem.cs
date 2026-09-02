@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Client.Clothing;
 using Content.Client.Examine;
+using Content.Client.Pointing;
 using Content.Client.Verbs.UI;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
@@ -23,6 +24,7 @@ namespace Content.Client.Inventory
         [Dependency] private IUserInterfaceManager _ui = default!;
         [Dependency] private ClientClothingSystem _clothingVisualsSystem = default!;
         [Dependency] private ExamineSystem _examine = default!;
+        [Dependency] private PointingSystem _pointing = default!;
 
         public Action<SlotData>? EntitySlotUpdate = null;
         public Action<SlotData>? OnSlotAdded = null;
@@ -235,6 +237,19 @@ namespace Content.Client.Inventory
                 return;
 
             RaisePredictiveEvent(new InteractInventorySlotEvent(GetNetEntity(item.Value), altInteract: true));
+        }
+
+        /// <summary>
+        /// Points at an item in the inventory
+        /// </summary>
+        /// <param name="slot">The slot to point at</param>
+        /// <param name="uid">The inventory entity containing the slot</param>
+        public void UIInventoryPointAt(string slot, EntityUid uid)
+        {
+            if (!TryGetSlotEntity(uid, slot, out var item))
+                return;
+
+            _pointing.TryPointAtEntity(GetNetEntity(item.Value));
         }
 
         protected override void UpdateInventoryTemplate(Entity<InventoryComponent> ent)

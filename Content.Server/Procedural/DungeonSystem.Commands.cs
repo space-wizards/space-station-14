@@ -29,7 +29,7 @@ public sealed partial class DungeonSystem
 
         var mapId = new MapId(mapInt);
 
-        if (!_prototype.TryIndex<DungeonConfigPrototype>(args[1], out var dungeon))
+        if (!ProtoMan.TryIndex<DungeonConfigPrototype>(args[1], out var dungeon))
         {
             shell.WriteError(Loc.GetString("cmd-dungen-config"));
             return;
@@ -81,7 +81,7 @@ public sealed partial class DungeonSystem
 
         if (args.Length == 2)
         {
-            return CompletionResult.FromHintOptions(CompletionHelper.PrototypeIDs<DungeonConfigPrototype>(proto: _prototype), Loc.GetString("cmd-dungen-hint-config"));
+            return CompletionResult.FromHintOptions(CompletionHelper.PrototypeIDs<DungeonConfigPrototype>(proto: ProtoMan), Loc.GetString("cmd-dungen-hint-config"));
         }
 
         if (args.Length == 3)
@@ -118,7 +118,7 @@ public sealed partial class DungeonSystem
         var mapId = new MapId(mapInt);
         var mapUid = _maps.GetMapOrInvalid(mapId);
 
-        if (!_prototype.TryIndex<DungeonRoomPackPrototype>(args[1], out var pack))
+        if (!ProtoMan.TryIndex<DungeonRoomPackPrototype>(args[1], out var pack))
         {
             return;
         }
@@ -174,7 +174,7 @@ public sealed partial class DungeonSystem
         var mapId = new MapId(mapInt);
         var mapUid =_maps.GetMapOrInvalid(mapId);
 
-        if (!_prototype.TryIndex<DungeonPresetPrototype>(args[1], out var preset))
+        if (!ProtoMan.TryIndex<DungeonPresetPrototype>(args[1], out var preset))
         {
             return;
         }
@@ -208,7 +208,7 @@ public sealed partial class DungeonSystem
 
         if (args.Length == 2)
         {
-            return CompletionResult.FromOptions(CompletionHelper.PrototypeIDs<DungeonPresetPrototype>(proto: _prototype));
+            return CompletionResult.FromOptions(CompletionHelper.PrototypeIDs<DungeonPresetPrototype>(proto: ProtoMan));
         }
 
         return CompletionResult.Empty;
@@ -223,7 +223,7 @@ public sealed partial class DungeonSystem
 
         if (args.Length == 2)
         {
-            return CompletionResult.FromOptions(CompletionHelper.PrototypeIDs<DungeonRoomPackPrototype>(proto: _prototype));
+            return CompletionResult.FromOptions(CompletionHelper.PrototypeIDs<DungeonRoomPackPrototype>(proto: ProtoMan));
         }
 
         return CompletionResult.Empty;

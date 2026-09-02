@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseItemDestructible ]
   id: LogicEmptyCircuit
   name: empty circuit
   description: Something seems to be missing.
@@ -10,7 +10,6 @@
     layers:
     - state: base
   - type: Anchorable
-  - type: Rotatable
   - type: Construction
     graph: LogicGate
     node: empty
@@ -25,6 +24,8 @@
     receiveFrequencyId: BasicDevice
   - type: WirelessNetworkConnection
     range: 200
+  - type: SoundOnOverload
+  - type: SpawnOnOverload
 
 - type: entity
   parent: BaseLogicItem
@@ -291,7 +292,7 @@
     - Output
   - type: Construction
     node: memory_cell
-    
+
 - type: entity
   parent: BaseLogicItem
   id: RandomGate

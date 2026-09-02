@@ -141,9 +141,9 @@ public sealed partial class TriggerSystem
 
         var handled = false;
         if (itemToggle.Activated && ent.Comp.CanDeactivate)
-            handled = _itemToggle.TryDeactivate((target.Value, itemToggle), args.User, ent.Comp.Predicted, ent.Comp.ShowPopup);
+            handled = _itemToggle.TryDeactivate((target.Value, itemToggle), args.User, ent.Comp.Predicted, ent.Comp.ShowPopup, ent.Comp.ConsciousAction);
         else if (ent.Comp.CanActivate)
-            handled = _itemToggle.TryActivate((target.Value, itemToggle), args.User, ent.Comp.Predicted, ent.Comp.ShowPopup);
+            handled = _itemToggle.TryActivate((target.Value, itemToggle), args.User, ent.Comp.Predicted, ent.Comp.ShowPopup, ent.Comp.ConsciousAction);
 
         args.Handled |= handled;
     }
