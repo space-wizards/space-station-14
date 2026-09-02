@@ -76,7 +76,7 @@ public sealed partial class GunSystem : SharedGunSystem
             ? TransformSystem.WithEntityId(fromCoordinates, gridUid)
             : new EntityCoordinates(_map.GetMapOrInvalid(fromMap.MapId), fromMap.Position);
 
-        if (fromEnt.EntityId == EntityUid.Invalid)
+        if (!fromEnt.EntityId.Valid)
         {
             Log.Warning($"Tried to fire gun {ToPrettyString(gun)} at entity coordinates with an invalid EntityUid.");
             return;
