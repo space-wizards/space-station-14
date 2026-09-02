@@ -1,4 +1,4 @@
-﻿<Control xmlns="https://spacestation14.io"
+<Control xmlns="https://spacestation14.io"
          xmlns:ot="clr-namespace:Content.Client.Administration.UI.Tabs.ObjectsTab"
          xmlns:co="clr-namespace:Content.Client.UserInterface.Controls">
     <BoxContainer Orientation="Vertical">

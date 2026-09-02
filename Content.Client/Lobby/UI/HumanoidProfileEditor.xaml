@@ -1,9 +1,9 @@
 <BoxContainer xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:humanoid="clr-namespace:Content.Client.Humanoid"
+         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
          xmlns:ui="clr-namespace:Content.Client.Lobby.UI"
          xmlns:profile="clr-namespace:Content.Client.Lobby.UI.ProfileEditorControls"
-         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
          HorizontalExpand="True">
         <!-- Left side -->
         <BoxContainer Orientation="Vertical" Margin="10 10 10 10" HorizontalExpand="True">

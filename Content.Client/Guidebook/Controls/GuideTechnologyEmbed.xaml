@@ -1,4 +1,4 @@
-﻿<BoxContainer xmlns="https://spacestation14.io"
+<BoxContainer xmlns="https://spacestation14.io"
               xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
               Orientation="Vertical"
