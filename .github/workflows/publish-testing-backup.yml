@@ -17,7 +17,8 @@ jobs:
       - name: Get Previous Successful Run Commit
         id: get_commit
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+        if: github.ref_name != 'master-publish-backup' && github.repository == 'space-wizards/space-station-14'
         run: |
           # Github doesn't support giving workflow filenames, despite needing it for the REST API. So we gotta regex it out.
           # Yes, there's a 4 year old issue for it... https://github.com/orgs/community/discussions/10052
