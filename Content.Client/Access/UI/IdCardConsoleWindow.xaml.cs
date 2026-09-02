@@ -36,6 +36,7 @@ public sealed partial class IdCardConsoleWindow : DefaultWindow
     // The job that will be picked if the ID doesn't have a job on the station.
     private static ProtoId<JobPrototype> _defaultJob = "Passenger";
 
+    /// <inheritdoc cref="IdCardConsoleWindow"/>
     public IdCardConsoleWindow()
     {
         RobustXamlLoader.Load(this);
