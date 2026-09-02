@@ -31,7 +31,7 @@
                 <SpriteView Name="BrainView" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             </Button>
         </BoxContainer>
-        <customControls:VSeparator/>
+        <controls:VSeparator/>
         <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="15 10 15 15">
             <Label Text="{Loc 'borg-ui-modules-label'}" Margin="0 0 0 5"/>
             <PanelContainer VerticalExpand="True" StyleClasses="PanelDeep">

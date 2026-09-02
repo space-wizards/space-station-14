@@ -1,6 +1,5 @@
 ﻿<controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                      xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
                       Title="{Loc 'borg-select-type-menu-title'}"
                       SetSize="550 300">
     <BoxContainer Orientation="Vertical">
@@ -13,7 +12,7 @@
                 </ScrollContainer>
             </BoxContainer>
 
-            <customControls:VSeparator />
+            <controls:VSeparator />
 
             <!-- Right pane: information about selected borg module, confirm button. -->
             <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="2 0">

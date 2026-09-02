@@ -69,7 +69,7 @@
                 </BoxContainer>
             </BoxContainer>
         </BoxContainer>
-        <customControls:VSeparator StyleClasses="LowDivider" />
+        <controls:VSeparator StyleClasses="LowDivider" />
         <BoxContainer HorizontalExpand="True" VerticalExpand="True">
             <PanelContainer Margin="10 10 10 10" HorizontalExpand="True" RectClipContent="True">
                 <PanelContainer.PanelOverride>
