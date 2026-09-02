@@ -2,6 +2,13 @@ using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Nutrition.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Serialization.Markdown;
+using Robust.Shared.Serialization.Markdown.Mapping;
+using Robust.Shared.Serialization.Markdown.Validation;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
+using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 
 namespace Content.Shared.Nutrition.Components;
 
@@ -10,17 +17,31 @@ namespace Content.Shared.Nutrition.Components;
 /// <see cref="SatiationTypePrototype"/>s.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
-// Nothing should modify the dictionary once it's deserialized. Perhaps satiations can be dynamically
-// added and removed in the future, but not today.
 [Access(typeof(SatiationSystem))]
 public sealed partial class SatiationComponent : Component
 {
+    // TODO Satiations being stored in a bespoke dictionary wrapper type is a hack. See the remark on `SatiationDictionary`.
+    //   When the engine issue is resolved, `_satiations` should swap to the signature `public Dictionary<...> Satiations`,
+    //   the existing `Satiations` field should be removed, existing references to `Satiations` should be retargetted to
+    //   the actual actual `Dictionary` field, and `SatiationFieldName` should be replaced with `nameof(Satiation)` and
+    //   inlined wherever it's used.
+
     /// <summary>
     /// The actual <see cref="Satiation"/>s this entity has, keyed by their <see cref="SatiationTypePrototype">type</see>.
     /// </summary>
-    [DataField(required: true)]
+    [DataField("satiations", required: true)]
     [AutoNetworkedField]
-    public Dictionary<ProtoId<SatiationTypePrototype>, Satiation> Satiations = [];
+    private SatiationDictionary _satiations = new();
+
+    /// <inheritdoc cref="_satiations"/>
+    // Hide `SatiationDictionary` from public API
+    public Dictionary<ProtoId<SatiationTypePrototype>, Satiation> Satiations => _satiations.Data;
+
+    /// <summary>
+    /// The C# code name of the backing field of <see cref="Satiations"/>, used for field deltas in
+    /// <see cref="SatiationSystem"/>.
+    /// </summary>
+    public const string SatiationFieldName = nameof(_satiations);
 
     /// <summary>
     /// Checks if this has a <see cref="Satiation"/> of the specified <paramref name="type"/>.
@@ -34,4 +55,81 @@ public sealed partial class SatiationComponent : Component
     /// </summary>
     [Access(Other = AccessPermissions.Execute)]
     public Satiation? GetOrNull(ProtoId<SatiationTypePrototype> type) => Satiations.GetValueOrDefault(type);
+}
+
+/// <summary>
+/// A specialized <c>Dictionary&lt;ProtoId&lt;SatiationTypePrototype&gt;, Satiation&gt;</c> that exists just to
+/// implement <see cref="IRobustCloneable{T}"/>.
+/// </summary>
+/// <remarks>TODO This existing at all is a hack to work around https://github.com/space-wizards/RobustToolbox/issues/6972 . When the engine supports generating this, this should be removed.</remarks>
+[Serializable, NetSerializable, Access(typeof(SatiationDictionarySerializer))]
+public sealed partial class SatiationDictionary : IRobustCloneable<SatiationDictionary>
+{
+    public Dictionary<ProtoId<SatiationTypePrototype>, Satiation> Data = new();
+
+    /// <inheritdoc/>
+    public SatiationDictionary Clone()
+    {
+        var clone = new SatiationDictionary();
+        foreach (var (proto, satiation) in Data)
+        {
+            clone.Data[proto] = satiation.Clone();
+        }
+
+        return clone;
+    }
+}
+
+/// <summary>
+/// The serializer for <see cref="SatiationDictionary"/>. It just delegates to the standard dictionary serializer.
+/// </summary>
+/// <remarks>TODO This is a hack. See the remark on <see cref="SatiationDictionary"/></remarks>
+[TypeSerializer]
+public sealed partial class SatiationDictionarySerializer : ITypeSerializer<SatiationDictionary, MappingDataNode>, ITypeCopyCreator<SatiationDictionary>
+{
+    private static readonly DictionarySerializer<ProtoId<SatiationTypePrototype>, Satiation> Delegate = new();
+
+    /// <inheritdoc/>
+    public ValidationNode Validate(
+        ISerializationManager serializationManager,
+        MappingDataNode node,
+        IDependencyCollection dependencies,
+        ISerializationContext? context = null
+    ) => Delegate.Validate(serializationManager, node, dependencies, context);
+
+    public SatiationDictionary CreateCopy(ISerializationManager serializationManager,
+        SatiationDictionary source,
+        IDependencyCollection dependencies,
+        SerializationHookContext hookCtx,
+        ISerializationContext? context = null
+        ) => source.Clone();
+
+    /// <inheritdoc/>
+    public SatiationDictionary Read(
+        ISerializationManager serializationManager,
+        MappingDataNode node,
+        IDependencyCollection dependencies,
+        SerializationHookContext hookCtx,
+        ISerializationContext? context = null,
+        ISerializationManager.InstantiationDelegate<SatiationDictionary>? instanceProvider = null
+    ) => new()
+    {
+        Data = Delegate.Read(
+            serializationManager,
+            node,
+            dependencies,
+            hookCtx,
+            context,
+            (ISerializationManager.InstantiationDelegate<Dictionary<ProtoId<SatiationTypePrototype>, Satiation>>?)null
+        ),
+    };
+
+    /// <inheritdoc/>
+    public DataNode Write(
+        ISerializationManager serializationManager,
+        SatiationDictionary value,
+        IDependencyCollection dependencies,
+        bool alwaysWrite = false,
+        ISerializationContext? context = null
+    ) => Delegate.Write(serializationManager, value.Data, dependencies, alwaysWrite, context);
 }
