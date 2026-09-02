@@ -133,9 +133,9 @@
         children:
         - id: WeaponLauncherChinaLake
         - id: GrenadeBlast
-          amount: 4
+          amount: 3
         - id: GrenadeFrag
-          amount: 4
+          amount: 5
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
