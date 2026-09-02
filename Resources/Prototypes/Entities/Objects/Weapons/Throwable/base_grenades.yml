@@ -63,6 +63,7 @@
   - type: TimerTriggerVisuals
     inHandPrimedName: -primed
 
+- type: entity
   abstract: true
   parent: [ GrenadeBase, VolatileGrenadeBase ]
   id: ImpactGrenadeBase
