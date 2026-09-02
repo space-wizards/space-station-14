@@ -98,4 +98,6 @@ jobs:
         COMMIT_SHA="${{ steps.get_commit.outputs.sha }}"
 
         git fetch origin $COMMIT_SHA --depth=1
-        git push origin $COMMIT_SHA:refs/heads/$TARGET_BRANCH --force
+        git checkout $COMMIT_SHA
+        git commit --allow-empty -m "Backup separation commit"
+        git push origin HEAD:refs/heads/$TARGET_BRANCH --force
