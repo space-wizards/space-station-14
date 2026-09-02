@@ -66,3 +66,35 @@ jobs:
       run: Tools/actions_changelog_rss.py
       env:
         CHANGELOG_RSS_KEY: ${{ secrets.CHANGELOG_RSS_KEY }}
+
+    - name: Get Previous Successful Run Commit
+      id: get_commit
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        # Github doesn't support giving workflow filenames, despite needing it for the REST API. So we gotta regex it out.
+        # Yes, there's a 4 year old issue for it... https://github.com/orgs/community/discussions/10052
+        WORKFLOW_FILENAME=$(echo "${{ github.workflow_ref }}" | grep -oP '(?<=.github/workflows/)[^@]+')
+        PREVIOUS_SHA=$(gh api \
+          -H "Accept: application/vnd.github+json" \
+          "/repos/${{ github.repository }}/actions/workflows/${WORKFLOW_FILENAME}/runs?branch=${{ github.ref_name }}&status=success&per_page=2" \
+          --jq '.workflow_runs[0].head_sha')
+
+        # If there is no previous run, .workflow_runs[1] will return null
+        if [ "$PREVIOUS_SHA" = "null" ] || [ -z "$PREVIOUS_SHA" ]; then
+          echo "No previous successful workflow run found."
+          echo "update=false" >> $GITHUB_OUTPUT
+        else
+          echo "Found previous successful commit: $PREVIOUS_SHA"
+          echo "update=true" >> $GITHUB_OUTPUT
+          echo "sha=$PREVIOUS_SHA" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Force Update Backup Branch
+      if: steps.get_commit.outputs.update == 'true'
+      run: |
+        TARGET_BRANCH="master-publish-backup"
+        COMMIT_SHA="${{ steps.get_commit.outputs.sha }}"
+
+        git fetch origin $COMMIT_SHA --depth=1
+        git push origin $COMMIT_SHA:refs/heads/$TARGET_BRANCH --force
