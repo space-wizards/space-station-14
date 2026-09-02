@@ -119,7 +119,7 @@ public sealed partial class AntagGhostRoleTest : AntagTest
         Assert.That(_ghostRole.Takeover(ServerSession!, role.Identifier), Is.True);
         Assert.That(ServerSession!.AttachedEntity, Is.Not.Null);
         var antag = SProtoMan.Index(spawner.Definition);
-        SAssertAntagInitialized(antag, ServerSession);
+        SAssertAntagInitialized(antag!, ServerSession);
 
         // Ensure we spawned in the correct location
         var sessionXform = SEntMan.GetComponent<TransformComponent>(ServerSession.AttachedEntity.Value);
