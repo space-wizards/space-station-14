@@ -12,7 +12,7 @@ namespace Content.Client.Access.UI;
 /// A BUI for the ID card computer, wraps a <see cref="IdCardConsoleWindow"/>.
 /// </summary>
 /// <seealso cref="IdCardConsoleComponent"/>
-public sealed partial class IdCardConsoleBoundUserInterfacee(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+public sealed partial class IdCardConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     private IdCardConsoleWindow? _window;
 
