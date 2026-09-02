@@ -37,21 +37,28 @@ public sealed partial class SuddenNukeArmRule : StationEventSystem<SuddenNukeArm
         return pickedNukes.Count > 0;
     }
 
-    protected override void Started(EntityUid uid,
+    protected override void Started(
+        EntityUid uid,
         SuddenNukeArmRuleComponent component,
         GameRuleComponent gameRule,
-        GameRuleStartedEvent args)
+        GameRuleStartedEvent args
+    )
     {
         if (!TryGetRandomStation(out var chosenStation))
+        {
             return;
+        }
 
         if (!TryComp<StationDataComponent>(chosenStation, out var stationData))
+        {
             return;
+        }
 
         var grid = StationSystem.GetLargestGrid((chosenStation.Value, stationData));
-
         if (grid is null)
+        {
             return;
+        }
 
         var query = EntityQueryEnumerator<NukeComponent>();
 
@@ -87,20 +94,22 @@ public sealed partial class SuddenNukeArmRule : StationEventSystem<SuddenNukeArm
 
     private void OnNukeExploded(NukeExplodedEvent ev)
     {
-        if (IsNukePicked(out var pickedNukes) && pickedNukes.Contains(ev.ExplodedNuke))
+        if (!IsNukePicked(out var pickedNukes) || !pickedNukes.Contains(ev.ExplodedNuke))
         {
-            var query = EntityQueryEnumerator<SuddenNukeArmRuleComponent>();
-
-            while (query.MoveNext(out _, out var component))
-            {
-                if (component.PickedNuke == ev.ExplodedNuke)
-                {
-                    component.ExplodedNuke = ev.ExplodedNuke;
-                }
-            }
-
-            _roundEndSystem.EndRound();
+            return;
         }
+
+        var query = EntityQueryEnumerator<SuddenNukeArmRuleComponent>();
+
+        while (query.MoveNext(out _, out var component))
+        {
+            if (component.PickedNuke == ev.ExplodedNuke)
+            {
+                component.ExplodedNuke = ev.ExplodedNuke;
+            }
+        }
+
+        _roundEndSystem.EndRound();
     }
 
     private void OnNukeDisarm(NukeDisarmSuccessEvent ev)
