@@ -94,6 +94,9 @@
   - FloorTileItemLino
   - FloorTileItemBoxing
   - FloorTileItemGym
+  - FloorTileItemPlastic
+  - FloorTileItemDarkPlastic
+  - FloorTileItemWhitePlastic
 
 - type: latheRecipePack
   id: CarpetTilesStatic

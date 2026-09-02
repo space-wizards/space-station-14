@@ -221,6 +221,11 @@ public static partial class GameDataScrounger
                 var entryMapping = (YamlMappingNode)entry;
 
                 var id = entryMapping[IdNode];
+
+                // TODO: Add handling for prototype variants
+                if (id is YamlMappingNode)
+                    continue;
+
                 var type = entryMapping[TypeNode];
                 var @abstract = ignored;
                 if (entryMapping.TryGetNode("abstract", out YamlScalarNode? abstractNode))

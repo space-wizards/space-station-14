@@ -269,7 +269,7 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
         else
             tileData &= FloorMask;
 
-        var enumerator = _mapSystem.GetAnchoredEntitiesEnumerator(uid, mapGrid, tile);
+        var enumerator = _mapSystem.GetAnchoredEntities(uid, mapGrid, tile);
         while (enumerator.MoveNext(out var ent))
         {
             if (!_airtightQuery.TryComp(ent, out var airtight))
