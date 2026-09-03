@@ -64,8 +64,11 @@ public sealed partial class PlantTraySystem : EntitySystem
         _audio.PlayPredicted(ent.Comp.WateringSound, ent, args.User);
     }
 
+    // TODO: replace with relationship system when it will be merged.
+    // this is really cursed - handler is getting hits on client when plant getting into tray
+    // but not when it gets out, yet it works just fine on server.
     [SubscribeLocalEvent]
-    private void OnPlantTerminating(Entity<PlantComponent> ent, ref ComponentShutdown args)
+    private void OnPlantTerminating(Entity<PlantComponent> ent, ref EntityTerminatingEvent args)
     {
         var trayUid = Transform(ent).ParentUid;
 
