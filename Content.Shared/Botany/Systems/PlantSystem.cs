@@ -1,9 +1,9 @@
 using System.Linq;
-using JetBrains.Annotations;
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
 using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Examine;
+using JetBrains.Annotations;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Botany.Systems;
@@ -18,10 +18,8 @@ public sealed partial class PlantSystem : EntitySystem
     [Dependency] private PlantMutationSystem _mutation = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
 
-    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery = default!;
-    [Dependency] private EntityQuery<PlantToxinsComponent> _toxinsQuery = default!;
-    [Dependency] private EntityQuery<PlantWeedPestComponent> _weedPestQuery = default!;
-    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery = default!;
+    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery;
+    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery;
 
     private readonly List<Entity<PlantHolderComponent>> _holdersToUpdate = [];
 
@@ -131,11 +129,15 @@ public sealed partial class PlantSystem : EntitySystem
         RaiseLocalEvent(ent.Owner, ref plantGrow);
 
         // Process mutations.
-        if (ent.Comp.MutationLevel > 0)
+        foreach (var mutationTable in ent.Comp.MutationLevels.Keys)
         {
-            _mutation.CheckRandomMutations(ent.Owner, Math.Min(ent.Comp.MutationLevel, ent.Comp.MaxMutationLevel));
-            ent.Comp.MutationLevel = 0;
-            DirtyField(ent, ent.Comp, nameof(ent.Comp.MutationLevel));
+            var mutationBuildup = ent.Comp.MutationLevels[mutationTable];
+            if (mutationBuildup <= 0)
+                continue;
+
+            ent.Comp.MutationLevels[mutationTable] = 0;
+            DirtyField(ent, ent.Comp, nameof(ent.Comp.MutationLevels));
+            _mutation.CheckRandomMutations(ent.Owner, mutationTable, Math.Min(mutationBuildup, ent.Comp.MaxMutationLevel));
         }
 
         if (ent.Comp.Health <= 0)
@@ -238,16 +240,11 @@ public sealed partial class PlantSystem : EntitySystem
         ent.Comp.Maturation = MathF.Max(1f, ent.Comp.Maturation + amount);
         DirtyField(ent, nameof(ent.Comp.Maturation));
 
-        if (ent.Comp.Production < ent.Comp.Maturation)
-        {
-            ent.Comp.Production = ent.Comp.Maturation;
-            DirtyField(ent, nameof(ent.Comp.Production));
-        }
     }
 
     /// <summary>
     /// Adjusts the production time of a plant component.
-    /// Should not be lower than <see cref="PlantComponent.Maturation"/>.
+    /// Must be at least 1.
     /// </summary>
     [PublicAPI]
     public void AdjustProduction(Entity<PlantComponent?> ent, float amount)
@@ -255,7 +252,7 @@ public sealed partial class PlantSystem : EntitySystem
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        ent.Comp.Production = MathF.Max(ent.Comp.Maturation, ent.Comp.Production + amount);
+        ent.Comp.Production = MathF.Max(1f, ent.Comp.Production + amount);
         DirtyField(ent, nameof(ent.Comp.Production));
     }
 

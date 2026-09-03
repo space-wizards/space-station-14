@@ -34,7 +34,7 @@
     energy: 0.8
     radius: 10
     softness: 1
-    offset: "0, 0.495"
+#    offset: "0, 0.25"
   - type: RCDDeconstructable
     cost: 4
     delay: 2
@@ -311,7 +311,7 @@
     enabled: false
   - type: PointLight
     enabled: false
-    offset: "0, 0.495"
+#    offset: "0, 0.25"
   - type: ContainerContainer
     containers:
       light_bulb: !type:ContainerSlot
@@ -454,6 +454,7 @@
       color: "#7CFC00"
       shader: "unshaded"
       visible: false
+  - type: Appearance
   - type: Construction
     graph: LightFixture
     node: emergencyLight

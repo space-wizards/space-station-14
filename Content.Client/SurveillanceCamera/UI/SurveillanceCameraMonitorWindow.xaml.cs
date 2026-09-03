@@ -180,9 +180,10 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     private int AddSubnet(ProtoId<DeviceFrequencyPrototype> subnet)
     {
         var name = subnet;
-        if (_prototypeManager.TryIndex(subnet, out var frequency))
+        if (_prototypeManager.TryIndex(subnet, out var frequency)
+            && frequency.Name != null)
         {
-            name = Loc.GetString(frequency.Name ?? subnet);
+            name = Loc.GetString(frequency.Name);
         }
 
         SubnetSelector.AddItem(name);

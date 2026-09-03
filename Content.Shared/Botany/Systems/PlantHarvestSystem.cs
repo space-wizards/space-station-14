@@ -1,10 +1,10 @@
-using JetBrains.Annotations;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using JetBrains.Annotations;
 
 namespace Content.Shared.Botany.Systems;
 
@@ -20,9 +20,10 @@ public sealed partial class PlantHarvestSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
 
-    [Dependency] private EntityQuery<PlantHarvestComponent> _harvestQuery = default!;
-    [Dependency] private EntityQuery<PlantComponent> _plantQuery = default!;
-    [Dependency] private EntityQuery<PlantDataComponent> _dataQuery = default!;
+    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery;
+    [Dependency] private EntityQuery<PlantHarvestComponent> _harvestQuery;
+    [Dependency] private EntityQuery<PlantComponent> _plantQuery;
+    [Dependency] private EntityQuery<PlantDataComponent> _dataQuery;
 
     [SubscribeLocalEvent]
     private void OnPlantGrow(Entity<PlantHolderComponent> ent, ref PlantGrowEvent args)
@@ -140,6 +141,19 @@ public sealed partial class PlantHarvestSystem : EntitySystem
 
         var ev = new AfterDoHarvestEvent(user, ent.Owner);
         RaiseLocalEvent(ent.Owner, ref ev);
+    }
+
+    /// <summary>
+    /// Resets harvest progress to the plant's current age.
+    /// </summary>
+    [PublicAPI]
+    public void ResetHarvestProgress(Entity<PlantHolderComponent?> ent)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
+            return;
+
+        ent.Comp.LastHarvest = ent.Comp.Age;
+        DirtyField(ent, nameof(ent.Comp.LastHarvest));
     }
 
     /// <summary>
