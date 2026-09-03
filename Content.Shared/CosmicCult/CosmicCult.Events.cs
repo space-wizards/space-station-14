@@ -33,3 +33,6 @@ public sealed partial class InfluenceVisualsEvent : EntityEventArgs
         Icon = icon;
     }
 }
+
+[ByRefEvent]
+public record struct CosmicCultistEmpowerChangedEvent(EntityUid Cultist, bool Empowered);

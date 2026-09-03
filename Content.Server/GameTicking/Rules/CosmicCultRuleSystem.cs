@@ -284,7 +284,7 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
             if (fontComp.Activated)
             {
                 Spawn(fontComp.Plinth, Transform(fontEnt).Coordinates);
-                Spawn(fontComp.GenericVfx, Transform(fontEnt).Coordinates);
+                Spawn(CosmicCultSystem.GenericVfx, Transform(fontEnt).Coordinates);
                 Spawn(_random.Pick(fontComp.Armors), Transform(fontEnt).Coordinates);
                 Spawn(_random.Pick(fontComp.Weapons), Transform(fontEnt).Coordinates);
                 fontQueue.Add(fontEnt);

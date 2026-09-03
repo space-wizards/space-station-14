@@ -4,7 +4,15 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.CosmicCult;
 
 [RegisterComponent, NetworkedComponent]
-public sealed partial class CosmicCultActionComponent : Component;
+[AutoGenerateComponentState]
+public sealed partial class CosmicCultActionComponent : Component
+{
+    /// <summary>
+    /// Whether this action is currently empowered by the holding cultist.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Empowered = false;
+}
 public sealed partial class EventCosmicSiphon : EntityTargetActionEvent;
 public sealed partial class EventCosmicShunt : EntityTargetActionEvent;
 public sealed partial class EventCosmicReturn : InstantActionEvent;

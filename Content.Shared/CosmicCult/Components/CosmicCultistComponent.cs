@@ -146,7 +146,6 @@ public sealed partial class CosmicCultistComponent : Component
     [DataField] public EntProtoId ShuntVfx = "CosmicShuntAbilityVfx";
     [DataField] public EntProtoId ShiftVfx = "CosmicShiftAbilityVfx";
     [DataField] public EntProtoId GlareVfx = "CosmicGlareAbilityVfx";
-    [DataField] public EntProtoId GenericVfx = "CosmicGenericVfx";
     [DataField] public EntProtoId ImpositionVfx = "CosmicImpositionAbilityVfx";
     [DataField] public SoundSpecifier MonumentGachaSfx = new SoundPathSpecifier("/Audio/Cosmic/monument-gacha.ogg");
     [DataField] public SoundSpecifier AegisDeflectSfx = new SoundPathSpecifier("/Audio/Cosmic/cosmicsword-glance.ogg");

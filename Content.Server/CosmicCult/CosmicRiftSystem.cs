@@ -1,4 +1,5 @@
 using Content.Server.Actions;
+using Content.Server.CosmicCult.Abilities;
 using Content.Server.CosmicCult.Components;
 using Content.Server.Popups;
 using Content.Shared.CosmicCult;
@@ -57,7 +58,12 @@ public sealed partial class CosmicRiftSystem : EntitySystem
 
         args.Handled = true;
         var actionEnt = _actions.AddAction(uid, uid.Comp.CosmicFragmentationAction);
-        Spawn(uid.Comp.GenericVfx, Transform(target).Coordinates);
+        Spawn(CosmicCultSystem.GenericVfx, Transform(target).Coordinates);
+
+        var ev = new CosmicCultistEmpowerChangedEvent(uid, true);
+        RaiseLocalEvent(uid, ref ev);
+
+        // TODO: Move to action specific components.
         comp.ActionEntities.Add(actionEnt);
         comp.WasEmpowered = true;
         comp.CosmicEmpowered = true;

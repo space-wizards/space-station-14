@@ -30,7 +30,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.CosmicCult;
 
-public abstract class CosmicCultSystem : EntitySystem
+public abstract partial class CosmicCultSystem : EntitySystem
 {
     [Dependency] protected IGameTiming Timing = default!;
     [Dependency] protected IPrototypeManager Prototype = default!;
@@ -52,6 +52,7 @@ public abstract class CosmicCultSystem : EntitySystem
     [Dependency] private SharedRoleSystem _role = default!;
 
     public static readonly EntProtoId StunId = "StatusEffectStunned";
+    public static readonly EntProtoId GenericVfx = "CosmicGenericVfx";
 
     public override void Initialize()
     {
@@ -94,7 +95,7 @@ public abstract class CosmicCultSystem : EntitySystem
         {
             if (_net.IsServer)
             {
-                Spawn(cultComp.GenericVfx, Transform(ent).Coordinates);
+                Spawn(GenericVfx, Transform(ent).Coordinates);
                 Audio.PlayEntity(cultComp.AegisDeflectSfx, ent, ent);
             }
             cultComp.AstralAegisStacks--;
@@ -120,7 +121,7 @@ public abstract class CosmicCultSystem : EntitySystem
             return;
 
         Audio.PlayPredicted(ent.Comp.DestroySfx, Transform(ent).Coordinates, args.User);
-        PredictedSpawnAtPosition(ent.Comp.GenericVfx, Transform(ent).Coordinates);
+        PredictedSpawnAtPosition(GenericVfx, Transform(ent).Coordinates);
         PredictedQueueDel(ent);
         args.Handled = true;
     }
@@ -142,7 +143,7 @@ public abstract class CosmicCultSystem : EntitySystem
                 Brand(args.User);
             }
 
-            PredictedSpawnAtPosition(ent.Comp.GenericVfx, Transform(ent).Coordinates);
+            PredictedSpawnAtPosition(GenericVfx, Transform(ent).Coordinates);
             _appearance.SetData(ent, CosmicFontVisualLayers.Base, true);
             if (TryComp<CosmicExamineComponent>(ent, out var examine))
                 examine.CultistText = "cosmic-examine-text-stigma-harvested";
@@ -195,13 +196,13 @@ public abstract class CosmicCultSystem : EntitySystem
             PredictedSpawnAtPosition(ent.Comp.Plinth, Transform(ent).Coordinates);
             PredictedSpawnAtPosition(Random.Pick(ent.Comp.Armors), Transform(ent).Coordinates);
             PredictedSpawnAtPosition(Random.Pick(ent.Comp.Weapons), Transform(ent).Coordinates);
-            PredictedSpawnAtPosition(ent.Comp.GenericVfx, Transform(ent).Coordinates);
+            PredictedSpawnAtPosition(GenericVfx, Transform(ent).Coordinates);
             PredictedQueueDel(ent);
         }
         else if (Timing.IsFirstTimePredicted)
         {
             ent.Comp.Activated = true;
-            PredictedSpawnAtPosition(ent.Comp.GenericVfx, Transform(ent).Coordinates);
+            PredictedSpawnAtPosition(GenericVfx, Transform(ent).Coordinates);
             Audio.PlayPredicted(ent.Comp.InsertSfx, Transform(ent).Coordinates, args.User);
             _appearance.SetData(ent, CosmicFontVisualLayers.Base, true);
             _light.SetEnabled(ent, false);
@@ -239,6 +240,13 @@ public abstract class CosmicCultSystem : EntitySystem
             if (_net.IsClient && Timing.IsFirstTimePredicted)
                 PopUp.PopupEntity(Loc.GetString("cosmiccult-gear-pickup", ("ITEM", ent)), args.User, args.User, PopupType.MediumCaution);
         }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnActionCultistEmpowered(Entity<CosmicCultActionComponent> ent, ref ActionRelayedEvent<CosmicCultistEmpowerChangedEvent> args)
+    {
+        ent.Comp.Empowered = args.Args.Empowered;
+        Dirty(ent);
     }
 
     /// <summary>

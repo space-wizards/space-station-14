@@ -14,18 +14,23 @@ public sealed partial class CosmicIngressSystem : EntitySystem
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
 
     [SubscribeLocalEvent]
-    private void OnCosmicIngress(Entity<CosmicCultistComponent> uid, ref EventCosmicIngress args)
+    private void OnCosmicIngress(Entity<CosmicIngressActionComponent> uid, ref EventCosmicIngress args)
     {
+        if (!TryComp<CosmicCultActionComponent>(uid, out var action))
+            return;
+
         var target = args.Target;
         if (args.Handled)
             return;
 
         args.Handled = true;
-        if (uid.Comp.CosmicEmpowered && TryComp<DoorBoltComponent>(target, out var doorBolt))
+
+        if (action.Empowered && TryComp<DoorBoltComponent>(target, out var doorBolt))
             _door.SetBoltsDown((target, doorBolt), false);
+
         _door.StartOpening(target);
         _audio.PlayPvs(uid.Comp.IngressSfx, uid);
-        Spawn(uid.Comp.GenericVfx, Transform(target).Coordinates);
+        Spawn(CosmicCultSystem.GenericVfx, Transform(target).Coordinates);
     }
 
     [SubscribeLocalEvent]

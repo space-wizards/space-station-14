@@ -24,6 +24,10 @@ public sealed partial class CosmicFragmentationSystem : EntitySystem
 
     private void UnEmpower(Entity<CosmicCultistComponent> ent)
     {
+        var ev = new CosmicCultistEmpowerChangedEvent(ent, false);
+        RaiseLocalEvent(ent, ref ev);
+
+        // TODO: Move to action specific components
         var comp = ent.Comp;
         comp.CosmicEmpowered = false;
         comp.CosmicSiphonQuantity = CosmicCultistComponent.DefaultCosmicSiphonQuantity;

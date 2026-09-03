@@ -61,8 +61,8 @@ public sealed partial class CosmicShuntSystem : EntitySystem
                     _stun.SetKnockdownTime(comp.OriginalBody, TimeSpan.Zero);
                     _audio.PlayPvs(comp.WispGrabber.Comp.TriggerSfx, Transform(comp.OriginalBody).Coordinates);
                     _audio.PlayPvs(comp.WispGrabber.Comp.TriggerSfx, Transform(uid).Coordinates);
-                    Spawn(comp.WispGrabber.Comp.GenericVfx, Transform(comp.OriginalBody).Coordinates);
-                    Spawn(comp.WispGrabber.Comp.GenericVfx, Transform(uid).Coordinates);
+                    Spawn(CosmicCultSystem.GenericVfx, Transform(comp.OriginalBody).Coordinates);
+                    Spawn(CosmicCultSystem.GenericVfx, Transform(uid).Coordinates);
 
                     if (comp.WispGrabber.Owner == comp.ShuntCaster.Owner)
                         _cultRule.IncrementCultistProgress(comp.WispGrabber, 3);
