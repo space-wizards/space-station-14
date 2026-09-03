@@ -1,23 +1,17 @@
 - type: entity
-  name: ritual dagger
-  parent: BaseItem
+  parent: [BaseKnife, BaseHighlyIllegalContraband]
   id: RitualDagger
+  name: ritual dagger
   description: A strange dagger used by sinister groups for rituals and sacrifices.
   components:
-  - type: Tool
-    qualities:
-    - Slicing
   - type: Sprite
     sprite: Objects/Weapons/Melee/cult_dagger.rsi
     state: icon
   - type: MeleeWeapon
-    wideAnimationRotation: -135
     attackRate: 1.5
     damage:
       types:
         Slash: 12
-  - type: Item
-    size: Normal
   - type: Clothing
     sprite: Objects/Weapons/Melee/cult_dagger.rsi
     slots:
@@ -25,25 +19,19 @@
   - type: DisarmMalus
 
 - type: entity
-  name: eldritch blade
-  parent: BaseItem
+  parent: [BaseSword, BaseHighlyIllegalContraband]
   id: EldritchBlade
+  name: eldritch blade
   description: A sword humming with unholy energy.
   components:
-  - type: Tool
-    qualities:
-    - Slicing
   - type: Sprite
     sprite: Objects/Weapons/Melee/cult_blade.rsi
     state: icon
   - type: MeleeWeapon
-    wideAnimationRotation: -135
     attackRate: 0.75
     damage:
       types:
         Slash: 16
-  - type: Item
-    size: Normal
   - type: Clothing
     sprite: Objects/Weapons/Melee/cult_blade.rsi
     slots:
@@ -51,30 +39,20 @@
   - type: DisarmMalus
 
 - type: entity
-  name: unholy halberd
-  parent: BaseItem
+  parent: [BaseAxe, BaseHighlyIllegalContraband]
   id: UnholyHalberd
+  name: unholy halberd
   description: A poleaxe that seems to be linked to its wielder.
   components:
-  - type: Tool
-    qualities:
-    - Slicing
-    - Sawing
-  - type: Tag
-    tags:
-    - FireAxe
   - type: Sprite
     sprite: Objects/Weapons/Melee/cult_halberd.rsi
     state: icon
   - type: MeleeWeapon
     wideAnimationRotation: -135
-    attackRate: 0.75
     damage:
       types:
         Blunt: 10
         Slash: 10
-    soundHit:
-      collection: MetalThud
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
@@ -82,15 +60,9 @@
         Blunt: 5
         Slash: 5
   - type: Item
-    size: Ginormous
-    shape:
-    - 0,0,2,1
-    - 1,2,1,5
     storedRotation: -45
   - type: Clothing
     sprite: Objects/Weapons/Melee/cult_halberd.rsi
     quickEquip: false
     slots:
     - back
-  - type: UseDelay
-    delay: 1
