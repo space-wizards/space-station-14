@@ -370,3 +370,17 @@
   - type: CosmicCultRole
   - type: RoleBriefing
     briefing: cosmic-cultist-briefing
+
+# Cosmic - Entropic Colossus
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleCosmicColossus
+  name: Colossus Role
+  components:
+  - type: MindRole
+    antagPrototype: CosmicColossus
+    exclusiveAntag: true
+    roleType: TeamAntagonist
+  - type: CosmicColossusRole
+  - type: RoleBriefing
+    briefing: cosmic-colossus-briefing

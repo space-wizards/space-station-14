@@ -41,7 +41,6 @@ using Content.Shared.DoAfter;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Pinpointer;
-using Content.Stellar.Server.CosmicCult.Components;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -67,7 +66,7 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
     [Dependency] private ServerGlobalSoundSystem _sound = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private SharedCosmicShiftSystem _cultShift = default!;
+    [Dependency] private CosmicShiftSystem _cultShift = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private SharedMindSystem _mind = default!;

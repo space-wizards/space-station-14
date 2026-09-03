@@ -5,6 +5,12 @@
   setPreference: false # TODO: set this to true once Changeling exits WIP status
   objective: roles-antag-changeling-objective
 
+- type: antag
+  id: CosmicColossus
+  name: ghost-role-information-colossus-name
+  antagonist: true
+  objective: ghost-role-colossus-objective
+
 - type: antagSpecifier
   parent: RestrictedAntag
   id: CosmicCultist

@@ -1,7 +1,6 @@
 using System.Collections.Immutable;
 using Content.Server.CosmicCult.Components;
 using Content.Server.GameTicking.Rules;
-using Content.Stellar.Server.CosmicCult.Components;
 using Content.Server.Popups;
 using Content.Shared.CosmicCult;
 using Content.Shared.CosmicCult.Components;
@@ -27,7 +26,7 @@ public sealed partial class CosmicShuntSystem : EntitySystem
     [Dependency] private CosmicCultRuleSystem _cultRule = default!;
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedCosmicCultSystem _cult = default!;
+    [Dependency] private CosmicCultSystem _cult = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private SharedStunSystem _stun = default!;

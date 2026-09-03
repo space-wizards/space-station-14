@@ -25,15 +25,15 @@
             "directions": 4
         },
         {
-            "name": "equipped-HELMET",
+            "name": "equipped-head",
             "directions": 4
         },
         {
-            "name": "equipped-HELMET-vox",
+            "name": "equipped-head-vox",
             "directions": 4
         },
         {
-            "name": "equipped-HELMET-vulpkanin",
+            "name": "equipped-head-vulpkanin",
             "directions": 4
         },
         {
@@ -41,15 +41,11 @@
             "directions": 4
         },
         {
-            "name": "equipped-OUTERCLOTHING-light",
+            "name": "equipped-head-unshaded",
             "directions": 4
         },
         {
             "name": "equipped-OUTERCLOTHING-vox",
-            "directions": 4
-        },
-        {
-            "name": "equipped-OUTERCLOTHING-harpy",
             "directions": 4
         }
     ]

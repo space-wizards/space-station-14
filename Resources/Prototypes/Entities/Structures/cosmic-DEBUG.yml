@@ -1,7 +1,0 @@
-- type: entity
-  parent: Error
-  id: CosmicVoidspawner
-
-- type: entity
-  parent: Error
-  id: StellarDoorMalign

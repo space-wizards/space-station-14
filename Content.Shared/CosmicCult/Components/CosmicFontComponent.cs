@@ -35,21 +35,21 @@ public sealed partial class CosmicFontComponent : Component
 
     [DataField, AutoNetworkedField] public HashSet<EntProtoId> Armors =
     [
-        "StellarHardsuitCosmicCult",
+        "HardsuitCosmicCult",
     ];
 
     [DataField, AutoNetworkedField] public HashSet<EntProtoId> Weapons =
     [
-        "StellarWeaponCosmicBlade",
-        "StellarWeaponCosmicLance",
-        "StellarWeaponCosmicScythe",
+        "WeaponCosmicBlade",
+        "WeaponCosmicLance",
+        "WeaponCosmicScythe",
     ];
 
     /// <summary>
     /// Visual and sound effects.
     /// </summary>
     [DataField] public EntProtoId GenericVfx = "CosmicGenericVfx";
-    [DataField] public SoundSpecifier InsertSfx = new SoundPathSpecifier("/Audio/_ST/CosmicCult/stigma-inserted.ogg");
+    [DataField] public SoundSpecifier InsertSfx = new SoundPathSpecifier("/Audio/Cosmic/stigma-inserted.ogg");
 }
 
 [Serializable, NetSerializable]

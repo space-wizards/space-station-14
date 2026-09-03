@@ -1,0 +1,413 @@
+# SPDX-FileCopyrightText: 2025 AftrLite
+#
+# SPDX-License-Identifier: LicenseRef-CosmicCult
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  id: WeaponArcCosmic
+  parent: WeaponArcStatic
+  components:
+    - type: WeaponArcVisuals
+      fadeOut: false
+    - type: Sprite
+      drawdepth: Effects
+      layers:
+      - sprite: Effects/Cosmic/attack-weapons.rsi
+        state: vfx
+        shader: unshaded
+    - type: TimedDespawn
+      lifetime: 0.66
+    - type: PointLight
+      color: "#42a4ae"
+      radius: 1.5
+      energy: 6
+      castShadows: false
+    - type: LightBehaviour
+      behaviours:
+      - !type:FadeBehaviour
+        interpolate: Linear
+        minDuration: 0.64
+        maxDuration: 0.65
+        startValue: 0.1
+        endValue: 6
+        property: Energy
+        enabled: true
+        reverseWhenFinished: true
+    - type: Tag
+      tags:
+      - HideContextMenu
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  id: CosmicFloorSpawnVfx
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: TimedDespawn
+    lifetime: 0.5
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    drawdepth: Effects
+    snapCardinals: true
+    layers:
+    - sprite: Effects/Cosmic/tile-spawn.rsi
+      state: vfx
+      shader: unshaded
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  id: BaseCosmicVfx
+  components:
+  - type: TimedDespawn
+    lifetime: 1.75
+  - type: Transform
+    noRot: true
+    anchored: false
+  - type: Sprite
+    netsync: false
+    drawdepth: Effects
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: BaseCosmicVfx
+  id: CosmicLapseAbilityVfx
+  components:
+  - type: Sprite
+    layers:
+    - sprite: Effects/Cosmic/ability-lapse.rsi
+      state: vfx
+      shader: unshaded
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: BaseCosmicVfx
+  id: CosmicShiftAbilityVfx
+  components:
+  - type: Sprite
+    drawdepth: BelowMobs
+    layers:
+    - sprite: Effects/Cosmic/ability-shift.rsi
+      offset: 0, -0.2
+      state: vfx
+      shader: unshaded
+  - type: TimedDespawn
+    lifetime: 2
+  - type: PointLight
+    color: "#42a4ae"
+    radius: 2.5
+    energy: 6
+    castShadows: false
+    netSync: false
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      interpolate: Linear
+      minDuration: 2
+      maxDuration: 2
+      startValue: 0.1
+      endValue: 6
+      property: Energy
+      enabled: true
+      isLooped: true
+      reverseWhenFinished: true
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: BaseCosmicVfx
+  id: CosmicShuntAbilityVfx
+  components:
+  - type: Sprite
+    layers:
+    - sprite: Effects/Cosmic/ability-shunt.rsi
+      state: vfx
+      shader: unshaded
+  - type: PointLight
+    color: "#42a4ae"
+    radius: 1.5
+    energy: 4
+    castShadows: false
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      interpolate: Linear
+      minDuration: 1.75
+      maxDuration: 1.75
+      startValue: 0.1
+      endValue: 4
+      property: Energy
+      enabled: true
+      isLooped: true
+      reverseWhenFinished: true
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: BaseCosmicVfx
+  id: CosmicGenericVfx
+  components:
+  - type: TimedDespawn
+    lifetime: 2.025
+  - type: Sprite
+    layers:
+    - sprite: Effects/Cosmic/effect-generic.rsi
+      state: vfx
+      shader: unshaded
+  - type: PointLight
+    color: "#42a4ae"
+    radius: 1.5
+    energy: 2.5
+    castShadows: false
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      interpolate: Linear
+      minDuration: 2.025
+      maxDuration: 2.025
+      startValue: 0.1
+      endValue: 2
+      property: Energy
+      enabled: true
+      isLooped: true
+      reverseWhenFinished: true
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: BaseCosmicVfx
+  id: CosmicGlareAbilityVfx
+  components:
+  - type: TimedDespawn
+    lifetime: 1.1
+  - type: Sprite
+    layers:
+    - sprite: Effects/Cosmic/ability-glare.rsi
+      state: vfx
+      shader: unshaded
+  - type: PointLight
+    color: "#42a4ae"
+    radius: 10
+    energy: 10
+    castShadows: true
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      interpolate: Linear
+      minDuration: 1.1
+      maxDuration: 1.1
+      startValue: 0.1
+      endValue: 10
+      property: Energy
+      enabled: true
+      isLooped: true
+      reverseWhenFinished: true
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: BaseCosmicVfx
+  id: CosmicImpositionAbilityVfx
+  components:
+  - type: TimedDespawn
+    lifetime: 1.92
+  - type: Sprite
+    layers:
+    - sprite: Effects/Cosmic/ability-imposition.rsi
+      state: vfx
+      shader: unshaded
+  - type: PointLight
+    color: "#42a4ae"
+    radius: 10
+    energy: 6
+    castShadows: true
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      interpolate: Linear
+      minDuration: 1.92
+      maxDuration: 1.92
+      startValue: 0.1
+      endValue: 6
+      property: Energy
+      enabled: true
+      isLooped: true
+      reverseWhenFinished: true
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  id: CosmicNovaImpactVfx
+  components:
+  - type: TimedDespawn
+    lifetime: 1.1
+  - type: Sprite
+    drawdepth: Effects
+    layers:
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+      sprite: Effects/Cosmic/ability-glare.rsi
+      state: vfx
+  - type: PointLight
+    color: "#42a4ae"
+    radius: 10
+    energy: 6
+    castShadows: true
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      interpolate: Linear
+      minDuration: 1.1
+      maxDuration: 1.1
+      startValue: 0.1
+      endValue: 6
+      property: Energy
+      enabled: true
+      isLooped: true
+      reverseWhenFinished: true
+  - type: Tag
+    tags:
+      - HideContextMenu
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: BaseCosmicVfx
+  id: CosmicColossusAttack1Vfx
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: TimedDespawn
+    lifetime: 1.5
+  - type: Sprite
+    snapCardinals: true
+    layers:
+    - sprite: Effects/Cosmic/colossus-attack.rsi
+      state: attack1
+      shader: unshaded
+  - type: PointLight
+    color: "#42a4ae"
+    radius: 5
+    energy: 5
+    castShadows: true
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      interpolate: Linear
+      minDuration: 1.5
+      maxDuration: 1.5
+      startValue: 0.1
+      endValue: 5
+      property: Energy
+      enabled: true
+      isLooped: true
+      reverseWhenFinished: true
+
+#######################
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  id: InfluenceEffectProjectile
+  components:
+  - type: ScreechShockWave
+    waveStrength: 1
+    waveSpeed: 5
+    fadeTime: 2
+  - type: TimedDespawn
+    lifetime: 2
+  - type: Transform
+    noRot: false
+    anchored: false
+  - type: Sprite
+    netsync: false
+    drawdepth: Effects
+    loop: false
+    sprite: Effects/Cosmic/monument-vfx-alt.rsi
+    layers:
+    - state: vfx
+      shader: unshaded
+  - type: Tag
+    tags:
+    - HideContextMenu
+  - type: PointLight
+    color: "#605191FF"
+    radius: 6
+    energy: 11
+    netsync: false
+    enabled: true
+    castShadows: false
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      interpolate: Linear
+      minDuration: 2.1
+      maxDuration: 2.1
+      startValue: 0.1
+      endValue: 4
+      property: Energy
+      enabled: true
+      reverseWhenFinished: true
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  id: InfluenceEffectMonument
+  components:
+  - type: TimedDespawn
+    lifetime: 1.5
+  - type: Transform
+    noRot: false
+    anchored: false
+  - type: Sprite
+    drawdepth: Overdoors
+    loop: false
+    sprite: Effects/Cosmic/monument-vfx.rsi
+    offset: -0.03, 1.65
+    layers:
+    - state: vfx-1
+      shader: unshaded
+  - type: Tag
+    tags:
+    - HideContextMenu
+  - type: PointLight
+    color: "#42a4ae"
+    radius: 10
+    energy: 11
+    netsync: false
+    enabled: true
+    castShadows: false
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      interpolate: Linear
+      minDuration: 1.6
+      maxDuration: 1.6
+      startValue: 0.1
+      endValue: 4
+      property: Energy
+      enabled: true
+      reverseWhenFinished: true
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  id: InfluenceEffectIcon
+  components:
+  - type: TimedDespawn
+    lifetime: 4
+  - type: Transform
+    noRot: false
+    anchored: false
+  - type: Sprite
+    netsync: false
+    drawdepth: Effects
+    sprite: Interface/Actions/cosmic-actions.rsi
+    layers:
+    - state: default
+      shader: unshaded
+  - type: Tag
+    tags:
+    - HideContextMenu

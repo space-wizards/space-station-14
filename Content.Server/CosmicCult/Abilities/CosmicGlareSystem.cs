@@ -23,7 +23,7 @@ public sealed partial class CosmicGlareSystem : EntitySystem
     [Dependency] private StunSystem _stun = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedColorFlashEffectSystem _color = default!;
-    [Dependency] private SharedCosmicCultSystem _cosmicCult = default!;
+    [Dependency] private CosmicCultSystem _cosmicCult = default!;
     [Dependency] private SharedInteractionSystem _interact = default!;
 
     private HashSet<Entity<PoweredLightComponent>> _lights = [];

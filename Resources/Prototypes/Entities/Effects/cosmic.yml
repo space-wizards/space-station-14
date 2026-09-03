@@ -17,10 +17,10 @@
     - state: vfx
       shader: unshaded
   - type: Clickable
-#  - type: CosmicExamine
-#    cultistText: cosmic-examine-text-rift
-#    othersText: cosmic-examine-text-crew-rift
-#  - type: CosmicRift
+  - type: CosmicExamine
+    cultistText: cosmic-examine-text-rift
+    othersText: cosmic-examine-text-crew-rift
+  - type: CosmicRift
 #  - type: StellarTileConversion
 #    conversionMaxTicks: 6
 #    conversionTime: 8
@@ -64,10 +64,10 @@
     - state: vfx
       shader: unshaded
   - type: Clickable
-#  - type: CosmicBreach
-#  - type: CosmicExamine
-#    cultistText: cosmic-examine-text-gateway
-#    othersText: cosmic-examine-text-crew-gateway
+  - type: CosmicBreach
+  - type: CosmicExamine
+    cultistText: cosmic-examine-text-gateway
+    othersText: cosmic-examine-text-crew-gateway
 #  - type: StellarTileConversion
 #    conversionTiles:
 #    - FloorCosmicRough
@@ -100,17 +100,10 @@
       isLooped: true
       reverseWhenFinished: true
 
-# This entity relies on Stellar-exclusive features that exist outside the Cosmic Cult license (StellarShockwave). You must remove these when porting Cosmic Cult.
 - type: entity
   categories: [ HideSpawnMenu ]
   id: CosmicBreachSpawnEffect
   components:
-#  - type: StellarShockwave # Begin: Remove this when porting.
-#    duration: 2
-#    visualRange: 3
-#    visualForce: 0.02
-#    visualWidth: 0.1
-#    visualAberration: 0.25 # End: Remove this when porting.
   - type: TimedDespawn
     lifetime: 2
   - type: Transform

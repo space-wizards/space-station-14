@@ -12,10 +12,10 @@
   - type: Physics
     bodyType: Static
   - type: SpriteFade
-#  - type: CosmicMonument
-#  - type: CosmicExamine
-#    cultistText: cosmic-examine-text-monument
-#    othersText: cosmic-examine-text-crew-monument
+  - type: CosmicMonument
+  - type: CosmicExamine
+    cultistText: cosmic-examine-text-monument
+    othersText: cosmic-examine-text-crew-monument
   - type: Fixtures
     fixtures:
       fix1:
@@ -40,12 +40,12 @@
       visible: false
       map: ["effects"]
   - type: Appearance
-#  - type: GenericVisualizer
-#    visuals:
-#      enum.MonumentVisuals.Status:
-#        effects:
-#          Idle: { visible: false }
-#          Finale: { visible: true }
+  - type: GenericVisualizer
+    visuals:
+      enum.MonumentVisuals.Status:
+        effects:
+          Idle: { visible: false }
+          Finale: { visible: true }
   - type: AmbientSound
     enabled: true
     volume: -8
@@ -90,9 +90,9 @@
     noRot: true
   - type: Clickable
   - type: InteractionOutline
-#  - type: CosmicFont
-#  - type: CosmicExamine
-#    cultistText: cosmic-examine-text-font
+  - type: CosmicFont
+  - type: CosmicExamine
+    cultistText: cosmic-examine-text-font
   - type: Sprite
     offset: 0, 0.3
     loop: false
@@ -101,7 +101,7 @@
     sprite: Structures/Specific/cosmic-font.rsi
     layers:
     - state: base
-#      map: [ "enum.CosmicFontVisualLayers.Base" ]
+      map: [ "enum.CosmicFontVisualLayers.Base" ]
     - state: icon
       visible: false
       map: [ "base" ]
@@ -111,13 +111,13 @@
       map: [ "glow" ]
   - type: AnimationPlayer
   - type: Appearance
-#  - type: GenericVisualizer
-#    visuals:
-#      enum.CosmicFontVisualLayers.Base:
-#        base:
-#          True: { visible: true }
-#        glow:
-#          True: { visible: true }
+  - type: GenericVisualizer
+    visuals:
+      enum.CosmicFontVisualLayers.Base:
+        base:
+          True: { visible: true }
+        glow:
+          True: { visible: true }
   - type: Fixtures
     fixtures:
       fix1:
@@ -174,7 +174,7 @@
   - type: Climbable
   - type: Sprite
     noRot: true
-    sprite: Structures/Specific/Cosmic/cosmic-plinth.rsi
+    sprite: Structures/Specific/cosmic-plinth.rsi
     layers:
     - state: icon
   - type: Fixtures
@@ -212,8 +212,8 @@
     - state: icon
     drawdepth: Mobs
     noRot: true
-#  - type: CosmicExamine
-#    cultistText: cosmic-examine-text-forthecult
+  - type: CosmicExamine
+    cultistText: cosmic-examine-text-forthecult
   - type: SpriteFade
   - type: Fixtures
     fixtures:

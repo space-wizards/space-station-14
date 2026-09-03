@@ -1,8 +1,3 @@
-// SPDX-FileCopyrightText: 2025 AftrLite
-// SPDX-FileCopyrightText: 2025 Janet Blackquill <uhhadd@gmail.com>
-//
-// SPDX-License-Identifier: LicenseRef-CosmicCult
-
 using System.Numerics;
 using Content.Shared.CosmicCult;
 using Content.Shared.CosmicCult.Components;
@@ -26,7 +21,7 @@ public sealed partial class CosmicNovaSystem : EntitySystem
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedColorFlashEffectSystem _color = default!;
-    [Dependency] private SharedCosmicCultSystem _cosmicCult = default!;
+    [Dependency] private CosmicCultSystem _cosmicCult = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedProjectileSystem _projectile = default!;
     [Dependency] private SharedStunSystem _stun = default!;

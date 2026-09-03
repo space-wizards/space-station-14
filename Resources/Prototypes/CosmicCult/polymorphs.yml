@@ -1,0 +1,197 @@
+#- type: polymorph
+#  id: CosmicLapseMobHuman
+#  configuration:
+#    entity: CosmicPolymorphEntHuman
+#    forced: true
+#    inventory: None
+#    transferName: false
+#    transferDamage: true
+#    duration: 12
+#    polymorphSound: /Audio/Cosmic/Abilities/ability-lapse.ogg
+#
+#- type: polymorph
+#  id: CosmicLapseMobArachnid
+#  configuration:
+#    entity: CosmicPolymorphEntArachnid
+#    forced: true
+#    inventory: None
+#    transferName: false
+#    transferDamage: true
+#    duration: 12
+#    polymorphSound: /Audio/Cosmic/Abilities/ability-lapse.ogg
+#
+#- type: polymorph
+#  id: CosmicLapseMobDiona
+#  configuration:
+#    entity: CosmicPolymorphEntDiona
+#    forced: true
+#    inventory: None
+#    transferName: false
+#    transferDamage: true
+#    duration: 12
+#    polymorphSound: /Audio/Cosmic/Abilities/ability-lapse.ogg
+#
+#- type: polymorph
+#  id: CosmicLapseMobMoth
+#  configuration:
+#    entity: CosmicPolymorphEntMoth
+#    forced: true
+#    inventory: None
+#    transferName: false
+#    transferDamage: true
+#    duration: 12
+#    polymorphSound: /Audio/Cosmic/Abilities/ability-lapse.ogg
+#
+#- type: polymorph
+#  id: CosmicLapseMobVox
+#  configuration:
+#    entity: CosmicPolymorphEntVox
+#    forced: true
+#    inventory: None
+#    transferName: false
+#    transferDamage: true
+#    duration: 12
+#    polymorphSound: /Audio/Cosmic/Abilities/ability-lapse.ogg
+#
+#- type: polymorph
+#  id: CosmicLapseMobVulpkanin
+#  configuration:
+#    entity: CosmicPolymorphEntVulp
+#    forced: true
+#    inventory: None
+#    transferName: false
+#    transferDamage: true
+#    duration: 12
+#    polymorphSound: /Audio/Cosmic/Abilities/ability-lapse.ogg
+#
+#- type: polymorph
+#  id: CosmicLapseMobReptilian
+#  configuration:
+#    entity: CosmicPolymorphEntLizard
+#    forced: true
+#    inventory: None
+#    transferName: false
+#    transferDamage: true
+#    duration: 12
+#    polymorphSound: /Audio/Cosmic/Abilities/ability-lapse.ogg
+#
+#- type: polymorph
+#  id: CosmicLapseMobSlimePerson
+#  configuration:
+#    entity: CosmicPolymorphEntSlime
+#    forced: true
+#    inventory: None
+#    transferName: false
+#    transferDamage: true
+#    duration: 12
+#    polymorphSound: /Audio/Cosmic/Abilities/ability-lapse.ogg
+#
+#- type: entity
+#  categories: [ HideSpawnMenu ]
+#  parent: BaseStructure
+#  abstract: true
+#  id: CosmicPolymorphEnt
+#  name: "???"
+#  description: Trapped in a lapse between here and there.
+#  components:
+#  - type: Sprite
+#    sprite: Effects/Cosmic/ability-lapse-polymorph.rsi
+#    state: human
+#    shader: unshaded
+#    drawdepth: SmallMobs
+#    noRot: true
+#  - type: PointLight
+#    radius: 1.25
+#    energy: 12
+#    color: "#42a4ae"
+#    castShadows: false
+##  - type: CosmicLapse
+#  - type: CosmicExamine
+#    cultistText: cosmic-examine-text-abilitylapse
+#  - type: LightBehaviour
+#    behaviours:
+#     - !type:FadeBehaviour
+#       interpolate: Linear
+#       minDuration: 1.75
+#       maxDuration: 1.75
+#       startValue: 0.5
+#       endValue: 12
+#       property: Energy
+#       enabled: true
+#       isLooped: true
+#       reverseWhenFinished: true
+#  - type: SpriteFade
+#  - type: Speech
+#    enabled: False
+#  - type: Transform
+#  - type: Fixtures
+#    fixtures:
+#      fix1:
+#        shape:
+#          !type:PhysShapeAabb
+#          bounds: "-0.2,-0.1,0.2,0.375"
+#        mask:
+#        - LargeMobMask
+#        layer:
+#        - WallLayer
+#
+#- type: entity
+#  categories: [ HideSpawnMenu ]
+#  parent: CosmicPolymorphEnt
+#  id: CosmicPolymorphEntHuman
+#
+#- type: entity
+#  categories: [ HideSpawnMenu ]
+#  parent: CosmicPolymorphEnt
+#  id: CosmicPolymorphEntArachnid
+#  components:
+#  - type: Sprite
+#    state: spider
+#
+#- type: entity
+#  categories: [ HideSpawnMenu ]
+#  parent: CosmicPolymorphEnt
+#  id: CosmicPolymorphEntDiona
+#  components:
+#  - type: Sprite
+#    state: diona
+#
+#- type: entity
+#  categories: [ HideSpawnMenu ]
+#  parent: CosmicPolymorphEnt
+#  id: CosmicPolymorphEntMoth
+#  components:
+#  - type: Sprite
+#    state: moth
+#
+#- type: entity
+#  categories: [ HideSpawnMenu ]
+#  parent: CosmicPolymorphEnt
+#  id: CosmicPolymorphEntVox
+#  components:
+#  - type: Sprite
+#    state: vox
+#
+#- type: entity
+#  categories: [ HideSpawnMenu ]
+#  parent: CosmicPolymorphEnt
+#  id: CosmicPolymorphEntVulp
+#  components:
+#  - type: Sprite
+#    state: vulp
+#
+#- type: entity
+#  categories: [ HideSpawnMenu ]
+#  parent: CosmicPolymorphEnt
+#  id: CosmicPolymorphEntLizard
+#  components:
+#  - type: Sprite
+#    state: lizard
+#
+#- type: entity
+#  categories: [ HideSpawnMenu ]
+#  parent: CosmicPolymorphEnt
+#  id: CosmicPolymorphEntSlime
+#  components:
+#  - type: Sprite
+#    state: slime

@@ -3,7 +3,7 @@
   parent: BaseDoAfterAction
   id: ActionCosmicSiphon
   name: Siphon Entropy
-  description: Silently siphon entropy from your target, dealing some damage in the process.
+  description: Stealthily siphon entropy from your target. Siphoning large amounts of entropy will increase your power.
   components:
   - type: Action
     useDelay: 50
@@ -19,7 +19,7 @@
       - HumanoidProfile
     blacklist:
       components:
-      - CosmicCult
+      - CosmicCultist
       - ActiveNPC
     event: !type:EventCosmicSiphon {}
 
@@ -44,7 +44,7 @@
       - HumanoidProfile
     blacklist:
       components:
-      - CosmicCult
+      - CosmicCultist
       - CosmicBlank
       - ActiveNPC
     event: !type:EventCosmicShunt {}
@@ -77,7 +77,7 @@
   parent: BaseMentalAction
   id: ActionCosmicGlare
   name: Null Glare
-  description: Emit a horrific pulse of cosmic light, slowing and disorienting everyone around you. Its effects are amplified against silicon-based entities.
+  description: Emit a horrid pulse of cosmic light, slowing and disorienting everyone around you. Its effects are amplified against silicon-based entities.
   components:
   - type: ConfirmableAction
     popup: cosmicability-glare-confirm
@@ -173,7 +173,7 @@
       - SiliconLawUpdater
     blacklist:
       components:
-      - CosmicCult
+      - CosmicCultist
       - ActiveNPC
     event: !type:EventCosmicFragmentation {}
 
@@ -181,7 +181,7 @@
   parent: BaseDoAfterAction
   id: ActionCosmicShift
   name: Astral Shift
-  description: Slip out of phase with realspace in order to temporarily access the cosmic dark. You'll automatically return to the station after a period of time.
+  description: Slip out of phase with realspace in order to temporarily access the cosmic dark. You'll automatically return to where you left from after a period of time.
   components:
   - type: ConfirmableAction
     popup: cosmicability-shift-confirm
@@ -202,7 +202,7 @@
   parent: BaseMentalAction
   id: ActionCosmicReturn
   name: Return
-  description: Exit the dark and return to the station early.
+  description: Leave the dark and return to the station early.
   components:
   - type: Action
     checkCanInteract: false
@@ -214,26 +214,3 @@
     - state: return
   - type: InstantAction
     event: !type:EventCosmicReturn {}
-#
-#- type: entity
-#  parent: BaseAction
-#  id: ActionRetractableItemArmBlade
-#  name: Arm Blade
-#  description: Shed your flesh and reform it into a fleshy blade.
-#  components:
-#  - type: Action
-#    useDelay: 2
-#    raiseOnAction: true
-#    itemIconStyle: BigAction
-#  - type: Sprite
-#    sprite: Interface/Actions/changeling.rsi
-#    layers:
-#    - state: armblade
-#  - type: InstantAction
-#    event: !type:OnRetractableItemActionEvent
-#  - type: RetractableItemAction
-#    spawnedPrototype: ArmBlade
-#    summonSounds:
-#      collection: gib # Placeholder
-#    retractSounds:
-#      collection: gib # Placeholder

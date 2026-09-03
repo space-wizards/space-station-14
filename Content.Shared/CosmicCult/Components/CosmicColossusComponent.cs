@@ -14,21 +14,21 @@ namespace Content.Shared.CosmicCult.Components;
 public sealed partial class CosmicColossusComponent : Component
 {
     [AutoPausedField, DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan AttackHoldTimer = default!;
+    public TimeSpan AttackHoldTimer;
 
     [AutoPausedField, DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan HibernationTimer = default!;
+    public TimeSpan HibernationTimer;
 
     [AutoPausedField, DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan DeathTimer = default!;
+    public TimeSpan DeathTimer;
 
-    [DataField] public SoundSpecifier ReawakenSfx = new SoundPathSpecifier("/Audio/_ST/CosmicCult/colossus_spawn.ogg");
+    [DataField] public SoundSpecifier ReawakenSfx = new SoundPathSpecifier("/Audio/Cosmic/colossus-spawn.ogg");
 
-    [DataField] public SoundSpecifier DeathSfx = new SoundPathSpecifier("/Audio/_ST/CosmicCult/colossus_death.ogg");
+    [DataField] public SoundSpecifier DeathSfx = new SoundPathSpecifier("/Audio/Cosmic/colossus-death.ogg");
 
-    [DataField] public SoundSpecifier IngressSfx = new SoundPathSpecifier("/Audio/_ST/CosmicCult/Abilities/ability-ingress.ogg");
+    [DataField] public SoundSpecifier IngressSfx = new SoundPathSpecifier("/Audio/Cosmic/Abilities/ability-ingress.ogg");
 
-    [DataField] public SoundSpecifier DoAfterSfx = new SoundPathSpecifier("/Audio/Machines/airlock_creaking.ogg");
+    [DataField] public SoundSpecifier DoAfterSfx = new SoundPathSpecifier("/Audio/Machines/airlock-creaking.ogg");
 
     [DataField] public EntProtoId CultVfx = "CosmicGenericVfx";
 
