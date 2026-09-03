@@ -1,6 +1,5 @@
-﻿using Robust.Shared.GameStates;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Respawn;
 
@@ -11,23 +10,20 @@ namespace Content.Shared.Respawn;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class SpecialRespawnComponent: Component
 {
-    [ViewVariables]
-    [DataField("stationMap")]
+    [DataField]
     public (EntityUid?, EntityUid?) StationMap;
 
     /// <summary>
-    /// Checks if the entityentity should respawn on the station grid
+    /// Checks if the entity should respawn on the station grid
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("respawn")]
+    [DataField]
     public bool Respawn = true;
 
     /// <summary>
     /// The prototypeID of the entity to be respawned
     /// </summary>
-    [ViewVariables]
-    [DataField("prototype", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Prototype = "";
+    [DataField(required: true)]
+    public EntProtoId Prototype;
 }
 
 public sealed class SpecialRespawnSetupEvent : EntityEventArgs

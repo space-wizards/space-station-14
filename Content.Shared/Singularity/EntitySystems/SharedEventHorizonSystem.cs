@@ -3,10 +3,9 @@ using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
-
-using Content.Shared.Ghost;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Physics;
+using Content.Shared.Ghost.Components;
 
 namespace Content.Shared.Singularity.EntitySystems;
 
@@ -157,18 +156,21 @@ public abstract partial class SharedEventHorizonSystem : EntitySystem
         || !Resolve(uid, ref fixtures, logMissing: false))
             return;
 
+        // Negative event horizon radius disables periodic consumption, but physics shapes cannot have a negative radius.
+        var fixtureRadius = MathF.Max(0f, eventHorizon.Radius);
+
         // Update both fixtures the event horizon is associated with:
         var consumer = _fixtures.GetFixtureOrNull(uid, consumerId, fixtures);
         if (consumer != null)
         {
-            _physics.SetRadius(uid, consumerId, consumer, consumer.Shape, eventHorizon.Radius, fixtures);
+            _physics.SetRadius(uid, consumerId, consumer, consumer.Shape, fixtureRadius, fixtures);
             _physics.SetHard(uid, consumer, false, fixtures);
         }
 
         var collider = _fixtures.GetFixtureOrNull(uid, colliderId, fixtures);
         if (collider != null)
         {
-            _physics.SetRadius(uid, colliderId, collider, collider.Shape, eventHorizon.Radius, fixtures);
+            _physics.SetRadius(uid, colliderId, collider, collider.Shape, fixtureRadius, fixtures);
             _physics.SetHard(uid, collider, true, fixtures);
         }
 

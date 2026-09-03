@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.Reactions;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Shared.Atmos;
@@ -27,7 +28,6 @@ namespace Content.Server.Atmos.EntitySystems;
 [UsedImplicitly]
 public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
 {
-    [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private IAdminLogManager _adminLog = default!;
     [Dependency] private IParallelManager _parallel = default!;
@@ -48,7 +48,6 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     [Dependency] private EntityQuery<FirelockComponent> _firelockQuery = default!;
 
     private const float ExposedUpdateDelay = 1f;
-    private float _exposedTimer = 0f;
 
     private HashSet<EntityUid> _entSet = new();
 
@@ -70,6 +69,7 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
 
         CacheDecals();
+        CacheGases();
     }
 
     public override void Shutdown()
@@ -91,6 +91,8 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     {
         if (ev.WasModified<DecalPrototype>())
             CacheDecals();
+        if (ev.WasModified<GasReactionPrototype>())
+            CacheGases();
     }
 
     public override void Update(float frameTime)
@@ -100,24 +102,23 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         UpdateProcessing(frameTime);
         UpdateHighPressure(frameTime);
 
-        _exposedTimer += frameTime;
-
-        if (_exposedTimer < ExposedUpdateDelay)
-            return;
+        var delay = TimeSpan.FromSeconds(ExposedUpdateDelay);
 
         var query = EntityQueryEnumerator<AtmosExposedComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out _, out var transform))
+        while (query.MoveNext(out var uid, out var exposed, out var transform))
         {
+            if (exposed.LastExposure + delay > _gameTiming.CurTime)
+                continue;
+
             var air = GetContainingMixture((uid, transform));
 
             if (air == null)
                 continue;
 
-            var updateEvent = new AtmosExposedUpdateEvent(transform.Coordinates, air, transform);
+            var updateEvent = new AtmosExposedUpdateEvent(transform.Coordinates, air, transform, ExposedUpdateDelay, exposed.ExposedArea);
             RaiseLocalEvent(uid, ref updateEvent);
+            exposed.LastExposure = _gameTiming.CurTime;
         }
-
-        _exposedTimer -= ExposedUpdateDelay;
     }
 
     private void CacheDecals()

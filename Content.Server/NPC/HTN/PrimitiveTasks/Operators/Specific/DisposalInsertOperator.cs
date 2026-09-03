@@ -46,7 +46,7 @@ public sealed partial class DisposalInsertOperator : HTNOperator
         if (!_entManager.TryGetComponent<DisposalUnitComponent>(disposalUnitTarget, out var disposalComp))
             return HTNOperatorStatus.Failed;
 
-        if (!_disposalSystem.TryInsert(disposalUnitTarget, target, owner, disposalComp))
+        if (!_disposalSystem.TryInsert((disposalUnitTarget, disposalComp), target, owner))
             return HTNOperatorStatus.Failed;
 
         return HTNOperatorStatus.Finished;

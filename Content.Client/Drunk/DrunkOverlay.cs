@@ -50,7 +50,7 @@ public sealed partial class DrunkOverlay : Overlay
         IoCManager.InjectDependencies(this);
         _statusEffectsSystem = _entityManager.System<Shared.StatusEffectNew.StatusEffectsSystem>();
         _drunkShader = _prototypeManager.Index(DrunkShader).InstanceUnique();
-        _configManager.OnValueChanged(CCVars.ReducedMotion, OnReducedMotionChanged, invokeImmediately: true);
+        _configManager.OnValueChanged(CCVars.DisableDrunkOverlay, OnReducedMotionChanged, invokeImmediately: true);
     }
 
     private void OnReducedMotionChanged(bool reducedMotion)

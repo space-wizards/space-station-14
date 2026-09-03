@@ -80,9 +80,6 @@ public sealed partial class NodeScannerSystem : EntitySystem
         EntityUid actor
     )
     {
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
         if (TryComp(device, out UseDelayComponent? useDelay)
             && !_useDelay.TryResetDelay((device, useDelay), true))
             return;

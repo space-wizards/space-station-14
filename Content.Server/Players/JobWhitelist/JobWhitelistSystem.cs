@@ -15,7 +15,6 @@ public sealed partial class JobWhitelistSystem : EntitySystem
     [Dependency] private IConfigurationManager _config = default!;
     [Dependency] private JobWhitelistManager _manager = default!;
     [Dependency] private IPlayerManager _player = default!;
-    [Dependency] private IPrototypeManager _prototypes = default!;
 
     private ImmutableArray<ProtoId<JobPrototype>> _whitelistedJobs = [];
 
@@ -79,7 +78,7 @@ public sealed partial class JobWhitelistSystem : EntitySystem
     private void CacheJobs()
     {
         var builder = ImmutableArray.CreateBuilder<ProtoId<JobPrototype>>();
-        foreach (var job in _prototypes.EnumeratePrototypes<JobPrototype>())
+        foreach (var job in ProtoMan.EnumeratePrototypes<JobPrototype>())
         {
             if (job.Whitelisted)
                 builder.Add(job.ID);

@@ -152,7 +152,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
     public void OnCableAnchorStateChanged(EntityUid uid, CableComponent component, CableAnchorStateChangedEvent args)
     {
-        var xform = args.Transform;
+        var xform = args.Cable.Comp;
 
         if (xform.GridUid == null || !TryComp<MapGridComponent>(xform.GridUid, out var grid))
             return;

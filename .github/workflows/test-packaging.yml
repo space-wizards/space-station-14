@@ -26,6 +26,10 @@ on:
       - 'RobustToolbox'
       - 'RobustToolbox/**'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'merge_group' }}
+
 jobs:
   build:
     name: Test Packaging
@@ -34,7 +38,7 @@ jobs:
 
     steps:
       - name: Checkout Master
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v7
 
       - name: Setup Submodule
         run: |
@@ -50,7 +54,7 @@ jobs:
 
       # ubuntu-latest has .NET 10
       # - name: Setup .NET Core
-      #   uses: actions/setup-dotnet@v4.1.0
+      #   uses: actions/setup-dotnet@v5
       #   with:
       #     dotnet-version: 10.0.x
 

@@ -19,7 +19,6 @@
     - !type:DepartmentTimeRequirement
       department: Command
       time: 4h
-  weight: 20
   startingGear: CaptainGear
   icon: "JobIconCaptain"
   joinNotifyCrew: true

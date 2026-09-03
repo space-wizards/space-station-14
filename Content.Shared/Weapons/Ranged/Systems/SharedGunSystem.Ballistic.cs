@@ -40,9 +40,10 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<BallisticAmmoInteractLoaderComponent, AfterInteractEvent>(OnBallisticAmmoLoad);
     }
 
-    private void OnBallisticRefillerMapInit(Entity<BallisticAmmoSelfRefillerComponent> entity, ref MapInitEvent _)
+    private void OnBallisticRefillerMapInit(Entity<BallisticAmmoSelfRefillerComponent> entity, ref MapInitEvent args)
     {
         entity.Comp.NextAutoRefill = Timing.CurTime + entity.Comp.AutoRefillRate;
+        DirtyField(entity.AsNullable(), nameof(BallisticAmmoSelfRefillerComponent.NextAutoRefill));
     }
 
     private void OnBallisticUse(Entity<BallisticAmmoProviderComponent> ent, ref UseInHandEvent args)
@@ -99,19 +100,17 @@ public abstract partial class SharedGunSystem
 
         if (target.Entities.Count + target.UnspawnedCount == target.Capacity)
         {
-            Popup(
-                Loc.GetString("gun-ballistic-transfer-target-full",
-                    ("entity", args.Target)),
-                args.Target,
+            PopupSystem.PopupEntity(
+                Loc.GetString("gun-ballistic-transfer-target-full", ("entity", args.Target.Value)),
+                args.Target.Value,
                 args.User);
             return;
         }
 
         if (component.Entities.Count + component.UnspawnedCount == 0)
         {
-            Popup(
-                Loc.GetString("gun-ballistic-transfer-empty",
-                    ("entity", uid)),
+            PopupSystem.PopupEntity(
+                Loc.GetString("gun-ballistic-transfer-empty", ("entity", uid)),
                 uid,
                 args.User);
             return;
@@ -134,7 +133,7 @@ public abstract partial class SharedGunSystem
 
             if (_whitelistSystem.IsWhitelistFail(target.Whitelist, ent.Value))
             {
-                Popup(
+                PopupSystem.PopupEntity(
                     Loc.GetString("gun-ballistic-transfer-invalid",
                         ("ammoEntity", ent.Value),
                         ("targetEntity", args.Target.Value)),
@@ -206,7 +205,7 @@ public abstract partial class SharedGunSystem
 
         var text = Loc.GetString(shots == 0 ? "gun-ballistic-cycled-empty" : "gun-ballistic-cycled");
 
-        Popup(text, ent, user);
+        PopupSystem.PopupEntity(text, ent, user);
         UpdateBallisticAppearance(ent);
         UpdateAmmoCount(ent);
     }

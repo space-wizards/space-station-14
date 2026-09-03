@@ -181,7 +181,7 @@
     storageInsertSound: null
 
 - type: entity
-  parent: ClothingBackpackSatchel
+  parent: ClothingBackpackHoldingBase #Standardized Bluespace Bags
   id: ClothingBackpackSatchelHolding
   name: satchel of holding
   description: A satchel that opens into a localized pocket of bluespace.
@@ -193,12 +193,6 @@
     - state: icon
     - state: icon-unlit
       shader: unshaded
-  - type: Item
-    size: Ginormous
-  - type: Storage
-    maxItemSize: Huge
-    grid:
-    - 0,0,19,9
 
 - type: entity
   parent: ClothingBackpackSatchelHolding
@@ -209,3 +203,7 @@
   components:
   - type: ExplosionResistance
     damageCoefficient: 0
+  - type: Storage
+    maxItemSize: Colossal # Can hold ANYTHING
+    grid:
+    - 0,0,19,9

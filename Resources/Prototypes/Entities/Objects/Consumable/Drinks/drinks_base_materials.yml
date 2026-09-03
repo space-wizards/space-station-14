@@ -13,12 +13,6 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger: # Overkill threshold
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 5
@@ -27,12 +21,6 @@
         sound:
           collection: GlassBreak
       - !type:SpillBehavior { }
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          ShardGlass:
-            min: 1
-            max: 1
-        transferForensics: true
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: DamageOnLand
@@ -54,17 +42,14 @@
 # Porcelain (like glass but no shard)
 - type: entity
   abstract: true
-  parent: DrinkBaseMaterialGlass
   id: DrinkBaseMaterialPorcelain
   components:
+  - type: Damageable
+    damageModifierSet: FlimsyGlass
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger: # Overkill threshold
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 5
@@ -75,9 +60,15 @@
       - !type:SpillBehavior { }
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: PhysicalComposition
-    materialComposition:
-      Glass: 10 # Trace amounts of glass I guess. Important for overriding inheritance
+  - type: DamageOnLand
+    ignoreResistances: true
+    damage:
+      types:
+        Blunt: 5 # so fragile it smashes when thrown
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 5
 
 # Fragile plastic
 - type: entity
@@ -90,12 +81,6 @@
 #    damageModifierSet: FlimsyPlastic TODO
   - type: Destructible
     thresholds:
-    - trigger: # Overkill threshold
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 5
@@ -127,12 +112,6 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger: # Overkill threshold
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 20 # can take a few more hits than basic plastic
@@ -166,12 +145,6 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger: # Overkill threshold
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 5
@@ -206,12 +179,6 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger: # Overkill threshold
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 10
@@ -245,12 +212,6 @@
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
-    - trigger: # Overkill threshold
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 25
@@ -276,12 +237,6 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger: # Overkill threshold
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 5 # Gold is very weak

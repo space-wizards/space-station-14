@@ -6,10 +6,11 @@
   components:
   - type: Action
     itemIconStyle: NoItem
-    icon:
-      sprite: Interface/Actions/actions_borg.rsi
-      state: state-laws
     useDelay: 0.5
+  - type: Sprite
+    sprite: Interface/Actions/actions_borg.rsi
+    layers:
+    - state: state-laws
   - type: InstantAction
     event: !type:ToggleLawsScreenEvent
 
@@ -20,9 +21,10 @@
   components:
   - type: Action
     itemIconStyle: NoItem
-    icon:
-      sprite: Interface/Actions/actions_borg.rsi
-      state: select-type
     useDelay: 0.5
+  - type: Sprite
+    sprite: Interface/Actions/actions_borg.rsi
+    layers:
+    - state: select-type
   - type: InstantAction
     event: !type:BorgToggleSelectTypeEvent

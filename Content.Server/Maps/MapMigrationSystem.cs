@@ -17,9 +17,6 @@ namespace Content.Server.Maps;
 /// </summary>
 public sealed partial class MapMigrationSystem : EntitySystem
 {
-#if DEBUG
-    [Dependency] private IPrototypeManager _protoMan = default!;
-#endif
     [Dependency] private IResourceManager _resMan = default!;
 
     private const string MigrationFile = "/migration.yml";
@@ -38,7 +35,7 @@ public sealed partial class MapMigrationSystem : EntitySystem
         {
             var newId = ((ValueDataNode) node).Value;
             if (!string.IsNullOrEmpty(newId) && newId != "null")
-                DebugTools.Assert(_protoMan.HasIndex<EntityPrototype>(newId), $"{newId} is not an entity prototype.");
+                DebugTools.Assert(ProtoMan.HasIndex<EntityPrototype>(newId), $"{newId} is not an entity prototype.");
         }
 #endif
     }
