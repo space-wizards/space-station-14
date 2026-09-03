@@ -44,7 +44,7 @@ public abstract partial class SharedHandsSystem
 
     private void OnEntityStorageDump(Entity<HandsComponent> ent, ref EntityStorageIntoContainerAttemptEvent args)
     {
-        // If you're physically carrying an EntityStroage which tries to dump its contents out,
+        // If you're physically carrying an EntityStorage which tries to dump its contents out,
         // we want those contents to fall to the floor.
         args.Cancelled = true;
     }
@@ -92,7 +92,13 @@ public abstract partial class SharedHandsSystem
     /// <summary>
     ///     Attempts to drop the item in the currently active hand.
     /// </summary>
-    public bool TryDrop(Entity<HandsComponent?> ent, EntityCoordinates? targetDropLocation = null, bool checkActionBlocker = true, bool doDropInteraction = true)
+    /// <param name="ent">entity with the HandsComponent which is dropping the item</param>
+    /// <param name="targetDropLocation">optional target for where it should be dropped</param>
+    /// <param name="checkActionBlocker">Do we check if the item is droppable? (no effect if <c>force</c> is true)</param>
+    /// <param name="doDropInteraction">should the item's "dropped interaction" be performed?</param>
+    /// <param name="force">If true, all can-remove checks will be ignored (item *will* be dropped.)</param>
+    /// <returns>true if it could be dropped, false otherwise</returns>
+    public bool TryDrop(Entity<HandsComponent?> ent, EntityCoordinates? targetDropLocation = null, bool checkActionBlocker = true, bool doDropInteraction = true, bool force = false)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
@@ -100,13 +106,20 @@ public abstract partial class SharedHandsSystem
         if (ent.Comp.ActiveHandId == null)
             return false;
 
-        return TryDrop(ent, ent.Comp.ActiveHandId, targetDropLocation, checkActionBlocker, doDropInteraction);
+        return TryDrop(ent, ent.Comp.ActiveHandId, targetDropLocation, checkActionBlocker, doDropInteraction, force);
     }
 
     /// <summary>
     ///     Drops an item at the target location.
     /// </summary>
-    public bool TryDrop(Entity<HandsComponent?> ent, EntityUid entity, EntityCoordinates? targetDropLocation = null, bool checkActionBlocker = true, bool doDropInteraction = true)
+    /// <param name="ent">entity with the HandsComponent which is dropping the item</param>
+    /// <param name="entity">the item being dropped (needs to be in hands of ent).</param>
+    /// <param name="targetDropLocation">optional target for where it should be dropped</param>
+    /// <param name="checkActionBlocker">Do we check if the item is droppable? (no effect if <c>force</c> is true)</param>
+    /// <param name="doDropInteraction">should the item's "dropped interaction" be performed?</param>
+    /// <param name="force">If true, all can-remove checks will be ignored (item *will* be dropped.)</param>
+    /// <returns>true if the item entity was dropped, false otherwise</returns>
+    public bool TryDrop(Entity<HandsComponent?> ent, EntityUid entity, EntityCoordinates? targetDropLocation = null, bool checkActionBlocker = true, bool doDropInteraction = true, bool force = false)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
@@ -114,18 +127,28 @@ public abstract partial class SharedHandsSystem
         if (!IsHolding(ent, entity, out var hand))
             return false;
 
-        return TryDrop(ent, hand, targetDropLocation, checkActionBlocker, doDropInteraction);
+        return TryDrop(ent, hand, targetDropLocation, checkActionBlocker, doDropInteraction, force);
     }
 
     /// <summary>
     ///     Drops a hands contents at the target location.
     /// </summary>
-    public bool TryDrop(Entity<HandsComponent?> ent, string handId, EntityCoordinates? targetDropLocation = null, bool checkActionBlocker = true, bool doDropInteraction = true)
+    /// <param name="ent">entity with the HandsComponent which is dropping the item</param>
+    /// <param name="handId">ID of the hand which the item is being dropped from</param>
+    /// <param name="targetDropLocation">optional target for where it should be dropped</param>
+    /// <param name="checkActionBlocker">Do we check if the item is droppable? (no effect if <c>force</c> is true)</param>
+    /// <param name="doDropInteraction">should the item's "dropped interaction" be performed?</param>
+    /// <param name="force">If true, all can-remove checks will be ignored (item *will* be dropped.)<br/>
+    /// note - if user is in a container, <c>force</c> is <c>true</c>, but item can't be dropped normally, the item may not end up inside the container.</param>
+    /// <returns>true if an item from the hand was dropped, false otherwise.</returns>
+    public bool TryDrop(Entity<HandsComponent?> ent, string handId, EntityCoordinates? targetDropLocation = null, bool checkActionBlocker = true, bool doDropInteraction = true, bool force = false)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
-        if (!CanDropHeld(ent, handId, checkActionBlocker))
+        // we may not care if we 'can drop' it if we're forcing the interaction - but 
+        var canDrop = CanDropHeld(ent, handId, checkActionBlocker);
+        if (!(canDrop || force))
             return false;
 
         if (!TryGetHeldItem(ent, handId, out var entity))
@@ -145,23 +168,37 @@ public abstract partial class SharedHandsSystem
         var userXform = Transform(ent);
         var isInContainer = ContainerSystem.IsEntityOrParentInContainer(ent, xform: userXform);
 
-        // if the user is in a container, drop the item inside the container
+        // if the user is in a container, try to drop the item inside the container
+        // as this type of drop cannot be "forced" (RobustToolbox limitation), this will only happen if we 'can drop' the item.
+        // if the user is in a container, can't drop the item normally, but still is "forced" to drop the item, it will be dropped at user position instead.
         if (isInContainer)
         {
-            TransformSystem.DropNextTo((entity.Value, itemXform), (ent, userXform));
+            if (canDrop)
+                TransformSystem.DropNextTo((entity.Value, itemXform), (ent, userXform));
+            else
+                DoDrop(ent, handId, doDropInteraction, targetDropLocation: userXform.Coordinates, force: force);
             return true;
         }
 
         // drop the item with heavy calculations from their hands and place it at the calculated interaction range position
         // The DoDrop is handle if there's no drop target
-        DoDrop(ent, handId, doDropInteraction: doDropInteraction, targetDropLocation: targetDropLocation);
+        DoDrop(ent, handId, doDropInteraction: doDropInteraction, targetDropLocation: targetDropLocation, force: force);
         return true;
     }
 
     /// <summary>
     ///     Attempts to move a held item from a hand into a container that is not another hand, without dropping it on the floor in-between.
     /// </summary>
-    public bool TryDropIntoContainer(Entity<HandsComponent?> ent, EntityUid entity, BaseContainer targetContainer, bool checkActionBlocker = true)
+    /// <param name="ent">entity with the HandsComponent which is dropping the item</param>
+    /// <param name="entity">the item being dropped.</param>
+    /// <param name="targetContainer">Container which the item is being inserted into</param>
+    /// <param name="checkActionBlocker">Do we check if the item is droppable? (no effect if <c>forceDrop</c> is true)</param>
+    /// <param name="forceDrop">If true, this will forcibly remove the item from hands.<br/>
+    /// This will <b>not</b> force insertion of the item into the container.<br/>
+    /// If this is <c>true</c>, but insertion is impossible, this will instead drop the item on the ground at the container's location, performing drop interactions (see <see cref="DoDrop"/>)</param>
+    /// <returns>true if the entity was dropped from hands and inserted into container, false otherwise. <br/>
+    /// (if <c>forceDrop == true</c>, returns true as long as entity was dropped from hands - but it may not have been inserted into the container)</returns>
+    public bool TryDropIntoContainer(Entity<HandsComponent?> ent, EntityUid entity, BaseContainer targetContainer, bool checkActionBlocker = true, bool forceDrop = false)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
@@ -169,28 +206,42 @@ public abstract partial class SharedHandsSystem
         if (!IsHolding(ent, entity, out var hand))
             return false;
 
-        if (!CanDropHeld(ent, hand, checkActionBlocker))
+        if (!(forceDrop || CanDropHeld(ent, hand, checkActionBlocker)))
             return false;
 
-        if (!ContainerSystem.CanInsert(entity, targetContainer))
+        var canInsert = ContainerSystem.CanInsert(entity, targetContainer);
+        if (!(forceDrop || canInsert))
             return false;
 
-        DoDrop(ent, hand, false);
-        ContainerSystem.Insert(entity, targetContainer);
+        if (canInsert)
+        {
+            DoDrop(ent, hand, false, force:forceDrop);
+            ContainerSystem.Insert(entity, targetContainer);
+        }
+        else
+        {
+            DoDrop(ent, hand, targetDropLocation:Transform(targetContainer.Owner).Coordinates, force:forceDrop);
+        }
+        
         return true;
     }
 
     /// <summary>
     ///     Tries to drop all currently held items.
     /// </summary>
-    public void DropAll(Entity<HandsComponent?> ent, EntityCoordinates? targetDropLocation = null, bool checkActionBlocker = true, bool doDropInteraction = true)
+    /// <param name="ent">entity with the HandsComponent which is dropping the item</param>
+    /// <param name="targetDropLocation">optional target for where it should be dropped</param>
+    /// <param name="checkActionBlocker">Do we check if the item is droppable? (no effect if <c>force</c> is true)</param>
+    /// <param name="doDropInteraction">should the "dropped interaction" of the dropped items be performed?</param>
+    /// <param name="force">If true, all can-remove checks will be ignored (item *will* be dropped.)</param>
+    public void DropAll(Entity<HandsComponent?> ent, EntityCoordinates? targetDropLocation = null, bool checkActionBlocker = true, bool doDropInteraction = true, bool force = false)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
         foreach (var hand in EnumerateHands(ent))
         {
-            TryDrop(ent, hand, targetDropLocation, checkActionBlocker, doDropInteraction);
+            TryDrop(ent, hand, targetDropLocation, checkActionBlocker, doDropInteraction, force);
         }
     }
 
@@ -223,11 +274,18 @@ public abstract partial class SharedHandsSystem
     /// <summary>
     ///     Removes the contents of a hand from its container. Assumes that the removal is allowed. In general, you should not be calling this directly.
     /// </summary>
+    /// <param name="ent">entity with the HandsComponent which is dropping the item</param>
+    /// <param name="handId">ID of the hand which the item is being dropped from</param>
+    /// <param name="doDropInteraction">should the item's "dropped interaction" be performed?</param>
+    /// <param name="log">If true, will be logged in admin log</param>
+    /// <param name="targetDropLocation">optional target for where it should be dropped</param>
+    /// <param name="force">If true, all can-remove checks will be ignored (item *will* be dropped.)</param>
     public virtual void DoDrop(Entity<HandsComponent?> ent,
         string handId,
         bool doDropInteraction = true,
         bool log = true,
-        EntityCoordinates? targetDropLocation = null
+        EntityCoordinates? targetDropLocation = null,
+        bool force = false
     )
     {
         if (!Resolve(ent, ref ent.Comp, false))
@@ -242,7 +300,7 @@ public abstract partial class SharedHandsSystem
         if (TerminatingOrDeleted(ent) || TerminatingOrDeleted(entity))
             return;
 
-        if (!ContainerSystem.Remove(entity.Value, container))
+        if (!ContainerSystem.Remove(entity.Value, container, force:force))
         {
             Log.Error($"Failed to remove {ToPrettyString(entity)} from users hand container when dropping. User: {ToPrettyString(ent)}. Hand: {handId}.");
             return;
@@ -263,7 +321,7 @@ public abstract partial class SharedHandsSystem
             _interactionSystem.DroppedInteraction(ent, entity.Value);
 
         if (log)
-            _adminLogger.Add(LogType.Drop, LogImpact.Low, $"{ToPrettyString(ent):user} dropped {ToPrettyString(entity):entity}");
+            _adminLogger.Add(LogType.Drop, LogImpact.Low, $"{ToPrettyString(ent):user} dropped {ToPrettyString(entity):entity}{(force ? " (forced)": "")}");
 
         if (handId == ent.Comp.ActiveHandId)
             RaiseLocalEvent(entity.Value, new HandDeselectedEvent(ent));
