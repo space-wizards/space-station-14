@@ -89,7 +89,7 @@ namespace Content.Server.Pointing.EntitySystems
 
             foreach (var viewer in viewers)
             {
-                if (viewer.AttachedEntity is not {Valid: true} viewerEntity)
+                if (viewer.AttachedEntity is not { Valid: true } viewerEntity)
                 {
                     continue;
                 }
@@ -111,13 +111,10 @@ namespace Content.Server.Pointing.EntitySystems
 
         /// <summary>
         /// Checks if <paramref name="coordinates"/> are within range of <paramref name="pointer"/>.
-        /// If not null, uses the pointed entity <paramref name="target"/> to see if the position is in range.
         /// </summary>
+        /// <param name="target">If not null, raises an <see cref="InRangeOverrideEvent"/> at the pointer.</param>
         public bool InRange(EntityUid pointer, EntityCoordinates coordinates, EntityUid? target = null)
         {
-            if (HasComp<GhostComponent>(pointer))
-                return _transform.InRange(Transform(pointer).Coordinates, coordinates, PointingRange);
-
             if (target != null)
             {
                 var ev = new InRangeOverrideEvent(pointer, target.Value);
@@ -126,6 +123,9 @@ namespace Content.Server.Pointing.EntitySystems
                 if (ev.Handled)
                     return ev.InRange;
             }
+
+            if (HasComp<GhostComponent>(pointer))
+                return _transform.InRange(Transform(pointer).Coordinates, coordinates, PointingRange);
 
             return _examine.InRangeUnOccluded(pointer, coordinates, PointingRange, predicate: e => e == pointer);
         }
@@ -187,12 +187,12 @@ namespace Content.Server.Pointing.EntitySystems
                 }
             }
 
-            var layer = (int) VisibilityFlags.Normal;
+            var layer = (int)VisibilityFlags.Normal;
             if (TryComp(player, out VisibilityComponent? playerVisibility))
             {
                 var arrowVisibility = EnsureComp<VisibilityComponent>(arrow);
                 layer = playerVisibility.Layer;
-                _visibilitySystem.SetLayer((arrow, arrowVisibility), (ushort) layer);
+                _visibilitySystem.SetLayer((arrow, arrowVisibility), (ushort)layer);
             }
 
             // Get players that are in range and whose visibility layer matches the arrow's.

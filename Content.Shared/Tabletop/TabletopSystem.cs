@@ -10,8 +10,8 @@ using Content.Shared.Popups;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
 using Content.Shared.Verbs;
-using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -24,7 +24,7 @@ namespace Content.Shared.Tabletop;
 /// Works using a dedicated map for board game boards.
 /// All tabletop windows have views into this map, where pieces can be dragged about by anyone playing the game.
 /// </summary>
-public abstract partial class SharedTabletopSystem : EntitySystem
+public abstract partial class TabletopSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IGameTiming _timing = default!;
@@ -38,9 +38,10 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     [Dependency] protected SharedUserInterfaceSystem UI = default!;
     [Dependency] private SharedViewSubscriberSystem _viewSubscriber = default!;
 
-    [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery;
     [Dependency] private EntityQuery<ActorComponent> _actorQuery;
+    [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery;
     [Dependency] private EntityQuery<ItemComponent> _itemQuery;
+    [Dependency] private EntityQuery<MapComponent> _mapQuery;
     [Dependency] private EntityQuery<TabletopBackgroundComponent> _backgroundQuery;
     [Dependency] protected EntityQuery<TabletopDraggableComponent> DraggableQuery;
     [Dependency] private EntityQuery<TabletopGameComponent> _gameQuery;
@@ -61,7 +62,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     /// The number of pixels per meter, used to determine board bounds.
     /// </summary>
     /// <remarks>
-    /// Yes this is disgusting but specifying "board size" off of a texture makes no sense in meters.
+    /// Yes, this is disgusting, but specifying "board size" off of a texture makes no sense in meters.
     /// </remarks>
     protected const float PixelsPerMeter = 32f;
 
@@ -268,7 +269,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         if (!IsPlaying(user, table))
             return;
 
-        // Only holograms are
+        // Only holograms can be removed, the original pieces should stay with the board.
         if (!_hologramQuery.TryComp(piece, out var hologram)
             || hologram.Table != table.Owner)
             return;
@@ -313,7 +314,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
 
         // Try to get existing tabletop visuals if we can (copying existing pieces), otherwise get this entity's prototype from its metadata.
         if (_appearanceQuery.TryComp(target, out AppearanceComponent? appearance)
-            && Appearance.TryGetData<string>(target, TabletopItemVisuals.Prototype, out var appearProto, appearance))
+            && Appearance.TryGetData<EntProtoId?>(target, TabletopItemVisuals.Prototype, out var appearProto, appearance))
         {
             Appearance.SetData(hologram, TabletopItemVisuals.Prototype, appearProto);
         }

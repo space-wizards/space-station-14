@@ -8,7 +8,7 @@ namespace Content.Shared.Tabletop.Components;
 /// A component that makes an object playable as a tabletop game.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
-[Access(typeof(SharedTabletopSystem), typeof(TabletopSetup))]
+[Access(typeof(TabletopSystem))]
 public sealed partial class TabletopGameComponent : Component
 {
     /// <summary>
@@ -26,7 +26,7 @@ public sealed partial class TabletopGameComponent : Component
     /// <summary>
     /// The size of the viewport being opened. Must match the board dimensions otherwise you'll get the space parallax (unless that's what you want).
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public Vector2i Size;
 
     /// <summary>
@@ -44,7 +44,7 @@ public sealed partial class TabletopGameComponent : Component
     /// <summary>
     /// The board entity for this game. Also functions as the camera.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField, ViewVariables]
     [AutoNetworkedField]
     public EntityUid? Board;
 }

@@ -18,34 +18,30 @@ public sealed partial class TabletopChessSetup : TabletopSetup
     public const float PieceOffsetX = -4.5f;
     public const float PieceOffsetY = 3.5f;
 
-    /// <inheritdoc />
-    public override void SetupTabletop(Entity<TabletopGameComponent> tabletop, MapCoordinates coordinates, EntityManager entityManager)
-    {
-        tabletop.Comp.Board = entityManager.SpawnEntity(BoardPrototype, coordinates);
+    // The size of a square on the board, in meters.
+    public const float PieceDistance = 1.0f;
 
-        SpawnPieces(tabletop, entityManager);
-    }
-
-    private void SpawnPieces(Entity<TabletopGameComponent> tabletop, EntityManager entityManager, float separation = 1f)
+    public override void SetupPieces(Entity<TabletopGameComponent> tabletop, EntityUid board, EntityManager entityManager)
     {
         var x = PieceOffsetX;
         var y = PieceOffsetY;
+        var separation = PieceDistance;
 
         // Spawn all black pieces.
-        SpawnPiecesRow(tabletop, entityManager, "Black", new(x, y), separation);
-        SpawnPawns(tabletop, entityManager, "Black", new(x, y - separation), separation);
+        SpawnPiecesRow(board, entityManager, "Black", new(x, y), separation);
+        SpawnPawns(board, entityManager, "Black", new(x, y - separation), separation);
 
         // Spawn all white pieces.
-        SpawnPawns(tabletop, entityManager, "White", new(x, y - 6 * separation), separation);
-        SpawnPiecesRow(tabletop, entityManager, "White", new(x, y - 7 * separation), separation);
+        SpawnPawns(board, entityManager, "White", new(x, y - 6 * separation), separation);
+        SpawnPiecesRow(board, entityManager, "White", new(x, y - 7 * separation), separation);
 
         // Extra queens.
-        SpawnPiece("BlackQueen", new(x + 9 * separation + 5f / 32, y - 3 * separation), tabletop, entityManager);
-        SpawnPiece("WhiteQueen", new(x + 9 * separation + 5f / 32, y - 4 * separation), tabletop, entityManager);
+        SpawnPiece("BlackQueen", new(x + 9 * separation + 5f / 32, y - 3 * separation), board, entityManager);
+        SpawnPiece("WhiteQueen", new(x + 9 * separation + 5f / 32, y - 4 * separation), board, entityManager);
     }
 
     // TODO: refactor to load FEN instead
-    private void SpawnPiecesRow(Entity<TabletopGameComponent> tabletop, EntityManager entityManager, string color, Vector2 left, float separation = 1f)
+    private void SpawnPiecesRow(EntityUid board, EntityManager entityManager, string color, Vector2 left, float separation = 1f)
     {
         const string piecesRow = "rnbqkbnr";
 
@@ -57,32 +53,32 @@ public sealed partial class TabletopChessSetup : TabletopSetup
             switch (piecesRow[i])
             {
                 case 'r':
-                    SpawnPiece(color + "Rook", coords, tabletop, entityManager);
+                    SpawnPiece(color + "Rook", coords, board, entityManager);
                     break;
                 case 'n':
-                    SpawnPiece(color + "Knight", coords, tabletop, entityManager);
+                    SpawnPiece(color + "Knight", coords, board, entityManager);
                     break;
                 case 'b':
-                    SpawnPiece(color + "Bishop", coords, tabletop, entityManager);
+                    SpawnPiece(color + "Bishop", coords, board, entityManager);
                     break;
                 case 'q':
-                    SpawnPiece(color + "Queen", coords, tabletop, entityManager);
+                    SpawnPiece(color + "Queen", coords, board, entityManager);
                     break;
                 case 'k':
-                    SpawnPiece(color + "King", coords, tabletop, entityManager);
+                    SpawnPiece(color + "King", coords, board, entityManager);
                     break;
             }
         }
     }
 
     // TODO: refactor to load FEN instead
-    private void SpawnPawns(Entity<TabletopGameComponent> tabletop, EntityManager entityManager, string color, Vector2 left, float separation = 1f)
+    private void SpawnPawns(EntityUid board, EntityManager entityManager, string color, Vector2 left, float separation = 1f)
     {
         var (x, y) = left;
 
         EntProtoId pawnProtoId = color + "Pawn";
 
         for (var i = 0; i < 8; i++)
-            SpawnPiece(pawnProtoId, new(x + i * separation, y), tabletop, entityManager);
+            SpawnPiece(pawnProtoId, new(x + i * separation, y), board, entityManager);
     }
 }

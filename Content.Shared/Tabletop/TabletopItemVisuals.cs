@@ -8,6 +8,6 @@ namespace Content.Shared.Tabletop;
 [Serializable, NetSerializable]
 public enum TabletopItemVisuals : byte
 {
-    /// <summary>The prototype that this piece should mimic, if any.</summary>
+    /// <summary><see cref="EntProtoId"/>: The prototype that this piece should mimic, if any.</summary>
     Prototype,
 }

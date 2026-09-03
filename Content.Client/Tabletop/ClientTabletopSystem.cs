@@ -2,12 +2,13 @@ using Content.Shared.Tabletop;
 using Content.Shared.Tabletop.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Tabletop;
 
 /// <inheritdoc />
 [UsedImplicitly]
-public sealed partial class TabletopSystem : SharedTabletopSystem
+public sealed partial class ClientTabletopSystem : TabletopSystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
 
@@ -18,7 +19,6 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
         UpdateDraggableAppearance(ent);
     }
 
-    #region Event handlers
     /// <summary>
     /// Hologram handler: sets up the hologram to mimic another entity's sprite.
     /// </summary>
@@ -29,7 +29,7 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
             return;
 
         // Do we have a new prototype to copy?
-        if (!Appearance.TryGetData<string>(ent, TabletopItemVisuals.Prototype, out var protoId, args.Component)
+        if (!args.TryGetData<EntProtoId?>(TabletopItemVisuals.Prototype, out var protoId)
             || ent.Comp.LastPrototype == protoId)
             return;
 
@@ -61,6 +61,13 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
         UpdateDraggableAppearance(ent);
     }
 
+    [SubscribeLocalEvent]
+    private void OnGameAutoHandleState(Entity<TabletopGameComponent> ent, ref AfterAutoHandleStateEvent _)
+    {
+        if (UI.TryGetOpenUi(ent.Owner, TabletopGameUiKey.Key, out var bui))
+            bui.Update();
+    }
+
     private void UpdateDraggableAppearance(Entity<TabletopDraggableComponent> ent, SpriteComponent? sprite = null)
     {
         if (sprite == null && !_spriteQuery.TryComp(ent, out sprite))
@@ -69,12 +76,4 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
         _sprite.SetScale((ent, sprite), ent.Comp.DraggingPlayer == null ? ent.Comp.NormalScale : ent.Comp.DraggedScale);
         _sprite.SetDrawDepth((ent, sprite), ent.Comp.DraggingPlayer == null ? ent.Comp.NormalDrawDepth : ent.Comp.DraggedDrawDepth);
     }
-
-    [SubscribeLocalEvent]
-    private void OnGameAutoHandleState(Entity<TabletopGameComponent> ent, ref AfterAutoHandleStateEvent _)
-    {
-        if (UI.TryGetOpenUi(ent.Owner, TabletopGameUiKey.Key, out var bui))
-            bui.Update();
-    }
-    #endregion
 }

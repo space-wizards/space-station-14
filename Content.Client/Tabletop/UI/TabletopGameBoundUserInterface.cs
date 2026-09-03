@@ -6,21 +6,16 @@ using Robust.Shared.Map;
 namespace Content.Client.Tabletop.UI;
 
 /// <summary>
-/// A bound UI for tabletop games.
-/// Sets up the window into the game and handles rotation and drag events.
+/// A BUI for tabletop games, wraps a <see cref="TabletopWindow"/>.
 /// </summary>
-public sealed partial class TabletopGameBoundUserInterface : BoundUserInterface
+/// <seealso cref="TabletopGameComponent"/>
+public sealed partial class TabletopGameBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private TabletopWindow? _window;
 
     [ViewVariables]
     private EntityUid? _lastBoard;
-
-    /// <inheritdoc cref="TabletopGameBoundUserInterface"/>
-    public TabletopGameBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
 
     /// <inheritdoc />
     protected override void Open()

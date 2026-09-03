@@ -11,8 +11,8 @@ public sealed partial class TabletopHologramComponent : Component
 {
     /// <summary>
     /// The prototype that this hologram is mimicking.
-    /// <seealso cref="TabletopItemVisuals.Prototype"/>
     /// </summary>
+    /// <seealso cref="TabletopItemVisuals.Prototype"/>
     [DataField]
     public EntProtoId? LastPrototype;
 

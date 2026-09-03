@@ -6,7 +6,7 @@ namespace Content.Shared.Tabletop.Components;
 /// Component for marking an entity as currently playing a tabletop.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedTabletopSystem))]
+[Access(typeof(TabletopSystem))]
 public sealed partial class TabletopGamerComponent : Component
 {
     /// <summary>
@@ -14,5 +14,5 @@ public sealed partial class TabletopGamerComponent : Component
     /// </summary>
     [DataField]
     [AutoNetworkedField]
-    public EntityUid Tabletop = EntityUid.Invalid;
+    public EntityUid Tabletop;
 }

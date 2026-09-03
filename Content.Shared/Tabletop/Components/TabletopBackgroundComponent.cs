@@ -7,5 +7,5 @@ namespace Content.Shared.Tabletop.Components;
 /// Useful for pointing.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(SharedTabletopSystem))]
+[Access(typeof(TabletopSystem))]
 public sealed partial class TabletopBackgroundComponent : Component;

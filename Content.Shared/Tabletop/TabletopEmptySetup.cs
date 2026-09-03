@@ -1,6 +1,5 @@
 using Content.Shared.Tabletop.Components;
 using JetBrains.Annotations;
-using Robust.Shared.Map;
 
 namespace Content.Shared.Tabletop;
 
@@ -10,9 +9,7 @@ namespace Content.Shared.Tabletop;
 [UsedImplicitly]
 public sealed partial class TabletopEmptySetup : TabletopSetup
 {
-    /// <inheritdoc />
-    public override void SetupTabletop(Entity<TabletopGameComponent> tabletop, MapCoordinates coordinates, EntityManager entityManager)
+    public override void SetupPieces(Entity<TabletopGameComponent> tabletop, EntityUid board, EntityManager entityManager)
     {
-        tabletop.Comp.Board = entityManager.SpawnEntity(BoardPrototype, coordinates);
     }
 }

@@ -13,7 +13,7 @@ namespace Content.Shared.Tabletop.Events;
 public sealed class TabletopMoveEvent(NetEntity movedEntityUid, Vector2 position, NetEntity tableUid) : EntityEventArgs
 {
     /// <summary>
-    /// The UID of the entity being moved.
+    /// The <see cref="NetEntity"/> of the entity being moved.
     /// </summary>
     public NetEntity MovedEntityUid = movedEntityUid;
 
@@ -23,7 +23,7 @@ public sealed class TabletopMoveEvent(NetEntity movedEntityUid, Vector2 position
     public Vector2 Position = position;
 
     /// <summary>
-    /// The UID of the table the entity is being moved on.
+    /// The <see cref="NetEntity"/> of the table the entity is being moved on.
     /// </summary>
     public NetEntity TableUid = tableUid;
 }

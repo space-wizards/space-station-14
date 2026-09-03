@@ -2,12 +2,11 @@ using System.Numerics;
 using Content.Shared.GameTicking;
 using Content.Shared.Maths;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 
 namespace Content.Shared.Tabletop;
 
 // A collection of methods for creating board game entities on a dedicated map.
-public abstract partial class SharedTabletopSystem
+public abstract partial class TabletopSystem
 {
     /// <summary>
     /// Separation between tabletops in the tabletop map.
@@ -61,7 +60,7 @@ public abstract partial class SharedTabletopSystem
         TabletopMap = mapId;
         _tabletops = 0;
 
-        var mapComp = Comp<MapComponent>(mapUid);
+        var mapComp = _mapQuery.Comp(mapUid);
 
         // Lighting is always disabled in tabletop world.
         mapComp.LightingEnabled = false;

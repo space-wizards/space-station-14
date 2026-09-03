@@ -5,7 +5,7 @@ using Robust.Shared.Player;
 namespace Content.Shared.Tabletop;
 
 // An API for setting up tabletop sessions.
-public abstract partial class SharedTabletopSystem
+public abstract partial class TabletopSystem
 {
     /// <summary>
     /// Ensures that the <see cref="TabletopGameComponent"/> in the entity passed has a valid board and pieces.
@@ -26,7 +26,7 @@ public abstract partial class SharedTabletopSystem
         var position = new MapCoordinates(GetNextTabletopPosition(), TabletopMap);
 
         // Since this is the first time opening this session, set up the game.
-        ent.Comp.Setup.SetupTabletop((ent, ent.Comp), position, EntityManager);
+        ent.Comp.Board = ent.Comp.Setup.SetupBoard((ent, ent.Comp), position, EntityManager);
 
         if (ent.Comp.Board is { } board)
             EnsureComp<EyeComponent>(board);

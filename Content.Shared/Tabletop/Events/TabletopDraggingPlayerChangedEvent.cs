@@ -3,14 +3,16 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Tabletop.Events;
 
 /// <summary>
-/// Event to tell other clients that we are dragging this item. Necessery to handle multiple users
-/// trying to move a single item at the same time.
+/// Event to tell other clients that we are dragging this item.
 /// </summary>
+/// <remarks>
+/// Necessery to handle multiple users trying to move a single item at the same time.
+/// </remarks>
 [Serializable, NetSerializable]
 public sealed class TabletopDraggingPlayerChangedEvent(NetEntity draggedEntityUid, bool isDragging) : EntityEventArgs
 {
     /// <summary>
-    /// The UID of the entity being dragged.
+    /// The <see cref="NetEntity"/> of the entity being dragged.
     /// </summary>
     public NetEntity DraggedEntityUid = draggedEntityUid;
 

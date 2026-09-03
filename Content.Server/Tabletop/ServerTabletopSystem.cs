@@ -3,4 +3,4 @@ using Content.Shared.Tabletop;
 namespace Content.Server.Tabletop;
 
 /// <inheritdoc />
-public sealed partial class TabletopSystem : SharedTabletopSystem;
+public sealed partial class ServerTabletopSystem : TabletopSystem;
