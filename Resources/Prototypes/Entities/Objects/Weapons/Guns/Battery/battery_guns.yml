@@ -602,7 +602,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: BatteryAmmoProvider
-    proto: BulletDisablerSmg
+    proto: BulletDisablerSmgSlowing
     fireCost: 25
   - type: MagazineVisuals
     magState: mag
