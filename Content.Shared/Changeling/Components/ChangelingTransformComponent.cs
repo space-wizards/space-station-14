@@ -1,6 +1,5 @@
 using Content.Shared.Changeling.Systems;
 using Content.Shared.Cloning;
-using Content.Shared.StatusIcon;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
