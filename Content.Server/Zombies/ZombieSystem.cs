@@ -289,8 +289,9 @@ namespace Content.Server.Zombies
         /// <param name="target">the entity you want to unzombify (different from source in case of cloning, for example)</param>
         /// <param name="zombiecomp"></param>
         /// <remarks>
-        ///     this currently only restore the skin/eye color from before zombified
+        ///     this currently only restores the skin/eye color from before zombified + removes clumsy zombie status effect
         ///     TODO: completely rethink how zombies are done to allow reversal.
+        ///     TODO: maybe move to ZombieSystem.Transform.cs?
         /// </remarks>
         public bool UnZombify(EntityUid source, EntityUid target, ZombieComponent? zombiecomp)
         {
@@ -301,6 +302,8 @@ namespace Content.Server.Zombies
             _visualBody.ApplyMarkings(target, zombiecomp.BeforeZombifiedMarkings);
 
             _bloodstream.ChangeBloodReagents(target, zombiecomp.BeforeZombifiedBloodReagents);
+
+            _statusEffects.TryRemoveStatusEffect(target, ClumsyZombieStatus);
 
             return true;
         }
