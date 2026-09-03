@@ -51,7 +51,6 @@ public sealed partial class PlantMutateChemicals : EntityEffectBase<PlantMutateC
                 }
             }
         }
-
         var names = ContentLocalizationManager.FormatListToOr(list);
 
         return Loc.GetString("entity-effect-guidebook-plant-mutate-chemicals", ("chance", Probability), ("name", names));

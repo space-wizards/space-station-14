@@ -145,7 +145,6 @@ public sealed partial class PlantSystem : EntitySystem
             DirtyField(ent, ent.Comp, nameof(ent.Comp.MutationLevels));
             _mutation.CheckRandomMutations(ent.Owner, mutationTable, Math.Min(mutationBuildup, ent.Comp.MaxMutationLevel));
         }
-
         if (ent.Comp.Health <= 0)
             _plantHolder.KillPlant(ent.Owner);
     }
