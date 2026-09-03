@@ -42,17 +42,17 @@
   - type: MeleeBatteryHitsLeft
   - type: StaminaDamageOnHitRequiresToggle
   - type: StaminaDamageOnHitRequiresCharge
-    requiredCharge: 120
+    requiredCharge: 100
   - type: StaminaDamageOnHit
-    damage: 35
+    damage: 23
     sound: /Audio/Weapons/egloves.ogg
   - type: StaminaDamageOnCollide
-    damage: 35
+    damage: 23
     sound: /Audio/Weapons/egloves.ogg
   - type: LandAtCursor # it deals stamina damage when thrown
   - type: Battery
-    maxCharge: 360
-    startingCharge: 360
+    maxCharge: 700
+    startingCharge: 700
   - type: UseDelay
   - type: Item
     heldPrefix: off
