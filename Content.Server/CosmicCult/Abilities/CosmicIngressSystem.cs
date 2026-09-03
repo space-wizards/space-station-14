@@ -3,6 +3,8 @@ using Content.Shared.CosmicCult;
 using Content.Shared.CosmicCult.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
+using Content.Shared.Tools.Components;
+using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.CosmicCult.Abilities;
@@ -10,6 +12,7 @@ namespace Content.Server.CosmicCult.Abilities;
 public sealed partial class CosmicIngressSystem : EntitySystem
 {
     [Dependency] private DoorSystem _door = default!;
+    [Dependency] private WeldableSystem _weld = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
 
@@ -20,17 +23,26 @@ public sealed partial class CosmicIngressSystem : EntitySystem
             return;
 
         var target = args.Target;
+
         if (args.Handled)
             return;
 
-        args.Handled = true;
+        if (action.Empowered)
+        {
+            if (TryComp<DoorBoltComponent>(target, out var doorBolt))
+                _door.SetBoltsDown((target, doorBolt), false);
 
-        if (action.Empowered && TryComp<DoorBoltComponent>(target, out var doorBolt))
-            _door.SetBoltsDown((target, doorBolt), false);
+            if (HasComp<WeldableComponent>(target))
+                _weld.SetWeldedState(target, false);
+        }
 
-        _door.StartOpening(target);
-        _audio.PlayPvs(uid.Comp.IngressSfx, uid);
-        Spawn(CosmicCultSystem.GenericVfx, Transform(target).Coordinates);
+        // TODO: Predicted opening when this is moved to shared.
+        if (_door.TryOpen(target, user: args.Performer, checkAccess: false))
+        {
+            args.Handled = true;
+            _audio.PlayPvs(uid.Comp.IngressSfx, uid);
+            Spawn(CosmicCultSystem.GenericVfx, Transform(target).Coordinates);
+        }
     }
 
     [SubscribeLocalEvent]

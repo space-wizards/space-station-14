@@ -115,6 +115,7 @@
       components:
       - Door
     event: !type:EventCosmicIngress {}
+  - type: CosmicIngressAction
 
 - type: entity
   parent: BaseMentalAction
