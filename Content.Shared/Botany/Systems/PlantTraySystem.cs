@@ -65,7 +65,7 @@ public sealed partial class PlantTraySystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnPlantTerminating(Entity<PlantComponent> ent, ref EntityTerminatingEvent args)
+    private void OnPlantTerminating(Entity<PlantComponent> ent, ref ComponentShutdown args)
     {
         var trayUid = Transform(ent).ParentUid;
 

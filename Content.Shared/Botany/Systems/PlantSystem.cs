@@ -1,9 +1,9 @@
 using System.Linq;
-using JetBrains.Annotations;
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
 using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Examine;
+using JetBrains.Annotations;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Botany.Systems;
@@ -18,8 +18,8 @@ public sealed partial class PlantSystem : EntitySystem
     [Dependency] private PlantMutationSystem _mutation = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
 
-    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery = default!;
-    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery = default!;
+    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery;
+    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery;
 
     private readonly List<Entity<PlantHolderComponent>> _holdersToUpdate = [];
 
