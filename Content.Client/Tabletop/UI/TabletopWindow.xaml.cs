@@ -59,7 +59,7 @@ public sealed partial class TabletopWindow : DefaultWindow
     /// <summary>
     /// The minimum distance, in pixels, required to move before sending an update to another player.
     /// </summary>
-    public const float MinDragUpdateDistance = 2f / EyeManager.PixelsPerMeter;
+    public const float MinDragUpdateDistance = 1f / EyeManager.PixelsPerMeter;
     public const float MinDragUpdateSquaredDistance = MinDragUpdateDistance * MinDragUpdateDistance;
 
     /// <inheritdoc cref="TabletopWindow"/>

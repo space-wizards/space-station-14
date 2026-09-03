@@ -29,7 +29,7 @@ public sealed partial class ClientTabletopSystem : TabletopSystem
             return;
 
         // Do we have a new prototype to copy?
-        if (!args.TryGetData<EntProtoId?>(TabletopItemVisuals.Prototype, out var protoId)
+        if (!args.TryGetData<string>(TabletopItemVisuals.Prototype, out var protoId)
             || ent.Comp.LastPrototype == protoId)
             return;
 

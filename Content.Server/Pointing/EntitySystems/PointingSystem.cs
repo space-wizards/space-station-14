@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Server.Administration.Logs;
 using Content.Server.Pointing.Components;
 using Content.Shared.CCVar;
@@ -173,7 +174,12 @@ namespace Content.Server.Pointing.EntitySystems
 
             if (TryComp<PointingArrowComponent>(arrow, out var pointing))
             {
-                pointing.StartPosition = _transform.ToCoordinates((arrow, Transform(arrow)), _transform.ToMapCoordinates(Transform(player).Coordinates)).Position;
+                var playerTransform = Transform(player);
+                if (playerTransform.MapID == mapCoordsPointed.MapId)
+                    pointing.StartPosition = _transform.ToCoordinates((arrow, Transform(arrow)), _transform.ToMapCoordinates(playerTransform.Coordinates)).Position;
+                else
+                    pointing.StartPosition = Vector2.Zero;
+
                 pointing.EndTime = _gameTiming.CurTime + PointDuration;
 
                 Dirty(arrow, pointing);

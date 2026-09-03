@@ -1,5 +1,6 @@
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
+using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Shared.Map;
 
@@ -11,6 +12,8 @@ namespace Content.Client.Tabletop.UI;
 /// <seealso cref="TabletopGameComponent"/>
 public sealed partial class TabletopGameBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
+    [Dependency] private IPlayerManager _playerManager = default!;
+
     [ViewVariables]
     private TabletopWindow? _window;
 
@@ -60,7 +63,8 @@ public sealed partial class TabletopGameBoundUserInterface(EntityUid owner, Enum
     {
         var netPiece = EntMan.GetNetEntity(piece);
         var netTable = EntMan.GetNetEntity(Owner);
-        EntMan.RaisePredictiveEvent(new TabletopMoveEvent(netPiece, coordinates.Position, netTable));
+        var ev = new TabletopMoveEvent(netPiece, coordinates.Position, netTable);
+        EntMan.RaisePredictiveEvent(ev);
     }
 
     private void OnDragFinished(EntityUid piece)

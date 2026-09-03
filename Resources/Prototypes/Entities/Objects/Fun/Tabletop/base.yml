@@ -26,6 +26,7 @@
 # Entities dragged onto the board have their appearance copied onto one of these.
 - type: entity
   id: BaseTabletopPiece
+  name: board game piece
   description: A piece used for playing a board game.
   categories: [HideSpawnMenu]
   components:
@@ -36,6 +37,19 @@
   - type: Appearance
   - type: Clickable
   - type: InteractionOutline
+
+- type: entity
+  parent: BaseTabletopPiece
+  id: TabletopHologram
+  description: Hang on, where'd this come from?
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    layers: # Backup sprite definition, just to prevent invisible pieces.
+    - state: outer_ring
+      color: "#000000"
+    - state: inner_circle
+      color: "#ff00ff"
 
 # Entity that acts as the background sprite in tabletop games.
 - type: entity

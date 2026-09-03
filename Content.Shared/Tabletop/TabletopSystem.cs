@@ -51,7 +51,7 @@ public abstract partial class TabletopSystem : EntitySystem
     /// <summary>
     /// The prototype to use to represent items dragged into the tabletop map.
     /// </summary>
-    protected static readonly EntProtoId GamePiecePrototype = "BaseTabletopPiece";
+    protected static readonly EntProtoId GamePiecePrototype = "TabletopHologram";
 
     /// <summary>
     /// The maximum number of pieces to allow placement on a table.
@@ -314,7 +314,7 @@ public abstract partial class TabletopSystem : EntitySystem
 
         // Try to get existing tabletop visuals if we can (copying existing pieces), otherwise get this entity's prototype from its metadata.
         if (_appearanceQuery.TryComp(target, out AppearanceComponent? appearance)
-            && Appearance.TryGetData<EntProtoId?>(target, TabletopItemVisuals.Prototype, out var appearProto, appearance))
+            && Appearance.TryGetData<string>(target, TabletopItemVisuals.Prototype, out var appearProto, appearance))
         {
             Appearance.SetData(hologram, TabletopItemVisuals.Prototype, appearProto);
         }
