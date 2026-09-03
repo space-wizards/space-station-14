@@ -68,7 +68,7 @@ public sealed partial class ChatUIController : UIController
     [UISystemDependency] private readonly RoleCodewordSystem? _roleCodewordSystem = default!;
 
     private static readonly ProtoId<PalettePrototype> ChatNamePalette = "ChatNames";
-    private List<string> _chatNameColors = default!;
+    private List<string> _chatNameColors = new();
     private bool _chatNameColorsEnabled;
 
     private ISawmill _sawmill = default!;
