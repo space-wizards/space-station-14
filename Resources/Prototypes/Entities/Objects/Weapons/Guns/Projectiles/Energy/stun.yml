@@ -118,8 +118,10 @@
         - BulletImpassable
       fly-by: *flybyfixture
   - type: Ammo
-  - type: StaminaDamageOnCollide
-    damage: 33
+  - type: StunOnCollide
+    slowdownAmount: 1.3
+    walkSpeedModifier: 0.75
+    sprintSpeedModifier: 0.75
   - type: Projectile
     impactEffect: BulletImpactEffectDisabler
     damage:
@@ -203,8 +205,10 @@
         - BulletImpassable
       fly-by: *flybyfixture
   - type: Ammo
-  - type: StaminaDamageOnCollide
-    damage: 15
+  - type: StunOnCollide
+    slowdownAmount: 1.3
+    walkSpeedModifier: 0.6
+    sprintSpeedModifier: 0.6
   - type: Projectile
     impactEffect: BulletImpactEffectDisabler
     damage:
