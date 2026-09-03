@@ -17,7 +17,6 @@ public sealed partial class ChangelingLastResortSystem : SharedChangelingLastRes
 {
     private static readonly ProtoId<AntagSpecifierPrototype> ChangelingAntag = "Changeling";
 
-    [Dependency] private RejuvenateSystem _rejuvenate = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
@@ -99,8 +98,6 @@ public sealed partial class ChangelingLastResortSystem : SharedChangelingLastRes
 
     private void TakeOverCorpse(EntityUid user, EntityUid target, EntityUid mindId, MindComponent mind)
     {
-        // TODO: delete this after adding the stasis.
-        _rejuvenate.PerformRejuvenate(target);
         _mind.TransferTo(mindId, target, mind: mind);
 
         _antag.AssignAntagComponents(target, ChangelingAntag);

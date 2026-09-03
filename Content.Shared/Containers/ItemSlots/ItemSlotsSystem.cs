@@ -207,11 +207,13 @@ public sealed partial class ItemSlotsSystem : EntitySystem
                 AddItemSlot((ent.Owner, ent.Comp), serverKey, slot);
             }
         }
+
+        ent.Comp.AllowSmartEquip = state.AllowSmartEquip;
     }
 
     [SubscribeLocalEvent]
     private void GetItemSlotsState(Entity<ItemSlotsComponent> ent, ref ComponentGetState args)
     {
-        args.State = new ItemSlotsComponentState(ent.Comp.Slots);
+        args.State = new ItemSlotsComponentState(ent.Comp.Slots, ent.Comp.AllowSmartEquip);
     }
 }

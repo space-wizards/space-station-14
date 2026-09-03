@@ -176,7 +176,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
 
     private void OnAnchorChanged(Entity<PuddleComponent> entity, ref AnchorStateChangedEvent args)
     {
-        if (!args.Anchored)
+        if (!args.Anchored && !args.Detaching)
             PredictedQueueDel(entity.Owner);
     }
 

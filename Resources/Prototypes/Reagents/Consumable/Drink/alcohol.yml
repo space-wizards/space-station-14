@@ -1353,33 +1353,6 @@
         Ethanol: 0.5
 
 - type: reagent
-  id: Neurotoxin
-  name: reagent-name-neurotoxin
-  parent: BaseAlcohol
-  desc: reagent-desc-neurotoxin
-  physicalDesc: reagent-physical-desc-pungent
-  flavor: neurotoxin
-  color: "#2E2E61"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/neurotoxinglass.rsi
-    state: icon_empty
-  metamorphicMaxFillLevels: 5
-  metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
-  metabolisms:
-    Digestion:
-      metabolites:
-        Ethanol: 0.5
-      effects:
-      - !type:Satiate
-        satiationType: Thirst
-        factor: 2
-      - !type:HealthChange
-        damage:
-          types:
-            Poison: 1
-
-- type: reagent
   id: Painkiller
   name: reagent-name-painkiller
   parent: BaseAlcohol

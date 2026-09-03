@@ -58,6 +58,8 @@ namespace Content.Server.Atmos.EntitySystems
 
         private readonly Dictionary<Entity<FlammableComponent>, float> _fireEvents = new();
 
+        private const int FirestackEnergy = 37500; // joules release when on fire
+
         public override void Initialize()
         {
             UpdatesAfter.Add(typeof(AtmosphereSystem));
@@ -475,7 +477,7 @@ namespace Content.Server.Atmos.EntitySystems
                     var source = EnsureComp<IgnitionSourceComponent>(uid);
                     _ignitionSourceSystem.SetIgnited((uid, source));
 
-                    _temperatureSystem.ChangeHeat(uid, 12500 * flammable.FireStacks, false);
+                    _temperatureSystem.ChangeHeat(uid, FirestackEnergy * flammable.FireStacks, false);
 
                     var ev = new GetFireProtectionEvent();
                     // let the thing on fire handle it
@@ -493,6 +495,27 @@ namespace Content.Server.Atmos.EntitySystems
                     TryExtinguish((uid, flammable));
                 }
             }
+        }
+
+        public void CopyComponent(Entity<FlammableComponent?> entity, EntityUid clone)
+        {
+            if (!Resolve(entity, ref entity.Comp, false))
+                return;
+
+            // Don't clone being on fire here.
+            var cloneComp = EnsureComp<FlammableComponent>(clone);
+            cloneComp.Displacement = entity.Comp.Displacement;
+            cloneComp.AlwaysCombustible = entity.Comp.AlwaysCombustible;
+            cloneComp.CanExtinguish = entity.Comp.CanExtinguish;
+            cloneComp.Damage = entity.Comp.Damage.Clone();
+            cloneComp.FirestackFade = entity.Comp.FirestackFade;
+            cloneComp.FirestacksOnIgnite = entity.Comp.FirestacksOnIgnite;
+            cloneComp.MaximumFireStacks = entity.Comp.MaximumFireStacks;
+            cloneComp.MinimumFireStacks = entity.Comp.MinimumFireStacks;
+            cloneComp.ResistTime = entity.Comp.ResistTime;
+            Dirty(clone, cloneComp);
+
+            UpdateAppearance(clone, cloneComp);
         }
     }
 }
