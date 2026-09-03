@@ -135,9 +135,9 @@ public sealed partial class PlantSystem : EntitySystem
         RaiseLocalEvent(ent.Owner, ref plantGrow);
 
         // Process mutations.
-        var mutationLevels = ent.Comp.MutationLevels.ToArray();
-        foreach (var (mutationTable, mutationBuildup) in mutationLevels)
+        foreach (var mutationTable in ent.Comp.MutationLevels.Keys)
         {
+            var mutationBuildup = ent.Comp.MutationLevels[mutationTable];
             if (mutationBuildup <= 0)
                 continue;
 
