@@ -25,7 +25,7 @@ public sealed partial class UnpoweredFlashlightComponent : Component
     public EntityUid? ToggleActionEntity;
 
     /// <summary>
-    ///  <see cref="PalettePrototype"/> ID that determines the list
+    /// <see cref="PalettePrototype"/> ID that determines the list
     /// of colors to select from when we get emagged
     /// </summary>
     [DataField]
