@@ -44,10 +44,23 @@ public sealed partial class GuardianCreatorComponent : Component
     public LocId GuardianHauntedPopup = "guardian-created";
 
     /// <summary>
-    /// The prototype of the guardian entity which will be created
+    /// The prototypes of the guardian entities which will be created
     /// </summary>
     [DataField(required: true)]
-    public EntProtoId? GuardianProto { get; set; }
+    public List<ProtoId<GuardianEntryPrototype>> Guardians { get; set; }
+
+    /// <summary>
+    /// If true, then the user will get a radial UI to choose its guardian (from Guardians).
+    /// If false, the guardian will be randomly picked.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool CanChoose = true;
+
+    /// <summary>
+    /// Current selected guardian type.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public uint Selected = 0;
 
     /// <summary>
     /// How long it takes to inject someone.

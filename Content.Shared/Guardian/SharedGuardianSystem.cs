@@ -1,7 +1,9 @@
 using Content.Shared.Actions;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
+using Content.Shared.EntityEffects;
 using Content.Shared.Examine;
+using Content.Shared.FixedPoint;
 using Content.Shared.Gibbing;
 using Content.Shared.Guardian.Components;
 using Content.Shared.Hands.Components;
@@ -12,9 +14,16 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mech.EntitySystems;
 using Content.Shared.Mobs;
 using Content.Shared.Popups;
+using Content.Shared.Random.Helpers;
+using Content.Shared.StatusEffectNew;
+using Content.Shared.StatusEffectNew.Components;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -23,7 +32,7 @@ namespace Content.Shared.Guardian;
 /// <summary>
 /// A guardian has a host it's attached to that it fights for. A fighting spirit.
 /// </summary>
-public sealed partial class GuardianSystem : EntitySystem
+public abstract partial class SharedGuardianSystem : EntitySystem
 {
     [Dependency] private DamageableSystem _damage = default!;
     [Dependency] private GibbingSystem _gibbing = default!;
@@ -35,9 +44,116 @@ public sealed partial class GuardianSystem : EntitySystem
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
-
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private SharedEntityEffectsSystem _effects = default!;
+    [Dependency] private StatusEffectsSystem _status = default!;
     [Dependency] private EntityQuery<GuardianComponent> _guardianQuery;
     [Dependency] private EntityQuery<GuardianHostComponent> _guardianHostQuery;
+
+    private static readonly string GuardianPickerBuiXmlGeneratedName = "GuardianPickerBoundUserInterface";
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<GuardianCreatorComponent, MapInitEvent>(OnCreatorInit);
+        SubscribeLocalEvent<GuardianCreatorComponent, UseInHandEvent>(OnCreatorUse);
+        SubscribeLocalEvent<GuardianCreatorComponent, AfterInteractEvent>(OnCreatorInteract);
+        SubscribeLocalEvent<GuardianCreatorComponent, ExaminedEvent>(OnCreatorExamine);
+        SubscribeLocalEvent<GuardianCreatorComponent, GuardianCreatorDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<GuardianCreatorComponent, GuardianPickedMessage>(OnGuardianPicked);
+
+        SubscribeLocalEvent<GuardianComponent, ComponentShutdown>(OnGuardianShutdown);
+        SubscribeLocalEvent<GuardianComponent, MoveEvent>(OnGuardianMove);
+        SubscribeLocalEvent<GuardianComponent, DamageDealtEvent>(OnGuardianDamaged);
+        SubscribeLocalEvent<GuardianComponent, PlayerAttachedEvent>(OnGuardianPlayerAttached);
+        SubscribeLocalEvent<GuardianComponent, PlayerDetachedEvent>(OnGuardianPlayerDetached);
+
+        SubscribeLocalEvent<GuardianHostComponent, ComponentInit>(OnHostInit);
+        SubscribeLocalEvent<GuardianHostComponent, MoveEvent>(OnHostMove);
+        SubscribeLocalEvent<GuardianHostComponent, MobStateChangedEvent>(OnHostStateChange);
+        SubscribeLocalEvent<GuardianHostComponent, ComponentShutdown>(OnHostShutdown);
+
+        SubscribeLocalEvent<GuardianHostComponent, GuardianToggleActionEvent>(OnPerformAction);
+
+        SubscribeLocalEvent<GuardianComponent, AttackAttemptEvent>(OnGuardianAttackAttempt);
+
+        SubscribeLocalEvent<GuardianHostComponent, MechPilotRelayedEvent<GettingAttackedAttemptEvent>>(OnPilotAttackAttempt);
+
+        SubscribeLocalEvent<GuardianTrappedStatusEffectComponent, StatusEffectRelayedEvent<ContactInteractionEvent>>(OnTrapContact);
+        SubscribeLocalEvent<GuardianTrappedStatusEffectComponent, StatusEffectRelayedEvent<StartCollideEvent>>(OnTrapCollide);
+    }
+
+    private void OnTrapCollide(Entity<GuardianTrappedStatusEffectComponent> ent, ref StatusEffectRelayedEvent<StartCollideEvent> args)
+    {
+        TriggerTrap(ent.Comp, ent.Owner, args.Args.OtherEntity);
+    }
+
+    private void OnTrapContact(Entity<GuardianTrappedStatusEffectComponent> ent, ref StatusEffectRelayedEvent<ContactInteractionEvent> args)
+    {
+        TriggerTrap(ent.Comp, ent.Owner, args.Args.Other);
+    }
+
+    private void TriggerTrap(GuardianTrappedStatusEffectComponent comp, EntityUid statusEffect, EntityUid other)
+    {
+        if (HasComp<GuardianTrapImmuneComponent>(other))
+            return;
+
+        if (!TryComp<StatusEffectComponent>(statusEffect, out var effectComponent) || effectComponent.AppliedTo == null)
+            return;
+
+        var source = effectComponent.AppliedTo.Value;
+
+        if (comp.VictimEffects != null)
+            _effects.ApplyEffects(other, comp.VictimEffects, FixedPoint2.New(1f), source);
+
+        if (comp.SelfEffects != null)
+            _effects.ApplyEffects(source, comp.SelfEffects, FixedPoint2.New(1f), source);
+
+        _status.TryRemoveStatusEffect(source, comp.SelfPrototype);
+    }
+
+    private void OnGuardianPicked(Entity<GuardianCreatorComponent> ent, ref GuardianPickedMessage args)
+    {
+        if (ent.Comp.CanChoose && ent.Comp.Guardians.Count > args.ChosenGuardian)
+            ent.Comp.Selected = args.ChosenGuardian;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnCreatorGetAltVerb(Entity<GuardianCreatorComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (ent.Comp.Used || !ent.Comp.CanChoose)
+            return;
+
+        var user = args.User;
+
+        AlternativeVerb verb = new()
+        {
+            Act = () =>
+            {
+                OpenPickingUi(user, ent);
+            },
+            Text = Loc.GetString("guardian-pick-verb"),
+            Priority = 2
+        };
+
+        args.Verbs.Add(verb);
+    }
+
+    private void OpenPickingUi(EntityUid user, Entity<GuardianCreatorComponent> ent)
+    {
+        if (!TryComp<UserInterfaceComponent>(ent.Owner, out var userInterfaceComp))
+            return;
+
+        if (!_ui.IsUiOpen((ent.Owner, userInterfaceComp), GuardianPickerUiKey.Key, user))
+        {
+            _ui.OpenUi((ent.Owner, userInterfaceComp), GuardianPickerUiKey.Key, user);
+        }
+    }
+
+    private void OnCreatorInit(Entity<GuardianCreatorComponent> ent, ref MapInitEvent args)
+    {
+        var userInterfaceComp = EnsureComp<UserInterfaceComponent>(ent);
+        _ui.SetUi((ent, userInterfaceComp), GuardianPickerUiKey.Key, new InterfaceData(GuardianPickerBuiXmlGeneratedName));
+    }
 
     [SubscribeLocalEvent]
     private void OnGuardianShutdown(Entity<GuardianComponent> ent, ref ComponentShutdown args)
@@ -246,12 +362,24 @@ public sealed partial class GuardianSystem : EntitySystem
         if (!_hands.IsHolding(args.Args.User, ent.Owner) || _guardianHostQuery.HasComp(args.Args.Target))
             return;
 
+        if (ent.Comp.Selected >= ent.Comp.Guardians.Count)
+            return;
+
+        var index = (int)ent.Comp.Selected;
+        if (!ent.Comp.CanChoose)
+            index = Math.Abs(SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent.Owner)).Next()) % ent.Comp.Guardians.Count;
+        if (!ProtoMan.Resolve(ent.Comp.Guardians[index], out var prototype))
+            return;
+
+        if (prototype.Components != null && ProtoMan.Resolve(prototype.Components, out var comps))
+            EntityManager.AddComponents(args.Args.Target.Value, comps);
         var hostXform = Transform(args.Args.Target.Value);
         var host = EnsureComp<GuardianHostComponent>(args.Args.Target.Value);
 
         // Use map position so it's not inadvertently parented to the host + if it's in a container it spawns outside I guess.
-        var guardian = PredictedSpawnAtPosition(ent.Comp.GuardianProto,
+        var guardian = PredictedSpawnAtPosition(prototype.Guardian,
             _transform.GetMoverCoordinates(args.Args.Target.Value, xform: hostXform));
+
         _container.Insert(guardian, host.GuardianContainer);
         host.HostedGuardian = guardian;
 
@@ -330,7 +458,15 @@ public sealed partial class GuardianSystem : EntitySystem
     private void OnCreatorExamine(Entity<GuardianCreatorComponent> ent, ref ExaminedEvent args)
     {
         if (!ent.Comp.Used)
+        {
+            if (ent.Comp.Selected >= ent.Comp.Guardians.Count)
+                return;
+
+            if (ent.Comp.CanChoose && ProtoMan.Resolve(ent.Comp.Guardians[(int)ent.Comp.Selected], out var proto))
+                args.PushMarkup(Loc.GetString("guardian-picked-desc", ("type", Loc.GetString(proto.Title))));
+
             return;
+        }
 
         args.PushMarkup(Loc.GetString(ent.Comp.EmptyExamine));
     }
@@ -386,8 +522,24 @@ public sealed partial class GuardianSystem : EntitySystem
         if (!guardian.Comp.GuardianLoose)
             return;
 
-        if (!_transform.InRange(guardianXform.Coordinates, hostXform.Coordinates, guardian.Comp.DistanceAllowed))
+        if (!guardianXform.Coordinates.TryDistance(EntityManager, hostXform.Coordinates, out var dist))
+        {
             RetractGuardian((host.Owner, host.Comp), guardian);
+            return;
+        }
+
+        if (dist > guardian.Comp.HardCapDistance)
+        {
+            RetractGuardian((host.Owner, host.Comp), guardian);
+        }
+        else if (dist > guardian.Comp.DistanceAllowed)
+        {
+            var coords = _transform.ToMapCoordinates(hostXform.Coordinates);
+            var basePos = coords.Position;
+            var delta = _transform.ToMapCoordinates(guardianXform.Coordinates).Position - basePos;
+            var pos = basePos + delta / dist * (guardian.Comp.DistanceAllowed - 0.05f);
+            _transform.SetMapCoordinates(guardian.Owner, new MapCoordinates(pos, coords.MapId));
+        }
     }
 
     private void ReleaseGuardian(Entity<GuardianHostComponent> host, Entity<GuardianComponent> guardian)
