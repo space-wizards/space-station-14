@@ -33,6 +33,7 @@
       types:
         Shock: 5
   - type: MeleeWeapon
+    attackRate: 1.3
     wideAnimationRotation: -135
     damage:
       types:
