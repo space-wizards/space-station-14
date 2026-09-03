@@ -563,6 +563,26 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: StationTeleportersControlCircuitboard
+  name: teleporters control console board
+  description: A computer printed circuit board for a teleporter control console.
+  components:
+  - type: Sprite
+    state: cpu_command
+  - type: ComputerBoard
+    prototype: ComputerStationTeleportersControl
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SyndicateTeleportersControlCircuitboard
+  name: syndicate teleporters control console board
+  description: A computer printed circuit board for a teleporter control console.
+  components:
+  - type: ComputerBoard
+    prototype: ComputerSyndicateTeleportersControl
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: StationAiFixerCircuitboard
   name: AI restoration console board
   description: A computer printed circuit board for an AI restoration console console.

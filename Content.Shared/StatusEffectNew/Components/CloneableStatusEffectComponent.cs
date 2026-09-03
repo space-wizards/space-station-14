@@ -1,9 +1,11 @@
-﻿namespace Content.Shared.StatusEffectNew.Components;
+﻿using Robust.Shared.GameStates;
+
+namespace Content.Shared.StatusEffectNew.Components;
 
 /// <summary>
 /// A simple marker component for a <see cref="StatusEffectComponent"/> which allows this status effect to be cloned
 /// by the CloningSystem (for example for paradox clones, cloning pods or changeling transformations).
 /// This is used for traits that use permanent status effects.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class CloneableStatusEffectComponent : Component;

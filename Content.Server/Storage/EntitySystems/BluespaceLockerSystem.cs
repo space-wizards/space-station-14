@@ -86,7 +86,7 @@ public sealed partial class BluespaceLockerSystem : EntitySystem
 
         // Close target if it is open
         if (target.Value.storageComponent.Open)
-            _entityStorage.CloseStorage(target.Value.uid, target.Value.storageComponent);
+            _entityStorage.CloseStorage((target.Value.uid, target.Value.storageComponent));
 
         // Apply bluespace effects if target is not a bluespace locker, otherwise let it handle it
         if (target.Value.bluespaceLockerComponent == null)
@@ -352,7 +352,7 @@ public sealed partial class BluespaceLockerSystem : EntitySystem
             if (Resolve(target.Value.uid, ref lockComponent, false) && lockComponent.Locked)
                 _lockSystem.Unlock(target.Value.uid, target.Value.uid, lockComponent);
 
-            _entityStorage.OpenStorage(target.Value.uid, target.Value.storageComponent);
+            _entityStorage.OpenStorage((target.Value.uid, target.Value.storageComponent));
         }
 
         // Bluespace effects

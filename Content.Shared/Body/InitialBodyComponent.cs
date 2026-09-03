@@ -15,4 +15,10 @@ public sealed partial class InitialBodyComponent : Component
     /// </summary>
     [DataField(required: true)]
     public Dictionary<ProtoId<OrganCategoryPrototype>, EntProtoId<OrganComponent>> Organs;
+
+    /// <summary>
+    /// Organ relationships, based on their categories. Keys are parents to their values.
+    /// </summary>
+    [DataField]
+    public Dictionary<ProtoId<OrganCategoryPrototype>, HashSet<ProtoId<OrganCategoryPrototype>>>? Relationships;
 }

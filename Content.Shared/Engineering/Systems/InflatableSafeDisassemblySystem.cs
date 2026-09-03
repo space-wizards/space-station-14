@@ -28,7 +28,7 @@ public sealed partial class InflatableSafeDisassemblySystem : EntitySystem
         if (!HasComp<BalloonPopperComponent>(args.Used))
             return;
 
-        _popupSystem.PopupPredicted(
+        _popupSystem.PopupEntity(
             Loc.GetString("inflatable-safe-disassembly", ("item", args.Used), ("target", ent.Owner)),
             ent,
             args.User);

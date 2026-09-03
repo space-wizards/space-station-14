@@ -9,41 +9,43 @@ namespace Content.Shared.DrawDepth
         /// <summary>
         ///     This is for sub-floors, the floors you see after prying off a tile.
         /// </summary>
-        LowFloors = DrawDepthTag.Default - 20,
+        LowFloors = DrawDepthTag.Default - 22,
 
         // various entity types that require different
         // draw depths, as to avoid hiding
+        // If updating this set, update the gaps above Puddles and Overdoors.
         #region SubfloorEntities
-        ThickPipe = DrawDepthTag.Default - 19,
-        ThickWire = DrawDepthTag.Default - 18,
-        ThinPipeAlt2 = DrawDepthTag.Default - 17,
-        ThinPipeAlt1 = DrawDepthTag.Default - 16,
-        ThinPipe = DrawDepthTag.Default - 15,
-        ThinWire = DrawDepthTag.Default - 14,
+        ThickPipe = DrawDepthTag.Default - 21,
+        ThickWire = DrawDepthTag.Default - 20,
+        ThinPipeAlt2 = DrawDepthTag.Default - 19,
+        ThinPipeAlt1 = DrawDepthTag.Default - 18,
+        ThinPipe = DrawDepthTag.Default - 17,
+        ThinWire = DrawDepthTag.Default - 16,
         #endregion
 
         /// <summary>
         ///     Things that are beneath regular floors.
         /// </summary>
-        BelowFloor = DrawDepthTag.Default - 13,
+        BelowFloor = DrawDepthTag.Default - 15,
 
         /// <summary>
         ///     Used for entities like carpets.
         /// </summary>
-        FloorTiles = DrawDepthTag.Default - 12,
+        FloorTiles = DrawDepthTag.Default - 14,
 
         /// <summary>
         ///     Things that are actually right on the floor, like ice crust or atmos devices. This does not mean objects like
         ///     tables, even though they are technically "on the floor".
         /// </summary>
-        FloorObjects = DrawDepthTag.Default - 11,
+        FloorObjects = DrawDepthTag.Default - 13,
 
         /// <summary>
         //     Discrete drawdepth to avoid z-fighting with other FloorObjects but also above floor entities.
         /// </summary>
-        Puddles = DrawDepthTag.Default - 10,
+        Puddles = DrawDepthTag.Default - 12,
 
-        // There's a gap for subfloor entities to retain relative draw depth when revealed by a t-ray scanner.
+        // NOTE: There's a gap for subfloor entities to retain relative draw depth when revealed by a t-ray scanner (need 6 layers in between).
+
         /// <summary>
         //     Objects that are on the floor, but should render above puddles. This includes kudzu, holopads, telepads and levers.
         /// </summary>
@@ -112,22 +114,24 @@ namespace Content.Shared.DrawDepth
         /// </summary>
         Overdoors = DrawDepthTag.Default + 10,
 
+        // NOTE: There's a gap here for subfloor layers in mapping mode (need 6 layers in between)
+
         /// <summary>
         ///     Visible atmos gas.
         /// </summary>
-        Gasses = DrawDepthTag.Default + 11,
+        Gasses = DrawDepthTag.Default + 17,
 
         /// <summary>
         ///     Explosions, fire, melee swings. Whatever.
         /// </summary>
-        Effects = DrawDepthTag.Default + 12,
+        Effects = DrawDepthTag.Default + 18,
 
-        Ghosts = DrawDepthTag.Default + 13,
+        Ghosts = DrawDepthTag.Default + 19,
 
         /// <summary>
         ///    Use this selectively if it absolutely needs to be drawn above (almost) everything else. Examples include
         ///    the pointing arrow, the drag & drop ghost-entity, and some debug tools.
         /// </summary>
-        Overlays = DrawDepthTag.Default + 14,
+        Overlays = DrawDepthTag.Default + 20,
     }
 }

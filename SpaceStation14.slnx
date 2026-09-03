@@ -150,6 +150,7 @@
     <Project Path="RobustToolbox/Robust.Server.IntegrationTests/Robust.Server.IntegrationTests.csproj" />
     <Project Path="RobustToolbox/Robust.Server.Testing/Robust.Server.Testing.csproj" />
     <Project Path="RobustToolbox/Robust.Server/Robust.Server.csproj" />
+    <Project Path="RobustToolbox/Robust.Shared.EntitySystemSubscriptionsGenerator/Robust.Shared.EntitySystemSubscriptionsGenerator.csproj" />
     <Project Path="RobustToolbox/Robust.Shared.IntegrationTests/Robust.Shared.IntegrationTests.csproj" />
     <Project Path="RobustToolbox/Robust.Shared.Maths.Testing/Robust.Shared.Maths.Testing.csproj" />
     <Project Path="RobustToolbox/Robust.Shared.Maths.Tests/Robust.Shared.Maths.Tests.csproj" />

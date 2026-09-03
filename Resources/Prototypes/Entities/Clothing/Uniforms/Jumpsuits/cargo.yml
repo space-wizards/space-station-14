@@ -1,0 +1,50 @@
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  id: ClothingUniformJumpsuitCargo
+  name: cargo tech jumpsuit
+  description: A sturdy jumpsuit, issued to members of the Cargo department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Cargo/cargotech.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  id: ClothingUniformJumpsuitSalvageSpecialist
+  name: salvage specialist's jumpsuit
+  description: It's a snappy jumpsuit with a sturdy set of overalls. It's very dirty.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Cargo/salvage.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitQM
+  name: quartermaster's jumpsuit
+  description: 'What can brown do for you?'
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Cargo/qm.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Cargo/qm.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitQMTurtleneck
+  name: quartermasters's turtleneck
+  description: A sharp turtleneck made for the hardy work environment of supply.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Cargo/qmturtle.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Cargo/qmturtle.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitQMFormal
+  name: quartermasters's formal suit
+  description: Inspired by the quartermasters of military's past, the perfect outfit for supplying a formal occasion.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Cargo/qmformal.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Cargo/qmformal.rsi

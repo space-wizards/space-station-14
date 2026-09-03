@@ -1,0 +1,93 @@
+- type: tile
+  id: FloorExoViscera
+  parent: BaseStationTile
+  name: tiles-exo-viscera
+  sprite: /Textures/Tiles/Exo/exo-viscera.png
+  variants: 3
+  footstepSounds:
+    collection: FootstepBlood
+  itemDrop: FloorTileItemExoViscera
+
+- type: tile
+  id: FloorExoHull
+  parent: BaseStationTile
+  name: tiles-exo-hull
+  sprite: /Textures/Tiles/Exo/exo-hull.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemExoHull
+
+- type: tile
+  id: FloorExoTechmaint
+  parent: BaseStationTile
+  name: tiles-exo-techmaint
+  sprite: /Textures/Tiles/Exo/exo-maint.png
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemExoTechmaint
+
+- type: tile
+  id: FloorExoHorizontal
+  parent: BaseStationTile
+  name: tiles-exo-horizontal
+  sprite: /Textures/Tiles/Exo/exo-horizontal.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemExoHorizontal
+
+- type: tile
+  id: FloorExoVertical
+  parent: BaseStationTile
+  name: tiles-exo-vertical
+  sprite: /Textures/Tiles/Exo/exo-vertical.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemExoVertical
+
+- type: tile
+  id: FloorExoCornerNE
+  parent: BaseStationTile
+  name: tiles-exo-corner-ne
+  sprite: /Textures/Tiles/Exo/exo-NE.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemExoCornerNE
+
+- type: tile
+  id: FloorExoCornerNW
+  parent: BaseStationTile
+  name: tiles-exo-corner-nw
+  sprite: /Textures/Tiles/Exo/exo-NW.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemExoCornerNW
+
+- type: tile
+  id: FloorExoCornerSE
+  parent: BaseStationTile
+  name: tiles-exo-corner-se
+  sprite: /Textures/Tiles/Exo/exo-SE.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemExoCornerSE
+
+- type: tile
+  id: FloorExoCornerSW
+  parent: BaseStationTile
+  name: tiles-exo-corner-sw
+  sprite: /Textures/Tiles/Exo/exo-SW.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemExoCornerSW
+
+- type: tile
+  id: FloorExoBorg
+  name: tiles-exo-borg
+  sprite: /Textures/Tiles/Exo/exo-borg.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemExoBorg
+  heatCapacity: 10000

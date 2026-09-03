@@ -108,7 +108,7 @@ public sealed partial class TriggerSystem : EntitySystem
         }
 
         if (ent.Comp.Popup != null)
-            _popup.PopupPredicted(Loc.GetString(ent.Comp.Popup.Value, ("device", ent.Owner)), ent.Owner, user);
+            _popup.PopupEntity(Loc.GetString(ent.Comp.Popup.Value, ("device", ent.Owner)), ent.Owner, user);
 
         AddComp<ActiveTimerTriggerComponent>(ent);
         var curTime = _timing.CurTime;

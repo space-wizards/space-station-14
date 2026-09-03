@@ -2,7 +2,7 @@
   id: Oxygen
   name: gas-oxygen
   abbreviation: gas-oxygen-abbreviation
-  molarHeatCapacity: 20
+  molarHeatCapacity: 29
   heatCapacityRatio: 1.4
   molarMass: 32
   color: '#2887E8'
@@ -14,7 +14,7 @@
   id: Nitrogen
   name: gas-nitrogen
   abbreviation: gas-nitrogen-abbreviation
-  molarHeatCapacity: 30
+  molarHeatCapacity: 29
   heatCapacityRatio: 1.4
   molarMass: 28
   color: '#DA1010'
@@ -25,7 +25,7 @@
   id: CarbonDioxide
   name: gas-carbon-dioxide
   abbreviation: gas-carbon-dioxide-abbreviation
-  molarHeatCapacity: 30
+  molarHeatCapacity: 37
   heatCapacityRatio: 1.3
   molarMass: 44
   color: '#4e4e4e'

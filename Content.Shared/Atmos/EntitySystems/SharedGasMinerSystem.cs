@@ -12,6 +12,7 @@ public abstract partial class SharedGasMinerSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<GasMinerComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<GasMinerComponent, AnchorStateChangedEvent>(OnMinerAnchorChanged);
     }
 
     private void OnExamine(Entity<GasMinerComponent> ent, ref ExaminedEvent args)
@@ -20,6 +21,9 @@ public abstract partial class SharedGasMinerSystem : EntitySystem
             return;
 
         var component = ent.Comp;
+
+        if (!component.ShowExamineText)
+            return;
 
         using (args.PushGroup(nameof(GasMinerComponent)))
         {
@@ -54,5 +58,17 @@ public abstract partial class SharedGasMinerSystem : EntitySystem
                 _ => throw new IndexOutOfRangeException(nameof(component.MinerState)),
             });
         }
+    }
+
+    // This is merely to update the examine text.
+    // when a gas miner with RequireAnchored (in the atmos device comp) set to true is unanchored,
+    // it leaves the atmosphere and stops receiving AtmosDeviceUpdateEvent which spawns the gas
+    private void OnMinerAnchorChanged(Entity<GasMinerComponent> entity, ref AnchorStateChangedEvent args)
+    {
+        if (!TryComp<AtmosDeviceComponent>(entity, out var atmosDevice))
+            return;
+
+        if (!args.Anchored && atmosDevice.RequireAnchored)
+            entity.Comp.MinerState = GasMinerState.Disabled;
     }
 }
