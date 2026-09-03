@@ -36,30 +36,28 @@ public sealed partial class ForcedItemStatusEffectSystem : EntitySystem
         if (!_net.IsServer)
             return;
 
-        if (entity.Comp.SuccessfullySpawned)
+        // No reapplying
+        if (entity.Comp.ItemEntities.Count != 0)
             return;
 
         foreach (var item in entity.Comp.HandItems)
         {
             var spawned = SpawnAtPosition(item, Transform(entity).Coordinates);
 
-            if (_hands.TryForcePickupAnyHand(args.Target, spawned, false))
-            {
-                if (entity.Comp.Unremovable)
-                    EnsureComp<UnremoveableComponent>(spawned);
+            var pickedUp = entity.Comp.DropExisting
+                ? _hands.TryForcePickupAnyHand(args.Target, spawned, false)
+                : _hands.TryPickupAnyHand(args.Target, spawned, false);
 
-                EnsureComp<ForcedItemStatusEffectItemComponent>(spawned, out var spawnedComp);
-                spawnedComp.StatusEffect = entity;
-                spawnedComp.RemoveWhenCuffed = entity.Comp.RemoveWhenCuffed;
-                entity.Comp.ItemEntities.Add(spawned);
+            if (entity.Comp.Unremovable)
+                EnsureComp<UnremoveableComponent>(spawned);
 
-                entity.Comp.SuccessfullySpawned = true;
-                Dirty(spawned, spawnedComp);
-            }
-            else
+            if (!pickedUp)
             {
                 QueueDel(spawned);
+                continue;
             }
+
+            TrackItem(spawned, entity);
         }
 
         foreach (var slot in entity.Comp.InventoryItems)
@@ -72,17 +70,16 @@ public sealed partial class ForcedItemStatusEffectSystem : EntitySystem
                     if (_inventory.TryUnequip(args.Target, container.ID, true, entity.Comp.Force) &&
                         SpawnItemInInventory(entity, slot.Value, args.Target, container.ID))
                     {
-                        entity.Comp.SuccessfullySpawned = true;
                         continue;
                     }
                 }
 
-                if (container.ContainedEntities.Count == 0 && SpawnItemInInventory(entity, slot.Value, args.Target, container.ID))
-                    entity.Comp.SuccessfullySpawned = true;
+                if (container.ContainedEntities.Count == 0)
+                    SpawnItemInInventory(entity, slot.Value, args.Target, container.ID);
             }
         }
 
-        if (!entity.Comp.SuccessfullySpawned)
+        if (entity.Comp.ItemEntities.Count == 0)
             return;
 
         _audio.PlayPvs(entity.Comp.SpawnSound, args.Target);
@@ -94,9 +91,6 @@ public sealed partial class ForcedItemStatusEffectSystem : EntitySystem
     {
         // Same reason as above.
         if (!_net.IsServer)
-            return;
-
-        if (!entity.Comp.SuccessfullySpawned)
             return;
 
         if (entity.Comp.ItemEntities.Count == 0)
@@ -176,12 +170,19 @@ public sealed partial class ForcedItemStatusEffectSystem : EntitySystem
         if (ent.Comp.Unremovable)
             EnsureComp<UnremoveableComponent>(itemUid.Value);
 
-        EnsureComp<ForcedItemStatusEffectItemComponent>(itemUid.Value, out var spawnedComp);
+        TrackItem(itemUid.Value, ent);
+
+        return true;
+    }
+
+    private void TrackItem(EntityUid item, Entity<ForcedItemStatusEffectComponent> ent)
+    {
+        EnsureComp<ForcedItemStatusEffectItemComponent>(item, out var spawnedComp);
         spawnedComp.StatusEffect = ent;
         spawnedComp.RemoveWhenCuffed = ent.Comp.RemoveWhenCuffed;
-        ent.Comp.ItemEntities.Add(itemUid.Value);
+        ent.Comp.ItemEntities.Add(item);
 
-        Dirty(itemUid.Value, spawnedComp);
-        return true;
+        Dirty(item, spawnedComp);
+        Dirty(ent);
     }
 }

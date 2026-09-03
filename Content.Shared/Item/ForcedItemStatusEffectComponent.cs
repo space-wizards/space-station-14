@@ -60,12 +60,6 @@ public sealed partial class ForcedItemStatusEffectComponent : Component
     public bool RemoveWhenCuffed = true;
 
     /// <summary>
-    /// Whether at least one item was successfully spawned by the effect.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool SuccessfullySpawned;
-
-    /// <summary>
     /// The sound to play when the item(s) spawn.
     /// </summary>
     [DataField, AutoNetworkedField]
