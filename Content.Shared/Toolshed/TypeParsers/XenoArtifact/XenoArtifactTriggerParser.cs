@@ -1,4 +1,3 @@
-using System.Linq;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
@@ -9,18 +8,18 @@ namespace Content.Shared.Toolshed.TypeParsers.XenoArtifact;
 
 /// <summary>
 /// Custom type parser for toolshed commands
-/// that lets choose entity prototype of XenoArtifact effect.
+/// that lets choose entity prototype of XenoArtifact trigger.
 /// </summary>
-public sealed partial class XenoEffectParser : CustomCompletionParser<ProtoId<EntityPrototype>>
+public sealed partial class XenoArtifactTriggerParser : CustomCompletionParser<ProtoId<EntityPrototype>>
 {
-    private static readonly ProtoId<EntityCategoryPrototype> EffectCategoryId = "XenoArtifactEffects";
+    private static readonly ProtoId<EntityCategoryPrototype> TriggerCategoryId = "XenoArtifactTriggers";
 
     [Dependency] private IPrototypeManager _prototype = default!;
 
     public override CompletionResult TryAutocomplete(ParserContext ctx, CommandArgument? arg)
     {
         var hint = ToolshedCommand.GetArgHint(arg, typeof(ProtoId<EntityPrototype>));
-        var completionOptions = CompletionHelper.EntityPrototypes(ctx.GetWord(), EffectCategoryId, _prototype);
+        var completionOptions = CompletionHelper.EntityPrototypes(ctx.GetWord(), TriggerCategoryId, _prototype);
         return CompletionResult.FromHintOptions(completionOptions, hint);
 
     }

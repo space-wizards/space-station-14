@@ -193,6 +193,7 @@
   - PlantTraitLigneous
   - PlantTraitScream
   - PlantTraitUnviable
+  - PlantTraitSeedless
 
 # for plant lifecycle clones
 - type: cloningSettings
@@ -202,7 +203,6 @@
   - PlantHolder
   # traits
   - PlantTraitSampled
-  - PlantTraitSeedless
 
 # for cloned items
 - type: cloningSettings

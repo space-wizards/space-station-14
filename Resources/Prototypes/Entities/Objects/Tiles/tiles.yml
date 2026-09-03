@@ -475,14 +475,12 @@
 # TODO add a catwalk tile item once tile smoothing is supported
 
 - type: entity
-  name: plastic floor
-  parent: FloorTileItemBase
+  parent: FloorTileItemSteel
   id: FloorTileItemPlastic
+  name: plastic floor
   components:
   - type: Sprite
-    state: steel # TODO need plastic sprite
-  - type: Item
-    heldPrefix: plastic
+    state: steel-plastic
   - type: FloorTile
     outputs:
     - Plating
@@ -491,12 +489,12 @@
     stackType: FloorTileStackPlastic
 
 - type: entity
-  parent: FloorTileItemPlastic
+  parent: FloorTileItemDark
   id: FloorTileItemDarkPlastic
   name: dark plastic floor
   components:
   - type: Sprite
-    state: dark # TODO need dark plastic sprite
+    state: dark-plastic
   - type: FloorTile
     outputs:
     - Plating
@@ -505,12 +503,12 @@
     stackType: FloorTileStackDarkPlastic
 
 - type: entity
-  parent: FloorTileItemPlastic
+  parent: FloorTileItemWhite
   id: FloorTileItemWhitePlastic
   name: white plastic floor
   components:
   - type: Sprite
-    state: white # TODO need white plastic sprite
+    state: white-plastic
   - type: FloorTile
     outputs:
     - Plating
