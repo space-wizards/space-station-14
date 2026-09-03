@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Resources;
 using Content.Shared.Overlays;
 using Robust.Client.Graphics;
@@ -18,7 +19,7 @@ public sealed partial class ImageOverlay : Overlay
     /// <inheritdoc/>
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
-    private readonly List<(ResPath Path, Color Color)> _texturesToDraw = new();
+    private readonly List<(ResPath Path, Color Color, Vector2 Scale)> _texturesToDraw = new();
 
     public ImageOverlay()
     {
@@ -26,7 +27,7 @@ public sealed partial class ImageOverlay : Overlay
     }
 
     /// <summary>
-    /// updates the list of active overlay textures. 
+    /// updates the list of active overlay textures.
     /// </summary>
     public void UpdateState(List<ImageOverlayComponent> components)
     {
@@ -34,19 +35,19 @@ public sealed partial class ImageOverlay : Overlay
         foreach (var comp in components)
         {
             if (comp.Active)
-                _texturesToDraw.Add((comp.PathToOverlayImage, comp.AdditionalColorOverlay));
+                _texturesToDraw.Add((comp.PathToOverlayImage, comp.AdditionalColorOverlay, comp.Scale));
         }
     }
 
     /// <summary>
-    /// Activates or deactivates the overlay texture. 
+    /// Activates or deactivates the overlay texture.
     /// </summary>
     public void SetActive(ImageOverlayComponent comp, bool isActive)
     {
         if (comp.Active == isActive) return; // prevents repetitious calls of this method
         comp.Active = isActive;
 
-        var overlayPair = (comp.PathToOverlayImage, comp.AdditionalColorOverlay);
+        var overlayPair = (comp.PathToOverlayImage, comp.AdditionalColorOverlay, comp.Scale);
         if (isActive)
             _texturesToDraw.Add(overlayPair);
         else
@@ -62,15 +63,15 @@ public sealed partial class ImageOverlay : Overlay
         var zoomFactor = _eyeManager.CurrentEye.Zoom.X;
         var screenRect = args.ViewportBounds;
 
-        foreach (var (path, color) in _texturesToDraw)
+        foreach (var (path, color, scale) in _texturesToDraw)
         {
             var texture = _resourceCache.GetTexture(path);
             var sc = args.ScreenHandle;
 
             sc.DrawRect(screenRect, color);
 
-            var regionWidth = texture.Width * zoomFactor;
-            var regionHeight = texture.Height * zoomFactor;
+            var regionWidth = texture.Width * (1 / scale.X) * zoomFactor;
+            var regionHeight = texture.Height * (1 / scale.Y) * zoomFactor;
 
             var left = (texture.Width / 2f) - (regionWidth / 2f);
             var top = (texture.Height / 2f) - (regionHeight / 2f);
