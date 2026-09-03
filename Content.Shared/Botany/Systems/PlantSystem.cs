@@ -135,11 +135,15 @@ public sealed partial class PlantSystem : EntitySystem
         RaiseLocalEvent(ent.Owner, ref plantGrow);
 
         // Process mutations.
-        if (ent.Comp.MutationLevel > 0)
+        foreach (var mutationTable in ent.Comp.MutationLevels.Keys)
         {
-            _mutation.CheckRandomMutations(ent.Owner, Math.Min(ent.Comp.MutationLevel, ent.Comp.MaxMutationLevel));
-            ent.Comp.MutationLevel = 0;
-            DirtyField(ent, ent.Comp, nameof(ent.Comp.MutationLevel));
+            var mutationBuildup = ent.Comp.MutationLevels[mutationTable];
+            if (mutationBuildup <= 0)
+                continue;
+
+            ent.Comp.MutationLevels[mutationTable] = 0;
+            DirtyField(ent, ent.Comp, nameof(ent.Comp.MutationLevels));
+            _mutation.CheckRandomMutations(ent.Owner, mutationTable, Math.Min(mutationBuildup, ent.Comp.MaxMutationLevel));
         }
 
         if (ent.Comp.Health <= 0)
