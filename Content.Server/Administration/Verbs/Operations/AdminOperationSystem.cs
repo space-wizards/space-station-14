@@ -1,6 +1,5 @@
 using Content.Server.GhostKick;
 using Content.Server.Popups;
-using Content.Server.Silicons.Laws;
 using Content.Shared.EntityEffects;
 
 namespace Content.Server.Administration.Verbs.Operations;
@@ -13,7 +12,6 @@ public sealed partial class AdminOperationSystem : EntitySystem
     [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
     [Dependency] private GhostKickManager _ghostKick = default!;
     [Dependency] private PopupSystem _popup = default!;
-    [Dependency] private SiliconLawSystem _siliconLaws = default!;
 
     /// <summary>
     /// Raises the strongly typed local event used by an operation's handler.

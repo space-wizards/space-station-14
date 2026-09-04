@@ -301,34 +301,26 @@
   icon:
     sprite: Interface/Actions/actions_borg.rsi
     state: state-laws
-  operations:
-  - !type:EntityEffectsOperation
-    effects:
-    - !type:AddComponents
-      replaceExisting: true
-      components:
-      - type: SiliconLawProvider
-        laws: Crewsimov
-  - !type:EntityEffectsOperation
-    effects:
-    - !type:AddUserInterfaces
-      interfaces:
-        enum.SiliconLawsUiKey.Key:
-          type: SiliconLawBoundUserInterface
-  - !type:SiliconLawBoundOperation
-  - !type:EntityEffectsOperation
-    effects:
-    - !type:AddAction
-      action: ActionViewLaws
-  - !type:EntityEffectsOperation
-    effects:
-    - !type:AddMindRole
-      role: MindRoleSiliconBrain
-  - !type:PopupOperation
-    message: admin-smite-silicon-laws-bound-self
-    recipients: Target
-    location: Entity
-    type: LargeCaution
+  effects:
+  - !type:AddComponents
+    replaceExisting: true
+    components:
+    - type: SiliconLawProvider
+      laws: Crewsimov
+  - !type:AddUserInterfaces
+    interfaces:
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+  - !type:SiliconLawBound
+  - !type:AddAction
+    action: ActionViewLaws
+  - !type:AddMindRole
+    role: MindRoleSiliconBrain
+  - !type:PopupMessage
+    messages: [ admin-smite-silicon-laws-bound-self ]
+    type: Local
+    method: PopupEntity
+    visualType: LargeCaution
 
 - type: adminSmite
   id: AdminSmiteChessDimension
