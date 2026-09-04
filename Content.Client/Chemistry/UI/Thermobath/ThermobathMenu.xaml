@@ -2,7 +2,7 @@
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
                       xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-                      SetSize="700 430"
+                      SetSize="700 432"
                       Resizable="False">
     <BoxContainer Orientation="Vertical" VerticalExpand="True">
         <BoxContainer Orientation="Horizontal" VerticalExpand="True" Margin="5">
@@ -14,7 +14,12 @@
                            HorizontalAlignment="Center"
                            Margin="8 2" />
                 </controls:StripeBack>
-                <PanelContainer StyleClasses="BackgroundPanelDark" Margin="2 4">
+                <PanelContainer Margin="2 4">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#1E272A"
+                                          BorderColor="#2C2F33"
+                                          BorderThickness="2" />
+                    </PanelContainer.PanelOverride>
                     <controls:SegmentDisplay Name="TemperatureVfd"
                                              MaxHeight="60"
                                              HorizontalAlignment="Center"
@@ -27,7 +32,12 @@
                            HorizontalAlignment="Center"
                            Margin="8 2" />
                 </controls:StripeBack>
-                <PanelContainer StyleClasses="BackgroundPanelDark" Margin="2 4">
+                <PanelContainer Margin="2 4">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#1E272A"
+                                          BorderColor="#2C2F33"
+                                          BorderThickness="2" />
+                    </PanelContainer.PanelOverride>
                     <controls:SegmentDisplay Name="SolutionTemperatureVfd"
                                              MaxHeight="60"
                                              HorizontalAlignment="Center"
@@ -40,7 +50,12 @@
                            HorizontalAlignment="Center"
                            Margin="8 2" />
                 </controls:StripeBack>
-                <PanelContainer StyleClasses="BackgroundPanelDark" Margin="2 4">
+                <PanelContainer Margin="2 4">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#1E272A"
+                                          BorderColor="#2C2F33"
+                                          BorderThickness="2" />
+                    </PanelContainer.PanelOverride>
                     <controls:SegmentDisplay Name="SetpointVfd"
                                              MaxHeight="60"
                                              HorizontalAlignment="Center"
@@ -60,7 +75,7 @@
                            HorizontalAlignment="Center"
                            Margin="10 2" />
                 </PanelContainer>
-                <PanelContainer StyleClasses="BackgroundPanelDark" Margin="0 0 0 2">
+                <PanelContainer StyleClasses="PanelInsetDeep" Margin="0 0 0 2">
                     <BoxContainer Orientation="Vertical" Margin="10 5">
                         <Slider Name="ModeSlider"
                                 MinValue="0"
@@ -95,9 +110,13 @@
                                    StyleClasses="LabelHeading"
                                    HorizontalAlignment="Center"
                                    FontColorOverride="#FF5555"
-                                   Margin="5" />
+                                   Margin="5 2" />
                         </BoxContainer>
-                        <PanelContainer StyleClasses="BackgroundPanelDark" Margin="0 0 0 8" VerticalExpand="True" MaxHeight="60" VerticalAlignment="Bottom">
+                        <PanelContainer StyleClasses="PanelInsetDeep"
+                                        Margin="0 0 0 8"
+                                        VerticalExpand="True"
+                                        MaxHeight="60"
+                                        VerticalAlignment="Bottom">
                             <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center"
                                           VerticalAlignment="Center" Margin="5">
                                 <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" Margin="8 0">
@@ -125,17 +144,15 @@
                         </PanelContainer>
                     </BoxContainer>
                     <BoxContainer Orientation="Vertical" HorizontalExpand="True">
-                        <PanelContainer Margin="0 0 0 5">
-                            <PanelContainer.PanelOverride>
-                                <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
-                            </PanelContainer.PanelOverride>
+                        <PanelContainer StyleClasses="PanelDark" Margin="0 0 0 5">
                             <Label Text="{Loc 'thermobath-menu-temperature-adjust'}"
                                    StyleClasses="LabelHeading"
                                    HorizontalAlignment="Center"
                                    Margin="5 2" />
                         </PanelContainer>
-                        <PanelContainer StyleClasses="BackgroundPanelDark" Margin="0 0 0 5">
-                            <BoxContainer Orientation="Horizontal" VerticalExpand="False" Margin="5 2">
+                        <PanelContainer StyleClasses="PanelInsetDeep" Margin="0 0 0 5">
+                            <BoxContainer Orientation="Horizontal" VerticalExpand="False" Margin="5 2"
+                                          SeparationOverride="5">
                                 <Button Name="DecreaseButton"
                                         Text="-"
                                         HorizontalExpand="True"
@@ -271,7 +288,7 @@
             </BoxContainer>
         </BoxContainer>
         <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom">
-            <PanelContainer StyleClasses="LowDivider" Margin="0 5 0 0" />
+            <PanelContainer StyleClasses="LowDivider" Margin="0 3 0 0" />
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
                 <Label Text="{Loc 'thermobath-menu-footer-warning'}"
                        StyleClasses="WindowFooterText"
