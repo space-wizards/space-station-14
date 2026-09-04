@@ -3,7 +3,6 @@ using Content.Shared.Cloning;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.GameTicking.Rules.Components;
 using Content.Shared.Gibbing.Components;
-using Content.Shared.Medical.SuitSensor;
 using Content.Shared.Medical.SuitSensors;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;

@@ -20,7 +20,7 @@
     layoutId: HighSec
     alwaysRandomize: true
   - type: Damageable
-    damageModifierSet: PlasteelMod
+    damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
     - trigger:

@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -16,6 +14,9 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using System.Collections.Frozen;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Content.Shared.Roles;
 
@@ -539,6 +540,41 @@ public abstract partial class SharedRoleSystem : EntitySystem
                 result = (uid, comp);
         }
         return result;
+    }
+
+    /// <summary>
+    /// Reads all <see cref="AntagTagPrototype"/> IDs on a mind and returns them.
+    /// </summary>
+    /// <param name="mind">The mind entity.</param>
+    /// <param name="tags">Antag tags from all roles that mind entity had. Null if mind had no roles marked as antag.</param>
+    /// <returns>A hashset of <see cref="AntagTagPrototype"/> IDs on the mind.</returns>
+    public bool TryGetAllAntagTags(Entity<MindComponent?> mind, [NotNullWhen(true)] out IReadOnlySet<ProtoId<AntagTagPrototype>>? tags)
+    {
+        tags = FrozenSet<ProtoId<AntagTagPrototype>>.Empty;
+        if (!Resolve(mind.Owner, ref mind.Comp))
+            return false;
+
+        var roles = MindGetAllRoleInfo(mind);
+        var antagTags = new HashSet<ProtoId<AntagTagPrototype>>();
+
+        var foundAntag = false;
+        foreach (var role in roles)
+        {
+            if (!role.Antagonist)
+                continue;
+
+            if (!ProtoMan.TryIndex<AntagPrototype>(role.Prototype, out var antag))
+                continue;
+
+            foundAntag = true;
+            foreach (var tag in antag.Tags)
+            {
+                antagTags.Add(tag);
+            }
+        }
+
+        tags = antagTags;
+        return foundAntag;
     }
 
     /// <summary>
