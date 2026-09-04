@@ -1,4 +1,3 @@
-﻿using Content.Server.Administration.Verbs.Operations;
 using Content.Shared.EntityEffects;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
@@ -29,12 +28,6 @@ public abstract partial class AdminVerbPrototype : IPrototype
 
     [DataField]
     public EntityWhitelist? Blacklist { get; private set; }
-
-    /// <summary>
-    /// Executed synchronously in the listed order, so later operations can rely on earlier ones.
-    /// </summary>
-    [DataField]
-    public AdminOperation[] Operations { get; private set; } = [];
 
     [DataField]
     public EntityEffect[] Effects { get; private set; } = [];

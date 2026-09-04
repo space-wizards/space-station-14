@@ -1,4 +1,3 @@
-using Content.Server.Administration.Verbs.Operations;
 using Content.Server.Administration.Verbs.Prototypes;
 using Content.Shared.Administration;
 using Content.Shared.Database;
@@ -12,7 +11,6 @@ namespace Content.Server.Administration.Systems;
 
 public sealed partial class AdminVerbSystem
 {
-    [Dependency] private AdminOperationSystem _adminOperations = default!;
     [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
@@ -55,7 +53,6 @@ public sealed partial class AdminVerbSystem
 
     private void ExecuteSmite(EntityUid target, EntityUid user, AdminSmitePrototype prototype)
     {
-        _adminOperations.Execute(target, user, prototype.Operations);
         _entityEffects.ApplyEffects(target, prototype.Effects, user: user);
     }
 }
