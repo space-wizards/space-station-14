@@ -1,8 +1,6 @@
 using Content.Server.GhostKick;
-using Content.Server.Mind;
 using Content.Server.Movement.Systems;
 using Content.Server.Popups;
-using Content.Server.Roles;
 using Content.Server.Silicons.Laws;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Tabletop;
@@ -33,11 +31,9 @@ public sealed partial class AdminOperationSystem : EntitySystem
     [Dependency] private FixtureSystem _fixtures = default!;
     [Dependency] private GhostKickManager _ghostKick = default!;
     [Dependency] private SharedGodmodeSystem _godmode = default!;
-    [Dependency] private MindSystem _mind = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private RoleSystem _role = default!;
     [Dependency] private SiliconLawSystem _siliconLaws = default!;
     [Dependency] private SlipperySystem _slippery = default!;
     [Dependency] private TabletopSystem _tabletop = default!;

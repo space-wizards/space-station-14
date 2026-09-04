@@ -314,8 +314,10 @@
     effects:
     - !type:AddAction
       action: ActionViewLaws
-  - !type:AddMindRoleOperation
-    role: MindRoleSiliconBrain
+  - !type:EntityEffectsOperation
+    effects:
+    - !type:AddMindRole
+      role: MindRoleSiliconBrain
   - !type:PopupOperation
     message: admin-smite-silicon-laws-bound-self
     recipients: Target
