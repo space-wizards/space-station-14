@@ -27,13 +27,22 @@ public sealed partial class PlantChangeTraitsEntityEffectSystem : EntityEffectSy
             return;
         }
 
-        if (args.Effect.Remove || HasComp(entity.Owner, traitType.GetType()))
+        switch (args.Effect.Type)
         {
-            RemCompDeferred(entity.Owner, traitType.GetType());
-        }
-        else
-        {
-            AddComp(entity.Owner, traitType);
+            case PlantChangeTraits.TraitModifyType.Add:
+                AddComp(entity.Owner, traitType);
+                break;
+            case PlantChangeTraits.TraitModifyType.Remove:
+                RemCompDeferred(entity.Owner, traitType.GetType());
+                break;
+            case PlantChangeTraits.TraitModifyType.Toggle:
+                if (HasComp(entity.Owner, traitType.GetType()))
+                    RemCompDeferred(entity.Owner, traitType.GetType());
+                else
+                    AddComp(entity.Owner, traitType);
+                break;
+            default:
+                break;
         }
     }
 }
@@ -48,8 +57,26 @@ public sealed partial class PlantChangeTraits : EntityEffectBase<PlantChangeTrai
     public string Trait;
 
     /// <summary>
-    /// If true, the trait is removed. If false, the trait is toggled.
+    /// Defines how the trait should be modified.
     /// </summary>
     [DataField]
-    public bool Remove;
+    public TraitModifyType Type = TraitModifyType.Toggle;
+
+    public enum TraitModifyType
+    {
+        /// <summary>
+        /// Adds the trait if it is not already present.
+        /// </summary>
+        Add,
+
+        /// <summary>
+        /// Removes the trait if it is present.
+        /// </summary>
+        Remove,
+
+        /// <summary>
+        /// Adds the trait if it is not present, or removes it if it is already present.
+        /// </summary>
+        Toggle
+    }
 }

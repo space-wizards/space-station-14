@@ -594,8 +594,10 @@
   plantMetabolism:
     - !type:PlantAdjustToxins
       amount: 6
-    - !type:PlantPhalanximine
+    - !type:PlantChangeTraits
       minScale: 4
+      trait: PlantTraitUnviable
+      type: Remove
   metabolisms:
     Bloodstream:
       metabolismRate: 0.1
