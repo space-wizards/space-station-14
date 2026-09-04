@@ -595,12 +595,10 @@
       amount: 1
     Radium:
       amount: 1
-    Carbon:
-      amount: 3
     Uranium:
       amount: 1
       catalyst: true
     Phosphorus:
       amount: 1
   products:
-    Nyctalon: 5
+    Nyctalon: 2
