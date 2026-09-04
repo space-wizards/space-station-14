@@ -302,13 +302,22 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
 
                 var grapplerUidA = _container.TryGetOuterContainer(physicalHook, Transform(physicalHook), out var containerA) ? containerA.Owner : physicalHook;
                 var grapplerOffsetA = _transform.GetRelativePosition(Transform(joint.BodyAUid), grapplerUidA);
-                var grapplerBodyA = Comp<PhysicsComponent>(grapplerUidA);
 
                 var grapplerUidB = _container.TryGetOuterContainer(physicalGrapple, Transform(physicalGrapple), out var containerB) ? containerB.Owner : physicalGrapple;
-                if (attachedToGrid)
-                    grapplerUidB = _transform.GetGrid(joint.BodyBUid) ?? grapplerUidB;
+
+                // Don't try to push grids without physics (e.g. Planets).
+                if (attachedToGrid && _transform.GetGrid(joint.BodyBUid) is { } gridB && HasComp<PhysicsComponent>(gridB))
+                    grapplerUidB = gridB;
+
                 var grapplerOffsetB = _transform.GetRelativePosition(Transform(joint.BodyBUid), grapplerUidB);
-                var grapplerBodyB = Comp<PhysicsComponent>(grapplerUidB);
+
+                // Either end may lack physics in which case there's nothing to apply an impulse to.
+                if (!TryComp<PhysicsComponent>(grapplerUidA, out var grapplerBodyA) ||
+                    !TryComp<PhysicsComponent>(grapplerUidB, out var grapplerBodyB))
+                {
+                    Dirty(uid, jointComp);
+                    continue;
+                }
 
                 // Note that this way of calculating the impulse does not take into account objects being stuck on things, e.g. a movable grapple point stuck behind a wall.
                 // Ideally the contraction of the joint itself should take this into account, but alas, this works for now.
@@ -425,11 +434,11 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
             if (!jointComp.GetJoints.TryGetValue(GrapplingJoint, out var joint))
                 continue;
 
-            if (Transform(entity).Anchored && _transform.GetGrid(entity.Owner) != null)
+            // Grids without physics (e.g. planets) can't be used as a relay body, so relay to the entity itself instead.
+            if (Transform(entity).Anchored && _transform.GetGrid(entity.Owner) is { } grid && HasComp<PhysicsComponent>(grid))
             {
-                joint.LocalAnchorA = _transform.GetRelativePosition(Transform(hook), _transform.GetGrid(entity.Owner)!.Value);
-                _joints.SetRelay(hook, _transform.GetGrid(entity.Owner));
-
+                joint.LocalAnchorA = _transform.GetRelativePosition(Transform(hook), grid);
+                _joints.SetRelay(hook, grid);
             }
             else
             {
