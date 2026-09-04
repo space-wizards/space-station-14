@@ -176,8 +176,8 @@
 # Chemistry
 - type: latheRecipe
   parent: [ BaseCircuitboardRecipe, BaseMedicalMachineRecipeCategory ]
-  id: ThermobathMachineCircuitboard
-  result: ThermobathMachineCircuitboard
+  id: HotplateMachineCircuitboard
+  result: HotplateMachineCircuitboard
 
 - type: latheRecipe
   parent: [ BaseCircuitboardRecipe, BaseMedicalMachineRecipeCategory ]
