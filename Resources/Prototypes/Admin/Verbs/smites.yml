@@ -445,13 +445,13 @@
   name: admin-smite-run-walk-swap-name
   description: admin-smite-run-walk-swap-description
   icon: Interface/AdminActions/run-walk-swap.png
-  operations:
-  - !type:SwapMovementSpeedsOperation
-  - !type:PopupOperation
-    message: admin-smite-run-walk-swap-prompt
-    recipients: Target
-    location: Entity
-    type: LargeCaution
+  effects:
+  - !type:SwapMovementSpeeds
+  - !type:PopupMessage
+    messages: [ admin-smite-run-walk-swap-prompt ]
+    type: Local
+    method: PopupEntity
+    visualType: LargeCaution
 
 - type: adminSmite
   id: AdminSmiteRemoveBlood
