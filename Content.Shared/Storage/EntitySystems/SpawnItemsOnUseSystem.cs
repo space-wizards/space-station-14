@@ -5,6 +5,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Storage.Components;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using static Content.Shared.Storage.EntitySpawnCollection;
 
@@ -18,7 +19,7 @@ public abstract partial class SpawnItemsOnUseSystem : EntitySystem
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     [SubscribeLocalEvent]
     private void OnUseInHand(Entity<SpawnItemsOnUseComponent> ent, ref UseInHandEvent args)
@@ -26,7 +27,7 @@ public abstract partial class SpawnItemsOnUseSystem : EntitySystem
         if (args.Handled)
             return;
 
-        var spawnEntities = GetSpawns(ent.Comp.Items, SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent)));
+        var spawnEntities = GetSpawns(ent.Comp.Items, _random);
 
         ent.Comp.Uses--;
         var remove = false;
@@ -44,9 +45,8 @@ public abstract partial class SpawnItemsOnUseSystem : EntitySystem
             _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(args.User)} used {ToPrettyString(ent)} which spawned {ToPrettyString(spawn)}");
         }
 
-        // The entity is often deleted, so play the sound at its position rather than parenting
         if (ent.Comp.Sound != null)
-            _audio.PlayPredicted(ent.Comp.Sound, ent, args.User);
+            _audio.PlayPredicted(ent.Comp.Sound, args.User, args.User);
 
         if (remove)
             PredictedQueueDel(ent);
