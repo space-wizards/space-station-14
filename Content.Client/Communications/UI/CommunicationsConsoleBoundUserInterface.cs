@@ -2,7 +2,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.AlertLevel;
 using Content.Shared.Communications;
-using Content.Shared.Station;
+using Content.Shared.Station.Systems;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
@@ -18,7 +18,7 @@ namespace Content.Client.Communications.UI;
 public sealed partial class CommunicationsConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private Shared.Station.Systems.StationSystem _station = default!;
+    [Dependency] private StationSystem _station = default!;
     [Dependency] private AlertLevelSystem _alertLevel = default!;
 
     [ViewVariables]

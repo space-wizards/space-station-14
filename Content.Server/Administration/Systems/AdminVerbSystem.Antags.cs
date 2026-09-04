@@ -2,6 +2,7 @@ using Content.Server.GameTicking;
 using Content.Server.Zombies;
 using Content.Shared.Administration;
 using Content.Server.Clothing.Systems;
+using Content.Shared.Antag;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Rules.Components;
 using Content.Shared.Humanoid;
@@ -17,7 +18,7 @@ namespace Content.Server.Administration.Systems;
 
 public sealed partial class AdminVerbSystem
 {
-    [Dependency] private Shared.Antag.AntagSelectionSystem _antag = default!;
+    [Dependency] private AntagSelectionSystem _antag = default!;
     [Dependency] private ZombieSystem _zombie = default!;
     [Dependency] private ServerGameTicker _gameTicker = default!;
     [Dependency] private OutfitSystem _outfit = default!;
@@ -57,7 +58,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Misc/job_icons.rsi"), "Syndicate"),
             Act = () =>
             {
-                _antag.ForceMakeAntag<Shared.GameTicking.Rules.Components.TraitorRuleComponent>(targetPlayer, DefaultTraitorRule);
+                _antag.ForceMakeAntag<TraitorRuleComponent>(targetPlayer, DefaultTraitorRule);
             },
             Impact = LogImpact.High,
             Message = string.Join(": ", traitorName, Loc.GetString("admin-verb-make-traitor")),
@@ -72,7 +73,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Interface/Misc/job_icons.rsi"), "InitialInfected"),
             Act = () =>
             {
-                _antag.ForceMakeAntag<Shared.GameTicking.Rules.Components.ZombieRuleComponent>(targetPlayer, DefaultInitialInfectedRule);
+                _antag.ForceMakeAntag<ZombieRuleComponent>(targetPlayer, DefaultInitialInfectedRule);
             },
             Impact = LogImpact.High,
             Message = string.Join(": ", initialInfectedName, Loc.GetString("admin-verb-make-initial-infected")),
@@ -163,7 +164,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Objects/Weapons/Melee/armblade.rsi"), "icon"),
             Act = () =>
             {
-                _antag.ForceMakeAntag<Shared.GameTicking.Rules.Components.ChangelingRuleComponent>(targetPlayer, DefaultChangelingRule);
+                _antag.ForceMakeAntag<ChangelingRuleComponent>(targetPlayer, DefaultChangelingRule);
             },
             Impact = LogImpact.High,
             Message = string.Join(": ", changelingName, Loc.GetString("admin-verb-make-changeling")),
@@ -181,7 +182,7 @@ public sealed partial class AdminVerbSystem
                 if (_gameTicker.AddGameRule(ParadoxCloneRuleId) is not { } ruleEnt)
                     return;
 
-                if (!TryComp<Shared.GameTicking.Rules.Components.ParadoxCloneRuleComponent>(ruleEnt, out var paradoxCloneRuleComp))
+                if (!TryComp<ParadoxCloneRuleComponent>(ruleEnt, out var paradoxCloneRuleComp))
                     return;
 
                 paradoxCloneRuleComp.OriginalBody = args.Target; // override the target player

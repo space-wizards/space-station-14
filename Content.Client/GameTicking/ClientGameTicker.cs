@@ -54,17 +54,6 @@ public sealed partial class ClientGameTicker : GameTicker
     {
         base.Initialize();
 
-        SubscribeNetworkEvent<TickerJoinLobbyEvent>(JoinLobby);
-        SubscribeNetworkEvent<TickerJoinGameEvent>(JoinGame);
-        SubscribeNetworkEvent<TickerConnectionStatusEvent>(ConnectionStatus);
-        SubscribeNetworkEvent<TickerLobbyStatusEvent>(LobbyStatus);
-        SubscribeNetworkEvent<TickerLobbyInfoEvent>(LobbyInfo);
-        SubscribeNetworkEvent<TickerLobbyCountdownEvent>(LobbyCountdown);
-        SubscribeNetworkEvent<RoundEndMessageEvent>(RoundEnd);
-        SubscribeNetworkEvent<RequestWindowAttentionEvent>(OnAttentionRequest);
-        SubscribeNetworkEvent<TickerLateJoinStatusEvent>(LateJoinStatus);
-        SubscribeNetworkEvent<TickerJobsAvailableEvent>(UpdateJobsAvailable);
-
         _admin.AdminStatusUpdated += OnAdminUpdated;
         OnAdminUpdated();
     }
@@ -106,17 +95,20 @@ public sealed partial class ClientGameTicker : GameTicker
 #endif
     }
 
+    [SubscribeNetworkEvent]
     private void OnAttentionRequest(RequestWindowAttentionEvent ev)
     {
         _clyde.RequestWindowAttention();
     }
 
+    [SubscribeNetworkEvent]
     private void LateJoinStatus(TickerLateJoinStatusEvent message)
     {
         DisallowedLateJoin = message.Disallowed;
         LobbyLateJoinStatusUpdated?.Invoke();
     }
 
+    [SubscribeNetworkEvent]
     private void UpdateJobsAvailable(TickerJobsAvailableEvent message)
     {
         _jobsAvailable.Clear();
@@ -141,16 +133,19 @@ public sealed partial class ClientGameTicker : GameTicker
         LobbyJobsAvailableUpdated?.Invoke(JobsAvailable);
     }
 
+    [SubscribeNetworkEvent]
     private void JoinLobby(TickerJoinLobbyEvent message)
     {
         _stateManager.RequestStateChange<LobbyState>();
     }
 
+    [SubscribeNetworkEvent]
     private void ConnectionStatus(TickerConnectionStatusEvent message)
     {
         RoundStartTimeSpan = message.RoundStartTimeSpan;
     }
 
+    [SubscribeNetworkEvent]
     private void LobbyStatus(TickerLobbyStatusEvent message)
     {
         StartTime = message.StartTime;
@@ -163,6 +158,7 @@ public sealed partial class ClientGameTicker : GameTicker
         LobbyStatusUpdated?.Invoke();
     }
 
+    [SubscribeNetworkEvent]
     private void LobbyInfo(TickerLobbyInfoEvent message)
     {
         ServerInfoBlob = message.TextBlob;
@@ -170,17 +166,20 @@ public sealed partial class ClientGameTicker : GameTicker
         InfoBlobUpdated?.Invoke();
     }
 
+    [SubscribeNetworkEvent]
     private void JoinGame(TickerJoinGameEvent message)
     {
         _stateManager.RequestStateChange<GameplayState>();
     }
 
+    [SubscribeNetworkEvent]
     private void LobbyCountdown(TickerLobbyCountdownEvent message)
     {
         StartTime = message.StartTime;
         Paused = message.Paused;
     }
 
+    [SubscribeNetworkEvent]
     private void RoundEnd(RoundEndMessageEvent message)
     {
         // Force an update in the event of this song being the same as the last.

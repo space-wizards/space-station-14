@@ -1,6 +1,5 @@
 using Content.Server.Chat.Managers;
 using Content.Server.Ghost;
-using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.Bed.Cryostorage;
@@ -22,7 +21,7 @@ using System.Globalization;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
-using Content.Shared.Station;
+using Content.Shared.Station.Systems;
 using Content.Shared.StationRecords.Components;
 using Content.Shared.StationRecords.Systems;
 using Robust.Shared.Audio.Systems;
@@ -43,7 +42,7 @@ public sealed partial class CryostorageSystem : SharedCryostorageSystem
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private Shared.Station.Systems.StationSystem _station = default!;
+    [Dependency] private StationSystem _station = default!;
     [Dependency] private ServerStationJobsSystem _stationJobs = default!;
     [Dependency] private StationRecordsSystem _stationRecords = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
