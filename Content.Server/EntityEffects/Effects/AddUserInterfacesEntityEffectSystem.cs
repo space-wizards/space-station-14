@@ -1,3 +1,4 @@
+using Content.Shared.EntityEffects;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.EntityEffects.Effects;

@@ -1,5 +1,6 @@
 using Content.Server.Mind;
 using Content.Server.Roles;
+using Content.Shared.EntityEffects;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.EntityEffects.Effects;
