@@ -1227,6 +1227,8 @@
     production: 12
     yield: 2
     potency: 20
+  - type: PlantHarvest
+    harvestRepeat: Repeat
   - type: PlantGrowth
     nutrientConsumption: 0.5
   - type: PlantAtmospheric
