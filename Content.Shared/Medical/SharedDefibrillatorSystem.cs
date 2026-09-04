@@ -46,7 +46,7 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<DefibrillatorComponent> ent, ref AfterInteractEvent args)
     {
-        if (args.Handled || args.Target is not { } target)
+        if (args.Handled || args.Target is not { } target || !args.CanReach)
             return;
 
         args.Handled = TryStartZap(ent.AsNullable(), target, args.User);
