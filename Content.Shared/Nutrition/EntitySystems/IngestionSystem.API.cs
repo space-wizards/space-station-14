@@ -155,16 +155,16 @@ public sealed partial class IngestionSystem
     /// </summary>
     /// <param name="entity">Edible entity that will spawn trash.</param>
     /// <param name="user">Optional user that will attempt to pickup spawned trash.</param>
-    /// <param name="replace">When true, tries to replace <paramref name="entity"/> with spawned trash if <paramref name="user"/> is holding it.</param>
-    public void SpawnTrash(Entity<EdibleComponent> entity, EntityUid? user = null, bool replace = false)
+    public void SpawnTrash(Entity<EdibleComponent> entity, EntityUid? user = null)
     {
         _transform.DetachEntity(entity);
+        var pickup = _hands.IsHolding(entity.Owner, user);
         foreach (var trash in entity.Comp.Trash)
         {
             var spawnedTrash = PredictedSpawnNextToOrDrop(trash, entity);
 
-            if (user is not null)
-                _hands.TryPickupAnyHand(user.Value, spawnedTrash);
+            if (pickup)
+                _hands.TryPickupAnyHand(user!.Value, spawnedTrash);
         }
     }
 
