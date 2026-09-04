@@ -92,6 +92,8 @@
   name: wooden support
   description: Increases your confidence that a rock won't fall on your head.
   components:
+  - type: Sprite
+    state: support
   - type: Fixtures
     fixtures:
       fix1:
@@ -108,6 +110,7 @@
   parent: BaseWoodenSupport
   id: WoodenSupportBeam
   name: wooden support beam
+  description: A pair of wooden beams, supportive without blocking your way.
   components:
   - type: Sprite
     state: support_beams

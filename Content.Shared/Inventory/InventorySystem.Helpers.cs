@@ -67,8 +67,19 @@ public partial class InventorySystem
                && (slot.SlotFlags & flags) != 0;
     }
 
-    public bool SpawnItemInSlot(EntityUid uid, string slot, string prototype, bool silent = false, bool force = false, InventoryComponent? inventory = null)
+    public bool SpawnItemInSlot(EntityUid uid,
+        string slot,
+        string prototype,
+        bool silent = false,
+        bool force = false,
+        InventoryComponent? inventory = null)
     {
+        return SpawnItemInSlot(uid, slot, prototype, out _, silent, force, inventory);
+    }
+
+    public bool SpawnItemInSlot(EntityUid uid, string slot, string prototype, [NotNullWhen(true)] out EntityUid? spawned, bool silent = false, bool force = false, InventoryComponent? inventory = null)
+    {
+        spawned = null;
         if (!Resolve(uid, ref inventory, false))
             return false;
 
@@ -87,14 +98,14 @@ public partial class InventorySystem
         // Let's spawn this first...
         var item = Spawn(prototype, Transform(uid).Coordinates);
 
-        // Helper method that deletes the item and returns false.
-        bool DeleteItem()
+        // We finally try to equip the item, otherwise we delete it.
+        if (TryEquip(uid, item, slot, silent, force))
         {
-            Del(item);
-            return false;
+            spawned = item;
+            return true;
         }
 
-        // We finally try to equip the item, otherwise we delete it.
-        return TryEquip(uid, item, slot, silent, force) || DeleteItem();
+        Del(item);
+        return false;
     }
 }
