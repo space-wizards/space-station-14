@@ -31,7 +31,7 @@ public sealed partial class CCVars
     ///     Whether the arrivals shuttle is enabled.
     /// </summary>
     public static readonly CVarDef<bool> ArrivalsShuttles =
-        CVarDef.Create("shuttle.arrivals", true, CVar.SERVERONLY);
+        CVarDef.Create("shuttle.arrivals", true);
 
     /// <summary>
     ///     The map to use for the arrivals station.
@@ -55,7 +55,7 @@ public sealed partial class CCVars
     ///     Should all players who spawn at arrivals have godmode until they leave the map?
     /// </summary>
     public static readonly CVarDef<bool> GodmodeArrivals =
-        CVarDef.Create("shuttle.godmode_arrivals", false, CVar.SERVERONLY);
+        CVarDef.Create("shuttle.godmode_arrivals", false);
 
     /// <summary>
     ///     If a grid is split then hide any smaller ones under this mass (kg) from the map.
