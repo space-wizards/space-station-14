@@ -6,7 +6,6 @@ using Content.Server.Roles;
 using Content.Server.Silicons.Laws;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Tabletop;
-using Content.Shared.Actions;
 using Content.Shared.Body;
 using Content.Shared.Body.Systems;
 using Content.Shared.Damage.Systems;
@@ -25,7 +24,6 @@ namespace Content.Server.Administration.Verbs.Operations;
 /// </summary>
 public sealed partial class AdminOperationSystem : EntitySystem
 {
-    [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private BloodstreamSystem _bloodstream = default!;
     [Dependency] private BodySystem _body = default!;
     [Dependency] private ContentEyeSystem _contentEye = default!;
