@@ -99,6 +99,20 @@
     bypassInsulation: true
 
 - type: adminVerb
+  id: AdminSmiteHeartAttack
+  name: admin-smite-heartattack-name
+  description: admin-smite-heartattack-description
+  icon:
+    sprite: Interface/Alerts/human_crew_monitoring.rsi
+    state: dead
+  whitelist:
+    components:
+    - Damageable
+  effects:
+  - !type:LethalDamage
+    damageType: Asphyxiation
+
+- type: adminVerb
   id: AdminSmiteZoomIn
   name: admin-smite-zoom-in-name
   description: admin-smite-zoom-in-description
