@@ -171,22 +171,24 @@ public abstract partial class GameTicker
         return true;
     }
 
-    private void StartRuleCache(EntityUid rule)
+    private void StartRuleCache(EntityUid uid)
     {
         // Very likely to be a recently added rule, so we start from the top!
         for (var i = AllRoundGameRules.Count - 1; i >= 0; i--)
         {
-            if (AllRoundGameRules[i].Uid != rule)
+            var rule = AllRoundGameRules[i];
+            if (rule.Uid != uid)
                 continue;
 
-            if (!AllRoundGameRules[i].StartRule(GetRoundTime()))
-                Log.Error($"Rule {rule} tried to be started, but was already started!");
+            if (!rule.StartRule(GetRoundTime()))
+                Log.Error($"Rule {uid} tried to be started, but was already started!");
 
+            AllRoundGameRules[i] = rule;
             return;
         }
 
-        Log.Error($"Rule {rule} was started but had not been added yet somehow!");
-        AllRoundGameRules.Add((GetRoundTime(), rule, GameRuleLifeStage.Started));
+        Log.Error($"Rule {ToPrettyString(uid)} was started but had not been added yet somehow!");
+        AllRoundGameRules.Add((GetRoundTime(), uid, GameRuleLifeStage.Started));
     }
 
     /// <summary>
