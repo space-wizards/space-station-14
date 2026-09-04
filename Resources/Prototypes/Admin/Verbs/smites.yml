@@ -404,8 +404,9 @@
   whitelist:
     components:
     - CreamPied
-  operations:
-  - !type:CreamPieOperation
+  effects:
+  - !type:SetCreamPied
+    enabled: true
 
 - type: adminSmite
   id: AdminSmiteDust

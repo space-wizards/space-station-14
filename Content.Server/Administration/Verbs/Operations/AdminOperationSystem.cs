@@ -4,7 +4,6 @@ using Content.Server.Silicons.Laws;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Tabletop;
 using Content.Shared.EntityEffects;
-using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Slippery;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Physics.Systems;
@@ -17,7 +16,6 @@ namespace Content.Server.Administration.Verbs.Operations;
 /// </summary>
 public sealed partial class AdminOperationSystem : EntitySystem
 {
-    [Dependency] private SharedCreamPieSystem _creamPie = default!;
     [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
     [Dependency] private EntityStorageSystem _entityStorage = default!;
     [Dependency] private FixtureSystem _fixtures = default!;
