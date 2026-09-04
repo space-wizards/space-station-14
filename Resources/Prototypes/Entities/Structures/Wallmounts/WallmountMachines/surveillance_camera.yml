@@ -18,6 +18,7 @@
     layers:
     - map: [ "enum.SurveillanceCameraVisualsKey.Layer" ]
       state: camera
+      cycle: true
   - type: Appearance
   - type: Physics
     bodyType: Static
@@ -224,8 +225,10 @@
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/camera.rsi
+    offset: 0, -0.5
     layers:
     - state: camera_off
+      cycle: true
   - type: Clickable
   - type: InteractionOutline
   - type: Damageable
