@@ -25,7 +25,6 @@ using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition.EntitySystems;
@@ -58,7 +57,6 @@ public sealed partial class IngestionSystem : EntitySystem
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private ForensicsSystem _forensics = default!;
-    [Dependency] private SharedContainerSystem _container = default!;
 
     // Body Component Dependencies
     [Dependency] private BodySystem _body = default!;
