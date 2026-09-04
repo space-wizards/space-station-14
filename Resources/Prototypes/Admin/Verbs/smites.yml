@@ -463,18 +463,18 @@
   whitelist:
     components:
     - Bloodstream
-  operations:
-  - !type:SpillBloodstreamOperation
-  - !type:PopupOperation
-    message: admin-smite-remove-blood-self
-    recipients: Target
-    location: Entity
-    type: LargeCaution
-  - !type:PopupOperation
-    message: admin-smite-remove-blood-others
-    recipients: PvsExceptTarget
-    location: Coordinates
-    type: MediumCaution
+  effects:
+  - !type:SpillBloodstream
+  - !type:PopupMessage
+    messages: [ admin-smite-remove-blood-self ]
+    type: Local
+    method: PopupEntity
+    visualType: LargeCaution
+  - !type:PopupMessage
+    messages: [ admin-smite-remove-blood-others ]
+    type: PvsExceptTarget
+    method: PopupCoordinates
+    visualType: MediumCaution
 
 - type: adminSmite
   id: AdminSmiteBuffering

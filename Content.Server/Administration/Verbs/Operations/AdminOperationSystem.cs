@@ -19,7 +19,6 @@ namespace Content.Server.Administration.Verbs.Operations;
 /// </summary>
 public sealed partial class AdminOperationSystem : EntitySystem
 {
-    [Dependency] private BloodstreamSystem _bloodstream = default!;
     [Dependency] private BodySystem _body = default!;
     [Dependency] private SharedCreamPieSystem _creamPie = default!;
     [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
