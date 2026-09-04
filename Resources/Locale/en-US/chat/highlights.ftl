@@ -35,7 +35,7 @@ highlights-scientist = Scientist, Science, "Sci"
 # Service
 highlights-bartender = Bartender, Barkeeper, Barkeep, "Bar", Service, "Serv"
 highlights-botanist = Botanist, Botany, Hydroponics, Service, "Serv"
-highlights-chaplain = Chaplain, Priest, Chapel, Service, "Serv"
+highlights-chaplain = Chaplain, Chapel, Service, "Serv"
 highlights-chef = Chef, "Cook", Kitchen, Service, "Serv"
 highlights-clown = Clown, Theatre, Theater, Service, "Serv"
 highlights-janitor = Janitor, "Jani", Service, "Serv"
