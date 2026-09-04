@@ -20,7 +20,9 @@ public sealed partial class EntityProviderSystem
     [PublicAPI]
     public bool TryInsertIntoProvider(Entity<EntityProviderComponent> provider, EntityUid target, EntityUid? user = null)
     {
-        if (_whitelist.IsWhitelistFail(provider.Comp.Whitelist, target))
+        if (!provider.Comp.CanReceive
+            || IsProviderFull(provider, user)
+            || _whitelist.IsWhitelistFailOrNull(provider.Comp.Whitelist, target))
             return false;
 
         // This event allows for a deeper check than a whitelist/blacklist.
@@ -45,6 +47,7 @@ public sealed partial class EntityProviderSystem
         if (user.HasValue) // This ensures not causing multiple sounds when refilled via storage.
             _audio.PlayPredicted(provider.Comp.SingularTransferSound, provider, user.Value);
 
+        HandleAppearance(provider.AsNullable());
         Dirty(provider);
         return true;
     }
@@ -82,8 +85,7 @@ public sealed partial class EntityProviderSystem
         Entity<EntityProviderComponent?> provider,
         EntProtoId protoId,
         [NotNullWhen(true)] out List<EntityUid>? entities,
-        int? requestedAmount = null
-    )
+        int? requestedAmount = null)
     {
         entities = null;
 
@@ -118,6 +120,7 @@ public sealed partial class EntityProviderSystem
         if (provider.Comp.DeleteIfEmpty && provider.Comp.EntityCounter.Count == 0)
             PredictedQueueDel(provider);
 
+        HandleAppearance(provider);
         return true;
     }
 
@@ -154,8 +157,7 @@ public sealed partial class EntityProviderSystem
         EntProtoId protoId,
         [NotNullWhen(true)] out List<EntityUid>? entities,
         int? requestedAmount = null,
-        EntityUid? user = null
-    )
+        EntityUid? user = null)
     {
         entities = null;
         if (!Resolve(provider, ref provider.Comp) || !TryGetEntities(provider, protoId, out entities, requestedAmount))
@@ -176,7 +178,29 @@ public sealed partial class EntityProviderSystem
         if (!ProtoMan.Resolve(protoId, out var prototype))
             return true;
 
-        _audio.PlayPredicted(provider.Comp.PluralTransferSound, provider, user);
+        _audio.PlayPredicted(requestedAmount == 1 ? provider.Comp.SingularTransferSound : provider.Comp.PluralTransferSound, provider, user);
+
+        return true;
+    }
+
+    /// <summary>
+    /// Attempts to switch the selected entity prototype id.
+    /// </summary>
+    /// <param name="provider">The provider whose selected entity is to change.</param>
+    /// <param name="protoId">The new entity prototype id to be selected.</param>
+    /// <param name="user">The user who caused the switch. If null, no sound will be played.</param>
+    /// <returns>True if it was able to select it, false if it didn't contain said prototype id or is not a provider.</returns>
+    [PublicAPI]
+    public bool TrySelectEntity(Entity<EntityProviderComponent?> provider, EntProtoId protoId, EntityUid? user)
+    {
+        if (!Resolve(provider, ref provider.Comp) || !provider.Comp.EntityCounter.ContainsKey(protoId))
+            return false;
+
+        provider.Comp.SelectedEntityProtoId = protoId;
+        Dirty(provider);
+
+        if (user.HasValue)
+            _audio.PlayPredicted(provider.Comp.SingularTransferSound, provider, user);
 
         return true;
     }

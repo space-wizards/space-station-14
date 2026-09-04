@@ -53,8 +53,9 @@
     tags:
     - Trash
   - type: PhysicalComposition
-    materialComposition:
-      Glass: 25
+    materialComposition: # Half of what it costs to print them.
+      Steel: 25
+      Glass: 100
   - type: SpaceGarbage
   - type: ToolRefinable
     refineResult:
