@@ -22,9 +22,9 @@ public sealed partial class BotanySampleTakerSystem : EntitySystem
     [Dependency] private PlantSystem _plant = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
-    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery = default!;
-    [Dependency] private EntityQuery<PlantDataComponent> _dataQuery = default!;
-    [Dependency] private EntityQuery<PlantComponent> _plantQuery = default!;
+    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery;
+    [Dependency] private EntityQuery<PlantDataComponent> _dataQuery;
+    [Dependency] private EntityQuery<PlantComponent> _plantQuery;
 
     [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<BotanySampleTakerComponent> ent, ref AfterInteractEvent args)
