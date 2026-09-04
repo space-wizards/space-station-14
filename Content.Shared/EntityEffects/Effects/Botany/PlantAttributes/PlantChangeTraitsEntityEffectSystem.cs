@@ -48,7 +48,7 @@ public sealed partial class PlantChangeTraits : EntityEffectBase<PlantChangeTrai
     public string Trait;
 
     /// <summary>
-    /// If true, the trait is removed. If false, the trait is added.
+    /// If true, the trait is removed. If false, the trait is toggled.
     /// </summary>
     [DataField]
     public bool Remove;
