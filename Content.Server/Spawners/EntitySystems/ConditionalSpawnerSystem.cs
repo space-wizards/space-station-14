@@ -113,7 +113,7 @@ public sealed partial class ConditionalSpawnerSystem : EntitySystem
         var coordinates = GetRandomOffset(coords, component.Offset);
         var rotation = _xform.GetWorldRotation(xform);
 
-        Spawn(_robustRandom.Pick(component.Prototypes), coordinates, rotation: rotation);
+        Spawn(proto, coordinates, rotation: rotation);
     }
 
     private void Spawn(Entity<EntityTableSpawnerComponent> ent)
