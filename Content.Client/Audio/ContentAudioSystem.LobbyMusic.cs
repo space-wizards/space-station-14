@@ -19,7 +19,7 @@ namespace Content.Client.Audio;
 public sealed partial class ContentAudioSystem
 {
     [Dependency] private IBaseClient _client = default!;
-    [Dependency] private ClientGameTicker _gameTicker = default!;
+    [Dependency] private GameTicking.ClientGameTicker _gameTicker = default!;
     [Dependency] private IResourceCache _resourceCache = default!;
 
     private readonly AudioParams _lobbySoundtrackParams = new(-5f, 1, 0, 0, 0, false, 0f);

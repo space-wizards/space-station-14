@@ -12,7 +12,7 @@ namespace Content.Server.Magic;
 public sealed partial class MagicSystem : SharedMagicSystem
 {
     [Dependency] private ChatSystem _chat = default!;
-    [Dependency] private GameTicker _gameTicker = default!;
+    [Dependency] private ServerGameTicker _gameTicker = default!;
     [Dependency] private TagSystem _tag = default!;
     [Dependency] private SharedMindSystem _mind = default!;
 
@@ -47,7 +47,7 @@ public sealed partial class MagicSystem : SharedMagicSystem
         if (_mind.TryGetMind(ev.Performer, out var mind, out _) && !_tag.HasTag(mind, InvalidForSurvivorAntagTag))
             _tag.AddTag(mind, InvalidForSurvivorAntagTag);
 
-        if (!_gameTicker.IsGameRuleActive<SurvivorRuleComponent>())
+        if (!_gameTicker.IsGameRuleActive<Shared.GameTicking.Rules.Components.SurvivorRuleComponent>())
             _gameTicker.StartGameRule(SurvivorGameRule);
     }
 }

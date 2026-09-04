@@ -10,7 +10,7 @@ namespace Content.Client.Light;
 /// <inheritdoc/>
 public sealed partial class LightCycleSystem : SharedLightCycleSystem
 {
-    [Dependency] private ClientGameTicker _ticker = default!;
+    [Dependency] private GameTicking.ClientGameTicker _ticker = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private MetaDataSystem _metadata = default!;
 

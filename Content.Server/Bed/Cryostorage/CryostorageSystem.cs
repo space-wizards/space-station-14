@@ -43,8 +43,8 @@ public sealed partial class CryostorageSystem : SharedCryostorageSystem
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private SharedStationSystem _station = default!;
-    [Dependency] private StationJobsSystem _stationJobs = default!;
+    [Dependency] private Shared.Station.Systems.StationSystem _station = default!;
+    [Dependency] private ServerStationJobsSystem _stationJobs = default!;
     [Dependency] private StationRecordsSystem _stationRecords = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
@@ -179,7 +179,7 @@ public sealed partial class CryostorageSystem : SharedCryostorageSystem
         {
             foreach (var uniqueStation in _station.GetStationsSet())
             {
-                if (!TryComp<StationJobsComponent>(uniqueStation, out var stationJobs))
+                if (!TryComp<Shared.Station.Components.StationJobsComponent>(uniqueStation, out var stationJobs))
                     continue;
 
                 if (!_stationJobs.TryGetPlayerJobs(uniqueStation, userId.Value, out var jobs, stationJobs))

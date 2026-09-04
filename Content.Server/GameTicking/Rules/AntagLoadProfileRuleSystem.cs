@@ -1,7 +1,9 @@
 using Content.Server.Antag;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Preferences.Managers;
+using Content.Shared.Antag;
 using Content.Shared.Body;
+using Content.Shared.GameTicking.Rules;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;

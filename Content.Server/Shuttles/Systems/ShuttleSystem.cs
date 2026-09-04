@@ -27,6 +27,7 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Content.Shared.Maps;
+using Content.Shared.Shuttles.Components;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -53,7 +54,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedSalvageSystem _salvage = default!;
     [Dependency] private ShuttleConsoleSystem _console = default!;
-    [Dependency] private StationSystem _station = default!;
+    [Dependency] private ServerStationSystem _station = default!;
     [Dependency] private StunSystem _stuns = default!;
     [Dependency] private ThrowingSystem _throwing = default!;
     [Dependency] private ThrusterSystem _thruster = default!;

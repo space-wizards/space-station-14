@@ -33,7 +33,7 @@ namespace Content.Client.LateJoin
 
         public event Action<(NetEntity, string)> SelectedId;
 
-        private readonly ClientGameTicker _gameTicker;
+        private readonly GameTicking.ClientGameTicker _gameTicker;
         private readonly SpriteSystem _sprites;
         private readonly CrewManifestSystem _crewManifest;
         private readonly ISawmill _sawmill;
@@ -50,7 +50,7 @@ namespace Content.Client.LateJoin
             IoCManager.InjectDependencies(this);
             _sprites = _entitySystem.GetEntitySystem<SpriteSystem>();
             _crewManifest = _entitySystem.GetEntitySystem<CrewManifestSystem>();
-            _gameTicker = _entitySystem.GetEntitySystem<ClientGameTicker>();
+            _gameTicker = _entitySystem.GetEntitySystem<GameTicking.ClientGameTicker>();
             _sawmill = _logManager.GetSawmill("latejoin.panel");
 
             Title = Loc.GetString("late-join-gui-title");

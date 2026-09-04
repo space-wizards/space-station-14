@@ -2,6 +2,7 @@ using Content.IntegrationTests.Fixtures;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Commands;
 using Content.Shared.CCVar;
+using Content.Shared.GameTicking;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -29,7 +30,7 @@ namespace Content.IntegrationTests.Tests.Commands
 
             var configManager = server.ResolveDependency<IConfigurationManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var gameTicker = entityManager.System<GameTicker>();
+            var gameTicker = entityManager.System<ServerGameTicker>();
 
             await pair.RunUntilSynced();
 

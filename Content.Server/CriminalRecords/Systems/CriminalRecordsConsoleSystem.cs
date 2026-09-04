@@ -30,7 +30,7 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private RadioSystem _radio = default!;
     [Dependency] private StationRecordsSystem _records = default!;
-    [Dependency] private StationSystem _station = default!;
+    [Dependency] private ServerStationSystem _station = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
     [Dependency] private IdentitySystem _identity = default!;
 

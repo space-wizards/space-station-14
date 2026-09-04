@@ -11,7 +11,7 @@ namespace Content.Server.AlertLevel.Commands;
 public sealed partial class SetAlertLevelCommand : LocalizedEntityCommands
 {
     [Dependency] private AlertLevelSystem _alertLevelSystem = default!;
-    [Dependency] private SharedStationSystem _stationSystem = default!;
+    [Dependency] private Shared.Station.Systems.StationSystem _stationSystem = default!;
     [Dependency] private IPrototypeManager _prototype = default!;
 
     public override string Command => "setalertlevel";

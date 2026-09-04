@@ -38,7 +38,7 @@ namespace Content.Server.Salvage
         [Dependency] private SharedMapSystem _mapSystem = default!;
         [Dependency] private ShuttleSystem _shuttle = default!;
         [Dependency] private ShuttleConsoleSystem _shuttleConsoles = default!;
-        [Dependency] private StationSystem _station = default!;
+        [Dependency] private ServerStationSystem _station = default!;
         [Dependency] private UserInterfaceSystem _ui = default!;
         [Dependency] private EntityQuery<MapGridComponent> _gridQuery = default!;
 

@@ -8,7 +8,7 @@ namespace Content.Server.FeedbackSystem;
 public sealed partial class FeedbackSystem : EntitySystem
 {
     [Dependency] private ServerFeedbackManager _feedbackManager = null!;
-    [Dependency] private GameTicker _gameTicker = null!;
+    [Dependency] private ServerGameTicker _gameTicker = null!;
 
     public override void Initialize()
     {

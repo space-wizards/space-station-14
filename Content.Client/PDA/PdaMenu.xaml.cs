@@ -20,7 +20,7 @@ namespace Content.Client.PDA
         [Dependency] private IGameTiming _gameTiming = default!;
         [Dependency] private IEntitySystemManager _entitySystem = default!;
         private readonly AlertLevelSystem _alert = default!;
-        private readonly ClientGameTicker _gameTicker;
+        private readonly GameTicking.ClientGameTicker _gameTicker;
 
         public const int HomeView = 0;
         public const int ProgramListView = 1;
@@ -45,7 +45,7 @@ namespace Content.Client.PDA
         {
             IoCManager.InjectDependencies(this);
             _alert = _entitySystem.GetEntitySystem<AlertLevelSystem>();
-            _gameTicker = _entitySystem.GetEntitySystem<ClientGameTicker>();
+            _gameTicker = _entitySystem.GetEntitySystem<GameTicking.ClientGameTicker>();
             RobustXamlLoader.Load(this);
 
             ViewContainer.OnChildAdded += control => control.Visible = false;

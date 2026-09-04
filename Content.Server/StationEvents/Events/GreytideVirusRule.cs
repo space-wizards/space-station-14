@@ -47,7 +47,7 @@ public sealed partial class GreytideVirusRule : StationEventSystem<GreytideVirus
         if (virusComp.Severity == null)
             return;
 
-        if (!TryGetRandomStation(out var chosenStation))
+        if (!Station.TryGetRandomStation(out var chosenStation))
             return;
 
         // pick random access groups
@@ -68,7 +68,7 @@ public sealed partial class GreytideVirusRule : StationEventSystem<GreytideVirus
                 continue;
 
             // make sure not to hit CentCom or other maps
-            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation)
+            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation.Value.Owner)
                 continue;
 
             // check access
@@ -90,7 +90,7 @@ public sealed partial class GreytideVirusRule : StationEventSystem<GreytideVirus
                 continue;
 
             // make sure not to hit CentCom or other maps
-            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation)
+            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation.Value.Owner)
                 continue;
 
             // use the access reader from the door electronics if they exist

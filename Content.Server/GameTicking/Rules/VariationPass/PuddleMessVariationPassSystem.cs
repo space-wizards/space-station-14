@@ -23,7 +23,7 @@ public sealed partial class PuddleMessVariationPassSystem : VariationPassSystem<
 
         for (var i = 0; i < puddleTiles; i++)
         {
-            if (!TryFindRandomTileOnStation(args.Station, out _, out _, out var coords))
+            if (!Stations.TryFindRandomTileOnStation(args.Station, out _, out _, out var coords))
                 continue;
 
             var sol = proto.Pick(Random);

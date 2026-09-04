@@ -15,6 +15,8 @@ using Content.Server.Station.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Maps;
 using Content.Shared.Roles;
+using Content.Shared.Shuttles.Components;
+using Content.Shared.Spawners.Components;
 using Content.Shared.Station.Components;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
@@ -333,7 +335,7 @@ namespace Content.IntegrationTests.Tests
             var mapLoader = entManager.System<MapLoaderSystem>();
             var mapSystem = entManager.System<SharedMapSystem>();
             var protoManager = server.ResolveDependency<IPrototypeManager>();
-            var ticker = entManager.EntitySysManager.GetEntitySystem<GameTicker>();
+            var ticker = entManager.EntitySysManager.GetEntitySystem<ServerGameTicker>();
             var shuttleSystem = entManager.EntitySysManager.GetEntitySystem<ShuttleSystem>();
             var cfg = server.ResolveDependency<IConfigurationManager>();
 
@@ -392,7 +394,7 @@ namespace Content.IntegrationTests.Tests
 
                 mapSystem.DeleteMap(shuttleMap);
 
-                if (entManager.HasComponent<StationJobsComponent>(station))
+                if (entManager.HasComponent<Shared.Station.Components.StationJobsComponent>(station))
                 {
                     // Test that the map has valid latejoin spawn points or container spawn points
                     if (!NoSpawnMaps.Contains(mapProto))
@@ -407,7 +409,7 @@ namespace Content.IntegrationTests.Tests
 
                     // Test all availableJobs have spawnPoints
                     // This is done inside gamemap test because loading the map takes ages and we already have it.
-                    var comp = entManager.GetComponent<StationJobsComponent>(station);
+                    var comp = entManager.GetComponent<Shared.Station.Components.StationJobsComponent>(station);
                     var jobs = new HashSet<ProtoId<JobPrototype>>(comp.SetupAvailableJobs.Keys);
 
                     var spawnPoints = entManager.EntityQuery<SpawnPointComponent>()

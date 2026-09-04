@@ -12,12 +12,13 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.GameTicking;
 
 namespace Content.Server.Mind;
 
 public sealed partial class MindSystem : SharedMindSystem
 {
-    [Dependency] private GameTicker _gameTicker = default!;
+    [Dependency] private ServerGameTicker _gameTicker = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private IPlayerManager _players = default!;
     [Dependency] private GhostSystem _ghosts = default!;
@@ -210,7 +211,7 @@ public sealed partial class MindSystem : SharedMindSystem
                 ? _transform.ToMapCoordinates(_gameTicker.GetObserverSpawnPoint())
                 : _transform.GetMapCoordinates(mind.OwnedEntity.Value);
 
-            entity = Spawn(GameTicker.ObserverPrototypeName, position);
+            entity = Spawn(ServerGameTicker.ObserverPrototypeName, position);
             component = EnsureComp<MindContainerComponent>(entity.Value);
             var ghostComponent = Comp<GhostComponent>(entity.Value);
             _ghosts.SetCanReturnToBody((entity.Value, ghostComponent), false);

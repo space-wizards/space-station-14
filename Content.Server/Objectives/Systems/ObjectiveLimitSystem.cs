@@ -26,7 +26,7 @@ public sealed partial class ObjectiveLimitSystem : EntitySystem
         var remaining = ent.Comp.Limit;
         // all traitor rules are considered
         // maybe this would interfere with multistation stuff in the future but eh
-        foreach (var rule in EntityQuery<TraitorRuleComponent>())
+        foreach (var rule in EntityQuery<Content.Shared.GameTicking.Rules.Components.TraitorRuleComponent>())
         {
             foreach (var mindId in rule.TraitorMinds)
             {

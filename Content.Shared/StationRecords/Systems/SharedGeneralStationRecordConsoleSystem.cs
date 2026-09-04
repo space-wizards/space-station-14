@@ -6,7 +6,7 @@ namespace Content.Shared.StationRecords.Systems;
 
 public abstract partial class SharedGeneralStationRecordConsoleSystem : EntitySystem
 {
-    [Dependency] protected SharedStationSystem StationSys = default!;
+    [Dependency] protected Station.Systems.StationSystem StationSys = default!;
     [Dependency] protected StationRecordsSystem StationRecordsSys = default!;
 
     [Dependency] protected EntityQuery<StationRecordsComponent> RecordsQuery = default!;

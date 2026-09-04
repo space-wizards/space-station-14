@@ -14,7 +14,7 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests.Station;
 
 [TestFixture]
-[TestOf(typeof(StationJobsSystem))]
+[TestOf(typeof(ServerStationJobsSystem))]
 public sealed class StationJobsTest : GameTest
 {
     private const string StationMapId = "FooStation";
@@ -137,8 +137,8 @@ public sealed class StationJobsTest : GameTest
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
         var barStationProto = prototypeManager.Index<GameMapPrototype>(SecondStationMapId);
         var entSysMan = server.ResolveDependency<IEntityManager>().EntitySysManager;
-        var stationJobs = entSysMan.GetEntitySystem<StationJobsSystem>();
-        var stationSystem = entSysMan.GetEntitySystem<StationSystem>();
+        var stationJobs = entSysMan.GetEntitySystem<ServerStationJobsSystem>();
+        var stationSystem = entSysMan.GetEntitySystem<ServerStationSystem>();
 
         var firstStation = EntityUid.Invalid;
         var secondStation = EntityUid.Invalid;
@@ -198,8 +198,8 @@ public sealed class StationJobsTest : GameTest
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
         var barStationProto = prototypeManager.Index<GameMapPrototype>(SecondStationMapId);
         var entSysMan = server.ResolveDependency<IEntityManager>().EntitySysManager;
-        var stationJobs = entSysMan.GetEntitySystem<StationJobsSystem>();
-        var stationSystem = entSysMan.GetEntitySystem<StationSystem>();
+        var stationJobs = entSysMan.GetEntitySystem<ServerStationJobsSystem>();
+        var stationSystem = entSysMan.GetEntitySystem<ServerStationSystem>();
         var station = EntityUid.Invalid;
 
         await server.WaitPost(() =>
@@ -264,8 +264,8 @@ public sealed class StationJobsTest : GameTest
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
         var fooStationProto = prototypeManager.Index<GameMapPrototype>(StationMapId);
         var entSysMan = server.ResolveDependency<IEntityManager>().EntitySysManager;
-        var stationJobs = entSysMan.GetEntitySystem<StationJobsSystem>();
-        var stationSystem = entSysMan.GetEntitySystem<StationSystem>();
+        var stationJobs = entSysMan.GetEntitySystem<ServerStationJobsSystem>();
+        var stationSystem = entSysMan.GetEntitySystem<ServerStationSystem>();
 
         var station = EntityUid.Invalid;
         await server.WaitPost(() =>
@@ -312,7 +312,7 @@ public sealed class StationJobsTest : GameTest
 
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
         var compFact = server.ResolveDependency<IComponentFactory>();
-        var name = compFact.GetComponentName<StationJobsComponent>();
+        var name = compFact.GetComponentName<Shared.Station.Components.StationJobsComponent>();
 
         await server.WaitAssertion(() =>
         {
@@ -334,7 +334,7 @@ public sealed class StationJobsTest : GameTest
                         if (!station.StationComponentOverrides.TryGetComponent(name, out var comp))
                             continue;
 
-                        foreach (var (job, array) in ((StationJobsComponent) comp).SetupAvailableJobs)
+                        foreach (var (job, array) in ((Shared.Station.Components.StationJobsComponent) comp).SetupAvailableJobs)
                         {
                             Assert.That(array.Length, Is.EqualTo(2));
                             Assert.That(array[0] is -1 or >= 0);

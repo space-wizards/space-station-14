@@ -23,7 +23,7 @@ public sealed partial class OutfitSystem : EntitySystem
     [Dependency] private IServerPreferencesManager _preferenceManager = default!;
     [Dependency] private HandsSystem _handSystem = default!;
     [Dependency] private InventorySystem _invSystem = default!;
-    [Dependency] private SharedStationSpawningSystem _spawningSystem = default!;
+    [Dependency] private Shared.Station.Systems.StationSpawningSystem _spawningSystem = default!;
     [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private StorageSystem _storageSystem = default!;
 

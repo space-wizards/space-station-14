@@ -11,7 +11,7 @@ namespace Content.Client.RoundEnd;
 
 [UsedImplicitly]
 public sealed partial class RoundEndSummaryUIController : UIController,
-    IOnSystemLoaded<ClientGameTicker>
+    IOnSystemLoaded<GameTicking.ClientGameTicker>
 {
     [Dependency] private IInputManager _input = default!;
 
@@ -43,7 +43,7 @@ public sealed partial class RoundEndSummaryUIController : UIController,
             message.RoundDuration, message.RoundId, message.AllPlayersEndInfo);
     }
 
-    public void OnSystemLoaded(ClientGameTicker system)
+    public void OnSystemLoaded(GameTicking.ClientGameTicker system)
     {
         _input.SetInputCommand(ContentKeyFunctions.ToggleRoundEndSummaryWindow,
             InputCmdHandler.FromDelegate(ToggleScoreboardWindow));

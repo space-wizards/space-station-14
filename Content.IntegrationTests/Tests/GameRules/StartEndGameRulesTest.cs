@@ -26,7 +26,7 @@ public sealed class StartEndGameRulesTest : GameTest
         var pair = Pair;
         var server = pair.Server;
         await server.WaitIdleAsync();
-        var gameTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
+        var gameTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<ServerGameTicker>();
         var cfg = server.ResolveDependency<IConfigurationManager>();
         Assert.That(cfg.GetCVar(CCVars.GridFill), Is.False);
 

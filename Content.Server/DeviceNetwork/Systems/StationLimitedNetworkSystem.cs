@@ -12,7 +12,7 @@ namespace Content.Server.DeviceNetwork.Systems
     [UsedImplicitly]
     public sealed partial class StationLimitedNetworkSystem : EntitySystem
     {
-        [Dependency] private StationSystem _stationSystem = default!;
+        [Dependency] private ServerStationSystem _stationSystem = default!;
         public override void Initialize()
         {
             base.Initialize();

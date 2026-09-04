@@ -1,15 +1,12 @@
 using System.Numerics;
-using Content.Server.Chat.Systems;
-using Content.Server.GameTicking.Rules;
 using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.GameTicking.Rules;
 using Content.Shared.Random.Helpers;
-using Robust.Server.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
@@ -17,23 +14,24 @@ namespace Content.Server.StationEvents.Events;
 public sealed partial class MeteorSwarmSystem : GameRuleSystem<MeteorSwarmComponent>
 {
     [Dependency] private SharedPhysicsSystem _physics = default!;
-    [Dependency] private AudioSystem _audio = default!;
-    [Dependency] private ChatSystem _chat = default!;
-    [Dependency] private StationSystem _station = default!;
+    [Dependency] private ServerStationSystem _station = default!;
 
-    protected override void Added(EntityUid uid, MeteorSwarmComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
+    protected override void Added(Entity<MeteorSwarmComponent, GameRuleComponent> rule, ref GameRuleAddedEvent args)
     {
-        base.Added(uid, component, gameRule, args);
+        base.Added(rule, ref args);
+        var stations = _station.GetStations();
+        if (stations.Count == 0)
+            return;
 
-        component.WaveCounter = component.Waves.Next(RobustRandom);
+        var station = RobustRandom.Pick(stations);
+        if (_station.GetLargestGrid(station.AsNullable()) is not { } grid)
+            return;
 
-        // we don't want to send to players who aren't in game (i.e. in the lobby)
-        Filter allPlayersInGame = Filter.Empty().AddWhere(GameTicker.UserHasJoinedGame);
+        rule.Comp1.TargetGrid = grid;
+        rule.Comp1.WaveCounter = rule.Comp1.Waves.Next(RobustRandom);
 
-        if (component.Announcement is { } locId)
-            _chat.DispatchFilteredAnnouncement(allPlayersInGame, Loc.GetString(locId), playSound: false, colorOverride: Color.Gold);
-
-        _audio.PlayGlobal(component.AnnouncementSound, allPlayersInGame, true);
+        if (rule.Comp1.Announcement is { } locId)
+            GameTicker.StationMapAnnouncement(station, locId, rule.Comp1.AnnouncementSound, Color.Gold);
     }
 
     protected override void ActiveTick(EntityUid uid, MeteorSwarmComponent component, GameRuleComponent gameRule, float frameTime)
@@ -41,15 +39,13 @@ public sealed partial class MeteorSwarmSystem : GameRuleSystem<MeteorSwarmCompon
         if (Timing.CurTime < component.NextWaveTime)
             return;
 
+        if (component.TargetGrid is not { } grid)
+        {
+            ForceEndSelf(uid, gameRule);
+            return;
+        }
+
         component.NextWaveTime += TimeSpan.FromSeconds(component.WaveCooldown.Next(RobustRandom));
-
-
-        if (_station.GetStations().Count == 0)
-            return;
-
-        var station = RobustRandom.Pick(_station.GetStations());
-        if (_station.GetLargestGrid(station) is not { } grid)
-            return;
 
         var mapId = Transform(grid).MapID;
         var playableArea = _physics.GetWorldAABB(grid);

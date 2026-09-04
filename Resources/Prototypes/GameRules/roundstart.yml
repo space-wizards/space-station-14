@@ -5,6 +5,13 @@
   - type: GameRule
 
 - type: entity
+  id: BaseSilentGameRule
+  abstract: true
+  components:
+  - type: GameRule
+    silent: true
+
+- type: entity
   parent: BaseGameRule
   id: BaseRoundstartAntagRule
   abstract: true
@@ -465,7 +472,7 @@
 # variation passes
 - type: entity
   id: BasicRoundstartVariation
-  parent: BaseGameRule
+  parent: BaseSilentGameRule
   components:
   - type: RoundstartStationVariationRule
     rules:

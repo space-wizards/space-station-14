@@ -6,7 +6,7 @@ namespace Content.Shared.Station.Components;
 /// Component that tracks which station an entity is currently on.
 /// Mainly used for UI purposes on the client to easily get station-specific data like alert levels.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedStationSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(Systems.StationSystem))]
 public sealed partial class StationTrackerComponent : Component
 {
     /// <summary>

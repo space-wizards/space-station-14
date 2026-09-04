@@ -1,10 +1,9 @@
-using Content.Server.Antag;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Zombies;
 using Content.Shared.Administration;
 using Content.Server.Clothing.Systems;
 using Content.Shared.Database;
+using Content.Shared.GameTicking.Rules.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
@@ -18,9 +17,9 @@ namespace Content.Server.Administration.Systems;
 
 public sealed partial class AdminVerbSystem
 {
-    [Dependency] private AntagSelectionSystem _antag = default!;
+    [Dependency] private Shared.Antag.AntagSelectionSystem _antag = default!;
     [Dependency] private ZombieSystem _zombie = default!;
-    [Dependency] private GameTicker _gameTicker = default!;
+    [Dependency] private ServerGameTicker _gameTicker = default!;
     [Dependency] private OutfitSystem _outfit = default!;
 
     private static readonly EntProtoId DefaultTraitorRule = "Traitor";
@@ -58,7 +57,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Misc/job_icons.rsi"), "Syndicate"),
             Act = () =>
             {
-                _antag.ForceMakeAntag<TraitorRuleComponent>(targetPlayer, DefaultTraitorRule);
+                _antag.ForceMakeAntag<Shared.GameTicking.Rules.Components.TraitorRuleComponent>(targetPlayer, DefaultTraitorRule);
             },
             Impact = LogImpact.High,
             Message = string.Join(": ", traitorName, Loc.GetString("admin-verb-make-traitor")),
@@ -73,7 +72,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Interface/Misc/job_icons.rsi"), "InitialInfected"),
             Act = () =>
             {
-                _antag.ForceMakeAntag<ZombieRuleComponent>(targetPlayer, DefaultInitialInfectedRule);
+                _antag.ForceMakeAntag<Shared.GameTicking.Rules.Components.ZombieRuleComponent>(targetPlayer, DefaultInitialInfectedRule);
             },
             Impact = LogImpact.High,
             Message = string.Join(": ", initialInfectedName, Loc.GetString("admin-verb-make-initial-infected")),
@@ -164,7 +163,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Objects/Weapons/Melee/armblade.rsi"), "icon"),
             Act = () =>
             {
-                _antag.ForceMakeAntag<ChangelingRuleComponent>(targetPlayer, DefaultChangelingRule);
+                _antag.ForceMakeAntag<Shared.GameTicking.Rules.Components.ChangelingRuleComponent>(targetPlayer, DefaultChangelingRule);
             },
             Impact = LogImpact.High,
             Message = string.Join(": ", changelingName, Loc.GetString("admin-verb-make-changeling")),
@@ -179,14 +178,15 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Interface/Misc/job_icons.rsi"), "ParadoxClone"),
             Act = () =>
             {
-                var ruleEnt = _gameTicker.AddGameRule(ParadoxCloneRuleId);
+                if (_gameTicker.AddGameRule(ParadoxCloneRuleId) is not { } ruleEnt)
+                    return;
 
-                if (!TryComp<ParadoxCloneRuleComponent>(ruleEnt, out var paradoxCloneRuleComp))
+                if (!TryComp<Shared.GameTicking.Rules.Components.ParadoxCloneRuleComponent>(ruleEnt, out var paradoxCloneRuleComp))
                     return;
 
                 paradoxCloneRuleComp.OriginalBody = args.Target; // override the target player
 
-                _gameTicker.StartGameRule(ruleEnt);
+                _gameTicker.StartGameRule(ruleEnt.AsNullable());
             },
             Impact = LogImpact.High,
             Message = string.Join(": ", paradoxCloneName, Loc.GetString("admin-verb-make-paradox-clone")),

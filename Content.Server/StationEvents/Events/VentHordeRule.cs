@@ -89,7 +89,7 @@ public sealed partial class VentHordeRule : StationEventSystem<VentHordeRuleComp
     private EntityUid? ChooseVent()
     {
         // Get a station
-        if (!TryGetRandomStation(out var station))
+        if (!Station.TryGetRandomStation(out var station))
         {
             return null;
         }
@@ -107,7 +107,7 @@ public sealed partial class VentHordeRule : StationEventSystem<VentHordeRuleComp
             if (HasComp<VentHordeSpawnerComponent>(uid))
                 continue;
 
-            if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == station)
+            if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == station.Value.Owner)
             {
                 validLocations.Add(uid);
             }

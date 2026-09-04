@@ -1,4 +1,3 @@
-using Content.Shared.Station;
 using Content.Shared.StationRecords;
 using Content.Shared.StationRecords.Components;
 using Content.Shared.StationRecords.Systems;
@@ -11,7 +10,7 @@ public sealed partial class GeneralStationRecordConsoleBoundUserInterface : Boun
     [ViewVariables]
     private GeneralStationRecordConsoleWindow? _window;
 
-    [Dependency] private SharedStationSystem _stationSys = default!;
+    [Dependency] private Shared.Station.Systems.StationSystem _stationSys = default!;
     [Dependency] private StationRecordsSystem _recordsSys = default!;
 
     public GeneralStationRecordConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
