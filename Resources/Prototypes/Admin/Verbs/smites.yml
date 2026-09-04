@@ -103,8 +103,8 @@
   name: admin-smite-zoom-in-name
   description: admin-smite-zoom-in-description
   icon: Interface/AdminActions/zoom.png
-  operations:
-  - !type:ScaleEyeZoomOperation
+  effects:
+  - !type:ScaleEyeZoom
     factor: 0.2
 
 # BROKEN: Negative eye zoom crashes viewport rendering.
@@ -113,8 +113,8 @@
 #  name: admin-smite-flip-eye-name
 #  description: admin-smite-flip-eye-description
 #  icon: Interface/AdminActions/flip.png
-#  operations:
-#  - !type:ScaleEyeZoomOperation
+#  effects:
+#  - !type:ScaleEyeZoom
 #    factor: -1
 
 - type: adminSmite

@@ -1,5 +1,4 @@
 using Content.Server.GhostKick;
-using Content.Server.Movement.Systems;
 using Content.Server.Popups;
 using Content.Server.Silicons.Laws;
 using Content.Server.Storage.EntitySystems;
@@ -22,7 +21,6 @@ public sealed partial class AdminOperationSystem : EntitySystem
 {
     [Dependency] private BloodstreamSystem _bloodstream = default!;
     [Dependency] private BodySystem _body = default!;
-    [Dependency] private ContentEyeSystem _contentEye = default!;
     [Dependency] private SharedCreamPieSystem _creamPie = default!;
     [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
     [Dependency] private EntityStorageSystem _entityStorage = default!;
