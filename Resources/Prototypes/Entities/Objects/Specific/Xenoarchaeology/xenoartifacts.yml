@@ -23,7 +23,8 @@
     - Xenoarchaeology
   # gameplay interactions
   - type: XenoArtifact
-    effectsWeights: XenoArtifactEffectsDefaultWeightedTable
+    effectsTable: !type:NestedSelector
+      tableId: XenoArtifactEffectsDefaultTable
   - type: Damageable
   - type: Injurable
   - type: Actions
