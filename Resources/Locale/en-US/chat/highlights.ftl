@@ -52,8 +52,8 @@ highlights-reporter = Reporter, Journalist, Newsroom, News
 highlights-tramdriver = Tram Driver, Tram, "Driver", Service, "Serv"
 
 # Silicon
-highlights-borg = Cyborg, Silicon, Borg, Robotics, "Robot"
-highlights-stationai = Station AI, Silicon, "AI", "sAI"
+highlights-borg = Cyborg, Silicon, Borg, Robotics, "Robot", "Law", "Laws", "Lawset"
+highlights-stationai = Station AI, Silicon, "AI", "sAI", "Law", "Laws", "Lawset"
 
 # Civilian
 highlights-passenger = Passenger, Greyshirt, Grayshirt, Greytider, Graytider, "Tider", "Tide"
