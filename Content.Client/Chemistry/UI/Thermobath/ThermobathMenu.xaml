@@ -1,0 +1,309 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+                      xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                      SetSize="700 432"
+                      Resizable="False">
+    <BoxContainer Orientation="Vertical" VerticalExpand="True">
+        <BoxContainer Orientation="Horizontal" VerticalExpand="True" Margin="5">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="1.5"
+                          Margin="0 0 5 0">
+                <controls:StripeBack>
+                    <Label Text="{Loc 'thermobath-menu-current-temperature'}"
+                           StyleClasses="LabelHeading"
+                           HorizontalAlignment="Center"
+                           Margin="8 2" />
+                </controls:StripeBack>
+                <PanelContainer Margin="2 4">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#1E272A"
+                                          BorderColor="#2C2F33"
+                                          BorderThickness="2" />
+                    </PanelContainer.PanelOverride>
+                    <controls:SegmentDisplay Name="TemperatureVfd"
+                                             MaxHeight="60"
+                                             HorizontalAlignment="Center"
+                                             VerticalAlignment="Center"
+                                             Margin="1" />
+                </PanelContainer>
+                <controls:StripeBack Margin="0 2 0 0">
+                    <Label Text="{Loc 'thermobath-menu-solution-temperature'}"
+                           StyleClasses="LabelHeading"
+                           HorizontalAlignment="Center"
+                           Margin="8 2" />
+                </controls:StripeBack>
+                <PanelContainer Margin="2 4">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#1E272A"
+                                          BorderColor="#2C2F33"
+                                          BorderThickness="2" />
+                    </PanelContainer.PanelOverride>
+                    <controls:SegmentDisplay Name="SolutionTemperatureVfd"
+                                             MaxHeight="60"
+                                             HorizontalAlignment="Center"
+                                             VerticalAlignment="Center"
+                                             Margin="1" />
+                </PanelContainer>
+                <controls:StripeBack Margin="0 2 0 0">
+                    <Label Text="{Loc 'thermobath-menu-setpoint'}"
+                           StyleClasses="LabelHeading"
+                           HorizontalAlignment="Center"
+                           Margin="8 2" />
+                </controls:StripeBack>
+                <PanelContainer Margin="2 4">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#1E272A"
+                                          BorderColor="#2C2F33"
+                                          BorderThickness="2" />
+                    </PanelContainer.PanelOverride>
+                    <controls:SegmentDisplay Name="SetpointVfd"
+                                             MaxHeight="60"
+                                             HorizontalAlignment="Center"
+                                             VerticalAlignment="Center"
+                                             Margin="1" />
+                </PanelContainer>
+            </BoxContainer>
+            <customControls:VSeparator StyleClasses="LowDivider" Margin="0 5" />
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True"
+                          SizeFlagsStretchRatio="1.5" Margin="5 3 0 0">
+                <PanelContainer Margin="0 0 0 5">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                    </PanelContainer.PanelOverride>
+                    <Label Text="{Loc 'thermobath-menu-operation-mode'}"
+                           StyleClasses="LabelHeading"
+                           HorizontalAlignment="Center"
+                           Margin="10 2" />
+                </PanelContainer>
+                <PanelContainer StyleClasses="PanelInsetDeep" Margin="0 0 0 2">
+                    <BoxContainer Orientation="Vertical" Margin="10 5">
+                        <Slider Name="ModeSlider"
+                                MinValue="0"
+                                MaxValue="2"
+                                Value="1"
+                                Page="0"
+                                Rounded="True"
+                                RoundingDecimals="0"
+                                HorizontalExpand="True"
+                                Margin="0 0 0 2" />
+                        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                            <Label Text="{Loc 'thermobath-menu-mode-cooling'}"
+                                   HorizontalExpand="True"
+                                   HorizontalAlignment="Left"
+                                   StyleClasses="LabelWeak" />
+                            <Label Text="{Loc 'thermobath-menu-mode-auto'}"
+                                   HorizontalExpand="True"
+                                   HorizontalAlignment="Center"
+                                   StyleClasses="LabelWeak" />
+                            <Label Text="{Loc 'thermobath-menu-mode-heating'}"
+                                   HorizontalExpand="True"
+                                   HorizontalAlignment="Right"
+                                   StyleClasses="LabelWeak" />
+                        </BoxContainer>
+                    </BoxContainer>
+                </PanelContainer>
+                <BoxContainer Orientation="Horizontal" Margin="0 10 0 0">
+                    <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="0 0 5 0">
+                        <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" Margin="0 0 0 5">
+                            <Label Name="BeakerStatusLabel"
+                                   Text="{Loc 'thermobath-menu-no-beaker'}"
+                                   StyleClasses="LabelHeading"
+                                   HorizontalAlignment="Center"
+                                   FontColorOverride="#FF5555"
+                                   Margin="5 2" />
+                        </BoxContainer>
+                        <PanelContainer StyleClasses="PanelInsetDeep"
+                                        Margin="0 0 0 8"
+                                        VerticalExpand="True"
+                                        MaxHeight="60"
+                                        VerticalAlignment="Bottom">
+                            <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" Margin="5">
+                                <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" Margin="8 0">
+                                    <PanelContainer Name="CoolingIndicator" SetSize="10 10"
+                                                    HorizontalAlignment="Center" Margin="0 0 0 2" />
+                                    <Label Text="{Loc 'thermobath-menu-status-cooling'}"
+                                           HorizontalAlignment="Center"
+                                           StyleClasses="LabelSmall" />
+                                </BoxContainer>
+                                <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" Margin="8 0">
+                                    <PanelContainer Name="HeatingIndicator" SetSize="10 10"
+                                                    HorizontalAlignment="Center" Margin="0 0 0 2" />
+                                    <Label Text="{Loc 'thermobath-menu-status-heating'}"
+                                           HorizontalAlignment="Center"
+                                           StyleClasses="LabelSmall" />
+                                </BoxContainer>
+                                <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" Margin="8 0">
+                                    <PanelContainer Name="PowerIndicator" SetSize="10 10" HorizontalAlignment="Center"
+                                                    Margin="0 0 0 2" />
+                                    <Label Text="{Loc 'thermobath-menu-status-power'}"
+                                           HorizontalAlignment="Center"
+                                           StyleClasses="LabelSmall" />
+                                </BoxContainer>
+                            </BoxContainer>
+                        </PanelContainer>
+                    </BoxContainer>
+                    <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                        <PanelContainer StyleClasses="PanelDark" Margin="0 0 0 5">
+                            <Label Text="{Loc 'thermobath-menu-temperature-adjust'}"
+                                   StyleClasses="LabelHeading"
+                                   HorizontalAlignment="Center"
+                                   Margin="5 2" />
+                        </PanelContainer>
+                        <PanelContainer StyleClasses="PanelInsetDeep" Margin="0 0 0 5">
+                            <BoxContainer Orientation="Horizontal" VerticalExpand="False" Margin="5 2"
+                                          SeparationOverride="5">
+                                <Button Name="DecreaseButton"
+                                        Text="-"
+                                        HorizontalExpand="True"
+                                        StyleClasses="ButtonSquare"
+                                        SetSize="100 40" />
+                                <Button Name="IncreaseButton"
+                                        Text="+"
+                                        HorizontalExpand="True"
+                                        StyleClasses="ButtonSquare"
+                                        SetSize="100 40" />
+                            </BoxContainer>
+                        </PanelContainer>
+                    </BoxContainer>
+                </BoxContainer>
+                <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                    <PanelContainer HorizontalAlignment="Stretch" VerticalExpand="True" Margin="0">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#212123" BorderColor="#2C2F33" BorderThickness="2" />
+                        </PanelContainer.PanelOverride>
+                        <GridContainer Columns="3" Rows="3" VerticalExpand="True" HorizontalExpand="True">
+                            <TextureRect TexturePath="/Textures/Interface/Nano/gear.svg.192dpi.png"
+                                         SetSize="14 14"
+                                         CanShrink="True"
+                                         Margin="4"
+                                         Stretch="KeepAspectCentered" />
+                            <TextureRect />
+                            <TextureRect TexturePath="/Textures/Interface/Nano/gear.svg.192dpi.png"
+                                         SetSize="14 14"
+                                         CanShrink="True"
+                                         Margin="4"
+                                         Stretch="KeepAspectCentered" />
+                            <Control />
+                            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True"
+                                          Margin="4">
+                                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalAlignment="Center"
+                                              Margin="5">
+                                    <BoxContainer Orientation="Vertical" HorizontalExpand="True"
+                                                  Margin="2">
+                                        <PanelContainer HorizontalExpand="True" SetHeight="2" Margin="0 4 4 4">
+                                            <PanelContainer.PanelOverride>
+                                                <gfx:StyleBoxFlat BackgroundColor="#525252" />
+                                            </PanelContainer.PanelOverride>
+                                        </PanelContainer>
+                                        <PanelContainer HorizontalExpand="True" SetHeight="2" Margin="0 4 4 4">
+                                            <PanelContainer.PanelOverride>
+                                                <gfx:StyleBoxFlat BackgroundColor="#525252" />
+                                            </PanelContainer.PanelOverride>
+                                        </PanelContainer>
+                                        <PanelContainer HorizontalExpand="True" SetHeight="2" Margin="0 4 4 4">
+                                            <PanelContainer.PanelOverride>
+                                                <gfx:StyleBoxFlat BackgroundColor="#525252" />
+                                            </PanelContainer.PanelOverride>
+                                        </PanelContainer>
+                                        <PanelContainer HorizontalExpand="True" SetHeight="2" Margin="0 4 4 4">
+                                            <PanelContainer.PanelOverride>
+                                                <gfx:StyleBoxFlat BackgroundColor="#525252" />
+                                            </PanelContainer.PanelOverride>
+                                        </PanelContainer>
+                                    </BoxContainer>
+                                    <BoxContainer Orientation="Vertical" HorizontalExpand="True"
+                                                  Margin="2">
+                                        <PanelContainer HorizontalExpand="True" SetHeight="2" Margin="4">
+                                            <PanelContainer.PanelOverride>
+                                                <gfx:StyleBoxFlat BackgroundColor="#525252" />
+                                            </PanelContainer.PanelOverride>
+                                        </PanelContainer>
+                                        <PanelContainer HorizontalExpand="True" SetHeight="2" Margin="4">
+                                            <PanelContainer.PanelOverride>
+                                                <gfx:StyleBoxFlat BackgroundColor="#525252" />
+                                            </PanelContainer.PanelOverride>
+                                        </PanelContainer>
+                                        <PanelContainer HorizontalExpand="True" SetHeight="2" Margin="4">
+                                            <PanelContainer.PanelOverride>
+                                                <gfx:StyleBoxFlat BackgroundColor="#525252" />
+                                            </PanelContainer.PanelOverride>
+                                        </PanelContainer>
+                                        <PanelContainer HorizontalExpand="True" SetHeight="2" Margin="4">
+                                            <PanelContainer.PanelOverride>
+                                                <gfx:StyleBoxFlat BackgroundColor="#525252" />
+                                            </PanelContainer.PanelOverride>
+                                        </PanelContainer>
+                                    </BoxContainer>
+                                    <BoxContainer Orientation="Vertical" HorizontalExpand="True"
+                                                  Margin="2">
+                                        <PanelContainer HorizontalExpand="True" SetHeight="2" Margin="4 4 0 4">
+                                            <PanelContainer.PanelOverride>
+                                                <gfx:StyleBoxFlat BackgroundColor="#525252" />
+                                            </PanelContainer.PanelOverride>
+                                        </PanelContainer>
+                                        <PanelContainer HorizontalExpand="True" SetHeight="2" Margin="4 4 0 4">
+                                            <PanelContainer.PanelOverride>
+                                                <gfx:StyleBoxFlat BackgroundColor="#525252" />
+                                            </PanelContainer.PanelOverride>
+                                        </PanelContainer>
+                                        <PanelContainer HorizontalExpand="True" SetHeight="2" Margin="4 4 0 4">
+                                            <PanelContainer.PanelOverride>
+                                                <gfx:StyleBoxFlat BackgroundColor="#525252" />
+                                            </PanelContainer.PanelOverride>
+                                        </PanelContainer>
+                                        <PanelContainer HorizontalExpand="True" SetHeight="2" Margin="4 4 0 4">
+                                            <PanelContainer.PanelOverride>
+                                                <gfx:StyleBoxFlat BackgroundColor="#525252" />
+                                            </PanelContainer.PanelOverride>
+                                        </PanelContainer>
+                                    </BoxContainer>
+                                </BoxContainer>
+                                <BoxContainer Orientation="Vertical" HorizontalAlignment="Right"
+                                              VerticalAlignment="Center" Margin="5 0">
+                                    <PanelContainer Margin="5">
+                                        <PanelContainer.PanelOverride>
+                                            <gfx:StyleBoxFlat BackgroundColor="Transparent" BorderColor="#444444"
+                                                              BorderThickness="2" />
+                                        </PanelContainer.PanelOverride>
+                                        <controls:OnOffButton Name="PowerButton" IsOn="False" Margin="5" />
+                                    </PanelContainer>
+                                </BoxContainer>
+                            </BoxContainer>
+                            <Control />
+                            <TextureRect TexturePath="/Textures/Interface/Nano/gear.svg.192dpi.png"
+                                         SetSize="14 14"
+                                         CanShrink="True"
+                                         Margin="4"
+                                         Stretch="KeepAspectCentered" />
+                            <Control />
+                            <TextureRect TexturePath="/Textures/Interface/Nano/gear.svg.192dpi.png"
+                                         SetSize="14 14"
+                                         CanShrink="True"
+                                         Margin="4"
+                                         Stretch="KeepAspectCentered" />
+                        </GridContainer>
+                    </PanelContainer>
+                </BoxContainer>
+            </BoxContainer>
+        </BoxContainer>
+        <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom">
+            <PanelContainer StyleClasses="LowDivider" Margin="0 3 0 0" />
+            <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
+                <Label Text="{Loc 'thermobath-menu-footer-warning'}"
+                       StyleClasses="WindowFooterText"
+                       FontColorOverride="#FF5555" />
+                <Label Text="{Loc 'thermobath-menu-footer-manufacturer'}"
+                       StyleClasses="WindowFooterText"
+                       HorizontalAlignment="Right"
+                       HorizontalExpand="True"
+                       Margin="0 0 5 0" />
+                <TextureRect StyleClasses="NTLogoDark"
+                             Stretch="KeepAspectCentered"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Right"
+                             SetSize="19 19" />
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

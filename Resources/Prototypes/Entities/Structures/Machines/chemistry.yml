@@ -1,0 +1,61 @@
+- type: entity
+  parent: [ BaseMachinePowered, SmallConstructibleMachine, BaseSmallConstructibleMachineDestructible ]
+  id: MachineThermobath
+  name: thermobath
+  description: A precision-controlled oil bath capable of both heating and cooling beakers.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/thermobath.rsi
+    drawdepth: SmallObjects
+    snapCardinals: true
+    layers:
+    - state: base
+    - state: on
+      map: [ "enum.ThermobathVisualLayers.PowerOn" ]
+      shader: unshaded
+    - state: off
+      map: [ "enum.ThermobathVisualLayers.PowerOff" ]
+      shader: unshaded
+    - state: heating
+      map: [ "enum.ThermobathVisualLayers.Heating" ]
+      shader: unshaded
+    - state: cooling
+      map: [ "enum.ThermobathVisualLayers.Cooling" ]
+      shader: unshaded
+    - state: open
+      map: [ "enum.ThermobathVisualLayers.Open" ]
+    - state: beaker
+      map: [ "enum.ThermobathVisualLayers.Beaker" ]
+    - state: lid_none
+      map: [ "enum.ThermobathVisualLayers.LidIdle" ]
+    - state: lid_cold
+      map: [ "enum.ThermobathVisualLayers.LidCooling" ]
+    - state: lid_hot
+      map: [ "enum.ThermobathVisualLayers.LidHeating" ]
+  - type: Thermobath
+  - type: Thermoregulator
+    heatingPower: 1200
+    coolingPower: 400
+  - type: ApcPowerReceiver
+    powerLoad: 1200
+    powerDisabled: true
+  - type: ContainerContainer
+    containers:
+      beakerSlot: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: ItemSlots
+    slots:
+      beakerSlot:
+        whitelist:
+          components:
+          - FitsInDispenser
+  - type: ActivatableUI
+    key: enum.ThermobathUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ThermobathUiKey.Key:
+        type: ThermobathBoundUserInterface
+  - type: Machine
+    board: ThermobathMachineCircuitboard
+  - type: Appearance
