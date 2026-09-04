@@ -34,6 +34,7 @@
       types:
         Blunt: 0
   - type: MeleeWeapon
+    attackRate: 1.3
     wideAnimationRotation: -135
     damage:
       types:
@@ -45,12 +46,12 @@
   - type: MeleeBatteryHitsLeft
   - type: StaminaDamageOnHitRequiresToggle
   - type: StaminaDamageOnHitRequiresCharge
-    requiredCharge: 50
+    requiredCharge: 40
   - type: StaminaDamageOnHit
-    damage: 35
+    damage: 23
     sound: /Audio/Weapons/egloves.ogg
   - type: StaminaDamageOnCollide
-    damage: 35
+    damage: 23
     sound: /Audio/Weapons/egloves.ogg
   - type: LandAtCursor # it deals stamina damage when thrown
   - type: Battery
