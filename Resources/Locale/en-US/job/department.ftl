@@ -4,8 +4,9 @@ department-Command = Command
 department-CentralCommand = Central Command
 department-Engineering = Engineering
 department-Medical = Medical
-department-Security = Security
 department-Science = Science
+department-Security = Security
+department-Service = Service
 department-Silicon = Silicon
 department-Specific = Station specific
 
