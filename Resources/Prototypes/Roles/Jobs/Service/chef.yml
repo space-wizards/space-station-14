@@ -5,7 +5,7 @@
   playTimeTracker: JobChef
   requirements:
     - !type:DepartmentTimeRequirement
-      department: Civilian
+      department: Service
       time: 0.5h
   startingGear: ChefGear
   icon: "JobIconChef"

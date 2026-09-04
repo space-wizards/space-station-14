@@ -28,14 +28,11 @@
 
 - type: entity
   parent:
-  - MobRespirator
-  - MobAtmosStandard
   - SimpleSpaceMobBase
   - MobNightVision
   - BaseMobDestructible
-  id: MobHeadSlug
-  name: headslug
-  description: A small, slug-like creature with a large, gaping maw. It's covered in a thick, slimy mucus.
+  id: MobHeadSlugBase
+  abstract: true
   components:
   - type: Fixtures
     fixtures:
@@ -48,6 +45,38 @@
         - SmallMobMask
         layer:
         - SmallMobLayer
+  - type: Deathgasp
+  - type: MobStateActions
+    actions:
+      Critical:
+      - ActionCritSuccumb
+      - ActionCritFakeDeath
+      - ActionCritLastWords
+  - type: ReplacementAccent
+    accent: genericAggressive
+  - type: MovementSpeedModifier # Slightly faster than regular mobs
+    baseWalkSpeed: 3
+    baseSprintSpeed: 5
+  - type: ChangelingSlug
+  - type: Speech # need these speech comps because it isnt targeted by MakeSentient.
+    speechVerb: LargeMob
+  - type: Emoting
+  - type: ActionGrant
+    actions:
+    - ActionChangelingStasisWeak
+  - type: Tag # Removes DoorBumpOpener
+    tags:
+      [ ]
+
+- type: entity
+  parent:
+  - MobHeadSlugBase
+  - MobRespirator
+  - MobAtmosStandard
+  id: MobHeadSlug
+  name: headslug
+  description: A small, slug-like creature with a large, gaping maw. It's covered in a thick, slimy mucus.
+  components:
   - type: Sprite
     drawdepth: SmallMobs
     layers:
@@ -62,13 +91,6 @@
         Base: slug_dead
       Dead:
         Base: slug_dead
-  - type: Deathgasp
-  - type: MobStateActions
-    actions:
-      Critical:
-      - ActionCritSuccumb
-      - ActionCritFakeDeath
-      - ActionCritLastWords
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -85,24 +107,62 @@
     damage:
       types:
         Blunt: 0.1
-  - type: MovementSpeedModifier # Slightly faster than regular mobs
-    baseWalkSpeed: 3
-    baseSprintSpeed: 5
   - type: MeleeWeapon
     altDisarm: false
     damage:
       types:
         Blunt: 5
         Structural: 15 # to destroy lockers in which bodies could be hidden
-  - type: ChangelingSlug
-  - type: ActionGrant
-    actions:
-    - ActionChangelingStasisWeak
-  - type: ReplacementAccent
-    accent: genericAggressive
-  - type: Tag # Removes DoorBumpOpener
-    tags:
-      []
+  - type: InteractionPopup
+    successChance: 0.2
+    interactSuccessString: petting-success-headslug
+    interactFailureString: petting-failure-headslug
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Effects/Fluids/blood1.ogg
+
+- type: entity
+  parent:
+  - MobHeadSlugBase
+  - FlyingMobBase # its space faring because it spawns from space
+  id: MobHeadSlugElder
+  name: elder headslug
+  description: After living a few years, headslugs develop into this state and gain space faring abilities as a part of the changeling's reproduction cycle.
+  components:
+  - type: Sprite
+    drawdepth: SmallMobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: slug_elder
+      sprite: Mobs/Animals/headslug.rsi
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: slug_elder
+      Critical:
+        Base: slug_elder_dead
+      Dead:
+        Base: slug_elder_dead
+  - type: ExplosionResistance # since it spawns in a bang
+    damageCoefficient: 0.1
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Critical
+      75: Dead
+  - type: MeleeWeapon
+    altDisarm: false
+    damage:
+      types:
+        Blunt: 10
+        Structural: 25 # to destroy lockers in which bodies could be hidden
+  - type: InteractionPopup
+    successChance: 0.01
+    interactSuccessString: petting-success-elder-headslug
+    interactFailureString: petting-failure-elder-headslug
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/cat_meow.ogg # meow
 
 - type: entity # dummy prototype for the store listing
   id: ChangelingFleshClothingAbilityStoreDummy

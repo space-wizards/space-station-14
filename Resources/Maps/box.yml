@@ -4,7 +4,7 @@ meta:
   engineVersion: 289.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/22/2026 17:50:29
+  time: 08/30/2026 10:30:27
   entityCount: 28909
 maps:
 - 780
@@ -155307,6 +155307,12 @@ entities:
       parent: 8364
       rot: -1.5707963267948966 rad
       pos: -45.5,-11.5
+  - uid: 16331
+    components:
+    - type: Transform
+      parent: 8364
+      rot: 1.5707963267948966 rad
+      pos: 18.5,-17.5
   - uid: 19232
     components:
     - type: Transform
@@ -155355,12 +155361,6 @@ entities:
     - type: Transform
       parent: 8364
       pos: -36.5,-54.5
-  - uid: 16331
-    components:
-    - type: Transform
-      parent: 8364
-      rot: 1.5707963267948966 rad
-      pos: 18.5,-17.5
   - uid: 20883
     components:
     - type: Transform
