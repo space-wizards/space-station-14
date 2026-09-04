@@ -46,15 +46,11 @@ public sealed partial class XATInteractWithSystem : BaseXATSystem<XATInteractWit
     /// </summary>
     private void OnInteractUsing(Entity<XenoArtifactComponent> artifact, Entity<XATInteractWithComponent, XenoArtifactNodeComponent> node, ref InteractUsingEvent args)
     {
-        if (args.Handled)
-            return;
-
-        args.Handled = true;
-
         if (!_whitelistSystem.IsWhitelistPassOrNull(node.Comp1.Whitelist, args.Used)) // must be on the whitelist.
             return;
 
         _audio.PlayPredicted(node.Comp1.StartTriggerSound, artifact.Owner, args.User);
+
         _doAfter.TryStartDoAfter(
             new DoAfterArgs(
                 EntityManager,
@@ -107,7 +103,8 @@ public sealed partial class XATInteractWithSystem : BaseXATSystem<XATInteractWit
 
         if (node.Comp1.Count > 0)
         {
-            _popup.PopupEntity(Loc.GetString("interact-artifact-more"), artifact.Owner, args.User);
+            if (node.Comp1.InsufficientInteractionPopup != null)
+                _popup.PopupEntity(Loc.GetString(node.Comp1.InsufficientInteractionPopup), artifact.Owner, args.User);
             Dirty(node);
             return; // insufficient, still need to add more!
         }

@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseWallmountMachine
+  parent: [ BaseWallmountMachine, StructureHealthMachineWeak ]
   id: Screen
   name: screen
   description: Displays text or time.
@@ -9,20 +9,25 @@
     textOffset: 0,3
     timerOffset: 0,-4
     rows: 2
+    rowLength: 6
+    scrollEnabled: true
+    frameState:
+      sprite: Structures/Wallmounts/screen.rsi
+      state: outer_frame
   - type: Sprite
+    noRot: true
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/screen.rsi
-    state: screen
-    noRot: true
+    state: screen # Note: outer_frame will be added on top of text layers.
   - type: Appearance
+  - type: Damageable
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 100
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak

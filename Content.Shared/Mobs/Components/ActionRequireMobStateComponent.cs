@@ -18,5 +18,11 @@ public sealed partial class ActionRequireMobStateComponent : Component
     /// The type of Popup to be used.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public PopupType? Popup = PopupType.SmallCaution;
+    public LocId? FailReason = "mob-state-action-requires-state";
+
+    /// <summary>
+    /// The type of the popup the fail reason should show as.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public PopupType FailReasonPopupType = PopupType.SmallCaution;
 }

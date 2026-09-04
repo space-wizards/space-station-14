@@ -5,7 +5,7 @@ using Content.Shared.Radio;
 
 namespace Content.Server.Emp;
 
-public sealed class EmpSystem : SharedEmpSystem
+public sealed partial class EmpSystem : SharedEmpSystem
 {
     public override void Initialize()
     {

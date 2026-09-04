@@ -56,7 +56,7 @@ public sealed partial class IngestionSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private SharedForensicsSystem _forensics = default!;
+    [Dependency] private ForensicsSystem _forensics = default!;
 
     // Body Component Dependencies
     [Dependency] private BodySystem _body = default!;

@@ -6,7 +6,7 @@ namespace Content.Client.Chemistry.Visualizers;
 /// <summary>
 /// Ensures entities with <see cref="SmokeVisualsComponent"/> have a color corresponding with their contained reagents.
 /// </summary>
-public sealed class SmokeVisualizerSystem : VisualizerSystem<SmokeVisualsComponent>
+public sealed partial class SmokeVisualizerSystem : VisualizerSystem<SmokeVisualsComponent>
 {
     /// <summary>
     /// Syncs the color of the smoke with the color of its contained reagents.

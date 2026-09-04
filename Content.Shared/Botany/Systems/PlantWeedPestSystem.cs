@@ -1,7 +1,8 @@
-using JetBrains.Annotations;
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
-using Robust.Shared.Random;
+using Content.Shared.Random.Helpers;
+using JetBrains.Annotations;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Botany.Systems;
 
@@ -11,11 +12,13 @@ namespace Content.Shared.Botany.Systems;
 /// </summary>
 public sealed partial class PlantWeedPestSystem : EntitySystem
 {
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private BotanySystem _botany = default!;
-    [Dependency] private IRobustRandom _random = default!;
     [Dependency] private PlantMutationSystem _mutation = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
     [Dependency] private PlantTraySystem _plantTray = default!;
+
+    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery;
 
     [SubscribeLocalEvent]
     private void OnCrossPollinate(Entity<PlantWeedPestComponent> ent, ref PlantCrossPollinateEvent args)
@@ -23,8 +26,8 @@ public sealed partial class PlantWeedPestSystem : EntitySystem
         if (!_botany.TryGetPlantComponent<PlantWeedPestComponent>(args.PollenData, args.PollenProtoId, out var pollenData))
             return;
 
-        _mutation.CrossFloat(ent, ref ent.Comp.WeedTolerance, pollenData.WeedTolerance);
-        _mutation.CrossFloat(ent, ref ent.Comp.PestTolerance, pollenData.PestTolerance);
+        _mutation.CrossFloat(ref ent.Comp.WeedTolerance, pollenData.WeedTolerance);
+        _mutation.CrossFloat(ref ent.Comp.PestTolerance, pollenData.PestTolerance);
         Dirty(ent);
     }
 
@@ -32,11 +35,14 @@ public sealed partial class PlantWeedPestSystem : EntitySystem
     private void OnPlantGrow(Entity<PlantWeedPestComponent> ent, ref PlantGrowEvent args)
     {
         var trayUid = GetEntity(args.Tray);
-        if (!TryComp<PlantTrayComponent>(trayUid, out var tray))
+        if (!_trayQuery.TryComp(trayUid, out var tray))
             return;
 
-        if (_random.Prob(ent.Comp.PestGrowthChance))
+        if (SharedRandomExtensions.PredictedProb(_timing, ent.Comp.PestGrowthChance, GetNetEntity(ent)))
             _plantTray.AdjustPest((trayUid, tray), ent.Comp.PestGrowthAmount);
+
+        if (tray.WeedLevel > ent.Comp.WeedTolerance)
+            _plantHolder.AdjustsHealth(ent.Owner, -ent.Comp.WeedDamageAmount);
 
         if (tray.PestLevel > ent.Comp.PestTolerance)
             _plantHolder.AdjustsHealth(ent.Owner, -ent.Comp.PestDamageAmount);

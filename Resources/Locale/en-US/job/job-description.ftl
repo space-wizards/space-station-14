@@ -41,19 +41,21 @@ job-description-chef = Keep the crew fed, butcher and dispose of dead animals, a
 job-description-janitor = Keep the station clean, recycle garbage into raw materials, and help exterminate vermin.
 job-description-lawyer = Ensure that criminals receive legal representation and fair judgment. Inform the crew of their rights and help organize trials, lawsuits, and settlements.
 job-description-librarian = Keep the library organized. Provide the crew with educational materials, entertaining stories, and tabletop games.
-job-description-passenger = Enjoy your stay aboard the station with no obligations!
 job-description-reporter = Inform and entertain the station's crew with wireless cameras and news bulletins.
 job-description-serviceworker = Assist the bar and kitchen with providing sustenance to the crew.
 job-description-tram-driver = Drive around a tram from stop to stop.
-
-# Silicon
-job-description-borg = Use your robotic chassis to perform a wide variety of specialized tasks.
-job-description-station-ai = Remotely interface with the station's cameras, airlocks, radio, and other electronic devices from the safety of your core.
 
 # Theatre
 job-description-clown = Entertain the crew with slapstick routines and terrible jokes, and engage in light rivalry with the mime.
 job-description-mime = Entertain the crew with silent acts of performance art, and engage in light rivalry with the clown.
 job-description-musician = Entertain the crew with your unique musical talents.
+
+# Civilian
+job-description-passenger = Enjoy your stay aboard the station with no obligations!
+
+# Silicon
+job-description-borg = Use your robotic chassis to perform a wide variety of specialized tasks.
+job-description-station-ai = Remotely interface with the station's cameras, airlocks, radio, and other electronic devices from the safety of your core.
 
 # Misc.
 job-description-centcommoff = Act as liaison to the newest state-of-the-art space station in Nanotrasen's fleet.

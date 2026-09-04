@@ -99,6 +99,9 @@
       - SnoutCover
       - HeadSide
       - HeadTop
+  - type: Tag
+    tags:
+    - Head
 
 - type: entity
   parent:

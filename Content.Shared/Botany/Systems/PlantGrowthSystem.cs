@@ -1,7 +1,7 @@
-using JetBrains.Annotations;
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
 using Content.Shared.Random.Helpers;
+using JetBrains.Annotations;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -20,8 +20,8 @@ public sealed partial class PlantGrowthSystem : EntitySystem
     [Dependency] private PlantHolderSystem _plantHolder = default!;
     [Dependency] private PlantTraySystem _plantTray = default!;
 
-    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery = default!;
-    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery = default!;
+    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery;
+    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery;
 
     [SubscribeLocalEvent]
     private void OnCrossPollinate(Entity<PlantGrowthComponent> ent, ref PlantCrossPollinateEvent args)
@@ -29,8 +29,8 @@ public sealed partial class PlantGrowthSystem : EntitySystem
         if (!_botany.TryGetPlantComponent<PlantGrowthComponent>(args.PollenData, args.PollenProtoId, out var pollenData))
             return;
 
-        _mutation.CrossFloat(ent, ref ent.Comp.WaterConsumption, pollenData.WaterConsumption);
-        _mutation.CrossFloat(ent, ref ent.Comp.NutrientConsumption, pollenData.NutrientConsumption);
+        _mutation.CrossFloat(ref ent.Comp.WaterConsumption, pollenData.WaterConsumption);
+        _mutation.CrossFloat(ref ent.Comp.NutrientConsumption, pollenData.NutrientConsumption);
         Dirty(ent);
     }
 

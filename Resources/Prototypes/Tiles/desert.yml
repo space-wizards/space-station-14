@@ -1,0 +1,27 @@
+- type: tile
+  id: FloorDesert
+  parent: BaseFloorPlanet
+  name: tiles-desert-floor
+  sprite: /Textures/Tiles/Desert/desert.png
+  variants: 5
+  edgeSpritePriority: 2
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Desert/single_edge_SE.png
+    NorthEast: /Textures/Tiles/Desert/single_edge_NE.png
+    NorthWest: /Textures/Tiles/Desert/single_edge_NW.png
+    SouthWest: /Textures/Tiles/Desert/single_edge_SW.png
+    South: /Textures/Tiles/Desert/double_edge_S.png
+    East: /Textures/Tiles/Desert/double_edge_E.png
+    North: /Textures/Tiles/Desert/double_edge_N.png
+    West: /Textures/Tiles/Desert/double_edge_W.png
+
+### ASTRO TILES
+- type: tile
+  parent: [ BaseStationTile, FloorDesert ]
+  id: FloorDesertAstroSand
+  name: tiles-desert-astro-sand
+  sprite: /Textures/Tiles/Desert/desert.png
+  variants: 5
+  footstepSounds:
+    collection: FootstepAsteroid
+  itemDrop: FloorTileItemDesertAstroSand
