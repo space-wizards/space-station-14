@@ -4,7 +4,6 @@ using Content.Server.Silicons.Laws;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Tabletop;
 using Content.Shared.EntityEffects;
-using Content.Shared.Slippery;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
@@ -24,7 +23,6 @@ public sealed partial class AdminOperationSystem : EntitySystem
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SiliconLawSystem _siliconLaws = default!;
-    [Dependency] private SlipperySystem _slippery = default!;
     [Dependency] private TabletopSystem _tabletop = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private WeldableSystem _weldable = default!;

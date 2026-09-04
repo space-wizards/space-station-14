@@ -287,8 +287,12 @@
   icon:
     sprite: Objects/Specific/Janitorial/soap.rsi
     state: omega-4
-  operations:
-  - !type:SuperSlipOperation
+  effects:
+  - !type:Slip
+    slippery:
+      superSlippery: true
+      stunTime: 5
+      launchForwardsMultiplier: 20
 
 - type: adminSmite
   id: AdminSmiteSiliconLawBound
