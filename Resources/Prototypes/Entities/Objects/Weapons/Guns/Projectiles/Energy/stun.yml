@@ -230,7 +230,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: StaminaDamageOnCollide
-    damage: 33
+    damage: 15
 
 - type: entity
   parent: BulletDisablerSmgStunning
