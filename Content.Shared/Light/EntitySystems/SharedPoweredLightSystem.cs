@@ -10,6 +10,7 @@ using Content.Shared.Emp;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Light.Components;
+using Content.Shared.Light.Events;
 using Content.Shared.Power;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
@@ -288,7 +289,9 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
         switch (lightBulb.State)
         {
             case LightBulbState.Normal:
-                if (powerReceiver.Powered && light.On)
+                var ev = new OverridePoweredLightStatus();
+                RaiseLocalEvent(uid, ref ev);
+                if (ev.LightState == null && powerReceiver.Powered && light.On || ev.LightState != null && ev.LightState.Value)
                 {
                     SetLight(uid, true, lightBulb.Color, light, lightBulb.LightRadius, lightBulb.LightEnergy, lightBulb.LightSoftness);
                     _appearance.SetData(uid, PoweredLightVisuals.BulbState, PoweredLightState.On, appearance);
@@ -384,6 +387,9 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
         // light bulbs burn your hands!
         if (TryComp<DamageOnInteractComponent>(uid, out var damageOnInteractComp))
             _damageOnInteractSystem.SetIsDamageActiveTo((uid, damageOnInteractComp), value);
+
+        var ev = new PoweredLightValueUpdated(value);
+        RaiseLocalEvent(uid, ref ev);
     }
 
     public void ToggleLight(EntityUid uid, PoweredLightComponent? light = null)
@@ -425,6 +431,38 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
         _appearance.SetData(ent, PoweredLightVisuals.Blinking, false);
     }
 
+    [SubscribeLocalEvent]
+    private void OnOverridePoweredLight(Entity<AntiFlickerPoweredLightComponent> ent, ref OverridePoweredLightStatus args)
+    {
+        if (GameTiming.CurTime < ent.Comp.LastTurnOnTime + ent.Comp.RequiredMinimumTime)
+        {
+            args.LightState = true;
+        }
+
+        if (GameTiming.CurTime < ent.Comp.LastTurnOffTime + ent.Comp.RequiredMinimumTime)
+        {
+            args.LightState = false;
+        }
+
+        if (GameTiming.CurTime < ent.Comp.LastTurnOnTime + ent.Comp.RequiredMinimumTime ||
+            GameTiming.CurTime < ent.Comp.LastTurnOffTime + ent.Comp.RequiredMinimumTime)
+            ent.Comp.CheckUpdate = true;
+    }
+    [SubscribeLocalEvent]
+    private void OnLightStatusUpdated(Entity<AntiFlickerPoweredLightComponent> ent, ref PoweredLightValueUpdated args)
+    {
+        if (args.Value)
+        {
+            if (ent.Comp.LastTurnOnTime <= ent.Comp.LastTurnOffTime)
+                ent.Comp.LastTurnOnTime = GameTiming.CurTime;
+        }
+        else
+        {
+            if (ent.Comp.LastTurnOffTime <= ent.Comp.LastTurnOnTime)
+                ent.Comp.LastTurnOffTime = GameTiming.CurTime;
+        }
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -435,6 +473,20 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
         {
             if (curTime > blinkingComp.StopBlinkingTime)
                 RemCompDeferred<BlinkingPoweredLightComponent>(uid);
+        }
+
+        var queryAntiFlicker = EntityQueryEnumerator<AntiFlickerPoweredLightComponent>();
+        while (queryAntiFlicker.MoveNext(out var uid, out var antiFlickerComp))
+        {
+            if (antiFlickerComp.CheckUpdate)
+            {
+                if (antiFlickerComp.LastTurnOffTime + antiFlickerComp.RequiredMinimumTime <= curTime ||
+                    antiFlickerComp.LastTurnOnTime + antiFlickerComp.RequiredMinimumTime <= curTime)
+                {
+                    antiFlickerComp.CheckUpdate = false;
+                    UpdateLight(uid);
+                }
+            }
         }
     }
 }
