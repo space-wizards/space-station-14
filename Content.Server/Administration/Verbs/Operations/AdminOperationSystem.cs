@@ -1,10 +1,8 @@
 using Content.Server.GhostKick;
 using Content.Server.Popups;
 using Content.Server.Silicons.Laws;
-using Content.Server.Storage.EntitySystems;
 using Content.Server.Tabletop;
 using Content.Shared.EntityEffects;
-using Content.Shared.Tools.Systems;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 
@@ -16,7 +14,6 @@ namespace Content.Server.Administration.Verbs.Operations;
 public sealed partial class AdminOperationSystem : EntitySystem
 {
     [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
-    [Dependency] private EntityStorageSystem _entityStorage = default!;
     [Dependency] private FixtureSystem _fixtures = default!;
     [Dependency] private GhostKickManager _ghostKick = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
@@ -25,7 +22,6 @@ public sealed partial class AdminOperationSystem : EntitySystem
     [Dependency] private SiliconLawSystem _siliconLaws = default!;
     [Dependency] private TabletopSystem _tabletop = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private WeldableSystem _weldable = default!;
 
     /// <summary>
     /// Raises the strongly typed local event used by an operation's handler.

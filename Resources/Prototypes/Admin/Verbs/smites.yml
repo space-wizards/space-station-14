@@ -367,8 +367,8 @@
   icon:
     sprite: Structures/Storage/closet.rsi
     state: generic
-  operations:
-  - !type:StuffIntoLockerOperation
+  effects:
+  - !type:StuffIntoLocker
     prototype: ClosetMaintenance
 
 - type: adminSmite
