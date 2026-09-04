@@ -5,6 +5,9 @@ namespace Content.Server.Spawners.Components;
 /// <summary>
 /// An extended <see cref="ConditionalSpawnerComponent"/> with optional rare prototypes and more configurable spawn behavior.
 /// </summary>
+/// <remarks>
+/// For non-trivial lists of prototypes, consider using <see cref="EntityTableSpawnerComponent"/> and an <see cref="EntityTableSelector"/> instead.
+/// </remarks>
 [RegisterComponent, EntityCategory("Spawner")]
 public sealed partial class RandomSpawnerComponent : ConditionalSpawnerComponent
 {

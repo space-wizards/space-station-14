@@ -3,8 +3,11 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Spawners.Components;
 
 /// <summary>
-/// A spawner that rolls to spawn from of a list of entities on <see cref="MapInitEvent"/> and/or <see cref="GameRuleStartedEvent"/>.
+/// A spawner that rolls to spawn from of a list of entities on <see cref="MapInitEvent"/> and <see cref="GameRuleStartedEvent"/>.
 /// </summary>
+/// <remarks>
+/// For non-trivial lists of prototypes, consider using <see cref="EntityTableSpawnerComponent"/> and an <see cref="EntityTableSelector"/> instead.
+/// </remarks>
 [RegisterComponent, EntityCategory("Spawner")]
 [Virtual]
 public partial class ConditionalSpawnerComponent : Component
