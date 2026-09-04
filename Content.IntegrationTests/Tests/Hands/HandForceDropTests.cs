@@ -1,6 +1,11 @@
-using System.Collections.Generic;
-using Content.IntegrationTests.Tests.Interaction;
+using System.Collections.Generic;using Content.IntegrationTests.Tests.Interaction;
+using Content.Server.Storage.EntitySystems;
+using Content.Shared.Physics;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.IntegrationTests.Tests.Hands;
 
@@ -8,9 +13,13 @@ namespace Content.IntegrationTests.Tests.Hands;
 public sealed class HandForceDropTests: InteractionTest
 {
 
+#region prototypes
     private const string Crowbar1 = "Crowbar1";
     private const string UnremovableCrowbar = "UnremovableCrowbar";
     private const string UnremovableDeleteOnDropCrowbar = "UnremovableDeleteOnDropCrowbar";
+    
+    private const string TestBox = "TestBox";
+    private const string TestBoxLimitedSpace = "TestBoxLimitedSpace";
     
     [TestPrototypes] private const string Prototypes = $@"
 - type: entity
@@ -34,7 +43,59 @@ public sealed class HandForceDropTests: InteractionTest
   components:
   - type: Unremoveable
     deleteOnDrop: true
+
+- type: entity
+  id: {TestBox}
+  name: box
+  components:
+  - type: EntityStorage
+    open: true
+    isCollidableWhenOpen: false
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: ""-0.4,-0.4,0.4,0.4""
+        density: 100
+        mask:
+          - MobMask
+        layer:
+          - MobLayer
+        hard: true
+
+- type: entity
+  id: {TestBoxLimitedSpace}
+  name: box
+  components:
+  - type: EntityStorage
+    open: true
+    isCollidableWhenOpen: false
+    capacity: 1
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: ""-0.4,-0.4,0.4,0.4""
+        density: 100
+        mask:
+          - MobMask
+        layer:
+          - MobLayer
+        hard: true
 ";
+#endregion
 
     [Test]
     public async Task TestTryDropUnremovable()
@@ -109,6 +170,61 @@ public sealed class HandForceDropTests: InteractionTest
         }
     }
 
+    [Test]
+    public async Task TryDropWhilstInContainer_Normal()
+    {
+        Assert.That(await AddMobFixtureToPlayer(SPlayer), Is.True, "AddFixtureToSPlayer failed :(");
+        // give item to player
+        EntityUid normalItem = SEntMan.GetEntity(await PlaceInHands(Crowbar1));
+        
+        var containerSystem = Server.System<SharedContainerSystem>();
+        EntityUid box = default;
+        // spawn the elusive box at player's coordinates
+        await Server.WaitPost(() => box = Server.EntMan.SpawnEntity(TestBox, Transform.ToCoordinates(Transform.GetMapCoordinates(SPlayer))));
+        
+        // Open then close the box to place the player, who is holding the crowbar, inside of it
+        var storage = Server.System<EntityStorageSystem>();
+        Assume.That(storage.IsOpen(box), Is.True, "Box entity is not open.");
+        
+        Transform.SetMapCoordinates(box, Transform.GetMapCoordinates(SPlayer));
+
+        await Server.WaitPost(() => storage.CloseStorage(box));
+        await RunTicksSync(5);
+        Assume.That(storage.IsOpen(box), Is.False, "Box entity is still open.");
+        Assume.That(containerSystem.IsEntityOrParentInContainer(SPlayer), Is.True, "Player is not in the box");
+        Assume.That(containerSystem.ContainsEntity(box, SPlayer), Is.True, "Player isn't in the box");
+        
+        Assert.That(HandSys.TryDrop(SPlayer), Is.True, "Could not drop regular item into container");
+        Assert.That(HandSys.IsHeld(normalItem, out _), Is.False, "Regular item is still in hands");
+        Assert.That(containerSystem.ContainsEntity(box, normalItem), Is.True, "The dropped item isn't in the box");
+    }
+    
+    [Test]
+    public async Task TryDropWhilstInContainer_Forced()
+    {
+        // give item to player
+        EntityUid unremovable = SEntMan.GetEntity(await PlaceInHands(Crowbar1));
+        
+        var containerSystem = Server.System<SharedContainerSystem>();
+        EntityUid box = default;
+        // spawn the elusive box at player's coordinates
+        await Server.WaitPost(() => box = Server.EntMan.SpawnEntity(TestBox, Transform.ToCoordinates(Transform.GetMapCoordinates(SPlayer))));
+        
+        // Open then close the box to place the player, who is holding the crowbar, inside of it
+        var storage = Server.System<EntityStorageSystem>();
+        Assume.That(storage.IsOpen(box), Is.True, "Box entity is not open.");
+
+        await Server.WaitPost(() => storage.CloseStorage(box));
+        await RunTicksSync(5);
+        Assume.That(storage.IsOpen(box), Is.False, "Box entity is still open.");
+        Assume.That(containerSystem.ContainsEntity(box, SPlayer), Is.True, "Player isn't in the box");
+        
+        Assert.That(HandSys.TryDrop(SPlayer), Is.True, "Could not drop regular item into container");
+        Assert.That(HandSys.IsHeld(unremovable, out _), Is.False, "Regular item is still in hands");
+        Assert.That(containerSystem.ContainsEntity(box, unremovable), Is.True, "The dropped item isn't in the box");
+    }
+
+#region helper methods
     /// <summary>
     /// helper method which duplicates the active hand of SPlayer, so player will have at least <c>targetHandCount</c> hands.<br/>
     /// This assumes that the player has hands.<br/>
@@ -139,5 +255,33 @@ public sealed class HandForceDropTests: InteractionTest
         await RunTicks(1);
         Assert.That(HandSys.GetHandCount(SPlayer), Is.EqualTo(targetHandCount), "Unable to update hand count to meet target hand count :(");
     }
-    
+
+    /// <summary>
+    /// adds a physics fixture to the SPlayer entity
+    /// </summary>
+    /// <returns>true if fixture could be added, false if it failed</returns>
+    private async Task<bool> AddMobFixtureToPlayer(EntityUid sPlayer)
+    {
+        //FixturesComponent fixtures = default;
+        await Server.WaitPost(() =>
+        {
+            SEntMan.EnsureComponent<FixturesComponent>(sPlayer);
+        });
+        await RunTicksSync(1);
+        var result = false;
+        await Server.WaitPost(() =>
+        {
+            result = Server.System<FixtureSystem>().TryCreateFixture(
+                sPlayer,
+                new PhysShapeCircle(0.35f),
+                "fix1",
+                50,
+                collisionMask: (int)CollisionGroup.MobLayer,
+                collisionLayer: (int)CollisionGroup.MobMask
+            );
+        });
+        await RunTicksSync(1);
+        return result;
+    }
+#endregion
 }
