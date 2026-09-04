@@ -32,7 +32,7 @@ highlights-paramedic = Paramedic, "Para", "Medic", Medbay, Medical, "Med"
 highlights-researchassistant = Research Assistant, "RA", Science, "Sci"
 highlights-scientist = Scientist, Science, "Sci"
 
-# Civilian
+# Service
 highlights-bartender = Bartender, Barkeeper, Barkeep, "Bar", Service, "Serv"
 highlights-botanist = Botanist, Botany, Hydroponics, Service, "Serv"
 highlights-chaplain = Chaplain, Priest, Chapel, Service, "Serv"
@@ -43,7 +43,6 @@ highlights-lawyer = Lawyer, Attorney, "Law", Service, "Serv"
 highlights-librarian = Librarian, Library, Service, "Serv"
 highlights-mime = Mime, Theatre, Theater, Service, "Serv"
 highlights-musician = Musician, Theatre, Theater, Service, "Serv"
-highlights-passenger = Passenger, Greyshirt, Grayshirt, Greytider, Graytider, "Tider", "Tide"
 highlights-serviceworker = Service Worker, Service, "Serv"
 highlights-visitor = Visitor
 
@@ -53,16 +52,8 @@ highlights-reporter = Reporter, Journalist, Newsroom, News
 highlights-tramdriver = Tram Driver, Tram, "Driver", Service, "Serv"
 
 # Silicon
-highlights-borg = Cyborg, Silicon, Borg, Robotics, "Robot", "Law", "Laws", "Lawset"
-highlights-stationai = Station AI, Silicon, "AI", "sAI", "Law", "Laws", "Lawset"
+highlights-borg = Cyborg, Silicon, Borg, Robotics, "Robot"
+highlights-stationai = Station AI, Silicon, "AI", "sAI"
 
-# Central Command
-highlights-centralcommandofficial = "Official", "Central Command", CentCom, CentComm, "CC"
-highlights-cburn = "CBURN"
-highlights-deathsquad = Deathsquad
-highlights-ertleader = Leader, "ERT", "Emergency Response Team"
-highlights-ertchaplain = Chaplain, "Chap", "ERT", "Emergency Response Team"
-highlights-ertengineer = Engineer, "Engi", "ERT", "Emergency Response Team"
-highlights-ertsecurity = Security, "ERT", "Emergency Response Team"
-highlights-ertmedical = "Medic", "ERT", "Emergency Response Team"
-highlights-ertjanitor = Janitor, "Jani", "ERT", "Emergency Response Team"
+# Civilian
+highlights-passenger = Passenger, Greyshirt, Grayshirt, Greytider, Graytider, "Tider", "Tide"

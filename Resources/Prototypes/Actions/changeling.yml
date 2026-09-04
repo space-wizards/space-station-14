@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseAction
-  id: ActionRetractableItemArmBlade
-  name: Arm Blade
-  description: Shed your flesh and reform it into a fleshy blade.
+  id: ActionRetractableItemArmblade
+  name: Armblade
+  description: Shed your flesh and reform it into a fleshy blade. Can be toggled when unconscious.
   components:
   - type: Action
     useDelay: 2
@@ -15,7 +15,7 @@
   - type: InstantAction
     event: !type:OnRetractableItemActionEvent
   - type: RetractableItemAction
-    spawnedPrototype: ArmBlade
+    spawnedPrototype: Armblade
     summonSounds:
       collection: gib # Placeholder
     retractSounds:
@@ -111,9 +111,9 @@
   id: ActionChangelingStasisWeak
   components:
   - type: RegenerativeStasisAction
-    bonusCooldownPerDamage: 1.2 # 50 damage should bring you to 120
+    bonusCooldownPerDamage: 2.4 # 50 damage should bring you to 180
     minStasisCooldown: 60
-    maxStasisCooldown: 120
+    maxStasisCooldown: 180
 
 - type: entity
   parent: ActionIntrinsicStore
@@ -203,7 +203,7 @@
   description: "Silently sting a target and worsen their sight for a short duration. \n\nRequires 30 Chemicals."
   components:
   - type: Action
-    useDelay: 10
+    useDelay: 30
     raiseOnAction: true
     itemIconStyle: BigAction
   - type: Sprite
@@ -280,6 +280,61 @@
     - !type:AddReagentToBloodstream
       reagent: Cryptobiolin
       quantity: 10 # About 20s of your speech being scrambled
+
+- type: entity
+  parent: BaseActionChangelingSting
+  id: ActionChangelingStingMute
+  name: Mute Sting
+  description: "Silently sting a target and inject them with chemicals that prevent them from speaking. \n\nRequires 30 Chemicals."
+  components:
+  - type: Action
+    useDelay: 30
+    raiseOnAction: true
+    itemIconStyle: BigAction
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: mute_sting
+  - type: EntityEffectAction
+    effects:
+    - !type:AddReagentToBloodstream
+      reagent: TaciticAcid
+      quantity: 5 # 50s of imperceptible mute
+
+- type: entity
+  parent: BaseActionChangelingSting
+  id: ActionChangelingStingArmblade
+  name: Armblade Sting
+  description: "Silently sting a target and cause them to grow a dull armblade after a lengthy delay. \n\nRequires 50 Chemicals."
+  components:
+  - type: Action
+    useDelay: 30
+    raiseOnAction: true
+    itemIconStyle: BigAction
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: armblade_sting
+  - type: ActionRequireSatiation
+    amount: 50
+  - type: EntityEffectAction
+    effects:
+    - !type:ModifyStatusEffect
+      conditions:
+      - !type:MobStateCondition # Only do the delay on living targets
+        mobstate: Alive
+      effectProto: StatusEffectForcedItemArmblade
+      type: Update
+      time: 90 # Takes 100s to regain the chemicals, so spam-use is a nat negative.
+      delay: 30 # No using it for easy combat!
+    - !type:ModifyStatusEffect
+      conditions:
+      - !type:MobStateCondition
+        mobstate: Alive
+        inverted: true # Not alive!
+      effectProto: StatusEffectForcedItemArmblade
+      type: Update
+      time: 120 # On dead/crit, transfer the 30s to the duration instead. Means you can also maintain it "permanently" on corpses as long as youre around + want to spend fuck ton of chemicals.
 
 - type: entity
   parent: BaseAction

@@ -175,7 +175,7 @@ public sealed partial class NPCUtilitySystem : EntitySystem
 
                 // only eat when hungry or if it will eat anything
                 if (TryComp<SatiationComponent>(owner, out var satiation) &&
-                    _satiation.IsValueInRange((owner, satiation), SatiationSystem.Hunger, below: foodValueConsideration.HungerThreshold) &&
+                    _satiation.IsValueInRange((owner, satiation), SatiationSystem.Hunger, above: foodValueConsideration.HungerThreshold) &&
                     avoidBadFood)
                     return 0f;
 
@@ -197,7 +197,7 @@ public sealed partial class NPCUtilitySystem : EntitySystem
 
                 // only drink when thirsty
                 if (TryComp<SatiationComponent>(owner, out var satiation) &&
-                    _satiation.IsValueInRange((owner, satiation), SatiationSystem.Thirst, below: drinkValueConsideration.ThirstThreshold))
+                    _satiation.IsValueInRange((owner, satiation), SatiationSystem.Thirst, above: drinkValueConsideration.ThirstThreshold))
                     return 0f;
 
                 // no janicow don't drink the blood puddle
