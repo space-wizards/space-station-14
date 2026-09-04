@@ -5,8 +5,8 @@
   icon:
     sprite: Structures/Furniture/Tables/glass.rsi
     state: full
-  operations:
-  - !type:AddComponentsOperation
+  effects:
+  - !type:AddComponents
     components:
     - type: SuperBonk
       stopWhenDead: true
@@ -18,8 +18,8 @@
   icon:
     sprite: Structures/Furniture/Tables/generic.rsi
     state: full
-  operations:
-  - !type:AddComponentsOperation
+  effects:
+  - !type:AddComponents
     components:
     - type: SuperBonk
       stopWhenDead: false
@@ -65,8 +65,8 @@
   name: admin-smite-explode-name
   description: admin-smite-explode-description
   icon: Interface/VerbIcons/smite.svg.192dpi.png
-  operations:
-  - !type:AddComponentsOperation
+  effects:
+  - !type:AddComponents
     replaceExisting: true
     components:
     - type: Explosive
@@ -76,10 +76,8 @@
       maxIntensity: 800
       maxTileBreak: 0
       canCreateVacuum: false
-  - !type:EntityEffectsOperation
-    effects:
-    - !type:Explode
-      delete: false
+  - !type:Explode
+    delete: false
 
 - type: adminSmite
   id: AdminSmiteElectrocute
@@ -124,19 +122,19 @@
   name: admin-smite-super-speed-name
   description: admin-smite-super-speed-description
   icon: Interface/AdminActions/super_speed.png
-  operations:
-  - !type:AddComponentsOperation
+  effects:
+  - !type:AddComponents
     replaceExisting: true
     components:
     - type: MovementSpeedModifier
       baseWalkSpeed: 400
       baseSprintSpeed: 8000
       baseAcceleration: 40
-  - !type:PopupOperation
-    message: admin-smite-super-speed-prompt
-    recipients: Target
-    location: Entity
-    type: LargeCaution
+  - !type:PopupMessage
+    messages: [ admin-smite-super-speed-prompt ]
+    type: Local
+    method: PopupEntity
+    visualType: LargeCaution
 
 - type: adminSmite
   id: AdminSmiteSetAlight
@@ -168,8 +166,8 @@
   icon:
     sprite: Interface/Actions/voice-mask.rsi
     state: icon
-  operations:
-  - !type:AddComponentsOperation
+  effects:
+  - !type:AddComponents
     components:
     - type: BarkAccent
     - type: BleatingAccent
@@ -191,8 +189,8 @@
   icon:
     sprite: Clothing/Mask/gas.rsi
     state: icon
-  operations:
-  - !type:AddComponentsOperation
+  effects:
+  - !type:AddComponents
     replaceExisting: true
     components:
     - type: GasMiner
@@ -212,8 +210,8 @@
   whitelist:
     components:
     - Inventory
-  operations:
-  - !type:AddComponentsOperation
+  effects:
+  - !type:AddComponents
     replaceExisting: true
     components:
     - type: KillSign
@@ -229,8 +227,8 @@
   whitelist:
     components:
     - Inventory
-  operations:
-  - !type:AddComponentsOperation
+  effects:
+  - !type:AddComponents
     replaceExisting: true
     components:
     - type: KillSign
@@ -243,8 +241,8 @@
   icon:
     sprite: Structures/Machines/gravity_generator.rsi
     state: off
-  operations:
-  - !type:AddComponentsOperation
+  effects:
+  - !type:AddComponents
     replaceExisting: true
     components:
     - type: MovementIgnoreGravity
@@ -300,11 +298,13 @@
     sprite: Interface/Actions/actions_borg.rsi
     state: state-laws
   operations:
-  - !type:AddComponentsOperation
-    replaceExisting: true
-    components:
-    - type: SiliconLawProvider
-      laws: Crewsimov
+  - !type:EntityEffectsOperation
+    effects:
+    - !type:AddComponents
+      replaceExisting: true
+      components:
+      - type: SiliconLawProvider
+        laws: Crewsimov
   - !type:AddUserInterfacesOperation
     interfaces:
       enum.SiliconLawsUiKey.Key:
@@ -330,9 +330,11 @@
   operations:
   - !type:SetGodmodeOperation
     enabled: true
-  - !type:AddComponentsOperation
-    components:
-    - type: TabletopDraggable
+  - !type:EntityEffectsOperation
+    effects:
+    - !type:AddComponents
+      components:
+      - type: TabletopDraggable
   - !type:PopupOperation
     message: admin-smite-chess-self
     recipients: Target
@@ -404,13 +406,13 @@
   icon:
     sprite: Objects/Materials/materials.rsi
     state: ash
-  operations:
-  - !type:PopupOperation
-    message: admin-smite-turned-ash-other
-    recipients: Pvs
-    location: Entity
-    type: LargeCaution
-  - !type:AddComponentsOperation
+  effects:
+  - !type:PopupMessage
+    messages: [ admin-smite-turned-ash-other ]
+    type: Pvs
+    method: PopupEntity
+    visualType: LargeCaution
+  - !type:AddComponents
     replaceExisting: true
     components:
     - type: SpawnOnDespawn
@@ -471,8 +473,8 @@
   name: admin-smite-buffering-name
   description: admin-smite-buffering-description
   icon: Interface/Misc/buffering_smite_icon.png
-  operations:
-  - !type:AddComponentsOperation
+  effects:
+  - !type:AddComponents
     components:
     - type: Buffering
 
@@ -486,8 +488,8 @@
   whitelist:
     components:
     - Inventory
-  operations:
-  - !type:AddComponentsOperation
+  effects:
+  - !type:AddComponents
     components:
     - type: Cluwne
 
@@ -498,8 +500,8 @@
   icon:
     sprite: Interface/Misc/pointing.rsi
     state: pointing
-  operations:
-  - !type:AddComponentsOperation
+  effects:
+  - !type:AddComponents
     components:
     - type: PointingArrowAngering
 
@@ -508,8 +510,8 @@
   name: admin-smite-headstand-name
   description: admin-smite-headstand-description
   icon: Interface/VerbIcons/refresh.svg.192dpi.png
-  operations:
-  - !type:AddComponentsOperation
+  effects:
+  - !type:AddComponents
     components:
     - type: Headstand
 
@@ -518,8 +520,8 @@
   name: admin-smite-speak-backwards-name
   description: admin-smite-speak-backwards-description
   icon: Interface/AdminActions/help-backwards.png
-  operations:
-  - !type:AddComponentsOperation
+  effects:
+  - !type:AddComponents
     components:
     - type: BackwardsAccent
 
@@ -528,8 +530,8 @@
   name: admin-smite-disarm-prone-name
   description: admin-smite-disarm-prone-description
   icon: Interface/Actions/disarm.png
-  operations:
-  - !type:AddComponentsOperation
+  effects:
+  - !type:AddComponents
     components:
     - type: DisarmProne
 
@@ -540,8 +542,8 @@
   icon:
     sprite: Mobs/Animals/snake.rsi
     state: icon
-  operations:
-  - !type:AddComponentsOperation
+  effects:
+  - !type:AddComponents
     components:
     - type: Worm
 
