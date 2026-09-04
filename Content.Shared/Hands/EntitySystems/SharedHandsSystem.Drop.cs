@@ -173,10 +173,13 @@ public abstract partial class SharedHandsSystem
         // if the user is in a container, can't drop the item normally, but still is "forced" to drop the item, it will be dropped at user position instead.
         if (isInContainer)
         {
+            TransformSystem.DropNextTo((entity.Value, itemXform), (ent, userXform));
+            /*
             if (canDrop)
                 TransformSystem.DropNextTo((entity.Value, itemXform), (ent, userXform));
             else
                 DoDrop(ent, handId, doDropInteraction, targetDropLocation: userXform.Coordinates, force: force);
+            */
             return true;
         }
 
