@@ -2751,6 +2751,10 @@
     needsHands: false
   - type: NoSlip
   - type: Spider
+  - type: HTN
+    blackboard:
+      NavClimb: !type:Bool
+        true
   - type: IgnoreSpiderWeb
   - type: Bloodstream
     bloodReferenceSolution:

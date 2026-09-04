@@ -7,6 +7,7 @@ using Content.Server.NPC.Components;
 using Content.Server.NPC.Events;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.CCVar;
+using Content.Shared.Climbing.Components;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.CombatMode;
 using Content.Shared.Interaction;
@@ -173,6 +174,10 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
             component.PathfindToken?.Cancel();
             component.PathfindToken = null;
             component.CurrentPath.Clear();
+
+            // Don't inherit the old targets failures
+            component.FailedPathCount = 0;
+            component.Status = SteeringStatus.Moving;
         }
         else
         {
@@ -324,6 +329,13 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         // Can't move at all, just noop input.
         if (!mover.CanMove)
         {
+            // Climbing owns movement here, keep the path
+            if (TryComp<ClimbingComponent>(uid, out var climbing) && climbing.NextTransition != null)
+            {
+                SetDirection(uid, mover, steering, Vector2.Zero, false);
+                return;
+            }
+
             SetDirection(uid, mover, steering, Vector2.Zero);
             steering.Status = SteeringStatus.NoPath;
             return;
@@ -467,6 +479,9 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
 
             return;
         }
+
+        // We have a successful route, reset failure count
+        steering.FailedPathCount = 0;
 
         var targetPos = _transform.ToMapCoordinates(steering.Coordinates);
         var ourPos = _transform.GetMapCoordinates(uid, xform: xform);
