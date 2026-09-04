@@ -157,7 +157,7 @@ public sealed partial class IngestionSystem
     /// <param name="user">Optional user that will attempt to pickup spawned trash.</param>
     public void SpawnTrash(Entity<EdibleComponent> entity, EntityUid? user = null)
     {
-        var pickup = user is not null && _container.ContainsEntity(user.Value, entity) && _container.RemoveEntity(user.Value, entity);
+        var pickup = user is not null && _hands.TryDrop(user.Value, entity);
         foreach (var trash in entity.Comp.Trash)
         {
             var spawnedTrash = PredictedSpawnNextToOrDrop(trash, entity);
