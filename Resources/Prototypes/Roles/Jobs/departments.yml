@@ -13,7 +13,7 @@
   name: department-Civilian
   description: department-Civilian-description
   color: "#7F7F7F"
-  weight: -10
+  weight: -100 # Always displays last
   ignoreForDepartmentFallback: true
   roles:
   - Passenger
@@ -137,6 +137,7 @@
   name: department-Silicon
   description: department-Silicon-description
   color: "#D381C9"
+  weight: -10 # so it displays "after" Theatre roles
   roles:
   - Borg
   - StationAi
@@ -159,7 +160,6 @@
   name: department-Theatre
   description: department-Theatre-description
   color: "#6F56B8"
-  weight: -15 # so it displays "after" the rest of the Service roles
   roles:
   - Clown
   - Mime
