@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseWallmountMachine
+  parent: [ BaseWallmountMachine, StructureHealthMachineWeak ]
   id: WallmountTelevision
   suffix: entertainment
   name: television
@@ -37,23 +37,33 @@
     radius: 1.5
     energy: 3.0
     color: "#b89f25"
+  - type: Damageable
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
           params:
             volume: -4
+      - !type:ChangeConstructionNodeBehavior
+        node: TelevisionFrame
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 0
+            max: 2
+          ComputerTelevisionCircuitboard:
+            min: 0
+            max: 1
   - type: StationAiWhitelist
 
 - type: entity
-  parent: BaseWallmountGlass
+  parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
   id: WallmountTelevisionFrame
   name: television frame
   description: Finally, some decent reception around here...
@@ -73,12 +83,15 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 15
+        damage: 50
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
-          collection: MetalGlassBreak
+          collection: MetalBreak
           params:
             volume: -4
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 0
+            max: 2

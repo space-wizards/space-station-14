@@ -3,7 +3,6 @@ using Content.Shared.EntityTable;
 using Content.Shared.NameIdentifier;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
-using Content.Shared.Xenoarchaeology.Artifact.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -82,26 +81,32 @@ public abstract partial class SharedXenoArtifactSystem
     /// <summary>
     /// Creates artifact node entity, attaching trigger and marking depth level for future use.
     /// </summary>
-    public Entity<XenoArtifactNodeComponent>? CreateNode(
-        Entity<XenoArtifactComponent> ent,
-        List<Entity<XenoArtifactNodeComponent>> directPredecessors,
-        Dictionary<XenoArchTriggerPrototype, float> triggers,
-        Dictionary<EntityPrototype, float> effects,
-        int depth = 0
-    )
+    public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, EntProtoId trigger, int depth = 0)
     {
         var effect = RobustRandom.Pick(effects);
 
-        var entProtoId = effect.ID;
+    /// <summary>
+    /// Creates artifact node entity, attaching trigger and marking depth level for future use.
+    /// </summary>
+    public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, EntityPrototype trigger, int depth = 0)
+    {
+        var entProtoId = _entityTable.GetSpawns(ent.Comp.EffectsTable)
+                                     .First();
+        return CreateNode(ent, entProtoId, trigger, depth);
+    }
 
-        AddNode((ent, ent), entProtoId, out var nodeEnt, dirty: false);
+    /// <summary>
+    /// Creates artifact node entity, attaching trigger and marking depth level for future use.
+    /// </summary>
+    public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, EntProtoId effect, EntityPrototype trigger, int depth = 0)
+    {
+        AddNode((ent, ent), effect, out var nodeEnt, dirty: false);
         DebugTools.Assert(nodeEnt.HasValue, "Failed to create node on artifact.");
 
         var nodeComponent = nodeEnt.Value.Comp;
         nodeComponent.Depth = depth;
+        nodeComponent.TriggerTip = trigger.Name;
 
-        var trigger = RobustRandom.PickAndTake(triggers);
-        nodeComponent.TriggerTip = trigger.Tip;
         EntityManager.AddComponents(nodeEnt.Value, trigger.Components);
 
         Dirty(nodeEnt.Value);

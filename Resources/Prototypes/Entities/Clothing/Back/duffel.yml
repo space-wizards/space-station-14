@@ -182,7 +182,8 @@
   abstract: true
   components:
   - type: Tag
-    tags: [] # ignore "WhitelistChameleon" tag
+    tags:
+    - Backpack # ignore "WhitelistChameleon" tag
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -190,7 +191,8 @@
   abstract: true
   components:
   - type: Tag
-    tags: [] # ignore "WhitelistChameleon" tag
+    tags:
+    - Backpack # ignore "WhitelistChameleon" tag
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
@@ -209,8 +211,9 @@
   id: ClothingBackpackDuffelSyndicateAmmoBundle
   abstract: true
   components:
-    - type: Tag
-      tags: [] # ignore "WhitelistChameleon" tag
+  - type: Tag
+    tags:
+    - Backpack # ignore "WhitelistChameleon" tag
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
@@ -229,14 +232,15 @@
   id: ClothingBackpackDuffelSyndicateMedicalBundle
   abstract: true
   components:
-    - type: Tag
-      tags: [] # ignore "WhitelistChameleon" tag
+  - type: Tag
+    tags:
+    - Backpack # ignore "WhitelistChameleon" tag
 
 - type: entity
-  parent: ClothingBackpackDuffel
+  parent: ClothingBackpackHoldingBase #Standardized Bluespace Bags
   id: ClothingBackpackDuffelHolding
-  name: duffelbag of holding
-  description: A duffelbag that opens into a localized pocket of bluespace.
+  name: duffel bag of holding
+  description: A duffel bag that opens into a localized pocket of bluespace.
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/holding.rsi
@@ -245,15 +249,6 @@
     - state: icon
     - state: icon-unlit
       shader: unshaded
-  - type: Item
-    size: Ginormous
-  - type: Storage
-    maxItemSize: Huge
-    grid:
-    - 0,0,19,9
-  - type: ClothingSpeedModifier
-    sprintModifier: 1 # makes its stats identical to other variants of bag of holding
-  - type: HeldSpeedModifier
 
 - type: entity
   parent: [ ClothingBackpackDuffel, BaseCentcommContraband ]
@@ -267,3 +262,6 @@
     walkModifier: 1
     sprintModifier: 1
   - type: HeldSpeedModifier
+  - type: Tag
+    tags:
+    - Backpack # ignore "WhitelistChameleon" tag. Maybe make a unique CBURN duffel sprite?

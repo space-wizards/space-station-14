@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: [BaseItem, BaseXenoArtifact]
   id: BaseXenoArtifactItem
   name: artifact
@@ -52,7 +52,25 @@
     graph: Artifact
     node: done
   - type: XenoArtifact
-    effectsWeights: XenoArtifactEffectsDefaultWeightedTableHandheld
+    triggersTable: !type:NestedSelector
+      tableId: XenoArtifactHandheldOnlyTriggerTable
+    effectsTable: !type:GroupSelector
+      children:
+      - !type:NestedSelector
+        tableId: XenoArtifactEffectsDefaultTable
+        weight: 54
+      - !type:NestedSelector
+        tableId: XenoArtifactEffectsHandheldOnlyTable
+        weight: 2
+
+- type: entity
+  id: DummyArtifactItem
+  parent: BaseXenoArtifactItem
+  name: artifact
+  suffix: Debug
+  components:
+  - type: XenoArtifact
+    isGenerationRequired: false
 
 - type: entity
   parent: BaseXenoArtifactItem

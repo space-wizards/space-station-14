@@ -21,7 +21,9 @@ public sealed partial class CCVars
     ///     Replaces the AI static camera effect with a plain gradient.
     /// </summary>
     public static readonly CVarDef<bool> DisableAiStatic =
-        CVarDef.Create("accessibility.disable_ai_static", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+        CVarDef.Create("accessibility.disable_ai_static", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+        //TODO return default value to False
+        // This was set to True pending evaluation of the static effect visuals, due to headache potential of the current static shader
 
     /// <summary>
     ///     Replaces the movement in the blurry shader for a static effect.

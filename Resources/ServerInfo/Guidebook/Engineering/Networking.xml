@@ -1,6 +1,6 @@
 <Document>
   # Networking
-  On the station, devices need to communicate to each other to preform their functions.
+  On the station, devices need to communicate to each other to perform their functions.
   [textlink="Air alarms" link="AirAlarms"] need to talk to their respective devices, [textlink="doors" link="Airlocks"] need to be linked to form proper airlocks, and much more.
 
   This is done through two systems, the Link system and the List system.

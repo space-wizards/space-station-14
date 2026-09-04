@@ -137,6 +137,39 @@
 
 - type: entity
   parent: BaseHoloSign
+  id: XenoborgDeflectorField
+  name: deflector field
+  description: An energy matrix, comprised of interlocking fields that deflect projectiles. Powerful, but short-lived.
+  components:
+  - type: Physics
+    bodyType: Static
+    canCollide: true
+  - type: Sprite
+    sprite: Structures/Holo/xenoborg.rsi
+    state: icon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.3,0.3,0.3"
+        hard: true
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
+  - type: TimedDespawn
+    lifetime: 15
+  - type: PointLight
+    enabled: true
+    radius: 3
+    color: purple
+  - type: Reflect
+    reflectProb: 1
+  - type: Climbable
+
+- type: entity
+  parent: BaseHoloSign
   id: HolosignForcefield
   name: holographic force field
   description: A powerful temporal containment field that doesn't let anything through, not even a tesla or singularity.

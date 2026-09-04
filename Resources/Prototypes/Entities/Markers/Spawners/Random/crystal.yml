@@ -21,7 +21,7 @@
     layers:
     - state: red
     - sprite: Structures/Decoration/crystal.rsi
-      state: crystal_grey
+      state: big0
   - type: EntityTableSpawner
     table: !type:NestedSelector
       tableId: RandomCrystalTable

@@ -2,7 +2,7 @@ using System.Linq;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
-using Content.Shared.Ghost;
+using Content.Shared.Ghost.Components;
 using Content.Shared.Mind;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
