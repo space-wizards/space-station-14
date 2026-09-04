@@ -667,3 +667,7 @@
         effectProto: StatusEffectNightVision
         time: 2
         type: Add
+      - !type:HealthChange
+        damage:
+          types:
+           Radiation: 0.2

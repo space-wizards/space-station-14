@@ -599,7 +599,8 @@
       amount: 3
     Uranium:
       amount: 1
-    Plasma:
+      catalyst: true
+    Phosphorus:
       amount: 1
   products:
-    Nyctalon: 1
+    Nyctalon: 5
