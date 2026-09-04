@@ -57,3 +57,15 @@ highlights-stationai = Station AI, Silicon, "AI", "sAI", "Law", "Laws", "Lawset"
 
 # Civilian
 highlights-passenger = Passenger, Greyshirt, Grayshirt, Greytider, Graytider, "Tider", "Tide"
+highlights-visitor = Visitor"
+
+# Central Command
+highlights-centralcommandofficial = Central Command Official, "Official", "Central Command", CentCom, CentComm, "CC"
+highlights-cburn = CBURN
+highlights-deathsquad = Death Squad, Deathsquad
+highlights-ertleader = Leader, "ERT", "Emergency Response Team"
+highlights-ertchaplain = Chaplain, "ERT", "Emergency Response Team"
+highlights-ertengineer = Engineer, "Engi", "ERT", "Emergency Response Team"
+highlights-ertsecurity = Security, "ERT", "Emergency Response Team"
+highlights-ertmedical = "Medic", "ERT", "Emergency Response Team"
+highlights-ertjanitor = Janitor, "Jani", "ERT", "Emergency Response Team"
