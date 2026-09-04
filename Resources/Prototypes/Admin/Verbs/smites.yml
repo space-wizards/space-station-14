@@ -277,8 +277,8 @@
 #    components:
 #    - Physics
 #    - Fixtures
-#  operations:
-#  - !type:YeetOperation
+#  effects:
+#  - !type:Yeet
 
 - type: adminSmite
   id: AdminSmiteSuperSlip

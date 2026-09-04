@@ -1,12 +1,18 @@
+using Content.Shared.EntityEffects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
+using Robust.Shared.Random;
 
-namespace Content.Server.Administration.Verbs.Operations;
+namespace Content.Server.EntityEffects.Effects.Smite;
 
-public sealed partial class AdminOperationSystem
+public sealed partial class YeetEntityEffectSystem : EntityEffectSystem<PhysicsComponent, Yeet>
 {
-    [SubscribeLocalEvent]
-    private void OnYeet(Entity<PhysicsComponent> entity, ref AdminOperationEvent<YeetOperation> args)
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+
+    protected override void Effect(Entity<PhysicsComponent> entity, ref EntityEffectEvent<Yeet> args)
     {
         if (!TryComp<FixturesComponent>(entity, out var fixtures))
             return;
@@ -28,4 +34,4 @@ public sealed partial class AdminOperationSystem
     }
 }
 
-public sealed partial class YeetOperation : AdminOperationBase<YeetOperation>;
+public sealed partial class Yeet : EntityEffectBase<Yeet>;
