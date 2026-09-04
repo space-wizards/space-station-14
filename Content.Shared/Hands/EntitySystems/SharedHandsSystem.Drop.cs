@@ -146,7 +146,7 @@ public abstract partial class SharedHandsSystem
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
-        // we may not care if we 'can drop' it if we're forcing the interaction - but 
+        // we may not care if we 'can drop' it if we're forcing the interaction - but taking note anyway if things may go awry later
         var canDrop = CanDropHeld(ent, handId, checkActionBlocker);
         if (!(canDrop || force))
             return false;
@@ -192,13 +192,9 @@ public abstract partial class SharedHandsSystem
     /// <param name="ent">entity with the HandsComponent which is dropping the item</param>
     /// <param name="entity">the item being dropped.</param>
     /// <param name="targetContainer">Container which the item is being inserted into</param>
-    /// <param name="checkActionBlocker">Do we check if the item is droppable? (no effect if <c>forceDrop</c> is true)</param>
-    /// <param name="forceDrop">If true, this will forcibly remove the item from hands.<br/>
-    /// This will <b>not</b> force insertion of the item into the container.<br/>
-    /// If this is <c>true</c>, but insertion is impossible, this will instead drop the item on the ground at the container's location, performing drop interactions (see <see cref="DoDrop"/>)</param>
-    /// <returns>true if the entity was dropped from hands and inserted into container, false otherwise. <br/>
-    /// (if <c>forceDrop == true</c>, returns true as long as entity was dropped from hands - but it may not have been inserted into the container)</returns>
-    public bool TryDropIntoContainer(Entity<HandsComponent?> ent, EntityUid entity, BaseContainer targetContainer, bool checkActionBlocker = true, bool forceDrop = false)
+    /// <param name="checkActionBlocker">Do we check if the item is droppable?</param>
+    /// <returns>true if the entity was dropped from hands and inserted into container, false otherwise.</returns>
+    public bool TryDropIntoContainer(Entity<HandsComponent?> ent, EntityUid entity, BaseContainer targetContainer, bool checkActionBlocker = true)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
@@ -206,23 +202,14 @@ public abstract partial class SharedHandsSystem
         if (!IsHolding(ent, entity, out var hand))
             return false;
 
-        if (!(forceDrop || CanDropHeld(ent, hand, checkActionBlocker)))
+        if (!CanDropHeld(ent, hand, checkActionBlocker))
             return false;
 
-        var canInsert = ContainerSystem.CanInsert(entity, targetContainer);
-        if (!(forceDrop || canInsert))
+        if (!ContainerSystem.CanInsert(entity, targetContainer))
             return false;
 
-        if (canInsert)
-        {
-            DoDrop(ent, hand, false, force:forceDrop);
-            ContainerSystem.Insert(entity, targetContainer);
-        }
-        else
-        {
-            DoDrop(ent, hand, targetDropLocation:Transform(targetContainer.Owner).Coordinates, force:forceDrop);
-        }
-        
+        DoDrop(ent, hand, false);
+        ContainerSystem.Insert(entity, targetContainer);
         return true;
     }
 
