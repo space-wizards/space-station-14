@@ -647,21 +647,21 @@
   whitelist:
     components:
     - Body
-  operations:
-  - !type:RemoveOrgansOperation
+  effects:
+  - !type:RemoveOrgans
     categories:
     - HandLeft
     - HandRight
-  - !type:PopupOperation
-    message: admin-smite-remove-hands-self
-    recipients: Target
-    location: Entity
-    type: LargeCaution
-  - !type:PopupOperation
-    message: admin-smite-remove-hands-other
-    recipients: PvsExceptTarget
-    location: Coordinates
-    type: Medium
+  - !type:PopupMessage
+    messages: [ admin-smite-remove-hands-self ]
+    type: Local
+    method: PopupEntity
+    visualType: LargeCaution
+  - !type:PopupMessage
+    messages: [ admin-smite-remove-hands-other ]
+    type: PvsExceptTarget
+    method: PopupCoordinates
+    visualType: Medium
 
 - type: adminSmite
   id: AdminSmiteRemoveHand
@@ -671,22 +671,22 @@
   whitelist:
     components:
     - Body
-  operations:
-  - !type:RemoveOrgansOperation
+  effects:
+  - !type:RemoveOrgans
     categories:
     - HandLeft
     - HandRight
     maxCount: 1
-  - !type:PopupOperation
-    message: admin-smite-remove-hands-self
-    recipients: Target
-    location: Entity
-    type: LargeCaution
-  - !type:PopupOperation
-    message: admin-smite-remove-hands-other
-    recipients: PvsExceptTarget
-    location: Coordinates
-    type: Medium
+  - !type:PopupMessage
+    messages: [ admin-smite-remove-hands-self ]
+    type: Local
+    method: PopupEntity
+    visualType: LargeCaution
+  - !type:PopupMessage
+    messages: [ admin-smite-remove-hands-other ]
+    type: PvsExceptTarget
+    method: PopupCoordinates
+    visualType: Medium
 
 - type: adminSmite
   id: AdminSmiteStomachRemoval
@@ -698,16 +698,16 @@
   whitelist:
     components:
     - Body
-  operations:
-  - !type:RemoveOrgansOperation
+  effects:
+  - !type:RemoveOrgans
     categories:
     - Stomach
     delete: true
-  - !type:PopupOperation
-    message: admin-smite-stomach-removal-self
-    recipients: Target
-    location: Entity
-    type: LargeCaution
+  - !type:PopupMessage
+    messages: [ admin-smite-stomach-removal-self ]
+    type: Local
+    method: PopupEntity
+    visualType: LargeCaution
 
 - type: adminSmite
   id: AdminSmiteLungRemoval
@@ -719,16 +719,16 @@
   whitelist:
     components:
     - Body
-  operations:
-  - !type:RemoveOrgansOperation
+  effects:
+  - !type:RemoveOrgans
     categories:
     - Lungs
     delete: true
-  - !type:PopupOperation
-    message: admin-smite-lung-removal-self
-    recipients: Target
-    location: Entity
-    type: LargeCaution
+  - !type:PopupMessage
+    messages: [ admin-smite-lung-removal-self ]
+    type: Local
+    method: PopupEntity
+    visualType: LargeCaution
 
 - type: adminSmite
   id: AdminSmiteVomitOrgans
@@ -740,26 +740,24 @@
   whitelist:
     components:
     - Body
-  operations:
-  - !type:EntityEffectsOperation
-    effects:
-    - !type:Vomit
-      thirstAmount: -1000
-      hungerAmount: -1000
-  - !type:RemoveOrgansOperation
+  effects:
+  - !type:Vomit
+    thirstAmount: -1000
+    hungerAmount: -1000
+  - !type:RemoveOrgans
     categories:
     - Heart
     - Lungs
     - Stomach
     - Liver
     - Kidneys
-  - !type:PopupOperation
-    message: admin-smite-vomit-organs-self
-    recipients: Target
-    location: Entity
-    type: LargeCaution
-  - !type:PopupOperation
-    message: admin-smite-vomit-organs-others
-    recipients: PvsExceptTarget
-    location: Coordinates
-    type: MediumCaution
+  - !type:PopupMessage
+    messages: [ admin-smite-vomit-organs-self ]
+    type: Local
+    method: PopupEntity
+    visualType: LargeCaution
+  - !type:PopupMessage
+    messages: [ admin-smite-vomit-organs-others ]
+    type: PvsExceptTarget
+    method: PopupCoordinates
+    visualType: MediumCaution

@@ -3,8 +3,6 @@ using Content.Server.Popups;
 using Content.Server.Silicons.Laws;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Tabletop;
-using Content.Shared.Body;
-using Content.Shared.Body.Systems;
 using Content.Shared.EntityEffects;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Slippery;
@@ -19,7 +17,6 @@ namespace Content.Server.Administration.Verbs.Operations;
 /// </summary>
 public sealed partial class AdminOperationSystem : EntitySystem
 {
-    [Dependency] private BodySystem _body = default!;
     [Dependency] private SharedCreamPieSystem _creamPie = default!;
     [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
     [Dependency] private EntityStorageSystem _entityStorage = default!;
