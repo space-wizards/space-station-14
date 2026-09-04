@@ -25,7 +25,7 @@ public sealed partial class RequiresTileSystem : EntitySystem
 
         foreach (var change in ev.Changes)
         {
-            var anchored = _maps.GetAnchoredEntitiesEnumerator(ev.Entity, grid, change.GridIndices);
+            var anchored = _maps.GetAnchoredEntities(ev.Entity, grid, change.GridIndices);
 
             while (anchored.MoveNext(out var ent))
             {

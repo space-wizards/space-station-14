@@ -478,12 +478,15 @@ namespace Content.Shared.Cuffs
             if (TryComp<HandsComponent>(target, out var hands) && hands.Count <= component.CuffedHandCount)
                 return false;
 
+            var beforeEv = new BeforeTargetHandcuffedEvent(user);
+            RaiseLocalEvent(target, ref beforeEv);
+
             // Success!
             _hands.TryDrop(user, handcuff);
 
             _container.Insert(handcuff, component.Container);
 
-            var ev = new TargetHandcuffedEvent();
+            var ev = new TargetHandcuffedEvent(user);
             RaiseLocalEvent(target, ref ev);
 
             UpdateHeldItems(target, handcuff, component);
@@ -519,7 +522,10 @@ namespace Content.Shared.Cuffs
 
             var cuffTime = handcuffComponent.CuffTime;
 
-            if (HasComp<StunnedComponent>(target))
+            var stunEv = new CheckIncapacitatedCuffEvent();
+            RaiseLocalEvent(target, ref stunEv);
+
+            if (stunEv.Incapacitated)
                 cuffTime = MathF.Max(0.1f, cuffTime - handcuffComponent.StunBonus);
 
             if (HasComp<DisarmProneComponent>(target))
@@ -866,15 +872,35 @@ namespace Content.Shared.Cuffs
     public sealed partial class AddCuffDoAfterEvent : SimpleDoAfterEvent;
 
     /// <summary>
-    /// Raised on the target when they get handcuffed.
+    /// Raised on the target before they get handcuffed.
     /// Relayed to their held items.
     /// </summary>
     [ByRefEvent]
-    public record struct TargetHandcuffedEvent : IInventoryRelayEvent
+    public record struct BeforeTargetHandcuffedEvent(EntityUid User) : IInventoryRelayEvent
     {
         /// <summary>
         /// All slots to relay to
         /// </summary>
         public SlotFlags TargetSlots { get; set; }
     }
+
+    /// <summary>
+    /// Raised on the target when they get handcuffed.
+    /// Relayed to their held items.
+    /// </summary>
+    [ByRefEvent]
+    public record struct TargetHandcuffedEvent(EntityUid User) : IInventoryRelayEvent
+    {
+        /// <summary>
+        /// All slots to relay to
+        /// </summary>
+        public SlotFlags TargetSlots { get; set; }
+    }
+
+    /// <summary>
+    /// Raised on the entity being cuffed to determine if their cuffing doafter should get a stuncuff timer reduction.
+    /// </summary>
+    /// <seealso cref="HandcuffComponent.StunBonus"/>
+    [ByRefEvent]
+    public record struct CheckIncapacitatedCuffEvent(bool Incapacitated);
 }

@@ -49,27 +49,21 @@
 - type: entity
   id: Thruster
   name: thruster
-  parent: [ BaseThruster, ConstructibleMachine ]
+  parent: [ BaseThruster, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   components:
   - type: Machine
     board: ThrusterMachineCircuitboard
   - type: Damageable
-    damageModifierSet: Electronic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300  # Changed 100->300 because impact damage is real
+        damage: 175
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
-      - !type:ChangeConstructionNodeBehavior
-        node: machineFrame
   - type: Sprite
     sprite: Structures/Shuttles/thruster.rsi
     layers:
@@ -101,20 +95,20 @@
     sprite: Structures/Shuttles/xenoborg_thruster.rsi
 
 - type: entity
+  parent: [ BaseThruster, StructureHealthMachineMassive ]
   id: ThrusterLarge
   name: large thruster
-  parent: BaseThruster
   placement:
     mode: AlignTileAny
   components:
+  - type: Damageable
+    damageModifierSet: PlastitaniumMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 900
+        damage: 400
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
@@ -232,6 +226,8 @@
     color: "#4246b3"
   - type: Machine
     board: GyroscopeMachineCircuitboard
+  - type: Damageable
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -240,11 +236,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          collection: MetalBreak
-  - type: Damageable
-    damageModifierSet: Electronic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+          collection: MetalGlassBreak
   - type: StaticPrice
     price: 2000
 
@@ -287,8 +279,8 @@
       visible: false
 
 - type: entity
+  parent: [ BaseStructureDynamic, StructureHealthMachineWeak ]
   id: RustedThruster
-  parent: BaseStructureDynamic
   name: rusted thruster
   description: An unrepairable thruster, broken down from wear and tear. Only useful for scrapping.
   components:
@@ -313,17 +305,13 @@
     sprite: Structures/Shuttles/old_thruster.rsi
     state: base
   - type: Damageable
-    damageModifierSet: Electronic
-  - type: Injurable
-    damageContainer: Inorganic
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 100  # Considering we need a lot of thrusters didn't want to make an individual one too tanky
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak

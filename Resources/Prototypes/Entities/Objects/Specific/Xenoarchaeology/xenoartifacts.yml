@@ -52,6 +52,10 @@
   - type: LightningTarget
     priority: 2
     lightningExplode: false
+  - type: Stamina
+    baseCritThreshold: 1000
+    decay: 1000
+    cooldown: 0.1
 
 - type: entity
   parent: BaseAction

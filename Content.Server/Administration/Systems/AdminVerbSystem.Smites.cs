@@ -23,10 +23,11 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Body;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
 using Content.Shared.Clothing.Components;
-using Content.Shared.Clumsy;
 using Content.Shared.Cluwne;
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Electrocution;
@@ -46,7 +47,10 @@ using Content.Shared.Popups;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Slippery;
+using Content.Shared.StatusEffectNew;
+using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Storage.Components;
+using Content.Shared.Suicide;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
@@ -65,8 +69,11 @@ namespace Content.Server.Administration.Systems;
 
 public sealed partial class AdminVerbSystem
 {
+    private static readonly EntProtoId<StatusEffectComponent> MaidStatus = "StatusEffectClumsyMaid";
+
     private readonly ProtoId<PolymorphPrototype> LizardSmite = "AdminLizardSmite";
     private readonly ProtoId<PolymorphPrototype> VulpkaninSmite = "AdminVulpSmite";
+    private readonly ProtoId<DamageTypePrototype> _asphyxiationDamageType = "Asphyxiation";
 
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private IRobustRandom _random = default!;
@@ -97,6 +104,8 @@ public sealed partial class AdminVerbSystem
     [Dependency] private GibbingSystem _gibbing = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private AtmosDeviceSystem _atmosDevice = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private SharedSuicideSystem _suicide = default!;
 
     private readonly EntProtoId _actionViewLawsProtoId = "ActionViewLaws";
     private readonly ProtoId<SiliconLawsetPrototype> _crewsimovLawset = "Crewsimov";
@@ -268,6 +277,22 @@ public sealed partial class AdminVerbSystem
                 Message = string.Join(": ", hardElectrocuteName, Loc.GetString("admin-smite-electrocute-description"))
             };
             args.Verbs.Add(hardElectrocute);
+
+            var heartAttackName = Loc.GetString("admin-smite-heartattack-name").ToLowerInvariant();
+            Verb heartAttack = new()
+            {
+                Text = heartAttackName,
+                Category = VerbCategory.Smite,
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/Interface/Alerts/human_crew_monitoring.rsi"), "dead"),
+                Act = () =>
+                {
+                    // If God would had wanted Me to Live he would not have created A Heart Attack!
+                    _suicide.ApplyLethalDamage((args.Target, damageable), _asphyxiationDamageType);
+                },
+                Impact = LogImpact.Extreme,
+                Message = string.Join(": ", heartAttackName, Loc.GetString("admin-smite-heartattack-description"))
+            };
+            args.Verbs.Add(heartAttack);
         }
 
         if (TryComp<CreamPiedComponent>(args.Target, out var creamPied))
@@ -632,14 +657,14 @@ public sealed partial class AdminVerbSystem
             {
                 Text = maidenName,
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Rsi(new("/Textures/Clothing/Uniforms/Jumpskirt/janimaid.rsi"), "icon"),
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/Clothing/Uniforms/Jumpskirts/Service/janimaid.rsi"), "icon"),
                 Act = () =>
                 {
                     _outfit.SetOutfit(args.Target, "JanitorMaidGear", (_, clothing) =>
                     {
                         if (HasComp<ClothingComponent>(clothing))
                             EnsureComp<UnremoveableComponent>(clothing);
-                        EnsureComp<ClumsyComponent>(args.Target);
+                        _statusEffects.TrySetStatusEffectDuration(args.Target, MaidStatus);
                     });
                 },
                 Impact = LogImpact.Extreme,
