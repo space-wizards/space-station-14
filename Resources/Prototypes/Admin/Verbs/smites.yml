@@ -378,8 +378,8 @@
   icon:
     sprite: Objects/Specific/Security/target.rsi
     state: target_s
-  operations:
-  - !type:HomingRodOperation
+  effects:
+  - !type:HomingRod
     prototype: ImmovableRodKeepTilesStill
     distance: 350
     speed: 25
@@ -391,8 +391,8 @@
   icon:
     sprite: Objects/Specific/Security/target.rsi
     state: target_c
-  operations:
-  - !type:HomingRodOperation
+  effects:
+  - !type:HomingRod
     prototype: ImmovableRodKeepTilesStill
     distance: 200
     speed: 5
