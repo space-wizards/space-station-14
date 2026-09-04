@@ -29,7 +29,7 @@ public sealed partial class AdminVerbSystem
         if (HasComp<MapComponent>(args.Target) || HasComp<MapGridComponent>(args.Target))
             return;
 
-        foreach (var prototype in ProtoMan.EnumeratePrototypes<AdminSmitePrototype>())
+        foreach (var prototype in ProtoMan.EnumeratePrototypes<AdminVerbPrototype>())
         {
             if (!_whitelistSystem.CheckBoth(args.Target, prototype.Blacklist, prototype.Whitelist))
                 continue;
@@ -51,7 +51,7 @@ public sealed partial class AdminVerbSystem
         }
     }
 
-    private void ExecuteSmite(EntityUid target, EntityUid user, AdminSmitePrototype prototype)
+    private void ExecuteSmite(EntityUid target, EntityUid user, AdminVerbPrototype prototype)
     {
         _entityEffects.ApplyEffects(target, prototype.Effects, user: user);
     }

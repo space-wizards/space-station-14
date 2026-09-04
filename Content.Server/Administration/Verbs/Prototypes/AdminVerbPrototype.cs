@@ -8,8 +8,8 @@ namespace Content.Server.Administration.Verbs.Prototypes;
 /// <summary>
 /// Defines a target-filtered admin verb.
 /// </summary>
-[DataDefinition]
-public abstract partial class AdminVerbPrototype : IPrototype
+[Prototype]
+public sealed partial class AdminVerbPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;

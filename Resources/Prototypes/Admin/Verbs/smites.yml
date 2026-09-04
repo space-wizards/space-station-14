@@ -1,4 +1,4 @@
-﻿- type: adminSmite
+﻿- type: adminVerb
   id: AdminSmiteSuperBonkLite
   name: admin-smite-super-bonk-lite-name
   description: admin-smite-super-bonk-lite-description
@@ -11,7 +11,7 @@
     - type: SuperBonk
       stopWhenDead: true
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteSuperBonk
   name: admin-smite-super-bonk-name
   description: admin-smite-super-bonk-description
@@ -24,7 +24,7 @@
     - type: SuperBonk
       stopWhenDead: false
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteNyanify
   name: admin-smite-nyanify-name
   description: admin-smite-nyanify-description
@@ -40,7 +40,7 @@
     time: null
     type: Set
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteMaid
   name: admin-smite-maid-name
   description: admin-smite-maid-description
@@ -60,7 +60,7 @@
     time: null
     type: Set
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteExplode
   name: admin-smite-explode-name
   description: admin-smite-explode-description
@@ -79,7 +79,7 @@
   - !type:Explode
     delete: false
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteElectrocute
   name: admin-smite-electrocute-name
   description: admin-smite-electrocute-description
@@ -98,7 +98,7 @@
     refresh: true
     bypassInsulation: true
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteZoomIn
   name: admin-smite-zoom-in-name
   description: admin-smite-zoom-in-description
@@ -108,7 +108,7 @@
     factor: 0.2
 
 # BROKEN: Negative eye zoom crashes viewport rendering.
-#- type: adminSmite
+#- type: adminVerb
 #  id: AdminSmiteFlipEye
 #  name: admin-smite-flip-eye-name
 #  description: admin-smite-flip-eye-description
@@ -117,7 +117,7 @@
 #  - !type:ScaleEyeZoom
 #    factor: -1
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteSuperSpeed
   name: admin-smite-super-speed-name
   description: admin-smite-super-speed-description
@@ -136,7 +136,7 @@
     method: PopupEntity
     visualType: LargeCaution
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteSetAlight
   name: admin-smite-set-alight-name
   description: admin-smite-set-alight-description
@@ -159,7 +159,7 @@
     method: PopupCoordinates
     visualType: MediumCaution
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteOmniAccent
   name: admin-smite-omni-accent-name
   description: admin-smite-omni-accent-description
@@ -182,7 +182,7 @@
     - type: SpanishAccent
     - type: StutteringAccent
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteMakeStinky
   name: admin-smite-make-stinky-name
   description: admin-smite-make-stinky-description
@@ -200,7 +200,7 @@
     - type: AtmosDevice
       requireAnchored: false
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteKillSign
   name: admin-smite-kill-sign-name
   description: admin-smite-kill-sign-description
@@ -217,7 +217,7 @@
     - type: KillSign
       hideFromOwner: false
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteHiddenKillSign
   name: admin-smite-kill-sign-hidden-name
   description: admin-smite-kill-sign-hidden-description
@@ -234,7 +234,7 @@
     - type: KillSign
       hideFromOwner: true
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteRemoveGravity
   name: admin-smite-remove-gravity-name
   description: admin-smite-remove-gravity-description
@@ -251,7 +251,7 @@
       weightless: true
 
 # BROKEN: Setting an input mover's body type to Dynamic causes a movement assertion.
-#- type: adminSmite
+#- type: adminVerb
 #  id: AdminSmitePinball
 #  name: admin-smite-pinball-name
 #  description: admin-smite-pinball-description
@@ -267,7 +267,7 @@
 #  - !type:Pinball
 
 # BROKEN: Setting an input mover's body type to Dynamic causes a movement assertion.
-#- type: adminSmite
+#- type: adminVerb
 #  id: AdminSmiteYeet
 #  name: admin-smite-yeet-name
 #  description: admin-smite-yeet-description
@@ -280,7 +280,7 @@
 #  effects:
 #  - !type:Yeet
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteSuperSlip
   name: admin-smite-super-slip-name
   description: admin-smite-super-slip-description
@@ -294,7 +294,7 @@
       stunTime: 5
       launchForwardsMultiplier: 20
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteSiliconLawBound
   name: admin-smite-silicon-laws-bound-name
   description: admin-smite-silicon-laws-bound-description
@@ -322,7 +322,7 @@
     method: PopupEntity
     visualType: LargeCaution
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteChessDimension
   name: admin-smite-chess-dimension-name
   description: admin-smite-chess-dimension-description
@@ -348,7 +348,7 @@
   - !type:TabletopDimension
     prototype: ChessBoard
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteLockerStuff
   name: admin-smite-locker-stuff-name
   description: admin-smite-locker-stuff-description
@@ -359,7 +359,7 @@
   - !type:StuffIntoLocker
     prototype: ClosetMaintenance
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteHomingRod
   name: admin-smite-homing-rod-name
   description: admin-smite-homing-rod-description
@@ -372,7 +372,7 @@
     distance: 350
     speed: 25
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteSlowHomingRod
   name: admin-smite-homing-rod-slow-name
   description: admin-smite-homing-rod-slow-description
@@ -386,7 +386,7 @@
     speed: 5
     matchTargetSprintSpeed: true
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteCreamPie
   name: admin-smite-creampie-name
   description: admin-smite-creampie-description
@@ -400,7 +400,7 @@
   - !type:SetCreamPied
     enabled: true
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteDust
   name: admin-smite-dust-name
   description: admin-smite-dust-description
@@ -421,7 +421,7 @@
     - type: TimedDespawn
       lifetime: 0
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteGhostKick
   name: admin-smite-ghostkick-name
   description: admin-smite-ghostkick-description
@@ -433,7 +433,7 @@
   - !type:GhostKick
     reason: admin-smite-ghostkick-reason
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteRunWalkSwap
   name: admin-smite-run-walk-swap-name
   description: admin-smite-run-walk-swap-description
@@ -446,7 +446,7 @@
     method: PopupEntity
     visualType: LargeCaution
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteRemoveBlood
   name: admin-smite-remove-blood-name
   description: admin-smite-remove-blood-description
@@ -469,7 +469,7 @@
     method: PopupCoordinates
     visualType: MediumCaution
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteBuffering
   name: admin-smite-buffering-name
   description: admin-smite-buffering-description
@@ -479,7 +479,7 @@
     components:
     - type: Buffering
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteCluwne
   name: admin-smite-cluwne-name
   description: admin-smite-cluwne-description
@@ -494,7 +494,7 @@
     components:
     - type: Cluwne
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteAngerPointingArrows
   name: admin-smite-anger-pointing-arrows-name
   description: admin-smite-anger-pointing-arrows-description
@@ -506,7 +506,7 @@
     components:
     - type: PointingArrowAngering
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteHeadstand
   name: admin-smite-headstand-name
   description: admin-smite-headstand-description
@@ -516,7 +516,7 @@
     components:
     - type: Headstand
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteSpeakBackwards
   name: admin-smite-speak-backwards-name
   description: admin-smite-speak-backwards-description
@@ -526,7 +526,7 @@
     components:
     - type: BackwardsAccent
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteDisarmProne
   name: admin-smite-disarm-prone-name
   description: admin-smite-disarm-prone-description
@@ -536,7 +536,7 @@
     components:
     - type: DisarmProne
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteCrawler
   name: admin-smite-crawler-name
   description: admin-smite-crawler-description
@@ -548,7 +548,7 @@
     components:
     - type: Worm
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteMonkey
   name: admin-smite-monkeyify-name
   description: admin-smite-monkeyify-description
@@ -560,7 +560,7 @@
     prototype: AdminMonkeySmite
     force: true
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteGarbageCan
   name: admin-smite-garbage-can-name
   description: admin-smite-garbage-can-description
@@ -572,7 +572,7 @@
     prototype: AdminDisposalsSmite
     force: true
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteBread
   name: admin-smite-become-bread-name
   description: admin-smite-become-bread-description
@@ -584,7 +584,7 @@
     prototype: AdminBreadSmite
     force: true
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteMouse
   name: admin-smite-become-mouse-name
   description: admin-smite-become-mouse-description
@@ -596,7 +596,7 @@
     prototype: AdminMouseSmite
     force: true
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteInstrument
   name: admin-smite-become-instrument-name
   description: admin-smite-become-instrument-description
@@ -608,7 +608,7 @@
     prototype: AdminInstrumentSmite
     force: true
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteReptilian
   name: admin-smite-reptilian-species-swap-name
   description: admin-smite-reptilian-species-swap-description
@@ -620,7 +620,7 @@
     prototype: AdminLizardSmite
     force: true
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteVulpkanin
   name: admin-smite-vulpkanin-species-swap-name
   description: admin-smite-vulpkanin-species-swap-description
@@ -632,7 +632,7 @@
     prototype: AdminVulpSmite
     force: true
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteRemoveHands
   name: admin-smite-remove-hands-name
   description: admin-smite-remove-hands-description
@@ -656,7 +656,7 @@
     method: PopupCoordinates
     visualType: Medium
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteRemoveHand
   name: admin-smite-remove-hand-name
   description: admin-smite-remove-hand-description
@@ -681,7 +681,7 @@
     method: PopupCoordinates
     visualType: Medium
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteStomachRemoval
   name: admin-smite-stomach-removal-name
   description: admin-smite-stomach-removal-description
@@ -702,7 +702,7 @@
     method: PopupEntity
     visualType: LargeCaution
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteLungRemoval
   name: admin-smite-lung-removal-name
   description: admin-smite-lung-removal-description
@@ -723,7 +723,7 @@
     method: PopupEntity
     visualType: LargeCaution
 
-- type: adminSmite
+- type: adminVerb
   id: AdminSmiteVomitOrgans
   name: admin-smite-vomit-organs-name
   description: admin-smite-vomit-organs-description
