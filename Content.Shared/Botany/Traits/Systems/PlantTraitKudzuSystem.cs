@@ -11,8 +11,8 @@ public sealed partial class PlantTraitKudzuSystem : EntitySystem
     [Dependency] private PlantHolderSystem _plantHolder = default!;
     [Dependency] private PlantTraySystem _plantTray = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
-    
-    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery = default!;
+
+    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery;
 
     [SubscribeLocalEvent]
     private void OnPlantGrow(Entity<PlantTraitKudzuComponent> ent, ref PlantGrowEvent args)
