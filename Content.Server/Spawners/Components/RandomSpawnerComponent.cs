@@ -2,32 +2,39 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Spawners.Components;
 
+/// <summary>
+/// An extended <see cref="ConditionalSpawnerComponent"/> with optional rare prototypes and more configurable spawn behavior.
+/// </summary>
 [RegisterComponent, EntityCategory("Spawner")]
 public sealed partial class RandomSpawnerComponent : ConditionalSpawnerComponent
 {
     /// <summary>
-    /// A list of rarer entities that can spawn with the RareChance
-    /// instead of one of the entities in the Prototypes list.
+    /// A list of rare entities to spawn.
+    /// </summary>
+    /// <remarks>
+    /// On a successful spawn roll, with <see cref="RareChance"/> probability,
+    /// an entity from this list is spawned (vs. the normal Prototypes list).
     /// </summary>
     [DataField]
     public List<EntProtoId> RarePrototypes { get; set; } = new();
 
     /// <summary>
-    /// The chance that a rare prototype may spawn instead of a common prototype
+    /// The chance that a rare prototype may spawn instead of a common prototype.
     /// </summary>
     [DataField]
     public float RareChance { get; set; } = 0.05f;
 
     /// <summary>
-    /// Scatter of entity spawn coordinates
+    /// Maximum distance in meters to scatter spawned entities from the spawner.
     /// </summary>
+    /// <remarks>
+    /// Spawned entities are created in a disk this size around the spawner.
+    /// </remarks>
     [DataField]
     public float Offset { get; set; } = 0.2f;
 
     /// <summary>
-    /// A variable meaning whether the spawn will
-    /// be able to be used again or whether
-    /// it will be destroyed after the first use
+    /// If true, the spawner is deleted on <see cref="MapInitEvent"/>.
     /// </summary>
     [DataField]
     public bool DeleteSpawnerAfterSpawn = true;
