@@ -25,6 +25,7 @@ using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition.EntitySystems;
@@ -57,6 +58,7 @@ public sealed partial class IngestionSystem : EntitySystem
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private ForensicsSystem _forensics = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
 
     // Body Component Dependencies
     [Dependency] private BodySystem _body = default!;
@@ -509,12 +511,12 @@ public sealed partial class IngestionSystem : EntitySystem
 
     private void OnFullyEaten(Entity<EdibleComponent> entity, ref FullyEatenEvent args)
     {
-        SpawnTrash(entity, args.User, true);
+        SpawnTrash(entity, args.User);
     }
 
     private void OnBeforeToolRefined(Entity<EdibleComponent> entity, ref BeforeToolRefinedEvent args)
     {
-        SpawnTrash(entity, args.User, true);
+        SpawnTrash(entity, args.User);
     }
 
     private void AddEdibleVerbs(Entity<EdibleComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
