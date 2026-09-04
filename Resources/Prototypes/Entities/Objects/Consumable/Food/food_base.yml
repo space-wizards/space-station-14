@@ -57,3 +57,27 @@
           True: {state: "icon-open"}
           False: {state: "icon"}
   - type: Openable
+
+# Base type for food that looks tasty but doesn't actually satiate the eater.
+- type: entity
+  abstract: true
+  parent: FoodBase
+  id: FakeFoodBase
+  components:
+    - type: FlavorProfile
+      flavors:
+        - nothing
+    - type: FakeConsumable
+      vanishSound: !type:SoundPathSpecifier
+        path: /Audio/Effects/quick_exhale.ogg
+        params:
+          volume: 9
+          pitch: 0.5
+    - type: Damageable
+    - type: Injurable
+      damageContainer: Biological
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 1
