@@ -286,7 +286,7 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Rsi(new("/Textures/Interface/Alerts/human_crew_monitoring.rsi"), "dead"),
                 Act = () =>
                 {
-                    // If God would have wanted me to Live he would not have given me A Heart Attack!
+                    // If God would had wanted Me to Live he would not have created A Heart Attack!
                     _suicide.ApplyLethalDamage((args.Target, damageable), _asphyxiationDamageType);
                 },
                 Impact = LogImpact.Extreme,
