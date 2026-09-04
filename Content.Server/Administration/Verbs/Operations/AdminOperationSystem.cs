@@ -1,7 +1,6 @@
 using Content.Server.GhostKick;
 using Content.Server.Popups;
 using Content.Server.Silicons.Laws;
-using Content.Server.Tabletop;
 using Content.Shared.EntityEffects;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
@@ -20,7 +19,6 @@ public sealed partial class AdminOperationSystem : EntitySystem
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SiliconLawSystem _siliconLaws = default!;
-    [Dependency] private TabletopSystem _tabletop = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
     /// <summary>

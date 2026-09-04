@@ -337,27 +337,23 @@
   icon:
     sprite: Objects/Fun/Tabletop/chessboard.rsi
     state: chessboard
-  operations:
-  - !type:EntityEffectsOperation
-    effects:
-    - !type:SetGodmode
-      enabled: true
-  - !type:EntityEffectsOperation
-    effects:
-    - !type:AddComponents
-      components:
-      - type: TabletopDraggable
-  - !type:PopupOperation
-    message: admin-smite-chess-self
-    recipients: Target
-    location: Entity
-    type: LargeCaution
-  - !type:PopupOperation
-    message: admin-smite-chess-others
-    recipients: PvsExceptTarget
-    location: Coordinates
-    type: MediumCaution
-  - !type:TabletopDimensionOperation
+  effects:
+  - !type:SetGodmode
+    enabled: true
+  - !type:AddComponents
+    components:
+    - type: TabletopDraggable
+  - !type:PopupMessage
+    messages: [ admin-smite-chess-self ]
+    type: Local
+    method: PopupEntity
+    visualType: LargeCaution
+  - !type:PopupMessage
+    messages: [ admin-smite-chess-others ]
+    type: PvsExceptTarget
+    method: PopupCoordinates
+    visualType: MediumCaution
+  - !type:TabletopDimension
     prototype: ChessBoard
 
 - type: adminSmite
