@@ -11,7 +11,6 @@ using Content.Shared.EntityEffects;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Slippery;
 using Content.Shared.Tools.Systems;
-using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 
@@ -38,7 +37,6 @@ public sealed partial class AdminOperationSystem : EntitySystem
     [Dependency] private SlipperySystem _slippery = default!;
     [Dependency] private TabletopSystem _tabletop = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private UserInterfaceSystem _ui = default!;
     [Dependency] private WeldableSystem _weldable = default!;
 
     /// <summary>

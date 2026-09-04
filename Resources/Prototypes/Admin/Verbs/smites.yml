@@ -305,10 +305,12 @@
       components:
       - type: SiliconLawProvider
         laws: Crewsimov
-  - !type:AddUserInterfacesOperation
-    interfaces:
-      enum.SiliconLawsUiKey.Key:
-        type: SiliconLawBoundUserInterface
+  - !type:EntityEffectsOperation
+    effects:
+    - !type:AddUserInterfaces
+      interfaces:
+        enum.SiliconLawsUiKey.Key:
+          type: SiliconLawBoundUserInterface
   - !type:SiliconLawBoundOperation
   - !type:EntityEffectsOperation
     effects:
