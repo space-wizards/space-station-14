@@ -263,8 +263,8 @@
 #    components:
 #    - Physics
 #    - Fixtures
-#  operations:
-#  - !type:PinballOperation
+#  effects:
+#  - !type:Pinball
 
 # BROKEN: Setting an input mover's body type to Dynamic causes a movement assertion.
 #- type: adminSmite
