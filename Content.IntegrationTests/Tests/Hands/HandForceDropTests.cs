@@ -57,6 +57,25 @@ public sealed class HandForceDropTests: InteractionTest
     }
 
     [Test]
+    public async Task TestTryDropUnremovable_DeleteOnDrop()
+    {
+        var initialFreeHands = HandSys.CountFreeHands(SPlayer);
+        Assume.That(initialFreeHands, Is.GreaterThan(0), "SPlayer must have at least one free hand");
+        
+        var item = SEntMan.GetEntity(await PlaceInHands(UnremovableDeleteOnDropCrowbar));
+        
+        var holdingItemFreeHands = HandSys.CountFreeHands(SPlayer);
+        Assume.That(holdingItemFreeHands, Is.LessThan(initialFreeHands), "SPlayer somehow has more free hands after being given the item");
+        
+        Assert.That(HandSys.TryDrop(SPlayer, force:true), Is.True, "SPlayer was unable to drop the item despite being forced to drop it");
+        Assert.That(HandSys.CountFreeHands(SPlayer), Is.EqualTo(initialFreeHands), "SPlayer did not return to initial free hand count after forcibly dropping the item!");
+        Assert.That(HandSys.IsHeld(item, out _), Is.False, "The item was still held after being forcibly dropped!");
+
+        Assert.That(SEntMan.IsQueuedForDeletion(item), Is.True,
+            "DeleteOnDrop item was not queued for deletion after being forcibly dropped!");
+    }
+
+    [Test]
     public async Task TestTryDropAllUnremovable()
     {
         Assume.That(HandSys.GetEmptyHandCount(SPlayer), Is.EqualTo(HandSys.GetHandCount(SPlayer)), "SPlayer did not start with all hands free");
@@ -91,8 +110,11 @@ public sealed class HandForceDropTests: InteractionTest
     }
 
     /// <summary>
-    /// helper method which duplicates the active hand of SPlayer, so player will have at least the desired hand quantity
-    /// (assumes that the player has hands)
+    /// helper method which duplicates the active hand of SPlayer, so player will have at least <c>targetHandCount</c> hands.<br/>
+    /// This assumes that the player has hands.<br/>
+    /// Uses <see cref="Content.IntegrationTests.Tests.Interaction.InteractionTest.SPlayer">base.SPlayer</see>,
+    /// <see cref="Content.IntegrationTests.Tests.Interaction.InteractionTest.HandSys">base.HandSys</see>,
+    /// and <see cref="Content.IntegrationTests.Tests.Interaction.InteractionTest.Hands">base.Hands</see>
     /// </summary>
     /// <param name="targetHandCount">how many hands do we want?<br/>
     /// function will ensure player has at least this many hands.<br/>
