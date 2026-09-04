@@ -135,11 +135,16 @@ public sealed partial class PlantTraySystem : EntitySystem
         var contents = trayComp.SoilSolution.Value.Comp.Solution.Contents.ToArray();
         foreach (var entry in contents)
         {
-            var reagentProto = ProtoMan.Index(entry.Reagent.Prototype);
-            _entityEffects.ApplyEffects(trayUid, [.. reagentProto.PlantMetabolisms], entry.Quantity.Float());
+            if (entry.Quantity.Float() >= 1f)
+            {
+                var reagentProto = ProtoMan.Index(entry.Reagent.Prototype);
+                _entityEffects.ApplyEffects(trayUid, [.. reagentProto.PlantMetabolisms], entry.Quantity.Float());
 
-            if (plantUid != null)
-                _entityEffects.ApplyEffects(plantUid.Value, [.. reagentProto.PlantMetabolisms], entry.Quantity.Float());
+                if (plantUid != null)
+                {
+                    _entityEffects.ApplyEffects(plantUid.Value, [.. reagentProto.PlantMetabolisms], entry.Quantity.Float());
+                }
+            }
         }
 
         _solutionContainer.RemoveEachReagent(trayComp.SoilSolution.Value, FixedPoint2.New(1));

@@ -27,10 +27,14 @@ public sealed partial class PlantChangeTraitsEntityEffectSystem : EntityEffectSy
             return;
         }
 
-        if (args.Effect.Remove)
+        if (HasComp(entity.Owner, traitType.GetType()))
+        {
             RemCompDeferred(entity.Owner, traitType.GetType());
-        else if (!HasComp(entity.Owner, traitType.GetType()))
+        }
+        else
+        {
             AddComp(entity.Owner, traitType);
+        }
     }
 }
 
@@ -42,10 +46,4 @@ public sealed partial class PlantChangeTraits : EntityEffectBase<PlantChangeTrai
     /// </summary>
     [DataField(required: true, customTypeSerializer: typeof(ComponentNameSerializer))]
     public string Trait;
-
-    /// <summary>
-    /// If true, the trait is removed. If false, the trait is added.
-    /// </summary>
-    [DataField]
-    public bool Remove;
 }
