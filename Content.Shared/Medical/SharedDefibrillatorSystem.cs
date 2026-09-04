@@ -191,11 +191,13 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
         bool failedRevive = true;
         if (_rotting.IsRotten(target))
         {
-            _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString("defibrillator-rotten"), InGameICChatType.Speak, true);
+            if (isOriginal) // Defibrillator doesn't know about those that are shocked incidentally.
+                _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString("defibrillator-rotten"), InGameICChatType.Speak, true);
         }
         else if (TryComp<UnrevivableComponent>(target, out var unrevivable))
         {
-            _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString(unrevivable.ReasonMessage), InGameICChatType.Speak, true);
+            if (isOriginal) // Defibrillator doesn't know about those that are shocked incidentally.
+                _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString(unrevivable.ReasonMessage), InGameICChatType.Speak, true);
         }
         else
         {
@@ -221,10 +223,13 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
             }
             else
             {
-                if (HasComp<MindContainerComponent>(target))
-                    _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString("defibrillator-no-mind"), InGameICChatType.Speak, true); //target can host a mind but doesn't
-                else
-                    _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString("defibrillator-not-living"), InGameICChatType.Speak, true); //target couldn't have hosted a mind
+                if (isOriginal) // Defibrillator doesn't know about those that are shocked incidentally.
+                {
+                    if (HasComp<MindContainerComponent>(target))
+                        _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString("defibrillator-no-mind"), InGameICChatType.Speak, true); //target can host a mind but doesn't
+                    else
+                        _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString("defibrillator-not-living"), InGameICChatType.Speak, true); //target couldn't have hosted a mind
+                }
             }
         }
 
