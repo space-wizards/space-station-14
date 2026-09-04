@@ -1,4 +1,3 @@
-using Content.Server.GhostKick;
 using Content.Server.Popups;
 using Content.Shared.EntityEffects;
 
@@ -10,7 +9,6 @@ namespace Content.Server.Administration.Verbs.Operations;
 public sealed partial class AdminOperationSystem : EntitySystem
 {
     [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
-    [Dependency] private GhostKickManager _ghostKick = default!;
     [Dependency] private PopupSystem _popup = default!;
 
     /// <summary>

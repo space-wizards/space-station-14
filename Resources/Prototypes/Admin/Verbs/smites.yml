@@ -429,8 +429,8 @@
   whitelist:
     components:
     - Actor
-  operations:
-  - !type:GhostKickOperation
+  effects:
+  - !type:GhostKick
     reason: admin-smite-ghostkick-reason
 
 - type: adminSmite
