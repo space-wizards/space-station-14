@@ -48,4 +48,10 @@ public sealed partial class FireVisualsComponent : Component
     /// </summary>
     [DataField]
     public ProtoId<DisplacementDataPrototype>? CurrentDisplacement;
+
+    /// <summary>
+    /// Cached sprite draw depth so floor entities (carpets) can temporarily render above the floor while burning.
+    /// </summary>
+    public int? OriginalDrawDepth;
 }
+

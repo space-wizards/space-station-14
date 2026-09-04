@@ -1,5 +1,6 @@
 using Content.Shared.Atmos;
 using Content.Server.Atmos.EntitySystems;
+using Content.Shared.Atmos.Components;
 using Robust.Shared.Audio.Systems;
 using Content.Server.Body.Systems;
 using Content.Shared.Body.Components;
@@ -27,6 +28,8 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private AtmosphereSystem _atmos = default!;
+        [Dependency] private FlammableSystem _flammable = default!;
+        [Dependency] private EntityLookupSystem _lookup = default!;
         [Dependency] private TransformSystem _transformSystem = default!;
         [Dependency] private InventorySystem _inventorySystem = default!;
         [Dependency] private ClothingSystem _clothing = default!;
@@ -39,6 +42,7 @@ namespace Content.Server.Nutrition.EntitySystems
         private const float UpdateTimer = 3f;
 
         private float _timer;
+        private readonly HashSet<Entity<FlammableComponent>> _nearbyFlammables = new();
 
         public override void Initialize()
         {
@@ -135,6 +139,21 @@ namespace Content.Server.Nutrition.EntitySystems
                     {
                         var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
                         _atmos.HotspotExpose(gridUid, position, smokable.ExposeTemperature, smokable.ExposeVolume, uid, true);
+                    }
+                }
+
+
+                // Dropped lit smokables can ignite nearby always-combustible / stacked flammables (carpets, paper, plants).
+                if (!_container.IsEntityInContainer(uid))
+                {
+                    _nearbyFlammables.Clear();
+                    _lookup.GetEntitiesInRange(Transform(uid).Coordinates, 0.75f, _nearbyFlammables);
+                    foreach (var target in _nearbyFlammables)
+                    {
+                        if (target.Owner == uid || target.Comp.OnFire)
+                            continue;
+
+                        _flammable.Ignite(target.Owner, uid, target.Comp);
                     }
                 }
 

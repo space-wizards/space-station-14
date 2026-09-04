@@ -15,6 +15,7 @@
   - type: ExtinguishableSetCollisionWake
   - type: Flammable
     fireSpread: true
+    fireSpreadRadius: 1.1
     alwaysCombustible: true
     canExtinguish: true
     damage:
@@ -493,6 +494,7 @@
   #- type: Appearance, hide stamp marks until we have some kind of displacement
   - type: Flammable
     fireSpread: true
+    fireSpreadRadius: 1.1
     canResistFire: false
     alwaysCombustible: true
     canExtinguish: true

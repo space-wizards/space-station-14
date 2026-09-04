@@ -60,6 +60,12 @@ namespace Content.Shared.Atmos.Components
         [DataField]
         public bool FireSpread { get; private set; } = false;
 
+        /// <summary>
+        /// How far this entity spreads fire while burning. A value of zero only allows collision-based spreading.
+        /// </summary>
+        [DataField]
+        public float FireSpreadRadius;
+
         [DataField]
         public bool CanResistFire { get; private set; } = false;
 

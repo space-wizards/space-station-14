@@ -1,290 +1,628 @@
 # TODO move all of this to tiles once tile smoothing is supported
-- type: entity
-  abstract: true
-  parent: [ BaseStructure, StructureHealthFurnitureWeak ]
-  id: CarpetBase
-  name: carpet
-  description: "Fancy walking surface."
-  components:
-  - type: Sprite
-    drawdepth: FloorTiles
-  - type: Icon
-    state: full
-  - type: IconSmooth
-    key: full
-    base: carpet_
-  - type: Tag
-    tags:
-    - Carpet
-    - ForceFixRotations
-  - type: Physics
-    canCollide: false
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
-        density: 5
-        layer:
-        - DoorPassable
-  - type: Damageable
-    damageModifierSet: ThreadMod
-  - type: TrayScanReveal
-  - type: ToolRefinable
-    refineResult:
-    - id: MaterialCloth1
 
 - type: entity
-  id: Carpet
-  parent: CarpetBase
-  suffix: Red
+
+  abstract: true
+
+  parent: BaseStructure
+
+  id: CarpetBase
+
+  name: carpet
+
+  description: "Fancy walking surface."
+
   components:
+
   - type: Sprite
-    sprite: Structures/Furniture/Carpets/red_carpet.rsi
+
+    drawdepth: FloorTiles
+
   - type: Icon
-    sprite: Structures/Furniture/Carpets/red_carpet.rsi
+
+    state: full
+
+  - type: IconSmooth
+
+    key: full
+
+    base: carpet_
+
+    index: 0
+
+  - type: Tag
+
+    tags:
+
+    - Carpet
+
+    - ForceFixRotations
+
+  - type: Physics
+
+    canCollide: true
+
+  - type: Fixtures
+
+    fixtures:
+
+      fix1:
+
+        shape:
+
+          !type:PhysShapeAabb
+
+          bounds: "-0.45,-0.45,0.45,0.45"
+
+        density: 5
+
+        hard: false
+
+        layer:
+
+        - DoorPassable
+
+        - MidImpassable
+
+  - type: Damageable
+
+    damageModifierSet: ThreadMod
+
+  - type: Injurable
+
+  - type: Flammable
+
+    fireSpread: true
+
+    fireSpreadRadius: 1.1
+
+    alwaysCombustible: true
+
+    canExtinguish: true
+
+    damage:
+
+      types:
+
+        Heat: 1
+
+  - type: Appearance
+
+  - type: Reactive
+
+    groups:
+
+      Flammable: [ Touch ]
+
+      Extinguish: [ Touch ]
+
+  - type: ExtinguishableSetCollisionWake
+
+  - type: FireVisuals
+
+    sprite: Effects/fire.rsi
+
+    normalState: fire
+
+    alternateState: 1
+
   - type: Destructible
+
     thresholds:
-    - trigger: &DamageFurnitureWeak
+
+    - trigger: &CarpetBurnTrigger
+
         !type:DamageTrigger
-        damage: 5
+
+        damage: 15
+
       behaviors:
+
       - !type:SpawnEntitiesBehavior
+
         spawn:
-          FloorCarpetItemRed: &BaseCarpetSpawn
+
+          Ash: &CarpetAshSpawn
+
             min: 1
+
             max: 1
 
+      - !type:DoActsBehavior
+
+        acts: [ "Destruction" ]
+
+  - type: TrayScanReveal
+
+  - type: ToolRefinable
+
+    refineResult:
+
+    - id: MaterialCloth1
+
+
+
 - type: entity
+
+  id: Carpet
+
+  parent: CarpetBase
+
+  suffix: Red
+
+  components:
+
+  - type: Sprite
+
+    sprite: Structures/Furniture/Carpets/red_carpet.rsi
+
+  - type: Icon
+
+    sprite: Structures/Furniture/Carpets/red_carpet.rsi
+
+
+
+- type: entity
+
   id: CarpetBlack
+
   parent: CarpetBase
+
   suffix: Black
+
   components:
+
   - type: Clickable
+
   - type: Sprite
+
     sprite: Structures/Furniture/Carpets/black_carpet.rsi
+
   - type: Icon
+
     sprite: Structures/Furniture/Carpets/black_carpet.rsi
-  - type: Destructible
-    thresholds:
-    - trigger: *DamageFurnitureWeak
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          FloorCarpetItemBlack: *BaseCarpetSpawn
+
+
 
 - type: entity
+
   id: CarpetPink
+
   parent: CarpetBase
+
   suffix: Pink
+
   components:
+
   - type: Clickable
+
   - type: Sprite
+
     sprite: Structures/Furniture/Carpets/pink_carpet.rsi
+
   - type: Icon
+
     sprite: Structures/Furniture/Carpets/pink_carpet.rsi
-  - type: Destructible
-    thresholds:
-    - trigger: *DamageFurnitureWeak
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          FloorCarpetItemPink: *BaseCarpetSpawn
+
+
 
 - type: entity
+
   id: CarpetBlue
+
   parent: CarpetBase
+
   suffix: Blue
+
   components:
+
   - type: Clickable
+
   - type: Sprite
+
     sprite: Structures/Furniture/Carpets/blue_carpet.rsi
+
   - type: Icon
+
     sprite: Structures/Furniture/Carpets/blue_carpet.rsi
-  - type: Destructible
-    thresholds:
-    - trigger: *DamageFurnitureWeak
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          FloorCarpetItemBlue: *BaseCarpetSpawn
+
+
 
 - type: entity
+
   id: CarpetGreen
+
   parent: CarpetBase
+
   suffix: Green
+
   components:
+
   - type: Clickable
+
   - type: Sprite
+
     sprite: Structures/Furniture/Carpets/green_carpet.rsi
+
   - type: Icon
+
     sprite: Structures/Furniture/Carpets/green_carpet.rsi
-  - type: Destructible
-    thresholds:
-    - trigger: *DamageFurnitureWeak
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          FloorCarpetItemGreen: *BaseCarpetSpawn
+
+
 
 - type: entity
+
   id: CarpetOrange
+
   parent: CarpetBase
+
   suffix: Orange
+
   components:
+
   - type: Clickable
+
   - type: Sprite
+
     sprite: Structures/Furniture/Carpets/orange_carpet.rsi
+
   - type: Icon
+
     sprite: Structures/Furniture/Carpets/orange_carpet.rsi
-  - type: Destructible
-    thresholds:
-    - trigger: *DamageFurnitureWeak
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          FloorCarpetItemOrange: *BaseCarpetSpawn
+
+
 
 - type: entity
+
   id: CarpetSBlue
+
   parent: CarpetBase
+
   suffix: Sky Blue
+
   components:
+
   - type: Clickable
+
   - type: Sprite
+
     sprite: Structures/Furniture/Carpets/skyblue_carpet.rsi
+
   - type: Icon
+
     sprite: Structures/Furniture/Carpets/skyblue_carpet.rsi
-  - type: Destructible
-    thresholds:
-    - trigger: *DamageFurnitureWeak
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          FloorCarpetItemSkyBlue: *BaseCarpetSpawn
+
+
 
 - type: entity
+
   id: CarpetPurple
+
   parent: CarpetBase
+
   suffix: Purple
+
   components:
+
   - type: Clickable
+
   - type: Sprite
+
     sprite: Structures/Furniture/Carpets/purple_carpet.rsi
+
   - type: Icon
+
     sprite: Structures/Furniture/Carpets/purple_carpet.rsi
-  - type: Destructible
-    thresholds:
-    - trigger: *DamageFurnitureWeak
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          FloorCarpetItemPurple: *BaseCarpetSpawn
+
+
 
 - type: entity
+
   id: CarpetCyan
+
   parent: CarpetBase
+
   suffix: Cyan
+
   components:
+
   - type: Clickable
+
   - type: Sprite
+
     sprite: Structures/Furniture/Carpets/cyan_carpet.rsi
+
   - type: Icon
+
     sprite: Structures/Furniture/Carpets/cyan_carpet.rsi
-  - type: Destructible
-    thresholds:
-    - trigger: *DamageFurnitureWeak
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          FloorCarpetItemCyan: *BaseCarpetSpawn
+
+
 
 - type: entity
+
   id: CarpetWhite
+
   parent: CarpetBase
+
   suffix: White
+
   components:
+
   - type: Clickable
+
   - type: Sprite
+
     sprite: Structures/Furniture/Carpets/white_carpet.rsi
+
   - type: Icon
+
     sprite: Structures/Furniture/Carpets/white_carpet.rsi
-  - type: Destructible
-    thresholds:
-    - trigger: *DamageFurnitureWeak
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          FloorCarpetItemWhite: *BaseCarpetSpawn
+
+
 
 # TODO nuke this once tiles support rotating sprites
+
 - type: entity
+
   parent: BaseStructure
+
   id: CarpetChapel
+
   name: "chapel's carpet"
+
   components:
+
   - type: Sprite
+
     sprite: Structures/Furniture/Carpets/chapel_carpet.rsi
+
     state: chapel
+
     drawdepth: FloorTiles
+
   - type: Icon
+
     sprite: Structures/Furniture/Carpets/chapel_carpet.rsi
+
     state: chapel
+
   - type: Tag
+
     tags:
+
     - Carpet
+
   - type: Physics
-    canCollide: false
+
+    canCollide: true
+
   - type: Fixtures
+
+    fixtures:
+
+      fix1:
+
+        shape:
+
+          !type:PhysShapeAabb
+
+          bounds: "-0.45,-0.45,0.45,0.45"
+
+        density: 5
+
+        hard: false
+
+        layer:
+
+        - DoorPassable
+
+        - MidImpassable
+
+  - type: Flammable
+
+    fireSpread: true
+
+    fireSpreadRadius: 1.1
+
+    alwaysCombustible: true
+
+    canExtinguish: true
+
+    damage:
+
+      types:
+
+        Heat: 1
+
+  - type: Appearance
+
+  - type: Reactive
+
+    groups:
+
+      Flammable: [ Touch ]
+
+      Extinguish: [ Touch ]
+
+  - type: ExtinguishableSetCollisionWake
+
+  - type: FireVisuals
+
+    sprite: Effects/fire.rsi
+
+    normalState: fire
+
+    alternateState: 1
+
   - type: Damageable
+
+    damageModifierSet: ThreadMod
+
   - type: Injurable
+
     damageContainer: Inorganic
+
   - type: Destructible
+
     thresholds:
-    - trigger: *DamageFurnitureWeak
+
+    - trigger: *CarpetBurnTrigger
+
       behaviors:
+
+      - !type:SpawnEntitiesBehavior
+
+        spawn:
+
+          Ash: *CarpetAshSpawn
+
       - !type:DoActsBehavior
+
         acts: [ "Destruction" ]
+
   - type: TrayScanReveal
+
+
 
 #cardpet
 
 - type: entity
-  parent: [ BaseStructure, StructureHealthFurnitureWeak ]
+
+  parent: BaseStructure
+
   id: CarpetCard
+
   name: cardboard "carpet"
+
   description: "Even lino is better."
+
   components:
+
   - type: Sprite
+
     drawdepth: FloorTiles
+
     sprite: Structures/Furniture/Carpets/card_carpet.rsi
+
   - type: Icon
+
     sprite: Structures/Furniture/Carpets/card_carpet.rsi
+
     state: full
+
   - type: IconSmooth
+
     key: cardpets
+
     additionalKeys:
+
     - cards
+
     base: carpet_
+
+    index: 0
+
   - type: Tag
+
     tags:
+
     - Carpet
+
     - ForceFixRotations
+
   - type: Physics
-    canCollide: false
+
+    canCollide: true
+
   - type: Clickable
+
   - type: Fixtures
+
+    fixtures:
+
+      fix1:
+
+        shape:
+
+          !type:PhysShapeAabb
+
+          bounds: "-0.45,-0.45,0.45,0.45"
+
+        density: 5
+
+        hard: false
+
+        layer:
+
+        - DoorPassable
+
+        - MidImpassable
+
+  - type: Flammable
+
+    fireSpread: true
+
+    fireSpreadRadius: 1.1
+
+    alwaysCombustible: true
+
+    canExtinguish: true
+
+    damage:
+
+      types:
+
+        Heat: 1
+
+  - type: Appearance
+
+  - type: Reactive
+
+    groups:
+
+      Flammable: [ Touch ]
+
+      Extinguish: [ Touch ]
+
+  - type: ExtinguishableSetCollisionWake
+
+  - type: FireVisuals
+
+    sprite: Effects/fire.rsi
+
+    normalState: fire
+
+    alternateState: 1
+
   - type: Damageable
+
     damageModifierSet: CardboardMod
+
+  - type: Injurable
+
   - type: Destructible
+
     thresholds:
-    - trigger: *DamageFurnitureWeak
+
+    - trigger: *CarpetBurnTrigger
+
       behaviors:
+
       - !type:SpawnEntitiesBehavior
+
         spawn:
-          MaterialCardboard: *BaseCarpetSpawn
+
+          Ash: *CarpetAshSpawn
+
+      - !type:DoActsBehavior
+
+        acts: [ "Destruction" ]
+
   - type: ToolRefinable
+
     refineResult:
+
     - id: MaterialCardboard1
+
   - type: TrayScanReveal
+

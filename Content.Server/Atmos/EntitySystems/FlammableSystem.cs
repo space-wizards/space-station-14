@@ -28,6 +28,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
+using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.EntitySystems
@@ -50,6 +51,8 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private AudioSystem _audio = default!;
         [Dependency] private IRobustRandom _random = default!;
         [Dependency] private IGameTiming _timing = default!;
+        [Dependency] private EntityLookupSystem _lookup = default!;
+        [Dependency] private SharedContainerSystem _container = default!;
 
         [Dependency] private EntityQuery<InventoryComponent> _inventoryQuery = default!;
         [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
@@ -57,6 +60,8 @@ namespace Content.Server.Atmos.EntitySystems
         private static readonly TimeSpan UpdateTime = TimeSpan.FromSeconds(1);
 
         private readonly Dictionary<Entity<FlammableComponent>, float> _fireEvents = new();
+        private readonly HashSet<Entity<FlammableComponent>> _nearbyFlammables = new();
+        private readonly List<Entity<FlammableComponent>> _fireSpreadSources = new();
 
         private const int FirestackEnergy = 37500; // joules release when on fire
 
@@ -435,6 +440,7 @@ namespace Content.Server.Atmos.EntitySystems
             _fireEvents.Clear();
 
             var curTime = _timing.CurTime;
+            _fireSpreadSources.Clear();
 
             // TODO: This needs cleanup to take off the crust from TemperatureComponent and shit.
             var query = EntityQueryEnumerator<FlammableComponent, TransformComponent>();
@@ -488,12 +494,72 @@ namespace Content.Server.Atmos.EntitySystems
 
                     _damageableSystem.TryChangeDamage(uid, flammable.Damage * flammable.FireStacks * ev.Multiplier, interruptsDoAfters: false);
 
+                    if (flammable.FireSpread && flammable.FireSpreadRadius > 0f)
+                        _fireSpreadSources.Add((uid, flammable));
+
                     AdjustFireStacks(uid, flammable.FirestackFade * (flammable.Resisting ? 15f : 1f), flammable, flammable.OnFire);
                 }
                 else
                 {
                     TryExtinguish((uid, flammable));
                 }
+            }
+
+            // Do this after the update loop so newly-ignited entities cannot spread again during the same tick.
+            foreach (var source in _fireSpreadSources)
+                SpreadFire(source);
+
+            IgniteFromIgnitionSources();
+        }
+
+        /// <summary>
+        /// Lit lighters, welders, and other ignition sources ignite nearby combustible entities.
+        /// </summary>
+        private void IgniteFromIgnitionSources()
+        {
+            var query = EntityQueryEnumerator<IgnitionSourceComponent, TransformComponent>();
+            while (query.MoveNext(out var uid, out var source, out var xform))
+            {
+                if (!source.Ignited)
+                    continue;
+
+                // Held / pocketed lighters should not auto-torch the floor under the player.
+                if (_container.IsEntityInContainer(uid))
+                    continue;
+
+                _nearbyFlammables.Clear();
+                _lookup.GetEntitiesInRange(xform.Coordinates, 0.75f, _nearbyFlammables);
+
+                foreach (var target in _nearbyFlammables)
+                {
+                    if (target.Owner == uid || target.Comp.OnFire)
+                        continue;
+
+                    Ignite(target.Owner, uid, target.Comp);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Ignites nearby entities that opt into fire spreading.
+        /// </summary>
+        public void SpreadFire(Entity<FlammableComponent> source)
+        {
+            if (Deleted(source) || !source.Comp.OnFire)
+                return;
+
+            _nearbyFlammables.Clear();
+            _lookup.GetEntitiesInRange(Transform(source).Coordinates, source.Comp.FireSpreadRadius, _nearbyFlammables);
+
+            foreach (var target in _nearbyFlammables)
+            {
+                if (target.Owner == source.Owner || target.Comp.OnFire || !target.Comp.FireSpread)
+                    continue;
+
+                SetFireStacks(target.Owner,
+                    MathF.Max(target.Comp.FirestacksOnIgnite, source.Comp.FireStacks / 2f),
+                    target.Comp,
+                    ignite: true);
             }
         }
 

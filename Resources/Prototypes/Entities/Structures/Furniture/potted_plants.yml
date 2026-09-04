@@ -16,10 +16,13 @@
       fix1:
         shape:
           !type:PhysShapeCircle
-          radius: 0.1
+          radius: 0.25
         density: 190
+        hard: false
         mask:
         - HighImpassable
+        layer:
+        - MidImpassable
   - type: Sprite
     drawdepth: Overdoors
     offset: "0.0,0.3"
@@ -40,7 +43,18 @@
     sprite: Structures/Furniture/potted_plants.rsi
     size: Huge
   - type: Damageable
-    damageModifierSet: RockMod
+    damageModifierSet: WoodMod
+  - type: Flammable
+    fireSpread: true
+    fireSpreadRadius: 1.1
+    alwaysCombustible: true
+    damage:
+      types:
+        Heat: 2
+  - type: Appearance
+  - type: FireVisuals
+    sprite: Effects/fire.rsi
+    normalState: 1
   - type: Destructible
     thresholds:
     - trigger:
