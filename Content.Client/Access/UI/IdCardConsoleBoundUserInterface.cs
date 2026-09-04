@@ -48,7 +48,7 @@ public sealed partial class IdCardConsoleBoundUserInterface(EntityUid owner, Enu
         _window?.UpdateState(castState);
     }
 
-    public void SubmitData(IdCardData data)
+    private void SubmitData(IdCardData data)
     {
         SendMessage(new WriteToTargetIdMessage(
             data.FullName,
