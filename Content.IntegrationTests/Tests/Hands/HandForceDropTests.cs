@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Content.IntegrationTests.Tests.Interaction;
+using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Hands;
 
@@ -40,43 +42,52 @@ public sealed class HandForceDropTests: InteractionTest
         var initialFreeHands = HandSys.CountFreeHands(SPlayer);
         Assume.That(initialFreeHands, Is.GreaterThan(0), "SPlayer must have at least one free hand");
 
-        await PlaceInHands(UnremovableCrowbar);
+        var item = SEntMan.GetEntity(await PlaceInHands(UnremovableCrowbar));
         
         var holdingItemFreeHands = HandSys.CountFreeHands(SPlayer);
         Assume.That(holdingItemFreeHands, Is.LessThan(initialFreeHands), "SPlayer somehow has more free hands after being given the item");
         
         Assert.That(HandSys.TryDrop(SPlayer, force: false), Is.False, "SPlayer was somehow able to drop the unremovable item without it being forced");
         Assert.That(HandSys.CountFreeHands(SPlayer), Is.EqualTo(holdingItemFreeHands), "SPlayer somehow freed a hand after unforced drop of unremovable item.");
+        Assert.That(HandSys.IsHeld(item, out _), Is.True, "Unremovable item was no longer held after unforced drop (should still be held)");
         
         Assert.That(HandSys.TryDrop(SPlayer, force:true), Is.True, "SPlayer was unable to drop the item despite being forced to drop it");
         Assert.That(HandSys.CountFreeHands(SPlayer), Is.EqualTo(initialFreeHands), "SPlayer did not return to initial free hand count after forcibly dropping the item!");
+        Assert.That(HandSys.IsHeld(item, out _), Is.False, "The item was still held after being forcibly dropped!");
     }
 
     [Test]
-    public async Task TryDropAll()
+    public async Task TestTryDropAllUnremovable()
     {
+        Assume.That(HandSys.GetEmptyHandCount(SPlayer), Is.EqualTo(HandSys.GetHandCount(SPlayer)), "SPlayer did not start with all hands free");
+
         // make sure we have at least two hands
         await HandDuplicationHelper(2);
-        
+
         var initialFreeHands = HandSys.CountFreeHands(SPlayer);
         Assume.That(initialFreeHands, Is.GreaterThan(0), "SPlayer must have at least one free hand");
 
         // fill hands with unremovable items
+        List<EntityUid> items = new List<EntityUid>(initialFreeHands);
         while (HandSys.TryGetEmptyHand(SPlayer, out var emptyHand))
         {
             HandSys.SetActiveHand(SPlayer, emptyHand);
-            await PlaceInHands(UnremovableCrowbar);
+            items.Add(SEntMan.GetEntity(await PlaceInHands(UnremovableCrowbar)));
         }
         var holdingItemsFreeHands = HandSys.CountFreeHands(SPlayer);
         Assume.That(holdingItemsFreeHands, Is.LessThan(initialFreeHands), "SPlayer somehow has more free hands after being given the item");
-        
+
         // attempting to drop all normally, should fail.
         HandSys.DropAll(SPlayer);
         Assert.That(HandSys.CountFreeHands(SPlayer), Is.EqualTo(holdingItemsFreeHands), "SPlayer somehow freed a hand after unforced DropAll of unremovable items.");
-        
+
         // attempting to force drop all, should free all hands.
         HandSys.DropAll(SPlayer, force: true);
         Assert.That(HandSys.CountFreeHands(SPlayer), Is.EqualTo(initialFreeHands), "SPlayer did not free all hands after force dropping all");
+        foreach (var item in items)
+        {
+            Assert.That(HandSys.IsHeld(item, out _), Is.False, $"Item {SToPrettyString(item)} was still held after being forcibly dropped!");
+        }
     }
 
     /// <summary>
