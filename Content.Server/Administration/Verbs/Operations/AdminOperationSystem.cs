@@ -6,7 +6,6 @@ using Content.Server.Storage.EntitySystems;
 using Content.Server.Tabletop;
 using Content.Shared.Body;
 using Content.Shared.Body.Systems;
-using Content.Shared.Damage.Systems;
 using Content.Shared.EntityEffects;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Slippery;
@@ -29,7 +28,6 @@ public sealed partial class AdminOperationSystem : EntitySystem
     [Dependency] private EntityStorageSystem _entityStorage = default!;
     [Dependency] private FixtureSystem _fixtures = default!;
     [Dependency] private GhostKickManager _ghostKick = default!;
-    [Dependency] private SharedGodmodeSystem _godmode = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private IRobustRandom _random = default!;

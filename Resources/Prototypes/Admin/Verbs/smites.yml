@@ -334,8 +334,10 @@
     sprite: Objects/Fun/Tabletop/chessboard.rsi
     state: chessboard
   operations:
-  - !type:SetGodmodeOperation
-    enabled: true
+  - !type:EntityEffectsOperation
+    effects:
+    - !type:SetGodmode
+      enabled: true
   - !type:EntityEffectsOperation
     effects:
     - !type:AddComponents
