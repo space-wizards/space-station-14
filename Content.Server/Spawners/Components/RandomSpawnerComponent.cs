@@ -32,4 +32,3 @@ public sealed partial class RandomSpawnerComponent : ConditionalSpawnerComponent
     [DataField]
     public bool DeleteSpawnerAfterSpawn = true;
 }
-
