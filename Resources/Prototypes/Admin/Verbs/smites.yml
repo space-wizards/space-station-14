@@ -34,11 +34,11 @@
   whitelist:
     components:
     - Inventory
-  operations:
-  - !type:SetEquipmentOperation
-    unremoveable: true
-    equipment:
-      head: ClothingHeadHatCatEars
+  effects:
+  - !type:ModifyStatusEffect
+    effectProto: StatusEffectForcedItemCatEars
+    time: null
+    type: Set
 
 - type: adminSmite
   id: AdminSmiteMaid
@@ -50,16 +50,15 @@
   whitelist:
     components:
     - Inventory
-  operations:
-  - !type:SetEquipmentOperation
-    startingGear: JanitorMaidGear
-    unremoveable: true
-  - !type:EntityEffectsOperation
-    effects:
-    - !type:ModifyStatusEffect
-      effectProto: StatusEffectClumsyMaid
-      time: null
-      type: Set
+  effects:
+  - !type:ModifyStatusEffect
+    effectProto: StatusEffectForcedItemMaid
+    time: null
+    type: Set
+  - !type:ModifyStatusEffect
+    effectProto: StatusEffectClumsyMaid
+    time: null
+    type: Set
 
 - type: adminSmite
   id: AdminSmiteExplode
@@ -94,14 +93,12 @@
     components:
     - Damageable
     - MobState
-  operations:
-  - !type:EntityEffectsOperation
-    effects:
-    - !type:Electrocute
-      shockDamage: 100
-      electrocuteTime: 30
-      refresh: true
-      bypassInsulation: true
+  effects:
+  - !type:Electrocute
+    shockDamage: 100
+    electrocuteTime: 30
+    refresh: true
+    bypassInsulation: true
 
 - type: adminSmite
   id: AdminSmiteZoomIn
@@ -149,22 +146,20 @@
   whitelist:
     components:
     - Flammable
-  operations:
-  - !type:EntityEffectsOperation
-    effects:
-    - !type:Flammable
-      multiplier: 1000
-    - !type:Ignite
-  - !type:PopupOperation
-    message: admin-smite-set-alight-self
-    recipients: Target
-    location: Entity
-    type: LargeCaution
-  - !type:PopupOperation
-    message: admin-smite-set-alight-others
-    recipients: PvsExceptTarget
-    location: Coordinates
-    type: MediumCaution
+  effects:
+  - !type:Flammable
+    multiplier: 1000
+  - !type:Ignite
+  - !type:PopupMessage
+    messages: [ admin-smite-set-alight-self ]
+    type: Local
+    method: PopupEntity
+    visualType: LargeCaution
+  - !type:PopupMessage
+    messages: [ admin-smite-set-alight-others ]
+    type: PvsExceptTarget
+    method: PopupCoordinates
+    visualType: MediumCaution
 
 - type: adminSmite
   id: AdminSmiteOmniAccent
@@ -557,9 +552,10 @@
   icon:
     sprite: Mobs/Animals/monkey.rsi
     state: monkey
-  operations:
-  - !type:PolymorphOperation
+  effects:
+  - !type:Polymorph
     prototype: AdminMonkeySmite
+    force: true
 
 - type: adminSmite
   id: AdminSmiteGarbageCan
@@ -568,9 +564,10 @@
   icon:
     sprite: Structures/Piping/disposal.rsi
     state: disposal
-  operations:
-  - !type:PolymorphOperation
+  effects:
+  - !type:Polymorph
     prototype: AdminDisposalsSmite
+    force: true
 
 - type: adminSmite
   id: AdminSmiteBread
@@ -579,9 +576,10 @@
   icon:
     sprite: Objects/Consumable/Food/Baked/bread.rsi
     state: plain
-  operations:
-  - !type:PolymorphOperation
+  effects:
+  - !type:Polymorph
     prototype: AdminBreadSmite
+    force: true
 
 - type: adminSmite
   id: AdminSmiteMouse
@@ -590,9 +588,10 @@
   icon:
     sprite: Mobs/Animals/mouse.rsi
     state: icon-0
-  operations:
-  - !type:PolymorphOperation
+  effects:
+  - !type:Polymorph
     prototype: AdminMouseSmite
+    force: true
 
 - type: adminSmite
   id: AdminSmiteInstrument
@@ -601,9 +600,10 @@
   icon:
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
     state: supersynth
-  operations:
-  - !type:PolymorphOperation
+  effects:
+  - !type:Polymorph
     prototype: AdminInstrumentSmite
+    force: true
 
 - type: adminSmite
   id: AdminSmiteReptilian
@@ -612,9 +612,10 @@
   icon:
     sprite: Objects/Fun/Plushies/lizard.rsi
     state: icon
-  operations:
-  - !type:PolymorphOperation
+  effects:
+  - !type:Polymorph
     prototype: AdminLizardSmite
+    force: true
 
 - type: adminSmite
   id: AdminSmiteVulpkanin
@@ -623,9 +624,10 @@
   icon:
     sprite: Objects/Fun/Balls/tennisball.rsi
     state: icon
-  operations:
-  - !type:PolymorphOperation
+  effects:
+  - !type:Polymorph
     prototype: AdminVulpSmite
+    force: true
 
 - type: adminSmite
   id: AdminSmiteRemoveHands

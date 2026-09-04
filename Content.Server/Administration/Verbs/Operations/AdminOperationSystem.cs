@@ -1,8 +1,6 @@
-﻿using Content.Server.Clothing.Systems;
 using Content.Server.GhostKick;
 using Content.Server.Mind;
 using Content.Server.Movement.Systems;
-using Content.Server.Polymorph.Systems;
 using Content.Server.Popups;
 using Content.Server.Roles;
 using Content.Server.Silicons.Laws;
@@ -13,7 +11,6 @@ using Content.Shared.Body;
 using Content.Shared.Body.Systems;
 using Content.Shared.Damage.Systems;
 using Content.Shared.EntityEffects;
-using Content.Shared.Inventory;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Slippery;
 using Content.Shared.Tools.Systems;
@@ -38,11 +35,8 @@ public sealed partial class AdminOperationSystem : EntitySystem
     [Dependency] private FixtureSystem _fixtures = default!;
     [Dependency] private GhostKickManager _ghostKick = default!;
     [Dependency] private SharedGodmodeSystem _godmode = default!;
-    [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private MindSystem _mind = default!;
-    [Dependency] private OutfitSystem _outfit = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
-    [Dependency] private PolymorphSystem _polymorph = default!;
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private RoleSystem _role = default!;

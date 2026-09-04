@@ -12,6 +12,12 @@ public sealed partial class Polymorph : EntityEffectBase<Polymorph>
     [DataField(required: true)]
     public ProtoId<PolymorphPrototype> Prototype;
 
+    /// <summary>
+    /// Allows polymorphing entities without a PolymorphableComponent.
+    /// </summary>
+    [DataField]
+    public bool Force;
+
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-make-polymorph",
             ("chance", Probability),

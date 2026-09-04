@@ -2,6 +2,7 @@ using Content.Server.Administration.Verbs.Operations;
 using Content.Server.Administration.Verbs.Prototypes;
 using Content.Shared.Administration;
 using Content.Shared.Database;
+using Content.Shared.EntityEffects;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Map.Components;
@@ -12,6 +13,7 @@ namespace Content.Server.Administration.Systems;
 public sealed partial class AdminVerbSystem
 {
     [Dependency] private AdminOperationSystem _adminOperations = default!;
+    [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
     // All smite verbs have names so invokeverb works.
@@ -40,7 +42,7 @@ public sealed partial class AdminVerbSystem
                 Text = name,
                 Category = VerbCategory.Smite,
                 Icon = prototype.Icon,
-                Act = () => _adminOperations.Execute(args.Target, args.User, prototype.Operations),
+                Act = () => ExecuteSmite(args.Target, args.User, prototype),
                 Impact = LogImpact.Extreme,
                 Message = prototype.Description is { } description
                     ? string.Join(": ", name, Loc.GetString(description))
@@ -49,5 +51,11 @@ public sealed partial class AdminVerbSystem
 
             args.Verbs.Add(verb);
         }
+    }
+
+    private void ExecuteSmite(EntityUid target, EntityUid user, AdminSmitePrototype prototype)
+    {
+        _adminOperations.Execute(target, user, prototype.Operations);
+        _entityEffects.ApplyEffects(target, prototype.Effects, user: user);
     }
 }

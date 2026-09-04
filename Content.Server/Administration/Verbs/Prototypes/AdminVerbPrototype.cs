@@ -1,4 +1,5 @@
 ﻿using Content.Server.Administration.Verbs.Operations;
+using Content.Shared.EntityEffects;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -6,7 +7,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Administration.Verbs.Prototypes;
 
 /// <summary>
-/// Defines a target-filtered admin verb as an ordered sequence of operations.
+/// Defines a target-filtered admin verb.
 /// </summary>
 [DataDefinition]
 public abstract partial class AdminVerbPrototype : IPrototype
@@ -32,6 +33,9 @@ public abstract partial class AdminVerbPrototype : IPrototype
     /// <summary>
     /// Executed synchronously in the listed order, so later operations can rely on earlier ones.
     /// </summary>
-    [DataField(required: true)]
+    [DataField]
     public AdminOperation[] Operations { get; private set; } = [];
+
+    [DataField]
+    public EntityEffect[] Effects { get; private set; } = [];
 }
