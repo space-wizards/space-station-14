@@ -116,7 +116,7 @@ public sealed partial class ThrusterSystem : EntitySystem
                         continue;
 
                     var checkPos = tilePos + new Vector2i(x, y);
-                    var enumerator = _mapSystem.GetAnchoredEntitiesEnumerator(uid, grid, checkPos);
+                    var enumerator = _mapSystem.GetAnchoredEntities(uid, grid, checkPos);
 
                     while (enumerator.MoveNext(out var ent))
                     {

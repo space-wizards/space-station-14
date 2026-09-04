@@ -113,3 +113,6 @@ alerts-stealthy-desc = Whether you are currently pickpocketing. Click to toggle.
 
 alerts-prying-name = Prying
 alerts-prying-desc = You can innately pry doors open using alternative interaction.
+
+alerts-changeling-chemicals-name = Chemicals
+alerts-changeling-chemicals-desc = The chemicals stored within our glands. We use them for many of our abilities to function. They regenerate over time.

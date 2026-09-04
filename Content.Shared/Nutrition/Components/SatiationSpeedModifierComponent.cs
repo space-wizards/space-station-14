@@ -17,5 +17,5 @@ public sealed partial class SatiationSpeedModifierComponent : Component
     /// keyed by the <see cref="SatiationTypePrototype">satiation types</see> they are thresholds for.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
-    public Dictionary<ProtoId<SatiationTypePrototype>, SatiationThresholds<float>> Satiations;
+    public Dictionary<ProtoId<SatiationTypePrototype>, SatiationThresholds<float>> Satiations = [];
 }

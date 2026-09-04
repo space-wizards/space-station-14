@@ -1084,7 +1084,16 @@
 
 - type: entity
   parent: ClearPDA
+  id: PrisonerPDA # This mostly just exists for the sake of the chameleon UI giving a clear PDA with a prisoner ID
+  suffix: Prisoner
+  components:
+  - type: Pda
+    id: PrisonerIDCard
+
+- type: entity
+  parent: ClearPDA
   id: VisitorPDA
+  suffix: Visitor
   components:
   - type: Pda
     id: VisitorIDCard
@@ -1646,6 +1655,7 @@
 - type: entity
   parent: ClearPDA
   id: ScurretPDA
+  suffix: Scurret
   description: A temporary PDA granted to scurret temps. Doesn't do much. Wawa!
   components:
   - type: Pda

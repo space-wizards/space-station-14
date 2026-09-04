@@ -38,7 +38,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.25, -0.25, 0.25, 0.25"
+          bounds: "-0.5,-0.5,0.5,0.5"
         layer:
           - SlipLayer
         mask:
@@ -78,3 +78,15 @@
     sprite: Tiles/TileEntities/swimming-pool.rsi
   - type: IconSmooth
     key: pool
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        layer:
+        - SlipLayer
+        mask:
+        - ItemMask
+        density: 1000
+        hard: false
