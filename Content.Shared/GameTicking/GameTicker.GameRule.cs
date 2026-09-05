@@ -6,7 +6,6 @@ using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.GameTicking;
 
@@ -200,7 +199,7 @@ public abstract partial class GameTicker
         if (!Resolve(rule, ref rule.Comp, false))
             return false;
 
-        RemCompDeferred(rule, rule.Comp);
+        RemComp(rule, rule.Comp);
 
         Log.Info($"Ended game rule {ToPrettyString(rule)}");
         Admin.Add(LogType.EventStopped, $"Ended game rule {ToPrettyString(rule)}");
