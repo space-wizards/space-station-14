@@ -12,8 +12,6 @@ public sealed partial class DungeonJob
     /// </summary>
     private async Task PostGen(CornerClutterDunGen gen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, IRobustRandom random)
     {
-        var contentsTable = _prototype.Index(gen.Contents);
-
         foreach (var tile in dungeon.CorridorTiles)
         {
             if (reservedTiles.Contains(tile))
@@ -42,7 +40,7 @@ public sealed partial class DungeonJob
                 if (random.Prob(gen.Chance))
                 {
                     var coords = _maps.GridTileToLocal(_gridUid, _grid, tile);
-                    var protos = _entTable.GetSpawns(contentsTable, random);
+                    var protos = _entTable.GetSpawns(gen.Contents, random);
                     _entManager.SpawnEntitiesAttachedTo(coords, protos);
                 }
 
