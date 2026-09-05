@@ -1,0 +1,41 @@
+﻿- type: antag
+  id: CosmicCultist
+  name: roles-antag-changeling-name
+  antagonist: true
+  setPreference: false # TODO: set this to true once Changeling exits WIP status
+  objective: roles-antag-changeling-objective
+
+- type: antag
+  id: CosmicColossus
+  name: ghost-role-information-colossus-name
+  antagonist: true
+  objective: ghost-role-colossus-objective
+
+- type: antagSpecifier
+  parent: RestrictedAntag
+  id: CosmicCultist
+  prefRoles: [ CosmicCultist ]
+  briefing:
+    text: cosmiccult-role-greeting
+    color: "#4cabb3"
+    sound: /Audio/Cosmic/cosmic-start.ogg
+  components:
+  - type: CosmicCultist
+  - type: RevolutionaryImmune
+  - type: ZombieImmune
+  - type: ActionGrant
+    removeOnShutdown: false
+    actions:
+    - ActionCosmicSiphon
+    - ActionCosmicShunt
+    - ActionCosmicShift
+    # ABILITIES HERE FOR DEBUGGING
+    - ActionCosmicFragmentation
+    - ActionCosmicNova
+    - ActionCosmicImposition
+    - ActionCosmicIngress
+    - ActionCosmicGlare
+    - ActionCosmicLapse
+    # ABILITIES HERE FOR DEBUGGING
+  mindRoles:
+  - MindRoleCosmicCultist

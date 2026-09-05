@@ -1,0 +1,70 @@
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitCosmicCult
+  name: entropic armor
+  description: An unsettling hardsuit, numbing to the touch. It pulses with a glow that makes you feel like you've forgotten something..
+  categories: [ ForkFiltered ]
+  components:
+  - type: CosmicEquipment
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/entropic-armor.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/entropic-armor.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.2
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: FireProtection
+    reduction: 0.5
+  # - type: StaminaResistance # Should not have stamina resistance, this is purely so people know it was not forgotten.
+  - type: Armor
+    modifiers:
+      coefficients:
+        Asphyxiation: 0.5
+        Radiation: 0.5
+        Piercing: 0.5
+        Caustic: 0.5
+        Blunt: 0.5
+        Slash: 0.5
+        Heat: 0.5
+        Cold: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetCosmicCult
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepCosmic
+
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetCosmicCult
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/entropic-armor.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/entropic-armor.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
+  - type: PointLight
+    enabled: true
+    color: "#42a4ae"
+    radius: 5
+    energy: 3.4
+    mask: /Textures/Effects/LightMasks/cone.png
+    castShadows: false
+    autoRot: true
+    netsync: false
+  - type: Armor
+    modifiers:
+      coefficients: # The helmet doesn't provide additional defense.
+        Blunt: 1
+        Slash: 1
+        Piercing: 1
+        Heat: 1
+        Radiation: 1
