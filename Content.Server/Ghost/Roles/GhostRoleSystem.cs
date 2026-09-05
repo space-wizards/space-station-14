@@ -1,11 +1,9 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.EUI;
 using Content.Server.GameTicking.Events;
 using Content.Server.Ghost.Roles.Components;
-using Content.Server.Ghost.Roles.Raffles;
 using Content.Server.Ghost.Roles.UI;
 using Content.Server.Popups;
 using Content.Shared.Administration;
@@ -17,7 +15,6 @@ using Content.Shared.Ghost;
 using Content.Shared.Ghost.Components;
 using Content.Shared.Ghost.Roles;
 using Content.Shared.Ghost.Roles.Components;
-using Content.Shared.Ghost.Roles.Raffles;
 using Content.Shared.Ghost.Systems;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -900,27 +897,6 @@ public sealed partial class GhostRoleSystem : EntitySystem
         }
 
         SetMode(entity.Owner, ghostRoleProto, ghostRoleProto.Name, entity.Comp);
-    }
-
-    private bool TryGetRaffleSettings(GhostRoleRaffleConfig? raffleConfig, [NotNullWhen(true)] out GhostRoleRaffleSettings? settings)
-    {
-        settings = null;
-        if (raffleConfig == null)
-            return false;
-
-        if (raffleConfig.SettingsOverride != null)
-        {
-            settings = raffleConfig.SettingsOverride;
-            return true;
-        }
-
-        if (ProtoMan.TryIndex(raffleConfig.Settings, out var settingsProto))
-        {
-            settings = settingsProto.Settings;
-            return true;
-        }
-
-        return false;
     }
 }
 
