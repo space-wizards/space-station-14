@@ -592,3 +592,30 @@
     delta: 500 #i just fiddled around till 10u lithium + 10u water = 10 hydogen @540k for tiders, or whatever weird clf3 mixes people invent
   - !type:CreateGas
     gas: WaterVapor
+
+- type: reaction
+  id: Nyctalon
+  reactants:
+    Oculine:
+      amount: 1
+    Radium:
+      amount: 1
+    Uranium:
+      amount: 1
+      catalyst: true
+    Phosphorus:
+      amount: 1
+  products:
+    Nyctalon: 2
+
+- type: reaction
+  id: TearGas
+  reactants:
+    CapsaicinOil:
+      amount: 1
+    Phosphorus:
+      amount: 1
+    Chlorine:
+      amount: 1
+  products:
+    TearGas: 3
