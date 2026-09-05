@@ -148,7 +148,7 @@ public sealed partial class ServerNukeopsRuleSystem : NukeopsRuleSystem
         // TODO: Why are we querying the active rules for NukeOps, then within EACH UID checking if the NukeOpsGameRule exists???
         // TODO: O(N^2) Operations ass.
         var query = QueryActiveRules();
-        while (query.MoveNext(out var uid, out _, out var nukeops, out _))
+        while (query.MoveNext(out var uid, out var nukeops, out _, out _))
         {
             if (ev.OwningStation != null)
             {
@@ -219,7 +219,7 @@ public sealed partial class ServerNukeopsRuleSystem : NukeopsRuleSystem
             return;
 
         var query = QueryActiveRules();
-        while (query.MoveNext(out var uid, out _, out var nukeops, out _))
+        while (query.MoveNext(out var uid, out var nukeops, out _, out _))
         {
             OnRoundEnd((uid, nukeops));
         }
@@ -342,7 +342,7 @@ public sealed partial class ServerNukeopsRuleSystem : NukeopsRuleSystem
     private void OnShuttleFTLAttempt(ref ConsoleFTLAttemptEvent ev)
     {
         var query = QueryActiveRules();
-        while (query.MoveNext(out var uid, out _, out var nukeops, out _))
+        while (query.MoveNext(out var uid, out var nukeops, out _, out _))
         {
             if (ev.Uid != GetShuttle((uid, nukeops)))
                 continue;
@@ -368,7 +368,7 @@ public sealed partial class ServerNukeopsRuleSystem : NukeopsRuleSystem
     private void OnShuttleCallAttempt(ref CommunicationConsoleCallShuttleAttemptEvent ev)
     {
         var query = QueryActiveRules();
-        while (query.MoveNext(out _, out _, out var nukeops, out _))
+        while (query.MoveNext(out var nukeops, out _, out _))
         {
             // Can't call while war nukies are preparing to arrive
             if (nukeops is { WarDeclaredTime: not null })
@@ -390,7 +390,7 @@ public sealed partial class ServerNukeopsRuleSystem : NukeopsRuleSystem
     {
         // TODO: this is VERY awful for multi-nukies
         var query = QueryActiveRules();
-        while (query.MoveNext(out var uid, out _, out var nukeops, out _))
+        while (query.MoveNext(out var uid, out var nukeops, out _, out _))
         {
             if (nukeops.WarDeclaredTime != null)
                 continue;
@@ -465,7 +465,7 @@ public sealed partial class ServerNukeopsRuleSystem : NukeopsRuleSystem
     private void CheckRoundShouldEnd()
     {
         var query = QueryActiveRules();
-        while (query.MoveNext(out var uid, out _, out var nukeops, out _))
+        while (query.MoveNext(out var uid, out var nukeops, out _, out _))
         {
             CheckRoundShouldEnd((uid, nukeops));
         }

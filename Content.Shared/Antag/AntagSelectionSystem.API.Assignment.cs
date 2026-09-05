@@ -279,7 +279,7 @@ public abstract partial class AntagSelectionSystem
         // This logic is effectively copy-pasted from the old system with some fixes.
         var query = QueryActiveRules();
         var rules = new List<(EntityUid, AntagSelectionComponent)>();
-        while (query.MoveNext(out var uid, out _, out var antag, out _))
+        while (query.MoveNext(out var uid, out var antag, out _, out _))
         {
             // This is intended to only be used for ghost roles so it shouldn't be assigned for late joins
             if (antag.SelectionTime == AntagSelectionTime.Never || !antag.LateJoinAdditional)

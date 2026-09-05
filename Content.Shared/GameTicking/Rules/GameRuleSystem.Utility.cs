@@ -2,16 +2,18 @@ using Content.Shared.GameTicking.Components;
 
 namespace Content.Shared.GameTicking.Rules;
 
+// TODO: Someone should probably make this virtual and make it into a "GameRuleSystem" with all GameRules in it.
+// TODO: Then move GameTicker.GameRule into here and have GameRuleSystem<T> inherit, since it already uses it as a dependency...
 public abstract partial class GameRuleSystem<T> where T: IComponent
 {
-    protected EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent> QueryActiveRules()
+    protected EntityQueryEnumerator<T, ActiveGameRuleComponent, GameRuleComponent> QueryActiveRules()
     {
-        return EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent>();
+        return EntityQueryEnumerator<T, ActiveGameRuleComponent, GameRuleComponent>();
     }
 
-    protected EntityQueryEnumerator<DelayedStartRuleComponent, T, GameRuleComponent> QueryDelayedRules()
+    protected EntityQueryEnumerator<T, DelayedStartRuleComponent, GameRuleComponent> QueryDelayedRules()
     {
-        return EntityQueryEnumerator<DelayedStartRuleComponent, T, GameRuleComponent>();
+        return EntityQueryEnumerator<T, DelayedStartRuleComponent, GameRuleComponent>();
     }
 
     /// <summary>
