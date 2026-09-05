@@ -19,7 +19,7 @@ public abstract partial class SpawnItemsOnUseSystem : EntitySystem
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     [SubscribeLocalEvent]
     private void OnUseInHand(Entity<SpawnItemsOnUseComponent> ent, ref UseInHandEvent args)
@@ -27,7 +27,7 @@ public abstract partial class SpawnItemsOnUseSystem : EntitySystem
         if (args.Handled)
             return;
 
-        var spawnEntities = GetSpawns(ent.Comp.Items, _random);
+        var spawnEntities = GetSpawns(ent.Comp.Items, SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent.Owner)));
 
         ent.Comp.Uses--;
         var remove = false;
