@@ -88,6 +88,7 @@ namespace Content.Client.Lobby
 
             _voteManager.ClearPopupContainer();
 
+            Lobby!.SwitchState(LobbyGui.LobbyGuiState.Default);
             Lobby!.CharacterPreview.CharacterSetupButton.OnPressed -= OnSetupPressed;
             Lobby!.ReadyButton.OnPressed -= OnReadyPressed;
             Lobby!.ReadyButton.OnToggled -= OnReadyToggled;
@@ -103,7 +104,6 @@ namespace Content.Client.Lobby
 
         private void OnSetupPressed(BaseButton.ButtonEventArgs args)
         {
-            SetReady(false);
             Lobby?.SwitchState(LobbyGui.LobbyGuiState.CharacterSetup);
         }
 
