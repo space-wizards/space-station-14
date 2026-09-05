@@ -565,7 +565,7 @@
       - Belt
   - type: BatteryAmmoProvider
     proto: BulletDisabler
-    fireCost: 62.5
+    fireCost: 40
   - type: GuideHelp
     guides:
     - Security
@@ -602,7 +602,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: BatteryAmmoProvider
-    proto: BulletDisablerSmg
+    proto: BulletDisablerSmgSlowing
     fireCost: 25
   - type: MagazineVisuals
     magState: mag
@@ -1058,7 +1058,7 @@
   id: WeaponRangeFinderXenoborg
   name: xenoborg range finder
   components:
-  - type: Sprite 
+  - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/xenoborg_range_finder.rsi
     layers:
     - state: icon
