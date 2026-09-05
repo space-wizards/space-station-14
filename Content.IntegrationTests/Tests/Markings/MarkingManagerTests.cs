@@ -26,6 +26,8 @@ public sealed class MarkingManagerTests : GameTest
     private const string ChestMarking = "ChestMarking";
 
     private static readonly ProtoId<SpeciesPrototype> HairTestSpecies = "Human";
+    private static readonly ProtoId<MarkingPrototype> TestHairId = "HumanHairLongBedhead2";
+    private static readonly ProtoId<OrganCategoryPrototype> HeadOrganCategory = "Head";
 
     [TestPrototypes]
     private const string Prototypes = $@"
@@ -95,15 +97,15 @@ public sealed class MarkingManagerTests : GameTest
     [RunOnSide(Side.Server)]
     public async Task HairConversion()
     {
-        var markings = new List<Marking>() { new("HumanHairLongBedhead2", [Color.Red]) };
+        List<Marking> markings = [new(TestHairId, [Color.Red])];
 
         var converted = _sMarkingManager.ConvertMarkings(markings, HairTestSpecies);
 
-        Assert.That(converted, Does.ContainKey(new ProtoId<OrganCategoryPrototype>("Head")));
-        Assert.That(converted["Head"], Does.ContainKey(HumanoidVisualLayers.Hair));
-        var hairMarkings = converted["Head"][HumanoidVisualLayers.Hair];
+        Assert.That(converted, Does.ContainKey(HeadOrganCategory));
+        Assert.That(converted[HeadOrganCategory], Does.ContainKey(HumanoidVisualLayers.Hair));
+        var hairMarkings = converted[HeadOrganCategory][HumanoidVisualLayers.Hair];
         Assert.That(hairMarkings, Has.Count.EqualTo(1));
-        Assert.That(hairMarkings[0].MarkingId, Is.EqualTo("HumanHairLongBedhead2"));
+        Assert.That(hairMarkings[0].MarkingId, Is.EqualTo(TestHairId));
         Assert.That(hairMarkings[0].MarkingColors[0], Is.EqualTo(Color.Red));
     }
 
