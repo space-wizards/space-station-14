@@ -1,4 +1,4 @@
-﻿using Content.Shared.Gravity;
+using Content.Shared.Gravity;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 

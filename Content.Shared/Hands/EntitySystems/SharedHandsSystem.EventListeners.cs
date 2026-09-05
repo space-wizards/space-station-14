@@ -1,4 +1,4 @@
-﻿using Content.Shared.Hands.Components;
+using Content.Shared.Hands.Components;
 using Content.Shared.Stunnable;
 
 namespace Content.Shared.Hands.EntitySystems;

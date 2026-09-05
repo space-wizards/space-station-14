@@ -1,4 +1,4 @@
-﻿using Content.Shared.Standing;
+using Content.Shared.Standing;
 using Content.Shared.Stunnable;
 using Robust.Shared.Prototypes;
 

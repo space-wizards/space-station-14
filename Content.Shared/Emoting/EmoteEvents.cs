@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Emoting;
+namespace Content.Shared.Emoting;
 
 public sealed class EmoteAttemptEvent(EntityUid uid) : CancellableEntityEventArgs
 {

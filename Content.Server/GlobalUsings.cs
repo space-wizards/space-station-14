@@ -1,4 +1,4 @@
-﻿// Global usings for Content.Server
+// Global usings for Content.Server
 
 global using System;
 global using System.Collections.Generic;

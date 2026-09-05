@@ -1,4 +1,4 @@
-﻿using Content.Shared.Mobs.Systems;
+using Content.Shared.Mobs.Systems;
 
 namespace Content.Shared.Mobs.Components;
 

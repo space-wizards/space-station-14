@@ -1,4 +1,4 @@
-﻿- type: localizedDataset
+- type: localizedDataset
   id: NamesNinja
   values:
     prefix: names-ninja-dataset-

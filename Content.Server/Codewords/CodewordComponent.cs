@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Codewords;
+namespace Content.Server.Codewords;
 
 /// <summary>
 /// Container for generated codewords.

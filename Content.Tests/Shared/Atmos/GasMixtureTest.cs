@@ -1,4 +1,4 @@
-﻿using Content.Shared.Atmos;
+using Content.Shared.Atmos;
 using NUnit.Framework;
 
 namespace Content.Tests.Shared.Atmos;

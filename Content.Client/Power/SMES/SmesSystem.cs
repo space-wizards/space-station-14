@@ -1,4 +1,4 @@
-﻿using Content.Shared.Power;
+using Content.Shared.Power;
 using Content.Shared.SMES;
 using Robust.Client.GameObjects;
 

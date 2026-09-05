@@ -1,4 +1,4 @@
-﻿using Content.Server.GameTicking;
+using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
 
 namespace Content.Server.Administration.Logs;

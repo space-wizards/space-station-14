@@ -1,4 +1,4 @@
-﻿using Content.Shared.Decals;
+using Content.Shared.Decals;
 
 namespace Content.MapRenderer.Painters;
 

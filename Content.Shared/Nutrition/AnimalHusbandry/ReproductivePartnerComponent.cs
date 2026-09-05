@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Nutrition.AnimalHusbandry;
+namespace Content.Shared.Nutrition.AnimalHusbandry;
 
 /// <summary>
 /// This is used for denoting entities which are

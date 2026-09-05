@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Inventory.Events;
+namespace Content.Shared.Inventory.Events;
 
 public abstract class BeforeEquipEventBase(EntityUid user, EntityUid equipTarget, EntityUid equipment, SlotDefinition slotDefinition) : EntityEventArgs
 {

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Silicons.Laws;
+using Content.Shared.Silicons.Laws;
 
 namespace Content.Client.Silicons.Laws;
 

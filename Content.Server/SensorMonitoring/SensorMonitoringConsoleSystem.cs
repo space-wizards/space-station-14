@@ -1,4 +1,4 @@
-﻿using Content.Server.Atmos.Monitor.Components;
+using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Payloads;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Generation.Teg;

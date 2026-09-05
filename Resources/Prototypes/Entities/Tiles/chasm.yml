@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: FloorChasmEntity
   name: chasm
   description: You can't even see the bottom.

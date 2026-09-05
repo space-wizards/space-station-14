@@ -1,4 +1,4 @@
-﻿- type: entityTable
+- type: entityTable
   id: RandomArtifactTable
   table: !type:GroupSelector
     children:

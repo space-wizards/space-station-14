@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BarberScissors
   name: barber scissors
   description: Is able to reshape the hairstyle of any crew cut to your liking.

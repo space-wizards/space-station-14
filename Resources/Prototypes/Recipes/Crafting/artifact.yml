@@ -1,4 +1,4 @@
-﻿- type: construction
+- type: construction
   parent: BaseItemMisc
   id: Artifact
   graph: Artifact

@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: EffectRCDBase
   abstract: true
   categories: [ HideSpawnMenu ]

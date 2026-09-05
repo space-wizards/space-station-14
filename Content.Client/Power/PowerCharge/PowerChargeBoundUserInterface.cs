@@ -1,4 +1,4 @@
-﻿using Content.Shared.Power;
+using Content.Shared.Power;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Power.PowerCharge;

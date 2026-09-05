@@ -1,4 +1,4 @@
-﻿name: "Labels: Untriaged"
+name: "Labels: Untriaged"
 
 on:
   issues:

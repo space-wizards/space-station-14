@@ -1,4 +1,4 @@
-﻿- type: localizedDataset
+- type: localizedDataset
   id: DescriptionsATV
   values:
     prefix: descriptions-atv-dataset-

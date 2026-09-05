@@ -1,4 +1,4 @@
-﻿using Content.Shared.Nutrition.AnimalHusbandry;
+using Content.Shared.Nutrition.AnimalHusbandry;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Nutrition.EntitySystems;

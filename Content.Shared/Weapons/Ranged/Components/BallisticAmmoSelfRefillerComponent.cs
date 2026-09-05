@@ -1,4 +1,4 @@
-﻿using Content.Shared.Power.Components;
+using Content.Shared.Power.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;

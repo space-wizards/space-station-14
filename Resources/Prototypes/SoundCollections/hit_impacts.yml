@@ -1,4 +1,4 @@
-﻿- type: soundCollection
+- type: soundCollection
   id: MetalThud
   files:
   - /Audio/Effects/metal_thud1.ogg

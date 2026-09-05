@@ -1,4 +1,4 @@
-﻿using Content.Shared.Drunk;
+using Content.Shared.Drunk;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.StatusEffects;
