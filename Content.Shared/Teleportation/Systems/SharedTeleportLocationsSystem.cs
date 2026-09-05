@@ -1,10 +1,10 @@
 ﻿using Content.Shared.Maths;
 using Content.Shared.Teleportation.Components;
-using Content.Shared.Timing;
 using Content.Shared.UserInterface;
 using Content.Shared.Warps;
 using Robust.Shared.Map;
 using System.Numerics;
+using Content.Shared.Timing.Systems;
 
 namespace Content.Shared.Teleportation.Systems;
 
