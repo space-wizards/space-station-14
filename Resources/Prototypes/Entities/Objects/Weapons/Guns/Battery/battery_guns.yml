@@ -788,18 +788,37 @@
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: AnomalousParticleDeltaStrong
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Battery/battery_weapon_fire_mode.rsi
+        state: delta-particle
       fireCost: 100
     - proto: AnomalousParticleEpsilonStrong
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Battery/battery_weapon_fire_mode.rsi
+        state: epsilon-particle
       fireCost: 100
     - proto: AnomalousParticleZetaStrong
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Battery/battery_weapon_fire_mode.rsi
+        state: zeta-particle
       fireCost: 100
     - proto: AnomalousParticleSigmaStrong
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Battery/battery_weapon_fire_mode.rsi
+        state: sigma-particle
       fireCost: 100
   - type: Construction
     graph: UpgradeWeaponPistolCHIMP
     node: start
   - type: StaticPrice
     price: 100
+  - type: ActivatableUI
+    inHandsOnly: true
+    key: enum.BatteryWeaponFireModesUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.BatteryWeaponFireModesUiKey.Key:
+        type: BatteryWeaponFireModesBoundUserInterface
 
 - type: entity
   parent: [WeaponPistolCHIMP, BaseSyndicateContraband]
@@ -809,14 +828,29 @@
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: AnomalousParticleDeltaStrong
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Battery/battery_weapon_fire_mode.rsi
+        state: delta-particle
       fireCost: 100
     - proto: AnomalousParticleEpsilonStrong
-      fireCost: 100
-    - proto: AnomalousParticleOmegaStrong
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Battery/battery_weapon_fire_mode.rsi
+        state: epsilon-particle
       fireCost: 100
     - proto: AnomalousParticleZetaStrong
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Battery/battery_weapon_fire_mode.rsi
+        state: zeta-particle
       fireCost: 100
     - proto: AnomalousParticleSigmaStrong
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Battery/battery_weapon_fire_mode.rsi
+        state: sigma-particle
+      fireCost: 100
+    - proto: AnomalousParticleOmegaStrong
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Battery/battery_weapon_fire_mode.rsi
+        state: omega-particle
       fireCost: 100
 
 - type: entity
@@ -877,10 +911,23 @@
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: BulletLaserSpreadNarrow
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+        state: heavylaser-spread
       fireCost: 80
     - proto: BulletDisablerSmgSpread
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+        state: heavylaser-spread-blue
       fireCost: 48
       pacifismAllowedMode: true
+  - type: ActivatableUI
+    inHandsOnly: true
+    key: enum.BatteryWeaponFireModesUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.BatteryWeaponFireModesUiKey.Key:
+        type: BatteryWeaponFireModesBoundUserInterface
   - type: Item
     size: Large
     sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
@@ -927,15 +974,31 @@
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: BulletLaserMagnum
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles_magnum.rsi
+        state: magnum
       fireCost: 150
     - proto: BulletLaserWindowPiercingMagnum
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles_magnum.rsi
+        state: magnum_piercing
       fireCost: 150
     - proto: BulletDisabler
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+        state: omnilaser
       fireCost: 62.5
       pacifismAllowedMode: true
   - type: BatterySelfRecharger
     autoRechargeRate: 48
     autoRechargePauseTime: 10
+  - type: ActivatableUI
+    singleUser: true
+    key: enum.BatteryWeaponFireModesUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.BatteryWeaponFireModesUiKey.Key:
+        type: BatteryWeaponFireModesBoundUserInterface
 
 - type: entity
   name: temperature gun
@@ -973,13 +1036,26 @@
     fireModes:
     - proto: BoltTempgunCold
       fireCost: 100
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+        state: omnilaser
     - proto: BoltTempgunHot
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+        state: heavylaser
       fireCost: 100
   - type: Battery
     maxCharge: 1000
     startingCharge: 1000
   - type: StaticPrice
     price: 100
+  - type: ActivatableUI
+    singleUser: true
+    key: enum.BatteryWeaponFireModesUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.BatteryWeaponFireModesUiKey.Key:
+        type: BatteryWeaponFireModesBoundUserInterface
 
 - type: entity
   parent: [WeaponAdvancedLaser, BaseXenoborgContraband]
