@@ -59,6 +59,22 @@ namespace Content.Server.Database
             InitNotificationListener(connectionString);
         }
 
+        protected override Task UpsertIPIntelCacheCore(
+            ServerDbContext db,
+            DateTime time,
+            IPAddress ip,
+            float score)
+        {
+            return db.Database.ExecuteSqlAsync($"""
+                INSERT INTO ipintel_cache (address, time, score)
+                VALUES ({ip}, {time}, {score})
+                ON CONFLICT (address) DO UPDATE
+                SET
+                    time = EXCLUDED.time,
+                    score = EXCLUDED.score;
+                """);
+        }
+
         #region Ban
         public override async Task<BanDef?> GetBanAsync(int id)
         {
