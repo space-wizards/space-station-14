@@ -22,7 +22,7 @@ public sealed class StunBatonTests : InteractionTest
     private static readonly EntProtoId HumanProtoId = "MobHuman";
 
     // If you are rebalancing stun batons you will have to change this number.
-    private const int NumberOfHitsToStun = 3;
+    private const int NumberOfHitsToStun = 5;
 
     [SidedDependency(Side.Server)] private readonly SharedBatterySystem _battery = default!;
     [SidedDependency(Side.Server)] private readonly DamageableSystem _damageable = default!;
