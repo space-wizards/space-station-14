@@ -179,4 +179,9 @@ public abstract partial class BaseActionEvent : HandledEntityEventArgs
     /// Should we toggle the action entity?
     /// </summary>
     public bool Toggle;
+
+    /// <summary>
+    /// Should the cooldown automatically start afterwards?
+    /// </summary>
+    public bool StartCooldown = true;
 }

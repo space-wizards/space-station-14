@@ -593,7 +593,8 @@ public abstract partial class SharedActionsSystem : EntitySystem
         _audio.PlayPredicted(action.Comp.Sound, performer, predicted ? performer : null);
 
         RemoveCooldown((action, action));
-        StartUseDelay((action, action));
+        if (ev.StartCooldown)
+            StartUseDelay((action, action));
 
         UpdateAction(action);
 
