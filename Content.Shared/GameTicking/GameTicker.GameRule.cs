@@ -143,7 +143,7 @@ public abstract partial class GameTicker
         if (!RuleQuery.Resolve(rule, ref rule.Comp, false))
             return false;
 
-        DebugTools.Assert(!rule.Comp.Silent, $"Rule {ToPrettyString(rule)} attempted to start when it should have been deleted!");
+        DebugTools.Assert(!rule.Comp.Silent, $"Rule {ToPrettyString(rule)} attempted to start when it should have been ended!");
 
         // can't start an already active rule
         if (ActiveRuleQuery.HasComp(rule))
