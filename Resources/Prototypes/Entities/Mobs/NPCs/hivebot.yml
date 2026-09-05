@@ -17,6 +17,8 @@
     blackboard:
       NavSmash: !type:Bool
         true
+  - type: CombatPower
+    factor: 1.0
   - type: NpcFactionMember
     factions:
     - SimpleHostile

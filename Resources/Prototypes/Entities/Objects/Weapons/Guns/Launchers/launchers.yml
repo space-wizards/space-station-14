@@ -29,6 +29,9 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+  - type: Tag
+    tags:
+    - Launcher 
 
 - type: entity
   parent: [ BaseWeaponLauncher, BaseSyndicateContraband ]
