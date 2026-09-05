@@ -40,9 +40,8 @@ public sealed class DrainTest : InteractionTest
 
     [SidedDependency(Side.Server)] private SharedSolutionContainerSystem _sSolutionContainerSystem = default!;
 
-
-[Test]
-[Description("Tests that drag & drop interactions with drains are working as intended.")]
+    [Test]
+    [Description("Tests that drag & drop interactions with drains are working as intended.")]
     public async Task DragDropOntoDrainTest()
     {
         // Spawn a drain one tile away.
@@ -90,9 +89,8 @@ public sealed class DrainTest : InteractionTest
         Assert.That(solution!.Volume, Is.EqualTo(pizzaVolume), "Pizza lost reagents when drag dropped onto a drain.");
     }
 
-    /// <summary>
-[Test]
-[Description("Tests that drains make puddles next to them disappear.")]
+    [Test]
+    [Description("Tests that drains make puddles next to them disappear.")]
     public async Task DrainPuddleTest()
     {
         // Spawn a puddle at the player coordinates;

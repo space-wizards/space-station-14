@@ -12,8 +12,8 @@ public sealed class DispenserTest : InteractionTest
     private static readonly EntProtoId ChemDispenser = "ChemDispenser";
     private static readonly EntProtoId Beaker = "Beaker";
 
-[Test]
-[Description("Checks that a beaker can be inserted and ejected from a dispenser.")]
+    [Test]
+    [Description("Checks that a beaker can be inserted and ejected from a dispenser.")]
     public async Task InsertEjectBuiTest()
     {
         await SpawnTarget(ChemDispenser);
