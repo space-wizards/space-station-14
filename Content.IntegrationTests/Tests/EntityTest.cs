@@ -243,6 +243,8 @@ namespace Content.IntegrationTests.Tests
                 "StationEvent",
                 "TimedDespawn",
 
+                // Usually spawns or modifies entities on mapInit.
+                "GameRule",
                 // makes an announcement on mapInit.
                 "AnnounceOnSpawn",
             };
