@@ -587,3 +587,16 @@
       amount: 3
   products:
     PhosphoricAcid: 10
+
+- type: reaction
+  id: TearGas
+  reactants:
+    CapsaicinOil:
+      amount: 1
+    Phosphorus:
+      amount: 1
+    Chlorine:
+      amount: 1
+  products:
+    TearGas: 3
+
