@@ -30,6 +30,50 @@
     {
       "name": "equipped-HELMET",
       "directions": 4
+    },
+    {
+      "name": "inhand-left-primed",
+      "directions": 4,
+	  "delays": [
+        [
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1
+        ]
+	  ]
+    },
+    {
+      "name": "inhand-right-primed",
+      "directions": 4,
+	  "delays": [
+        [
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1
+        ]
+	  ]
     }
   ]
 }
