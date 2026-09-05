@@ -492,7 +492,7 @@ namespace Content.Server.GameTicking
                 var mapUid = Map.GetMapOrInvalid(map);
                 var meta = MetaData(mapUid);
 
-                if (!meta.EntityPaused || TerminatingOrDeleted(mapUid, meta))
+                if (meta.EntityPaused || TerminatingOrDeleted(mapUid, meta))
                     continue;
 
                 return new EntityCoordinates(mapUid, Vector2.Zero);
