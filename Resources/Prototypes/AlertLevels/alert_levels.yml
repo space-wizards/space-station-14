@@ -105,3 +105,13 @@
   color: PaleVioletRed
   emergencyLightColor: PaleVioletRed
   forceEnableEmergencyLights: true
+
+# Placeholder for the comms console in case of failure.
+- type: alertLevel
+  parent: Green
+  id: Unknown
+  name: alert-level-unknown
+  announcement: alert-level-unknown-announcement
+  instructions: alert-level-unknown-instructions
+  selectable: false
+  color: Gray
