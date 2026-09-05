@@ -22,6 +22,11 @@ public sealed partial class VentCrittersRule : StationEventSystem<VentCrittersRu
         {
             return;
         }
+        if (!TryComp<StationDataComponent>(station, out var stationData))
+        {
+            return;
+        }
+        var grid = StationSystem.GetLargestGrid((station.Value, stationData));
 
         var locations = EntityQueryEnumerator<VentCritterSpawnLocationComponent, TransformComponent>();
         var validLocations = new List<EntityCoordinates>();
@@ -30,7 +35,7 @@ public sealed partial class VentCrittersRule : StationEventSystem<VentCrittersRu
             if (!transform.Anchored)
                 continue;
 
-            if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == station)
+            if (transform.GridUid == grid)
             {
                 validLocations.Add(transform.Coordinates);
                 foreach (var spawn in EntitySpawnCollection.GetSpawns(component.Entries, RobustRandom))
