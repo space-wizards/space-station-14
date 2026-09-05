@@ -87,10 +87,12 @@ namespace Content.Client.Examine
             base.Shutdown();
         }
 
-        public override bool CanExamine(EntityUid examiner, MapCoordinates target, Ignored? predicate = null, EntityUid? examined = null, ExaminerComponent? examinerComp = null)
+        public override bool CanExamine(Entity<ExaminerComponent?, TransformComponent?> examiner, MapCoordinates target, Ignored? predicate = null, EntityUid? examined = null, MapCoordinates? examinerCoordinates = null)
         {
-            if (!Resolve(examiner, ref examinerComp, false))
+            if (!Resolve(examiner, ref examiner.Comp1, false))
                 return false;
+
+            var examinerComp = examiner.Comp1;
 
             if (examinerComp.SkipChecks)
                 return true;
@@ -103,7 +105,7 @@ namespace Content.Client.Examine
                     return false;
             }
 
-            return base.CanExamine(examiner, target, predicate, examined, examinerComp);
+            return base.CanExamine(examiner, target, predicate, examined, examinerCoordinates);
         }
 
         private bool HandleExamine(in PointerInputCmdHandler.PointerInputCmdArgs args)

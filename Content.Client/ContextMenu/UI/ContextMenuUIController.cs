@@ -4,6 +4,7 @@ using Content.Client.CombatMode;
 using Content.Client.Gameplay;
 using Content.Client.Mapping;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.Controllers;
 using Timer = Robust.Shared.Timing.Timer;
 
@@ -40,9 +41,11 @@ namespace Content.Client.ContextMenu.UI
         public Action? OnContextClosed;
         public Action<ContextMenuElement>? OnContextMouseEntered;
         public Action<ContextMenuElement>? OnContextMouseExited;
+        public Action<ContextMenuElement>? OnBeforeOpenSubMenu;
         public Action<ContextMenuElement>? OnSubMenuOpened;
         public Action<ContextMenuElement, GUIBoundKeyEventArgs>? OnContextKeyEvent;
 
+        private readonly Dictionary<ContextMenuElement, Action<GUIBoundKeyEventArgs>> _keyBindHandlers = new();
         private bool _setup;
 
         public void OnStateEntered(GameplayState state)
@@ -95,7 +98,7 @@ namespace Content.Client.ContextMenu.UI
         /// </summary>
         public void Close()
         {
-            RootMenu.MenuBody.RemoveAllChildren();
+            RootMenu.ClearBody();
             CancelOpen?.Cancel();
             CancelClose?.Cancel();
             OnContextClosed?.Invoke();
@@ -147,6 +150,12 @@ namespace Content.Client.ContextMenu.UI
             Timer.Spawn(HoverDelay, () => OpenSubMenu(element), CancelOpen.Token);
         }
 
+        private void OnMouseEntered(GUIMouseHoverEventArgs args)
+        {
+            if (args.SourceControl is ContextMenuElement element)
+                OnMouseEntered(element);
+        }
+
         /// <summary>
         ///     Start a timer to close this element's sub-menu.
         /// </summary>
@@ -157,13 +166,19 @@ namespace Content.Client.ContextMenu.UI
         {
             CancelOpen?.Cancel();
 
-            if (element.SubMenu == null)
+            if (element.SubMenu == null && !element.HasDeferredSubMenu)
                 return;
 
             CancelClose?.Cancel();
             CancelClose = new();
             Timer.Spawn(HoverDelay, () => CloseSubMenus(element.ParentMenu), CancelClose.Token);
             OnContextMouseExited?.Invoke(element);
+        }
+
+        private void OnMouseExited(GUIMouseHoverEventArgs args)
+        {
+            if (args.SourceControl is ContextMenuElement element)
+                OnMouseExited(element);
         }
 
         private void OnKeyBindDown(ContextMenuElement element, GUIBoundKeyEventArgs args)
@@ -200,6 +215,8 @@ namespace Content.Client.ContextMenu.UI
             CancelOpen?.Cancel();
             CancelOpen = null;
 
+            OnBeforeOpenSubMenu?.Invoke(element);
+
             if (element.SubMenu == null)
                 return;
 
@@ -219,29 +236,30 @@ namespace Content.Client.ContextMenu.UI
         /// <summary>
         ///     Add an element to a menu and subscribe to GUI events.
         /// </summary>
-        public void AddElement(ContextMenuPopup menu, ContextMenuElement element)
+        public void AddElement(ContextMenuPopup menu, ContextMenuElement element, Container? body = null)
         {
-            element.OnMouseEntered += _ => OnMouseEntered(element);
-            element.OnMouseExited += _ => OnMouseExited(element);
-            element.OnKeyBindDown += args => OnKeyBindDown(element, args);
+            element.OnMouseEntered += OnMouseEntered;
+            element.OnMouseExited += OnMouseExited;
+            Action<GUIBoundKeyEventArgs> keyBindHandler = args => OnKeyBindDown(element, args);
+            element.OnKeyBindDown += keyBindHandler;
+            _keyBindHandlers.Add(element, keyBindHandler);
             element.ParentMenu = menu;
-            menu.MenuBody.AddChild(element);
-            menu.InvalidateMeasure();
+            (body ?? menu.Body).AddChild(element);
         }
 
         /// <summary>
         ///     Removes event subscriptions when an element is removed from a menu,
         /// </summary>
-        public void OnRemoveElement(ContextMenuPopup menu, Control control)
+        public void OnRemoveElement(Control control)
         {
             if (control is not ContextMenuElement element)
                 return;
 
-            element.OnMouseEntered -= _ => OnMouseEntered(element);
-            element.OnMouseExited -= _ => OnMouseExited(element);
-            element.OnKeyBindDown -= args => OnKeyBindDown(element, args);
+            element.OnMouseEntered -= OnMouseEntered;
+            element.OnMouseExited -= OnMouseExited;
+            if (_keyBindHandlers.Remove(element, out var keyBindHandler))
+                element.OnKeyBindDown -= keyBindHandler;
 
-            menu.InvalidateMeasure();
         }
 
         private void OnCombatModeUpdated(bool inCombatMode)

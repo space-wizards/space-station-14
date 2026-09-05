@@ -6,6 +6,7 @@ using Content.Shared.Administration;
 using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Client.ContextMenu.UI
 {
@@ -21,6 +22,7 @@ namespace Content.Client.ContextMenu.UI
         ///     The entity that can be accessed by interacting with this element.
         /// </summary>
         public EntityUid? Entity;
+        public List<EntityUid>? DeferredGroupEntities;
 
         /// <summary>
         ///     How many entities are accessible through this element's sub-menus.
@@ -45,7 +47,21 @@ namespace Content.Client.ContextMenu.UI
         {
             base.ExitedTree();
             Entity = null;
+            DeferredGroupEntities = null;
             Count = 0;
+        }
+
+        public void SetDeferredGroup(List<EntityUid> group)
+        {
+            DebugTools.Assert(group.Count > 0);
+
+            Entity = null;
+            DeferredGroupEntities = group;
+            Count = group.Count;
+            HasDeferredSubMenu = true;
+
+            UpdateEntity(group[0]);
+            UpdateCountLabel();
         }
 
         private string? SearchPlayerName(EntityUid entity)
@@ -63,12 +79,17 @@ namespace Content.Client.ContextMenu.UI
                 return;
 
             Count = 0;
-            foreach (var subElement in SubMenu.MenuBody.Children)
+            foreach (var subElement in SubMenu.Body.Children)
             {
                 if (subElement is EntityMenuElement entityElement)
                     Count += entityElement.Count;
             }
 
+            UpdateCountLabel();
+        }
+
+        private void UpdateCountLabel()
+        {
             IconLabel.Visible = Count > 1;
             if (IconLabel.Visible)
                 IconLabel.Text = Count.ToString();

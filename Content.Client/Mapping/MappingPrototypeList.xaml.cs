@@ -117,7 +117,7 @@ public sealed partial class MappingPrototypeList : Control
         if (!SearchList.Visible)
             return;
 
-        var height = MeasureButton.DesiredSize.Y + PrototypeListContainer.Separation;
+        var height = MeasureButton.DesiredSize.Y + VirtualListContainer.DefaultSeparation;
         var offset = Math.Max(-SearchList.Position.Y, 0);
         var startIndex = (int) Math.Floor(offset / height);
         SearchList.ItemOffset = startIndex;
