@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Shuttles.Components;
@@ -10,6 +11,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Spreader;
@@ -29,17 +31,20 @@ public sealed partial class SpreaderSystem : EntitySystem
     [Dependency] private EntityQuery<DockingComponent> _dockingQuery = default!;
 
     /// <summary>
-    /// Cached maximum number of updates per spreader prototype. This is applied per-grid.
+    /// Cached maximum number of updates per interval per spreader prototype. This is applied per-grid.
     /// </summary>
     private Dictionary<string, int> _prototypeUpdates = default!;
 
     /// <summary>
-    /// Remaining number of updates per grid & prototype.
+    /// cached durations of the update interval for each prototype.
     /// </summary>
-    // TODO PERFORMANCE Assign each prototype to an index and convert dictionary to array
-    private readonly Dictionary<EntityUid, Dictionary<string, int>> _gridUpdates = [];
+    private Dictionary<string, float> _prototypeIntervals = default!;
 
-    public const float SpreadCooldownSeconds = 1;
+    /// <summary>
+    /// Remaining number of updates per grid & prototype.
+    /// TODO PERFORMANCE Assign each prototype to an index and convert dictionary to array
+    /// </summary>
+    private readonly Dictionary<EntityUid, Dictionary<string, int>> _gridUpdates = [];
 
     private static readonly ProtoId<TagPrototype> IgnoredTag = "SpreaderIgnore";
 
@@ -63,9 +68,19 @@ public sealed partial class SpreaderSystem : EntitySystem
     private void SetupPrototypes()
     {
         _prototypeUpdates = [];
+        _prototypeIntervals = [];
         foreach (var proto in ProtoMan.EnumeratePrototypes<EdgeSpreaderPrototype>())
         {
-            _prototypeUpdates.Add(proto.ID, proto.UpdatesPerSecond);
+            _prototypeUpdates.Add(proto.ID, proto.UpdatesPerInterval);
+            _prototypeIntervals.Add(proto.ID, proto.SpreadInterval);
+        }
+
+        foreach (var grid in EntityQueryEnumerator<SpreaderGridComponent>())
+        {
+            foreach (var proto in _prototypeIntervals)
+            {
+                grid.Comp.ProtoUpdateAccumulators[proto.Key] = proto.Value;
+            }
         }
     }
 
@@ -76,7 +91,11 @@ public sealed partial class SpreaderSystem : EntitySystem
 
     private void OnGridInit(GridInitializeEvent ev)
     {
-        EnsureComp<SpreaderGridComponent>(ev.EntityUid);
+        var grid = EnsureComp<SpreaderGridComponent>(ev.EntityUid);
+        foreach (var proto in _prototypeIntervals)
+        {
+            grid.ProtoUpdateAccumulators[proto.Key] = proto.Value;
+        }
     }
 
     private void OnTerminating(Entity<EdgeSpreaderComponent> entity, ref EntityTerminatingEvent args)
@@ -93,12 +112,18 @@ public sealed partial class SpreaderSystem : EntitySystem
         _gridUpdates.Clear();
         while (spreadGrids.MoveNext(out var uid, out var grid))
         {
-            grid.UpdateAccumulator -= frameTime;
-            if (grid.UpdateAccumulator > 0)
-                continue;
 
-            _gridUpdates[uid] = _prototypeUpdates.ShallowClone();
-            grid.UpdateAccumulator += SpreadCooldownSeconds;
+            foreach (var proto in grid.ProtoUpdateAccumulators.Keys)
+            {
+                grid.ProtoUpdateAccumulators[proto] -= frameTime;
+                if (grid.ProtoUpdateAccumulators[proto] > 0)
+                    continue;
+                if (!_gridUpdates.ContainsKey(uid))
+                    _gridUpdates.Add(uid, new Dictionary<string, int>());
+                _gridUpdates[uid][proto] = _prototypeUpdates[proto];
+
+                grid.ProtoUpdateAccumulators[proto] += _prototypeIntervals[proto];
+            }
         }
 
         if (_gridUpdates.Count == 0)
@@ -112,6 +137,9 @@ public sealed partial class SpreaderSystem : EntitySystem
         {
             spreaders.Add((uid, comp));
         }
+
+        if (spreaders.Count == 0) 
+            return;
 
         _robustRandom.Shuffle(spreaders);
 
@@ -153,6 +181,13 @@ public sealed partial class SpreaderSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Spreads the edge spreader
+    /// </summary>
+    /// <param name="uid">uid of the origin entity</param>
+    /// <param name="xform">xform of the origin entity</param>
+    /// <param name="prototype">ID of the EdgeSpreaderPrototype of the thing being spread</param>
+    /// <param name="updates">updates remaining for the edgespreader</param>
     private void Spread(EntityUid uid, TransformComponent xform, ProtoId<EdgeSpreaderPrototype> prototype, ref int updates)
     {
         GetNeighbors(uid, xform, prototype, out var freeTiles, out _, out var neighbors);
@@ -293,6 +328,8 @@ public sealed partial class SpreaderSystem : EntitySystem
     /// This function activates all spreaders that are adjacent to a given entity. This also activates other spreaders
     /// on the same tile as the current entity (for thin airtight entities like windoors).
     /// </summary>
+    /// <param name="origin">UID of EdgeSpreaderComponent when position is null. Otherwise, UID + pos of AirtightChanged.Entity</param>
+    /// <param name="position">Position arg (UID + pos) of source <see cref="Server.Atmos.EntitySystems.AirtightChanged">AirtightChanged</see></param>
     public void ActivateSpreadableNeighbors(EntityUid origin, (EntityUid Grid, Vector2i Tile)? position = null)
     {
         Vector2i tile;
