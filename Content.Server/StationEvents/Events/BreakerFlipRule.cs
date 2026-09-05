@@ -52,7 +52,7 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
         }
 
         var toDisable = Math.Min(component.ApcCount.Next(RobustRandom), stationApcs.Count);
-        if (toDisable == 0)
+        if (toDisable <= 0)
             return;
 
         RobustRandom.Shuffle(stationApcs);
