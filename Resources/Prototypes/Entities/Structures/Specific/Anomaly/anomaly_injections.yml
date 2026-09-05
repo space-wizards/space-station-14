@@ -33,6 +33,15 @@
     projectileSpeed: 0.5
     minProjectiles: 1
     maxProjectiles: 3
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: pyroclastic anomaly host
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   parent: AnomalyInjectionBase
@@ -47,6 +56,15 @@
     maxElectrocuteRange: 4
     maxElectrocuteDamage: 10
     maxElectrocuteDuration: 4
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: electric anomaly host
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   parent: AnomalyInjectionBase
@@ -72,6 +90,15 @@
         maxRange: 25
       spawns:
       - ShadowKudzu
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: shadow anomaly host
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   parent: AnomalyInjectionBase
@@ -105,6 +132,15 @@
     releasedGas: 8 # Frezon. Please replace if there is a better way to specify this
     releaseOnMaxSeverity: true
     spawnRadius: 0
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: ice anomaly host
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   parent: AnomalyInjectionBase
@@ -143,6 +179,15 @@
         maxRange: 3
       spawns:
       - KudzuFlowerAngry
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: flora anomaly host
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   parent: AnomalyInjectionBase
@@ -152,6 +197,15 @@
   - type: PointLight
     color: "#00ccff"
   - type: BluespaceAnomaly
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: bluespace anomaly host
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   parent: AnomalyInjectionBase
@@ -230,6 +284,15 @@
       - MobFleshClamp
       - MobFleshLover
       - FleshKudzu
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: flesh anomaly host
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   parent: AnomalyInjectionBase
@@ -248,6 +311,15 @@
   - type: SingularityDistortion
     intensity: 100
     falloffPower: 2.7
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: gravity anomaly host
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   parent: AnomalyInjectionBase
@@ -257,7 +329,7 @@
   - type: PointLight
     color: "#56c1e8"
   - type: TechAnomaly
-    linkRadius: 
+    linkRadius:
       min: 2
       max: 5
     linkCountPerPulse:
@@ -273,6 +345,15 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: tech anomaly host
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   parent: AnomalyInjectionBase
@@ -351,6 +432,15 @@
       - MobSpawnCrabSilver
       - MobSpawnCrabIron
       - MobSpawnCrabQuartz
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: rock anomaly host
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   parent: AnomalyInjectionBase
@@ -380,3 +470,12 @@
         maxRange: 6
       spawns:
       - PresentRandomInsane
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: santa anomaly host
+    blacklist:
+      tags:
+      - GhostOnlyWarp
