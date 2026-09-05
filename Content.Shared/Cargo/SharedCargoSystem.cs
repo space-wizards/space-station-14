@@ -32,15 +32,8 @@ public abstract partial class SharedCargoSystem : EntitySystem
         var stationQuery = EntityQueryEnumerator<StationBankAccountComponent>();
         while (stationQuery.MoveNext(out var uid, out var comp))
         {
-            foreach (var (account, cash) in comp.Accounts)
-            {
-                comp.Accounts[account] = cash - args.Fine;
-                args.Total += args.Fine;
-            }
-
-            var ev = new BankBalanceUpdatedEvent(uid, comp.Accounts);
-            RaiseLocalEvent(uid, ref ev, true);
-            Dirty(uid, comp);
+            TryAdjustBankAccount((uid, comp), -args.Fine, out var total);
+            args.Total = -total;
         }
     }
 
@@ -104,6 +97,42 @@ public abstract partial class SharedCargoSystem : EntitySystem
             return new Dictionary<ProtoId<CargoAccountPrototype>, int>();
 
         return station.Comp.Accounts;
+    }
+
+    /// <summary>
+    /// Attempts to adjust the money of all bank accounts.
+    /// </summary>
+    /// <param name="station">Station where the bank account is from</param>
+    /// <param name="money">how much money to adjust each account by</param>
+    /// <param name="adjustment">how much money was successfully withdrawn</param>
+    /// <param name="createAccount">Whether or not it should create the account if it doesn't exist.</param>
+    /// <param name="dirty">Whether to mark the bank account component as dirty.</param>
+    /// <returns>Whether or not setting the value succeeded.</returns>
+    public bool TryAdjustBankAccount(
+        Entity<StationBankAccountComponent?> station,
+        int money,
+        out int adjustment,
+        bool createAccount = false,
+        bool dirty = true)
+    {
+        adjustment = 0;
+        if (!Resolve(station, ref station.Comp))
+            return false;
+
+        foreach (var (account, balance) in station.Comp.Accounts)
+        {
+            station.Comp.Accounts[account] = balance + money;
+            adjustment += money;
+        }
+
+        var ev = new BankBalanceUpdatedEvent(station, station.Comp.Accounts);
+        RaiseLocalEvent(station, ref ev, true);
+
+        if (!dirty)
+            return true;
+
+        Dirty(station);
+        return true;
     }
 
     /// <summary>
