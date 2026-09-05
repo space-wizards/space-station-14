@@ -13,7 +13,7 @@ using static Content.Shared.Access.Components.IdCardConsoleComponent;
 namespace Content.Client.Access.UI;
 
 /// <summary>
-/// A window for the ID card computer for renaming an ID card, giving out new job titles and reassigning its accesses.
+/// A window for renaming an ID card, assigning new job titles and access levels.
 /// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class IdCardConsoleWindow : DefaultWindow
@@ -92,7 +92,7 @@ public sealed partial class IdCardConsoleWindow : DefaultWindow
     /// Sets the access levels this console can assign.
     /// </summary>
     /// <remarks>
-    /// Repopulates the buttons in the AccessLevelControl.
+    /// Repopulates the buttons in the <see cref="AccessLevelControl"/>.
     /// Should be called while setting up the window.
     /// </remarks>
     public void SetAccessLevels(List<ProtoId<AccessLevelPrototype>> accessLevels)
