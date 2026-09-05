@@ -43,7 +43,7 @@ public abstract partial class SharedSalvageSystem
         var rand = new RobustRandom();
         rand.SetSeed(seed);
 
-        var type = SharedRandomExtensions.Pick(_offeringWeights, rand);
+        var type = rand.Pick(_offeringWeights);
         switch (type)
         {
             case AsteroidOffering:
