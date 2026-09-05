@@ -404,6 +404,8 @@ ui-options-chat-window-opacity = Chat window opacity
 ui-options-speech-bubble-text-opacity = Speech bubble text opacity
 ui-options-speech-bubble-speaker-opacity = Speech bubble speaker opacity
 ui-options-speech-bubble-background-opacity = Speech bubble background opacity
+ui-options-chat-preview = Show chat preview bubbles when typing
+ui-options-preview-bubble-background-opacity = Preview bubble background opacity
 
 ui-options-censor-nudity = Censor character nudity
 
