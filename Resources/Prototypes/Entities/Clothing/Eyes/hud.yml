@@ -207,7 +207,7 @@
   - type: ShowSyndicateIcons
 
 - type: entity
-  parent: [ClothingEyesHudBase, ShowSecurityIcons, ShowMedicalIcons]
+  parent: [ClothingEyesHudBase, ShowSecurityIcons, ShowMedicalIcons, BaseMeson]
   id: ClothingEyesHudOmni
   name: omni hud
   description: Filler
