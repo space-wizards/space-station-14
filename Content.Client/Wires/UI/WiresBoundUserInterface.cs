@@ -33,4 +33,3 @@ public sealed class WiresBoundUserInterface(EntityUid owner, Enum uiKey) : Bound
         SendMessage(new WiresActionMessage(id, action));
     }
 }
-
