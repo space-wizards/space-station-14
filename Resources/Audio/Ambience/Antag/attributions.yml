@@ -34,3 +34,7 @@
   license: "CC-BY-SA-3.0"
   copyright: "Made by DarkIcedCoffee (discord)"
   source: "https://github.com/space-wizards/space-station-14/pull/40042/"
+- files: ["wizard_start.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from TG station"
+  source: "https://github.com/tgstation/tgstation/commit/436ba869ebcd0b60b63973fb7562f447ee655205"
