@@ -189,13 +189,14 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
     private bool TryRevive(Entity<DefibrillatorComponent> ent, EntityUid user, EntityUid target, bool isOriginal)
     {
         bool failedRevive = true;
+        string? message = null;
         if (_rotting.IsRotten(target))
         {
-            _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString("defibrillator-rotten"), InGameICChatType.Speak, true);
+            message = Loc.GetString("defibrillator-rotten");
         }
         else if (TryComp<UnrevivableComponent>(target, out var unrevivable))
         {
-            _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString(unrevivable.ReasonMessage), InGameICChatType.Speak, true);
+            message = Loc.GetString(unrevivable.ReasonMessage);
         }
         else
         {
@@ -222,11 +223,16 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
             else
             {
                 if (HasComp<MindContainerComponent>(target))
-                    _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString("defibrillator-no-mind"), InGameICChatType.Speak, true); //target can host a mind but doesn't
+                    message = Loc.GetString("defibrillator-no-mind"); //target can host a mind but doesn't
                 else
-                    _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString("defibrillator-not-living"), InGameICChatType.Speak, true); //target couldn't have hosted a mind
+                    message = Loc.GetString("defibrillator-not-living"); //target couldn't have hosted a mind
             }
         }
+
+        // Only report on the entity the pads were actually placed on. Everything else caught in the chain
+        // (the bed the patient is strapped to, whoever is pulling them) still gets zapped, just silently.
+        if (isOriginal && message != null)
+            _chat.TrySendInGameICMessage(ent.Owner, message, InGameICChatType.Speak, true);
 
         _electrocution.TryDoElectrocution(
             target,
