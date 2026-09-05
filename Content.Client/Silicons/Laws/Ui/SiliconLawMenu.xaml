@@ -55,7 +55,7 @@
         <!-- Footer -->
         <BoxContainer Orientation="Vertical" Margin="0 5 0 0">
             <PanelContainer />
-            <PanelContainer StyleClasses="LowDivider" />
+            <controls:Separator StyleClasses="LowDivider"/>
             <!--Todo: Change Logo based on Laws (Change to Syndicate Logo when Emagged)-->
             <BoxContainer Name="Footer" Orientation="Horizontal" Margin="10 0 5 0" VerticalAlignment="Bottom">
                 <Label Text="{Loc 'laws-window-footer-left'}" StyleClasses="WindowFooterText" />

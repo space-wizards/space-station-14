@@ -1,23 +1,23 @@
 <BoxContainer xmlns="https://spacestation14.io"
-              xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+              xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
               Orientation="Vertical">
     <BoxContainer Name ="MetadataContainer" Orientation="Horizontal">
         <TextureRect Name="SeverityRect" Margin="2"/>
         <Label Name="TimeLabel" Margin="4 0" />
-        <cc:HSeparator Margin="4 0" />
+        <controls:Separator Margin="4 0" Orientation="Vertical" MinHeight="2"/>
         <Label Name="ServerLabel" />
-        <cc:HSeparator Margin="4 0" />
+        <controls:Separator Margin="4 0" Orientation="Vertical" MinHeight="2"/>
         <Label Name="RoundLabel" />
-        <cc:HSeparator Margin="4 0" />
+        <controls:Separator Margin="4 0" Orientation="Vertical" MinHeight="2"/>
         <Label Name="AdminLabel" />
-        <cc:HSeparator Margin="4 0" />
+        <controls:Separator Margin="4 0" Orientation="Vertical" MinHeight="2"/>
         <Label Name="PlaytimeLabel" />
-        <cc:HSeparator Name="SecretSeparator" Visible="False" Margin="4 0" />
+        <controls:Separator Name="SecretSeparator" Visible="False" Margin="4 0" Orientation="Vertical" MinHeight="2"/>
         <Label Name="SecretLabel" Text="{Loc admin-notes-secret} " Visible="False" />
     </BoxContainer>
     <RichTextLabel Name="NoteLabel" />
     <Label Name="ExpiresLabel" Text="{Loc admin-note-editor-expiry-label}" Visible="False" />
     <Label Name="ExtraLabel" Visible="False" Modulate="#1AA7EC" />
     <Label Name="EditedLabel" Visible="False" />
-    <cc:HSeparator Name="Separator" />
+    <controls:Separator Name="Separator"/>
 </BoxContainer>

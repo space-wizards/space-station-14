@@ -1,5 +1,5 @@
-﻿<BoxContainer xmlns="https://spacestation14.io"
-              xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
               Margin="10 10 10 0"
               HorizontalExpand="True"
               Visible="True">
@@ -7,7 +7,7 @@
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
             <BoxContainer HorizontalExpand="True" Orientation="Vertical" MaxWidth="380">
                 <RichTextLabel Name="NameLabel" StyleClasses="LabelKeyText"/>
-                <customControls:HSeparator Margin="0 0 0 5"/>
+                <controls:Separator Margin="0 0 0 5"/>
                 <RichTextLabel Name="DescriptionLabel" HorizontalExpand="True"/>
                 <Control MinHeight="10"/>
                 <RichTextLabel Name="ManifestLabel"/>

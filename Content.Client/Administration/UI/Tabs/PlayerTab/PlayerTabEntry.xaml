@@ -1,5 +1,5 @@
-﻿<PanelContainer xmlns="https://spacestation14.io"
-                xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+<PanelContainer xmlns="https://spacestation14.io"
+                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                 Name="BackgroundColorPanel">
     <BoxContainer Orientation="Horizontal"
                   HorizontalExpand="True"
@@ -8,22 +8,22 @@
                SizeFlagsStretchRatio="3"
                HorizontalExpand="True"
                ClipText="True"/>
-        <customControls:VSeparator/>
+        <controls:Separator Orientation="Vertical" MinHeight="5"/>
         <Label Name="CharacterLabel"
                SizeFlagsStretchRatio="3"
                HorizontalExpand="True"
                ClipText="True"/>
-        <customControls:VSeparator/>
+        <controls:Separator Orientation="Vertical" MinHeight="5"/>
         <Label Name="JobLabel"
                SizeFlagsStretchRatio="2"
                HorizontalExpand="True"
                ClipText="True"/>
-        <customControls:VSeparator/>
+        <controls:Separator Orientation="Vertical" MinHeight="5"/>
         <Label Name="RoleTypeLabel"
                SizeFlagsStretchRatio="2"
                HorizontalExpand="True"
                ClipText="True"/>
-        <customControls:VSeparator/>
+        <controls:Separator Orientation="Vertical" MinHeight="5"/>
         <Label Name="OverallPlaytimeLabel"
                SizeFlagsStretchRatio="1"
                HorizontalExpand="True"

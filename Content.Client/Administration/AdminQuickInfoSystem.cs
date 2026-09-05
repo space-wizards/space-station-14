@@ -1,3 +1,4 @@
+using Content.Client.UserInterface.Controls;
 using System.Linq;
 using Content.Client.Administration.Systems;
 using Content.Client.Stylesheets;
@@ -5,7 +6,6 @@ using Content.Shared.Administration;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Console;
-using Robust.Shared.Prototypes;
 using Robust.Shared.RichText;
 using Robust.Shared.Utility;
 
@@ -59,7 +59,7 @@ internal sealed partial class AdminQuickInfoSystem : EntitySystem
 
     public void OpenPopupFor(NetEntity[] entities)
     {
-        var vBox = new VBox() { SeparationOverride = 6 };;
+        var vBox = new VBox() { SeparationOverride = 6 };
         var popup = new Popup
         {
             Children =
@@ -79,7 +79,7 @@ internal sealed partial class AdminQuickInfoSystem : EntitySystem
         {
             if (!first)
             {
-                vBox.AddChild(new PanelContainer
+                vBox.AddChild(new Separator
                 {
                     StyleClasses = { StyleClass.LowDivider },
                     HorizontalExpand = true,

@@ -14,7 +14,6 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Graphics;
 using static Robust.Client.UserInterface.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets
@@ -165,8 +164,6 @@ namespace Content.Client.Stylesheets
         public const string StyleClassLabelHeading = "LabelHeading";
         public const string StyleClassLabelSubText = "LabelSubText";
         public const string StyleClassRedTopButton = "negative";
-        public const string ClassHighDivider = "HighDivider";
-        public const string ClassLowDivider = "LowDivider";
         public const string ClassAngleRect = "AngleRect";
 
 
@@ -1334,11 +1331,6 @@ namespace Content.Client.Stylesheets
                 Element<PanelContainer>().Class(OptionButton.StyleClassOptionsBackground)
                     .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat(Color.FromHex("#25252A"))),
 
-                new StyleRule(new SelectorElement(typeof(PanelContainer), new []{ ClassHighDivider}, null, null), new []
-                {
-                    new StyleProperty(PanelContainer.StylePropertyPanel, new StyleBoxFlat { BackgroundColor = NanoGold, ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2}),
-                }),
-
                 // Labels ---
                 Element<Label>().Class(StyleClassLabelBig)
                     .Prop(Label.StylePropertyFont, notoSans16),
@@ -1359,15 +1351,6 @@ namespace Content.Client.Stylesheets
                     .Prop(PanelContainer.StylePropertyPanel, BaseButtonOpenLeft)
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252A")),
                 // ---
-
-                // Dividers
-                Element<PanelContainer>().Class(ClassLowDivider)
-                    .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat
-                    {
-                        BackgroundColor = Color.FromHex("#444"),
-                        ContentMarginLeftOverride = 2,
-                        ContentMarginBottomOverride = 2
-                    }),
 
                 // Window Headers
                 Element<Label>().Class("FancyWindowTitle")

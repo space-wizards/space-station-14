@@ -1,6 +1,5 @@
-﻿<Control xmlns="https://spacestation14.io"
+<Control xmlns="https://spacestation14.io"
          xmlns:pt="clr-namespace:Content.Client.Administration.UI.Tabs.PlayerTab"
-         xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
          xmlns:co="clr-namespace:Content.Client.UserInterface.Controls">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
@@ -13,7 +12,7 @@
         </BoxContainer>
         <Control MinSize="0 5"/>
         <pt:PlayerTabHeader Name="ListHeader"/>
-        <cc:HSeparator/>
+        <co:Separator MinWidth="2" />
         <co:SearchListContainer Name="SearchList" Access="Public" VerticalExpand="True"/>
     </BoxContainer>
 </Control>

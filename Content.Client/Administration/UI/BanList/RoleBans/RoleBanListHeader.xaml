@@ -1,6 +1,6 @@
-﻿<ContainerButton
+<ContainerButton
     xmlns="https://spacestation14.io"
-    xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls">
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
     <PanelContainer Name="BackgroundPanel" Access="Public">
         <BoxContainer
             Orientation="Horizontal"
@@ -9,23 +9,23 @@
             <Label Text="{Loc ban-list-header-ids}"
                    SizeFlagsStretchRatio="1"
                    HorizontalExpand="True"/>
-            <cc:VSeparator/>
+            <controls:Separator Orientation="Vertical" MinHeight="5"/>
             <Label Text="{Loc ban-list-header-reason}"
                    SizeFlagsStretchRatio="4.5"
                    HorizontalExpand="True"/>
-            <cc:VSeparator Name="ReasonSeparator" Access="Public"/>
+            <controls:Separator Name="ReasonSeparator" Access="Public" Orientation="Vertical" MinHeight="5"/>
             <Label Text="{Loc ban-list-header-role}"
                    SizeFlagsStretchRatio="1.5"
                    HorizontalExpand="True"/>
-            <cc:VSeparator/>
+            <controls:Separator Orientation="Vertical" MinHeight="5"/>
             <Label Text="{Loc ban-list-header-time}"
                    SizeFlagsStretchRatio="2"
                    HorizontalExpand="True"/>
-            <cc:VSeparator/>
+            <controls:Separator Orientation="Vertical" MinHeight="5"/>
             <Label Text="{Loc ban-list-header-expires}"
                    SizeFlagsStretchRatio="4"
                    HorizontalExpand="True"/>
-            <cc:VSeparator/>
+            <controls:Separator Orientation="Vertical" MinHeight="5"/>
             <Label Text="{Loc ban-list-header-banning-admin}"
                    SizeFlagsStretchRatio="2"
                    HorizontalExpand="True"/>

@@ -2,7 +2,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Numerics;
-using Content.Client.Administration.UI.CustomControls;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -218,7 +218,7 @@ public sealed partial class BanPanel : DefaultWindow
             }
         });
         RolesContainer.AddChild(outerContainer);
-        RolesContainer.AddChild(new HSeparator());
+        RolesContainer.AddChild(new Separator());
     }
 
     private Button CreateRoleGroupHeader(string groupName, BoxContainer header, Color color, GridContainer innerContainer)

@@ -1,6 +1,5 @@
-﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+<controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                      xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
                       Title="{Loc 'borg-ui-menu-title'}"
                       MinSize="600 350"
                       SetSize="650 450">
@@ -15,13 +14,13 @@
                 <Control MinWidth="5"/>
                 <Button Name="EjectBatteryButton" Text="{Loc 'borg-ui-remove-battery'}" StyleClasses="OpenLeft"/>
             </BoxContainer>
-            <customControls:HSeparator Margin="0 10 0 10"/>
+            <controls:Separator Margin="0 10 0 10"/>
             <PanelContainer VerticalExpand="True" StyleClasses="PanelDeep">
                 <BoxContainer HorizontalAlignment="Center" VerticalAlignment="Center">
                     <SpriteView Name="BorgSprite" Scale="5 5"/>
                 </BoxContainer>
             </PanelContainer>
-            <customControls:HSeparator Margin="0 10 0 10"/>
+            <controls:Separator Margin="0 10 0 10"/>
             <BoxContainer Orientation="Horizontal">
                 <LineEdit Name="NameLineEdit" HorizontalExpand="True"/>
                 <Label Name="NameIdentifierLabel" Margin="10 0 0 0"/>
@@ -31,7 +30,7 @@
                 <SpriteView Name="BrainView" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             </Button>
         </BoxContainer>
-        <customControls:VSeparator/>
+        <controls:Separator Orientation="Vertical" MinHeight="5"/>
         <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="15 10 15 15">
             <Label Text="{Loc 'borg-ui-modules-label'}" Margin="0 0 0 5"/>
             <PanelContainer VerticalExpand="True" StyleClasses="PanelDeep">
