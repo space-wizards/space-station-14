@@ -134,4 +134,10 @@ public sealed partial class BatteryWeaponFireModesSystem : EntitySystem
             _gun.UpdateShots((ent, batteryAmmoProviderComponent));
         }
     }
+
+    [SubscribeLocalEvent]
+    private void OnComponentInit(Entity<BatteryWeaponFireModesComponent> ent, ref ComponentInit args)
+    {
+        SetFireMode(ent, 0);
+    }
 }
