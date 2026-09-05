@@ -670,4 +670,4 @@
       - !type:HealthChange
         damage:
           types:
-           Radiation: 0.25
+           Radiation: 0.5
