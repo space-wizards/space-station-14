@@ -4,18 +4,26 @@ using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
+using Content.Shared.Labels.Components;
+using Content.Shared.Labels.EntitySystems;
 using Content.Shared.NodeContainer;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 using GasCanisterComponent = Content.Shared.Atmos.Piping.Unary.Components.GasCanisterComponent;
 
 namespace Content.Shared.Atmos.Piping.Unary.Systems;
 
 public abstract partial class SharedGasCanisterSystem : GasMaxPressureSystem<GasCanisterComponent>
 {
+    [Dependency] private IComponentFactory _componentFactory = default!;
+    [Dependency] private MetaDataSystem _metadata = default!;
     [Dependency] protected ISharedAdminLogManager AdminLogger = default!;
     [Dependency] private ItemSlotsSystem _slots = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] protected SharedUserInterfaceSystem UI = default!;
+    [Dependency] private LabelSystem _label = default!;
+
+    private static readonly EntProtoId DefaultCanisterProtoId = "StorageCanister";
 
     public override void Initialize()
     {
@@ -33,6 +41,44 @@ public abstract partial class SharedGasCanisterSystem : GasMaxPressureSystem<Gas
         SubscribeLocalEvent<GasCanisterComponent, GasCanisterChangeReleaseValveMessage>(OnCanisterChangeReleaseValve);
     }
 
+    public void UpdateCanisterDescription(Entity<GasCanisterComponent> ent, EntProtoId protoId)
+    {
+        var isBeingPainted = false;
+        if (TryGetCanisterGasName(protoId, out var gasName))
+        {
+            _label.Label(ent, gasName);
+            isBeingPainted = true;
+        }
+        else if (protoId == DefaultCanisterProtoId)
+        {
+            _label.RemoveLabel(ent.Owner);
+            isBeingPainted = false;
+        }
+
+        _metadata.SetEntityDescription(
+            ent,
+            Loc.GetString("gas-canister-description", ("isBeingPainted", isBeingPainted), ("gas", gasName)));
+    }
+
+    private bool TryGetCanisterGasName(EntProtoId protoId, out string gasName)
+    {
+        gasName = string.Empty;
+
+        if (!ProtoMan.TryIndex<EntityPrototype>(protoId, out var prototype))
+        {
+            return false;
+        }
+
+        if (prototype.TryComp<LabelComponent>(out var labelComp, _componentFactory)
+            && labelComp.LocalizedLabel is { } localizedLabel)
+        {
+            gasName = Loc.GetString(localizedLabel);
+            return true;
+        }
+
+        return false;
+    }
+
     private void OnCanisterUIOpened(Entity<GasCanisterComponent> ent, ref BoundUIOpenedEvent args)
     {
         // Fixes all canisters not populating UI elements before MapInit. Mappers rejoice
@@ -45,6 +91,12 @@ public abstract partial class SharedGasCanisterSystem : GasMaxPressureSystem<Gas
         // Fixes empty canisters not populating UI elements
         DirtyUI(ent.Owner, ent);
         UpdateAppearance(ent);
+
+        var protoId = Prototype(ent.Owner)?.ID;
+        if (protoId is not null)
+        {
+            UpdateCanisterDescription(ent, protoId);
+        }
     }
 
     private void OnCanisterStartup(Entity<GasCanisterComponent> ent, ref ComponentStartup args)
