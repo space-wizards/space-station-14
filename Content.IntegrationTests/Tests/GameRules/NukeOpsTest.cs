@@ -56,7 +56,7 @@ public sealed class NukeOpsTest : GameTest
     [SidedDependency(Side.Server)] private InventorySystem _sInventorySystem = default!;
     [SidedDependency(Side.Server)] private NpcFactionSystem _sFactionSystem = default!;
     [SidedDependency(Side.Server)] private RoundEndSystem _sRoundEndSystem = default!;
-    [SidedDependency(Side.Server)] private DamageableSystem _damageSystem = default!;
+    [SidedDependency(Side.Server)] private DamageableSystem _sDamageSystem = default!;
 
     /// <summary>
     /// Check that a nuke ops game mode can start without issue. I.e., that the nuke station and such all get loaded.
@@ -239,7 +239,7 @@ public sealed class NukeOpsTest : GameTest
             {
                 await RunTicksSync(increment);
                 Assert.That(resp.SuffocationCycles, Is.LessThanOrEqualTo(resp.SuffocationCycleThreshold));
-                Assert.That(_damageSystem.GetTotalDamage(player), Is.EqualTo(FixedPoint2.Zero));
+                Assert.That(_sDamageSystem.GetTotalDamage(player), Is.EqualTo(FixedPoint2.Zero));
             }
         }
 

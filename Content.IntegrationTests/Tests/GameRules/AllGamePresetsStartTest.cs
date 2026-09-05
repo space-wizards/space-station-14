@@ -48,7 +48,7 @@ public sealed class AllGamePresetsStartTest : AntagTest
         var preset = SProtoMan.Index<GamePresetPrototype>(presetId);
 
         // Spawn the minimum number of players.
-        var players = new List<ICommonSession> { Client.Session! };
+        List<ICommonSession> players = [Client.Session!];
         var min = 0;
         await Server.WaitPost(() =>
         {

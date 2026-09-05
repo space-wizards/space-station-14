@@ -41,9 +41,9 @@ public sealed class SprayVaporTests : GameTest
         Quantity: {BloodVolume}
 ";
 
-    [SidedDependency(Side.Server)] private readonly SpraySystem _spray = default!;
-    [SidedDependency(Side.Server)] private readonly SolutionContainerSystem _solutionContainer = default!;
-    [SidedDependency(Side.Server)] private readonly SharedTransformSystem _transform = default!;
+    [SidedDependency(Side.Server)] private readonly SpraySystem _sSpraySystem = default!;
+    [SidedDependency(Side.Server)] private readonly SolutionContainerSystem _sSolutionContainerSystem = default!;
+    [SidedDependency(Side.Server)] private readonly SharedTransformSystem _sTransformSystem = default!;
 
     [Test]
     public async Task TestSprayingSpaceCleaner()
@@ -56,15 +56,15 @@ public sealed class SprayVaporTests : GameTest
         {
             var sprayCleaner = SSpawnAtPosition(SprayBottleSpaceCleaner, testMap.GridCoords);
             Assume.That(sprayCleaner, Has.Comp<SprayComponent>(Server));
-            _transform.SetLocalPositionNoLerp(sprayCleaner, SComp<TransformComponent>(sprayCleaner).LocalPosition + new Vector2(1, 1));
+            _sTransformSystem.SetLocalPositionNoLerp(sprayCleaner, SComp<TransformComponent>(sprayCleaner).LocalPosition + new Vector2(1, 1));
 
             var puddleUid = SSpawnAtPosition(BloodPuddle, testMap.GridCoords);
             Assume.That(puddleUid, Has.Comp<PuddleComponent>(Server));
-            Assume.That(_solutionContainer.TryGetSolution(puddleUid, SolutionId, out var puddleSolution, out _));
+            Assume.That(_sSolutionContainerSystem.TryGetSolution(puddleUid, SolutionId, out var puddleSolution, out _));
             puddle = puddleSolution!.Value;
             Assume.That(puddle.Comp.Solution.ContainsPrototype(Blood));
 
-            _spray.Spray((sprayCleaner, SComp<SprayComponent>(sprayCleaner)), _transform.GetMapCoordinates(puddleUid));
+            _sSpraySystem.Spray((sprayCleaner, SComp<SprayComponent>(sprayCleaner)), _sTransformSystem.GetMapCoordinates(puddleUid));
             var vaporEnum = SEntMan.EntityQueryEnumerator<VaporComponent>();
             Assume.That(vaporEnum.MoveNext(out _));
         });
