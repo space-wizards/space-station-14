@@ -1,4 +1,4 @@
-using Content.Server.NPC.Systems;
+using Content.Shared.Physics;
 using Robust.Shared.Audio;
 
 namespace Content.Server.NPC.Components;
@@ -20,7 +20,8 @@ public sealed partial class NPCRangedCombatComponent : Component
     /// <summary>
     /// If null it will instantly turn.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)] public Angle? RotationSpeed;
+    [ViewVariables(VVAccess.ReadWrite)]
+    public Angle? RotationSpeed;
 
     /// <summary>
     /// Maximum distance, between our rotation and the target's, to consider shooting it.
@@ -41,11 +42,10 @@ public sealed partial class NPCRangedCombatComponent : Component
     public bool TargetInLOS = false;
 
     /// <summary>
-    /// If true, only opaque objects will block line of sight.
+    /// Collision group(s) that block line of sight to the target.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    // ReSharper disable once InconsistentNaming
-    public bool UseOpaqueForLOSChecks = false;
+    public CollisionGroup BlockingGroup = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
 
     /// <summary>
     /// Delay after target is in LOS before we start shooting.
