@@ -10,8 +10,7 @@ using JetBrains.Annotations;
 namespace Content.Server.StationEvents.Events;
 
 /// <summary>
-/// The system driving the logic for the breaker flip.
-/// Disables a random number of APCs (default between 3-7) on a random station.
+/// The system driving breaker flip events - disables a random number of APCs on a random station.
 /// </summary>
 [UsedImplicitly]
 public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRuleComponent>
@@ -21,11 +20,6 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
 
     [Dependency] private EntityQuery<StationEventComponent> _stationEventQuery;
     [Dependency] private EntityQuery<StationMemberComponent> _stationMemberQuery;
-
-    // Minimum number of APCs to trigger.
-    private const int MinAPCs = 3;
-    // Maximum (exclusive) number of APCs to trigger.
-    private const int MaxAPCs = 7;
 
     protected override void Added(EntityUid uid, BreakerFlipRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
@@ -57,7 +51,7 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
             }
         }
 
-        var toDisable = Math.Min(RobustRandom.Next(MinAPCs, MaxAPCs), stationApcs.Count);
+        var toDisable = Math.Min(component.ApcCount.Next(RobustRandom), stationApcs.Count);
         if (toDisable == 0)
             return;
 
