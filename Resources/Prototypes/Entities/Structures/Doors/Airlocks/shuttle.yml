@@ -7,6 +7,14 @@
   components:
   - type: Docking
   - type: DockingSignalControl
+  - type: DeviceLinkSink
+    ports:
+    - Open
+    - Close
+    - Toggle
+    - AutoClose
+    - DoorBolt
+    - DockToggle
   - type: DeviceLinkSource
     ports:
       - DoorStatus
