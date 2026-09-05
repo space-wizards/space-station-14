@@ -14,6 +14,7 @@ using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.VirtualItem;
+using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Content.Shared.Verbs;
@@ -359,7 +360,11 @@ public abstract partial class SharedStrippableSystem : EntitySystem
         RaiseLocalEvent(item, new DroppedEvent(user), true); // Gas tank internals etc.
 
         _handsSystem.PickupOrDrop(user, item, animateUser: stealth, animate: !stealth);
-        _adminLogger.Add(LogType.Stripping, LogImpact.High, $"{ToPrettyString(user):actor} has stripped the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s {slot} slot");
+        // Entities that have never been mind-controlled (mannequins, unpossessed animals) don't need to alert admins.
+        var impact = TryComp<MindContainerComponent>(target, out var mindContainer) && mindContainer.LastMind != null
+            ? LogImpact.High
+            : LogImpact.Low;
+        _adminLogger.Add(LogType.Stripping, impact, $"{ToPrettyString(user):actor} has stripped the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s {slot} slot");
     }
 
     /// <summary>
@@ -574,7 +579,11 @@ public abstract partial class SharedStrippableSystem : EntitySystem
 
         _handsSystem.TryDrop(target, item, checkActionBlocker: false);
         _handsSystem.PickupOrDrop(user, item, animateUser: stealth, animate: !stealth, handsComp: user.Comp);
-        _adminLogger.Add(LogType.Stripping, LogImpact.High, $"{ToPrettyString(user):actor} has stripped the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s hands");
+        // Entities that have never been mind-controlled (mannequins, unpossessed animals) don't need to alert admins.
+        var impact = TryComp<MindContainerComponent>(target, out var mindContainer) && mindContainer.LastMind != null
+            ? LogImpact.High
+            : LogImpact.Low;
+        _adminLogger.Add(LogType.Stripping, impact, $"{ToPrettyString(user):actor} has stripped the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s hands");
 
         // Hand update will trigger strippable update.
     }
