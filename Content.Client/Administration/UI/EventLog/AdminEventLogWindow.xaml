@@ -9,6 +9,8 @@
             <SpinBox Name="RoundSpinBox" Value="0" MinWidth="150" Access="Public"/>
             <Button Name="ResetRoundButton" Text="{Loc admin-event-round-reset}"
                     StyleClasses="Open"/>
+            <Label Name="CategoryLabel" Text="{Loc admin-event-category}"/>
+            <OptionButton Name="CategoryOption"/>
         </BoxContainer>
         <TextEdit Name="EventTextEdit" HorizontalExpand="True" VerticalExpand="True" Access="Public"/>
         <BoxContainer Orientation="Horizontal">

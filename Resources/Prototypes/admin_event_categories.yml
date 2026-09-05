@@ -1,0 +1,19 @@
+- type: eventCategory
+  id: t1
+  title: admin-event-category-T1-title
+  description: admin-event-category-T1-description
+
+- type: eventCategory
+  id: t2
+  title: admin-event-category-T2-title
+  description: admin-event-category-T2-description
+
+- type: eventCategory
+  id: t3
+  title: admin-event-category-T3-title
+  description: admin-event-category-T3-description
+
+- type: eventCategory
+  id: t4
+  title: admin-event-category-T4-title
+  description: admin-event-category-T4-description
