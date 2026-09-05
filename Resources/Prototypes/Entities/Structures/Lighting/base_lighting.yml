@@ -54,6 +54,9 @@
         - TabletopMachineLayer
   - type: PlacementReplacement
     key: lights
+  - type: ParentToWall
+    offset: 0, 1 # points away from the wall
+    blockDeconstruction: false
 
 - type: entity
   abstract: true

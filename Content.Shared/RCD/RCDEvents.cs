@@ -16,6 +16,18 @@ public sealed class RCDConstructionGhostRotationEvent(NetEntity netEntity, Direc
     public readonly Direction Direction = direction;
 }
 
+/// <summary>
+/// An event raised on an entity when it is attempted to be destroyed with an RCD.
+/// </summary>
+/// <param name="User">The user attempting to deconstruct the </param>
+[ByRefEvent]
+public sealed partial class AttemptRCDDeconstructionEvent(EntityUid user, EntityUid tool) : CancellableEntityEventArgs
+{
+    public readonly EntityUid User = user;
+    public readonly EntityUid Tool = tool;
+    public string Reason = string.Empty;
+}
+
 [Serializable, NetSerializable]
 public enum RcdUiKey : byte
 {
