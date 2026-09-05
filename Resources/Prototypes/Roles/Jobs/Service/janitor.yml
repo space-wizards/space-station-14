@@ -6,6 +6,7 @@
   startingGear: JanitorGear
   icon: "JobIconJanitor"
   supervisors: job-supervisors-hop
+  guides: [ Janitorial ]
   access:
   - Service
   - Janitor
