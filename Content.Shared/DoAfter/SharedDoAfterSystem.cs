@@ -301,6 +301,9 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             if (args.NeedFreeHand && !_hands.ActiveHandIsEmpty(args.User))
                 return false;
 
+            if (args.NeedAnyFreeHand && _hands.GetEmptyHandCount((args.User, handsComponent)) == 0)
+                return false;
+
             doAfter.InitialHand = handsComponent.ActiveHandId;
             doAfter.InitialItem = _hands.GetActiveItem((args.User, handsComponent));
         }
