@@ -219,7 +219,7 @@
   id: VisitorSecurityCadet
   equipment:
     jumpsuit: ClothingUniformJumpsuitSec
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesBootsJackFilled
     head: ClothingHeadHelmetBasic
     id: VisitorPDA
     belt: ClothingBeltSecurityFilled
@@ -236,7 +236,7 @@
   id: VisitorSecurityCadetAlt
   equipment:
     jumpsuit: ClothingUniformJumpsuitSecGrey
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesBootsJackFilled
     head: ClothingHeadHelmetBasic
     neck: SecurityWhistle
     id: VisitorPDA
@@ -254,7 +254,7 @@
   id: VisitorSecurityOfficer
   equipment:
     jumpsuit: ClothingUniformJumpsuitSec
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesBootsJackFilled
     head: ClothingHeadHelmetBasic
     id: VisitorPDA
     belt: ClothingBeltSecurityWebbingFilled
@@ -271,7 +271,7 @@
   id: VisitorSecurityOfficerAlt
   equipment:
     jumpsuit: ClothingUniformJumpsuitSecGrey
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesBootsJackFilled
     head: ClothingHeadHatCorpsoft
     neck: SecurityWhistle
     id: VisitorPDA
@@ -289,7 +289,7 @@
   id: VisitorDetective
   equipment:
     jumpsuit: ClothingUniformJumpsuitDetective
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesBootsJackFilled
     head: ClothingHeadHatFedoraBrown
     neck: ClothingNeckTieDet
     id: VisitorPDA
@@ -307,7 +307,7 @@
   id: VisitorDetectiveAlt
   equipment:
     jumpsuit: ClothingUniformJumpsuitDetectiveGrey
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesBootsJackFilled
     head: ClothingHeadHatFedoraGrey
     neck: ClothingNeckTieDet
     id: VisitorPDA
@@ -325,7 +325,7 @@
   id: VisitorWarden
   equipment:
     jumpsuit: ClothingUniformJumpsuitWarden
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesBootsJackFilled
     gloves: ClothingHandsGlovesCombat
     head: ClothingHeadHatBeretWarden
     neck: SecurityWhistle
@@ -345,7 +345,7 @@
   id: VisitorWardenAlt
   equipment:
     jumpsuit: ClothingUniformJumpsuitWarden
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesBootsJackFilled
     gloves: ClothingHandsGlovesCombat
     head: ClothingHeadHatWarden
     id: VisitorPDA
