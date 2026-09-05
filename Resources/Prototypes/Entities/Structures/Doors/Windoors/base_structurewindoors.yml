@@ -23,10 +23,9 @@
           !type:PhysShapeAabb
           bounds: "-0.49,-0.49,0.49,-0.36"
         density: 1500
-        mask:
-        - TabletopMachineMask
         layer:
-        - GlassAirlockLayer
+        - BulletImpassable
+        - WindoorImpassable
   - type: Sprite
     layers:
     - state: closed
@@ -109,16 +108,18 @@
       board: !type:Container
   - type: Door
     canCrush: false
-    openingAnimationTime: 0.9
-    closingAnimationTime: 0.9
+    closeTimeOne: 0.4
+    closeTimeTwo: 0.3
+    openTimeOne: 0.4
+    openTimeTwo: 0.3
+    openingAnimationTime: 0.7
+    closingAnimationTime: 0.7
     openSound:
       path: /Audio/Machines/windoor_open.ogg
     closeSound:
       path: /Audio/Machines/windoor_open.ogg
     denySound:
       path: /Audio/Machines/airlock_deny.ogg
-    checkFixtureCollision: true
-    allowMachineLayer: true
   - type: Airlock
     keepOpenIfClicked: true
     openPanelVisible: true

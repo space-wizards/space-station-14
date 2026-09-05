@@ -81,6 +81,9 @@ public sealed partial class DoorSystem : SharedDoorSystem
         if (args.Key != DoorComponent.OpenKey && args.Key != DoorComponent.CloseKey)
             return;
 
+        if (!args.Finished)
+            return;
+
         if (!TryComp<SpriteComponent>(ent, out var sprite))
             return;
 
@@ -155,7 +158,7 @@ public sealed partial class DoorSystem : SharedDoorSystem
                 if (_animationSystem.HasRunningAnimation(entity, DoorComponent.OpenKey))
                 {
                     _animationSystem.Stop(entity, null, DoorComponent.OpenKey);
-                    _animationSystem.Play(entity, (Animation)entity.Comp.OpeningAnimation, DoorComponent.CloseKey);
+                    _animationSystem.Play(entity, (Animation)entity.Comp.ClosingAnimation, DoorComponent.CloseKey);
                 }
 
                 foreach (var (layer, layerState) in entity.Comp.ClosedSpriteStates)
@@ -172,6 +175,9 @@ public sealed partial class DoorSystem : SharedDoorSystem
                 if (_animationSystem.HasRunningAnimation(entity, DoorComponent.OpenKey))
                     return;
 
+                if (_animationSystem.HasRunningAnimation(entity, DoorComponent.CloseKey))
+                    _animationSystem.Stop(entity, null, DoorComponent.CloseKey);
+
                 _animationSystem.Play(entity, (Animation)entity.Comp.OpeningAnimation, DoorComponent.OpenKey);
 
                 return;
@@ -181,6 +187,9 @@ public sealed partial class DoorSystem : SharedDoorSystem
 
                 if (_animationSystem.HasRunningAnimation(entity, DoorComponent.CloseKey))
                     return;
+
+                if (_animationSystem.HasRunningAnimation(entity, DoorComponent.OpenKey))
+                    _animationSystem.Stop(entity, null, DoorComponent.OpenKey);
 
                 _animationSystem.Play(entity, (Animation)entity.Comp.ClosingAnimation, DoorComponent.CloseKey);
 
