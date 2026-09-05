@@ -1,0 +1,13 @@
+﻿- type: inventoryTemplate # Just here to you keep your PDA on you even after transforming.
+  id: dionaTree # TODO: Prevent equipped items from being shown.
+  slots:
+  - name: id
+    slotTexture: id
+    fullTextureName: template_small
+    slotFlags: IDCARD
+    slotGroup: SecondHotbar
+    stripTime: 6
+    uiWindowPos: 2,1
+    strippingWindowPos: 2,4
+    displayName: ID
+    stripHidden: true

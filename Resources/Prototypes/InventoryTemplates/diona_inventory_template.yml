@@ -2,6 +2,16 @@
 - type: inventoryTemplate
   id: diona
   slots:
+    - name: id # By having the ID/PDA listed first, it will get transferred to the robust tree polymorph before the jumpsuit, which would drop the ID without re-equipping it.
+      slotTexture: id
+      fullTextureName: template_small
+      slotFlags: IDCARD
+      slotGroup: SecondHotbar
+      stripTime: 6
+      uiWindowPos: 2,1
+      strippingWindowPos: 2,4
+      dependsOn: jumpsuit
+      displayName: ID
     - name: jumpsuit
       slotTexture: uniform
       slotFlags: INNERCLOTHING
@@ -87,16 +97,6 @@
       dependsOnComponents:
       - type: AllowSuitStorage
       displayName: Suit Storage
-    - name: id
-      slotTexture: id
-      fullTextureName: template_small
-      slotFlags: IDCARD
-      slotGroup: SecondHotbar
-      stripTime: 6
-      uiWindowPos: 2,1
-      strippingWindowPos: 2,4
-      dependsOn: jumpsuit
-      displayName: ID
     - name: belt
       slotTexture: belt
       fullTextureName: template_small
