@@ -9,6 +9,15 @@ namespace Content.Shared.Clothing.Components;
 public sealed partial class LoadoutComponent : Component
 {
     /// <summary>
+    /// If true, will select the same starting gear as the role loadout.
+    /// </summary>
+    /// <remarks>
+    /// Requires starting gear and role loadout counts to be the same.
+    /// </remarks>
+    [DataField, AutoNetworkedField]
+    public bool SelectSame = false;
+
+    /// <summary>
     /// A list of starting gears, of which one will be given, before RoleLoadouts are equipped.
     /// All elements are weighted the same in the list.
     /// </summary>
