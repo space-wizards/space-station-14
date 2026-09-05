@@ -79,9 +79,9 @@ public sealed partial class GhostRoleSystem : EntitySystem
     private void OnMobStateChanged(Entity<GhostRoleComponent> ent, ref MobStateChangedEvent args)
     {
         if (args.NewMobState == MobState.Alive && !ent.Comp.Taken)
-            EnsureComp<GhostTakeoverAvailableComponent>(ent);
+            RegisterGhostRole(ent);
         else if (args.NewMobState == MobState.Critical || args.NewMobState == MobState.Dead)
-            RemComp<GhostTakeoverAvailableComponent>(ent);
+            UnregisterGhostRole(ent);
     }
 
     public override void Shutdown()
@@ -276,7 +276,7 @@ public sealed partial class GhostRoleSystem : EntitySystem
 
     public void RegisterGhostRole(Entity<GhostRoleComponent> role)
     {
-        if (role.Comp.Taken)
+        if (role.Comp.Taken || TerminatingOrDeleted(role))
             return;
 
         EnsureComp<GhostTakeoverAvailableComponent>(role);
@@ -312,9 +312,10 @@ public sealed partial class GhostRoleSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnRaffleInit(Entity<GhostRoleRaffleComponent> ent, ref ComponentInit args)
     {
-        if (!_ghostRoleQuery.TryComp(ent, out var ghostRole))
+        if (!_ghostRoleQuery.TryComp(ent, out var ghostRole)
+            || ghostRole.Taken)
         {
-            RemComp(ent, ent.Comp); // Ghost role doesn't exist.
+            RemComp(ent, ent.Comp); // Ghost role doesn't exist, or the role's taken
             return;
         }
 
@@ -691,7 +692,7 @@ public sealed partial class GhostRoleSystem : EntitySystem
     private void OnMindRemoved(EntityUid uid, GhostRoleComponent component, MindRemovedMessage args)
     {
         // Avoid re-registering it for duplicate entries and potential exceptions.
-        if (!component.ReregisterOnGhost || component.LifeStage > ComponentLifeStage.Running)
+        if (!component.ReregisterOnGhost)
             return;
 
         component.Taken = false;
