@@ -94,7 +94,7 @@ public abstract partial class GameTicker
     /// </summary>
     /// <param name="ruleId">Name of the game rule we're spawning</param>
     /// <returns>EntityUid of the rule we spawned.</returns>
-    protected virtual Entity<GameRuleComponent>? SpawnGameRule(EntProtoId ruleId)
+    protected virtual Entity<GameRuleComponent> SpawnGameRule(EntProtoId ruleId)
     {
         var rule = Spawn(ruleId, MapCoordinates.Nullspace);
         var meta = MetaData(rule);
@@ -102,13 +102,11 @@ public abstract partial class GameTicker
         Admin.Add(LogType.EventStarted, $"Added game rule {ToPrettyString((rule, meta))}");
 
         // This should probably be a bool on the GameRuleComponent...
-        if (!RuleQuery.TryComp(rule, out var ruleComp))
-        {
-            Log.Error($"Entity {ToPrettyString((rule, meta))} lacked a {nameof(GameRuleComponent)} and was deleted!");
-            Del(rule, meta);
-            return null;
-        }
+        if (RuleQuery.TryComp(rule, out var ruleComp))
+            return (rule, ruleComp);
 
+        Log.Error($"Entity {ToPrettyString((rule, meta))} lacked a {nameof(GameRuleComponent)}!");
+        ruleComp = AddComp<GameRuleComponent>(rule);
         return (rule, ruleComp);
     }
 
@@ -531,14 +529,14 @@ public abstract partial class GameTicker
         if (!TryComp(rule, out MetaDataComponent? meta))
             return "Deleted Rule";
 
-        var str = meta.EntityPrototype?.ID ?? "Unknown Rule";
+        var str = $"{meta.EntityPrototype?.ID ?? "Unknown Rule"} ({rule.Id})";
         switch (stage)
         {
             case GameRuleLifeStage.Added:
-                str += " (Pending)";
+                str += " - Pending";
                 break;
             case GameRuleLifeStage.Ended:
-                str += " (Ended)";
+                str += " - Ended";
                 break;
         }
 

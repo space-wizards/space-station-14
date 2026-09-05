@@ -2,7 +2,6 @@ using System.Linq;
 using System.Text;
 using Content.Server.Administration;
 using Content.Shared.Administration;
-using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
@@ -59,11 +58,9 @@ public sealed partial class ServerGameTicker
     /// start it yet, instead waiting until the rule is actually started by other code (usually roundstart)
     /// </summary>
     /// <returns>The entity for the added gamerule</returns>
-    protected override Entity<GameRuleComponent>? SpawnGameRule(EntProtoId ruleId)
+    protected override Entity<GameRuleComponent> SpawnGameRule(EntProtoId ruleId)
     {
-        if (base.SpawnGameRule(ruleId) is not { } ruleEntity)
-            return null;
-
+        var ruleEntity = base.SpawnGameRule(ruleId);
         var str = Loc.GetString("station-event-system-run-event", ("eventName", ToPrettyString(ruleEntity)));
 #if DEBUG
         _chatManager.SendAdminAlert(str);
@@ -157,8 +154,8 @@ public sealed partial class ServerGameTicker
 
             // Start rule if we're already in the middle of a round
             // TODO: DO WE EVEN NEED THIS CHECK???
-            if (ent != null && RunLevel == GameRunLevel.InRound)
-                StartGameRule(ent.Value.AsNullable());
+            if (RunLevel == GameRunLevel.InRound)
+                StartGameRule(ent.AsNullable());
         }
     }
 
@@ -223,14 +220,14 @@ public sealed partial class ServerGameTicker
                 var header = Loc.GetString("list-gamerule-admin-header");
                 message.AppendLine();
                 message.AppendLine(header);
-                message.AppendLine("|------------|------------------");
+                message.AppendLine("|------------|---------------------------");
             }
 
             foreach (var (time, rule, stage) in AllRoundGameRules)
             {
                 var formattedTime = time.ToString(@"hh\:mm\:ss");
                 var name = RuleToString(rule, stage);
-                message.AppendLine($"| {formattedTime,-10} | {name,-16} ");
+                message.AppendLine($"| {formattedTime,-10} | {name,-24} ");
             }
 
             return message.ToString().TrimEnd('\n');
