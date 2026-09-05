@@ -296,6 +296,9 @@
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/cargo-mining.rsi
     state: "assembly"
+  - type: Construction
+    graph: MiningAirlock
+    node: assembly
 
 - type: entity
   parent: AirlockAssembly
@@ -305,6 +308,9 @@
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/cargo-mining.rsi
     state: "assembly"
+  - type: Construction
+    graph: MiningAirlock
+    node: glassElectronics
 
 #Syndicate
 - type: entity

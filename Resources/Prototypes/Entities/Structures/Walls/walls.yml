@@ -960,6 +960,9 @@
       behaviors:
       - *SoundMetalSlam
       - *SpawnGirder
+  - type: Construction
+    graph: Girder
+    node: wallMining
   - type: IconSmooth
     key: walls
     base: mining
@@ -985,6 +988,9 @@
       behaviors:
       - *SpawnGirder
       - *SoundMetalSlam
+  - type: Construction
+    graph: Girder
+    node: wallMiningDiagonal
 
 # Mime
 
