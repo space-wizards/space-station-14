@@ -46,22 +46,39 @@
     - id: InflatableDoorStack1
 
 - type: entityTable
-  id: FillLockerEmergencyStandard
+  id: FillEmergencyO2
   table: !type:AllSelector
     children:
-    - id: ClothingMaskBreath
-    - id: ClothingOuterSuitEmergency
     - !type:GroupSelector
       children:
       - id: EmergencyOxygenTankFilled
+        weight: 4
       - id: OxygenTankFilled
+
+- type: entityTable
+  id: FillEmergencyN2
+  table: !type:AllSelector
+    children:
+    - !type:GroupSelector
+      children:
+      - id: EmergencyNitrogenTankFilled
+        weight: 4
+      - id: NitrogenTankFilled
+
+# Emergency lockers are intended to be somewhat random (for verisimilitude/suspense), so other than the bare essentials there should rarely be 100% guarenteed spawns
+- type: entityTable
+  id: FillLockerEmergencyStandard
+  table: !type:AllSelector
+    children:
+    - id: BoxMRE
+      prob: 0.1
+    - id: ClothingMaskBreath
+    - id: ClothingOuterSuitEmergency
+    - id: MedkitOxygenFilled # technically doesn't fit N2 lockers, but we don't have an N2 version of this yet, and (aside from the emergency O2 tank) N2-breathing species can still use its contents
+      prob: 0.2
     - id: ToolboxEmergencyFilled
       prob: 0.5
-    - id: MedkitOxygenFilled
-      prob: 0.2
     - id: WeaponFlareGun
-      prob: 0.1
-    - id: BoxMRE
       prob: 0.1
     - !type:NestedSelector
       tableId: FillEmergencyInflatables
@@ -73,8 +90,12 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:NestedSelector
-        tableId: FillLockerEmergencyStandard
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: FillLockerEmergencyStandard
+        - !type:NestedSelector
+          tableId: FillEmergencyO2
 
 - type: entity
   id: ClosetWallEmergencyFilledRandom
@@ -83,26 +104,12 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:NestedSelector
-        tableId: FillLockerEmergencyStandard
-
-- type: entityTable
-  id: FillLockerEmergencyN2Standard
-  table: !type:AllSelector
-    children:
-    - id: ClothingMaskBreath
-    - id: ClothingOuterSuitEmergency
-    - id: BoxMRE
-      prob: 0.1
-    - id: ToolboxEmergencyFilled
-      prob: 0.05
-    - !type:GroupSelector
-      children:
-      - id: EmergencyNitrogenTankFilled
-        weight: 4
-      - id: NitrogenTankFilled
-    - !type:NestedSelector
-      tableId: FillEmergencyInflatables
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: FillLockerEmergencyStandard
+        - !type:NestedSelector
+          tableId: FillEmergencyO2
 
 - type: entity
   id: ClosetEmergencyN2FilledRandom
@@ -111,8 +118,12 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:NestedSelector
-        tableId: FillLockerEmergencyN2Standard
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: FillLockerEmergencyStandard
+        - !type:NestedSelector
+          tableId: FillEmergencyN2
 
 - type: entity
   parent: ClosetWallEmergencyN2
@@ -121,20 +132,20 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:NestedSelector
-        tableId: FillLockerEmergencyN2Standard
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: FillLockerEmergencyStandard
+        - !type:NestedSelector
+          tableId: FillEmergencyN2
 
 - type: entityTable
   id: FillLockerFireStandard
   table: !type:AllSelector
     children:
-    - id: ClothingOuterSuitFire
     - id: ClothingHeadHelmetFire
     - id: ClothingMaskGas
-    - !type:GroupSelector
-      children:
-      - id: EmergencyOxygenTankFilled
-      - id: OxygenTankFilled
+    - id: ClothingOuterSuitFire
     - id: CrowbarRed
     - !type:GroupSelector
       children:
@@ -150,8 +161,17 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:NestedSelector
-        tableId: FillLockerFireStandard
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: FillLockerFireStandard
+        - !type:GroupSelector # Chance to contain N2 instead of O2
+          children:
+          - !type:NestedSelector
+            tableId: FillEmergencyO2
+            weight: 4
+          - !type:NestedSelector
+            tableId: FillEmergencyN2
 
 - type: entity
   id: ClosetWallFireFilledRandom
@@ -160,8 +180,17 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:NestedSelector
-        tableId: FillLockerFireStandard
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: FillLockerFireStandard
+        - !type:GroupSelector # Chance to contain N2 instead of O2
+          children:
+          - !type:NestedSelector
+            tableId: FillEmergencyO2
+            weight: 4
+          - !type:NestedSelector
+            tableId: FillEmergencyN2
 
 - type: entityTable
   id: SyndieMaintLoot
