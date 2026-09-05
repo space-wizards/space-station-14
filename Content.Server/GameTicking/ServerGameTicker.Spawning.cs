@@ -498,10 +498,8 @@ namespace Content.Server.GameTicking
                 return new EntityCoordinates(mapUid, Vector2.Zero);
             }
 
-            // AAAAAAAAAAAAA
-            // This should be an error, if it didn't cause tests to start erroring when they delete a player.
-            // TODO: This still fails tests waow
-            Log.Warning("Found no observer spawn points!");
+            // You REALLY fucked up
+            Log.Error("Found no observer spawn points!");
             return EntityCoordinates.Invalid;
         }
 
