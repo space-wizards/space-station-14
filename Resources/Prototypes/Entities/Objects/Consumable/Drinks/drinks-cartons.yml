@@ -9,6 +9,8 @@
     closeable: true
     closeSound:
       collection: bottleCloseSounds
+    openEmptySound:
+      collection: bottleOpenEmptySounds
 
 - type: entity
   abstract: true
