@@ -1,0 +1,89 @@
+- type: alert
+  id: BaseGhostTeleportAlert
+  icons:
+  - sprite: /Textures/Decals/stencil.rsi
+    state: stencil_Exclaim
+  alertViewEntity: GhostAlertCounterSpriteView
+  name: ghost-alert-base-name
+  description: ghost-alert-base-desc
+  clickEvent: !type:AlertTeleportEvent
+  rightClickEvent: !type:ClearAlertEvent
+
+- type: alert
+  parent: BaseGhostTeleportAlert
+  id: BaseGhostRoleAlert
+  name: ghost-alert-base-role-name
+  description: ghost-alert-base-role-desc
+
+- type: alert
+  parent: BaseGhostRoleAlert
+  id: SpaceNinja
+  icons:
+  - sprite: Objects/Weapons/Melee/energykatana.rsi
+    state: icon
+  name: ghost-alert-space-ninja-name
+
+- type: alert
+  parent: BaseGhostRoleAlert
+  id: SpaceDragon
+  icons:
+  - sprite: Objects/Fun/figurines.rsi
+    state: spacedragon
+  name: ghost-alert-space-dragon-name
+
+- type: alert
+  parent: BaseGhostRoleAlert
+  id: Xenoborgs
+  icons:
+  - sprite: Mobs/Silicon/mothership_core.rsi
+    state: core-idle
+  name: ghost-alert-mothership-core-name
+
+- type: alert
+  parent: BaseGhostRoleAlert
+  id: Wizard
+  icons:
+  - sprite: Clothing/Head/Hats/wizardhat.rsi
+    state: icon
+  name: ghost-alert-wizard-name
+
+- type: alert
+  parent: BaseGhostRoleAlert
+  id: NukeOp
+  icons:
+  - sprite: /Textures/Objects/Weapons/Guns/SMGs/c20r.rsi
+    state: icon
+  name: ghost-alert-nuke-op-name
+
+- type: alert
+  parent: BaseGhostTeleportAlert
+  id: ImmovableRod
+  icons:
+  - sprite: Objects/Fun/immovable_rod.rsi
+    state: icon
+  name: ghost-alert-immovable-rod-name
+
+- type: alert
+  parent: BaseGhostTeleportAlert
+  id: NukeArm
+  icons:
+  - sprite: Objects/Devices/nuke.rsi
+    state: nuclearbomb_base
+  name: ghost-alert-nuke-arm-name
+
+- type: entity
+  id: GhostAlertCounterSpriteView
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: GenericCounterAlert
+    hideZeroAndSingleValues: true
+    centerGlyph: false
+  - type: Sprite
+    sprite: /Textures/Interface/Alerts/generic_counter.rsi
+    layers:
+    - map: [ "enum.AlertVisualLayers.Base" ]
+    - map: [ "1" ]
+      offset: 0.25, 0
+    - map: [ "10" ]
+      offset: 0.125, 0
+    - map: [ "100" ]
