@@ -6,7 +6,7 @@ using Content.Shared.Item.ItemToggle;
 using Content.Shared.Mind;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
-using Content.Shared.Timing;
+using Content.Shared.Timing.Systems;
 using Content.Shared.Trigger.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Network;

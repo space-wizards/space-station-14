@@ -587,3 +587,32 @@
       amount: 3
   products:
     PhosphoricAcid: 10
+
+- type: reaction
+  id: Nyctalon
+  reactants:
+    Oculine:
+      amount: 1
+    Radium:
+      amount: 1
+    Uranium:
+      amount: 1
+      catalyst: true
+    Phosphorus:
+      amount: 1
+  products:
+    Nyctalon: 2
+
+- type: reaction
+  id: TearGas
+  reactants:
+    CapsaicinOil:
+      amount: 1
+    Phosphorus:
+      amount: 1
+    Chlorine:
+      amount: 1
+  products:
+    TearGas: 3
+
+
