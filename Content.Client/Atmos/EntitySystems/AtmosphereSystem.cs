@@ -1,4 +1,3 @@
-﻿using Content.Client.Atmos.Components;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Robust.Shared.GameStates;
@@ -19,6 +18,8 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
             return;
 
         // Struct so should just copy by value.
-        component.OverlayData = state.Overlay;
+        component.SharedFireData = state.SharedFireData;
+        component.SharedVisibleGasData = state.SharedVisibleGasData;
+        component.SharedGasTemperatureData = state.SharedGasTemperatureData;
     }
 }

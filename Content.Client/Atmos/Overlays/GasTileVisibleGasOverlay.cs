@@ -13,6 +13,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Numerics;
+using static Content.Shared.Atmos.EntitySystems.SharedGasTileOverlaySystem;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Atmos.Overlays;
@@ -178,11 +179,11 @@ public sealed partial class GasTileVisibleGasOverlay : Overlay
                 state.drawHandle.UseShader(null);
                 foreach (var chunk in comp.Chunks.Values)
                 {
-                    var enumerator = new GasChunkEnumerator(chunk);
+                    var enumerator = new GasChunkEnumerator<SharedVisibleGasData>(chunk.TileVisibleGasData);
 
-                    while (enumerator.MoveNext(out var gas))
+                    while (enumerator.MoveNext(out var sharedVisibleGasData))
                     {
-                        if (gas.Opacity == null!)
+                        if (sharedVisibleGasData.Opacity == null!)
                             continue;
 
                         var tilePosition = chunk.Origin + (enumerator.X, enumerator.Y);
@@ -191,7 +192,7 @@ public sealed partial class GasTileVisibleGasOverlay : Overlay
 
                         for (var i = 0; i < state.gasCount; i++)
                         {
-                            var opacity = gas.Opacity[i];
+                            var opacity = sharedVisibleGasData.Opacity[i];
                             if (opacity > 0)
                             {
                                 state.drawHandle.DrawTexture(state.frames[i][state.frameCounter[i]],
@@ -234,9 +235,9 @@ public sealed partial class GasTileVisibleGasOverlay : Overlay
             {
                 var tilePosition = new Vector2(x, y);
 
-                for (var i = 0; i < atmos.OverlayData.Opacity.Length; i++)
+                for (var i = 0; i < atmos.VisibleGasData.Opacity.Length; i++)
                 {
-                    var opacity = atmos.OverlayData.Opacity[i];
+                    var opacity = atmos.VisibleGasData.Opacity[i];
 
                     if (opacity > 0)
                         handle.DrawTexture(_frames[i][_frameCounter[i]], tilePosition, Color.White.WithAlpha(opacity));
