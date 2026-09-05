@@ -1,7 +1,7 @@
 <Document>
 # Writing
 
-Using a pen, you can write on paper or in books. Nanotrasen provides everyone with a spare pen in their PDA.
+Using a pen, you can write on paper, in books, or on envelopes. Nanotrasen provides everyone with a spare pen in their PDA.
 
 ## Formatting
 
@@ -18,5 +18,15 @@ Color supports either hexadecimal or most HTML color names. For example:
 
 - [color=#ff0000]\[color=#ff0000\]\[\/color\][/color]
 - [color=red]\[color=red\]\[\/color\][/color]
+
+## Monospace
+
+You can also use a tag called "Mono", which is short for monospace. A monospace font is a font in which each character is the same width, such as an 'M' and a period. Switch to a monospaced font using the [color=lightblue]\[mono\][/color] tag.
+
+[color=lightblue][head=2][mono]\[mono\]like this!\[\/mono\][/mono][/color][/head]
+
+Currently the monospace tag does not always behave the way you may expect it to when combined with other tags. For instance, monospace can not be used with bold, italic, or bolditalic. Color works normally. And with headers the mono tag MUST come after the header tag.
+
+[color=#aaaaaa]Hopefully this will be fixed eventually, but since the functionality is already in the game it seems silly to hide it.[/color]
 
 </Document>
