@@ -71,7 +71,7 @@ public abstract partial class SharedStoreSystem
         args.Verbs.Add(new AlternativeVerb
         {
             Text = Loc.GetString(entity.Comp.Verb),
-            Message = Loc.GetString(entity.Comp.VerbDescription),
+            Message = Loc.GetString(entity.Comp.VerbDescription, ("amount", entity.Comp.Amount), ("currency", Loc.GetString(proto.DisplayName)), ("entity", entity)),
             Act = () =>
             {
                 Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> currency = new();
@@ -96,7 +96,7 @@ public abstract partial class SharedStoreSystem
         if (!ProtoMan.TryIndex(entity.Comp.Currency, out var proto))
             return;
 
-        args.PushMarkup(Loc.GetString("store-generator-examine", ("currency", Loc.GetString(proto.DisplayName)), ("amount", entity.Comp.Amount)));
+        args.PushMarkup(Loc.GetString("store-generator-examine", ("amount", entity.Comp.Amount), ("currency", Loc.GetString(proto.DisplayName)), ("entity", entity)));
     }
 
     private void UpdateGenerator(float frameTime)
