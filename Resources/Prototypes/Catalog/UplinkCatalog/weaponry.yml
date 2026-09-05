@@ -79,6 +79,10 @@
   categories:
   - UplinkWeaponry
   conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
   - !type:ListingLimitedStockCondition
     stock: 1
 
