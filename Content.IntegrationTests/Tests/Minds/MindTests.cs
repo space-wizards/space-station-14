@@ -287,7 +287,7 @@ public sealed partial class MindTests : GameTest
 
             var jobRole = "";
 
-            roleSystem.MindAddJobRole(mindId, jobPrototype:jobRole);
+            roleSystem.MindAddJobRole(mindId, jobPrototype: jobRole);
 
             Assert.Multiple(() =>
             {
@@ -438,7 +438,7 @@ public sealed partial class MindTests : GameTest
 
         await server.WaitAssertion(() =>
         {
-            var id = entMan.GetComponent<GhostRoleComponent>(ghostRole).Identifier;
+            var id = entMan.GetNetEntity(ghostRole);
             entMan.EntitySysManager.GetEntitySystem<GhostRoleSystem>().Takeover(player, id);
         });
 

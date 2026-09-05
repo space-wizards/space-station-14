@@ -23,7 +23,6 @@
   - type: RotationVisuals
     defaultRotation: 90
     horizontalRotation: 90
-  - type: GhostTakeoverAvailable
   - type: HTN
     rootTask:
       task: SimpleHostileCompound

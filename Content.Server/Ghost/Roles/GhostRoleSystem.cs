@@ -1,26 +1,35 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.EUI;
 using Content.Server.GameTicking.Events;
 using Content.Server.Ghost.Roles.Components;
-using Content.Shared.Ghost.Roles.Raffles;
+using Content.Server.Ghost.Roles.Raffles;
 using Content.Server.Ghost.Roles.UI;
+using Content.Server.Popups;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Follower;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
+using Content.Shared.Ghost.Components;
 using Content.Shared.Ghost.Roles;
+using Content.Shared.Ghost.Roles.Components;
+using Content.Shared.Ghost.Roles.Raffles;
+using Content.Shared.Ghost.Systems;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Players;
 using Content.Shared.Roles;
+using Content.Shared.Roles.Components;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
@@ -29,89 +38,53 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Server.Popups;
-using Content.Shared.Verbs;
-using Robust.Shared.Collections;
-using Content.Shared.Ghost.Roles.Components;
-using Content.Shared.Roles.Components;
-using Content.Shared.Ghost.Systems;
-using Content.Shared.Ghost.Components;
 
 namespace Content.Server.Ghost.Roles;
 
 [UsedImplicitly]
 public sealed partial class GhostRoleSystem : EntitySystem
 {
+    [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private IBanManager _ban = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private EuiManager _euiManager = default!;
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
-    [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private EuiManager _euiManager = default!;
     [Dependency] private FollowerSystem _followerSystem = default!;
-    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
     [Dependency] private SharedMindSystem _mindSystem = default!;
     [Dependency] private SharedRoleSystem _roleSystem = default!;
-    [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private TransformSystem _transform = default!;
 
-    private uint _nextRoleIdentifier;
+    [Dependency] private EntityQuery<ActorComponent> _actorQuery;
+    [Dependency] private EntityQuery<GhostComponent> _ghostQuery;
+    [Dependency] private EntityQuery<GhostRoleRaffleComponent> _ghostRaffleQuery;
+    [Dependency] private EntityQuery<GhostRoleComponent> _ghostRoleQuery;
+    [Dependency] private EntityQuery<GhostTakeoverAvailableComponent> _ghostTakeoverQuery;
+    [Dependency] private EntityQuery<MindComponent> _mindQuery;
+    [Dependency] private EntityQuery<MindContainerComponent> _mindContainerQuery;
+    [Dependency] private EntityQuery<MindRoleComponent> _mindRoleQuery;
+
     private bool _needsUpdateGhostRoleCount = true;
-
-    private readonly Dictionary<uint, Entity<GhostRoleComponent>> _ghostRoles = new();
-    private readonly Dictionary<uint, Entity<GhostRoleRaffleComponent>> _ghostRoleRaffles = new();
 
     private readonly Dictionary<ICommonSession, GhostRolesEui> _openUis = new();
     private readonly Dictionary<ICommonSession, MakeGhostRoleEui> _openMakeGhostRoleUis = new();
-
-    [ViewVariables]
-    public IReadOnlyCollection<Entity<GhostRoleComponent>> GhostRoles => _ghostRoles.Values;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-        SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
-
-        SubscribeLocalEvent<GhostTakeoverAvailableComponent, MindAddedMessage>(OnMindAdded);
-        SubscribeLocalEvent<GhostTakeoverAvailableComponent, MindRemovedMessage>(OnMindRemoved);
-        SubscribeLocalEvent<GhostTakeoverAvailableComponent, MobStateChangedEvent>(OnMobStateChanged);
-        SubscribeLocalEvent<GhostTakeoverAvailableComponent, TakeGhostRoleEvent>(OnTakeoverTakeRole);
-
-        SubscribeLocalEvent<GhostRoleComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<GhostRoleComponent, ComponentStartup>(OnRoleStartup);
-        SubscribeLocalEvent<GhostRoleComponent, ComponentShutdown>(OnRoleShutdown);
-        SubscribeLocalEvent<GhostRoleComponent, EntityPausedEvent>(OnPaused);
-        SubscribeLocalEvent<GhostRoleComponent, EntityUnpausedEvent>(OnUnpaused);
-
-        SubscribeLocalEvent<GhostRoleRaffleComponent, ComponentInit>(OnRaffleInit);
-        SubscribeLocalEvent<GhostRoleRaffleComponent, ComponentShutdown>(OnRaffleShutdown);
-
-        SubscribeLocalEvent<GhostRoleMobSpawnerComponent, TakeGhostRoleEvent>(OnSpawnerTakeRole);
-        SubscribeLocalEvent<GhostRoleMobSpawnerComponent, GetVerbsEvent<Verb>>(OnVerb);
-        SubscribeLocalEvent<GhostRoleMobSpawnerComponent, GhostRoleRadioMessage>(OnGhostRoleRadioMessage);
         _playerManager.PlayerStatusChanged += PlayerStatusChanged;
     }
 
-    private void OnMobStateChanged(Entity<GhostTakeoverAvailableComponent> component, ref MobStateChangedEvent args)
+    [SubscribeLocalEvent]
+    private void OnMobStateChanged(Entity<GhostRoleComponent> ent, ref MobStateChangedEvent args)
     {
-        if (!TryComp(component, out GhostRoleComponent? ghostRole))
-            return;
-
-        switch (args.NewMobState)
-        {
-            case MobState.Alive:
-                {
-                    if (!ghostRole.Taken)
-                        RegisterGhostRole((component, ghostRole));
-                    break;
-                }
-            case MobState.Critical:
-            case MobState.Dead:
-                UnregisterGhostRole((component, ghostRole));
-                break;
-        }
+        if (args.NewMobState == MobState.Alive && !ent.Comp.Taken)
+            EnsureComp<GhostTakeoverAvailableComponent>(ent);
+        else if (args.NewMobState == MobState.Critical || args.NewMobState == MobState.Dead)
+            RemComp<GhostTakeoverAvailableComponent>(ent);
     }
 
     public override void Shutdown()
@@ -121,15 +94,10 @@ public sealed partial class GhostRoleSystem : EntitySystem
         _playerManager.PlayerStatusChanged -= PlayerStatusChanged;
     }
 
-    private uint GetNextRoleIdentifier()
-    {
-        return unchecked(_nextRoleIdentifier++);
-    }
-
     public void OpenEui(ICommonSession session)
     {
         if (session.AttachedEntity is not { Valid: true } attached ||
-            !HasComp<GhostComponent>(attached))
+            !_ghostQuery.HasComp(attached))
             return;
 
         if (_openUis.ContainsKey(session))
@@ -230,7 +198,7 @@ public sealed partial class GhostRoleSystem : EntitySystem
                 continue;
 
             // the raffle is over! find someone to take over the ghost role
-            if (!TryComp(entityUid, out GhostRoleComponent? ghostRole))
+            if (!_ghostRoleQuery.TryComp(entityUid, out var ghostRole))
             {
                 Log.Warning($"Ghost role raffle finished on {entityUid} but {nameof(GhostRoleComponent)} is missing");
                 RemoveRaffleAndUpdateEui(entityUid, raffle);
@@ -252,7 +220,7 @@ public sealed partial class GhostRoleSystem : EntitySystem
                 raffle.CurrentMembers.AsEnumerable(),
                 session =>
                 {
-                    var success = TryTakeover(session, raffle.Identifier);
+                    var success = TryTakeover(session, GetNetEntity(entityUid));
                     foundWinner |= success;
                     return success;
                 }
@@ -269,16 +237,14 @@ public sealed partial class GhostRoleSystem : EntitySystem
         }
     }
 
-    private bool TryTakeover(ICommonSession player, uint identifier)
+    private bool TryTakeover(ICommonSession player, NetEntity identifier)
     {
-        // TODO: the following two checks are kind of redundant since they should already be removed
-        //           from the raffle
-        // can't win if you are disconnected (although you shouldn't be a candidate anyway)
+        // Can't win if you are disconnected (although you shouldn't be a candidate anyway)
         if (player.Status != SessionStatus.InGame)
             return false;
 
-        // can't win if you are no longer a ghost (e.g. if you returned to your body)
-        if (player.AttachedEntity == null || !HasComp<GhostComponent>(player.AttachedEntity))
+        // Can't win if you are no longer a ghost (e.g. if you returned to your body)
+        if (!_ghostQuery.HasComp(player.AttachedEntity))
             return false;
 
         if (Takeover(player, identifier))
@@ -293,7 +259,6 @@ public sealed partial class GhostRoleSystem : EntitySystem
 
     private void RemoveRaffleAndUpdateEui(EntityUid entityUid, GhostRoleRaffleComponent raffle)
     {
-        _ghostRoleRaffles.Remove(raffle.Identifier);
         RemComp(entityUid, raffle);
         UpdateAllEui();
     }
@@ -302,7 +267,7 @@ public sealed partial class GhostRoleSystem : EntitySystem
     {
         if (args.NewStatus == SessionStatus.InGame)
         {
-            var response = new GhostUpdateGhostRoleCountEvent(_ghostRoles.Count);
+            var response = new GhostUpdateGhostRoleCountEvent(Count<GhostTakeoverAvailableComponent>());
             RaiseNetworkEvent(response, args.Session.Channel);
         }
         else
@@ -314,47 +279,57 @@ public sealed partial class GhostRoleSystem : EntitySystem
 
     public void RegisterGhostRole(Entity<GhostRoleComponent> role)
     {
-        if (_ghostRoles.ContainsValue(role))
+        if (role.Comp.Taken)
             return;
 
-        _ghostRoles[role.Comp.Identifier = GetNextRoleIdentifier()] = role;
+        EnsureComp<GhostTakeoverAvailableComponent>(role);
+        if (role.Comp.RaffleConfig != null)
+            EnsureComp<GhostRoleRaffleComponent>(role);
         UpdateAllEui();
     }
 
     public void UnregisterGhostRole(Entity<GhostRoleComponent> role)
     {
-        var comp = role.Comp;
-        if (!_ghostRoles.ContainsKey(comp.Identifier) || _ghostRoles[comp.Identifier] != role)
-            return;
-
-        _ghostRoles.Remove(comp.Identifier);
-        if (TryComp(role.Owner, out GhostRoleRaffleComponent? raffle))
+        var hadTakeover = RemComp<GhostTakeoverAvailableComponent>(role);
+        if (_ghostRaffleQuery.TryComp(role, out var raffle))
         {
             // if a raffle is still running, get rid of it
             RemoveRaffleAndUpdateEui(role.Owner, raffle);
         }
-        else
+        else if (hadTakeover)
         {
             UpdateAllEui();
         }
     }
 
     // probably fine to be init because it's never added during entity initialization, but much later
+    [SubscribeLocalEvent]
+    private void OnTakeoverInit(Entity<GhostTakeoverAvailableComponent> ent, ref ComponentInit args)
+    {
+        if (!_ghostRoleQuery.TryComp(ent, out var ghostRole)
+            || ghostRole.Taken)
+            RemComp(ent, ent.Comp);
+    }
+
+    // probably fine to be init because it's never added during entity initialization, but much later
+    [SubscribeLocalEvent]
     private void OnRaffleInit(Entity<GhostRoleRaffleComponent> ent, ref ComponentInit args)
     {
-        if (!TryComp(ent, out GhostRoleComponent? ghostRole))
+        if (!_ghostRoleQuery.TryComp(ent, out var ghostRole))
         {
-            // can't have a raffle for a ghost role that doesn't exist
-            RemComp<GhostRoleRaffleComponent>(ent);
+            RemComp(ent, ent.Comp); // Ghost role doesn't exist.
             return;
         }
 
         var config = ghostRole.RaffleConfig;
         if (config is null)
-            return; // should, realistically, never be reached but you never know
+        {
+            RemComp(ent, ent.Comp); // No raffle settings.
+            return;
+        }
 
         var settings = config.SettingsOverride
-                       ?? ProtoMan.Index<GhostRoleRaffleSettingsPrototype>(config.Settings).Settings;
+                       ?? ProtoMan.Index(config.Settings).Settings;
 
         if (settings.MaxDuration < settings.InitialDuration)
         {
@@ -365,18 +340,12 @@ public sealed partial class GhostRoleSystem : EntitySystem
         }
 
         var raffle = ent.Comp;
-        raffle.Identifier = ghostRole.Identifier;
-        var countdown = _cfg.GetCVar(CCVars.GhostQuickLottery)? 1 : settings.InitialDuration;
+        var countdown = _cfg.GetCVar(CCVars.GhostQuickLottery) ? 1 : settings.InitialDuration;
         raffle.Countdown = TimeSpan.FromSeconds(countdown);
         raffle.CumulativeTime = TimeSpan.FromSeconds(settings.InitialDuration);
         // we copy these settings into the component because they would be cumbersome to access otherwise
         raffle.JoinExtendsDurationBy = TimeSpan.FromSeconds(settings.JoinExtendsDurationBy);
         raffle.MaxDuration = TimeSpan.FromSeconds(settings.MaxDuration);
-    }
-
-    private void OnRaffleShutdown(Entity<GhostRoleRaffleComponent> ent, ref ComponentShutdown args)
-    {
-        _ghostRoleRaffles.Remove(ent.Comp.Identifier);
     }
 
     /// <summary>
@@ -385,21 +354,18 @@ public sealed partial class GhostRoleSystem : EntitySystem
     /// <param name="player">The player.</param>
     /// <param name="identifier">The ID that represents the ghost role or ghost role raffle.
     /// (A raffle will have the same ID as the ghost role it's for.)</param>
-    private void JoinRaffle(ICommonSession player, uint identifier)
+    private void JoinRaffle(ICommonSession player, NetEntity entity)
     {
-        if (!_ghostRoles.TryGetValue(identifier, out var roleEnt))
+        var ghostUid = GetEntity(entity);
+        if (!_ghostTakeoverQuery.HasComp(ghostUid))
             return;
 
         // get raffle or create a new one if it doesn't exist
-        var raffle = _ghostRoleRaffles.TryGetValue(identifier, out var raffleEnt)
-            ? raffleEnt.Comp
-            : EnsureComp<GhostRoleRaffleComponent>(roleEnt.Owner);
-
-        _ghostRoleRaffles.TryAdd(identifier, (roleEnt.Owner, raffle));
+        var raffle = EnsureComp<GhostRoleRaffleComponent>(ghostUid);
 
         if (!raffle.CurrentMembers.Add(player))
         {
-            Log.Warning($"{player.Name} tried to join raffle for ghost role {identifier} but they are already in the raffle");
+            Log.Warning($"{player.Name} tried to join raffle for ghost role {ghostUid} but they are already in the raffle");
             return;
         }
 
@@ -409,8 +375,8 @@ public sealed partial class GhostRoleSystem : EntitySystem
         if (raffle.AllMembers.Add(player) && raffle.AllMembers.Count > 1
             && raffle.CumulativeTime.Add(raffle.JoinExtendsDurationBy) <= raffle.MaxDuration)
         {
-                raffle.Countdown += raffle.JoinExtendsDurationBy;
-                raffle.CumulativeTime += raffle.JoinExtendsDurationBy;
+            raffle.Countdown += raffle.JoinExtendsDurationBy;
+            raffle.CumulativeTime += raffle.JoinExtendsDurationBy;
         }
 
         UpdateAllEui();
@@ -419,18 +385,19 @@ public sealed partial class GhostRoleSystem : EntitySystem
     /// <summary>
     /// Makes the given player leave the raffle corresponding to the given ID.
     /// </summary>
-    public void LeaveRaffle(ICommonSession player, uint identifier)
+    public void LeaveRaffle(ICommonSession player, NetEntity identifier)
     {
-        if (!_ghostRoleRaffles.TryGetValue(identifier, out var raffleEnt))
+        var roleUid = GetEntity(identifier);
+        if (!_ghostRaffleQuery.TryComp(roleUid, out var raffleComp))
             return;
 
-        if (raffleEnt.Comp.CurrentMembers.Remove(player))
+        if (raffleComp.CurrentMembers.Remove(player))
         {
             UpdateAllEui();
         }
         else
         {
-            Log.Warning($"{player.Name} tried to leave raffle for ghost role {identifier} but they are not in the raffle");
+            Log.Warning($"{player.Name} tried to leave raffle for ghost role {roleUid} but they are not in the raffle");
         }
 
         // (raffle ending because all players left is handled in update())
@@ -443,9 +410,11 @@ public sealed partial class GhostRoleSystem : EntitySystem
     {
         var shouldUpdateEui = false;
 
-        foreach (var raffleEnt in _ghostRoleRaffles.Values)
+        var raffles = EntityQueryEnumerator<GhostRoleRaffleComponent>();
+
+        while (raffles.MoveNext(out var raffleComp))
         {
-            shouldUpdateEui |= raffleEnt.Comp.CurrentMembers.Remove(player);
+            shouldUpdateEui |= raffleComp.CurrentMembers.Remove(player);
         }
 
         if (shouldUpdateEui)
@@ -458,10 +427,14 @@ public sealed partial class GhostRoleSystem : EntitySystem
     /// </summary>
     /// <param name="player">The player.</param>
     /// <param name="identifier">ID of the ghost role.</param>
-    public void Request(ICommonSession player, uint identifier)
+    public void Request(ICommonSession player, NetEntity identifier)
     {
-        if (!_ghostRoles.TryGetValue(identifier, out var roleEnt))
+        var roleUid = GetEntity(identifier);
+        if (!_ghostTakeoverQuery.HasComp(roleUid)
+            || !_ghostRoleQuery.TryComp(roleUid, out var ghostRole))
             return;
+
+        Entity<GhostRoleComponent> roleEnt = (roleUid, ghostRole);
 
         TryPrototypes(roleEnt, out var antags, out var jobs);
 
@@ -506,12 +479,12 @@ public sealed partial class GhostRoleSystem : EntitySystem
 
         // If there is a mind already, check its mind roles.
         // Not sure if this can ever actually happen.
-        if (TryComp<MindContainerComponent>(roleEnt, out var mindCont)
-            && TryComp<MindComponent>(mindCont.Mind, out var mind))
+        if (_mindContainerQuery.TryComp(roleEnt, out var mindCont)
+            && _mindQuery.TryComp(mindCont.Mind, out var mind))
         {
             foreach (var role in mind.MindRoleContainer.ContainedEntities)
             {
-                if(!TryComp<MindRoleComponent>(role, out var comp))
+                if (!_mindRoleQuery.TryComp(role, out var comp))
                     continue;
 
                 if (comp.JobPrototype is not null)
@@ -565,9 +538,11 @@ public sealed partial class GhostRoleSystem : EntitySystem
     /// Attempts having the player take over the ghost role with the corresponding ID. Does not start a raffle.
     /// </summary>
     /// <returns>True if takeover was successful, otherwise false.</returns>
-    public bool Takeover(ICommonSession player, uint identifier)
+    public bool Takeover(ICommonSession player, NetEntity identifier)
     {
-        if (!_ghostRoles.TryGetValue(identifier, out var role))
+        var role = GetEntity(identifier);
+        if (!_ghostTakeoverQuery.HasComp(role)
+            || !_ghostRoleQuery.TryComp(role, out var ghostRole))
             return false;
 
         var ev = new TakeGhostRoleEvent(player);
@@ -577,15 +552,16 @@ public sealed partial class GhostRoleSystem : EntitySystem
             return false;
 
         if (player.AttachedEntity != null)
-            _adminLogger.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{player:player} took the {role.Comp.RoleName:roleName} ghost role {ToPrettyString(player.AttachedEntity.Value):entity}");
+            _adminLogger.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{player:player} took the {ghostRole.RoleName:roleName} ghost role {ToPrettyString(player.AttachedEntity.Value):entity}");
 
         CloseEui(player);
         return true;
     }
 
-    public void Follow(ICommonSession player, uint identifier)
+    public void Follow(ICommonSession player, NetEntity identifier)
     {
-        if (!_ghostRoles.TryGetValue(identifier, out var role))
+        var role = GetEntity(identifier);
+        if (!_ghostTakeoverQuery.HasComp(role))
             return;
 
         if (player.AttachedEntity == null)
@@ -603,7 +579,7 @@ public sealed partial class GhostRoleSystem : EntitySystem
 
         // After taking a ghost role, the player cannot return to the original body, so wipe the player's current mind
         // unless it is a visiting mind
-        if(_mindSystem.TryGetMind(player.UserId, out _, out var mind) && !mind.IsVisitingEntity)
+        if (_mindSystem.TryGetMind(player.UserId, out _, out var mind) && !mind.IsVisitingEntity)
             _mindSystem.WipeMind(player);
 
         var newMind = _mindSystem.CreateMind(player.UserId,
@@ -620,7 +596,13 @@ public sealed partial class GhostRoleSystem : EntitySystem
     /// </summary>
     public int GetGhostRoleCount()
     {
-        return _ghostRoles.Count(pair => MetaData(pair.Value.Owner).EntityPaused == false);
+        // Count includes paused objects, so we need to use an EntityQueryEnumerator.
+        var takeoverQuery = EntityQueryEnumerator<GhostTakeoverAvailableComponent>();
+        var output = 0;
+        while (takeoverQuery.MoveNext(out _, out _))
+            output++;
+
+        return output;
     }
 
     /// <summary>
@@ -633,7 +615,8 @@ public sealed partial class GhostRoleSystem : EntitySystem
     {
         var roles = new List<GhostRoleInfo>();
 
-        foreach (var (id, (uid, role)) in _ghostRoles)
+        var takeoverQuery = EntityQueryEnumerator<GhostTakeoverAvailableComponent, GhostRoleComponent>();
+        while (takeoverQuery.MoveNext(out var uid, out _, out var role))
         {
             if (MetaData(uid).EntityPaused)
                 continue;
@@ -646,17 +629,16 @@ public sealed partial class GhostRoleSystem : EntitySystem
             {
                 kind = GhostRoleKind.RaffleReady;
 
-                if (_ghostRoleRaffles.TryGetValue(id, out var raffleEnt))
+                if (_ghostRaffleQuery.TryComp(uid, out var raffleComp))
                 {
                     kind = GhostRoleKind.RaffleInProgress;
-                    raffle = raffleEnt.Comp;
 
-                    if (player is not null && raffle.CurrentMembers.Contains(player))
+                    if (player is not null && raffleComp.CurrentMembers.Contains(player))
                         kind = GhostRoleKind.RaffleJoined;
                 }
             }
 
-            var rafflePlayerCount = (uint?) raffle?.CurrentMembers.Count ?? 0;
+            var rafflePlayerCount = (uint?)raffle?.CurrentMembers.Count ?? 0;
             var raffleEndTime = raffle is not null
                 ? _timing.CurTime.Add(raffle.Countdown)
                 : TimeSpan.MinValue;
@@ -665,7 +647,7 @@ public sealed partial class GhostRoleSystem : EntitySystem
 
             roles.Add(new GhostRoleInfo
             {
-                Identifier = id,
+                Identifier = GetNetEntity(uid),
                 Name = role.RoleName,
                 Description = role.RoleDescription,
                 Rules = role.RoleRules,
@@ -679,13 +661,14 @@ public sealed partial class GhostRoleSystem : EntitySystem
         return roles.ToArray();
     }
 
+    [SubscribeLocalEvent]
     private void OnPlayerAttached(PlayerAttachedEvent message)
     {
         // Close the session of any player that has a ghost roles window open and isn't a ghost anymore.
         if (!_openUis.ContainsKey(message.Player))
             return;
 
-        if (HasComp<GhostComponent>(message.Entity))
+        if (_ghostQuery.HasComp(message.Entity))
             return;
 
         // The player is not a ghost (anymore), so they should not be in any raffles. Remove them.
@@ -695,33 +678,30 @@ public sealed partial class GhostRoleSystem : EntitySystem
         CloseEui(message.Player);
     }
 
-    private void OnMindAdded(EntityUid uid, GhostTakeoverAvailableComponent component, MindAddedMessage args)
+    [SubscribeLocalEvent]
+    private void OnMindAdded(EntityUid uid, GhostRoleComponent component, MindAddedMessage args)
     {
-        if (!TryComp(uid, out GhostRoleComponent? ghostRole))
-            return;
-
-        if (ghostRole.JobProto != null)
+        if (component.JobProto != null)
         {
-            _roleSystem.MindAddJobRole(args.Mind, args.Mind, silent:false,ghostRole.JobProto);
+            _roleSystem.MindAddJobRole(args.Mind, args.Mind, silent: false, component.JobProto);
         }
 
-        ghostRole.Taken = true;
-        UnregisterGhostRole((uid, ghostRole));
+        component.Taken = true;
+        UnregisterGhostRole((uid, component));
     }
 
-    private void OnMindRemoved(EntityUid uid, GhostTakeoverAvailableComponent component, MindRemovedMessage args)
+    [SubscribeLocalEvent]
+    private void OnMindRemoved(EntityUid uid, GhostRoleComponent component, MindRemovedMessage args)
     {
-        if (!TryComp(uid, out GhostRoleComponent? ghostRole))
-            return;
-
         // Avoid re-registering it for duplicate entries and potential exceptions.
-        if (!ghostRole.ReregisterOnGhost || component.LifeStage > ComponentLifeStage.Running)
+        if (!component.ReregisterOnGhost || component.LifeStage > ComponentLifeStage.Running)
             return;
 
-        ghostRole.Taken = false;
-        RegisterGhostRole((uid, ghostRole));
+        component.Taken = false;
+        RegisterGhostRole((uid, component));
     }
 
+    [SubscribeLocalEvent]
     public void Reset(RoundRestartCleanupEvent ev)
     {
         foreach (var session in _openUis.Keys)
@@ -730,61 +710,66 @@ public sealed partial class GhostRoleSystem : EntitySystem
         }
 
         _openUis.Clear();
-        _ghostRoles.Clear();
-        _ghostRoleRaffles.Clear();
-        _nextRoleIdentifier = 0;
     }
 
-    private void OnPaused(EntityUid uid, GhostRoleComponent component, ref EntityPausedEvent args)
+    [SubscribeLocalEvent]
+    private void OnPaused(Entity<GhostRoleComponent> ent, ref EntityPausedEvent args)
     {
-        if (HasComp<ActorComponent>(uid))
+        if (_actorQuery.HasComp(ent))
             return;
 
         UpdateAllEui();
     }
 
-    private void OnUnpaused(EntityUid uid, GhostRoleComponent component, ref EntityUnpausedEvent args)
+    [SubscribeLocalEvent]
+    private void OnUnpaused(Entity<GhostRoleComponent> ent, ref EntityUnpausedEvent args)
     {
-        if (HasComp<ActorComponent>(uid))
+        if (_actorQuery.HasComp(ent))
             return;
 
         UpdateAllEui();
     }
 
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<GhostRoleComponent> ent, ref MapInitEvent args)
     {
         if (ent.Comp.Probability < 1f && !_random.Prob(ent.Comp.Probability))
+        {
             RemCompDeferred<GhostRoleComponent>(ent);
+            return;
+        }
+
+        if (ent.Comp.Taken)
+            UnregisterGhostRole(ent);
+        else
+            RegisterGhostRole(ent);
     }
 
-    private void OnRoleStartup(Entity<GhostRoleComponent> ent, ref ComponentStartup args)
+    [SubscribeLocalEvent]
+    private void OnRoleShutdown(Entity<GhostRoleComponent> ent, ref ComponentShutdown args)
     {
-        RegisterGhostRole(ent);
+        UnregisterGhostRole(ent);
     }
 
-    private void OnRoleShutdown(Entity<GhostRoleComponent> role, ref ComponentShutdown args)
+    [SubscribeLocalEvent]
+    private void OnSpawnerTakeRole(Entity<GhostRoleMobSpawnerComponent> ent, ref TakeGhostRoleEvent args)
     {
-        UnregisterGhostRole(role);
-    }
-
-    private void OnSpawnerTakeRole(EntityUid uid, GhostRoleMobSpawnerComponent component, ref TakeGhostRoleEvent args)
-    {
-        if (!TryComp(uid, out GhostRoleComponent? ghostRole) ||
-            !CanTakeGhost(uid, ghostRole))
+        if (!_ghostRoleQuery.TryComp(ent, out var ghostRole) ||
+            !CanTakeGhost((ent, ghostRole)))
         {
             args.TookRole = false;
             return;
         }
 
-        if (string.IsNullOrEmpty(component.Prototype))
+        if (string.IsNullOrEmpty(ent.Comp.Prototype))
             throw new NullReferenceException("Prototype string cannot be null or empty!");
 
-        if (!_transform.TryGetMapOrGridCoordinates(uid, out var spawnCoordinates))
+        if (!_transform.TryGetMapOrGridCoordinates(ent, out var spawnCoordinates))
             return;
 
-        var mob = Spawn(component.Prototype, spawnCoordinates.Value);
+        var mob = Spawn(ent.Comp.Prototype, spawnCoordinates.Value);
 
-        var spawnedEvent = new GhostRoleSpawnerUsedEvent(uid, mob);
+        var spawnedEvent = new GhostRoleSpawnerUsedEvent(ent, mob);
         RaiseLocalEvent(mob, ref spawnedEvent);
 
         if (ghostRole.MakeSentient)
@@ -792,9 +777,9 @@ public sealed partial class GhostRoleSystem : EntitySystem
 
         EnsureComp<MindContainerComponent>(mob);
 
-        GhostRoleInternalCreateMindAndTransfer(args.Player, uid, mob, ghostRole);
+        GhostRoleInternalCreateMindAndTransfer(args.Player, ent, mob, ghostRole);
 
-        if (++component.CurrentTakeovers < component.AvailableTakeovers)
+        if (++ent.Comp.CurrentTakeovers < ent.Comp.AvailableTakeovers)
         {
             args.TookRole = true;
             return;
@@ -802,31 +787,31 @@ public sealed partial class GhostRoleSystem : EntitySystem
 
         ghostRole.Taken = true;
 
-        if (component.DeleteOnSpawn)
-            QueueDel(uid);
+        if (ent.Comp.DeleteOnSpawn)
+            QueueDel(ent);
 
         args.TookRole = true;
     }
 
-    private bool CanTakeGhost(EntityUid uid, GhostRoleComponent? component = null)
+    private bool CanTakeGhost(Entity<GhostRoleComponent?> ent)
     {
-        return Resolve(uid, ref component, false) &&
-               !component.Taken &&
-               !MetaData(uid).EntityPaused;
+        return Resolve(ent, ref ent.Comp, false) &&
+               !ent.Comp.Taken &&
+               !MetaData(ent).EntityPaused;
     }
 
-    private void OnTakeoverTakeRole(EntityUid uid, GhostTakeoverAvailableComponent component, ref TakeGhostRoleEvent args)
+    [SubscribeLocalEvent]
+    private void OnTakeRole(Entity<GhostRoleComponent> ent, ref TakeGhostRoleEvent args)
     {
-        if (!TryComp(uid, out GhostRoleComponent? ghostRole) ||
-            !CanTakeGhost(uid, ghostRole))
+        if (!CanTakeGhost(ent.AsNullable()))
         {
             args.TookRole = false;
             return;
         }
 
-        ghostRole.Taken = true;
+        ent.Comp.Taken = true;
 
-        var mind = EnsureComp<MindContainerComponent>(uid);
+        var mind = EnsureComp<MindContainerComponent>(ent);
 
         if (mind.HasMind)
         {
@@ -834,18 +819,19 @@ public sealed partial class GhostRoleSystem : EntitySystem
             return;
         }
 
-        if (ghostRole.MakeSentient)
-            _mindSystem.MakeSentient(uid, ghostRole.AllowMovement, ghostRole.AllowSpeech);
+        if (ent.Comp.MakeSentient)
+            _mindSystem.MakeSentient(ent, ent.Comp.AllowMovement, ent.Comp.AllowSpeech);
 
-        GhostRoleInternalCreateMindAndTransfer(args.Player, uid, uid, ghostRole);
-        UnregisterGhostRole((uid, ghostRole));
+        GhostRoleInternalCreateMindAndTransfer(args.Player, ent, ent, ent.Comp);
+        UnregisterGhostRole(ent);
 
         args.TookRole = true;
     }
 
-    private void OnVerb(EntityUid uid, GhostRoleMobSpawnerComponent component, GetVerbsEvent<Verb> args)
+    [SubscribeLocalEvent]
+    private void OnVerb(Entity<GhostRoleMobSpawnerComponent> ent, ref GetVerbsEvent<Verb> args)
     {
-        var prototypes = component.SelectablePrototypes;
+        var prototypes = ent.Comp.SelectablePrototypes;
         if (prototypes.Count < 1)
             return;
 
@@ -854,28 +840,28 @@ public sealed partial class GhostRoleSystem : EntitySystem
 
         var verbs = new ValueList<Verb>();
 
-        foreach (var prototypeID in prototypes)
+        foreach (var ghostProtoId in prototypes)
         {
-            if (ProtoMan.TryIndex<GhostRolePrototype>(prototypeID, out var prototype))
-            {
-                var verb = CreateVerb(uid, component, args.User, prototype);
-                verbs.Add(verb);
-            }
+            if (!ProtoMan.TryIndex(ghostProtoId, out var ghostProto))
+                continue;
+
+            var verb = CreateVerb(ent, args.User, ghostProto);
+            verbs.Add(verb);
         }
 
         args.Verbs.UnionWith(verbs);
     }
 
-    private Verb CreateVerb(EntityUid uid, GhostRoleMobSpawnerComponent component, EntityUid userUid, GhostRolePrototype prototype)
+    private Verb CreateVerb(Entity<GhostRoleMobSpawnerComponent> ent, EntityUid userUid, GhostRolePrototype prototype)
     {
         var verbText = Loc.GetString(prototype.Name);
 
         return new Verb()
         {
             Text = verbText,
-            Disabled = component.Prototype == prototype.EntityPrototype,
+            Disabled = ent.Comp.Prototype == prototype.EntityPrototype,
             Category = VerbCategory.SelectType,
-            Act = () => SetMode(uid, prototype, verbText, component, userUid)
+            Act = () => SetMode(ent, prototype, verbText, ent.Comp, userUid)
         };
     }
 
@@ -900,6 +886,7 @@ public sealed partial class GhostRoleSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     public void OnGhostRoleRadioMessage(Entity<GhostRoleMobSpawnerComponent> entity, ref GhostRoleRadioMessage args)
     {
         if (!ProtoMan.Resolve(args.ProtoId, out var ghostRoleProto))
@@ -913,6 +900,27 @@ public sealed partial class GhostRoleSystem : EntitySystem
         }
 
         SetMode(entity.Owner, ghostRoleProto, ghostRoleProto.Name, entity.Comp);
+    }
+
+    private bool TryGetRaffleSettings(GhostRoleRaffleConfig? raffleConfig, [NotNullWhen(true)] out GhostRoleRaffleSettings? settings)
+    {
+        settings = null;
+        if (raffleConfig == null)
+            return false;
+
+        if (raffleConfig.SettingsOverride != null)
+        {
+            settings = raffleConfig.SettingsOverride;
+            return true;
+        }
+
+        if (ProtoMan.TryIndex(raffleConfig.Settings, out var settingsProto))
+        {
+            settings = settingsProto.Settings;
+            return true;
+        }
+
+        return false;
     }
 }
 

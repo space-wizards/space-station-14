@@ -580,7 +580,6 @@
       raffle:
         settings: default
       job: Borg
-    - type: GhostTakeoverAvailable
 
 - type: entity
   id: PlayerBorgSyndicateSaboteurBattery
@@ -614,7 +613,6 @@
       raffle:
         settings: default
       job: Borg
-    - type: GhostTakeoverAvailable
 
 - type: entity
   parent: MarkerBase
@@ -670,7 +668,6 @@
       settings: default
     reregister: false
     job: Borg
-  - type: GhostTakeoverAvailable
 
 - type: entity
   parent: BorgChassisDerelict
@@ -706,7 +703,6 @@
         settings: default
       reregister: false
       job: Borg
-    - type: GhostTakeoverAvailable
 
 - type: entity
   parent: JanitorBorgChassisDerelict
@@ -744,7 +740,6 @@
       settings: default
     reregister: false
     job: Borg
-  - type: GhostTakeoverAvailable
 
 - type: entity
   parent: MedicalBorgChassisDerelict
@@ -783,7 +778,6 @@
       settings: default
     reregister: false
     job: Borg
-  - type: GhostTakeoverAvailable
 
 - type: entity
   parent: MiningBorgChassisDerelict
@@ -821,7 +815,6 @@
       settings: default
     reregister: false
     job: Borg
-  - type: GhostTakeoverAvailable
 
 - type: entity
   parent: SyndicateAssaultBorgChassisDerelict
@@ -860,4 +853,3 @@
       settings: default
     reregister: false
     job: Borg
-  - type: GhostTakeoverAvailable

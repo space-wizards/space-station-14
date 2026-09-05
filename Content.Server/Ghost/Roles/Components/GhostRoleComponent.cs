@@ -5,6 +5,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Ghost.Roles.Components;
 
+/// <summary>
+/// A component for roles that can be taken over by dead or observing players.
+/// </summary>
 [RegisterComponent]
 [Access(typeof(GhostRoleSystem))]
 public sealed partial class GhostRoleComponent : Component
@@ -18,7 +21,7 @@ public sealed partial class GhostRoleComponent : Component
     /// <summary>
     /// Whether the <see cref="MakeSentientCommand"/> should run on the mob.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)] [DataField("makeSentient")]
+    [DataField]
     public bool MakeSentient = true;
 
     /// <summary>
@@ -78,16 +81,12 @@ public sealed partial class GhostRoleComponent : Component
     [DataField]
     public bool AllowMovement { get; set; }
 
-    [ViewVariables(VVAccess.ReadOnly)]
-    public bool Taken { get; set; }
-
     [ViewVariables]
-    public uint Identifier { get; set; }
+    public bool Taken { get; set; }
 
     /// <summary>
     /// Reregisters the ghost role when the current player ghosts.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("reregister")]
     public bool ReregisterOnGhost { get; set; } = true;
 
