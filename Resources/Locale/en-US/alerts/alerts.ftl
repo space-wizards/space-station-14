@@ -116,3 +116,6 @@ alerts-prying-desc = You can innately pry doors open using alternative interacti
 
 alerts-changeling-chemicals-name = Chemicals
 alerts-changeling-chemicals-desc = The chemicals stored within our glands. We use them for many of our abilities to function. They regenerate over time.
+
+alerts-dragon-rift-timer-name = Summon Rift Timer
+alerts-dragon-rift-timer-desc = Summon a rift before the time runs out!
