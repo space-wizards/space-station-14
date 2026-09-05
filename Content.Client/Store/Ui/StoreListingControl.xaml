@@ -1,5 +1,5 @@
 <Control xmlns="https://spacestation14.io"
-    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
+         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
     <BoxContainer Margin="8,0,8,8" Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
             <Label Name="StoreItemName" HorizontalExpand="True" />
