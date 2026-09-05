@@ -1,7 +1,6 @@
 using System.Numerics;
 using Robust.Client.Graphics;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 
 namespace Content.Client.TextScreen;
 
@@ -9,7 +8,10 @@ namespace Content.Client.TextScreen;
 /// A component for rendering text on a screen.
 /// Can show scrolling text, timers, or other specific-use information (e.g. arrivals timer)
 /// </summary>
-[RegisterComponent]
+/// <remarks>
+/// Pausing handled manually due to manual TextScreenRow logic.
+/// </remarks>
+[RegisterComponent, Access(typeof(TextScreenSystem))]
 public sealed partial class TextScreenVisualsComponent : Component
 {
     /// <summary>
@@ -27,6 +29,12 @@ public sealed partial class TextScreenVisualsComponent : Component
     public Color Color = new Color(15, 151, 251);
 
     /// <summary>
+    /// The current color being drawn on the screen.
+    /// </summary>
+    [ViewVariables]
+    public Color CurrentColor;
+
+    /// <summary>
     /// Offset for centering the text.
     /// </summary>
     [DataField]
@@ -37,12 +45,6 @@ public sealed partial class TextScreenVisualsComponent : Component
     /// </summary>
     [DataField]
     public Vector2 TimerOffset = Vector2.Zero;
-
-    /// <summary>
-    /// Number of rows of text this screen can render.
-    /// </summary>
-    [DataField]
-    public int Rows = 2;
 
     /// <summary>
     /// Vertical distance between the top pixel of each row.
@@ -60,53 +62,59 @@ public sealed partial class TextScreenVisualsComponent : Component
     public int RowLength = 5;
 
     /// <summary>
-    /// Text the screen should show when it finishes a timer.
+    /// When scrolling, a horizontal offset for the scrolling, in pixels
     /// </summary>
+    /// <seealso cref="TextScreenSystem.CharWidth"/>
     [DataField]
-    public string?[] Text = new string?[2];
+    public int HorizontalScrollOffset;
 
     /// <summary>
-    /// Text the screen will draw whenever appearance is updated.
+    /// When scrolling, the number of pixels that the leftmost letters should be invisible for.
+    /// Value should be between [0,CharWidth)
     /// </summary>
-    public string?[] TextToDraw = new string?[2];
+    /// <seealso cref="TextScreenSystem.CharWidth"/>
+    [DataField]
+    public int LeftInvisiblePixels;
 
     /// <summary>
-    /// Per-character layers, for mapping into the sprite component.
+    /// When scrolling, the number of pixels that the rightmost letters should be invisible for.
+    /// Value should be between [0,CharWidth)
     /// </summary>
+    /// <seealso cref="TextScreenSystem.CharWidth"/>
     [DataField]
-    public Dictionary<string, string?> LayerStatesToDraw = new();
+    public int RightInvisiblePixels;
 
     /// <summary>
     /// If true, the screen is able to scroll its text.
-    /// Not used for timers.
     /// </summary>
     [DataField]
     public bool ScrollEnabled;
 
     /// <summary>
-    /// The next time that the text on each row should be scrolled.
-    /// </summary>
-    [DataField(customTypeSerializer: typeof(CustomArraySerializer<TimeSpan, TimeOffsetSerializer>))]
-    public TimeSpan[] NextScrollTime = [TimeSpan.MaxValue, TimeSpan.MaxValue];
-
-    /// <summary>
-    /// The amount of time between scrolling individual pixels per row.
+    /// The list of row data for the text screens.
     /// </summary>
     [DataField]
-    public TimeSpan[] TimeBetweenScrolls = [TimeSpan.MaxValue, TimeSpan.MaxValue];
+    public TextScreenRow[] RowData = { new(), new() };
 
     /// <summary>
-    /// A counter the scroll position of each row.
-    /// Should be used modulo the pixel width of the actual strings.
+    /// The text to display on the screen.
+    /// Each row delimited with a newline (\n) character.
     /// </summary>
-    [DataField]
-    public int[] ScrollPosition = new int[2];
+    [ViewVariables]
+    public string? TextToDisplay;
 
     /// <summary>
-    /// The last received text for this screen. Prevents resetting the scroll state on updates.
+    /// The time that the text was sent.
+    /// Used for scrolling.
     /// </summary>
-    [DataField]
-    public string? LastText;
+    [ViewVariables]
+    public TimeSpan TextTime;
+
+    /// <summary>
+    /// If true, text to display has been updated and should redraw.
+    /// </summary>
+    [ViewVariables]
+    public bool NewTextToDisplay;
 
     /// <summary>
     /// The layer for the outer frame of the text screen.
@@ -114,22 +122,39 @@ public sealed partial class TextScreenVisualsComponent : Component
     /// </summary>
     [DataField]
     public PrototypeLayerData? FrameState;
+}
+
+/// <summary>
+/// All information about a given row of text.
+/// </summary>
+[DataRecord, Serializable]
+public partial struct TextScreenRow()
+{
+    /// <summary>
+    /// The time this row should next scroll the text by a pixel.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextScroll = TimeSpan.MaxValue;
 
     /// <summary>
-    /// The format string to use for displaying hours when used as a timer.
+    /// The delay between each pixel scrolled on this screen.
     /// </summary>
-    [DataField]
-    public string HourFormat = "D2";
+    public TimeSpan ScrollDelay = TimeSpan.MaxValue;
 
     /// <summary>
-    /// The format string to use for displaying minutes when used as a timer.
+    /// The current position of the row in the string, in pixels.
+    /// Increases monotonically, should be taken modulo the text length.
+    /// Each character is a fixed size (assumed 4 pixels wide)
     /// </summary>
-    [DataField]
-    public string MinuteFormat = "D2";
+    public int ScrollPosition;
 
     /// <summary>
-    /// The format string to use for displaying seconds when used as a timer.
+    /// A list with each of the row's sprite layers, with the key inside of it and the state it's currently on.
     /// </summary>
-    [DataField]
-    public string SecondFormat = "D2";
+    public List<(string Key, string? State)> Layers = new();
+
+    /// <summary>
+    /// The full text currently being drawn on the row.
+    /// </summary>
+    public string Text = string.Empty;
 }
