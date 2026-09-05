@@ -231,6 +231,7 @@
         Piercing: 0.35
         Heat: 0.35
         Caustic: 0.5
+        Radiation: 0.25
   - type: StaminaResistance # do not add these to other equipment or mobs, we don't want to microbalance these everywhere
     damageCoefficient: 0.45
   - type: ClothingSpeedModifier
