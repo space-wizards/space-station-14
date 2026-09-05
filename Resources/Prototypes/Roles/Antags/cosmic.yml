@@ -24,8 +24,18 @@
   - type: RevolutionaryImmune
   - type: ZombieImmune
   - type: ActionGrant
+    removeOnShutdown: false
     actions:
     - ActionCosmicSiphon
     - ActionCosmicShunt
+    - ActionCosmicShift
+    # ABILITIES HERE FOR DEBUGGING
+    - ActionCosmicFragmentation
+    - ActionCosmicNova
+    - ActionCosmicImposition
+    - ActionCosmicIngress
+    - ActionCosmicGlare
+    - ActionCosmicLapse
+    # ABILITIES HERE FOR DEBUGGING
   mindRoles:
   - MindRoleCosmicCultist

@@ -1,7 +1,3 @@
-# SPDX-FileCopyrightText: 2025 AftrLite
-#
-# SPDX-License-Identifier: LicenseRef-CosmicCult
-
 - type: entity
   categories: [ HideSpawnMenu ]
   id: WeaponArcCosmic
@@ -39,7 +35,23 @@
 
 - type: entity
   categories: [ HideSpawnMenu ]
-  id: CosmicFloorSpawnVfx
+  id: EffectCosmicBase
+  components:
+  - type: TimedDespawn
+    lifetime: 1.75
+  - type: Transform
+    noRot: true
+    anchored: false
+  - type: Sprite
+    netsync: false
+    drawdepth: Effects
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  id: EffectCosmicTileSpawn
   placement:
     mode: SnapgridCenter
   components:
@@ -60,24 +72,8 @@
 
 - type: entity
   categories: [ HideSpawnMenu ]
-  id: BaseCosmicVfx
-  components:
-  - type: TimedDespawn
-    lifetime: 1.75
-  - type: Transform
-    noRot: true
-    anchored: false
-  - type: Sprite
-    netsync: false
-    drawdepth: Effects
-  - type: Tag
-    tags:
-    - HideContextMenu
-
-- type: entity
-  categories: [ HideSpawnMenu ]
-  parent: BaseCosmicVfx
-  id: CosmicLapseAbilityVfx
+  parent: EffectCosmicBase
+  id: EffectCosmicActionLapse
   components:
   - type: Sprite
     layers:
@@ -87,8 +83,8 @@
 
 - type: entity
   categories: [ HideSpawnMenu ]
-  parent: BaseCosmicVfx
-  id: CosmicShiftAbilityVfx
+  parent: EffectCosmicBase
+  id: EffectCosmicActionShift
   components:
   - type: Sprite
     drawdepth: BelowMobs
@@ -120,8 +116,8 @@
 
 - type: entity
   categories: [ HideSpawnMenu ]
-  parent: BaseCosmicVfx
-  id: CosmicShuntAbilityVfx
+  parent: EffectCosmicBase
+  id: EffectCosmicActionShunt
   components:
   - type: Sprite
     layers:
@@ -148,11 +144,12 @@
 
 - type: entity
   categories: [ HideSpawnMenu ]
-  parent: BaseCosmicVfx
-  id: CosmicGenericVfx
+  parent: EffectCosmicBase
+  id: EffectCosmicGeneric
   components:
+  - type: EffectVisuals
   - type: TimedDespawn
-    lifetime: 2.025
+    lifetime: 0.7
   - type: Sprite
     layers:
     - sprite: Effects/Cosmic/effect-generic.rsi
@@ -167,8 +164,8 @@
     behaviours:
     - !type:FadeBehaviour
       interpolate: Linear
-      minDuration: 2.025
-      maxDuration: 2.025
+      minDuration: 0.675
+      maxDuration: 0.675
       startValue: 0.1
       endValue: 2
       property: Energy
@@ -178,8 +175,8 @@
 
 - type: entity
   categories: [ HideSpawnMenu ]
-  parent: BaseCosmicVfx
-  id: CosmicGlareAbilityVfx
+  parent: EffectCosmicBase
+  id: EffectCosmicActionGlare
   components:
   - type: TimedDespawn
     lifetime: 1.1
@@ -208,12 +205,14 @@
 
 - type: entity
   categories: [ HideSpawnMenu ]
-  parent: BaseCosmicVfx
-  id: CosmicImpositionAbilityVfx
+  parent: EffectCosmicBase
+  id: EffectCosmicActionImposition
   components:
+  - type: EffectVisuals
   - type: TimedDespawn
-    lifetime: 1.92
+    lifetime: 0.9
   - type: Sprite
+    noRot: true
     layers:
     - sprite: Effects/Cosmic/ability-imposition.rsi
       state: vfx
@@ -227,8 +226,8 @@
     behaviours:
     - !type:FadeBehaviour
       interpolate: Linear
-      minDuration: 1.92
-      maxDuration: 1.92
+      minDuration: 0.9
+      maxDuration: 0.9
       startValue: 0.1
       endValue: 6
       property: Energy
@@ -238,7 +237,21 @@
 
 - type: entity
   categories: [ HideSpawnMenu ]
-  id: CosmicNovaImpactVfx
+  parent: EffectCosmicBase
+  id: EffectCosmicActionImpositionOverlay
+  components:
+  - type: TimedDespawn
+    lifetime: 6
+  - type: Sprite
+    noRot: true
+    layers:
+    - sprite: Effects/Cosmic/ability-imposition-overlay.rsi
+      state: vfx
+      shader: unshaded
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  id: EffectCosmicActionNovaImpact
   components:
   - type: TimedDespawn
     lifetime: 1.1
@@ -272,7 +285,7 @@
 
 - type: entity
   categories: [ HideSpawnMenu ]
-  parent: BaseCosmicVfx
+  parent: EffectCosmicBase
   id: CosmicColossusAttack1Vfx
   placement:
     mode: SnapgridCenter
@@ -312,7 +325,7 @@
 
 - type: entity
   categories: [ HideSpawnMenu ]
-  id: InfluenceEffectProjectile
+  id: EffectCosmicInfluenceGainChaser
   components:
   - type: ScreechShockWave
     waveStrength: 1
@@ -355,7 +368,7 @@
 
 - type: entity
   categories: [ HideSpawnMenu ]
-  id: InfluenceEffectMonument
+  id: EffectCosmicInfluenceGainMonument
   components:
   - type: TimedDespawn
     lifetime: 1.5
@@ -394,7 +407,7 @@
 
 - type: entity
   categories: [ HideSpawnMenu ]
-  id: InfluenceEffectIcon
+  id: EffectCosmicInfluenceGainIcon
   components:
   - type: TimedDespawn
     lifetime: 4

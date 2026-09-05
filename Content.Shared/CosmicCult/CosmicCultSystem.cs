@@ -19,6 +19,7 @@ using Content.Shared.Popups;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
 using Content.Shared.Stealth.Components;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
@@ -52,7 +53,8 @@ public abstract partial class CosmicCultSystem : EntitySystem
     [Dependency] private SharedRoleSystem _role = default!;
 
     public static readonly EntProtoId StunId = "StatusEffectStunned";
-    public static readonly EntProtoId GenericVfx = "CosmicGenericVfx";
+    public static readonly EntProtoId GenericVfx = "EffectCosmicGeneric";
+    public static SoundSpecifier GenericSfx = new SoundPathSpecifier("/Audio/Cosmic/trigger-sound.ogg");
 
     public override void Initialize()
     {
@@ -147,6 +149,9 @@ public abstract partial class CosmicCultSystem : EntitySystem
             _appearance.SetData(ent, CosmicFontVisualLayers.Base, true);
             if (TryComp<CosmicExamineComponent>(ent, out var examine))
                 examine.CultistText = "cosmic-examine-text-stigma-harvested";
+
+            var evt = new CosmicCultistProgressEvent(3);
+            RaiseLocalEvent(args.User, ref evt);
         }
         else if (!EntityIsCultist(args.User))
         {
@@ -209,6 +214,9 @@ public abstract partial class CosmicCultSystem : EntitySystem
             if (TryComp<CosmicExamineComponent>(ent, out var examine))
                 examine.CultistText = "cosmic-examine-text-font-activated";
         }
+
+        var evt = new CosmicCultistProgressEvent(3);
+        RaiseLocalEvent(args.User, ref evt);
         PredictedQueueDel(args.Used);
         Dirty(ent);
         args.Handled = true;
@@ -305,3 +313,6 @@ public abstract partial class CosmicCultSystem : EntitySystem
         args.AddModifier("cosmiccult-player-ascendant");
     }
 }
+
+[ByRefEvent]
+public record struct CosmicCultistProgressEvent(int Progress);

@@ -35,7 +35,7 @@ public sealed partial class CosmicChantryComponent : Component
 
     [DataField] public EntProtoId Colossus = "MobCosmicColossus";
 
-    [DataField] public EntProtoId FallbackBrain = "CosmicCultMindSink";
+    [DataField] public EntProtoId FallbackBrain = "PositronicBrain";
 
     [DataField] public EntProtoId SpawnVfx = "CosmicGlareAbilityVfx";
 

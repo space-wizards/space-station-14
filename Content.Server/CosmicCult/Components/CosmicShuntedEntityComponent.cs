@@ -17,7 +17,7 @@ public sealed partial class CosmicShuntedEntityComponent : Component
 
     [DataField] public TimeSpan ShuntedDuration;
 
-    public Entity<CosmicCultistComponent> ShuntCaster;
+    public EntityUid ShuntCaster;
 
-    public Entity<CosmicCultistComponent> WispGrabber;
+    public EntityUid WispGrabber;
 }

@@ -2,6 +2,7 @@ using Content.Server.Antag;
 using Content.Server.Silicons.Laws;
 using Content.Shared.CosmicCult;
 using Content.Shared.CosmicCult.Components;
+using Content.Shared.CosmicCult.Components.Actions;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Radio.Components;
@@ -30,19 +31,14 @@ public sealed partial class CosmicFragmentationSystem : EntitySystem
         // TODO: Move to action specific components
         var comp = ent.Comp;
         comp.CosmicEmpowered = false;
-        comp.CosmicSiphonQuantity = CosmicCultistComponent.DefaultCosmicSiphonQuantity;
-        comp.CosmicGlareRange = CosmicCultistComponent.DefaultCosmicGlareRange;
-        comp.CosmicGlareDuration = CosmicCultistComponent.DefaultCosmicGlareDuration;
-        comp.CosmicGlareStun = CosmicCultistComponent.DefaultCosmicGlareStun;
-        comp.CosmicImpositionDuration = CosmicCultistComponent.DefaultCosmicImpositionDuration;
-        comp.CosmicShuntDuration = CosmicCultistComponent.DefaultCosmicShuntDuration;
-        comp.CosmicShuntDelay = CosmicCultistComponent.DefaultCosmicShuntDelay;
-        comp.CosmicShiftWindup = CosmicCultistComponent.DefaultCosmicShiftWindup;
     }
 
     [SubscribeLocalEvent]
-    private void OnCosmicFragmentation(Entity<CosmicCultistComponent> ent, ref EventCosmicFragmentation args)
+    private void OnCosmicFragmentation(Entity<CosmicActionFragmentationComponent> ent, ref EventCosmicFragmentation args)
     {
+        if (!HasComp<CosmicCultActionComponent>(ent))
+            return;
+
         if (args.Handled || _mobState.IsIncapacitated(args.Target))
             return;
 
@@ -50,7 +46,7 @@ public sealed partial class CosmicFragmentationSystem : EntitySystem
             return; // Don't waste charges on borgs that ain't here.
 
         args.Handled = true;
-        var evt = new MalignFragmentationEvent(ent, args.Target);
+        var evt = new MalignFragmentationEvent(args.Target);
         RaiseLocalEvent(args.Target, ref evt);
     }
 
@@ -103,4 +99,4 @@ public sealed partial class CosmicFragmentationSystem : EntitySystem
 }
 
 [ByRefEvent]
-public record struct MalignFragmentationEvent(Entity<CosmicCultistComponent> User, EntityUid Target);
+public record struct MalignFragmentationEvent(EntityUid Target);

@@ -55,26 +55,18 @@ public sealed partial class CosmicRiftSystem : EntitySystem
                 rift.Occupied = false;
             return;
         }
-
         args.Handled = true;
-        var actionEnt = _actions.AddAction(uid, uid.Comp.CosmicFragmentationAction);
+
+        _actions.AddAction(uid, uid.Comp.CosmicFragmentationAction);
         Spawn(CosmicCultSystem.GenericVfx, Transform(target).Coordinates);
 
         var ev = new CosmicCultistEmpowerChangedEvent(uid, true);
         RaiseLocalEvent(uid, ref ev);
 
         // TODO: Move to action specific components.
-        comp.ActionEntities.Add(actionEnt);
         comp.WasEmpowered = true;
         comp.CosmicEmpowered = true;
-        comp.CosmicSiphonQuantity = 2;
-        comp.CosmicGlareRange = 10;
         comp.CosmicShiftWindup = TimeSpan.FromSeconds(1);
-        comp.CosmicGlareDuration = TimeSpan.FromSeconds(10);
-        comp.CosmicGlareStun = TimeSpan.FromSeconds(1);
-        comp.CosmicImpositionDuration = TimeSpan.FromSeconds(8);
-        comp.CosmicShuntDuration = TimeSpan.FromSeconds(26);
-        comp.CosmicShuntDelay = TimeSpan.FromSeconds(0.4);
         comp.Respiration = false;
         // TODO: COSMIC CULT - CULTISTS MUST BE PRESSURE IMMUNE
         _popup.PopupCoordinates(Loc.GetString("cosmiccult-rift-absorb", ("NAME", Identity.Entity(args.Args.User, EntityManager))), Transform(args.Args.User).Coordinates, PopupType.MediumCaution);

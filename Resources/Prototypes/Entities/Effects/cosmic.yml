@@ -21,11 +21,11 @@
     cultistText: cosmic-examine-text-rift
     othersText: cosmic-examine-text-crew-rift
   - type: CosmicRift
-#  - type: StellarTileConversion
-#    conversionMaxTicks: 6
-#    conversionTime: 8
-#    conversionChance: 1
-#    chanceReduction: 0.16
+  - type: TileConversion
+    conversionMaxTicks: 6
+    conversionTime: 8
+    conversionChance: 1
+    chanceReduction: 0.16
   - type: PointLight
     color: "#42a4ae"
     radius: 2.5
@@ -68,10 +68,10 @@
   - type: CosmicExamine
     cultistText: cosmic-examine-text-gateway
     othersText: cosmic-examine-text-crew-gateway
-#  - type: StellarTileConversion
-#    conversionTiles:
-#    - FloorCosmicRough
-#    - FloorCosmicCorruption
+  - type: TileConversion
+    conversionTiles:
+    - FloorCosmicRough
+    - FloorCosmicCorruption
     conversionMaxTicks: 4
     conversionTime: 1
     conversionChance: 1

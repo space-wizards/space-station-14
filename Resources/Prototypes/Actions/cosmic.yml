@@ -1,11 +1,15 @@
-
 - type: entity
   parent: BaseDoAfterAction
   id: ActionCosmicSiphon
   name: Siphon Entropy
   description: Stealthily siphon entropy from your target. Siphoning large amounts of entropy will increase your power.
   components:
+  - type: DoAfterArgs
+    delay: 0.9
+    hidden: True
+    breakOnMove: True
   - type: Action
+    raiseOnAction: true
     useDelay: 50
     itemIconStyle: BigAction
   - type: Sprite
@@ -21,7 +25,12 @@
       components:
       - CosmicCultist
       - ActiveNPC
-    event: !type:EventCosmicSiphon {}
+    event: !type:EventCosmicSiphon
+  - type: CosmicActionSiphon
+  - type: CosmicCultAction
+    vfx: EffectCosmicActionSiphon
+    sfx:
+      path: "/Audio/Cosmic/Abilities/ability-siphon.ogg"
 
 - type: entity
   parent: BaseDoAfterAction
@@ -29,7 +38,10 @@
   name: Shunt Subjectivity
   description: Shunt your target's mind out of their body and unto the cosmic dark, temporarily rendering their body mindless.
   components:
+  - type: DoAfterArgs
+    delay: 0.566
   - type: Action
+    raiseOnAction: true
     useDelay: 120
     itemIconStyle: BigAction
   - type: Sprite
@@ -45,9 +57,14 @@
     blacklist:
       components:
       - CosmicCultist
-      - CosmicBlank
+      - CosmicShuntedOrigin
       - ActiveNPC
-    event: !type:EventCosmicShunt {}
+    event: !type:EventCosmicShunt
+  - type: CosmicActionShunt
+  - type: CosmicCultAction
+    vfx: EffectCosmicActionShunt
+    sfx:
+      path: "/Audio/Cosmic/Abilities/ability-shunt.ogg"
 
 - type: entity
   parent: BaseMentalAction
@@ -56,6 +73,7 @@
   description: Lapse your target's corporeal form, temporarily rendering it immutable, impassible, and frozen in place.
   components:
   - type: Action
+    raiseOnAction: true
     useDelay: 45
     itemIconStyle: BigAction
   - type: Sprite
@@ -70,8 +88,13 @@
       - HumanoidProfile
     blacklist:
       components:
-      - CosmicBlank
-    event: !type:EventCosmicLapse {}
+      - CosmicShuntedOrigin
+    event: !type:EventCosmicLapse
+  - type: CosmicActionLapse
+  - type: CosmicCultAction
+    vfx: EffectCosmicActionLapse
+    sfx:
+      path: "/Audio/Cosmic/Abilities/ability-lapse.ogg"
 
 - type: entity
   parent: BaseMentalAction
@@ -84,6 +107,7 @@
     confirmDelay: 0.1
     primeTime: 3
   - type: Action
+    raiseOnAction: true
     useDelay: 60
     checkCanInteract: false
     itemIconStyle: BigAction
@@ -92,7 +116,12 @@
     layers:
     - state: glare
   - type: InstantAction
-    event: !type:EventCosmicGlare {}
+    event: !type:EventCosmicGlare
+  - type: CosmicActionGlare
+  - type: CosmicCultAction
+    vfx: EffectCosmicActionGlare
+    sfx:
+      path: "/Audio/Cosmic/Abilities/ability-glare.ogg"
 
 - type: entity
   parent: BaseMentalAction
@@ -100,7 +129,6 @@
   name: Force Ingress
   description: Use a concentrated blast of power to force a secure doorway open.
   components:
-  - type: CosmicCultAction
   - type: Action
     raiseOnAction: true
     useDelay: 20
@@ -114,8 +142,9 @@
     whitelist:
       components:
       - Door
-    event: !type:EventCosmicIngress {}
-  - type: CosmicIngressAction
+    event: !type:EventCosmicIngress
+  - type: CosmicActionIngress
+  - type: CosmicCultAction
 
 - type: entity
   parent: BaseMentalAction
@@ -124,6 +153,7 @@
   description: You negate any incoming damage for a short time.
   components:
   - type: Action
+    raiseOnAction: true
     useDelay: 120
     checkCanInteract: false
     itemIconStyle: BigAction
@@ -132,7 +162,12 @@
     layers:
     - state: entropic
   - type: InstantAction
-    event: !type:EventCosmicImposition {}
+    event: !type:EventCosmicImposition
+  - type: CosmicActionImposition
+  - type: CosmicCultAction
+    vfx: EffectCosmicActionImposition
+    sfx:
+      path: "/Audio/Cosmic/Abilities/ability-imposition.ogg"
 
 - type: entity
   parent: BaseAction
@@ -142,16 +177,22 @@
   components:
   - type: Action
     useDelay: 30
-    raiseOnUser: true
+    raiseOnAction: true
     itemIconStyle: BigAction
   - type: Sprite
     sprite: Interface/Actions/cosmic-actions.rsi
     layers:
     - state: nova
   - type: TargetAction
-    range: 60
+    checkCanAccess: false
+    repeat: false
+    range: 0
   - type: WorldTargetAction
-    event: !type:EventCosmicNova {}
+    event: !type:EventCosmicNova
+  - type: CosmicActionNova
+  - type: CosmicCultAction
+    sfx:
+      path: "/Audio/Cosmic/Abilities/ability-nova-cast.ogg"
 
 - type: entity
   parent: BaseAction
@@ -162,6 +203,7 @@
   - type: LimitedCharges
     maxCharges: 1
   - type: Action
+    raiseOnAction: true
     useDelay: 25
     itemIconStyle: BigAction
   - type: Sprite
@@ -178,7 +220,9 @@
       components:
       - CosmicCultist
       - ActiveNPC
-    event: !type:EventCosmicFragmentation {}
+    event: !type:EventCosmicFragmentation
+  - type: CosmicActionFragmentation
+  - type: CosmicCultAction
 
 - type: entity
   parent: BaseDoAfterAction
@@ -191,6 +235,7 @@
     confirmDelay: 0.075
     primeTime: 2
   - type: Action
+    raiseOnAction: true
     checkCanInteract: false
     itemIconStyle: BigAction
     useDelay: 45
@@ -199,7 +244,9 @@
     layers:
     - state: shift
   - type: InstantAction
-    event: !type:EventCosmicShift {}
+    event: !type:EventCosmicShift
+  - type: CosmicActionShift
+  - type: CosmicCultAction
 
 - type: entity
   parent: BaseMentalAction
@@ -208,6 +255,7 @@
   description: Leave the dark and return to the station early.
   components:
   - type: Action
+    raiseOnAction: true
     checkCanInteract: false
     itemIconStyle: BigAction
     useDelay: 0
@@ -216,4 +264,6 @@
     layers:
     - state: return
   - type: InstantAction
-    event: !type:EventCosmicReturn {}
+    event: !type:EventCosmicReturn
+  - type: CosmicActionReturn
+  - type: CosmicCultAction

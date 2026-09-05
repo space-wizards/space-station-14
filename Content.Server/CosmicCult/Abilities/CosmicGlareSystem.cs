@@ -3,6 +3,7 @@ using Content.Server.Flash;
 using Content.Server.Stunnable;
 using Content.Shared.CosmicCult;
 using Content.Shared.CosmicCult.Components;
+using Content.Shared.CosmicCult.Components.Actions;
 using Content.Shared.Effects;
 using Content.Shared.Interaction;
 using Content.Shared.Light.Components;
@@ -29,19 +30,29 @@ public sealed partial class CosmicGlareSystem : EntitySystem
     private HashSet<Entity<PoweredLightComponent>> _lights = [];
 
     [SubscribeLocalEvent]
-    private void OnCosmicGlare(Entity<CosmicCultistComponent> uid, ref EventCosmicGlare args)
+    private void OnCosmicGlare(Entity<CosmicActionGlareComponent> ent, ref EventCosmicGlare args)
     {
-        _audio.PlayPvs(uid.Comp.GlareSfx, uid);
-        Spawn(uid.Comp.GlareVfx, Transform(uid).Coordinates);
+        if (!TryComp<CosmicCultActionComponent>(ent, out var action))
+            return;
+
+        _audio.PlayPvs(action.Sfx, ent);
+        Spawn(action.Vfx, Transform(ent).Coordinates);
         args.Handled = true;
 
+        var stun = action.Empowered ? ent.Comp.StunEmpowered : ent.Comp.StunDefault;
+        var range = action.Empowered ? ent.Comp.RangeDefault : ent.Comp.RangeEmpowered;
+        var duration = action.Empowered ? ent.Comp.DurationDefault : ent.Comp.DurationEmpowered;
+        var penalty = action.Empowered ? ent.Comp.MovePenaltyDefault : ent.Comp.MovePenaltyEmpowered;
+
         _lights.Clear();
-        _lookup.GetEntitiesInRange<PoweredLightComponent>(Transform(uid).Coordinates, uid.Comp.CosmicGlareRange, _lights);
+        _lookup.GetEntitiesInRange(Transform(ent).Coordinates, range, _lights);
 
         foreach (var entity in _lights)
+        {
             _poweredLight.TryDestroyBulb(entity);
+        }
 
-        var targetFilter = Filter.Pvs(uid).RemoveWhere(player =>
+        var targetFilter = Filter.Pvs(ent).RemoveWhere(player =>
         {
             if (player.AttachedEntity == null)
                 return true;
@@ -50,20 +61,18 @@ public sealed partial class CosmicGlareSystem : EntitySystem
             if (!HasComp<MobStateComponent>(ent) || _cosmicCult.EntityIsCultist(ent))
                 return true;
 
-            return !_interact.InRangeUnobstructed((uid, Transform(uid)), (ent, Transform(ent)), range: 0, collisionMask: CollisionGroup.Impassable);
+            return !_interact.InRangeUnobstructed((ent, Transform(ent)), (ent, Transform(ent)), range: 0, collisionMask: CollisionGroup.Impassable);
         });
 
-        var targets = new HashSet<NetEntity>(targetFilter.RemovePlayerByAttachedEntity(uid).Recipients.Select(ply => GetNetEntity(ply.AttachedEntity!.Value)));
+        var targets = new HashSet<NetEntity>(targetFilter.RemovePlayerByAttachedEntity(ent).Recipients.Select(ply => GetNetEntity(ply.AttachedEntity!.Value)));
         foreach (var target in targets)
         {
             var targetEnt = GetEntity(target);
 
-            _flash.Flash(targetEnt, uid, args.Action, uid.Comp.CosmicGlareDuration, uid.Comp.CosmicGlarePenalty, false, false, uid.Comp.CosmicGlareStun);
+            _flash.Flash(targetEnt, ent, args.Action, duration, penalty, false, false, stun);
 
             if (HasComp<BorgChassisComponent>(targetEnt))
-            {
-                _stun.TryAddParalyzeDuration(targetEnt, uid.Comp.CosmicGlareDuration / 2);
-            }
+                _stun.TryAddParalyzeDuration(targetEnt, duration / 2);
 
             _color.RaiseEffect(Color.CadetBlue, new List<EntityUid>() { targetEnt }, Filter.Pvs(targetEnt, entityManager: EntityManager));
         }

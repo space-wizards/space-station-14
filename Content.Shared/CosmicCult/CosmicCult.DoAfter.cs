@@ -4,13 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.CosmicCult;
 
 [Serializable, NetSerializable]
-public sealed partial class EventCosmicSiphonDoAfter : SimpleDoAfterEvent;
-
-[Serializable, NetSerializable]
 public sealed partial class EventAbsorbRiftDoAfter : SimpleDoAfterEvent;
-
-[Serializable, NetSerializable]
-public sealed partial class EventCosmicColossusIngressDoAfter : SimpleDoAfterEvent;
 
 //
 

@@ -1,7 +1,5 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.CosmicCult.Components;
 
@@ -10,17 +8,8 @@ namespace Content.Shared.CosmicCult.Components;
 /// </summary>
 [NetworkedComponent, RegisterComponent]
 [AutoGenerateComponentPause]
-public sealed partial class CosmicImposingComponent : Component
+public sealed partial class CosmicImpositionInvulnerableComponent : Component
 {
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan Expiry;
-
-    [DataField]
-    public SpriteSpecifier Sprite = new SpriteSpecifier.Rsi(new("/Textures/_ST/CosmicCult/Effects/ability-imposition-overlay.rsi"), "vfx");
-}
-
-[Serializable, NetSerializable]
-public enum CosmicImposingKey
-{
-    Key
 }

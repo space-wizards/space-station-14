@@ -1,5 +1,7 @@
 using Content.Shared.Actions;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.CosmicCult;
 
@@ -12,7 +14,14 @@ public sealed partial class CosmicCultActionComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Empowered = false;
+
+    [DataField]
+    public EntProtoId Vfx = "EffectCosmicGeneric";
+
+    [DataField]
+    public SoundSpecifier Sfx = new SoundPathSpecifier("/Audio/Cosmic/Abilities/ability-ingress.ogg");
 }
+
 public sealed partial class EventCosmicSiphon : EntityTargetActionEvent;
 public sealed partial class EventCosmicShunt : EntityTargetActionEvent;
 public sealed partial class EventCosmicReturn : InstantActionEvent;

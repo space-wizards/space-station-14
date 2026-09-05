@@ -1,7 +1,3 @@
-# SPDX-FileCopyrightText: 2025 AftrLite
-#
-# SPDX-License-Identifier: LicenseRef-CosmicCult
-
 - type: entity
   parent: [ BaseSimpleMob, FlyingMobBase ]
   abstract: true
@@ -72,7 +68,6 @@
         sunder:
           Running: { visible: true }
           Stopped: { visible: false }
-
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -225,10 +220,10 @@
     thresholds:
       0: Alive
       600: Dead
-#  - type: CosmicCorrupting
-#    mobile: true
-#    autoDisable: false
-#    corruptionReduction: 0
+  - type: TileConversion
+    mobile: true
+    autoDisable: false
+    chanceReduction: 0
 
 - type: entity
   parent: [ MobCosmicColossusBase ]

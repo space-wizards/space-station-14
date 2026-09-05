@@ -23,8 +23,12 @@ public sealed partial class ClientCosmicCultSystem : CosmicCultSystem
     [Dependency] private PointLightSystem _light = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
-    private readonly SoundSpecifier _siphonSfx = new SoundPathSpecifier("/Audio/_ST/CosmicCult/Abilities/ability-siphon.ogg");
-    private readonly ResPath _rsiPath = new("/Textures/_ST/CosmicCult/Effects/ability-siphon.rsi");
+    private readonly SoundSpecifier _siphonSfx = new SoundPathSpecifier("/Audio/Cosmic/Abilities/ability-siphon.ogg");
+    private readonly ResPath _rsiPath = new("/Textures/Effects/Cosmic/ability-siphon.rsi");
+
+    private readonly EntProtoId _effectMonument = "EffectCosmicInfluenceGainMonument";
+    private readonly EntProtoId _effectChaser = "EffectCosmicInfluenceGainChaser";
+    private readonly EntProtoId _effectIcon = "EffectCosmicInfluenceGainIcon";
 
     protected override void OnMonumentInteracted(Entity<CosmicMonumentComponent> ent, ref InteractHandEvent args)
     {
@@ -44,6 +48,33 @@ public sealed partial class ClientCosmicCultSystem : CosmicCultSystem
     {
         if (!_animPlayer.HasRunningAnimation(ent, ent.Comp.AnimationKey))
             FloatCultist(ent, ent.Comp.Offset, ent.Comp.AnimationKey, ent.Comp.AnimationTime);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnImposition(Entity<CosmicImpositionFadeComponent> ent, ref ComponentStartup args)
+    {
+        var duration = ent.Comp.Duration;
+        var animation = new Animation
+        {
+            Length = TimeSpan.FromSeconds(duration),
+            AnimationTracks =
+            {
+                new AnimationTrackComponentProperty
+                {
+                    ComponentType = typeof(SpriteComponent),
+                    Property = nameof(SpriteComponent.Color),
+                    InterpolationMode = AnimationInterpolationMode.Linear,
+                    KeyFrames =
+                    {
+                        new AnimationTrackProperty.KeyFrame(Color.White.WithAlpha(0f), 0),
+                        new AnimationTrackProperty.KeyFrame(Color.White, duration * 0.15f),
+                        new AnimationTrackProperty.KeyFrame(Color.White, duration * 0.7f),
+                        new AnimationTrackProperty.KeyFrame(Color.White.WithAlpha(0f), duration * 0.15f),
+                    }
+                }
+            }
+        };
+        _animPlayer.Play(ent, animation, "imposition-fade");
     }
 
     #region Floating Animation
@@ -98,9 +129,9 @@ public sealed partial class ClientCosmicCultSystem : CosmicCultSystem
         var monumentPos = TransformSystem.GetMapCoordinates(monument).Offset(0, 1.65f);
         var cultistPos = TransformSystem.GetMapCoordinates(cultist).Position;
         var dist = cultistPos - monumentPos.Position;
-        var iconEnt = Spawn("InfluenceEffectIcon", Transform(cultist).Coordinates.Offset(new Vector2(0, 0.95f)));
-        var effectEnt = Spawn("InfluenceEffectProjectile", TransformSystem.GetMapCoordinates(monument).Offset(0, 1.55f));
-        Spawn("InfluenceEffectMonument", TransformSystem.GetMapCoordinates(monument));
+        var iconEnt = Spawn(_effectIcon, Transform(cultist).Coordinates.Offset(new Vector2(0, 0.95f)));
+        var effectEnt = Spawn(_effectChaser, TransformSystem.GetMapCoordinates(monument).Offset(0, 1.55f));
+        Spawn(_effectMonument, TransformSystem.GetMapCoordinates(monument));
 
         _sprite.LayerSetSprite(iconEnt, 0, args.Icon);
         _sprite.SetRotation(effectEnt, -dist.ToAngle());
@@ -316,17 +347,6 @@ public sealed partial class ClientCosmicCultSystem : CosmicCultSystem
         _sprite.LayerMapSet(uid.Owner, CosmicRevealedKey.Key, layer);
         sprite.LayerSetShader(layer, "unshaded");
     }
-
-    [SubscribeLocalEvent]
-    private void OnCosmicImpositionAdded(Entity<CosmicImposingComponent> uid, ref ComponentStartup args)
-    {
-        if (_sprite.LayerMapTryGet(uid.Owner, CosmicImposingKey.Key, out _, false) || !TryComp<SpriteComponent>(uid.Owner, out var sprite))
-            return;
-
-        var layer = _sprite.AddLayer(uid.Owner, uid.Comp.Sprite);
-        _sprite.LayerMapSet(uid.Owner, CosmicImposingKey.Key, layer);
-        sprite.LayerSetShader(layer, "unshaded");
-    }
     #endregion
 
     #region Layer Removals
@@ -334,12 +354,6 @@ public sealed partial class ClientCosmicCultSystem : CosmicCultSystem
     private void OnCosmicStarMarkRemoved(Entity<CosmicBrandComponent> uid, ref ComponentShutdown args)
     {
         _sprite.RemoveLayer(uid.Owner, CosmicRevealedKey.Key);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnCosmicImpositionRemoved(Entity<CosmicImposingComponent> uid, ref ComponentShutdown args)
-    {
-        _sprite.RemoveLayer(uid.Owner, CosmicImposingKey.Key);
     }
     #endregion
 
@@ -352,7 +366,7 @@ public sealed partial class ClientCosmicCultSystem : CosmicCultSystem
     }
 
     [SubscribeLocalEvent]
-    private void GetCosmicSSDIcon(Entity<CosmicShuntedOriginComponent> ent, ref GetStatusIconsEvent args)
+    private void GetCosmicSsdIcon(Entity<CosmicShuntedOriginComponent> ent, ref GetStatusIconsEvent args)
     {
         if (_prototype.TryIndex(ent.Comp.StatusIcon, out var iconPrototype))
             args.StatusIcons.Add(iconPrototype);

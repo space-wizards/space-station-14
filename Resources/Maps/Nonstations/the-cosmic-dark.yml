@@ -42,7 +42,7 @@ entities:
     - type: Parallax
       parallax: ParallaxMalignAlt
     - type: MapLight
-      ambientLightColor: '#605191FF'
+      ambientLightColor: '#42356c'
   - uid: 2
     components:
     - type: MetaData
@@ -51,6 +51,7 @@ entities:
       pos: 288.38983,429.73245
       parent: 1
     - type: BlockGridConstruction
+    - type: ChameleonBlockedGridComponent
     - type: MapGrid
       chunks:
         0,0:

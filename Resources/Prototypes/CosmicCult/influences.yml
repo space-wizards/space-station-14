@@ -1,7 +1,3 @@
-# SPDX-FileCopyrightText: 2025 AftrLite
-#
-# SPDX-License-Identifier: LicenseRef-CosmicCult
-
 ### ACTIVE INFLUENCES
 - type: influence
   id: InfluenceAberrantLapse
@@ -10,7 +6,7 @@
   weight: 5
   description: influence-description-lapse
   icon:
-    sprite: _ST/CosmicCult/Icons/cosmiccult-abilities.rsi
+    sprite: Interface/Actions/cosmic-actions.rsi
     state: lapse
   action: ActionCosmicLapse
   tier: 1
@@ -22,7 +18,7 @@
   weight: 5
   description: influence-description-glare
   icon:
-    sprite: _ST/CosmicCult/Icons/cosmiccult-abilities.rsi
+    sprite: Interface/Actions/cosmic-actions.rsi
     state: glare
   action: ActionCosmicGlare
   tier: 1
@@ -34,7 +30,7 @@
   weight: 10
   description: influence-description-ingress
   icon:
-    sprite: _ST/CosmicCult/Icons/cosmiccult-abilities.rsi
+    sprite: Interface/Actions/cosmic-actions.rsi
     state: ingress
   action: ActionCosmicIngress
   tier: 2
@@ -46,7 +42,7 @@
   weight: 20
   description: influence-description-imposition
   icon:
-    sprite: _ST/CosmicCult/Icons/cosmiccult-abilities.rsi
+    sprite: Interface/Actions/cosmic-actions.rsi
     state: entropic
   action: ActionCosmicImposition
   tier: 3
@@ -58,7 +54,7 @@
   weight: 20
   description: influence-description-nova
   icon:
-    sprite: _ST/CosmicCult/Icons/cosmiccult-abilities.rsi
+    sprite: Interface/Actions/cosmic-actions.rsi
     state: nova
   action: ActionCosmicNova
   tier: 3
@@ -73,7 +69,7 @@
   weight: 10
   description: influence-description-eschew
   icon:
-    sprite: _ST/CosmicCult/Icons/cosmiccult-abilities.rsi
+    sprite: Interface/Actions/cosmic-actions.rsi
     state: metabolism
   remove:
   - type: Hunger
@@ -87,7 +83,7 @@
   weight: 20
   description: influence-description-step
   icon:
-    sprite: _ST/CosmicCult/Icons/cosmiccult-abilities.rsi
+    sprite: Interface/Actions/cosmic-actions.rsi
     state: step
   add:
   - type: MovementIgnoreGravity
@@ -100,7 +96,7 @@
   weight: 30
   description: influence-description-stride
   icon:
-    sprite: _ST/CosmicCult/Icons/cosmiccult-abilities.rsi
+    sprite: Interface/Actions/cosmic-actions.rsi
     state: stride
   add:
   - type: InfluenceStride
@@ -113,7 +109,7 @@
   weight: 30
   description: influence-description-vitality
   icon:
-    sprite: _ST/CosmicCult/Icons/cosmiccult-abilities.rsi
+    sprite: Interface/Actions/cosmic-actions.rsi
     state: astral
   add:
   - type: InfluenceVitality
@@ -126,6 +122,6 @@
   weight: 5
   description: influence-description-aegis
   icon:
-    sprite: _ST/CosmicCult/Icons/cosmiccult-abilities.rsi
+    sprite: Interface/Actions/cosmic-actions.rsi
     state: aegis
   tier: 4

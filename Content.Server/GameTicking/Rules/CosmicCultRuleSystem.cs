@@ -336,11 +336,6 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
                     _doAfter.Cancel(cultist, doAfterId.Key);
                 }
             }
-
-            if (TryComp<CosmicCultistComponent>(cultist, out var cultComp))
-            {
-                _actions.RemoveAction(cultist, cultComp.CosmicShiftActionActionEntity);
-            }
         }
     }
 
@@ -376,7 +371,8 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
                     continue;
                 cultComp.UnlockedInfluences.Add(influence, influence.Weight);
             }
-            IncrementCultistProgress((cultistEnt, cultComp), 12);
+            var evt = new CosmicCultistProgressEvent(12);
+            RaiseLocalEvent(cultistEnt, ref evt);
             Dirty(cultistEnt, cultComp);
         }
     }
@@ -409,7 +405,8 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
                 cultComp.UnlockedInfluences.Add(influence, influence.Weight);
             }
 
-            IncrementCultistProgress((cultistEnt, cultComp), 8);
+            var evt = new CosmicCultistProgressEvent(8);
+            RaiseLocalEvent(cultistEnt, ref evt);
             Dirty(cultistEnt, cultComp);
         }
     }
@@ -474,7 +471,7 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         if (AssociatedGamerule(ent) is not { } cult)
             return;
 
-        cult.Comp.EntropySiphoned += ent.Comp.CosmicSiphonQuantity;
+        // cult.Comp.EntropySiphoned += ent.Comp.CosmicSiphonQuantity;
         UpdateCultData(cult);
 
         // var query = EntityQueryEnumerator<CosmicEntropyGoalComponent, StellarNumericGoalComponent>();
@@ -484,14 +481,15 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         // }
     }
 
-    public void IncrementCultistProgress(Entity<CosmicCultistComponent> ent, int amount = 0)
+    [SubscribeLocalEvent]
+    private void IncrementCultistProgress(Entity<CosmicCultistComponent> ent, ref CosmicCultistProgressEvent args)
     {
-        var toIncrement = amount > 0 ? amount : 1;
+        var toIncrement = args.Progress > 0 ? args.Progress : 1;
         ent.Comp.PersonalProgress += toIncrement;
 
-        if (ent.Comp.PersonalProgress >= 14 && _playerMan.TryGetSessionByEntity(ent, out var session))
+        if (ent.Comp.PersonalProgress >= 13 && _playerMan.TryGetSessionByEntity(ent, out var session))
         {
-            ent.Comp.PersonalProgress -= 14;
+            ent.Comp.PersonalProgress -= 13;
             ent.Comp.MonumentVisits++;
             _euiMan.OpenEui(new CosmicInfluenceEui(), session);
             _audio.PlayEntity(ent.Comp.AbilityGainSfx, ent, ent);
@@ -517,7 +515,7 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
     }
     #endregion
 
-    #region De- & Conversion
+    #region Conversion
     public void TryStartCult(EntityUid uid, Entity<CosmicCultRuleComponent> rule)
     {
         if (!_mind.TryGetMind(uid, out var mindId, out var mind))

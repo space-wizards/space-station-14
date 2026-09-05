@@ -53,10 +53,8 @@ public sealed partial class ServerCosmicCultSystem : CosmicCultSystem
     private void GiveInfluence(Entity<CosmicCultistComponent> ent, InfluencePrototype proto)
     {
         if (proto.InfluenceType == "influence-type-active")
-        {
-            var actionEnt = Actions.AddAction(ent, proto.Action);
-            ent.Comp.ActionEntities.Add(actionEnt);
-        }
+            Actions.AddAction(ent, proto.Action);
+
         else if (proto.InfluenceType == "influence-type-passive")
         {
             if (proto.Add != null)
@@ -126,14 +124,6 @@ public sealed partial class ServerCosmicCultSystem : CosmicCultSystem
     [SubscribeLocalEvent]
     private void OnStartCultist(Entity<CosmicCultistComponent> ent, ref ComponentInit args)
     {
-        Actions.AddAction(ent, ref ent.Comp.CosmicShiftActionActionEntity, ent.Comp.CosmicShiftAction, ent);
-
-        foreach (var actionId in ent.Comp.CosmicCultActions)
-        {
-            var actionEnt = Actions.AddAction(ent, actionId);
-            ent.Comp.ActionEntities.Add(actionEnt);
-        }
-
         foreach (var influence in ProtoMan.EnumeratePrototypes<InfluencePrototype>().Where(influence => influence.Tier == 1))
         {
             if (ent.Comp.UnlockedInfluences.ContainsKey(influence))
@@ -158,13 +148,13 @@ public sealed partial class ServerCosmicCultSystem : CosmicCultSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnStartImposition(Entity<CosmicImposingComponent> uid, ref ComponentInit args) // that movespeed applies more-or-less correctly
+    private void OnStartImposition(Entity<CosmicImpositionInvulnerableComponent> uid, ref ComponentInit args) // that movespeed applies more-or-less correctly
     {
         // _movementSpeed.RefreshMovementSpeedModifiers(uid);
     }
 
     [SubscribeLocalEvent]
-    private void OnEndImposition(Entity<CosmicImposingComponent> uid, ref ComponentRemove args) // as various cosmic cult effects get added and removed
+    private void OnEndImposition(Entity<CosmicImpositionInvulnerableComponent> uid, ref ComponentRemove args) // as various cosmic cult effects get added and removed
     {
         // _movementSpeed.RefreshMovementSpeedModifiers(uid);
     }
@@ -176,7 +166,7 @@ public sealed partial class ServerCosmicCultSystem : CosmicCultSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnImpositionMoveSpeed(EntityUid uid, CosmicImposingComponent comp, RefreshMovementSpeedModifiersEvent args)
+    private void OnImpositionMoveSpeed(EntityUid uid, CosmicImpositionInvulnerableComponent comp, RefreshMovementSpeedModifiersEvent args)
     {
         args.ModifySpeed(0.65f, 0.65f);
     }

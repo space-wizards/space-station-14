@@ -1,13 +1,13 @@
 - type: entity
   id: FloorEntityCosmicDecay
-  categories: [ DoNotMap ] # This is labeled as DO NOT MAP because it should only exist in the z
+  categories: [ DoNotMap ] # This is labeled as DO NOT MAP because it should only exist in the Cosmic Dark pocket dimension.
   placement:
     mode: SnapgridCenter
     snap:
     - Wall
   components:
   - type: TileEmission
-    color: "#605191"
+    color: "#42356c"
   - type: Physics
     bodyType: Static
   - type: Transform

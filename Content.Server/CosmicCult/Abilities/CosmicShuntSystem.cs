@@ -4,6 +4,7 @@ using Content.Server.GameTicking.Rules;
 using Content.Server.Popups;
 using Content.Shared.CosmicCult;
 using Content.Shared.CosmicCult.Components;
+using Content.Shared.CosmicCult.Components.Actions;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -59,17 +60,18 @@ public sealed partial class CosmicShuntSystem : EntitySystem
                 {
                     _cultRule.CosmicConversion(comp.ShuntCaster, comp.OriginalBody);
                     _stun.SetKnockdownTime(comp.OriginalBody, TimeSpan.Zero);
-                    _audio.PlayPvs(comp.WispGrabber.Comp.TriggerSfx, Transform(comp.OriginalBody).Coordinates);
-                    _audio.PlayPvs(comp.WispGrabber.Comp.TriggerSfx, Transform(uid).Coordinates);
+                    _audio.PlayPvs(CosmicCultSystem.GenericSfx, Transform(comp.OriginalBody).Coordinates);
+                    _audio.PlayPvs(CosmicCultSystem.GenericSfx, Transform(uid).Coordinates);
                     Spawn(CosmicCultSystem.GenericVfx, Transform(comp.OriginalBody).Coordinates);
                     Spawn(CosmicCultSystem.GenericVfx, Transform(uid).Coordinates);
+                    var evt = new CosmicCultistProgressEvent(3);
 
-                    if (comp.WispGrabber.Owner == comp.ShuntCaster.Owner)
-                        _cultRule.IncrementCultistProgress(comp.WispGrabber, 3);
+                    if (comp.WispGrabber == comp.ShuntCaster)
+                        RaiseLocalEvent(comp.WispGrabber, ref evt);
                     else
                     {
-                        _cultRule.IncrementCultistProgress(comp.ShuntCaster, 3);
-                        _cultRule.IncrementCultistProgress(comp.WispGrabber, 3);
+                        RaiseLocalEvent(comp.WispGrabber, ref evt);
+                        RaiseLocalEvent(comp.ShuntCaster, ref evt);
                     }
 
                     comp.ConvertOnReturn = false;
@@ -88,32 +90,18 @@ public sealed partial class CosmicShuntSystem : EntitySystem
         if (ent.Comp.ConvertOnReturn || args.Handled || !_cult.EntityIsCultist(args.User) || !TryComp<CosmicCultistComponent>(args.User, out var cultComp))
             return;
 
-        ent.Comp.WispGrabber = (args.User, cultComp);
+        ent.Comp.WispGrabber = args.User;
         ent.Comp.ConvertOnReturn = true;
         ent.Comp.ReadyToReturn = true;
     }
 
     [SubscribeLocalEvent]
-    private void OnCosmicShunt(Entity<CosmicCultistComponent> ent, ref EventCosmicShunt args)
+    private void OnCosmicShunt(Entity<CosmicActionShuntComponent> ent, ref EventCosmicShunt args)
     {
-        if (args.Handled)
+        if (!TryComp<CosmicCultActionComponent>(ent, out var action))
             return;
 
-        var doargs = new DoAfterArgs(EntityManager, ent, ent.Comp.CosmicShuntDelay, new CosmicShuntDoAfter(), ent, args.Target)
-        {
-            DistanceThreshold = 1.5f, Hidden = false, BreakOnDamage = true, BreakOnMove = true, BreakOnDropItem = true,
-        };
-        args.Handled = true;
-        _doAfter.TryStartDoAfter(doargs);
-        _popup.PopupEntity(Loc.GetString("cosmicability-shunt-begin", ("target", Identity.Entity(ent, EntityManager))), ent, args.Target);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnCosmicShuntDoAfter(Entity<CosmicCultistComponent> ent, ref CosmicShuntDoAfter args)
-    {
-        if (args.Cancelled || args.Handled || args.Args.Target is not { } target)
-            return;
-
+        var target = args.Target;
         if (!TryComp<MindContainerComponent>(target, out var mindContainer) || mindContainer.Mind is not { } mindEnt)
             return;
 
@@ -130,22 +118,23 @@ public sealed partial class CosmicShuntSystem : EntitySystem
         var mind = Comp<MindComponent>(mindEnt);
         mind.PreventGhosting = true;
 
-        _audio.PlayPvs(ent.Comp.ShuntSfx, ent, AudioParams.Default.WithVolume(6f));
-        Spawn(ent.Comp.ShuntVfx, tgtpos);
+        _audio.PlayPvs(action.Sfx, ent, AudioParams.Default.WithVolume(6f));
+        Spawn(action.Vfx, tgtpos);
         var newSpawn = _random.Pick(spawnPoints);
         var spawnTgt = Transform(newSpawn.Uid).Coordinates;
         var wisp = Spawn(ent.Comp.SpawnWisp, spawnTgt);
+        var duration = action.Empowered ? ent.Comp.DurationEmpowered : ent.Comp.DurationDefault;
 
         EnsureComp<CosmicShuntedEntityComponent>(wisp, out var shuntComp);
-        shuntComp.ShuntCaster = ent;
+        shuntComp.ShuntCaster = args.Performer;
         shuntComp.OriginalBody = target;
-        shuntComp.ExitVoidTime = _timing.CurTime + ent.Comp.CosmicShuntDuration;
+        shuntComp.ExitVoidTime = _timing.CurTime + duration;
 
         _mind.TransferTo(mindEnt, wisp);
-        _stun.TryKnockdown(target, ent.Comp.CosmicShuntDuration + TimeSpan.FromSeconds(2));
+        _stun.TryKnockdown(target, duration + TimeSpan.FromSeconds(2));
         _popup.PopupEntity(Loc.GetString("cosmicability-shunt-transfer"), wisp, wisp);
-        _audio.PlayPvs(ent.Comp.ShuntSfx, spawnTgt, AudioParams.Default.WithVolume(6f));
-        Spawn(ent.Comp.ShuntVfx, spawnTgt);
+        _audio.PlayPvs(action.Sfx, spawnTgt, AudioParams.Default.WithVolume(6f));
+        Spawn(action.Vfx, spawnTgt);
         args.Handled = true;
     }
 }

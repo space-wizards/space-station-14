@@ -11,11 +11,14 @@ namespace Content.Shared.CosmicCult.Components;
 [NetworkedComponent, RegisterComponent, AutoGenerateComponentState]
 public sealed partial class CosmicBrandComponent : Component
 {
-    [DataField] public SpriteSpecifier Sprite = new SpriteSpecifier.Rsi(new("/Textures/Effects/Cosmic/cult-revealed.rsi"), "vfx");
+    [DataField]
+    public SpriteSpecifier Sprite = new SpriteSpecifier.Rsi(new("/Textures/Effects/Cosmic/cult-revealed.rsi"), "vfx");
 
-    [DataField, AutoNetworkedField] public float AnimationTime = 2f;
+    [DataField, AutoNetworkedField]
+    public float AnimationTime = 2f;
 
-    [DataField, AutoNetworkedField] public Vector2 Offset = new(0, 0.175f);
+    [DataField, AutoNetworkedField]
+    public Vector2 Offset = new(0, 0.175f);
 
     public readonly string AnimationKey = "cosmicFloating";
 }

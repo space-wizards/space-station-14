@@ -1,7 +1,6 @@
 using Content.Server.Doors.Systems;
 using Content.Shared.CosmicCult;
-using Content.Shared.CosmicCult.Components;
-using Content.Shared.DoAfter;
+using Content.Shared.CosmicCult.Components.Actions;
 using Content.Shared.Doors.Components;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
@@ -14,16 +13,14 @@ public sealed partial class CosmicIngressSystem : EntitySystem
     [Dependency] private DoorSystem _door = default!;
     [Dependency] private WeldableSystem _weld = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedDoAfterSystem _doAfter = default!;
 
     [SubscribeLocalEvent]
-    private void OnCosmicIngress(Entity<CosmicIngressActionComponent> uid, ref EventCosmicIngress args)
+    private void OnCosmicIngress(Entity<CosmicActionIngressComponent> ent, ref EventCosmicIngress args)
     {
-        if (!TryComp<CosmicCultActionComponent>(uid, out var action))
+        if (!TryComp<CosmicCultActionComponent>(ent, out var action))
             return;
 
         var target = args.Target;
-
         if (args.Handled)
             return;
 
@@ -40,39 +37,8 @@ public sealed partial class CosmicIngressSystem : EntitySystem
         if (_door.TryOpen(target, user: args.Performer, checkAccess: false))
         {
             args.Handled = true;
-            _audio.PlayPvs(uid.Comp.IngressSfx, uid);
-            Spawn(CosmicCultSystem.GenericVfx, Transform(target).Coordinates);
+            _audio.PlayPvs(action.Sfx, ent);
+            Spawn(action.Vfx, Transform(target).Coordinates);
         }
-    }
-
-    [SubscribeLocalEvent]
-    private void OnColossusIngress(Entity<CosmicColossusComponent> ent, ref EventCosmicColossusIngress args)
-    {
-        var doargs = new DoAfterArgs(EntityManager, ent, ent.Comp.IngressDoAfter, new EventCosmicColossusIngressDoAfter(), ent, args.Target)
-        {
-            DistanceThreshold = 2f,
-            Hidden = false,
-            BreakOnMove = true,
-        };
-        args.Handled = true;
-        _audio.PlayPvs(ent.Comp.DoAfterSfx, ent);
-        _doAfter.TryStartDoAfter(doargs);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnColossusIngressDoAfter(Entity<CosmicColossusComponent> ent, ref EventCosmicColossusIngressDoAfter args)
-    {
-        if (args.Args.Target is not { } target)
-            return;
-        if (args.Cancelled || args.Handled)
-            return;
-        args.Handled = true;
-        var comp = ent.Comp;
-
-        if (TryComp<DoorBoltComponent>(target, out var doorBolt))
-            _door.SetBoltsDown((target, doorBolt), false);
-        _door.StartOpening(target);
-        _audio.PlayPvs(comp.IngressSfx, ent);
-        Spawn(comp.CultVfx, Transform(target).Coordinates);
     }
 }

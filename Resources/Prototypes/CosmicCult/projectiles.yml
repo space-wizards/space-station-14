@@ -7,21 +7,21 @@
   components:
   - type: PointLight
     color: "#42a4ae"
-    radius: 2.0
+    radius: 3.5
     energy: 5.0
   - type: TimedDespawn
     lifetime: 10
   - type: Projectile
-    impactEffect: CosmicNovaImpactVfx
+    impactEffect: EffectCosmicActionNovaImpact
     forceSound: true
     soundHit:
-      path: /Audio/_ST/CosmicCult/Abilities/ability-nova-impact.ogg
+      path: "/Audio/Cosmic/Abilities/ability-nova-impact.ogg"
       params:
         variation: 0.1
         volume: +14
   - type: CosmicNova
   - type: Sprite
-    sprite: _ST/CosmicCult/Effects/ability-nova.rsi
+    sprite: Effects/Cosmic/ability-nova.rsi
     layers:
     - state: vfx
       shader: unshaded
@@ -35,7 +35,7 @@
     volume: 0
     range: 10
     sound:
-      path: /Audio/_ST/CosmicCult/Abilities/ability-nova-ambient.ogg
+      path: "/Audio/Cosmic/Abilities/ability-nova-ambient.ogg"
 
 - type: entity
   id: ProjectileCosmic
@@ -49,17 +49,16 @@
     - Energy
   - type: Sprite
     noRot: false
-    sprite: _ST/CosmicCult/Effects/weaponprojectiles.rsi
-    layers:
-      - state: razor
-        shader: unshaded
+    sprite: Effects/Cosmic/base-projectile.rsi
+    state: vfx
+    shader: unshaded
   - type: Projectile
     impactEffect: BulletImpactEffectCosmic
     damage:
       types:
         Cold: 12
     soundHit:
-      path: /Audio/_ST/CosmicCult/projectile_razor_hit.ogg
+      path: "/Audio/Cosmic/Abilities/cosmic-projectile-hit.ogg"
       params:
         variation: 0.08
   - type: Ammo
@@ -117,8 +116,8 @@
     layers:
     - shader: unshaded
       map: ["enum.EffectLayers.Unshaded"]
-      sprite: _ST/CosmicCult/Effects/weaponarcs.rsi
-      state: arc_cosmic
+      sprite: Effects/Cosmic/attack-weapons.rsi
+      state: vfx
   - type: EffectVisuals
   - type: PointLight
     color: "#42a4ae"
