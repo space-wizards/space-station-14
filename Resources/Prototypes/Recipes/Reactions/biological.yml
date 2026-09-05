@@ -37,8 +37,9 @@
     Slime:
       amount: 5
   products:
-    Water: 4
+    Water: 3
     Nitrogen: 1
+    Lithium: 1 #to help explain why slimes burn in water.
 
 - type: reaction
   id: SapBloodBreakdown
