@@ -95,4 +95,4 @@ reagent-name-phosphoric-acid = phosphoric acid
 reagent-desc-phosphoric-acid = An acidic chemical often used in agriculture. Keep away from your eyes.
 
 reagent-name-hardlight-toxin = hardlight toxin
-reagent-desc-hardlight-toxin = A highly advanced toxin which which when metabolized directly attacks a victim's nervous system.
+reagent-desc-hardlight-toxin = A highly advanced toxin which inundates a victim's nervous system with ionizing radiation when metabolized.
