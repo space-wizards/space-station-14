@@ -3,21 +3,25 @@
   id: ChiefMedicalOfficerJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitCMO
+  groupBy: "jumpsuit"
 
 - type: loadout
   id: ChiefMedicalOfficerJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtCMO
+  groupBy: "jumpskirt"
 
 - type: loadout
   id: ChiefMedicalOfficerTurtleneckJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitCMOTurtle
+  groupBy: "jumpsuit"
 
 - type: loadout
   id: ChiefMedicalOfficerTurtleneckJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtCMOTurtle
+  groupBy: "jumpskirt"
 
 # Head
 - type: loadout

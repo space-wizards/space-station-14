@@ -14,12 +14,14 @@
   storage:
     back:
     - ClothingHeadHatFlowerWreath
+  groupBy: "flower"
 
 - type: loadout
   id: Hairflower
   storage:
     back:
     - ClothingHeadHatHairflower
+  groupBy: "flower"
 
 # Headphones
 - type: loadout
@@ -34,12 +36,14 @@
   storage:
     back:
     - PlushieLizard
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieSpaceLizard
   storage:
     back:
     - PlushieSpaceLizard
+  groupBy: "plushies"
 
 - type: loadout
   id: ThreeCandles
