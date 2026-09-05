@@ -20,7 +20,7 @@ public sealed partial class LoadoutSystem : EntitySystem
     // Shared so we can predict it for placement manager.
 
     [Dependency] private ActorSystem _actors = default!;
-    [Dependency] private SharedStationSpawningSystem _station = default!;
+    [Dependency] private Station.Systems.StationSpawningSystem _station = default!;
     [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()

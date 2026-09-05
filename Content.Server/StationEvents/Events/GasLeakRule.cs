@@ -1,5 +1,4 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Robust.Shared.Audio;
@@ -21,8 +20,9 @@ namespace Content.Server.StationEvents.Events
                 return;
 
             // Essentially we'll pick out a target amount of gas to leak, then a rate to leak it at, then work out the duration from there.
-            if (TryFindRandomTile(out component.TargetTile, out var target, out component.TargetGrid, out component.TargetCoords))
+            if (Station.TryFindRandomTile(out component.TargetTile, out var target, out var grid, out component.TargetCoords))
             {
+                component.TargetGrid = grid.Value;
                 component.TargetStation = target.Value;
                 component.FoundTile = true;
 
@@ -62,28 +62,28 @@ namespace Content.Server.StationEvents.Events
             environment?.AdjustMoles(component.LeakGas, component.LeakCooldown * component.MolesPerSecond);
         }
 
-        protected override void Ended(EntityUid uid, GasLeakRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
+        protected override void Ended(Entity<GasLeakRuleComponent> rule, ref GameRuleEndedEvent args)
         {
-            base.Ended(uid, component, gameRule, args);
-            Spark(uid, component);
+            base.Ended(rule, ref args);
+            Spark(rule);
         }
 
-        private void Spark(EntityUid uid, GasLeakRuleComponent component)
+        private void Spark(Entity<GasLeakRuleComponent> rule)
         {
-            if (RobustRandom.NextFloat() <= component.SparkChance)
+            if (RobustRandom.NextFloat() <= rule.Comp.SparkChance)
             {
-                if (!component.FoundTile ||
-                    component.TargetGrid == default ||
-                    (!Exists(component.TargetGrid) ? EntityLifeStage.Deleted : MetaData(component.TargetGrid).EntityLifeStage) >= EntityLifeStage.Deleted ||
-                    !_atmosphere.IsSimulatedGrid(component.TargetGrid))
+                if (!rule.Comp.FoundTile ||
+                    rule.Comp.TargetGrid == default ||
+                    (!Exists(rule.Comp.TargetGrid) ? EntityLifeStage.Deleted : MetaData(rule.Comp.TargetGrid).EntityLifeStage) >= EntityLifeStage.Deleted ||
+                    !_atmosphere.IsSimulatedGrid(rule.Comp.TargetGrid))
                 {
                     return;
                 }
 
                 // Don't want it to be so obnoxious as to instantly murder anyone in the area but enough that
                 // it COULD start potentially start a bigger fire.
-                _atmosphere.HotspotExpose(component.TargetGrid, component.TargetTile, 700f, 50f, null, true);
-                Audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/sparks4.ogg"), component.TargetCoords);
+                _atmosphere.HotspotExpose(rule.Comp.TargetGrid, rule.Comp.TargetTile, 700f, 50f, null, true);
+                Audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/sparks4.ogg"), rule.Comp.TargetCoords);
             }
         }
     }

@@ -12,6 +12,12 @@ public sealed partial class MeteorSwarmComponent : Component
     public TimeSpan NextWaveTime;
 
     /// <summary>
+    /// Grid which this game rule is targeting.
+    /// </summary>
+    [DataField]
+    public EntityUid? TargetGrid;
+
+    /// <summary>
     /// We'll send a specific amount of waves of meteors towards the station per ending rather than using a timer.
     /// </summary>
     [DataField]

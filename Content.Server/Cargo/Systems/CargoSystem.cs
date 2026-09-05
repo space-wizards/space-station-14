@@ -34,7 +34,7 @@ public sealed partial class CargoSystem : SharedCargoSystem
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private StackSystem _stack = default!;
-    [Dependency] private StationSystem _station = default!;
+    [Dependency] private ServerStationSystem _station = default!;
     [Dependency] private UserInterfaceSystem _uiSystem = default!;
     [Dependency] private MetaDataSystem _metaSystem = default!;
     [Dependency] private RadioSystem _radio = default!;

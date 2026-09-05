@@ -3,6 +3,7 @@ using Content.Server.GameTicking.Rules.Components;
 using Content.Server.KillTracking;
 using Content.Shared.Chat;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.GameTicking.Rules;
 using Robust.Server.Player;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -31,7 +32,7 @@ public sealed partial class KillCalloutRuleSystem : GameRuleSystem<KillCalloutRu
         var query = EntityQueryEnumerator<KillCalloutRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var kill, out var rule))
         {
-            if (!GameTicker.IsGameRuleActive(uid, rule))
+            if (!GameTicker.IsGameRuleActive((uid, rule)))
                 continue;
 
             var callout = GetCallout(kill, ev);

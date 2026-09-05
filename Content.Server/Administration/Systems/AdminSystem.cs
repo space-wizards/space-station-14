@@ -49,7 +49,7 @@ public sealed partial class AdminSystem : EntitySystem
     [Dependency] private PhysicsSystem _physics = default!;
     [Dependency] private PlayTimeTrackingManager _playTime = default!;
     [Dependency] private SharedRoleSystem _role = default!;
-    [Dependency] private GameTicker _gameTicker = default!;
+    [Dependency] private ServerGameTicker _gameTicker = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private StationRecordsSystem _stationRecords = default!;
     [Dependency] private TransformSystem _transform = default!;

@@ -22,6 +22,6 @@ public sealed partial class ThrowScoreboardCommand : IConsoleCommand
             shell.WriteLine(Help);
             return;
         }
-        _e.System<GameTicker>().ShowRoundEndScoreboard();
+        _e.System<ServerGameTicker>().ShowRoundEndScoreboard();
     }
 }

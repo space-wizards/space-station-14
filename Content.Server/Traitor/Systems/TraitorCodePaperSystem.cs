@@ -1,13 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.GameTicking;
-using Content.Server.GameTicking.Rules;
-using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Paper;
 using Content.Server.Traitor.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
-using Content.Server.Codewords;
 using Content.Shared.Paper;
 
 namespace Content.Server.Traitor.Systems;
@@ -16,7 +11,7 @@ public sealed partial class TraitorCodePaperSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private PaperSystem _paper = default!;
-    [Dependency] private CodewordSystem _codewordSystem = default!;
+    [Dependency] private Shared.Codewords.CodewordSystem _codewordSystem = default!;
 
     public override void Initialize()
     {

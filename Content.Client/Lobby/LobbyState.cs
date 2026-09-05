@@ -1,5 +1,5 @@
 using Content.Client.Audio;
-using Content.Client.GameTicking.Managers;
+using Content.Client.GameTicking;
 using Content.Client.LateJoin;
 using Content.Client.Lobby.UI;
 using Content.Client.Message;

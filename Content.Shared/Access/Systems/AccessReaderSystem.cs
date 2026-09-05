@@ -31,7 +31,7 @@ public sealed partial class AccessReaderSystem : EntitySystem
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private EmagSystem _emag = default!;
     [Dependency] private TagSystem _tag = default!;
-    [Dependency] private SharedGameTicker _gameTicker = default!;
+    [Dependency] private GameTicker _gameTicker = default!;
     [Dependency] private SharedHandsSystem _handsSystem = default!;
     [Dependency] private SharedContainerSystem _containerSystem = default!;
     [Dependency] private StationRecordsSystem _recordsSystem = default!;

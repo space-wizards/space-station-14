@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using Content.Server.Station.Systems;
 using Content.Shared.Construction.Components;
+using Content.Shared.Station.Systems;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Construction;

@@ -25,7 +25,7 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            var gameTicker = _entities.System<GameTicker>();
+            var gameTicker = _entities.System<ServerGameTicker>();
             if (!gameTicker.PlayerGameStatuses.TryGetValue(player.UserId, out var playerStatus) ||
                 playerStatus is not PlayerGameStatus.JoinedGame)
             {

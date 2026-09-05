@@ -13,15 +13,15 @@ public sealed partial class AlertLevelInterceptionRule : StationEventSystem<Aler
     {
         base.Started(uid, component, gameRule, args);
 
-        if (!TryGetRandomStation(out var chosenStation))
+        if (!Station.TryGetRandomStation(out var chosenStation))
             return;
 
-        if (!_alertLevel.TryGetLevel(chosenStation.Value, out var level)
-            || !_alertLevel.TryGetDefaultLevel(chosenStation.Value, out var defaultLevel)
+        if (!_alertLevel.TryGetLevel(chosenStation.Value.Owner, out var level)
+            || !_alertLevel.TryGetDefaultLevel(chosenStation.Value.Owner, out var defaultLevel)
             || level != defaultLevel)
             return;
 
-        _alertLevel.SetLevel(chosenStation.Value,
+        _alertLevel.SetLevel(chosenStation.Value.Owner,
             component.AlertLevel,
             force: true);
     }

@@ -1,4 +1,5 @@
 using Content.Server.Antag.Components;
+using Content.Shared.Antag;
 
 namespace Content.Server.Antag;
 

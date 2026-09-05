@@ -1,4 +1,4 @@
-using Content.Client.GameTicking.Managers;
+using Content.Client.GameTicking;
 using Content.Shared.GameTicking;
 using Content.Shared.Input;
 using JetBrains.Annotations;

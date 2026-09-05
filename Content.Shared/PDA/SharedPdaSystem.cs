@@ -84,5 +84,12 @@ namespace Content.Shared.PDA
             // This does nothing yet while I finish up PDA prediction
             // Overriden by the server
         }
+
+        public void SetOwner(EntityUid uid, PdaComponent pda, EntityUid owner, string ownerName)
+        {
+            pda.OwnerName = ownerName;
+            pda.PdaOwner = owner;
+            UpdatePdaUi(uid, pda);
+        }
     }
 }

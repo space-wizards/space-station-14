@@ -1,15 +1,12 @@
-using Content.Server.Antag;
 using Content.Server.GameTicking.Rules;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Silicons.Borgs;
+using Content.Shared.Antag;
 using Content.Shared.Destructible;
-using Content.Shared.Mind;
+using Content.Shared.GameTicking.Rules.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
-using Content.Shared.Roles.Components;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Xenoborgs.Components;
-using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
 namespace Content.Server.Xenoborgs;
@@ -19,7 +16,7 @@ public sealed partial class XenoborgSystem : EntitySystem
     [Dependency] private AntagSelectionSystem _antag = default!;
     [Dependency] private BorgSystem _borg = default!;
     [Dependency] private SharedRoleSystem _roles = default!;
-    [Dependency] private XenoborgsRuleSystem _xenoborgsRule = default!;
+    [Dependency] private ServerXenoborgsRuleSystem _xenoborgsRule = default!;
 
     private static readonly Color XenoborgBriefingColor = Color.BlueViolet;
 
@@ -46,7 +43,7 @@ public sealed partial class XenoborgSystem : EntitySystem
         var mothershipCoreQuery = AllEntityQuery<MothershipCoreComponent>(); // paused mothership cores still count
         var mothershipCoreAlive = mothershipCoreQuery.MoveNext(out _, out _);
 
-        var xenoborgsRuleQuery = EntityQueryEnumerator<XenoborgsRuleComponent>();
+        var xenoborgsRuleQuery = EntityQueryEnumerator<Shared.GameTicking.Rules.Components.XenoborgsRuleComponent>();
         if (xenoborgsRuleQuery.MoveNext(out var xenoborgsRuleEnt, out var xenoborgsRuleComp))
             _xenoborgsRule.SendXenoborgDeathAnnouncement((xenoborgsRuleEnt, xenoborgsRuleComp), mothershipCoreAlive);
     }

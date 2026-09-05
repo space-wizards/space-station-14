@@ -41,7 +41,7 @@ namespace Content.IntegrationTests.Tests
             var server = pair.Server;
 
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
-            var gameTicker = entitySystemManager.GetEntitySystem<GameTicker>();
+            var gameTicker = entitySystemManager.GetEntitySystem<ServerGameTicker>();
 
             await server.WaitAssertion(() =>
             {

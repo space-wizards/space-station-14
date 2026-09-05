@@ -7,7 +7,6 @@ using Content.Server.Ghost.Roles;
 using Content.Server.Mind;
 using Content.Server.Prayer;
 using Content.Server.Silicons.Laws;
-using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Systems;
 using Content.Shared.Chemistry.Components.SolutionManager;
@@ -36,7 +35,7 @@ using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
 using System.Linq;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Mind;
+using Content.Shared.Station.Systems;
 using static Content.Shared.Configurable.ConfigurationComponent;
 
 namespace Content.Server.Administration.Systems

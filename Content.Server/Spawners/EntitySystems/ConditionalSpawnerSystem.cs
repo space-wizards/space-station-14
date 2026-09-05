@@ -24,7 +24,7 @@ namespace Content.Server.Spawners.EntitySystems;
 public sealed partial class ConditionalSpawnerSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _robustRandom = default!;
-    [Dependency] private GameTicker _ticker = default!;
+    [Dependency] private ServerGameTicker _ticker = default!;
     [Dependency] private EntityTableSystem _entityTable = default!;
     [Dependency] private StackSystem _stack = default!;
     [Dependency] private TransformSystem _xform = default!;

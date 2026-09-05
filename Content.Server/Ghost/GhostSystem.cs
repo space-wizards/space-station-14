@@ -16,6 +16,7 @@ using Content.Shared.Eye;
 using Content.Shared.FixedPoint;
 using Content.Shared.Follower;
 using Content.Shared.Follower.Components;
+using Content.Shared.GameTicking;
 using Content.Shared.Ghost.Components;
 using Content.Shared.Ghost.Systems;
 using Content.Shared.GhostTypes;
@@ -65,7 +66,7 @@ namespace Content.Server.Ghost
         [Dependency] private IConfigurationManager _configurationManager = default!;
         [Dependency] private IChatManager _chatManager = default!;
         [Dependency] private SharedMindSystem _mind = default!;
-        [Dependency] private GameTicker _gameTicker = default!;
+        [Dependency] private ServerGameTicker _gameTicker = default!;
         [Dependency] private DamageableSystem _damageable = default!;
         [Dependency] private SharedPopupSystem _popup = default!;
         [Dependency] private IRobustRandom _random = default!;
@@ -104,7 +105,7 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<GhostComponent, ToggleGhostHearingActionEvent>(OnGhostHearingAction);
             SubscribeLocalEvent<GhostComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
 
-            SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
+            SubscribeLocalEvent<RoundEndMessageEvent>(_ => MakeVisible(true));
             SubscribeLocalEvent<ToggleGhostVisibilityToAllEvent>(OnToggleGhostVisibilityToAll);
 
             SubscribeLocalEvent<GhostComponent, GetVisMaskEvent>(OnGhostVis);
@@ -510,7 +511,7 @@ namespace Content.Server.Ghost
                 return null;
             }
 
-            var ghost = SpawnAtPosition(GameTicker.ObserverPrototypeName, spawnPosition.Value);
+            var ghost = SpawnAtPosition(ServerGameTicker.ObserverPrototypeName, spawnPosition.Value);
             var ghostComponent = Comp<GhostComponent>(ghost);
 
             if (TryComp<GhostSpriteStateComponent>(ghost, out var state))  // If more TryComps are added this should be turned into an event
