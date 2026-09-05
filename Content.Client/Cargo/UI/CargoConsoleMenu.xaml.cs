@@ -57,6 +57,7 @@ namespace Content.Client.Cargo.UI
             _cargoSystem = _entityManager.System<CargoSystem>();
             _spriteSystem = _entityManager.System<SpriteSystem>();
 
+            _orderConsoleQuery = _entityManager.GetEntityQuery<CargoOrderConsoleComponent>();
             _bankQuery = _entityManager.GetEntityQuery<StationBankAccountComponent>();
 
             SearchBar.OnTextChanged += OnSearchBarTextChanged;
