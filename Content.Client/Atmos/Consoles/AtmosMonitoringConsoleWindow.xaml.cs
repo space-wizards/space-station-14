@@ -112,10 +112,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
     private void OnShowPipeNetworkToggled()
     {
-        if (_console == null)
-            return;
-
-        if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_console.Value, out var console))
+        if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_console, out var console))
             return;
 
         NavMap.ShowPipeNetwork = ShowPipeNetwork.Pressed;
@@ -135,10 +132,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
     private void OnShowGasPipeSensors()
     {
-        if (_console == null)
-            return;
-
-        if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_console.Value, out var console))
+        if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_console, out var console))
             return;
 
         foreach (var (netEnt, device) in console.AtmosDevices)
@@ -160,10 +154,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
         (EntityCoordinates? consoleCoords,
         AtmosMonitoringConsoleEntry[] atmosNetworks)
     {
-        if (_console == null)
-            return;
-
-        if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_console.Value, out var console))
+        if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_console, out var console))
             return;
 
         // Reset nav map values
@@ -208,7 +199,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
     private void UpdateNavMapBlips()
     {
-        if (_console == null || !_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_console.Value, out var console))
+        if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_console, out var console))
             return;
 
         if (NavMap.Visible)
