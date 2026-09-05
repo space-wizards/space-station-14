@@ -33,10 +33,7 @@ public abstract partial class GameTicker
         RaiseLocalEvent(rule, ref ev, true);
 
         if (rule.Comp.Silent)
-        {
-            EndGameRule(rule.AsNullable());
             return;
-        }
 
         AllRoundGameRules.Add((GetRoundTime(), rule));
     }
@@ -48,7 +45,10 @@ public abstract partial class GameTicker
             return;
 
         var ruleComp = RuleQuery.Comp(rule);
-        StartRuleCache(rule);
+        if (ruleComp.Silent)
+            EndGameRule((rule, ruleComp));
+        else
+            StartRuleCache(rule);
 
         Log.Info($"Started game rule {ToPrettyString(rule)}");
         Admin.Add(LogType.EventStarted, $"Started game rule {ToPrettyString(rule)}");
@@ -141,8 +141,6 @@ public abstract partial class GameTicker
         // Game rule has already ended itself, or this was never a game rule...
         if (!RuleQuery.Resolve(rule, ref rule.Comp, false))
             return false;
-
-        DebugTools.Assert(!rule.Comp.Silent, $"Rule {ToPrettyString(rule)} attempted to start when it should have been ended!");
 
         // can't start an already active rule
         if (ActiveRuleQuery.HasComp(rule))
