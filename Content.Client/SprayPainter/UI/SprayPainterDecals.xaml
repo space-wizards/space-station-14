@@ -13,7 +13,7 @@
             </GridContainer>
         </ScrollContainer>
 
-        <controls:Separator StyleClasses="LowDivider" MinWidth="2" />
+        <controls:Separator StyleClasses="LowDivider" />
         <BoxContainer Orientation="Vertical">
             <ColorSelectorSliders Name="ColorSelector" IsAlphaVisible="True">
                 <BoxContainer HorizontalAlignment="Right" VerticalAlignment="Top" SetHeight="29">

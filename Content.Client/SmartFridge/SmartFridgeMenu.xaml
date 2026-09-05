@@ -11,7 +11,7 @@
         <co:SearchListContainer Name="VendingContents" VerticalExpand="True" Margin="4 4"/>
          <!-- Footer -->
         <BoxContainer Orientation="Vertical">
-            <controls:Separator StyleClasses="LowDivider" MinWidth="2" />
+            <controls:Separator StyleClasses="LowDivider" />
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
                 <Label Name="LeftFlavorLabel" StyleClasses="WindowFooterText" />
                 <Label Text="{Loc 'vending-machine-flavor-right'}" StyleClasses="WindowFooterText"

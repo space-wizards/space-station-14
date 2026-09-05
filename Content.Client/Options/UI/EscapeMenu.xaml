@@ -8,16 +8,16 @@
 
     <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="150">
         <ui:VoteCallMenuButton />
-        <controls:Separator StyleClasses="LowDivider" Margin="0 2.5 0 2.5" MinWidth="2" />
+        <controls:Separator StyleClasses="LowDivider" Margin="0 2.5 0 2.5" />
         <Button Access="Public" Name="RulesButton" Text="{Loc 'ui-escape-rules'}" StyleClasses="OpenLeft" />
         <Button Access="Public" Name="GuidebookButton" Text="{Loc 'ui-escape-guidebook'}" StyleClasses="OpenBoth" />
         <Button Access="Public" Name="WikiButton" Text="{Loc 'ui-escape-wiki'}" StyleClasses="OpenBoth" />
         <changelog:ChangelogButton Access="Public" Name="ChangelogButton" StyleClasses="OpenBoth"/>
         <Button Access="Public" Name="FeedbackButton" Text="{Loc 'ui-escape-feedback'}" StyleClasses="OpenBoth"/>
         <Button Access="Public" Name="AdminRemarksButton" Text="{Loc 'ui-escape-remarks'}" StyleClasses="OpenRight"/>
-        <controls:Separator StyleClasses="LowDivider" Margin="0 2.5 0 2.5" MinWidth="2" />
+        <controls:Separator StyleClasses="LowDivider" Margin="0 2.5 0 2.5" />
         <Button Access="Public" Name="OptionsButton" Text="{Loc 'ui-escape-options'}" />
-        <controls:Separator StyleClasses="LowDivider" Margin="0 2.5 0 2.5" MinWidth="2" />
+        <controls:Separator StyleClasses="LowDivider" Margin="0 2.5 0 2.5" />
         <Button Access="Public" Name="DisconnectButton" Text="{Loc 'ui-escape-disconnect'}" StyleClasses="negative OpenLeft" />
         <Button Access="Public" Name="QuitButton" Text="{Loc 'ui-escape-quit'}" StyleClasses="negative OpenRight" />
     </BoxContainer>

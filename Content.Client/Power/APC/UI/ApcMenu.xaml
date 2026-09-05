@@ -43,7 +43,7 @@
 
         <!-- Footer -->
         <BoxContainer Orientation="Vertical">
-            <controls:Separator StyleClasses="LowDivider" MinWidth="2" />
+            <controls:Separator StyleClasses="LowDivider" />
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
                 <Label Text="{Loc 'apc-menu-flavor-left'}" StyleClasses="WindowFooterText" />
                 <Label Text="{Loc 'apc-menu-flavor-right'}" StyleClasses="WindowFooterText"

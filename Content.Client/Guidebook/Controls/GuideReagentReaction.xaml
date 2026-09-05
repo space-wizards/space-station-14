@@ -27,5 +27,5 @@
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>
-    <controls:Separator StyleClasses="LowDivider" Margin="0 5 0 5" MinWidth="2" />
+    <controls:Separator StyleClasses="LowDivider" Margin="0 5 0 5" />
 </BoxContainer>

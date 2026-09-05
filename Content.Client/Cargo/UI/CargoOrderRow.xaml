@@ -24,7 +24,7 @@
 
             <controls:Separator Name="Stride"
                 Access="Public"
-                StyleClasses="LowDivider" MinWidth="2" />
+                StyleClasses="LowDivider" />
         </BoxContainer>
 
         <!-- Info -->
@@ -59,7 +59,7 @@
         </BoxContainer>
 
         <BoxContainer Orientation="Vertical">
-            <controls:Separator StyleClasses="LowDivider" MinWidth="2" />
+            <controls:Separator StyleClasses="LowDivider" />
 
             <!-- Buttons -->
             <!-- Btn's position hardcoded (args.Button.Parent?.Parent?.Parent type) in CargoConsoleBUI 158 & 166 line -->

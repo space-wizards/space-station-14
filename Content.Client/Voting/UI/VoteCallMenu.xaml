@@ -10,7 +10,7 @@
             <TextureButton Name="CloseButton" StyleClasses="windowCloseButton"
                            VerticalAlignment="Center" />
         </BoxContainer>
-        <controls:Separator MinWidth="2" StyleClasses="HighDivider" />
+        <controls:Separator StyleClasses="HighDivider" />
 
         <BoxContainer Orientation="Vertical" Margin="8 2 8 0" VerticalExpand="True" VerticalAlignment="Top">
             <BoxContainer Orientation="Vertical">
@@ -26,7 +26,7 @@
 
         <Button Margin="8 32 8 2" Name="CreateButton" Text="{Loc 'ui-vote-create-button'}" />
 
-        <controls:Separator StyleClasses="LowDivider" MinWidth="2" />
+        <controls:Separator StyleClasses="LowDivider" />
         <Label Margin="12 0 0 0" StyleClasses="LabelSubText" Text="{Loc 'ui-vote-fluff'}" />
     </BoxContainer>
 </ui:VoteCallMenu>

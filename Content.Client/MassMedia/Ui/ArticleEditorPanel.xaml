@@ -16,7 +16,7 @@
                        HorizontalExpand="True" VAlign="Center" StyleClasses="FancyWindowTitle" />
             </BoxContainer>
         </Control>
-        <controls:Separator StyleClasses="LowDivider" Margin="0 0 1 0" MinWidth="2" />
+        <controls:Separator StyleClasses="LowDivider" Margin="0 0 1 0" />
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc news-write-ui-article-name-label}" Margin="17 10 0 9" VerticalAlignment="Center"/>
             <LineEdit Name="TitleField" Margin="6 10 0 9" MinWidth="260" MinHeight="23" Access="Public"/>

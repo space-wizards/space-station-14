@@ -4,7 +4,7 @@
         <BoxContainer Orientation="Horizontal">
             <Label Name="StoreItemName" HorizontalExpand="True" />
         </BoxContainer>
-        <controls:Separator StyleClasses="HighDivider" Margin="0,1,0,2" MinWidth="2" />
+        <controls:Separator StyleClasses="HighDivider" Margin="0,1,0,2" />
         <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
             <BoxContainer Orientation="Vertical" VerticalAlignment="Center" Margin="0,0,4,0">
                 <TextureRect

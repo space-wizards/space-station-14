@@ -23,7 +23,7 @@
                    Text="{Loc 'health-analyzer-window-entity-unknown-text'}" />
         </BoxContainer>
 
-        <controls:Separator StyleClasses="LowDivider" MinWidth="2" />
+        <controls:Separator StyleClasses="LowDivider" />
 
         <GridContainer Margin="0 5 0 0" Columns="2">
             <Label Text="{Loc 'health-analyzer-window-entity-status-text'}" />
@@ -37,13 +37,13 @@
         </GridContainer>
     </BoxContainer>
 
-    <controls:Separator Name="AlertsDivider" Visible="False" StyleClasses="LowDivider" MinWidth="2" />
+    <controls:Separator Name="AlertsDivider" Visible="False" StyleClasses="LowDivider" />
 
     <BoxContainer Name="AlertsContainer" Visible="False" Margin="0 5" Orientation="Vertical" HorizontalAlignment="Center">
 
     </BoxContainer>
 
-    <controls:Separator StyleClasses="LowDivider" MinWidth="2" />
+    <controls:Separator StyleClasses="LowDivider" />
 
     <BoxContainer
         Name="GroupsContainer"

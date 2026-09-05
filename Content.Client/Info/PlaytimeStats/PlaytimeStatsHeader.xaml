@@ -23,6 +23,6 @@
                    Margin="5,5,5,5"/>
         </BoxContainer>
         <!-- Horizontal Separator -->
-        <controls:Separator MinWidth="2" />
+        <controls:Separator />
     </BoxContainer>
 </Control>

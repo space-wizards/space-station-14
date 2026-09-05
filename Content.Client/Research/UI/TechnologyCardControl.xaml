@@ -27,7 +27,7 @@
                             <Label Name="TechnologyNameLabel" StyleClasses="LabelKeyText" HorizontalExpand="True"/>
                             <TextureRect Name="DisciplineTexture" TextureScale="2 2" VerticalAlignment="Top" HorizontalAlignment="Right"/>
                         </BoxContainer>
-                        <controls:Separator StyleClasses="LowDivider" Margin="0 5 0 5" MinWidth="2" />
+                        <controls:Separator StyleClasses="LowDivider" Margin="0 5 0 5" />
                         <BoxContainer Orientation="Horizontal">
                             <RichTextLabel Name="TierLabel" HorizontalAlignment="Left" StyleClasses="LabelSubText" HorizontalExpand="True"/>
                             <Button Name="ResearchButton" Text="{Loc 'research-console-menu-server-research-button'}"/>

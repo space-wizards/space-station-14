@@ -4,7 +4,7 @@
     <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.4">
         <BoxContainer Orientation="Vertical" Margin="0 4 0 4">
             <RichTextLabel Text="{Loc 'ghost-target-window-warp-to-title'}" HorizontalAlignment="Center" />
-            <controls:Separator StyleClasses="LowDivider" Margin="0 5" MinWidth="2" />
+            <controls:Separator StyleClasses="LowDivider" Margin="0 5" />
             <BoxContainer Orientation="Horizontal" Align="Center">
                 <Button Name="GhostnadoButton" Text="{Loc 'ghost-target-window-warp-to-most-followed'}"
                         ToolTip="{Loc 'ghost-target-window-warp-to-most-followed-tooltip'}"

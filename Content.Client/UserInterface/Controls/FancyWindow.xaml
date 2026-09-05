@@ -16,7 +16,7 @@
                                VerticalAlignment="Center" />
             </BoxContainer>
         </Control>
-        <controls:Separator StyleClasses="LowDivider" MinWidth="2" />
+        <controls:Separator StyleClasses="LowDivider" />
         <Control Access="Public" Name="ContentsContainer" StyleClasses="WindowContentsContainer" RectClipContent="True" VerticalExpand="true" />
     </BoxContainer>
 </controls:FancyWindow>

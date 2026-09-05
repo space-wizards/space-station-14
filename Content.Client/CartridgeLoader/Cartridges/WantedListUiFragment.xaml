@@ -31,17 +31,17 @@
                 <Label Name="PersonName" StyleClasses="LabelBig" />
                 <RichTextLabel Name="PersonState" HorizontalAlignment="Right" HorizontalExpand="True" />
             </BoxContainer>
-            <controls:Separator StyleClasses="LowDivider" Margin="0 5 0 5" MinWidth="2" />
+            <controls:Separator StyleClasses="LowDivider" Margin="0 5 0 5" />
             <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
                 <BoxContainer Name="DataContainer" Orientation="Vertical">
                     <RichTextLabel Name="TargetAge" />
                     <RichTextLabel Name="TargetJob" />
                     <RichTextLabel Name="TargetSpecies" />
                     <RichTextLabel Name="TargetGender" />
-                    <controls:Separator StyleClasses="LowDivider" Margin="0 5 0 5" MinWidth="2" />
+                    <controls:Separator StyleClasses="LowDivider" Margin="0 5 0 5" />
                     <RichTextLabel Name="InitiatorName" VerticalAlignment="Stretch"/>
                     <RichTextLabel Name="WantedReason" VerticalAlignment="Stretch"/>
-                    <controls:Separator StyleClasses="LowDivider" Margin="0 5 0 5" MinWidth="2" />
+                    <controls:Separator StyleClasses="LowDivider" Margin="0 5 0 5" />
                     <TableContainer Name="HistoryTable" Columns="3" Visible="False" HorizontalAlignment="Stretch" />
                 </BoxContainer>
             </ScrollContainer>

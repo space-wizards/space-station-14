@@ -36,7 +36,7 @@
                     <Label Text="{Loc ban-panel-severity}" />
                     <OptionButton Name="SeverityOption" />
                 </BoxContainer>
-                <controls:Separator Margin="1" MinWidth="2" />
+                <controls:Separator Margin="1" />
                 <TextEdit Name="ReasonTextEdit" MinHeight="100" VerticalExpand="True" HorizontalExpand="True" />
             </BoxContainer>
             <!-- Player List -->

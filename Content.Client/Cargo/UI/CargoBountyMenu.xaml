@@ -32,7 +32,7 @@
         </PanelContainer>
         <!-- Footer -->
         <BoxContainer Orientation="Vertical">
-            <controls:Separator StyleClasses="LowDivider" MinWidth="2" />
+            <controls:Separator StyleClasses="LowDivider" />
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
                 <Label Text="{Loc 'bounty-console-flavor-left'}" StyleClasses="WindowFooterText" />
                 <Label Text="{Loc 'bounty-console-flavor-right'}" StyleClasses="WindowFooterText"

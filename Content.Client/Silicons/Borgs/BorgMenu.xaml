@@ -14,13 +14,13 @@
                 <Control MinWidth="5"/>
                 <Button Name="EjectBatteryButton" Text="{Loc 'borg-ui-remove-battery'}" StyleClasses="OpenLeft"/>
             </BoxContainer>
-            <controls:Separator Margin="0 10 0 10" MinWidth="2" />
+            <controls:Separator Margin="0 10 0 10" />
             <PanelContainer VerticalExpand="True" StyleClasses="PanelDeep">
                 <BoxContainer HorizontalAlignment="Center" VerticalAlignment="Center">
                     <SpriteView Name="BorgSprite" Scale="5 5"/>
                 </BoxContainer>
             </PanelContainer>
-            <controls:Separator Margin="0 10 0 10" MinWidth="2" />
+            <controls:Separator Margin="0 10 0 10" />
             <BoxContainer Orientation="Horizontal">
                 <LineEdit Name="NameLineEdit" HorizontalExpand="True"/>
                 <Label Name="NameIdentifierLabel" Margin="10 0 0 0"/>

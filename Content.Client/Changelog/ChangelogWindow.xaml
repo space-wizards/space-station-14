@@ -8,7 +8,7 @@
     <PanelContainer StyleClasses="BackgroundPanel" />
     <BoxContainer Orientation="Vertical">
         <TabContainer Name="Tabs" Access="Public" HorizontalExpand="True" VerticalExpand="True" />
-        <controls:Separator StyleClasses="LowDivider" MinWidth="2" />
+        <controls:Separator StyleClasses="LowDivider" />
         <Label Name="VersionLabel" Access="Public" HorizontalAlignment="Right" StyleClasses="LabelSubText" Margin="4 0" />
     </BoxContainer>
 </ui:ChangelogWindow>
