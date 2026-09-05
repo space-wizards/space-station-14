@@ -110,53 +110,53 @@ public sealed partial class ExpendableLightSystem : EntitySystem
     ///     Light refueling logic
     /// </summary>	
     [SubscribeLocalEvent]
-    private void OnInteractUsing(EntityUid uid, ExpendableLightComponent component, ref InteractUsingEvent args)
+    private void OnInteractUsing(Entity<ExpendableLightComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled) return;
 
         if (!TryComp(args.Used, out StackComponent? stack)) return;
 
-        if (stack.StackTypeId != component.RefuelMaterialID) return;
+        if (stack.StackTypeId != ent.Comp.RefuelMaterialID) return;
 
-        switch (component.CurrentState)
+        switch (ent.Comp.CurrentState)
         {
             case ExpendableLightState.Dead:
-                component.CurrentState = ExpendableLightState.Unlit;
-                _tagSystem.RemoveTag(uid, TrashTag);
-                component.GlowDuration = component.RefuelMaterialTime;
+                ent.Comp.CurrentState = ExpendableLightState.Unlit;
+                _tagSystem.RemoveTag(ent, TrashTag);
+                ent.Comp.GlowDuration = ent.Comp.RefuelMaterialTime;
 
-                _nameModifier.RefreshNameModifiers(uid);
-                UpdateVisualizer((uid, component));
+                _nameModifier.RefreshNameModifiers(ent.Owner);
+                UpdateVisualizer(ent);
                 break;
 
             case ExpendableLightState.Unlit:
-                if (component.GlowDuration + component.RefuelMaterialTime >= component.RefuelMaximumDuration) // light cannot hold more fuel
+                if (ent.Comp.GlowDuration + ent.Comp.RefuelMaterialTime >= ent.Comp.RefuelMaximumDuration) // light cannot hold more fuel
                     return;
-                component.GlowDuration += component.RefuelMaterialTime;
+                ent.Comp.GlowDuration += ent.Comp.RefuelMaterialTime;
                 break;
 
             case ExpendableLightState.Fading:
-                var glowTimeLeft = component.StateExpiryTime - _timing.CurTime; // how long until the light goes out
-                if (glowTimeLeft + component.RefuelMaterialTime > component.FadeOutDuration) //enough fuel to go from fading into lit state
+                var glowTimeLeft = ent.Comp.StateExpiryTime - _timing.CurTime; // how long until the light goes out
+                if (glowTimeLeft + ent.Comp.RefuelMaterialTime > ent.Comp.FadeOutDuration) //enough fuel to go from fading into lit state
                 {
-                    var newGlowTime = glowTimeLeft + component.RefuelMaterialTime - component.FadeOutDuration;
-                    component.CurrentState = ExpendableLightState.Lit;
-                    component.StateExpiryTime = _timing.CurTime + newGlowTime;
-                    UpdateVisualizer((uid, component));
+                    var newGlowTime = glowTimeLeft + ent.Comp.RefuelMaterialTime - ent.Comp.FadeOutDuration;
+                    ent.Comp.CurrentState = ExpendableLightState.Lit;
+                    ent.Comp.StateExpiryTime = _timing.CurTime + newGlowTime;
+                    UpdateVisualizer(ent);
                 }
                 else
-                    component.StateExpiryTime += component.RefuelMaterialTime;
+                    ent.Comp.StateExpiryTime += ent.Comp.RefuelMaterialTime;
                 break;
 
             case ExpendableLightState.Lit:
-                var timeLeft = component.StateExpiryTime - _timing.CurTime;
-                if (timeLeft + component.RefuelMaterialTime >= component.RefuelMaximumDuration) // light cannot hold more fuel
+                var timeLeft = ent.Comp.StateExpiryTime - _timing.CurTime;
+                if (timeLeft + ent.Comp.RefuelMaterialTime >= ent.Comp.RefuelMaximumDuration) // light cannot hold more fuel
                     return;
 
-                component.StateExpiryTime += component.RefuelMaterialTime;
+                ent.Comp.StateExpiryTime += ent.Comp.RefuelMaterialTime;
                 break;
         }
-        Dirty(uid, component);
+        Dirty(ent);
         _stackSystem.ReduceCount((args.Used, stack), 1);
         args.Handled = true;
 
@@ -228,11 +228,11 @@ public sealed partial class ExpendableLightSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnExpLightInit(EntityUid uid, ExpendableLightComponent component, ComponentInit args)
+    private void OnExpLightInit(Entity<ExpendableLightComponent> ent, ref ComponentInit args)
     {
-        if (TryComp<ItemComponent>(uid, out var item))
+        if (TryComp<ItemComponent>(ent, out var item))
         {
-            _item.SetHeldPrefix(uid, "unlit", component: item);
+            _item.SetHeldPrefix(ent, "unlit", component: item);
         }
     }
 
@@ -266,8 +266,8 @@ public sealed partial class ExpendableLightSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnLightShutdown(EntityUid uid, ExpendableLightComponent component, ComponentShutdown args)
+    private void OnLightShutdown(Entity<ExpendableLightComponent> ent, ref ComponentShutdown args)
     {
-        component.PlayingStream = _audio.Stop(component.PlayingStream);
+        ent.Comp.PlayingStream = _audio.Stop(ent.Comp.PlayingStream);
     }
 }
