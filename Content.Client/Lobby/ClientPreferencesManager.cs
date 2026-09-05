@@ -14,11 +14,11 @@ namespace Content.Client.Lobby
     ///     connection.
     ///     Stores preferences on the server through <see cref="SelectCharacter" /> and <see cref="UpdateCharacter" />.
     /// </summary>
-    public sealed class ClientPreferencesManager : IClientPreferencesManager
+    public sealed partial class ClientPreferencesManager : IClientPreferencesManager
     {
-        [Dependency] private readonly IClientNetManager _netManager = default!;
-        [Dependency] private readonly IBaseClient _baseClient = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private IClientNetManager _netManager = default!;
+        [Dependency] private IBaseClient _baseClient = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
 
         public event Action? OnServerDataLoaded;
 

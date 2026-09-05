@@ -4,7 +4,7 @@
   id: BaseThiefObjective
   components:
   - type: Objective
-    issuer: objective-issuer-thief
+    issuer: Thief
   - type: RoleRequirement
     roles:
     - ThiefRole
@@ -176,7 +176,6 @@
     minCollectionSize: 7
     maxCollectionSize: 12
     verifyMapExistence: false
-    checkStealAreas: false
   - type: Objective
     difficulty: 0.3
 

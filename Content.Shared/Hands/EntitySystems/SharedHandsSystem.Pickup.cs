@@ -80,6 +80,10 @@ public abstract partial class SharedHandsSystem
         if (handId == null)
             return false;
 
+        // don't try to pick up the item if it's being deleted anyways
+        if (TerminatingOrDeleted(entity) || EntityManager.IsQueuedForDeletion(entity))
+            return false;
+
         if (!Resolve(entity, ref item, false))
             return false;
 

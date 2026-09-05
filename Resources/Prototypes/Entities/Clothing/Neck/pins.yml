@@ -11,6 +11,10 @@
     sprite: Clothing/Neck/Misc/pins.rsi
   - type: Clothing
     sprite: Clothing/Neck/Misc/pins.rsi
+    tags:
+    - ClothMade #idk man its on the parent
+    - MonkeyWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -29,6 +33,7 @@
   - type: Tag
     tags:
     - ClothMade #idk man its on the parent
+    - MonkeyWearable
     - WhitelistChameleon
     - GenderPin
 
@@ -263,7 +268,7 @@
     equippedPrefix: goldautism
 
 - type: entity
-  parent: BaseItem
+  parent: [SolutionSpray, SolutionTiny, BaseItem]
   id: SprayFlowerPin
   name: flower pin
   description: A cute flower pin. Something seems off with it...
@@ -281,13 +286,11 @@
     - neck
   - type: EquipSpray
     verbLocId: equip-spray-verb-press
-  - type: SolutionContainerManager
-    solutions:
-      spray:
-        maxVol: 30
-        reagents:
-        - ReagentId: Water
-          Quantity: 30
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Water
+        Quantity: 30
   - type: RefillableSolution
     solution: spray
   - type: DrainableSolution
@@ -310,6 +313,4 @@
     actions:
     - ActionShootWater
   - type: ItemActionGrant
-    actions:
-    - ActionShootWater
     activeIfWorn: true

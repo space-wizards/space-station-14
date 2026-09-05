@@ -1,23 +1,24 @@
-﻿using Robust.Shared.Physics;
+﻿using Robust.Shared.GameStates;
+using Robust.Shared.Physics;
 
-namespace Content.Shared.Blocking;
+namespace Content.Shared.Blocking.Components;
 
 /// <summary>
 /// This component gets dynamically added to an Entity via the <see cref="BlockingSystem"/>
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class BlockingUserComponent : Component
 {
     /// <summary>
     /// The entity that's being used to block
     /// </summary>
-    [DataField("blockingItem")]
+    [DataField, AutoNetworkedField]
     public EntityUid? BlockingItem;
 
     /// <summary>
     /// Stores the entities original bodytype
     /// Used so that it can be put back to what it was after anchoring
     /// </summary>
-    [DataField("originalBodyType")]
+    [DataField, AutoNetworkedField]
     public BodyType OriginalBodyType;
 }

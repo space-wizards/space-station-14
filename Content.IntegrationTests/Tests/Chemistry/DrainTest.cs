@@ -23,15 +23,15 @@ public sealed class DrainTest : InteractionTest
 - type: entity
   parent: Puddle
   id: PuddleBloodTest
-  suffix: Blood (30u)
+  suffix: Blood
   components:
-  - type: SolutionContainerManager
-    solutions:
-      puddle:
-        maxVol: 1000
-        reagents:
-        - ReagentId: {BloodReagent}
-          Quantity: {PuddleVolume}
+  - type: Solution
+    id: puddle
+    solution:
+      maxVol: 1000
+      reagents:
+      - ReagentId: {BloodReagent}
+        Quantity: {PuddleVolume}
 ";
 
 

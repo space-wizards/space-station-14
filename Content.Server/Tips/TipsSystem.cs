@@ -12,14 +12,13 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Tips;
 
-public sealed class TipsSystem : SharedTipsSystem
+public sealed partial class TipsSystem : SharedTipsSystem
 {
-    [Dependency] private readonly IChatManager _chat = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private IChatManager _chat = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private GameTicker _ticker = default!;
 
     private bool _tipsEnabled;
     private float _tipTimeOutOfRound;
@@ -113,7 +112,7 @@ public sealed class TipsSystem : SharedTipsSystem
 
     public override void AnnounceRandomTip()
     {
-        if (!_prototype.TryIndex<LocalizedDatasetPrototype>(_tipsDataset, out var tips))
+        if (!ProtoMan.TryIndex<LocalizedDatasetPrototype>(_tipsDataset, out var tips))
             return;
 
         var tip = _random.Pick(tips.Values);

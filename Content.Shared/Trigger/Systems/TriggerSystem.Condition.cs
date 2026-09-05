@@ -59,7 +59,7 @@ public sealed partial class TriggerSystem
     private void Toggle(Entity<ToggleTriggerConditionComponent> ent, EntityUid user)
     {
         var msg = ent.Comp.Enabled ? ent.Comp.ToggleOff : ent.Comp.ToggleOn;
-        _popup.PopupPredicted(Loc.GetString(msg), ent.Owner, user);
+        _popup.PopupEntity(Loc.GetString(msg), ent.Owner, user);
         ent.Comp.Enabled = !ent.Comp.Enabled;
         Dirty(ent);
     }
@@ -70,17 +70,8 @@ public sealed partial class TriggerSystem
         if (args.Key != null && !ent.Comp.Keys.Contains(args.Key))
             return;
 
-        // TODO: Replace with RandomPredicted once the engine PR is merged
-        var hash = new List<int>
-        {
-            (int)_timing.CurTick.Value,
-            GetNetEntity(ent).Id,
-            args.User == null ? 0 : GetNetEntity(args.User.Value).Id,
-        };
-        var seed = SharedRandomExtensions.HashCodeCombine(hash);
-        var rand = new System.Random(seed);
-
-        args.Cancelled |= !rand.Prob(ent.Comp.SuccessChance); // When not successful, Cancelled = true
+        // When not successful, Cancelled = true
+        args.Cancelled |= !SharedRandomExtensions.PredictedProb(_timing, ent.Comp.SuccessChance, GetNetEntity(ent), GetNetEntity(args.User));
     }
     private void OnMindRoleTriggerAttempt(Entity<MindRoleTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
     {

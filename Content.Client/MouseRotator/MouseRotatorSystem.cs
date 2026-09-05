@@ -8,13 +8,13 @@ using Robust.Shared.Timing;
 namespace Content.Client.MouseRotator;
 
 /// <inheritdoc/>
-public sealed class MouseRotatorSystem : SharedMouseRotatorSystem
+public sealed partial class MouseRotatorSystem : SharedMouseRotatorSystem
 {
-    [Dependency] private readonly IInputManager _input = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IEyeManager _eye = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private IInputManager _input = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IEyeManager _eye = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     public override void Update(float frameTime)
     {

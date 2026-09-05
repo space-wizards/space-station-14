@@ -8,9 +8,9 @@ using Content.Shared.Wieldable.Components;
 
 namespace Content.Server.Wieldable;
 
-public sealed class WieldableSystem : SharedWieldableSystem
+public sealed partial class WieldableSystem : SharedWieldableSystem
 {
-    [Dependency] private readonly ContentEyeSystem _eye = default!;
+    [Dependency] private ContentEyeSystem _eye = default!;
 
     public override void Initialize()
     {

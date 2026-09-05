@@ -11,11 +11,11 @@ namespace Content.Shared.EntityEffects.Effects;
 /// TODO: This can probably be made into a generic "CleanEntityEffect" which multiple components listen to...
 public sealed partial class WashCreamPieEntityEffectSystem : EntityEffectSystem<CreamPiedComponent, WashCreamPie>
 {
-    [Dependency] private readonly SharedCreamPieSystem _creamPie = default!;
+    [Dependency] private SharedCreamPieSystem _creamPie = default!;
 
     protected override void Effect(Entity<CreamPiedComponent> entity, ref EntityEffectEvent<WashCreamPie> args)
     {
-        _creamPie.SetCreamPied(entity, entity.Comp, false);
+        _creamPie.SetCreamPied((entity, entity.Comp), false);
     }
 }
 

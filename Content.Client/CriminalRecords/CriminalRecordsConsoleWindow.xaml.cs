@@ -28,7 +28,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
     private readonly IPrototypeManager _proto;
     private readonly IRobustRandom _random;
     private readonly AccessReaderSystem _accessReader;
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
     private readonly SpriteSystem _spriteSystem;
 
     public readonly EntityUid Console;

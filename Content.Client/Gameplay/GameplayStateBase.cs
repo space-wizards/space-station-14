@@ -30,19 +30,18 @@ namespace Content.Client.Gameplay
     // Ok actually it's fine.
     // Instantiated dynamically through the StateManager, Dependencies will be resolved.
     [Virtual]
-    public class GameplayStateBase : State, IEntityEventSubscriber
+    public partial class GameplayStateBase : State, IEntityEventSubscriber
     {
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
-        [Dependency] private readonly IInputManager _inputManager = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] protected readonly IUserInterfaceManager UserInterfaceManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IViewVariablesManager _vvm = default!;
-        [Dependency] private readonly IConsoleHost _conHost = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private IEyeManager _eyeManager = default!;
+        [Dependency] private IInputManager _inputManager = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private IGameTiming _timing = default!;
+        [Dependency] protected IUserInterfaceManager UserInterfaceManager = default!;
+        [Dependency] private IEntityManager _entityManager = default!;
+        [Dependency] private IViewVariablesManager _vvm = default!;
+        [Dependency] private IConsoleHost _conHost = default!;
+        [Dependency] private IConfigurationManager _configurationManager = default!;
 
         private ClickableEntityComparer _comparer = default!;
 
@@ -161,13 +160,11 @@ namespace Content.Client.Gameplay
 
             // Check the entities against whether or not we can click them
             var foundEntities = new List<(EntityUid, int, uint, float)>(entities.Count);
-            var clickQuery = _entityManager.GetEntityQuery<ClickableComponent>();
             var clickables = _entityManager.System<ClickableSystem>();
 
             foreach (var entity in entities)
             {
-                if (clickQuery.TryGetComponent(entity.Uid, out var component) &&
-                    clickables.CheckClick((entity.Uid, component, entity.Component, entity.Transform), coordinates.Position, eye, excludeFaded, out var drawDepthClicked, out var renderOrder, out var bottom))
+                if (clickables.CheckClick((entity.Uid, null, entity.Component, entity.Transform), coordinates.Position, eye, excludeFaded, out var drawDepthClicked, out var renderOrder, out var bottom))
                 {
                     foundEntities.Add((entity.Uid, drawDepthClicked, renderOrder, bottom));
                 }
@@ -242,7 +239,7 @@ namespace Content.Client.Gameplay
                 var transformSystem = _entitySystemManager.GetEntitySystem<SharedTransformSystem>();
                 var mapSystem = _entitySystemManager.GetEntitySystem<MapSystem>();
 
-                coordinates = _mapManager.TryFindGridAt(mousePosWorld, out var uid, out _) ?
+                coordinates = mapSystem.TryFindGridAt(mousePosWorld, out var uid, out _) ?
                     mapSystem.MapToGrid(uid, mousePosWorld) :
                     transformSystem.ToCoordinates(mousePosWorld);
             }

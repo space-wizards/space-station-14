@@ -42,3 +42,8 @@
   id: TriggerActivate
   files:
   - /Audio/Weapons/click.ogg
+
+- type: soundCollection
+  id: ServerFans
+  files:
+  - /Audio/Ambience/Objects/server_fans.ogg

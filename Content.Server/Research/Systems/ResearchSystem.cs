@@ -15,13 +15,13 @@ namespace Content.Server.Research.Systems
     [UsedImplicitly]
     public sealed partial class ResearchSystem : SharedResearchSystem
     {
-        [Dependency] private readonly IAdminLogManager _adminLog = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-        [Dependency] private readonly EntityLookupSystem _lookup = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-        [Dependency] private readonly SharedPopupSystem _popup = default!;
-        [Dependency] private readonly RadioSystem _radio = default!;
+        [Dependency] private IAdminLogManager _adminLog = default!;
+        [Dependency] private IGameTiming _timing = default!;
+        [Dependency] private AccessReaderSystem _accessReader = default!;
+        [Dependency] private EntityLookupSystem _lookup = default!;
+        [Dependency] private UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private SharedPopupSystem _popup = default!;
+        [Dependency] private RadioSystem _radio = default!;
 
         public override void Initialize()
         {

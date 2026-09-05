@@ -11,11 +11,11 @@ using Robust.Shared.Timing;
 namespace Content.Server.Power.SMES;
 
 [UsedImplicitly]
-internal sealed class SmesSystem : EntitySystem
+internal sealed partial class SmesSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedBatterySystem _battery = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedBatterySystem _battery = default!;
 
     public override void Initialize()
     {

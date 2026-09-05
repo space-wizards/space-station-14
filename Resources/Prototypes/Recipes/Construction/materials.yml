@@ -1,95 +1,74 @@
-﻿- type: construction
+﻿# region Base
+- type: construction
+  abstract: true
+  id: BaseMaterial
+  category: construction-category-materials
+  objectType: Item
+# endregion Base
+
+# region Materials
+- type: construction
+  parent: BaseMaterial
   id: MetalRod
   graph: MetalRod
-  startNode: start
   targetNode: MetalRod
-  category: construction-category-materials
-  objectType: Item
 
 - type: construction
-  id: SheetRGlass
-  graph: Glass
-  startNode: start
-  targetNode: SheetRGlass
-  category: construction-category-materials
-  objectType: Item
-
-- type: construction
-  id: SheetClockworkGlass
-  graph: Glass
-  startNode: start
-  targetNode: SheetClockworkGlass
-  category: construction-category-materials
-  objectType: Item
-
-- type: construction
-  id: SheetPGlass
-  graph: Glass
-  startNode: start
-  targetNode: SheetPGlass
-  category: construction-category-materials
-  objectType: Item
-
-- type: construction
-  id: SheetRPGlass
-  graph: Glass
-  startNode: start
-  targetNode: SheetRPGlass
-  category: construction-category-materials
-  objectType: Item
-
-- type: construction
-  id: SheetRPGlass0
-  graph: Glass
-  startNode: start
-  targetNode: SheetRPGlass0
-  category: construction-category-materials
-  objectType: Item
-
-- type: construction
-  id: SheetRPGlass1
-  graph: Glass
-  startNode: start
-  targetNode: SheetRPGlass1
-  category: construction-category-materials
-  objectType: Item
-
-- type: construction
+  parent: BaseMaterial
   id: MaterialDurathread
   graph: Durathread
-  startNode: start
   targetNode: MaterialDurathread
-  category: construction-category-materials
-  objectType: Item
+# endregion Materials
+
+# region Glass
+- type: construction
+  parent: BaseMaterial
+  id: SheetRGlass
+  graph: Glass
+  targetNode: SheetRGlass
 
 - type: construction
+  parent: SheetRGlass
+  id: SheetClockworkGlass
+  targetNode: SheetClockworkGlass
+
+- type: construction
+  parent: SheetRGlass
+  id: SheetPGlass
+  targetNode: SheetPGlass
+
+- type: construction
+  parent: SheetRGlass
+  id: SheetRPGlass
+  targetNode: SheetRPGlass
+
+- type: construction
+  parent: SheetRGlass
+  id: SheetRPGlass0
+  targetNode: SheetRPGlass0
+
+- type: construction
+  parent: SheetRGlass
+  id: SheetRPGlass1
+  targetNode: SheetRPGlass1
+
+- type: construction
+  parent: SheetRGlass
   id: SheetUGlass
-  graph: Glass
-  startNode: start
   targetNode: SheetUGlass
-  category: construction-category-materials
-  objectType: Item
 
 - type: construction
+  parent: SheetRGlass
   id: SheetRUGlass
-  graph: Glass
-  startNode: start
   targetNode: SheetRUGlass
-  category: construction-category-materials
-  objectType: Item
 
 - type: construction
+  parent: SheetRGlass
   id: SheetRUGlass0
-  graph: Glass
-  startNode: start
   targetNode: SheetRUGlass0
-  category: construction-category-materials
-  objectType: Item
 
 - type: construction
+  parent: SheetRGlass
   id: SheetRUGlass1
-  graph: Glass
-  startNode: start
   targetNode: SheetRUGlass1
-  category: construction-category-materials
-  objectType: Item
+# endregion Glass

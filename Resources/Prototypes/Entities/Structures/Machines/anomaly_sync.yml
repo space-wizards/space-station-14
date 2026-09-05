@@ -1,6 +1,6 @@
 - type: entity
   id: MachineAnomalySynchronizer
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   name: anomaly synchronizer
   description: A sophisticated device that reads changes in anomalous waves, and converts them into energy signals.
   components:
@@ -43,6 +43,14 @@
         mask:
         - ItemMask
         hard: True
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 175
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
   - type: Transform
     anchored: true
     noRot: false

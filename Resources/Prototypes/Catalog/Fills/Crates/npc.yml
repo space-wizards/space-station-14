@@ -284,3 +284,23 @@
       entity_storage:
         id: MobMothroach
         amount: 4
+
+- type: entity
+  parent: CrateLivestock
+  id: CrateNPCSheep
+  name: sheep crate
+  description: A crate containing a single sheep.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:GroupSelector
+        children:
+        - id: MobSheep
+        - id: MobSheepRainbow
+          weight: 0.1
+        - id: MobSheepSpace
+          weight: 0.1
+        - id: PlushieSheep # teehee get plushied
+          weight: 0.001
+        - id: PlushieSpaceSheep
+          weight: 0.001

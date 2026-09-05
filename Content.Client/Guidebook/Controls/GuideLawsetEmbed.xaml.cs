@@ -20,7 +20,7 @@ namespace Content.Client.Guidebook.Controls;
 [UsedImplicitly, GenerateTypedNameReferences]
 public sealed partial class GuideLawsetEmbed : Control, IDocumentTag, ISearchableControl, IPrototypeRepresentationControl
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     private ISawmill _logging = default!;
 

@@ -1,19 +1,16 @@
-using System.Collections;
 using System.Linq;
 using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.Atmos;
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
-using Robust.Shared.CPUJob.JobQueues;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Parallax;
 using Content.Server.Procedural;
 using Content.Server.Salvage.Expeditions;
+using Content.Server.Shuttles.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Construction.EntitySystems;
-using Content.Shared.Dataset;
 using Content.Shared.Gravity;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Physics;
@@ -24,15 +21,13 @@ using Content.Shared.Salvage;
 using Content.Shared.Salvage.Expeditions;
 using Content.Shared.Salvage.Expeditions.Modifiers;
 using Content.Shared.Shuttles.Components;
-using Content.Shared.Storage;
 using Robust.Shared.Collections;
-using Robust.Shared.Map;
+using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Server.Shuttles.Components;
 
 namespace Content.Server.Salvage;
 
@@ -92,7 +87,8 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         var mapUid = _map.CreateMap(out var mapId, runMapInit: false);
         MetaDataComponent? metadata = null;
         var grid = _entManager.EnsureComponent<MapGridComponent>(mapUid);
-        var random = new Random(_missionParams.Seed);
+        var random = new RobustRandom();
+        random.SetSeed(_missionParams.Seed);
         var destComp = _entManager.AddComponent<FTLDestinationComponent>(mapUid);
         destComp.BeaconsOnly = true;
         destComp.RequireCoordinateDisk = true;
@@ -289,7 +285,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         return true;
     }
 
-    private async Task SpawnRandomEntry(Entity<MapGridComponent> grid, IBudgetEntry entry, Dungeon dungeon, Random random)
+    private async Task SpawnRandomEntry(Entity<MapGridComponent> grid, IBudgetEntry entry, Dungeon dungeon, IRobustRandom random)
     {
         await SuspendIfOutOfTime();
 

@@ -100,3 +100,21 @@
           amount: 2
         - id: WeaponBaguette
         - id: PaperWrittenCombatBakeryKit
+
+- type: entity
+  parent: [BoxCardboardSmall, BaseSyndicateContraband]
+  id: SyndimovCircuitKit
+  name: syndimov circuit kit
+  description: A kit containing an electronics board with the Syndimov lawset and a Syndicate ID.
+  components:
+  - type: Sprite
+    layers:
+    - state: box_of_doom
+    - state: circuit
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: SyndimovCircuitBoard
+        - id: SyndicateIDCard
+

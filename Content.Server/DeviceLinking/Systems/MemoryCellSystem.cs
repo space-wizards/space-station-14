@@ -1,16 +1,15 @@
 using Content.Server.DeviceLinking.Components;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
-using Content.Shared.DeviceNetwork;
 
 namespace Content.Server.DeviceLinking.Systems;
 
 /// <summary>
 /// Handles the control of output based on the input and enable ports.
 /// </summary>
-public sealed class MemoryCellSystem : EntitySystem
+public sealed partial class MemoryCellSystem : EntitySystem
 {
-    [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
+    [Dependency] private DeviceLinkSystem _deviceLink = default!;
 
     public override void Initialize()
     {
@@ -46,7 +45,19 @@ public sealed class MemoryCellSystem : EntitySystem
     private void OnSignalReceived(Entity<MemoryCellComponent> ent, ref SignalReceivedEvent args)
     {
         var state = SignalState.Momentary;
-        args.Data?.TryGetValue(DeviceNetworkConstants.LogicState, out state);
+
+        if (args.Port == ent.Comp.InputPort)
+            ent.Comp.InputState = state;
+        else if (args.Port == ent.Comp.EnablePort)
+            ent.Comp.EnableState = state;
+
+        UpdateOutput(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnSignalReceived(Entity<MemoryCellComponent> ent, ref SignalReceivedEvent<LogicStatePayload> args)
+    {
+        var state = args.Data.State;
 
         if (args.Port == ent.Comp.InputPort)
             ent.Comp.InputState = state;
@@ -58,9 +69,6 @@ public sealed class MemoryCellSystem : EntitySystem
 
     private void UpdateOutput(Entity<MemoryCellComponent, DeviceLinkSourceComponent?> ent)
     {
-        if (!Resolve(ent, ref ent.Comp2))
-            return;
-
         if (ent.Comp1.EnableState == SignalState.Low)
             return;
 
@@ -69,6 +77,6 @@ public sealed class MemoryCellSystem : EntitySystem
             return;
 
         ent.Comp1.LastOutput = value;
-        _deviceLink.SendSignal(ent, ent.Comp1.OutputPort, value, ent.Comp2);
+        _deviceLink.SendSignal((ent.Owner, ent.Comp2), ent.Comp1.OutputPort, value);
     }
 }

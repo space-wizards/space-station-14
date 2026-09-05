@@ -52,7 +52,8 @@
                           <PanelContainer StyleClasses="LowDivider" Margin="0 -2 0 -1"/>
 
                           <Label Name="ShuttleCapacityLabel"
-                              Text="0/20"
+                              Text="0/0"
+                              Access="Public"
                               Margin="4 0"/>
                       </GridContainer>
 

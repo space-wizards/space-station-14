@@ -1,0 +1,11 @@
+<Control xmlns="https://spacestation14.io">
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+        <Slider Name="Slider"
+                HorizontalExpand="True"
+                Rounded="True" />
+        <SpinBox Name="SpinBox"
+                 HorizontalExpand="True"
+                 SizeFlagsStretchRatio="0.3"
+                 Margin="8 0" />
+    </BoxContainer>
+</Control>

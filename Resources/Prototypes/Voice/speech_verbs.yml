@@ -119,6 +119,13 @@
   - chat-speech-verb-goat-3
 
 - type: speechVerb
+  id: Sheep
+  name: chat-speech-verb-name-sheep
+  speechVerbStrings:
+  - chat-speech-verb-sheep-1
+  - chat-speech-verb-sheep-2
+
+- type: speechVerb
   id: LargeMob
   name: chat-speech-verb-name-large-mob
   speechVerbStrings:

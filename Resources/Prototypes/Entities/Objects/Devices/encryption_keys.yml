@@ -206,7 +206,7 @@
     - EncryptionSecurity
 
 - type: entity
-  parent: [ EncryptionKey, BaseCivilianContraband ]
+  parent: [ EncryptionKey, BaseServiceContraband ]
   id: EncryptionKeyService
   name: service encryption key
   description: An encryption key used by the service staff, tasked with keeping the station full, happy and clean.

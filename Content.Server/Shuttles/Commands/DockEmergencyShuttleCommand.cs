@@ -9,9 +9,9 @@ namespace Content.Server.Shuttles.Commands;
 /// Calls in the emergency shuttle.
 /// </summary>
 [AdminCommand(AdminFlags.Fun)]
-public sealed class DockEmergencyShuttleCommand : LocalizedEntityCommands
+public sealed partial class DockEmergencyShuttleCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly EmergencyShuttleSystem _shuttleSystem = default!;
+    [Dependency] private EmergencyShuttleSystem _shuttleSystem = default!;
 
     public override string Command => "dockemergencyshuttle";
 

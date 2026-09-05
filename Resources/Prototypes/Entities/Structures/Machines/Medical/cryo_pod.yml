@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: [BaseStructure, ConstructibleMachine] # Not a BaseMachinePowered since we don't want the anchorable component
+  parent: [BaseStructure, ConstructibleMachine, BaseConstructibleMachineDestructible] # Not a BaseMachinePowered since we don't want the anchorable component
   id: CryoPod
   name: cryo pod
   description: A special machine intended to create a safe environment for the use of chemicals that react in cold environments.
@@ -10,18 +10,18 @@
     noRot: true
     offset: 0, 0.5
     layers:
-      - sprite: Structures/Piping/Atmospherics/pipe.rsi
-        state: pipeHalf
-        offset: 0, -0.5
-        map: [ "enum.PipeVisualLayers.Pipe" ]
-      - state: pod-open
-        map: [ "enum.CryoPodVisualLayers.Base" ]
-      - state: cover-on
-        map: [ "enum.CryoPodVisualLayers.Cover" ]
-        visible: false
-      - state: pod-panel
-        map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-        visible: false
+    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: pipeHalf
+      offset: 0, -0.5
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+    - state: pod-open
+      map: [ "enum.CryoPodVisualLayers.Base" ]
+    - state: cover-on
+      map: [ "enum.CryoPodVisualLayers.Cover" ]
+      visible: false
+    - state: pod-panel
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      visible: false
   - type: InteractionOutline
   - type: Transform
     noRot: true
@@ -54,22 +54,16 @@
     boardName: wires-board-name-cryopod
     layoutId: CryoPod
   - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StructuralMetallic
+    damageModifierSet: GlassReinforcedMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 175
       behaviors:
-        - !type:EmptyAllContainersBehaviour
-        - !type:PlaySoundBehavior
-          sound:
-            collection: WindowShatter
-        - !type:ChangeConstructionNodeBehavior
-          node: machineFrame
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
   - type: ApcPowerReceiver
     powerLoad: 3000
   - type: ExtensionCableReceiver
@@ -105,22 +99,30 @@
   - type: EmptyOnMachineDeconstruct
     containers:
       - scanner-body
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      injectionBuffer:
-        maxVol: 50
+    - SolutionCryoBuffer
   - type: CryoPod
   - type: CryoPodAir
   - type: Climbable # so that ejected bodies don't get stuck
     vaultable: false
   - type: ContainerTemperature
-    coldDamageThreshold: 10
+    coldDamageThreshold: 213
   - type: GuideHelp
     guides:
     - Cryogenics
+  - type: AmbientMusicMarkerMedical
 
 - type: entity
-  parent: BaseMachine
+  parent: SolutionSmall
+  id: SolutionCryoBuffer
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    id: injectionBuffer
+
+- type: entity
+  parent: [ BaseMachine, BaseMachineDestructible ]
   id: CryoPodDestroyed
   name: destroyed cryo pod
   description: A cryo pod that has seen better days. It's entirely inoperable; not good for anything but scrap.
@@ -142,17 +144,17 @@
         - MachineMask
         layer:
         - MachineLayer
+  - type: Damageable
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 175
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: WindowShatter
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: PhysicalComposition
     materialComposition:
       Steel: 2000 # 20 sheets

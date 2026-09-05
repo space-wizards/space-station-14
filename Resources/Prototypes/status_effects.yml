@@ -19,43 +19,17 @@
   id: Stutter
 
 - type: statusEffect
-  id: AllCaps
-
-- type: statusEffect
   id: Electrocution
 
 - type: statusEffect
   id: Drunk
 
 - type: statusEffect
-  id: SlurredSpeech
-
-- type: statusEffect
-  id: PressureImmunity
-
-- type: statusEffect
-  id: Muted
-  alert: Muted
+  id: SlurredSpeechr
 
 - type: statusEffect
   id: Corporeal
   alert: Corporeal
 
 - type: statusEffect
-  id: TemporaryBlindness
-
-- type: statusEffect
   id: Pacified #cannot attack
-
-- type: statusEffect
-  id: RatvarianLanguage #Praise him
-
-- type: statusEffect
-  id: Flashed
-
-- type: statusEffect
-  id: RadiationProtection
-
-- type: statusEffect
-  id: Adrenaline
-  alert: Adrenaline

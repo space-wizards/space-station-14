@@ -1,12 +1,18 @@
+using Content.Shared.Station;
 using Content.Shared.StationRecords;
+using Content.Shared.StationRecords.Components;
+using Content.Shared.StationRecords.Systems;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.StationRecords;
 
-public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInterface
+public sealed partial class GeneralStationRecordConsoleBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
-    private GeneralStationRecordConsoleWindow? _window = default!;
+    private GeneralStationRecordConsoleWindow? _window;
+
+    [Dependency] private SharedStationSystem _stationSys = default!;
+    [Dependency] private StationRecordsSystem _recordsSys = default!;
 
     public GeneralStationRecordConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
@@ -17,20 +23,51 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
         base.Open();
 
         _window = this.CreateWindow<GeneralStationRecordConsoleWindow>();
-        _window.OnKeySelected += key =>
-            SendMessage(new SelectStationRecord(key));
-        _window.OnFiltersChanged += (type, filterValue) =>
-            SendMessage(new SetStationRecordFilter(type, filterValue));
-        _window.OnDeleted += id => SendMessage(new DeleteStationRecord(id));
+        _window.OnKeySelected += SelectStationRecord;
+        _window.OnFiltersChanged += SetStationRecordFilter;
+        _window.OnDeleted += id => SendPredictedMessage(new DeleteStationRecord(id));
+        Update();
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    public override void Update()
     {
-        base.UpdateState(state);
+        base.Update();
 
-        if (state is not GeneralStationRecordConsoleState cast)
+        if (!EntMan.TryGetComponent(Owner, out GeneralStationRecordConsoleComponent? comp))
             return;
 
-        _window?.UpdateState(cast);
+        var owningStation = _stationSys.GetOwningStation(Owner);
+
+        if (!EntMan.TryGetComponent(owningStation, out StationRecordsComponent? stationRecords))
+            return;
+
+        var listing = _recordsSys.BuildListing((owningStation.Value, stationRecords), comp.Filter);
+
+        GeneralStationRecord? record = null;
+        if (comp.ActiveKey != null)
+        {
+            var key = new StationRecordKey(comp.ActiveKey.Value, owningStation.Value);
+            _recordsSys.TryGetRecord(key, out record, stationRecords);
+        }
+
+        _window?.UpdateState(comp.ActiveKey, record, listing, comp.Filter, comp.CanDeleteEntries);
+    }
+
+    private void SelectStationRecord(uint? key)
+    {
+        if (!EntMan.TryGetComponent(Owner, out GeneralStationRecordConsoleComponent? comp))
+            return;
+
+        comp.ActiveKey = key;
+        Update();
+    }
+
+    private void SetStationRecordFilter(StationRecordFilterType type, string value)
+    {
+        if (!EntMan.TryGetComponent(Owner, out GeneralStationRecordConsoleComponent? comp))
+            return;
+
+        comp.Filter = new StationRecordsFilter(type, value);
+        Update();
     }
 }

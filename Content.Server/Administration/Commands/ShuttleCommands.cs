@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Round)]
-    public sealed class CallShuttleCommand : LocalizedEntityCommands
+    public sealed partial class CallShuttleCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
+        [Dependency] private RoundEndSystem _roundEndSystem = default!;
 
         public override string Command => "callshuttle";
 
@@ -27,9 +27,9 @@ namespace Content.Server.Administration.Commands
     }
 
     [AdminCommand(AdminFlags.Round)]
-    public sealed class RecallShuttleCommand : LocalizedEntityCommands
+    public sealed partial class RecallShuttleCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
+        [Dependency] private RoundEndSystem _roundEndSystem = default!;
 
         public override string Command => "recallshuttle";
 

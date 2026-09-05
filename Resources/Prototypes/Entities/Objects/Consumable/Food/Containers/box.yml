@@ -192,11 +192,6 @@
       storagebase:
         id: Eggshells
         amount: 12
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
 
 # Pizza
 

@@ -17,6 +17,12 @@ public sealed partial class FlashComponent : Component
     public bool FlashOnUse = true;
 
     /// <summary>
+    /// Flash the area around the entity when the flash is used with ranged interaction?
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool FlashOnRangedInteract = false;
+
+    /// <summary>
     /// Flash the target when melee attacking them?
     /// </summary>
     [DataField, AutoNetworkedField]
@@ -68,7 +74,7 @@ public sealed partial class FlashComponent : Component
     [DataField, AutoNetworkedField]
     public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Weapons/flash.ogg")
     {
-        Params = AudioParams.Default.WithVolume(1f).WithMaxDistance(3f)
+        Params = AudioParams.Default.AddVolume(1f).WithMaxDistance(3f)
     };
 
     /// <summary>

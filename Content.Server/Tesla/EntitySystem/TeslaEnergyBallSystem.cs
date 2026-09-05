@@ -15,9 +15,9 @@ namespace Content.Server.Tesla.EntitySystems;
 /// <summary>
 /// A component that tracks an entity's saturation level from absorbing other creatures by touch, and spawns new entities when the saturation limit is reached.
 /// </summary>
-public sealed class TeslaEnergyBallSystem : EntitySystem
+public sealed partial class TeslaEnergyBallSystem : EntitySystem
 {
-    [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private AudioSystem _audio = default!;
 
     public override void Initialize()
     {

@@ -13,21 +13,35 @@
                 <BoxContainer Orientation="Vertical">
                     <ui:HighlightedContainer>
                         <BoxContainer Orientation="Vertical">
-                            <ui:HighlightedContainer>
-                                <BoxContainer Orientation="Vertical">
-                                    <BoxContainer Orientation="Horizontal" VerticalExpand="True">
-                                        <Label Text="{Loc 'humanoid-profile-editor-name-label'}" />
-                                        <LineEdit Name="NameEdit" MinSize="270 0" VerticalAlignment="Center" Margin="5 0 0 0" />
-                                        <Button Name="NameRandomize" Text="{Loc 'humanoid-profile-editor-name-random-button'}" />
-                                    </BoxContainer>
-                                    <Button Name="RandomizeEverythingButton" HorizontalAlignment="Center"
-                                            HorizontalExpand="False" MaxWidth="256"
-                                            Text="{Loc 'humanoid-profile-editor-randomize-everything-button'}" />
-                                    <RichTextLabel Name="WarningLabel" HorizontalExpand="False"
-                                                   VerticalExpand="True" MaxWidth="425"
-                                                   HorizontalAlignment="Left" />
-                                </BoxContainer>
-                            </ui:HighlightedContainer>
+                            <BoxContainer Orientation="Horizontal" VerticalExpand="True">
+                                <Label Text="{Loc 'humanoid-profile-editor-name-label'}" />
+                                <LineEdit Name="NameEdit" MinSize="270 0" VerticalAlignment="Center" Margin="5 0 0 0" />
+                            </BoxContainer>
+                            <RichTextLabel Name="WarningLabel" HorizontalExpand="False"
+                                            VerticalExpand="True" MaxWidth="425"
+                                            HorizontalAlignment="Left" />
+                        </BoxContainer>
+                    </ui:HighlightedContainer>
+                </BoxContainer>
+                <!-- Randomizer -->
+                <BoxContainer Orientation="Vertical">
+                    <ui:HighlightedContainer>
+                        <BoxContainer Orientation="Vertical">
+                            <Label Text="{Loc 'humanoid-profile-editor-randomize'}" HorizontalAlignment="Center"/>
+                            <PanelContainer StyleClasses="LowDivider" Margin="0 10"/>
+                            <GridContainer Columns="2" MinWidth="250" HorizontalExpand="True">
+                                <ui:RandomizeLockButton For="Name" LabelText="{Loc 'humanoid-profile-editor-randomize-name-button'}"/>
+                                <ui:RandomizeLockButton For="Species" LabelText="{Loc 'humanoid-profile-editor-randomize-species-button'}"/>
+                                <ui:RandomizeLockButton For="Age" LabelText="{Loc 'humanoid-profile-editor-randomize-age-button'}"/>
+                                <ui:RandomizeLockButton For="Sex" LabelText="{Loc 'humanoid-profile-editor-randomize-sex-button'}"/>
+                                <ui:RandomizeLockButton For="Skin" LabelText="{Loc 'humanoid-profile-editor-randomize-skin-button'}"/>
+                                <ui:RandomizeLockButton For="Eyes" LabelText="{Loc 'humanoid-profile-editor-randomize-eye-button'}"/>
+                                <ui:RandomizeLockButton For="Markings" LabelText="{Loc 'humanoid-profile-editor-randomize-markings-button'}"/>
+                            </GridContainer>
+                            <Button
+                                Name="RandomizeUnlockedButton"
+                                MaxWidth="256"
+                                Text="{Loc 'humanoid-profile-editor-randomize-unlocked-button'}"/>
                         </BoxContainer>
                     </ui:HighlightedContainer>
                 </BoxContainer>
@@ -73,6 +87,12 @@
                                     <Label Text="{Loc 'humanoid-profile-editor-sex-label'}" />
                                     <Control HorizontalExpand="True"/>
                                     <OptionButton Name="SexButton" HorizontalAlignment="Right" />
+                                </BoxContainer>
+                                <!-- Voice -->
+                                <BoxContainer HorizontalExpand="True">
+                                    <Label Text="{Loc 'humanoid-profile-editor-voice-label'}" />
+                                    <Control HorizontalExpand="True" />
+                                    <OptionButton Name="VoiceButton" HorizontalAlignment="Right" />
                                 </BoxContainer>
                                 <!-- Pronouns -->
                                 <BoxContainer HorizontalExpand="True">

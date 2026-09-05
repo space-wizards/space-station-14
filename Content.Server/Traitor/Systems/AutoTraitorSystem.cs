@@ -9,10 +9,10 @@ namespace Content.Server.Traitor.Systems;
 /// <summary>
 /// Makes entities with <see cref="AutoTraitorComponent"/> a traitor either immediately if they have a mind or when a mind is added.
 /// </summary>
-public sealed class AutoTraitorSystem : EntitySystem
+public sealed partial class AutoTraitorSystem : EntitySystem
 {
-    [Dependency] private readonly AntagSelectionSystem _antag = default!;
-    [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private AntagSelectionSystem _antag = default!;
+    [Dependency] private ISharedPlayerManager _player = default!;
 
     public override void Initialize()
     {

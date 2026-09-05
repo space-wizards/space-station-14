@@ -5,7 +5,7 @@ namespace Content.Server.NPC.HTN.Preconditions;
 
 public sealed partial class TargetInLOSPrecondition : HTNPrecondition
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
     private InteractionSystem _interaction = default!;
 
     [DataField("targetKey")]

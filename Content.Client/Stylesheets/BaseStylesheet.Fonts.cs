@@ -10,9 +10,9 @@ namespace Content.Client.Stylesheets;
 
 public abstract partial class BaseStylesheet : IStyleResources
 {
-    [Dependency] protected readonly ISandboxHelper SandboxHelper = default!;
-    [Dependency] protected readonly IReflectionManager ReflectionManager = default!;
-    [Dependency] protected internal readonly IResourceCache ResCache = default!;
+    [Dependency] protected ISandboxHelper SandboxHelper = default!;
+    [Dependency] protected IReflectionManager ReflectionManager = default!;
+    [Dependency] protected internal IResourceCache ResCache = default!;
 
     public Stylesheet Stylesheet { get; init; }
 

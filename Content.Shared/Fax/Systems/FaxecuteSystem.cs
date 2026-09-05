@@ -6,10 +6,10 @@ namespace Content.Shared.Fax.Systems;
 /// <summary>
 /// System for handling execution of a mob within fax when copy or send attempt is made.
 /// </summary>
-public sealed class FaxecuteSystem : EntitySystem
+public sealed partial class FaxecuteSystem : EntitySystem
 {
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {

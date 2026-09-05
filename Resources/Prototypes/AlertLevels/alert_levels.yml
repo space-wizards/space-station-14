@@ -1,72 +1,107 @@
-- type: alertLevels
-  id: stationAlerts
-  defaultLevel: green
-  levels:
-    green:
-      announcement: alert-level-green-announcement
-      color: Green
-      emergencyLightColor: LawnGreen
-      shuttleTime: 600
-    blue:
-      announcement: alert-level-blue-announcement
-      sound: /Audio/Misc/bluealert.ogg
-      color: DodgerBlue
-      forceEnableEmergencyLights: true
-      emergencyLightColor: DodgerBlue
-      shuttleTime: 600
-    violet:
-      announcement: alert-level-violet-announcement
-      sound: /Audio/Misc/notice1.ogg
-      color: Violet
-      emergencyLightColor: Violet
-      forceEnableEmergencyLights: true
-      shuttleTime: 600
-    yellow:
-      announcement: alert-level-yellow-announcement
-      sound: /Audio/Misc/notice1.ogg
-      color: Yellow
-      emergencyLightColor: Goldenrod
-      forceEnableEmergencyLights: true
-      shuttleTime: 600
-    red:
-      announcement: alert-level-red-announcement
-      sound: /Audio/Misc/redalert.ogg
-      color: Red
-      emergencyLightColor: Red
-      forceEnableEmergencyLights: true
-      shuttleTime: 600 #No reduction in time as we don't have swiping for red alert like in /tg/. Shuttle times are intended to create friction, so having a way to brainlessly bypass that would be dumb.
-    gamma:
-      announcement: alert-level-gamma-announcement
-      selectable: false
-      sound:
-        path: /Audio/Misc/gamma.ogg
-        params:
-          volume: -2
-      disableSelection: true
-      color: PaleVioletRed
-      emergencyLightColor: PaleVioletRed
-      forceEnableEmergencyLights: true
-    delta:
-      announcement: alert-level-delta-announcement
-      selectable: false
-      sound:
-        path: /Audio/Misc/delta.ogg
-        params:
-          volume: -3
-      disableSelection: true
-      color: DarkRed
-      emergencyLightColor: Orange
-      forceEnableEmergencyLights: true
-      shuttleTime: 1200
-    epsilon:
-      announcement: alert-level-epsilon-announcement
-      selectable: false
-      sound:
-        path: /Audio/Misc/epsilon.ogg
-        params:
-          volume: -2
-      disableSelection: true
-      color: DarkViolet
-      emergencyLightColor: DarkViolet
-      forceEnableEmergencyLights: true
-      shuttleTime: 1200
+- type: alertLevel
+  id: Green
+  name: alert-level-green
+  announcement: alert-level-green-announcement
+  instructions: alert-level-green-instructions
+  color: Green
+  emergencyLightColor: LawnGreen
+  shuttleTime: 600
+
+- type: alertLevel
+  id: Blue
+  name: alert-level-blue
+  announcement: alert-level-blue-announcement
+  instructions: alert-level-blue-instructions
+  sound: /Audio/Misc/bluealert.ogg
+  color: DodgerBlue
+  emergencyLightColor: DodgerBlue
+  forceEnableEmergencyLights: true
+  shuttleTime: 600
+
+- type: alertLevel
+  id: Yellow
+  name: alert-level-yellow
+  announcement: alert-level-yellow-announcement
+  instructions: alert-level-yellow-instructions
+  sound: /Audio/Misc/notice1.ogg
+  color: Yellow
+  emergencyLightColor: Goldenrod
+  forceEnableEmergencyLights: true
+  shuttleTime: 600
+
+- type: alertLevel
+  id: Red
+  name: alert-level-red
+  announcement: alert-level-red-announcement
+  instructions: alert-level-red-instructions
+  sound: /Audio/Misc/redalert.ogg
+  color: Red
+  emergencyLightColor: Red
+  forceEnableEmergencyLights: true
+  shuttleTime: 600
+  # No reduction in time as we don't have swiping for red alert like in /tg/.
+  # Shuttle times are intended to create friction,
+  # so having a way to brainlessly bypass that would be dumb.
+
+- type: alertLevel
+  id: Violet
+  name: alert-level-violet
+  announcement: alert-level-violet-announcement
+  instructions: alert-level-violet-instructions
+  sound: /Audio/Misc/notice1.ogg
+  color: Violet
+  emergencyLightColor: Violet
+  forceEnableEmergencyLights: true
+  shuttleTime: 600
+
+- type: alertLevel
+  abstract: true
+  id: BaseDelta
+  name: alert-level-delta
+  instructions: alert-level-delta-instructions
+  selectable: false
+  disableSelection: true
+  forceEnableEmergencyLights: true
+  shuttleTime: 1200
+
+- type: alertLevel
+  parent: BaseDelta
+  id: DeltaNuke
+  announcement: alert-level-delta-nuke-announcement
+  sound:
+    path: /Audio/Misc/delta.ogg
+    params:
+      volume: -3
+  color: DarkRed
+  emergencyLightColor: Orange
+
+- type: alertLevel
+  id: Epsilon
+  name: alert-level-epsilon
+  announcement: alert-level-epsilon-announcement
+  instructions: alert-level-epsilon-instructions
+  selectable: false
+  sound:
+    path: /Audio/Misc/epsilon.ogg
+    params:
+      volume: -2
+  disableSelection: true
+  color: DarkViolet
+  emergencyLightColor: DarkViolet
+  forceEnableEmergencyLights: true
+  shuttleTime: 1200
+
+- type: alertLevel
+  id: Gamma
+  name: alert-level-gamma
+  announcement: alert-level-gamma-announcement
+  instructions: alert-level-gamma-instructions
+  selectable: false
+  sound:
+    path: /Audio/Misc/gamma.ogg
+    params:
+      volume: -2
+  disableSelection: true
+  color: PaleVioletRed
+  emergencyLightColor: PaleVioletRed
+  forceEnableEmergencyLights: true

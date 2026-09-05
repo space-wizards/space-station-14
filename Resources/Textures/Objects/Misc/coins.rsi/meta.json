@@ -1,26 +1,47 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from vgstation13 at https://github.com/vgstation-coders/vgstation13/blob/15121b534f4ef10339d96412e22fe3ce4d15a45d/icons/obj/coins.dmi",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "coin_silver"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from vgstation13 at https://github.com/vgstation-coders/vgstation13/blob/15121b534f4ef10339d96412e22fe3ce4d15a45d/icons/obj/coins.dmi; coinIron_2, coinSilver_2, coinGold_2, coinDiamond_2 and coinAdamantine_2 edited by Miguel4387 (Github)",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "coin_gold"
-    },
-    {
-      "name": "coin_iron"
-    },
-    {
-      "name": "coin_diamond"
-    },
-    {
-      "name": "coin_adamantine"
-    }
-  ]
+    "states": [
+        {
+            "name": "coinSilver_1"
+        },
+        {
+            "name": "coinSilver_2"
+        },
+        {
+            "name": "coinGold_1"
+        },
+        {
+            "name": "coinGold_2"
+        },
+        {
+            "name": "coinIron_1"
+        },
+        {
+            "name": "coinIron_2"
+        },
+        {
+            "name": "coinDiamond_1"
+        },
+        {
+            "name": "coinDiamond_2"
+        },
+        {
+            "name": "coinAdamantine_1"
+        },
+        {
+            "name": "coinAdamantine_2"
+        },
+        {
+            "name": "d2_1"
+        },
+        {
+            "name": "d2_2"
+        }
+    ]
 }

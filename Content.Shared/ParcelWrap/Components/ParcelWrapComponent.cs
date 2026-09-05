@@ -1,4 +1,5 @@
 using Content.Shared.Item;
+using Content.Shared.ParcelWrap.Systems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -18,28 +19,7 @@ public sealed partial class ParcelWrapComponent : Component
     /// The <see cref="EntityPrototype"/> of the parcel created by using this component.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
-    public EntProtoId ParcelPrototype;
-
-    /// <summary>
-    /// If true, parcels created by this will have the same <see cref="ItemSizePrototype">size</see> as the item they
-    /// contain. If false, parcels created by this will always have the size specified by <see cref="FallbackItemSize"/>.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool WrappedItemsMaintainSize = true;
-
-    /// <summary>
-    /// The <see cref="ItemSizePrototype">size</see> of parcels created by this component's entity. This is used if
-    /// <see cref="WrappedItemsMaintainSize"/> is false, or if the item being wrapped somehow doesn't have a size.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public ProtoId<ItemSizePrototype> FallbackItemSize = "Ginormous";
-
-    /// <summary>
-    /// If true, parcels created by this will have the same shape as the item they contain. If false, parcels created by
-    /// this will have the default shape for their size.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool WrappedItemsMaintainShape;
+    public EntProtoId<WrappedParcelComponent> ParcelPrototype;
 
     /// <summary>
     /// How long it takes to use this to wrap something.

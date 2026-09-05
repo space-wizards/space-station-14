@@ -2,7 +2,6 @@
                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                xmlns:health="clr-namespace:Content.Client.HealthAnalyzer.UI"
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-               xmlns:cryogenics="clr-namespace:Content.Client.Medical.Cryogenics"
                MinSize="250 300"
                Resizable="False">
 
@@ -62,9 +61,11 @@
 
             <!-- Gas mix -->
             <Control Margin="0 0 0 22">
-                <controls:SplitBar Name="GasMixChart"
-                                   MinHeight="8"
-                                   MaxHeight="8"/>
+                <controls:SegmentedBarChart
+                    Name="GasMixChart"
+                    StyleClasses="ClassicSplitBar"
+                    MinHeight="8"
+                    MaxHeight="8"/>
             </Control>
 
             <!-- Warnings & status -->
@@ -173,9 +174,13 @@
                        FontColorOverride="Gray"
                        VerticalExpand="True"
                        VAlign="Center"/>
-                <cryogenics:BeakerBarChart Name="ChemicalsChart"
-                                  HorizontalExpand="True"
-                                  VerticalExpand="True"/>
+                <controls:SegmentedBarChart
+                    Name="ChemicalsChart"
+                    HorizontalExpand="True"
+                    VerticalExpand="True"
+                    Capacity="50"
+                    ShowRuler="True"
+                    ShowBackground="True"/>
             </Control>
 
             <!-- Buttons -->

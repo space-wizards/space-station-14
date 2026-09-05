@@ -9,10 +9,10 @@ using Robust.Shared.Animations;
 
 namespace Content.Client.Light.EntitySystems;
 
-public sealed class LightBehaviorSystem : EntitySystem
+public sealed partial class LightBehaviorSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly AnimationPlayerSystem _player = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private AnimationPlayerSystem _player = default!;
 
     public override void Initialize()
     {
@@ -40,7 +40,7 @@ public sealed class LightBehaviorSystem : EntitySystem
         }
         else
         {
-            StopLightBehaviour((uid, component), container.LightBehaviour.ID, resetToOriginalSettings: true);
+            StopLightBehaviour((uid, component), container.LightBehaviour.ID);
         }
     }
 

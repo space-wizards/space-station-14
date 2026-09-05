@@ -1,33 +1,38 @@
-using System.Collections;
-using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using static Content.Shared.Decals.DecalGridComponent;
 
 namespace Content.Shared.Decals
 {
-    public abstract class SharedDecalSystem : EntitySystem
+    public abstract partial class SharedDecalSystem : EntitySystem
     {
-        [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-        [Dependency] protected readonly IMapManager MapManager = default!;
+        [Dependency] protected ChunkEntitySystem ChunkEntities = default!;
+        [Dependency] protected EntityQuery<DecalChunkComponent> DecalChunkQuery = default!;
 
         protected bool PvsEnabled;
 
-        // Note that this constant is effectively baked into all map files, because of how they save the grid decal component.
-        // So if this ever needs changing, the maps need converting.
-        public const int ChunkSize = 32;
-        public static Vector2i GetChunkIndices(Vector2 coordinates) => new ((int) Math.Floor(coordinates.X / ChunkSize), (int) Math.Floor(coordinates.Y / ChunkSize));
+        // Legacy DecalGridComponent data was serialized in 32x32 chunks. Loading code must treat those keys as old
+        // storage buckets and re-chunk decals by coordinates before migrating them to chunk entities.
+        public const int LegacyChunkSize = 32;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<GridInitializeEvent>(OnGridInitialize);
-            SubscribeLocalEvent<DecalGridComponent, ComponentStartup>(OnCompStartup);
             SubscribeLocalEvent<DecalGridComponent, ComponentGetState>(OnGetState);
+            SubscribeLocalEvent<DecalChunkComponent, ComponentStartup>(OnChunkStartup);
+            SubscribeAllEvent<RequestDecalPlacementEvent>(OnDecalPlacementRequest);
+            SubscribeAllEvent<RequestDecalRemovalEvent>(OnDecalRemovalRequest);
+        }
+
+        protected abstract void OnDecalPlacementRequest(RequestDecalPlacementEvent ev, EntitySessionEventArgs eventArgs);
+
+        protected abstract void OnDecalRemovalRequest(RequestDecalRemovalEvent ev, EntitySessionEventArgs eventArgs);
+
+        private void OnChunkStartup(Entity<DecalChunkComponent> ent, ref ComponentStartup args)
+        {
+            RebuildFreeDecalIds(ent.Comp);
         }
 
         private void OnGetState(EntityUid uid, DecalGridComponent component, ref ComponentGetState args)
@@ -42,7 +47,7 @@ namespace Content.Shared.Decals
                 return;
             }
 
-            var data = new Dictionary<Vector2i, DecalChunk>();
+            var data = new Dictionary<Vector2i, DecalGridComponent.DecalChunk>();
             foreach (var (index, chunk) in component.ChunkCollection.ChunkCollection)
             {
                 if (chunk.LastModified >= args.FromTick)
@@ -52,73 +57,69 @@ namespace Content.Shared.Decals
             args.State = new DecalGridDeltaState(data, new(component.ChunkCollection.ChunkCollection.Keys));
         }
 
-        private void OnGridInitialize(GridInitializeEvent msg)
+        public HashSet<(DecalIndex Index, Decal Decal)> GetDecalsInRange(EntityUid gridId, Vector2 position, float distance = 0.75f, Func<Decal, bool>? validDelegate = null)
         {
-            EnsureComp<DecalGridComponent>(msg.EntityUid);
+            var bounds = new Box2(position - new Vector2(distance + 1f), position + new Vector2(distance + 1f));
+            var decalIds = GetDecalsIntersecting(gridId, bounds);
+
+            decalIds.RemoveWhere(set =>
+                (position - set.Decal.Coordinates - new Vector2(0.5f, 0.5f)).Length() > distance ||
+                validDelegate != null && !validDelegate(set.Decal));
+
+            return decalIds;
         }
 
-        private void OnCompStartup(EntityUid uid, DecalGridComponent component, ComponentStartup args)
+        public HashSet<(DecalIndex Index, Decal Decal)> GetDecalsIntersecting(EntityUid gridUid, Box2 bounds)
         {
-            foreach (var (indices, decals) in component.ChunkCollection.ChunkCollection)
+            var decalIds = new HashSet<(DecalIndex, Decal)>();
+
+            foreach (var chunk in ChunkEntities.GetChunksIntersecting(gridUid, bounds, DecalChunkQuery))
             {
-                foreach (var decalUid in decals.Decals.Keys)
+                foreach (var (id, decal) in chunk.Comp2.Decals)
                 {
-                    component.DecalIndex[decalUid] = indices;
+                    if (!bounds.Contains(decal.Coordinates))
+                        continue;
+
+                    decalIds.Add((new DecalIndex(chunk.Comp1.Chunk, id), decal));
                 }
             }
 
-            // This **shouldn't** be required, but just in case we ever get entity prototypes that have decal grids, we
-            // need to ensure that we send an initial full state to players.
-            Dirty(uid, component);
+            return decalIds;
         }
 
-        protected Dictionary<Vector2i, DecalChunk>? ChunkCollection(EntityUid gridEuid, DecalGridComponent? comp = null)
+        public virtual bool RemoveDecal(EntityUid gridId, DecalIndex decal)
         {
-            if (!Resolve(gridEuid, ref comp))
-                return null;
-
-            return comp.ChunkCollection.ChunkCollection;
+            // NOOP on client atm.
+            return true;
         }
 
-        protected virtual void DirtyChunk(EntityUid id, Vector2i chunkIndices, DecalChunk chunk) {}
+        /// <summary>
+        /// Adds a decal.
+        /// </summary>
+        public abstract bool TryAddDecal(Decal decal, EntityCoordinates coordinates, out DecalIndex decalId);
 
-        // internal, so that client/predicted code doesn't accidentally remove decals. There is a public server-side function.
-        protected bool RemoveDecalInternal(EntityUid gridId, uint decalId, [NotNullWhen(true)] out Decal? removed, DecalGridComponent? component = null)
+        private static void RebuildFreeDecalIds(DecalChunkComponent component)
         {
-            removed = null;
-            if (!Resolve(gridId, ref component))
-                return false;
+            component.FreeDecalIds.Clear();
 
-            if (!component.DecalIndex.Remove(decalId, out var indices)
-                || !component.ChunkCollection.ChunkCollection.TryGetValue(indices, out var chunk)
-                || !chunk.Decals.Remove(decalId, out removed))
+            // Saves only carry decal data and the highest allocated server id. The free list is a runtime cache.
+            foreach (var id in component.Decals.Keys)
             {
-                return false;
+                if (id <= DecalChunkComponent.MaxServerDecalId)
+                    component.MaxDecalId = Math.Max(component.MaxDecalId, id);
             }
 
-            if (chunk.Decals.Count == 0)
-                component.ChunkCollection.ChunkCollection.Remove(indices);
+            component.FreeDecalIds.EnsureCapacity(component.MaxDecalId + 1 - component.Decals.Count);
 
-            DirtyChunk(gridId, indices, chunk);
-            OnDecalRemoved(gridId, decalId, component, indices, chunk);
-            return true;
-        }
+            for (var id = 0; id <= component.MaxDecalId; id++)
+            {
+                var decalId = (ushort) id;
+                if (!component.Decals.ContainsKey(decalId))
+                    component.FreeDecalIds.Add(decalId);
+            }
 
-        protected virtual void OnDecalRemoved(EntityUid gridId, uint decalId, DecalGridComponent component, Vector2i indices, DecalChunk chunk)
-        {
-            // used by client-side overlay code
-        }
-
-        public virtual HashSet<(uint Index, Decal Decal)> GetDecalsInRange(EntityUid gridId, Vector2 position, float distance = 0.75f, Func<Decal, bool>? validDelegate = null)
-        {
-            // NOOP on client atm.
-            return new HashSet<(uint Index, Decal Decal)>();
-        }
-
-        public virtual bool RemoveDecal(EntityUid gridId, uint decalId, DecalGridComponent? component = null)
-        {
-            // NOOP on client atm.
-            return true;
+            // Allocation pops from the end, so keep the lowest free id there for stable decal ids.
+            component.FreeDecalIds.Sort((x, y) => y.CompareTo(x));
         }
     }
 

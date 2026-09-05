@@ -6,11 +6,11 @@ using Robust.Shared.Player;
 
 namespace Content.Client.SubFloor;
 
-public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
+public sealed partial class SubFloorHideSystem : SharedSubFloorHideSystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly IUserInterfaceManager _ui = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private IUserInterfaceManager _ui = default!;
 
     private bool _showAll;
 
@@ -91,7 +91,8 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
         {
             // Allows sandbox mode to make wires visible over other stuff.
             component.OriginalDrawDepth ??= args.Sprite.DrawDepth;
-            _sprite.SetDrawDepth((uid, args.Sprite), (int)Shared.DrawDepth.DrawDepth.Overdoors);
+            var drawDepthDifference = Shared.DrawDepth.DrawDepth.ThickPipe - (Shared.DrawDepth.DrawDepth.Overdoors + 1);
+            _sprite.SetDrawDepth((uid, args.Sprite), args.Sprite.DrawDepth - drawDepthDifference);
         }
         else if (scannerRevealed)
         {
@@ -99,8 +100,8 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
             if (component.OriginalDrawDepth is not null)
                 return;
             component.OriginalDrawDepth = args.Sprite.DrawDepth;
-            var drawDepthDifference = Shared.DrawDepth.DrawDepth.ThickPipe - Shared.DrawDepth.DrawDepth.Puddles;
-            _sprite.SetDrawDepth((uid, args.Sprite), args.Sprite.DrawDepth - (drawDepthDifference - 1));
+            var drawDepthDifference = Shared.DrawDepth.DrawDepth.ThickPipe - (Shared.DrawDepth.DrawDepth.Puddles + 1);
+            _sprite.SetDrawDepth((uid, args.Sprite), args.Sprite.DrawDepth - drawDepthDifference);
         }
         else if (component.OriginalDrawDepth.HasValue)
         {

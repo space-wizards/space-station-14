@@ -1,0 +1,33 @@
+﻿using Content.Shared.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
+using Content.Server.Weapons.Hitscan.Components;
+using Content.Shared.Weapons.Hitscan.Events;
+using Robust.Shared.Random;
+
+namespace Content.Server.Weapons.Hitscan.Systems;
+
+public sealed partial class HitscanIgniteSystem : EntitySystem
+{
+    [Dependency] private IRobustRandom _robustRandom = default!;
+    [Dependency] private FlammableSystem _flammable = default!;
+
+    //The hitscan has hit the target, rolls a chance to ignite and ignite if it succeeds.
+    [SubscribeLocalEvent]
+    private void OnHitscanHit(Entity<HitscanIgniteComponent> ent, ref HitscanRaycastFiredEvent args)
+    {
+        //If the roll succeeds, the target is set on fire.
+        var target = args.Data.HitEntity;
+        var stackAmount = ent.Comp.FireStacks;
+
+        if (target == null)
+            return;
+
+        //Rolls a chance for the laser to ignite the target. Cancels if it fails.
+        if (!_robustRandom.Prob(ent.Comp.IgniteChance))
+            return;
+
+        if (TryComp<FlammableComponent>(target.Value, out var flamcmp))
+            _flammable.AdjustFireStacks(target.Value, stackAmount, flamcmp, true);
+    }
+
+}

@@ -1,5 +1,7 @@
 using Content.Client.Atmos.Components;
+using Content.Client.DisplacementMap;
 using Content.Shared.Atmos;
+using Content.Shared.DisplacementMap;
 using Robust.Client.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
@@ -9,9 +11,10 @@ namespace Content.Client.Atmos.EntitySystems;
 /// <summary>
 /// This handles the display of fire effects on flammable entities.
 /// </summary>
-public sealed class FireVisualizerSystem : VisualizerSystem<FireVisualsComponent>
+public sealed partial class FireVisualizerSystem : VisualizerSystem<FireVisualsComponent>
 {
-    [Dependency] private readonly PointLightSystem _lights = default!;
+    [Dependency] private PointLightSystem _lights = default!;
+    [Dependency] private DisplacementMapSystem _displacement = default!;
 
     public override void Initialize()
     {
@@ -65,6 +68,7 @@ public sealed class FireVisualizerSystem : VisualizerSystem<FireVisualsComponent
 
         AppearanceSystem.TryGetData<bool>(uid, FireVisuals.OnFire, out var onFire, appearance);
         AppearanceSystem.TryGetData<float>(uid, FireVisuals.FireStacks, out var fireStacks, appearance);
+        AppearanceSystem.TryGetData<string?>(uid, FireVisuals.FireDisplacement, out var fireDisplacement, appearance);
         SpriteSystem.LayerSetVisible((uid, sprite), index, onFire);
 
         if (!onFire)
@@ -82,6 +86,16 @@ public sealed class FireVisualizerSystem : VisualizerSystem<FireVisualsComponent
             SpriteSystem.LayerSetRsiState((uid, sprite), index, component.AlternateState);
         else
             SpriteSystem.LayerSetRsiState((uid, sprite), index, component.NormalState);
+
+        if (component.CurrentDisplacement != fireDisplacement)
+        {
+            if (fireDisplacement != null && ProtoMan.Resolve<DisplacementDataPrototype>(fireDisplacement, out var displacementProto))
+                _displacement.TryAddDisplacement(displacementProto.Displacement, (uid, sprite), index, FireVisualLayers.Fire, out _);
+            else
+                _displacement.EnsureDisplacementIsNotOnSprite((uid, sprite), FireVisualLayers.Fire);
+
+            component.CurrentDisplacement = fireDisplacement;
+        }
 
         component.LightEntity ??= Spawn(null, new EntityCoordinates(uid, default));
         var light = EnsureComp<PointLightComponent>(component.LightEntity.Value);

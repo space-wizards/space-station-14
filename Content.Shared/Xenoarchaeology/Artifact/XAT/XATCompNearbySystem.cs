@@ -6,10 +6,10 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
 /// <summary>
 /// System for xeno artifact trigger that requires some entity/entities with certain component on them nearby.
 /// </summary>
-public sealed class XATCompNearbySystem : BaseQueryUpdateXATSystem<XATCompNearbyComponent>
+public sealed partial class XATCompNearbySystem : BaseQueryUpdateXATSystem<XATCompNearbyComponent>
 {
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private EntityLookupSystem _entityLookup = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     /// <summary> Pre-allocated and re-used collection.</summary>
     private readonly HashSet<Entity<IComponent>> _entities = new();

@@ -20,6 +20,9 @@ public sealed partial class MobStateEntityConditionSystem : EntityConditionSyste
 /// <inheritdoc cref="EntityCondition"/>
 public sealed partial class MobStateCondition : EntityConditionBase<MobStateCondition>
 {
+    /// <summary>
+    /// The mobstate necessary to fulfill this condition.
+    /// </summary>
     [DataField]
     public MobState Mobstate = MobState.Alive;
 

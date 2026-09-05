@@ -109,6 +109,11 @@
   description: signal-port-description-logic-enable
 
 - type: sinkPort
+  id: TargetReceiver
+  name: signal-port-name-target-receiver
+  description: signal-port-description-target-receiver
+
+- type: sinkPort
   id: RandomGateInput
   name: signal-port-name-logic-random-input
   description: signal-port-description-logic-random-input

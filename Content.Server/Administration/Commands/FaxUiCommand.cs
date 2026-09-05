@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Fun)]
-public sealed class FaxUiCommand : LocalizedEntityCommands
+public sealed partial class FaxUiCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly EuiManager _euiManager = default!;
+    [Dependency] private EuiManager _euiManager = default!;
 
     public override string Command => "faxui";
 

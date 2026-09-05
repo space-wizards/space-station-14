@@ -1,3 +1,4 @@
+using Content.Shared.DisplacementMap;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Robust.Shared.GameStates;
@@ -6,18 +7,21 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Body;
 
+/// <summary>
+/// Defines an organ that applies markings on top of the layer specified in <see cref="VisualOrganComponent" />
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true, fieldDeltas: true)]
 [Access(typeof(SharedVisualBodySystem))]
 public sealed partial class VisualOrganMarkingsComponent : Component
 {
     /// <summary>
-    /// What markings this organ can take
+    /// Defines the type of markings this organ can take
     /// </summary>
     [DataField(required: true), AlwaysPushInheritance]
     public OrganMarkingData MarkingData = default!;
 
     /// <summary>
-    /// The list of markings to apply to the entity
+    /// The list of markings this organ is currently providing to the entity
     /// </summary>
     [DataField, AutoNetworkedField]
     public Dictionary<HumanoidVisualLayers, List<Marking>> Markings = new();
@@ -33,6 +37,13 @@ public sealed partial class VisualOrganMarkingsComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public Dictionary<Enum, HashSet<Enum>> DependentHidingLayers = new();
+
+    /// <summary>
+    /// Optional displacement data for this organ to apply to markings.
+    /// Only applies to markings which support displacement data.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Dictionary<HumanoidVisualLayers, DisplacementData> MarkingsDisplacement = new();
 
     /// <summary>
     /// Client only - the last markings applied by this component

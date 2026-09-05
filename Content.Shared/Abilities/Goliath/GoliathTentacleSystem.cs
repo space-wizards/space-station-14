@@ -10,15 +10,15 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.Abilities.Goliath;
 
-public sealed class GoliathTentacleSystem : EntitySystem
+public sealed partial class GoliathTentacleSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly SharedStunSystem _stun = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private SharedStunSystem _stun = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private TurfSystem _turf = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -33,7 +33,7 @@ public sealed class GoliathTentacleSystem : EntitySystem
 
         // TODO: animation
 
-        _popup.PopupPredicted(Loc.GetString("tentacle-ability-use-popup", ("entity", args.Performer)), args.Performer, args.Performer, type: PopupType.SmallCaution);
+        _popup.PopupEntity(Loc.GetString("tentacle-ability-use-popup", ("entity", args.Performer)), args.Performer, type: PopupType.SmallCaution);
         _stun.TryAddStunDuration(args.Performer, TimeSpan.FromSeconds(0.8f));
 
         var coords = args.Target;

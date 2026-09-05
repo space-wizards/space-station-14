@@ -13,7 +13,7 @@ namespace Content.Shared.EntityEffects.Effects.Solution;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class AdjustReagentEntityEffectSystem : EntityEffectSystem<SolutionComponent, AdjustReagent>
 {
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
     protected override void Effect(Entity<SolutionComponent> entity, ref EntityEffectEvent<AdjustReagent> args)
     {
@@ -36,6 +36,9 @@ public sealed partial class AdjustReagent : EntityEffectBase<AdjustReagent>
     [DataField(required: true)]
     public ProtoId<ReagentPrototype> Reagent;
 
+    /// <summary>
+    /// The amount by which to adjust the reagent volume.
+    /// </summary>
     [DataField(required: true)]
     public FixedPoint2 Amount;
 

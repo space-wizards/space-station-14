@@ -24,7 +24,7 @@
       path: /Audio/Items/smoke_grenade_prime.ogg
 
 - type: entity
-  parent: [ BaseCivilianContraband, SmokeGrenade ]
+  parent: [ BaseServiceContraband, SmokeGrenade ]
   id: CleanerGrenade
   name: cleanade
   description: Special grenade for janitors, releasing large cloud of space cleaner foam.
@@ -41,6 +41,9 @@
       reagents:
       - ReagentId: SpaceCleaner
         Quantity: 30
+  - type: Tag
+    tags:
+    - CleanerGrenade
 
 - type: entity
   parent: SmokeGrenade
@@ -115,3 +118,10 @@
         enabled:
           True: { state: active }
           False: { state: spent }
+  - type: RemoveComponentsOnTrigger # should prevent it from being re-triggered
+    keysIn:
+    - timer
+    triggerOnce: true
+    components:
+    - type: TriggerOnUse
+    - type: TimerTrigger

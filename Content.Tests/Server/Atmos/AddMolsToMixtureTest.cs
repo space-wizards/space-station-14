@@ -21,10 +21,8 @@ public sealed class AddMolsToMixtureTest
         var mixture = new GasMixture();
         var wrongLength = new float[Atmospherics.AdjustedNumberOfGases + num];
 
-        var ex = Assert.Throws<ArgumentOutOfRangeException>(() =>
+        Assert.Throws<ArgumentException>(() =>
             AtmosphereSystem.AddMolsToMixture(mixture, wrongLength));
-
-        Assert.That(ex!.ParamName, Is.EqualTo("Length"));
     }
 
     /// <summary>

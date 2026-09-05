@@ -11,7 +11,7 @@ namespace Content.Shared.EntityEffects.Effects.StatusEffects;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class ElectrocuteEntityEffectSystem : EntityEffectSystem<StatusEffectsComponent, Electrocute>
 {
-    [Dependency] private readonly SharedElectrocutionSystem _electrocution = default!;
+    [Dependency] private SharedElectrocutionSystem _electrocution = default!;
 
     // TODO: When electrocution is new status, change this to new status
     protected override void Effect(Entity<StatusEffectsComponent> entity, ref EntityEffectEvent<Electrocute> args)

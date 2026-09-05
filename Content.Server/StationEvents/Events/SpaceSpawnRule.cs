@@ -3,15 +3,16 @@ using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
 /// <summary>
 /// Station event component for spawning this rules antags in space around a station.
 /// </summary>
-public sealed class SpaceSpawnRule : StationEventSystem<SpaceSpawnRuleComponent>
+public sealed partial class SpaceSpawnRule : StationEventSystem<SpaceSpawnRuleComponent>
 {
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {

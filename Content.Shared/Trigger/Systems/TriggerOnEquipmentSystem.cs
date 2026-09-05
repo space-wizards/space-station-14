@@ -7,9 +7,9 @@ namespace Content.Shared.Trigger.Systems;
 /// <summary>
 /// System for creating triggers when entities are equipped or unequipped from inventory slots.
 /// </summary>
-public sealed class TriggerOnEquipmentSystem : TriggerOnXSystem
+public sealed partial class TriggerOnEquipmentSystem : TriggerOnXSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -53,7 +53,7 @@ public sealed class TriggerOnEquipmentSystem : TriggerOnXSystem
         if ((ent.Comp.SlotFlags & args.SlotFlags) == 0)
             return;
 
-        Trigger.Trigger(ent.Owner, args.Equipee, ent.Comp.KeyOut);
+        Trigger.Trigger(ent.Owner, args.EquipTarget, ent.Comp.KeyOut);
     }
 
     private void OnGotUnequipped(Entity<TriggerOnGotUnequippedComponent> ent, ref GotUnequippedEvent args)
@@ -64,6 +64,6 @@ public sealed class TriggerOnEquipmentSystem : TriggerOnXSystem
         if ((ent.Comp.SlotFlags & args.SlotFlags) == 0)
             return;
 
-        Trigger.Trigger(ent.Owner, args.Equipee, ent.Comp.KeyOut);
+        Trigger.Trigger(ent.Owner, args.EquipTarget, ent.Comp.KeyOut);
     }
 }

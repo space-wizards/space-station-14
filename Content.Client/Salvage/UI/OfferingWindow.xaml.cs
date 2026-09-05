@@ -15,7 +15,7 @@ namespace Content.Client.Salvage.UI;
 public sealed partial class OfferingWindow : FancyWindow,
     IComputerWindow<EmergencyConsoleBoundUserInterfaceState>
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public bool Claimed;
     public TimeSpan NextOffer;

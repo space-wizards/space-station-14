@@ -12,13 +12,13 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.CombatMode.Pacification;
 
-public sealed class PacificationSystem : EntitySystem
+public sealed partial class PacificationSystem : EntitySystem
 {
-    [Dependency] private readonly AlertsSystem _alertsSystem = default!;
-    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-    [Dependency] private readonly SharedCombatModeSystem _combatSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private AlertsSystem _alertsSystem = default!;
+    [Dependency] private SharedActionsSystem _actionsSystem = default!;
+    [Dependency] private SharedCombatModeSystem _combatSystem = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -56,7 +56,7 @@ public sealed class PacificationSystem : EntitySystem
             return;
 
         var targetName = Identity.Entity(target, EntityManager);
-        _popup.PopupClient(Loc.GetString(reason, ("entity", targetName)), user, user);
+        _popup.PopupEntity(Loc.GetString(reason, ("entity", targetName)), user, user);
         user.Comp.NextPopupTime = _timing.CurTime + user.Comp.PopupCooldown;
         user.Comp.LastAttackedEntity = target;
     }

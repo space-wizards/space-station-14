@@ -1,16 +1,18 @@
+using Content.Client.Pinpointer.UI;
+using Content.Client.Resources;
+using Content.Shared.DeviceNetwork;
+using Content.Shared.SurveillanceCamera.Components;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Map;
-using Content.Client.Pinpointer.UI;
-using Content.Client.Resources;
-using Content.Shared.SurveillanceCamera.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.SurveillanceCamera.UI;
 
-public sealed class SurveillanceCameraNavMapControl : NavMapControl
+public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IResourceCache _resourceCache = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IResourceCache _resourceCache = default!;
 
     private static readonly Color CameraActiveColor = Color.FromHex("#FF00FF");
     private static readonly Color CameraInactiveColor = Color.FromHex("#a09f9fff");
@@ -23,8 +25,8 @@ public sealed class SurveillanceCameraNavMapControl : NavMapControl
     private readonly Texture _invalidTexture;
 
     private string _activeCameraAddress = string.Empty;
-    private HashSet<string> _availableSubnets = new();
-    private (Dictionary<NetEntity, CameraMarker> Cameras, string ActiveAddress, HashSet<string> AvailableSubnets) _lastState;
+    private HashSet<ProtoId<DeviceFrequencyPrototype>> _availableSubnets = [];
+    private (Dictionary<NetEntity, CameraMarker> Cameras, string ActiveAddress, HashSet<ProtoId<DeviceFrequencyPrototype>> AvailableSubnets) _lastState;
 
     public bool EnableCameraSelection { get; set; }
 
@@ -56,7 +58,7 @@ public sealed class SurveillanceCameraNavMapControl : NavMapControl
         ForceNavMapUpdate();
     }
 
-    public void SetAvailableSubnets(HashSet<string> subnets)
+    public void SetAvailableSubnets(HashSet<ProtoId<DeviceFrequencyPrototype>> subnets)
     {
         if (_availableSubnets.SetEquals(subnets))
             return;

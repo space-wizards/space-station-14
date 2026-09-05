@@ -15,8 +15,8 @@ namespace Content.Client.Materials.UI;
 [GenerateTypedNameReferences]
 public sealed partial class MaterialDisplay : PanelContainer
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
 
     private readonly MaterialStorageSystem _materialStorage;
 
@@ -87,7 +87,7 @@ public sealed partial class MaterialDisplay : PanelContainer
             {
                 Name = $"{sheetsToEject}",
                 Access = AccessLevel.Public,
-                Text = Loc.GetString($"{sheetsToEject}"),
+                Text = sheetsToEject.ToString(),
                 MinWidth = 45,
                 StyleClasses = { styleClass }
             };

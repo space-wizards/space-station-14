@@ -18,15 +18,15 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Clothing.Systems;
 
 /// <inheritdoc/>
-public sealed class CursedMaskSystem : SharedCursedMaskSystem
+public sealed partial class CursedMaskSystem : SharedCursedMaskSystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
-    [Dependency] private readonly GhostSystem _ghostSystem = default!;
-    [Dependency] private readonly HTNSystem _htn = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly NPCSystem _npc = default!;
-    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private IAdminLogManager _adminLog = default!;
+    [Dependency] private GhostSystem _ghostSystem = default!;
+    [Dependency] private HTNSystem _htn = default!;
+    [Dependency] private MindSystem _mind = default!;
+    [Dependency] private NPCSystem _npc = default!;
+    [Dependency] private NpcFactionSystem _npcFaction = default!;
+    [Dependency] private PopupSystem _popup = default!;
 
     // We can't store this info on the component easily
     private static readonly ProtoId<HTNCompoundPrototype> TakeoverRootTask = "SimpleHostileCompound";

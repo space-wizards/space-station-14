@@ -2,7 +2,7 @@
   id: SusChameleonOutfit
   loadoutName: chameleon-outfit-sus-name
   name: job-name-passenger
-  icon: "JobIconPassenger"
+  icon: "JobIconSus"
   equipment:
     head: ClothingHeadHatBeret
     eyes: ClothingEyesGlassesSunglasses

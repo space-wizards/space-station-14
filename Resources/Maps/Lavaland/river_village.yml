@@ -6196,7 +6196,6 @@ entities:
   - uid: 1313
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
       pos: 32.5,14.5
       parent: 1
 - proto: HydroponicsToolMiniHoe

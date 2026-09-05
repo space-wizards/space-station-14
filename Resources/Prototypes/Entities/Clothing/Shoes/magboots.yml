@@ -102,7 +102,7 @@
     walkModifier: 0.9
     sprintModifier: 0.9
   - type: GasTank
-    outputPressure: 42.6
+    releasePressure: 42.6
     air:
       # 2 minutes of thrust
       volume: 0.75
@@ -128,12 +128,10 @@
     sprite: Clothing/Shoes/Boots/magboots-ert.rsi
 
 - type: entity
-  parent: BaseAction
+  parent: BaseToggleAction
   id: ActionToggleMagboots
   name: Toggle Magboots
   description: Toggles the magboots on and off.
   components:
   - type: Action
     itemIconStyle: BigItem
-  - type: InstantAction
-    event: !type:ToggleActionEvent

@@ -9,10 +9,10 @@ namespace Content.Server.Trigger.Systems;
 /// Handles igniting when triggered and stopping ignition after the delay.
 /// </summary>
 /// <seealso cref="FireStackOnTriggerSystem"/>
-public sealed class IgniteOnTriggerSystem : EntitySystem
+public sealed partial class IgniteOnTriggerSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedIgnitionSourceSystem _source = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedIgnitionSourceSystem _source = default!;
 
     public override void Initialize()
     {

@@ -1,9 +1,11 @@
 ﻿- type: entity
-  id: BaseLandMine
   abstract: true
+  parent: StructureHealthMachineFlimsy
+  id: BaseLandMine
   components:
   - type: Clickable
   - type: InteractionOutline
+  - type: ItemToggleExaminableStatus
   - type: ItemToggle
     soundActivate:
       path: /Audio/Weapons/click.ogg
@@ -39,7 +41,7 @@
           True: {visible: true}
           False: {visible: false}
   - type: Damageable
-    damageContainer: Inorganic
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -47,8 +49,6 @@
         damage: 50
       behaviors:
       - !type:TriggerBehavior
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: LandMine
     sound:
         path: /Audio/Effects/beep_landmine.ogg

@@ -14,12 +14,12 @@ namespace Content.Shared.Thief.Systems;
 /// <summary>
 /// <see cref="ThiefBeaconComponent"/>
 /// </summary>
-public sealed class ThiefBeaconSystem : EntitySystem
+public sealed partial class ThiefBeaconSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly SharedRoleSystem _roles = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private SharedRoleSystem _roles = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -84,7 +84,7 @@ public sealed class ThiefBeaconSystem : EntitySystem
             return;
 
         _audio.PlayPredicted(beacon.Comp.LinkSound, beacon, user);
-        _popup.PopupClient(Loc.GetString("thief-fulton-set"), beacon, user);
+        _popup.PopupEntity(Loc.GetString("thief-fulton-set"), beacon, user);
         area.Owners.Clear(); // We only reconfigure the beacon for ourselves, we don't need multiple thieves to steal from the same beacon.
         area.Owners.Add(mind);
         area.OwnerCount = area.Owners.Count;
@@ -100,7 +100,7 @@ public sealed class ThiefBeaconSystem : EntitySystem
             return;
 
         _audio.PlayPredicted(beacon.Comp.UnlinkSound, beacon, user);
-        _popup.PopupClient(Loc.GetString("thief-fulton-clear"), beacon, user);
+        _popup.PopupEntity(Loc.GetString("thief-fulton-clear"), beacon, user);
         area.Owners.Clear();
         area.OwnerCount = area.Owners.Count;
         Dirty(beacon.Owner, area);

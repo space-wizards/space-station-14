@@ -5,10 +5,10 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed class LaunchOnTriggerSystem : XOnTriggerSystem<LaunchOnTriggerComponent>
+public sealed partial class LaunchOnTriggerSystem : XOnTriggerSystem<LaunchOnTriggerComponent>
 {
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
 
     protected override void OnTrigger(Entity<LaunchOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {

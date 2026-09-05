@@ -1,5 +1,6 @@
-﻿using Content.Server.Chat.Systems;
+using Content.Server.Chat.Systems;
 using Content.Shared.Chat;
+using Content.Shared.Popups;
 using Content.Shared.Teleportation;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;
@@ -14,8 +15,9 @@ namespace Content.Server.Teleportation;
 /// </summary>
 public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSystem
 {
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     public override void Initialize()
     {
@@ -37,7 +39,7 @@ public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSys
 
     protected override void OnTeleportToLocationRequest(Entity<TeleportLocationsComponent> ent, ref TeleportLocationDestinationMessage args)
     {
-        if (Delay.IsDelayed(ent.Owner, TeleportDelay))
+        if (IsDelayed(ent))
             return;
 
         if (!string.IsNullOrWhiteSpace(ent.Comp.Speech))
@@ -47,6 +49,13 @@ public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSys
         }
 
         base.OnTeleportToLocationRequest(ent, ref args);
+    }
+
+    protected override void HandleTeleportDestinationObstructed(EntityUid userUid)
+    {
+        // Client can't know if the destination is obstructed if it's not loaded.
+        var msg = Loc.GetString("teleportation-menu-destination-obstructed");
+        _popup.PopupEntity(msg, userUid, userUid, PopupType.MediumCaution);
     }
 
     // If it's in shared this doesn't populate the points on the UI
@@ -59,12 +68,18 @@ public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSys
 
         var allEnts = AllEntityQuery<WarpPointComponent>();
 
+        // Selecting suitable entities with the warpPoint component using whitelist
         while (allEnts.MoveNext(out var warpEnt, out var warpPointComp))
         {
-            if (_whitelist.IsWhitelistPass(warpPointComp.Blacklist, warpEnt) || string.IsNullOrWhiteSpace(warpPointComp.Location))
+
+            if (string.IsNullOrWhiteSpace(warpPointComp.Location))
                 continue;
 
-            ent.Comp.AvailableWarps.Add(new TeleportPoint(warpPointComp.Location, GetNetEntity(warpEnt)));
+            if (!_whitelist.CheckBoth(warpEnt, ent.Comp.Blacklist, ent.Comp.Whitelist))
+
+                continue;
+
+            ent.Comp.AvailableWarps.Add(new TeleportPoint(Loc.GetString(warpPointComp.Location), GetNetEntity(warpEnt)));
         }
 
         Dirty(ent);

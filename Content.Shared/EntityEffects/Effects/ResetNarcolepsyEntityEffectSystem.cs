@@ -10,7 +10,7 @@ namespace Content.Shared.EntityEffects.Effects;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class ResetNarcolepsyEntityEffectSystem : EntityEffectSystem<NarcolepsyComponent, ResetNarcolepsy>
 {
-    [Dependency] private readonly NarcolepsySystem _narcolepsy = default!;
+    [Dependency] private NarcolepsySystem _narcolepsy = default!;
 
     protected override void Effect(Entity<NarcolepsyComponent> entity, ref EntityEffectEvent<ResetNarcolepsy> args)
     {

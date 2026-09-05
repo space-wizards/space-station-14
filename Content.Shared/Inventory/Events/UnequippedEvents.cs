@@ -1,52 +1,42 @@
 ﻿namespace Content.Shared.Inventory.Events;
 
-public abstract class UnequippedEventBase : EntityEventArgs
+public abstract class UnequippedEventBase(EntityUid equipTarget, EntityUid equipment, SlotDefinition slotDefinition) : EntityEventArgs
 {
     /// <summary>
-    /// The entity unequipping.
+    /// The entity which was unequipped from.
+    /// NOT necessarily the one who performed the interaction.
     /// </summary>
-    public readonly EntityUid Equipee;
+    public readonly EntityUid EquipTarget = equipTarget;
 
     /// <summary>
     /// The entity which got unequipped.
     /// </summary>
-    public readonly EntityUid Equipment;
+    public readonly EntityUid Equipment = equipment;
 
     /// <summary>
     /// The slot the entity got unequipped from.
     /// </summary>
-    public readonly string Slot;
+    public readonly string Slot = slotDefinition.Name;
 
     /// <summary>
     /// The slot group the entity got unequipped from.
     /// </summary>
-    public readonly string SlotGroup;
+    public readonly string SlotGroup = slotDefinition.SlotGroup;
 
     /// <summary>
     /// Slotflags of the slot the entity just got unequipped from.
     /// </summary>
-    public readonly SlotFlags SlotFlags;
-
-    public UnequippedEventBase(EntityUid equipee, EntityUid equipment, SlotDefinition slotDefinition)
-    {
-        Equipee = equipee;
-        Equipment = equipment;
-        Slot = slotDefinition.Name;
-        SlotGroup = slotDefinition.SlotGroup;
-        SlotFlags = slotDefinition.SlotFlags;
-    }
+    public readonly SlotFlags SlotFlags = slotDefinition.SlotFlags;
 }
 
-public sealed class DidUnequipEvent : UnequippedEventBase
-{
-    public DidUnequipEvent(EntityUid equipee, EntityUid equipment, SlotDefinition slotDefinition) : base(equipee, equipment, slotDefinition)
-    {
-    }
-}
+/// <summary>
+/// Raised directed on an equipee when something was unequipped.
+/// </summary>
+public sealed class DidUnequipEvent(EntityUid equipTarget, EntityUid equipment, SlotDefinition slotDefinition)
+    : UnequippedEventBase(equipTarget, equipment, slotDefinition);
 
-public sealed class GotUnequippedEvent : UnequippedEventBase
-{
-    public GotUnequippedEvent(EntityUid equipee, EntityUid equipment, SlotDefinition slotDefinition) : base(equipee, equipment, slotDefinition)
-    {
-    }
-}
+/// <summary>
+/// Raised directed on equipment when it was unequipped from an equipee.
+/// </summary>
+public sealed class GotUnequippedEvent(EntityUid equipTarget, EntityUid equipment, SlotDefinition slotDefinition)
+    : UnequippedEventBase(equipTarget, equipment, slotDefinition);

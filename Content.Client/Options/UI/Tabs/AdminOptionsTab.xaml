@@ -18,6 +18,9 @@
                 <ui:OptionSlider Name="OverlayMergeDistanceSlider"  Title="{Loc 'ui-options-admin-overlay-merge-distance'}"/>
                 <ui:OptionSlider Name="OverlayGhostFadeSlider"  Title="{Loc 'ui-options-admin-overlay-ghost-fade-distance'}"/>
                 <ui:OptionSlider Name="OverlayGhostHideSlider"  Title="{Loc 'ui-options-admin-overlay-ghost-hide-distance'}"/>
+                <Label Text="{Loc 'ui-options-admin-strip-overlay-title'}"
+                       StyleClasses="LabelKeyText"/>
+                <CheckBox Name="EnableAdminStripOverlayDefault" Text="{Loc 'ui-options-admin-strip-overlay-setting'}" />
             </BoxContainer>
         </ScrollContainer>
         <ui:OptionsTabControlRow Name="Control" Access="Public" />
