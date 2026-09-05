@@ -8,6 +8,7 @@ using Content.Server.GameTicking;
 using Content.Server.GameTicking.Presets;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Antag;
+using Content.Shared.Antag.Components;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Robust.Shared.Map.Components;
