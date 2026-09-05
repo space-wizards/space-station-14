@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Npgsql;
 using Prometheus;
+using Robust.Shared.Asynchronous;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Network;
@@ -29,6 +30,8 @@ namespace Content.Server.Database
     public interface IServerDbManager
     {
         void Init();
+
+        void BlockUntilInitialized();
 
         void Shutdown();
 
@@ -414,6 +417,7 @@ namespace Content.Server.Database
         [Dependency] private IResourceManager _res = default!;
         [Dependency] private ILogManager _logMgr = default!;
         [Dependency] private ISerializationManager _serialization = default!;
+        [Dependency] private ITaskManager _task = default!;
 
         private ServerDbBase _db = default!;
         private LoggingProvider _msLogProvider = default!;
@@ -458,6 +462,14 @@ namespace Content.Server.Database
             }
 
             _db.OnNotificationReceived += HandleDatabaseNotification;
+        }
+
+        public void BlockUntilInitialized()
+        {
+            if (_db.DbReadyTask.IsCompleted)
+                return;
+
+            _task.BlockWaitOnTask(_db.DbReadyTask);
         }
 
         public void Shutdown()
