@@ -1,5 +1,6 @@
-﻿using Robust.Shared.Prototypes;
+﻿using Content.Shared.Audio;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Silicons.Laws.Components;
 
@@ -27,6 +28,7 @@ public sealed partial class SiliconLawProviderComponent : Component
     /// when the law change is processed for the provider.
     /// </summary>
     [DataField]
+    [AllowStereo]
     public SoundSpecifier? LawUploadSound = new SoundPathSpecifier("/Audio/Misc/cryo_warning.ogg");
 
     /// <summary>

@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Audio;
 using Content.Shared.StatusEffectNew.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -34,7 +35,7 @@ public sealed partial class WeatherStatusEffectComponent : Component
     /// <summary>
     /// Sound to play on the affected areas.
     /// </summary>
-    [DataField]
+    [DataField, AllowStereo]
     public SoundSpecifier? Sound;
 
     /// <summary>

@@ -34,7 +34,7 @@ public sealed partial class AmbientMusicPrototype : IPrototype
     [DataField]
     public bool FadeIn;
 
-    [DataField(required: true)]
+    [DataField(required: true), AllowStereo]
     public SoundSpecifier Sound = default!;
 
     [DataField]
