@@ -8,18 +8,18 @@
                SizeFlagsStretchRatio="5"
                HorizontalExpand="True"
                ClipText="True"/>
-        <controls:Separator Orientation="Vertical" MinHeight="5" />
+        <controls:Separator Orientation="Vertical" MinHeight="5"/>
         <Label Name="EIDLabel"
                SizeFlagsStretchRatio="5"
                HorizontalExpand="True"
                ClipText="True"/>
-        <controls:Separator Orientation="Vertical" MinHeight="5" />
+        <controls:Separator Orientation="Vertical" MinHeight="5"/>
         <Button Name="TeleportButton"
                 Text="{Loc object-tab-entity-teleport}"
                SizeFlagsStretchRatio="3"
                HorizontalExpand="True"
                ClipText="True"/>
-        <controls:Separator Orientation="Vertical" MinHeight="5" />
+        <controls:Separator Orientation="Vertical" MinHeight="5"/>
         <controls:ConfirmButton Name="DeleteButton"
                 Text="{Loc object-tab-entity-delete}"
                 SizeFlagsStretchRatio="3"

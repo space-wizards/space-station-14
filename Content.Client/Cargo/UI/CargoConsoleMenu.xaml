@@ -29,7 +29,7 @@
                           <Label Text="{Loc 'cargo-console-menu-account-name-label'}"
                               StyleClasses="LabelKeyText" />
 
-                          <controls:Separator StyleClasses="LowDivider" Margin="0 -2" />
+                          <controls:Separator StyleClasses="LowDivider" Margin="0 -2"/>
 
                           <RichTextLabel Name="AccountNameLabel"
                               Text="{Loc 'cargo-console-menu-account-name-none-text'}"
@@ -39,7 +39,7 @@
                           <Label Text="{Loc 'cargo-console-menu-points-label'}"
                               StyleClasses="LabelKeyText"/>
 
-                          <controls:Separator StyleClasses="LowDivider" Margin="0 -2" />
+                          <controls:Separator StyleClasses="LowDivider" Margin="0 -2"/>
 
                           <RichTextLabel Name="PointsLabel"
                               Text="$0"
@@ -49,7 +49,7 @@
                           <Label Text="{Loc 'cargo-console-menu-order-capacity-label'}"
                               StyleClasses="LabelKeyText" />
 
-                          <controls:Separator StyleClasses="LowDivider" Margin="0 -2 0 -1" />
+                          <controls:Separator StyleClasses="LowDivider" Margin="0 -2 0 -1"/>
 
                           <Label Name="ShuttleCapacityLabel"
                               Text="0/0"
@@ -57,7 +57,7 @@
                               Margin="4 0"/>
                       </GridContainer>
 
-                      <controls:Separator StyleClasses="LowDivider" Margin="0 4.5 -8 0" />
+                      <controls:Separator StyleClasses="LowDivider" Margin="0 4.5 -8 0"/>
                   </BoxContainer>
 
                   <!-- Search -->
@@ -89,7 +89,7 @@
                   </ScrollContainer>
               </BoxContainer>
 
-              <controls:Separator StyleClasses="LowDivider" Margin="0 -8" Orientation="Vertical" MinHeight="2" />
+              <controls:Separator StyleClasses="LowDivider" Margin="0 -8" Orientation="Vertical" MinHeight="2"/>
 
               <!-- Right Part -->
               <BoxContainer Orientation="Vertical"
@@ -199,7 +199,7 @@
         <BoxContainer Orientation="Vertical"
             VerticalAlignment="Bottom">
 
-            <controls:Separator StyleClasses="LowDivider" />
+            <controls:Separator StyleClasses="LowDivider"/>
 
             <BoxContainer Orientation="Horizontal"
                 Margin="12 0 6 2"

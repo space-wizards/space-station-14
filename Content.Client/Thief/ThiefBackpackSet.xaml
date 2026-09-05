@@ -11,7 +11,7 @@
 				<Label Name="SetName" Text="Set" StyleClasses="highlight"></Label>
 				<Button Margin="0 10" Name="SetButton" Text="Select" StyleClasses="OpenRight" Access="Public" HorizontalAlignment="Right"/>
 			</GridContainer>
-			<controls:Separator ColorOverride="#404040" Thickness="1" Margin="0 5" />
+			<controls:Separator ColorOverride="#404040" Thickness="1" Margin="0 5"/>
 			<!-- Icon and Description -->
 			<GridContainer Margin="0 5" Columns="2">
 				<TextureRect Name="Icon" Margin="10" Stretch="KeepAspectCentered"

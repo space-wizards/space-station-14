@@ -38,7 +38,7 @@
                             <GridContainer Name="JobGroupGrid" Columns="3" />
                             <!-- Group buttons are generated in code -->
                         </BoxContainer>
-                        <controls:Separator StyleClasses="LowDivider" VerticalExpand="True" Orientation="Vertical" MinHeight="2" />
+                        <controls:Separator StyleClasses="LowDivider" VerticalExpand="True" Orientation="Vertical" MinHeight="2"/>
                         <PanelContainer StyleClasses="PanelInsetDark" HorizontalExpand="True">
                             <BoxContainer Margin="8">
                                 <GridContainer Name="IconGrid" Columns="4" />

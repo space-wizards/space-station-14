@@ -8,22 +8,22 @@
                SizeFlagsStretchRatio="3"
                HorizontalExpand="True"
                ClipText="True"/>
-        <controls:Separator Orientation="Vertical" MinHeight="5" />
+        <controls:Separator Orientation="Vertical" MinHeight="5"/>
         <Label Name="CharacterLabel"
                SizeFlagsStretchRatio="3"
                HorizontalExpand="True"
                ClipText="True"/>
-        <controls:Separator Orientation="Vertical" MinHeight="5" />
+        <controls:Separator Orientation="Vertical" MinHeight="5"/>
         <Label Name="JobLabel"
                SizeFlagsStretchRatio="2"
                HorizontalExpand="True"
                ClipText="True"/>
-        <controls:Separator Orientation="Vertical" MinHeight="5" />
+        <controls:Separator Orientation="Vertical" MinHeight="5"/>
         <Label Name="RoleTypeLabel"
                SizeFlagsStretchRatio="2"
                HorizontalExpand="True"
                ClipText="True"/>
-        <controls:Separator Orientation="Vertical" MinHeight="5" />
+        <controls:Separator Orientation="Vertical" MinHeight="5"/>
         <Label Name="OverallPlaytimeLabel"
                SizeFlagsStretchRatio="1"
                HorizontalExpand="True"

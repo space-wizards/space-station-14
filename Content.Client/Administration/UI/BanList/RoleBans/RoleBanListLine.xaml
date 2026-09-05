@@ -14,30 +14,30 @@
                 VerticalExpand="True"
                 MouseFilter="Pass"/>
     </BoxContainer>
-    <controls:Separator Orientation="Vertical" MinHeight="5" />
+    <controls:Separator Orientation="Vertical" MinHeight="5"/>
     <Label Name="Reason"
            Access="Public"
            SizeFlagsStretchRatio="4.5"
            HorizontalExpand="True"
            VerticalExpand="True"/>
-    <controls:Separator Orientation="Vertical" MinHeight="5" />
+    <controls:Separator Orientation="Vertical" MinHeight="5"/>
     <Label Name="Role"
            SizeFlagsStretchRatio="1.5"
            HorizontalExpand="True"
            VerticalExpand="True"/>
-    <controls:Separator Orientation="Vertical" MinHeight="5" />
+    <controls:Separator Orientation="Vertical" MinHeight="5"/>
     <Label Name="BanTime"
            Access="Public"
            SizeFlagsStretchRatio="2"
            HorizontalExpand="True"
            ClipText="True"/>
-    <controls:Separator Orientation="Vertical" MinHeight="5" />
+    <controls:Separator Orientation="Vertical" MinHeight="5"/>
     <Label Name="Expires"
            Access="Public"
            SizeFlagsStretchRatio="4"
            HorizontalExpand="True"
            ClipText="True"/>
-    <controls:Separator Orientation="Vertical" MinHeight="5" />
+    <controls:Separator Orientation="Vertical" MinHeight="5"/>
     <Label Name="BanningAdmin"
            Access="Public"
            SizeFlagsStretchRatio="2"

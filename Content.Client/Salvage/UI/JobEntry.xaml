@@ -7,7 +7,7 @@
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
             <BoxContainer HorizontalExpand="True" Orientation="Vertical" MaxWidth="380">
                 <RichTextLabel Name="NameLabel" StyleClasses="LabelKeyText"/>
-                <controls:Separator Margin="0 0 0 5" />
+                <controls:Separator Margin="0 0 0 5"/>
                 <RichTextLabel Name="DescriptionLabel" HorizontalExpand="True"/>
                 <Control MinHeight="10"/>
                 <RichTextLabel Name="ManifestLabel"/>

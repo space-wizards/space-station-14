@@ -35,7 +35,7 @@
             </BoxContainer>
             <!-- Divider -->
             <controls:Separator
-                StyleClasses="LowDivider" Orientation="Vertical" MinHeight="2" />
+                StyleClasses="LowDivider" Orientation="Vertical" MinHeight="2"/>
             <!-- Villain -->
             <BoxContainer
                 Orientation="Vertical"

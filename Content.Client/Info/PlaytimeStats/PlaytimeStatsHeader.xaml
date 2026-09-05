@@ -13,7 +13,7 @@
                    Text="{Loc ui-playtime-header-role-type}"
                    MouseFilter="Pass"
                    Margin="5,5,5,5"/>
-            <controls:Separator Orientation="Vertical" MinHeight="5" />
+            <controls:Separator Orientation="Vertical" MinHeight="5"/>
             <Label Name="PlaytimeLabel"
                    SizeFlagsStretchRatio="3"
                    HorizontalExpand="True"
@@ -23,6 +23,6 @@
                    Margin="5,5,5,5"/>
         </BoxContainer>
         <!-- Horizontal Separator -->
-        <controls:Separator />
+        <controls:Separator/>
     </BoxContainer>
 </Control>

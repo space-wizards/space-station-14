@@ -15,7 +15,7 @@
                     <SpriteView Name="ArtifactView" Scale="4 4" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalExpand="True" VerticalExpand="True"/>
                 </BoxContainer>
             </PanelContainer>
-            <controls:Separator StyleClasses="HighDivider" Margin="0 15 0 10" />
+            <controls:Separator StyleClasses="HighDivider" Margin="0 15 0 10"/>
             <BoxContainer Name="ExtractContainer" Orientation="Vertical" VerticalExpand="True" Visible="False">
                 <PanelContainer HorizontalExpand="True" VerticalExpand="True" RectClipContent="True">
                     <PanelContainer.PanelOverride>
@@ -68,7 +68,7 @@
                 </BoxContainer>
             </BoxContainer>
         </BoxContainer>
-        <controls:Separator StyleClasses="LowDivider" Orientation="Vertical" MinHeight="5" />
+        <controls:Separator StyleClasses="LowDivider" Orientation="Vertical" MinHeight="5"/>
         <BoxContainer HorizontalExpand="True" VerticalExpand="True">
             <PanelContainer Margin="10 10 10 10" HorizontalExpand="True" RectClipContent="True">
                 <PanelContainer.PanelOverride>

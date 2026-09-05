@@ -11,7 +11,7 @@
         <!-- Populated with C# code -->
     </BoxContainer>
 
-    <controls:Separator StyleClasses="LowDivider" VerticalExpand="True" Margin="0 0 0 0" SetWidth="2" Orientation="Vertical" MinHeight="2" ColorOverride="#FFFFFF" />
+    <controls:Separator StyleClasses="LowDivider" VerticalExpand="True" Margin="0 0 0 0" SetWidth="2" Orientation="Vertical" MinHeight="2" ColorOverride="#FFFFFF"/>
 
     <!-- Access levels -->
     <ScrollContainer HorizontalExpand="True" VerticalExpand="True" Margin="10 0 0 0">

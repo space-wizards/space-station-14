@@ -45,7 +45,7 @@
                      Value="1" />
         </GridContainer>
         <Control VerticalExpand="True"/>
-        <controls:Separator StyleClasses="LowDivider" Margin="0 6 0 2" />
+        <controls:Separator StyleClasses="LowDivider" Margin="0 6 0 2"/>
         <Button Name="SubmitButton"
                 Access="Public"
                 Text="{Loc 'cargo-console-order-menu-submit-button'}"

@@ -19,7 +19,7 @@
             <Button Name="SpeakerButton" ToggleMode="True" Text="{Loc 'intercom-button-text-speaker'}" StyleClasses="OpenLeft" MinWidth="70"/>
         </BoxContainer>
         <BoxContainer Orientation="Vertical">
-            <controls:Separator StyleClasses="LowDivider" />
+            <controls:Separator StyleClasses="LowDivider"/>
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
                 <Label Text="{Loc 'intercom-flavor-text-left'}" StyleClasses="WindowFooterText"
                        HorizontalAlignment="Left" HorizontalExpand="True"  Margin="0 0 5 0" />

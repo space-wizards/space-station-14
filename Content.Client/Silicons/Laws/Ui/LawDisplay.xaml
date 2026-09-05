@@ -19,7 +19,7 @@
                 </BoxContainer>
                 <TextureRect Name="LawSelectedIcon" TexturePath="/Textures/Interface/Alerts/Abilities/silenced.png" />
             </BoxContainer>
-            <controls:Separator Margin="0 5 0 5" />
+            <controls:Separator Margin="0 5 0 5"/>
             <RichTextLabel Name="LawLabel" />
         </BoxContainer>
     </PanelContainer>

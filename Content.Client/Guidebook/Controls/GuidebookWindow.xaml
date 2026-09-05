@@ -9,7 +9,7 @@
         <!-- Guide select -->
         <BoxContainer Orientation="Horizontal" Name="TreeBox">
             <fancyTree:FancyTree Name="Tree" VerticalExpand="True" HorizontalExpand="True" Access="Public"/>
-            <controls:Separator StyleClasses="LowDivider" Margin="0 -2" Orientation="Vertical" MinHeight="5" />
+            <controls:Separator StyleClasses="LowDivider" Margin="0 -2" Orientation="Vertical" MinHeight="5"/>
         </BoxContainer>
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
             <fancyTree:FancyTree Name="TableOfContents" HorizontalExpand="True"/>

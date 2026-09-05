@@ -14,7 +14,7 @@
                     <RichTextLabel Name="NameLabel" VerticalAlignment="Bottom" HorizontalExpand="True"/>
                     <TextureRect Name="TechTexture" VerticalAlignment="Center"  HorizontalAlignment="Right"/>
                 </BoxContainer>
-                <controls:Separator Margin="10 5 10 10" />
+                <controls:Separator Margin="10 5 10 10"/>
                 <RichTextLabel Name="DescriptionLabel"/>
             </BoxContainer>
         </BoxContainer>

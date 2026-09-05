@@ -16,5 +16,5 @@
                SetWidth="390"
                ClipText="True"/>
     </BoxContainer>
-    <controls:Separator Margin="0 5 0 5" />
+    <controls:Separator Margin="0 5 0 5"/>
 </BoxContainer>

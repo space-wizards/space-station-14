@@ -9,7 +9,7 @@
                HorizontalExpand="True"
                ClipText="True"
                Margin="5,5,5,5"/>
-        <controls:Separator Orientation="Vertical" MinHeight="5" />
+        <controls:Separator Orientation="Vertical" MinHeight="5"/>
         <Label Name="PlaytimeLabel"
                SizeFlagsStretchRatio="3"
                HorizontalExpand="True"

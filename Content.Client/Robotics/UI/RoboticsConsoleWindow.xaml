@@ -12,7 +12,7 @@
             </ScrollContainer>
         </BoxContainer>
 
-        <controls:Separator StyleClasses="LowDivider" Margin="0 5 0 5" />
+        <controls:Separator StyleClasses="LowDivider" Margin="0 5 0 5"/>
 
         <!-- Selected borg info -->
         <Label Name="SelectCyborg" Text="{Loc 'robotics-console-select-cyborg'}" HorizontalAlignment="Center"/>

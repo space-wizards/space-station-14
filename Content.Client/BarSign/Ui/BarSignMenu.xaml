@@ -8,7 +8,7 @@
         <BoxContainer Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
             <BoxContainer Orientation="Vertical" HorizontalAlignment="Center">
                 <Label Text="{Loc 'barsign-ui-set-label'}" HorizontalAlignment="Center" StyleClasses="LabelSubText" Margin="30 0"/>
-                <controls:Separator Margin="0 0 0 5" />
+                <controls:Separator Margin="0 0 0 5"/>
             </BoxContainer>
             <OptionButton Name="SignOptions" HorizontalAlignment="Center" VerticalAlignment="Center" MinSize="175 60" Margin="0 0 0 20"/>
         </BoxContainer>

@@ -62,7 +62,7 @@
                    </BoxContainer>
                 </BoxContainer>
 
-                <controls:Separator StyleClasses="LowDivider" Margin="0 4 0 4" />
+                <controls:Separator StyleClasses="LowDivider" Margin="0 4 0 4"/>
 
                 <!-- Send & Copy -->
                 <BoxContainer Orientation="Vertical">
