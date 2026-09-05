@@ -123,7 +123,7 @@ public sealed partial class DefusableSystem : SharedDefusableSystem
 
     #region Public
 
-    public void TryStartCountdown(EntityUid uid, EntityUid user, DefusableComponent comp)
+    public void TryStartCountdown(EntityUid uid, EntityUid? user, DefusableComponent comp)
     {
         if (!comp.Usable)
         {
@@ -152,7 +152,7 @@ public sealed partial class DefusableSystem : SharedDefusableSystem
             _wiresSystem.TogglePanel(uid, wiresPanelComponent, false);
     }
 
-    public void TryDetonateBomb(EntityUid uid, EntityUid detonator, DefusableComponent comp)
+    public void TryDetonateBomb(EntityUid uid, EntityUid? detonator, DefusableComponent comp)
     {
         if (!comp.Activated)
             return;
@@ -234,7 +234,7 @@ public sealed partial class DefusableSystem : SharedDefusableSystem
 
     #region Wires
 
-    public void DelayWirePulse(EntityUid user, Wire wire, DefusableComponent comp)
+    public void DelayWirePulse(EntityUid? user, Wire wire, DefusableComponent comp)
     {
         if (comp is not { Activated: true, DelayWireUsed: false })
             return;
@@ -244,7 +244,7 @@ public sealed partial class DefusableSystem : SharedDefusableSystem
         comp.DelayWireUsed = true;
     }
 
-    public bool ProceedWireCut(EntityUid user, Wire wire, DefusableComponent comp)
+    public bool ProceedWireCut(EntityUid? user, Wire wire, DefusableComponent comp)
     {
         if (comp is not { Activated: true, ProceedWireCut: false })
             return true;
@@ -256,7 +256,7 @@ public sealed partial class DefusableSystem : SharedDefusableSystem
         return true;
     }
 
-    public void ProceedWirePulse(EntityUid user, Wire wire, DefusableComponent comp)
+    public void ProceedWirePulse(EntityUid? user, Wire wire, DefusableComponent comp)
     {
         if (comp is { Activated: true, ProceedWireUsed: false })
         {
@@ -267,7 +267,7 @@ public sealed partial class DefusableSystem : SharedDefusableSystem
         _popup.PopupEntity(Loc.GetString("defusable-popup-wire-proceed-pulse", ("name", wire.Owner)), wire.Owner);
     }
 
-    public bool ActivateWireCut(EntityUid user, Wire wire, DefusableComponent comp)
+    public bool ActivateWireCut(EntityUid? user, Wire wire, DefusableComponent comp)
     {
         // if you cut the wire it just defuses the bomb
 
@@ -282,7 +282,7 @@ public sealed partial class DefusableSystem : SharedDefusableSystem
         return true;
     }
 
-    public void ActivateWirePulse(EntityUid user, Wire wire, DefusableComponent comp)
+    public void ActivateWirePulse(EntityUid? user, Wire wire, DefusableComponent comp)
     {
         // if the component isnt active, just start the countdown
         // if it is and it isn't already used then delay it
@@ -302,7 +302,7 @@ public sealed partial class DefusableSystem : SharedDefusableSystem
         }
     }
 
-    public bool BoomWireCut(EntityUid user, Wire wire, DefusableComponent comp)
+    public bool BoomWireCut(EntityUid? user, Wire wire, DefusableComponent comp)
     {
         if (comp.Activated)
         {
@@ -315,7 +315,7 @@ public sealed partial class DefusableSystem : SharedDefusableSystem
         return true;
     }
 
-    public bool BoomWireMend(EntityUid user, Wire wire, DefusableComponent comp)
+    public bool BoomWireMend(EntityUid? user, Wire wire, DefusableComponent comp)
     {
         if (comp is { Activated: false, Usable: false })
         {
@@ -325,7 +325,7 @@ public sealed partial class DefusableSystem : SharedDefusableSystem
         return true;
     }
 
-    public void BoomWirePulse(EntityUid user, Wire wire, DefusableComponent comp)
+    public void BoomWirePulse(EntityUid? user, Wire wire, DefusableComponent comp)
     {
         if (comp.Activated)
         {
@@ -333,7 +333,7 @@ public sealed partial class DefusableSystem : SharedDefusableSystem
         }
     }
 
-    public bool BoltWireMend(EntityUid user, Wire wire, DefusableComponent comp)
+    public bool BoltWireMend(EntityUid? user, Wire wire, DefusableComponent comp)
     {
         if (!comp.Activated)
             return true;
@@ -345,7 +345,7 @@ public sealed partial class DefusableSystem : SharedDefusableSystem
         return true;
     }
 
-    public bool BoltWireCut(EntityUid user, Wire wire, DefusableComponent comp)
+    public bool BoltWireCut(EntityUid? user, Wire wire, DefusableComponent comp)
     {
         if (!comp.Activated)
             return true;
@@ -357,7 +357,7 @@ public sealed partial class DefusableSystem : SharedDefusableSystem
         return true;
     }
 
-    public void BoltWirePulse(EntityUid user, Wire wire, DefusableComponent comp)
+    public void BoltWirePulse(EntityUid? user, Wire wire, DefusableComponent comp)
     {
         _popup.PopupEntity(Loc.GetString("defusable-popup-wire-bolt-pulse", ("name", wire.Owner)), wire.Owner);
     }

@@ -21,7 +21,7 @@ public sealed partial class AccessWireAction : ComponentWireAction<AccessReaderC
 
     public override object StatusKey => AccessWireActionKey.Status;
 
-    public override bool Cut(EntityUid user, Wire wire, AccessReaderComponent comp)
+    public override bool Cut(EntityUid? user, Wire wire, AccessReaderComponent comp)
     {
         WiresSystem.TryCancelWireAction(wire.Owner, PulseTimeoutKey.Key);
         EntityManager.System<AccessReaderSystem>().SetActive((wire.Owner, comp), false);
@@ -29,14 +29,14 @@ public sealed partial class AccessWireAction : ComponentWireAction<AccessReaderC
         return true;
     }
 
-    public override bool Mend(EntityUid user, Wire wire, AccessReaderComponent comp)
+    public override bool Mend(EntityUid? user, Wire wire, AccessReaderComponent comp)
     {
         EntityManager.System<AccessReaderSystem>().SetActive((wire.Owner, comp), true);
 
         return true;
     }
 
-    public override void Pulse(EntityUid user, Wire wire, AccessReaderComponent comp)
+    public override void Pulse(EntityUid? user, Wire wire, AccessReaderComponent comp)
     {
         EntityManager.System<AccessReaderSystem>().SetActive((wire.Owner, comp), false);
         WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PulseTimeoutKey.Key, new TimedWireEvent(AwaitPulseCancel, wire));

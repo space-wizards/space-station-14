@@ -113,7 +113,7 @@ public sealed partial class PowerWireAction : BaseWireAction
     }
 
     /// <returns>false if failed, true otherwise, or if the entity cannot be electrified</returns>
-    private bool TrySetElectrocution(EntityUid user, Wire wire, bool timed = false)
+    private bool TrySetElectrocution(EntityUid? user, Wire wire, bool timed = false)
     {
         if (!EntityManager.TryGetComponent<ElectrifiedComponent>(wire.Owner, out var electrified))
         {
@@ -123,7 +123,10 @@ public sealed partial class PowerWireAction : BaseWireAction
         // always set this to true
         SetElectrified(wire.Owner, true, electrified);
 
-        var electrifiedAttempt = _electrocution.TryDoElectrifiedAct(wire.Owner, user);
+        if (user is null)
+            return true;
+
+        var electrifiedAttempt = _electrocution.TryDoElectrifiedAct(wire.Owner, user.Value);
 
         // if we were electrified, then return false
         return !electrifiedAttempt;
@@ -186,7 +189,7 @@ public sealed partial class PowerWireAction : BaseWireAction
         return true;
     }
 
-    public override bool Cut(EntityUid user, Wire wire)
+    public override bool Cut(EntityUid? user, Wire wire)
     {
         base.Cut(user, wire);
         if (!TrySetElectrocution(user, wire))
@@ -199,7 +202,7 @@ public sealed partial class PowerWireAction : BaseWireAction
         return true;
     }
 
-    public override bool Mend(EntityUid user, Wire wire)
+    public override bool Mend(EntityUid? user, Wire wire)
     {
         base.Mend(user, wire);
         if (!TrySetElectrocution(user, wire))
@@ -216,7 +219,7 @@ public sealed partial class PowerWireAction : BaseWireAction
         return true;
     }
 
-    public override void Pulse(EntityUid user, Wire wire)
+    public override void Pulse(EntityUid? user, Wire wire)
     {
         base.Pulse(user, wire);
         WiresSystem.TryCancelWireAction(wire.Owner, PowerWireActionKey.ElectrifiedCancel);

@@ -32,19 +32,19 @@ public sealed partial class VendingMachineEjectItemWireAction : ComponentWireAct
         _vendingMachineSystem = EntityManager.System<VendingMachineSystem>();
     }
 
-    public override bool Cut(EntityUid user, Wire wire, VendingMachineComponent vending)
+    public override bool Cut(EntityUid? user, Wire wire, VendingMachineComponent vending)
     {
         _vendingMachineSystem.SetShooting(wire.Owner, true);
         return true;
     }
 
-    public override bool Mend(EntityUid user, Wire wire, VendingMachineComponent vending)
+    public override bool Mend(EntityUid? user, Wire wire, VendingMachineComponent vending)
     {
         _vendingMachineSystem.SetShooting(wire.Owner, false);
         return true;
     }
 
-    public override void Pulse(EntityUid user, Wire wire, VendingMachineComponent vending)
+    public override void Pulse(EntityUid? user, Wire wire, VendingMachineComponent vending)
     {
         _vendingMachineSystem.EjectRandom((wire.Owner, vending), true);
     }

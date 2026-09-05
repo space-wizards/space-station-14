@@ -27,7 +27,7 @@ public abstract partial class BaseToggleWireAction : BaseWireAction
     public virtual object? TimeoutKey { get; } = null;
     public virtual int Delay { get; } = 30;
 
-    public override bool Cut(EntityUid user, Wire wire)
+    public override bool Cut(EntityUid? user, Wire wire)
     {
         base.Cut(user, wire);
         ToggleValue(wire.Owner, false);
@@ -40,7 +40,7 @@ public abstract partial class BaseToggleWireAction : BaseWireAction
         return true;
     }
 
-    public override bool Mend(EntityUid user, Wire wire)
+    public override bool Mend(EntityUid? user, Wire wire)
     {
         base.Mend(user, wire);
         ToggleValue(wire.Owner, true);
@@ -48,7 +48,7 @@ public abstract partial class BaseToggleWireAction : BaseWireAction
         return true;
     }
 
-    public override void Pulse(EntityUid user, Wire wire)
+    public override void Pulse(EntityUid? user, Wire wire)
     {
         base.Pulse(user, wire);
         ToggleValue(wire.Owner, !GetValue(wire.Owner));
