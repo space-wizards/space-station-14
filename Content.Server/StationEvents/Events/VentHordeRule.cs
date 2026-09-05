@@ -35,7 +35,7 @@ public sealed partial class VentHordeRule : StationEventSystem<VentHordeRuleComp
 
         if (component.ChosenVent is not { } vent)
         {
-            Log.Warning($"Unable to find a valid vent for {args.RuleId}!");
+            Log.Warning($"Unable to find a valid vent for {ToPrettyString(args.Rule)}!");
             ForceEndSelf(uid, gameRule);
             return;
         }

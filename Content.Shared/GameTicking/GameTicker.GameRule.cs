@@ -27,7 +27,22 @@ public abstract partial class GameTicker
     [ViewVariables] protected readonly List<GameRule> AllRoundGameRules = [];
 
     [SubscribeLocalEvent]
-    private void OnGameRuleStarted(Entity<ActiveGameRuleComponent> rule, ref ComponentInit startup)
+    private void OnGameRuleAdded(Entity<GameRuleComponent> rule, ref ComponentInit args)
+    {
+        var ev = new GameRuleAddedEvent(rule);
+        RaiseLocalEvent(rule, ref ev, true);
+
+        if (rule.Comp.Silent)
+        {
+            EndGameRule(rule.AsNullable());
+            return;
+        }
+
+        AllRoundGameRules.Add((GetRoundTime(), rule));
+    }
+
+    [SubscribeLocalEvent]
+    private void OnGameRuleStarted(Entity<ActiveGameRuleComponent> rule, ref ComponentInit args)
     {
         if (MetaData(rule).EntityPrototype is not { } proto)
             return;
@@ -94,17 +109,6 @@ public abstract partial class GameTicker
             return null;
         }
 
-        var ev = new GameRuleAddedEvent((rule, ruleComp), ruleId);
-        RaiseLocalEvent(rule, ref ev, true);
-
-        // Silent rules do exactly one thing and then delete themselves.
-        if (ruleComp.Silent)
-        {
-            EndGameRule((rule, ruleComp));
-            return null;
-        }
-
-        AllRoundGameRules.Add((GetRoundTime(), rule));
         return (rule, ruleComp);
     }
 

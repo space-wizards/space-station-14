@@ -49,7 +49,7 @@ public sealed partial class GameRuleComponent : Component
 /// Good for announcing station events and other such things.
 /// </summary>
 [ByRefEvent]
-public readonly record struct GameRuleAddedEvent(Entity<GameRuleComponent> Rule, EntProtoId RuleId);
+public readonly record struct GameRuleAddedEvent(Entity<GameRuleComponent> Rule);
 
 /// <summary>
 /// Raised when the rule actually begins.
