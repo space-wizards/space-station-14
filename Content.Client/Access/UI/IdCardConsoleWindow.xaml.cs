@@ -248,4 +248,3 @@ public record struct IdCardData(
     List<ProtoId<AccessLevelPrototype>> Accesses,
     ProtoId<JobPrototype>? JobPrototype
 );
-

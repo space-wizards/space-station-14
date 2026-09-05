@@ -28,7 +28,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
     private readonly SpriteSystem _spriteSystem;
     private readonly SharedNavMapSystem _navMapSystem;
 
-    private EntityUid? _owner;
+    private EntityUid? _console;
     private NetEntity? _trackedEntity;
 
     private IEnumerable<AtmosAlertsComputerEntry>? _allAlarms = null;
@@ -87,21 +87,21 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
     }
 
     /// <summary>
-    /// Sets the owning entity for this window.
+    /// Sets the console entity this window represents.
     /// </summary>
     /// <remarks>
     /// Populates the nav map data on call.
     /// </remarks>
-    public void SetOwner(EntityUid owner)
+    public void SetConsole(EntityUid console)
     {
         // Pass the owner to nav map
-        _owner = owner;
-        NavMap.Owner = _owner;
+        _console = console;
+        NavMap.Owner = _console;
 
         // Set nav map grid uid
         var stationName = Loc.GetString("atmos-alerts-window-unknown-location");
 
-        if (_entManager.TryGetComponent<TransformComponent>(owner, out var xform))
+        if (_entManager.TryGetComponent<TransformComponent>(_console, out var xform))
         {
             NavMap.MapUid = xform.GridUid;
 
@@ -129,10 +129,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
 
     private void OnShowAlarmsToggled(CheckBox toggle, AtmosAlarmType toggledAlarmState)
     {
-        if (_owner == null)
-            return;
-
-        if (!_entManager.TryGetComponent<AtmosAlertsComputerComponent>(_owner.Value, out var console))
+        if (!_entManager.TryGetComponent<AtmosAlertsComputerComponent>(_console, out var console))
             return;
 
         foreach (var device in console.AtmosDevices)
@@ -152,7 +149,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
 
     private void OnSilenceAlertsToggled(NetEntity netEntity, bool toggleState)
     {
-        if (!_entManager.TryGetComponent<AtmosAlertsComputerComponent>(_owner, out var console))
+        if (!_entManager.TryGetComponent<AtmosAlertsComputerComponent>(_console, out var console))
             return;
 
         if (toggleState)
@@ -174,10 +171,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
 
     public void UpdateUI(EntityCoordinates? consoleCoords, AtmosAlertsComputerEntry[] airAlarms, AtmosAlertsComputerEntry[] fireAlarms, AtmosAlertsFocusDeviceData? focusData)
     {
-        if (_owner == null)
-            return;
-
-        if (!_entManager.TryGetComponent<AtmosAlertsComputerComponent>(_owner.Value, out var console))
+        if (!_entManager.TryGetComponent<AtmosAlertsComputerComponent>(_console, out var console))
             return;
 
         if (_trackedEntity != focusData?.NetEntity)
@@ -229,7 +223,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         }
 
         // Show the monitor location
-        var consoleUid = _entManager.GetNetEntity(_owner);
+        var consoleUid = _entManager.GetNetEntity(_console);
 
         if (consoleCoords != null && consoleUid != null)
         {
@@ -299,11 +293,11 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         NavMap.RegionOverlays.Clear();
         var prioritizedRegionOverlays = new Dictionary<NavMapRegionOverlay, int>();
 
-        if (_owner != null &&
-            _entManager.TryGetComponent<TransformComponent>(_owner, out var xform) &&
+        if (_console != null &&
+            _entManager.TryGetComponent<TransformComponent>(_console, out var xform) &&
             _entManager.TryGetComponent<NavMapComponent>(xform.GridUid, out var navMap))
         {
-            var regionOverlays = _navMapSystem.GetNavMapRegionOverlays(_owner.Value, navMap, AtmosAlertsComputerUiKey.Key);
+            var regionOverlays = _navMapSystem.GetNavMapRegionOverlays(_console.Value, navMap, AtmosAlertsComputerUiKey.Key);
 
             foreach (var (regionOwner, regionOverlay) in regionOverlays)
             {
@@ -454,7 +448,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         if (netEntity == null)
             return;
 
-        if (!_entManager.TryGetComponent<AtmosAlertsComputerComponent>(_owner, out var console))
+        if (!_entManager.TryGetComponent<AtmosAlertsComputerComponent>(_console, out var console))
             return;
 
         _trackedEntity = netEntity;

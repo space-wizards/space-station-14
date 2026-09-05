@@ -44,4 +44,3 @@ public sealed class AnalysisConsoleBoundUserInterface(EntityUid owner, Enum uiKe
         _consoleMenu?.Update(ent);
     }
 }
-

@@ -53,7 +53,8 @@ namespace Content.Client.Cargo.BUI
             base.Open();
 
             _menu = this.CreateWindow<CargoConsoleMenu>();
-            _menu.SetOwner(Owner);
+            _menu.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+            _menu.SetConsole(Owner);
 
             var localPlayer = _playerMan.LocalEntity;
             var description = new FormattedMessage();

@@ -17,7 +17,7 @@ public sealed class AtmosMonitoringConsoleBoundUserInterface(EntityUid owner, En
         base.Open();
 
         _menu = this.CreateWindow<AtmosMonitoringConsoleWindow>();
-        _menu.SetOwner(Owner);
+        _menu.SetConsole(Owner);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

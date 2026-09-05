@@ -35,4 +35,3 @@ public sealed class AnomalyScannerBoundUserInterface(EntityUid owner, Enum uiKey
         _menu.UpdateMenu();
     }
 }
-

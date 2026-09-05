@@ -17,7 +17,7 @@ public sealed class StationAiCustomizationBoundUserInterface(EntityUid owner, En
         base.Open();
 
         _menu = this.CreateWindow<StationAiCustomizationMenu>();
-        _menu.SetOwner(Owner);
+        _menu.SetConsole(Owner);
 
         _menu.SendStationAiCustomizationMessageAction += SendStationAiCustomizationMessage;
     }

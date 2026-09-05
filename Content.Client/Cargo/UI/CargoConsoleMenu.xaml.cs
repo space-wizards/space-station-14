@@ -30,7 +30,7 @@ namespace Content.Client.Cargo.UI
 
         private readonly CargoSystem _cargoSystem;
         private readonly SpriteSystem _spriteSystem;
-        private EntityUid _owner;
+        private EntityUid _console;
         private EntityUid? _station;
 
         private readonly EntityQuery<CargoOrderConsoleComponent> _orderConsoleQuery;
@@ -57,7 +57,6 @@ namespace Content.Client.Cargo.UI
             _cargoSystem = _entityManager.System<CargoSystem>();
             _spriteSystem = _entityManager.System<SpriteSystem>();
 
-            _orderConsoleQuery = _entityManager.GetEntityQuery<CargoOrderConsoleComponent>();
             _bankQuery = _entityManager.GetEntityQuery<StationBankAccountComponent>();
 
             SearchBar.OnTextChanged += OnSearchBarTextChanged;
@@ -73,7 +72,7 @@ namespace Content.Client.Cargo.UI
 
             TransferSpinBox.IsValid = val =>
             {
-                if (!_entityManager.TryGetComponent<CargoOrderConsoleComponent>(_owner, out var console) ||
+                if (!_entityManager.TryGetComponent<CargoOrderConsoleComponent>(_console, out var console) ||
                     !_entityManager.TryGetComponent<StationBankAccountComponent>(_station, out var bank))
                     return true;
 
@@ -82,7 +81,7 @@ namespace Content.Client.Cargo.UI
 
             AccountActionButton.OnPressed += _ =>
             {
-                var account = (ProtoId<CargoAccountPrototype>?) ActionOptions.SelectedMetadata;
+                var account = (ProtoId<CargoAccountPrototype>?)ActionOptions.SelectedMetadata;
                 OnAccountAction?.Invoke(account, TransferSpinBox.Value);
             };
 
@@ -92,13 +91,14 @@ namespace Content.Client.Cargo.UI
             };
         }
 
-        public void SetOwner(EntityUid owner)
+        /// <summary>
+        /// Sets the console this window represents.
+        /// </summary>
+        public void SetConsole(EntityUid console)
         {
-            _owner = owner;
+            _console = console;
 
-            Title = _entityManager.GetComponent<MetaDataComponent>(owner).EntityName;
-
-            if (_orderConsoleQuery.TryGetComponent(owner, out var orderConsole))
+            if (_orderConsoleQuery.TryGetComponent(_console, out var orderConsole))
             {
                 var accountProto = _protoManager.Index(orderConsole.Account);
                 AccountNameLabel.Text = Loc.GetString("cargo-console-menu-account-name-format",
@@ -129,7 +129,7 @@ namespace Content.Client.Cargo.UI
         {
             get
             {
-                var allowedGroups = _entityManager.GetComponentOrNull<CargoOrderConsoleComponent>(_owner)?.AllowedGroups;
+                var allowedGroups = _entityManager.GetComponentOrNull<CargoOrderConsoleComponent>(_console)?.AllowedGroups;
 
                 foreach (var cargoPrototypeId in ProductCatalogue)
                 {
@@ -209,11 +209,11 @@ namespace Content.Client.Cargo.UI
         }
 
         /// <summary>
-        ///     Populates the list of orders and requests.
+        /// Populates the list of orders and requests.
         /// </summary>
         public void PopulateOrders(IEnumerable<CargoOrderData> orders)
         {
-            if (!_orderConsoleQuery.TryComp(_owner, out var orderConsole))
+            if (!_orderConsoleQuery.TryComp(_console, out var orderConsole))
                 return;
 
             Requests.RemoveAllChildren();
@@ -287,7 +287,7 @@ namespace Content.Client.Cargo.UI
         public void PopulateAccountActions()
         {
             if (!_entityManager.TryGetComponent<StationBankAccountComponent>(_station, out var bank) ||
-                !_entityManager.TryGetComponent<CargoOrderConsoleComponent>(_owner, out var console))
+                !_entityManager.TryGetComponent<CargoOrderConsoleComponent>(_console, out var console))
                 return;
 
             var i = 0;
@@ -317,7 +317,7 @@ namespace Content.Client.Cargo.UI
             base.FrameUpdate(args);
 
             if (!_bankQuery.TryComp(_station, out var bankAccount) ||
-                !_orderConsoleQuery.TryComp(_owner, out var orderConsole))
+                !_orderConsoleQuery.TryComp(_console, out var orderConsole))
             {
                 return;
             }
@@ -325,7 +325,7 @@ namespace Content.Client.Cargo.UI
             var balance = _cargoSystem.GetBalanceFromAccount((_station.Value, bankAccount), orderConsole.Account);
             PointsLabel.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", balance));
             TransferLimitLabel.Text = Loc.GetString("cargo-console-menu-account-action-transfer-limit",
-                ("limit", (int) (balance * orderConsole.TransferLimit)));
+                ("limit", (int)(balance * orderConsole.TransferLimit)));
 
             UnlimitedNotifier.Visible = orderConsole.TransferUnbounded;
             AccountActionButton.Disabled = TransferSpinBox.Value <= 0 ||

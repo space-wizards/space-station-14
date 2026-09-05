@@ -17,7 +17,7 @@ public sealed class AtmosAlertsComputerBoundUserInterface(EntityUid owner, Enum 
         base.Open();
 
         _menu = this.CreateWindow<AtmosAlertsComputerWindow>();
-        _menu.SetOwner(Owner);
+        _menu.SetConsole(Owner);
 
         // Set atmos monitoring message action
         _menu.SendFocusChangeMessageAction += SendFocusChangeMessage;
@@ -28,7 +28,7 @@ public sealed class AtmosAlertsComputerBoundUserInterface(EntityUid owner, Enum 
     {
         base.UpdateState(state);
 
-        var castState = (AtmosAlertsComputerBoundInterfaceState) state;
+        var castState = (AtmosAlertsComputerBoundInterfaceState)state;
 
         EntMan.TryGetComponent<TransformComponent>(Owner, out var xform);
         _menu?.UpdateUI(xform?.Coordinates, castState.AirAlarms, castState.FireAlarms, castState.FocusData);

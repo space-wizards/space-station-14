@@ -57,4 +57,3 @@ public sealed partial class IdCardConsoleBoundUserInterface(EntityUid owner, Enu
             data.JobPrototype));
     }
 }
-
