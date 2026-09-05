@@ -152,6 +152,9 @@
     containers:
       delivery: !type:NestedSelector
         tableId: LetterDeliveryRewards
+  - type: Tag
+    tags:
+    - LetterDelivery
 
 
 # Modifier Tables

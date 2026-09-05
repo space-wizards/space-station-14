@@ -8,6 +8,9 @@
     sprite: Objects/Decoration/present.rsi
     layers:
       - state: present
+  - type: Tag
+    tags:
+    - Present
 
 - type: entity
   id: Present
