@@ -7,10 +7,10 @@
             <BoxContainer Orientation="Horizontal" Align="Center">
                 <Button Name="GhostnadoButton" Text="{Loc 'ghost-target-window-warp-to-most-followed'}"
                         ToolTip="{Loc 'ghost-target-window-warp-to-most-followed-tooltip'}"
-                        HorizontalAlignment="Center" StyleClasses="OpenRight" />
+                        HorizontalAlignment="Center" StyleClasses="OpenRight" Disabled="True"/>
                 <Button Name="WarpToRandomFollowedButton" Text="{Loc 'ghost-target-window-warp-to-random-followed'}"
                         ToolTip="{Loc 'ghost-target-window-warp-to-random-followed-tooltip'}"
-                        HorizontalAlignment="Center" StyleClasses="OpenBoth" />
+                        HorizontalAlignment="Center" StyleClasses="OpenBoth" Disabled="True"/>
                 <Button Name="WarpToRandomButton" Text="{Loc 'ghost-target-window-warp-to-random'}"
                         ToolTip="{Loc 'ghost-target-window-warp-to-random-tooltip'}" HorizontalAlignment="Center"
                         StyleClasses="OpenLeft" />
