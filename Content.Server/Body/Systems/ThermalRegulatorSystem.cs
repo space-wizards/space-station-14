@@ -2,6 +2,7 @@ using Content.Server.Body.Components;
 using Content.Server.Temperature.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Temperature.Components;
+using Content.Shared.Mobs.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Body.Systems;
@@ -11,6 +12,7 @@ public sealed partial class ThermalRegulatorSystem : EntitySystem
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private TemperatureSystem _tempSys = default!;
     [Dependency] private ActionBlockerSystem _actionBlockerSys = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
@@ -39,6 +41,11 @@ public sealed partial class ThermalRegulatorSystem : EntitySystem
                 continue;
 
             regulator.NextUpdate += regulator.UpdateInterval;
+
+            // The dead shouldn't be able to regulate their own body temperature.
+            if (_mobState.IsDead(uid))
+                continue;
+
             ProcessThermalRegulation((uid, regulator));
         }
     }
