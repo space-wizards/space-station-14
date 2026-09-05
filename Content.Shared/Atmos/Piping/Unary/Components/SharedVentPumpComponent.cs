@@ -32,6 +32,16 @@ public sealed partial class GasVentPumpData : BaseAtmosDeviceData
         PressureLockoutOverride = false
     };
 
+    public static GasVentPumpData WideFilterModePreset = new GasVentPumpData
+    {
+        Enabled = true,
+        PumpDirection = VentPumpDirection.Releasing,
+        PressureChecks = VentPressureBound.ExternalBound,
+        ExternalPressureBound = Atmospherics.OneAtmosphere * 1.05f,
+        InternalPressureBound = 0f,
+        PressureLockoutOverride = false
+    };
+
     public static GasVentPumpData FillModePreset = new GasVentPumpData
     {
         Enabled = true,
@@ -46,18 +56,6 @@ public sealed partial class GasVentPumpData : BaseAtmosDeviceData
     public static GasVentPumpData PanicModePreset = new GasVentPumpData
     {
         Enabled = false,
-        Dirty = true,
-        PumpDirection = VentPumpDirection.Releasing,
-        PressureChecks = VentPressureBound.ExternalBound,
-        ExternalPressureBound = Atmospherics.OneAtmosphere,
-        InternalPressureBound = 0f,
-        PressureLockoutOverride = false
-    };
-
-    public static GasVentPumpData ReplaceModePreset = new GasVentPumpData
-    {
-        Enabled = false,
-        IgnoreAlarms = true,
         Dirty = true,
         PumpDirection = VentPumpDirection.Releasing,
         PressureChecks = VentPressureBound.ExternalBound,
