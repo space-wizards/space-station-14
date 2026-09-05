@@ -6,6 +6,7 @@
   - Brutepack
   - Ointment
   - Gauze
+  - EmptyIVBag
 
 - type: latheRecipePack
   id: BasicChemistryStatic

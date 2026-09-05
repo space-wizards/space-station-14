@@ -1,0 +1,17 @@
+- type: reaction
+  id: IVBagToBloodpack
+  impact: Low
+  quantized: true
+  conserveEnergy: false
+  requiredMixerCategories:
+  - EmptyIVBag
+  reactants:
+    JuiceTomato:
+      amount: 15
+    Saline:
+      amount: 45
+  effects:
+  - !type:SpawnEntity
+    entity: Bloodpack5
+    number: 1
+  - !type:DeleteEntity

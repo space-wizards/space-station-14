@@ -25,6 +25,29 @@ public sealed partial class ReactionMixerSystem : EntitySystem
         SubscribeLocalEvent<ReactionMixerComponent, AfterInteractEvent>(OnAfterInteract, before: [typeof(IngestionSystem)]);
         SubscribeLocalEvent<ReactionMixerComponent, ShakeEvent>(OnShake);
         SubscribeLocalEvent<ReactionMixerComponent, ReactionMixDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<ReactionMixerComponent, SolutionChangedEvent>(OnSolutionChanged);
+    }
+
+    /// <summary>
+    /// Process Self Fix.
+    /// </summary>
+    /// <param name="ent"></param>
+    /// <param name="args"></param>
+    private void OnSolutionChanged(Entity<ReactionMixerComponent> ent, ref SolutionChangedEvent args)
+    {
+        if (ent.Comp.MixerType != ReactionMixerType.SelfMix)
+            return;
+        if (!CanMix(ent.AsNullable(), ent))
+            return;
+        ent.Comp.AudioStream = _audio.PlayPredicted(ent.Comp.MixingSound, ent,null)?.Entity ?? ent.Comp.AudioStream;
+        //stop loops of solutionchanged by disable mixing
+        ent.Comp.MixerType = ReactionMixerType.None;
+        //do mixing
+        if (!TryMix(ent.AsNullable(), args.Solution))
+            return;
+        //enable mixing again.
+        ent.Comp.MixerType = ReactionMixerType.SelfMix;
+        _popup.PopupEntity(Loc.GetString(ent.Comp.MixMessage),ent);
     }
 
     private void OnUseInHand(Entity<ReactionMixerComponent> ent, ref UseInHandEvent args)

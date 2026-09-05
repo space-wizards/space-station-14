@@ -220,6 +220,7 @@
       - DiscreteHealthAnalyzer
       - SurgeryTool
       - Dropper
+      - IVBag
       components:
       - Injector
       - Pill

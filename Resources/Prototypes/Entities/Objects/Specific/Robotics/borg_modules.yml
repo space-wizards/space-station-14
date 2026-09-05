@@ -899,6 +899,8 @@
         whitelist:
           components:
           - Healing
+          tags:
+          - IVBag
     - item: Brutepack
       hand:
         emptyLabel: borg-slot-topicals-empty
@@ -906,6 +908,8 @@
         whitelist:
           components:
           - Healing
+          tags:
+          - IVBag
     - item: Ointment
       hand:
         emptyLabel: borg-slot-topicals-empty
@@ -913,6 +917,8 @@
         whitelist:
           components:
           - Healing
+          tags:
+          - IVBag
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: treatment-module }
 

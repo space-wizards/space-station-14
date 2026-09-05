@@ -65,3 +65,10 @@
   icon:
     sprite: Objects/Misc/utensils.rsi
     state: spoon
+
+- type: mixingCategory
+  id: EmptyIVBag
+  verbText: mixing-verb-packing
+  icon:
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: bloodpack-empty

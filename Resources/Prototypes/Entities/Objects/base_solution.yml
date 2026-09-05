@@ -19,6 +19,14 @@
 - type: entity
   abstract: true
   parent: Solution
+  id: SolutionIVBag
+  components:
+  - type: Solution
+    id: ivbag
+
+- type: entity
+  abstract: true
+  parent: Solution
   id: SolutionBeaker
   components:
   - type: Solution

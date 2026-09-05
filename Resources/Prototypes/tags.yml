@@ -828,6 +828,9 @@
 - type: Tag
   id: InvalidForSurvivorAntag # Used by server MagicSystem and SurvivorRuleSystem to alter mind roles from global spawn spells.
 
+- type: Tag
+  id: IVBag # Whitelist mediborg, medical toolbelt
+
 ## J ##
 
 - type: Tag
