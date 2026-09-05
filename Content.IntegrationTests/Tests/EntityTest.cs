@@ -21,7 +21,7 @@ namespace Content.IntegrationTests.Tests
     [TestOf(typeof(EntityUid))]
     public sealed class EntityTest : GameTest
     {
-        private static readonly HashSet<ProtoId<EntityCategoryPrototype>> IgnoredCategories = ["Spawner", "Debug"];
+        private static readonly HashSet<ProtoId<EntityCategoryPrototype>> IgnoredCategories = ["Spawner", "Debug", "GameRules"];
 
         public override PoolSettings PoolSettings => new()
         {
@@ -243,8 +243,6 @@ namespace Content.IntegrationTests.Tests
                 "StationEvent",
                 "TimedDespawn",
 
-                // Usually spawns or modifies entities on mapInit.
-                "GameRule",
                 // makes an announcement on mapInit.
                 "AnnounceOnSpawn",
             };
