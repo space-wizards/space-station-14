@@ -13,6 +13,7 @@ namespace Content.Client.Info;
 public sealed partial class RulesControl : BoxContainer, ILinkClickHandler
 {
     [Dependency] private DocumentParsingManager _parsingMan = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     private string? _currentEntry;
     private readonly Stack<string> _priorEntries = new();
@@ -29,9 +30,13 @@ public sealed partial class RulesControl : BoxContainer, ILinkClickHandler
         BackButton.OnPressed += _ => SetGuide(_priorEntries.Pop(), false);
     }
 
-    public void HandleClick(string link)
+    public bool HandleClick(string link)
     {
+        if (!_prototypeManager.HasIndex<GuideEntryPrototype>(link))
+            return false;
+
         SetGuide(link);
+        return true;
     }
 
     private void SetGuide(ProtoId<GuideEntryPrototype>? entry = null, bool addToPrior = true)
