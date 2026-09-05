@@ -2,6 +2,10 @@ using Content.Shared.Slippery;
 
 namespace Content.Shared.EntityEffects.Effects;
 
+/// <summary>
+/// Attempts to slip this entity once, using its existing slippery settings when present.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
 public sealed partial class SlipEntityEffectSystem : EntityEffectSystem<MetaDataComponent, Slip>
 {
     [Dependency] private SlipperySystem _slippery = default!;
@@ -18,6 +22,7 @@ public sealed partial class SlipEntityEffectSystem : EntityEffectSystem<MetaData
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class Slip : EntityEffectBase<Slip>
 {
     [DataField]

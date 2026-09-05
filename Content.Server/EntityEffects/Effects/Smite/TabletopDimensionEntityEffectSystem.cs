@@ -5,6 +5,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.EntityEffects.Effects.Smite;
 
+/// <summary>
+/// Spawns a game board and moves this entity into its tabletop session.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
 public sealed partial class TabletopDimensionEntityEffectSystem : EntityEffectSystem<MetaDataComponent, TabletopDimension>
 {
     [Dependency] private TabletopSystem _tabletop = default!;
@@ -21,6 +25,7 @@ public sealed partial class TabletopDimensionEntityEffectSystem : EntityEffectSy
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class TabletopDimension : EntityEffectBase<TabletopDimension>
 {
     [DataField(required: true)]

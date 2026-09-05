@@ -4,6 +4,10 @@ using Content.Shared.Movement.Components;
 
 namespace Content.Server.EntityEffects.Effects;
 
+/// <summary>
+/// Multiplies this entity's target eye zoom, ignoring normal zoom limits.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
 public sealed partial class ScaleEyeZoomEntityEffectSystem : EntityEffectSystem<MetaDataComponent, ScaleEyeZoom>
 {
     [Dependency] private ContentEyeSystem _contentEye = default!;
@@ -15,8 +19,12 @@ public sealed partial class ScaleEyeZoomEntityEffectSystem : EntityEffectSystem<
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class ScaleEyeZoom : EntityEffectBase<ScaleEyeZoom>
 {
+    /// <summary>
+    /// Multiplier for the current target zoom. Values below one zoom in; must be positive and finite.
+    /// </summary>
     [DataField(required: true)]
     public float Factor;
 }

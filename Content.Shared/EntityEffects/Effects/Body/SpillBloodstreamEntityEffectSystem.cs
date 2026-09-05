@@ -1,8 +1,12 @@
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 
-namespace Content.Shared.EntityEffects.Effects;
+namespace Content.Shared.EntityEffects.Effects.Body;
 
+/// <summary>
+/// Spills all bloodstream solutions from this entity.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
 public sealed partial class SpillBloodstreamEntityEffectSystem : EntityEffectSystem<BloodstreamComponent, SpillBloodstream>
 {
     [Dependency] private BloodstreamSystem _bloodstream = default!;
@@ -13,4 +17,5 @@ public sealed partial class SpillBloodstreamEntityEffectSystem : EntityEffectSys
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class SpillBloodstream : EntityEffectBase<SpillBloodstream>;

@@ -7,13 +7,14 @@ namespace Content.Shared.EntityEffects.Effects;
 public sealed partial class Polymorph : EntityEffectBase<Polymorph>
 {
     /// <summary>
-    ///     What polymorph prototype is used on effect
+    /// Polymorph configuration to apply.
     /// </summary>
     [DataField(required: true)]
     public ProtoId<PolymorphPrototype> Prototype;
 
     /// <summary>
     /// Allows polymorphing entities without a PolymorphableComponent.
+    /// Cooldowns and restrictions on repeated polymorphs still apply.
     /// </summary>
     [DataField]
     public bool Force;

@@ -6,6 +6,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.EntityEffects.Effects.Smite;
 
+/// <summary>
+/// Spawns a locker, attempts to insert this entity, and welds it shut.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
 public sealed partial class StuffIntoLockerEntityEffectSystem : EntityEffectSystem<MetaDataComponent, StuffIntoLocker>
 {
     [Dependency] private EntityStorageSystem _entityStorage = default!;
@@ -26,6 +30,7 @@ public sealed partial class StuffIntoLockerEntityEffectSystem : EntityEffectSyst
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class StuffIntoLocker : EntityEffectBase<StuffIntoLocker>
 {
     [DataField(required: true)]

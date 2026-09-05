@@ -2,6 +2,10 @@ using Content.Shared.Movement.Components;
 
 namespace Content.Shared.EntityEffects.Effects;
 
+/// <summary>
+/// Swaps this entity's base walk and sprint speeds, preserving their modifiers.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
 public sealed partial class SwapMovementSpeedsEntityEffectSystem : EntityEffectSystem<MetaDataComponent, SwapMovementSpeeds>
 {
     protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<SwapMovementSpeeds> args)
@@ -14,4 +18,5 @@ public sealed partial class SwapMovementSpeedsEntityEffectSystem : EntityEffectS
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class SwapMovementSpeeds : EntityEffectBase<SwapMovementSpeeds>;

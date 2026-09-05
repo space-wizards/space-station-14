@@ -6,6 +6,10 @@ using Robust.Shared.Random;
 
 namespace Content.Server.EntityEffects.Effects.Smite;
 
+/// <summary>
+/// Launches this entity as a spinning dynamic physics body with non-solid fixtures.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
 public sealed partial class YeetEntityEffectSystem : EntityEffectSystem<PhysicsComponent, Yeet>
 {
     [Dependency] private SharedPhysicsSystem _physics = default!;
@@ -34,4 +38,5 @@ public sealed partial class YeetEntityEffectSystem : EntityEffectSystem<PhysicsC
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class Yeet : EntityEffectBase<Yeet>;

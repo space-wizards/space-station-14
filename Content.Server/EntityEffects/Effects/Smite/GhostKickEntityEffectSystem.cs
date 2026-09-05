@@ -4,6 +4,10 @@ using Robust.Shared.Player;
 
 namespace Content.Server.EntityEffects.Effects.Smite;
 
+/// <summary>
+/// Disconnects this entity's player using the ghost kick manager.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
 public sealed partial class GhostKickEntityEffectSystem : EntityEffectSystem<ActorComponent, GhostKick>
 {
     [Dependency] private GhostKickManager _ghostKick = default!;
@@ -14,6 +18,7 @@ public sealed partial class GhostKickEntityEffectSystem : EntityEffectSystem<Act
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class GhostKick : EntityEffectBase<GhostKick>
 {
     [DataField(required: true)]

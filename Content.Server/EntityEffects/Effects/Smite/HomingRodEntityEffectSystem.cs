@@ -8,6 +8,10 @@ using Robust.Shared.Spawners;
 
 namespace Content.Server.EntityEffects.Effects.Smite;
 
+/// <summary>
+/// Spawns a rod at a distance and makes it chase this entity.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
 public sealed partial class HomingRodEntityEffectSystem : EntityEffectSystem<MetaDataComponent, HomingRod>
 {
     [Dependency] private SharedTransformSystem _transform = default!;
@@ -38,6 +42,7 @@ public sealed partial class HomingRodEntityEffectSystem : EntityEffectSystem<Met
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class HomingRod : EntityEffectBase<HomingRod>
 {
     [DataField(required: true)]
@@ -49,6 +54,9 @@ public sealed partial class HomingRod : EntityEffectBase<HomingRod>
     [DataField(required: true)]
     public float Speed;
 
+    /// <summary>
+    /// Use the target's current sprint speed plus a small offset, falling back to Speed if unavailable.
+    /// </summary>
     [DataField]
     public bool MatchTargetSprintSpeed;
 }

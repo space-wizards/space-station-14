@@ -3,6 +3,10 @@ using Content.Shared.Damage.Systems;
 
 namespace Content.Shared.EntityEffects.Effects;
 
+/// <summary>
+/// Enables or disables godmode on this entity.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
 public sealed partial class SetGodmodeEntityEffectSystem : EntityEffectSystem<MetaDataComponent, SetGodmode>
 {
     [Dependency] private SharedGodmodeSystem _godmode = default!;
@@ -19,6 +23,7 @@ public sealed partial class SetGodmodeEntityEffectSystem : EntityEffectSystem<Me
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class SetGodmode : EntityEffectBase<SetGodmode>
 {
     [DataField(required: true)]

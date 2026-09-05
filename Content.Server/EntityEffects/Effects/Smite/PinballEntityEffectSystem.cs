@@ -6,6 +6,10 @@ using Robust.Shared.Random;
 
 namespace Content.Server.EntityEffects.Effects.Smite;
 
+/// <summary>
+/// Turns this entity into a spinning, bouncing dynamic physics body.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
 public sealed partial class PinballEntityEffectSystem : EntityEffectSystem<PhysicsComponent, Pinball>
 {
     [Dependency] private FixtureSystem _fixtures = default!;
@@ -37,4 +41,5 @@ public sealed partial class PinballEntityEffectSystem : EntityEffectSystem<Physi
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class Pinball : EntityEffectBase<Pinball>;

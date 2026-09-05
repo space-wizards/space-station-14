@@ -3,6 +3,10 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.EntityEffects.Effects;
 
+/// <summary>
+/// Adds or replaces the specified user interfaces without removing other interfaces.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
 public sealed partial class AddUserInterfacesEntityEffectSystem : EntityEffectSystem<MetaDataComponent, AddUserInterfaces>
 {
     [Dependency] private UserInterfaceSystem _ui = default!;
@@ -18,6 +22,7 @@ public sealed partial class AddUserInterfacesEntityEffectSystem : EntityEffectSy
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class AddUserInterfaces : EntityEffectBase<AddUserInterfaces>
 {
     [DataField(required: true)]

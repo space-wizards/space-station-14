@@ -1,10 +1,7 @@
 using Content.Server.Administration.Verbs.Prototypes;
-using Content.Shared.Administration;
-using Content.Shared.Database;
 using Content.Shared.EntityEffects;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 
 namespace Content.Server.Administration.Systems;
@@ -14,23 +11,22 @@ public sealed partial class AdminVerbSystem
     [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
-    // All smite verbs have names so invokeverb works.
-    private void AddSmiteVerbs(GetVerbsEvent<Verb> args)
+    // All prototype verbs have names so invokeverb works.
+    private void AddPrototypeVerbs(GetVerbsEvent<Verb> args)
     {
         if (!TryComp(args.User, out ActorComponent? actor))
             return;
 
         var player = actor.PlayerSession;
 
-        if (!_adminManager.HasAdminFlag(player, AdminFlags.Fun))
-            return;
-
-        // 1984.
-        if (HasComp<MapComponent>(args.Target) || HasComp<MapGridComponent>(args.Target))
-            return;
-
         foreach (var prototype in ProtoMan.EnumeratePrototypes<AdminVerbPrototype>())
         {
+            if (prototype.Abstract)
+                continue;
+
+            if (!_adminManager.HasAdminFlag(player, prototype.RequiredFlags))
+                continue;
+
             if (!_whitelistSystem.CheckBoth(args.Target, prototype.Blacklist, prototype.Whitelist))
                 continue;
 
@@ -38,10 +34,15 @@ public sealed partial class AdminVerbSystem
             var verb = new Verb
             {
                 Text = name,
-                Category = VerbCategory.Smite,
+                Category = prototype.Category is { } category
+                    ? new VerbCategory(category, prototype.CategoryIcon, prototype.CategoryIconsOnly)
+                    {
+                        Columns = prototype.CategoryColumns
+                    }
+                    : null,
                 Icon = prototype.Icon,
-                Act = () => ExecuteSmite(args.Target, args.User, prototype),
-                Impact = LogImpact.Extreme,
+                Act = () => _entityEffects.ApplyEffects(args.Target, prototype.Effects, user: args.User),
+                Impact = prototype.Impact,
                 Message = prototype.Description is { } description
                     ? string.Join(": ", name, Loc.GetString(description))
                     : null
@@ -49,10 +50,5 @@ public sealed partial class AdminVerbSystem
 
             args.Verbs.Add(verb);
         }
-    }
-
-    private void ExecuteSmite(EntityUid target, EntityUid user, AdminVerbPrototype prototype)
-    {
-        _entityEffects.ApplyEffects(target, prototype.Effects, user: user);
     }
 }

@@ -5,6 +5,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.EntityEffects.Effects;
 
+/// <summary>
+/// Adds a role to this entity's mind unless that role prototype is already present.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
 public sealed partial class AddMindRoleEntityEffectSystem : EntityEffectSystem<MetaDataComponent, AddMindRole>
 {
     [Dependency] private MindSystem _mind = default!;
@@ -26,6 +30,7 @@ public sealed partial class AddMindRoleEntityEffectSystem : EntityEffectSystem<M
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class AddMindRole : EntityEffectBase<AddMindRole>
 {
     [DataField(required: true)]

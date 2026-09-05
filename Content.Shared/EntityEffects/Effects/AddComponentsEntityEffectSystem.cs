@@ -20,6 +20,9 @@ public sealed partial class AddComponents : EntityEffectBase<AddComponents>
     [DataField(required: true)]
     public ComponentRegistry Components = new();
 
+    /// <summary>
+    /// Replace existing components instead of keeping their current configuration.
+    /// </summary>
     [DataField]
     public bool ReplaceExisting;
 }
