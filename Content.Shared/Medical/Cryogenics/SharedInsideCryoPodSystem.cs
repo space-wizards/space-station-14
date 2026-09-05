@@ -1,4 +1,4 @@
-﻿using Content.Shared.Standing;
+using Content.Shared.Standing;
 using Content.Shared.Temperature;
 using Robust.Shared.Containers;
 
@@ -21,7 +21,8 @@ public abstract partial class SharedCryoPodSystem
     // Must stand in the cryo pod
     private void HandleDown(Entity<InsideCryoPodComponent> entity, ref DownAttemptEvent args)
     {
-        args.Cancel();
+        if (entity.Comp.LifeStage < ComponentLifeStage.Stopping)
+            args.Cancel();
     }
 
     private void OnBeforeHeatExchange(Entity<InsideCryoPodComponent> entity, ref BeforeHeatExchangeEvent args)
