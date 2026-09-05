@@ -347,7 +347,7 @@
   icon:
     sprite: *icon-rsi
     state: TramDriver
-  jobName: job-name-tramdriver
+  jobName: job-name-tram-driver
 
 # Theatre (not exactly service workers, but not civilians either)
 
