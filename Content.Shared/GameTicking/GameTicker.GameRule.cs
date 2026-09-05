@@ -42,7 +42,7 @@ public abstract partial class GameTicker
     }
 
     [SubscribeLocalEvent]
-    private void OnGameRuleStarted(Entity<ActiveGameRuleComponent> rule, ref ComponentInit args)
+    private void OnGameRuleStarted(Entity<ActiveGameRuleComponent> rule, ref MapInitEvent args)
     {
         if (MetaData(rule).EntityPrototype is not { } proto)
             return;
