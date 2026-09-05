@@ -39,7 +39,7 @@ public sealed partial class ChannelItem : Control
     /// <summary>
     /// Name of this channel item in the UI.
     /// </summary>
-    public string? ChannelName
+    public string? ChannelLabel
     {
         get => ChannelNameLabel.Text;
         set => ChannelNameLabel.Text = value;

@@ -47,7 +47,7 @@ public sealed partial class ActiveInstrumentComponent : Component
 {
     [DataField]
     [AutoNetworkedField]
-    public MidiTrack?[] Tracks = [];
+    public BitArray UsedChannels = new(16, false);
 }
 
 [Serializable, NetSerializable]
@@ -178,18 +178,19 @@ public enum InstrumentUiKey
 public sealed class InstrumentSetChannelsEvent : EntityEventArgs
 {
     public NetEntity Uid { get; }
-    public MidiTrack?[] Tracks { get; set; }
+    public BitArray Channels { get; set; }
 
-    public InstrumentSetChannelsEvent(NetEntity uid, MidiTrack?[] tracks)
+    public InstrumentSetChannelsEvent(NetEntity uid, BitArray channels)
     {
         Uid = uid;
-        Tracks = tracks;
+        Channels = channels;
     }
 }
 
 /// <summary>
 /// Represents a single midi track with the track name, instrument name and bank instrument name extracted.
 /// </summary>
+[Obsolete("Use MidiTrackInfo instead.")]
 [Serializable, NetSerializable]
 public sealed class MidiTrack
 {
@@ -263,4 +264,184 @@ public sealed class MidiTrack
 
         return sanitized.ToString();
     }
+}
+
+/// <summary>
+/// Contains the header information from a MIDI file.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class MidiHeaderInfo
+{
+    /// <summary>
+    /// Used MIDI file container format.
+    /// </summary>
+    /// <remarks>
+    /// 0: All data store inside one track.
+    /// 1: Data stored across multiple co-dependent tracks meant to be played in sync.
+    /// Tempo data must be stored in the first track.
+    /// 2: Data stored across multiple independent tracks with their own starting points and tempos. (Rarely used)
+    /// </remarks>
+    public int Format;
+
+    /// <summary>
+    /// Amount of tracks detected inside the file (including invalid ones).
+    /// </summary>
+    public int NumTracks;
+
+    /// <summary>
+    /// Set to true if the MIDI files uses SMPTE timing instead of the more common ticks / quarter note
+    /// </summary>
+    /// <remarks>
+    /// SMPTE is currently not supported by the parser.
+    /// </remarks>
+    public bool IsSmpte;
+
+    /// <summary>
+    /// Ticks / Quarter note also known as time base.
+    /// </summary>
+    public int TimeBase;
+}
+
+/// <summary>
+/// Contains information about a single track inside a MIDI file.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class MidiTrackInfo
+{
+    private const string Postfix = "…";
+
+    /// <summary>
+    /// Track length in bytes.
+    /// </summary>
+    public int Length;
+
+    /// <summary>
+    /// The parsed text field of track (if used)
+    /// </summary>
+    public string? Text;
+
+    /// <summary>
+    /// The parsed copyright field of track (if used)
+    /// </summary>
+    public string? Copyright;
+
+    /// <summary>
+    /// The parsed track name of track (if used)
+    /// </summary>
+    public string? TrackName;
+
+    /// <summary>
+    /// The parsed instrument name of track (if used)
+    /// </summary>
+    public string? InstrumentName;
+
+    /// <summary>
+    /// Contains all used channels used by this track.
+    /// </summary>
+    public BitArray UsedChannels = new(RobustMidiEvent.MaxChannels, false);
+
+    /// <summary>
+    /// Total length of this track in ticks.
+    /// </summary>
+    public int TotalTicks = 0;
+
+    /// <summary>
+    /// Contains all detected tempos as TickPosition, Tempo(microseconds per quarter note).
+    /// </summary>
+    public Dictionary<int, int> TempoMap = [];
+
+    public override string ToString()
+    {
+        return $"MIDI Track: Name = {TrackName}, TotalTicks = {TotalTicks}";
+    }
+
+    /// <summary>
+    /// Truncates the fields based on the limit inputted into this method.
+    /// </summary>
+    public void TruncateFields(int limit)
+    {
+        if (Text != null)
+            Text = Truncate(Text, limit);
+
+        if (Copyright != null)
+            Copyright = Truncate(Copyright, limit);
+
+        if (TrackName != null)
+            TrackName = Truncate(TrackName, limit);
+
+        if (InstrumentName != null)
+            InstrumentName = Truncate(InstrumentName, limit);
+    }
+
+    public void SanitizeFields()
+    {
+        if (Text != null)
+            Text = Sanitize(Text);
+
+        if (Copyright != null)
+            Copyright = Sanitize(Copyright);
+
+        if (InstrumentName != null)
+            InstrumentName = Sanitize(InstrumentName);
+
+        if (TrackName != null)
+            TrackName = Sanitize(TrackName);
+    }
+
+    // TODO: Still make a general method to use in RT. I, too, don't know if we have that.
+    private static string Truncate(string input, int limit)
+    {
+        if (string.IsNullOrEmpty(input) || limit <= 0 || input.Length <= limit)
+            return input;
+
+        var truncatedLength = limit - Postfix.Length;
+
+        return input.Substring(0, truncatedLength) + Postfix;
+    }
+
+    private static string Sanitize(string input)
+    {
+        var sanitized = new StringBuilder(input.Length);
+
+        foreach (var c in input)
+        {
+            if (!char.IsControl(c) && c <= 127) // no control characters, only ASCII
+                sanitized.Append(c);
+        }
+
+        return sanitized.ToString();
+    }
+}
+
+/// <summary>
+/// Contains information about a single midi file, includes header, tracks, used channels and calculated play time.
+/// </summary>
+/// <remarks>Does not contain the actual MIDI data needed to play it.</remarks>
+[Serializable, NetSerializable]
+public sealed class MidiFileInfo
+{
+    /// <summary>
+    /// Header data of the MIDI file (format, timebase, etc.)
+    /// </summary>
+    public MidiHeaderInfo? Header;
+
+    /// <summary>
+    /// Collection of one or more tracks contained inside the file.
+    /// </summary>
+    public MidiTrackInfo[] Tracks = [];
+
+    /// <summary>
+    /// Contains all used channels across all MIDI tracks inside the file.
+    /// </summary>
+    public BitArray UsedChannels = new(RobustMidiEvent.MaxChannels, false);
+
+    /// <summary>
+    /// Calculated playtime of the complete MIDI file taking into account time base and tempo changes.
+    /// </summary>
+    public double PlayTimeMinutes;
+
+    /// <summary>
+    /// Song tick count measured across all tracks.
+    /// </summary>
+    public int TotalTicks;
 }
