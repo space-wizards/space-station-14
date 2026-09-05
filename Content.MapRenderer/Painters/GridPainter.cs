@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using Content.Shared.Decals;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
@@ -106,22 +107,23 @@ namespace Content.MapRenderer.Painters
 
             var decals = new Dictionary<EntityUid, List<DecalData>>();
             var query = _sEntityManager.AllEntityQueryEnumerator<MapGridComponent>();
+            var chunkEntities = _sEntityManager.System<ChunkEntitySystem>();
+            var decalChunkQuery = _sEntityManager.GetEntityQuery<DecalChunkComponent>();
 
             while (query.MoveNext(out var uid, out var grid))
             {
-                // TODO this needs to use the client entity manager because the client
-                // actually has the correct z-indices for decals for some reason when the server doesn't,
-                // BUT can't do that yet because the client hasn't actually received everything yet
-                // for some reason decal moment i guess.
-                if (_sEntityManager.TryGetComponent<DecalGridComponent>(uid, out var comp))
+                foreach (var chunk in chunkEntities.GetChunks(uid))
                 {
-                    foreach (var chunk in comp.ChunkCollection.ChunkCollection.Values)
+                    if (!decalChunkQuery.TryGetComponent(chunk.Owner, out var decalComp))
                     {
-                        foreach (var decal in chunk.Decals.Values)
-                        {
-                            var (x, y) = TransformLocalPosition(decal.Coordinates, grid);
-                            decals.GetOrNew(uid).Add(new DecalData(decal, x, y));
-                        }
+                        continue;
+                    }
+
+                    foreach (var (id, decal) in decalComp.Decals)
+                    {
+                        var (x, y) = TransformLocalPosition(decal.Coordinates, grid);
+                        var index = new DecalIndex(chunk.Comp.Chunk, id);
+                        decals.GetOrNew(uid).Add(new DecalData(index, decal, x, y));
                     }
                 }
             }
