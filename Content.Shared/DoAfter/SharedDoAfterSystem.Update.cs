@@ -269,7 +269,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
                 return true;
 
             if (args.NeedAnyFreeHand && _hands.GetEmptyHandCount((args.User, hands)) == 0)
-                return false;
+                return true;
         }
 
         if (args.RequireCanInteract && !_actionBlocker.CanInteract(args.User, args.Target))
