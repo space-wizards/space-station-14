@@ -101,8 +101,8 @@
 
 # Not exactly service workers, but not civilians either
 - type: jobIconGroup
-  id: EntertainerIconGroup
-  groupName: job-icon-group-entertainer
+  id: TheatreIconGroup
+  groupName: job-icon-group-theatre
   sprite:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Clown

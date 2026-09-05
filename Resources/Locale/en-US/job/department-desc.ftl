@@ -9,3 +9,4 @@ department-Security-description = Protect the station and keep the peace.
 department-Service-description = Attend to the crew's basic physical and psychological needs.
 department-Silicon-description = Fulfill the terms of your installed lawset.
 department-Specific-description = Jobs that not all stations have.
+department-Theatre-description = Perform amusing antics and heartfelt performances for the crew.
