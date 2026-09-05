@@ -1,7 +1,7 @@
 # Command
 highlights-captain = Captain, "Cap", "Bridge", "Command"
 highlights-headofpersonnel = Head Of Personnel, "HoP", Service, "Serv", "Bridge", "Command"
-highlights-chiefengineer = Chief Engineer, "CE", Engineering, Engineer, "Engi", "Bridge", "Command"
+highlights-chiefengineer = Chief Engineer, "CE", Engineering, "Engi", "Bridge", "Command"
 highlights-chiefmedicalofficer = Chief Medical Officer, "CMO", Medbay, Medical, "Med", "Bridge", "Command"
 highlights-headofsecurity = Head of Security, "HoS", Armory, Security, "Sec", "Bridge", "Command"
 highlights-quartermaster = Quartermaster, "QM", Cargo, Supply, "Bridge", "Command"
@@ -19,8 +19,8 @@ highlights-salvagespecialist = Salvage Specialist, Salvager, Salvage, "Salv", "C
 
 # Engineering
 highlights-atmospherictechnician = Atmospheric Technician, Atmos Tech, Atmospheric, Engineering, "Atmos", "Engi"
-highlights-stationengineer = Station Engineer, Engineering, Engineer, "Engi"
-highlights-technicalassistant = Technical Assistant, Tech Assistant, "TA", Engineering, Engineer, "Engi"
+highlights-stationengineer = Station Engineer, Engineer, Engineering, "Engi", "Engis"
+highlights-technicalassistant = Technical Assistant, Tech Assistant, "TA", Engineering, "Engi"
 
 # Medical
 highlights-chemist = Chemist, Chemistry, "Chem", Medbay, Medical, "Med"
@@ -47,7 +47,7 @@ highlights-serviceworker = Service Worker, Service, "Serv"
 
 # Station-specific
 highlights-psychologist = Psychologist, Psychology, "Psych", Medbay, Medical, "Med"
-highlights-reporter = Reporter, Journalist, Newsroom, News
+highlights-reporter = Reporter, Journalist, Newsroom, News, Service, "Serv"
 highlights-tramdriver = Tram Driver, Tram, "Driver", Service, "Serv"
 
 # Silicon
