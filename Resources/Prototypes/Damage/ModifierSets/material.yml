@@ -20,8 +20,9 @@
     Structural: 9
 
 # Strong metal used by crew to protect important areas and items.
+# Used for static entities which mostly never move.
 - type: damageModifierSet
-  id: PlasteelMod
+  id: PlasteelStaticMod
   coefficients:
     Piercing: 0.7 # Bullets aren't a good option against metal
   flatReductions:
@@ -34,16 +35,65 @@
     Caustic: 15
     Structural: 6
 
-# Common metal found all over the place.
+# Strong metal used by crew to protect important areas and items.
+# Used for dynamic entities which might move frequently.
 - type: damageModifierSet
-  id: SteelMod
+  id: PlasteelMod
   coefficients:
     Piercing: 0.7 # Bullets aren't a good option against metal
   flatReductions:
     Blunt: 10
     Slash: 10
     Piercing: 10
-    Heat: 15
+    Heat: 10
+    Cold: 10
+    Shock: 15
+    Caustic: 15
+    Structural: 6
+
+# Common metal found all over the place.
+# Used for static entities which mostly never move.
+- type: damageModifierSet
+  id: SteelStaticMod
+  coefficients:
+    Piercing: 0.7 # Bullets aren't a good option against metal
+  flatReductions:
+    Blunt: 10
+    Slash: 10
+    Piercing: 10
+    Heat: 10
+    Cold: 15
+    Shock: 15
+    Caustic: 15
+    Structural: 3
+
+# Common metal found all over the place.
+# Used for dynamic entities which might move frequently.
+- type: damageModifierSet
+  id: SteelMod
+  coefficients:
+    Piercing: 0.7 # Bullets aren't a good option against metal
+  flatReductions:
+    Blunt: 5
+    Slash: 5
+    Piercing: 5
+    Heat: 5
+    Cold: 10
+    Shock: 10
+    Caustic: 15
+    Structural: 3
+
+# Steel rods
+- type: damageModifierSet
+  id: RodMetalMod
+  coefficients:
+    Piercing: 0.7 # Bullets aren't a good option against metal
+    Slash: 1.5 # Easier to cut through
+  flatReductions:
+    Blunt: 5
+    Slash: 5
+    Piercing: 10
+    Heat: 10
     Cold: 15
     Shock: 15
     Caustic: 15
@@ -62,7 +112,7 @@
     Slash: 5
     Piercing: 5
     Shock: 30 # Way less electrical resistance compared to steel
-    Caustic: 10
+    Caustic: 5
 
 # Metals that you really shouldn't be building things out of. Gold, silver, etc.
 - type: damageModifierSet
@@ -92,7 +142,7 @@
     Shock: 20
     Caustic: 20
 
-# Halfway between steel and glass.
+# Mix of RodMetal and Glass
 - type: damageModifierSet
   id: GlassReinforcedMod
   coefficients:
@@ -101,12 +151,12 @@
   flatReductions:
     Blunt: 5
     Slash: 5
-    Piercing: 5
+    Piercing: 10
     Heat: 20
     Cold: 20
     Shock: 20
     Caustic: 20
-    Structural: 2
+    Structural: 3
 
 # Halfway between plasma and glass.
 - type: damageModifierSet
@@ -137,12 +187,12 @@
   flatReductions:
     Blunt: 8
     Slash: 8
-    Piercing: 5
+    Piercing: 10
     Heat: 30
     Cold: 20
     Shock: 20
     Caustic: 20
-    Structural: 2
+    Structural: 3
 
 #endregion
 #region Organic
