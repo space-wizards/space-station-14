@@ -38,7 +38,14 @@ namespace Content.Shared.Cargo
         // public int RequesterId;
         [DataField]
         public string Reason { get; private set; }
-        public  bool Approved;
+        public bool Approved;
+
+        /// <summary>
+        /// The console that approved the order
+        /// </summary>
+        [ViewVariables]
+        public NetEntity? ApprovingConsole { get; set; }
+
         [DataField]
         public string? Approver;
 
