@@ -211,6 +211,12 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    ///  Sets a new duration for a given status effect (cannot shorten the duration).
+    /// </summary>
+    /// <param name="effect">The status effect entity.</param>
+    /// <param name="duration">New duration for the effect (ends at <c>duration</c> time after current time). If null, effect lasts indefinitely.
+    /// If the new duration is shorter than the existing duration, the existing duration will remain unchanged.</param>
     private void UpdateStatusEffectTime(Entity<StatusEffectComponent?> effect, TimeSpan? duration)
     {
         if (!_effectQuery.Resolve(effect, ref effect.Comp))
@@ -225,7 +231,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         if (duration is not null)
         {
             // Don't update time to a smaller timespan...
-            newEndTime = _timing.CurTime + duration;
+            newEndTime = _timing.CurTime + duration.Value;
             if (effect.Comp.EndEffectTime >= newEndTime)
                 return;
         }
@@ -233,6 +239,11 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         SetStatusEffectEndTime(effect, newEndTime);
     }
 
+    /// <summary>
+    ///  Sets a new delay for a given status effect. Does nothing if the effect has already started. Cannot lengthen existing delay; but can make it start sooner/instantly.
+    /// </summary>
+    /// <param name="effect">The status effect entity.</param>
+    /// <param name="delay">New delay for the effect (starts at <c>delay</c> time after current time). If null, the effect starts instantly.</param>
     private void UpdateStatusEffectDelay(Entity<StatusEffectComponent?> effect, TimeSpan? delay)
     {
         if (!_effectQuery.Resolve(effect, ref effect.Comp))
@@ -242,12 +253,12 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         if (_timing.CurTime >= effect.Comp.StartEffectTime)
             return;
 
-        var newStartTime = TimeSpan.Zero;
+        var newStartTime = _timing.CurTime;
 
         if (delay is not null)
         {
             // Don't update time to a smaller timespan...
-            newStartTime = _timing.CurTime + delay.Value;
+            newStartTime += delay.Value;
             if (effect.Comp.StartEffectTime < newStartTime)
                 return;
         }
@@ -255,7 +266,12 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         SetStatusEffectStartTime(effect, newStartTime);
     }
 
-    private void AddStatusEffectTime(Entity<StatusEffectComponent?> effect, TimeSpan delta)
+    /// <summary>
+    /// Adds to the duration of the status effect.
+    /// </summary>
+    /// <param name="effect">The status effect entity.</param>
+    /// <param name="delta">Amount of time to add to the duration of the status effect. If null, effect will last indefinitely. No impact if effect is already indefinite.</param>
+    private void AddStatusEffectTime(Entity<StatusEffectComponent?> effect, TimeSpan? delta)
     {
         if (!_effectQuery.Resolve(effect, ref effect.Comp))
             return;
@@ -264,10 +280,23 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         if (effect.Comp.EndEffectTime is null)
             return;
 
-        // Add to the current end effect time, if we're here we should have one set already, and if it's null it's probably infinite.
-        SetStatusEffectEndTime((effect, effect.Comp), effect.Comp.EndEffectTime.Value + delta);
+        if (delta is null)
+        {
+            SetStatusEffectEndTime((effect, effect.Comp), delta);
+        }
+        else
+        {
+            // Add to the current end effect time, if we're here we should have one set already, and if it's null it's probably infinite.
+            SetStatusEffectEndTime((effect, effect.Comp), effect.Comp.EndEffectTime.Value + delta);
+        }
+        
     }
 
+    /// <summary>
+    /// Sets the end time for the status effect.
+    /// </summary>
+    /// <param name="ent">The status effect entity.</param>
+    /// <param name="endTime">The new end time for the status effect. If null, the effect will last indefinitely.</param>
     private void SetStatusEffectEndTime(Entity<StatusEffectComponent?> ent, TimeSpan? endTime)
     {
         if (!_effectQuery.Resolve(ent, ref ent.Comp))
