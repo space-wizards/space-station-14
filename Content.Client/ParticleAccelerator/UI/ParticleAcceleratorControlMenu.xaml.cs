@@ -93,14 +93,9 @@ public sealed partial class ParticleAcceleratorControlMenu : FancyWindow
         StateSpinBox.ValueChanged += PowerStateChanged;
         StateSpinBox.LineEditDisabled = true;
 
-        OffButton.OnPressed += _ =>
+        PowerSwitch.OnToggled += args =>
         {
-            OnOverallState?.Invoke(false);
-        };
-
-        OnButton.OnPressed += _ =>
-        {
-            OnOverallState?.Invoke(true);
+            OnOverallState?.Invoke(args.Pressed);
         };
 
         ScanButton.OnPressed += _ =>
@@ -212,12 +207,10 @@ public sealed partial class ParticleAcceleratorControlMenu : FancyWindow
         bool hasAccess = _player.LocalSession?.AttachedEntity is {} player
             && _accessReader.IsAllowed(player, _entity);
 
-        OnButton.Pressed = enabled;
-        OffButton.Pressed = !enabled;
+        PowerSwitch.Pressed = enabled;
 
         var cantUse = !assembled || blocked || powerBlock || !hasAccess;
-        OnButton.Disabled = cantUse;
-        OffButton.Disabled = cantUse;
+        PowerSwitch.Disabled = cantUse;
         ScanButton.Disabled = blocked || !hasAccess;
 
         var cantChangeLevel = !assembled || blocked || !enabled || cantUse;
