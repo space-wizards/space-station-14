@@ -1,5 +1,6 @@
 using Content.Shared.Botany.Items.Components;
 using Content.Shared.Burial.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Botany.Events;
 
@@ -51,4 +52,16 @@ public sealed class TrayShovelAttemptEvent(Entity<ShovelComponent> shovel, Entit
 {
     public Entity<ShovelComponent> Shovel { get; } = shovel;
     public EntityUid User { get; } = user;
+}
+
+/// <summary>
+/// Event raised when a plant analyzer attempts to analyze an entity.
+/// </summary>
+[ByRefEvent]
+public struct PlantAnalyzerAttemptEvent(EntityUid user)
+{
+    public EntityUid User { get; } = user;
+    public EntityUid? PlantData;
+    public EntProtoId? PlantProtoId;
+    public bool Handled;
 }

@@ -39,6 +39,14 @@ public sealed partial class BotanySeedSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
+    private void OnPlantAnalyzerAttempt(Entity<SeedComponent> ent, ref PlantAnalyzerAttemptEvent args)
+    {
+        args.PlantData = ent.Comp.PlantData;
+        args.PlantProtoId = ent.Comp.PlantProtoId;
+        args.Handled = true;
+    }
+
+    [SubscribeLocalEvent]
     private void OnPlantingSeedAttempt(Entity<PlantTrayComponent> ent, ref PlantingSeedAttemptEvent args)
     {
         if (args.Cancelled)

@@ -26,6 +26,7 @@ public sealed partial class PlantTraySystem : EntitySystem
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
+    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery;
     [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery;
     [Dependency] private EntityQuery<PlantDataComponent> _dataQuery;
 
@@ -40,11 +41,11 @@ public sealed partial class PlantTraySystem : EntitySystem
             if (!TryGetPlant(ent.AsNullable(), out var plantUid))
             {
                 args.PushMarkup(Loc.GetString("tray-component-nothing-planted-message"));
-                if (_dataQuery.TryComp(plantUid, out var plantData))
-                {
-                    var name = Loc.GetString(plantData.Name);
-                    args.PushMarkup(Loc.GetString("plant-component-something-already-growing-message", ("seedName", name)));
-                }
+            }
+            else if (_dataQuery.TryComp(plantUid, out var plantData))
+            {
+                var name = Loc.GetString(plantData.Name);
+                args.PushMarkup(Loc.GetString("plant-component-something-already-growing-message", ("seedName", name)));
             }
 
             args.PushMarkup(Loc.GetString("tray-component-water-level-message",
@@ -53,8 +54,6 @@ public sealed partial class PlantTraySystem : EntitySystem
                 ("nutritionLevel", (int)ent.Comp.NutritionLevel)));
 
             args.PushMarkup(GetTrayWarningsMarkup(ent.AsNullable()));
-            if (plantUid != null && ent.Comp.DrawWarnings)
-                args.PushMarkup(_plant.GetPlantWarningsMarkup(plantUid.Value));
         }
     }
 
@@ -259,6 +258,12 @@ public sealed partial class PlantTraySystem : EntitySystem
         return ent.Comp.ToxinLevel >= ent.Comp.MaxToxinLevel * 0.5f;
     }
 
+    [PublicAPI]
+    public bool TryGetPlant(Entity<PlantTrayComponent?> ent)
+    {
+        return TryGetPlant(ent, out _);
+    }
+
     /// <summary>
     /// Tries to get the plant entity in the tray.
     /// </summary>
@@ -276,6 +281,7 @@ public sealed partial class PlantTraySystem : EntitySystem
         return true;
     }
 
+    [PublicAPI]
     public bool TryGetAlivePlant(Entity<PlantTrayComponent?> ent)
     {
         return TryGetAlivePlant(ent, out _);
@@ -321,6 +327,22 @@ public sealed partial class PlantTraySystem : EntitySystem
 
         if (GetPestThreshold(ent))
             markup.Add(Loc.GetString("tray-component-pest-high-level-warning"));
+
+        if (ent.Comp.DrawWarnings && TryGetPlant(ent, out var plantUid)
+            && _holderQuery.TryComp(plantUid.Value, out var holder))
+        {
+            if (holder.ImproperHeat)
+                markup.Add(Loc.GetString("tray-component-plant-improper-heat-warning"));
+
+            if (holder.ImproperPressure)
+                markup.Add(Loc.GetString("tray-component-plant-improper-pressure-warning"));
+
+            if (holder.MissingGas)
+                markup.Add(Loc.GetString("tray-component-plant-missing-gas-warning"));
+
+            if (_plantHolder.GetHealthThreshold(plantUid.Value))
+                markup.Add(Loc.GetString("tray-component-plant-health-warning"));
+        }
 
         return string.Join("\n", markup);
     }
