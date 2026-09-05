@@ -2,7 +2,7 @@
 
 on:
   push:
-    branches: [ master, staging, stable ]
+    branches: [ master, main, develop, dev, staging, stable ]
   merge_group:
   pull_request:
     types: [ opened, reopened, synchronize, ready_for_review ]
@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   build:
-    if: github.actor != 'PJBot' && github.event.pull_request.draft == false
+    if: ${{ github.actor != vars.REPO_BOT_NAME && github.event.pull_request.draft == false }}
     strategy:
       matrix:
         os: [ubuntu-latest]

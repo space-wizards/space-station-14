@@ -5,7 +5,7 @@ on:
 
 jobs:
   labeler:
-    if: github.actor != 'PJBot'
+    if: ${{ github.actor != vars.REPO_BOT_NAME }}
     permissions:
       contents: read
       pull-requests: write

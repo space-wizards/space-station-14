@@ -8,9 +8,7 @@ on:
 jobs:
   get_credits:
     runs-on: ubuntu-latest
-    # Hey there fork dev! If you like to include your own contributors in this then you can probably just change this to your own repo
-    # Do this in dump_github_contributors.ps1 too into your own repo
-    if: github.repository == 'space-wizards/space-station-14'
+    if: ${{ github.repository == vars.UPSTREAM_REPO_NAME }}
 
     steps:
       - uses: actions/checkout@v7
@@ -38,7 +36,7 @@ jobs:
       #  uses: stefanzweifel/git-auto-commit-action@v4
       #  with:
       #    commit_message: Update Credits
-      #    commit_author: PJBot <pieterjan.briers+bot@gmail.com>
+      #    commit_author: ${{ vars.CREDITS_COMMIT_AUTHOR_NAME }} <${{ vars.CREDITS_COMMIT_AUTHOR_EMAIL }}>
 
       # This will make a PR
       - name: Set current date as env variable
@@ -47,8 +45,8 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
-          commit-message: Update Credits
-          title: Update Credits
-          body: This is an automated Pull Request. This PR updates the github contributors in the credits section.
-          author: PJBot <pieterjan.briers+bot@gmail.com>
-          branch: automated/credits-${{env.NOW}}
+          commit-message: Update the in-game credits at time ${{ github.event.repository.updated_at}}
+          title: Update in-game credits at time ${{ github.event.repository.updated_at}}
+          body: This is an automated Pull Request. This PR adds new GitHub contributors to the in-game credits section.
+          author: ${{ vars.CREDITS_COMMIT_AUTHOR_NAME }} <${{ vars.CREDITS_COMMIT_AUTHOR_EMAIL }}>
+          branch: automated/credits-${{ github.event.repository.updated_at}}
