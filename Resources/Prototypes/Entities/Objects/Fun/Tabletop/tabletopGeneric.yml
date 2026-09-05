@@ -1,55 +1,77 @@
+# Instances used in backgammon/parchis setup
 - type: entity
-  abstract: true
   parent: BaseTabletopPiece
-  id: BaseGenericTabletopPiece
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/Tabletop/generic_pieces.rsi
-
-- type: entity
-  parent: BaseGenericTabletopPiece
   id: RedTabletopPiece
   name: red piece
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    state: red
+    layers:
+    - state: outer_ring
+      color: "#222034"
+    - state: inner_circle
+      color: "#9a353e"
 
 - type: entity
-  parent: BaseGenericTabletopPiece
+  parent: BaseTabletopPiece
   id: GreenTabletopPiece
   name: green piece
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    state: green
+    layers:
+    - state: outer_ring
+      color: "#222034"
+    - state: inner_circle
+      color: "#3d8822"
 
 - type: entity
-  parent: BaseGenericTabletopPiece
+  parent: BaseTabletopPiece
   id: YellowTabletopPiece
   name: yellow piece
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    state: yellow
+    layers:
+    - state: outer_ring
+      color: "#222034"
+    - state: inner_circle
+      color: "#b4ae27"
 
 - type: entity
-  parent: BaseGenericTabletopPiece
+  parent: BaseTabletopPiece
   id: BlueTabletopPiece
   name: blue piece
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    state: blue
+    layers:
+    - state: outer_ring
+      color: "#222034"
+    - state: inner_circle
+      color: "#313a91"
 
 - type: entity
-  parent: BaseGenericTabletopPiece
+  parent: BaseTabletopPiece
   id: WhiteTabletopPiece
   name: white piece
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    state: white
+    layers:
+    - state: outer_ring
+      color: "#222034"
+    - state: inner_circle
 
 - type: entity
-  parent: BaseGenericTabletopPiece
+  parent: BaseTabletopPiece
   id: BlackTabletopPiece
   name: black piece
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    state: black
+    layers:
+    - state: outer_ring
+      color: "#222034"
+    - state: inner_circle
+      color: "#222034"

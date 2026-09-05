@@ -20,11 +20,12 @@
       quickInsert: true
       areaInsert: true
       whitelist:
+        components:
+        - TabletopGame
         tags:
-          - Book
-          - Dice
-          - Document
-          - Figurine
-          - TabletopBoard
-          - Write
+        - Book
+        - Dice
+        - Document
+        - Figurine
+        - Write
     - type: Dumpable

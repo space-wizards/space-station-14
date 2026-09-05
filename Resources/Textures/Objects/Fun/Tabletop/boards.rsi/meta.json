@@ -1,0 +1,38 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "backgammon by Fishfish458, chess/checkers based on work by Visne & edited by whatston3, parchis by Zumorica, battlemaps by Just-A-Unity-Dev (GitHub): grass/sand texture from https://github.com/discordia-space/CEV-Eris/commit/026ee3250ac1de938b503e3eb46ad73dd9c3ca82, moon texture from https://github.com/vgstation-coders/vgstation13/tree/e4d3ea7f69d21c3667be12b114fa935c4640cb05, snow texture from https://github.com/tgstation/tgstation/tree/8abb19545828230d92ba18827feeb42a67a55d49",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "backgammon"
+        },
+        {
+            "name": "battlemap-grass"
+        },
+        {
+            "name": "battlemap-moon"
+        },
+        {
+            "name": "battlemap-sand"
+        },
+        {
+            "name": "battlemap-ship"
+        },
+        {
+            "name": "battlemap-snow"
+        },
+        {
+            "name": "checkers"
+        },
+        {
+            "name": "chess"
+        },
+        {
+            "name": "parchis"
+        }
+    ]
+}
