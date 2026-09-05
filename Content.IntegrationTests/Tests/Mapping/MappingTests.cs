@@ -57,7 +57,7 @@ public sealed class MappingTests : GameTest
 
         // Save the map
         var file = $"{nameof(MappingTest)}.yml";
-        await pair.WaitClientCommand($"savemap {mapId} {file}");
+        await pair.WaitClientCommand($"savemap {file} {mapId}");
 
         // Mapinitialize it
         await pair.WaitClientCommand($"mapinit {mapId}");
