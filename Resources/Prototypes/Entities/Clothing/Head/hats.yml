@@ -533,22 +533,6 @@
       HeadSide : HEAD
 
 - type: entity
-  parent: ClothingHeadHatWizardBase
-  id: ClothingHeadHatRedwizard
-  name: red wizard hat
-  description: A strange-looking red hat that most certainly belongs to a powerful magic-user.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hats/redwizard.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hats/redwizard.rsi
-  - type: Tag
-    tags:
-    - PetWearable
-    - ClothMade
-    - WhitelistChameleon
-
-- type: entity
   parent: [ClothingHeadBase, BaseFoldable]
   id: ClothingHeadHatSantahat
   name: santa hat
@@ -735,22 +719,6 @@
         color: "#a60b0b"
 
 - type: entity
-  parent: ClothingHeadHatWizardBase
-  id: ClothingHeadHatVioletwizard
-  name: violet wizard hat
-  description: A strange-looking violet hat that most certainly belongs to a powerful magic-user.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hats/violetwizard.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hats/violetwizard.rsi
-  - type: Tag
-    tags:
-    - PetWearable
-    - ClothMade
-    - WhitelistChameleon
-
-- type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatWarden
   name: warden's cap
@@ -790,6 +758,48 @@
     - Hair
 
 - type: entity
+  abstract: true
+  parent: [ ClothingHeadBase, BaseMagicalContraband ]
+  id: ClothingHeadHatWizardBase
+  components:
+  - type: WizardClothes
+
+- type: entity
+  parent: ClothingHeadHatWizardBase
+  id: ClothingHeadHatWizardAbyss
+  name: abyss wizard hat
+  description: A strange looking red-trimmed hat that most certainly belongs to a powerful magic-user.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/wizard_abyss.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/wizard_abyss.rsi
+  - type: Tag
+    tags:
+    - PetWearable
+    - ClothMade
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadHatWizardBase
+  id: ClothingHeadHatWizardBlue
+  name: blue wizard hat
+  description: A strange-looking blue hat that most certainly belongs to a powerful magic-user.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/wizard_blue.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/wizard_blue.rsi
+  - type: Tag
+    tags:
+    - PetWearable
+    - CorgiWearable
+    - ClothMade
+    - Recyclable
+    - HamsterWearable
+    - WhitelistChameleon
+
+- type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatWizardFake
   name: fake wizard hat
@@ -806,30 +816,37 @@
       HeadSide : HEAD
 
 - type: entity
-  abstract: true
-  parent: [ ClothingHeadBase, BaseMagicalContraband ]
-  id: ClothingHeadHatWizardBase
-  components:
-  - type: WizardClothes
-
-- type: entity
   parent: ClothingHeadHatWizardBase
-  id: ClothingHeadHatWizard
-  name: wizard hat
-  description: A strange-looking blue hat that most certainly belongs to a powerful magic-user.
+  id: ClothingHeadHatWizardRed
+  name: red wizard hat
+  description: A strange-looking red hat that most certainly belongs to a powerful magic-user.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/wizardhat.rsi
+    sprite: Clothing/Head/Hats/wizard_red.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hats/wizardhat.rsi
+    sprite: Clothing/Head/Hats/wizard_red.rsi
   - type: Tag
     tags:
     - PetWearable
-    - CorgiWearable
     - ClothMade
-    - Recyclable
-    - HamsterWearable
     - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadHatWizardBase
+  id: ClothingHeadHatWizardViolet
+  name: violet wizard hat
+  description: A strange-looking violet hat that most certainly belongs to a powerful magic-user.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/wizard_violet.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/wizard_violet.rsi
+  - type: Tag
+    tags:
+    - PetWearable
+    - ClothMade
+    - WhitelistChameleon
+
 
 - type: entity
   parent: ClothingHeadBase
