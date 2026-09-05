@@ -1,0 +1,149 @@
+- type: entity
+  abstract: true
+  id: BaseGiantMushroom
+  parent: BaseStructure
+  components:
+  - type: Sprite
+    noRot: true
+  - type: Transform
+    anchored: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.20,-0.45,0.20,0.45"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+  - type: Damageable
+    damageModifierSet: Biological
+  - type: Injurable
+    damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnGasBehavior
+        gasMixture:
+          volume: 1000
+          moles:
+            Fungalin: 25  #figure out the proper values for this and the other gas spawning
+          temperature: 373.15
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: AtmosDevice
+    requireAnchored: false
+  - type: GasMiner
+    maxExternalPressure: 200
+    spawnAmount: 0.25
+    spawnGas: Fungalin
+    showStateOnExamine: false
+
+- type: entity
+  id: MomMushroom
+  parent: BaseGiantMushroom
+  name: mom mushroom
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Mushrooms/mom_mushroom.rsi
+    layers:
+      - state: base
+      - state: top
+        shader: unshaded
+  - type: TimedSpawner
+    prototypes:
+    - GiantSpore
+    intervalSeconds: 40
+    minimumEntitiesSpawned: 2
+    maximumEntitiesSpawned: 5
+
+- type: entity
+  id: RedMushroom
+  parent: BaseGiantMushroom
+  name: red mushroom
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Mushrooms/red_mushroom.rsi
+    layers:
+    - state: base
+    - state: top
+      shader: unshaded
+
+- type: entity
+  id: OrangeMushroom
+  parent: BaseGiantMushroom
+  name: orange mushroom
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Mushrooms/orange_mushroom.rsi
+    layers:
+    - state: base
+    - state: top
+      shader: unshaded
+
+- type: entity
+  id: YellowMushroom
+  parent: BaseGiantMushroom
+  name: yellow mushroom
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Mushrooms/yellow_mushroom.rsi
+    layers:
+    - state: base 
+    - state: top
+      shader: unshaded
+
+
+- type: entity
+  id: GreenMushroom
+  parent: BaseGiantMushroom
+  name: green mushroom
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Mushrooms/green_mushroom.rsi
+    layers:
+    - state: base
+    - state: top
+      shader: unshaded
+
+- type: entity
+  id: BlueMushroom
+  parent: BaseGiantMushroom
+  name: blue mushroom
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Mushrooms/blue_mushroom.rsi
+    layers:
+    - state: base
+    - state: top
+      shader: unshaded
+
+- type: entity
+  id: PurpleMushroom
+  parent: BaseGiantMushroom
+  name: purple mushroom
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Mushrooms/purple_mushroom.rsi
+    layers:
+    - state: base
+    - state: top
+      shader: unshaded
+
+- type: entity
+  id: PinkMushroom
+  parent: BaseGiantMushroom
+  name: pink mushroom
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Mushrooms/pink_mushroom.rsi
+    layers:
+    - state: base
+    - state: top
+      shader: unshaded

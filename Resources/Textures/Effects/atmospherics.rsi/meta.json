@@ -69,6 +69,10 @@
         {
             "name": "water_vapor_old",
             "delays": [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2]]
+        },
+        {
+            "name": "fungalin_gas",
+            "delays": [[0.2, 0.2, 0.2, 0.2, 0.2]]
         }
     ]
 }

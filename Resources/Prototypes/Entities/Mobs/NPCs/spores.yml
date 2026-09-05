@@ -1,0 +1,110 @@
+- type: entity
+  id: GiantSpore
+  parent: [ BaseSimpleMob, FlyingMobBase ]
+  name: giant spore
+  components:
+  - type: Sprite
+    sprite: Mobs/Plants/Mushrooms/giant_spore.rsi
+    layers:
+    - state: icon
+      shader: unshaded
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: RandomSprite
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        icon: Rainbow
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral
+  - type: HTN
+    rootTask:
+      task: IdleCompound
+  - type: Extractable
+    grindableSolutionName: solution
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Fungalin
+        Quantity: 5
+  - type: Item
+    size: Tiny
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 5
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
+  - type: PassiveDamage
+    pauseWhenStored: true
+    allowedStates:
+    - Alive
+    damage:
+      types:
+        Cellular: 0.25
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          GiantMushroomSpawner:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+## Spawners
+- type: entity
+  id: GiantMushroomSpawner
+  name: giant mushroom spawner
+  components:
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: GiantSporeSpawnTable
+
+- type: entityTable
+  id: GiantSporeSpawnTable
+  offset: 0.5
+  table: !type:GroupSelector
+    children:
+    - id: RedMushroom
+    - id: OrangeMushroom
+    - id: YellowMushroom
+    - id: GreenMushroom
+    - id: BlueMushroom
+    - id: PurpleMushroom
+    - id: PinkMushroom
+
+# Rember to delete this
+- type: entity
+  parent: DrinkCanBaseFull
+  id: DrinkieFungalCan
+  name: fungal can
+  description: wawa
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Fungalin
+        Quantity: 40
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/beer_can.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/beer_can.rsi
+  - type: Tag
+    tags:
+    - Beer
+    - DrinkCan
