@@ -39,13 +39,11 @@
                     SizeFlagsStretchRatio="4">
                     <PanelContainer VerticalExpand="True" StyleClasses="PanelDeep">
                         <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
-                            <BoxContainer
+                            <controls:ListContainer
                                 Name="RecipeList"
-                                Orientation="Vertical"
                                 HorizontalExpand="True"
                                 VerticalExpand="True"
-                                RectClipContent="True">
-                            </BoxContainer>
+                                RectClipContent="True" />
                         </ScrollContainer>
                     </PanelContainer>
                 </BoxContainer>
@@ -85,7 +83,8 @@
                     Name="FabricatingContainer"
                     Orientation="Horizontal"
                     HorizontalExpand="True"
-                    SizeFlagsStretchRatio="2">
+                    SizeFlagsStretchRatio="2"
+                    Visible="False">
                     <PanelContainer
                         VerticalExpand="True"
                         HorizontalExpand="True"
