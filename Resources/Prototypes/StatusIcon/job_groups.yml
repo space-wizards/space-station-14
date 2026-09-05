@@ -1,3 +1,23 @@
+# Jobs within an icon group should generally be sorted alphabetically (by ingame name, not prototype name).
+# The department head (if any) should always be at the top of the group.
+# Non-command roles with raised weight (e.g Warden) should be listed after the department head but before the rest of the group.
+# Any jobs currently inaccessible to normal crew (e.g Boxer, Brigmedic, Geneticist) should be listed at the end of the group.
+
+- type: jobIconGroup
+  id: CommandIconGroup
+  groupName: job-icon-group-command
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Captain
+  icons:
+  - JobIconCaptain
+  - JobIconChiefEngineer
+  - JobIconChiefMedicalOfficer
+  - JobIconHeadOfPersonnel
+  - JobIconHeadOfSecurity
+  - JobIconQuarterMaster
+  - JobIconResearchDirector
+
 - type: jobIconGroup
   id: CargoIconGroup
   groupName: job-icon-group-cargo
@@ -10,22 +30,6 @@
   - JobIconShaftMiner
 
 - type: jobIconGroup
-  id: CommandIconGroup
-  groupName: job-icon-group-command
-  sprite:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Captain
-  icons:
-  - JobIconNanotrasen
-  - JobIconCaptain
-  - JobIconChiefEngineer
-  - JobIconChiefMedicalOfficer
-  - JobIconHeadOfPersonnel
-  - JobIconHeadOfSecurity
-  - JobIconQuarterMaster
-  - JobIconResearchDirector
-
-- type: jobIconGroup
   id: EngineeringIconGroup
   groupName: job-icon-group-engineering
   sprite:
@@ -33,9 +37,9 @@
     state: StationEngineer
   icons:
   - JobIconChiefEngineer
+  - JobIconAtmosphericTechnician
   - JobIconStationEngineer
   - JobIconTechnicalAssistant
-  - JobIconAtmosphericTechnician
 
 - type: jobIconGroup
   id: MedicalIconGroup
@@ -45,24 +49,24 @@
     state: MedicalDoctor
   icons:
   - JobIconChiefMedicalOfficer
+  - JobIconChemist
   - JobIconMedicalDoctor
   - JobIconMedicalIntern
-  - JobIconChemist
-  - JobIconGeneticist
   - JobIconParamedic
   - JobIconPsychologist
+  - JobIconGeneticist
   - JobIconVirologist
 
 - type: jobIconGroup
-  id: ResearchIconGroup
-  groupName: job-icon-group-research
+  id: ScienceIconGroup
+  groupName: job-icon-group-science
   sprite:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Scientist
   icons:
   - JobIconResearchDirector
-  - JobIconScientist
   - JobIconResearchAssistant
+  - JobIconScientist
   - JobIconRoboticist
 
 - type: jobIconGroup
@@ -73,11 +77,11 @@
     state: SecurityOfficer
   icons:
   - JobIconHeadOfSecurity
-  - JobIconSecurityOfficer
-  - JobIconSecurityCadet
-  - JobIconBrigmedic
-  - JobIconDetective
   - JobIconWarden
+  - JobIconDetective
+  - JobIconSecurityCadet
+  - JobIconSecurityOfficer
+  - JobIconBrigmedic
 
 - type: jobIconGroup
   id: ServiceIconGroup
@@ -89,7 +93,6 @@
   - JobIconHeadOfPersonnel
   - JobIconBartender
   - JobIconBotanist
-  - JobIconBoxer
   - JobIconChaplain
   - JobIconChef
   - JobIconJanitor
@@ -97,12 +100,13 @@
   - JobIconLibrarian
   - JobIconReporter
   - JobIconServiceWorker
+  - JobIconTramDriver
+  - JobIconBoxer
   - JobIconZookeeper
 
-# Not exactly service workers, but not civilians either
 - type: jobIconGroup
-  id: EntertainerIconGroup
-  groupName: job-icon-group-entertainer
+  id: TheatreIconGroup # Not exactly service workers, but not civilians either
+  groupName: job-icon-group-theatre
   sprite:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Clown
@@ -122,31 +126,57 @@
   - JobIconVisitor
 
 - type: jobIconGroup
+  id: SiliconIconGroup
+  groupName: job-icon-group-silicon
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Borg
+  icons:
+  - JobIconStationAi
+  - JobIconBorg
+
+- type: jobIconGroup
   id: CentCommIconGroup
   groupName: job-icon-group-centcomm
   sprite:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Nanotrasen
   icons:
+  - JobIconNanotrasen
   - JobIconCBURN
   - JobIconDeathSquad
+  - JobIconERTLeader
   - JobIconERTChaplain
   - JobIconERTEngineer
   - JobIconERTJanitor
-  - JobIconERTLeader
   - JobIconERTMedic
   - JobIconERTSecurity
-  - JobIconNanotrasen
 
 - type: jobIconGroup
-  id: SiliconIconGroup
-  groupName: job-icon-group-silicon
+  id: AntagonistIconGroup
+  groupName: job-icon-group-antagonist
   sprite:
     sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: StationAi
+    state: Syndicate
   icons:
-  - JobIconStationAi
-  - JobIconBorg
+  - JobIconNinja
+  - JobIconPirate
+  - JobIconSyndicate
+  - JobIconSyndicateCommander
+  - JobIconSyndicateCorpsman
+  - JobIconSyndicateOperative
+  - JobIconWizard
+
+- type: jobIconGroup
+  id: MiscIconGroup # Anything that doesn't fit into any of the above categories
+  groupName: job-icon-group-misc
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Sus
+  icons:
+  - JobIconCluwne
+  - JobIconPrisoner
+  - JobIconSus
 
 - type: jobIconGroup
   id: BlankIconGroup
@@ -158,25 +188,6 @@
   - JobIconUnknown
   - JobIconNoId
 
-# Rogues and villains
-- type: jobIconGroup
-  id: ThreatIconGroup
-  groupName: job-icon-group-threat
-  sprite:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Syndicate
-  icons:
-  - JobIconCluwne
-  - JobIconNinja
-  - JobIconPirate
-  - JobIconPrisoner
-  - JobIconSyndicate
-  - JobIconSyndicateCommander
-  - JobIconSyndicateCorpsman
-  - JobIconSyndicateOperative
-  - JobIconWizard
-  - JobIconSus
-
 - type: jobIconGroup
   id: AdminIconGroup
   groupName: job-icon-group-admin
@@ -185,8 +196,8 @@
     state: Admin
   icons:
   - JobIconAdmin
-  - JobIconZombie
   - JobIconSeniorEngineer
+  - JobIconSeniorOfficer
   - JobIconSeniorPhysician
   - JobIconSeniorResearcher
-  - JobIconSeniorOfficer
+  - JobIconZombie # here instead of in the Antagonist group because zombies don't typically have unique ID cards
