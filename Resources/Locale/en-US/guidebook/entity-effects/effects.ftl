@@ -539,3 +539,9 @@ entity-effect-disarm =
         [1] Disarms
         *[other] disarms
     } the entity
+
+entity-effect-guidebook-make-trap-in-container =
+    { $chance ->
+        [1] Traps
+        *[other] traps
+    } the metabolizer inside a { $entityname }

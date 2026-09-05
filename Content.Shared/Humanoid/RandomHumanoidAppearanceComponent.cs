@@ -1,6 +1,8 @@
-namespace Content.Server.Humanoid.Components;
+using Robust.Shared.GameStates;
 
-[RegisterComponent]
+namespace Content.Shared.Humanoid;
+
+[RegisterComponent, NetworkedComponent]
 public sealed partial class RandomHumanoidAppearanceComponent : Component
 {
     [DataField]
