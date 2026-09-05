@@ -4,18 +4,22 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;
+using Content.Shared.Gibbing;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory;
 using Content.Shared.Jittering;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Stacks;
+using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Kitchen.EntitySystems;
@@ -40,6 +44,8 @@ public abstract partial class SharedReagentGrinderSystem : EntitySystem
     [Dependency] private SharedJitteringSystem _jitter = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;
     [Dependency] private SharedPowerStateSystem _powerState = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private InventorySystem _inventory = default!;
 
     public override void Initialize()
     {
@@ -329,6 +335,9 @@ public abstract partial class SharedReagentGrinderSystem : EntitySystem
                 if (solution.Volume > beakerSolution.AvailableVolume)
                     continue;
 
+                var ev = new BeingGrindedEvent(ent, ent.Comp.InputContainer);
+                RaiseLocalEvent(item, ref ev);
+
                 _destructible.DestroyEntity(item);
             }
             _solutionContainersSystem.TryAddSolution(beakerSolutionEntity.Value, solution);
@@ -408,3 +417,6 @@ public abstract partial class SharedReagentGrinderSystem : EntitySystem
         return ent.Comp.JuiceSolution is not null;
     }
 }
+
+[ByRefEvent]
+public readonly record struct BeingGrindedEvent(EntityUid Grinder, Container InputContainer);
