@@ -2,6 +2,7 @@
   id: GiantSpore
   parent: [ BaseSimpleMob, FlyingMobBase ]
   name: giant spore
+  description: A giant yet delicate spore ready to burst into a similarly giant mushroom.
   components:
   - type: Sprite
     sprite: Mobs/Plants/Mushrooms/giant_spore.rsi
@@ -56,7 +57,7 @@
         acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 10
+        damage: 5
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -87,24 +88,3 @@
     - id: BlueMushroom
     - id: PurpleMushroom
     - id: PinkMushroom
-
-# Rember to delete this
-- type: entity
-  parent: DrinkCanBaseFull
-  id: DrinkieFungalCan
-  name: fungal can
-  description: wawa
-  components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Fungalin
-        Quantity: 40
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/beer_can.rsi
-  - type: Item
-    sprite: Objects/Consumable/Drinks/beer_can.rsi
-  - type: Tag
-    tags:
-    - Beer
-    - DrinkCan

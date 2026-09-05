@@ -129,6 +129,6 @@
     sprite: /Textures/Effects/atmospherics.rsi
     state: fungalin_gas
   gasMolesVisible: 0.6
-  color: '#ff0084'
+  color: '#450631'
   reagent: Fungalin
   pricePerMole: 0

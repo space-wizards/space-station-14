@@ -5,6 +5,7 @@
   components:
   - type: Sprite
     noRot: true
+    drawdepth: Mobs # Needs to be drawn above tables
   - type: Transform
     anchored: false
   - type: Fixtures
@@ -33,7 +34,7 @@
         gasMixture:
           volume: 1000
           moles:
-            Fungalin: 25  #figure out the proper values for this and the other gas spawning
+            Fungalin: 25  
           temperature: 373.15
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -49,6 +50,7 @@
   id: MomMushroom
   parent: BaseGiantMushroom
   name: mom mushroom
+  description: An enormous mushroom releasing spores into the air. How did this fit inside a vent?
   components:
   - type: Sprite
     sprite: Structures/Specific/Mushrooms/mom_mushroom.rsi
@@ -67,6 +69,7 @@
   id: RedMushroom
   parent: BaseGiantMushroom
   name: red mushroom
+  description: A giant mushroom, you really shouldn't be breathing close to it.
   components:
   - type: Sprite
     sprite: Structures/Specific/Mushrooms/red_mushroom.rsi
@@ -79,6 +82,7 @@
   id: OrangeMushroom
   parent: BaseGiantMushroom
   name: orange mushroom
+  description: A giant mushroom, you really shouldn't be breathing close to it.
   components:
   - type: Sprite
     sprite: Structures/Specific/Mushrooms/orange_mushroom.rsi
@@ -91,6 +95,7 @@
   id: YellowMushroom
   parent: BaseGiantMushroom
   name: yellow mushroom
+  description: A giant mushroom, you really shouldn't be breathing close to it.
   components:
   - type: Sprite
     sprite: Structures/Specific/Mushrooms/yellow_mushroom.rsi
@@ -104,6 +109,7 @@
   id: GreenMushroom
   parent: BaseGiantMushroom
   name: green mushroom
+  description: A giant mushroom, you really shouldn't be breathing close to it.
   components:
   - type: Sprite
     sprite: Structures/Specific/Mushrooms/green_mushroom.rsi
@@ -116,6 +122,7 @@
   id: BlueMushroom
   parent: BaseGiantMushroom
   name: blue mushroom
+  description: A giant mushroom, you really shouldn't be breathing close to it.
   components:
   - type: Sprite
     sprite: Structures/Specific/Mushrooms/blue_mushroom.rsi
@@ -128,6 +135,7 @@
   id: PurpleMushroom
   parent: BaseGiantMushroom
   name: purple mushroom
+  description: A giant mushroom, you really shouldn't be breathing close to it.
   components:
   - type: Sprite
     sprite: Structures/Specific/Mushrooms/purple_mushroom.rsi
@@ -140,6 +148,7 @@
   id: PinkMushroom
   parent: BaseGiantMushroom
   name: pink mushroom
+  description: A giant mushroom, you really shouldn't be breathing close to it.
   components:
   - type: Sprite
     sprite: Structures/Specific/Mushrooms/pink_mushroom.rsi

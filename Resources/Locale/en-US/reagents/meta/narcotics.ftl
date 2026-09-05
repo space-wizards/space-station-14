@@ -50,4 +50,4 @@ reagent-name-StrawberryIce = Methylenedioxystraquinone
 reagent-desc-StrawberryIce = A special drug designed to be even stronger than Desoxyephedrine. Known as "Strawberry Ice" or "Girl Ice" given its color and flavor, it is incredibly addictive and comes with strong withdrawal symptoms. While the highs are higher and users report flying in rainbows through space while under its influence, near-eternal horrors await those who cease consuming it.
 
 reagent-name-fungalin = fungalin
-reagent-desc-fungalin = fungal fungyness
+reagent-desc-fungalin = A natural fungal chemical known for it's hallucinogenic properties and bothersome spread.

@@ -528,7 +528,6 @@
       maxDuration: 20
     - type: VentHordeRule
       table: !type:GroupSelector
-        rolls: 1, 1
         children:
           - id: MomMushroom
 

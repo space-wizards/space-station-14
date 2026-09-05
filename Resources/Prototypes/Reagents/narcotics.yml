@@ -658,31 +658,49 @@
   desc: reagent-desc-fungalin
   physicalDesc: reagent-physical-desc-soothing
   flavor: tingly
-  color: "#EE35FF"
+  color: "#450631"
   metabolisms:
     Bloodstream:
       effects:
-      - !type:Emote
-        emote: Cough
-        showInChat: true
-        probability: 0.1
-        conditions:
-        - !type:ReagentCondition
-          reagent: Fungalin
-          min: 5
       - !type:ModifyStatusEffect
         effectProto: StatusEffectSeeingRainbow
-        time: 5
+        time: 7
         type: Add
         conditions:
         - !type:ReagentCondition
           reagent: Fungalin
-          min: 15
+          min: 5
       - !type:SpawnEntity
         entity: GiantSpore
         predicted: false
-        probability: 0.1
+        probability: 0.05
         conditions:
         - !type:ReagentCondition
           reagent: Fungalin
-          min: 25
+          min: 10
+    Respiration:
+      effects:
+        - !type:Emote
+          emote: Cough
+          showInChat: true
+          probability: 0.1
+          conditions:
+            - !type:ReagentCondition
+              reagent: Fungalin
+              min: 0.25
+        - !type:ModifyStatusEffect
+          effectProto: StatusEffectSeeingRainbow
+          time: 7
+          type: Add
+          conditions:
+            - !type:ReagentCondition
+              reagent: Fungalin
+              min: 0.5
+        - !type:SpawnEntity
+          entity: GiantSpore
+          predicted: false
+          probability: 0.05
+          conditions:
+            - !type:ReagentCondition
+              reagent: Fungalin
+              min: 0.9
