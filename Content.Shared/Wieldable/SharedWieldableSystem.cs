@@ -114,6 +114,9 @@ public abstract partial class SharedWieldableSystem : EntitySystem
         if (_hands.GetHandCount(args.User) > 2)
             return;
 
+        if (!component.UnwieldOnHandDeselected)
+            return;
+
         TryUnwield((uid, component), args.User);
     }
 
@@ -167,6 +170,9 @@ public abstract partial class SharedWieldableSystem : EntitySystem
         if (args.Hands == null || !args.CanAccess || !args.CanInteract)
             return;
 
+        if (component.DisallowManualWielding)
+            return;
+
         if (!_hands.IsHolding((args.User, args.Hands), uid, out _))
             return;
 
@@ -188,6 +194,9 @@ public abstract partial class SharedWieldableSystem : EntitySystem
     private void OnUseInHand(EntityUid uid, WieldableComponent component, UseInHandEvent args)
     {
         if (args.Handled)
+            return;
+
+        if (component.DisallowManualWielding)
             return;
 
         if (!component.Wielded)
@@ -337,9 +346,14 @@ public abstract partial class SharedWieldableSystem : EntitySystem
             return false;
         }
 
-        var selfMessage = Loc.GetString("wieldable-component-successful-wield", ("item", wieldable.Owner));
-        var othersMessage = Loc.GetString("wieldable-component-successful-wield-other", ("user", Identity.Entity(user, EntityManager)), ("item", wieldable.Owner));
-        _popup.PopupEntity(selfMessage, othersMessage, user, user);
+        if (wieldable.Comp.DisplayPopup)
+        {
+            var selfMessage = Loc.GetString("wieldable-component-successful-wield", ("item", wieldable.Owner));
+            var othersMessage = Loc.GetString("wieldable-component-successful-wield-other",
+                ("user", Identity.Entity(user, EntityManager)),
+                ("item", wieldable.Owner));
+            _popup.PopupEntity(selfMessage, othersMessage, user, user);
+        }
 
         var ev = new ItemWieldedEvent(user);
         RaiseLocalEvent(wieldable.Owner, ref ev);
@@ -414,9 +428,14 @@ public abstract partial class SharedWieldableSystem : EntitySystem
             if (component.UnwieldSound != null)
                 _audio.PlayPredicted(component.UnwieldSound, uid, user);
 
-            var selfMessage = Loc.GetString("wieldable-component-failed-wield", ("item", uid));
-            var othersMessage = Loc.GetString("wieldable-component-failed-wield-other", ("user", Identity.Entity(args.User, EntityManager)), ("item", uid));
-            _popup.PopupEntity(selfMessage, othersMessage, user, user);
+            if (component.DisplayPopup)
+            {
+                var selfMessage = Loc.GetString("wieldable-component-failed-wield", ("item", uid));
+                var othersMessage = Loc.GetString("wieldable-component-failed-wield-other",
+                    ("user", Identity.Entity(args.User, EntityManager)),
+                    ("item", uid));
+                _popup.PopupEntity(selfMessage, othersMessage, user, user);
+            }
         }
     }
 
