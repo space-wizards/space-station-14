@@ -73,6 +73,7 @@
   - type: TargetAction
   - type: EntityTargetAction
     whitelist: { components: [ PointLight ] }
+    blacklist: { components: [ RgbLightController ] }
     event: !type:ChangeComponentsSpellEvent
       toAdd:
       - type: RgbLightController
