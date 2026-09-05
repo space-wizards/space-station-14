@@ -189,6 +189,9 @@ public sealed partial class ChatUIController : UIController
 
         _speechBubbleRoot = new LayoutContainer();
 
+        _config.OnValueChanged(CCVars.LoocEnabled, _ => UpdateChannelPermissions());
+        _config.OnValueChanged(CCVars.DeadChatEnabled, _ => UpdateChannelPermissions());
+
         UpdateChannelPermissions();
 
         _input.SetInputCommand(ContentKeyFunctions.FocusChat,
@@ -520,9 +523,13 @@ public sealed partial class ChatUIController : UIController
 
         // can always send/recieve OOC
         CanSendChannels |= ChatSelectChannel.OOC;
-        CanSendChannels |= ChatSelectChannel.LOOC;
         FilterableChannels |= ChatChannel.OOC;
         FilterableChannels |= ChatChannel.LOOC;
+
+        if (_config.GetCVar(CCVars.LoocEnabled) || _admin.HasFlag(AdminFlags.Admin)) // admins can always send LOOC, even if disabled
+        {
+            CanSendChannels |= ChatSelectChannel.LOOC;
+        }
 
         // can always hear server (nobody can actually send server messages).
         FilterableChannels |= ChatChannel.Server;
@@ -551,7 +558,10 @@ public sealed partial class ChatUIController : UIController
         if (_admin.HasFlag(AdminFlags.Admin) || _ghost is {IsGhost: true})
         {
             FilterableChannels |= ChatChannel.Dead;
-            CanSendChannels |= ChatSelectChannel.Dead;
+            if (_config.GetCVar(CCVars.DeadChatEnabled) || _admin.HasFlag(AdminFlags.Admin)) // admins can always send deadchat, even if disabled
+            {
+                CanSendChannels |= ChatSelectChannel.Dead;
+            }
         }
 
         // only admins can see / filter asay
