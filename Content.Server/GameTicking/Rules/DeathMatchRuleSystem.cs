@@ -8,6 +8,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.EntityTable;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.Mobs;
 using Content.Shared.Points;
 using Robust.Server.Player;
 using Robust.Shared.Utility;
@@ -55,7 +56,9 @@ public sealed partial class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRule
 
             _mind.TransferTo(newMind, mob);
             _outfitSystem.SetOutfit(mob, dm.Gear);
-            EnsureComp<KillTrackerComponent>(mob);
+            // We need to ensure any spawned player has the kill tracker, and that Critical is used for the DeathMatch gamemode.
+            var killTracker = EnsureComp<KillTrackerComponent>(mob);
+            killTracker.KillState = MobState.Critical;
             _respawn.AddToTracker(ev.Player.UserId, (uid, tracker));
 
             _point.EnsurePlayer(ev.Player.UserId, uid, point);
@@ -67,12 +70,16 @@ public sealed partial class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRule
 
     private void OnSpawnComplete(PlayerSpawnCompleteEvent ev)
     {
-        EnsureComp<KillTrackerComponent>(ev.Mob);
         var query = EntityQueryEnumerator<DeathMatchRuleComponent, RespawnTrackerComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out _, out var tracker, out var rule))
         {
             if (!GameTicker.IsGameRuleActive(uid, rule))
                 continue;
+
+            // We need to ensure any spawned player has the kill tracker, and that Critical is used for the DeathMatch gamemode.
+            var killTracker = EnsureComp<KillTrackerComponent>(ev.Mob);
+            killTracker.KillState = MobState.Critical;
+
             _respawn.AddToTracker((ev.Mob, null), (uid, tracker));
         }
     }

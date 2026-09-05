@@ -34,6 +34,11 @@
     - NamesNinjaTitle
     - NamesNinja
     nameFormat: name-format-ninja
+  - type: GibOnRoundEnd
+    preventGibbingObjectives:
+    - NinjaKillLimitObjective
+    spawnProto: Acidifier
+    deleteItems: true
   mindRoles:
   - MindRoleNinja
 
