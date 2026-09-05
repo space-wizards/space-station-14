@@ -76,7 +76,7 @@ namespace Content.Server.Storage.EntitySystems
 
             foreach (var proto in spawnEntities)
             {
-                entityToPlaceInHands = SpawnNextToOrDrop(proto, args.User, xform);
+                entityToPlaceInHands = SpawnNextToOrDrop(proto, args.User); // TODO: Add xform back after e#6605
                 _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(args.User)} used {ToPrettyString(uid)} which spawned {ToPrettyString(entityToPlaceInHands.Value)}");
             }
 
