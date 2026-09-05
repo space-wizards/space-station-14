@@ -1,7 +1,10 @@
 using Content.Shared.Actions.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Ghost.Systems;
+using Content.Shared.Hands;
+using Content.Shared.Inventory;
 using Content.Shared.Mobs;
+using Content.Shared.Ninja.Events;
 
 namespace Content.Shared.Actions;
 
@@ -11,6 +14,7 @@ public abstract partial class SharedActionsSystem
     {
         SubscribeLocalEvent<ActionsComponent, MobStateChangedEvent>(RefRelayActionEvent);
         SubscribeLocalEvent<ActionsComponent, GhostAttemptEvent>(RefRelayActionEvent);
+        SubscribeLocalEvent<ActionsComponent, NinjaAbilitiesDisabledEvent>(RefRelayActionEvent);
     }
 
     private void RefRelayActionEvent<T>(EntityUid uid, ActionsComponent component, ref T args) where T : struct

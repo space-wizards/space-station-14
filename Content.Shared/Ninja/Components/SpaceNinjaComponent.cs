@@ -2,6 +2,7 @@ using Content.Shared.Alert;
 using Content.Shared.Ninja.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Ninja.Components;
 
@@ -30,6 +31,12 @@ public sealed partial class SpaceNinjaComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? Katana;
+
+    /// <summary>
+    /// How long their abilities will be disabled after being hit while cloaked.
+    /// </summary>
+    [DataField]
+    public TimeSpan DisableDelay = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// Objective to complete after calling in a threat.

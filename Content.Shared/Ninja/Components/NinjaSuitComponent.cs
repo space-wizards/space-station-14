@@ -20,10 +20,10 @@ public sealed partial class NinjaSuitComponent : Component
     public SoundSpecifier RevealSound = new SoundPathSpecifier("/Audio/Effects/chime.ogg");
 
     /// <summary>
-    /// ID of the use delay to disable all ninja abilities.
+    /// ID of the use delay to disable suit abilities.
     /// </summary>
     [DataField]
-    public string DisableDelayId = "suit_powers";
+    public string DisableDelayId = "SuitDisabledDelay";
 
     /// <summary>
     /// The action id for recalling a bound energy katana

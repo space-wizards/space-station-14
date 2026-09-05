@@ -3,10 +3,13 @@ using Content.Shared.CombatMode;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Ninja.Components;
+using Content.Shared.Ninja.Events;
 using Content.Shared.Popups;
+using Content.Shared.Timing;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Ninja.Systems;
@@ -20,18 +23,9 @@ public abstract partial class SharedNinjaGlovesSystem : EntitySystem
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private ItemToggleSystem _toggle = default!;
+    [Dependency] private UseDelaySystem _useDelay = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedSpaceNinjaSystem _ninja = default!;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<NinjaGlovesComponent, ToggleClothingCheckEvent>(OnToggleCheck);
-        SubscribeLocalEvent<NinjaGlovesComponent, ItemToggleActivateAttemptEvent>(OnActivateAttempt);
-        SubscribeLocalEvent<NinjaGlovesComponent, ItemToggledEvent>(OnToggled);
-        SubscribeLocalEvent<NinjaGlovesComponent, ExaminedEvent>(OnExamined);
-    }
 
     /// <summary>
     /// Disable glove abilities and show the popup if they were enabled previously.
@@ -56,6 +50,7 @@ public abstract partial class SharedNinjaGlovesSystem : EntitySystem
     /// <summary>
     /// Adds the toggle action when equipped by a ninja only.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnToggleCheck(Entity<NinjaGlovesComponent> ent, ref ToggleClothingCheckEvent args)
     {
         if (!_ninja.IsNinja(args.User))
@@ -65,6 +60,7 @@ public abstract partial class SharedNinjaGlovesSystem : EntitySystem
     /// <summary>
     /// Show if the gloves are enabled when examining.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnExamined(Entity<NinjaGlovesComponent> ent, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
@@ -74,7 +70,15 @@ public abstract partial class SharedNinjaGlovesSystem : EntitySystem
         args.PushText(Loc.GetString($"ninja-gloves-examine-{on}"));
     }
 
-    private void OnActivateAttempt(Entity<NinjaGlovesComponent> ent, ref ItemToggleActivateAttemptEvent args)
+    [SubscribeLocalEvent]
+    private void OnAbilitiesDisabled(Entity<NinjaGlovesComponent> gloves, ref InventoryRelayedEvent<NinjaAbilitiesDisabledEvent> args)
+    {
+        _toggle.TryDeactivate(gloves.Owner);
+        _useDelay.TryResetDelay(gloves, id: gloves.Comp.DisableDelayId);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnActivateAttempt(Entity<NinjaGlovesComponent> gloves, ref ItemToggleActivateAttemptEvent args)
     {
         if (args.User is not {} user
             || !_ninja.NinjaQuery.TryComp(user, out var ninja)
@@ -85,8 +89,15 @@ public abstract partial class SharedNinjaGlovesSystem : EntitySystem
             args.Popup = Loc.GetString("ninja-gloves-not-wearing-suit");
             return;
         }
+
+        if (_useDelay.IsDelayed(gloves.Owner, gloves.Comp.DisableDelayId))
+        {
+            args.Cancelled = true;
+            args.Popup = Loc.GetString("ninja-abilities-disabled");
+        }
     }
 
+    [SubscribeLocalEvent]
     private void OnToggled(Entity<NinjaGlovesComponent> ent, ref ItemToggledEvent args)
     {
         if ((args.User ?? ent.Comp.User) is not {} user)

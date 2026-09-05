@@ -108,3 +108,5 @@
     onFailPopup: limited-charges-no-charges
   - type: AutoRecharge
     rechargeDuration: 20
+  - type: DisableAction
+    disableDuration: 5
