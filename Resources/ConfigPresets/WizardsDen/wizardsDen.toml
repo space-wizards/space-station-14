@@ -61,3 +61,7 @@ privacy_policy_version = "2025-01-19"
 
 [feedback]
 valid_origins = "wizden"
+
+[chat]
+flagged_word_ahelp_enabled = true
+flagged_word_ahelp_cooldown = 30
