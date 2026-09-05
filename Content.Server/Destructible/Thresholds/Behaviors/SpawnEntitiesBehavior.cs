@@ -3,7 +3,10 @@ using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Forensics.Components;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
+using Content.Shared.Storage;
+using Content.Shared.Storage.EntitySystems;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -31,9 +34,49 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
             var tSys = system.EntityManager.System<TransformSystem>();
+            var storageSystem = system.EntityManager.System<SharedStorageSystem>();
             var position = tSys.GetMapCoordinates(owner);
 
             var getRandomVector = () => new Vector2(system.Random.NextFloat(-Offset, Offset), system.Random.NextFloat(-Offset, Offset));
+
+            BaseContainer? containingContainer = null;
+            ItemStorageLocation? storageLocation = null;
+            if (SpawnInContainer)
+            {
+                var containerSystem = system.EntityManager.System<SharedContainerSystem>();
+                if (containerSystem.TryGetContainingContainer(owner, out var container))
+                {
+                    // Removing the entity clears this location, so save it first.
+                    if (storageSystem.TryGetStorageLocation(owner, out _, out _, out var location))
+                        storageLocation = location;
+
+                    if (containerSystem.Remove(owner, container, force: true))
+                        containingContainer = container;
+                }
+            }
+
+            EntityUid SpawnReplacement(EntProtoId prototype)
+            {
+                if (!SpawnInContainer)
+                    return system.EntityManager.SpawnEntity(prototype, position.Offset(getRandomVector()));
+
+                if (containingContainer == null)
+                    return system.EntityManager.SpawnNextToOrDrop(prototype, owner);
+
+                var spawned = system.EntityManager.SpawnInContainerOrDrop(
+                    prototype,
+                    containingContainer.Owner,
+                    containingContainer.ID);
+
+                if (storageLocation is { } location &&
+                    storageSystem.TrySetItemStorageLocation(spawned, containingContainer.Owner, location))
+                {
+                    // Only one replacement can occupy the destroyed entity's old location.
+                    storageLocation = null;
+                }
+
+                return spawned;
+            }
 
             var executions = 1;
             if (system.EntityManager.TryGetComponent<StackComponent>(owner, out var stack))
@@ -54,9 +97,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
                     if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, system.PrototypeManager, system.EntityManager.ComponentFactory))
                     {
-                        var spawned = SpawnInContainer
-                            ? system.EntityManager.SpawnNextToOrDrop(entityId, owner)
-                            : system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
+                        var spawned = SpawnReplacement(entityId);
                         system.StackSystem.SetCount((spawned, null), (int) count);
 
                         TransferForensics(spawned, system, owner);
@@ -65,9 +106,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                     {
                         for (var i = 0; i < count; i++)
                         {
-                            var spawned = SpawnInContainer
-                                ? system.EntityManager.SpawnNextToOrDrop(entityId, owner)
-                                : system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
+                            var spawned = SpawnReplacement(entityId);
 
                             TransferForensics(spawned, system, owner);
                         }
