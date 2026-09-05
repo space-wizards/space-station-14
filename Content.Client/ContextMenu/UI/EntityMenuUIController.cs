@@ -91,7 +91,7 @@ namespace Content.Client.ContextMenu.UI
         /// <summary>
         ///     Given a list of entities, sort them into groups and them to a new entity menu.
         /// </summary>
-        public void OpenRootMenu(List<EntityUid> entities)
+        public void OpenRootMenu(List<EntityUid> entities, EntityUid? priorityEntity = null)
         {
             // close any old menus first.
             if (_context.RootMenu.Visible)
@@ -103,6 +103,10 @@ namespace Content.Client.ContextMenu.UI
                 Identity.Name(x.First(), _entityManager),
                 Identity.Name(y.First(), _entityManager),
                 StringComparison.CurrentCulture));
+
+            if (priorityEntity != null && entities.Contains(priorityEntity.Value))
+                PrioritizeEntity(orderedStates, priorityEntity.Value);
+
             Elements.Clear();
             AddToUI(orderedStates);
 
@@ -180,9 +184,39 @@ namespace Content.Client.ContextMenu.UI
             var coords = _xform.ToMapCoordinates(args.Coordinates);
 
             if (_verbSystem.TryGetEntityMenuEntities(coords, out var entities))
-                OpenRootMenu(entities);
+                OpenRootMenu(entities, args.EntityUid);
 
             return true;
+        }
+
+        /// <summary>
+        ///     Move the entity that was directly clicked to the top of the root menu, preserving existing ordering for
+        ///     all other entities.
+        /// </summary>
+        private void PrioritizeEntity(List<List<EntityUid>> entityGroups, EntityUid priorityEntity)
+        {
+            for (var i = 0; i < entityGroups.Count; i++)
+            {
+                var group = entityGroups[i];
+                var entityIndex = group.IndexOf(priorityEntity);
+
+                if (entityIndex == -1)
+                    continue;
+
+                if (entityIndex > 0)
+                {
+                    group.RemoveAt(entityIndex);
+                    group.Insert(0, priorityEntity);
+                }
+
+                if (i > 0)
+                {
+                    entityGroups.RemoveAt(i);
+                    entityGroups.Insert(0, group);
+                }
+
+                return;
+            }
         }
 
         /// <summary>
