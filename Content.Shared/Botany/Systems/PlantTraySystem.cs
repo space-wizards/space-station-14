@@ -26,6 +26,7 @@ public sealed partial class PlantTraySystem : EntitySystem
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
+    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery;
     [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery;
     [Dependency] private EntityQuery<PlantDataComponent> _dataQuery;
 
@@ -257,11 +258,8 @@ public sealed partial class PlantTraySystem : EntitySystem
         return ent.Comp.ToxinLevel >= ent.Comp.MaxToxinLevel * 0.5f;
     }
 
-    /// <summary>
-    /// Checks whether the tray contains a plant entity.
-    /// </summary>
     [PublicAPI]
-    public bool HasPlant(Entity<PlantTrayComponent?> ent)
+    public bool TryGetPlant(Entity<PlantTrayComponent?> ent)
     {
         return TryGetPlant(ent, out _);
     }
@@ -283,11 +281,8 @@ public sealed partial class PlantTraySystem : EntitySystem
         return true;
     }
 
-    /// <summary>
-    /// Checks whether the tray contains a living plant entity.
-    /// </summary>
     [PublicAPI]
-    public bool HasAlivePlant(Entity<PlantTrayComponent?> ent)
+    public bool TryGetAlivePlant(Entity<PlantTrayComponent?> ent)
     {
         return TryGetAlivePlant(ent, out _);
     }

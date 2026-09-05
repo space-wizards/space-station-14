@@ -85,7 +85,7 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         Maturation.Text = $"{plant.Maturation:0.#}";
         Production.Text = $"{plant.Production:0.#}";
         Potency.Text = $"{plant.Potency:0.#}";
-        Mutation.Text = $"{holder.MutationLevel:0.#} / {holder.MaxMutationLevel:0.#}";
+        Mutation.Text = $"{holder.MutationLevels.Values.Sum():0.#} / {holder.MaxMutationLevel:0.#}";
         MutationMod.Text = $"{holder.MutationMod:0.#} / {holder.MaxMutationMod:0.#}";
         Age.Text = $"{holder.Age}";
         var growthStage = plantEntity is { } plantUid

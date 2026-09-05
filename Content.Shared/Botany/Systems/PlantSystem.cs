@@ -20,6 +20,8 @@ public sealed partial class PlantSystem : EntitySystem
 
     [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery;
     [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery;
+    [Dependency] private EntityQuery<PlantToxinsComponent> _toxinsQuery;
+    [Dependency] private EntityQuery<PlantWeedPestComponent> _weedPestQuery;
 
     private readonly List<Entity<PlantHolderComponent>> _holdersToUpdate = [];
 
@@ -90,9 +92,6 @@ public sealed partial class PlantSystem : EntitySystem
     private void OnExamined(Entity<PlantComponent> ent, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
-            return;
-
-        if (!_holderQuery.HasComp(ent.Owner))
             return;
 
         using (args.PushGroup(nameof(PlantComponent)))
