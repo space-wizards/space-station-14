@@ -962,4 +962,9 @@
       gender: male
   - type: Loadout
     prototypes: [ MobPollyGear ]
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-organic
+  - type: Tag
+    tags:
+    - CannotSuicide
 
