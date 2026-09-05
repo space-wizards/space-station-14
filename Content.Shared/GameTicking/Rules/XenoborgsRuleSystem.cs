@@ -79,7 +79,6 @@ public abstract partial class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRule
         args.AddLine("");
     }
 
-
     protected override void Started(Entity<XenoborgsRuleComponent, GameRuleComponent> rule, ref GameRuleStartedEvent args)
     {
         base.Started(rule, ref args);

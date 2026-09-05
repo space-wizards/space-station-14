@@ -1,3 +1,4 @@
+using System.Globalization;
 using Content.Server.Chat.Managers;
 using Content.Server.Ghost;
 using Content.Server.Station.Systems;
@@ -9,22 +10,22 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Inventory;
 using Content.Shared.Mind.Components;
+using Content.Shared.Popups;
+using Content.Shared.Station.Components;
+using Content.Shared.Station.Systems;
 using Content.Shared.StationRecords;
+using Content.Shared.StationRecords.Components;
+using Content.Shared.StationRecords.Systems;
 using Content.Shared.UserInterface;
 using Robust.Server.Player;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
-using System.Globalization;
-using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Inventory;
-using Content.Shared.Popups;
-using Content.Shared.Station.Systems;
-using Content.Shared.StationRecords.Components;
-using Content.Shared.StationRecords.Systems;
-using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Bed.Cryostorage;
 
@@ -178,7 +179,7 @@ public sealed partial class CryostorageSystem : SharedCryostorageSystem
         {
             foreach (var uniqueStation in _station.GetStationsSet())
             {
-                if (!TryComp<Shared.Station.Components.StationJobsComponent>(uniqueStation, out var stationJobs))
+                if (!TryComp<StationJobsComponent>(uniqueStation, out var stationJobs))
                     continue;
 
                 if (!_stationJobs.TryGetPlayerJobs(uniqueStation, userId.Value, out var jobs, stationJobs))

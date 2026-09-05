@@ -409,7 +409,6 @@ public sealed partial class StationSpawningSystem : EntitySystem
     #endregion Player spawning helpers
 }
 
-
 /// <summary>
 /// Ordered broadcast event fired on any spawner eligible to attempt to spawn a player.
 /// This event's success is measured by if SpawnResult is not null.

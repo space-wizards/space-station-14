@@ -13,7 +13,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Station;
+using Content.Shared.Station.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -24,7 +24,7 @@ namespace Content.Shared.Medical.SuitSensors;
 
 public abstract partial class SharedSuitSensorSystem : EntitySystem
 {
-    [Dependency] private Station.Systems.StationSystem _stationSystem = default!;
+    [Dependency] private StationSystem _stationSystem = default!;
     [Dependency] private MobStateSystem _mobStateSystem = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private SharedTransformSystem _transform = default!;

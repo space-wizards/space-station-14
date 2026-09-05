@@ -27,7 +27,7 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
         GameTicker.EndGameRule(entity);
     }
 
-    [Obsolete]
+    [Obsolete("Use Entity<T> typed version of this method instead!")]
     protected void ForceEndSelf(EntityUid uid, GameRuleComponent? component = null)
     {
         ForceEndSelf((uid, component));

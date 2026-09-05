@@ -1,5 +1,5 @@
 using Content.Client.Audio;
-using Content.Client.GameTicking.Managers;
+using Content.Client.GameTicking;
 using Content.Client.LateJoin;
 using Content.Client.Lobby.UI;
 using Content.Client.Message;
@@ -31,7 +31,7 @@ namespace Content.Client.Lobby
         [Dependency] private ClientsidePlaytimeTrackingManager _playtimeTracking = default!;
         [Dependency] private IPrototypeManager _protoMan = default!;
 
-        private GameTicking.ClientGameTicker _gameTicker = default!;
+        private ClientGameTicker _gameTicker = default!;
         private ContentAudioSystem _contentAudioSystem = default!;
 
         protected override Type? LinkedScreenType { get; } = typeof(LobbyGui);
@@ -47,7 +47,7 @@ namespace Content.Client.Lobby
             Lobby = (LobbyGui) _userInterfaceManager.ActiveScreen;
 
             var chatController = _userInterfaceManager.GetUIController<ChatUIController>();
-            _gameTicker = _entityManager.System<GameTicking.ClientGameTicker>();
+            _gameTicker = _entityManager.System<ClientGameTicker>();
             _contentAudioSystem = _entityManager.System<ContentAudioSystem>();
             _contentAudioSystem.LobbySoundtrackChanged += UpdateLobbySoundtrackInfo;
 

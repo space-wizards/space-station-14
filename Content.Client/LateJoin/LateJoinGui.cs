@@ -1,14 +1,13 @@
 using System.Linq;
 using System.Numerics;
 using Content.Client.CrewManifest;
-using Content.Client.GameTicking.Managers;
+using Content.Client.GameTicking;
 using Content.Client.Lobby;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Shared.CCVar;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
-using Content.Shared.StatusIcon;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
@@ -33,7 +32,7 @@ namespace Content.Client.LateJoin
 
         public event Action<(NetEntity, string)> SelectedId;
 
-        private readonly GameTicking.ClientGameTicker _gameTicker;
+        private readonly ClientGameTicker _gameTicker;
         private readonly SpriteSystem _sprites;
         private readonly CrewManifestSystem _crewManifest;
         private readonly ISawmill _sawmill;
@@ -50,7 +49,7 @@ namespace Content.Client.LateJoin
             IoCManager.InjectDependencies(this);
             _sprites = _entitySystem.GetEntitySystem<SpriteSystem>();
             _crewManifest = _entitySystem.GetEntitySystem<CrewManifestSystem>();
-            _gameTicker = _entitySystem.GetEntitySystem<GameTicking.ClientGameTicker>();
+            _gameTicker = _entitySystem.GetEntitySystem<ClientGameTicker>();
             _sawmill = _logManager.GetSawmill("latejoin.panel");
 
             Title = Loc.GetString("late-join-gui-title");

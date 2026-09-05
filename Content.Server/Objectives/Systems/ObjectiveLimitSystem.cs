@@ -1,7 +1,9 @@
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Objectives.Components;
+using Content.Shared.GameTicking.Rules.Components;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
+
+namespace Content.Server.Objectives.Systems;
 
 public sealed partial class ObjectiveLimitSystem : EntitySystem
 {
@@ -26,7 +28,7 @@ public sealed partial class ObjectiveLimitSystem : EntitySystem
         var remaining = ent.Comp.Limit;
         // all traitor rules are considered
         // maybe this would interfere with multistation stuff in the future but eh
-        foreach (var rule in EntityQuery<Content.Shared.GameTicking.Rules.Components.TraitorRuleComponent>())
+        foreach (var rule in EntityQuery<TraitorRuleComponent>())
         {
             foreach (var mindId in rule.TraitorMinds)
             {

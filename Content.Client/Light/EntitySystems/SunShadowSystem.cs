@@ -1,6 +1,6 @@
 using System.Diagnostics.Contracts;
 using System.Numerics;
-using Content.Client.GameTicking.Managers;
+using Content.Shared.GameTicking;
 using Content.Shared.Light.Components;
 using Content.Shared.Light.EntitySystems;
 using Robust.Shared.Timing;
@@ -10,7 +10,7 @@ namespace Content.Client.Light.EntitySystems;
 
 public sealed partial class SunShadowSystem : SharedSunShadowSystem
 {
-    [Dependency] private GameTicking.ClientGameTicker _ticker = default!;
+    [Dependency] private GameTicker _ticker = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private MetaDataSystem _metadata = default!;
 

@@ -108,7 +108,7 @@ public sealed partial class DynamicRuleSystem : GameRuleSystem<DynamicRuleCompon
 
             executedRules.Add(ruleUid.Value);
 
-            if (TryComp<Shared.GameTicking.Rules.Components.DynamicRuleCostComponent>(ruleUid, out var cost))
+            if (TryComp<DynamicRuleCostComponent>(ruleUid, out var cost))
             {
                 entity.Comp.Budget -= cost.Cost;
                 _adminLog.Add(LogType.EventRan, LogImpact.High, $"{ToPrettyString(entity)} ran rule {ToPrettyString(ruleUid)} with cost {cost.Cost} on budget {entity.Comp.Budget}.");

@@ -4,6 +4,7 @@ using Content.Server.RoundEnd;
 using Content.Server.Zombies;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.GameTicking.Rules;
+using Content.Shared.GameTicking.Rules.Components;
 using Content.Shared.Zombies;
 
 namespace Content.Server.GameTicking.Rules;
@@ -15,7 +16,7 @@ public sealed partial class ServerZombieRuleSystem : ZombieRuleSystem
     [Dependency] private RoundEndSystem _roundEnd = default!;
     [Dependency] private ZombieSystem _zombie = default!;
 
-    protected override void ActiveTick(EntityUid uid, Shared.GameTicking.Rules.Components.ZombieRuleComponent component, GameRuleComponent gameRule, float frameTime)
+    protected override void ActiveTick(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule, float frameTime)
     {
         base.ActiveTick(uid, component, gameRule, frameTime);
         if (!component.NextRoundEndCheck.HasValue || component.NextRoundEndCheck > Timing.CurTime)
@@ -27,7 +28,7 @@ public sealed partial class ServerZombieRuleSystem : ZombieRuleSystem
     /// <summary>
     ///     The big kahoona function for checking if the round is gonna end
     /// </summary>
-    private void CheckRoundEnd(Shared.GameTicking.Rules.Components.ZombieRuleComponent zombieRuleComponent)
+    private void CheckRoundEnd(ZombieRuleComponent zombieRuleComponent)
     {
         var healthy = GetHealthyHumans();
         if (healthy.Count == 1) // Only one human left. spooky

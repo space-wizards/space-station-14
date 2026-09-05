@@ -1,6 +1,7 @@
 using Content.Server.RoundEnd;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.GameTicking.Rules;
+using Content.Shared.GameTicking.Rules.Components;
 using Content.Shared.Objectives.Systems;
 using Robust.Shared.Timing;
 
@@ -12,7 +13,7 @@ public sealed partial class ServerXenoborgsRuleSystem : XenoborgsRuleSystem
     [Dependency] private RoundEndSystem _roundEnd = default!;
     [Dependency] private AliveHumanoidTargetSystem _target = default!;
 
-    protected override void ActiveTick(EntityUid uid, Shared.GameTicking.Rules.Components.XenoborgsRuleComponent component, GameRuleComponent gameRule, float frameTime)
+    protected override void ActiveTick(EntityUid uid, XenoborgsRuleComponent component, GameRuleComponent gameRule, float frameTime)
     {
         base.ActiveTick(uid, component, gameRule, frameTime);
 
@@ -23,7 +24,7 @@ public sealed partial class ServerXenoborgsRuleSystem : XenoborgsRuleSystem
         component.NextRoundEndCheck = _timing.CurTime + component.EndCheckDelay;
     }
 
-    private void CheckRoundEnd(Shared.GameTicking.Rules.Components.XenoborgsRuleComponent xenoborgsRuleComponent)
+    private void CheckRoundEnd(XenoborgsRuleComponent xenoborgsRuleComponent)
     {
         var numXenoborgs = GetNumberXenoborgs();
         var numHumans = _target.GetMinds().Count;

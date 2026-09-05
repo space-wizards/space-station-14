@@ -18,7 +18,6 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
         SubscribeLocalEvent<T, GameRuleAddedEvent>(OnGameRuleAdded);
         SubscribeLocalEvent<T, GameRuleStartedEvent>(OnGameRuleStarted);
         SubscribeLocalEvent<T, GameRuleEndedEvent>(OnGameRuleEnded);
-        SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndTextAppend);
     }
 
     private void OnGameRuleAdded(Entity<T> entity, ref GameRuleAddedEvent args)
@@ -36,6 +35,7 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
         Ended((entity, entity), ref args);
     }
 
+    [SubscribeLocalEvent]
     private void OnRoundEndTextAppend(ref RoundEndTextAppendEvent ev)
     {
         // We don't query GameRuleComponent since the rule may have ended!
@@ -49,7 +49,7 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     /// <summary>
     /// Called when the gamerule is added
     /// </summary>
-    [Obsolete]
+    [Obsolete("Use Entity<T,GameRuleComponent> version instead")]
     protected virtual void Added(EntityUid uid, T component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
 
@@ -66,7 +66,7 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     /// <summary>
     /// Called when the gamerule begins
     /// </summary>
-    [Obsolete]
+    [Obsolete("Use Entity<T,GameRuleComponent> version instead")]
     protected virtual void Started(EntityUid uid, T component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
 
@@ -88,7 +88,6 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     /// <summary>w
     /// Called at the end of a round when text needs to be added for a game rule.
     /// </summary>
-    // TODO: Call this without GameRuleComponent!!!
     protected virtual void AppendRoundEndText(Entity<T> rule, ref RoundEndTextAppendEvent args)
     {
 

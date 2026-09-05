@@ -1,10 +1,9 @@
 using Content.Server.Access.Components;
-using Content.Server.GameTicking;
-using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Roles;
+using Content.Shared.Station.Components;
 
 namespace Content.Server.Access.Systems;
 
@@ -31,7 +30,7 @@ public sealed partial class PresetIdCardSystem : EntitySystem
             var station = _stationSystem.GetOwningStation(uid);
 
             // If we're not on an extended access station, the ID is already configured correctly from MapInit.
-            if (station == null || !TryComp<Shared.Station.Components.StationJobsComponent>(station.Value, out var jobsComp) || !jobsComp.ExtendedAccess)
+            if (station == null || !TryComp<StationJobsComponent>(station.Value, out var jobsComp) || !jobsComp.ExtendedAccess)
                 continue;
 
             SetupIdAccess(uid, card, true);
@@ -50,7 +49,7 @@ public sealed partial class PresetIdCardSystem : EntitySystem
         var extended = false;
 
         // Station not guaranteed to have jobs (e.g. nukie outpost).
-        if (TryComp(station, out Shared.Station.Components.StationJobsComponent? stationJobs))
+        if (TryComp(station, out StationJobsComponent? stationJobs))
             extended = stationJobs.ExtendedAccess;
 
         SetupIdAccess(uid, id, extended);

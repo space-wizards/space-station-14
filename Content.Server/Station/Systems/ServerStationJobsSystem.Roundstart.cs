@@ -306,7 +306,7 @@ public sealed partial class ServerStationJobsSystem
         // Calculate whether stations need to be on extended access or not.
         foreach (var (station, count) in jobsCount)
         {
-            var jobs = Comp<Shared.Station.Components.StationJobsComponent>(station);
+            var jobs = Comp<StationJobsComponent>(station);
 
             var thresh = jobs.ExtendedAccessThreshold;
 

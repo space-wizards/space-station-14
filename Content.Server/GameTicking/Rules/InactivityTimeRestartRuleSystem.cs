@@ -69,7 +69,7 @@ public sealed partial class InactivityTimeRestartRuleSystem : GameRuleSystem<Ina
     private void RunLevelChanged(GameRunLevelChangedEvent args)
     {
         var query = QueryActiveRules();
-        while (query.MoveNext(out var uid, out _, out var inactivity, out var gameRule))
+        while (query.MoveNext(out var uid, out _, out var inactivity, out _))
         {
             switch (args.New)
             {

@@ -3,6 +3,7 @@ using Content.Server.Traitor.Uplink;
 using Content.Shared.FixedPoint;
 using Content.Shared.PDA;
 using Content.Shared.GameTicking.Rules;
+using Content.Shared.GameTicking.Rules.Components;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -51,7 +52,7 @@ public sealed partial class ServerTraitorRuleSystem : TraitorRuleSystem
 
     // TODO: AntagCodewordsComponent
     [SubscribeLocalEvent]
-    private void OnObjectivesTextPrepend(EntityUid uid, Shared.GameTicking.Rules.Components.TraitorRuleComponent comp, ref ObjectivesTextPrependEvent args)
+    private void OnObjectivesTextPrepend(EntityUid uid, TraitorRuleComponent comp, ref ObjectivesTextPrependEvent args)
     {
         if(comp.GiveCodewords)
             args.Text += "\n" + Loc.GetString("traitor-round-end-codewords", ("codewords", string.Join(", ", Codeword.GetCodewords(comp.CodewordFactionPrototypeId))));

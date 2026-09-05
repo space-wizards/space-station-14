@@ -6,6 +6,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Maps;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Station.Components;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
@@ -312,7 +313,7 @@ public sealed class StationJobsTest : GameTest
 
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
         var compFact = server.ResolveDependency<IComponentFactory>();
-        var name = compFact.GetComponentName<Shared.Station.Components.StationJobsComponent>();
+        var name = compFact.GetComponentName<StationJobsComponent>();
 
         await server.WaitAssertion(() =>
         {
@@ -334,7 +335,7 @@ public sealed class StationJobsTest : GameTest
                         if (!station.StationComponentOverrides.TryGetComponent(name, out var comp))
                             continue;
 
-                        foreach (var (job, array) in ((Shared.Station.Components.StationJobsComponent) comp).SetupAvailableJobs)
+                        foreach (var (job, array) in ((StationJobsComponent) comp).SetupAvailableJobs)
                         {
                             Assert.That(array.Length, Is.EqualTo(2));
                             Assert.That(array[0] is -1 or >= 0);

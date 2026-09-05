@@ -13,6 +13,7 @@ using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Station;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Station.Systems;
 using Content.Shared.Storage;
 using Robust.Shared.Player;
 
@@ -23,7 +24,7 @@ public sealed partial class OutfitSystem : EntitySystem
     [Dependency] private IServerPreferencesManager _preferenceManager = default!;
     [Dependency] private HandsSystem _handSystem = default!;
     [Dependency] private InventorySystem _invSystem = default!;
-    [Dependency] private Shared.Station.Systems.StationSpawningSystem _spawningSystem = default!;
+    [Dependency] private StationSpawningSystem _spawningSystem = default!;
     [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private StorageSystem _storageSystem = default!;
 
@@ -43,7 +44,7 @@ public sealed partial class OutfitSystem : EntitySystem
             session = actorComponent.PlayerSession;
             var userId = actorComponent.PlayerSession.UserId;
             var prefs = _preferenceManager.GetPreferences(userId);
-            profile = prefs.SelectedCharacter as HumanoidCharacterProfile;
+            profile = prefs.SelectedCharacter;
         }
 
         if (_invSystem.TryGetSlots(target, out var slots))

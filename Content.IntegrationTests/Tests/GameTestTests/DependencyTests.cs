@@ -1,9 +1,8 @@
 #nullable enable
 using System.Collections.Generic;
-using Content.Client.GameTicking.Managers;
+using Content.Client.GameTicking;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
-using Content.IntegrationTests.NUnit.Constraints;
 using Content.Server.GameTicking;
 using Content.Shared.GameTicking;
 using Robust.Shared.GameObjects;
@@ -39,7 +38,7 @@ public sealed class DependencyTests : GameTest
             Assert.That(!ReferenceEquals(_sGameTicker, _cGameTicker),
                 "Server and client gametickers should be distinct");
             Assert.That(_sGameTicker, Is.TypeOf<ServerGameTicker>());
-            Assert.That(_cGameTicker, Is.TypeOf<Client.GameTicking.ClientGameTicker>());
+            Assert.That(_cGameTicker, Is.TypeOf<ClientGameTicker>());
         }
     }
 
