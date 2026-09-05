@@ -43,30 +43,14 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
     private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
     public const string LightBulbContainer = "light_bulb";
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<PoweredLightComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<PoweredLightComponent, EntRemovedFromContainerMessage>(OnRemoved);
-        SubscribeLocalEvent<PoweredLightComponent, EntInsertedIntoContainerMessage>(OnInserted);
-        SubscribeLocalEvent<PoweredLightComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<PoweredLightComponent, InteractHandEvent>(OnInteractHand);
-        SubscribeLocalEvent<PoweredLightComponent, SignalReceivedEvent>(OnSignalReceived);
-        SubscribeLocalEvent<PoweredLightComponent, PowerChangedEvent>(OnPowerChanged);
-        SubscribeLocalEvent<PoweredLightComponent, PoweredLightDoAfterEvent>(OnDoAfter);
-        SubscribeLocalEvent<PoweredLightComponent, DamageChangedEvent>(HandleLightDamaged);
-        SubscribeLocalEvent<PoweredLightComponent, EmpPulseEvent>(OnEmpPulse);
-
-        SubscribeLocalEvent<BlinkingPoweredLightComponent, MapInitEvent>(OnBlinkingMapInit);
-        SubscribeLocalEvent<BlinkingPoweredLightComponent, ComponentShutdown>(OnBlinkingShutdown);
-    }
-
+    [SubscribeLocalEvent]
     private void OnInit(EntityUid uid, PoweredLightComponent light, ComponentInit args)
     {
         light.LightBulbContainer = ContainerSystem.EnsureContainer<ContainerSlot>(uid, LightBulbContainer);
         _deviceLink.EnsureSinkPorts(uid, light.OnPort, light.OffPort, light.TogglePort);
     }
 
+    [SubscribeLocalEvent]
     private void OnRemoved(Entity<PoweredLightComponent> light, ref EntRemovedFromContainerMessage args)
     {
         if (args.Container.ID != LightBulbContainer)
@@ -75,6 +59,7 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
         UpdateLight(light, light);
     }
 
+    [SubscribeLocalEvent]
     private void OnInserted(Entity<PoweredLightComponent> light, ref EntInsertedIntoContainerMessage args)
     {
         if (args.Container.ID != LightBulbContainer)
@@ -83,6 +68,7 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
         UpdateLight(light, light);
     }
 
+    [SubscribeLocalEvent]
     private void OnInteractUsing(EntityUid uid, PoweredLightComponent component, InteractUsingEvent args)
     {
         if (args.Handled)
@@ -91,6 +77,7 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
         args.Handled = InsertBulb(uid, args.Used, component, user: args.User, playAnimation: true);
     }
 
+    [SubscribeLocalEvent]
     private void OnInteractHand(EntityUid uid, PoweredLightComponent light, InteractHandEvent args)
     {
         if (args.Handled)
@@ -119,6 +106,7 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnSignalReceived(Entity<PoweredLightComponent> ent, ref SignalReceivedEvent args)
     {
         if (args.Port == ent.Comp.OffPort)
@@ -293,10 +281,10 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
                 RaiseLocalEvent(uid, ref ev);
                 if (ev.LightState == null && powerReceiver.Powered && light.On || ev.LightState != null && ev.LightState.Value)
                 {
-                    SetLight(uid, true, lightBulb.Color, light, lightBulb.LightRadius, lightBulb.LightEnergy, lightBulb.LightSoftness);
+                    var lightChanged = SetLight(uid, true, lightBulb.Color, light, lightBulb.LightRadius, lightBulb.LightEnergy, lightBulb.LightSoftness);
                     _appearance.SetData(uid, PoweredLightVisuals.BulbState, PoweredLightState.On, appearance);
                     var time = GameTiming.CurTime;
-                    if (time > light.LastThunk + ThunkDelay)
+                    if (lightChanged && time > light.LastThunk + ThunkDelay)
                     {
                         light.LastThunk = time;
                         Dirty(uid, light);
@@ -328,7 +316,8 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
     /// <remarks>
     ///     TODO: This should be an IThresholdBehaviour once DestructibleSystem is predicted.
     /// </remarks>
-    public void HandleLightDamaged(EntityUid uid, PoweredLightComponent component, DamageChangedEvent args)
+    [SubscribeLocalEvent]
+    private void HandleLightDamaged(EntityUid uid, PoweredLightComponent component, DamageChangedEvent args)
     {
         if (GameTiming.ApplyingState) // The destruction is already networked on its own.
             return;
@@ -340,6 +329,7 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnPowerChanged(EntityUid uid, PoweredLightComponent component, ref PowerChangedEvent args)
     {
         // TODO: Power moment
@@ -351,20 +341,28 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
         UpdateLight(uid, component);
     }
 
+    [SubscribeLocalEvent]
     private void OnEmpPulse(EntityUid uid, PoweredLightComponent component, ref EmpPulseEvent args)
     {
         if (TryDestroyBulb(uid, component))
             args.Affected = true;
     }
 
-    private void SetLight(EntityUid uid, bool value, Color? color = null, PoweredLightComponent? light = null, float? radius = null, float? energy = null, float? softness = null)
+    /// <summary>
+    /// Sets the light on or off, with optional parameters for the pointlight.
+    /// </summary>
+    /// <returns>Returns true if the on/off value changed.</returns>
+    private bool SetLight(EntityUid uid, bool value, Color? color = null, PoweredLightComponent? light = null, float? radius = null, float? energy = null, float? softness = null)
     {
         if (!Resolve(uid, ref light))
-            return;
+            return false;
+
+        var valueChanged = false;
 
         if (light.CurrentLit != value)
         {
             light.CurrentLit = value;
+            valueChanged = true;
             Dirty(uid, light);
         }
 
@@ -390,6 +388,8 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
 
         var ev = new PoweredLightValueUpdated(value);
         RaiseLocalEvent(uid, ref ev);
+
+        return valueChanged;
     }
 
     public void ToggleLight(EntityUid uid, PoweredLightComponent? light = null)
@@ -411,6 +411,7 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
         UpdateLight(uid, light);
     }
 
+    [SubscribeLocalEvent]
     private void OnDoAfter(EntityUid uid, PoweredLightComponent component, DoAfterEvent args)
     {
         if (args.Handled || args.Cancelled || args.Args.Target == null)
@@ -421,11 +422,13 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnBlinkingMapInit(Entity<BlinkingPoweredLightComponent> ent, ref MapInitEvent args)
     {
         _appearance.SetData(ent, PoweredLightVisuals.Blinking, true);
     }
 
+    [SubscribeLocalEvent]
     private void OnBlinkingShutdown(Entity<BlinkingPoweredLightComponent> ent, ref ComponentShutdown args)
     {
         _appearance.SetData(ent, PoweredLightVisuals.Blinking, false);
@@ -448,10 +451,11 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
             GameTiming.CurTime < ent.Comp.LastTurnOffTime + ent.Comp.RequiredMinimumTime)
             ent.Comp.CheckUpdate = true;
     }
+
     [SubscribeLocalEvent]
-    private void OnLightStatusUpdated(Entity<AntiFlickerPoweredLightComponent> ent, ref PoweredLightValueUpdated args)
+    private void OnLightStatusUpdated(Entity<AntiFlickerPoweredLightComponent> ent, ref PointLightToggleEvent args)
     {
-        if (args.Value)
+        if (args.Enabled)
         {
             if (ent.Comp.LastTurnOnTime <= ent.Comp.LastTurnOffTime)
                 ent.Comp.LastTurnOnTime = GameTiming.CurTime;
