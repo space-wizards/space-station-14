@@ -73,7 +73,14 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     // Maybe someday we'll have clientside prediction for entity spawning, but not today.
     // Until then, these methods do nothing on the client.
     /// <inheritdoc/>
-    public override bool TrySplashSpillAt(Entity<SpillableComponent?> entity, EntityCoordinates coordinates, out EntityUid puddleUid, out Solution solution, bool sound = true, EntityUid? user = null)
+    public override bool TrySplashSpillAt(
+        Entity<SpillableComponent?> entity,
+        EntityCoordinates coordinates,
+        out EntityUid puddleUid,
+        out Solution solution,
+        bool sound = true,
+        EntityUid? user = null,
+        LocId? popup = null)
     {
         puddleUid = EntityUid.Invalid;
         solution = new Solution();
@@ -85,7 +92,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         Solution spilled,
         out EntityUid puddleUid,
         bool sound = true,
-        EntityUid? user = null)
+        EntityUid? user = null,
+        LocId? popup = null)
     {
         puddleUid = EntityUid.Invalid;
         return false;

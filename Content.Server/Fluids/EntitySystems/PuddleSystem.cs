@@ -37,6 +37,11 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private EntityQuery<PuddleComponent> _puddleQuery = default!;
     [Dependency] private EntityQuery<EvaporationSparkleComponent> _evaporationSparklesQuery = default!;
 
+    /// <summary>
+    /// The default popup shown when solution splashes on the entity.
+    /// </summary>
+    private static readonly LocId DefaultSpillLandPopup = "spill-land-spilled-on-other";
+
     /*
      * TODO: Need some sort of way to do blood slash / vomit solution spill on its own
      * This would then evaporate into the puddle tile below
@@ -363,7 +368,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         out EntityUid puddleUid,
         out Solution spilled,
         bool sound = true,
-        EntityUid? user = null)
+        EntityUid? user = null,
+        LocId? popup = null)
     {
         puddleUid = EntityUid.Invalid;
         spilled = new Solution();
@@ -376,7 +382,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         spilled = solution.Value.Comp.Solution;
 
-        return TrySplashSpillAt(entity, coordinates, solution.Value, out puddleUid, sound, user);
+        return TrySplashSpillAt(entity, coordinates, solution.Value, out puddleUid, sound, user, popup);
     }
 
     private bool TrySplashSpillAt(EntityUid entity,
@@ -384,9 +390,10 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         Entity<SolutionComponent> solution,
         out EntityUid puddleUid,
         bool sound = true,
-        EntityUid? user = null)
+        EntityUid? user = null,
+        LocId? popup = null)
     {
-        var result = TrySplashSpillAt(entity, coordinates, solution.Comp.Solution, out puddleUid, sound, user);
+        var result = TrySplashSpillAt(entity, coordinates, solution.Comp.Solution, out puddleUid, sound, user, popup);
         _solutionContainerSystem.UpdateChemicals(solution);
         return result;
     }
@@ -396,7 +403,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         Solution solution,
         out EntityUid puddleUid,
         bool sound = true,
-        EntityUid? user = null)
+        EntityUid? user = null,
+        LocId? popup = null)
     {
         puddleUid = EntityUid.Invalid;
 
@@ -426,7 +434,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
             targets.Add(owner);
             Reactive.DoEntityReaction(owner, splitSolution, ReactionMethod.Touch);
-            Popups.PopupEntity(Loc.GetString("spill-land-spilled-on-other",
+            Popups.PopupEntity(Loc.GetString(popup ?? DefaultSpillLandPopup,
                     ("spillable", entity),
                     ("target", Identity.Entity(owner, EntityManager))),
                 owner,

@@ -18,6 +18,18 @@ public sealed partial class SpillableComponent : Component
     public float? SpillDelay;
 
     /// <summary>
+    /// A popup to show instead of the default one on the successful splash.
+    /// </summary>
+    [DataField]
+    public LocId? OnSplashPopup;
+
+    /// <summary>
+    /// Whether to play the splash sound.
+    /// </summary>
+    [DataField]
+    public bool PlaySound = true;
+
+    /// <summary>
     /// If you can spill the reagent from the container from your hands with the the spill verb
     /// </summary>
     [DataField]
