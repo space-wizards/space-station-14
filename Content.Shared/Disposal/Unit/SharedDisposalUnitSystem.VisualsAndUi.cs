@@ -44,12 +44,9 @@ public abstract partial class SharedDisposalUnitSystem
 
     protected void UpdateUI(Entity<DisposalUnitComponent> entity)
     {
-        if (_timing.ApplyingState)
-            return;
-
         if (_ui.TryGetOpenUi(entity.Owner, DisposalUnitUiKey.Key, out var bui))
         {
-            bui.Update<DisposalUnitBoundUserInterfaceState>();
+            bui.Update();
         }
     }
 

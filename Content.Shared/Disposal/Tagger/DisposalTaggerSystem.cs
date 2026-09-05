@@ -1,3 +1,5 @@
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Holder;
 using Content.Shared.Disposal.Tube;
@@ -12,8 +14,10 @@ namespace Content.Shared.Disposal.Tagger;
 /// </summary>
 public sealed partial class DisposalTaggerSystem : EntitySystem
 {
+    [Dependency] private AccessReaderSystem _accessReaderSystem = default!;
     [Dependency] private SharedDisposalHolderSystem _disposalHolder = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedUserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
     {
@@ -21,15 +25,32 @@ public sealed partial class DisposalTaggerSystem : EntitySystem
 
         SubscribeLocalEvent<DisposalTaggerComponent, GetDisposalsNextDirectionEvent>(OnGetTaggerNextDirection, after: new[] { typeof(DisposalTubeSystem) });
 
+        Subs.BuiEvents<DisposalTaggerComponent>(DisposalUnitUiKey.Key, subs =>
+        {
+            subs.Event<DisposalTaggerOpenUiMessage>(OnOpenUiAction);
+        });
+
         Subs.BuiEvents<DisposalTaggerComponent>(DisposalTaggerUiKey.Key, subs =>
         {
             subs.Event<DisposalTaggerUiActionMessage>(OnUiAction);
         });
     }
 
+    [SubscribeLocalEvent]
+    private void OnDisposalFlush(Entity<DisposalTaggerComponent> ent, ref BeforeDisposalFlushEvent args)
+    {
+        args.Tags.Add(ent.Comp.Tag);
+    }
+
     private void OnGetTaggerNextDirection(Entity<DisposalTaggerComponent> ent, ref GetDisposalsNextDirectionEvent args)
     {
         _disposalHolder.AddTag(args.Holder, ent.Comp.Tag);
+    }
+
+    private void OnOpenUiAction(Entity<DisposalTaggerComponent> ent, ref DisposalTaggerOpenUiMessage args)
+    {
+        if (_accessReaderSystem.IsAllowed(args.Actor, ent))
+            _uiSystem.TryToggleUi(ent.Owner, DisposalTaggerUiKey.Key, args.Actor);
     }
 
     /// <summary>
