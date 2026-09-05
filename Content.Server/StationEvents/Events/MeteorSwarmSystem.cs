@@ -41,7 +41,7 @@ public sealed partial class MeteorSwarmSystem : GameRuleSystem<MeteorSwarmCompon
 
         if (component.TargetGrid is not { } grid)
         {
-            ForceEndSelf(uid, gameRule);
+            ForceEndSelf((uid, gameRule));
             return;
         }
 
