@@ -435,8 +435,8 @@
 
 - type: entity
   parent: BaseDoAfterAction
-  id: ActionChangelingEntomb
-  name: Flesh tomb
+  id: ActionChangelingFleshtomb
+  name: Fleshtomb
   description: "Preserve a body in a fragile cocoon made of flesh, which slowly harvests their life for DNA. \n\nRequires 50 Chemicals."
   components:
   - type: Action
@@ -456,6 +456,10 @@
   - type: PopupOnAction
     popupType: MediumCaution
     selfMessage: changeling-cocoon-success
+  - type: DoAfterArgs
+    delay: 10
+    breakOnMove: true
+    breakOnDamage: true
   - type: EntityTargetAction
     whitelist:
       components:
@@ -470,3 +474,9 @@
         mobstate: Dead
       entity: ChangelingFleshCocoon
       container: storage
+    - !type:PlaySound
+      conditions:
+      - !type:MobStateCondition
+        mobstate: Dead
+      sound:
+        collection: gib
