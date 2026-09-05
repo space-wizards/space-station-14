@@ -1,87 +1,74 @@
-﻿using Content.Shared.Atmos.Components;
-using Content.Shared.Atmos.Piping.Binary.Components;
+﻿using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.IdentityManagement;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
-namespace Content.Client.Atmos.UI
+namespace Content.Client.Atmos.UI;
+
+/// <summary>
+/// A BUI for gas canisters, wraps a <see cref="GasCanisterWindow"/>.
+/// </summary>
+/// <seealso cref="GasCanisterComponent"/>
+[UsedImplicitly]
+public sealed class GasCanisterBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
-    /// <summary>
-    /// Initializes a <see cref="GasCanisterWindow"/> and updates it when new server messages are received.
-    /// </summary>
-    [UsedImplicitly]
-    public sealed class GasCanisterBoundUserInterface : BoundUserInterface
+    [ViewVariables]
+    private GasCanisterWindow? _window;
+
+    protected override void Open()
     {
-        [ViewVariables]
-        private GasCanisterWindow? _window;
+        base.Open();
 
-        public GasCanisterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-        {
-        }
+        _window = this.CreateWindow<GasCanisterWindow>();
 
-        protected override void Open()
-        {
-            base.Open();
+        _window.ReleaseValveCloseButtonPressed += OnReleaseValveClosePressed;
+        _window.ReleaseValveOpenButtonPressed += OnReleaseValveOpenPressed;
+        _window.ReleasePressureSet += OnReleasePressureSet;
+        _window.TankEjectButtonPressed += OnTankEjectPressed;
+    }
 
-            _window = this.CreateWindow<GasCanisterWindow>();
+    private void OnTankEjectPressed()
+    {
+        SendPredictedMessage(new GasCanisterHoldingTankEjectMessage());
+    }
 
-            _window.ReleaseValveCloseButtonPressed += OnReleaseValveClosePressed;
-            _window.ReleaseValveOpenButtonPressed += OnReleaseValveOpenPressed;
-            _window.ReleasePressureSet += OnReleasePressureSet;
-            _window.TankEjectButtonPressed += OnTankEjectPressed;
-        }
+    private void OnReleasePressureSet(float value)
+    {
+        SendPredictedMessage(new GasCanisterChangeReleasePressureMessage(value));
+    }
 
-        private void OnTankEjectPressed()
-        {
-            SendPredictedMessage(new GasCanisterHoldingTankEjectMessage());
-        }
+    private void OnReleaseValveOpenPressed()
+    {
+        SendPredictedMessage(new GasCanisterChangeReleaseValveMessage(true));
+    }
 
-        private void OnReleasePressureSet(float value)
-        {
-            SendPredictedMessage(new GasCanisterChangeReleasePressureMessage(value));
-        }
+    private void OnReleaseValveClosePressed()
+    {
+        SendPredictedMessage(new GasCanisterChangeReleaseValveMessage(false));
+    }
 
-        private void OnReleaseValveOpenPressed()
-        {
-            SendPredictedMessage(new GasCanisterChangeReleaseValveMessage(true));
-        }
+    /// <summary>
+    /// Update the UI state based on server-sent info
+    /// </summary>
+    /// <param name="state"></param>
+    protected override void UpdateState(BoundUserInterfaceState state)
+    {
+        base.UpdateState(state);
+        if (_window == null || state is not GasCanisterBoundUserInterfaceState cast || !EntMan.TryGetComponent(Owner, out GasCanisterComponent? component))
+            return;
 
-        private void OnReleaseValveClosePressed()
-        {
-            SendPredictedMessage(new GasCanisterChangeReleaseValveMessage(false));
-        }
+        var canisterLabel = Identity.Name(Owner, EntMan);
+        var tankLabel = component.GasTankSlot.Item != null ? Identity.Name(component.GasTankSlot.Item.Value, EntMan) : null;
 
-        /// <summary>
-        /// Update the UI state based on server-sent info
-        /// </summary>
-        /// <param name="state"></param>
-        protected override void UpdateState(BoundUserInterfaceState state)
-        {
-            base.UpdateState(state);
-            if (_window == null || state is not GasCanisterBoundUserInterfaceState cast || !EntMan.TryGetComponent(Owner, out GasCanisterComponent? component))
-                return;
+        _window.SetCanisterLabel(canisterLabel);
+        _window.SetCanisterPressure(cast.CanisterPressure);
+        _window.SetPortStatus(cast.PortStatus);
 
-            var canisterLabel = Identity.Name(Owner, EntMan);
-            var tankLabel = component.GasTankSlot.Item != null ? Identity.Name(component.GasTankSlot.Item.Value, EntMan) : null;
-
-            _window.SetCanisterLabel(canisterLabel);
-            _window.SetCanisterPressure(cast.CanisterPressure);
-            _window.SetPortStatus(cast.PortStatus);
-
-            _window.SetTankLabel(tankLabel);
-            _window.SetTankPressure(cast.TankPressure);
-            _window.SetReleasePressureRange(component.MinReleasePressure, component.MaxReleasePressure);
-            _window.SetReleasePressure(component.ReleasePressure);
-            _window.SetReleaseValve(component.ReleaseValveOpen);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing) return;
-            _window?.Dispose();
-        }
+        _window.SetTankLabel(tankLabel);
+        _window.SetTankPressure(cast.TankPressure);
+        _window.SetReleasePressureRange(component.MinReleasePressure, component.MaxReleasePressure);
+        _window.SetReleasePressure(component.ReleasePressure);
+        _window.SetReleaseValve(component.ReleaseValveOpen);
     }
 }
