@@ -11,16 +11,7 @@ public sealed partial class UseDelaySystem : EntitySystem
 
     public const string DefaultId = "default";
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<UseDelayComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<UseDelayComponent, EntityUnpausedEvent>(OnUnpaused);
-        SubscribeLocalEvent<UseDelayComponent, ComponentGetState>(OnDelayGetState);
-        SubscribeLocalEvent<UseDelayComponent, ComponentHandleState>(OnDelayHandleState);
-    }
-
+    [SubscribeLocalEvent]
     private void OnDelayHandleState(Entity<UseDelayComponent> ent, ref ComponentHandleState args)
     {
         if (args.Current is not UseDelayComponentState state)
@@ -35,6 +26,7 @@ public sealed partial class UseDelaySystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnDelayGetState(Entity<UseDelayComponent> ent, ref ComponentGetState args)
     {
         args.State = new UseDelayComponentState()
@@ -43,6 +35,7 @@ public sealed partial class UseDelaySystem : EntitySystem
         };
     }
 
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<UseDelayComponent> ent, ref MapInitEvent args)
     {
         // Set default delay length from the prototype
@@ -50,6 +43,7 @@ public sealed partial class UseDelaySystem : EntitySystem
         SetLength((ent, ent.Comp), ent.Comp.Delay, DefaultId);
     }
 
+    [SubscribeLocalEvent]
     private void OnUnpaused(Entity<UseDelayComponent> ent, ref EntityUnpausedEvent args)
     {
         // We have to do this manually, since it's not just a single field.

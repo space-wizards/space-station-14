@@ -79,7 +79,6 @@ public abstract partial class SharedFlashSystem : EntitySystem
     private void OnFlashMeleeHit(Entity<FlashComponent> ent, ref MeleeHitEvent args)
     {
         if (!ent.Comp.FlashOnMelee ||
-            !args.IsHit ||
             !args.HitEntities.Any() ||
             !TryUseFlashItem(ent.AsNullable(), args.User))
         {

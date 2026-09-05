@@ -1,3 +1,4 @@
+using Content.Shared.Timing;
 using Content.Shared.Throwing;
 using Robust.Shared.GameStates;
 
@@ -55,6 +56,12 @@ public sealed partial class MeleeThrowOnHitComponent : Component
     [DataField, AutoNetworkedField]
     [ViewVariables(VVAccess.ReadOnly)]
     public bool HitWhileThrown;
+
+    /// <summary>
+    /// The <see cref="UseDelayInfo"/> ID we should check for.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public string UseDelayId = UseDelaySystem.DefaultId;
 }
 
 /// <summary>

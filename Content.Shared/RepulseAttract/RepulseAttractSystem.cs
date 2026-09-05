@@ -28,13 +28,13 @@ public sealed partial class RepulseAttractSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RepulseAttractComponent, MeleeHitEvent>(OnMeleeAttempt, before: [typeof(UseDelayOnMeleeHitSystem)], after: [typeof(SharedWieldableSystem)]);
+        SubscribeLocalEvent<RepulseAttractComponent, MeleeHitEvent>(OnMeleeAttempt, before: [typeof(UseDelaySystem)], after: [typeof(SharedWieldableSystem)]);
         SubscribeLocalEvent<RepulseAttractComponent, RepulseAttractActionEvent>(OnRepulseAttractAction);
     }
 
     private void OnMeleeAttempt(Entity<RepulseAttractComponent> ent, ref MeleeHitEvent args)
     {
-        if (_delay.IsDelayed(ent.Owner))
+        if (_delay.IsDelayed(ent.Owner, ent.Comp.UseDelayId))
             return;
 
         TryRepulseAttract(ent, args.User);
