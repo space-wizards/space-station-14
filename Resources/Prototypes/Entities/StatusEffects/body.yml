@@ -92,3 +92,11 @@
   components:
   - type: StaminaModifierStatusEffect
     modifier: 1.5
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectNightVision
+  name: Night Vision
+  components:
+    - type: NightVision
+      relayOverlay: True
