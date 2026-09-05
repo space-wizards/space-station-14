@@ -150,27 +150,20 @@ public sealed partial class IngestionSystem
 
     #region EdibleComponent
 
+    /// <summary>
+    /// Spawns trash for the edible entity, placing it in the same hand if held, otherwise spawning it nearby.
+    /// </summary>
+    /// <param name="entity">Edible entity that will spawn trash.</param>
+    /// <param name="user">Optional user that will attempt to pickup spawned trash.</param>
     public void SpawnTrash(Entity<EdibleComponent> entity, EntityUid? user = null)
     {
-        if (entity.Comp.Trash.Count == 0)
-            return;
-
-        var position = _transform.GetMapCoordinates(entity);
-        var trashes = entity.Comp.Trash;
-        var pickup = user != null && _hands.IsHolding(user.Value, entity, out _);
-
-        foreach (var trash in trashes)
+        var pickup = user is not null && _hands.TryDrop(user.Value, entity);
+        foreach (var trash in entity.Comp.Trash)
         {
-            var spawnedTrash = EntityManager.PredictedSpawn(trash, position);
+            var spawnedTrash = PredictedSpawnNextToOrDrop(trash, entity);
 
-            // If the user is holding the item
-            if (!pickup)
-                continue;
-
-            // Put the trash in the user's hand
-            // I am 100% confident we don't need this check but rider gets made at me if it's not here.
-            if (user != null)
-                _hands.TryPickupAnyHand(user.Value, spawnedTrash);
+            if (pickup)
+                _hands.TryPickupAnyHand(user!.Value, spawnedTrash);
         }
     }
 
