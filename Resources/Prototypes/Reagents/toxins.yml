@@ -869,7 +869,7 @@
   physicalDesc: reagent-physical-desc-glowing
   contrabandSeverity: Syndicate
   metabolisms:
-    Bloodstream:
+    Metabolites:
       metabolismRate: 2.5 # It's basically pure energy so it metabolizes very fast
       effects:
       - !type:HealthChange
