@@ -1,3 +1,6 @@
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using DrawDepthTag = Robust.Shared.GameObjects.DrawDepth;
+
 namespace Content.Client.Storage.Visualizers;
 
 [RegisterComponent]
@@ -35,12 +38,12 @@ public sealed partial class EntityStorageVisualsComponent : Component
     /// <summary>
     /// The drawdepth the object has when it's open
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>)), ViewVariables(VVAccess.ReadWrite)]
     public int? OpenDrawDepth;
 
     /// <summary>
     /// The drawdepth the object has when it's closed
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>)), ViewVariables(VVAccess.ReadWrite)]
     public int? ClosedDrawDepth;
 }
