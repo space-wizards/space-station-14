@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Prayer;
@@ -43,4 +44,10 @@ public sealed partial class PrayableComponent : Component
     [DataField("verbImage")]
     [ViewVariables(VVAccess.ReadOnly)]
     public SpriteSpecifier? VerbImage = new SpriteSpecifier.Texture(new ("/Textures/Interface/pray.svg.png"));
+}
+
+[Serializable, NetSerializable]
+public enum PrayUiKey : byte
+{
+    Key,
 }
