@@ -60,3 +60,4 @@ changeling-not-enough-chemicals = We don't have enough Chemicals.
 
 # other
 changeling-paused-map-name = Changeling identity storage map
+changeling-cocoon-success = We encase {THE($target)} in a fleshy tomb.

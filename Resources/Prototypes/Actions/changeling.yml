@@ -432,3 +432,41 @@
   - type: Tag
     tags:
     - FakeMindShieldChangeling # used to distinguish the changeling's toggle mindshield action from the implant's
+
+- type: entity
+  parent: BaseDoAfterAction
+  id: ActionChangelingEntomb
+  name: Flesh tomb
+  description: "Preserve a body in a fragile cocoon made of flesh, which slowly harvests their life for DNA. \n\nRequires 50 Chemicals."
+  components:
+  - type: Action
+    useDelay: 50
+    raiseOnAction: true
+    itemIconStyle: BigAction
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: blind_sting
+  - type: TargetAction
+    interactOnMiss: false
+  - type: ActionRequireSatiation
+    satiation: Chemicals
+    amount: 50
+    failReason: changeling-not-enough-chemicals
+  - type: PopupOnAction
+    popupType: MediumCaution
+    selfMessage: changeling-cocoon-success
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - HumanoidProfile
+      - MobState
+    event: !type:EntityEffectActionEvent
+  - type: EntityEffectAction
+    effects:
+    - !type:TrapInContainer
+      conditions:
+      - !type:MobStateCondition
+        mobstate: Dead
+      entity: ChangelingFleshCocoon
+      container: storage
