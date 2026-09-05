@@ -27,7 +27,7 @@ public abstract partial class GameTicker
     [ViewVariables] protected readonly List<GameRule> AllRoundGameRules = [];
 
     [SubscribeLocalEvent]
-    private void OnGameRuleAdded(Entity<GameRuleComponent> rule, ref ComponentInit args)
+    private void OnGameRuleAdded(Entity<GameRuleComponent> rule, ref MapInitEvent args)
     {
         var ev = new GameRuleAddedEvent(rule);
         RaiseLocalEvent(rule, ref ev, true);
