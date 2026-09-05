@@ -128,10 +128,7 @@ public abstract partial class GameTicker
     public bool StartGameRule([ForbidLiteral] EntProtoId ruleId, [NotNullWhen(true)] out Entity<GameRuleComponent>? ruleEntity)
     {
         ruleEntity = AddGameRule(ruleId);
-        if (ruleEntity == null)
-            return false;
-
-        return StartGameRule(ruleEntity.Value.AsNullable()); // Worst shit I've ever seen in C#
+        return ruleEntity != null && StartGameRule(ruleEntity.Value.AsNullable()); // Worst shit I've ever seen in C#
     }
 
     /// <summary>
