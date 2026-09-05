@@ -205,7 +205,7 @@ public abstract partial class GameTicker
         if (!Resolve(rule, ref rule.Comp, false))
             return false;
 
-        RemComp(rule, rule.Comp);
+        RemCompDeferred(rule, rule.Comp);
 
         Log.Info($"Ended game rule {ToPrettyString(rule)}");
         Admin.Add(LogType.EventStopped, $"Ended game rule {ToPrettyString(rule)}");
