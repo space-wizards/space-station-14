@@ -104,7 +104,7 @@ public sealed partial class PuddleOverlay : Overlay
 
                 var screenCenter = _eyeManager.WorldToScreen(Vector2.Transform(centre, matrix));
 
-                drawHandle.DrawString(_font, screenCenter, debugOverlayData.CurrentVolume.ToString(), Color.White);
+                drawHandle.DrawString(_font, screenCenter, debugOverlayData.CurrentVolume.ToString(), 1, Color.White, TextOutline.Default);
             }
         }
     }
