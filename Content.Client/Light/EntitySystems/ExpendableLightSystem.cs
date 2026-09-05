@@ -1,28 +1,19 @@
 using Content.Client.Light.Components;
 using Content.Shared.Light.Components;
 using Robust.Client.GameObjects;
-using Robust.Shared.Audio.Systems;
 
 namespace Content.Client.Light.EntitySystems;
 
-public sealed partial class ExpendableLightSystem : VisualizerSystem<ExpendableLightComponent>
+public sealed partial class ExpendableLightVisualsSystem : VisualizerSystem<ExpendableLightComponent>
 {
     [Dependency] private PointLightSystem _pointLightSystem = default!;
-    [Dependency] private SharedAudioSystem _audioSystem = default!;
     [Dependency] private LightBehaviorSystem _lightBehavior = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ExpendableLightComponent, ComponentShutdown>(OnLightShutdown);
     }
-
-    private void OnLightShutdown(EntityUid uid, ExpendableLightComponent component, ComponentShutdown args)
-    {
-        component.PlayingStream = _audioSystem.Stop(component.PlayingStream);
-    }
-
     protected override void OnAppearanceChange(EntityUid uid, ExpendableLightComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
@@ -46,45 +37,48 @@ public sealed partial class ExpendableLightSystem : VisualizerSystem<ExpendableL
         if (!AppearanceSystem.TryGetData<ExpendableLightState>(uid, ExpendableLightVisuals.State, out var state, args.Component))
             return;
 
+        var sprite = (uid, args.Sprite);
         switch (state)
         {
             case ExpendableLightState.Lit:
-                _audioSystem.Stop(comp.PlayingStream);
-                comp.PlayingStream = _audioSystem.PlayPvs(
-                    comp.LoopedSound, uid)?.Entity;
-
-                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), ExpendableLightVisualLayers.Overlay, out var layerIdx, true))
+                if (SpriteSystem.LayerMapTryGet(sprite, ExpendableLightVisualLayers.Overlay, out var layerIdx, true))
                 {
                     if (!string.IsNullOrWhiteSpace(comp.IconStateLit))
-                        SpriteSystem.LayerSetRsiState((uid, args.Sprite), layerIdx, comp.IconStateLit);
+                        SpriteSystem.LayerSetRsiState(sprite, layerIdx, comp.IconStateLit);
                     if (!string.IsNullOrWhiteSpace(comp.SpriteShaderLit))
                         args.Sprite.LayerSetShader(layerIdx, comp.SpriteShaderLit);
                     else
                         args.Sprite.LayerSetShader(layerIdx, null, null);
                     if (comp.GlowColorLit.HasValue)
-                        SpriteSystem.LayerSetColor((uid, args.Sprite), layerIdx, comp.GlowColorLit.Value);
-                    SpriteSystem.LayerSetVisible((uid, args.Sprite), layerIdx, true);
+                        SpriteSystem.LayerSetColor(sprite, layerIdx, comp.GlowColorLit.Value);
+                    SpriteSystem.LayerSetVisible(sprite, layerIdx, true);
                 }
 
                 if (comp.GlowColorLit.HasValue)
-                    SpriteSystem.LayerSetColor((uid, args.Sprite), ExpendableLightVisualLayers.Glow, comp.GlowColorLit.Value);
-                SpriteSystem.LayerSetVisible((uid, args.Sprite), ExpendableLightVisualLayers.Glow, true);
-
+                    SpriteSystem.LayerSetColor(sprite, ExpendableLightVisualLayers.Glow, comp.GlowColorLit.Value);
+                SpriteSystem.LayerSetVisible(sprite, ExpendableLightVisualLayers.Glow, true);
                 break;
+
             case ExpendableLightState.Dead:
-                comp.PlayingStream = _audioSystem.Stop(comp.PlayingStream);
-                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), ExpendableLightVisualLayers.Overlay, out layerIdx, true))
+                if (SpriteSystem.LayerMapTryGet(sprite, ExpendableLightVisualLayers.Overlay, out layerIdx, true))
                 {
                     if (!string.IsNullOrWhiteSpace(comp.IconStateSpent))
-                        SpriteSystem.LayerSetRsiState((uid, args.Sprite), layerIdx, comp.IconStateSpent);
+                        SpriteSystem.LayerSetRsiState(sprite, layerIdx, comp.IconStateSpent);
                     if (!string.IsNullOrWhiteSpace(comp.SpriteShaderSpent))
                         args.Sprite.LayerSetShader(layerIdx, comp.SpriteShaderSpent);
                     else
                         args.Sprite.LayerSetShader(layerIdx, null, null);
                 }
 
-                SpriteSystem.LayerSetVisible((uid, args.Sprite), ExpendableLightVisualLayers.Glow, false);
+                SpriteSystem.LayerSetVisible(sprite, ExpendableLightVisualLayers.Glow, false);
                 break;
         }
     }
+}
+
+public enum ExpendableLightVisualLayers : byte
+{
+    Base = 0,
+    Glow = 1,
+    Overlay = 2,
 }
