@@ -1,6 +1,5 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
-using Content.Server.Jittering;
 using Content.Server.Mind;
 using Content.Server.Stunnable;
 using Content.Shared.Anomaly;
@@ -11,6 +10,7 @@ using Content.Shared.Database;
 using Content.Shared.Gibbing;
 using Content.Shared.Mobs;
 using Content.Shared.Popups;
+using Content.Shared.StatusEffectNew;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Events;
@@ -27,8 +27,8 @@ public sealed partial class InnerBodyAnomalySystem : SharedInnerBodyAnomalySyste
     [Dependency] private IChatManager _chat = default!;
     [Dependency] private ISharedPlayerManager _player = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private JitteringSystem _jitter = default!;
     [Dependency] private MindSystem _mind = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private StunSystem _stun = default!;
 
@@ -93,8 +93,9 @@ public sealed partial class InnerBodyAnomalySystem : SharedInnerBodyAnomalySyste
 
         EntityManager.AddComponents(ent, injectedAnom.Components);
 
-        _stun.TryUpdateParalyzeDuration(ent, TimeSpan.FromSeconds(ent.Comp.StunDuration));
-        _jitter.DoJitter(ent, TimeSpan.FromSeconds(ent.Comp.StunDuration), true);
+        var duration = TimeSpan.FromSeconds(ent.Comp.StunDuration);
+        _stun.TryUpdateParalyzeDuration(ent, duration);
+        _statusEffects.TryUpdateStatusEffectDuration(ent, ent.Comp.StunnedStatus, duration);
 
         if (ent.Comp.StartSound is not null)
             _audio.PlayPvs(ent.Comp.StartSound, ent);
@@ -122,8 +123,9 @@ public sealed partial class InnerBodyAnomalySystem : SharedInnerBodyAnomalySyste
 
     private void OnAnomalyPulse(Entity<InnerBodyAnomalyComponent> ent, ref AnomalyPulseEvent args)
     {
-        _stun.TryUpdateParalyzeDuration(ent, TimeSpan.FromSeconds(ent.Comp.StunDuration / 2 * args.Severity));
-        _jitter.DoJitter(ent, TimeSpan.FromSeconds(ent.Comp.StunDuration / 2 * args.Severity), true);
+        var duration = TimeSpan.FromSeconds(ent.Comp.StunDuration / 2 * args.Severity);
+        _stun.TryUpdateParalyzeDuration(ent, duration);
+        _statusEffects.TryUpdateStatusEffectDuration(ent, ent.Comp.StunnedStatus, duration);
     }
 
     private void OnAnomalySupercritical(Entity<InnerBodyAnomalyComponent> ent, ref AnomalySupercriticalEvent args)
