@@ -60,6 +60,43 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
         return true;
     }
 
+    /// <summary>
+    /// Get all entities with <see cref="TComponent"/> that are on the station. Ignore entities outside the station.
+    /// </summary>
+    /// <param name="checkIfAnchored">Whether to only get anchored entities.
+    /// Good check for air vents, bad for containers.</param>
+    /// <returns>All matching entities.</returns>
+    protected HashSet<EntityUid> GetEntitiesWithComponentOnStation<TComponent>(bool checkIfAnchored)
+        where TComponent : IComponent
+    {
+        HashSet<EntityUid> entities = [];
+
+        if (!TryGetRandomStation(out var station))
+        {
+            return entities;
+        }
+
+        var grid = StationSystem.GetLargestGrid(station.Value);
+
+        var locations = EntityQueryEnumerator<TComponent, TransformComponent>();
+        while (locations.MoveNext(out var uid, out _, out var transform))
+        {
+            if (checkIfAnchored && !transform.Anchored)
+            {
+                continue;
+            }
+
+            if (transform.GridUid != grid)
+            {
+                continue;
+            }
+
+            entities.Add(uid);
+        }
+
+        return entities;
+    }
+
     protected bool TryFindRandomTile(out Vector2i tile,
         [NotNullWhen(true)] out EntityUid? targetStation,
         out EntityUid targetGrid,

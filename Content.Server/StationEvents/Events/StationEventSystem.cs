@@ -19,7 +19,6 @@ public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T 
     [Dependency] protected IAdminLogManager AdminLogManager = default!;
     [Dependency] protected ChatSystem ChatSystem = default!;
     [Dependency] protected SharedAudioSystem Audio = default!;
-    [Dependency] protected StationSystem StationSystem = default!;
 
     protected ISawmill Sawmill = default!;
 
