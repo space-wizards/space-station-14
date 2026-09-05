@@ -57,7 +57,7 @@ highlights-stationai = Station AI, Silicon, "AI", "sAI", "Law", "Laws", "Lawset"
 
 # Civilian
 highlights-passenger = Passenger, Greyshirt, Grayshirt, Greytider, Graytider, "Tider", "Tide"
-highlights-visitor = Visitor"
+highlights-visitor = Visitor
 
 # Central Command
 highlights-centralcommandofficial = Central Command Official, "Official", "Central Command", CentCom, CentComm, "CC"
