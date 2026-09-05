@@ -164,15 +164,21 @@ public sealed partial class OptionsTabControlRow : Control
     /// <param name="options">
     /// The set of options that will be shown in the drop-down. Items are ordered as provided.
     /// </param>
+    /// <param name="enablePreview">
+    /// Whether to enable preview of option values.
+    /// With preview enabled, when user hovers over options,
+    /// the CVar is temporarily set to that option value, but without saving.
+    /// </param>
     /// <typeparam name="T">The type of the CVar being controlled.</typeparam>
     /// <returns>The option instance backing the added option.</returns>
     public OptionDropDownCVar<T> AddOptionDropDown<T>(
         CVarDef<T> cVar,
         OptionDropDown dropDown,
-        IReadOnlyCollection<OptionDropDownCVar<T>.ValueOption> options)
+        IReadOnlyCollection<OptionDropDownCVar<T>.ValueOption> options,
+        bool enablePreview = false)
         where T : notnull
     {
-        return AddOption(new OptionDropDownCVar<T>(this, _cfg, cVar, dropDown, options));
+        return AddOption(new OptionDropDownCVar<T>(this, _cfg, cVar, dropDown, options, enablePreview));
     }
 
     /// <summary>
@@ -333,8 +339,8 @@ public abstract class BaseOptionCVar<TValue> : BaseOption
     /// </remarks>
     public event Action<TValue>? ImmediateValueChanged;
 
-    private readonly IConfigurationManager _cfg;
-    private readonly CVarDef<TValue> _cVar;
+    protected readonly IConfigurationManager Cfg;
+    protected readonly CVarDef<TValue> CVar;
 
     /// <summary>
     /// Sets and gets the actual CVar value to/from the frontend UI state or control.
@@ -354,33 +360,33 @@ public abstract class BaseOptionCVar<TValue> : BaseOption
         CVarDef<TValue> cVar)
         : base(controller)
     {
-        _cfg = cfg;
-        _cVar = cVar;
+        Cfg = cfg;
+        CVar = cVar;
     }
 
     public override void LoadValue()
     {
-        Value = _cfg.GetCVar(_cVar);
+        Value = Cfg.GetCVar(CVar);
     }
 
     public override void SaveValue()
     {
-        _cfg.SetCVar(_cVar, Value);
+        Cfg.SetCVar(CVar, Value);
     }
 
     public override void ResetToDefault()
     {
-        Value = _cVar.DefaultValue;
+        Value = CVar.DefaultValue;
     }
 
     public override bool IsModified()
     {
-        return !IsValueEqual(Value, _cfg.GetCVar(_cVar));
+        return !IsValueEqual(Value, Cfg.GetCVar(CVar));
     }
 
     public override bool IsModifiedFromDefault()
     {
-        return !IsValueEqual(Value, _cVar.DefaultValue);
+        return !IsValueEqual(Value, CVar.DefaultValue);
     }
 
     protected virtual bool IsValueEqual(TValue a, TValue b)
@@ -676,12 +682,18 @@ public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
     /// <param name="cVar">The CVar that is being controlled by this option.</param>
     /// <param name="dropDown">The UI control for the option.</param>
     /// <param name="options">The list of options shown to the user.</param>
+    /// <param name="enablePreview">
+    /// Whether to enable preview of option values.
+    /// With preview enabled, when user hovers over options,
+    /// the CVar is temporarily set to that option value, but without saving.
+    /// </param>
     public OptionDropDownCVar(
         OptionsTabControlRow controller,
         IConfigurationManager cfg,
         CVarDef<T> cVar,
         OptionDropDown dropDown,
-        IReadOnlyCollection<ValueOption> options) : base(controller, cfg, cVar)
+        IReadOnlyCollection<ValueOption> options,
+        bool enablePreview) : base(controller, cfg, cVar)
     {
         if (options.Count == 0)
             throw new ArgumentException("Need at least one option!");
@@ -703,11 +715,64 @@ public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
             i += 1;
         }
 
+        // option ID that was selected at the moment when popup opened
+        var selectedOptionIdBeforePreview = 0;
+
         dropDown.Button.OnItemSelected += args =>
         {
+            if (enablePreview)
+            {
+                // reset cvar back to the initial value after it was likely changed in preview.
+                var idx = button.GetIdx(selectedOptionIdBeforePreview);
+                var meta = button.GetItemMetadata(idx);
+                cfg.SetCVar(cVar.Name, meta!);
+            }
+
             dropDown.Button.SelectId(args.Id);
             ValueChanged();
         };
+
+        if (enablePreview)
+        {
+            button.OnPopupToggled += args =>
+            {
+                if (args.Toggle)
+                {
+                    // when popup opens, remember selected value
+                    selectedOptionIdBeforePreview = dropDown.Button.SelectedId;
+                }
+                else
+                {
+                    if (selectedOptionIdBeforePreview != dropDown.Button.SelectedId)
+                    {
+                        // if user selected a value skip cvar reset
+                        return;
+                    }
+
+                    // reset cvar back to the initial value after the popup closes without user selecting a new value
+                    var idx = button.GetIdx(selectedOptionIdBeforePreview);
+                    var meta = button.GetItemMetadata(idx);
+                    cfg.SetCVar(cVar.Name, meta!);
+                }
+            };
+
+            // last item id that was hovered over
+            var lastHoveredOptionId = 0;
+            button.OnItemHover += args =>
+            {
+                // skip expensive SetCVar if not dirty
+                if (args.Id == lastHoveredOptionId)
+                {
+                    return;
+                }
+
+                // the "preview" happens here - temporarily change the cvar without saving
+                var idx = button.GetIdx(args.Id);
+                var meta = button.GetItemMetadata(idx);
+                cfg.SetCVar(cVar.Name, meta!);
+                lastHoveredOptionId = args.Id;
+            };
+        }
     }
 
     private int FindValueId(T value)
