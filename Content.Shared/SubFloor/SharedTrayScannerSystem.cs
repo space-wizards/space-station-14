@@ -3,6 +3,7 @@ using Content.Shared.Eye;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
@@ -19,14 +20,14 @@ public abstract partial class SharedTrayScannerSystem : EntitySystem
     [Dependency] private SharedEyeSystem _eye = default!;
     [Dependency] private UseDelaySystem _delay = default!;
     [Dependency] private INetManager _netMan = default!;
+    [Dependency] private ItemToggleSystem _itemToggle = default!;
 
     public const float SubfloorRevealAlpha = 0.8f;
 
     public override void Initialize()
     {
         base.Initialize();
-
-        SubscribeLocalEvent<TrayScannerComponent, ActivateInWorldEvent>(OnTrayScannerActivate);
+        
         SubscribeLocalEvent<TrayScannerComponent, GetVerbsEvent<AlternativeVerb>>(OnAddSwitchModeVerb);
         SubscribeLocalEvent<TrayScannerComponent, GotEquippedHandEvent>(OnTrayHandEquipped);
         SubscribeLocalEvent<TrayScannerComponent, GotUnequippedHandEvent>(OnTrayHandUnequipped);
@@ -37,7 +38,7 @@ public abstract partial class SharedTrayScannerSystem : EntitySystem
 
     private void OnAddSwitchModeVerb(Entity<TrayScannerComponent> scanner, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || !args.Using.HasValue || !scanner.Comp.Enabled)
+        if (!args.CanAccess || !args.CanInteract || !args.Using.HasValue || !_itemToggle.IsActivated(scanner.Owner))
             return;
 
         var user = args.User;
@@ -134,21 +135,5 @@ public abstract partial class SharedTrayScannerSystem : EntitySystem
     private void OnTrayEquipped(Entity<TrayScannerComponent> ent, ref GotEquippedEvent args)
     {
         OnEquip(args.EquipTarget);
-    }
-
-    private void OnTrayScannerActivate(Entity<TrayScannerComponent> ent, ref ActivateInWorldEvent args)
-    {
-        if (args.Handled || !args.Complex)
-            return;
-
-        ent.Comp.Enabled = !ent.Comp.Enabled;
-        Dirty(ent);
-
-        if (TryComp<AppearanceComponent>(ent, out var appearance))
-        {
-            _appearance.SetData(ent, TrayScannerVisual.Visual, ent.Comp.Enabled ? TrayScannerVisual.On : TrayScannerVisual.Off, appearance);
-        }
-
-        args.Handled = true;
     }
 }
