@@ -100,6 +100,7 @@
   - JobIconLibrarian
   - JobIconReporter
   - JobIconServiceWorker
+  - JobIconTramDriver
   - JobIconBoxer
   - JobIconZookeeper
 
