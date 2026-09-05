@@ -504,8 +504,8 @@ namespace Content.Server.GameTicking
 
             // AAAAAAAAAAAAA
             // This should be an error, if it didn't cause tests to start erroring when they delete a player.
-            // TODO: Make sure this doesn't fail tests, but deleting a player should be handled properly tbqh :P
-            Log.Error("Found no observer spawn points!");
+            // TODO: This still fails tests waow
+            Log.Warning("Found no observer spawn points!");
             return EntityCoordinates.Invalid;
         }
 
