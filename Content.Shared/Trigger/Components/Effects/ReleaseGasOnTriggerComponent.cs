@@ -65,6 +65,18 @@ public sealed partial class ReleaseGasOnTriggerComponent : BaseXOnTriggerCompone
     /// <remarks>Set when the grenade is activated.</remarks>
     [DataField(readOnly: true)]
     public float StartingTotalMoles;
+
+
+    /// <summary>
+    /// Whether this entity should keep trying to emit gas until it runs out of gas.
+    /// It will only actually release gas when the current air pressure is below the pressure limit (if defined).
+    /// </summary>
+    /// <remarks>
+    /// Does nothing without a pressure limit. If undefined on the prototype,
+    /// it will cease all emissions as soon as the pressure limit is reached.
+    /// </remarks>
+    [DataField]
+    public bool ContinueUntilEmpty = false;
 }
 
 /// <summary>
