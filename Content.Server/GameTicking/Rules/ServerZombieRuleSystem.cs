@@ -39,7 +39,8 @@ public sealed partial class ServerZombieRuleSystem : ZombieRuleSystem
             {
                 _chat.DispatchStationAnnouncement(station, Loc.GetString("zombie-shuttle-call"), colorOverride: Color.Crimson);
             }
-            _roundEnd.RequestRoundEnd(checkCooldown: false);
+
+            _roundEnd.DoRoundEndBehavior(zombieRuleComponent.ZombieRoundEndBehavior, zombieRuleComponent.ZombieEvacShuttleTime);
         }
 
         // we include dead for this count because we don't want to end the round
