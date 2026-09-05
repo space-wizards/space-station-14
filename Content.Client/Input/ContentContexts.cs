@@ -80,7 +80,6 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.SmartEquipSuitStorage);
             human.AddFunction(ContentKeyFunctions.OpenBackpack);
             human.AddFunction(ContentKeyFunctions.OpenBelt);
-            human.AddFunction(ContentKeyFunctions.MouseMiddle);
             human.AddFunction(ContentKeyFunctions.RotateObjectClockwise);
             human.AddFunction(ContentKeyFunctions.RotateObjectCounterclockwise);
             human.AddFunction(ContentKeyFunctions.FlipObject);
@@ -117,6 +116,27 @@ namespace Content.Client.Input
             aghost.AddFunction(ContentKeyFunctions.TryPullObject);
             aghost.AddFunction(ContentKeyFunctions.MovePulledObject);
             aghost.AddFunction(ContentKeyFunctions.ReleasePulledObject);
+            aghost.AddFunction(ContentKeyFunctions.OpenCharacterMenu);
+            aghost.AddFunction(ContentKeyFunctions.OpenCraftingMenu);
+            aghost.AddFunction(ContentKeyFunctions.OpenInventoryMenu);
+            aghost.AddFunction(ContentKeyFunctions.SmartEquipBackpack);
+            aghost.AddFunction(ContentKeyFunctions.SmartEquipBelt);
+            aghost.AddFunction(ContentKeyFunctions.SmartEquipPocket1);
+            aghost.AddFunction(ContentKeyFunctions.SmartEquipPocket2);
+            aghost.AddFunction(ContentKeyFunctions.SmartEquipSuitStorage);
+            aghost.AddFunction(ContentKeyFunctions.OpenBackpack);
+            aghost.AddFunction(ContentKeyFunctions.OpenBelt);
+            aghost.AddFunction(ContentKeyFunctions.RotateObjectClockwise);
+            aghost.AddFunction(ContentKeyFunctions.RotateObjectCounterclockwise);
+            aghost.AddFunction(ContentKeyFunctions.FlipObject);
+            aghost.AddFunction(ContentKeyFunctions.ArcadeUp);
+            aghost.AddFunction(ContentKeyFunctions.ArcadeDown);
+            aghost.AddFunction(ContentKeyFunctions.ArcadeLeft);
+            aghost.AddFunction(ContentKeyFunctions.ArcadeRight);
+            aghost.AddFunction(ContentKeyFunctions.Arcade1);
+            aghost.AddFunction(ContentKeyFunctions.Arcade2);
+            aghost.AddFunction(ContentKeyFunctions.Arcade3);
+
 
             var ghost = contexts.New("ghost", "human");
             ghost.AddFunction(EngineKeyFunctions.MoveUp);
