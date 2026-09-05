@@ -53,7 +53,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
             return;
 
         var patient = entity.Comp.BodyContainer.ContainedEntity;
-        var gasMix = _gasAnalyzerSystem.GenerateGasMixEntry("Cryo pod", air.Air);
+        var gasMix = _gasAnalyzerSystem.GenerateGasMixEntry("Cryo pod", air.UiSample ?? air.Air);
         var (beakerCapacity, beaker) = GetBeakerInfo(entity);
         var injecting = GetInjectingReagents(entity);
         var health = _healthAnalyzerSystem.GetHealthAnalyzerUiState(patient);
@@ -81,6 +81,8 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         {
             _gasCanisterSystem.MixContainerWithPipeNet(cryoPodAir.Air, net.Air);
         }
+
+        cryoPodAir.UiSample = cryoPodAir.Air.Clone();
     }
 
     private void OnGasAnalyzed(Entity<CryoPodComponent> entity, ref GasAnalyzerScanEvent args)
