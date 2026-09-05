@@ -9,18 +9,31 @@ public sealed partial class BorgModuleControl : PanelContainer
 {
     public Action? RemoveButtonPressed;
 
-    public BorgModuleControl(EntityUid entity, IEntityManager entityManager, bool canRemove)
+    public BorgModuleControl(EntityUid entity, IEntityManager entityManager, bool canRemove, string? cannotRemoveReason)
     {
         RobustXamlLoader.Load(this);
 
         ModuleView.SetEntity(entity);
         ModuleName.Text = entityManager.GetComponent<MetaDataComponent>(entity).EntityName;
-        RemoveButton.TexturePath = "/Textures/Interface/Nano/cross.svg.png";
         RemoveButton.OnPressed += _ =>
         {
             RemoveButtonPressed?.Invoke();
         };
-        RemoveButton.Visible = canRemove;
+
+        if (!canRemove)
+        {
+            RemoveButton.Disabled = true;
+            if (cannotRemoveReason != null)
+            {
+                // We have reasons to show to the user as to why it can't be removed.
+                RemoveButton.ToolTip = cannotRemoveReason;
+            }
+            else
+            {
+                // We have no explanation for why it can't be removed, so just hide the button.
+                RemoveButton.Visible = false;
+            }
+        }
     }
 }
 
