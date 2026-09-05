@@ -31,6 +31,8 @@ public abstract partial class SharedCryostorageSystem : EntitySystem
 
     protected bool CryoSleepRejoiningEnabled;
 
+    public const string ItemStoredSlotname = "ItemsStoredInside";
+
     /// <inheritdoc/>
     public override void Initialize()
     {
