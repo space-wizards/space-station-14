@@ -15,6 +15,12 @@ namespace Content.Server.Spawners.EntitySystems;
 // TODO: This whole system is a mess. A lot of this should be marked obsolete.
 // TODO: It should probably use interfaces with entity tables *if* more than one component is needed.
 // TODO: Remove the TransformSystem Dependency when engine SpawnAtPosition EntityCoordinates override is fixed.
+/// <summary>
+/// A system for spawning random or conditional entities, either on initializing spawner entities, or on adding GameRules.
+/// </summary>
+/// <seealso cref="ConditionalSpawnerComponent"/>
+/// <seealso cref="RandomSpawnerComponent"/>
+/// <seealso cref="EntityTableSpawnerComponent"/>
 public sealed partial class ConditionalSpawnerSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _robustRandom = default!;
@@ -113,7 +119,7 @@ public sealed partial class ConditionalSpawnerSystem : EntitySystem
         var coordinates = GetRandomOffset(coords, component.Offset);
         var rotation = _xform.GetWorldRotation(xform);
 
-        Spawn(_robustRandom.Pick(component.Prototypes), coordinates, rotation: rotation);
+        Spawn(proto, coordinates, rotation: rotation);
     }
 
     private void Spawn(Entity<EntityTableSpawnerComponent> ent)
