@@ -1,3 +1,4 @@
+using Content.Client.GameTicking;
 using Content.Shared.GameTicking;
 using Content.Shared.Input;
 using JetBrains.Annotations;
@@ -10,7 +11,7 @@ namespace Content.Client.RoundEnd;
 
 [UsedImplicitly]
 public sealed partial class RoundEndSummaryUIController : UIController,
-    IOnSystemLoaded<GameTicker>
+    IOnSystemLoaded<ClientGameTicker>
 {
     [Dependency] private IInputManager _input = default!;
 
@@ -42,7 +43,7 @@ public sealed partial class RoundEndSummaryUIController : UIController,
             message.RoundDuration, message.RoundId, message.AllPlayersEndInfo);
     }
 
-    public void OnSystemLoaded(GameTicker system)
+    public void OnSystemLoaded(ClientGameTicker system)
     {
         _input.SetInputCommand(ContentKeyFunctions.ToggleRoundEndSummaryWindow,
             InputCmdHandler.FromDelegate(ToggleScoreboardWindow));
