@@ -69,7 +69,7 @@ public sealed class BankCommand : ToolshedCommand
     public IEnumerable<int> Amount([PipedArgument] IEnumerable<BankAccount> @ref)
     {
         _cargo ??= GetSys<CargoSystem>();
-        return @ref.Select(bankAccount => (success: _cargo.TryGetAccount(bankAccount.Station, bankAccount.Account, out var money), money))
+        return @ref.Select(bankAccount => (success: _cargo.TryGetAccountBalance(bankAccount.Station, bankAccount.Account, out var money), money))
         .Where(result => result.success)
         .Select(result => result.money);
     }
@@ -83,7 +83,7 @@ public readonly record struct BankAccount(
 {
     public override string ToString()
     {
-        if (!Cargo.TryGetAccount(Station, Account, out var money))
+        if (!Cargo.TryGetAccountBalance(Station, Account, out var money))
         {
             return $"{EntityManager.ToPrettyString(Station)} Account {Account} : (not a account)";
         }
