@@ -42,11 +42,7 @@
                             <Label Name="TurretStatusHeader" Text="{Loc 'turret-controls-window-turret-status-label'}" StyleClasses="ConsoleSubHeading"
                                    HorizontalAlignment="Center" />
 
-                            <PanelContainer StyleClasses="LowDivider" HorizontalExpand="True" Margin="-5 5 -5 5" SetHeight="2">
-                                <PanelContainer.PanelOverride>
-                                    <gfx:StyleBoxFlat BackgroundColor="#FFFFFF" />
-                                </PanelContainer.PanelOverride>
-                            </PanelContainer>
+                            <controls:Separator StyleClasses="LowDivider" HorizontalExpand="True" Margin="-5 5 -5 5" SetHeight="2" MinWidth="2" ColorOverride="#FFFFFF" />
 
                             <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
                                 <Label Name="NoLinkedTurretsText" Text="{Loc 'turret-controls-window-no-turrets'}" StyleClasses="ConsoleText"
@@ -71,11 +67,7 @@
                             <Label Text="{Loc 'turret-controls-window-armament-controls-label'}" StyleClasses="ConsoleSubHeading"
                                    HorizontalAlignment="Center" Margin="0 5 0 5" />
 
-                            <PanelContainer StyleClasses="LowDivider" HorizontalExpand="True" SetHeight="2">
-                                <PanelContainer.PanelOverride>
-                                    <gfx:StyleBoxFlat BackgroundColor="#FFFFFF" />
-                                </PanelContainer.PanelOverride>
-                            </PanelContainer>
+                            <controls:Separator StyleClasses="LowDivider" HorizontalExpand="True" SetHeight="2" MinWidth="2" ColorOverride="#FFFFFF" />
 
                             <BoxContainer Orientation="Horizontal" Margin="10 10 10 10">
                                 <controls:MonotoneButton Name="SafeButton" Text="{Loc 'turret-controls-window-safe'}"
@@ -99,11 +91,7 @@
                             <Label Text="{Loc 'turret-controls-window-targeting-controls-label'}" StyleClasses="ConsoleSubHeading"
                                    HorizontalAlignment="Center" Margin="0 5 0 5" />
 
-                            <PanelContainer StyleClasses="LowDivider" HorizontalExpand="True" SetHeight="2">
-                                <PanelContainer.PanelOverride>
-                                    <gfx:StyleBoxFlat BackgroundColor="#FFFFFF" />
-                                </PanelContainer.PanelOverride>
-                            </PanelContainer>
+                            <controls:Separator StyleClasses="LowDivider" HorizontalExpand="True" SetHeight="2" MinWidth="2" ColorOverride="#FFFFFF" />
 
                             <!-- Access configuration -->
                             <access:GroupedAccessLevelChecklist Name="AccessConfiguration"/>

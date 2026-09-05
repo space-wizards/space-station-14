@@ -1,5 +1,6 @@
 <DefaultWindow
     xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     Title="{Loc 'spacevillain-menu-title'}"
     MinWidth="540"
     MinHeight="225">
@@ -33,8 +34,8 @@
                 </BoxContainer>
             </BoxContainer>
             <!-- Divider -->
-            <PanelContainer
-                StyleClasses="LowDivider"/>
+            <controls:Separator
+                StyleClasses="LowDivider" Orientation="Vertical" MinHeight="2" />
             <!-- Villain -->
             <BoxContainer
                 Orientation="Vertical"

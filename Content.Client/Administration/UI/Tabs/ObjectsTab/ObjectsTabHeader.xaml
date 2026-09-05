@@ -10,7 +10,7 @@
                ClipText="True"
                Text="{Loc object-tab-object-name}"
                MouseFilter="Pass"/>
-        <controls:VSeparator/>
+        <controls:Separator Orientation="Vertical" MinHeight="5" />
         <Label Name="EntityIDLabel"
                SizeFlagsStretchRatio="5"
                HorizontalExpand="True"

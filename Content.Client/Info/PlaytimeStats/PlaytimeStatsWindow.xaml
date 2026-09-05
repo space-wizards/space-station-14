@@ -16,7 +16,7 @@
                 <BoxContainer Orientation="Vertical" Name="RolesPlaytimeList">
                     <!-- Table Header -->
                     <pt:PlaytimeStatsHeader Name="ListHeader" />
-                    <ui:HSeparator />
+                    <ui:Separator MinWidth="2" />
                 </BoxContainer>
             </ScrollContainer>
         </BoxContainer>

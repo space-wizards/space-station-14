@@ -25,7 +25,7 @@ public sealed partial class BanListControl : Control
 
         foreach (var ban in bans)
         {
-            Bans.AddChild(new HSeparator());
+            Bans.AddChild(new Separator());
 
             var line = new BanListLine(ban);
             line.IdsClicked += LineIdsClicked;

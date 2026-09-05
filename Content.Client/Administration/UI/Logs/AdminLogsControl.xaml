@@ -24,7 +24,7 @@
                             <BoxContainer Name="TypesContainer" Access="Public" Orientation="Vertical"/>
                         </ScrollContainer>
                     </BoxContainer>
-                    <controls:VSeparator/>
+                    <controls:Separator Orientation="Vertical" MinHeight="5" />
                     <BoxContainer Orientation="Vertical" MinWidth="200">
                         <LineEdit Name="PlayerSearch" Access="Public" StyleClasses="actionSearchBox"
                                   HorizontalExpand="true" PlaceHolder="{Loc admin-logs-search-players-placeholder}"/>
@@ -40,7 +40,7 @@
                             <BoxContainer Name="PlayersContainer" Access="Public" Orientation="Vertical"/>
                         </ScrollContainer>
                     </BoxContainer>
-                    <controls:VSeparator/>
+                    <controls:Separator Orientation="Vertical" MinHeight="5" />
                 </BoxContainer>
             </BoxContainer>
             <BoxContainer Orientation="Vertical" HorizontalExpand="True">

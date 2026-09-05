@@ -93,7 +93,7 @@
                 </BoxContainer>
             </BoxContainer>
 
-            <PanelContainer StyleClasses="LowDivider" Margin="0 -8" HorizontalAlignment="Right"/>
+            <controls:Separator StyleClasses="LowDivider" Margin="0 -8" HorizontalAlignment="Right" Orientation="Vertical" MinHeight="2" />
 
             <!-- PA Visual part -->
             <BoxContainer Orientation="Vertical"

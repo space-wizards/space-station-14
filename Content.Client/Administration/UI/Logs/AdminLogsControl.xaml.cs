@@ -487,7 +487,7 @@ public sealed partial class AdminLogsControl : Control
         for (var i = 0; i < span.Length; i++)
         {
             ref var log = ref span[i];
-            var separator = new HSeparator();
+            var separator = new Separator();
             var label = new AdminLogLabel(ref log, separator);
             label.Visible = ShouldShowLog(label);
 

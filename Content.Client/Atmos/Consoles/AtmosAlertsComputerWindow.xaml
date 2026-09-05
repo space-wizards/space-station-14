@@ -94,7 +94,7 @@
 
         <!-- Footer -->
         <BoxContainer Orientation="Vertical">
-            <PanelContainer StyleClasses="LowDivider" />
+            <controls:Separator StyleClasses="LowDivider" MinWidth="2" />
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
                 <Label Text="{Loc 'atmos-alerts-window-flavor-left'}" StyleClasses="WindowFooterText" />
                 <Label Text="{Loc 'atmos-alerts-window-flavor-right'}" StyleClasses="WindowFooterText"

@@ -28,7 +28,7 @@
                     <RichTextLabel Name="IdLabel" HorizontalAlignment="Right" Margin="0 0 5 0"/>
                 </BoxContainer>
             </BoxContainer>
-            <controls:HSeparator Margin="5 10 5 10"/>
+            <controls:Separator Margin="5 10 5 10" MinWidth="2" />
             <BoxContainer>
                 <RichTextLabel Name="DescriptionLabel"/>
             </BoxContainer>

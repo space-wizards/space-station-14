@@ -4,20 +4,20 @@
     <BoxContainer Name ="MetadataContainer" Orientation="Horizontal">
         <TextureRect Name="SeverityRect" Margin="2"/>
         <Label Name="TimeLabel" Margin="4 0" />
-        <controls:HSeparator Margin="4 0" />
+        <controls:Separator Margin="4 0" Orientation="Vertical" MinHeight="2" />
         <Label Name="ServerLabel" />
-        <controls:HSeparator Margin="4 0" />
+        <controls:Separator Margin="4 0" Orientation="Vertical" MinHeight="2" />
         <Label Name="RoundLabel" />
-        <controls:HSeparator Margin="4 0" />
+        <controls:Separator Margin="4 0" Orientation="Vertical" MinHeight="2" />
         <Label Name="AdminLabel" />
-        <controls:HSeparator Margin="4 0" />
+        <controls:Separator Margin="4 0" Orientation="Vertical" MinHeight="2" />
         <Label Name="PlaytimeLabel" />
-        <controls:HSeparator Name="SecretSeparator" Visible="False" Margin="4 0" />
+        <controls:Separator Name="SecretSeparator" Visible="False" Margin="4 0" Orientation="Vertical" MinHeight="2" />
         <Label Name="SecretLabel" Text="{Loc admin-notes-secret} " Visible="False" />
     </BoxContainer>
     <RichTextLabel Name="NoteLabel" />
     <Label Name="ExpiresLabel" Text="{Loc admin-note-editor-expiry-label}" Visible="False" />
     <Label Name="ExtraLabel" Visible="False" Modulate="#1AA7EC" />
     <Label Name="EditedLabel" Visible="False" />
-    <controls:HSeparator Name="Separator" />
+    <controls:Separator Name="Separator" MinWidth="2" />
 </BoxContainer>

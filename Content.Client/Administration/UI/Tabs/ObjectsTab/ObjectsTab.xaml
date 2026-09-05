@@ -9,10 +9,10 @@
                       SizeFlagsStretchRatio="1" />
             <Button Name="RefreshListButton" Text="{Loc object-tab-refresh-button}" ToggleMode="False" />
         </BoxContainer>
-        <co:HSeparator />
+        <co:Separator MinWidth="2" />
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
             <ot:ObjectsTabHeader Name="ListHeader" />
-            <co:HSeparator />
+            <co:Separator MinWidth="2" />
             <co:SearchListContainer Name="SearchList" Access="Public" VerticalExpand="True" />
         </BoxContainer>
     </BoxContainer>

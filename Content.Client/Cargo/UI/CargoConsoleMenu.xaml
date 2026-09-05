@@ -1,4 +1,4 @@
-﻿<controls:FancyWindow
+<controls:FancyWindow
     xmlns="https://spacestation14.io"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
@@ -29,7 +29,7 @@
                           <Label Text="{Loc 'cargo-console-menu-account-name-label'}"
                               StyleClasses="LabelKeyText" />
 
-                          <PanelContainer StyleClasses="LowDivider" Margin="0 -2"/>
+                          <controls:Separator StyleClasses="LowDivider" Margin="0 -2" MinWidth="2" />
 
                           <RichTextLabel Name="AccountNameLabel"
                               Text="{Loc 'cargo-console-menu-account-name-none-text'}"
@@ -39,7 +39,7 @@
                           <Label Text="{Loc 'cargo-console-menu-points-label'}"
                               StyleClasses="LabelKeyText"/>
 
-                          <PanelContainer StyleClasses="LowDivider" Margin="0 -2"/>
+                          <controls:Separator StyleClasses="LowDivider" Margin="0 -2" MinWidth="2" />
 
                           <RichTextLabel Name="PointsLabel"
                               Text="$0"
@@ -49,7 +49,7 @@
                           <Label Text="{Loc 'cargo-console-menu-order-capacity-label'}"
                               StyleClasses="LabelKeyText" />
 
-                          <PanelContainer StyleClasses="LowDivider" Margin="0 -2 0 -1"/>
+                          <controls:Separator StyleClasses="LowDivider" Margin="0 -2 0 -1" MinWidth="2" />
 
                           <Label Name="ShuttleCapacityLabel"
                               Text="0/0"
@@ -57,7 +57,7 @@
                               Margin="4 0"/>
                       </GridContainer>
 
-                      <PanelContainer StyleClasses="LowDivider" Margin="0 4.5 -8 0"/>
+                      <controls:Separator StyleClasses="LowDivider" Margin="0 4.5 -8 0" MinWidth="2" />
                   </BoxContainer>
 
                   <!-- Search -->
@@ -89,7 +89,7 @@
                   </ScrollContainer>
               </BoxContainer>
 
-              <PanelContainer StyleClasses="LowDivider" Margin="0 -8"/>
+              <controls:Separator StyleClasses="LowDivider" Margin="0 -8" Orientation="Vertical" MinHeight="2" />
 
               <!-- Right Part -->
               <BoxContainer Orientation="Vertical"
@@ -199,7 +199,7 @@
         <BoxContainer Orientation="Vertical"
             VerticalAlignment="Bottom">
 
-            <PanelContainer StyleClasses="LowDivider" />
+            <controls:Separator StyleClasses="LowDivider" MinWidth="2" />
 
             <BoxContainer Orientation="Horizontal"
                 Margin="12 0 6 2"

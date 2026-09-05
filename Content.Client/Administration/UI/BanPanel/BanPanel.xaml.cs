@@ -218,7 +218,7 @@ public sealed partial class BanPanel : DefaultWindow
             }
         });
         RolesContainer.AddChild(outerContainer);
-        RolesContainer.AddChild(new HSeparator());
+        RolesContainer.AddChild(new Separator());
     }
 
     private Button CreateRoleGroupHeader(string groupName, BoxContainer header, Color color, GridContainer innerContainer)

@@ -28,7 +28,7 @@
             <Label Name="NextOfferText" Text="0.00"
                    Margin="5"/>
         </BoxContainer>
-        <controls:HLine Color="#404040" Thickness="2" Margin="0 5 0 5"/>
+        <controls:Separator ColorOverride="#404040" Thickness="2" Margin="0 5 0 5" />
         <BoxContainer Name="Container"
                       Orientation="Horizontal"
                       Margin="5 0 5 0"/>

@@ -1,4 +1,5 @@
 <DefaultWindow xmlns="https://spacestation14.io"
+               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                Title="{Loc 'cargo-console-order-menu-title'}"
                MinSize="460 261">
     <BoxContainer Orientation="Vertical">
@@ -44,7 +45,7 @@
                      Value="1" />
         </GridContainer>
         <Control VerticalExpand="True"/>
-        <PanelContainer StyleClasses="LowDivider" Margin="0 6 0 2"/>
+        <controls:Separator StyleClasses="LowDivider" Margin="0 6 0 2" MinWidth="2" />
         <Button Name="SubmitButton"
                 Access="Public"
                 Text="{Loc 'cargo-console-order-menu-submit-button'}"

@@ -39,7 +39,7 @@
             </GridContainer>
             <Label Margin="2 0 0 0" Name="CloggedLabel" FontColorOverride="Red" Text="{Loc 'portable-generator-ui-clogged'}" />
         </BoxContainer>
-        <controls:VSeparator StyleClasses="LowDivider"/>
+        <controls:Separator StyleClasses="LowDivider" Orientation="Vertical" MinHeight="5" />
         <PanelContainer Margin="12 0 0 0" StyleClasses="BackgroundPanelDark" VerticalAlignment="Center">
             <SpriteView Name="EntityView" SetSize="64 64" Scale="2 2" OverrideDirection="South" Margin="15"/>
         </PanelContainer>
