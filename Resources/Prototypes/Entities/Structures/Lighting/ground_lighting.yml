@@ -66,6 +66,7 @@
     enabled: false
   - type: PoweredLight
     bulb: Tube
+  - type: AntiFlickerPoweredLight
   - type: SpookyPoweredLight
   - type: ContainerContainer
     containers:
