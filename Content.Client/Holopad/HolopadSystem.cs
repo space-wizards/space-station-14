@@ -99,7 +99,7 @@ public sealed partial class HolopadSystem : SharedHolopadSystem
         // Override specific values
         _sprite.SetColor((hologram, hologramSprite), Color.White);
         _sprite.SetOffset((hologram, hologramSprite), holopadhologram.Offset);
-        _sprite.SetDrawDepth((hologram, hologramSprite), (int)DrawDepth.Mobs);
+        _sprite.SetDrawDepth((hologram, hologramSprite), (byte)DrawDepth.Mobs);
         hologramSprite.NoRotation = true;
         hologramSprite.DirectionOverride = Direction.South;
         hologramSprite.EnableDirectionOverride = true;

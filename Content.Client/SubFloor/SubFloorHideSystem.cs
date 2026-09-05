@@ -91,8 +91,8 @@ public sealed partial class SubFloorHideSystem : SharedSubFloorHideSystem
         {
             // Allows sandbox mode to make wires visible over other stuff.
             component.OriginalDrawDepth ??= args.Sprite.DrawDepth;
-            var drawDepthDifference = Shared.DrawDepth.DrawDepth.ThickPipe - (Shared.DrawDepth.DrawDepth.Overdoors + 1);
-            _sprite.SetDrawDepth((uid, args.Sprite), args.Sprite.DrawDepth - drawDepthDifference);
+            var drawDepthDifference = (int) Shared.DrawDepth.DrawDepth.ThickPipe - ((int) Shared.DrawDepth.DrawDepth.Overdoors + 1);
+            _sprite.SetDrawDepth((uid, args.Sprite), (byte) (args.Sprite.DrawDepth - drawDepthDifference));
         }
         else if (scannerRevealed)
         {
@@ -100,8 +100,8 @@ public sealed partial class SubFloorHideSystem : SharedSubFloorHideSystem
             if (component.OriginalDrawDepth is not null)
                 return;
             component.OriginalDrawDepth = args.Sprite.DrawDepth;
-            var drawDepthDifference = Shared.DrawDepth.DrawDepth.ThickPipe - (Shared.DrawDepth.DrawDepth.Puddles + 1);
-            _sprite.SetDrawDepth((uid, args.Sprite), args.Sprite.DrawDepth - drawDepthDifference);
+            var drawDepthDifference = (int) Shared.DrawDepth.DrawDepth.ThickPipe - ((int) Shared.DrawDepth.DrawDepth.Puddles + 1);
+            _sprite.SetDrawDepth((uid, args.Sprite), (byte) (args.Sprite.DrawDepth - drawDepthDifference));
         }
         else if (component.OriginalDrawDepth.HasValue)
         {

@@ -69,7 +69,7 @@ public sealed partial class BuckleComponent : Component
     /// <summary>
     /// Used for client rendering
     /// </summary>
-    [ViewVariables] public int? OriginalDrawDepth;
+    [ViewVariables] public byte? OriginalDrawDepth;
 }
 
 public sealed partial class UnbuckleAlertEvent : BaseAlertEvent;
