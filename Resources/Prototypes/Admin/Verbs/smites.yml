@@ -802,10 +802,12 @@
     thirstAmount: -1000
     hungerAmount: -1000
   - !type:RemoveOrgans
-    blacklist:
-      components:
-      - Brain
-      - Eye
+    categories:
+    - Heart
+    - Lungs
+    - Stomach
+    - Liver
+    - Kidneys
   - !type:PopupMessage
     messages: [ admin-smite-vomit-organs-self ]
     type: Local
