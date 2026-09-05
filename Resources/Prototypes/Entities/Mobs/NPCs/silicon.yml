@@ -440,6 +440,9 @@
     - Supply
   - type: Puller
     needsHands: false
+  - type: Strap
+    position: Down
+    rotation: -90
 
 - type: entity
   parent: [ MobSiliconBase, MobCombat ]
