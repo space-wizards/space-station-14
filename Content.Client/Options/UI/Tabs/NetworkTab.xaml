@@ -1,0 +1,24 @@
+<Control xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:ui="clr-namespace:Content.Client.Options.UI">
+    <BoxContainer Orientation="Vertical" >
+        <BoxContainer Orientation="Vertical" Margin="8 8 8 8" VerticalExpand="True">
+            <Label Text="{Loc 'ui-options-net-warning'}" FontColorOverride="#fbf236" />
+            <Control MinHeight="20" />
+            <BoxContainer Orientation="Vertical" Margin="0 3 0 0">
+                <ui:OptionSlider Name="NetPvsSpawnSlider" Title="{Loc 'ui-options-net-pvs-spawn'}"/>
+                <RichTextLabel Text="{Loc 'ui-options-net-pvs-spawn-tooltip'}" />
+                <Control MinHeight="10" />
+
+                <ui:OptionSlider Name="NetPvsEntrySlider" Title="{Loc 'ui-options-net-pvs-entry'}"/>
+                <RichTextLabel Text="{Loc 'ui-options-net-pvs-entry-tooltip'}" />
+                <Control MinHeight="10" />
+
+                <ui:OptionSlider Name="NetPvsLeaveSlider" Title="{Loc 'ui-options-net-pvs-leave'}"/>
+                <RichTextLabel Text="{Loc 'ui-options-net-pvs-leave-tooltip'}" />
+                <Control MinHeight="10" />
+            </BoxContainer>
+        </BoxContainer>
+        <ui:OptionsTabControlRow Name="Control" Access="Public" />
+    </BoxContainer>
+</Control>
