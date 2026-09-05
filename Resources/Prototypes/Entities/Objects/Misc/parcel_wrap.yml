@@ -43,7 +43,7 @@
 
 - type: entity
   abstract: true
-  parent: BasePaperLabelable # We use this instead of BasePaperLabelableVisualized because WrappedParcel needs its own GenericVisualizer component for the parcel itself, and WrappedParcelHumanoid currently doesn't have label sprites at all
+  parent: BasePaperLabelable
   id: BaseWrappedParcel
   components:
   - type: Physics
@@ -112,16 +112,6 @@
           "Large": { state: "parcel-medium" }
           "Huge": { state: "parcel-large" }
           "Ginormous": { state: "parcel-large" }
-      enum.PaperLabelVisuals.HasLabel:
-        enum.PaperLabelVisuals.Layer:
-          True: { visible: true }
-          False: { visible: false }
-      enum.PaperLabelVisuals.LabelType:
-        enum.PaperLabelVisuals.Layer:
-          Paper: { state: paper }
-          Bounty: { state: bounty }
-          CaptainsPaper: { state: captains_paper }
-          Invoice: { state: invoice }
   - type: Sprite
     sprite: Objects/Misc/ParcelWrap/wrapped_parcel.rsi
     layers:
