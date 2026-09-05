@@ -196,7 +196,7 @@
   icons:
   - JobIconAdmin
   - JobIconSeniorEngineer
+  - JobIconSeniorOfficer
   - JobIconSeniorPhysician
   - JobIconSeniorResearcher
-  - JobIconSeniorOfficer
   - JobIconZombie # here instead of in the Antagonist group because zombies don't typically have unique ID cards
