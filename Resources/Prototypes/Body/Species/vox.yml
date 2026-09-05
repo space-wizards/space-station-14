@@ -163,6 +163,10 @@
   id: MobVox
   name: Urist McVox
   components:
+  - type: FootstepTrack
+    footprints:
+    - BloodClawprint1
+    - BloodClawprint2
   - type: Damageable
     damageModifierSet: Vox
   - type: Speech

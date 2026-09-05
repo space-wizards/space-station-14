@@ -1,0 +1,67 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/bad46d86008c1dee6b4efa16889e04192edcfd39/icons/effects/footprints.dmi",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "blood1",
+            "directions": 4
+        },
+        {
+            "name": "blood2",
+            "directions": 4
+        },
+        {
+            "name": "bloodpaw1",
+            "directions": 4
+        },
+        {
+            "name": "bloodpaw2",
+            "directions": 4
+        },
+        {
+            "name": "bloodclaw1",
+            "directions": 4
+        },
+        {
+            "name": "bloodclaw2",
+            "directions": 4
+        },
+        {
+            "name": "bloodbot1",
+            "directions": 4
+        },
+        {
+            "name": "bloodbot2",
+            "directions": 4
+        },
+        {
+            "name": "footprint1",
+            "directions": 4
+        },
+        {
+            "name": "footprint2",
+            "directions": 4
+        },
+        {
+            "name": "footprint_paw1",
+            "directions": 4
+        },
+        {
+            "name": "footprint_paw2",
+            "directions": 4
+        },
+        {
+            "name": "footprint_claw1",
+            "directions": 4
+        },
+        {
+            "name": "footprint_claw2",
+            "directions": 4
+        }
+    ]
+}

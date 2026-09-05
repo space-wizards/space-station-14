@@ -23,6 +23,7 @@
     - Recyclable
     - WhitelistChameleon
   - type: ProtectedFromStepTriggers
+  - type: FootstepTrack
 
 - type: entity
   abstract: true

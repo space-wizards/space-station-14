@@ -27,6 +27,7 @@ public sealed partial class DecalChunkComponent : Component
     /// <summary>
     /// Highest authoritative decal ID allocated in this chunk.
     /// </summary>
+    /// Not networked because client decrements from the top instead and doesn't care.
     [DataField]
     public ushort MaxDecalId;
 
