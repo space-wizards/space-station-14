@@ -44,7 +44,7 @@ public sealed partial class PlantTrayWindow : FancyWindow
 
     private void UpdateStatus(Entity<PlantTrayComponent> tray)
     {
-        var status = Loc.GetString("botany-ui-status-empty");
+        var status = Loc.GetString("botany-ui-tray-empty");
         if (_plantTraySystem.TryGetPlant(tray.AsNullable(), out var plant)
             && _entityManager.TryGetComponent<PlantDataComponent>(plant.Value, out var data))
         {
@@ -67,12 +67,6 @@ public sealed partial class PlantTrayWindow : FancyWindow
     {
         Reagents.ClearDisplay();
 
-        if (Reagents.ChildCount == 0)
-        {
-            Reagents.ShowEmptyMessage();
-            return;
-        }
-
         if (_solutionSystem.ResolveSolution(tray.Owner, tray.Comp.SoilSolutionName, ref tray.Comp.SoilSolution, out var solution))
         {
             foreach (var (reagent, quantity) in solution.Contents)
@@ -80,6 +74,9 @@ public sealed partial class PlantTrayWindow : FancyWindow
                 Reagents.AddReagent(reagent, quantity);
             }
         }
+
+        if (Reagents.ChildCount == 0)
+            Reagents.ShowEmptyMessage();
     }
 
     private void UpdateWarnings(Entity<PlantTrayComponent> tray)

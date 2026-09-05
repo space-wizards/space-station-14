@@ -1,8 +1,3 @@
-botany-ui-status = Status
-botany-ui-status-empty = The tray is empty
-botany-ui-tray-plant = Tray contains [color=green]{$plant}[/color]
-botany-ui-section-reagents = Tray reagents
-
 botany-ui-section-plant = Plant status
 botany-ui-health = Health
 botany-ui-age = Age
@@ -33,8 +28,13 @@ botany-ui-pests = Pests
 botany-ui-toxins = Toxins
 botany-ui-temperature = Temperature
 botany-ui-pressure = Pressure
+
+botany-ui-section-reagents = Tray reagents
 botany-ui-reagents-none = No reagents detected.
-botany-ui-gases-none = No gases detected.
+
+botany-ui-section-tray = Status
+botany-ui-tray-empty = The tray is empty.
+botany-ui-tray-plant = Tray contains [color=limegreen]{$plant}[/color].
 
 botany-ui-section-conditions = Required conditions
 botany-ui-condition-range = {$minimum} - {$maximum} {$unit}
@@ -44,6 +44,7 @@ botany-ui-condition-current-missing = unavailable
 
 botany-ui-section-consumed-gases = Consumed gases
 botany-ui-section-exuded-gases = Exuded gases
+botany-ui-gases-none = No gases detected.
 
 botany-ui-section-chemicals = Harvest chemicals
 botany-ui-chemicals-none = No harvest chemicals detected.

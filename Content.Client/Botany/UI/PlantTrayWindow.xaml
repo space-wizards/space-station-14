@@ -35,7 +35,7 @@
                                     HorizontalExpand="True">
                         <BoxContainer Orientation="Vertical"
                                       Margin="0 8">
-                            <Label Text="{Loc 'botany-ui-status'}"
+                            <Label Text="{Loc 'botany-ui-section-tray'}"
                                    StyleClasses="LabelKeyText" />
                             <RichTextLabel Name="Status" />
                         </BoxContainer>

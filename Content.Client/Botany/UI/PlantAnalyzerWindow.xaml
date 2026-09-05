@@ -4,7 +4,7 @@
                       xmlns:botany="clr-namespace:Content.Client.Botany.UI"
                       xmlns:atmos="clr-namespace:Content.Client.Atmos.UI"
                       Resizable="False"
-                      MinWidth="800"
+                      MinWidth="750"
                       MinHeight="500">
     <BoxContainer Orientation="Vertical"
                   MinWidth="600"
