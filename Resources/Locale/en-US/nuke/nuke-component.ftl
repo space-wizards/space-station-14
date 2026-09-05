@@ -40,6 +40,7 @@ nuke-label-syndicate = SYN-{$serial}
 # Codes
 nuke-codes-message = [color=red]TOP SECRET![/color]
 nuke-codes-list = {$name} code: {$code}
+nuke-code-global = nuclear authentication codes: {$code}
 nuke-codes-fax-paper-name = nuclear authentication codes
 
 # Nuke disk slot
