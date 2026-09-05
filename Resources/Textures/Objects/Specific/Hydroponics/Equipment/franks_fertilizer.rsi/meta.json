@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Original work created for this item by Chaisftw",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "franks-fertilizer"
+    },
+    {
+      "name": "franks-fertilizer_open"
+    }
+  ]
+}
