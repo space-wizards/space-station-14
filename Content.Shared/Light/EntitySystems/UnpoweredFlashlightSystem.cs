@@ -5,7 +5,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Prototypes;
+using Robust.Shared.ColorNaming;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -15,6 +15,7 @@ public sealed partial class UnpoweredFlashlightSystem : EntitySystem
 {
     // TODO: Split some of this to ItemTogglePointLight
 
+    [Dependency] private IPaletteManager _palette = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedActionsSystem _actionsSystem = default!;
     [Dependency] private ActionContainerSystem _actionContainer = default!;
@@ -84,11 +85,8 @@ public sealed partial class UnpoweredFlashlightSystem : EntitySystem
         if (!_light.TryGetLight(uid, out var light))
             return;
 
-        if (ProtoMan.Resolve(component.EmaggedColorsPrototype, out var possibleColors))
-        {
-            var pick = _random.Pick(possibleColors.Colors.Values);
-            _light.SetColor(uid, pick, light);
-        }
+        if (_palette.TryPickRandomColor(component.EmaggedColorsPrototype, out var color))
+            _light.SetColor(uid, color.Value, light);
 
         args.Repeatable = true;
         args.Handled = true;
