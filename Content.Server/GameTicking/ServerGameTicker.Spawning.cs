@@ -457,10 +457,6 @@ namespace Content.Server.GameTicking
                 var query = EntityQueryEnumerator<MapGridComponent>();
                 while (query.MoveNext(out var uid, out _))
                 {
-                    // TODO Check: I'm pretty sure this is already checked for with the Comp Deletion check but I also remember it being bugged in engine :V
-                    //if (TerminatingOrDeleted(uid))
-                        //continue;
-
                     _possiblePositions.Add(new EntityCoordinates(uid, Vector2.Zero));
                 }
             }
