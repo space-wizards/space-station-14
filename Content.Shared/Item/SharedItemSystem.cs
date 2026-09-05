@@ -16,9 +16,13 @@ public abstract partial class SharedItemSystem : EntitySystem
     [Dependency] private SharedHandsSystem _handsSystem = default!;
     [Dependency] protected SharedContainerSystem Container = default!;
 
+    private readonly List<ItemSizePrototype> _sortedSizes = [];
+
     public override void Initialize()
     {
         base.Initialize();
+        ProtoMan.PrototypesReloaded += OnPrototypesReloaded;
+
         SubscribeLocalEvent<ItemComponent, GetVerbsEvent<InteractionVerb>>(AddPickupVerb);
         SubscribeLocalEvent<ItemComponent, InteractHandEvent>(OnHandInteract);
         SubscribeLocalEvent<ItemComponent, AfterAutoHandleStateEvent>(OnItemAutoState);
@@ -26,6 +30,29 @@ public abstract partial class SharedItemSystem : EntitySystem
         SubscribeLocalEvent<ItemComponent, ExaminedEvent>(OnExamine);
 
         SubscribeLocalEvent<ItemToggleSizeComponent, ItemToggledEvent>(OnItemToggle);
+
+        UpdatePrototypeCache();
+    }
+
+    public override void Shutdown()
+    {
+        ProtoMan.PrototypesReloaded -= OnPrototypesReloaded;
+    }
+
+    public void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
+    {
+        if (args.WasModified<ItemSizePrototype>()))
+            || (args.Removed?.ContainsKey(typeof(ItemSizePrototype)) ?? false))
+        {
+            UpdatePrototypeCache();
+        }
+    }
+
+    private void UpdatePrototypeCache()
+    {
+        _sortedSizes.Clear();
+        _sortedSizes.AddRange(ProtoMan.EnumeratePrototypes<ItemSizePrototype>());
+        _sortedSizes.Sort();
     }
 
     private void OnItemAutoState(EntityUid uid, ItemComponent component, ref AfterAutoHandleStateEvent args)
@@ -146,6 +173,58 @@ public abstract partial class SharedItemSystem : EntitySystem
     public ItemSizePrototype GetSizePrototype(ProtoId<ItemSizePrototype> id)
     {
         return ProtoMan.Index(id);
+    }
+
+    /// <summary>
+    /// Returns the prototype of the smallest size
+    /// </summary>
+    [PublicAPI]
+    public ItemSizePrototype GetSmallestSize()
+    {
+        return _sortedSizes[0];
+    }
+
+    /// <summary>
+    /// Returns the prototype of the largest size
+    /// </summary>
+    [PublicAPI]
+    public ItemSizePrototype GetLargestSize()
+    {
+        return _sortedSizes[^1];
+    }
+
+    /// <summary>
+    /// Returns a size prototype that is "one" smaller than the size prototype given
+    /// </summary>
+    /// <returns>null if the size is the smallest</returns>
+    [PublicAPI]
+    public ItemSizePrototype? GetSizeSmaller(ItemSizePrototype sizePrototype)
+    {
+        var index = _sortedSizes.IndexOf(sizePrototype);
+        if (index == -1)
+        {
+            Log.Error($"Size prototype: {sizePrototype} not found in _sortedSizes");
+            return null;
+        }
+
+        return index > 0 ? _sortedSizes[index - 1] : null;
+    }
+
+    /// <summary>
+    /// Returns a size prototype that is "one" bigger than the size prototype given
+    /// </summary>
+    /// <returns>null if the size is the largest</returns>
+    [PublicAPI]
+    public ItemSizePrototype? GetSizeBigger(ItemSizePrototype sizePrototype)
+    {
+        var index = _sortedSizes.IndexOf(sizePrototype);
+        if (index == -1)
+        {
+            Log.Error($"Size prototype: {sizePrototype} not found in _sortedSizes");
+            return null;
+        }
+
+        return index < _sortedSizes.Count - 1 ? _sortedSizes[index + 1] : null;
     }
 
     /// <summary>
