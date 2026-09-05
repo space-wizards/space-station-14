@@ -17,11 +17,8 @@
 - type: loadout
   id: OffsetCaneClown
   effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobClown
-      time: 1h
+  - !type:GroupLoadoutEffect
+    proto: ClownStarter
   storage:
     back:
     - OffsetCaneClown
@@ -30,11 +27,8 @@
 - type: loadout
   id: OffsetCaneMime
   effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobMime
-      time: 1h
+  - !type:GroupLoadoutEffect
+    proto: MimeStarter
   storage:
     back:
     - OffsetCaneMime
@@ -43,11 +37,8 @@
 - type: loadout
   id: OffsetCaneNT
   effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Command
-      time: 5h
+  - !type:GroupLoadoutEffect
+    proto: CommandStarter
   storage:
     back:
     - OffsetCaneNT
@@ -56,11 +47,8 @@
 - type: loadout
   id: Cane
   effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobLibrarian
-      time: 1h # same as Jamjar.
+  - !type:GroupLoadoutEffect
+    proto: LibrarianStarter
   storage:
     back:
     - Cane
