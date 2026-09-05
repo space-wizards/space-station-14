@@ -210,6 +210,14 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             if (!PreAssignAntag(session, ref _preSpawnRules))
                 continue;
 
+            // Only commit the player to the round if they actually got a body out of it.
+            // Otherwise they'd be joined into the game while attached to nothing, which is just a black screen.
+            if (session.AttachedEntity == null)
+            {
+                Log.Error($"Antag pre-assignment for {session.Name} did not produce an entity, leaving them in the spawn pool.");
+                continue;
+            }
+
             args.PlayerPool.Remove(session);
             GameTicker.PlayerJoinGame(session);
         }
@@ -431,6 +439,17 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             if (TryGetAntagEntity(antag.GameRule, antag.Definition, player, out var antagEnt))
             {
                 InitializeAntag(antag.GameRule, antag.Definition, antagEnt.Value, player);
+
+                // If initializing didn't actually attach the player to a body, undo the selection so they can
+                // still get a normal job instead of being stuck on a black screen.
+                if (player.AttachedEntity == null)
+                {
+                    Log.Error($"Gamerule {ToPrettyString(antag.GameRule)} initialized {player.Name} as antag {antag.Definition.ID}, but they ended up without an entity.");
+                    DeSelectSession(antag.GameRule, antag.Definition, player);
+                    RestoreAntagSlot(antag, ref antags);
+                    return false;
+                }
+
                 return true;
             }
 
@@ -441,6 +460,29 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         // If we're here, then we didn't assign a single antag!
         return false;
+    }
+
+    /// <summary>
+    /// Gives back a slot which was taken by a player that ended up not becoming an antag,
+    /// so that it can be given to someone else or turned into a ghost role.
+    /// </summary>
+    /// <param name="antag">The antag rule, with its count already decremented.</param>
+    /// <param name="antags">The list of antag rules the slot came from.</param>
+    private void RestoreAntagSlot(AntagRule antag, ref List<AntagRule> antags)
+    {
+        for (var i = 0; i < antags.Count; i++)
+        {
+            if (antags[i].GameRule.Owner != antag.GameRule.Owner || antags[i].Definition.ID != antag.Definition.ID)
+                continue;
+
+            var existing = antags[i];
+            existing.Count++;
+            antags[i] = existing;
+            return;
+        }
+
+        antag.Count++;
+        antags.Add(antag);
     }
 
     /// <summary>
