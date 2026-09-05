@@ -6,6 +6,7 @@ using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
+using Content.Shared.Coordinates;
 using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
@@ -155,7 +156,8 @@ namespace Content.Server.Cargo.Systems
             var station = _station.GetOwningStation(uid);
 
             // No station to deduct from.
-            if (!TryComp(station, out StationBankAccountComponent? bank) ||
+            if (!OnSameMap(uid, station) ||
+                !TryComp(station, out StationBankAccountComponent? bank) ||
                 !TryComp(station, out StationDataComponent? stationData) ||
                 !TryGetOrderDatabase(station, out var orderDatabase))
             {
@@ -261,6 +263,16 @@ namespace Content.Server.Cargo.Systems
             UpdateBankAccount((station.Value, bank), -cost, order.Account);
             UpdateOrders(station.Value);
         }
+
+        private bool OnSameMap(EntityUid uid, EntityUid? station)
+        {
+            if (station is null ||
+                _station.GetLargestGrid(station.Value) is not { } stationGrid)
+                return false;
+
+            return Transform(stationGrid).MapID == Transform(uid).MapID;
+        }
+
 
         private EntityUid? TryFulfillOrder(Entity<StationDataComponent> stationData, ProtoId<CargoAccountPrototype> account, CargoOrderData order, StationCargoOrderDatabaseComponent orderDatabase)
         {
