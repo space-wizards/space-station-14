@@ -147,7 +147,7 @@
   name: department-Specific
   description: department-Specific-description
   color: "#9FED58"
-  weight: 10
+  weight: -100 # Displays after all other departments, since that makes them obviously distinct in the lobby's jobs list
   ignoreForDepartmentFallback: true
   roles:
   - Reporter
