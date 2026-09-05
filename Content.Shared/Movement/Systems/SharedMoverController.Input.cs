@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared.Alert;
+using Content.Shared.Buckle.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Follower.Components;
 using Content.Shared.Input;
@@ -157,7 +158,7 @@ namespace Content.Shared.Movement.Systems
             if (CameraRotationLocked || !MoverQuery.TryGetComponent(uid, out var mover))
                 return;
 
-            mover.TargetRelativeRotation += angle;
+            mover.TargetRelativeRotation = (mover.TargetRelativeRotation + angle).Reduced();
             Dirty(uid, mover);
         }
 
@@ -209,9 +210,8 @@ namespace Content.Shared.Movement.Systems
             }
 
             var diff = relativeRot - oldRelativeRot;
-
-            // If we're going from a grid -> map then preserve the relative rotation so it's seamless if they go into space and back.
-            if (MapQuery.HasComp(relative) && MapGridQuery.HasComp(mover.RelativeEntity))
+            var buckled = TryComp<BuckleComponent>(uid, out var buckle) && buckle.Buckled;
+            if (buckled || MapQuery.HasComp(relative) && MapGridQuery.HasComp(mover.RelativeEntity))
             {
                 mover.TargetRelativeRotation -= diff;
             }
@@ -276,6 +276,24 @@ namespace Content.Shared.Movement.Systems
                 entity.Comp.RelativeEntity = relative;
                 entity.Comp.TargetRelativeRotation = Angle.Zero;
                 entity.Comp.RelativeRotation = Angle.Zero;
+                entity.Comp.LerpTarget = TimeSpan.Zero;
+                Dirty(entity.Owner, entity.Comp);
+                return;
+            }
+
+            if (TryComp<BuckleComponent>(entity, out var buckle) && buckle.Buckled)
+            {
+                if (relative == entity.Comp.RelativeEntity)
+                {
+                    if (entity.Comp.LerpTarget >= Timing.CurTime)
+                    {
+                        entity.Comp.LerpTarget = TimeSpan.Zero;
+                        Dirty(entity.Owner, entity.Comp);
+                    }
+
+                    return;
+                }
+
                 entity.Comp.LerpTarget = TimeSpan.Zero;
                 Dirty(entity.Owner, entity.Comp);
                 return;
