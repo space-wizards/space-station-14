@@ -29,7 +29,7 @@
       - startTimer
       # use the default trigger key so it can activate any inserted payload
       keyOut: trigger
-      delay: 5
+      delay: 3
       delayOptions: [3, 5, 10, 15, 30]
       initialBeepDelay: 0
       beepSound:
