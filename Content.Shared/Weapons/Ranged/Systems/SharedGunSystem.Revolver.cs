@@ -177,6 +177,14 @@ public partial class SharedGunSystem
                 continue;
             }
 
+            var canInsertEv = new CanAmmoInsertionEvent();
+            RaiseLocalEvent(ent, ref canInsertEv);
+            if (canInsertEv.Cancelled)
+                return false;
+
+            var providerEv = new AmmoInsertionEvent();
+            RaiseLocalEvent(ent, ref providerEv);
+
             ent.Comp.AmmoSlots[index] = insertEnt;
             Containers.Insert(insertEnt, ent.Comp.AmmoContainer);
             SetChamber(ent, insertEnt, index);
