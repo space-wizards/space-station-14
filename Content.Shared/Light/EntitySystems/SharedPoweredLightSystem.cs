@@ -386,9 +386,6 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
         if (TryComp<DamageOnInteractComponent>(uid, out var damageOnInteractComp))
             _damageOnInteractSystem.SetIsDamageActiveTo((uid, damageOnInteractComp), value);
 
-        var ev = new PoweredLightValueUpdated(value);
-        RaiseLocalEvent(uid, ref ev);
-
         return valueChanged;
     }
 
