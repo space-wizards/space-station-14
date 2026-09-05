@@ -1,0 +1,24 @@
+# Basic shapes prototyped for convenience
+- type: entityShape
+  id: BoxFilled
+  shape: !type:BoxEntityShape
+
+- type: entityShape
+  id: BoxHollow
+  shape: !type:BoxEntityShape
+    hollow: true
+
+- type: entityShape
+  id: Cross
+  shape: !type:CrossEntityShape
+
+- type: entityShape
+  id: DiagonalCross
+  shape: !type:DiagonalCrossEntityShape
+
+- type: entityShape
+  id: BothCross
+  shape: !type:AllEntityShape
+    children:
+    - id: Cross
+    - id: DiagonalCross
