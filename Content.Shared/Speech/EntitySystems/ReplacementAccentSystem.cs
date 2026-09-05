@@ -90,7 +90,6 @@ public sealed partial class ReplacementAccentSystem : RelayAccentSystem<Replacem
                 return replacement + prototype.DefaultPunctuation;
 
             return replacement + punctuation;
-
         }
 
         // Prohibition of repeated word replacements.
