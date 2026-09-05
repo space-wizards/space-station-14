@@ -265,6 +265,14 @@ public sealed partial class PlantTraySystem : EntitySystem
     }
 
     /// <summary>
+    /// Checks whether the tray contains a plant entity.
+    /// </summary>
+    public bool HasPlant(Entity<PlantTrayComponent?> ent)
+    {
+        return TryGetPlant(ent, out _);
+    }
+
+    /// <summary>
     /// Tries to get the plant entity in the tray.
     /// </summary>
     [PublicAPI]
@@ -281,7 +289,10 @@ public sealed partial class PlantTraySystem : EntitySystem
         return true;
     }
 
-    public bool TryGetAlivePlant(Entity<PlantTrayComponent?> ent)
+    /// <summary>
+    /// Checks whether the tray contains a living plant entity.
+    /// </summary>
+    public bool HasAlivePlant(Entity<PlantTrayComponent?> ent)
     {
         return TryGetAlivePlant(ent, out _);
     }

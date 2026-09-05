@@ -44,7 +44,7 @@ public sealed partial class BotanySeedSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        if (_plantTray.TryGetPlant(ent.AsNullable(), out _))
+        if (_plantTray.HasPlant(ent.AsNullable()))
         {
             _popup.PopupCursor(
                 Loc.GetString("plant-component-already-seeded-popup", ("name", MetaData(ent.Owner).EntityName)),
