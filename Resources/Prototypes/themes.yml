@@ -117,3 +117,20 @@
     _itemstatus_content_margin_right: "#06060604"
     _itemstatus_content_margin_left: "#06060604"
     _itemstatus_patch_margin: "#07060505"
+- type: uiTheme
+  id: SS14TrasenKnoxTheme
+  path: /Textures/Interface/TrasenKnox/
+  colors:
+    whiteText: "#FFF5EE"
+    slotSelectedGold: "#FFF5EE"
+    slotColor: "#FFF5EE"
+    slotOutline: "#FFF5EE"
+    slotText: "#FFF5EE"
+    nanoGold: "#FFF5EE"
+    goodGreenFore: "#FFF5EE"
+    concerningOrangeFore: "#FFF5EE"
+    dangerousRedFore: "#FFF5EE"
+    disabledFore: "#FFF5EE"
+    _itemstatus_content_margin_right: "#06060604"
+    _itemstatus_content_margin_left: "#06060604"
+    _itemstatus_patch_margin: "#07060505"
