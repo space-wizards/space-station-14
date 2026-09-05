@@ -86,7 +86,7 @@
       prototype: ComputerStationRecords
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [BaseComputerCircuitboard, BaseCargoContraband]
   id: CargoRequestComputerCircuitboard
   name: cargo request computer board
   description: A computer printed circuit board for a cargo request computer.
@@ -99,7 +99,7 @@
       price: 750
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [BaseComputerCircuitboard, BaseEngineeringContraband]
   id: CargoRequestEngineeringComputerCircuitboard
   name: engineering request computer board
   description: A computer printed circuit board for an engineering request computer.
@@ -112,7 +112,7 @@
     price: 750
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [BaseComputerCircuitboard, BaseMedicalContraband]
   id: CargoRequestMedicalComputerCircuitboard
   name: medical request computer board
   description: A computer printed circuit board for a medical request computer.
@@ -125,7 +125,7 @@
     price: 750
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [BaseComputerCircuitboard, BaseScienceContraband]
   id: CargoRequestScienceComputerCircuitboard
   name: science request computer board
   description: A computer printed circuit board for a science request computer.
@@ -138,7 +138,7 @@
     price: 750
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [BaseComputerCircuitboard, BaseSecurityContraband]
   id: CargoRequestSecurityComputerCircuitboard
   name: security request computer board
   description: A computer printed circuit board for a security request computer.
@@ -177,7 +177,7 @@
     price: 750
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [BaseComputerCircuitboard, BaseCargoContraband]
   id: CargoSaleComputerCircuitboard
   name: cargo sale computer board
   description: A computer printed circuit board for a cargo sale computer.
@@ -188,8 +188,8 @@
       prototype: ComputerPalletConsole
 
 - type: entity
+  parent: [BaseComputerCircuitboard, BaseCargoContraband]
   id: CargoBountyComputerCircuitboard
-  parent: BaseComputerCircuitboard
   name: cargo bounty computer board
   description: A computer printed circuit board for a cargo bounty computer.
   components:
@@ -200,7 +200,7 @@
   - type: StaticPrice
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [BaseComputerCircuitboard, BaseCargoContraband]
   id: SalvageJobBoardComputerCircuitboard
   name: salvage job board computer board
   description: A computer printed circuit board for a salvage job board computer.
@@ -211,7 +211,7 @@
     prototype: ComputerSalvageJobBoard
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [BaseComputerCircuitboard, BaseCargoContraband]
   id: SalvageExpeditionsComputerCircuitboard
   name: salvage expeditions computer board
   description: A computer printed circuit board for a salvage expeditions computer.
@@ -224,7 +224,7 @@
       stealGroup: SalvageExpeditionsComputerCircuitboard
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [BaseComputerCircuitboard, BaseCargoContraband]
   id: CargoShuttleConsoleCircuitboard
   name: cargo shuttle console board
   description: A computer printed circuit board for a cargo shuttle console.
@@ -582,7 +582,7 @@
     prototype: ComputerSyndicateTeleportersControl
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [BaseComputerCircuitboard, BaseScienceContraband]
   id: StationAiFixerCircuitboard
   name: AI restoration console board
   description: A computer printed circuit board for an AI restoration console console.
