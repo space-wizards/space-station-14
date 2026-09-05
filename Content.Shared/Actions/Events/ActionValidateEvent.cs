@@ -1,10 +1,12 @@
 namespace Content.Shared.Actions.Events;
 
 /// <summary>
-/// Raised on an action entity before being used to:
-/// 1. Make sure client is sending the correct kind of target (if any)
-/// 2. Do any validation on the target, if needed
-/// 3. Give the action system an event to raise on the performer, to actually do the action.
+/// Raised on an action entity before it is executed, to:
+/// <list type="number">
+/// <item> Verify that the client is providing the correct type of target (if applicable). </item>
+/// <item> Perform any necessary validation on the target. </item>
+/// <item> Provide the action system with an event to raise on the performer to carry out the action. </item>
+/// </list>
 /// </summary>
 [ByRefEvent]
 public struct ActionValidateEvent
@@ -27,6 +29,12 @@ public struct ActionValidateEvent
     /// <summary>
     /// If set to true, the client sent invalid event data and this should be logged as an error.
     /// For functioning input that happens to not be allowed this should not be set, for example a range check.
+    /// Use <see cref="Cancel"/> instead.
     /// </summary>
     public bool Invalid;
+
+    /// <summary>
+    /// If set to to true, the Action failed Validation  and should be Canceled from executing.
+    /// </summary>
+    public bool Cancel;
 }
