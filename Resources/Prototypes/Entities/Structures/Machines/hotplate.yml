@@ -1,7 +1,7 @@
 # heats an entity or solution placed on it
 - type: entity
   abstract: true
-  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
+  parent: [ BaseMachinePowered, SmallConstructibleMachine, BaseSmallConstructibleMachineDestructible ]
   id: BaseHeaterMachine
   components:
   - type: ItemPlacer
@@ -22,6 +22,14 @@
         - TabletopMachineMask
         layer:
         - TabletopMachineLayer
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: ApcPowerReceiver
     powerLoad: 300
 

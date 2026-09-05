@@ -1,12 +1,11 @@
 using Content.Server.DeviceLinking.Components;
-using Content.Server.DeviceNetwork;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Timing;
+using Content.Shared.Timing.Components;
+using Content.Shared.Timing.Systems;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio.Systems;
 
@@ -73,8 +72,7 @@ public sealed partial class LogicGateSystem : EntitySystem
             return;
 
         // no sound spamming
-        if (TryComp<UseDelayComponent>(uid, out var useDelay)
-            && !_useDelay.TryResetDelay((uid, useDelay), true))
+        if (!_useDelay.TryResetDelay(uid, true))
             return;
 
         // cycle through possible gates
@@ -96,8 +94,26 @@ public sealed partial class LogicGateSystem : EntitySystem
     {
         // default to momentary for compatibility with non-logic signals.
         // currently only door status and logic gates have logic signal state.
-        var state = SignalState.Momentary;
-        args.Data?.TryGetValue(DeviceNetworkConstants.LogicState, out state);
+
+        // update the state for the correct port
+        if (args.Port == comp.InputPortA)
+        {
+            comp.StateA = SignalState.Momentary;
+            _appearance.SetData(uid, LogicGateVisuals.InputA, false); //If A == High => Sets input A sprite to True
+        }
+        else if (args.Port == comp.InputPortB)
+        {
+            comp.StateB = SignalState.Momentary;
+            _appearance.SetData(uid, LogicGateVisuals.InputB, false); //If B == High => Sets input B sprite to True
+        }
+
+        UpdateOutput(uid, comp);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnSignalReceived(EntityUid uid, LogicGateComponent comp, ref SignalReceivedEvent<LogicStatePayload> args)
+    {
+        var state = args.Data.State;
 
         // update the state for the correct port
         if (args.Port == comp.InputPortA)

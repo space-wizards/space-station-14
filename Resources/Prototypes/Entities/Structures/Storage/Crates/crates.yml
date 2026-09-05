@@ -138,12 +138,13 @@
     sprite: Structures/Storage/Crates/surgery.rsi
 
 - type: entity
-  parent: CrateGeneric
+  parent: [ BaseCrate, StructureHealthContainerFlimsy ]
   id: CrateWeb
   name: web crate
   components:
   - type: Icon
     sprite: Structures/Storage/Crates/web.rsi
+    state: icon
   - type: Sprite
     sprite: Structures/Storage/Crates/web.rsi
     layers:
@@ -157,16 +158,16 @@
   - type: Construction
     graph: WebStructures
     node: crate
+    containers:
+    - entity_storage
   - type: Damageable
-    damageModifierSet: Web
+    damageModifierSet: ThreadMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 20
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: WoodDestroy
@@ -190,6 +191,7 @@
   components:
   - type: Icon
     sprite: Structures/Storage/Crates/sec_gear.rsi
+    state: icon
   - type: Sprite
     sprite: Structures/Storage/Crates/sec_gear.rsi
   - type: AccessReader
@@ -337,7 +339,7 @@
     access: [["SyndicateAgent", "NuclearOperative"]]
 
 - type: entity
-  parent: CrateGeneric
+  parent: [ BaseCrate, StructureHealthContainerFlimsy ]
   id: CrateLivestock
   name: livestock crate
   components:
@@ -356,11 +358,13 @@
   - type: Icon
     sprite: Structures/Storage/Crates/livestock.rsi
     state: base
+  - type: Damageable
+    damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 15
+        damage: 20
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -370,8 +374,6 @@
           MaterialWoodPlank1:
             min: 1
             max: 4
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures
@@ -394,7 +396,7 @@
     price: 125
 
 - type: entity
-  parent: CrateGeneric
+  parent: [ BaseCrate, StructureHealthContainerFlimsy ]
   id: CrateRodentCage
   name: hamster cage
   components:
@@ -412,11 +414,14 @@
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: Icon
     sprite: Structures/Storage/Crates/cage.rsi
+    state: icon
+  - type: Damageable
+    damageModifierSet: PlasticMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 15
+        damage: 20
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -426,8 +431,6 @@
           SheetPlastic:
             min: 1
             max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Physics
     bodyType: Dynamic
   - type: EntityStorage
@@ -689,7 +692,7 @@
     state: crate_icon
 
 - type: entity
-  parent: CrateGeneric
+  parent: [ BaseCrate, StructureHealthContainerFlimsy ]
   id: CrateCoffin
   name: coffin
   description: A comfy coffin, excellent place for the vampires and corpses.
@@ -705,11 +708,13 @@
   - type: Icon
     sprite: Structures/Storage/Crates/coffin.rsi
     state: base
+  - type: Damageable
+    damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 15
+        damage: 20
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -719,8 +724,6 @@
           MaterialWoodPlank1:
             min: 1
             max: 4
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Construction
     graph: CrateCoffin
     node: cratecoffin
@@ -728,7 +731,7 @@
     - entity_storage
 
 - type: entity
-  parent: CrateGeneric
+  parent: [ BaseCrate, StructureHealthContainer ]
   id: CrateWoodenGrave
   name: grave
   suffix: wooden
@@ -747,11 +750,13 @@
   - type: Icon
     sprite: Structures/Storage/Crates/wooden_grave.rsi
     state: base
+  - type: Damageable
+    damageModifierSet: RockMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200 # discourage just beating the grave to break it open
+        damage: 100 # discourage just beating the grave to break it open
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -761,8 +766,6 @@
           MaterialWoodPlank1:
             min: 1
             max: 4
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Physics
     bodyType: Static
   - type: Grave

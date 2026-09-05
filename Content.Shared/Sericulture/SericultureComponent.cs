@@ -1,7 +1,7 @@
-using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Nutrition.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Sericulture;
 
@@ -15,52 +15,39 @@ public sealed partial class SericultureComponent : Component
     /// <summary>
     /// The text that pops up whenever sericulture fails for not having enough hunger.
     /// </summary>
-    [DataField("popupText")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
-    public string PopupText = "sericulture-failure-hunger";
+    [DataField, AutoNetworkedField]
+    public LocId PopupText = "sericulture-failure-hunger";
 
     /// <summary>
     /// What will be produced at the end of the action.
     /// </summary>
-    [DataField(required: true)]
-    [ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
+    [DataField(required: true), AutoNetworkedField]
     public EntProtoId EntityProduced;
 
     /// <summary>
     /// The entity needed to actually preform sericulture. This will be granted (and removed) upon the entity's creation.
     /// </summary>
-    [DataField]
-    [ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public EntProtoId Action = "ActionSericulture";
 
-    [AutoNetworkedField]
-    [DataField("actionEntity")]
+    [DataField, AutoNetworkedField]
     public EntityUid? ActionEntity;
 
     /// <summary>
     /// How long will it take to make.
     /// </summary>
-    [DataField("productionLength")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public float ProductionLength = 3f;
 
     /// <summary>
     /// This will subtract (not add, don't get this mixed up) from the current hunger of the mob doing sericulture.
     /// </summary>
-    [DataField("hungerCost")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public float HungerCost = 5f;
 
     /// <summary>
-    /// The lowest hunger threshold that this mob can be in before it's allowed to spin silk.
+    /// If the entity's hunger satiation is below this value, it cannot spin web.
     /// </summary>
-    [DataField("minHungerThreshold")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
-    public HungerThreshold MinHungerThreshold = HungerThreshold.Okay;
+    [DataField(required: true), AutoNetworkedField]
+    public SatiationValue MinHungerThreshold;
 }

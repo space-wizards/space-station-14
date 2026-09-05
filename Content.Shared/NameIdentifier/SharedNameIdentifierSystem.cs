@@ -7,16 +7,14 @@ namespace Content.Shared.NameIdentifier;
 /// </summary>
 public abstract partial class SharedNameIdentifierSystem : EntitySystem
 {
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<NameIdentifierComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
-    }
-
+    [SubscribeLocalEvent]
     private void OnRefreshNameModifiers(Entity<NameIdentifierComponent> ent, ref RefreshNameModifiersEvent args)
     {
         if (ent.Comp.Group is null)
+            return;
+
+        // Don't add whitespace
+        if (string.IsNullOrWhiteSpace(ent.Comp.FullIdentifier))
             return;
 
         // Don't apply the modifier if the component is being removed
@@ -26,7 +24,11 @@ public abstract partial class SharedNameIdentifierSystem : EntitySystem
         if (!ProtoMan.Resolve(ent.Comp.Group, out var group))
             return;
 
-        var format = group.FullName ? "name-identifier-format-full" : "name-identifier-format-append";
+        var format = "name-identifier-format-full";
+
+        if (!group.FullName)
+            format = group.Prefix ? "name-identifier-format-prepend" : "name-identifier-format-append";
+
         // We apply the modifier with a low priority to keep it near the base name
         // "Beep (Si-4562) the zombie" instead of "Beep the zombie (Si-4562)"
         args.AddModifier(format, -10, ("identifier", ent.Comp.FullIdentifier));

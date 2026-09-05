@@ -1,4 +1,5 @@
 ﻿using Content.Shared.ActionBlocker;
+using Content.Shared.Chat;
 using Content.Shared.Movement.Events;
 using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Weapons.Misc;
@@ -15,26 +16,17 @@ namespace Content.Shared.Chasm;
 /// </summary>
 public sealed partial class ChasmSystem : EntitySystem
 {
-    [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private ActionBlockerSystem _blocker = default!;
-    [Dependency] private SharedGrapplingGunSystem _grapple = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedChatSystem _chat = default!;
+    [Dependency] private SharedGrapplingGunSystem _grapple = default!;
 
-    [Dependency] private EntityQuery<ChasmFallingComponent> _chasmFallingQuery;
     [Dependency] private EntityQuery<ChasmComponent> _chasmQuery;
+    [Dependency] private EntityQuery<ChasmFallingComponent> _chasmFallingQuery;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<ChasmComponent, StepTriggeredOffEvent>(OnStepTriggered);
-        SubscribeLocalEvent<ChasmComponent, StepTriggerAttemptEvent>(OnStepTriggerAttempt);
-        SubscribeLocalEvent<ChasmComponent, ComponentShutdown>(OnShutdown);
-
-        SubscribeLocalEvent<ChasmFallingComponent, UpdateCanMoveEvent>(OnUpdateCanMove);
-    }
-
+    /// <inheritdoc />
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -61,6 +53,8 @@ public sealed partial class ChasmSystem : EntitySystem
         }
     }
 
+    #region Event Handlers
+    [SubscribeLocalEvent]
     private void OnStepTriggered(Entity<ChasmComponent> entity, ref StepTriggeredOffEvent args)
     {
         // already doomed
@@ -85,19 +79,55 @@ public sealed partial class ChasmSystem : EntitySystem
         StartFalling(entity.AsNullable(), args.Tripper);
     }
 
+    [SubscribeLocalEvent]
+    private void OnStepTriggerAttempt(Entity<ChasmComponent> entity, ref StepTriggerAttemptEvent args)
+    {
+        if (_grapple.IsEntityHooked(args.Tripper))
+        {
+            args.Cancelled = true;
+            return;
+        }
+
+        args.Continue = true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnShutdown(Entity<ChasmComponent> entity, ref ComponentShutdown args)
+    {
+        var e = EntityQueryEnumerator<ChasmFallingComponent>();
+        while (e.MoveNext(out var fallingEnt, out var falling))
+        {
+            if (falling.FallingInto != entity.Owner)
+                continue;
+
+            RemCompDeferred<ChasmFallingComponent>(fallingEnt);
+        }
+    }
+
+    [SubscribeLocalEvent]
+    private static void OnUpdateCanMove(Entity<ChasmFallingComponent> entity, ref UpdateCanMoveEvent args)
+    {
+        args.Cancel();
+    }
+    #endregion Event Handlers
+
+    #region Public API
     /// <summary>
     /// Causes <paramref name="tripper"/> to fall into <paramref name="chasm"/>: starts a falling animation, optionally
     /// plays a sound, and eventually deletes <paramref name="tripper"/>.
     /// If <paramref name="chasm"/> does not have a <see cref="ChasmComponent"/> component, does nothing and returns null.
     /// </summary>
+    /// <param name="playSound">Whether or not the chasm should play a sound when the entity falls in.</param>
+    /// <param name="playEmote">Whether or not <paramref name="tripper"/> should try to emote when falling into the chasm.</param>
     /// <returns>
-    /// <paramref name="tripper"/> with its new <see cref="ChasmFallingComponent"/>, if the entity did start falling. Null otherwise.
+    /// <paramref name="tripper"/> with its new <see cref="ChasmFallingComponent"/>, if the entity did start falling, null otherwise.
     /// </returns>
     [PublicAPI]
     public Entity<ChasmFallingComponent>? StartFalling(
         Entity<ChasmComponent?> chasm,
         EntityUid tripper,
-        bool playSound = true
+        bool playSound = true,
+        bool playEmote = true
     )
     {
         if (!_chasmQuery.Resolve(chasm, ref chasm.Comp, logMissing: false))
@@ -112,6 +142,9 @@ public sealed partial class ChasmSystem : EntitySystem
         if (playSound)
             _audio.PlayPredicted(chasm.Comp.FallingSound, chasm, tripper);
 
+        if (playEmote && chasm.Comp.Emote is { } emote)
+            _chat.TryEmoteWithChat(tripper, emote);
+
         var chasmEvent = new EntityStartedFallingIntoChasmEvent((tripper, falling));
         RaiseLocalEvent(chasm, ref chasmEvent);
         var tripperEvent = new StartedFallingIntoChasmEvent((chasm, chasm.Comp));
@@ -122,31 +155,5 @@ public sealed partial class ChasmSystem : EntitySystem
         return ret;
     }
 
-    private void OnStepTriggerAttempt(Entity<ChasmComponent> entity, ref StepTriggerAttemptEvent args)
-    {
-        if (_grapple.IsEntityHooked(args.Tripper))
-        {
-            args.Cancelled = true;
-            return;
-        }
-
-        args.Continue = true;
-    }
-
-    private static void OnUpdateCanMove(Entity<ChasmFallingComponent> entity, ref UpdateCanMoveEvent args)
-    {
-        args.Cancel();
-    }
-
-    private void OnShutdown(Entity<ChasmComponent> entity, ref ComponentShutdown args)
-    {
-        var e = EntityQueryEnumerator<ChasmFallingComponent>();
-        while (e.MoveNext(out var fallingEnt, out var falling))
-        {
-            if (falling.FallingInto != entity.Owner)
-                continue;
-
-            RemCompDeferred<ChasmFallingComponent>(fallingEnt);
-        }
-    }
+    #endregion Public API
 }

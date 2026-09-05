@@ -60,12 +60,6 @@
 
 - type: construction
   parent: Girder
-  id: ClockworkGirder
-  graph: ClockworkGirder
-  targetNode: clockGirder
-
-- type: construction
-  parent: Girder
   id: Wall
   targetNode: wall
 
@@ -73,11 +67,6 @@
   parent: Girder
   id: ReinforcedWall
   targetNode: reinforcedWall
-
-- type: construction
-  parent: ClockworkGirder
-  id: WallClock
-  targetNode: clockworkWall
 
 - type: construction
   parent: Girder
@@ -94,11 +83,6 @@
   parent: Girder
   id: SilverWall
   targetNode: silverWall
-
-- type: construction
-  parent: Girder
-  id: PlasticWall
-  targetNode: plasticWall
 
 - type: construction
   parent: Girder
@@ -121,11 +105,6 @@
   name: construction-recipe-diagonal-shuttle-wall
   targetNode: diagonalshuttleWall
   canRotate: true
-
-- type: construction
-  parent: Girder
-  id: ClownWall
-  targetNode: bananiumWall
 
 - type: construction
   parent: Girder
@@ -154,21 +133,10 @@
 
 - type: construction
   parent: Grille
-  id: ClockGrille
-  graph: ClockGrille
-  targetNode: clockGrille
-
-- type: construction
-  parent: Grille
   id: GrilleDiagonal
   graph: GrilleDiagonal
   targetNode: grilleDiagonal
   canRotate: true
-
-- type: construction
-  parent: GrilleDiagonal
-  id: ClockworkGrilleDiagonal
-  targetNode: clockworkGrilleDiagonal
 # endregion Grilles
 
 # region Windows
@@ -198,17 +166,6 @@
   parent: BaseWindow
   id: TintedWindow
   targetNode: tintedWindow
-
-- type: construction
-  parent: BaseWindow
-  id: ClockworkWindow
-  targetNode: clockworkWindow
-
-- type: construction
-  parent: BaseWindowDiagonal
-  id: ClockworkWindowDiagonal
-  name: construction-recipe-clockwork-window-diagonal
-  targetNode: clockworkWindowDiagonal
 
 - type: construction
   parent: BaseWindow
@@ -267,14 +224,35 @@
   canRotate: true
 
 - type: construction
+  id: WindowDirectionalCorner
+  graph: WindowDirectionalCorner
+  startNode: start
+  targetNode: windowDirectionalCorner
+  category: construction-category-structures
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
   parent: WindowDirectional
   id: WindowReinforcedDirectional
   targetNode: windowReinforcedDirectional
 
 - type: construction
-  parent: WindowDirectional
-  id: WindowClockworkDirectional
-  targetNode: windowClockworkDirectional
+  id: WindowReinforcedDirectionalCorner
+  graph: WindowDirectionalCorner
+  startNode: start
+  targetNode: windowReinforcedDirectionalCorner
+  category: construction-category-structures
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
 
 - type: construction
   parent: WindowDirectional
@@ -282,10 +260,36 @@
   targetNode: plasmaWindowDirectional
 
 - type: construction
+  id: PlasmaWindowDirectionalCorner
+  graph: WindowDirectionalCorner
+  startNode: start
+  targetNode: plasmaWindowDirectionalCorner
+  category: construction-category-structures
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
   parent: WindowDirectional
   id: PlasmaReinforcedWindowDirectional
   targetNode: plasmaReinforcedWindowDirectional
 # endregion Windows
+
+- type: construction
+  id: PlasmaReinforcedWindowDirectionalCorner
+  graph: WindowDirectionalCorner
+  startNode: start
+  targetNode: plasmaReinforcedWindowDirectionalCorner
+  category: construction-category-structures
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
 
 # region Firelocks
 - type: construction
@@ -344,17 +348,6 @@
     - Lattice
     - Plating
 
-- type: construction
-  parent: BaseStructureFullTile
-  id: FloorBananium
-  graph: FloorBananium
-  targetNode: BananiumFloor
-  conditions:
-  - !type:TileNotBlocked
-    failIfSpace: false
-  - !type:TileType
-    targets:
-    - Plating
 # endregion Floors
 
 # region Barricades
@@ -498,19 +491,6 @@
   targetNode: glassAirlock
 
 - type: construction
-  parent: BaseStructureFullTile
-  id: PinionAirlock
-  name: construction-recipe-pinion-airlock
-  graph: PinionAirlock
-  targetNode: airlock
-
-- type: construction
-  parent: PinionAirlock
-  id: PinionAirlockGlass
-  name: construction-recipe-pinion-airlock-glass
-  targetNode: glassAirlock
-
-- type: construction
   parent: BaseStructureFullTileDirectional
   id: AirlockShuttle
   graph: AirlockShuttle
@@ -530,15 +510,6 @@
   graph: Windoor
   targetNode: windoor
 
-- type: construction
-  parent: Windoor
-  id: SecureWindoor
-  targetNode: windoorSecure
-
-- type: construction
-  parent: Windoor
-  id: ClockworkWindoor
-  targetNode: windoorClockwork
 # endregion Windoors
 
 # region Lighting
@@ -576,44 +547,34 @@
 # region Material Doors
 - type: construction
   parent: BaseStructureFullTileDirectional
-  id: MetalDoor
+  id: SilverDoor
   graph: DoorGraph
-  targetNode: metalDoor
+  targetNode: silverDoor
 
 - type: construction
-  parent: MetalDoor
+  parent: SilverDoor
   id: WoodDoor
   targetNode: woodDoor
 
 - type: construction
-  parent: MetalDoor
+  parent: SilverDoor
   id: PlasmaDoor
   targetNode: plasmaDoor
 
 - type: construction
-  parent: MetalDoor
+  parent: SilverDoor
   id: GoldDoor
   targetNode: goldDoor
 
 - type: construction
-  parent: MetalDoor
-  id: SilverDoor
-  targetNode: silverDoor
-
-- type: construction
-  parent: MetalDoor
+  parent: SilverDoor
   id: PaperDoor
   targetNode: paperDoor
 
 - type: construction
-  parent: MetalDoor
+  parent: SilverDoor
   id: CardDoor
   targetNode: cardDoor
-
-- type: construction
-  parent: MetalDoor
-  id: BananiumDoor
-  targetNode: bananiumDoor
 # endregion Material Doors
 
 # region Plastic Flaps
@@ -640,9 +601,9 @@
 
 - type: construction
   parent: BaseStructureFullTile
-  id: BananiumClownStatue
-  graph: BananiumStatueClown
-  targetNode: bananiumStatue
+  id: OrnateClownStatue
+  graph: OrnateStatueClown
+  targetNode: ornateStatueClown
 
 - type: construction
   parent: BaseStructureFullTile
@@ -663,9 +624,9 @@
 
 - type: construction
   parent: BaseStructureFullTileDirectional
-  id: Turnstile
-  graph: Turnstile
-  targetNode: turnstile
+  id: EnergyGate
+  graph: EnergyGate
+  targetNode: energyGate
 
 - type: construction
   parent: BaseStructureFullTileDirectional

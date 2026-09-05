@@ -109,7 +109,7 @@
     - type: Cartridge
       programName: log-probe-program-name
       icon:
-        sprite: Structures/Doors/Airlocks/Standard/security.rsi
+        sprite: Structures/Doors/Airlocks/Standard/security-base.rsi
         state: closed
     - type: LogProbeCartridge
     - type: GuideHelp

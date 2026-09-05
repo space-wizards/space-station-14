@@ -1,0 +1,76 @@
+# Modifier sets for non-species mobs
+
+- type: damageModifierSet
+  id: SlimePet # Very survivable slimes
+  coefficients:
+    Blunt: 0.5
+    Slash: 0.8
+    Piercing: 0.8
+    Cold: 1.0
+    Poison: 0.2
+    Cellular: 0.0
+    Radiation: 0.2
+    Caustic: 0.0
+
+- type: damageModifierSet
+  id: Cockroach
+  coefficients:
+    Blunt: 1.0
+    Slash: 1.0
+    Piercing: 1.0
+    Cold: 1.0
+    Poison: 1.0
+    Cellular: 1.0
+    Radiation: 0.0 # hehe funny cockroach immune to rads
+    Caustic: 1.0
+
+# Massive heat damage, presumably to kill with lasers
+- type: damageModifierSet
+  id: LivingLight
+  coefficients:
+    Blunt: 0.8
+    Slash: 0.8
+    Piercing: 0.7
+    Shock: 0.0
+    Cold: 0.0
+    Poison: 0.0
+    Radiation: 0.0
+    Cellular: 0.0
+    Heat: 2.5
+    Caustic: 0.0
+
+- type: damageModifierSet
+  id: Zombie #Blunt resistant and immune to biological threats, but can be hacked apart and burned
+  coefficients:
+    Blunt: 0.6
+    Piercing: 0.8
+    Cold: 0.3
+    Heat: 1.25
+    Poison: 0.0
+    Radiation: 0.0
+
+- type: damageModifierSet
+  id: Infernal
+  coefficients:
+    Blunt: 0.8
+    Slash: 0.8
+    Piercing: 0.8
+    Cold: 0.8
+    Heat: 0.2
+    Holy: 1.5
+  flatReductions:
+    Heat: 3
+
+- type: damageModifierSet
+  id: HellSpawn
+  coefficients:
+    Heat: 0.0
+    Radiation: 0.0
+    Shock: 0.8
+    Bloodloss: 0.4
+    Holy: 1
+
+- type: damageModifierSet
+  id: ManifestedSpirit
+  coefficients:
+    Holy: 2

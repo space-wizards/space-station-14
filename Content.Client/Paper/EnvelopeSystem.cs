@@ -3,7 +3,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Paper;
 
-public sealed class EnvelopeSystem : VisualizerSystem<EnvelopeComponent>
+public sealed partial class EnvelopeSystem : VisualizerSystem<EnvelopeComponent>
 {
     public override void Initialize()
     {

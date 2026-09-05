@@ -79,10 +79,12 @@
     damageRecovery:
       types:
         Asphyxiation: -1.0
-  - type: Hunger
-    baseDecayRate: 0.0083
-  - type: Thirst
-    baseDecayRate: 0.0083
+  - type: Satiation
+    satiations:
+      Hunger:
+        prototype: DionaHunger
+      Thirst:
+        prototype: DionaThirst
   - type: Damageable
     damageModifierSet: Diona
   - type: DamageVisuals
@@ -278,7 +280,16 @@
     stages: [ Digestion, Bloodstream, Metabolites ]
 
 - type: entity
-  parent: OrganDionaBrain
+  abstract: true
+  id: BaseNymphingOrgan
+  components:
+  - type: Nymph
+    blacklist:
+      components:
+      - ChangelingTransform
+
+- type: entity
+  parent: [ OrganDionaBrain, BaseNymphingOrgan ]
   suffix: "Diona, Nymphing"
   id: OrganDionaBrainNymphing
   components:
@@ -287,7 +298,7 @@
     entityPrototype: OrganDionaNymphBrain
 
 - type: entity
-  parent: OrganDionaLungs
+  parent: [ OrganDionaLungs, BaseNymphingOrgan ]
   suffix: "Diona, Nymphing"
   id: OrganDionaLungsNymphing
   components:
@@ -295,7 +306,7 @@
     entityPrototype: OrganDionaNymphLungs
 
 - type: entity
-  parent: OrganDionaStomach
+  parent: [ OrganDionaStomach, BaseNymphingOrgan ]
   suffix: "Diona, Nymphing"
   id: OrganDionaStomachNymphing
   components:

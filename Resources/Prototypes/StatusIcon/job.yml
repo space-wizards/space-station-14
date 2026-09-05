@@ -23,6 +23,24 @@
     state: ShaftMiner
   jobName: job-name-salvagespec
 
+# Civilian
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconPassenger
+  icon:
+    sprite: *icon-rsi
+    state: Passenger
+  jobName: job-name-passenger
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconVisitor
+  icon:
+    sprite: *icon-rsi
+    state: Visitor
+  jobName: job-name-visitor
+
 # Command
 
 - type: jobIcon
@@ -323,6 +341,14 @@
     state: Zookeeper
   jobName: job-name-zookeeper
 
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconTramDriver
+  icon:
+    sprite: *icon-rsi
+    state: TramDriver
+  jobName: job-name-tramdriver
+
 # Entertainer (like service, but not actually service)
 
 - type: jobIcon
@@ -348,24 +374,6 @@
     sprite: *icon-rsi
     state: Musician
   jobName: job-name-musician
-
-# Passenger
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconPassenger
-  icon:
-    sprite: *icon-rsi
-    state: Passenger
-  jobName: job-name-passenger
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconVisitor
-  icon:
-    sprite: *icon-rsi
-    state: Visitor
-  jobName: job-name-visitor
 
 # Silicon
 
@@ -607,3 +615,11 @@
     state: Unknown
   jobName: job-name-unknown
   isCrewJob: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSus
+  icon:
+    sprite: *icon-rsi
+    state: Sus
+  jobName: job-name-sus

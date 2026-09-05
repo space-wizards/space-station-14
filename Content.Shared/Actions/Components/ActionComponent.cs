@@ -4,7 +4,6 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Actions.Components;
 
@@ -16,46 +15,6 @@ namespace Content.Shared.Actions.Components;
 [EntityCategory("Actions")]
 public sealed partial class ActionComponent : Component
 {
-    /// <summary>
-    ///     Icon representing this action in the UI.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public SpriteSpecifier? Icon;
-
-    /// <summary>
-    ///     For toggle actions only, icon to show when toggled on. If omitted, the action will simply be highlighted
-    ///     when turned on.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public SpriteSpecifier? IconOn;
-
-    /// <summary>
-    ///     For toggle actions only, background to show when toggled on.
-    /// </summary>
-    [DataField]
-    public SpriteSpecifier? BackgroundOn;
-
-    /// <summary>
-    ///     If not null, this color will modulate the action icon color.
-    /// </summary>
-    /// <remarks>
-    ///     This currently only exists for decal-placement actions, so that the action icons correspond to the color of
-    ///     the decal. But this is probably useful for other actions, including maybe changing color on toggle.
-    /// </remarks>
-    [DataField, AutoNetworkedField]
-    public Color IconColor = Color.White;
-
-    /// <summary>
-    ///     The original <see cref="IconColor"/> this action was.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public Color OriginalIconColor;
-
-    /// <summary>
-    ///     The color the action should turn to when disabled
-    /// </summary>
-    [DataField] public Color DisabledIconColor = Color.DimGray;
-
     /// <summary>
     ///     Keywords that can be used to search for this action in the action menu.
     /// </summary>
@@ -69,7 +28,7 @@ public sealed partial class ActionComponent : Component
     public bool Enabled = true;
 
     /// <summary>
-    ///     The toggle state of this action. Toggling switches the currently displayed icon, see <see cref="Icon"/> and <see cref="IconOn"/>.
+    ///     The toggle state of this action. Toggling switches the currently displayed icon layer.
     /// </summary>
     /// <remarks>
     ///     The toggle can set directly via <see cref="SharedActionsSystem.SetToggled"/>, but it will also be
