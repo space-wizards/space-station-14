@@ -8,7 +8,8 @@ namespace Content.Shared.Station.Components;
 /// Stores core information about a station, namely its config and associated grids.
 /// All station entities will have this component.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedStationSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedStationSystem))]
+[AutoGenerateComponentState, AutoGenerateEntityRelations(shutdownEvent: false)]
 public sealed partial class StationDataComponent : Component
 {
     /// <summary>
@@ -26,6 +27,6 @@ public sealed partial class StationDataComponent : Component
     /// <summary>
     /// List of all grids this station is part of.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public HashSet<EntityUid> Grids = new();
+    [DataField, AutoNetworkedField, AutoRelationField]
+    public HashSet<EntityRelation> Grids = new();
 }

@@ -64,7 +64,10 @@ public sealed class StationsCommand : ToolshedCommand
 
     [CommandImplementation("grids")]
     public IEnumerable<EntityUid> Grids([PipedArgument] EntityUid input)
-        => Comp<StationDataComponent>(input).Grids;
+        => Comp<StationDataComponent>(input)
+            .Grids
+            .Where(x => x.Entity != null)
+            .Select(x => x.Entity!.Value);
 
     [CommandImplementation("grids")]
     public IEnumerable<EntityUid> Grids([PipedArgument] IEnumerable<EntityUid> input)

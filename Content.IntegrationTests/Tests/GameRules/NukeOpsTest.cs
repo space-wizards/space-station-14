@@ -197,7 +197,7 @@ public sealed class NukeOpsTest : GameTest
 
         var targetStation = entMan.GetComponent<StationDataComponent>(ruleComp.TargetStation!.Value);
         var targetGrid = targetStation.Grids.First();
-        var targetMap = entMan.GetComponent<TransformComponent>(targetGrid).MapUid!.Value;
+        var targetMap = entMan.GetComponent<TransformComponent>(targetGrid.Entity!.Value).MapUid!.Value;
         Assert.That(targetMap, Is.Not.EqualTo(nukieMap));
 
         Assert.That(entMan.GetComponent<TransformComponent>(player).MapUid, Is.EqualTo(nukieMap));

@@ -15,7 +15,8 @@ namespace Content.Shared.Anomaly.Components;
 ///
 /// Anomalies and their related components were designed here: https://hackmd.io/@ss14-design/r1sQbkJOs
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState, AutoGenerateComponentPause, AutoGenerateEntityRelations(shutdownEvent: false)]
 [Access(typeof(SharedAnomalySystem), typeof(SharedInnerBodyAnomalySystem))]
 public sealed partial class AnomalyComponent : Component
 {
@@ -192,8 +193,8 @@ public sealed partial class AnomalyComponent : Component
     /// The vessel that the anomaly is connceted to. Stored so that multiple
     /// vessels cannot connect to the same anomaly.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public EntityUid? ConnectedVessel;
+    [DataField, AutoRelationField]
+    public EntityRelation ConnectedVessel;
 
     /// <summary>
     /// The minimum amount of research points generated per second

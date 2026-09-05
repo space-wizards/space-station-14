@@ -1,12 +1,10 @@
-using Content.Server.Station.Systems;
-
 namespace Content.Server.Cargo.Components;
 
 /// <summary>
 /// This is used for marking containers as
 /// containing goods for fulfilling bounties.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, AutoGenerateEntityRelations]
 public sealed partial class CargoBountyLabelComponent : Component
 {
     /// <summary>
@@ -23,6 +21,6 @@ public sealed partial class CargoBountyLabelComponent : Component
     /// <summary>
     /// The Station System to check and remove bounties from
     /// </summary>
-    [DataField]
-    public EntityUid? AssociatedStationId;
+    [DataField, AutoRelationField]
+    public EntityRelation AssociatedStationId;
 }

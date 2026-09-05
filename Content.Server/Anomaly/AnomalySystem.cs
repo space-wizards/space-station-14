@@ -87,6 +87,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
             RemoveBehavior(anomaly, anomaly.Comp.CurrentBehavior.Value);
 
         EndAnomaly(anomaly, spawnCore: false);
+        AnomalyComponent.ClearComponentRelations(anomaly, EntityManager);
     }
 
     private void OnStartCollide(Entity<AnomalyComponent> anomaly, ref StartCollideEvent args)

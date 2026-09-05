@@ -249,7 +249,10 @@ public sealed partial class ShuttleSystem
 
                     if (TryComp<StationMemberComponent>(xform.GridUid, out var stationMember))
                     {
-                        _station.AddGridToStation(stationMember.Station, grid.Value);
+                        if (stationMember.Station.Entity == null)
+                            return;
+
+                        _station.AddGridToStation(stationMember.Station.Entity.Value, grid.Value);
                     }
 
                     valid = true;

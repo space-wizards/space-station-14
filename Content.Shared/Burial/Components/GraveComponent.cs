@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Burial.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateEntityRelations]
 public sealed partial class GraveComponent : Component
 {
     /// <summary>
@@ -35,8 +35,8 @@ public sealed partial class GraveComponent : Component
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public bool DiggingComplete = false;
 
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public EntityUid? Stream;
+    [DataField, AutoRelationField]
+    public EntityRelation Stream;
 
     /// <summary>
     /// Auto-networked field to track shovel digging.

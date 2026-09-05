@@ -58,8 +58,8 @@ public sealed partial class DragonRiftSystem : EntitySystem
                 // TODO: When we get autocall you can buff if the rift finishes / 3 rifts are up
                 // for now they just keep 3 rifts up.
 
-                if (comp.Dragon != null)
-                    _dragon.RiftCharged(comp.Dragon.Value);
+                if (comp.Dragon.Entity != null)
+                    _dragon.RiftCharged(comp.Dragon.Entity.Value);
 
                 comp.Accumulator = comp.MaxAccumulator;
                 RemComp<DamageableComponent>(uid);
@@ -98,8 +98,8 @@ public sealed partial class DragonRiftSystem : EntitySystem
                     Dirty(ent, spawnedSprite);
                 }
 
-                if (comp.Dragon != null)
-                    _npc.SetBlackboard(ent, NPCBlackboard.FollowTarget, new EntityCoordinates(comp.Dragon.Value, Vector2.Zero));
+                if (comp.Dragon.Entity != null)
+                    _npc.SetBlackboard(ent, NPCBlackboard.FollowTarget, new EntityCoordinates(comp.Dragon.Entity.Value, Vector2.Zero));
             }
         }
     }
@@ -119,9 +119,10 @@ public sealed partial class DragonRiftSystem : EntitySystem
 
     private void OnShutdown(EntityUid uid, DragonRiftComponent comp, ComponentShutdown args)
     {
-        if (!TryComp<DragonComponent>(comp.Dragon, out var dragon) || dragon.Weakened)
+        if (!TryComp<DragonComponent>(comp.Dragon.Entity, out var dragon) || dragon.Weakened)
             return;
 
-        _dragon.RiftDestroyed(comp.Dragon.Value, dragon);
+        _dragon.RiftDestroyed(comp.Dragon.Entity.Value, dragon);
+        DragonRiftComponent.ClearComponentRelations((uid, comp), EntityManager);
     }
 }

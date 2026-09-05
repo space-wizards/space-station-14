@@ -2,7 +2,6 @@ using System.Linq;
 using System.Threading;
 using Content.Server.Salvage.Expeditions;
 using Content.Shared.CCVar;
-using Content.Shared.Examine;
 using Content.Shared.Salvage.Expeditions;
 using Content.Shared.Shuttles.Components;
 using Robust.Shared.CPUJob.JobQueues;
@@ -69,7 +68,7 @@ public sealed partial class SalvageSystem
 
     private void OnExpeditionShutdown(EntityUid uid, SalvageExpeditionComponent component, ComponentShutdown args)
     {
-        component.Stream = _audio.Stop(component.Stream);
+        _audio.Stop(component.Stream);
 
         // First wipe any disks referencing us
         var disks = AllEntityQuery<ShuttleDestinationCoordinatesComponent>();

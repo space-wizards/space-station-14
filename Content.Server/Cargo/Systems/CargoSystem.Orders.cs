@@ -303,10 +303,13 @@ namespace Content.Server.Cargo.Systems
         {
             foreach (var gridUid in data.Grids)
             {
+                if (gridUid.Entity == null)
+                    continue;
+
                 if (!_tradeStationQuery.HasComponent(gridUid))
                     continue;
 
-                ents.Add(gridUid);
+                ents.Add(gridUid.Entity.Value);
             }
         }
 
