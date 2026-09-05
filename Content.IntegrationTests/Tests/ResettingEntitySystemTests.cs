@@ -31,7 +31,6 @@ namespace Content.IntegrationTests.Tests
         {
             DummyTicker = false,
             Connected = true,
-            Dirty = true
         };
 
         [Test]

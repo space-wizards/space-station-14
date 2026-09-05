@@ -10,7 +10,7 @@ namespace Content.IntegrationTests.Tests.Roles;
 [TestFixture]
 public sealed class StartingGearPrototypeStorageTest : GameTest
 {
-    public override PoolSettings PoolSettings => new() { Connected = true, Dirty = true };
+    public override PoolSettings PoolSettings => new() { Connected = true };
 
     /// <summary>
     /// Checks that a storage fill on a StartingGearPrototype will properly fill
