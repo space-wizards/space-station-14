@@ -46,4 +46,8 @@ public sealed partial class VendingMachineComponent : Component
     public EntityUid? RestockStream;
 }
 
-public sealed partial class VendingMachineSelfDispenseEvent : InstantActionEvent;
+public sealed partial class VendingMachineSelfDispenseEvent : InstantActionEvent
+{
+    [DataField]
+    public bool ThrowItem { get; set; } = true;
+}
