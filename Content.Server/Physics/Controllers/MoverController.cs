@@ -23,7 +23,6 @@ public sealed partial class MoverController : SharedMoverController
 
     [Dependency] private ThrusterSystem _thruster = default!;
 
-    [Dependency] private EntityQuery<ActiveInputMoverComponent> _activeQuery = default!;
     [Dependency] private EntityQuery<DroneConsoleComponent> _droneQuery = default!;
     [Dependency] private EntityQuery<ShuttleComponent> _shuttleQuery = default!;
 
@@ -38,21 +37,12 @@ public sealed partial class MoverController : SharedMoverController
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ActiveInputMoverComponent, EntityPausedEvent>(OnEntityPaused);
         SubscribeLocalEvent<InputMoverComponent, EntityUnpausedEvent>(OnEntityUnpaused);
 
         SubscribeLocalEvent<RelayInputMoverComponent, PlayerAttachedEvent>(OnRelayPlayerAttached);
         SubscribeLocalEvent<RelayInputMoverComponent, PlayerDetachedEvent>(OnRelayPlayerDetached);
         SubscribeLocalEvent<InputMoverComponent, PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<InputMoverComponent, PlayerDetachedEvent>(OnPlayerDetached);
-    }
-
-    private void OnEntityPaused(Entity<ActiveInputMoverComponent> ent, ref EntityPausedEvent args)
-    {
-        // Become unactive [sic] if we don't have PhysicsComp.IgnorePaused
-        if (PhysicsQuery.TryComp(ent, out var phys) && phys.IgnorePaused)
-            return;
-        RemCompDeferred<ActiveInputMoverComponent>(ent);
     }
 
     private void OnEntityUnpaused(Entity<InputMoverComponent> ent, ref EntityUnpausedEvent args)
@@ -80,18 +70,12 @@ public sealed partial class MoverController : SharedMoverController
         {
             if (!MoverQuery.Resolve(ent, ref ent.Comp1, logMissing: false))
             {
-                RemCompDeferred<ActiveInputMoverComponent>(ent);
                 break;
             }
 
             var meta = MetaData(ent);
             if (Terminating(ent, meta))
                 break;
-
-            ActiveInputMoverComponent? activeMover = null;
-            if (!meta.EntityPaused
-                || PhysicsQuery.TryComp(ent, out var phys) && phys.IgnorePaused)
-                activeMover = EnsureComp<ActiveInputMoverComponent>(ent);
 
             // If we're a relay target, make sure our drivers are InputMovers
             if (RelayTargetQuery.Resolve(ent, ref ent.Comp2, logMissing: false)
@@ -106,17 +90,10 @@ public sealed partial class MoverController : SharedMoverController
                     break;
                 }
 
-                if (activeMover is not null)
-                    activeMover.RelayedFrom = ent.Comp2.Source;
-
                 ent = ent.Comp2.Source;
                 _seenMovers.Add(ent);
                 continue;
             }
-
-            // No longer a well-defined relay target
-            if (activeMover is not null)
-                activeMover.RelayedFrom = null;
 
             break;
         }
@@ -158,13 +135,15 @@ public sealed partial class MoverController : SharedMoverController
         _seenMovers.Clear();
         _moversToUpdate.Clear();
 
-        // Don't use EntityQueryEnumerator because admin ghosts have to move on
-        // paused maps. Pausing movers is handled via ActiveInputMoverComponent.
-        var inputQueryEnumerator = AllEntityQuery<ActiveInputMoverComponent, InputMoverComponent>();
-        while (inputQueryEnumerator.MoveNext(out var uid, out var activeComp, out var moverComp))
+        // Don't use EntityQueryEnumerator because admin ghosts have to move on paused maps.
+        var inputQueryEnumerator = AllEntityQuery<InputMoverComponent>();
+        while (inputQueryEnumerator.MoveNext(out var uid, out var moverComp))
         {
             _seenRelayMovers.Clear(); // O(1) if already empty
-            QueueRelaySources(activeComp.RelayedFrom);
+            if (RelayTargetQuery.TryComp(uid, out var relayTarget))
+            {
+                QueueRelaySources(relayTarget.Source);
+            }
 
             // If it's already inserted, that's fine—that means it'll still be
             // handled before its child movers
@@ -187,18 +166,16 @@ public sealed partial class MoverController : SharedMoverController
         void QueueRelaySources(EntityUid? next)
         {
             // We only care if it's still a mover
-            if (!_activeQuery.TryComp(next, out var nextActive)
+            if (!RelayTargetQuery.TryComp(next, out var nextRelayTarget)
                 || !MoverQuery.TryComp(next, out var nextMover)
+                // _seenRelayMovers will track any relay loops and
+                // ensure this function will always terminate:
                 || !_seenRelayMovers.Add(next.Value))
                 return;
 
-            Debug.Assert(next.Value != nextActive.RelayedFrom);
+            Debug.Assert(next.Value != nextRelayTarget.Source);
 
-            // While it is (as of writing) currently true that this recursion
-            // should always terminate due to RelayedFrom always being written
-            // in a way that tracks if it's made a loop, we still take the extra
-            // memory (and small time cost) of making sure via _seenRelayMovers.
-            QueueRelaySources(nextActive.RelayedFrom);
+            QueueRelaySources(nextRelayTarget.Source);
             AddMover((next.Value, nextMover));
         }
 
