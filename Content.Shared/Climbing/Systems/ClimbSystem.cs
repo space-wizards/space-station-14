@@ -24,6 +24,7 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Climbing.Systems;
 
@@ -174,11 +175,11 @@ public sealed partial class ClimbSystem : VirtualController
         if (!TryComp(args.User, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing || !climbingComponent.CanClimb)
             return;
 
-        // TODO VERBS ICON add a climbing icon?
         args.Verbs.Add(new AlternativeVerb
         {
             Act = () => TryClimb(args.User, args.User, args.Target, out _, component),
-            Text = Loc.GetString("comp-climbable-verb-climb")
+            Text = Loc.GetString("comp-climbable-verb-climb"),
+            Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/vault.svg.192dpi.png")),
         });
     }
 
@@ -228,7 +229,7 @@ public sealed partial class ClimbSystem : VirtualController
             used: entityToMove)
         {
             BreakOnMove = true,
-            BreakOnDamage = true,
+            BreakOnDamage = user != entityToMove,
             DuplicateCondition = DuplicateConditions.SameTool | DuplicateConditions.SameTarget
         };
 
