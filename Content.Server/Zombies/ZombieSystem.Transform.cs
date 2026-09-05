@@ -15,8 +15,8 @@ using Content.Shared.Body;
 using Content.Shared.Body.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.CombatMode.Pacification;
+using Content.Shared.Cuffs;
 using Content.Shared.Ghost.Roles.Components;
-using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
@@ -43,6 +43,9 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.Shared.StatusEffectNew.Components;
+using Content.Shared.StatusEffectNew;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Zombies;
 
@@ -71,12 +74,16 @@ public sealed partial class ZombieSystem
     [Dependency] private NPCSystem _npc = default!;
     [Dependency] private TagSystem _tag = default!;
     [Dependency] private ISharedPlayerManager _player = default!;
+    [Dependency] private SharedContainerSystem _containerSystem = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private SharedCuffableSystem _cuffable = default!;
 
     private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
     private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
     private static readonly ProtoId<NpcFactionPrototype> ZombieFaction = "Zombie";
     private static readonly string MindRoleZombie = "MindRoleZombie";
     private static readonly List<ProtoId<AntagPrototype>> BannableZombiePrototypes = ["Zombie"];
+    private static readonly EntProtoId<StatusEffectComponent> ClumsyZombieStatus = "StatusEffectClumsyZombie";
     internal static readonly HashSet<HumanoidVisualLayers> AdditionalZombieLayers = [HumanoidVisualLayers.Tail, HumanoidVisualLayers.HeadSide, HumanoidVisualLayers.HeadTop, HumanoidVisualLayers.Snout];
 
     /// <summary>
@@ -312,10 +319,20 @@ public sealed partial class ZombieSystem
             MakeGhostRole(target);
         }
 
-        if (TryComp<HandsComponent>(target, out var handsComp))
+        // forcibly empties hands (even if they contain something sticky/unremovable)
+        foreach (var hand in _hands.EnumerateHands(target))
         {
-            _hands.RemoveHands(target);
-            RemComp(target, handsComp);
+            if (_containerSystem.TryGetContainer(target, hand, out var handContainer))
+                _containerSystem.EmptyContainer(handContainer, true);
+        }
+
+        // the zombie is now clumsy. it will drop anything handed to it.
+        _statusEffects.TrySetStatusEffectDuration(target, ClumsyZombieStatus);
+
+        // Uncuffing the zombie
+        while (_cuffable.TryGetLastCuff(target, out var cuff))
+        {
+            _cuffable.Uncuff(target, null, cuff.Value);
         }
 
         // Sloth: What the fuck?
