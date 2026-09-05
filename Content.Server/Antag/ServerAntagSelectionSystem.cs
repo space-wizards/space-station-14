@@ -82,7 +82,7 @@ public sealed partial class ServerAntagSelectionSystem : AntagSelectionSystem
         // If someone fails to spawn in due to there being no jobs, they should be removed from any preselected antags.
         // We only care about delayed rules, since if they're active the player should have already been removed via MakeAntag.
         var query = QueryDelayedRules();
-        while (query.MoveNext(out var uid, out _, out var comp, out _))
+        while (query.MoveNext(out var uid, out var comp, out _, out _))
         {
             if (comp.SelectionTime == AntagSelectionTime.RuleStarted)
                 continue;
