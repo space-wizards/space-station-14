@@ -15,8 +15,8 @@ uplink-clothing-no-slips-shoes-desc = Chameleon shoes that protect you from slip
 uplink-clothing-outer-vest-web-name = Web Vest
 uplink-clothing-outer-vest-web-desc = A synthetic armor vest. This one has added webbing and ballistic plates.
 
-uplink-clothing-outer-vest-web-elite-name = Energy Web Vest
-uplink-clothing-outer-vest-web-elite-desc = A synthetic armor vest. This one has added webbing with heat and radiation resistant fibers, with the trade-off of weaker ballistic protection.
+uplink-clothing-outer-vest-web-energy-name = Energy Web Vest
+uplink-clothing-outer-vest-web-energy-desc = A synthetic armor vest. This one has added webbing with heat and radiation resistant fibers, with the trade-off of weaker ballistic protection.
 
 uplink-clothing-shoes-boots-mag-syndie-name = Blood-red Magboots
 uplink-clothing-shoes-boots-mag-syndie-desc = A pair of boots that when turned on prevent slipping and, in zero gravity, allow you to move normally, at the cost of a slight slowdown. Additionally, they have jetpack functionality and come fueled, but don't last for long.
