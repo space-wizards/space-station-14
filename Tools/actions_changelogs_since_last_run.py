@@ -17,10 +17,11 @@ import requests
 import yaml
 import time
 
+import actions_changelog_github
+
 DEBUG = os.environ.get("SS14_CHANGELOG_DEBUG", "").lower() in {"1", "true", "yes"}
 DEBUG_CHANGELOG_FILE_OLD = Path("Resources/Changelog/Old.yml")
 DEBUG_DISCORD_DUMP_FILE = Path("Resources/Changelog/DiscordDebug.md")
-GITHUB_API_URL = os.environ.get("GITHUB_API_URL", "https://api.github.com")
 
 # https://discord.com/developers/docs/resources/webhook
 DISCORD_SPLIT_LIMIT = 2000
@@ -65,75 +66,24 @@ def main():
     send_message_lines(message_lines)
 
 
-def get_most_recent_workflow(
-    sess: requests.Session, github_repository: str, github_run: str
-) -> Any:
-    workflow_run = get_current_run(sess, github_repository, github_run)
-    past_runs = get_past_runs(sess, workflow_run)
-    for run in past_runs:
-        return run
-
-    raise RuntimeError("Could not find a previous successful workflow run")
-
-
-def get_current_run(
-    sess: requests.Session, github_repository: str, github_run: str
-) -> Any:
-    resp = sess.get(
-        f"{GITHUB_API_URL}/repos/{github_repository}/actions/runs/{github_run}"
-    )
-    resp.raise_for_status()
-    return resp.json()
-
-
-def get_past_runs(sess: requests.Session, current_run: Any) -> Iterable[Any]:
-    """
-    Get all successful workflow runs before our current one.
-    """
-    params = {
-        "status": "success",
-        "created": f"<={current_run['created_at']}",
-        "per_page": 100,
-    }
-    url = f"{current_run['workflow_url']}/runs"
-
-    while url:
-        resp = sess.get(url, params=params)
-        resp.raise_for_status()
-
-        for run in resp.json()["workflow_runs"]:
-            # First past successful run that isn't our current run.
-            if run["id"] == current_run["id"]:
-                continue
-
-            yield run
-
-        next_url = resp.links.get("next", {}).get("url")
-        if not next_url:
-            break
-
-        url = next_url
-        params = None
-
-
 def get_last_changelog() -> str:
-    github_repository = os.environ["GITHUB_REPOSITORY"]
-    github_run = os.environ["GITHUB_RUN_ID"]
-    github_token = os.environ["GITHUB_TOKEN"]
-
-    session = requests.Session()
-    session.headers["Authorization"] = f"Bearer {github_token}"
-    session.headers["Accept"] = "application/vnd.github+json"
-    session.headers["X-GitHub-Api-Version"] = "2022-11-28"
-
-    most_recent = get_most_recent_workflow(session, github_repository, github_run)
-    last_sha = most_recent["head_commit"]["id"]
-    print(f"Last successful publish job was {most_recent['id']}: {last_sha}")
-    last_changelog_stream = get_last_changelog_by_sha(
-        session, last_sha, github_repository
+    github_repository, github_run, github_token = (
+        actions_changelog_github.get_required_github_env()
     )
 
-    return last_changelog_stream
+    session = actions_changelog_github.make_github_session(github_token)
+
+    # If a previous workflow step already computed the last successful publish's
+    # SHA, reuse it instead of querying the GitHub Actions API for the same info.
+    last_sha = os.environ.get("LAST_PUBLISH_SHA")
+    if last_sha:
+        print(f"Using last publish SHA from environment: {last_sha}")
+    else:
+        last_sha = actions_changelog_github.get_last_publish_sha(
+            session, github_repository, github_run
+        )
+
+    return get_last_changelog_by_sha(session, last_sha, github_repository)
 
 
 def get_last_changelog_by_sha(
@@ -148,7 +98,7 @@ def get_last_changelog_by_sha(
     headers = {"Accept": "application/vnd.github.raw"}
 
     resp = sess.get(
-        f"{GITHUB_API_URL}/repos/{github_repository}/contents/{CHANGELOG_FILE}",
+        f"{actions_changelog_github.GITHUB_API_URL}/repos/{github_repository}/contents/{CHANGELOG_FILE}",
         headers=headers,
         params=params,
     )
