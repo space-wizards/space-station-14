@@ -1,81 +1,94 @@
 using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
-namespace Content.Client.Chemistry.UI
+namespace Content.Client.Chemistry.UI;
+
+/// <summary>
+/// Initializes a <see cref="ChemMasterWindow"/> and updates it when new server messages are received.
+/// </summary>
+[UsedImplicitly]
+public sealed class ChemMasterBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
+    [ViewVariables]
+    private ChemMasterWindow? _window;
+
     /// <summary>
-    /// Initializes a <see cref="ChemMasterWindow"/> and updates it when new server messages are received.
+    /// Called each time a chem master UI instance is opened. Generates the window and fills it with
+    /// relevant info. Sets the actions for static buttons.
     /// </summary>
-    [UsedImplicitly]
-    public sealed class ChemMasterBoundUserInterface : BoundUserInterface
+    protected override void Open()
     {
-        [ViewVariables]
-        private ChemMasterWindow? _window;
+        base.Open();
 
-        public ChemMasterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        // Setup window layout/elements
+        _window = this.CreateWindow<ChemMasterWindow>();
+        _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+
+        // Setup static button actions.
+        _window.InputEjectButton.OnPressed += _ => SendPredictedMessage(
+            new ItemSlotButtonPressedEvent(ChemMasterConstants.InputSlotName));
+        _window.OutputEjectButton.OnPressed += _ => SendPredictedMessage(
+            new ItemSlotButtonPressedEvent(ChemMasterConstants.OutputSlotName));
+        _window.BufferTransferButton.OnPressed += _ => SendPredictedMessage(
+            new ChemMasterSetModeMessage(ChemMasterMode.Transfer));
+        _window.BufferDiscardButton.OnPressed += _ => SendPredictedMessage(
+            new ChemMasterSetModeMessage(ChemMasterMode.Discard));
+        _window.CreatePillButton.OnPressed += _ => SendPredictedMessage(
+            new ChemMasterCreatePillsMessage(
+                (uint) _window.PillDosage.Value,
+                (uint) _window.PillNumber.Value,
+                _window.LabelLine));
+        _window.CreateBottleButton.OnPressed += _ => SendPredictedMessage(
+            new ChemMasterOutputToBottleMessage(
+                (uint) _window.BottleDosage.Value,
+                _window.LabelLine));
+        _window.BufferSortButton.OnPressed += _ => SendPredictedMessage(
+            new ChemMasterSortingTypeCycleMessage());
+        _window.OutputBufferDraw.OnPressed += _ => SendPredictedMessage(
+            new ChemMasterOutputDrawSourceMessage(ChemMasterDrawSource.Internal));
+        _window.OutputBeakerDraw.OnPressed += _ => SendPredictedMessage(
+            new ChemMasterOutputDrawSourceMessage(ChemMasterDrawSource.External));
+
+        for (uint i = 0; i < _window.PillTypeButtons.Length; i++)
         {
+            var pillType = i;
+            _window.PillTypeButtons[i].OnPressed += _ => SendPredictedMessage(new ChemMasterSetPillTypeMessage(pillType));
         }
 
-        /// <summary>
-        /// Called each time a chem master UI instance is opened. Generates the window and fills it with
-        /// relevant info. Sets the actions for static buttons.
-        /// </summary>
-        protected override void Open()
-        {
-            base.Open();
+        if (EntMan.TryGetComponent(Owner, out ChemMasterComponent? chemMaster))
+            _window.SetupButtonPress((Owner, chemMaster));
 
-            // Setup window layout/elements
-            _window = this.CreateWindow<ChemMasterWindow>();
-            _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+        _window.OnReagentButtonPressed += (_, button) =>
+            SendPredictedMessage(new ChemMasterReagentAmountButtonMessage(button.Id, button.Amount, button.IsBuffer));
+    }
 
-            // Setup static button actions.
-            _window.InputEjectButton.OnPressed += _ => SendMessage(
-                new ItemSlotButtonPressedEvent(SharedChemMaster.InputSlotName));
-            _window.OutputEjectButton.OnPressed += _ => SendMessage(
-                new ItemSlotButtonPressedEvent(SharedChemMaster.OutputSlotName));
-            _window.BufferTransferButton.OnPressed += _ => SendMessage(
-                new ChemMasterSetModeMessage(ChemMasterMode.Transfer));
-            _window.BufferDiscardButton.OnPressed += _ => SendMessage(
-                new ChemMasterSetModeMessage(ChemMasterMode.Discard));
-            _window.CreatePillButton.OnPressed += _ => SendMessage(
-                new ChemMasterCreatePillsMessage(
-                    (uint) _window.PillDosage.Value, (uint) _window.PillNumber.Value, _window.LabelLine));
-            _window.CreateBottleButton.OnPressed += _ => SendMessage(
-                new ChemMasterOutputToBottleMessage(
-                    (uint) _window.BottleDosage.Value, _window.LabelLine));
-            _window.BufferSortButton.OnPressed += _ => SendMessage(
-                    new ChemMasterSortingTypeCycleMessage());
-            _window.OutputBufferDraw.OnPressed += _ => SendMessage(
-                new ChemMasterOutputDrawSourceMessage(ChemMasterDrawSource.Internal));
-            _window.OutputBeakerDraw.OnPressed += _ => SendMessage(
-                new ChemMasterOutputDrawSourceMessage(ChemMasterDrawSource.External));
+    /// <summary>
+    /// Update the UI when requested.
+    /// </summary>
+    public override void Update()
+    {
+        base.Update();
 
-            for (uint i = 0; i < _window.PillTypeButtons.Length; i++)
-            {
-                var pillType = i;
-                _window.PillTypeButtons[i].OnPressed += _ => SendMessage(new ChemMasterSetPillTypeMessage(pillType));
-            }
+        if (_window is null || !EntMan.TryGetComponent(Owner, out ChemMasterComponent? chemMaster))
+            return;
 
-            _window.OnReagentButtonPressed += (args, button) => SendMessage(new ChemMasterReagentAmountButtonMessage(button.Id, button.Amount, button.IsBuffer));
-        }
+        var ent = (Owner, chemMaster);
+        _window.UpdateBufferData(ent);
+        _window.UpdateContainerInfo(ent);
+        _window.UpdateDosageFields(ent);
+        _window.UpdatePanelInfo(ent);
+    }
 
-        /// <summary>
-        /// Update the ui each time new state data is sent from the server.
-        /// </summary>
-        /// <param name="state">
-        /// Data of the <see cref="SharedReagentDispenserComponent"/> that this ui represents.
-        /// Sent from the server.
-        /// </param>
-        protected override void UpdateState(BoundUserInterfaceState state)
-        {
-            base.UpdateState(state);
+    // there's probably a better way to do this, i just dont know it lol
+    public void UpdateUiLabels()
+    {
+        if (_window is null || !EntMan.TryGetComponent(Owner, out ChemMasterComponent? chemMaster))
+            return;
 
-            var castState = (ChemMasterBoundUserInterfaceState) state;
-
-            _window?.UpdateState(castState); // Update window state
-        }
+        var ent = (Owner, chemMaster);
+        _window.UpdateLabels(ent);
     }
 }
