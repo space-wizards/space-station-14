@@ -31,6 +31,7 @@ panic-bunker-account-reason-overall = Your overall playtime on the server must b
 whitelist-playtime = You do not have enough playtime to join this server. You need at least {$minutes} minutes of playtime to join this server.
 whitelist-player-count = This server is currently not accepting players. Please try again later.
 whitelist-notes = You currently have too many admin notes to join this server. You can check your notes by typing /adminremarks in chat.
+whitelist-not-whitelisted = You are not whitelisted for this role or action.
 whitelist-manual = You are not whitelisted on this server.
 whitelist-blacklisted = You are blacklisted from this server.
 whitelist-always-deny = You are not allowed to join this server.
