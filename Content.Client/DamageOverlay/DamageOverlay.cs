@@ -254,8 +254,6 @@ public sealed partial class DamageOverlay : Overlay
             handle.UseShader(_critShader);
             handle.DrawRect(viewport, Color.White);
         }
-
-        handle.UseShader(null);
     }
 
     private float GetDiff(float value, float lastFrameTime)

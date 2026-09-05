@@ -41,16 +41,12 @@ public sealed class MapTextOverlay : Overlay
         if (args.ViewportControl == null)
             return;
 
-        args.DrawingHandle.SetTransform(Matrix3x2.Identity);
-
         var scale = _configManager.GetCVar(CVars.DisplayUIScale);
 
         if (scale == 0f)
             scale = _uiManager.DefaultUIScale;
 
         DrawWorld(args.ScreenHandle, args, scale);
-
-        args.DrawingHandle.UseShader(null);
     }
 
     private void DrawWorld(DrawingHandleScreen handle, OverlayDrawArgs args, float scale)
