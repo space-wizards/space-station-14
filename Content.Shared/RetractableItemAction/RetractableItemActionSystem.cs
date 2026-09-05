@@ -29,7 +29,7 @@ public sealed partial class RetractableItemActionSystem : EntitySystem
         SubscribeLocalEvent<RetractableItemActionComponent, OnRetractableItemActionEvent>(OnRetractableItemAction);
 
         SubscribeLocalEvent<ActionRetractableItemComponent, ComponentShutdown>(OnActionSummonedShutdown);
-        Subs.SubscribeWithRelay<ActionRetractableItemComponent, HeldRelayedEvent<TargetHandcuffedEvent>>(OnItemHandcuffed, inventory: false);
+        Subs.SubscribeWithRelay<ActionRetractableItemComponent, BeforeTargetHandcuffedEvent>(OnItemHandcuffed, inventory: false);
     }
 
     private void OnActionInit(Entity<RetractableItemActionComponent> ent, ref MapInitEvent args)
@@ -54,9 +54,7 @@ public sealed partial class RetractableItemActionSystem : EntitySystem
             return;
 
         // Don't allow to summon an item if holding an unremoveable item unless that item is summoned by the action.
-        if (_hands.GetActiveItem(ent.Owner) != null
-            && !_hands.IsHolding(args.Performer, ent.Comp.ActionItemUid)
-            && !_hands.CanDropHeld(args.Performer, activeHand, false))
+        if (_hands.GetActiveItem(ent.Owner) != null && !_hands.IsHolding(args.Performer, ent.Comp.ActionItemUid) && !_hands.CanDropHeld(args.Performer, activeHand, false))
         {
             _popups.PopupEntity(Loc.GetString("retractable-item-hand-cannot-drop"), args.Performer, args.Performer);
             return;
@@ -86,7 +84,7 @@ public sealed partial class RetractableItemActionSystem : EntitySystem
         PopulateActionItem(action.Owner);
     }
 
-    private void OnItemHandcuffed(Entity<ActionRetractableItemComponent> ent, ref HeldRelayedEvent<TargetHandcuffedEvent> args)
+    private void OnItemHandcuffed(Entity<ActionRetractableItemComponent> ent, ref BeforeTargetHandcuffedEvent args)
     {
         if (_actions.GetAction(ent.Comp.SummoningAction) is not { } action)
             return;
@@ -97,7 +95,7 @@ public sealed partial class RetractableItemActionSystem : EntitySystem
         if (_hands.GetActiveHand(action.Comp.AttachedEntity.Value) is not { })
             return;
 
-        RetractRetractableItem(action.Comp.AttachedEntity.Value, ent, action.Owner);
+        RetractRetractableItem(args.User, ent, action.Owner);
     }
 
     private void PopulateActionItem(Entity<RetractableItemActionComponent?> ent)
@@ -118,7 +116,7 @@ public sealed partial class RetractableItemActionSystem : EntitySystem
         Dirty(ent);
     }
 
-    private void RetractRetractableItem(EntityUid holder, EntityUid item, Entity<RetractableItemActionComponent?> action)
+    private void RetractRetractableItem(EntityUid user, EntityUid item, Entity<RetractableItemActionComponent?> action)
     {
         if (!Resolve(action, ref action.Comp, false))
             return;
@@ -126,7 +124,7 @@ public sealed partial class RetractableItemActionSystem : EntitySystem
         RemComp<UnremoveableComponent>(item);
         var container = _containers.GetContainer(action, RetractableItemActionComponent.ContainerId);
         _containers.Insert(item, container);
-        _audio.PlayPredicted(action.Comp.RetractSounds, holder, holder);
+        _audio.PlayPredicted(action.Comp.RetractSounds, user, user);
     }
 
     private void SummonRetractableItem(EntityUid holder, EntityUid item, string hand, Entity<RetractableItemActionComponent?> action)
