@@ -31,7 +31,7 @@ public sealed partial class PlaySoundEntityEffectSystem : EntityEffectSystem<Tra
 public sealed partial class PlaySound : EntityEffectBase<PlaySound>
 {
     /// <summary>
-    /// The container entity to spawn.
+    /// The sound to play.
     /// </summary>
     [DataField(required: true)]
     public SoundSpecifier Sound = new SoundCollectionSpecifier("Weh");

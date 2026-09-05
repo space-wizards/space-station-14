@@ -1,12 +1,11 @@
 ﻿using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.EntityEffects.Effects;
 
 /// <summary>
-/// Causes this entity to glow.
+/// Spawns an entity with a container and traps the target inside of it.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class TrapInContainerEntityEffectSystem : EntityEffectSystem<TransformComponent, TrapInContainer>
