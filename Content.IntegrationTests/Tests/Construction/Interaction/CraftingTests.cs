@@ -1,5 +1,6 @@
 #nullable enable
 using System.Linq;
+using Content.IntegrationTests.NUnit.Constraints;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Stacks;
@@ -81,17 +82,17 @@ public sealed class CraftingTests : InteractionTest
         var wires = await SpawnEntity((Cable, 10), serverTargetCoords);
         var shard = await SpawnEntity(ShardGlass, serverTargetCoords);
 
-        var rodStack = SEntMan.GetComponent<StackComponent>(rods);
-        var wireStack = SEntMan.GetComponent<StackComponent>(wires);
+        var rodStack = SComp<StackComponent>(rods);
+        var wireStack = SComp<StackComponent>(wires);
 
         await RunTicks(5);
         var sys = SEntMan.System<SharedContainerSystem>();
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(sys.IsEntityInContainer(rods), Is.False);
             Assert.That(sys.IsEntityInContainer(wires), Is.False);
             Assert.That(sys.IsEntityInContainer(shard), Is.False);
-        });
+        }
 
 #pragma warning disable CS4014 // Legacy construction code uses DoAfterAwait. If we await it we will be waiting forever.
         await Server.WaitPost(() => SConstruction.TryStartItemConstruction(Spear, SEntMan.GetEntity(Player)));
@@ -134,6 +135,6 @@ public sealed class CraftingTests : InteractionTest
         await FindEntity(Spear);
         Assert.That(sys.IsEntityInContainer(rods), Is.False);
         Assert.That(sys.IsEntityInContainer(wires), Is.False);
-        Assert.That(SEntMan.Deleted(shard));
+        Assert.That(shard, Is.Deleted(Server));
     }
 }
