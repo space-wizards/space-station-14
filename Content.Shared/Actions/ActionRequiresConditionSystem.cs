@@ -13,7 +13,11 @@ public sealed partial class ActionRequiresConditionSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnActionAttempt(Entity<ActionRequiresConditionComponent> ent, ref ActionAttemptEvent args)
     {
-        if (!_conditions.TryConditions(ent.Owner, ent.Comp.Conditions))
+        var target = args.User;
+        if (!ent.Comp.RaiseOnUser)
+            target = ent.Owner;
+        
+        if (!_conditions.TryConditions(target, ent.Comp.Conditions))
         {
             if (ent.Comp.FailureMessage != null)
                 args.Reason = Loc.GetString(ent.Comp.FailureMessage);

@@ -16,8 +16,14 @@ public sealed partial class ActionRequiresConditionComponent : Component
     public EntityCondition[]? Conditions;
 
     /// <summary>
-    /// Popup displayed if the conditions fail
+    /// Message displayed if the conditions fail
     /// </summary>
     [DataField]
     public LocId? FailureMessage;
+
+    /// <summary>
+    /// If false, the action will be checked for the conditions
+    /// </summary>
+    [DataField]
+    public bool RaiseOnUser = true;
 }

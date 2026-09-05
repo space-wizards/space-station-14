@@ -1,7 +1,4 @@
-using System.Numerics;
 using Content.Shared.Atmos.Components;
-using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Generic;
