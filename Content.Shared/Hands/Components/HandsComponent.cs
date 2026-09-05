@@ -1,3 +1,4 @@
+using Content.Shared.Cloning;
 using Content.Shared.DisplacementMap;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Whitelist;
@@ -12,7 +13,7 @@ namespace Content.Shared.Hands.Components;
 /// Allows this entity to have hands so that it can interact with items.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
-[Access(typeof(SharedHandsSystem))]
+[Access(typeof(SharedHandsSystem), typeof(CloningContext))]
 public sealed partial class HandsComponent : Component, IComponentDelta
 {
     /// <inheritdoc />

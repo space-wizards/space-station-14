@@ -1,8 +1,6 @@
 using Content.Shared.Botany.Components;
-using Content.Shared.Cloning.Events;
 using Content.Shared.Damage.Systems;
 using JetBrains.Annotations;
-using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Botany.Systems;
@@ -12,20 +10,7 @@ namespace Content.Shared.Botany.Systems;
 /// </summary>
 public sealed partial class PlantHolderSystem : EntitySystem
 {
-    [Dependency] private ISerializationManager _serialization = default!;
-
     [Dependency] private EntityQuery<PlantComponent> _plantQuery;
-
-    [SubscribeLocalEvent]
-    private void OnCloning(Entity<PlantHolderComponent> ent, ref CloningEvent args)
-    {
-        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
-            return;
-
-        var cloneComp = EnsureComp<PlantHolderComponent>(args.CloneUid);
-        _serialization.CopyTo(ent.Comp, ref cloneComp, notNullableOverride: true);
-        Dirty(args.CloneUid, cloneComp);
-    }
 
     [SubscribeLocalEvent]
     private void OnDamageDealt(Entity<PlantHolderComponent> ent, ref DamageDealtEvent args)

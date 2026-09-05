@@ -4,7 +4,6 @@ using Content.Shared.Chat.Prototypes;
 using Content.Shared.Humanoid;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Speech.Components;
-using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -17,13 +16,15 @@ public sealed partial class VocalSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private INetManager _net = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedChatSystem _chat = default!;
-    [Dependency] private SharedActionsSystem _actions = default!;
 
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<VocalComponent> ent, ref MapInitEvent args)
     {
+        LoadSounds(ent, ent.Comp.EmoteSounds);
+
         // try to add scream action when vocal comp added
         _actions.AddAction(ent.Owner, ref ent.Comp.EmoteActionEntity, ent.Comp.EmoteAction);
         Dirty(ent);
@@ -73,25 +74,6 @@ public sealed partial class VocalSystem : EntitySystem
         args.Handled = true;
     }
 
-    /// <summary>
-    /// Copy this component's datafields from one entity to another.
-    /// This can't use CopyComp because of the ScreamActionEntity DataField, which should not be copied.
-    /// </summary>
-    [PublicAPI]
-    public void CopyComponent(Entity<VocalComponent?> source, EntityUid target)
-    {
-        if (!Resolve(source, ref source.Comp))
-            return;
-
-        var targetComp = Factory.GetComponent<VocalComponent>();
-        targetComp.ScreamId = source.Comp.ScreamId;
-        targetComp.Wilhelm = source.Comp.Wilhelm;
-        targetComp.WilhelmProbability = source.Comp.WilhelmProbability;
-        targetComp.EmoteAction = source.Comp.EmoteAction;
-        targetComp.EmoteSounds = source.Comp.EmoteSounds;
-        AddComp(target, targetComp, true);
-    }
-
     private bool TryPlayScreamSound(Entity<VocalComponent> ent, EntityUid user)
     {
         var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent.Owner), GetNetEntity(user));
@@ -111,7 +93,7 @@ public sealed partial class VocalSystem : EntitySystem
     /// <summary>
     /// This only works on Humanoids. Mobs should have emoteSounds on <see cref="VocalComponent"/> set directly instead.
     /// </summary>
-    private void LoadSounds(Entity<VocalComponent> ent, ProtoId<EmoteSoundsPrototype>? protoId = null)
+    public void LoadSounds(Entity<VocalComponent> ent, ProtoId<EmoteSoundsPrototype>? protoId = null)
     {
         if (!TryComp<HumanoidProfileComponent>(ent.Owner, out var humanoid))
             return;

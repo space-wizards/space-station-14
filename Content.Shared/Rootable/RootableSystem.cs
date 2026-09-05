@@ -60,7 +60,6 @@ public sealed partial class RootableSystem : EntitySystem
         SubscribeLocalEvent<RootableComponent, IsWeightlessEvent>(OnIsWeightless);
         SubscribeLocalEvent<RootableComponent, SlipAttemptEvent>(OnSlipAttempt);
         SubscribeLocalEvent<RootableComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeed);
-        SubscribeLocalEvent<RootableComponent, CloningEvent>(OnCloning);
     }
 
     public override void Update(float frameTime)
@@ -111,22 +110,6 @@ public sealed partial class RootableSystem : EntitySystem
         // Log solution addition by puddle.
         if (_blood.TryAddToBloodstream((ent, ent.Comp2), transferSolution))
             _logger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(ent):target} absorbed puddle {SharedSolutionContainerSystem.ToPrettyString(transferSolution)}");
-    }
-
-    private void OnCloning(Entity<RootableComponent> ent, ref CloningEvent args)
-    {
-        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
-            return;
-
-        // Make sure to set the datafields before adding the component so that the correct action gets spawned on map init.
-        var cloneComp = Factory.GetComponent<RootableComponent>();
-        cloneComp.Action = ent.Comp.Action;
-        cloneComp.RootedAlert = ent.Comp.RootedAlert;
-        cloneComp.TransferRate = ent.Comp.TransferRate;
-        cloneComp.TransferFrequency = ent.Comp.TransferFrequency;
-        cloneComp.SpeedModifier = ent.Comp.SpeedModifier;
-        cloneComp.RootSound = ent.Comp.RootSound;
-        AddComp(args.CloneUid, cloneComp, true);
     }
 
     private void OnRootableMapInit(Entity<RootableComponent> ent, ref MapInitEvent args)
