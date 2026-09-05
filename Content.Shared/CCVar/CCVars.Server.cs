@@ -64,9 +64,9 @@ public sealed partial class CCVars
     ///     The list of fallback servers that will be offered to the player, if the server is full.
     /// </summary>
     /// <remarks>
-    /// Servers have a name and an URL, these are separated by a semicolon (;).
-    /// The name;url pairs are separated from other pairs by |.
-    /// Example: "Server Name 1;ss14s://server1.hostdomain.com|Server Name 2;ss14s://server2.hostdomain.com"
+    /// Servers have a name and an URL, these are separated by a semicolon ";").
+    /// The name;url pairs are separated from other pairs by "|".
+    /// Example: "Vulture;ss14://vulture.spacestation14.com|Leviathan;ss14://leviathan.spacestation14.com"
     /// </remarks>
     public static readonly CVarDef<string> FallbackServers =
         CVarDef.Create("server.fallback_servers", "", CVar.SERVERONLY);
