@@ -6,6 +6,7 @@
     mode: PlaceFree
   components:
   - type: MapText
+    text: "" # remove if "null" fields will be editable in component view
   - type: Sprite
     state: pink
 
