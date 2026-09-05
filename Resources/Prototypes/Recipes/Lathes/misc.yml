@@ -10,6 +10,17 @@
     Steel: 50
     Glass: 200
 
+- type: latheRecipe
+  abstract: true
+  id: BasePackagedLightRecipe
+  categories:
+  - Lights
+  completetime: 10 # 2x as fast as printing lights individually.
+  materials: # 20% cheaper than printing lights individually.
+    Steel: 400
+    Glass: 1600
+    Cardboard: 200 # You get only one back via recycling.
+
 # Recipes
 
 ## Lights
@@ -53,6 +64,58 @@
   parent: BaseLightRecipe
   id: WarmLightBulb
   result: WarmLightBulb
+
+# Light Packages
+
+- type: latheRecipe
+  parent: BasePackagedLightRecipe
+  id: BoxLighttube
+  result: BoxLighttube
+
+- type: latheRecipe
+  parent: BasePackagedLightRecipe
+  id: BoxExteriorLighttube
+  result: BoxExteriorLighttube
+
+- type: latheRecipe
+  parent: BasePackagedLightRecipe
+  id: BoxLedLighttube
+  result: BoxLedLighttube
+
+- type: latheRecipe
+  parent: BasePackagedLightRecipe
+  id: BoxSodiumLighttube
+  result: BoxSodiumLighttube
+
+- type: latheRecipe
+  parent: BasePackagedLightRecipe
+  id: BoxLightbulb
+  result: BoxLightbulb
+
+- type: latheRecipe
+  parent: BasePackagedLightRecipe
+  id: BoxDimLightbulb
+  result: BoxDimLightbulb
+
+- type: latheRecipe
+  parent: BasePackagedLightRecipe
+  id: BoxWarmLightbulb
+  result: BoxWarmLightbulb
+
+- type: latheRecipe
+  parent: BasePackagedLightRecipe
+  id: BoxLedLightbulb
+  result: BoxLedLightbulb
+
+- type: latheRecipe
+  parent: BasePackagedLightRecipe
+  id: BoxLightMixed
+  result: BoxLightMixed
+
+- type: latheRecipe
+  parent: BasePackagedLightRecipe
+  id: BoxLedLightMixed
+  result: BoxLedLightMixed
 
 - type: latheRecipe
   parent: BaseLightRecipe

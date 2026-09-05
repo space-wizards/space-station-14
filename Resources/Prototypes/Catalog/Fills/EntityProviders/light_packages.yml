@@ -1,0 +1,185 @@
+﻿# Light packages that contain multiple lights of a kind.
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseLightPackage
+  components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,3,3
+  - type: MultiHandedItem
+  - type: EntityProvider
+    canReceive: false
+  - type: ContainerContainer
+    containers:
+      entity-provider: !type:Container
+  - type: UserInterface
+    interfaces:
+      enum.EntityProviderUiKey.Key:
+        type: EntityProviderBoundUserInterface
+  - type: Sprite
+    sprite: Objects/Storage/EntityProvider/packaged_lights.rsi
+  - type: PhysicalComposition
+    materialComposition:
+      Cardboard: 100
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.EntityProviderVisuals.Key:
+        emptyLayer:
+          Full: { visible: false }
+          Opened: { visible: false }
+          Empty: { visible: true }
+
+# Light Tubes
+- type: entity
+  parent: BaseLightPackage
+  id: BoxLighttube
+  name: fluorescent lighttube package
+  description: A cardboard package containing 10 fluorescent light tubes.
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: tubes
+    - state: empty
+      map: [ "emptyLayer" ]
+      visible: false
+  - type: EntityProvider
+    entityCounter:
+      LightTube: 10
+
+- type: entity
+  parent: BoxLighttube
+  id: BoxExteriorLighttube
+  name: exterior lighttube package
+  description: A cardboard package containing 10 exterior light tubes.
+  components:
+  - type: EntityProvider
+    entityCounter:
+      ExteriorLightTube: 10
+
+- type: entity
+  parent: BoxLighttube
+  id: BoxLedLighttube
+  name: led light tube package
+  description: A cardboard package containing 10 LED light tubes.
+  components:
+  - type: EntityProvider
+    entityCounter:
+      LedLightTube: 10
+
+- type: entity
+  parent: BoxLighttube
+  id: BoxSodiumLighttube
+  name: sodium light tube package
+  description: A cardboard package containing 10 sodium light tubes.
+  components:
+  - type: EntityProvider
+    entityCounter:
+      SodiumLightTube: 10
+
+- type: entity
+  parent: BaseLightPackage
+  id: BoxLightbulb
+  name: incandescent light bulb box
+  description: A cardboard package containing 10 incandescent light bulbs.
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: bulbs
+    - state: empty
+      map: [ "emptyLayer" ]
+      visible: false
+  - type: EntityProvider
+    entityCounter:
+      LightBulb: 10
+
+- type: entity
+  parent: BoxLightbulb
+  id: BoxDimLightbulb
+  name: dim light bulb box
+  description: A cardboard package containing 10 dim light bulbs.
+  components:
+  - type: EntityProvider
+    entityCounter:
+      DimLightBulb: 10
+
+- type: entity
+  parent: BoxLightbulb
+  id: BoxWarmLightbulb
+  name: warm light bulb box
+  description: A cardboard package containing 10 warm light bulbs.
+  components:
+  - type: EntityProvider
+    entityCounter:
+      WarmLightBulb: 10
+
+- type: entity
+  parent: BoxLightbulb
+  id: BoxLedLightbulb
+  name: led light bulb box
+  description: A cardboard package containing 10 LED light bulbs.
+  components:
+  - type: EntityProvider
+    entityCounter:
+      LedLightBulb: 10
+
+- type: entity
+  parent: BaseLightPackage
+  id: BoxLightMixed
+  name: mixed standard lights box
+  description: A cardboard package containing 5 fluorescent light tubes and 5 incandescent light bulbs.
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: standard-mixed
+    - state: empty
+      map: [ "emptyLayer" ]
+      visible: false
+  - type: EntityProvider
+    entityCounter:
+      LightTube: 5
+      LightBulb: 5
+
+- type: entity
+  parent: BoxLightMixed
+  id: BoxLedLightMixed
+  name: mixed led lights box
+  description: A cardboard package containing 5 LED light tubes and bulbs.
+  components:
+  - type: EntityProvider
+    entityCounter:
+      LedLightTube: 5
+      LedLightBulb: 5
+
+- type: entity
+  parent: BoxLightbulb
+  id: BoxLightbulbColorfulMixed
+  name: mixed colorful lightbulb box
+  components:
+  - type: EntityProvider
+    entityCounter:
+      LightBulbCrystalCyan: 2
+      LightBulbCrystalBlue: 2
+      LightBulbCrystalGreen: 2
+      LightBulbCrystalPink: 2
+      LightBulbCrystalRed: 2
+      LightBulbCrystalOrange: 2
+
+- type: entity
+  parent: BoxLighttube
+  id: BoxLighttubeColorfulMixed
+  name: mixed colorful lighttube box
+  components:
+  - type: EntityProvider
+    entityCounter:
+      LightTubeCrystalCyan: 2
+      LightTubeCrystalBlue: 2
+      LightTubeCrystalGreen: 2
+      LightTubeCrystalPink: 2
+      LightTubeCrystalRed: 2
+      LightTubeCrystalOrange: 2
