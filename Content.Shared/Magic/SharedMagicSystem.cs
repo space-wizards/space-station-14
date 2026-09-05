@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Numerics;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Charges.Components;
@@ -286,8 +287,51 @@ public abstract partial class SharedMagicSystem : EntitySystem
 
         ev.Handled = true;
 
-        RemoveComponents(ev.Target, ev.ToRemove);
-        AddComponents(ev.Target, ev.ToAdd);
+        EntityManager.RemoveComponents(ev.Target, ev.ToRemove);
+        EntityManager.AddComponents(ev.Target, ev.ToAdd);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnChangeOwnComponentsSpell(ChangeOwnComponentsSpellEvent ev)
+    {
+        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
+            return;
+
+        ev.Handled = true;
+
+        if (!ev.ComponentsAdded)
+        {
+            // We record the deleted and added components so that we can put everything back in place later
+            ev.AddedComponents = ev.ToAdd;
+            ev.RemovedComponents = GetPlayerComponents(ev.Performer, ev.ForcedAdd);
+
+            foreach (var comp in ev.ForcedAdd)
+            {
+                ev.AddedComponents.TryAdd(comp.Key, comp.Value);
+            }
+
+            foreach (var comp in GetPlayerComponents(ev.Performer, ev.ToAdd))
+            {
+                ev.AddedComponents.Remove(comp.Key);
+            }
+
+            foreach (var comp in ev.RemovedComponents)
+            {
+                ev.RemovedComponents.TryAdd(comp.Key, comp.Value);
+            }
+
+            EntityManager.RemoveComponents(ev.Performer, ev.ToRemove);
+            EntityManager.AddComponents(ev.Performer, ev.ToAdd, false);
+            EntityManager.AddComponents(ev.Performer, ev.ForcedAdd, true);
+            ev.ComponentsAdded = true;
+        }
+        else
+        {
+            EntityManager.RemoveComponents(ev.Performer, ev.AddedComponents);
+            EntityManager.AddComponents(ev.Performer, ev.RemovedComponents, true);
+            ev.ComponentsAdded = false;
+        }
+        ev.Toggle = true;
     }
     // End Change Component Spells
     #endregion
@@ -325,27 +369,17 @@ public abstract partial class SharedMagicSystem : EntitySystem
         }
     }
 
-    private void AddComponents(EntityUid target, ComponentRegistry comps)
+    private ComponentRegistry GetPlayerComponents(EntityUid entity, ComponentRegistry comp)
     {
-        foreach (var (name, data) in comps)
+        var playerComps = new ComponentRegistry();
+        foreach (var (name, entry) in comp)
         {
-            if (HasComp(target, data.Component.GetType()))
-                continue;
+            var compType = entry.Component.GetType();
 
-            var component = (Component)Factory.GetComponent(name);
-            var temp = (object)component;
-            _seriMan.CopyTo(data.Component, ref temp);
-            AddComp(target, (Component)temp!);
+            if (TryComp(entity, compType, out var component))
+                playerComps.Add(name, new EntityPrototype.ComponentRegistryEntry(component));
         }
-    }
-
-    private void RemoveComponents(EntityUid target, HashSet<string> comps)
-    {
-        foreach (var toRemove in comps)
-        {
-            if (Factory.TryGetRegistration(toRemove, out var registration))
-                RemComp(target, registration.Type);
-        }
+        return playerComps;
     }
     // End Spell Helpers
     #endregion
