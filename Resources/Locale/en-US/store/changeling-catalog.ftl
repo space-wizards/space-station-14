@@ -45,5 +45,5 @@ changeling-catalog-voice-mindshield-desc = Modify your neuron's natural waves to
 changeling-catalog-night-vision-name = Night Vision
 changeling-catalog-night-vision-desc = You modify your photoreceptors and heighten your senses as to become able to see in complete darkness.
 
-changeling-catalog-fleshtomb-name = Fleshtomb
-changeling-catalog-fleshtomb-desc = Encase a corpse in a fleshy prison, slowly harvesting their genetic code for your own use. It slowly generates DNA, but is very fragile and must be preserved in proper atmosphere to not fall apart.
+changeling-catalog-fleshtomb-name = Fleshtomb [EXPERIMENTAL]
+changeling-catalog-fleshtomb-desc = Preserve a corpse in a fleshy prison, slowly harvesting their genetic code for your own use. It slowly generates DNA, but is very fragile and must be preserved in proper atmosphere to not fall apart.
