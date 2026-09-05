@@ -370,6 +370,13 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
         var target = GetEntity(netTarget);
 
+        // Already checked in validation, but GetWorldPosition causes errors if the entity doesn't exist.
+        if (TerminatingOrDeleted(target))
+        {
+            args.Invalid = true;
+            return;
+        }
+
         var targetWorldPos = _transform.GetWorldPosition(target);
 
         if (ent.Comp.RotateOnUse)
