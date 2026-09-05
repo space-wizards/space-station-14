@@ -44,7 +44,6 @@ highlights-librarian = Librarian, Library, Service, "Serv"
 highlights-mime = Mime, Theatre, Theater, Service, "Serv"
 highlights-musician = Musician, Theatre, Theater, Service, "Serv"
 highlights-serviceworker = Service Worker, Service, "Serv"
-highlights-visitor = Visitor
 
 # Station-specific
 highlights-psychologist = Psychologist, Psychology, "Psych", Medbay, Medical, "Med"
@@ -56,8 +55,8 @@ highlights-borg = Cyborg, Silicon, Borg, Robotics, "Robot", "Law", "Laws", "Laws
 highlights-stationai = Station AI, Silicon, "AI", "sAI", "Law", "Laws", "Lawset"
 
 # Civilian
-highlights-passenger = Passenger, Greyshirt, Grayshirt, Greytider, Graytider, "Tider", "Tide"
-highlights-visitor = Visitor
+highlights-passenger = Passenger, Greyshirt, Grayshirt, Greytider, Graytider, Tider, Civilian, Civie, Civvie, Civvy
+highlights-visitor = Visitor, Civilian, Civie, Civvie, Civvy
 
 # Central Command
 highlights-centralcommandofficial = Central Command Official, "Official", "Central Command", CentCom, CentComm, "CC"
