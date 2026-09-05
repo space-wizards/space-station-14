@@ -1,6 +1,7 @@
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Systems;
 using Content.Shared.Botany.Traits.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
@@ -27,10 +28,23 @@ public sealed partial class PlantChangeTraitsEntityEffectSystem : EntityEffectSy
             return;
         }
 
-        if (args.Effect.Remove)
-            RemCompDeferred(entity.Owner, traitType.GetType());
-        else if (!HasComp(entity.Owner, traitType.GetType()))
-            AddComp(entity.Owner, traitType);
+        switch (args.Effect.Type)
+        {
+            case PlantChangeTraits.TraitModifyType.Add:
+                AddComp(entity.Owner, traitType);
+                break;
+            case PlantChangeTraits.TraitModifyType.Remove:
+                RemCompDeferred(entity.Owner, traitType.GetType());
+                break;
+            case PlantChangeTraits.TraitModifyType.Toggle:
+                if (HasComp(entity.Owner, traitType.GetType()))
+                    RemCompDeferred(entity.Owner, traitType.GetType());
+                else
+                    AddComp(entity.Owner, traitType);
+                break;
+            default:
+                break;
+        }
     }
 }
 
@@ -44,8 +58,37 @@ public sealed partial class PlantChangeTraits : EntityEffectBase<PlantChangeTrai
     public string Trait;
 
     /// <summary>
-    /// If true, the trait is removed. If false, the trait is added.
+    /// Defines how the trait should be modified.
     /// </summary>
     [DataField]
-    public bool Remove;
+    public TraitModifyType Type = TraitModifyType.Toggle;
+
+    public enum TraitModifyType
+    {
+        /// <summary>
+        /// Adds the trait if it is not already present.
+        /// </summary>
+        Add,
+
+        /// <summary>
+        /// Removes the trait if it is present.
+        /// </summary>
+        Remove,
+
+        /// <summary>
+        /// Adds the trait if it is not present, or removes it if it is already present.
+        /// </summary>
+        Toggle
+    }
+
+    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    {
+        var component = IoCManager.Resolve<IComponentFactory>().GetComponent(Trait);
+        if (component is not PlantTraitsComponent plantTrait || plantTrait.TraitName is not { } traitName)
+        {
+            return null;
+        }
+
+        return Loc.GetString("entity-effect-guidebook-plant-change-trait", [("change", Type.ToString()), ("chance", Probability), ("trait", Loc.GetString(traitName))]);
+    }
 }
