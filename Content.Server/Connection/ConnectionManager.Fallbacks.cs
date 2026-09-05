@@ -83,7 +83,7 @@ public sealed partial class ConnectionManager
         if (!uri.StartsWith("ss14s://")
             && !uri.StartsWith("ss14://") )
         {
-            _sawmill.Info($"Invalid address in FallbackServers cvar: {uri}");
+            _sawmill.Warning($"Invalid address in FallbackServers cvar: {uri}");
             return;
         }
 
@@ -138,7 +138,7 @@ public sealed partial class ConnectionManager
         catch (Exception e) when (e is JsonException or HttpRequestException or InvalidDataException or IOException
                                       or SocketException)
         {
-            _sawmill.Info($"A Fallback Server did not respond to the status query - '{url}'");
+            _sawmill.Debug($"A Fallback Server did not respond to the status query - '{url}'");
             return null;
         }
 
