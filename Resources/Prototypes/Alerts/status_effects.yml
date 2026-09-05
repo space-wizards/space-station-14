@@ -34,3 +34,11 @@
   name: alerts-vow-silence-name
   clickEvent: !type:BreakVowAlertEvent
   description: alerts-vow-silence-desc
+
+- type: alert
+  id: FrailStatusAlert
+  icons:
+  - sprite: /Textures/Interface/Alerts/status_effects.rsi
+    state: frail
+  name: alerts-frail-name
+  description: alerts-mild-frail-desc
