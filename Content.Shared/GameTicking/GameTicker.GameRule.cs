@@ -197,7 +197,9 @@ public abstract partial class GameTicker
     [PublicAPI]
     public bool EndGameRule(Entity<GameRuleComponent?> rule)
     {
-        if (!Resolve(rule, ref rule.Comp))
+        // Don't log missing because we could've already ended the rule.
+        // TODO: Maybe do log missing to ensure we only ever try to end a rule once?
+        if (!Resolve(rule, ref rule.Comp, false))
             return false;
 
         RemComp(rule, rule.Comp);
