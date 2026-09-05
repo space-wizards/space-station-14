@@ -261,7 +261,7 @@
   parent: [BaseCircuitboardRecipe]
   id: SmartFridgeCircuitboard
   result: SmartFridgeCircuitboard
-  
+
 # Bar
 - type: latheRecipe
   parent: [ BaseCircuitboardRecipe, BaseServiceMachineRecipeCategory ]
@@ -311,11 +311,6 @@
   parent: [ BaseGoldCircuitboardRecipe, BaseSupplyMachineRecipeCategory ]
   id: CargoTelepadMachineCircuitboard
   result: CargoTelepadMachineCircuitboard
-
-- type: latheRecipe
-  parent: [ BaseGoldCircuitboardRecipe, BaseSupplyMachineRecipeCategory ]
-  id: SalvageMagnetMachineCircuitboard
-  result: SalvageMagnetMachineCircuitboard
 
 # Shuttle
 - type: latheRecipe

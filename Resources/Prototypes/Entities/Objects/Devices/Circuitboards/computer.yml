@@ -188,8 +188,8 @@
       prototype: ComputerPalletConsole
 
 - type: entity
-  id: CargoBountyComputerCircuitboard
   parent: BaseComputerCircuitboard
+  id: CargoBountyComputerCircuitboard
   name: cargo bounty computer board
   description: A computer printed circuit board for a cargo bounty computer.
   components:

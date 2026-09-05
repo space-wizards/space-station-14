@@ -90,10 +90,10 @@
   weights:
     ChiefEngineerToolbeltStealObjective: 0.5             #command
     CaptainSwordStealObjective: 0.5
-    ClothingHeadsetAltMedicalStealObjective: 1
+    HeadsetAltStealObjective: 1
     ForensicScannerStealObjective: 1                    #sec
     FlippoEngravedLighterStealObjective: 0.5
-    ClothingHeadHatWardenStealObjective: 1
+    SecurityTechFabCircuitboardStealObjective: 1
     WantedListCartridgeStealObjective: 1
     ClothingOuterHardsuitVoidParamedStealObjective: 1   #med
     MedicalTechFabCircuitboardStealObjective: 1
@@ -101,8 +101,9 @@
     AmePartFlatpackStealObjective: 1
     ExpeditionsCircuitboardStealObjective: 1            #sup
     CargoShuttleCircuitboardStealObjective: 1
-    BibleStealObjective: 1
-    ClothingNeckGoldmedalStealObjective: 1              #other
+    SalvageMagnetCircuitboardStealObjective: 1
+    BibleStealObjective: 1                              #other
+    ClothingNeckGoldmedalStealObjective: 1
     ClothingNeckClownmedalStealObjective: 0.5
 
 - type: weightedRandom
@@ -110,9 +111,6 @@
   weights:
     NuclearBombStealObjective: 0.5
     FaxMachineCaptainStealObjective: 1
-    ChemDispenserStealObjective: 1
-    XenoArtifactStealObjective: 1
-    FreezerHeaterStealObjective: 1
     TegStealObjective: 1
     BoozeDispenserStealObjective: 1
     AltarNanotrasenStealObjective: 1
