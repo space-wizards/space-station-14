@@ -92,6 +92,7 @@
         children:
         - id: ClothingHeadHatBeretQM
         - id: ClothingUniformJumpsuitQMFormal
+        - id: ClothingUniformJumpskirtQMFormalDress
         - id: ClothingUniformJumpsuitQMTurtleneck
         - id: ClothingUniformJumpskirtQMTurtleneck
         - id: ClothingHandsGlovesColorBrown

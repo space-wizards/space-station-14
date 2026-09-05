@@ -20,6 +20,7 @@
   - ClothingUniformJumpsuitQMTurtleneck
   - ClothingUniformJumpskirtQMTurtleneck
   - ClothingUniformJumpsuitQMFormal
+  - ClothingUniformJumpskirtQMFormalDress
 
 - type: latheRecipePack
   id: ClothingCommand
