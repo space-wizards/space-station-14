@@ -32,15 +32,16 @@ public sealed partial class ToggleableVisualsSystem : VisualizerSystem<Toggleabl
             after: [typeof(ClientClothingSystem)]);
     }
 
+    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid,
         ToggleableVisualsComponent component,
         ref AppearanceChangeEvent args)
     {
-        if (!AppearanceSystem.TryGetData<bool>(uid, ToggleableVisuals.Enabled, out var enabled, args.Component))
+        if (!args.TryGetData<bool>(ToggleableVisuals.Enabled, out var enabled))
             return;
 
         var modulateColor =
-            AppearanceSystem.TryGetData<Color>(uid, ToggleableVisuals.Color, out var color, args.Component);
+            args.TryGetData<Color>(ToggleableVisuals.Color, out var color);
 
         // Update the item's sprite
         if (args.Sprite != null && component.SpriteLayer != null &&

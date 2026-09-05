@@ -9,13 +9,14 @@ namespace Content.Client.Mech;
 /// </summary>
 public sealed partial class MechAssemblyVisualizerSystem : VisualizerSystem<MechAssemblyVisualsComponent>
 {
+    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, MechAssemblyVisualsComponent component,
         ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        if (!AppearanceSystem.TryGetData<int>(uid, MechAssemblyVisuals.State, out var stage, args.Component))
+        if (!args.TryGetData<int>(MechAssemblyVisuals.State, out var stage))
             return;
 
         var state = component.StatePrefix + stage;

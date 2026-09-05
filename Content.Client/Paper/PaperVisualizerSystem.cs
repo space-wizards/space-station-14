@@ -7,15 +7,16 @@ namespace Content.Client.Paper;
 
 public sealed partial class PaperVisualizerSystem : VisualizerSystem<PaperVisualizerComponent>
 {
+    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, PaperVisualizerComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        if (AppearanceSystem.TryGetData<PaperStatus>(uid, PaperVisuals.Status, out var writingStatus, args.Component))
+        if (args.TryGetData<PaperStatus>(PaperVisuals.Status, out var writingStatus))
             SpriteSystem.LayerSetVisible((uid, args.Sprite), PaperVisualLayers.Writing, writingStatus == PaperStatus.Written);
 
-        if (AppearanceSystem.TryGetData<string>(uid, PaperVisuals.Stamp, out var stampState, args.Component))
+        if (args.TryGetData<string>(PaperVisuals.Stamp, out var stampState))
         {
             if (stampState != string.Empty)
             {

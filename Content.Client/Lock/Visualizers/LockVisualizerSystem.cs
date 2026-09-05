@@ -6,19 +6,16 @@ namespace Content.Client.Lock.Visualizers;
 
 public sealed partial class LockVisualizerSystem : VisualizerSystem<LockVisualsComponent>
 {
+    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, LockVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null
-            || !AppearanceSystem.TryGetData<bool>(uid, LockVisuals.Locked, out _, args.Component))
+            || !args.TryGetData<bool>(LockVisuals.Locked, out var locked))
             return;
-
-        // Lock state for the entity.
-        if (!AppearanceSystem.TryGetData<bool>(uid, LockVisuals.Locked, out var locked, args.Component))
-            locked = true;
 
         var unlockedStateExist = args.Sprite.BaseRSI?.TryGetState(comp.StateUnlocked, out _);
 
-        if (AppearanceSystem.TryGetData<bool>(uid, StorageVisuals.Open, out var open, args.Component))
+        if (args.TryGetData<bool>(StorageVisuals.Open, out var open))
         {
             SpriteSystem.LayerSetVisible((uid, args.Sprite), LockVisualLayers.Lock, !open);
         }

@@ -18,12 +18,13 @@ public sealed partial class PoweredLightVisualizerSystem : VisualizerSystem<Powe
         SubscribeLocalEvent<PoweredLightVisualsComponent, AnimationCompletedEvent>(OnAnimationCompleted);
     }
 
+    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, PoweredLightVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        if (!AppearanceSystem.TryGetData<PoweredLightState>(uid, PoweredLightVisuals.BulbState, out var state, args.Component))
+        if (!args.TryGetData<PoweredLightState>(PoweredLightVisuals.BulbState, out var state))
             return;
 
         if (comp.SpriteStateMap.TryGetValue(state, out var spriteState))
@@ -42,7 +43,7 @@ public sealed partial class PoweredLightVisualizerSystem : VisualizerSystem<Powe
         SetBlinkingAnimation(
             uid,
             state == PoweredLightState.On
-            && (AppearanceSystem.TryGetData<bool>(uid, PoweredLightVisuals.Blinking, out var isBlinking, args.Component) && isBlinking),
+            && (args.TryGetData<bool>(PoweredLightVisuals.Blinking, out var isBlinking) && isBlinking),
             comp
         );
     }

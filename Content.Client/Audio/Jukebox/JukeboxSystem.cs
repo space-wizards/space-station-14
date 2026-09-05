@@ -72,11 +72,8 @@ public sealed partial class JukeboxSystem : SharedJukeboxSystem
         if (args.Sprite == null)
             return;
 
-        if (!args.AppearanceData.TryGetValue(JukeboxVisuals.VisualState, out var visualStateObject) ||
-            visualStateObject is not JukeboxVisualState visualState)
-        {
+        if (!args.TryGetData<JukeboxVisualState>(JukeboxVisuals.VisualState, out var visualState))
             visualState = JukeboxVisualState.On;
-        }
 
         UpdateAppearance((uid, args.Sprite), visualState, component);
     }

@@ -17,9 +17,8 @@ public sealed partial class SurveillanceCameraVisualsSystem : EntitySystem
     private void OnAppearanceChange(EntityUid uid, SurveillanceCameraVisualsComponent component,
         ref AppearanceChangeEvent args)
     {
-        if (!args.AppearanceData.TryGetValue(SurveillanceCameraVisualsKey.Key, out var data)
-            || data is not SurveillanceCameraVisuals key
-            || args.Sprite == null
+        if (args.Sprite == null
+            || !args.TryGetData<SurveillanceCameraVisuals>(SurveillanceCameraVisualsKey.Key, out var key)
             || !_sprite.LayerMapTryGet((uid, args.Sprite), SurveillanceCameraVisualsKey.Layer, out var layer, false)
             || !component.CameraSprites.TryGetValue(key, out var state))
         {
