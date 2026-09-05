@@ -48,9 +48,8 @@ public sealed partial class GameTicker
             var tempDir = _cfg.GetCVar(CCVars.ReplayAutoRecordTempDir);
             ResPath? moveToPath = null;
 
-            // Set the round end player and text back to null to prevent it from writing the previous round's data.
-            _replayRoundPlayerInfo = null;
-            _replayRoundText = null;
+            // Set the round end info to null to prevent it from writing the previous round's data.
+            _lastRoundInfo = null;
 
             if (!string.IsNullOrEmpty(tempDir))
             {
@@ -125,8 +124,9 @@ public sealed partial class GameTicker
 
         metadata["map"] = new ValueDataNode(_gameMapManager.GetSelectedMap()?.MapName);
         metadata["gamemode"] = new ValueDataNode(CurrentPreset != null ? Loc.GetString(CurrentPreset.ModeTitle) : string.Empty);
-        metadata["roundEndPlayers"] = _serialman.WriteValue(_replayRoundPlayerInfo);
-        metadata["roundEndText"] = new ValueDataNode(_replayRoundText);
+        metadata["roundEndPlayers"] = _serialman.WriteValue(_lastRoundInfo?.AllPlayersEndInfo);
+        metadata["roundEndText"] = new ValueDataNode(_lastRoundInfo?.RoundEndText);
+
         metadata["server_id"] = new ValueDataNode(_cfg.GetCVar(CCVars.ServerId));
         metadata["server_name"] = new ValueDataNode(_cfg.GetCVar(CCVars.AdminLogsServerName));
         metadata["roundId"] = new ValueDataNode(RoundId.ToString());

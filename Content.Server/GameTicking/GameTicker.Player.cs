@@ -78,6 +78,12 @@ namespace Content.Server.GameTicking
                         _roundStartTime = _gameTiming.CurTime + LobbyDuration;
                     }
 
+                    if (_lastRoundInfo != null)
+                    {
+                        var evt = new PreviousRoundInfoMessageEvent(_lastRoundInfo);
+                        RaiseNetworkEvent(evt, args.Session);
+                    }
+
                     break;
                 }
 
