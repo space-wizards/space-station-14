@@ -465,6 +465,9 @@
       components:
       - HumanoidProfile
       - MobState
+    blacklist:
+      components:
+      - RandomHumanoidAppearance # Hungry... For... Salvage corpses... grrrr...
     event: !type:EntityEffectActionEvent
   - type: EntityEffectAction
     effects:
