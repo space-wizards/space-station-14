@@ -227,10 +227,10 @@ namespace Content.Shared.Interaction
             if (_gameTiming.ApplyingState)
                 return; // The changes are already networked with the same gamestate as the container event.
 
-            if (!item.DeleteOnDrop)
-                RemCompDeferred<UnremoveableComponent>(uid);
-            else
+            if (item.DeleteOnDrop)
                 PredictedQueueDel(uid);
+            else if (item.BecomeRemoveableOnDrop)
+                RemCompDeferred<UnremoveableComponent>(uid);
         }
 
         private void OnUnequipHand(EntityUid uid, UnremoveableComponent item, GotUnequippedHandEvent args)
@@ -238,10 +238,10 @@ namespace Content.Shared.Interaction
             if (_gameTiming.ApplyingState)
                 return; // The changes are already networked with the same gamestate as the container event.
 
-            if (!item.DeleteOnDrop)
-                RemCompDeferred<UnremoveableComponent>(uid);
-            else
+            if (item.DeleteOnDrop)
                 PredictedQueueDel(uid);
+            else if (item.BecomeRemoveableOnDrop)
+                RemCompDeferred<UnremoveableComponent>(uid);
         }
 
         private void OnDropped(EntityUid uid, UnremoveableComponent item, DroppedEvent args)
@@ -251,10 +251,10 @@ namespace Content.Shared.Interaction
             // Other than the two cases above this is not a container event, but adding and removing hands is networked similarly
             // and removing hands causes items to be dropped.
 
-            if (!item.DeleteOnDrop)
-                RemCompDeferred<UnremoveableComponent>(uid);
-            else
+            if (item.DeleteOnDrop)
                 PredictedQueueDel(uid);
+            else if (item.BecomeRemoveableOnDrop)
+                RemCompDeferred<UnremoveableComponent>(uid);;
         }
 
         private bool HandleTryPullObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)

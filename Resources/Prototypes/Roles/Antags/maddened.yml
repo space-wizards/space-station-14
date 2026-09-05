@@ -1,0 +1,5 @@
+- type: antag
+  id: Maddened
+  name: roles-antag-maddened-name
+  antagonist: true
+  objective: roles-antag-maddened-objective
