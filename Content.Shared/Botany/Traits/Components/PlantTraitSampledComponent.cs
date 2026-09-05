@@ -9,5 +9,7 @@ namespace Content.Shared.Botany.Traits.Components;
 public sealed partial class PlantTraitSampledComponent : PlantTraitsComponent
 {
     /// <inheritdoc/>
-    public override LocId? TraitState { get; set; } = "mutation-plant-sampled";
+    public override LocId? TraitState { get; set; } = "mutation-plant-state-sampled";
+    /// <inheritdoc/>
+    public override LocId? TraitName { get; set; } = "mutation-plant-name-sampled";
 }

@@ -10,4 +10,10 @@ public abstract partial class PlantTraitsComponent : Component
     /// </summary>
     [DataField]
     public virtual LocId? TraitState { get; set; }
+
+    /// <summary>
+    /// Localization key for the name of the trait.
+    /// </summary>
+    [DataField]
+    public virtual LocId? TraitName { get; set; }
 }

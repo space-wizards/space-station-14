@@ -1,6 +1,7 @@
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Systems;
 using Content.Shared.Botany.Traits.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
@@ -78,5 +79,16 @@ public sealed partial class PlantChangeTraits : EntityEffectBase<PlantChangeTrai
         /// Adds the trait if it is not present, or removes it if it is already present.
         /// </summary>
         Toggle
+    }
+
+    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    {
+        var component = IoCManager.Resolve<IComponentFactory>().GetComponent(Trait);
+        if (component is not PlantTraitsComponent plantTrait || plantTrait.TraitName is not { } traitName)
+        {
+            return null;
+        }
+
+        return Loc.GetString("entity-effect-guidebook-plant-change-trait", [("change", Type.ToString()), ("chance", Probability), ("trait", Loc.GetString(traitName))]);
     }
 }
