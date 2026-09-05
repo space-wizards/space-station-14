@@ -15,7 +15,6 @@
     - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
-  - type: GhostTakeoverAvailable
   - type: HTN
     rootTask:
       task: SimpleRangedHostileCompound

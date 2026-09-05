@@ -67,7 +67,6 @@
     radius: 1.2
     energy: 2
     color: "#4faffb"
-  - type: GhostTakeoverAvailable
   - type: Speech
     speechVerb: LargeMob
 
@@ -513,7 +512,6 @@
     rules: ghost-role-information-freeagent-rules
     mindRoles:
     - MindRoleGhostRoleFreeAgentHarmless
-  - type: GhostTakeoverAvailable
   - type: Emoting
   - type: Sprite
     drawdepth: SmallMobs
