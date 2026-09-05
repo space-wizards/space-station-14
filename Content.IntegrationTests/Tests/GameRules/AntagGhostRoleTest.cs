@@ -75,7 +75,6 @@ public sealed partial class AntagGhostRoleTest : AntagTest
 
         // End all rules
         STicker.ClearGameRules();
-        Server.RunTicks(1);
         Assert.That(STicker.GetAddedGameRules(), Is.Empty);
     }
 
