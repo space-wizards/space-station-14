@@ -5,6 +5,8 @@ using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Shared.Cargo.Prototypes;
+using Content.Shared.Containers;
+using Content.Shared.EntityTable;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
@@ -22,8 +24,7 @@ public sealed class CargoTest : GameTest
     /// </summary>
     private static readonly HashSet<ProtoId<CargoProductPrototype>> Ignored =
     [
-        // This is ignored because it is explicitly intended to be able to sell for more than it costs.
-        new("FunCrateGambling"),
+
     ];
 
     [SidedDependency(Side.Server)]
@@ -35,34 +36,52 @@ public sealed class CargoTest : GameTest
     [SidedDependency(Side.Server)]
     private readonly CargoSystem _sCargo = null!;
 
+    [SidedDependency(Side.Server)]
+    private readonly EntityTableSystem _sTableSystem = null!;
+
     [Test]
     public async Task NoCargoOrderArbitrage()
     {
-        var pair = Pair;
-        var server = pair.Server;
+        await Pair.CreateTestMap();
+        var coordinates = Pair.TestMap!.GridCoords;
 
-        var testMap = await pair.CreateTestMap();
-
-        var entManager = server.ResolveDependency<IEntityManager>();
-        var protoManager = server.ResolveDependency<IPrototypeManager>();
-        var pricing = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<PricingSystem>();
-
-        await server.WaitAssertion(() =>
+        await Server.WaitAssertion(() =>
         {
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
-                foreach (var proto in protoManager.EnumeratePrototypes<CargoProductPrototype>())
+                foreach (var proto in SProtoMan.EnumeratePrototypes<CargoProductPrototype>())
                 {
                     if (Ignored.Contains(proto.ID))
                         continue;
+                    var entProto = SProtoMan.Index<EntityPrototype>(proto.Product);
+                    double price = 0;
+                    bool contentsChecked = false;
+                    EntityUid ent;
+                    if (entProto.TryComp<EntityTableContainerFillComponent>(out var fill, _sCompFact))
+                    {
+                        foreach (var container in fill.Containers)
+                        {
+                            foreach (var item in _sTableSystem.AverageSpawns(container.Value))
+                            {
+                                ent = SSpawnAtPosition(item.spawn, coordinates);
+                                price += _sPricing.GetPrice(ent) * item.Item2;
+                                SDeleteNow(ent);
+                            }
+                        }
+                        contentsChecked = true;
+                    }
 
-                    var ent = entManager.SpawnEntity(proto.Product, testMap.MapCoords);
-                    var price = pricing.GetPrice(ent);
+                    ent = SSpawnAtPosition(proto.Product, coordinates);
+                    price += _sPricing.GetPrice(ent, includeContents: !contentsChecked);
 
-                    Assert.That(price, Is.AtMost(proto.Cost), $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell is {price}!");
+                    Assert.That(
+                        price,
+                        Is.AtMost(proto.Cost),
+                        $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell is {price}!"
+                    );
                     SDeleteNow(ent);
                 }
-            });
+            }
         });
     }
 
