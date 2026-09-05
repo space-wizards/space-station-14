@@ -139,8 +139,9 @@ public abstract partial class GameTicker
     [PublicAPI]
     public bool StartGameRule(Entity<GameRuleComponent?> rule)
     {
-        if (!RuleQuery.Resolve(rule, ref rule.Comp))
-            rule.Comp = AddComp<GameRuleComponent>(rule);
+        // Game rule has already ended itself, or this was never a game rule...
+        if (!RuleQuery.Resolve(rule, ref rule.Comp, false))
+            return false;
 
         DebugTools.Assert(!rule.Comp.Silent, $"Rule {ToPrettyString(rule)} attempted to start when it should have been deleted!");
 
