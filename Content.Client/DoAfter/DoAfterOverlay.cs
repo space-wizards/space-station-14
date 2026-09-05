@@ -139,7 +139,7 @@ public sealed class DoAfterOverlay : Overlay
                 // Use the sprite itself if we know its bounds. This means short or tall sprites don't get overlapped
                 // by the bar.
                 var spriteBounds = _sprite.GetLocalBounds((uid, sprite));
-                var yFinished = spriteBounds.Height / 2f + 0.05f;
+                var yFinished = spriteBounds.Height / 2f;
                 var yStart = yFinished / 6f;
                 var yOffset = MathHelper.Lerp(yStart, yFinished, Easings.OutSine((float)Math.Clamp(elapsed / MaxYPosTime, 0.0, 1.0)));
 

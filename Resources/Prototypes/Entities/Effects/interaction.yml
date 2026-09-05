@@ -1,0 +1,25 @@
+- type: entity
+  id: InteractionParticleUse
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TimedDespawn
+    lifetime: 1.1
+  - type: Transform
+    noRot: true
+  - type: Sprite
+    sprite: Effects/interaction.rsi
+    state: hand
+    drawdepth: Effects
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  parent: InteractionParticleUse
+  id: InteractionParticlePull
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: pulling
+    loop: false

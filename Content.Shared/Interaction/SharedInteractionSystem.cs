@@ -15,6 +15,7 @@ using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Pulling.Systems;
@@ -34,6 +35,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
@@ -52,6 +54,7 @@ namespace Content.Shared.Interaction
     public abstract partial class SharedInteractionSystem : EntitySystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private INetManager _net = default!;
         [Dependency] private ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private ISharedChatManager _chat = default!;
         [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
@@ -522,9 +525,12 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(user, userMessage, true);
 
             _adminLogger.Add(LogType.InteractHand, LogImpact.Low, $"{user} interacted with {target}");
-            DoContactInteraction(user, target, message);
+            DoContactInteraction(user, target, null, message);
             if (message.Handled || userMessage.Handled)
+            {
+                CreateInteractionParticle(user, null, target, true);
                 return;
+            }
 
             DebugTools.Assert(!IsDeleted(user) && !IsDeleted(target));
             // Else we run Activate.
@@ -568,9 +574,12 @@ namespace Content.Shared.Interaction
                 RaiseLocalEvent(target.Value, rangedMsg, true);
 
                 // We contact the USED entity, but not the target.
-                DoContactInteraction(user, used, rangedMsg);
+                DoContactInteraction(user, used, null, rangedMsg);
                 if (rangedMsg.Handled)
+                {
+                    CreateInteractionParticle(user, null, target, true);
                     return;
+                }
             }
 
             DebugTools.Assert(!IsDeleted(user) && !IsDeleted(used) && !IsDeleted(target));
@@ -1008,7 +1017,7 @@ namespace Content.Shared.Interaction
                 return false;
 
             // We contact the USED entity, but not the target.
-            DoContactInteraction(user, used, ev);
+            DoContactInteraction(user, used, null, ev);
             return ev.Handled;
         }
 
@@ -1060,11 +1069,15 @@ namespace Content.Shared.Interaction
             var userInteractUsingEvent = new UserInteractUsingEvent(user, used, target, clickLocation);
             RaiseLocalEvent(user, userInteractUsingEvent, true);
 
-            DoContactInteraction(user, used, interactUsingEvent);
-            DoContactInteraction(user, target, interactUsingEvent);
+            DoContactInteraction(user, used, null);
+            DoContactInteraction(user, target, null);
             // Contact interactions are currently only used for forensics, so we don't raise used -> target
             if (interactUsingEvent.Handled || userInteractUsingEvent.Handled)
+            {
+                CreateInteractionParticle(user, target, null , true);
+                CreateInteractionParticle(user, used, null , true);
                 return true;
+            }
 
             if (InteractDoAfter(user, used, target, clickLocation, canReach: true, checkDeletion: false))
                 return true;
@@ -1093,15 +1106,18 @@ namespace Content.Shared.Interaction
 
             var afterInteractEvent = new AfterInteractEvent(user, used, target, clickLocation, canReach);
             RaiseLocalEvent(used, afterInteractEvent);
-            DoContactInteraction(user, used, afterInteractEvent);
+            DoContactInteraction(user, used, null, afterInteractEvent);
             if (canReach)
             {
-                DoContactInteraction(user, target, afterInteractEvent);
+                DoContactInteraction(user, target, used, afterInteractEvent);
                 // Contact interactions are currently only used for forensics, so we don't raise used -> target
             }
 
             if (afterInteractEvent.Handled)
+            {
+                CreateInteractionParticle(user, used, target, true, InteractionParticleType.Use, _transform.ToMapCoordinates(clickLocation));
                 return true;
+            }
 
             if (target == null)
                 return false;
@@ -1110,11 +1126,13 @@ namespace Content.Shared.Interaction
             var afterInteractUsingEvent = new AfterInteractUsingEvent(user, used, target, clickLocation, canReach);
             RaiseLocalEvent(target.Value, afterInteractUsingEvent);
 
-            DoContactInteraction(user, used, afterInteractUsingEvent);
+            DoContactInteraction(user, used, null, afterInteractUsingEvent);
             if (canReach)
             {
-                DoContactInteraction(user, target, afterInteractUsingEvent);
+                DoContactInteraction(user, target, used, afterInteractUsingEvent);
                 // Contact interactions are currently only used for forensics, so we don't raise used -> target
+                if (afterInteractUsingEvent.SpawnInteractionParticles && afterInteractUsingEvent.Handled)
+                    CreateInteractionParticle(user, used, target, true);
             }
 
             return afterInteractUsingEvent.Handled;
@@ -1176,7 +1194,7 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(used, activateMsg, true);
             if (activateMsg.Handled)
             {
-                DoContactInteraction(user, used);
+                DoContactInteraction(user, used, null);
                 if (!activateMsg.WasLogged)
                     _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
 
@@ -1191,7 +1209,7 @@ namespace Content.Shared.Interaction
             if (!userEv.Handled)
                 return false;
 
-            DoContactInteraction(user, used);
+            DoContactInteraction(user, used, null);
             // Still need to call this even without checkUseDelay in case this gets relayed from Activate.
             if (delayComponent != null)
                 _useDelay.TryResetDelay(used, component: delayComponent);
@@ -1232,7 +1250,7 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(used, useMsg, true);
             if (useMsg.Handled)
             {
-                DoContactInteraction(user, used, useMsg);
+                DoContactInteraction(user, used, null, useMsg);
                 if (delayComponent != null && useMsg.ApplyDelay)
                     _useDelay.TryResetDelay((used, delayComponent));
                 return true;
@@ -1418,7 +1436,11 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Simple convenience function to raise contact events (disease, forensics, etc).
         /// </summary>
-        public void DoContactInteraction(EntityUid uidA, EntityUid? uidB, HandledEntityEventArgs? args = null)
+        /// <param name="uidA">The entity doing the contacting.</param>
+        /// <param name="uidB">The entity being contacted.</param>
+        /// <param name="used">The entity used to contact <see cref="uidB"/>.</param>
+        /// <param name="args">Optional handleable entity event to check.</param>
+        public void DoContactInteraction(EntityUid uidA, EntityUid? uidB, EntityUid? used, HandledEntityEventArgs? args = null)
         {
             if (uidB == null || args?.Handled == false)
                 return;
@@ -1438,6 +1460,29 @@ namespace Content.Shared.Interaction
 
             ev.Other = uidA;
             RaiseLocalEvent(uidB.Value, ev);
+        }
+
+        public void CreateInteractionParticle(EntityUid user, EntityUid? used, EntityUid? target, bool predicted, InteractionParticleType interactionParticleType = InteractionParticleType.Use, MapCoordinates? clickCoordinates = null)
+        {
+            if (HasComp<VirtualItemComponent>(target))
+                return;
+
+            if (target == null && clickCoordinates == null)
+                return;
+
+            if (_net.IsServer)
+            {
+                var filter = predicted
+                    ? Filter.PvsExcept(user, entityManager: EntityManager)
+                    : Filter.Pvs(user, entityManager: EntityManager);
+
+                RaiseNetworkEvent(new InteractionParticleEvent(GetNetEntity(user), GetNetEntity(used), GetNetEntity(target),  clickCoordinates, false, interactionParticleType), filter);
+            }
+            else if (_gameTiming.IsFirstTimePredicted)
+            {
+                var evt = new InteractionParticleEvent(GetNetEntity(user), GetNetEntity(used), GetNetEntity(target), clickCoordinates, true, interactionParticleType);
+                RaiseLocalEvent(evt);
+            }
         }
 
 
