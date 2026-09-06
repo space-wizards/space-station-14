@@ -63,17 +63,17 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
     /// <summary>
     /// Get all entities with <see cref="TComponent"/> that are on the station. Ignore entities outside the station.
     /// </summary>
-    /// <param name="checkIfAnchored">Whether to only get anchored entities.
-    /// Good check for air vents, bad for containers.</param>
+    /// <param name="onlyAnchored">Whether to only get anchored entities.
+    /// Good check for air vents, bad for containers like crates.</param>
     /// <returns>All matching entities.</returns>
-    protected HashSet<Entity<TComponent>> GetEntitiesWithComponentOnStation<TComponent>(bool checkIfAnchored) where TComponent : IComponent
+    protected HashSet<Entity<TComponent>> GetEntitiesWithComponentOnStation<TComponent>(bool onlyAnchored) where TComponent : IComponent
     {
-        return GetEntitiesWithComponentOnStation<TComponent>(checkIfAnchored, out _);
+        return GetEntitiesWithComponentOnStation<TComponent>(onlyAnchored, out _);
     }
 
     /// <param name="station">Optional station to search. If null, a random eligible station is used.</param>
     /// <inheritdoc cref="GetEntitiesWithComponentOnStation{TComponent}(bool)" />
-    protected HashSet<Entity<TComponent>> GetEntitiesWithComponentOnStation<TComponent>(bool checkIfAnchored,
+    protected HashSet<Entity<TComponent>> GetEntitiesWithComponentOnStation<TComponent>(bool onlyAnchored,
         out EntityUid? station)
         where TComponent : IComponent
     {
@@ -93,7 +93,7 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
         var locations = EntityQueryEnumerator<TComponent, TransformComponent>();
         while (locations.MoveNext(out var uid, out var component, out var transform))
         {
-            if (checkIfAnchored && !transform.Anchored)
+            if (onlyAnchored && !transform.Anchored)
             {
                 continue;
             }
