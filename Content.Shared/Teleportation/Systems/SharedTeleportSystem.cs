@@ -1,6 +1,5 @@
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
-using Content.Shared.Teleportation.Components;
 using Content.Shared.Weapons.Misc;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
@@ -18,7 +17,7 @@ public sealed partial class SharedTeleportSystem : EntitySystem
 
     /// <summary>
     /// Attempts to move a target, optionally triggering effects on the teleporter.
-    /// Always notifies the target with <see cref="TeleportedEvent"/> after successful movement.
+    /// Notifies the target with <see cref="TeleportedEvent"/> after successful movement, before post-move effects.
     /// Used by teleport implementations while handling a request dispatched by <see cref="RequestTeleport"/>.
     /// </summary>
     /// <param name="teleporter">The entity performing the teleportation.</param>
@@ -62,32 +61,22 @@ public sealed partial class SharedTeleportSystem : EntitySystem
         if (!moved)
             return false;
 
-        if (triggerEffects)
-        {
-            var targetTeleported = new TargetTeleportedEvent(target);
-            RaiseLocalEvent(teleporter, ref targetTeleported);
-        }
-
         var teleported = new TeleportedEvent(teleporter);
         RaiseLocalEvent(target, ref teleported);
 
-        return true;
-    }
+        if (!triggerEffects)
+            return true;
 
-    /// <summary>
-    /// Moves a target without raising teleport lifecycle events, including those that trigger sounds.
-    /// Pulling and grappling relationships are still stopped before movement.
-    /// Refuses to move a target while a teleport request is being processed.
-    /// </summary>
-    public bool TryTeleport(EntityUid target, EntityCoordinates destination)
-    {
-        if (HasComp<TeleportingComponent>(target))
-            return false;
+        // Notification handlers may delete either participant after the movement succeeded.
+        if (TerminatingOrDeleted(target))
+            return true;
 
-        if (!CanTeleport(target, destination))
-            return false;
+        if (TerminatingOrDeleted(teleporter))
+            return true;
 
-        Teleport(target, destination);
+        var targetTeleported = new TargetTeleportedEvent(target);
+        RaiseLocalEvent(teleporter, ref targetTeleported);
+
         return true;
     }
 

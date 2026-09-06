@@ -51,12 +51,28 @@ public sealed partial class CollisionTeleportTriggerSystem : EntitySystem
     /// </summary>
     public bool CanTrigger(EntityUid teleporter, EntityUid target)
     {
-        if (!TryComp<CollisionTeleportTriggerComponent>(teleporter, out var trigger) ||
-            !IsTargetAllowed(trigger, target) ||
-            !TryComp<PhysicsComponent>(teleporter, out var teleporterBody) || !teleporterBody.CanCollide ||
-            !TryComp<PhysicsComponent>(target, out var targetBody) || !targetBody.CanCollide ||
-            !TryComp<FixturesComponent>(teleporter, out var teleporterFixtures) ||
-            !TryComp<FixturesComponent>(target, out var targetFixtures))
+        if (!TryComp<CollisionTeleportTriggerComponent>(teleporter, out var trigger))
+            return false;
+
+        if (!IsTargetAllowed(trigger, target))
+            return false;
+
+        if (!TryComp<PhysicsComponent>(teleporter, out var teleporterBody))
+            return false;
+
+        if (!teleporterBody.CanCollide)
+            return false;
+
+        if (!TryComp<PhysicsComponent>(target, out var targetBody))
+            return false;
+
+        if (!targetBody.CanCollide)
+            return false;
+
+        if (!TryComp<FixturesComponent>(teleporter, out var teleporterFixtures))
+            return false;
+
+        if (!TryComp<FixturesComponent>(target, out var targetFixtures))
             return false;
 
         foreach (var (teleporterId, teleporterFixture) in teleporterFixtures.Fixtures)
@@ -79,15 +95,37 @@ public sealed partial class CollisionTeleportTriggerSystem : EntitySystem
     /// </summary>
     public bool IsInsideTriggerBounds(EntityUid teleporter, EntityUid target)
     {
-        if (!Exists(teleporter) || TerminatingOrDeleted(teleporter) ||
-            !Exists(target) || TerminatingOrDeleted(target) ||
-            !TryComp<CollisionTeleportTriggerComponent>(teleporter, out var trigger) ||
-            !TryComp<FixturesComponent>(teleporter, out var teleporterFixtures) ||
-            !TryComp<FixturesComponent>(target, out var targetFixtures) ||
-            !TryComp(teleporter, out TransformComponent? teleporterXform) ||
-            !TryComp(target, out TransformComponent? targetXform) ||
-            teleporterXform.MapID == MapId.Nullspace ||
-            teleporterXform.MapID != targetXform.MapID)
+        if (!Exists(teleporter))
+            return false;
+
+        if (TerminatingOrDeleted(teleporter))
+            return false;
+
+        if (!Exists(target))
+            return false;
+
+        if (TerminatingOrDeleted(target))
+            return false;
+
+        if (!TryComp<CollisionTeleportTriggerComponent>(teleporter, out var trigger))
+            return false;
+
+        if (!TryComp<FixturesComponent>(teleporter, out var teleporterFixtures))
+            return false;
+
+        if (!TryComp<FixturesComponent>(target, out var targetFixtures))
+            return false;
+
+        if (!TryComp(teleporter, out TransformComponent? teleporterXform))
+            return false;
+
+        if (!TryComp(target, out TransformComponent? targetXform))
+            return false;
+
+        if (teleporterXform.MapID == MapId.Nullspace)
+            return false;
+
+        if (teleporterXform.MapID != targetXform.MapID)
             return false;
 
         var teleporterTransform = _physics.GetPhysicsTransform(teleporter, teleporterXform);
