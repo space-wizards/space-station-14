@@ -12,12 +12,21 @@ internal sealed partial class BuckleSystem : SharedBuckleSystem
 {
     [Dependency] private RotationVisualizerSystem _rotationVisualizerSystem = default!;
     [Dependency] private IEyeManager _eye = default!;
-    [Dependency] private SharedTransformSystem _xformSystem = default!;
+    [Dependency] private TransformSystem _xformSystem = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
     [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
 
     #region Event Handlers
+
+    protected override void AfterBuckleParentChanged(Entity<BuckleComponent> ent, ref EntParentChangedMessage args)
+    {
+        if (HasComp<StrapComponent>(args.Transform.ParentUid) ||
+            args.OldParent is { } oldParent && HasComp<StrapComponent>(oldParent))
+        {
+            _xformSystem.SnapRenderPose(ent, true);
+        }
+    }
 
     [SubscribeLocalEvent]
     private void OnStrapMoveEvent(Entity<StrapComponent> ent, ref MoveEvent args)
@@ -90,6 +99,8 @@ internal sealed partial class BuckleSystem : SharedBuckleSystem
     [SubscribeLocalEvent]
     private void OnBuckledEvent(Entity<BuckleComponent> ent, ref BuckledEvent args)
     {
+        _xformSystem.SnapRenderPose(ent, true);
+
         if (!args.Strap.Comp.ModifyBuckleDrawDepth)
             return;
 
@@ -114,6 +125,8 @@ internal sealed partial class BuckleSystem : SharedBuckleSystem
     [SubscribeLocalEvent]
     private void OnUnbuckledEvent(Entity<BuckleComponent> ent, ref UnbuckledEvent args)
     {
+        _xformSystem.SnapRenderPose(ent, true);
+
         if (!args.Strap.Comp.ModifyBuckleDrawDepth)
             return;
 

@@ -18,6 +18,7 @@ public sealed partial class MoverController : SharedMoverController
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private AlertsSystem _alerts = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private Robust.Client.GameObjects.TransformSystem _renderTransforms = default!;
 
     public override void Initialize()
     {
@@ -26,6 +27,7 @@ public sealed partial class MoverController : SharedMoverController
         SubscribeLocalEvent<RelayInputMoverComponent, LocalPlayerDetachedEvent>(OnRelayPlayerDetached);
         SubscribeLocalEvent<InputMoverComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<InputMoverComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<InputMoverComponent, MoveEvent>(OnMoverTransformMoved);
 
         SubscribeLocalEvent<InputMoverComponent, UpdateIsPredictedEvent>(OnUpdatePredicted);
         SubscribeLocalEvent<MovementRelayTargetComponent, UpdateIsPredictedEvent>(OnUpdateRelayTargetPredicted);
@@ -83,6 +85,12 @@ public sealed partial class MoverController : SharedMoverController
     private void OnPlayerDetached(Entity<InputMoverComponent> entity, ref LocalPlayerDetachedEvent args)
     {
         SetMoveInput(entity, MoveButtons.None);
+    }
+
+    private void OnMoverTransformMoved(Entity<InputMoverComponent> entity, ref MoveEvent args)
+    {
+        if (!args.OldRotation.EqualsApprox(args.NewRotation))
+            _renderTransforms.SnapRenderRotation(entity);
     }
 
     public override void UpdateBeforeSolve(bool prediction, float frameTime)

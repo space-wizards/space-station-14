@@ -6,6 +6,7 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Standing;
+using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Buckle
@@ -227,6 +228,60 @@ namespace Content.IntegrationTests.Tests.Buckle
                     Assert.That(buckle.Buckled, Is.False);
                     Assert.That(buckle.BuckledTo, Is.Null);
                     Assert.That(strap.BuckledEntities, Is.Empty);
+                });
+            });
+        }
+
+        [Test]
+        public async Task BuckleAndUnbuckleSnapClientRenderPoseTest()
+        {
+            var map = await Pair.CreateTestMap();
+            EntityUid human = default;
+            EntityUid chair = default;
+            NetEntity netHuman = default;
+            NetEntity netChair = default;
+
+            await Server.WaitAssertion(() =>
+            {
+                human = SEntMan.SpawnEntity(BuckleDummyId, map.GridCoords);
+                chair = SEntMan.SpawnEntity(StrapDummyId, map.GridCoords);
+                netHuman = SEntMan.GetNetEntity(human);
+                netChair = SEntMan.GetNetEntity(chair);
+            });
+
+            await Pair.RunTicksSync(5);
+
+            await Client.WaitAssertion(() =>
+            {
+                var clientHuman = CEntMan.GetEntity(netHuman);
+                var clientChair = CEntMan.GetEntity(netChair);
+                var buckle = CEntMan.GetComponent<BuckleComponent>(clientHuman);
+                var buckleSystem = CEntMan.System<SharedBuckleSystem>();
+                var transformSystem = CEntMan.System<TransformSystem>();
+                var xform = CEntMan.GetComponent<TransformComponent>(clientHuman);
+
+                using (CGameTiming.StartStateApplicationArea())
+                    transformSystem.SetLocalPosition(clientHuman, new Vector2(0.5f, 0f), xform);
+
+                Assert.That(transformSystem.TryGetRenderPoseDebugData(clientHuman, out _), Is.True);
+                Assert.That(buckleSystem.TryBuckle(clientHuman, clientHuman, clientChair, buckle, popup: false), Is.True);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(transformSystem.TryGetRenderPoseDebugData(clientHuman, out _), Is.False);
+                    Assert.That(transformSystem.GetRenderWorldPosition(clientHuman),
+                        Is.EqualTo(transformSystem.GetWorldPosition(clientHuman)));
+                });
+
+                using (CGameTiming.StartStateApplicationArea())
+                    transformSystem.SetLocalPosition(clientHuman, new Vector2(0.25f, 0f), xform);
+
+                Assert.That(transformSystem.TryGetRenderPoseDebugData(clientHuman, out _), Is.True);
+                buckleSystem.Unbuckle(clientHuman, clientHuman);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(transformSystem.TryGetRenderPoseDebugData(clientHuman, out _), Is.False);
+                    Assert.That(transformSystem.GetRenderWorldPosition(clientHuman),
+                        Is.EqualTo(transformSystem.GetWorldPosition(clientHuman)));
                 });
             });
         }

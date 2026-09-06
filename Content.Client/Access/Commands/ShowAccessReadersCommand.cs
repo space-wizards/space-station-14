@@ -1,3 +1,4 @@
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Console;
@@ -8,7 +9,7 @@ public sealed partial class ShowAccessReadersCommand : LocalizedEntityCommands
 {
     [Dependency] private IOverlayManager _overlay = default!;
     [Dependency] private IResourceCache _cache = default!;
-    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private TransformSystem _xform = default!;
 
     public override string Command => "showaccessreaders";
 

@@ -72,7 +72,7 @@ public sealed partial class MiningOverlay : Overlay
             var gridRot = xform.GridUid == null ? 0 : _xformQuery.CompOrNull(xform.GridUid.Value)?.LocalRotation ?? 0;
             var rotationMatrix = Matrix3Helpers.CreateRotation(gridRot);
 
-            var worldMatrix = Matrix3Helpers.CreateTranslation(_xform.GetWorldPosition(xform));
+            var worldMatrix = Matrix3Helpers.CreateTranslation(_xform.GetRenderWorldPosition((ore, xform)));
             var scaledWorld = Matrix3x2.Multiply(scaleMatrix, worldMatrix);
             var matty = Matrix3x2.Multiply(rotationMatrix, scaledWorld);
             handle.SetTransform(matty);
