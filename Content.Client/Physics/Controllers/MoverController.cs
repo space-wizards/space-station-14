@@ -2,6 +2,7 @@ using Content.Shared.Alert;
 using Content.Shared.CCVar;
 using Content.Shared.Friction;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Systems;
 using Robust.Client.GameObjects;
@@ -28,7 +29,7 @@ public sealed partial class MoverController : SharedMoverController
         SubscribeLocalEvent<RelayInputMoverComponent, LocalPlayerDetachedEvent>(OnRelayPlayerDetached);
         SubscribeLocalEvent<InputMoverComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<InputMoverComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
-        SubscribeLocalEvent<InputMoverComponent, MoveEvent>(OnMoverTransformMoved);
+        SubscribeLocalEvent<InputMoverComponent, MoveInputEvent>(OnMoverMoveInput);
 
         SubscribeLocalEvent<InputMoverComponent, UpdateIsPredictedEvent>(OnUpdatePredicted);
         SubscribeLocalEvent<MovementRelayTargetComponent, UpdateIsPredictedEvent>(OnUpdateRelayTargetPredicted);
@@ -88,10 +89,9 @@ public sealed partial class MoverController : SharedMoverController
         SetMoveInput(entity, MoveButtons.None);
     }
 
-    private void OnMoverTransformMoved(Entity<InputMoverComponent> entity, ref MoveEvent args)
+    private void OnMoverMoveInput(Entity<InputMoverComponent> entity, ref MoveInputEvent args)
     {
-        if (!args.OldRotation.EqualsApprox(args.NewRotation))
-            _transform.SnapRenderRotation(entity);
+        _transform.SnapRenderRotation(entity);
     }
 
     public override void UpdateBeforeSolve(bool prediction, float frameTime)
