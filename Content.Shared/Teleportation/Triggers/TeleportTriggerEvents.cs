@@ -40,9 +40,10 @@ public record struct TeleportUseAttemptEvent(
     LocId? CancelReason = null);
 
 /// <summary>
-/// Notifies a teleporter that a target has stopped colliding with its collision trigger.
+/// Notifies a teleporter that one eligible fixture contact with a target has ended.
+/// The target may still overlap the trigger; handlers must check its bounds before treating this as an exit.
 /// Raised on the teleporter entity.
 /// </summary>
-/// <param name="Target">The entity that left the trigger.</param>
+/// <param name="Target">The entity whose fixture contact ended.</param>
 [ByRefEvent, Serializable]
 public record struct TeleportTriggerExitedEvent(EntityUid Target);
