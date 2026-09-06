@@ -12,11 +12,14 @@ namespace Content.Server.Ghost.Roles.Components;
 [Access(typeof(GhostRoleSystem))]
 public sealed partial class GhostRoleComponent : Component
 {
+    public static readonly LocId DefaultRules = "ghost-role-component-default-rules";
+    public static readonly EntProtoId DefaultMindRole = "MindRoleGhostRoleNeutral";
+
     [DataField("name")] private string _roleName = "Unknown";
 
     [DataField("description")] private string _roleDescription = "Unknown";
 
-    [DataField("rules")] private string _roleRules = "ghost-role-component-default-rules";
+    [DataField("rules")] private string _roleRules = DefaultRules;
 
     /// <summary>
     /// Whether the <see cref="MakeSentientCommand"/> should run on the mob.
@@ -25,8 +28,8 @@ public sealed partial class GhostRoleComponent : Component
     public bool MakeSentient = true;
 
     /// <summary>
-    ///     The probability that this ghost role will be available after init.
-    ///     Used mostly for takeover roles that want some probability of being takeover, but not 100%.
+    /// The probability that this ghost role will be available after init.
+    /// Used mostly for takeover roles that want some probability of being takeover, but not 100%.
     /// </summary>
     [DataField("prob")]
     public float Probability = 1f;
@@ -34,7 +37,6 @@ public sealed partial class GhostRoleComponent : Component
     // We do this so updating RoleName and RoleDescription in VV updates the open EUIs.
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
     public string RoleName
     {
         get => Loc.GetString(_roleName);
@@ -46,7 +48,6 @@ public sealed partial class GhostRoleComponent : Component
     }
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
     public string RoleDescription
     {
         get => Loc.GetString(_roleDescription);
@@ -58,7 +59,6 @@ public sealed partial class GhostRoleComponent : Component
     }
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
     public string RoleRules
     {
         get => Loc.GetString(_roleRules);
@@ -72,8 +72,7 @@ public sealed partial class GhostRoleComponent : Component
     /// <summary>
     /// The mind roles that will be added to the mob's mind entity
     /// </summary>
-    [DataField, Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // Don't make eye contact
-    public List<EntProtoId> MindRoles = new() { "MindRoleGhostRoleNeutral" };
+    public List<EntProtoId> MindRoles = new() { DefaultMindRole };
 
     [DataField]
     public bool AllowSpeech { get; set; } = true;
@@ -94,14 +93,12 @@ public sealed partial class GhostRoleComponent : Component
     /// If set, ghost role is raffled, otherwise it is first-come-first-serve.
     /// </summary>
     [DataField("raffle")]
-    [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
     public GhostRoleRaffleConfig? RaffleConfig { get; set; }
 
     /// <summary>
     /// Job the entity will receive after adding the mind.
     /// </summary>
     [DataField("job")]
-    [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // also FIXME Friends
     public ProtoId<JobPrototype>? JobProto = null;
 }
 

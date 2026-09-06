@@ -54,12 +54,6 @@ namespace Content.Server.Ghost.Roles
                 return;
             }
 
-            if (_entManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
-            {
-                shell.WriteLine($"Entity {metaData.EntityName} with id {uid} already has a {nameof(GhostTakeoverAvailableComponent)}");
-                return;
-            }
-
             var name = args[1];
             var description = args[2];
 
@@ -68,7 +62,7 @@ namespace Content.Server.Ghost.Roles
             {
                 5 => args[4],
                 7 => args[6],
-                _ => Loc.GetString("ghost-role-component-default-rules"),
+                _ => Loc.GetString(GhostRoleComponent.DefaultRules),
             };
 
             // is it an invocation with a prototype ID and optional rules?
@@ -114,12 +108,12 @@ namespace Content.Server.Ghost.Roles
                 };
             }
 
-            ghostRole = _entManager.AddComponent<GhostRoleComponent>(uid.Value);
-            _entManager.AddComponent<GhostTakeoverAvailableComponent>(uid.Value);
-            ghostRole.RoleName = name;
-            ghostRole.RoleDescription = description;
-            ghostRole.RoleRules = rules;
-            ghostRole.RaffleConfig = new GhostRoleRaffleConfig(settings);
+            var ghostRoleSystem = _entManager.System<GhostRoleSystem>();
+            ghostRoleSystem.CreateGhostRole(uid.Value,
+                name: name,
+                description: description,
+                rules: rules,
+                raffleConfig: new GhostRoleRaffleConfig(settings));
 
             shell.WriteLine($"Made entity {metaData.EntityName} a raffled ghost role.");
         }

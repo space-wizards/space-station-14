@@ -28,6 +28,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Content.Server.Ghost.Roles.Components;
+using Content.Server.Ghost.Roles;
 
 namespace Content.Server.Zombies
 {
@@ -35,12 +36,13 @@ namespace Content.Server.Zombies
     {
         [Dependency] private IGameTiming _timing = default!;
         [Dependency] private IRobustRandom _random = default!;
-        [Dependency] private BloodstreamSystem _bloodstream = default!;
-        [Dependency] private DamageableSystem _damageable = default!;
-        [Dependency] private ChatSystem _chat = default!;
         [Dependency] private ActionsSystem _actions = default!;
         [Dependency] private AutoEmoteSystem _autoEmote = default!;
+        [Dependency] private BloodstreamSystem _bloodstream = default!;
+        [Dependency] private ChatSystem _chat = default!;
+        [Dependency] private DamageableSystem _damageable = default!;
         [Dependency] private EmoteOnDamageSystem _emoteOnDamage = default!;
+        [Dependency] private GhostRoleSystem _ghostRole = default!;
         [Dependency] private MobStateSystem _mobState = default!;
         [Dependency] private SharedPopupSystem _popup = default!;
         [Dependency] private SharedRoleSystem _role = default!;
@@ -336,13 +338,11 @@ namespace Content.Server.Zombies
         private void MakeGhostRole(EntityUid ent)
         {
             //yet more hardcoding. Visit zombie.ftl for more information.
-            var ghostRole = EnsureComp<GhostRoleComponent>(ent);
-            EnsureComp<GhostTakeoverAvailableComponent>(ent);
-
-            ghostRole.RoleName = Loc.GetString("zombie-generic");
-            ghostRole.RoleDescription = Loc.GetString("zombie-role-desc");
-            ghostRole.RoleRules = Loc.GetString("zombie-role-rules");
-            ghostRole.MindRoles.Add(MindRoleZombie);
+            _ghostRole.CreateGhostRole(ent,
+                name: Loc.GetString("zombie-generic"),
+                description: Loc.GetString("zombie-role-desc"),
+                rules: Loc.GetString("zombie-role-rules"),
+                mindRoles: new() { GhostRoleComponent.DefaultMindRole, MindRoleZombie });
         }
     }
 }

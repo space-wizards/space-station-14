@@ -44,7 +44,7 @@ namespace Content.Server.Ghost.Roles
 
             var name = args[1];
             var description = args[2];
-            var rules = args.Length >= 4 ? args[3] : Loc.GetString("ghost-role-component-default-rules");
+            var rules = args.Length >= 4 ? args[3] : Loc.GetString(GhostRoleComponent.DefaultRules);
 
             if (_entManager.TryGetComponent(uid, out GhostRoleComponent? ghostRole))
             {
@@ -52,17 +52,11 @@ namespace Content.Server.Ghost.Roles
                 return;
             }
 
-            if (_entManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
-            {
-                shell.WriteLine($"Entity {metaData.EntityName} with id {uid} already has a {nameof(GhostTakeoverAvailableComponent)}");
-                return;
-            }
-
-            ghostRole = _entManager.AddComponent<GhostRoleComponent>(uid.Value);
-            _entManager.AddComponent<GhostTakeoverAvailableComponent>(uid.Value);
-            ghostRole.RoleName = name;
-            ghostRole.RoleDescription = description;
-            ghostRole.RoleRules = rules;
+            var ghostRoleSystem = _entManager.System<GhostRoleSystem>();
+            ghostRoleSystem.CreateGhostRole(uid.Value,
+                name: name,
+                description: description,
+                rules: rules);
 
             shell.WriteLine($"Made entity {metaData.EntityName} a ghost role.");
         }

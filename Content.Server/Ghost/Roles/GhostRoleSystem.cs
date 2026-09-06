@@ -4,6 +4,7 @@ using Content.Server.Administration.Managers;
 using Content.Server.EUI;
 using Content.Server.GameTicking.Events;
 using Content.Server.Ghost.Roles.Components;
+using Content.Server.Ghost.Roles.Raffles;
 using Content.Server.Ghost.Roles.UI;
 using Content.Server.Popups;
 using Content.Shared.Administration;
@@ -71,7 +72,6 @@ public sealed partial class GhostRoleSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
         _playerManager.PlayerStatusChanged += PlayerStatusChanged;
     }
 
@@ -79,9 +79,9 @@ public sealed partial class GhostRoleSystem : EntitySystem
     private void OnMobStateChanged(Entity<GhostRoleComponent> ent, ref MobStateChangedEvent args)
     {
         if (args.NewMobState == MobState.Alive && !ent.Comp.Taken)
-            RegisterGhostRole(ent);
+            RegisterGhostRole(ent.AsNullable());
         else if (args.NewMobState == MobState.Critical || args.NewMobState == MobState.Dead)
-            UnregisterGhostRole(ent);
+            UnregisterGhostRole(ent.AsNullable());
     }
 
     public override void Shutdown()
@@ -274,10 +274,48 @@ public sealed partial class GhostRoleSystem : EntitySystem
         }
     }
 
-    public void RegisterGhostRole(Entity<GhostRoleComponent> role)
+    public void CreateGhostRole(Entity<GhostRoleComponent?> role,
+        string name,
+        string description,
+        string rules,
+        GhostRoleRaffleConfig? raffleConfig = null,
+        ProtoId<JobPrototype>? jobProto = null,
+        List<EntProtoId>? mindRoles = null)
     {
-        if (role.Comp.Taken || TerminatingOrDeleted(role))
+        if (!_ghostRoleQuery.Resolve(role, ref role.Comp, logMissing: false))
+            role.Comp = EnsureComp<GhostRoleComponent>(role);
+
+        role.Comp.RoleName = name;
+        role.Comp.RoleDescription = description;
+        role.Comp.RoleRules = rules;
+        role.Comp.RaffleConfig = raffleConfig;
+        role.Comp.JobProto = jobProto;
+        if (mindRoles != null)
+            role.Comp.MindRoles = mindRoles;
+
+        RegisterGhostRole(role);
+    }
+
+    public void DestroyGhostRole(Entity<GhostRoleComponent?> role)
+    {
+        RemComp<GhostRoleComponent>(role);
+        RemComp<GhostTakeoverAvailableComponent>(role);
+        RemComp<GhostRoleRaffleComponent>(role);
+    }
+
+    public void RegisterGhostRole(Entity<GhostRoleComponent?> role)
+    {
+        if (!_ghostRoleQuery.Resolve(role, ref role.Comp, logMissing: false))
             return;
+
+        if (TerminatingOrDeleted(role))
+            return;
+
+        if (!_mindContainerQuery.TryComp(role, out var mindContainer)
+            || !mindContainer.HasMind)
+        {
+            role.Comp.Taken = false;
+        }
 
         EnsureComp<GhostTakeoverAvailableComponent>(role);
         if (role.Comp.RaffleConfig != null)
@@ -285,8 +323,13 @@ public sealed partial class GhostRoleSystem : EntitySystem
         UpdateAllEui();
     }
 
-    public void UnregisterGhostRole(Entity<GhostRoleComponent> role)
+    public void UnregisterGhostRole(Entity<GhostRoleComponent?> role)
     {
+        if (!_ghostRoleQuery.Resolve(role, ref role.Comp, logMissing: false))
+            return;
+
+        role.Comp.Taken = true;
+
         var hadTakeover = RemComp<GhostTakeoverAvailableComponent>(role);
         if (_ghostRaffleQuery.TryComp(role, out var raffle))
         {
@@ -297,6 +340,65 @@ public sealed partial class GhostRoleSystem : EntitySystem
         {
             UpdateAllEui();
         }
+    }
+
+    public void SetRoleName(Entity<GhostRoleComponent> role, string roleName)
+    {
+        role.Comp.RoleName = roleName;
+        UpdateAllEui();
+    }
+
+    public void SetRoleDescription(Entity<GhostRoleComponent> role, string roleDescription)
+    {
+        role.Comp.RoleDescription = roleDescription;
+        UpdateAllEui();
+    }
+
+    public void SetRoleRules(Entity<GhostRoleComponent> role, string roleName)
+    {
+        role.Comp.RoleRules = roleName;
+        UpdateAllEui();
+    }
+
+    public void SetRaffleConfig(Entity<GhostRoleComponent> role, GhostRoleRaffleConfig? raffleConfig)
+    {
+        role.Comp.RaffleConfig = raffleConfig;
+
+        // If the role is open, reregister it with the new/missing raffle config.
+        if (!role.Comp.Taken)
+            RegisterGhostRole(role.AsNullable());
+    }
+
+    public void SetJobPrototype(Entity<GhostRoleComponent> role, ProtoId<JobPrototype>? jobProto)
+    {
+        role.Comp.JobProto = jobProto;
+    }
+
+    public void SetMakeSentient(Entity<GhostRoleComponent> role, bool makeSentient)
+    {
+        role.Comp.MakeSentient = makeSentient;
+    }
+
+    public void SetMindRoles(Entity<GhostRoleComponent> role, List<EntProtoId> roles)
+    {
+        role.Comp.MindRoles = roles;
+    }
+
+    public void SetAllowSpeech(Entity<GhostRoleComponent> role, bool allowSpeech)
+    {
+        role.Comp.AllowSpeech = allowSpeech;
+    }
+
+    public void SetAllowMovement(Entity<GhostRoleComponent> role, bool allowMovement)
+    {
+        role.Comp.AllowMovement = allowMovement;
+    }
+
+    public void SetReregisterOnGhost(Entity<GhostRoleComponent> role, bool reregisterOnGhost)
+    {
+        role.Comp.ReregisterOnGhost = reregisterOnGhost;
+        if (!_mindContainerQuery.TryComp(role, out var mindContainer) || !mindContainer.HasMind)
+            RegisterGhostRole(role.AsNullable());
     }
 
     // probably fine to be init because it's never added during entity initialization, but much later
@@ -684,7 +786,6 @@ public sealed partial class GhostRoleSystem : EntitySystem
             _roleSystem.MindAddJobRole(args.Mind, args.Mind, silent: false, component.JobProto);
         }
 
-        component.Taken = true;
         UnregisterGhostRole((uid, component));
     }
 
@@ -695,7 +796,6 @@ public sealed partial class GhostRoleSystem : EntitySystem
         if (!component.ReregisterOnGhost)
             return;
 
-        component.Taken = false;
         RegisterGhostRole((uid, component));
     }
 
@@ -738,15 +838,15 @@ public sealed partial class GhostRoleSystem : EntitySystem
         }
 
         if (ent.Comp.Taken)
-            UnregisterGhostRole(ent);
+            UnregisterGhostRole(ent.AsNullable());
         else
-            RegisterGhostRole(ent);
+            RegisterGhostRole(ent.AsNullable());
     }
 
     [SubscribeLocalEvent]
     private void OnRoleShutdown(Entity<GhostRoleComponent> ent, ref ComponentShutdown args)
     {
-        UnregisterGhostRole(ent);
+        UnregisterGhostRole(ent.AsNullable());
     }
 
     [SubscribeLocalEvent]
@@ -783,8 +883,6 @@ public sealed partial class GhostRoleSystem : EntitySystem
             return;
         }
 
-        ghostRole.Taken = true;
-
         if (ent.Comp.DeleteOnSpawn)
             QueueDel(ent);
 
@@ -807,8 +905,6 @@ public sealed partial class GhostRoleSystem : EntitySystem
             return;
         }
 
-        ent.Comp.Taken = true;
-
         var mind = EnsureComp<MindContainerComponent>(ent);
 
         if (mind.HasMind)
@@ -821,7 +917,7 @@ public sealed partial class GhostRoleSystem : EntitySystem
             _mindSystem.MakeSentient(ent, ent.Comp.AllowMovement, ent.Comp.AllowSpeech);
 
         GhostRoleInternalCreateMindAndTransfer(args.Player, ent, ent, ent.Comp);
-        UnregisterGhostRole(ent);
+        UnregisterGhostRole(ent.AsNullable());
 
         args.TookRole = true;
     }

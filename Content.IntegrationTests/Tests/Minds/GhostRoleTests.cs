@@ -24,7 +24,6 @@ public sealed class GhostRoleTests : GameTest
           components:
           - type: MindContainer
           - type: GhostRole
-          - type: GhostTakeoverAvailable
           - type: MobState
 
         - type: entity
