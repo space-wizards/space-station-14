@@ -36,7 +36,7 @@ public abstract partial class SharedPortalSystem : EntitySystem
 
     private void OnTeleportUseAttempt(Entity<PortalComponent> ent, ref TeleportUseAttemptEvent args)
     {
-        if (HasComp<PortalTimeoutComponent>(args.Target))
+        if (TryComp<PortalTimeoutComponent>(args.Target, out var timeout) && IsTimeoutActive(args.Target, timeout))
         {
             args.Cancelled = true;
             return;
@@ -53,8 +53,8 @@ public abstract partial class SharedPortalSystem : EntitySystem
 
     private void OnTeleportTriggerExited(Entity<PortalComponent> ent, ref TeleportTriggerExitedEvent args)
     {
-        if (TryComp<PortalTimeoutComponent>(args.Target, out var timeout) && timeout.EnteredPortal != ent)
-            RemCompDeferred<PortalTimeoutComponent>(args.Target);
+        if (TryComp<PortalTimeoutComponent>(args.Target, out var timeout) && timeout.ExitPortal == ent.Owner)
+            RefreshTimeout(args.Target, timeout);
     }
 
     private void OnTeleportRequest(Entity<PortalComponent> ent, ref TeleportRequestEvent args)
@@ -62,9 +62,11 @@ public abstract partial class SharedPortalSystem : EntitySystem
         if (args.Handled)
             return;
 
+        args.Handled = true;
+
         if (TryComp<LinkedEntityComponent>(ent, out var link) && link.LinkedEntities.Count != 0)
         {
-            args.Handled = TryTeleportLinked(ent, link, args.Target, args.TriggerEffects);
+            args.Succeeded = TryTeleportLinked(ent, link, args.Target, args.TriggerEffects);
             return;
         }
 
@@ -75,8 +77,7 @@ public abstract partial class SharedPortalSystem : EntitySystem
             return;
 
         var randomDestination = FindRandomDestination(ent);
-        if (TryTeleport(ent, args.Target, randomDestination, args.TriggerEffects))
-            args.Handled = true;
+        args.Succeeded = TryTeleport(ent, args.Target, randomDestination, args.TriggerEffects);
     }
 
     private bool TryTeleportLinked(
@@ -106,31 +107,24 @@ public abstract partial class SharedPortalSystem : EntitySystem
         if (!TryValidateDestination(ent, destination, destinationEntity))
             return false;
 
-        var addedTimeout = AddTimeout(ent, target, destinationEntity);
         var source = Transform(target).Coordinates;
-        if (_teleport.TryTeleport(ent, target, destination, triggerEffects))
+        var previousExit = CompOrNull<PortalTimeoutComponent>(target)?.ExitPortal;
+        var timeoutSet = destinationEntity is { } exit && SetPortalTimeout(target, exit);
+        var moved = false;
+        try
         {
+            if (!_teleport.TryTeleport(ent, target, destination, out moved, triggerEffects))
+                return false;
+
             LogTeleport(ent, target, source, destination);
             return true;
         }
-
-        if (addedTimeout)
-            RemComp<PortalTimeoutComponent>(target);
-
-        return false;
-    }
-
-    private bool AddTimeout(EntityUid portal, EntityUid target, EntityUid? destination)
-    {
-        // Only collision-triggered return trips need a timeout. Other targets may never raise an exit event.
-        if (destination is not { } exit || !HasComp<PortalComponent>(exit) || !_collisionTrigger.CanTrigger(exit, target))
-            return false;
-
-        var addedTimeout = !HasComp<PortalTimeoutComponent>(target);
-        var timeout = EnsureComp<PortalTimeoutComponent>(target);
-        timeout.EnteredPortal = portal;
-        Dirty(target, timeout);
-        return addedTimeout;
+        finally
+        {
+            // A failed post-move effect must not remove protection at the exit.
+            if (timeoutSet && !moved && !TerminatingOrDeleted(target))
+                RestoreTimeout(target, previousExit);
+        }
     }
 
     private bool TryValidateDestination(

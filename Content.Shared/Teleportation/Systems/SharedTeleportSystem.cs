@@ -24,9 +24,12 @@ public sealed partial class SharedTeleportSystem : EntitySystem
     /// <param name="teleporter">The entity performing the teleportation.</param>
     /// <param name="target">The entity to teleport.</param>
     /// <param name="destination">The destination chosen by the teleport implementation.</param>
+    /// <param name="moved">Whether the target reached the destination, even if a later effect throws.</param>
     /// <param name="triggerEffects">Whether to raise the pre-move and post-move effect events.</param>
-    internal bool TryTeleport(EntityUid teleporter, EntityUid target, EntityCoordinates destination, bool triggerEffects = true)
+    internal bool TryTeleport(EntityUid teleporter, EntityUid target, EntityCoordinates destination, out bool moved, bool triggerEffects = true)
     {
+        moved = false;
+
         if (!Exists(teleporter))
             return false;
 
@@ -39,7 +42,25 @@ public sealed partial class SharedTeleportSystem : EntitySystem
             RaiseLocalEvent(teleporter, ref beforeTeleport);
         }
 
-        Teleport(target, destination);
+        // Effects may invalidate the target or destination without issuing another teleport request.
+        if (!CanTeleport(target, destination))
+            return false;
+
+        try
+        {
+            Teleport(target, destination);
+        }
+        finally
+        {
+            // SetCoordinates can raise movement handlers after changing the transform.
+            // Preserve the movement result even if one of those handlers throws.
+            moved = TryComp(target, out TransformComponent? transform) &&
+                    transform.ParentUid == destination.EntityId &&
+                    transform.LocalPosition.EqualsApprox(destination.Position);
+        }
+
+        if (!moved)
+            return false;
 
         if (triggerEffects)
         {

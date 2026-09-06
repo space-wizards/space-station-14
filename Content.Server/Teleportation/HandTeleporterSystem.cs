@@ -20,6 +20,7 @@ public sealed partial class HandTeleporterSystem : EntitySystem
     [Dependency] private AudioSystem _audio = default!;
     [Dependency] private SharedDoAfterSystem _doafter = default!;
     [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private SharedPortalSystem _portal = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -122,9 +123,8 @@ public sealed partial class HandTeleporterSystem : EntitySystem
             if (xform.ParentUid != xform.GridUid)
                 return;
 
-            var timeout = EnsureComp<PortalTimeoutComponent>(user);
-            timeout.EnteredPortal = null;
             component.FirstPortal = Spawn(component.FirstPortalPrototype, Transform(user).Coordinates);
+            _portal.SetPortalTimeout(user, component.FirstPortal.Value);
             Dirty(uid, component);
 
             if (component.AllowPortalsOnDifferentMaps && TryComp<PortalComponent>(component.FirstPortal, out var portal))
@@ -145,9 +145,8 @@ public sealed partial class HandTeleporterSystem : EntitySystem
                 return;
             }
 
-            var timeout = EnsureComp<PortalTimeoutComponent>(user);
-            timeout.EnteredPortal = null;
             component.SecondPortal = Spawn(component.SecondPortalPrototype, Transform(user).Coordinates);
+            _portal.SetPortalTimeout(user, component.SecondPortal.Value);
             Dirty(uid, component);
 
             if (component.AllowPortalsOnDifferentMaps && TryComp<PortalComponent>(component.SecondPortal, out var portal))

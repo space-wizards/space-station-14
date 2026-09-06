@@ -12,9 +12,15 @@ namespace Content.Shared.Teleportation.Triggers;
 public record struct TeleportRequestEvent(EntityUid Target, EntityUid User, bool TriggerEffects = true)
 {
     /// <summary>
-    /// Whether a teleport implementation successfully handled the request.
+    /// Whether a teleport implementation accepted the request, even if teleportation failed.
+    /// Set before execution to prevent another implementation from processing the same request.
     /// </summary>
     public bool Handled;
+
+    /// <summary>
+    /// Whether the implementation successfully completed the teleportation.
+    /// </summary>
+    public bool Succeeded;
 }
 
 /// <summary>

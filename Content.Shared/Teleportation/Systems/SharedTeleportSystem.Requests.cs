@@ -50,7 +50,7 @@ public sealed partial class SharedTeleportSystem
                           "because no teleport implementation handled the request");
             }
 
-            return request.Handled;
+            return request.Succeeded;
         }
         finally
         {
