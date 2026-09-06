@@ -245,7 +245,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        if (_battery.GetCharge(ent.Owner) >= ent.Comp.RequiredCharge)
+        if (_battery.GetCharge(ent.Owner).Charge >= ent.Comp.RequiredCharge)
             return;
 
         args.Cancelled = true;
