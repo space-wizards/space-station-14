@@ -17,7 +17,7 @@ public sealed partial class PlantTraitKudzuSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnPlantGrow(Entity<PlantTraitKudzuComponent> ent, ref PlantGrowEvent args)
     {
-        var trayUid = GetEntity(args.Tray);
+        var trayUid = args.Tray;
         if (!_trayQuery.TryComp(trayUid, out var trayComp))
             return;
 

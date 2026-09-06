@@ -168,6 +168,11 @@
   - type: LayerChangeOnWeld
     unWeldedLayer: AirlockLayer
     weldedLayer: WallLayer
+  - type: Fixtures
+    fixtures:
+      fix1:
+        layer:
+        - AirlockLayer
   - type: DoorSignalControl
   - type: DeviceNetwork
     deviceNetId: Wireless
