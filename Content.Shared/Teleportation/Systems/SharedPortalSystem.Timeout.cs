@@ -25,7 +25,8 @@ public abstract partial class SharedPortalSystem
         if (!_net.IsClient)
             return true;
 
-        // Remote targets are reconciled by the server; only predict our simulated bodies.
+        // On clients, update timeouts only for bodies with physics prediction enabled.
+        // Other entities receive timeout changes from the server.
         if (!TryComp<PhysicsComponent>(target, out var body))
             return false;
 
