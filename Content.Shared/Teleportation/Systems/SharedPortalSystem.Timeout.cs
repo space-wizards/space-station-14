@@ -13,18 +13,23 @@ public abstract partial class SharedPortalSystem
         var query = EntityQueryEnumerator<PortalTimeoutComponent>();
         while (query.MoveNext(out var target, out var timeout))
         {
-            // Remote targets are reconciled by the server; only predict our simulated bodies.
-            if (_net.IsClient)
-            {
-                if (!TryComp<PhysicsComponent>(target, out var body))
-                    continue;
-
-                if (!body.Predict)
-                    continue;
-            }
+            if (!ShouldUpdateTimeout(target))
+                continue;
 
             RefreshTimeout(target, timeout);
         }
+    }
+
+    private bool ShouldUpdateTimeout(EntityUid target)
+    {
+        if (!_net.IsClient)
+            return true;
+
+        // Remote targets are reconciled by the server; only predict our simulated bodies.
+        if (!TryComp<PhysicsComponent>(target, out var body))
+            return false;
+
+        return body.Predict;
     }
 
     /// <summary>
@@ -48,19 +53,24 @@ public abstract partial class SharedPortalSystem
     private bool IsTimeoutActive(EntityUid target, PortalTimeoutComponent timeout)
     {
         // An exit outside client visibility is not evidence that the server deleted it.
-        if (_net.IsClient)
-        {
-            if (!TryComp(timeout.ExitPortal, out TransformComponent? exitTransform))
-                return true;
-
-            if (exitTransform.MapID == MapId.Nullspace)
-                return true;
-        }
+        if (IsExitUnavailableOnClient(timeout.ExitPortal))
+            return true;
 
         if (!HasComp<PortalComponent>(timeout.ExitPortal))
             return false;
 
         return _collisionTrigger.IsInsideTriggerBounds(timeout.ExitPortal, target);
+    }
+
+    private bool IsExitUnavailableOnClient(EntityUid exit)
+    {
+        if (!_net.IsClient)
+            return false;
+
+        if (!TryComp(exit, out TransformComponent? transform))
+            return true;
+
+        return transform.MapID == MapId.Nullspace;
     }
 
     private void RefreshTimeout(EntityUid target, PortalTimeoutComponent timeout)
