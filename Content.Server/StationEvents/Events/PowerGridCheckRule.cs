@@ -32,29 +32,25 @@ namespace Content.Server.StationEvents.Events
         {
             base.Started(uid, component, gameRule, args);
 
-            if (!TryGetRandomStation(out var chosenStation))
+            var apcs = GetEntitiesWithComponentOnStation<ApcComponent>(true, out var chosenStation);
+
+            if (chosenStation is null)
+            {
                 return;
+            }
 
             component.AffectedStation = chosenStation.Value;
 
-            var largestGrid = _stationSystem.GetLargestGrid(chosenStation.Value);
-
-            if (largestGrid == null)
-                return;
-
-            var query = AllEntityQuery<ApcComponent, TransformComponent>();
-            while (query.MoveNext(out var apcUid, out var apc, out var transform))
+            foreach (var apc in apcs)
             {
-                if (!apc.MainBreakerEnabled)
+                if (apc.Comp.MainBreakerEnabled)
                     continue;
 
-                if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station != chosenStation)
+                var apcTransform = Transform(apc);
+                if (apcTransform.GridUid != component.AffectedStation)
                     continue;
 
-                if (transform.GridUid != largestGrid.Value)
-                    continue;
-
-                component.Powered.Add(apcUid);
+                component.Powered.Add(apc);
             }
 
             RobustRandom.Shuffle(component.Powered);

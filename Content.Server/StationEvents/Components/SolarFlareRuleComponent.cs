@@ -1,4 +1,6 @@
 using Content.Server.StationEvents.Events;
+using Content.Shared.Doors.Components;
+using Content.Shared.Light.Components;
 using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
 
@@ -39,6 +41,19 @@ public sealed partial class SolarFlareRuleComponent : Component
     /// </remarks>
     [DataField("extraCount")]
     public uint ExtraCount;
+
+    /// <summary>
+    ///    The collection of lights that will be affected by the solar flare event.
+    /// </summary>
+    [DataField]
+    public HashSet<(EntityUid, PoweredLightComponent)> AffectedLights = [];
+
+    /// <summary>
+    ///     The collection of airlocks that will be affected by the solar flare event.
+    /// </summary>
+    [DataField]
+    public HashSet<(EntityUid, AirlockComponent)> AffectedAirlocks = [];
+
 
     /// <summary>
     ///     Chance light bulb breaks per second during event
