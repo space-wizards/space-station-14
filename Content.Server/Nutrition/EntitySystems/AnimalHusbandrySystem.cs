@@ -149,7 +149,10 @@ public sealed partial class AnimalHusbandrySystem : EntitySystem
         if (_failedAttempts.Contains(uid))
             return false;
 
-        if (Resolve(uid, ref component, false) && component.Gestating)
+        if (!Resolve(uid, ref component, false))
+            return false;
+
+        if (component.Gestating)
             return false;
 
         if (HasComp<InfantComponent>(uid))
