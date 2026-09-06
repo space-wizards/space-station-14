@@ -229,7 +229,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnExpLightInit(Entity<ExpendableLightComponent> ent, ref ComponentInit args)
+    private void OnExpLightStartup(Entity<ExpendableLightComponent> ent, ref ComponentStartup args)
     {
         if (TryComp<ItemComponent>(ent, out var item))
         {

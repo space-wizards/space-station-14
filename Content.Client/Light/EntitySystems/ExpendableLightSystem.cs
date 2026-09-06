@@ -9,11 +9,6 @@ public sealed partial class ExpendableLightVisualsSystem : VisualizerSystem<Expe
     [Dependency] private PointLightSystem _pointLightSystem = default!;
     [Dependency] private LightBehaviorSystem _lightBehavior = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-    }
     protected override void OnAppearanceChange(EntityUid uid, ExpendableLightComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
