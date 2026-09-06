@@ -5,6 +5,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Storage.Components;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using static Content.Shared.Storage.EntitySpawnCollection;
@@ -27,7 +28,7 @@ public abstract partial class SpawnItemsOnUseSystem : EntitySystem
         if (args.Handled)
             return;
 
-        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(args.User), GetNetEntity(ent));
+        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(args.User));
         var spawnEntities = GetSpawns(ent.Comp.Items, random);
 
         ent.Comp.Uses--;
