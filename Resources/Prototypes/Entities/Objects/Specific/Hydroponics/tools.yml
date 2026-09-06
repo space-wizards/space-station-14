@@ -7,7 +7,6 @@
   - type: Tag
     tags:
     - Hoe
-    - BotanyHoe
     - BotanyTool
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hoe.rsi
@@ -36,7 +35,6 @@
   components:
   - type: Tag
     tags:
-    - PlantSampleTaker
     - BotanyTool
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/clippers.rsi

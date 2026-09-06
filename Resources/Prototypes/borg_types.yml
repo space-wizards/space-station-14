@@ -211,9 +211,7 @@
   defaultModules:
   - BorgModulePrying
   - BorgModuleMusique
-  - BorgModuleTool
   - BorgModuleService
-  - BorgModuleMusique
   - BorgModuleBotany
   - BorgModuleCooking
   radioChannels:
