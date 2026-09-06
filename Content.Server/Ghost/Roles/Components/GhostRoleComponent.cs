@@ -15,9 +15,9 @@ public sealed partial class GhostRoleComponent : Component
     public static readonly LocId DefaultRules = "ghost-role-component-default-rules";
     public static readonly EntProtoId DefaultMindRole = "MindRoleGhostRoleNeutral";
 
-    [DataField("name")] private string _roleName = "Unknown";
+    [DataField("name")] private string _roleName = "generic-unknown-title";
 
-    [DataField("description")] private string _roleDescription = "Unknown";
+    [DataField("description")] private string _roleDescription = "generic-unknown-title";
 
     [DataField("rules")] private string _roleRules = DefaultRules;
 
