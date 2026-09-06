@@ -14,8 +14,14 @@ public abstract partial class SharedPortalSystem
         while (query.MoveNext(out var target, out var timeout))
         {
             // Remote targets are reconciled by the server; only predict our simulated bodies.
-            if (_net.IsClient && (!TryComp<PhysicsComponent>(target, out var body) || !body.Predict))
-                continue;
+            if (_net.IsClient)
+            {
+                if (!TryComp<PhysicsComponent>(target, out var body))
+                    continue;
+
+                if (!body.Predict)
+                    continue;
+            }
 
             RefreshTimeout(target, timeout);
         }
@@ -27,7 +33,10 @@ public abstract partial class SharedPortalSystem
     /// </summary>
     public bool SetPortalTimeout(EntityUid target, EntityUid exit)
     {
-        if (!HasComp<PortalComponent>(exit) || !_collisionTrigger.CanTrigger(exit, target))
+        if (!HasComp<PortalComponent>(exit))
+            return false;
+
+        if (!_collisionTrigger.CanTrigger(exit, target))
             return false;
 
         var timeout = EnsureComp<PortalTimeoutComponent>(target);
@@ -39,26 +48,43 @@ public abstract partial class SharedPortalSystem
     private bool IsTimeoutActive(EntityUid target, PortalTimeoutComponent timeout)
     {
         // An exit outside client visibility is not evidence that the server deleted it.
-        if (_net.IsClient && (!TryComp(timeout.ExitPortal, out TransformComponent? exitTransform) ||
-                              exitTransform.MapID == MapId.Nullspace))
-            return true;
+        if (_net.IsClient)
+        {
+            if (!TryComp(timeout.ExitPortal, out TransformComponent? exitTransform))
+                return true;
 
-        return HasComp<PortalComponent>(timeout.ExitPortal) &&
-               _collisionTrigger.IsInsideTriggerBounds(timeout.ExitPortal, target);
+            if (exitTransform.MapID == MapId.Nullspace)
+                return true;
+        }
+
+        if (!HasComp<PortalComponent>(timeout.ExitPortal))
+            return false;
+
+        return _collisionTrigger.IsInsideTriggerBounds(timeout.ExitPortal, target);
     }
 
     private void RefreshTimeout(EntityUid target, PortalTimeoutComponent timeout)
     {
         // Movement can synchronously end the source contact before arrival is complete.
-        if (HasComp<TeleportingComponent>(target) || IsTimeoutActive(target, timeout))
+        if (HasComp<TeleportingComponent>(target))
+            return;
+
+        if (IsTimeoutActive(target, timeout))
             return;
 
         // Do not queue removal: another request may replace the timeout in the same tick.
         RemComp<PortalTimeoutComponent>(target);
     }
 
-    private void RestoreTimeout(EntityUid target, EntityUid? previousExit)
+    private void RestoreTimeoutAfterFailedTeleport(EntityUid target, EntityUid? previousExit, bool moved)
     {
+        // A failed post-move effect must not remove protection at the exit.
+        if (moved)
+            return;
+
+        if (TerminatingOrDeleted(target))
+            return;
+
         if (previousExit is not { } exit)
         {
             RemComp<PortalTimeoutComponent>(target);

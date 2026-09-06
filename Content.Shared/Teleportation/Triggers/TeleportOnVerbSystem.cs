@@ -28,7 +28,10 @@ public sealed partial class TeleportOnVerbSystem : EntitySystem
     private void OnGetVerbs<TVerb>(Entity<TeleportOnVerbComponent> ent, ref GetVerbsEvent<TVerb> args, TeleportVerbType type)
         where TVerb : Verb, new()
     {
-        if (ent.Comp.VerbType != type || !args.CanAccess)
+        if (ent.Comp.VerbType != type)
+            return;
+
+        if (!args.CanAccess)
             return;
 
         if (!IsUserAllowed(ent.Comp, args.User))
@@ -62,8 +65,10 @@ public sealed partial class TeleportOnVerbSystem : EntitySystem
 
     private bool IsUserAllowed(TeleportOnVerbComponent component, EntityUid user)
     {
-        return !_whitelist.IsWhitelistFail(component.UserWhitelist, user) &&
-               !_whitelist.IsWhitelistPass(component.UserBlacklist, user);
+        if (_whitelist.IsWhitelistFail(component.UserWhitelist, user))
+            return false;
+
+        return !_whitelist.IsWhitelistPass(component.UserBlacklist, user);
     }
 
     private string? GetMessage(TeleportOnVerbComponent component, TeleportUseAttemptEvent attempt)

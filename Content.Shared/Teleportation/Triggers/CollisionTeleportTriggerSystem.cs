@@ -188,9 +188,13 @@ public sealed partial class CollisionTeleportTriggerSystem : EntitySystem
 
     private bool IsTargetAllowed(CollisionTeleportTriggerComponent component, EntityUid target)
     {
-        return !Transform(target).Anchored &&
-               !_whitelist.IsWhitelistFail(component.TargetWhitelist, target) &&
-               !_whitelist.IsWhitelistPass(component.TargetBlacklist, target);
+        if (Transform(target).Anchored)
+            return false;
+
+        if (_whitelist.IsWhitelistFail(component.TargetWhitelist, target))
+            return false;
+
+        return !_whitelist.IsWhitelistPass(component.TargetBlacklist, target);
     }
 
     private static bool IsTriggerCollision(

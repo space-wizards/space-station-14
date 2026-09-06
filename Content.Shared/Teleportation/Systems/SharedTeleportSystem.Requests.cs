@@ -14,15 +14,24 @@ public sealed partial class SharedTeleportSystem
     /// </summary>
     public TeleportUseAttemptEvent CheckTeleportUse(EntityUid teleporter, EntityUid target, EntityUid user)
     {
-        var attempt = new TeleportUseAttemptEvent(target, user);
+        var attempt = new TeleportUseAttemptEvent(target, user, Cancelled: true);
 
-        if (!Exists(teleporter) || TerminatingOrDeleted(teleporter) ||
-            !Exists(target) || TerminatingOrDeleted(target) || HasComp<TeleportingComponent>(target))
-        {
-            attempt.Cancelled = true;
+        if (!Exists(teleporter))
             return attempt;
-        }
 
+        if (TerminatingOrDeleted(teleporter))
+            return attempt;
+
+        if (!Exists(target))
+            return attempt;
+
+        if (TerminatingOrDeleted(target))
+            return attempt;
+
+        if (HasComp<TeleportingComponent>(target))
+            return attempt;
+
+        attempt.Cancelled = false;
         RaiseLocalEvent(teleporter, ref attempt);
         return attempt;
     }
@@ -44,11 +53,14 @@ public sealed partial class SharedTeleportSystem
             var request = new TeleportRequestEvent(target, user, triggerEffects);
             RaiseLocalEvent(teleporter, ref request);
 
-            if (!request.Handled && !_net.IsClient)
-            {
-                Log.Error($"Teleporter {ToPrettyString(teleporter)} couldn't teleport {ToPrettyString(target)} " +
-                          "because no teleport implementation handled the request");
-            }
+            if (request.Handled)
+                return request.Succeeded;
+
+            if (_net.IsClient)
+                return request.Succeeded;
+
+            Log.Error($"Teleporter {ToPrettyString(teleporter)} couldn't teleport {ToPrettyString(target)} " +
+                      "because no teleport implementation handled the request");
 
             return request.Succeeded;
         }

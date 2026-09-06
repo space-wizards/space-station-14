@@ -53,8 +53,13 @@ public abstract partial class SharedPortalSystem : EntitySystem
 
     private void OnTeleportTriggerExited(Entity<PortalComponent> ent, ref TeleportTriggerExitedEvent args)
     {
-        if (TryComp<PortalTimeoutComponent>(args.Target, out var timeout) && timeout.ExitPortal == ent.Owner)
-            RefreshTimeout(args.Target, timeout);
+        if (!TryComp<PortalTimeoutComponent>(args.Target, out var timeout))
+            return;
+
+        if (timeout.ExitPortal != ent.Owner)
+            return;
+
+        RefreshTimeout(args.Target, timeout);
     }
 
     private void OnTeleportRequest(Entity<PortalComponent> ent, ref TeleportRequestEvent args)
@@ -90,7 +95,10 @@ public abstract partial class SharedPortalSystem : EntitySystem
             return false;
 
         var destinationEntity = _random.Pick(link.LinkedEntities);
-        if (!Exists(destinationEntity) || TerminatingOrDeleted(destinationEntity))
+        if (!Exists(destinationEntity))
+            return false;
+
+        if (TerminatingOrDeleted(destinationEntity))
             return false;
 
         var destination = Transform(destinationEntity).Coordinates;
@@ -121,9 +129,8 @@ public abstract partial class SharedPortalSystem : EntitySystem
         }
         finally
         {
-            // A failed post-move effect must not remove protection at the exit.
-            if (timeoutSet && !moved && !TerminatingOrDeleted(target))
-                RestoreTimeout(target, previousExit);
+            if (timeoutSet)
+                RestoreTimeoutAfterFailedTeleport(target, previousExit, moved);
         }
     }
 

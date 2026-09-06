@@ -82,7 +82,13 @@ public sealed partial class SharedTeleportSystem : EntitySystem
 
     private bool CanTeleport(EntityUid target, EntityCoordinates destination)
     {
-        return Exists(target) && !TerminatingOrDeleted(target) && destination.IsValid(EntityManager);
+        if (!Exists(target))
+            return false;
+
+        if (TerminatingOrDeleted(target))
+            return false;
+
+        return destination.IsValid(EntityManager);
     }
 
     private void Teleport(EntityUid target, EntityCoordinates destination)
