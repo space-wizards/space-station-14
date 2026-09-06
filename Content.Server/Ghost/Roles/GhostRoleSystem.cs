@@ -640,16 +640,20 @@ public sealed partial class GhostRoleSystem : EntitySystem
     /// <returns>True if takeover was successful, otherwise false.</returns>
     public bool Takeover(ICommonSession player, NetEntity identifier)
     {
-        var role = GetEntity(identifier);
-        if (!_ghostTakeoverQuery.HasComp(role)
-            || !_ghostRoleQuery.TryComp(role, out var ghostRole))
+        var roleUid = GetEntity(identifier);
+        if (!_ghostTakeoverQuery.HasComp(roleUid)
+            || !_ghostRoleQuery.TryComp(roleUid, out var ghostRole))
             return false;
 
         var ev = new TakeGhostRoleEvent(player);
-        RaiseLocalEvent(role, ref ev);
+        RaiseLocalEvent(roleUid, ref ev);
 
-        if (!ev.TookRole)
+        // Try to take over the entity directly if not handled specially.
+        if (!ev.TookRole
+            && !TryTakeGhostRole((roleUid, ghostRole), player))
+        {
             return false;
+        }
 
         if (player.AttachedEntity != null)
             _adminLogger.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{player:player} took the {ghostRole.RoleName:roleName} ghost role {ToPrettyString(player.AttachedEntity.Value):entity}");
@@ -883,6 +887,8 @@ public sealed partial class GhostRoleSystem : EntitySystem
             return;
         }
 
+        UnregisterGhostRole(ent.Owner);
+
         if (ent.Comp.DeleteOnSpawn)
             QueueDel(ent);
 
@@ -896,30 +902,23 @@ public sealed partial class GhostRoleSystem : EntitySystem
                !MetaData(ent).EntityPaused;
     }
 
-    [SubscribeLocalEvent]
-    private void OnTakeRole(Entity<GhostRoleComponent> ent, ref TakeGhostRoleEvent args)
+    private bool TryTakeGhostRole(Entity<GhostRoleComponent> ent, ICommonSession player)
     {
         if (!CanTakeGhost(ent.AsNullable()))
-        {
-            args.TookRole = false;
-            return;
-        }
+            return false;
 
         var mind = EnsureComp<MindContainerComponent>(ent);
 
         if (mind.HasMind)
-        {
-            args.TookRole = false;
-            return;
-        }
+            return false;
 
         if (ent.Comp.MakeSentient)
             _mindSystem.MakeSentient(ent, ent.Comp.AllowMovement, ent.Comp.AllowSpeech);
 
-        GhostRoleInternalCreateMindAndTransfer(args.Player, ent, ent, ent.Comp);
+        GhostRoleInternalCreateMindAndTransfer(player, ent, ent, ent.Comp);
         UnregisterGhostRole(ent.AsNullable());
 
-        args.TookRole = true;
+        return true;
     }
 
     [SubscribeLocalEvent]
