@@ -130,8 +130,7 @@
         - !type:NestedSelector
           tableId: KeyedPercussionInstrumentTable # 300 speso max
         - !type:NestedSelector
-          tableId: SpecialInstrumentTable # x2 200 speso max
-          rolls: 2
+          tableId: SpecialInstrumentTable # 200 speso max
 
 # Rest of the fun
 
