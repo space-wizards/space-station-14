@@ -9,7 +9,7 @@ public sealed partial class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSys
     private void OnNanoTaskCopied(Entity<NanoTaskPrintedComponent> original, ref PaperCopiedEvent evt)
     {
         var newTask = EnsureComp<NanoTaskPrintedComponent>(evt.Copy);
-        newTask.Task = original.Comp.Task;
+        newTask.Task = original.Comp.Task?.Clone();
     }
 }
 

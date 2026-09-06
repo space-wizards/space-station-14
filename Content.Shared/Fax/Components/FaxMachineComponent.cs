@@ -3,6 +3,7 @@ using Content.Shared.Paper;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Fax.Components;
 
@@ -149,6 +150,7 @@ public sealed partial class FaxMachineComponent : Component
 }
 
 [DataDefinition]
+[Serializable, NetSerializable]
 public sealed partial class FaxPrintout
 {
     [DataField(required: true)]
@@ -158,7 +160,7 @@ public sealed partial class FaxPrintout
     public string Content { get; private set; } = default!;
 
     [DataField(required: true)]
-    public EntProtoId PrototypeId { get; private set; } = default!;
+    public EntProtoId PrototypeId { get; private set; } = default;
 
     [DataField]
     public string? StampState { get; private set; }
@@ -170,19 +172,19 @@ public sealed partial class FaxPrintout
     public bool Locked { get; private set; }
 
     [DataField]
-    public string? SenderFaxName { get; private set; } = default!;
+    public string? SenderFaxName { get; private set; } = default;
 
     /// <summary>
     /// The original entity from which this fax was generated, if any.
     /// </summary>
     [DataField]
-    public EntityUid? OriginalEntity = default!;
+    public NetEntity? OriginalEntity = default;
 
     private FaxPrintout()
     {
     }
 
-    public FaxPrintout(string content, string name, string? prototypeId = null, string? stampState = null, List<StampDisplayInfo>? stampedBy = null, bool locked = false, string? senderFaxName = null, EntityUid? originalEntity = null)
+    public FaxPrintout(string content, string name, string? prototypeId = null, string? stampState = null, List<StampDisplayInfo>? stampedBy = null, bool locked = false, string? senderFaxName = null, NetEntity? originalEntity = null)
     {
         Content = content;
         Name = name;

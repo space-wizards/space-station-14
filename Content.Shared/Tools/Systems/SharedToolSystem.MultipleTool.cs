@@ -68,11 +68,13 @@ public abstract partial class SharedToolSystem
         var current = multiple.Entries[multiple.CurrentEntry];
         tool.UseSound = current.UseSound;
         tool.Qualities = current.Behavior;
+        Dirty(uid, tool);
 
         // TODO: Replace this with a better solution later
         if (TryComp<PryingComponent>(uid, out var pryComp))
         {
             pryComp.Enabled = current.Behavior.Contains("Prying");
+            Dirty(uid, pryComp);
         }
 
         if (playSound && current.ChangeSound != null)

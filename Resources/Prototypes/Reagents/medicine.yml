@@ -1436,7 +1436,7 @@
   flavor: medicine
   color: "#baa15d"
   metabolisms:
-    Bloodstream:
+    Digestion:
       effects:
       - !type:ModifyStatusEffect
         effectProto: StatusEffectRadiationProtection

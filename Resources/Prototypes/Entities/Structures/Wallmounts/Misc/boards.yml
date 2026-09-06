@@ -1,0 +1,71 @@
+﻿- type: entity
+  abstract: true
+  parent: [ BaseWallmount, StructureHealthFurniture ]
+  id: BaseWallmountBoard
+  components:
+  - type: Appearance
+  - type: Damageable
+    damageModifierSet: WoodMod
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 1
+            max: 2
+
+- type: entity
+  parent: BaseWallmountBoard
+  id: NoticeBoard
+  name: notice board
+  description: Is there a job for a witcher?
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/noticeboard.rsi
+    layers:
+    - state: noticeboard
+    - state: notice-0
+      map: ["enum.StorageFillLayers.Fill"]
+  - type: Storage
+    grid:
+    - 0,0,4,3
+    maxItemSize: Small
+    whitelist:
+      tags:
+      - Folder
+      - Document
+      - Write
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+  - type: Construction
+    graph: WallBoard
+    node: noticeBoard
+
+- type: entity
+  parent: [ BaseWallmountBoard, BasePaperLabelableVisualized ]
+  id: PostBoard
+  name: post board
+  description: Apply paper directly to the boardhead.
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/postboard.rsi
+    layers:
+    - state: postboard
+    - state: paper
+      map: ["enum.PaperLabelVisuals.Layer"]
+    - state: postboard_over
+  - type: Construction
+    graph: WallBoard
+    node: postBoard

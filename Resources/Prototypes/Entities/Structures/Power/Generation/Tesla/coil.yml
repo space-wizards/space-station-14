@@ -75,6 +75,12 @@
   - type: PowerNetworkBattery
     maxSupply: 350000
     supplyRampTolerance: 350000
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    usesApcPower: false
+    highVoltageNode: input
   - type: Anchorable
   - type: Rotatable
   - type: Pullable

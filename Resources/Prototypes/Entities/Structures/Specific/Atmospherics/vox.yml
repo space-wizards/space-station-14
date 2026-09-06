@@ -21,12 +21,20 @@
   id: AirSensorVox
 
 - type: entity
-  parent: [AirSensorVoxBase, GasVentPump]
-  id: GasVentPumpVox
+  parent: !type:CreateVariants
+    sequences: [ [AirSensorVoxBase, GasVentPump], [AirSensorVoxBase, GasVentPumpAlt1], [AirSensorVoxBase, GasVentPumpAlt2] ]
+  id: !type:CreateVariants
+    values: [ GasVentPumpVox, GasVentPumpVoxAlt1, GasVentPumpVoxAlt2 ]
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
 
 - type: entity
-  parent: [AirSensorVoxBase, GasVentScrubber]
-  id: GasVentScrubberVox
+  parent: !type:CreateVariants
+    sequences: [ [AirSensorVoxBase, GasVentScrubber], [AirSensorVoxBase, GasVentScrubberAlt1], [AirSensorVoxBase, GasVentScrubberAlt2] ]
+  id: !type:CreateVariants
+    values: [ GasVentScrubberVox, GasVentScrubberVoxAlt1, GasVentScrubberVoxAlt2 ]
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   components:
   - type: GasVentScrubber
     wideNet: true # Air alarm with auto mode overrides filters with hardcoded defaults so default to widenet
