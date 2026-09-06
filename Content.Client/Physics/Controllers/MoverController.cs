@@ -4,6 +4,7 @@ using Content.Shared.Friction;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Systems;
+using Robust.Client.GameObjects;
 using Robust.Client.Physics;
 using Robust.Client.Player;
 using Robust.Shared.Configuration;
@@ -18,7 +19,7 @@ public sealed partial class MoverController : SharedMoverController
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private AlertsSystem _alerts = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private Robust.Client.GameObjects.TransformSystem _renderTransforms = default!;
+    [Dependency] private TransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -90,7 +91,7 @@ public sealed partial class MoverController : SharedMoverController
     private void OnMoverTransformMoved(Entity<InputMoverComponent> entity, ref MoveEvent args)
     {
         if (!args.OldRotation.EqualsApprox(args.NewRotation))
-            _renderTransforms.SnapRenderRotation(entity);
+            _transform.SnapRenderRotation(entity);
     }
 
     public override void UpdateBeforeSolve(bool prediction, float frameTime)
