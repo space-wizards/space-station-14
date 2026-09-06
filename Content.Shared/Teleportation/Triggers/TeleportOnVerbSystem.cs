@@ -1,13 +1,13 @@
+using Content.Shared.Teleportation.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
-using Robust.Shared.Network;
 
 namespace Content.Shared.Teleportation.Triggers;
 
 public sealed partial class TeleportOnVerbSystem : EntitySystem
 {
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private INetManager _net = default!;
+    [Dependency] private SharedTeleportSystem _teleport = default!;
 
     public override void Initialize()
     {
@@ -35,8 +35,7 @@ public sealed partial class TeleportOnVerbSystem : EntitySystem
             return;
 
         var target = args.User;
-        var attempt = new TeleportUseAttemptEvent(target, target);
-        RaiseLocalEvent(ent, ref attempt);
+        var attempt = _teleport.CheckTeleportUse(ent, target, target);
 
         if (attempt.Cancelled && ent.Comp.HideWhenDisabled)
             return;
@@ -58,23 +57,7 @@ public sealed partial class TeleportOnVerbSystem : EntitySystem
         if (!IsUserAllowed(ent.Comp, target))
             return;
 
-        var attempt = new TeleportUseAttemptEvent(target, target);
-        RaiseLocalEvent(ent, ref attempt);
-
-        if (attempt.Cancelled)
-            return;
-
-        var request = new TeleportRequestEvent(target, target);
-        RaiseLocalEvent(ent, ref request);
-
-        if (request.Handled)
-            return;
-
-        if (_net.IsClient)
-            return;
-
-        Log.Error($"TeleportOnVerb on {ToPrettyString(ent)} couldn't teleport {ToPrettyString(target)} " +
-                  "because no teleport implementation handled the request");
+        _teleport.RequestTeleport(ent, target, target, ent.Comp.TriggerEffects);
     }
 
     private bool IsUserAllowed(TeleportOnVerbComponent component, EntityUid user)

@@ -15,6 +15,7 @@
     departureSound: /Audio/Effects/teleport_departure.ogg
     arrivalSound: /Audio/Effects/teleport_arrival.ogg
   - type: TeleportOnVerb
+    triggerEffects: false
     verbType: Alternative
     verbText: portal-component-ghost-traverse
     verbIcon: /Textures/Interface/VerbIcons/open.svg.192dpi.png

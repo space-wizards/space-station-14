@@ -1,5 +1,6 @@
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
+using Content.Shared.Teleportation.Components;
 using Content.Shared.Weapons.Misc;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
@@ -7,7 +8,7 @@ using Robust.Shared.Physics.Systems;
 namespace Content.Shared.Teleportation.Systems;
 
 /// <summary>
-/// Moves entities to resolved destination coordinates, optionally raising the common teleport lifecycle events.
+/// Moves entities to resolved destination coordinates, with optional effects before and after movement.
 /// </summary>
 public sealed partial class SharedTeleportSystem : EntitySystem
 {
@@ -16,12 +17,15 @@ public sealed partial class SharedTeleportSystem : EntitySystem
     [Dependency] private SharedJointSystem _joints = default!;
 
     /// <summary>
-    /// Attempts to move a target and raise teleport lifecycle events on the teleporter and target.
+    /// Attempts to move a target, optionally triggering effects on the teleporter.
+    /// Always notifies the target with <see cref="TeleportedEvent"/> after successful movement.
+    /// Used by teleport implementations while handling a request dispatched by <see cref="RequestTeleport"/>.
     /// </summary>
     /// <param name="teleporter">The entity performing the teleportation.</param>
     /// <param name="target">The entity to teleport.</param>
     /// <param name="destination">The destination chosen by the teleport implementation.</param>
-    public bool TryTeleport(EntityUid teleporter, EntityUid target, EntityCoordinates destination)
+    /// <param name="triggerEffects">Whether to raise the pre-move and post-move effect events.</param>
+    internal bool TryTeleport(EntityUid teleporter, EntityUid target, EntityCoordinates destination, bool triggerEffects = true)
     {
         if (!Exists(teleporter))
             return false;
@@ -29,13 +33,19 @@ public sealed partial class SharedTeleportSystem : EntitySystem
         if (!CanTeleport(target, destination))
             return false;
 
-        var beforeTeleport = new BeforeTeleportEvent(target);
-        RaiseLocalEvent(teleporter, ref beforeTeleport);
+        if (triggerEffects)
+        {
+            var beforeTeleport = new BeforeTeleportEvent(target);
+            RaiseLocalEvent(teleporter, ref beforeTeleport);
+        }
 
         Teleport(target, destination);
 
-        var targetTeleported = new TargetTeleportedEvent(target);
-        RaiseLocalEvent(teleporter, ref targetTeleported);
+        if (triggerEffects)
+        {
+            var targetTeleported = new TargetTeleportedEvent(target);
+            RaiseLocalEvent(teleporter, ref targetTeleported);
+        }
 
         var teleported = new TeleportedEvent(teleporter);
         RaiseLocalEvent(target, ref teleported);
@@ -46,9 +56,13 @@ public sealed partial class SharedTeleportSystem : EntitySystem
     /// <summary>
     /// Moves a target without raising teleport lifecycle events, including those that trigger sounds.
     /// Pulling and grappling relationships are still stopped before movement.
+    /// Refuses to move a target while a teleport request is being processed.
     /// </summary>
     public bool TryTeleport(EntityUid target, EntityCoordinates destination)
     {
+        if (HasComp<TeleportingComponent>(target))
+            return false;
+
         if (!CanTeleport(target, destination))
             return false;
 

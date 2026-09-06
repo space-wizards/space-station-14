@@ -11,6 +11,13 @@ namespace Content.Shared.Teleportation.Triggers;
 public sealed partial class TeleportOnVerbComponent : Component
 {
     /// <summary>
+    /// Whether this verb requests effects before and after teleportation.
+    /// Use checks and the successful teleport notification are unaffected.
+    /// </summary>
+    [DataField]
+    public bool TriggerEffects = true;
+
+    /// <summary>
     /// Determines the verb menu and shortcut used to activate this trigger.
     /// </summary>
     [DataField]

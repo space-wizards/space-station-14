@@ -3,11 +3,13 @@ namespace Content.Shared.Teleportation.Triggers;
 /// <summary>
 /// Passes a target and the user that activated the teleporter to a teleport implementation.
 /// Raised on the teleporter entity.
+/// Triggers must use SharedTeleportSystem.RequestTeleport to run use checks and prevent nested requests.
 /// </summary>
 /// <param name="Target">The entity to teleport.</param>
 /// <param name="User">The entity that activated the teleporter.</param>
+/// <param name="TriggerEffects">Whether to run effects before and after movement. Does not bypass use checks.</param>
 [ByRefEvent, Serializable]
-public record struct TeleportRequestEvent(EntityUid Target, EntityUid User)
+public record struct TeleportRequestEvent(EntityUid Target, EntityUid User, bool TriggerEffects = true)
 {
     /// <summary>
     /// Whether a teleport implementation successfully handled the request.

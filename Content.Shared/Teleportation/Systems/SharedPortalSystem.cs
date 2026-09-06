@@ -64,7 +64,7 @@ public abstract partial class SharedPortalSystem : EntitySystem
 
         if (TryComp<LinkedEntityComponent>(ent, out var link) && link.LinkedEntities.Count != 0)
         {
-            args.Handled = TryTeleportLinked(ent, link, args.Target);
+            args.Handled = TryTeleportLinked(ent, link, args.Target, args.TriggerEffects);
             return;
         }
 
@@ -75,11 +75,15 @@ public abstract partial class SharedPortalSystem : EntitySystem
             return;
 
         var randomDestination = FindRandomDestination(ent);
-        if (TryTeleport(ent, args.Target, randomDestination))
+        if (TryTeleport(ent, args.Target, randomDestination, args.TriggerEffects))
             args.Handled = true;
     }
 
-    private bool TryTeleportLinked(Entity<PortalComponent> ent, LinkedEntityComponent link, EntityUid target)
+    private bool TryTeleportLinked(
+        Entity<PortalComponent> ent,
+        LinkedEntityComponent link,
+        EntityUid target,
+        bool triggerEffects)
     {
         if (_net.IsClient && !CanPredictTeleport((ent, link)))
             return false;
@@ -89,13 +93,14 @@ public abstract partial class SharedPortalSystem : EntitySystem
             return false;
 
         var destination = Transform(destinationEntity).Coordinates;
-        return TryTeleport(ent, target, destination, destinationEntity);
+        return TryTeleport(ent, target, destination, triggerEffects, destinationEntity);
     }
 
     private bool TryTeleport(
         Entity<PortalComponent> ent,
         EntityUid target,
         EntityCoordinates destination,
+        bool triggerEffects,
         EntityUid? destinationEntity = null)
     {
         if (!TryValidateDestination(ent, destination, destinationEntity))
@@ -103,7 +108,7 @@ public abstract partial class SharedPortalSystem : EntitySystem
 
         var addedTimeout = AddTimeout(ent, target, destinationEntity);
         var source = Transform(target).Coordinates;
-        if (_teleport.TryTeleport(ent, target, destination))
+        if (_teleport.TryTeleport(ent, target, destination, triggerEffects))
         {
             LogTeleport(ent, target, source, destination);
             return true;

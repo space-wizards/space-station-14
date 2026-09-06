@@ -1,5 +1,5 @@
+using Content.Shared.Teleportation.Systems;
 using Content.Shared.Whitelist;
-using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
@@ -10,7 +10,7 @@ namespace Content.Shared.Teleportation.Triggers;
 public sealed partial class CollisionTeleportTriggerSystem : EntitySystem
 {
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private INetManager _net = default!;
+    [Dependency] private SharedTeleportSystem _teleport = default!;
 
     public override void Initialize()
     {
@@ -30,23 +30,7 @@ public sealed partial class CollisionTeleportTriggerSystem : EntitySystem
         if (!IsTargetAllowed(ent.Comp, target))
             return;
 
-        var attempt = new TeleportUseAttemptEvent(target, target);
-        RaiseLocalEvent(ent, ref attempt);
-
-        if (attempt.Cancelled)
-            return;
-
-        var request = new TeleportRequestEvent(target, target);
-        RaiseLocalEvent(ent, ref request);
-
-        if (request.Handled)
-            return;
-
-        if (_net.IsClient)
-            return;
-
-        Log.Error($"CollisionTeleportTrigger on {ToPrettyString(ent)} couldn't teleport " +
-                  $"{ToPrettyString(target)} because no teleport implementation handled the request");
+        _teleport.RequestTeleport(ent, target, target);
     }
 
     private void OnEndCollide(Entity<CollisionTeleportTriggerComponent> ent, ref EndCollideEvent args)
