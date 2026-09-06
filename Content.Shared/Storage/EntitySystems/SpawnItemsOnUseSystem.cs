@@ -27,7 +27,8 @@ public abstract partial class SpawnItemsOnUseSystem : EntitySystem
         if (args.Handled)
             return;
 
-        var spawnEntities = GetSpawns(ent.Comp.Items, SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent.Owner)));
+        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(args.User), GetNetEntity(ent));
+        var spawnEntities = GetSpawns(ent.Comp.Items, random);
 
         ent.Comp.Uses--;
         var remove = false;
