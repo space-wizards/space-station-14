@@ -184,6 +184,7 @@ public abstract partial class SharedPortalSystem : EntitySystem
                 break;
         }
 
+        // If all attempts fail, use the last candidate even if it places the target inside a wall.
         return destination;
     }
 
@@ -198,6 +199,10 @@ public abstract partial class SharedPortalSystem : EntitySystem
     {
     }
 
+    /// <summary>
+    /// Clients can predict only a single linked exit that is available locally and outside nullspace.
+    /// Multiple exits require a random choice by the server.
+    /// </summary>
     private bool CanPredictTeleport(Entity<LinkedEntityComponent> portal)
     {
         if (portal.Comp.LinkedEntities.Count != 1)
