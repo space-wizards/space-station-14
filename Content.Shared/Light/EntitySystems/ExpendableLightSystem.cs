@@ -30,7 +30,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
     private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
 
     /// <summary>
-    ///     Checks if any light needs it's state updated.
+    /// Checks if any light needs it's state updated.
     /// </summary>	
     public override void Update(float frameTime)
     {
@@ -80,7 +80,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Enables the light if it is not active. Once active it cannot be turned off.
+    /// Enables the light if it is not active. Once active it cannot be turned off.
     /// </summary>	   
     public bool TryActivate(Entity<ExpendableLightComponent> ent, EntityUid? user = null)
     {
@@ -107,7 +107,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Light refueling logic
+    /// Light refueling logic
     /// </summary>	
     [SubscribeLocalEvent]
     private void OnInteractUsing(Entity<ExpendableLightComponent> ent, ref InteractUsingEvent args)
@@ -169,10 +169,11 @@ public sealed partial class ExpendableLightSystem : EntitySystem
             args.AddModifier("expendable-light-spent-prefix");
     }
 
-    private void UpdateVisualizer(Entity<ExpendableLightComponent> ent, AppearanceComponent? appearance = null)
+    private void UpdateVisualizer(Entity<ExpendableLightComponent> ent)
     {
         var component = ent.Comp;
-        if (!Resolve(ent, ref appearance, false))
+
+        if (!TryComp<AppearanceComponent>(ent, out var appearance))
             return;
 
         _appearance.SetData(ent, ExpendableLightVisuals.State, component.CurrentState, appearance);
