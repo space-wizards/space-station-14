@@ -82,32 +82,30 @@ public sealed class GetItemActionsEvent : EntityEventArgs
 [Serializable, NetSerializable]
 public sealed class RequestPerformActionEvent : EntityEventArgs
 {
-    public readonly NetEntity Action;
-    public readonly NetEntity? EntityTarget;
-    public readonly NetCoordinates? EntityCoordinatesTarget;
+    public ActionArgs ActionArgs;
 
     public RequestPerformActionEvent(NetEntity action)
     {
-        Action = action;
+        ActionArgs.NetAction = action;
     }
 
     public RequestPerformActionEvent(NetEntity action, NetEntity entityTarget)
     {
-        Action = action;
-        EntityTarget = entityTarget;
+        ActionArgs.NetAction = action;
+        ActionArgs.NetTarget = entityTarget;
     }
 
     public RequestPerformActionEvent(NetEntity action, NetCoordinates entityCoordinatesTarget)
     {
-        Action = action;
-        EntityCoordinatesTarget = entityCoordinatesTarget;
+        ActionArgs.NetAction = action;
+        ActionArgs.NetCoordinates = entityCoordinatesTarget;
     }
 
     public RequestPerformActionEvent(NetEntity action, NetEntity? entityTarget, NetCoordinates entityCoordinatesTarget)
     {
-        Action = action;
-        EntityTarget = entityTarget;
-        EntityCoordinatesTarget = entityCoordinatesTarget;
+        ActionArgs.NetAction = action;
+        ActionArgs.NetTarget = entityTarget;
+        ActionArgs.NetCoordinates = entityCoordinatesTarget;
     }
 }
 
@@ -179,4 +177,23 @@ public abstract partial class BaseActionEvent : HandledEntityEventArgs
     /// Should we toggle the action entity?
     /// </summary>
     public bool Toggle;
+}
+
+
+/// <summary>
+/// Raised directly on an entity when they have an action added to them.
+/// </summary>
+[ByRefEvent]
+public readonly struct AddedActionEvent(Entity<ActionComponent> action)
+{
+    public readonly Entity<ActionComponent> Action = action;
+}
+
+/// <summary>
+/// Raised directly on an entity when they have an action removed from them
+/// </summary>
+[ByRefEvent]
+public readonly struct RemovedActionEvent(Entity<ActionComponent> action)
+{
+    public readonly Entity<ActionComponent> Action = action;
 }

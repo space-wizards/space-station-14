@@ -215,6 +215,16 @@
         Piercing: 12
 
 - type: entity
+  parent: MobDragonDungeon
+  id: MobDragonDebug
+  suffix: AI/Debug
+  components:
+  - type: NPCUseActionOnTarget
+    actions:
+    - actionId: ActionGoliathTentacle
+    - actionId: ActionDragonsBreath
+
+- type: entity
   parent: BaseAction
   id: ActionSpawnRift
   name: Summon Carp Rift

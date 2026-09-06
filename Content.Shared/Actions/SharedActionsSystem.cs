@@ -16,6 +16,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -87,7 +88,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
     private void OnActionShutdown(Entity<ActionComponent> ent, ref ComponentShutdown args)
     {
-        if (ent.Comp.AttachedEntity is {} user && !TerminatingOrDeleted(user))
+        if (ent.Comp.AttachedEntity is { } user && !TerminatingOrDeleted(user))
             RemoveAction(user, (ent, ent));
     }
 
@@ -109,7 +110,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
     /// </summary>
     public Entity<ActionComponent>? GetAction(Entity<ActionComponent?>? action, bool logError = true)
     {
-        if (action is not {} ent || Deleted(ent))
+        if (action is not { } ent || Deleted(ent))
             return null;
 
         if (!_actionQuery.Resolve(ent, ref ent.Comp, logError))
@@ -120,7 +121,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
     public void SetCooldown(Entity<ActionComponent?>? action, TimeSpan start, TimeSpan end)
     {
-        if (GetAction(action) is not {} ent)
+        if (GetAction(action) is not { } ent)
             return;
 
         ent.Comp.Cooldown = new ActionCooldown
@@ -133,7 +134,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
     public void RemoveCooldown(Entity<ActionComponent?>? action)
     {
-        if (GetAction(action) is not {} ent)
+        if (GetAction(action) is not { } ent)
             return;
 
         ent.Comp.Cooldown = null;
@@ -151,10 +152,10 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
     public void ClearCooldown(Entity<ActionComponent?>? action)
     {
-        if (GetAction(action) is not {} ent)
+        if (GetAction(action) is not { } ent)
             return;
 
-        if (ent.Comp.Cooldown is not {} cooldown)
+        if (ent.Comp.Cooldown is not { } cooldown)
             return;
 
         ent.Comp.Cooldown = new ActionCooldown
@@ -170,7 +171,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
     /// </summary>
     public void SetIfBiggerCooldown(Entity<ActionComponent?>? action, TimeSpan cooldown)
     {
-        if (GetAction(action) is not {} ent || cooldown < TimeSpan.Zero)
+        if (GetAction(action) is not { } ent || cooldown < TimeSpan.Zero)
             return;
 
         var start = GameTiming.CurTime;
@@ -187,7 +188,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
     /// </summary>
     public void StartUseDelay(Entity<ActionComponent?>? action)
     {
-        if (GetAction(action) is not {} ent || ent.Comp.UseDelay is not {} delay)
+        if (GetAction(action) is not { } ent || ent.Comp.UseDelay is not { } delay)
             return;
 
         SetCooldown((ent, ent), delay);
@@ -195,7 +196,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
     public void SetUseDelay(Entity<ActionComponent?>? action, TimeSpan? delay)
     {
-        if (GetAction(action) is not {} ent || ent.Comp.UseDelay == delay)
+        if (GetAction(action) is not { } ent || ent.Comp.UseDelay == delay)
             return;
 
         ent.Comp.UseDelay = delay;
@@ -205,7 +206,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
     public void ReduceUseDelay(Entity<ActionComponent?>? action, TimeSpan? lowerDelay)
     {
-        if (GetAction(action) is not {} ent)
+        if (GetAction(action) is not { } ent)
             return;
 
         if (ent.Comp.UseDelay != null && lowerDelay != null)
@@ -227,6 +228,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
     }
 
     #region ComponentStateManagement
+
     public virtual void UpdateAction(Entity<ActionComponent> ent)
     {
         // See client-side code.
@@ -234,7 +236,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
     public void SetToggled(Entity<ActionComponent?>? action, bool toggled)
     {
-        if (GetAction(action) is not {} ent || ent.Comp.Toggled == toggled)
+        if (GetAction(action) is not { } ent || ent.Comp.Toggled == toggled)
             return;
 
         ent.Comp.Toggled = toggled;
@@ -245,7 +247,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
     public void SetEnabled(Entity<ActionComponent?>? action, bool enabled)
     {
-        if (GetAction(action) is not {} ent || ent.Comp.Enabled == enabled)
+        if (GetAction(action) is not { } ent || ent.Comp.Enabled == enabled)
             return;
 
         ent.Comp.Enabled = enabled;
@@ -256,6 +258,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
     #endregion
 
     #region Execution
+
     /// <summary>
     ///     When receiving a request to perform an action, this validates whether the action is allowed. If it is, it
     ///     will raise the relevant action event
@@ -265,21 +268,23 @@ public abstract partial class SharedActionsSystem : EntitySystem
         if (args.SenderSession.AttachedEntity is not { } user)
             return;
 
-        TryPerformAction(ev, user);
+        TryPerformAction(user, ev.ActionArgs);
     }
 
     /// <summary>
     /// <see cref="OnActionRequest"/>
     /// </summary>
-    /// <param name="ev">The Request Perform Action Event</param>
     /// <param name="user">The user/performer of the action</param>
+    /// <param name="args">Arguments for this action</param>
+    /// <param name="predicted">Whether this action is predicted or not</param>
     /// <param name="skipDoActionRequest">Should this skip the initial doaction request?</param>
-    private bool TryPerformAction(RequestPerformActionEvent ev, EntityUid user, bool skipDoActionRequest = false, bool showPopups = true)
+    /// <param name="showPopups">Whether or not this action attempt should a PopUp if it fails.</param>
+    private bool TryPerformAction(EntityUid user, ActionArgs args, bool skipDoActionRequest = false, bool predicted = true, bool showPopups = true)
     {
         if (!_actionsQuery.TryComp(user, out var component))
             return false;
 
-        var actionEnt = GetEntity(ev.Action);
+        var actionEnt = GetEntity(args.NetAction);
 
         if (!TryComp(actionEnt, out MetaDataComponent? metaData))
             return false;
@@ -294,7 +299,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
             return false;
         }
 
-        if (GetAction(actionEnt) is not {} action)
+        if (GetAction(actionEnt) is not { } action)
             return false;
 
         DebugTools.Assert(action.Comp.AttachedEntity == user);
@@ -318,30 +323,30 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
         // Validate request by checking action blockers and the like
         var provider = action.Comp.Container ?? user;
-        var validateEv = new ActionValidateEvent()
-        {
-            Input = ev,
-            User = user,
-            Provider = provider
-        };
+        var validateEv = GetActionValidateEvent(action, user, provider, args);
+
         RaiseLocalEvent(action, ref validateEv);
         if (validateEv.Invalid)
             return false;
 
-        if (TryComp<DoAfterArgsComponent>(action, out var actionDoAfterComp) && TryComp<DoAfterComponent>(user, out var performerDoAfterComp) && !skipDoActionRequest)
+        if (TryComp<DoAfterArgsComponent>(action, out var actionDoAfterComp) &&
+            TryComp<DoAfterComponent>(user, out var performerDoAfterComp) && !skipDoActionRequest)
         {
-            return TryStartActionDoAfter((action, actionDoAfterComp), (user, performerDoAfterComp), action.Comp.UseDelay, ev);
+            return TryStartActionDoAfter((action, actionDoAfterComp),
+                (user, performerDoAfterComp),
+                action.Comp.UseDelay,
+                args);
         }
 
         // All checks passed. Perform the action!
-        PerformAction((user, component), action);
+        PerformAction((user, component), action, predicted: predicted);
         return true;
     }
 
     private void OnValidate(Entity<ActionComponent> ent, ref ActionValidateEvent args)
     {
-        if ((ent.Comp.CheckConsciousness && !_actionBlocker.CanConsciouslyPerformAction(args.User))
-            || (ent.Comp.CheckCanInteract && !_actionBlocker.CanInteract(args.User, null)))
+        if (ent.Comp.CheckConsciousness && !_actionBlocker.CanConsciouslyPerformAction(args.User)
+            || ent.Comp.CheckCanInteract && !_actionBlocker.CanInteract(args.User, null))
             args.Invalid = true;
     }
 
@@ -354,21 +359,20 @@ public abstract partial class SharedActionsSystem : EntitySystem
     private void OnEntityValidate(Entity<EntityTargetActionComponent> ent, ref ActionValidateEvent args)
     {
         // let WorldTargetAction handle it
-        if (ent.Comp.Event is not {} ev)
+        if (ent.Comp.Event is not { } ev)
         {
-            DebugTools.Assert(HasComp<WorldTargetActionComponent>(ent), $"Entity-world targeting action {ToPrettyString(ent)} requires WorldTargetActionComponent");
+            DebugTools.Assert(HasComp<WorldTargetActionComponent>(ent),
+                $"Entity-world targeting action {ToPrettyString(ent)} requires WorldTargetActionComponent");
             return;
         }
 
-        if (args.Input.EntityTarget is not {} netTarget)
+        if (args.EntityTarget is not { } target)
         {
             args.Invalid = true;
             return;
         }
 
         var user = args.User;
-
-        var target = GetEntity(netTarget);
 
         var targetWorldPos = _transform.GetWorldPosition(target);
 
@@ -386,14 +390,13 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
     private void OnWorldValidate(Entity<WorldTargetActionComponent> ent, ref ActionValidateEvent args)
     {
-        if (args.Input.EntityCoordinatesTarget is not { } netTarget)
+        if (args.EntityCoordinatesTarget is not { } target)
         {
             args.Invalid = true;
             return;
         }
 
         var user = args.User;
-        var target = GetCoordinates(netTarget);
 
         if (ent.Comp.RotateOnUse)
             _rotateToFace.TryFaceCoordinates(user, _transform.ToMapCoordinates(target).Position);
@@ -402,10 +405,10 @@ public abstract partial class SharedActionsSystem : EntitySystem
             return;
 
         // if the client specified an entity it needs to be valid
-        var targetEntity = GetEntity(args.Input.EntityTarget);
+        var targetEntity = args.EntityTarget;
         if (targetEntity != null && (
-            !TryComp<EntityTargetActionComponent>(ent, out var entTarget) ||
-            !ValidateEntityTarget(user, targetEntity.Value, (ent, entTarget))))
+                !TryComp<EntityTargetActionComponent>(ent, out var entTarget) ||
+                !ValidateEntityTarget(user, targetEntity.Value, (ent, entTarget))))
         {
             args.Invalid = true;
             return;
@@ -414,7 +417,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
         _adminLogger.Add(LogType.Action,
             $"{ToPrettyString(user):user} is performing the {Name(ent):action} action (provided by {args.Provider}) targeting {targetEntity} at {target:target}.");
 
-        if (ent.Comp.Event is {} ev)
+        if (ent.Comp.Event is { } ev)
         {
             ev.Target = target;
             ev.Entity = targetEntity;
@@ -479,19 +482,19 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
     private void OnInstantGetEvent(Entity<InstantActionComponent> ent, ref ActionGetEventEvent args)
     {
-        if (ent.Comp.Event is {} ev)
+        if (ent.Comp.Event is { } ev)
             args.Event = ev;
     }
 
     private void OnEntityGetEvent(Entity<EntityTargetActionComponent> ent, ref ActionGetEventEvent args)
     {
-        if (ent.Comp.Event is {} ev)
+        if (ent.Comp.Event is { } ev)
             args.Event = ev;
     }
 
     private void OnWorldGetEvent(Entity<WorldTargetActionComponent> ent, ref ActionGetEventEvent args)
     {
-        if (ent.Comp.Event is {} ev)
+        if (ent.Comp.Event is { } ev)
             args.Event = ev;
     }
 
@@ -524,7 +527,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
     private void OnEntitySetTarget(Entity<EntityTargetActionComponent> ent, ref ActionSetTargetEvent args)
     {
-        if (ent.Comp.Event is {} ev)
+        if (ent.Comp.Event is { } ev)
         {
             ev.Target = args.Target;
             args.Handled = true;
@@ -533,7 +536,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
     private void OnWorldSetTarget(Entity<WorldTargetActionComponent> ent, ref ActionSetTargetEvent args)
     {
-        if (ent.Comp.Event is {} ev)
+        if (ent.Comp.Event is { } ev)
         {
             ev.Target = Transform(args.Target).Coordinates;
             // only set Entity if the action also has EntityTargetAction
@@ -549,20 +552,24 @@ public abstract partial class SharedActionsSystem : EntitySystem
     /// <param name="action">The action being performed</param>
     /// <param name="actionEvent">An event override to perform. If null, uses <see cref="GetEvent"/></param>
     /// <param name="predicted">If false, prevents playing the action's sound on the client</param>
-    public void PerformAction(Entity<ActionsComponent?> performer, Entity<ActionComponent> action, BaseActionEvent? actionEvent = null, bool predicted = true)
+    public void PerformAction(Entity<ActionsComponent?> performer,
+        Entity<ActionComponent> action,
+        BaseActionEvent? actionEvent = null,
+        bool predicted = true)
     {
         var handled = false;
 
         // Note that attached entity and attached container are allowed to be null here.
         if (action.Comp.AttachedEntity != null && action.Comp.AttachedEntity != performer)
         {
-            Log.Error($"{ToPrettyString(performer)} is attempting to perform an action {ToPrettyString(action)} that is attached to another entity {ToPrettyString(action.Comp.AttachedEntity)}");
+            Log.Error(
+                $"{ToPrettyString(performer)} is attempting to perform an action {ToPrettyString(action)} that is attached to another entity {ToPrettyString(action.Comp.AttachedEntity)}");
             return;
         }
 
         actionEvent ??= GetEvent(action);
 
-        if (actionEvent is not {} ev)
+        if (actionEvent is not { } ev)
             return;
 
         ev.Performer = performer;
@@ -574,13 +581,13 @@ public abstract partial class SharedActionsSystem : EntitySystem
         ev.Action = action;
 
         // TODO: This is where we'd add support for event lists
-        if (!action.Comp.RaiseOnUser && action.Comp.Container is {} container && !_mindQuery.HasComp(container))
+        if (!action.Comp.RaiseOnUser && action.Comp.Container is { } container && !_mindQuery.HasComp(container))
             target = container;
 
         if (action.Comp.RaiseOnAction)
             target = action;
 
-        RaiseLocalEvent(target, (object) ev, broadcast: true);
+        RaiseLocalEvent(target, (object)ev, broadcast: true);
         handled = ev.Handled;
 
         if (!handled)
@@ -600,6 +607,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
         var performed = new ActionPerformedEvent(performer);
         RaiseLocalEvent(action, ref performed);
     }
+
     #endregion
 
     #region AddRemoveActions
@@ -656,7 +664,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
         Entity<ActionComponent?> action,
         Entity<ActionsContainerComponent?> container)
     {
-        if (GetAction(action) is not {} ent)
+        if (GetAction(action) is not { } ent)
             return false;
 
         if (ent.Comp.Container != container.Owner
@@ -677,14 +685,14 @@ public abstract partial class SharedActionsSystem : EntitySystem
     public bool AddActionDirect(Entity<ActionsComponent?> performer,
         Entity<ActionComponent?>? action)
     {
-        if (GetAction(action) is not {} ent)
+        if (GetAction(action) is not { } ent)
             return false;
 
         DebugTools.Assert(ent.Comp.Container == null ||
                           (TryComp(ent.Comp.Container, out ActionsContainerComponent? containerComp)
                            && containerComp.Container.Contains(ent)));
 
-        if (ent.Comp.AttachedEntity is {} user)
+        if (ent.Comp.AttachedEntity is { } user)
             RemoveAction(user, (ent, ent));
 
         // TODO: make this an event bruh
@@ -698,6 +706,8 @@ public abstract partial class SharedActionsSystem : EntitySystem
         performer.Comp.Actions.Add(ent);
         Dirty(performer, performer.Comp);
         ActionAdded((performer, performer.Comp), (ent, ent.Comp));
+        var ev = new AddedActionEvent(ent);
+        RaiseLocalEvent(performer, ref ev);
         return true;
     }
 
@@ -746,7 +756,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
         foreach (var actionId in container.Comp.Container.ContainedEntities)
         {
-            if (GetAction(actionId) is {} action)
+            if (GetAction(actionId) is { } action)
                 AddActionDirect(performer, (action, action));
         }
     }
@@ -758,7 +768,9 @@ public abstract partial class SharedActionsSystem : EntitySystem
     /// <param name="performer"></param>
     /// <param name="container"></param>
     /// <param name="actionId"></param>
-    public void GrantContainedAction(Entity<ActionsComponent?> performer, Entity<ActionsContainerComponent?> container, EntityUid actionId)
+    public void GrantContainedAction(Entity<ActionsComponent?> performer,
+        Entity<ActionsContainerComponent?> container,
+        EntityUid actionId)
     {
         if (!Resolve(container, ref container.Comp))
             return;
@@ -775,7 +787,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
         foreach (var actionId in actions.Actions)
         {
-            if (GetAction(actionId) is not {} ent)
+            if (GetAction(actionId) is not { } ent)
                 continue;
 
             yield return ent;
@@ -792,7 +804,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
         foreach (var actionId in comp.Actions.ToArray())
         {
-            if (GetAction(actionId) is not {} ent)
+            if (GetAction(actionId) is not { } ent)
                 return;
 
             if (ent.Comp.Container == container)
@@ -803,9 +815,12 @@ public abstract partial class SharedActionsSystem : EntitySystem
     /// <summary>
     ///     Removes a single provided action provided by another entity.
     /// </summary>
-    public void RemoveProvidedAction(EntityUid performer, EntityUid container, EntityUid actionId, ActionsComponent? comp = null)
+    public void RemoveProvidedAction(EntityUid performer,
+        EntityUid container,
+        EntityUid actionId,
+        ActionsComponent? comp = null)
     {
-        if (!_actionsQuery.Resolve(performer, ref comp, false) || GetAction(actionId) is not {} ent)
+        if (!_actionsQuery.Resolve(performer, ref comp, false) || GetAction(actionId) is not { } ent)
             return;
 
         if (ent.Comp.Container == container)
@@ -817,7 +832,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
     /// </summary>
     public void RemoveAction(Entity<ActionComponent?>? action)
     {
-        if (GetAction(action) is not {} ent || ent.Comp.AttachedEntity is not {} actions)
+        if (GetAction(action) is not { } ent || ent.Comp.AttachedEntity is not { } actions)
             return;
 
         if (!_actionsQuery.TryComp(actions, out var comp))
@@ -828,7 +843,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
     public void RemoveAction(Entity<ActionsComponent?> performer, Entity<ActionComponent?>? action)
     {
-        if (GetAction(action) is not {} ent)
+        if (GetAction(action) is not { } ent)
             return;
 
         if (ent.Comp.AttachedEntity != performer.Owner)
@@ -838,7 +853,8 @@ public abstract partial class SharedActionsSystem : EntitySystem
                               || !performer.Comp.Actions.Contains(ent.Owner));
 
             if (!GameTiming.ApplyingState)
-                Log.Error($"Attempted to remove an action {ToPrettyString(ent)} from an entity that it was never attached to: {ToPrettyString(performer)}. Trace: {Environment.StackTrace}");
+                Log.Error(
+                    $"Attempted to remove an action {ToPrettyString(ent)} from an entity that it was never attached to: {ToPrettyString(performer)}. Trace: {Environment.StackTrace}");
             return;
         }
 
@@ -865,6 +881,8 @@ public abstract partial class SharedActionsSystem : EntitySystem
     /// </summary>
     protected virtual void ActionRemoved(Entity<ActionsComponent> performer, Entity<ActionComponent> action)
     {
+        var ev = new RemovedActionEvent(action);
+        RaiseLocalEvent(performer, ref ev);
         // See client-side system for UI code.
     }
 
@@ -883,6 +901,19 @@ public abstract partial class SharedActionsSystem : EntitySystem
     }
 
     #endregion
+
+    /// <summary>
+    /// Tries to validate an action and use it. If it's not valid or can't be used it blocks the action from being used.
+    /// This is its own method so that both NPCs and Players don't have two different systems to do the same thing.
+    /// </summary>
+    public bool TryPerformAction(EntityUid user,
+        EntityUid actionEnt,
+        EntityUid? entTarget,
+        EntityCoordinates? actionCoords,
+        bool predicted = true)
+    {
+        return TryPerformAction(user, GetActionArgs(actionEnt, entTarget, actionCoords), predicted: predicted);
+    }
 
     private void OnRelayActionCompChange(Entity<ActionsComponent> ent, ref RelayedActionComponentChangeEvent args)
     {
@@ -926,6 +957,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
     }
 
     #region EquipHandlers
+
     private void OnDidEquip(Entity<ActionsComponent> ent, ref DidEquipEvent args)
     {
         if (GameTiming.ApplyingState)
@@ -969,6 +1001,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
         RemoveProvidedActions(uid, args.Unequipped, component);
     }
+
     #endregion
 
     public void SetEntityIcon(Entity<ActionComponent?> ent, EntityUid? icon)
@@ -1051,4 +1084,31 @@ public abstract partial class SharedActionsSystem : EntitySystem
         ent.Comp.Temporary = temporary;
         Dirty(ent);
     }
+
+    public ActionArgs GetActionArgs(EntityUid action, EntityUid? target, EntityCoordinates? coordinates)
+    {
+        return new ActionArgs(GetNetEntity(action), GetNetEntity(target), GetNetCoordinates(coordinates));
+    }
+
+    public ActionValidateEvent GetActionValidateEvent(EntityUid action, EntityUid user, EntityUid provider, ActionArgs args)
+    {
+        return new ActionValidateEvent(action,
+            GetEntity(args.NetTarget),
+            GetCoordinates(args.NetCoordinates),
+            user,
+            provider);
+    }
+
+    public ActionValidateEvent GetActionValidateEvent(EntityUid user, EntityUid provider, ActionArgs args)
+    {
+        return new ActionValidateEvent(
+            GetEntity(args.NetAction),
+            GetEntity(args.NetTarget),
+            GetCoordinates(args.NetCoordinates),
+            user,
+            provider);
+    }
 }
+
+[Serializable, NetSerializable]
+public record struct ActionArgs(NetEntity NetAction, NetEntity? NetTarget, NetCoordinates? NetCoordinates);
