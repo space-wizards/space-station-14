@@ -72,6 +72,7 @@ public sealed partial class GhostRoleComponent : Component
     /// <summary>
     /// The mind roles that will be added to the mob's mind entity
     /// </summary>
+    [DataField]
     public List<EntProtoId> MindRoles = new() { DefaultMindRole };
 
     [DataField]
