@@ -119,7 +119,7 @@
       fly-by: *flybyfixture
   - type: Ammo
   - type: StunOnCollide
-    slowdownAmount: 1.3
+    slowdownAmount: 2.2
     walkSpeedModifier: 0.75
     sprintSpeedModifier: 0.75
   - type: Projectile
@@ -220,9 +220,9 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: StunOnCollide
-    slowdownAmount: 1.3
-    walkSpeedModifier: 0.6
-    sprintSpeedModifier: 0.6
+    slowdownAmount: 2.2
+    walkSpeedModifier: 0.65
+    sprintSpeedModifier: 0.65
 
 - type: entity
   parent: BulletDisablerSmgBase
