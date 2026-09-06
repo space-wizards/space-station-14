@@ -1,7 +1,8 @@
 using Content.Shared.TextScreen;
 using Content.Server.Screens.Components;
-using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.RoundEnd;
+using Content.Shared.Screens;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Screens.Systems;
@@ -15,23 +16,12 @@ public sealed partial class ScreenSystem : EntitySystem
     [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
 
     /// <summary>
-    /// Calls either a normal screen text update or shuttle timer update based on the presence of
-    /// <see cref="ShuttleTimerMasks.ShuttleMap"/> in <see cref="args.Data"/>
-    /// </summary>
-    [SubscribeLocalEvent]
-    private void OnPacketReceived(Entity<ScreenComponent> ent, ref DeviceNetworkPacketEvent args)
-    {
-        if (args.Data.TryGetValue(ShuttleTimerMasks.ShuttleMap, out _))
-            ShuttleTimer(ent, args);
-        else
-            ScreenText(ent, args);
-    }
-
-    /// <summary>
     /// Send a text update to every screen on the same MapUid as the originating comms console.
     /// </summary>
-    private void ScreenText(Entity<ScreenComponent> ent, DeviceNetworkPacketEvent args)
+    [SubscribeLocalEvent]
+    private void OnScreenText(Entity<ScreenComponent> ent, ref DeviceNetworkPacketEvent<ScreenTextPayload> args)
     {
+        var text = args.Data.Text;
         // don't allow text updates if there's an active timer
         // (and just check here so the server doesn't have to track them)
         if (_appearanceSystem.TryGetData(ent, TextScreenVisuals.TargetTime, out TimeSpan target)
@@ -41,17 +31,15 @@ public sealed partial class ScreenSystem : EntitySystem
         var screenMap = Transform(ent).MapUid;
         var argsMap = Transform(args.Sender).MapUid;
 
-        if (screenMap != null
-            && argsMap != null
-            && screenMap == argsMap
-            && args.Data.TryGetValue(ScreenMasks.Text, out string? text)
-            && text != null
-            )
-        {
-            _appearanceSystem.SetData(ent, TextScreenVisuals.DefaultText, text);
-            _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenText, text);
-            _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenTextTime, _gameTiming.CurTime);
-        }
+        if (screenMap == null
+            || argsMap == null
+            || screenMap != argsMap
+            || text == null)
+            return;
+
+        _appearanceSystem.SetData(ent, TextScreenVisuals.DefaultText, text);
+        _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenText, text);
+        _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenTextTime, _gameTiming.CurTime);
     }
 
     /// <summary>
@@ -62,49 +50,46 @@ public sealed partial class ScreenSystem : EntitySystem
     /// Subnets are the shuttle, source, and dest. Source/dest change each jump.
     /// This is required to send different timers to the shuttle/terminal/station.
     /// </summary>
-    private void ShuttleTimer(Entity<ScreenComponent> ent, DeviceNetworkPacketEvent args)
+    [SubscribeLocalEvent]
+    private void OnShuttleTimer(Entity<ScreenComponent> ent, ref DeviceNetworkPacketEvent<ScreenShuttlePayload> args)
     {
+        var payload = args.Data;
         var timerXform = Transform(ent);
 
         // no false positives.
         if (timerXform.MapUid == null)
             return;
 
-        string key;
-        args.Data.TryGetValue(ShuttleTimerMasks.ShuttleMap, out EntityUid? shuttleMap);
-        args.Data.TryGetValue(ShuttleTimerMasks.SourceMap, out EntityUid? source);
-        args.Data.TryGetValue(ShuttleTimerMasks.DestMap, out EntityUid? dest);
-        args.Data.TryGetValue(ShuttleTimerMasks.Docked, out bool docked);
-        string text = docked ? ShuttleTimerMasks.ETD : ShuttleTimerMasks.ETA;
+        string? text = null;
+        TimeSpan time;
 
         switch (timerXform.MapUid)
         {
-            // sometimes the timer transforms on FTL shuttles have a hyperspace mapuid, so matching by grid works as a fallback.
-            case var local when local == shuttleMap || timerXform.GridUid == shuttleMap:
-                key = ShuttleTimerMasks.ShuttleTime;
+            // sometimes the timer transforms on FTL shuttles have a hyperspace mapent, so matching by grid works as a fallback.
+            case var local when local == payload.Shuttle || timerXform.GridUid == payload.Shuttle:
+                time = payload.ShuttleTime;
                 break;
-            case var origin when origin == source:
-                key = ShuttleTimerMasks.SourceTime;
+            case var origin when origin == payload.SourceMap:
+                time = payload.SourceTime;
                 break;
-            case var remote when remote == dest:
-                key = ShuttleTimerMasks.DestTime;
+            case var remote when remote == payload.DestinationMap:
+                time = payload.DestinationTime;
                 text = ShuttleTimerMasks.ETA;
                 break;
             default:
                 return;
         }
 
-        if (!args.Data.TryGetValue(key, out TimeSpan duration))
-            return;
+        if (payload.OverrideText != null)
+            text = payload.OverrideText;
 
-        if (args.Data.TryGetValue(ScreenMasks.Text, out string? label) && label != null)
-            text = label;
-
-        _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenText, text);
-        _appearanceSystem.SetData(ent, TextScreenVisuals.TargetTime, _gameTiming.CurTime + duration);
+        _appearanceSystem.SetData(ent, TextScreenVisuals.TargetTime, _gameTiming.CurTime + time);
         _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenTextTime, _gameTiming.CurTime);
 
-        if (args.Data.TryGetValue(ScreenMasks.Color, out Color color))
-            _appearanceSystem.SetData(ent, TextScreenVisuals.Color, color);
+        if (text != null)
+            _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenText, text);
+
+        if (payload.OverrideColor != null)
+            _appearanceSystem.SetData(ent, TextScreenVisuals.Color, payload.OverrideColor);
     }
 }

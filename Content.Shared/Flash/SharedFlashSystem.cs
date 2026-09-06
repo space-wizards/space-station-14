@@ -15,7 +15,7 @@ using Content.Shared.Random.Helpers;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
-using Content.Shared.Timing;
+using Content.Shared.Timing.Systems;
 using Content.Shared.Traits.Assorted;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
