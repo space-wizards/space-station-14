@@ -136,14 +136,14 @@ public sealed partial class ExpendableLightComponent : Component
 }
 
 [Serializable, NetSerializable]
-public enum ExpendableLightVisuals
+public enum ExpendableLightVisuals : byte
 {
     State,
     Behavior
 }
 
 [Serializable, NetSerializable]
-public enum ExpendableLightState
+public enum ExpendableLightState : byte
 {
     Unlit,
     Lit,
