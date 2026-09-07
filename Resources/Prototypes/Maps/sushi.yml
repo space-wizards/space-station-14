@@ -3,7 +3,6 @@
   mapName: 'Sushi Station'
   mapPath: /Maps/sushi.yml
   minPlayers: 45
-  maxPlayers: 
   stations:
     Sushi:
       stationProto: StandardNanotrasenStation
