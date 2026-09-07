@@ -1,4 +1,4 @@
-﻿using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature.HeatContainer;
 using Content.Shared.Temperature.Systems;

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Temperature.Components;
 using Robust.Client.GameObjects;
