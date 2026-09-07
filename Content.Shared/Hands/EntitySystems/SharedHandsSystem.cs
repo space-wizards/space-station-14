@@ -512,9 +512,14 @@ public abstract partial class SharedHandsSystem
         return held != null;
     }
 
+    /// <summary>
+    /// Checks if the specified hand of the entity is empty.
+    /// Assumes that the entity has hands, and that the given hand exists.
+    /// </summary>
+    /// <returns>false if hand is holding something. true if hand is empty (or doesn't exist).</returns>
     public bool HandIsEmpty(Entity<HandsComponent?> ent, string handId)
     {
-        return GetHeldItem(ent, handId) == null;
+        return TryGetHeldItem(ent, handId, out _);
     }
 
     /// <summary>
