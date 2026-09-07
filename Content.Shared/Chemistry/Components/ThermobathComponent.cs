@@ -6,56 +6,30 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Chemistry.Components;
 
 /// <summary>
-/// Component for a laboratory device that can heat or cool solutions.
+/// Marks a device that heats or cools solutions in an inserted container.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true, fieldDeltas: true), Access(typeof(SharedThermobathSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedThermobathSystem))]
 public sealed partial class ThermobathComponent : Component
 {
-    /// <summary>
-    /// Current temperature of the solution in Kelvin.
-    /// </summary>
-    // TODO: Take this straight from the solution maybe? Unsure how that works with networking right now.
-    [DataField, AutoNetworkedField]
-    public float? SolutionTemperature;
-
-    /// <summary>
-    /// Whether we currently have a beaker inserted.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool HasBeaker;
+    public const string BeakerSlotId = "beakerSlot";
 }
 
 [Serializable, NetSerializable]
-public sealed class ThermobathPowerChangedMessage : BoundUserInterfaceMessage
+public sealed class ThermobathPowerChangedMessage(bool enabled) : BoundUserInterfaceMessage
 {
-    public bool Powered;
-
-    public ThermobathPowerChangedMessage(bool powered)
-    {
-        Powered = powered;
-    }
+    public readonly bool Enabled = enabled;
 }
 
 [Serializable, NetSerializable]
-public sealed class ThermobathSetpointChangedMessage : BoundUserInterfaceMessage
+public sealed class ThermobathSetpointChangedMessage(float setpoint) : BoundUserInterfaceMessage
 {
-    public float Setpoint;
-
-    public ThermobathSetpointChangedMessage(float setpoint)
-    {
-        Setpoint = setpoint;
-    }
+    public readonly float Setpoint = setpoint;
 }
 
 [Serializable, NetSerializable]
-public sealed class ThermobathModeChangedMessage : BoundUserInterfaceMessage
+public sealed class ThermobathModeChangedMessage(ThermoregulatorMode mode) : BoundUserInterfaceMessage
 {
-    public ThermoregulatorMode Mode;
-
-    public ThermobathModeChangedMessage(ThermoregulatorMode mode)
-    {
-        Mode = mode;
-    }
+    public readonly ThermoregulatorMode Mode = mode;
 }
 
 [Serializable, NetSerializable]

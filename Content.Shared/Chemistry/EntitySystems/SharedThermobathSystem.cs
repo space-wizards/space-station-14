@@ -1,207 +1,122 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Components;
 using Content.Shared.Temperature.Components;
-using Content.Shared.Temperature.HeatContainer;
 using Content.Shared.Temperature.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
 /// <summary>
-/// The system for UI and heat transfer logic for a device that can heat or cool beakers.
+/// Handles thermobath UI messages and appearance data.
 /// </summary>
 public abstract partial class SharedThermobathSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
-    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;
-    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private ThermoregulatorSystem _thermoregulator = default!;
+    [Dependency] private SharedThermoregulatorSystem _thermoregulator = default!;
 
-    private const string BeakerSlotId = "beakerSlot";
-    private const string SolutionId = "beaker";
-
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<ThermobathComponent, PowerChangedEvent>(OnPowerChanged);
-        SubscribeLocalEvent<ThermobathComponent, ThermobathPowerChangedMessage>(OnPowerChangeMessage);
-        SubscribeLocalEvent<ThermobathComponent, ThermobathSetpointChangedMessage>(OnSetpointChangeMessage);
-        SubscribeLocalEvent<ThermobathComponent, ThermobathModeChangedMessage>(OnModeChangeMessage);
-        SubscribeLocalEvent<ThermobathComponent, EntInsertedIntoContainerMessage>(OnEntInsertedIntoContainer);
-        SubscribeLocalEvent<ThermobathComponent, EntRemovedFromContainerMessage>(OnEntRemovedFromContainer);
-        SubscribeLocalEvent<ThermobathComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<ThermobathComponent, ThermoregulatorUpdatedEvent>(OnThermoregulatorUpdated);
-
-        Subs.BuiEvents<ThermobathComponent>(ThermobathUiKey.Key,
-            subs =>
-        {
-            subs.Event<BoundUIOpenedEvent>(OnUiOpened);
-        });
-    }
-
-    private void OnThermoregulatorUpdated(Entity<ThermobathComponent> ent, ref ThermoregulatorUpdatedEvent args)
-    {
-        if (_timing.ApplyingState)
-            return;
-
-        // Skip if not powered
-        if (!_power.IsPowered(ent.Owner))
-            return;
-
-        if (ent.Comp.HasBeaker && TryGetSolutionFromContainer(ent, out var soln, out var solution) && solution.Volume > 0)
-        {
-            var solutionHeatContainer = new HeatContainer(solution.GetHeatCapacity(_proto), solution.Temperature);
-            _thermoregulator.TransferHeatFromEntity((ent, args.Thermoregulator),
-                ref solutionHeatContainer);
-            _solutionContainer.SetTemperature(soln.Value, solutionHeatContainer.Temperature);
-            ent.Comp.SolutionTemperature = solutionHeatContainer.Temperature;
-
-            DirtyField(ent.AsNullable(), nameof(ThermobathComponent.SolutionTemperature));
-        }
-
-        // Update the UI regardless since our temperature has changed
-        UpdateUi(ent);
-
-        _appearance.SetData(ent, ThermobathVisuals.IsHeating, args.Thermoregulator.ActiveMode == ThermoregulatorActiveMode.Heating);
-        _appearance.SetData(ent, ThermobathVisuals.IsCooling, args.Thermoregulator.ActiveMode == ThermoregulatorActiveMode.Cooling);
-        _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndIdle, args.Thermoregulator.ActiveMode == ThermoregulatorActiveMode.Idle && ent.Comp.HasBeaker);
-        _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndHeating, args.Thermoregulator.ActiveMode == ThermoregulatorActiveMode.Heating && ent.Comp.HasBeaker);
-        _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndCooling, args.Thermoregulator.ActiveMode == ThermoregulatorActiveMode.Cooling && ent.Comp.HasBeaker);
-    }
-
-    private void OnUiOpened(Entity<ThermobathComponent> ent, ref BoundUIOpenedEvent args)
-    {
-        UpdateUi(ent);
-    }
-
+    [SubscribeLocalEvent]
     private void OnStartup(Entity<ThermobathComponent> ent, ref ComponentStartup args)
     {
-        _container.EnsureContainer<ContainerSlot>(ent, BeakerSlotId);
+        UpdateAppearance(ent);
     }
 
-    private void OnEntInsertedIntoContainer(Entity<ThermobathComponent> ent, ref EntInsertedIntoContainerMessage args)
+    [SubscribeLocalEvent]
+    private void OnEntInsertedIntoContainer(Entity<ThermobathComponent> ent, ref EntInsertedIntoContainerMessage args) =>
+        OnContainerModified(ent, args);
+
+    [SubscribeLocalEvent]
+    private void OnEntRemovedFromContainer(Entity<ThermobathComponent> ent, ref EntRemovedFromContainerMessage args) =>
+        OnContainerModified(ent, args);
+
+    private void OnContainerModified(Entity<ThermobathComponent> ent, ContainerModifiedMessage args)
     {
-        if (args.Container.ID != BeakerSlotId)
+        if (args.Container.ID != ThermobathComponent.BeakerSlotId)
             return;
 
-        if (!TryGetSolutionFromContainer(ent, out _, out var solution))
+        if (_timing.ApplyingState)
+        {
+            UpdateUi(ent);
             return;
-
-        ent.Comp.HasBeaker = true;
-        ent.Comp.SolutionTemperature = solution.Temperature;
-        DirtyFields(ent.AsNullable(), null, nameof(ThermobathComponent.SolutionTemperature), nameof(ThermobathComponent.HasBeaker));
-        UpdateUi(ent);
-
-        _appearance.SetData(ent, ThermobathVisuals.HasBeaker, true);
-        _appearance.SetData(ent, ThermobathVisuals.DoesNotHaveBeaker, false);
-        if (TryComp<ThermoregulatorComponent>(ent, out var comp))
-        {
-            _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndIdle, comp.ActiveMode == ThermoregulatorActiveMode.Idle);
-            _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndHeating, comp.ActiveMode == ThermoregulatorActiveMode.Heating);
-            _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndCooling, comp.ActiveMode == ThermoregulatorActiveMode.Cooling);
         }
-        else
-        {
-            _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndIdle, true);
-            _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndHeating, false);
-            _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndCooling, false);
-        }
+
+        UpdateState(ent);
     }
 
-    private void OnEntRemovedFromContainer(Entity<ThermobathComponent> ent, ref EntRemovedFromContainerMessage args)
-    {
-        if (args.Container.ID != BeakerSlotId)
-            return;
-
-        ent.Comp.HasBeaker = args.Container.Count > 0;
-        ent.Comp.SolutionTemperature = null;
-        DirtyFields(ent.AsNullable(), null, nameof(ThermobathComponent.SolutionTemperature), nameof(ThermobathComponent.HasBeaker));
-        UpdateUi(ent);
-        _appearance.SetData(ent, ThermobathVisuals.HasBeaker, false);
-        _appearance.SetData(ent, ThermobathVisuals.DoesNotHaveBeaker, true);
-        _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndIdle, false);
-        _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndHeating, false);
-        _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndCooling, false);
-    }
-
+    [SubscribeLocalEvent]
     private void OnPowerChanged(Entity<ThermobathComponent> ent, ref PowerChangedEvent args)
     {
-        _thermoregulator.SetEnabled(ent.Owner, args.Powered);
-        UpdateUi(ent);
+        if (_timing.ApplyingState)
+        {
+            UpdateUi(ent);
+            return;
+        }
+
+        UpdateState(ent, powered: args.Powered);
     }
 
+    [SubscribeLocalEvent]
     private void OnPowerChangeMessage(Entity<ThermobathComponent> ent, ref ThermobathPowerChangedMessage args)
     {
-        _power.TogglePower(ent, user: args.Actor);
-        // Would be handled by OnPowerChanged but currently it's raised from the server
-        _thermoregulator.SetEnabled(ent.Owner, args.Powered);
-        UpdateUi(ent);
-        _appearance.SetData(ent, ThermobathVisuals.IsOn, args.Powered);
-        _appearance.SetData(ent, ThermobathVisuals.IsOff, !args.Powered);
-
-        if (args.Powered) // May need to set some of the HasBeakerAnd__ values when powered.
+        SharedApcPowerReceiverComponent? receiver = null;
+        if (!_power.ResolveApc(ent, ref receiver) || !receiver.NeedsPower)
             return;
-        _appearance.SetData(ent, ThermobathVisuals.IsHeating, false);
-        _appearance.SetData(ent, ThermobathVisuals.IsCooling, false);
 
-        if (!ent.Comp.HasBeaker)
+        var currentEnabled = !receiver.PowerDisabled;
+        if (currentEnabled == args.Enabled)
             return;
-        _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndIdle, true);
-        _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndHeating, false);
-        _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndCooling, false);
+
+        _power.TogglePower(ent, receiver: receiver, user: args.Actor);
+        var powered = args.Enabled && receiver.Powered;
+
+        UpdateState(ent, powered: powered);
     }
 
+    [SubscribeLocalEvent]
     private void OnSetpointChangeMessage(Entity<ThermobathComponent> ent, ref ThermobathSetpointChangedMessage args)
     {
-        if (_timing.ApplyingState)
-            return;
-
         _thermoregulator.SetSetpoint(ent.Owner, args.Setpoint);
         UpdateUi(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnModeChangeMessage(Entity<ThermobathComponent> ent, ref ThermobathModeChangedMessage args)
     {
         _thermoregulator.SetMode(ent.Owner, args.Mode);
         UpdateUi(ent);
     }
 
-    /// <summary>
-    /// Helper method to fetch a solution from the container.
-    /// </summary>
-    private bool TryGetSolutionFromContainer(
+    private bool HasBeaker(EntityUid uid) =>
+        _itemSlots.GetItemOrNull(uid, ThermobathComponent.BeakerSlotId) != null;
+
+    private void UpdateState(Entity<ThermobathComponent> ent, bool? powered = null)
+    {
+        UpdateUi(ent);
+        UpdateAppearance(ent, powered: powered);
+    }
+
+    protected void UpdateAppearance(
         Entity<ThermobathComponent> ent,
-        [NotNullWhen(true)] out Entity<SolutionComponent>? soln,
-        [NotNullWhen(true)] out Solution? solution)
+        ThermoregulatorComponent? thermoregulator = null,
+        bool? powered = null)
     {
-        soln = null;
-        solution = null;
+        var isPowered = powered ?? _power.IsPowered(ent.Owner);
+        thermoregulator ??= CompOrNull<ThermoregulatorComponent>(ent);
 
-        if (!_container.TryGetContainer(ent, BeakerSlotId, out var beakerSlot))
-            return false;
+        var activeMode = isPowered
+            ? thermoregulator?.ActiveMode ?? ThermoregulatorActiveMode.Idle
+            : ThermoregulatorActiveMode.Idle;
 
-        foreach (var entity in beakerSlot.ContainedEntities)
-        {
-            if (!_solutionContainer.TryGetSolution(entity, SolutionId, out soln, out solution))
-                continue;
-
-            return true;
-        }
-
-        return false;
+        _appearance.SetData(ent, ThermobathVisuals.Powered, isPowered);
+        _appearance.SetData(ent, ThermobathVisuals.HasBeaker, HasBeaker(ent));
+        _appearance.SetData(ent, ThermobathVisuals.ActiveMode, activeMode);
     }
 
-    protected virtual void UpdateUi(Entity<ThermobathComponent> ent)
-    {
-        // This is implemented in client system
-    }
+    protected virtual void UpdateUi(Entity<ThermobathComponent> ent) { }
 }

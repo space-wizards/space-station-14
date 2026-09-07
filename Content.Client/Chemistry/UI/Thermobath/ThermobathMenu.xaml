@@ -1,7 +1,6 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                       SetSize="700 430"
                       Resizable="False">
@@ -20,17 +19,18 @@
                 </controls:StripeBack>
 
                 <!-- Current Temperature display -->
-                <PanelContainer StyleClasses="Inset" Margin="2 4">
+                <PanelContainer Margin="2 4">
                     <PanelContainer.PanelOverride>
-                        <gfx:StyleBoxFlat BackgroundColor="#1e272a"
+                        <gfx:StyleBoxFlat BackgroundColor="#1E272A"
                                           BorderColor="#2C2F33"
                                           BorderThickness="2" />
                     </PanelContainer.PanelOverride>
                     <controls:SegmentDisplay Name="TemperatureVfd"
-                                         MaxHeight="60"
-                                         HorizontalAlignment="Center"
-                                         VerticalAlignment="Center"
-                                         Margin="1" />
+                                             DigitCount="5"
+                                             MaxHeight="60"
+                                             HorizontalAlignment="Center"
+                                             VerticalAlignment="Center"
+                                             Margin="1" />
                 </PanelContainer>
 
                 <!-- Solution Temperature Header -->
@@ -42,17 +42,18 @@
                 </controls:StripeBack>
 
                 <!-- Solution Temperature display -->
-                <PanelContainer StyleClasses="Inset" Margin="2 4">
+                <PanelContainer Margin="2 4">
                     <PanelContainer.PanelOverride>
-                        <gfx:StyleBoxFlat BackgroundColor="#1e272a"
+                        <gfx:StyleBoxFlat BackgroundColor="#1E272A"
                                           BorderColor="#2C2F33"
                                           BorderThickness="2" />
                     </PanelContainer.PanelOverride>
                     <controls:SegmentDisplay Name="SolutionTemperatureVfd"
-                                         MaxHeight="60"
-                                         HorizontalAlignment="Center"
-                                         VerticalAlignment="Center"
-                                         Margin="1" />
+                                             DigitCount="5"
+                                             MaxHeight="60"
+                                             HorizontalAlignment="Center"
+                                             VerticalAlignment="Center"
+                                             Margin="1" />
                 </PanelContainer>
 
                 <!-- Temperature Setpoint Header -->
@@ -64,17 +65,18 @@
                 </controls:StripeBack>
 
                 <!-- Setpoint Temperature display -->
-                <PanelContainer StyleClasses="Inset" Margin="2 4">
+                <PanelContainer Margin="2 4">
                     <PanelContainer.PanelOverride>
-                        <gfx:StyleBoxFlat BackgroundColor="#1e272a"
+                        <gfx:StyleBoxFlat BackgroundColor="#1E272A"
                                           BorderColor="#2C2F33"
                                           BorderThickness="2" />
                     </PanelContainer.PanelOverride>
                     <controls:SegmentDisplay Name="SetpointVfd"
-                                         MaxHeight="60"
-                                         HorizontalAlignment="Center"
-                                         VerticalAlignment="Center"
-                                         Margin="1" />
+                                             DigitCount="5"
+                                             MaxHeight="60"
+                                             HorizontalAlignment="Center"
+                                             VerticalAlignment="Center"
+                                             Margin="1" />
                 </PanelContainer>
             </BoxContainer>
 
@@ -82,7 +84,7 @@
             <customControls:VSeparator StyleClasses="LowDivider" Margin="0 5" />
 
             <!-- Right pane: Controls -->
-            <BoxContainer Name="ControlsPane" Orientation="Vertical" HorizontalExpand="True"
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True"
                           SizeFlagsStretchRatio="1.5" Margin="5 3 0 0">
                 <!-- Operation Mode Section -->
                 <PanelContainer Margin="0 0 0 5">
@@ -95,7 +97,7 @@
                            Margin="10 2" />
                 </PanelContainer>
 
-                <PanelContainer StyleClasses="Inset" Margin="0 0 0 2">
+                <PanelContainer StyleClasses="PanelInsetDeep" Margin="0 0 0 2">
                     <BoxContainer Orientation="Vertical" Margin="10 5">
                         <!-- Mode slider -->
                         <Slider Name="ModeSlider"
@@ -113,15 +115,15 @@
                             <Label Text="{Loc 'thermobath-menu-mode-cooling'}"
                                    HorizontalExpand="True"
                                    HorizontalAlignment="Left"
-                                   StyleClasses="LabelSecondaryColor" />
+                                   StyleClasses="LabelWeak" />
                             <Label Text="{Loc 'thermobath-menu-mode-auto'}"
                                    HorizontalExpand="True"
                                    HorizontalAlignment="Center"
-                                   StyleClasses="LabelSecondaryColor" />
+                                   StyleClasses="LabelWeak" />
                             <Label Text="{Loc 'thermobath-menu-mode-heating'}"
                                    HorizontalExpand="True"
                                    HorizontalAlignment="Right"
-                                   StyleClasses="LabelSecondaryColor" />
+                                   StyleClasses="LabelWeak" />
                         </BoxContainer>
                     </BoxContainer>
                 </PanelContainer>
@@ -134,13 +136,18 @@
                         <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" Margin="0 0 0 5">
                             <Label Name="BeakerStatusLabel"
                                    Text="{Loc 'thermobath-menu-no-beaker'}"
+                                   StyleClasses="LabelHeading"
                                    HorizontalAlignment="Center"
                                    FontColorOverride="#FF5555"
-                                   Margin="5" />
+                                   Margin="5 2" />
                         </BoxContainer>
 
                         <!-- Status indicators box -->
-                        <PanelContainer StyleClasses="Inset" Margin="0 0 0 8" VerticalExpand="True" MaxHeight="60" VerticalAlignment="Bottom">
+                        <PanelContainer StyleClasses="PanelInsetDeep"
+                                        Margin="0 0 0 8"
+                                        VerticalExpand="True"
+                                        MaxHeight="60"
+                                        VerticalAlignment="Bottom">
                             <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center"
                                           VerticalAlignment="Center" Margin="5">
                                 <!-- Cooling indicator -->
@@ -153,7 +160,7 @@
                                     </PanelContainer>
                                     <Label Text="{Loc 'thermobath-menu-status-cooling'}"
                                            HorizontalAlignment="Center"
-                                           StyleClasses="LabelSmall" />
+                                           StyleClasses="font-small" />
                                 </BoxContainer>
 
                                 <!-- Heating indicator -->
@@ -166,7 +173,7 @@
                                     </PanelContainer>
                                     <Label Text="{Loc 'thermobath-menu-status-heating'}"
                                            HorizontalAlignment="Center"
-                                           StyleClasses="LabelSmall" />
+                                           StyleClasses="font-small" />
                                 </BoxContainer>
 
                                 <!-- Power indicator -->
@@ -179,7 +186,7 @@
                                     </PanelContainer>
                                     <Label Text="{Loc 'thermobath-menu-status-power'}"
                                            HorizontalAlignment="Center"
-                                           StyleClasses="LabelSmall" />
+                                           StyleClasses="font-small" />
                                 </BoxContainer>
                             </BoxContainer>
                         </PanelContainer>
@@ -198,8 +205,9 @@
                                    Margin="5 2" />
                         </PanelContainer>
 
-                        <PanelContainer StyleClasses="Inset" Margin="0 0 0 5">
-                            <BoxContainer Orientation="Horizontal" VerticalExpand="False" Margin="5 2">
+                        <PanelContainer StyleClasses="PanelInsetDeep" Margin="0 0 0 5">
+                            <BoxContainer Orientation="Horizontal" VerticalExpand="False" Margin="5 2"
+                                          SeparationOverride="5">
                                 <Button Name="DecreaseButton"
                                         Text="-"
                                         HorizontalExpand="True"
@@ -241,10 +249,10 @@
                             <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True"
                                           Margin="4">
                                 <!-- Split vent area into 3 sections -->
-                                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True"
+                                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalAlignment="Center"
                                               Margin="5">
                                     <!-- Left vent section -->
-                                    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True"
+                                    <BoxContainer Orientation="Vertical" HorizontalExpand="True"
                                                   Margin="2">
                                         <PanelContainer HorizontalExpand="True" SetHeight="2" Margin="0 4 4 4">
                                             <PanelContainer.PanelOverride>
@@ -269,7 +277,7 @@
                                     </BoxContainer>
 
                                     <!-- Middle vent section -->
-                                    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True"
+                                    <BoxContainer Orientation="Vertical" HorizontalExpand="True"
                                                   Margin="2">
                                         <PanelContainer HorizontalExpand="True" SetHeight="2" Margin="4">
                                             <PanelContainer.PanelOverride>
@@ -294,7 +302,7 @@
                                     </BoxContainer>
 
                                     <!-- Right vent section -->
-                                    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True"
+                                    <BoxContainer Orientation="Vertical" HorizontalExpand="True"
                                                   Margin="2">
                                         <PanelContainer HorizontalExpand="True" SetHeight="2" Margin="4 4 0 4">
                                             <PanelContainer.PanelOverride>
@@ -351,8 +359,8 @@
         </BoxContainer>
 
         <!-- Footer -->
-        <BoxContainer Name="Footer" Orientation="Vertical" VerticalAlignment="Bottom">
-            <PanelContainer StyleClasses="LowDivider" Margin="0 5 0 0" />
+        <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom">
+            <PanelContainer StyleClasses="LowDivider" Margin="0 3 0 0" />
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
                 <Label Text="{Loc 'thermobath-menu-footer-warning'}"
                        StyleClasses="WindowFooterText"
