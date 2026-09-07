@@ -41,7 +41,9 @@ public sealed class ThermobathBoundUserInterface : BoundUserInterface, IBuiPreTi
         _window.OnSetpointChanged += setpoint => SendPredictedMessage(new ThermobathSetpointChangedMessage(setpoint));
         _window.OnModeChanged += mode => SendPredictedMessage(new ThermobathModeChangedMessage(mode));
 
-        EntMan.TryGetComponent(Owner, out _thermoregulator);
+        if (EntMan.TryGetComponent(Owner, out _thermoregulator))
+            _window.SetTemperatureLimits( _thermoregulator.MinTemperature, _thermoregulator.MaxTemperature);
+
         UpdateWindow();
     }
 
@@ -68,8 +70,6 @@ public sealed class ThermobathBoundUserInterface : BoundUserInterface, IBuiPreTi
             return;
 
         _window.SetMode(_thermoregulator.Mode);
-
-        _window.SetTemperatureLimits(_thermoregulator.MinTemperature, _thermoregulator.MaxTemperature);
         _window.SetCurrentTemperature(_thermoregulator.Temperature);
         _window.SetSetpoint(_thermoregulator.Setpoint);
         _window.SetActiveMode(_thermoregulator.ActiveMode);
