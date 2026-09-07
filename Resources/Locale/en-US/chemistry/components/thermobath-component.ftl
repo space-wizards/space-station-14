@@ -1,5 +1,5 @@
 ## Left pane
-thermobath-menu-current-temperature = HOTPLATE (K)
+thermobath-menu-current-temperature = BATH (K)
 thermobath-menu-solution-temperature = SOLUTION (K)
 thermobath-menu-setpoint = SETPOINT (K)
 
@@ -15,5 +15,5 @@ thermobath-menu-status-power = POWER
 thermobath-menu-temperature-adjust = ADJUSTMENT
 
 ## Footer
-thermobath-menu-footer-warning = DANGER: HOT!
+thermobath-menu-footer-warning = CAUTION: EXTREME TEMPERATURES
 thermobath-menu-footer-manufacturer = NanoTrasen Laboratory Equipment
