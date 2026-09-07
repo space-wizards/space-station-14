@@ -10,21 +10,15 @@ namespace Content.Shared.Temperature.Components;
 /// <summary>
 /// Generic implementation of a hysteresis-based temperature controller.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(ThermoregulatorSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedThermoregulatorSystem))]
 [AutoGenerateComponentState(true, fieldDeltas: true), AutoGenerateComponentPause]
 public sealed partial class ThermoregulatorComponent : Component, IHeatContainer
 {
     /// <summary>
     /// Whether the thermoregulator is enabled.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool Enabled = true;
-
-    /// <summary>
-    /// Thermal information about this entity. It stores the heat capacity and temperature.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public float HeatCapacity { get; set; } = 500f; // about 1kg of water
+    [DataField]
+    public float HeatCapacity { get; set; } = 500f;
 
     /// <inheritdoc/>
     [DataField, AutoNetworkedField]
@@ -44,7 +38,7 @@ public sealed partial class ThermoregulatorComponent : Component, IHeatContainer
     /// <summary>
     /// The <see cref="TimeSpan"/> of the next update.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextUpdate;
 
     /// <summary>
@@ -65,31 +59,26 @@ public sealed partial class ThermoregulatorComponent : Component, IHeatContainer
     /// Target temperature setpoint in Kelvin.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float Setpoint = 293.15f;
+    public float Setpoint = Atmospherics.T20C;
+
+    /// <summary>
+    /// Temperature difference required to start regulating, in kelvin.
+    /// Once active, the regulator runs until it reaches the setpoint.
+    /// </summary>
+    [DataField]
+    public float TemperatureTolerance = 0.05f;
 
     /// <summary>
     /// Maximum allowed temperature setpoint.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public float MaxTemperature = 573.15f; // 300C, taken from HUBER CC-308B datasheet
+    [DataField]
+    public float MaxTemperature = 573.15f; // 300 °C, taken from HUBER CC-308B datasheet
 
     /// <summary>
     /// Minimum allowed temperature setpoint.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public float MinTemperature = 253.15f; // -20C, taken from HUBER CC-308B datasheet
-
-    /// <summary>
-    /// Temperature hysteresis in Kelvin.
-    /// </summary>
     [DataField]
-    public float Hysteresis = 1.5f;
-
-    /// <summary>
-    /// Power scaling band beyond hysteresis.
-    /// </summary>
-    [DataField]
-    public float ScaleBand = 6f;
+    public float MinTemperature = 253.15f; // -20 °C, taken from HUBER CC-308B datasheet
 
     /// <summary>
     /// Heating power in watts.
@@ -102,6 +91,12 @@ public sealed partial class ThermoregulatorComponent : Component, IHeatContainer
     /// </summary>
     [DataField]
     public float CoolingPower = 60f;
+
+    /// <summary>
+    /// Thermal conductance between the regulator and the controlled object, in watts per kelvin.
+    /// </summary>
+    [DataField]
+    public float ThermalConductance = 2f;
 }
 
 [Serializable, NetSerializable]
