@@ -7,12 +7,12 @@ using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.Markings;
 
-public sealed class MarkingsLocalizationTests : GameTest
+public sealed class MarkingLocalizationTests : GameTest
 {
-    [SidedDependency(Side.Server)] private readonly ILocalizationManager _locManager = default!;
-    
+    [SidedDependency(Side.Server)] private readonly ILocalizationManager _sLocManager = default!;
+
     private static readonly string[] Markings = GameDataScrounger.PrototypesOfKind<MarkingPrototype>();
-    
+
     [Test]
     [TestOf(typeof(MarkingPrototype))]
     [TestCaseSource(nameof(Markings))]
@@ -20,18 +20,18 @@ public sealed class MarkingsLocalizationTests : GameTest
     public async Task MarkingHasLocalization(string marking)
     {
         var proto = SProtoMan.Index<MarkingPrototype>(marking);
-            
+
         if (proto.GroupWhitelist is null || proto.GroupWhitelist.Count == 0)
             return;
 
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(_locManager.HasString($"marking-{proto.ID}"),
+            Assert.That(_sLocManager.HasString($"marking-{proto.ID}"),
                 $"Marking {proto.ID} is missing localization for: marking-{proto.ID}");
 
-            if (proto.ForcedColoring) 
+            if (proto.ForcedColoring)
                 return;
-            
+
             foreach (var sprite in proto.Sprites)
             {
                 var locStr = sprite switch
@@ -40,10 +40,10 @@ public sealed class MarkingsLocalizationTests : GameTest
                     SpriteSpecifier.Texture texture => $"marking-{proto.ID}-{texture.TexturePath.Filename}",
                     _ => ""
                 };
-                
-                Assert.That(locStr != "",$"Unhandled SpriteSpecifier type {sprite} in marking {proto.ID}");
-                    
-                Assert.That(_locManager.HasString(locStr),
+
+                Assert.That(locStr != "", $"Unhandled SpriteSpecifier type {sprite} in marking {proto.ID}");
+
+                Assert.That(_sLocManager.HasString(locStr),
                     $"Marking {proto.ID} is missing localization for: {locStr}");
             }
         }
