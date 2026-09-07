@@ -11,17 +11,19 @@ public sealed class MarkingLocalizationTests : GameTest
 {
     [SidedDependency(Side.Server)] private readonly ILocalizationManager _sLocManager = default!;
 
+    private static readonly string[] Markings = GameDataScrounger.PrototypesOfKind<MarkingPrototype>();
+
     [Test]
     [TestOf(typeof(MarkingPrototype))]
     [Description("Tests that a given marking has defined localizations for itself and all layers (if colorable).")]
     public async Task MarkingHasLocalization()
     {
-        var protos = SProtoMan.EnumeratePrototypes<MarkingPrototype>();
-
         using (Assert.EnterMultipleScope())
         {
-            foreach (var proto in protos)
+            foreach (var marking in Markings)
             {
+                var proto = SProtoMan.Index<MarkingPrototype>(marking);
+
                 if (proto.GroupWhitelist is null || proto.GroupWhitelist.Count == 0)
                     continue;
 
