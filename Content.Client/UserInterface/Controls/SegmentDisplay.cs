@@ -48,7 +48,7 @@ public sealed class SegmentDisplay : Control
     private int _value;
     private bool _showDecimalPoint;
     private bool _showLeadingZeroes = true;
-    private int _decimalPosition = -1; // -1 means no decimal point
+    private int _decimalPosition = -1;
     private int _digitCount = 4;
 
     private byte?[] _bitmaskOverrides = new byte?[4];
@@ -214,7 +214,6 @@ public sealed class SegmentDisplay : Control
         var spacing = digitWidth * 0.1f;
         var yOffset = PixelHeight * 0.05f;
 
-        // Draw each digit
         for (var i = 0; i < _digitCount; i++)
         {
             var x = i * digitWidth + spacing;
@@ -245,34 +244,25 @@ public sealed class SegmentDisplay : Control
             };
     }
 
-    /// <summary>
-    /// Draws a single 7-segment pattern using the bitmask.
-    /// Segments are drawn as hexagons for that nice beveled look.
-    /// </summary>
     private void DrawSevenSegmentPattern(DrawingHandleScreen handle, byte pattern, float x, float y, float width, float height)
     {
         var segmentThickness = height * 0.1f;
         var gap = segmentThickness * 0.01f;
 
-        // Math time! Figure out vertical segment height based on total height
         var verticalSegmentHeight = (height - 3 * segmentThickness - 4 * gap) / 2;
 
-        // Horizontal segment dimensions
         var effectiveWidth = width * 1.1f;
         var horSegmentWidth = effectiveWidth - segmentThickness * 2;
         var horSegmentX = x + (width - effectiveWidth) / 2 + segmentThickness;
 
-        // Vertical segment positions
         var leftEdge = x + (width - effectiveWidth) / 2;
         var rightEdge = leftEdge + effectiveWidth - segmentThickness;
 
-        // This is an arbitrary number used for extension because the bevels will cut off the corners
+        // Extend horizontal segments so their beveled ends meet the vertical segments.
         var extension = segmentThickness * 0.5f;
 
-        // Top horizontal segment
         DrawSegment(handle, (pattern & 0b0000001) != 0, horSegmentX - extension / 2, y, horSegmentWidth + extension, segmentThickness, true);
 
-        // Top left vertical segment
         var topLeftY = y + segmentThickness + gap;
         DrawSegment(handle,
             (pattern & 0b0100000) != 0,
@@ -282,7 +272,6 @@ public sealed class SegmentDisplay : Control
             verticalSegmentHeight + extension,
             false);
 
-        // Top right vertical segment
         DrawSegment(handle,
             (pattern & 0b0000010) != 0,
             rightEdge,
@@ -291,7 +280,6 @@ public sealed class SegmentDisplay : Control
             verticalSegmentHeight + extension,
             false);
 
-        // Middle horizontal segment
         var middleY = y + segmentThickness + verticalSegmentHeight + gap;
         DrawSegment(handle,
             (pattern & 0b1000000) != 0,
@@ -301,7 +289,6 @@ public sealed class SegmentDisplay : Control
             segmentThickness,
             true);
 
-        // Bottom left vertical segment
         var bottomLeftY = middleY + segmentThickness + gap;
         DrawSegment(handle,
             (pattern & 0b0010000) != 0,
@@ -311,7 +298,6 @@ public sealed class SegmentDisplay : Control
             verticalSegmentHeight + extension,
             false);
 
-        // Bottom right vertical segment
         DrawSegment(handle,
             (pattern & 0b0000100) != 0,
             rightEdge,
@@ -320,7 +306,6 @@ public sealed class SegmentDisplay : Control
             verticalSegmentHeight + extension,
             false);
 
-        // Bottom horizontal segment
         var bottomY = bottomLeftY + verticalSegmentHeight + gap;
         DrawSegment(handle,
             (pattern & 0b0001000) != 0,
@@ -338,22 +323,22 @@ public sealed class SegmentDisplay : Control
         if (horizontal)
         {
             var endBevel = height * 0.5f;
-            _segmentPoints[0] = new(x + endBevel, y); // Top left
-            _segmentPoints[1] = new(x + width - endBevel, y); // Top right
-            _segmentPoints[2] = new(x + width, y + height * 0.5f); // Mid right point
-            _segmentPoints[3] = new(x + width - endBevel, y + height); // Bottom right
-            _segmentPoints[4] = new(x + endBevel, y + height); // Bottom left
-            _segmentPoints[5] = new(x, y + height * 0.5f); // Mid left point
+            _segmentPoints[0] = new(x + endBevel, y);
+            _segmentPoints[1] = new(x + width - endBevel, y);
+            _segmentPoints[2] = new(x + width, y + height * 0.5f);
+            _segmentPoints[3] = new(x + width - endBevel, y + height);
+            _segmentPoints[4] = new(x + endBevel, y + height);
+            _segmentPoints[5] = new(x, y + height * 0.5f);
         }
         else
         {
             var endBevel = width * 0.5f;
-            _segmentPoints[0] = new(x + width * 0.5f, y); // Top mid point
-            _segmentPoints[1] = new(x + width, y + endBevel); // Top right
-            _segmentPoints[2] = new(x + width, y + height - endBevel); // Bottom right
-            _segmentPoints[3] = new(x + width * 0.5f, y + height); // Bottom mid point
-            _segmentPoints[4] = new(x, y + height - endBevel); // Bottom left
-            _segmentPoints[5] = new(x, y + endBevel); // Top left
+            _segmentPoints[0] = new(x + width * 0.5f, y);
+            _segmentPoints[1] = new(x + width, y + endBevel);
+            _segmentPoints[2] = new(x + width, y + height - endBevel);
+            _segmentPoints[3] = new(x + width * 0.5f, y + height);
+            _segmentPoints[4] = new(x, y + height - endBevel);
+            _segmentPoints[5] = new(x, y + endBevel);
         }
 
         handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, _segmentPoints, color);

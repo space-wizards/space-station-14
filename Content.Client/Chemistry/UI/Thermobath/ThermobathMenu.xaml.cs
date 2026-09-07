@@ -11,18 +11,16 @@ namespace Content.Client.Chemistry.UI.Thermobath;
 [GenerateTypedNameReferences]
 public sealed partial class ThermobathMenu : FancyWindow
 {
-    private static readonly Color PowerOnColor = Color.FromHex("#00FF00"); // Green
-    private static readonly Color HeatingColor = Color.FromHex("#FF6A00"); // Orange
-    private static readonly Color CoolingColor = Color.FromHex("#00AAFF"); // Light blue
-    private static readonly Color DisabledColor = Color.FromHex("#444444"); // Dark gray
+    private static readonly Color PowerOnColor = Color.FromHex("#00FF00");
+    private static readonly Color HeatingColor = Color.FromHex("#FF6A00");
+    private static readonly Color CoolingColor = Color.FromHex("#00AAFF");
+    private static readonly Color DisabledColor = Color.FromHex("#444444");
 
-    // Consts for adjustment buttons
     private const float InitialAdjustmentRate = 0.1f;
     private const float MaxAdjustmentRate = 100f;
     private const float AdjustmentAcceleration = 3f;
     private const float ButtonHoldThreshold = 0.2f;
 
-    // Style box for status indicator
     private readonly StyleBoxFlat _powerIndicatorStyle;
     private readonly StyleBoxFlat _heatingIndicatorStyle;
     private readonly StyleBoxFlat _coolingIndicatorStyle;
@@ -31,7 +29,6 @@ public sealed partial class ThermobathMenu : FancyWindow
     private float _heldTime;
     private bool _setpointDirty;
 
-    // These are set from the component, we just cache it here
     private bool _powered;
     private float _minTemperature;
     private float _maxTemperature;

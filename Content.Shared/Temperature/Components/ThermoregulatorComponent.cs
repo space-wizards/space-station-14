@@ -15,7 +15,7 @@ namespace Content.Shared.Temperature.Components;
 public sealed partial class ThermoregulatorComponent : Component, IHeatContainer
 {
     /// <summary>
-    /// Whether the thermoregulator is enabled.
+    /// The heat capacity of the thermoregulator in joules per kelvin.
     /// </summary>
     [DataField]
     public float HeatCapacity { get; set; } = 500f;
@@ -28,9 +28,7 @@ public sealed partial class ThermoregulatorComponent : Component, IHeatContainer
     /// The <see cref="TimeSpan"/> interval between updates of the controller.
     /// </summary>
     /// <remarks>
-    /// The temperature change every tick will be very small with the default settings (0.006 K),
-    /// so we don't want to run this so often. If your heating/cooling power is much higher than the default,
-    /// you might want to tune this.
+    /// Use a shorter interval for regulators with enough power to produce large temperature changes per update.
     /// </remarks>
     [DataField]
     public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
