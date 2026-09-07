@@ -96,7 +96,7 @@ public sealed partial class AirlockSystem : SharedAirlockSystem
         if (hasPower)
         {
             _appearanceSystem.TryGetData<bool>(uid, DoorVisuals.BoltLights, out var boltedVisible, args.Component);
-            showBolted = boltedVisible && (state == DoorState.Closed || state == DoorState.Welded);
+            showBolted = boltedVisible && state == DoorState.Closed;
 
             _appearanceSystem.TryGetData<bool>(uid, DoorVisuals.EmergencyLights, out var emergencyVisible, args.Component);
             showEmergency = emergencyVisible;
