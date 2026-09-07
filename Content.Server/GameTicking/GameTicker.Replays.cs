@@ -121,8 +121,6 @@ public sealed partial class GameTicker
 
         metadata["map"] = new ValueDataNode(_gameMapManager.GetSelectedMap()?.MapName);
         metadata["gamemode"] = new ValueDataNode(CurrentPreset != null ? Loc.GetString(CurrentPreset.ModeTitle) : string.Empty);
-
-        _lastRoundInfo = null;
         if (_lastRoundInfo != null && _lastRoundInfo.RoundId == RoundId)
         {
             metadata["roundEndPlayers"] = _serialman.WriteValue(_lastRoundInfo?.AllPlayersEndInfo);
