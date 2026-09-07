@@ -1,10 +1,10 @@
 using System.Numerics;
 using Content.IntegrationTests.Fixtures;
-using Content.Server.DeviceNetwork.Components;
-using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Systems;
 
 namespace Content.IntegrationTests.Tests.DeviceNetwork
 {
@@ -76,8 +76,8 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 Assert.That(entityManager.TryGetComponent(device1, out networkComponent1), Is.True);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(networkComponent1.Data.ReceiveFrequency, Is.Not.Null);
-                    Assert.That(networkComponent1.Data.AddressId, Is.Not.EqualTo(DeviceAddress.Invalid));
+                    Assert.That(networkComponent1.ReceiveFrequency, Is.Not.Null);
+                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
                 });
 
                 device2 = entityManager.SpawnEntity("DummyNetworkDevice", MapCoordinates.Nullspace);
@@ -85,10 +85,10 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 Assert.That(entityManager.TryGetComponent(device2, out networkComponent2), Is.True);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(networkComponent1.Data.ReceiveFrequency, Is.Not.Null);
-                    Assert.That(networkComponent2.Data.AddressId, Is.Not.EqualTo(DeviceAddress.Invalid));
+                    Assert.That(networkComponent1.ReceiveFrequency, Is.Not.Null);
+                    Assert.That(networkComponent2.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
 
-                    Assert.That(networkComponent1.Data.AddressId, Is.Not.EqualTo(networkComponent2.Data.AddressId));
+                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
                 });
 
                 deviceNetSystem.SendPacket(device1, networkComponent2.Address, ref payload, networkComponent2.ReceiveFrequency.Value);
@@ -125,8 +125,8 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 });
                 Assert.Multiple(() =>
                 {
-                    Assert.That(networkComponent1.Data.ReceiveFrequency, Is.Not.Null);
-                    Assert.That(networkComponent1.Data.AddressId, Is.Not.EqualTo(DeviceAddress.Invalid));
+                    Assert.That(networkComponent1.ReceiveFrequency, Is.Not.Null);
+                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
                 });
 
                 device2 = entityManager.SpawnEntity("WirelessNetworkDeviceDummy", new MapCoordinates(new Vector2(0, 50), testMap.MapId));
@@ -134,10 +134,10 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 Assert.That(entityManager.TryGetComponent(device2, out networkComponent2), Is.True);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(networkComponent2.Data.ReceiveFrequency, Is.Not.Null);
-                    Assert.That(networkComponent2.Data.AddressId, Is.Not.EqualTo(DeviceAddress.Invalid));
+                    Assert.That(networkComponent2.ReceiveFrequency, Is.Not.Null);
+                    Assert.That(networkComponent2.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
 
-                    Assert.That(networkComponent1.Data.AddressId, Is.Not.EqualTo(networkComponent2.Data.AddressId));
+                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
                 });
 
                 var payload = new TestPayload
@@ -197,8 +197,8 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 });
                 Assert.Multiple(() =>
                 {
-                    Assert.That(networkComponent1.Data.ReceiveFrequency, Is.Not.Null);
-                    Assert.That(networkComponent1.Data.AddressId, Is.Not.EqualTo(DeviceAddress.Invalid));
+                    Assert.That(networkComponent1.ReceiveFrequency, Is.Not.Null);
+                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
                 });
 
                 device2 = entityManager.SpawnEntity("DummyWiredNetworkDevice", coordinates);
@@ -206,10 +206,10 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 Assert.That(entityManager.TryGetComponent(device2, out networkComponent2), Is.True);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(networkComponent2.Data.ReceiveFrequency, Is.Not.Null);
-                    Assert.That(networkComponent2.Data.AddressId, Is.Not.EqualTo(DeviceAddress.Invalid));
+                    Assert.That(networkComponent2.ReceiveFrequency, Is.Not.Null);
+                    Assert.That(networkComponent2.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
 
-                    Assert.That(networkComponent1.Data.AddressId, Is.Not.EqualTo(networkComponent2.Data.AddressId));
+                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
                 });
 
                 var payload = new TestPayload

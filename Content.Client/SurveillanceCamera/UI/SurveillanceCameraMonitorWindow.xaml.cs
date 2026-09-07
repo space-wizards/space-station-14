@@ -78,9 +78,9 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     // pass it here so that the UI can change its view.
     public void UpdateState(IEye? eye,
         HashSet<ProtoId<DeviceFrequencyPrototype>> subnets,
-        string activeAddress,
+        DeviceAddress activeAddress,
         ProtoId<DeviceFrequencyPrototype>? activeSubnet,
-        Dictionary<string, string> cameras)
+        Dictionary<DeviceAddress, string> cameras)
     {
         CameraMap.SetActiveCameraAddress(activeAddress);
         CameraMap.SetAvailableSubnets(subnets);
@@ -202,7 +202,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
 
     private void OnSubnetListSelect(ItemList.ItemListSelectedEventArgs args)
     {
-        CameraSelected!((string)SubnetList[args.ItemIndex].Metadata!, null);
+        CameraSelected!((DeviceAddress)SubnetList[args.ItemIndex].Metadata!, null);
     }
 
     public void SetMap(EntityUid mapUid)

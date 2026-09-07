@@ -58,5 +58,5 @@ public sealed partial class SurveillanceCameraMonitorComponent : Component
     /// The subnets known by this camera monitor.
     /// </summary>
     [ViewVariables]
-    public Dictionary<ProtoId<DeviceFrequencyPrototype>, string> KnownSubnets { get; } = new();
+    public Dictionary<ProtoId<DeviceFrequencyPrototype>, DeviceAddress> KnownSubnets { get; } = new();
 }

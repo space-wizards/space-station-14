@@ -59,7 +59,7 @@ public sealed partial class DeviceListSystem : EntitySystem
                 ? DeviceLocalizationHelpers.GetAddressFromId(deviceNet)
                 : $"UID: {deviceUid.ToString()}";
 
-            devices.Add(new LocDeviceAddress(deviceNet.Data.AddressId, deviceNet.Prefix), (deviceUid, address));
+            devices.Add(new LocDeviceAddress(deviceNet.Address, deviceNet.Prefix), (deviceUid, address));
         }
 
         return devices;

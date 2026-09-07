@@ -10,7 +10,7 @@ using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Timing;
+using Content.Shared.Timing.Systems;
 using Content.Shared.UserInterface;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map.Events;
@@ -134,8 +134,8 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
             return;
 
         var address = _deviceNetwork.GetAddress(target);
-        var addressId = target.Comp.Data.AddressId;
-        if (target.Comp.Data.AddressId == 0)
+        var addressId = target.Comp.Address;
+        if (target.Comp.Address == 0)
         {
             // This primarily checks if the entity in question is pre-map init or not.
             // This is because otherwise, anything that uses DeviceNetwork will not
@@ -353,7 +353,7 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
             return;
 
         var name = Identity.Name(target, EntityManager, configurator);
-        addressId ??= target.Comp.Data.AddressId;
+        addressId ??= target.Comp.Address;
         configurator.Comp.Devices.Add(addressId.Value, target);
         configurator.Comp.NamedDevices.Add(addressId.Value, (target.Comp.Prefix, name));
         DirtyFields(configurator, null, nameof(NetworkConfiguratorComponent.Devices), nameof(NetworkConfiguratorComponent.NamedDevices));

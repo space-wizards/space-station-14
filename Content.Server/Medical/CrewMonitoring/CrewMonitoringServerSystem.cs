@@ -1,6 +1,6 @@
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
-using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Medical.CrewMonitoring;
 using Content.Shared.Medical.SuitSensors;
 using Robust.Shared.Timing;

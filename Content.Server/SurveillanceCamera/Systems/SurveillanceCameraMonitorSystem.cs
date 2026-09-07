@@ -173,7 +173,7 @@ public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
         {
             RemoveActiveCamera(uid, component);
             component.NextCameraAddress = null;
-            component.ActiveSubnet = DeviceAddress.Invalid;
+            component.ActiveSubnet = null;
         }
     }
 
@@ -206,7 +206,6 @@ public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
         if (!Resolve(uid, ref monitor)
             || monitor.LastHeartbeatSent < HeartbeatDelay
             || monitor.ActiveSubnet is not { } activeSubnet
-            || monitor.ActiveSubnet == DeviceAddress.Invalid
             || !monitor.KnownSubnets.TryGetValue(activeSubnet, out var subnetAddress))
         {
             return;
@@ -288,10 +287,9 @@ public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
         _deviceNetworkSystem.SendPacket(uid, null, ref payload);
     }
 
-    private void ConnectToSubnet(EntityUid uid, DeviceAddress subnet, SurveillanceCameraMonitorComponent? monitor = null)
+    private void ConnectToSubnet(EntityUid uid, ProtoId<DeviceFrequencyPrototype> subnet, SurveillanceCameraMonitorComponent? monitor = null)
     {
         if (!Resolve(uid, ref monitor)
-            || subnet == DeviceAddress.Invalid
             || !monitor.KnownSubnets.TryGetValue(subnet, out var address))
         {
             return;
@@ -387,7 +385,7 @@ public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
         UpdateUserInterface(uid, monitor);
     }
 
-    private void TrySwitchCameraByAddress(EntityUid uid, DeviceAddress address, DeviceFrequency? cameraSubnet = null, SurveillanceCameraMonitorComponent? monitor = null)
+    private void TrySwitchCameraByAddress(EntityUid uid, DeviceAddress address, ProtoId<DeviceFrequencyPrototype>? cameraSubnet = null, SurveillanceCameraMonitorComponent? monitor = null)
     {
         if (!Resolve(uid, ref monitor))
             return;

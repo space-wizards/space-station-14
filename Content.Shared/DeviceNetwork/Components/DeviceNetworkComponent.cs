@@ -16,6 +16,8 @@ public sealed partial class DeviceNetworkComponent : Component
 
     public int DeviceNetId => (int) NetIdEnum;
 
+    public LocDeviceAddress LocAddress => new(Address, Prefix);
+
     /// <summary>
     ///     The frequency that this device is listening on.
     /// </summary>
@@ -27,7 +29,7 @@ public sealed partial class DeviceNetworkComponent : Component
     ///     most recently used.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string Address = string.Empty;
+    public DeviceAddress Address = DeviceAddress.Invalid;
 
     /// <summary>
     ///     Whether the device should listen for all device messages, regardless of the intended recipient.
@@ -90,18 +92,4 @@ public sealed partial class DeviceNetworkComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool CustomAddress;
-
-    /// <summary>
-    /// A list of device-lists that this device is on.
-    /// </summary>
-    [DataField]
-    [Access(typeof(SharedDeviceListSystem))]
-    public HashSet<EntityUid> DeviceLists = new();
-
-    /// <summary>
-    /// A list of configurators that this device is on.
-    /// </summary>
-    [DataField]
-    [Access(typeof(SharedNetworkConfiguratorSystem))]
-    public HashSet<EntityUid> Configurators = new();
 }

@@ -27,20 +27,14 @@ public sealed partial class RadioChannelPrototype : IPrototype
     [DataField("keycode")]
     public char KeyCode { get; private set; } = '\0';
 
-    [DataField("frequency")]
-    public DeviceFrequency Frequency { get; private set; } = 1;
-
-    [DataField("color")]
-    public Color Color { get; private set; } = Color.Lime;
-
-    [IdDataField, ViewVariables]
-    public string ID { get; private set; } = default!;
-
     /// <summary>
     /// Color used to display the channel.
     /// </summary>
     [DataField]
     public Color Color { get; private set; } = Color.Lime;
+
+    [DataField("frequency")]
+    public DeviceFrequency Frequency { get; private set; } = 1;
 
     /// <summary>
     /// Whether the channel can transmit across different stations without a telecommunications server.

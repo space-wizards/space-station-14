@@ -48,11 +48,11 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
     private void OnMapInit(Entity<DeviceNetworkComponent> ent, ref MapInitEvent args)
     {
         var device = ent.Comp;
-        if (device.Data.ReceiveFrequency == null
+        if (device.ReceiveFrequency == null
             && device.ReceiveFrequencyId != null
             && _protoMan.TryIndex(device.ReceiveFrequencyId, out var receive))
         {
-            device.Data.ReceiveFrequency = receive.Frequency;
+            device.ReceiveFrequency = receive.Frequency;
         }
 
         if (device.TransmitFrequency == null
@@ -65,7 +65,10 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
         if (ent.Comp.AutoConnect)
             ConnectDevice(ent.AsNullable());
 
-        DirtyField(ent.AsNullable(), nameof(DeviceNetworkComponent.Data));
+        DirtyFields(ent.AsNullable(),
+            null,
+            nameof(DeviceNetworkComponent.ReceiveFrequency),
+            nameof(DeviceNetworkComponent.TransmitFrequency));
     }
 
     [SubscribeLocalEvent]
@@ -153,8 +156,8 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
             if (!TryGetDevice(packet.NetId, packet.Address.Value, out var device))
                 return;
 
-            if (!device.Value.DeviceData.ReceiveAll &&
-                device.Value.DeviceData.ReceiveFrequency == packet.Frequency)
+            if (!device.Value.ReceiveAll &&
+                device.Value.ReceiveFrequency == packet.Frequency)
             {
                 totalDevices += 1;
                 hasTargetedDevice = true;

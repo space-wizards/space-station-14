@@ -13,26 +13,26 @@ public sealed partial class DeviceNetworkSystem
             return false;
 
         var deviceComp = ent.Comp;
-        var device = new Device(ent.Owner, ent.Comp.Data);
+        var device = new Device((ent.Owner, ent.Comp));
         if (deviceComp.CustomAddress)
         {
             // Only add if the device's existing address is available.
-            if (!network.Devices.TryAdd(deviceComp.Data.AddressId, device))
+            if (!network.Devices.TryAdd(deviceComp.Address, device))
                 return false;
         }
         else
         {
             // Randomly generate a new address if the existing random one is invalid. Otherwise, keep the existing address
-            if (deviceComp.Data.AddressId == 0 || network.Devices.ContainsKey(deviceComp.Data.AddressId))
+            if (deviceComp.Address == 0 || network.Devices.ContainsKey(deviceComp.Address))
             {
-                deviceComp.Data.AddressId = GenerateValidAddressId(network);
-                device = new Device(ent.Owner, ent.Comp.Data); // Reallocate because the data had changed
+                deviceComp.Address = GenerateValidAddressId(network);
+                device = new Device((ent.Owner, ent.Comp)); // Reallocate because the data had changed
             }
 
-            network.Devices[deviceComp.Data.AddressId] = device;
+            network.Devices[deviceComp.Address] = device;
         }
 
-        if (deviceComp.Data.ReceiveFrequency is not { } freq)
+        if (deviceComp.ReceiveFrequency is not { } freq)
             return true;
 
         if (!network.ListeningDevices.TryGetValue(freq, out var devices))
@@ -40,7 +40,7 @@ public sealed partial class DeviceNetworkSystem
 
         devices.Add(device);
 
-        if (!deviceComp.Data.ReceiveAll)
+        if (!deviceComp.ReceiveAll)
             return true;
 
         if (!network.ReceiveAllDevices.TryGetValue(freq, out var receiveAlldevices))
@@ -59,11 +59,11 @@ public sealed partial class DeviceNetworkSystem
             return false;
 
         var deviceComp = ent.Comp;
-        var device = new Device(ent.Owner, ent.Comp.Data);
-        if (!network.Devices.Remove(deviceComp.Data.AddressId))
+        var device = new Device((ent.Owner, ent.Comp));
+        if (!network.Devices.Remove(deviceComp.Address))
             return false;
 
-        if (deviceComp.Data.ReceiveFrequency is not { } freq)
+        if (deviceComp.ReceiveFrequency is not { } freq)
             return true;
 
         if (network.ListeningDevices.TryGetValue(freq, out var listening))
@@ -73,7 +73,7 @@ public sealed partial class DeviceNetworkSystem
                 network.ListeningDevices.Remove(freq);
         }
 
-        if (deviceComp.Data.ReceiveAll && network.ReceiveAllDevices.TryGetValue(freq, out var receiveAll))
+        if (deviceComp.ReceiveAll && network.ReceiveAllDevices.TryGetValue(freq, out var receiveAll))
         {
             receiveAll.Remove(device);
             if (receiveAll.Count == 0)

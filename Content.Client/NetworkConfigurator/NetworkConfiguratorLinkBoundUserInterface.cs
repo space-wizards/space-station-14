@@ -77,13 +77,13 @@ public sealed partial class NetworkConfiguratorLinkBoundUserInterface : BoundUse
         if (_deviceNetworkQuery.TryComp(source, out var sourceDeviceComp))
         {
             sourceAddress = _deviceNetwork.GetAddress((source, sourceDeviceComp));
-            sourceAddressId = sourceDeviceComp.Data.AddressId;
+            sourceAddressId = sourceDeviceComp.Address;
         }
 
         if (_deviceNetworkQuery.TryComp(sink, out var sinkDeviceComp))
         {
             sinkAddress = _deviceNetwork.GetAddress((sink, sinkDeviceComp));
-            sinkAddressId = sinkDeviceComp.Data.AddressId;
+            sinkAddressId = sinkDeviceComp.Address;
         }
 
         _linkMenu?.UpdateState(sourceIds,

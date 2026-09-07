@@ -1,7 +1,6 @@
 using Content.Server.Atmos.Monitor.Components;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Server.Popups;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration.Logs;
@@ -10,11 +9,7 @@ using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Database;
-using Content.Shared.DeviceLinking;
-using Content.Shared.DeviceNetwork.Systems;
-using Content.Shared.Interaction;
 using Content.Shared.Power;
-using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using System.Linq;
 using Content.Server.Atmos.Monitor.Payloads;
@@ -196,7 +191,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
                 continue;
             }
 
-            _atmosDevNet.Deregister(uid, deviceNet.Data.AddressId);
+            _atmosDevNet.Deregister(uid, deviceNet.Address);
         }
 
         component.ScrubberData.Clear();
@@ -276,7 +271,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
             var addr = DeviceAddress.Invalid;
             if (TryComp<DeviceNetworkComponent>(uid, out var netConn))
             {
-                addr = netConn.Data.AddressId;
+                addr = netConn.Address;
             }
 
             _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(args.Actor)} changed {ToPrettyString(uid)} mode to {args.Mode}");
@@ -395,7 +390,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
         var addr = DeviceAddress.Invalid;
         if (TryComp<DeviceNetworkComponent>(uid, out var netConn))
         {
-            addr = netConn.Data.AddressId;
+            addr = netConn.Address;
         }
 
         if (component.AutoMode)
@@ -521,25 +516,27 @@ public sealed partial class AirAlarmSystem : EntitySystem
         if (!controller.CanSync)
             return;
 
+        var senderAddress = args.Sender.Comp.LocAddress;
+
         // Save into component.
         // Sync data to interface.
         switch (args.Data.Payload)
         {
             case GasVentPumpData ventData:
-                if (!controller.VentData.TryAdd(args.SenderAddress, ventData))
-                    controller.VentData[args.SenderAddress] = ventData;
+                if (!controller.VentData.TryAdd(senderAddress, ventData))
+                    controller.VentData[senderAddress] = ventData;
                 break;
             case GasVentScrubberData scrubberData:
-                if (!controller.ScrubberData.TryAdd(args.SenderAddress, scrubberData))
-                    controller.ScrubberData[args.SenderAddress] = scrubberData;
+                if (!controller.ScrubberData.TryAdd(senderAddress, scrubberData))
+                    controller.ScrubberData[senderAddress] = scrubberData;
                 break;
             case AtmosMonitorData sensorData:
-                if (!controller.SensorData.TryAdd(args.SenderAddress, sensorData))
-                    controller.SensorData[args.SenderAddress] = sensorData;
+                if (!controller.SensorData.TryAdd(senderAddress, sensorData))
+                    controller.SensorData[senderAddress] = sensorData;
                 break;
         }
 
-        controller.KnownDevices.Add(args.SenderAddress);
+        controller.KnownDevices.Add(senderAddress);
         UpdateUI(uid, controller);
     }
 
@@ -648,7 +645,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
         _ui.SetUiState(
             uid,
             SharedAirAlarmInterfaceKey.Key,
-            new AirAlarmUIState((devNet.Data.AddressId, devNet.Prefix), deviceCount, pressure, temperature, dataToSend, alarm.CurrentMode, highestAlarm.Value, alarm.AutoMode, alarm.PanicWireCut));
+            new AirAlarmUIState((devNet.Address, devNet.Prefix), deviceCount, pressure, temperature, dataToSend, alarm.CurrentMode, highestAlarm.Value, alarm.AutoMode, alarm.PanicWireCut));
     }
 
     private const float Delay = 8f;

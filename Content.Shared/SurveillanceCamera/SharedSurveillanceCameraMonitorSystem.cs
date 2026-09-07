@@ -7,11 +7,12 @@ namespace Content.Shared.SurveillanceCamera;
 // Camera monitor state. If the camera is null, there should be a blank
 // space where the camera is.
 [Serializable, NetSerializable]
-public sealed class SurveillanceCameraMonitorUiState(NetEntity? activeCamera,
+public sealed class SurveillanceCameraMonitorUiState(
+    NetEntity? activeCamera,
     HashSet<ProtoId<DeviceFrequencyPrototype>> subnets,
-    string activeAddress,
+    DeviceAddress activeAddress,
     ProtoId<DeviceFrequencyPrototype>? activeSubnet,
-    Dictionary<string, string> cameras
+    Dictionary<DeviceAddress, string> cameras
 ) : BoundUserInterfaceState
 {
     // The active camera on the monitor. If this is null, the part of the UI
@@ -33,7 +34,7 @@ public sealed class SurveillanceCameraMonitorUiState(NetEntity? activeCamera,
 
 [Serializable, NetSerializable]
 public sealed class SurveillanceCameraMonitorSwitchMessage(
-    string address,
+    DeviceAddress address,
     ProtoId<DeviceFrequencyPrototype>? cameraSubnet
 ) : BoundUserInterfaceMessage
 {

@@ -1,10 +1,10 @@
 ﻿using Content.Shared.DeviceLinking.Events;
 using Content.Shared.DeviceNetwork;
 
-namespace Content.Shared.DeviceLinking;
+namespace Content.Shared.DeviceLinking.Payloads;
 
 /// <summary>
-///
+/// A network payload that can be nested inside <see cref="SignalPayload{T}"/>.
 /// </summary>
 public partial interface ISignalNetworkPayload : INetworkPayload;
 

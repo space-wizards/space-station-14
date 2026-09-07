@@ -1,5 +1,6 @@
 ﻿using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Payloads;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
@@ -107,7 +108,7 @@ public sealed partial class DeviceLinkSystem
 
         // force using wireless network so things like atmos devices are able to send signals
         var network = (int) DeviceNetIdDefaults.Wireless;
-        _deviceNetworkSystem.SendPacket(source.Owner, sinkNetwork.Data.AddressId, ref payload, sinkNetwork.Data.ReceiveFrequency, network);
+        _deviceNetworkSystem.SendPacket(source.Owner, sinkNetwork.Address, ref payload, sinkNetwork.ReceiveFrequency, network);
     }
 
     /// <summary>
@@ -149,9 +150,9 @@ public sealed partial class DeviceLinkSystem
         // Force using wireless network so things like atmos devices are able to send signals.
         _deviceNetworkSystem.SendPacket(
             source.Owner,
-            sinkNetwork.Data.AddressId,
+            sinkNetwork.Address,
             ref payload,
-            sinkNetwork.Data.ReceiveFrequency,
+            sinkNetwork.ReceiveFrequency,
             (int) DeviceNetIdDefaults.Wireless);
     }
 

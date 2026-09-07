@@ -55,6 +55,6 @@ public static class DeviceLocalizationHelpers
     /// </remarks>
     public static string GetAddressFromId(DeviceNetworkComponent comp)
     {
-        return GetAddressFromId(comp.Data.AddressId, comp.Prefix);
+        return GetAddressFromId(comp.Address, comp.Prefix);
     }
 }

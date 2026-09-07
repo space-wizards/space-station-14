@@ -29,7 +29,7 @@ public sealed partial class DeviceNetworkSystem
             return false;
 
         var device = ent.Comp;
-        if (device.Data.AddressId == 0)
+        if (device.Address == 0)
             return false;
 
         frequency ??= device.TransmitFrequency;
@@ -39,7 +39,7 @@ public sealed partial class DeviceNetworkSystem
 
         network ??= ent.Comp.DeviceNetId;
 
-        var packet = new DeviceNetworkPacketEvent<T>(network.Value, address, frequency.Value, device.Data.AddressId, ent!, data);
+        var packet = new DeviceNetworkPacketEvent<T>(network.Value, address, frequency.Value, device.Address, ent!, data);
         SendPacket(ref packet);
         return true;
     }
@@ -58,7 +58,7 @@ public sealed partial class DeviceNetworkSystem
             return false;
 
         var success = AddToNetwork(ent, deviceNet);
-        DirtyField(ent, nameof(DeviceNetworkComponent.Data));
+        DirtyField(ent, nameof(DeviceNetworkComponent.Address));
         return success;
     }
 
@@ -99,7 +99,7 @@ public sealed partial class DeviceNetworkSystem
         if (!_networks.TryGetValue(ent.Comp.DeviceNetId, out var deviceNet))
             return false;
 
-        var device = new Device(ent.Owner, ent.Comp.Data);
+        var device = new Device((ent.Owner, ent.Comp));
         return deviceNet.Devices.ContainsValue(device);
     }
 
@@ -127,21 +127,21 @@ public sealed partial class DeviceNetworkSystem
         if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        if (ent.Comp.Data.ReceiveFrequency == frequency)
+        if (ent.Comp.ReceiveFrequency == frequency)
             return;
 
         if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
             return;
 
-        var oldFrequency = ent.Comp.Data.ReceiveFrequency;
+        var oldFrequency = ent.Comp.ReceiveFrequency;
         RemoveFromNetwork(ent, deviceNet);
-        ent.Comp.Data.ReceiveFrequency = frequency;
+        ent.Comp.ReceiveFrequency = frequency;
         AddToNetwork(ent, deviceNet);
 
         var ev = new DeviceReceiveFrequencyChangedEvent(oldFrequency, frequency);
         RaiseLocalEvent(ent, ref ev);
 
-        DirtyField(ent, nameof(DeviceNetworkComponent.Data));
+        DirtyField(ent, nameof(DeviceNetworkComponent.ReceiveFrequency));
     }
 
     /// <summary>
@@ -161,7 +161,7 @@ public sealed partial class DeviceNetworkSystem
         var ev = new DeviceReceiveFrequencyChangedEvent(oldFrequency, frequency);
         RaiseLocalEvent(ent, ref ev);
 
-        DirtyField(ent, nameof(DeviceNetworkComponent.Data));
+        DirtyField(ent, nameof(DeviceNetworkComponent.TransmitFrequency));
     }
 
     /// <summary>
@@ -173,20 +173,20 @@ public sealed partial class DeviceNetworkSystem
         if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        if (ent.Comp.Data.ReceiveAll == receiveAll)
+        if (ent.Comp.ReceiveAll == receiveAll)
             return;
 
         if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
             return;
 
         RemoveFromNetwork(ent, deviceNet);
-        ent.Comp.Data.ReceiveAll = receiveAll;
+        ent.Comp.ReceiveAll = receiveAll;
         AddToNetwork(ent, deviceNet);
 
         var ev = new DeviceReceiveAllChangedEvent(receiveAll);
         RaiseLocalEvent(ent, ref ev);
 
-        DirtyField(ent, nameof(DeviceNetworkComponent.Data));
+        DirtyField(ent, nameof(DeviceNetworkComponent.ReceiveAll));
     }
 
     /// <summary>
@@ -198,24 +198,22 @@ public sealed partial class DeviceNetworkSystem
         if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        if (ent.Comp.Data.AddressId == address && ent.Comp.CustomAddress)
+        if (ent.Comp.Address == address && ent.Comp.CustomAddress)
             return;
 
         if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
             return;
 
-        var oldAddress = ent.Comp.Data.AddressId;
-        var oldPrefix = ent.Comp.Prefix;
-
+        var oldAddress = ent.Comp.Address;
         RemoveFromNetwork(ent, deviceNet);
         ent.Comp.CustomAddress = true;
-        ent.Comp.Data.AddressId = address;
+        ent.Comp.Address = address;
         AddToNetwork(ent, deviceNet);
 
-        var ev = new DeviceAddressChangedEvent(oldAddress, address, oldPrefix, ent.Comp.Prefix, ent.Comp.CustomAddress);
+        var ev = new DeviceAddressChangedEvent(oldAddress, address, ent.Comp.CustomAddress);
         RaiseLocalEvent(ent, ref ev);
 
-        DirtyFields(ent, null, nameof(DeviceNetworkComponent.Data), nameof(DeviceNetworkComponent.CustomAddress));
+        DirtyFields(ent, null, nameof(DeviceNetworkComponent.Address), nameof(DeviceNetworkComponent.CustomAddress));
     }
 
     /// <summary>
@@ -243,16 +241,16 @@ public sealed partial class DeviceNetworkSystem
         if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
             return;
 
-        var oldAddress = ent.Comp.Data.AddressId;
+        var oldAddress = ent.Comp.Address;
         RemoveFromNetwork(ent, deviceNet);
         ent.Comp.CustomAddress = false;
-        ent.Comp.Data.AddressId = DeviceAddress.Invalid;
+        ent.Comp.Address = DeviceAddress.Invalid;
         AddToNetwork(ent, deviceNet);
 
-        var ev = new DeviceAddressChangedEvent(oldAddress, ent.Comp.Data.AddressId, ent.Comp.Prefix, ent.Comp.Prefix, ent.Comp.CustomAddress);
+        var ev = new DeviceAddressChangedEvent(oldAddress, ent.Comp.Address, ent.Comp.CustomAddress);
         RaiseLocalEvent(ent, ref ev);
 
-        DirtyFields(ent, null, nameof(DeviceNetworkComponent.Data), nameof(DeviceNetworkComponent.CustomAddress));
+        DirtyFields(ent, null, nameof(DeviceNetworkComponent.Address), nameof(DeviceNetworkComponent.CustomAddress));
     }
 
     /// <summary>
@@ -266,6 +264,6 @@ public sealed partial class DeviceNetworkSystem
         if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return string.Empty;
 
-        return DeviceLocalizationHelpers.GetAddressFromId(ent.Comp.Data.AddressId, ent.Comp.Prefix);
+        return DeviceLocalizationHelpers.GetAddressFromId(ent.Comp.Address, ent.Comp.Prefix);
     }
 }

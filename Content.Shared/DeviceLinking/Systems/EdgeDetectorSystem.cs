@@ -1,5 +1,6 @@
 using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Payloads;
 
 namespace Content.Shared.DeviceLinking.Systems;
 

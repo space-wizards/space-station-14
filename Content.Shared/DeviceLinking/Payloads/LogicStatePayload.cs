@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.DeviceLinking;
+﻿namespace Content.Shared.DeviceLinking.Payloads;
 
 /// <summary>
 /// Contains a logic state of a <see cref="SignalPayload"/>.
