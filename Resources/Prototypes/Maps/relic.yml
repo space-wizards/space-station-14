@@ -30,35 +30,35 @@
                 - /Maps/Shuttles/trading_outpost.yml
         - type: StationJobs
           availableJobs:
-            #command (6)
+            # Command (6)
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             HeadOfSecurity: [ 1, 1 ]
             ChiefMedicalOfficer: [ 1, 1 ]
             ChiefEngineer: [ 1, 1 ]
             ResearchDirector: [ 1, 1 ]
-            #service (1)
+            # Service (1)
             Chaplain: [ 1, 1 ]
-            #engineering (4)
+            # Engineering (6)
             AtmosphericTechnician: [ 2, 2 ]
             StationEngineer: [ 2, 2 ]
-            TechnicalAssistant: [ 2, 2 ] #intern, not counted
-            #medical (4)
+            TechnicalAssistant: [ 2, 2 ]
+            # Medical (6)
             Chemist: [ 1, 1 ]
             MedicalDoctor: [ 2, 2 ]
             Paramedic: [ 1, 1 ]
-            MedicalIntern: [ 2, 2 ] #intern, not counted
-            #science (1 - 2)
+            MedicalIntern: [ 2, 2 ]
+            # Science (3-4)
             Scientist: [ 1, 2 ]
-            ResearchAssistant: [ 2, 2 ] #intern, not counted
-            #security (4 - 5)
+            ResearchAssistant: [ 2, 2 ]
+            # Security (6-7)
             Warden: [ 1, 1 ]
             SecurityOfficer: [ 1, 2 ]
             Detective: [ 1, 1 ]
-            SecurityCadet: [ 2, 2 ] #intern, not counted
+            SecurityCadet: [ 2, 2 ]
             Lawyer: [ 1, 1 ]
-            #supply (0)
-            #civilian (0+)
-            Passenger: [ -1, -1 ] #infinite, not counted
-            #silicon (1)
+            # Supply (0)
+            # Civilian (0 + overflow)
+            Passenger: [ -1, -1 ] # infinite, not counted
+            # Silicon (1)
             StationAi: [ 1, 1 ]

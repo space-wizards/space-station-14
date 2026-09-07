@@ -19,7 +19,7 @@
           path: /Maps/Shuttles/cargo_plasma.yml
         - type: StationJobs
           availableJobs:
-            #command (7)
+            # Command (7)
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             HeadOfSecurity: [ 1, 1 ]
@@ -27,7 +27,7 @@
             ChiefEngineer: [ 1, 1 ]
             ResearchDirector: [ 1, 1 ]
             Quartermaster: [ 1, 1 ]
-            #service 7-11
+            # Service (11)
             Bartender: [ 1, 1 ]
             Botanist: [ 2, 2 ]
             Chef: [ 2, 2 ]
@@ -36,33 +36,33 @@
             Librarian: [ 1, 1 ]
             Reporter: [ 1, 1 ]
             ServiceWorker: [ 1, 1 ]
-            #engineering 7-8
+            # Engineering (8)
             AtmosphericTechnician: [ 2, 2 ]
             StationEngineer: [ 4, 4 ]
             TechnicalAssistant: [ 2, 2 ]
-            #medical 7-9
+            # Medical (9)
             Chemist: [ 2, 2 ]
             MedicalDoctor: [ 3, 3 ]
             MedicalIntern: [ 2, 2 ]
             Paramedic: [ 1, 1 ]
             Psychologist: [ 1, 1 ]
-            #science 5-6
+            # Science (6)
             Scientist: [ 4, 4 ]
             ResearchAssistant: [ 2, 2 ]
-            #security 6-8
+            # Security (9)
             Warden: [ 1, 1 ]
             SecurityOfficer: [ 4, 4 ]
             Detective: [ 1, 1 ]
             SecurityCadet: [ 2, 2 ]
             Lawyer: [ 1, 1 ]
-            #supply 4
+            # Supply (5)
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 2, 2 ]
-            #civilian 2-3 + overflow
-            Passenger: [ -1, -1 ]
+            # Civilian (3 + overflow)
+            Passenger: [ -1, -1 ] # infinite, not counted
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
-            #silicon 3
+            # Silicon (3)
             StationAi: [ 1, 1 ]
             Borg: [ 2, 2 ]
