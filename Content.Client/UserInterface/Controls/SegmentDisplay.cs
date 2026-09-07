@@ -5,11 +5,20 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.UserInterface.Controls;
 
+/// <summary>
+/// Displays an integer using a configurable number of seven-segment digits.
+/// </summary>
 public sealed class SegmentDisplay : Control
 {
-    private static readonly Color ActiveColor = Color.FromHex("#94daca");
-    private static readonly Color InactiveColor = Color.FromHex("#46635c");
-    private static readonly Color BackgroundColor = Color.FromHex("#1e272a");
+    private const int MaxDigitCount = 10;
+    private const int BlankDigit = -1;
+    private const int MinusSign = -2;
+    private const float DigitAspectRatio = 0.625f;
+    private const float DefaultHeight = 60f;
+
+    private static readonly Color DefaultActiveColor = Color.FromHex("#94DACA");
+    private static readonly Color DefaultInactiveColor = Color.FromHex("#46635C");
+    private static readonly Color DefaultBackgroundColor = Color.FromHex("#1E272A");
 
     /// <summary>
     /// 7-segment display patterns for digits 0-9.
@@ -22,8 +31,8 @@ public sealed class SegmentDisplay : Control
     ///
     /// So 0b0111111 for '0' means light up all segments except the middle bar.
     /// </summary>
-    private static readonly byte[] DigitPatterns = new byte[]
-    {
+    private static readonly byte[] DigitPatterns =
+    [
         0b0111111, // 0
         0b0000110, // 1
         0b1011011, // 2
@@ -34,10 +43,11 @@ public sealed class SegmentDisplay : Control
         0b0000111, // 7
         0b1111111, // 8
         0b1101111  // 9
-    };
+    ];
 
     private int _value;
     private bool _showDecimalPoint;
+    private bool _showLeadingZeroes = true;
     private int _decimalPosition = -1; // -1 means no decimal point
     private int _digitCount = 4;
 
@@ -45,9 +55,17 @@ public sealed class SegmentDisplay : Control
     private byte? _globalBitmaskOverride;
 
     private int[] _cachedDigits = new int[4];
-    private bool _digitsCacheDirty = true;
 
     private readonly Vector2[] _segmentPoints = new Vector2[6];
+
+    [ViewVariables, PublicAPI]
+    public Color ActiveColor { get; set; } = DefaultActiveColor;
+
+    [ViewVariables, PublicAPI]
+    public Color InactiveColor { get; set; } = DefaultInactiveColor;
+
+    [ViewVariables, PublicAPI]
+    public Color BackgroundColor { get; set; } = DefaultBackgroundColor;
 
     [ViewVariables, PublicAPI]
     public int Value
@@ -55,16 +73,30 @@ public sealed class SegmentDisplay : Control
         get => _value;
         set
         {
-            // Calculate max value based on digit count
-            var maxValue = (int) Math.Pow(10, _digitCount) - 1;
-            var newValue = Math.Clamp(value, 0, maxValue);
+            var newValue = ClampValue(value);
 
             if (_value == newValue)
                 return;
 
             _value = newValue;
-            _digitsCacheDirty = true;
-            InvalidateMeasure();
+            UpdateDigitsCache();
+        }
+    }
+
+    /// <summary>
+    /// Whether unused positions display zeroes instead of remaining blank.
+    /// </summary>
+    [ViewVariables, PublicAPI]
+    public bool ShowLeadingZeroes
+    {
+        get => _showLeadingZeroes;
+        set
+        {
+            if (_showLeadingZeroes == value)
+                return;
+
+            _showLeadingZeroes = value;
+            UpdateDigitsCache();
         }
     }
 
@@ -72,14 +104,7 @@ public sealed class SegmentDisplay : Control
     public bool ShowDecimalPoint
     {
         get => _showDecimalPoint;
-        set
-        {
-            if (_showDecimalPoint == value)
-                return;
-
-            _showDecimalPoint = value;
-            InvalidateMeasure();
-        }
+        set => _showDecimalPoint = value;
     }
 
     /// <summary>
@@ -90,14 +115,7 @@ public sealed class SegmentDisplay : Control
     public int DecimalPosition
     {
         get => _decimalPosition;
-        set
-        {
-            if (_decimalPosition == value)
-                return;
-
-            _decimalPosition = Math.Clamp(value, -1, _digitCount - 1);
-            InvalidateMeasure();
-        }
+        set => _decimalPosition = Math.Clamp(value, -1, _digitCount - 1);
     }
 
     /// <summary>
@@ -109,17 +127,17 @@ public sealed class SegmentDisplay : Control
         get => _digitCount;
         set
         {
-            if (_digitCount == value || value < 1)
+            var newValue = Math.Clamp(value, 1, MaxDigitCount);
+            if (_digitCount == newValue)
                 return;
 
-            _digitCount = value;
+            _digitCount = newValue;
 
             Array.Resize(ref _bitmaskOverrides, _digitCount);
             Array.Resize(ref _cachedDigits, _digitCount);
-            _digitsCacheDirty = true;
 
-            // Reclamp the value to fit within the new digit count
-            Value = _value;
+            _value = ClampValue(_value);
+            UpdateDigitsCache();
 
             if (_decimalPosition >= _digitCount)
                 _decimalPosition = _digitCount - 1;
@@ -139,8 +157,7 @@ public sealed class SegmentDisplay : Control
         if (position < 0 || position >= _digitCount)
             return;
 
-        _bitmaskOverrides[_digitCount - 1 - position] = bitmask;
-        InvalidateMeasure();
+        _bitmaskOverrides[position] = bitmask;
     }
 
     /// <summary>
@@ -153,8 +170,7 @@ public sealed class SegmentDisplay : Control
         if (position < 0 || position >= _digitCount)
             return;
 
-        _bitmaskOverrides[_digitCount - 1 - position] = null;
-        InvalidateMeasure();
+        _bitmaskOverrides[position] = null;
     }
 
     /// <summary>
@@ -165,7 +181,6 @@ public sealed class SegmentDisplay : Control
     public void SetGlobalBitmaskOverride(byte bitmask)
     {
         _globalBitmaskOverride = bitmask;
-        InvalidateMeasure();
     }
 
     /// <summary>
@@ -175,7 +190,6 @@ public sealed class SegmentDisplay : Control
     public void ClearGlobalBitmaskOverride()
     {
         _globalBitmaskOverride = null;
-        InvalidateMeasure();
     }
 
     /// <summary>
@@ -184,13 +198,8 @@ public sealed class SegmentDisplay : Control
     [PublicAPI]
     public void ClearAllBitmaskOverrides()
     {
-        for (var i = 0; i < _bitmaskOverrides.Length; i++)
-        {
-            _bitmaskOverrides[i] = null;
-        }
-
+        Array.Fill(_bitmaskOverrides, null);
         _globalBitmaskOverride = null;
-        InvalidateMeasure();
     }
 
     protected override void Draw(DrawingHandleScreen handle)
@@ -199,14 +208,7 @@ public sealed class SegmentDisplay : Control
 
         handle.DrawRect(PixelSizeBox, BackgroundColor);
 
-        // Update cached digits if needed
-        if (_digitsCacheDirty)
-        {
-            UpdateDigitsCache();
-            _digitsCacheDirty = false;
-        }
-
-        var digitWidth = PixelWidth / _digitCount;
+        var digitWidth = (float) PixelWidth / _digitCount;
         var segmentHeight = PixelHeight * 0.9f;
         var segmentWidth = digitWidth * 0.7f;
         var spacing = digitWidth * 0.1f;
@@ -217,35 +219,30 @@ public sealed class SegmentDisplay : Control
         {
             var x = i * digitWidth + spacing;
 
-            // Determine which pattern to use (priority: position override > global override > digit value)
-            byte pattern;
-            if (_bitmaskOverrides[i] != null)
-            {
-                pattern = _bitmaskOverrides[i]!.Value;
-            }
-            else if (_globalBitmaskOverride != null)
-            {
-                pattern = _globalBitmaskOverride.Value;
-            }
-            else
-            {
-                var digit = _cachedDigits[i];
-                pattern = digit is >= 0 and <= 9
-                    ? DigitPatterns[digit]
-                    : (byte)0;
-            }
-
+            var pattern = GetPattern(i);
             DrawSevenSegmentPattern(handle, pattern, x, yOffset, segmentWidth, segmentHeight);
 
-            // Draw decimal point if enabled for this position
-            if (_showDecimalPoint && _decimalPosition == (_digitCount - 1 - i))
-            {
-                var dpSize = segmentHeight * 0.08f;
-                var dpX = x + segmentWidth + spacing * 0.5f;
-                var dpY = yOffset + segmentHeight - dpSize;
-                handle.DrawRect(new UIBox2(dpX, dpY, dpX + dpSize, dpY + dpSize), ActiveColor);
-            }
+            if (!_showDecimalPoint || _decimalPosition != _digitCount - 1 - i)
+                continue;
+
+            var dpSize = segmentHeight * 0.08f;
+            var dpX = x + segmentWidth + spacing * 0.5f;
+            var dpY = yOffset + segmentHeight - dpSize;
+            handle.DrawRect(new UIBox2(dpX, dpY, dpX + dpSize, dpY + dpSize), ActiveColor);
         }
+    }
+
+    private byte GetPattern(int position)
+    {
+        var digit = _cachedDigits[position];
+        return _bitmaskOverrides[_digitCount - 1 - position]
+            ?? _globalBitmaskOverride
+            ?? digit switch
+            {
+                MinusSign => 0b1000000,
+                >= 0 and <= 9 => DigitPatterns[digit],
+                _ => 0
+            };
     }
 
     /// <summary>
@@ -273,7 +270,7 @@ public sealed class SegmentDisplay : Control
         var extension = segmentThickness * 0.5f;
 
         // Top horizontal segment
-        DrawSegment(handle, (pattern & 0b0000001) != 0, horSegmentX - extension/2, y, horSegmentWidth + extension, segmentThickness, true);
+        DrawSegment(handle, (pattern & 0b0000001) != 0, horSegmentX - extension / 2, y, horSegmentWidth + extension, segmentThickness, true);
 
         // Top left vertical segment
         var topLeftY = y + segmentThickness + gap;
@@ -347,8 +344,6 @@ public sealed class SegmentDisplay : Control
             _segmentPoints[3] = new(x + width - endBevel, y + height); // Bottom right
             _segmentPoints[4] = new(x + endBevel, y + height); // Bottom left
             _segmentPoints[5] = new(x, y + height * 0.5f); // Mid left point
-
-            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, _segmentPoints, color);
         }
         else
         {
@@ -359,31 +354,80 @@ public sealed class SegmentDisplay : Control
             _segmentPoints[3] = new(x + width * 0.5f, y + height); // Bottom mid point
             _segmentPoints[4] = new(x, y + height - endBevel); // Bottom left
             _segmentPoints[5] = new(x, y + endBevel); // Top left
-
-            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, _segmentPoints, color);
         }
+
+        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, _segmentPoints, color);
     }
 
     private void UpdateDigitsCache()
     {
-        var value = _value;
-        for (var i = 0; i < _digitCount; i++)
+        Array.Fill(_cachedDigits, BlankDigit);
+
+        var value = Math.Abs((long) _value);
+        var index = _digitCount - 1;
+        do
         {
-            _cachedDigits[_digitCount - 1 - i] = value % 10;
+            _cachedDigits[index--] = (int) (value % 10);
             value /= 10;
+        } while (value > 0 && index >= 0);
+
+        if (_value < 0)
+        {
+            if (_showLeadingZeroes)
+            {
+                while (index > 0)
+                {
+                    _cachedDigits[index--] = 0;
+                }
+            }
+
+            _cachedDigits[index] = MinusSign;
+            return;
         }
+
+        if (!_showLeadingZeroes)
+            return;
+
+        while (index >= 0)
+        {
+            _cachedDigits[index--] = 0;
+        }
+    }
+
+    private static int GetMaximumValue(int digits)
+    {
+        if (digits <= 0)
+            return 0;
+
+        if (digits >= MaxDigitCount)
+            return int.MaxValue;
+
+        var maximum = 1;
+        for (var i = 0; i < digits; i++)
+        {
+            maximum *= 10;
+        }
+
+        return maximum - 1;
+    }
+
+    private int ClampValue(int value)
+    {
+        var maximum = GetMaximumValue(_digitCount);
+        var minimum = -GetMaximumValue(_digitCount - 1);
+        return Math.Clamp(value, minimum, maximum);
     }
 
     protected override Vector2 MeasureOverride(Vector2 availableSize)
     {
-        var height = availableSize.Y;
-        var width = height * (_digitCount * 0.625f); // Each digit is approximately 0.625 times height
+        var height = float.IsFinite(availableSize.Y) ? availableSize.Y : DefaultHeight;
+        var width = height * _digitCount * DigitAspectRatio;
 
-        if (width > availableSize.X)
-        {
-            width = availableSize.X;
-            height = width / (_digitCount * 0.625f);
-        }
+        if (width <= availableSize.X)
+            return new Vector2(width, height);
+
+        width = availableSize.X;
+        height = width / (_digitCount * DigitAspectRatio);
 
         return new Vector2(width, height);
     }
