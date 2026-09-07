@@ -85,6 +85,13 @@ namespace Content.Shared.PDA
             // Overriden by the server
         }
 
+        /// <summary>
+        /// Sets the owner of a PDA to a given entity, with a given name.
+        /// </summary>
+        /// <param name="uid">Pda Entity</param>
+        /// <param name="pda">Pda Component</param>
+        /// <param name="owner">New entity owner of the PDA, this is probably an ID card</param>
+        /// <param name="ownerName">Name of the new owner, this is probably the name on the ID card</param>
         public void SetOwner(EntityUid uid, PdaComponent pda, EntityUid owner, string ownerName)
         {
             pda.OwnerName = ownerName;

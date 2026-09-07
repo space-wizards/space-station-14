@@ -217,13 +217,24 @@ public abstract partial class GameTicker
         return query.MoveNext(out _, out _, out _);
     }
 
+    /// <summary>
+    /// Returns if a game rule entity has been added yet.
+    /// </summary>
+    /// <param name="rule">Game Rule entity</param>
+    /// <returns>True if the rule has been added, and has not ended yet.</returns>
     [PublicAPI]
     public bool IsGameRuleAdded(Entity<GameRuleComponent?> rule)
     {
         return Resolve(rule, ref rule.Comp);
     }
 
+    /// <summary>
+    /// Checks if a game rule of a specific prototype has been added yet.
+    /// </summary>
+    /// <param name="rule">Rule prototype we're checking for</param>
+    /// <returns>True if a game rule exists with this prototype, that has not ended yet.</returns>
     [PublicAPI]
+    [Obsolete]
     public bool IsGameRuleAdded([ForbidLiteral] string rule)
     {
         foreach (var ruleEntity in GetAddedGameRules())
@@ -269,13 +280,24 @@ public abstract partial class GameTicker
         return false;
     }
 
+    /// <summary>
+    /// Checks if a game rule entity has been added, and has been started.
+    /// </summary>
+    /// <param name="entity">Entity we are checking.</param>
+    /// <returns>True if the game rule has been added, and has been started.</returns>
     [PublicAPI]
     public bool IsGameRuleActive(Entity<GameRuleComponent?> entity)
     {
-        return Resolve(entity, ref entity.Comp) && HasComp<ActiveGameRuleComponent>(entity);
+        return Resolve(entity, ref entity.Comp) && ActiveRuleQuery.HasComp(entity);
     }
 
+    /// <summary>
+    /// Checks if a game rule with a given prototype has been added, and has been started.
+    /// </summary>
+    /// <param name="rule">Prototype we are looking for.</param>
+    /// <returns>True if the game rule has been added, and has been started.</returns>
     [PublicAPI]
+    [Obsolete]
     public bool IsGameRuleActive([ForbidLiteral] string rule)
     {
         foreach (var ruleEntity in GetActiveGameRules())
@@ -306,7 +328,7 @@ public abstract partial class GameTicker
 
 
     /// <summary>
-    /// Gets all the gamerule entities that have been added.
+    /// Gets all the game rule entities that have been added.
     /// </summary>
     [PublicAPI]
     public IEnumerable<EntityUid> GetAddedGameRules()

@@ -10,16 +10,8 @@ public sealed partial class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 {
     [Dependency] private AntagSelectionSystem _antag = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<ThiefRuleComponent, AfterAntagEntitySelectedEvent>(AfterAntagSelected);
-
-        SubscribeLocalEvent<ThiefRoleComponent, GetBriefingEvent>(OnGetBriefing);
-    }
-
     // Greeting upon thief activation
+    [SubscribeLocalEvent]
     private void AfterAntagSelected(Entity<ThiefRuleComponent> mindId, ref AfterAntagEntitySelectedEvent args)
     {
         var ent = args.EntityUid;
@@ -27,6 +19,7 @@ public sealed partial class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
     }
 
     // Character screen briefing
+    [SubscribeLocalEvent]
     private void OnGetBriefing(Entity<ThiefRoleComponent> role, ref GetBriefingEvent args)
     {
         var ent = args.Mind.Comp.OwnedEntity;

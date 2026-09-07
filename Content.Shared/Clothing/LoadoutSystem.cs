@@ -5,7 +5,7 @@ using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
-using Content.Shared.Station;
+using Content.Shared.Station.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -20,7 +20,7 @@ public sealed partial class LoadoutSystem : EntitySystem
     // Shared so we can predict it for placement manager.
 
     [Dependency] private ActorSystem _actors = default!;
-    [Dependency] private Station.Systems.StationSpawningSystem _station = default!;
+    [Dependency] private StationSpawningSystem _station = default!;
     [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()

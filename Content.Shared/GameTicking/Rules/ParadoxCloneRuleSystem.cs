@@ -19,14 +19,6 @@ public sealed partial class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxClone
     [Dependency] private SharedSuitSensorSystem _sensor = default!;
     [Dependency] private AliveHumanoidTargetSystem _target = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<ParadoxCloneRuleComponent, AntagSelectEntityEvent>(OnAntagSelectEntity);
-        SubscribeLocalEvent<ParadoxCloneRuleComponent, AfterAntagEntitySelectedEvent>(AfterAntagEntitySelected);
-    }
-
     protected override void Started(Entity<ParadoxCloneRuleComponent, GameRuleComponent> rule, ref GameRuleStartedEvent args)
     {
         base.Started(rule, ref args);
@@ -42,6 +34,7 @@ public sealed partial class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxClone
     }
 
     // we have to do the spawning here so we can transfer the mind to the correct entity and can assign the objectives correctly
+    [SubscribeLocalEvent]
     private void OnAntagSelectEntity(Entity<ParadoxCloneRuleComponent> ent, ref AntagSelectEntityEvent args)
     {
         if (ent.Comp.OriginalBody != null) // target was overridden, for example by admin antag control
@@ -91,6 +84,7 @@ public sealed partial class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxClone
         args.Entity = clone;
     }
 
+    [SubscribeLocalEvent]
     private void AfterAntagEntitySelected(Entity<ParadoxCloneRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
     {
         if (ent.Comp.OriginalMind == null)

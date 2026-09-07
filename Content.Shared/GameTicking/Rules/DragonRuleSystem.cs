@@ -16,14 +16,7 @@ public sealed partial class DragonRuleSystem : GameRuleSystem<DragonRuleComponen
     [Dependency] private SharedRoleSystem _roleSystem = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<DragonRuleComponent, AfterAntagEntitySelectedEvent>(AfterAntagEntitySelected);
-        SubscribeLocalEvent<DragonRoleComponent, GetBriefingEvent>(UpdateBriefing);
-    }
-
+    [SubscribeLocalEvent]
     private void UpdateBriefing(Entity<DragonRoleComponent> entity, ref GetBriefingEvent args)
     {
         var ent = args.Mind.Comp.OwnedEntity;
@@ -34,6 +27,7 @@ public sealed partial class DragonRuleSystem : GameRuleSystem<DragonRuleComponen
         args.Append(MakeBriefing(ent.Value));
     }
 
+    [SubscribeLocalEvent]
     private void AfterAntagEntitySelected(Entity<DragonRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
     {
         if (!_mind.TryGetMind(args.EntityUid, out var mindId, out _))
