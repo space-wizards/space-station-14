@@ -13,6 +13,7 @@ namespace Content.Shared.Light.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState, AutoGenerateComponentPause]
+[Access(typeof(ExpendableLightSystem))]
 public sealed partial class ExpendableLightComponent : Component
 {
 
