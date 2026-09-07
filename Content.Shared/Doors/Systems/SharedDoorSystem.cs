@@ -427,7 +427,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         {
             SetState(uid, DoorState.EmaggingWelded, door);
         }
-        else if (door.State is not DoorState.Emagging or DoorState.EmaggingWelded)
+        else if (door.State != DoorState.Emagging && door.State !=  DoorState.EmaggingWelded)
         {
             SetState(uid, DoorState.Emagging, door);
         }
@@ -876,7 +876,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
             case DoorState.EmaggingWelded:
                 // engage bolts, leave it welded
                 if (TryComp<DoorBoltComponent>(ent, out var doorBoltComponent))
-                    SetBoltsDown((ent, doorBoltComponent),true);
+                    SetBoltsDown((ent, doorBoltComponent),true, predicted:true);
                 SetState(ent, DoorState.Welded, door);
                 break;
 
