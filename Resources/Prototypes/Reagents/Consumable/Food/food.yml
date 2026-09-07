@@ -8,8 +8,8 @@
   flavor: nutriment
   color: "#24591F"
   metabolisms:
-    metabolismRate: 1
     Digestion:
+      metabolismRate: 1
       effects:
       - !type:Satiate
         satiationType: Hunger
