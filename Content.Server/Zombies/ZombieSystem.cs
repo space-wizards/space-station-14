@@ -1,16 +1,16 @@
 using Content.Shared.NPC.Prototypes;
 using Content.Server.Actions;
-using Content.Server.Body.Systems;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Emoting.Systems;
-using Content.Shared.Speech.EntitySystems;
+using Content.Server.Ghost.Roles;
+using Content.Server.Ghost.Roles.Components;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Armor;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Body.Systems;
-using Content.Shared.Cloning.Events;
 using Content.Shared.Chat;
+using Content.Shared.Cloning.Events;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Inventory;
 using Content.Shared.Mind;
@@ -22,13 +22,12 @@ using Content.Shared.Popups;
 using Content.Shared.Revolutionary;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
+using Content.Shared.Speech.EntitySystems;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Content.Server.Ghost.Roles.Components;
-using Content.Server.Ghost.Roles;
 
 namespace Content.Server.Zombies
 {
@@ -304,6 +303,13 @@ namespace Content.Server.Zombies
 
             _bloodstream.ChangeBloodReagents(target, zombiecomp.BeforeZombifiedBloodReagents);
 
+            // Restore the blood refresh amount to what it was before zombification. They can't regain blood otherwise.
+            _bloodstream.ChangeBloodRefreshAmount(target, zombiecomp.BeforeZombifiedBloodRefresh);
+            _bloodstream.ChangeBloodIncreaseEnabled(target, true);
+
+            // Remove the tags that we added during Zombification
+            _tag.RemoveTag(target, CannotSuicideTag);
+            _tag.RemoveTag(target, InvalidForGlobalSpawnSpellTag);
             return true;
         }
 

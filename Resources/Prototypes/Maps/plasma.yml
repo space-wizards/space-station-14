@@ -2,8 +2,8 @@
   id: Plasma
   mapName: 'Plasma'
   mapPath: /Maps/plasma.yml
-  minPlayers: 25
-  maxPlayers: 44
+  minPlayers: 30
+  maxPlayers: 65
   stations:
     Plasma:
       stationProto: StandardNanotrasenStation
@@ -30,7 +30,7 @@
             #service 7-11
             Bartender: [ 1, 1 ]
             Botanist: [ 2, 2 ]
-            Chef: [ 1, 1 ]
+            Chef: [ 2, 2 ]
             Janitor: [ 2, 2 ]
             Chaplain: [ 1, 1 ]
             Librarian: [ 1, 1 ]
@@ -42,10 +42,10 @@
             TechnicalAssistant: [ 2, 2 ]
             #medical 7-9
             Chemist: [ 2, 2 ]
-            MedicalDoctor: [ 2, 2 ]
+            MedicalDoctor: [ 3, 3 ]
             MedicalIntern: [ 2, 2 ]
             Paramedic: [ 1, 1 ]
-            Psychologist: [ 0, 1 ]
+            Psychologist: [ 1, 1 ]
             #science 5-6
             Scientist: [ 4, 4 ]
             ResearchAssistant: [ 2, 2 ]
@@ -56,7 +56,7 @@
             SecurityCadet: [ 2, 2 ]
             Lawyer: [ 1, 1 ]
             #supply 4
-            SalvageSpecialist: [ 2, 2 ]
+            SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 2, 2 ]
             #civilian 2-3 + overflow
             Passenger: [ -1, -1 ]

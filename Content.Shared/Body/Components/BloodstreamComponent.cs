@@ -108,6 +108,12 @@ public sealed partial class BloodstreamComponent : Component
     public FixedPoint2 BleedPuddleThreshold = 1.0f;
 
     /// <summary>
+    /// Should we allow entities to regain their blood? This affects blood increase from reagents and topicals.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool BloodIncreaseEnabled = true;
+
+    /// <summary>
     /// A modifier set prototype ID corresponding to how damage should be modified
     /// before taking it into account for bloodloss.
     /// </summary>
