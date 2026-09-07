@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.DeviceNetwork.Events;
-using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Power;
 using Content.Shared.UserInterface;
 using Content.Shared.SurveillanceCamera;
