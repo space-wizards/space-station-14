@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.StationEvents.Components;
@@ -30,18 +31,7 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
     {
         base.Started(uid, component, gameRule, args);
 
-        if (!TryGetRandomStation(out var chosenStation, uid => _whitelist.IsWhitelistFailOrNull(component.Blacklist, uid)))
-            return;
-
-        var stationApcs = new List<Entity<ApcComponent>>();
-        var query = EntityQueryEnumerator<ApcComponent, TransformComponent>();
-        while (query.MoveNext(out var apcUid, out var apc, out var xform))
-        {
-            if (apc.MainBreakerEnabled && CompOrNull<StationMemberComponent>(xform.GridUid)?.Station == chosenStation)
-            {
-                stationApcs.Add((apcUid, apc));
-            }
-        }
+        var stationApcs = GetEntitiesWithComponentOnStation<ApcComponent>(true).ToList();
 
         var toDisable = Math.Min(RobustRandom.Next(3, 7), stationApcs.Count);
         if (toDisable == 0)
