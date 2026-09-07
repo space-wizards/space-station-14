@@ -56,7 +56,7 @@
             SalvageSpecialist: [ 2, 2 ]
             CargoTechnician: [ 2, 2 ]
             # Civilian (3 + overflow)
-            Passenger: [ -1, -1 ]
+            Passenger: [ -1, -1 ] # infinite, not counted
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
