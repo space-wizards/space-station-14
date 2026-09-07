@@ -38,3 +38,12 @@ public sealed partial class SignalSwitchComponent : Component
     [DataField]
     public SoundSpecifier? ClickSound = new SoundPathSpecifier("/Audio/Machines/lightswitch.ogg");
 }
+
+/// <summary>
+/// Enum for the appearance system.
+/// </summary>
+[Serializable, NetSerializable]
+public enum SwitchVisuals
+{
+    Visuals,
+}
