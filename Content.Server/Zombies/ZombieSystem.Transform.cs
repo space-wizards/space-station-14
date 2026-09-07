@@ -21,6 +21,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Components;
+using Content.Shared.Metabolism;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Pulling.Components;
@@ -74,9 +75,10 @@ public sealed partial class ZombieSystem
     [Dependency] private NPCSystem _npc = default!;
     [Dependency] private TagSystem _tag = default!;
     [Dependency] private ISharedPlayerManager _player = default!;
+    [Dependency] private BodySystem _body = default!;
+    [Dependency] private SharedCuffableSystem _cuffable = default!;
     [Dependency] private SharedContainerSystem _containerSystem = default!;
     [Dependency] private StatusEffectsSystem _statusEffects = default!;
-    [Dependency] private SharedCuffableSystem _cuffable = default!;
 
     private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
     private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
@@ -151,6 +153,13 @@ public sealed partial class ZombieSystem
         RemComp<ComplexInteractionComponent>(target);
         RemComp<SentienceTargetComponent>(target);
 
+        // remove the metabolizer from all the body's organs. they're an undead.
+        var metabolizerOrgans = _body.EnumerateOrgans<MetabolizerComponent>(target);
+        foreach(var organ in metabolizerOrgans)
+        {
+            RemComp<MetabolizerComponent>(organ);
+        }
+
         //funny voice
         var accentType = "zombie";
         if (TryComp<ZombieAccentOverrideComponent>(target, out var accent))
@@ -196,7 +205,11 @@ public sealed partial class ZombieSystem
         }
 
         if (TryComp<BloodstreamComponent>(target, out var stream) && stream.BloodReferenceSolution is { } reagents)
+        {
             zombiecomp.BeforeZombifiedBloodReagents = reagents.Clone();
+            // Store the blood refresh amount for cloning later.
+            zombiecomp.BeforeZombifiedBloodRefresh = stream.BloodRefreshAmount;
+        }
 
         if (_visualBody.TryGatherMarkingsData(target, null, out var profiles, out _, out var markings))
         {
@@ -260,6 +273,9 @@ public sealed partial class ZombieSystem
         _bloodstream.SetBloodLossThreshold(target, 0f);
         //Give them zombie blood
         _bloodstream.ChangeBloodReagents(target, zombiecomp.NewBloodReagents);
+        //Stop their blood from automatically regenerating
+        _bloodstream.ChangeBloodRefreshAmount(target, 0f);
+        _bloodstream.ChangeBloodIncreaseEnabled(target, false);
 
         //This is specifically here to combat insuls, because frying zombies on grilles is funny as shit.
         _inventory.TryUnequip(target, "gloves", true, true);

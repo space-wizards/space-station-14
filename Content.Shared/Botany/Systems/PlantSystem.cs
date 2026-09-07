@@ -131,7 +131,7 @@ public sealed partial class PlantSystem : EntitySystem
             return;
 
         TryGetTray(ent.Owner, out var trayEnt);
-        var plantGrow = new PlantGrowEvent(GetNetEntity(trayEnt.Owner));
+        var plantGrow = new PlantGrowEvent(trayEnt.Owner);
         RaiseLocalEvent(ent.Owner, ref plantGrow);
 
         // Process mutations.
