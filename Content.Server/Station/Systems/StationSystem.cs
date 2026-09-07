@@ -148,7 +148,7 @@ public sealed partial class StationSystem : SharedStationSystem
                 continue;
             }
 
-            InitializeNewStation(stationConfig, gridIds, ev.StationName);
+            InitializeNewStation(stationConfig, gridIds, ev.StationName, ev.GameMap);
         }
     }
 
@@ -181,12 +181,17 @@ public sealed partial class StationSystem : SharedStationSystem
     /// <summary>
     /// Initializes a new station with the given information.
     /// </summary>
-    /// <param name="stationConfig">The game map prototype used, if any.</param>
+    /// <param name="stationConfig">The station configuration to use.</param>
     /// <param name="gridIds">All grids that should be added to the station.</param>
     /// <param name="name">Optional override for the station name.</param>
+    /// <param name="gameMap">The game map that created this station, if any.</param>
     /// <remarks>This is for ease of use, manually spawning the entity works just fine.</remarks>
     /// <returns>The initialized station.</returns>
-    public EntityUid InitializeNewStation(StationConfig stationConfig, IEnumerable<EntityUid>? gridIds, string? name = null)
+    public EntityUid InitializeNewStation(
+        StationConfig stationConfig,
+        IEnumerable<EntityUid>? gridIds,
+        string? name = null,
+        Content.Shared.Maps.GameMapPrototype? gameMap = null)
     {
         // Use overrides for setup.
         var station = EntityManager.SpawnEntity(stationConfig.StationPrototype, MapCoordinates.Nullspace, stationConfig.StationComponentOverrides);
@@ -197,6 +202,8 @@ public sealed partial class StationSystem : SharedStationSystem
         DebugTools.Assert(HasComp<StationDataComponent>(station), "Stations should have StationData in their prototype.");
 
         var data = Comp<StationDataComponent>(station);
+        data.JobWeights = gameMap?.JobWeights;
+        Dirty(station, data);
         name ??= MetaData(station).EntityName;
 
         foreach (var grid in gridIds ?? Array.Empty<EntityUid>())

@@ -21,7 +21,7 @@ public sealed partial class DisposalSignallerSystem : EntitySystem
 
     private void OnInit(Entity<DisposalSignallerComponent> ent, ref ComponentInit args)
     {
-        _link.EnsureSourcePorts(ent, ent.Comp.Port);
+        _link.EnsureSourcePorts(ent.Owner, ent.Comp.Port);
     }
 
     private void OnGetNextDirection(Entity<DisposalSignallerComponent> ent, ref GetDisposalsNextDirectionEvent args)

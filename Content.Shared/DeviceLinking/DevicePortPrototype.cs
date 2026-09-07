@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.DeviceLinking;
 
@@ -14,7 +15,7 @@ public abstract partial class DevicePortPrototype
     /// <summary>
     ///     Localization string for the port name. Displayed in the linking UI.
     /// </summary>
-    [DataField(required:true)]
+    [DataField(required: true)]
     public LocId Name;
 
     /// <summary>

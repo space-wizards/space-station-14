@@ -31,27 +31,33 @@
     - AtmosphericsSystems
 
 - type: entity
+  parent: [ AirSensorBase, StructureHealthMachineFlimsy ]
   id: AirSensor
   name: air sensor
   description: Air sensor. It senses air.
-  parent: AirSensorBase
   placement:
     mode: SnapgridCenter
   components:
   - type: Transform
     anchored: true
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: Inorganic
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 50
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -4
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 0
+            max: 1
   - type: Physics
     canCollide: false
   - type: Fixtures
@@ -93,7 +99,7 @@
     - ForceFixRotations
 
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseItemDestructible ]
   id: AirSensorAssembly
   name: air sensor assembly
   description: Air sensor assembly. An assembly of air sensors?

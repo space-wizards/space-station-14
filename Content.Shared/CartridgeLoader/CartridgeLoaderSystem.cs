@@ -32,7 +32,7 @@ public sealed partial class CartridgeLoaderSystem : EntitySystem
 
     private void OnComponentInit(Entity<CartridgeLoaderComponent> ent, ref ComponentInit args)
     {
-        _itemSlotsSystem.AddItemSlot(ent, CartridgeLoaderComponent.CartridgeSlotId, ent.Comp.CartridgeSlot);
+        _itemSlotsSystem.AddItemSlot(ent.Owner, CartridgeLoaderComponent.CartridgeSlotId, ent.Comp.CartridgeSlot);
         _container.EnsureContainer<Container>(ent, CartridgeLoaderComponent.RemovableContainerId);
         _container.EnsureContainer<Container>(ent, CartridgeLoaderComponent.UnremovableContainerId);
     }
@@ -42,7 +42,7 @@ public sealed partial class CartridgeLoaderSystem : EntitySystem
     /// </summary>
     private void OnComponentRemove(Entity<CartridgeLoaderComponent> ent, ref ComponentRemove args)
     {
-        _itemSlotsSystem.RemoveItemSlot(ent, ent.Comp.CartridgeSlot);
+        _itemSlotsSystem.RemoveItemSlot(ent.Owner, ent.Comp.CartridgeSlot);
         if (_container.TryGetContainer(ent, CartridgeLoaderComponent.RemovableContainerId, out var removable))
             _container.ShutdownContainer(removable);
         if (_container.TryGetContainer(ent, CartridgeLoaderComponent.UnremovableContainerId, out var unremovable))

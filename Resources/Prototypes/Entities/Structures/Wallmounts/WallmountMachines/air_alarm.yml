@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseWallmountMachine
+  parent: [ BaseWallmountMachine, StructureHealthMachineWeak ]
   id: AirAlarm
   name: air alarm
   description: An air alarm. Alarms... air?
@@ -75,29 +75,24 @@
   - type: Appearance
   - type: WiresVisuals
   - type: Sprite
-    sprite: Structures/Wallmounts/air_monitors.rsi
+    sprite: Structures/Wallmounts/air-alarm.rsi
+    offset: 0, -0.25
     layers:
-    - state: alarmp
-      map: ["airAlarmBase"]
+    - state: base
     - state: alarm0
+      shader: unshaded
       map: ["airAlarmState"] # TODO: fire alarm enum
-    - state: alarmx
+    - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Construction
     graph: AirAlarm
     node: air_alarm
-  - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
@@ -109,23 +104,23 @@
     - DeviceMonitoringAndControl
 
 - type: entity
-  parent: BaseWallmountMetallic
+  parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
   id: AirAlarmAssembly
   name: air alarm assembly
   description: An air alarm. Doesn't look like it'll be alarming air any time soon.
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/air_monitors.rsi
+    sprite: Structures/Wallmounts/air-alarm.rsi
     layers:
-    - state: alarm_b1
+    - state: panel
       map: [ "enum.ConstructionVisuals.Layer" ]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.ConstructionVisuals.Key:
         enum.ConstructionVisuals.Layer:
-          assembly: { state: alarm_b1 }
-          electronics: { state: alarm_b1 }
+          assembly: { state: panel }
+          electronics: { state: panel }
   - type: Construction
     graph: AirAlarm
     node: assembly
@@ -135,35 +130,10 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 15
+        damage: 50
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
           params:
             volume: -4
-
-- type: entity
-  id: AirAlarmXeno
-  parent: AirAlarm
-  description: An alien air alarm. Hopefully they didn't breathe poison.
-  components:
-  - type: Sprite
-    sprite: Structures/Wallmounts/air_monitors_xeno.rsi
-    layers:
-    - state: alarmp
-      map: ["airAlarmBase"]  # TODO: fire alarm enum
-    - state: alarm0
-      map: ["airAlarmState"]
-    - state: alarmx
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-
-- type: entity
-  id: AirAlarmAssemblyXeno
-  parent: AirAlarmAssembly
-  description: An alien air alarm. Why are the wires pulsating?...
-  components:
-  - type: Sprite
-    sprite: Structures/Wallmounts/air_monitors_xeno.rsi

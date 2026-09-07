@@ -93,7 +93,6 @@ public sealed partial class DeviceListSystem : EntitySystem
         }
 
         var filteredRecipients = new HashSet<Device>(args.Recipients.Count);
-
         foreach (var recipient in args.Recipients)
         {
             if (component.Devices.Contains(recipient.Owner) == component.IsAllowList)

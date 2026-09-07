@@ -1,6 +1,5 @@
 ﻿using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Payloads;
-using Content.Shared.DeviceNetwork.Systems;
 using Content.Server.Power.Generation.Teg;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Monitor;
@@ -11,6 +10,7 @@ using Content.Shared.DeviceConfigurator.Components;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Power.Generation.Teg;
 using Content.Shared.SensorMonitoring;
 using Robust.Server.GameObjects;
@@ -270,7 +270,7 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
             }
 
             var address = _deviceNetworkQuery.GetComponent(ent);
-            _deviceNetwork.SendPacket(uid, address.Data.AddressId, ref payload);
+            _deviceNetwork.SendPacket(uid, address.Address, ref payload);
         }
     }
 
@@ -291,7 +291,7 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
             }
 
             var address = _deviceNetworkQuery.GetComponent(ent);
-            _deviceNetwork.SendPacket(uid, address.Data.AddressId, ref payload);
+            _deviceNetwork.SendPacket(uid, address.Address, ref payload);
         }
     }
 }

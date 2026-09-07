@@ -8,12 +8,11 @@ public sealed partial class SurveillanceCameraRouterComponent : Component
 {
     [ViewVariables] public bool Active { get; set; }
 
-    // The name of the subnet connected to this router.
+    /// <summary>
+    /// The name of the subnet connected to this router.
+    /// </summary>
     [ViewVariables]
     public string SubnetName = string.Empty;
-
-    [ViewVariables]
-    public DeviceAddress SubnetAddress;
 
     /// <summary>
     /// The monitors to route to. This raises an issue related to
@@ -22,16 +21,16 @@ public sealed partial class SurveillanceCameraRouterComponent : Component
     /// is added or removed from active routing.
     /// </summary>
     [ViewVariables]
-    public HashSet<DeviceAddress> MonitorRoutes { get; } = new();
+    public HashSet<string> MonitorRoutes { get; } = new();
 
     /// <summary>
     /// The frequency that talks to this router's subnet.
     /// </summary>
     [ViewVariables]
-    public DeviceFrequency SubnetFrequency;
+    public uint SubnetFrequency;
 
     [DataField("subnetFrequency")]
-    public ProtoId<DeviceFrequencyPrototype>? SubnetFrequencyId { get; set;  }
+    public ProtoId<DeviceFrequencyPrototype>? SubnetFrequencyId { get; set; }
 
     [DataField("setupAvailableNetworks")]
     public List<ProtoId<DeviceFrequencyPrototype>> AvailableNetworks { get; private set; } = new();

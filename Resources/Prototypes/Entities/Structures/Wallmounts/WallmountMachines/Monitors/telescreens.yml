@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseWallmountMachine
+  parent: [ BaseWallmountMachine, StructureHealthMachineWeak ]
   id: WallmountTelescreen
   suffix: camera monitor
   name: telescreen
@@ -12,17 +12,27 @@
         state: telescreen_frame
       - map: ["computerLayerScreen"]
         state: telescreen
+  - type: Damageable
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 100
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: TelescreenFrame
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 0
+            max: 2
+          SurveillanceCameraMonitorCircuitboard:
+            min: 0
+            max: 1
   - type: Construction
     graph: WallmountTelescreen
     node: Telescreen
@@ -48,7 +58,7 @@
           type: SurveillanceCameraMonitorBoundUserInterface
 
 - type: entity
-  parent: BaseWallmountMetallic
+  parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
   id: WallmountTelescreenFrame
   name: telescreen frame
   description: Finally, some decent reception around here...
@@ -69,10 +79,11 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+            min: 0
+            max: 2

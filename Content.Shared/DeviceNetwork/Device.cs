@@ -1,45 +1,24 @@
-﻿using Content.Shared.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Shared.DeviceNetwork;
 
 /// <summary>
-/// Represents a device in a network.
+/// Represents a device in a <see cref="DeviceNet"/>.
 /// </summary>
 /// <remarks>
-/// This type is read-only. To change any parameters of the device, use <see cref="DeviceNetworkSystem"/>'s API.
+/// This type is read-only. To change any parameters of the device, use <see cref="SharedDeviceNetworkSystem"/>'s API.
 /// </remarks>
-[DataDefinition]
-public readonly partial struct Device(EntityUid owner, DeviceData deviceData) : IEquatable<Device>
+[DataRecord]
+public readonly partial record struct Device(EntityUid Owner, uint? ReceiveFrequency, string Address, bool ReceiveAll)
 {
-    [DataField]
-    public readonly EntityUid Owner = owner;
-
-    [IncludeDataField]
-    public readonly DeviceData DeviceData = deviceData;
-
-    // Compares only for EntityUid and not the data
-    public bool Equals(Device other)
+    public Device(Entity<DeviceNetworkComponent> ent) : this(
+        ent.Owner,
+        ent.Comp.ReceiveFrequency,
+        ent.Comp.Address,
+        ent.Comp.ReceiveAll)
     {
-        return Owner.Equals(other.Owner);
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return obj is Device other && Equals(other);
-    }
-
-    public override int GetHashCode()
-    {
-        return Owner.GetHashCode();
-    }
-
-    public static bool operator ==(Device left, Device right)
-    {
-        return left.Equals(right);
-    }
-
-    public static bool operator !=(Device left, Device right)
-    {
-        return !left.Equals(right);
+        Owner = ent.Owner;
+        ReceiveFrequency = ent.Comp.ReceiveFrequency;
+        ReceiveAll = ent.Comp.ReceiveAll;
     }
 }

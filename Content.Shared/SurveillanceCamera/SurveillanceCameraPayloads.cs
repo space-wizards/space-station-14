@@ -1,5 +1,6 @@
 ﻿using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Payloads;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.SurveillanceCamera;
 
@@ -58,10 +59,13 @@ public partial record struct SurveillanceCameraHeartbeatPayload : IRoutableNetwo
 public partial record struct SurveillanceCameraPingPayload : IRoutableNetworkPayload
 {
     [DataField]
-    public EntityUid Sender { get; set; }
+    public string Subnet;
 
     [DataField]
     public DeviceAddress? SenderAddress { get; set; }
+
+    [DataField]
+    public EntityUid Sender { get; set; }
 }
 
 /// <summary>
@@ -73,7 +77,7 @@ public partial record struct SurveillanceCameraDataPayload : IRoutableNetworkPay
     public string Name;
 
     [DataField]
-    public DeviceAddress Subnet;
+    public string Subnet;
 
     [DataField]
     public DeviceAddress? SenderAddress { get; set; }
@@ -103,10 +107,8 @@ public partial record struct SurveillanceCameraPingSubnetPayload : INetworkPaylo
 public partial record struct SurveillanceCameraSubnetDataPayload : INetworkPayload
 {
     [DataField]
-    public DeviceFrequency TransmitFrequency;
-}
+    public string Subnet;
 
-/// <summary>
-/// Ping payload raised from a camera when trying to update its map data.
-/// </summary>
-public partial record struct SurveillanceCameraMarkerPingSubnetPayload(DeviceAddress? RouterConnected = null) : INetworkPayload;
+    [DataField]
+    public ProtoId<DeviceFrequencyPrototype> TransmitFrequency;
+}

@@ -10,6 +10,8 @@ using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Database;
+using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Power;
 using Content.Shared.Wires;
@@ -519,28 +521,25 @@ public sealed partial class AirAlarmSystem : EntitySystem
         if (!controller.CanSync)
             return;
 
-        if (!_deviceNetworkQuery.TryComp(args.Sender, out var deviceComp))
-            return;
-
         // Save into component.
         // Sync data to interface.
         switch (args.Data.Payload)
         {
             case GasVentPumpData ventData:
-                if (!controller.VentData.TryAdd(deviceComp, ventData))
-                    controller.VentData[deviceComp] = ventData;
+                if (!controller.VentData.TryAdd(args.SenderAddress, ventData))
+                    controller.VentData[args.SenderAddress] = ventData;
                 break;
             case GasVentScrubberData scrubberData:
-                if (!controller.ScrubberData.TryAdd(deviceComp, scrubberData))
-                    controller.ScrubberData[deviceComp] = scrubberData;
+                if (!controller.ScrubberData.TryAdd(args.SenderAddress, scrubberData))
+                    controller.ScrubberData[args.SenderAddress] = scrubberData;
                 break;
             case AtmosMonitorData sensorData:
-                if (!controller.SensorData.TryAdd(deviceComp, sensorData))
-                    controller.SensorData[deviceComp] = sensorData;
+                if (!controller.SensorData.TryAdd(args.SenderAddress, sensorData))
+                    controller.SensorData[args.SenderAddress] = sensorData;
                 break;
         }
 
-        controller.KnownDevices.Add(deviceComp);
+        controller.KnownDevices.Add(args.SenderAddress);
         UpdateUI(uid, controller);
     }
 

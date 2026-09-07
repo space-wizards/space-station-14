@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken and modified from cev-eris at https://github.com/discordia-space/CEV-Eris/tree/7ff8f28ea4de734f3cc3cb70f2d4e4b4263a988d, debug sprites by slarticodefast(GitHub), _xeno_fire sprites by august-sun(Github)",
+  "copyright": "Taken and modified from cev-eris at https://github.com/discordia-space/CEV-Eris/tree/7ff8f28ea4de734f3cc3cb70f2d4e4b4263a988d, debug sprites by slarticodefast(GitHub), _xeno_fire sprites by august-sun(Github), xenoborg sprites recolored by Samuka-C (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -98,6 +98,51 @@
       ]
     },
     {
+      "name": "muzzle_beam_xenoborg",
+      "delays": [
+        [
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002
+        ]
+      ]
+    },
+    {
+      "name": "muzzle_beam_xenoborg_heavy",
+      "delays": [
+        [
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002
+        ]
+      ]
+    },
+    {
+      "name": "laser_pointer",
+      "delays": [
+        [
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002
+        ]
+      ]
+    },
+    {
       "name": "beam_heavy2",
       "delays": [
         [
@@ -128,6 +173,36 @@
       ]
     },
     {
+      "name": "beam_xenoborg",
+      "delays": [
+        [
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002
+        ]
+      ]
+    },
+    {
+      "name": "beam_xenoborg_heavy",
+      "delays": [
+        [
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002
+        ]
+      ]
+    },
+    {
       "name": "impact_beam_heavy",
       "delays": [
         [
@@ -144,6 +219,36 @@
     },
     {
       "name": "impact_beam_heavy2",
+      "delays": [
+        [
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002
+        ]
+      ]
+    },
+    {
+      "name": "impact_beam_xenoborg",
+      "delays": [
+        [
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002
+        ]
+      ]
+    },
+    {
+      "name": "impact_beam_xenoborg_heavy",
       "delays": [
         [
           0.060000002,
@@ -264,6 +369,21 @@
       ]
     },
     {
+      "name": "muzzle_laser_pointer",
+      "delays": [
+        [
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002
+        ]
+      ]
+    },
+    {
       "name": "beam",
       "delays": [
         [
@@ -292,6 +412,21 @@
           0.1,
           0.1,
           0.5
+        ]
+      ]
+    },
+    {
+      "name": "impact_laser_pointer",
+      "delays": [
+        [
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002
         ]
       ]
     },

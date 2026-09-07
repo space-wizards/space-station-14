@@ -1,6 +1,6 @@
-﻿using Content.Shared.Materials;
+using Content.Shared.Materials;
 using Content.Shared.Power.Generator;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Power.Generator;
 
@@ -22,19 +22,18 @@ public sealed partial class SolidFuelGeneratorAdapterComponent : Component
     /// <summary>
     /// The material to accept as fuel.
     /// </summary>
-    [DataField("fuelMaterial", customTypeSerializer: typeof(PrototypeIdSerializer<MaterialPrototype>))]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public string FuelMaterial = "Plasma";
+    [DataField]
+    public ProtoId<MaterialPrototype> FuelMaterial = "Plasma";
 
     /// <summary>
     /// How much material (can be fractional) is left in the generator.
     /// </summary>
-    [DataField("fractionalMaterial"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float FractionalMaterial;
 
     /// <summary>
     /// Value to multiply material amount by to get fuel amount.
     /// </summary>
-    [DataField("multiplier"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float Multiplier;
 }

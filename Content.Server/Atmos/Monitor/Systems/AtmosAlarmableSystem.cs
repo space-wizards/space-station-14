@@ -4,7 +4,6 @@ using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Payloads;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Atmos.Monitor;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power;
 using Content.Shared.Tag;

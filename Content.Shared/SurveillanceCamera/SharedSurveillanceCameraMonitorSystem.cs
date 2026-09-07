@@ -7,56 +7,46 @@ namespace Content.Shared.SurveillanceCamera;
 // Camera monitor state. If the camera is null, there should be a blank
 // space where the camera is.
 [Serializable, NetSerializable]
-public sealed class SurveillanceCameraMonitorUiState : BoundUserInterfaceState
+public sealed class SurveillanceCameraMonitorUiState(NetEntity? activeCamera,
+    HashSet<ProtoId<DeviceFrequencyPrototype>> subnets,
+    string activeAddress,
+    ProtoId<DeviceFrequencyPrototype>? activeSubnet,
+    Dictionary<string, string> cameras
+) : BoundUserInterfaceState
 {
     // The active camera on the monitor. If this is null, the part of the UI
     // that contains the monitor should clear.
-    public readonly NetEntity? ActiveCamera;
+    public NetEntity? ActiveCamera { get; } = activeCamera;
 
     // Currently available subnets. Does not send the entirety of the possible
     // cameras to view because that could be really, really large
-    public readonly HashSet<DeviceFrequency> Subnets;
+    public HashSet<ProtoId<DeviceFrequencyPrototype>> Subnets { get; } = subnets;
 
-    public readonly DeviceAddress ActiveAddress;
+    public DeviceAddress ActiveAddress = activeAddress;
 
     // Currently active subnet.
-    public readonly DeviceFrequency? ActiveSubnet;
+    public ProtoId<DeviceFrequencyPrototype>? ActiveSubnet { get; } = activeSubnet;
 
     // Known cameras, by address and name.
-    public readonly Dictionary<DeviceAddress, string> Cameras;
-
-    public SurveillanceCameraMonitorUiState(NetEntity? activeCamera, HashSet<DeviceFrequency> subnets, DeviceAddress activeAddress, DeviceFrequency? activeSubnet, Dictionary<DeviceAddress, string> cameras)
-    {
-        ActiveCamera = activeCamera;
-        Subnets = subnets;
-        ActiveAddress = activeAddress;
-        ActiveSubnet = activeSubnet;
-        Cameras = cameras;
-    }
+    public Dictionary<DeviceAddress, string> Cameras { get; } = cameras;
 }
 
 [Serializable, NetSerializable]
-public sealed class SurveillanceCameraMonitorSwitchMessage : BoundUserInterfaceMessage
+public sealed class SurveillanceCameraMonitorSwitchMessage(
+    string address,
+    ProtoId<DeviceFrequencyPrototype>? cameraSubnet
+) : BoundUserInterfaceMessage
 {
-    public readonly DeviceAddress Address;
-    public readonly DeviceFrequency? CameraSubnet;
-
-    public SurveillanceCameraMonitorSwitchMessage(DeviceAddress address, DeviceFrequency? cameraSubnet = null)
-    {
-        Address = address;
-        CameraSubnet = cameraSubnet;
-    }
+    public DeviceAddress Address { get; } = address;
+    public ProtoId<DeviceFrequencyPrototype>? CameraSubnet { get; } = cameraSubnet;
 }
 
 [Serializable, NetSerializable]
-public sealed class SurveillanceCameraMonitorSubnetRequestMessage : BoundUserInterfaceMessage
+public sealed class SurveillanceCameraMonitorSubnetRequestMessage(
+    ProtoId<DeviceFrequencyPrototype> subnet
+) : BoundUserInterfaceMessage
 {
-    public readonly DeviceFrequency Subnet;
-
-    public SurveillanceCameraMonitorSubnetRequestMessage(DeviceFrequency subnet)
-    {
-        Subnet = subnet;
-    }
+    public ProtoId<DeviceFrequencyPrototype> Subnet { get; } = subnet;
 }
 
 // Sent when the user requests that the cameras on the current subnet be refreshed.
@@ -80,46 +70,32 @@ public enum SurveillanceCameraMonitorUiKey : byte
 // SETUP
 
 [Serializable, NetSerializable]
-public sealed class SurveillanceCameraSetupBoundUiState : BoundUserInterfaceState
+public sealed class SurveillanceCameraSetupBoundUiState(
+    string name,
+    uint network,
+    List<ProtoId<DeviceFrequencyPrototype>> networks,
+    bool nameDisabled,
+    bool networkDisabled
+) : BoundUserInterfaceState
 {
-    public readonly string Name;
-    public readonly uint Network;
-    public readonly List<ProtoId<DeviceFrequencyPrototype>> Networks;
-    public readonly bool NameDisabled;
-    public readonly bool NetworkDisabled;
-
-    public SurveillanceCameraSetupBoundUiState(string name, uint network, List<ProtoId<DeviceFrequencyPrototype>> networks, bool nameDisabled, bool networkDisabled)
-    {
-        Name = name;
-        Network = network;
-        Networks = networks;
-        NameDisabled = nameDisabled;
-        NetworkDisabled = networkDisabled;
-    }
+    public string Name { get; } = name;
+    public uint Network { get; } = network;
+    public List<ProtoId<DeviceFrequencyPrototype>> Networks { get; } = networks;
+    public bool NameDisabled { get; } = nameDisabled;
+    public bool NetworkDisabled { get; } = networkDisabled;
 }
 
 [Serializable, NetSerializable]
-public sealed class SurveillanceCameraSetupSetName : BoundUserInterfaceMessage
+public sealed class SurveillanceCameraSetupSetName(string name) : BoundUserInterfaceMessage
 {
-    public readonly string Name;
-
-    public SurveillanceCameraSetupSetName(string name)
-    {
-        Name = name;
-    }
+    public string Name { get; } = name;
 }
 
 [Serializable, NetSerializable]
-public sealed class SurveillanceCameraSetupSetNetwork : BoundUserInterfaceMessage
+public sealed class SurveillanceCameraSetupSetNetwork(int network) : BoundUserInterfaceMessage
 {
-    public readonly int Network;
-
-    public SurveillanceCameraSetupSetNetwork(int network)
-    {
-        Network = network;
-    }
+    public int Network { get; } = network;
 }
-
 
 [Serializable, NetSerializable]
 public enum SurveillanceCameraSetupUiKey : byte

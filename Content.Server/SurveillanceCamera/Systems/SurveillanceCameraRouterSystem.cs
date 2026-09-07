@@ -1,6 +1,5 @@
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.ActionBlocker;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power;
 using Content.Shared.SurveillanceCamera;
@@ -17,7 +16,6 @@ public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
     [Dependency] private UserInterfaceSystem _userInterface = default!;
 
     [Dependency] private EntityQuery<SurveillanceCameraRouterComponent> _query = default!;
-    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
 
     public override void Initialize()
     {
@@ -57,9 +55,13 @@ public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnSubnetPing(Entity<SurveillanceCameraRouterComponent> ent, ref DeviceNetworkPacketEvent<SurveillanceCameraPingSubnetPayload> args)
     {
+        if (ent.Comp.SubnetFrequencyId == null)
+            return;
+
         var response = new SurveillanceCameraSubnetDataPayload
         {
-            TransmitFrequency = ent.Comp.SubnetFrequency,
+            Subnet = ent.Comp.SubnetName,
+            TransmitFrequency = ent.Comp.SubnetFrequencyId.Value,
         };
         _deviceNetworkSystem.SendPacket(ent.Owner, args.SenderAddress, ref response);
     }
@@ -135,7 +137,7 @@ public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
         }
 
         var state = new SurveillanceCameraSetupBoundUiState(ent.Comp1.SubnetName,
-            ent.Comp2.Data.ReceiveFrequency ?? 0,
+            ent.Comp2.ReceiveFrequency ?? 0,
             ent.Comp1.AvailableNetworks,
             true,
             ent.Comp1.SubnetFrequencyId != null);
@@ -160,13 +162,15 @@ public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
     }
 
     // Pings a subnet to get all camera information.
-    private void PingSubnet(Entity<SurveillanceCameraRouterComponent?, DeviceNetworkComponent?> ent)
+    private void PingSubnet(Entity<SurveillanceCameraRouterComponent?> ent)
     {
-        if (!_query.Resolve(ent.Owner, ref ent.Comp1)
-            || !_deviceNetworkQuery.Resolve(ent.Owner, ref ent.Comp2))
+        if (!_query.Resolve(ref ent) || ent.Comp == null)
             return;
 
-        var payload = new SurveillanceCameraPingPayload();
-        _deviceNetworkSystem.SendPacket(ent.Owner, null, ref payload, ent.Comp1.SubnetFrequency);
+        var payload = new SurveillanceCameraPingPayload
+        {
+            Subnet = ent.Comp.SubnetName,
+        };
+        _deviceNetworkSystem.SendPacket(ent.Owner, null, ref payload, ent.Comp.SubnetFrequency);
     }
 }

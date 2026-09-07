@@ -1,13 +1,14 @@
 using Content.Server.Administration.Logs;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Database;
+using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Power;
 using Content.Shared.SurveillanceCamera;
 using Content.Shared.SurveillanceCamera.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
-using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.SurveillanceCamera;
 
@@ -20,6 +21,8 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private SurveillanceCameraMapSystem _cameraMapSystem = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
+
+    [Dependency] private EntityQuery<SurveillanceCameraRouterComponent> _routerQuery = default!;
 
     public const int CameraNameLimit = 32;
 
@@ -60,12 +63,22 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
     [SubscribeLocalEvent]
     private void OnPing(Entity<SurveillanceCameraComponent> ent, ref DeviceNetworkPacketEvent<SurveillanceCameraPingPayload> args)
     {
+        var payload = args.Data;
         if (!ent.Comp.Active)
             return;
 
+        if (!_routerQuery.TryComp(args.Sender, out var routerComp))
+            return;
+
+        if (routerComp.SubnetName != payload.Subnet)
+            return;
+
         var name = ent.Comp.UseEntityNameAsCameraId ? MetaData(ent).EntityName : ent.Comp.CameraId;
-        var responsePayload = new SurveillanceCameraDataPayload { Name = name };
-        _deviceNetworkRouter.SendPacketRouted(ent.Owner, ref responsePayload, args.SenderAddress, args.Data.SenderAddress);
+        var responsePayload = new SurveillanceCameraDataPayload
+        {
+            Name = name,
+        };
+        _deviceNetworkRouter.SendPacketRouted(ent.Owner, ref responsePayload, args.SenderAddress, payload.SenderAddress);
     }
 
     private void OnPowerChanged(EntityUid camera, SurveillanceCameraComponent component, ref PowerChangedEvent args)
@@ -145,9 +158,9 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
 
         if (camera.AvailableNetworks.Count == 0)
         {
-            if (deviceNet.ReceiveFrequencyId != null)
+            if (deviceNet.ReceiveFrequencyId is { } recvFreq)
             {
-                camera.AvailableNetworks.Add(deviceNet.ReceiveFrequencyId.Value);
+                camera.AvailableNetworks.Add(recvFreq);
             }
             else if (!camera.NetworkSet)
             {
@@ -158,7 +171,7 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
 
         var name = camera.UseEntityNameAsCameraId ? MetaData(uid).EntityName : camera.CameraId;
         var state = new SurveillanceCameraSetupBoundUiState(name,
-            deviceNet.Data.ReceiveFrequency ?? 0,
+            deviceNet.ReceiveFrequency ?? 0,
             camera.AvailableNetworks,
             camera.NameSet,
             camera.NetworkSet);

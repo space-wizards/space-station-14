@@ -1,7 +1,7 @@
 - type: entity
   abstract: true
+  parent: [ BaseMachinePowered, StructureHealthMachineWeak ]
   id: DisposalUnitBase
-  parent: BaseMachinePowered
   description: A pneumatic waste disposal unit.
   placement:
     mode: SnapgridCenter
@@ -86,16 +86,13 @@
         layer:
         - MachineLayer
   - type: Damageable
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: PlasticMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
@@ -103,12 +100,17 @@
             volume: -6
       - !type:SpawnEntitiesBehavior
         spawn:
+          SheetPlastic1:
+            min: 0
+            max: 1
           SheetSteel1:
-            min: 1
+            min: 0
             max: 1
       - !type:EmptyContainersBehaviour
         containers:
         - DisposalUnitComponent
+      - !type:ChangeConstructionNodeBehavior
+        node: frame
   - type: Appearance
   - type: UserInterface
     interfaces:

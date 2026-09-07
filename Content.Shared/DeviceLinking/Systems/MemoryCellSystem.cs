@@ -37,10 +37,12 @@ public sealed partial class MemoryCellSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnSignalReceived(Entity<MemoryCellComponent> ent, ref SignalReceivedEvent args)
     {
+        var state = SignalState.Momentary;
+
         if (args.Port == ent.Comp.InputPort)
-            ent.Comp.InputState = SignalState.Momentary;
+            ent.Comp.InputState = state;
         else if (args.Port == ent.Comp.EnablePort)
-            ent.Comp.EnableState = SignalState.Momentary;
+            ent.Comp.EnableState = state;
 
         UpdateOutput(ent);
     }
@@ -60,9 +62,6 @@ public sealed partial class MemoryCellSystem : EntitySystem
 
     private void UpdateOutput(Entity<MemoryCellComponent, DeviceLinkSourceComponent?> ent)
     {
-        if (!Resolve(ent, ref ent.Comp2))
-            return;
-
         if (ent.Comp1.EnableState == SignalState.Low)
             return;
 

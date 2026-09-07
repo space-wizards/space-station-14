@@ -22,7 +22,6 @@ public static class DeviceLocalizationHelpers
     /// <summary>
     /// Either returns the localized name representation of the corresponding <see cref="DeviceNetIdDefaults"/>
     /// or converts the id to string
-    /// Gets the readable device address from a <see cref="DeviceAddress"/> and an optional localized prefix.
     /// </summary>
     public static string DeviceNetIdToLocalizedName(int? id, ILocalizationManager localeMan)
     {

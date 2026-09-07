@@ -10,17 +10,6 @@
     drawdepth: WallMountedItems
     sprite: Structures/Storage/Shelfs/wood.rsi
     state: base
-  - type: Damageable
-  - type: Injurable
-    damageContainer: StructuralInorganic
-  - type: Destructible
-    thresholds:
-    - trigger: &DamageTrigger50
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Storage
     grid:
     - 0,0,3,1
@@ -36,7 +25,22 @@
 
 - type: entity
   abstract: true
-  parent: ShelfBase
+  parent: [ ShelfBase, StructureHealthContainerWeak ]
+  id: ShelfBaseWeak
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: &DamageContainerWeak
+        !type:DamageTrigger
+        damage: 60
+      behaviors:
+      - !type:EmptyContainersBehaviour
+        containers:
+        - storagebase
+
+- type: entity
+  abstract: true
+  parent: [ ShelfBase, StructureHealthContainer ]
   id: ShelfBaseReinforced
   name: reinforced shelf
   description: It looks as strong as reality itself.
@@ -63,17 +67,28 @@
     stateDoorOpen: open
     stateDoorClosed: closed
   - type: AccessReader
+  - type: Destructible
+    thresholds:
+    - trigger: &DamageContainerNormal
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:EmptyContainersBehaviour
+        containers:
+        - storagebase
 
 # Normal
 - type: entity
-  parent: ShelfBase
+  parent: ShelfBaseWeak
   id: ShelfWood
   name: wooden shelf
   description: A convenient place to place, well, anything really.
   components:
+  - type: Damageable
+    damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger50
+    - trigger: *DamageContainerWeak
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -83,16 +98,12 @@
           MaterialWoodPlank1:
             min: 1
             max: 3
-  - type: Tag
-    tags:
-    - Structure
-    - Wooden
   - type: Construction
     graph: Shelf
     node: ShelfWood
 
 - type: entity
-  parent: ShelfBase
+  parent: ShelfBaseWeak
   id: ShelfMetal
   name: metal shelf
   description: A sturdy place to place, well, anything really.
@@ -101,10 +112,10 @@
     sprite: Structures/Storage/Shelfs/metal.rsi
     state: base
   - type: Damageable
-    damageModifierSet: Metallic
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger50
+    - trigger: *DamageContainerWeak
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -119,7 +130,7 @@
     node: ShelfMetal
 
 - type: entity
-  parent: ShelfBase
+  parent: ShelfBaseWeak
   id: ShelfGlass
   name: glass shelf
   description: A fragile place to place, well, anything really.
@@ -128,10 +139,10 @@
     sprite: Structures/Storage/Shelfs/glass.rsi
     state: base
   - type: Damageable
-    damageModifierSet: Glass
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger50
+    - trigger: *DamageContainerWeak
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -163,9 +174,11 @@
     - state: locked
       map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
+  - type: Damageable
+    damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger50
+    - trigger: *DamageContainerNormal
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -187,9 +200,11 @@
   components:
   - type: Sprite
     sprite: Structures/Storage/Shelfs/metal.rsi
+  - type: Damageable
+    damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger50
+    - trigger: *DamageContainerNormal
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -217,9 +232,11 @@
   components:
   - type: Sprite
     sprite: Structures/Storage/Shelfs/glass.rsi
+  - type: Damageable
+    damageModifierSet: GlassReinforcedMod
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger50
+    - trigger: *DamageContainerNormal
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -241,7 +258,7 @@
 
 # Departmental
 - type: entity
-  parent: ShelfBase
+  parent: ShelfBaseWeak
   id: ShelfBar
   name: bar shelf
   description: Made out of the finest synthetic wood for all alcohol holding needs.
@@ -257,9 +274,11 @@
   - type: StorageFillVisualizer
     maxFillLevels: 13
     fillBaseName: bar
+  - type: Damageable
+    damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger50
+    - trigger: *DamageContainerWeak
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -278,7 +297,7 @@
     node: ShelfBar
 
 - type: entity
-  parent: ShelfBase
+  parent: ShelfBaseWeak
   id: ShelfKitchen
   name: kitchen shelf
   description: Holds knifes, spice, and everything nice!
@@ -294,9 +313,11 @@
   - type: StorageFillVisualizer
     maxFillLevels: 13
     fillBaseName: kitchen
+  - type: Damageable
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger50
+    - trigger: *DamageContainerWeak
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -343,9 +364,11 @@
   - type: StorageFillVisualizer
     maxFillLevels: 7
     fillBaseName: chem
+  - type: Damageable
+    damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger50
+    - trigger: *DamageContainerNormal
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -361,8 +384,6 @@
           ShardGlass:
             min: 1
             max: 1
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Storage
     grid:
     - 0,0,5,1

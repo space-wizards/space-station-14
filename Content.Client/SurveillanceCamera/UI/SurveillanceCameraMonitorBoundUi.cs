@@ -2,6 +2,7 @@ using Content.Client.Eye;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.SurveillanceCamera;
 using Robust.Client.UserInterface;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.SurveillanceCamera.UI;
 
@@ -42,12 +43,12 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
             _window?.SetMap(gridUid.Value);
     }
 
-    private void OnCameraSelected(DeviceAddress address, DeviceFrequency? subnet)
+    private void OnCameraSelected(DeviceAddress address, ProtoId<DeviceFrequencyPrototype>? subnet)
     {
         SendMessage(new SurveillanceCameraMonitorSwitchMessage(address, subnet));
     }
 
-    private void OnSubnetRequest(DeviceFrequency subnet)
+    private void OnSubnetRequest(ProtoId<DeviceFrequencyPrototype> subnet)
     {
         SendMessage(new SurveillanceCameraMonitorSubnetRequestMessage(subnet));
     }
@@ -121,11 +122,6 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
         {
             _eyeLerpingSystem.RemoveEye(_currentCamera.Value);
             _currentCamera = null;
-        }
-
-        if (disposing)
-        {
-            _window?.Dispose();
         }
     }
 }

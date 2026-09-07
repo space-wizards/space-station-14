@@ -15,7 +15,9 @@ public sealed partial class DeviceNetworkRouterSystem : EntitySystem
 
     [Dependency] private EntityQuery<DeviceNetworkComponent> _query = default!;
 
-    // TODO after generic event subscriptions are supported, fix this hilarious thing
+    // TODO: make an engine PR to allow for auto-generated relay subscriptions
+    // Should be doable by using reflection on marker interfaces and then adding them to the auto-generated subscriptions
+    // I know it looks absolutely hilarious and horrible, but uuuhhhh anything to not make boxing allocations!!!!!!!! :godo:
     public override void Initialize()
     {
         base.Initialize();
@@ -80,7 +82,7 @@ public sealed partial class DeviceNetworkRouterSystem : EntitySystem
         if (!_query.Resolve(ref ent) || ent.Comp == null)
             return;
 
-        data.SenderAddress = ent.Comp.Data.AddressId;
+        data.SenderAddress = ent.Comp.Address;
         data.Sender = ent.Owner;
         var payload = new RoutedNetworkPayload<T>
         {

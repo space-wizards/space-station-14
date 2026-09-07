@@ -1,4 +1,4 @@
-﻿using Content.Server.DeviceLinking.Systems;
+using Content.Server.DeviceLinking.Systems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.DeviceLinking.Components.Overload;

@@ -3,13 +3,19 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Radio;
 
+/// <summary>
+/// Defines a radio channel and its transmission properties.
+/// </summary>
 [Prototype]
 public sealed partial class RadioChannelPrototype : IPrototype
 {
+    [IdDataField, ViewVariables]
+    public string ID { get; private set; } = default!;
+
     /// <summary>
     /// Human-readable name for the channel.
     /// </summary>
-    [DataField("name")]
+    [DataField]
     public LocId Name { get; private set; } = string.Empty;
 
     [ViewVariables(VVAccess.ReadOnly)]
@@ -31,9 +37,14 @@ public sealed partial class RadioChannelPrototype : IPrototype
     public string ID { get; private set; } = default!;
 
     /// <summary>
-    /// If channel is long range it doesn't require telecommunication server
-    /// and messages can be sent across different stations
+    /// Color used to display the channel.
     /// </summary>
-    [DataField("longRange"), ViewVariables]
-    public bool LongRange = false;
+    [DataField]
+    public Color Color { get; private set; } = Color.Lime;
+
+    /// <summary>
+    /// Whether the channel can transmit across different stations without a telecommunications server.
+    /// </summary>
+    [DataField]
+    public bool LongRange;
 }

@@ -1,4 +1,4 @@
-﻿using Content.Shared.DeviceLinking.Systems;
+using Content.Shared.DeviceLinking.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
