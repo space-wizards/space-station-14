@@ -34,9 +34,6 @@ public record struct IconChunkData()
     // 0 actually means 256.
     public byte Count;
 
-    // This is set to true when it's *actually* zero
-    public bool Empty;
-
     public bool TryGetTileCache(Vector2i index, [NotNullWhen(true)] out byte? cache)
     {
         cache = GetTileCache(index);
@@ -102,7 +99,6 @@ public record struct IconChunkData()
     {
         DebugTools.Assert(Tiles[index] != null, $"SetTileCache overwrote an empty index without incrementing the ref count!");
         Tiles[index] = value;
-        ValidateChunkData();
     }
 
     public void AddTileCache(Vector2i index, byte value)
@@ -126,35 +122,44 @@ public record struct IconChunkData()
         DebugTools.Assert(Tiles[index] == null, $"AddTileCache overwrote an existing value, and incremented the cache as if it were empty. Use SetTileCache!");
         Count++;
         Tiles[index] = value;
-        ValidateChunkData();
+#if DEBUG
+        var count = CountChunks();
+        DebugTools.Assert(count == Count || Count == 0 && count == 256,
+            $"Number of cached tiles in this chunk did not match counted tiles counted: {Count} actual: {count}");
+#endif
     }
 
-    public void RemoveTileCache(Vector2i index)
+    public bool RemoveTileCache(Vector2i index)
     {
-        RemoveTileCache(index.X, index.Y);
+        return RemoveTileCache(index.X, index.Y);
     }
 
-    public void RemoveTileCache(int x, int y)
+    public bool RemoveTileCache(int x, int y)
     {
         DebugTools.Assert(x < MapGridComponent.DefaultChunkSize && y < MapGridComponent.DefaultChunkSize, "Vector2i passed exceeded the bounds of our jagged array!!!");
-        RemoveTileCache((byte)(x + (y << 4)));
+        return RemoveTileCache((byte)(x + (y << 4)));
     }
 
     /// <summary>
     /// Clears the cached value at a given tile on this chunk.
     /// </summary>
     /// <param name="index">Index of our cache, top 4 bits represent Y, bottom for represent X</param>
-    public void RemoveTileCache(byte index)
+    /// <returns>True if the cache is empty</returns>
+    public bool RemoveTileCache(byte index)
     {
         DebugTools.Assert(Tiles[index] != null, $"RemoveTileCache tried to remove a non-existent value!");
         Count--;
         Tiles[index] = null;
-        if (Count == 0)
-            Empty = true;
-        ValidateChunkData();
+#if DEBUG
+        var count = CountChunks();
+        DebugTools.Assert(count == Count,
+            $"Number of cached tiles in this chunk did not match counted tiles counted: {Count} actual: {count}");
+#endif
+
+        return Count == 0;
     }
 
-    private void ValidateChunkData()
+    private short CountChunks()
     {
         short count = 0;
         foreach (var value in Tiles)
@@ -162,8 +167,7 @@ public record struct IconChunkData()
             if (value != null)
                 count++;
         }
-        DebugTools.Assert(count == 0 == Empty, $"Array was marked as {Empty} despite there being {count} items");
-        DebugTools.Assert(count == Count || count == 256 && Count == 0 && !Empty,
-            $"Number of cached tiles in this chunk did not match counted tiles counted: {Count} actual: {count}");
+
+        return count;
     }
 }

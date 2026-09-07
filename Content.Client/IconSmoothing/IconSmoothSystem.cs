@@ -365,8 +365,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
 
     private void RemoveTileCache(Entity<IconSmoothGridComponent> grid, (Vector2i Chunk, Vector2i Relative) index, IconChunkData chunkData)
     {
-        chunkData.RemoveTileCache(index.Relative);
-        if (chunkData.Empty)
+        if (chunkData.RemoveTileCache(index.Relative))
             grid.Comp.Chunks.Remove(index.Chunk);
         else
             grid.Comp.Chunks[index.Chunk] = chunkData;
