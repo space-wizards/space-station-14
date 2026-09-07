@@ -8,7 +8,6 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Light.Components;
 
-
 /// <summary>
 /// Component that represents a handheld expendable light which can be activated and eventually dies over time.
 /// </summary>
@@ -21,9 +20,17 @@ public sealed partial class ExpendableLightComponent : Component
     [AutoNetworkedField]
     public ExpendableLightState CurrentState = ExpendableLightState.Unlit;
 
+    /// <summary>
+    /// The ID of the light behavior that will be used when the light it lit.
+    /// For more information, see <see cref=" LightBehaviorSystem"/>.
+    /// </summary>
     [DataField]
     public string TurnOnBehaviourID = string.Empty;
 
+    /// <summary>
+    /// The ID of the light behavior that will be used when the light starts fading out.
+    /// For more information, see <see cref=" LightBehaviorSystem"/>.
+    /// </summary>
     [DataField]
     public string FadeOutBehaviourID = string.Empty;
 
@@ -114,13 +121,13 @@ public sealed partial class ExpendableLightComponent : Component
     public EntityUid? PlayingStream;
 
     /// <summary>
-    ///     Status of light, whether or not it is emitting light.
+    /// Status of light, whether or not it is emitting light.
     /// </summary>
     [ViewVariables]
     public bool Activated => CurrentState is ExpendableLightState.Lit or ExpendableLightState.Fading;
 
     /// <summary>
-    ///     Time when next change of CurrentState happens. It's current time + how long light will spend in current state.
+    /// Time when next change of CurrentState happens. It's current time + how long light will spend in current state.
     /// </summary>
 
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
