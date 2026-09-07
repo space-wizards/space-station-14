@@ -46,7 +46,7 @@
             Psychologist: [ 1, 1 ]
             # Science (6)
             Scientist: [ 4, 4 ]
-            ResearchAssisant: [ 2, 2 ]
+            ResearchAssistant: [ 2, 2 ]
             # Security (12)
             Warden: [ 1, 1 ]
             SecurityOfficer: [ 6, 6 ]
