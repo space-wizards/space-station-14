@@ -87104,8 +87104,6 @@ entities:
       deviceLists:
       - 27146
       - 27150
-      configurators:
-      - invalid
   - uid: 19788
     components:
     - type: Transform
@@ -87114,8 +87112,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 27150
-      configurators:
-      - invalid
   - uid: 20417
     components:
     - type: Transform
@@ -147547,8 +147543,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -53.5,-10.5
     - type: DeviceNetwork
-      configurators:
-      - invalid
   - uid: 14291
     components:
     - type: Transform
