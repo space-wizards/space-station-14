@@ -29,7 +29,7 @@ public sealed class MarkingLocalizationTests : GameTest
                         $"Marking {proto.ID} is missing localization for: marking-{proto.ID}");
 
                 if (proto.ForcedColoring)
-                    return;
+                    continue;
 
                 foreach (var sprite in proto.Sprites)
                 {
