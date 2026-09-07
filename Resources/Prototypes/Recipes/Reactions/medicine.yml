@@ -332,6 +332,7 @@
       amount: 2
     Plasma:
       amount: 1
+      catalyst: true  
   products:
     Ultravasculine: 2
 
