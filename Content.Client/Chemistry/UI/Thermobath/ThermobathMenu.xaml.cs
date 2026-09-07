@@ -188,17 +188,20 @@ public sealed partial class ThermobathMenu : FancyWindow
             _adjustmentDirection = direction;
             _heldTime = 0;
         };
-        button.OnButtonUp += _ =>
-        {
-            if (_adjustmentDirection != direction)
-                return;
+        button.OnButtonUp += _ => EndAdjustment(direction, applyClick: true);
+        button.OnMouseExited += _ => EndAdjustment(direction, applyClick: false);
+    }
 
-            if (_heldTime <= ButtonHoldThreshold)
-                AdjustSetpoint(direction * InitialAdjustmentRate);
+    private void EndAdjustment(int direction, bool applyClick)
+    {
+        if (_adjustmentDirection != direction)
+            return;
 
-            _adjustmentDirection = 0;
-            CommitSetpoint();
-        };
+        if (applyClick && _heldTime <= ButtonHoldThreshold)
+            AdjustSetpoint(direction * InitialAdjustmentRate);
+
+        _adjustmentDirection = 0;
+        CommitSetpoint();
     }
 
     private void CommitSetpoint()
