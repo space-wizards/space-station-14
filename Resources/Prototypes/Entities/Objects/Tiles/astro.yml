@@ -189,7 +189,7 @@
 
 - type: entity
   name: large wood floor
-  parent: FloorTileItemBase
+  parent: [FloorTileItemBase, BaseWoodFuel]
   id: FloorTileItemWoodLarge
   components:
   - type: Sprite

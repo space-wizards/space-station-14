@@ -50,7 +50,7 @@
     node: TableFrame
 
 - type: entity
-  parent: [ BaseStructure, StructureHealthFurnitureWeak ]
+  parent: [BaseStructure, StructureHealthFurnitureWeak, BaseWoodFuel]
   id: CounterWoodFrame
   name: wooden counter frame
   description: Pieces of wood that make the frame of a table.
@@ -411,7 +411,7 @@
     node: TableBrass
 
 - type: entity
-  parent: [ TableBase, StructureHealthFurniture ]
+  parent: [TableBase, StructureHealthFurniture, BaseWoodFuel]
   id: TableWood
   name: wood table
   description: Do not apply fire to this. Rumour says it burns easily.
@@ -443,7 +443,7 @@
       collection: FootstepWood
 
 - type: entity
-  parent: [ TableBase, StructureHealthFurnitureWeak ]
+  parent: [TableBase, StructureHealthFurnitureWeak, BaseWoodFuel]
   id: TableCarpet
   name: gambling table
   description: Play em' cowboy.
@@ -572,7 +572,7 @@
 
 - type: entity
   abstract: true
-  parent: [ TableBase, StructureHealthFurnitureWeak ]
+  parent: [TableBase, StructureHealthFurnitureWeak, BaseWoodFuel]
   id: TableFancyBase
   name: fancy table
   description: Expensive and rich.
@@ -840,7 +840,7 @@
 #region Counters
 
 - type: entity
-  parent: [ CounterBase, StructureHealthFurniture ]
+  parent: [CounterBase, StructureHealthFurniture, BaseWoodFuel]
   id: TableCounterWood
   name: wood counter
   description: Do not apply fire to this. Rumour says it burns easily.

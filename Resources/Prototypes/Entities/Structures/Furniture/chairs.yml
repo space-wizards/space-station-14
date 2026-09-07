@@ -245,7 +245,7 @@
     thresholds: *ThresholdsFurnitureNormalSteel
 
 - type: entity
-  parent: [ UnanchoredChairBase, StructureHealthFurniture ]
+  parent: [UnanchoredChairBase, StructureHealthFurniture, BaseWoodFuel]
   id: ChairWood
   name: wooden chair
   components:
@@ -449,7 +449,7 @@
           MaterialCardboard: *Min0Max1
 
 - type: entity
-  parent: [ ChairBase, StructureHealthFurniture ]
+  parent: [ChairBase, StructureHealthFurniture, BaseWoodFuel]
   id: WoodenBench
   name: wooden bench
   description: Did you get a splinter? Well, at least it’s eco friendly.

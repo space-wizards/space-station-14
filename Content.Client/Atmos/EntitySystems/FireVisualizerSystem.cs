@@ -20,7 +20,7 @@ public sealed partial class FireVisualizerSystem : VisualizerSystem<FireVisualsC
     {
         base.Initialize();
 
-        SubscribeLocalEvent<FireVisualsComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<FireVisualsComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<FireVisualsComponent, ComponentShutdown>(OnShutdown);
     }
 
@@ -41,7 +41,8 @@ public sealed partial class FireVisualizerSystem : VisualizerSystem<FireVisualsC
         }
     }
 
-    private void OnComponentInit(EntityUid uid, FireVisualsComponent component, ComponentInit args)
+    // An entity entering PVS can already be burning. Its child light must wait until initialization finishes.
+    private void OnComponentStartup(EntityUid uid, FireVisualsComponent component, ComponentStartup args)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite) || !TryComp(uid, out AppearanceComponent? appearance))
             return;

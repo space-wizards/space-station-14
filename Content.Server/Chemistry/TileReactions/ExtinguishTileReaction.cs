@@ -25,6 +25,9 @@ namespace Content.Server.Chemistry.TileReactions
 
             var atmosphereSystem = entityManager.System<AtmosphereSystem>();
 
+            // Carpet and floor fires may have no colliding fixture or atmospheric hotspot.
+            entityManager.System<SolidFuelSystem>().ExtinguishTile(tile, reactVolume.Float());
+
             var environment = atmosphereSystem.GetTileMixture(tile.GridUid, null, tile.GridIndices, true);
 
             if (environment == null || !atmosphereSystem.IsHotspotActive(tile.GridUid, tile.GridIndices))

@@ -875,7 +875,7 @@
     resistance: 6
 
 - type: entity
-  parent: [ BaseWall, StructureHealthBarrierStrong ]
+  parent: [BaseWall, StructureHealthBarrierStrong, BaseWoodFuel]
   id: WallWood
   name: wood wall
   description: The traditional greytide defense.

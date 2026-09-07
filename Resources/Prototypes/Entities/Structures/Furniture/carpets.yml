@@ -1,7 +1,7 @@
 # TODO move all of this to tiles once tile smoothing is supported
 - type: entity
   abstract: true
-  parent: [ BaseStructure, StructureHealthFurnitureWeak ]
+  parent: [BaseStructure, StructureHealthFurnitureWeak, BaseCarpetFuel]
   id: CarpetBase
   name: carpet
   description: "Fancy walking surface."
@@ -220,7 +220,7 @@
 
 # TODO nuke this once tiles support rotating sprites
 - type: entity
-  parent: BaseStructure
+  parent: [BaseStructure, BaseCarpetFuel]
   id: CarpetChapel
   name: "chapel's carpet"
   components:
@@ -251,7 +251,7 @@
 #cardpet
 
 - type: entity
-  parent: [ BaseStructure, StructureHealthFurnitureWeak ]
+  parent: [BaseStructure, StructureHealthFurnitureWeak, BaseCarpetFuel]
   id: CarpetCard
   name: cardboard "carpet"
   description: "Even lino is better."

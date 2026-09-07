@@ -39,6 +39,7 @@
 
 - type: tile
   id: FloorWood
+  solidFuelEntity: SolidFuelFloorWood
   parent: BaseStationTile
   name: tiles-wood
   sprite: /Textures/Tiles/Wood/wood.png
@@ -143,6 +144,7 @@
 # Carpets (non smoothing)
 - type: tile
   id: FloorArcadeBlue
+  solidFuelEntity: SolidFuelFloorCarpet
   parent: BaseStationTile
   name: tiles-blue-arcade-floor
   sprite: /Textures/Tiles/arcadeblue.png
@@ -155,6 +157,7 @@
 
 - type: tile
   id: FloorArcadeRed
+  solidFuelEntity: SolidFuelFloorCarpet
   parent: BaseStationTile
   name: tiles-red-arcade-floor
   sprite: /Textures/Tiles/arcadered.png
@@ -167,6 +170,7 @@
 
 - type: tile
   id: FloorCarpetClown
+  solidFuelEntity: SolidFuelFloorCarpet
   parent: BaseStationTile
   name: tiles-clown-carpet-floor
   sprite: /Textures/Tiles/carpetclown.png
@@ -179,6 +183,7 @@
 
 - type: tile
   id: FloorCarpetOffice
+  solidFuelEntity: SolidFuelFloorCarpet
   parent: BaseStationTile
   name: tiles-office-carpet-floor
   sprite: /Textures/Tiles/carpetoffice.png
@@ -191,6 +196,7 @@
 
 - type: tile
   id: FloorBoxing
+  solidFuelEntity: SolidFuelFloorCarpet
   parent: BaseStationTile
   name: tiles-boxing-ring-floor
   sprite: /Textures/Tiles/boxing.png
@@ -200,6 +206,7 @@
 
 - type: tile
   id: FloorGym
+  solidFuelEntity: SolidFuelFloorCarpet
   parent: BaseStationTile
   name: tiles-gym-floor
   sprite: /Textures/Tiles/gym.png
@@ -278,6 +285,7 @@
 
 - type: tile
   id: FloorWoodTile
+  solidFuelEntity: SolidFuelFloorWood
   parent: BaseStationTile
   name: tiles-wood2
   sprite: /Textures/Tiles/Wood/wood-tile.png
@@ -289,6 +297,7 @@
 
 - type: tile
   id: FloorBrokenWood
+  solidFuelEntity: SolidFuelFloorWood
   parent: BaseStationTile
   name: tiles-wood3
   sprite: /Textures/Tiles/Wood/wood-broken.png
@@ -301,6 +310,7 @@
 
 - type: tile
   id: FloorWoodLarge
+  solidFuelEntity: SolidFuelFloorWood
   parent: BaseStationTile
   name: tiles-wood-large
   sprite: /Textures/Tiles/Wood/wood-large.png

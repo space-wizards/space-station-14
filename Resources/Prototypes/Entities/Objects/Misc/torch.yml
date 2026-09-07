@@ -44,6 +44,7 @@
       energy: 5.0
       netsync: false
     - type: IgnitionSource
+      contactIgnitionRate: 30
       temperature: 400
       ignited: false
     - type: LightBehaviour

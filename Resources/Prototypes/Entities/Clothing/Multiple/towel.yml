@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [UnsensoredClothingUniformBase, ClothingHeadBase, ClothingBeltBase]
+  parent: [UnsensoredClothingUniformBase, ClothingHeadBase, ClothingBeltBase, BaseSolidFuel]
   id: BaseTowel
   name: base towel
   description: If you want to survive out here, you gotta know where your towel is.

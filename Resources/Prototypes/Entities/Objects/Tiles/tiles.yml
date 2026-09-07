@@ -439,7 +439,7 @@
 
 - type: entity
   name: wood floor
-  parent: FloorTileItemBase
+  parent: [FloorTileItemBase, BaseWoodFuel]
   id: FloorTileItemWood
   components:
   - type: Sprite
@@ -842,7 +842,7 @@
 
 - type: entity
   name: wood pattern floor
-  parent: FloorTileItemBase
+  parent: [FloorTileItemBase, BaseWoodFuel]
   id: FloorTileItemWoodPattern
   components:
   - type: Sprite

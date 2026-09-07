@@ -150,6 +150,10 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnInteractUsing(EntityUid uid, FlammableComponent flammable, InteractUsingEvent args)
         {
+            // Solid materials require sustained contact, handled by SolidFuelSystem.
+            if (HasComp<SolidFuelComponent>(uid))
+                return;
+
             if (args.Handled)
                 return;
 
@@ -241,6 +245,9 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnTileFire(Entity<FlammableComponent> ent, ref TileFireEvent args)
         {
+            if (HasComp<SolidFuelComponent>(ent) && !EntityManager.System<SolidFuelSystem>().CanBurn((ent.Owner, ent.Comp)))
+                return;
+
             var tempDelta = args.Temperature - ent.Comp.MinIgnitionTemperature;
 
             _fireEvents.TryGetValue(ent, out var maxTemp);
@@ -295,6 +302,10 @@ namespace Content.Server.Atmos.EntitySystems
         {
             if (!Resolve(uid, ref flammable))
                 return;
+
+            if (ignite && HasComp<SolidFuelComponent>(uid) &&
+                !EntityManager.System<SolidFuelSystem>().CanBurn((uid, flammable)))
+                ignite = false;
 
             flammable.FireStacks = MathF.Min(MathF.Max(flammable.MinimumFireStacks, stacks), flammable.MaximumFireStacks);
 
@@ -357,6 +368,9 @@ namespace Content.Server.Atmos.EntitySystems
             if (!Resolve(uid, ref flammable))
                 return;
 
+            if (HasComp<SolidFuelComponent>(uid) && !EntityManager.System<SolidFuelSystem>().CanBurn((uid, flammable)))
+                return;
+
             if (flammable.AlwaysCombustible)
             {
                 flammable.FireStacks = Math.Max(flammable.FirestacksOnIgnite, flammable.FireStacks);
@@ -398,7 +412,6 @@ namespace Content.Server.Atmos.EntitySystems
                 flammable.FireStacks += component.FireStacks;
                 Ignite(uid, uid, flammable);
             }
-
 
         }
 
@@ -468,7 +481,9 @@ namespace Content.Server.Atmos.EntitySystems
                     var air = _atmosphereSystem.GetContainingMixture(uid);
 
                     // If we're in an oxygenless environment, put the fire out.
-                    if (air == null || air.GetMoles(Gas.Oxygen) < 1f)
+                    if (HasComp<SolidFuelComponent>(uid)
+                        ? !EntityManager.System<SolidFuelSystem>().HasOxygen(uid)
+                        : air == null || air.GetMoles(Gas.Oxygen) < 1f)
                     {
                         TryExtinguish((uid, flammable));
                         continue;

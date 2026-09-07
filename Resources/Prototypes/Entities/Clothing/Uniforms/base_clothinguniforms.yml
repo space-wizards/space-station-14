@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [SolutionFood, SolutionToolNormal, Clothing, BaseSlicingRefinable]
+  parent: [SolutionFood, SolutionToolNormal, Clothing, BaseSlicingRefinable, BaseSolidFuel]
   id: UnsensoredClothingUniformBase
   components:
   - type: Sprite

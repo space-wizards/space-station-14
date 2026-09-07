@@ -28,6 +28,9 @@ public sealed partial class ContentTileDefinition : IPrototype, IInheritingProto
 
     public ushort TileId { get; private set; }
 
+    /// <summary>Transient fuel entity used when this floor is exposed to a heat source.</summary>
+    [DataField] public EntProtoId? SolidFuelEntity { get; private set; }
+
     [DataField]
     public string Name { get; private set; } = "";
     [DataField] public ResPath? Sprite { get; private set; }

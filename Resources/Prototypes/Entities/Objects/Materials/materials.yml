@@ -1,5 +1,5 @@
 - type: entity
-  parent: MaterialBase
+  parent: [MaterialBase, BaseSolidFuel]
   id: MaterialCardboard
   name: cardboard
   suffix: Full
@@ -55,7 +55,7 @@
     count: 1
 
 - type: entity
-  parent: [MaterialBase, FoodBase]
+  parent: [MaterialBase, FoodBase, BaseSolidFuel]
   id: MaterialCloth
   name: cloth
   suffix: Full
@@ -194,7 +194,7 @@
     count: 1
 
 - type: entity
-  parent: MaterialBase
+  parent: [MaterialBase, BaseWoodFuel]
   id: MaterialWoodPlank
   name: wood
   suffix: Full

@@ -1,0 +1,61 @@
+# Shared balance profiles. Ignition time is in cigarette-equivalent seconds.
+- type: entity
+  id: BaseSolidFuel
+  abstract: true
+  components:
+  - type: SolidFuel
+    ignitionTime: 90
+    burnTime: 60
+    coolingRate: 2
+  - type: Flammable
+    alwaysCombustible: true
+    fireSpread: false # SolidFuelSystem handles gradual spread.
+    firestackFade: 0
+    damage: {} # Burnout consumes the object, without triggering salvage drops.
+  - type: Appearance
+  - type: FireVisuals
+    sprite: Effects/fire.rsi
+    normalState: fire
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+
+- type: entity
+  id: BaseWoodFuel
+  parent: BaseSolidFuel
+  abstract: true
+  components:
+  - type: SolidFuel
+    ignitionTime: 300
+    burnTime: 120
+
+- type: entity
+  id: BaseCarpetFuel
+  parent: BaseSolidFuel
+  abstract: true
+  components:
+  - type: SolidFuel
+    ignitionTime: 240
+    burnTime: 90
+
+# Invisible until ignited. Created only for floor tiles currently exposed to heat.
+- type: entity
+  id: SolidFuelFloorWood
+  parent: BaseWoodFuel
+  name: burning wooden floor
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    noRot: true
+  - type: Transform
+    anchored: true
+
+- type: entity
+  id: SolidFuelFloorCarpet
+  parent: SolidFuelFloorWood
+  name: burning carpet floor
+  components:
+  - type: SolidFuel
+    ignitionTime: 240
+    burnTime: 90
