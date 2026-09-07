@@ -73,7 +73,7 @@ public sealed class PanelSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet,
                 .Class(StyleClass.BackgroundPanelDark)
                 .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.BaseStyleBox(sheet))
                 .Modulate(sheet.SecondaryPalette.BackgroundDark),
-             E()
+            E()
                 .Class(StyleClass.BackgroundPanelOpenLeft)
                 .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.OpenLeftStyleBox(sheet))
                 .Modulate(sheet.SecondaryPalette.Background),

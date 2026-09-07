@@ -14,8 +14,7 @@
                            HorizontalAlignment="Center"
                            Margin="8 2" />
                 </controls:StripeBack>
-
-                <PanelContainer Margin="2 4">
+                <PanelContainer StyleClasses="PanelInsetDark" Margin="2 4">
                     <PanelContainer.PanelOverride>
                         <gfx:StyleBoxFlat BackgroundColor="#1E272A"
                                           BorderColor="#2C2F33"
@@ -34,7 +33,7 @@
                            HorizontalAlignment="Center"
                            Margin="8 2" />
                 </controls:StripeBack>
-                <PanelContainer Margin="2 4">
+                <PanelContainer StyleClasses="PanelInsetDark" Margin="2 4">
                     <PanelContainer.PanelOverride>
                         <gfx:StyleBoxFlat BackgroundColor="#1E272A"
                                           BorderColor="#2C2F33"
@@ -70,16 +69,15 @@
             <customControls:VSeparator StyleClasses="LowDivider" Margin="0 5" />
             <BoxContainer Orientation="Vertical" HorizontalExpand="True"
                           SizeFlagsStretchRatio="1.5" Margin="5 3 0 0">
-                <PanelContainer Margin="0 0 0 5">
-                    <PanelContainer.PanelOverride>
-                        <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
-                    </PanelContainer.PanelOverride>
+                <PanelContainer StyleClasses="PanelDeep" Margin="0 0 0 5">
                     <Label Text="{Loc 'thermobath-menu-operation-mode'}"
                            StyleClasses="LabelHeading"
                            HorizontalAlignment="Center"
                            Margin="10 2" />
                 </PanelContainer>
-                <PanelContainer StyleClasses="PanelInsetDeep" Margin="0 0 0 2">
+                <PanelContainer StyleClasses="BackgroundPanel"
+                                ModulateSelfOverride="#212123"
+                                Margin="0 0 0 2">
                     <BoxContainer Orientation="Vertical" Margin="10 5">
                         <Slider Name="ModeSlider"
                                 MinValue="0"
@@ -116,7 +114,8 @@
                                    FontColorOverride="#FF5555"
                                    Margin="5 2" />
                         </BoxContainer>
-                        <PanelContainer StyleClasses="PanelInsetDeep"
+                        <PanelContainer StyleClasses="BackgroundPanel"
+                                        ModulateSelfOverride="#212123"
                                         Margin="0 0 0 8"
                                         VerticalExpand="True"
                                         MaxHeight="60"
@@ -132,7 +131,7 @@
                                     </PanelContainer>
                                     <Label Text="{Loc 'thermobath-menu-status-cooling'}"
                                            HorizontalAlignment="Center"
-                                           StyleClasses="font-small" />
+                                           StyleClasses="FontSmall" />
                                 </BoxContainer>
                                 <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" Margin="8 0">
                                     <PanelContainer Name="HeatingIndicator" SetSize="10 10"
@@ -143,7 +142,7 @@
                                     </PanelContainer>
                                     <Label Text="{Loc 'thermobath-menu-status-heating'}"
                                            HorizontalAlignment="Center"
-                                           StyleClasses="font-small" />
+                                           StyleClasses="FontSmall" />
                                 </BoxContainer>
                                 <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" Margin="8 0">
                                     <PanelContainer Name="PowerIndicator" SetSize="10 10" HorizontalAlignment="Center"
@@ -154,34 +153,30 @@
                                     </PanelContainer>
                                     <Label Text="{Loc 'thermobath-menu-status-power'}"
                                            HorizontalAlignment="Center"
-                                           StyleClasses="font-small" />
+                                           StyleClasses="FontSmall" />
                                 </BoxContainer>
                             </BoxContainer>
                         </PanelContainer>
                     </BoxContainer>
                     <BoxContainer Orientation="Vertical" HorizontalExpand="True">
-                        <PanelContainer Margin="0 0 0 5">
-                            <PanelContainer.PanelOverride>
-                                <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
-                            </PanelContainer.PanelOverride>
+                        <PanelContainer StyleClasses="PanelDeep" Margin="0 0 0 5">
                             <Label Text="{Loc 'thermobath-menu-temperature-adjust'}"
                                    StyleClasses="LabelHeading"
                                    HorizontalAlignment="Center"
                                    Margin="5 2" />
                         </PanelContainer>
-                        <PanelContainer StyleClasses="PanelInsetDeep" Margin="0 0 0 5">
-                            <BoxContainer Orientation="Horizontal" VerticalExpand="False" Margin="5 2"
-                                          SeparationOverride="5">
+                        <PanelContainer StyleClasses="BackgroundPanel"
+                                        ModulateSelfOverride="#212123"
+                                        Margin="0 0 0 5">
+                            <BoxContainer Orientation="Horizontal" VerticalExpand="False" Margin="5 2" SeparationOverride="5">
                                 <Button Name="DecreaseButton"
                                         Text="-"
-                                        HorizontalExpand="True"
                                         StyleClasses="ButtonSquare"
-                                        SetSize="100 40" />
+                                        SetSize="80 40" />
                                 <Button Name="IncreaseButton"
                                         Text="+"
-                                        HorizontalExpand="True"
                                         StyleClasses="ButtonSquare"
-                                        SetSize="100 40" />
+                                        SetSize="80 40" />
                             </BoxContainer>
                         </PanelContainer>
                     </BoxContainer>
