@@ -5,8 +5,6 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Storage.Components;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Network;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using static Content.Shared.Storage.EntitySpawnCollection;
 
@@ -47,8 +45,7 @@ public abstract partial class SpawnItemsOnUseSystem : EntitySystem
             _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(args.User)} used {ToPrettyString(ent)} which spawned {ToPrettyString(spawn)}");
         }
 
-        if (ent.Comp.Sound != null)
-            _audio.PlayPredicted(ent.Comp.Sound, args.User, args.User);
+        _audio.PlayPredicted(ent.Comp.Sound, args.User, args.User);
 
         if (remove)
             PredictedQueueDel(ent);
