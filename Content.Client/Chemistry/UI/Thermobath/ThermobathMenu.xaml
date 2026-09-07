@@ -172,11 +172,11 @@
                                 <Button Name="DecreaseButton"
                                         Text="-"
                                         StyleClasses="ButtonSquare"
-                                        SetSize="80 40" />
+                                        SetSize="70 40" />
                                 <Button Name="IncreaseButton"
                                         Text="+"
                                         StyleClasses="ButtonSquare"
-                                        SetSize="80 40" />
+                                        SetSize="70 40" />
                             </BoxContainer>
                         </PanelContainer>
                     </BoxContainer>
