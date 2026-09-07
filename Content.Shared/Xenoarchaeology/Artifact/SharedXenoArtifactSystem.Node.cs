@@ -83,15 +83,18 @@ public abstract partial class SharedXenoArtifactSystem
     /// </summary>
     public Entity<XenoArtifactNodeComponent>? CreateNode(
         Entity<XenoArtifactComponent> ent,
-        List<Entity<XenoArtifactNodeComponent>> directPredecessors,
         EntProtoId triggerProtoId,
         EntityTableSelector effects,
         int depth = 0
     )
     {
-        var effect = _entityTable.GetSpawns(effects).FirstOrDefault();
+        EntProtoId? effect = _entityTable.GetSpawns(effects)
+                                         .FirstOrDefault();
+        if (effect == null)
+            return null;
+
         var trigger = ProtoMan.Index(triggerProtoId);
-        return CreateNode(ent, effect, trigger, depth);
+        return CreateNode(ent, effect.Value, trigger, depth);
     }
 
     /// <summary>

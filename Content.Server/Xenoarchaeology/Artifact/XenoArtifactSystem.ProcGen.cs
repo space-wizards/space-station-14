@@ -14,6 +14,15 @@ public sealed partial class XenoArtifactSystem
 {
     [Dependency] private EntityTableSystem _entityTable = default!;
 
+    // pre-allocated list for storing generated nodes in current segment during generation process
+    private readonly List<Entity<XenoArtifactNodeComponent>> _generatedInCurrentScope = new(20);
+    // pre-allocated list for storing generated nodes in current layer of current segment during generation process
+    private readonly List<Entity<XenoArtifactNodeComponent>> _currentLayerNodes = new(8);
+    // pre-allocated list for storing generated nodes in previous layer of current segment during generation process
+    private readonly List<Entity<XenoArtifactNodeComponent>> _previousLayerNodes = new(8);
+    // pre-allocated list for storing direct predecessor nodes, calculated for each node during artifact generation process
+    private readonly List<Entity<XenoArtifactNodeComponent>> _directPredecessors = new(8);
+
     private void GenerateArtifactStructure(Entity<XenoArtifactComponent> ent)
     {
         var desiredNodeCount = ent.Comp.NodeCount.Next(RobustRandom);
@@ -51,7 +60,7 @@ public sealed partial class XenoArtifactSystem
         var nodesForSegmentToGenerate = GetArtifactSegmentDesiredSize(ent, maxNodeCount);
         var depth = 0;
         IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> generatedNodes = [];
-        List<Entity<XenoArtifactNodeComponent>> totalGenerated = new();
+        _generatedInCurrentScope.Clear();
         while (nodesForSegmentToGenerate != 0)
         {
             generatedNodes = PopulateLayer(ent, triggers, effects, generatedNodes, triggerPool, nodesForSegmentToGenerate, depth);
@@ -60,16 +69,16 @@ public sealed partial class XenoArtifactSystem
 
             nodesForSegmentToGenerate -= generatedNodes.Count;
 
-            totalGenerated.AddRange(generatedNodes);
+            _generatedInCurrentScope.AddRange(generatedNodes);
             depth++;
         }
 
-        if (totalGenerated.Count == 0)
+        if (_generatedInCurrentScope.Count == 0)
             return 0;
 
-        AddEdgesToUnderConnectedNodes(ent, totalGenerated);
+        AddEdgesToUnderConnectedNodes(ent, _generatedInCurrentScope);
 
-        return totalGenerated.Count;
+        return _generatedInCurrentScope.Count;
     }
 
     /// <summary>
@@ -99,48 +108,51 @@ public sealed partial class XenoArtifactSystem
         var desiredNodeCount = 1;
         if (maxPerLayer >= minPerLayer)
             desiredNodeCount = new MinMax(minPerLayer, maxPerLayer).Next(RobustRandom);
-
-        var nodes = new List<Entity<XenoArtifactNodeComponent>>();
+        _previousLayerNodes.Clear();
+        _previousLayerNodes.AddRange(predecessors);
+        _currentLayerNodes.Clear();
         var scatterCount = ent.Comp.ScatterPerLayer.Next(RobustRandom);
 
         for (var i = 0; i < desiredNodeCount; i++)
         {
-            var directPredecessors = SelectDirectPredecessors(predecessors, scatterCount);
+            var directPredecessors = SelectDirectPredecessors(_previousLayerNodes, scatterCount);
             scatterCount -= (directPredecessors.Count - 1);
-           
-            var trigger = _entityTable.GetSpawns(triggers, RobustRandom, triggerPool.Context)
-                                      .FirstOrDefault();
-            // TODO: handle null
 
-            var nodeEntity = CreateNode(ent, directPredecessors, trigger, effects, iteration);
+            EntProtoId? trigger = _entityTable.GetSpawns(triggers, RobustRandom, triggerPool.Context)
+                                              .FirstOrDefault();
+
+            if (trigger == null)
+                continue;
+
+            var nodeEntity = CreateNode(ent, trigger.Value, effects, iteration);
             if (!nodeEntity.HasValue)
                 continue;
 
-            triggerPool.AddTriggerAsUsed(trigger);
+            triggerPool.AddTriggerAsUsed(trigger.Value);
 
-            nodes.Add(nodeEntity.Value);
+            _currentLayerNodes.Add(nodeEntity.Value);
 
             foreach (var predecessorForEdge in directPredecessors)
             {
                 AddEdge((ent, ent), predecessorForEdge, nodeEntity.Value, dirty: false);
             }
         }
-        
-        return nodes;
+
+        return _currentLayerNodes;
     }
 
-    private List<Entity<XenoArtifactNodeComponent>> SelectDirectPredecessors(
+    private IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> SelectDirectPredecessors(
         IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> predecessors,
         int scatterCount
     )
     {
-        List<Entity<XenoArtifactNodeComponent>> directPredecessors = new();
         ValueList<Entity<XenoArtifactNodeComponent>> predecessorsToUse = new(predecessors);
         if (predecessors.Count <= 0)
-            return directPredecessors;
+            return [];
 
+        _directPredecessors.Clear();
         var predecessor = RobustRandom.Pick(predecessorsToUse);
-        directPredecessors.Add(predecessor);
+        _directPredecessors.Add(predecessor);
         predecessorsToUse.Remove(predecessor);
 
         // randomly add in some extra edges for variance.
@@ -148,13 +160,13 @@ public sealed partial class XenoArtifactSystem
         {
             scatterCount--;
             var predecessorFromScatter = RobustRandom.Pick(predecessorsToUse);
-            directPredecessors.Add(predecessorFromScatter);
+            _directPredecessors.Add(predecessorFromScatter);
             predecessorsToUse.Remove(predecessor);
             if (RobustRandom.Prob(0.5f))
                 break;
         }
 
-        return directPredecessors;
+        return _directPredecessors;
     }
 
 
