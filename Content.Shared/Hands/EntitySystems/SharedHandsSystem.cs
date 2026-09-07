@@ -519,7 +519,7 @@ public abstract partial class SharedHandsSystem
     /// <returns>false if hand is holding something. true if hand is empty (or doesn't exist).</returns>
     public bool HandIsEmpty(Entity<HandsComponent?> ent, string handId)
     {
-        return TryGetHeldItem(ent, handId, out _);
+        return !TryGetHeldItem(ent, handId, out _);
     }
 
     /// <summary>
