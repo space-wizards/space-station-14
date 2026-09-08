@@ -630,10 +630,6 @@ CigaretteSpaceDrugs: CigaretteLipolicide
 CigaretteMilk: CigaretteHaloperidol
 CigaretteBread: CigaretteBbqSauce
 
-# 2025-05-05
-ChemistryHotplate: MachineThermobath
-HotplateMachineCircuitboard: ThermobathMachineCircuitboard
-
 # 2025-05-09
 ClothingOuterHardsuitBasic: ClothingOuterHardsuitEVA
 ClothingHeadHelmetHardsuitBasic: null
@@ -1136,3 +1132,7 @@ JanitorServiceLight: null
 
 #2026-08-31
 DrinkWaterJug: JugWater
+
+# 2026-09-08
+ChemistryHotplate: MachineThermobath
+HotplateMachineCircuitboard: ThermobathMachineCircuitboard
