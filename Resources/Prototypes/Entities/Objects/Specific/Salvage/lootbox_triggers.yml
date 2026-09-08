@@ -294,37 +294,57 @@
 #- type: entity  # requires access trigger PR
 #  id: LootboxTriggerAccessCE # description not needed as it shows access requirements
 #  components:
-#  - type: XATAccess
-#    accessSound: "/Audio/Machines/beep.ogg"
 #  - type: AccessReader
-#    access: [["ChiefEngineer"]]
 #    loggingDisabled: true
+#  - type: XATAccess
+#    deniedSound:
+#      path: /Audio/Machines/airlock_deny.ogg
+#    potentialAccess:
+#    - ChiefEngineer
+#    - Atmospherics
+#    - Engineering
 #
 #- type: entity
 #  id: LootboxTriggerAccessHOS
 #  parent: LootboxTriggerAccessCE
 #  components:
-#  - type: AccessReader
-#    access: [["HeadOfSecurity"]]
+#  - type: XATAccess
+#    potentialAccess:
+#    - HeadOfSecurity
+#    - Armory
+#    - Lawyer
+#    - Security
 #
 #- type: entity
 #  id: LootboxTriggerAccessRD
 #  parent: LootboxTriggerAccessCE
 #  components:
-#  - type: AccessReader
-#    access: [["ResearchDirector"]]
+#  - type: XATAccess
+#    potentialAccess: # can't "give out" cyborg access so would be impossible to open if there was no cyborg on the station
+#    - ResearchDirector
+#    - Research
 #
 #- type: entity
 #  id: LootboxTriggerAccessCMO
 #  parent: LootboxTriggerAccessCE
 #  components:
-#  - type: AccessReader
-#    access: [["ChiefMedicalOfficer"]]
+#  - type: XATAccess
+#    potentialAccess:
+#    - ChiefMedicalOfficer
+#    - Medical
+#    - Chemistry
 #
 #- type: entity
 #  id: LootboxTriggerAccessHOP
 #  parent: LootboxTriggerAccessCE
 #  components:
-#  - type: AccessReader
-#    access: [["HeadOfPersonnel"]]
+#  - type: XATAccess
+#    potentialAccess:
+#    - HeadOfPersonnel
+#    - Hydroponics
+#    - Kitchen
+#    - Bar
+#    - Theatre
+#    - Service
+#    - Chapel
 

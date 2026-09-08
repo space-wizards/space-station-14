@@ -443,7 +443,7 @@
     # !Legendary Item!
     - !type:AllSelector
       weight: 0.076 # ~1/125 chance
-      children: # body scanner is salvagable elsewhere
+      children: # body scanner is salvagable elsewhere, can't be too generous...
         - id: CloningConsoleComputerCircuitboard
         - id: CloningPodMachineCircuitboard
 
