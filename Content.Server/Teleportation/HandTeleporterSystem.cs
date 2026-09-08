@@ -233,7 +233,8 @@ public sealed partial class HandTeleporterSystem : EntitySystem
     /// <param name="instability">if it should send an "instability" popup to the user</param>
     private void FizzlePortals(Entity<HandTeleporterComponent> entity, EntityUid? user, bool instability)
     {
-        LogPortalClosure(entity, user);
+        LogPortalClosure(entity.Comp.FirstPortal, entity, user);
+        LogPortalClosure(entity.Comp.SecondPortal, entity, user);
 
         // Clear both portals
         if (!Deleted(entity.Comp.FirstPortal))
@@ -255,23 +256,17 @@ public sealed partial class HandTeleporterSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("handheld-teleporter-instability-fizzle"), entity, user.Value, PopupType.MediumCaution);
     }
 
-    private void LogPortalClosure(Entity<HandTeleporterComponent> entity, EntityUid? user)
+    private void LogPortalClosure(EntityUid? portal, EntityUid teleporter, EntityUid? user)
     {
-        var portalStrings = "";
-        portalStrings += ToPrettyString(entity.Comp.FirstPortal);
-        if (portalStrings != "")
-            portalStrings += " and ";
-        portalStrings += ToPrettyString(entity.Comp.SecondPortal);
-
-        if (portalStrings == "")
+        if (Deleted(portal))
             return;
 
         if (user != null)
         {
-            _adminLogger.Add(LogType.EntityDelete, LogImpact.High, $"{ToPrettyString(user):player} closed {portalStrings} with {ToPrettyString(entity)}");
+            _adminLogger.Add(LogType.EntityDelete, LogImpact.High, $"{ToPrettyString(user):player} closed {ToPrettyString(portal)} with {ToPrettyString(teleporter)}");
             return;
         }
 
-        _adminLogger.Add(LogType.EntityDelete, LogImpact.High, $"{portalStrings} were closed");
+        _adminLogger.Add(LogType.EntityDelete, LogImpact.High, $"{ToPrettyString(portal)} was closed by {ToPrettyString(teleporter)}");
     }
 }
