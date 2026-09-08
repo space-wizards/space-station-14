@@ -190,6 +190,8 @@
     receiveFrequencyId: SurveillanceCamera
     transmitFrequencyId: SurveillanceCamera
     prefix: device-address-prefix-camera-router-wireless
+  - type: DeviceNetworkRouter
+  - type: SurveillanceCameraRouter
   - type: WirelessNetworkConnection
     range: 200
   - type: DeviceNetworkRequiresPower
