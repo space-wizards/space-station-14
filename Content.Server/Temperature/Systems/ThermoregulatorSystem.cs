@@ -93,6 +93,9 @@ public sealed partial class ThermoregulatorSystem : SharedThermoregulatorSystem
         DirtyField(ent.AsNullable(), nameof(ThermoregulatorComponent.ActiveMode));
     }
 
+    /// <summary>
+    /// Conducts heat between the thermoregulator and another heat container.
+    /// </summary>
     public void ConductHeatWith(
         Entity<ThermoregulatorComponent?> ent,
         ref HeatContainer otherHeatContainer)

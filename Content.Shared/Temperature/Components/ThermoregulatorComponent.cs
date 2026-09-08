@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.Temperature.Components;
 
 /// <summary>
-/// Generic implementation of a hysteresis-based temperature controller.
+/// Generic temperature controller with a configurable setpoint.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedThermoregulatorSystem))]
 [AutoGenerateComponentState(true, fieldDeltas: true), AutoGenerateComponentPause]
