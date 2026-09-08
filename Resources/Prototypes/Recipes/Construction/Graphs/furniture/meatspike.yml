@@ -21,6 +21,10 @@
     entity: KitchenSpike
     edges:
     - to: start
+      conditions:
+      - !type:ContainerEmpty
+        container: body
+        examineText: comp-kitchen-spike-deconstruct-occupied
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1

@@ -7,7 +7,7 @@ namespace Content.Server.Objectives.Systems;
 /// <summary>
 /// Handles species requirement for objectives that require a certain species.
 /// </summary>
-public sealed class SpeciesRequirementSystem : EntitySystem
+public sealed partial class SpeciesRequirementSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -21,7 +21,7 @@ public sealed class SpeciesRequirementSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        if (!TryComp<HumanoidAppearanceComponent>(args.Mind.OwnedEntity, out var appearance)) {
+        if (!TryComp<HumanoidProfileComponent>(args.Mind.OwnedEntity, out var appearance)) {
             args.Cancelled = true;
             return;
         }

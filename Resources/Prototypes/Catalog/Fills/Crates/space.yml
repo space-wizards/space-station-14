@@ -1,0 +1,75 @@
+- type: entity
+  parent: CrateCommandSecure
+  id: CrateEvaKit
+  name: EVA kit
+  description: A set consisting of two prestigious EVA suits and helmets. Requires Command access to open.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingHeadHelmetEVA
+          amount: 2
+        - id: ClothingOuterHardsuitEVA
+          amount: 2
+
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateSpaceJetpack
+  name: jetpack crate
+  description: Two jetpacks for those who don't know how to use fire extinguishers.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: JetpackBlue
+        amount: 2
+
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateSpaceMiniJetpack
+  name: mini jetpack crate
+  description: Two mini jetpacks for those who want an extra challenge.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: JetpackMini
+        amount: 2
+
+- type: entity
+  parent: CrateEngineering
+  id: CrateSpaceGyroscope
+  name: gyroscope crate
+  description: Contains a gyroscope flatpack.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: GyroscopeFlatpack
+
+- type: entity
+  parent: CrateEngineering
+  id: CrateSpaceThruster
+  name: thruster crate
+  description: Contains a thruster flatpack.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: ThrusterFlatpack
+
+- type: entity
+  parent: CrateEngineeringSecure
+  id: CrateSpaceShuttlePower
+  name: shuttle powering crate
+  description: A crate containing all needs for shuttle powering.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: WallmountSubstationElectronics
+        - id: WallmountGeneratorAPUElectronics
+        - id: HandheldGPSBasic
+        - id: InflatableDoorStack1

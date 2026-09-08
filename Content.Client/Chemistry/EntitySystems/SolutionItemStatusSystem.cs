@@ -9,9 +9,9 @@ namespace Content.Client.Chemistry.EntitySystems;
 /// Wires up item status logic for <see cref="SolutionItemStatusComponent"/>.
 /// </summary>
 /// <seealso cref="SolutionStatusControl"/>
-public sealed class SolutionItemStatusSystem : EntitySystem
+public sealed partial class SolutionItemStatusSystem : EntitySystem
 {
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
     public override void Initialize()
     {

@@ -29,7 +29,7 @@ public sealed partial class StoreWhitelistCondition : ListingCondition
         var whitelistSystem = ent.System<EntityWhitelistSystem>();
 
         if (whitelistSystem.IsWhitelistFail(Whitelist, args.StoreEntity.Value) ||
-            whitelistSystem.IsBlacklistPass(Blacklist, args.StoreEntity.Value))
+            whitelistSystem.IsWhitelistPass(Blacklist, args.StoreEntity.Value))
             return false;
 
         return true;

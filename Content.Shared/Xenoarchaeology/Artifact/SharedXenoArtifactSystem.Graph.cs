@@ -53,8 +53,8 @@ public abstract partial class SharedXenoArtifactSystem
     /// <exception cref="ArgumentException">Throws if requested index doesn't exist on artifact. </exception>
     public Entity<XenoArtifactNodeComponent> GetNode(Entity<XenoArtifactComponent> ent, int index)
     {
-        if (ent.Comp.NodeVertices[index] is { } netUid && GetEntity(netUid) is var uid)
-            return (uid, XenoArtifactNode(uid));
+        if (ent.Comp.NodeVertices[index] is { } netUid && GetEntity(netUid) is var uid && _nodeQuery.TryComp(uid, out var comp))
+            return (uid, comp);
 
         throw new ArgumentException($"index {index} does not correspond to an existing node in {ToPrettyString(ent)}");
     }
@@ -71,8 +71,8 @@ public abstract partial class SharedXenoArtifactSystem
         if (index < 0 || index >= ent.Comp.NodeVertices.Length)
             return false;
 
-        if (ent.Comp.NodeVertices[index] is { } netUid && GetEntity(netUid) is var uid)
-            node = (uid, XenoArtifactNode(uid));
+        if (ent.Comp.NodeVertices[index] is { } netUid && GetEntity(netUid) is var uid && _nodeQuery.TryComp(uid, out var comp))
+            node = (uid, comp);
 
         return node != null;
     }
@@ -102,8 +102,8 @@ public abstract partial class SharedXenoArtifactSystem
     {
         foreach (var netNode in ent.Comp.NodeVertices)
         {
-            if (TryGetEntity(netNode, out var node))
-                yield return (node.Value, XenoArtifactNode(node.Value));
+            if (TryGetEntity(netNode, out var node) && _nodeQuery.TryComp(node, out var comp))
+                yield return (node.Value, comp);
         }
     }
 
@@ -253,7 +253,8 @@ public abstract partial class SharedXenoArtifactSystem
             return false;
 
         var uid = Spawn(entProtoId);
-        node = (uid, XenoArtifactNode(uid));
+        var comp = EnsureComp<XenoArtifactNodeComponent>(uid);
+        node = (uid, comp);
         return AddNode(ent, (node.Value, node.Value.Comp), dirty: dirty);
     }
 
@@ -269,11 +270,10 @@ public abstract partial class SharedXenoArtifactSystem
     /// <returns>True if node adding was successful, false otherwise.</returns>
     public bool AddNode(Entity<XenoArtifactComponent?> ent, Entity<XenoArtifactNodeComponent?> node, bool dirty = true)
     {
-        if (!Resolve(ent, ref ent.Comp))
+        if (!Resolve(ent, ref ent.Comp) || !Resolve(node, ref node.Comp, false))
             return false;
 
-        node.Comp ??= XenoArtifactNode(node);
-        node.Comp.Attached = GetNetEntity(ent);
+        node.Comp.Attached = ent.Owner;
 
         var nodeIdx = GetFreeNodeIndex((ent, ent.Comp));
         _container.Insert(node.Owner, ent.Comp.NodeContainer);
@@ -300,10 +300,8 @@ public abstract partial class SharedXenoArtifactSystem
     /// <returns>True if node was removed successfully, false otherwise.</returns>
     public bool RemoveNode(Entity<XenoArtifactComponent?> ent, Entity<XenoArtifactNodeComponent?> node, bool dirty = true)
     {
-        if (!Resolve(ent, ref ent.Comp))
+        if (!Resolve(ent, ref ent.Comp) || !Resolve(node, ref node.Comp, false))
             return false;
-
-        node.Comp ??= XenoArtifactNode(node);
 
         if (!TryGetIndex(ent, node, out var idx))
             return false; // node isn't attached to this entity.

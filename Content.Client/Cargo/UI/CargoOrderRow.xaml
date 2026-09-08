@@ -1,33 +1,81 @@
-﻿<PanelContainer xmlns="https://spacestation14.io"
-                HorizontalExpand="True"
-                Margin="0 1">
-    <BoxContainer Orientation="Horizontal"
-                  HorizontalExpand="True">
-        <TextureRect Name="Icon"
-                     Access="Public"
-                     MinSize="32 32"
-                     RectClipContent="True" />
-        <Control MinWidth="5"/>
-        <BoxContainer Orientation="Vertical"
-                      HorizontalExpand="True"
-                      VerticalExpand="True">
-            <RichTextLabel Name="ProductName"
-                   Access="Public"
-                   HorizontalExpand="True"
-                   StyleClasses="LabelSubText" />
-            <Label Name="Description"
-                   Access="Public"
-                   HorizontalExpand="True"
-                   StyleClasses="LabelSubText"
-                   ClipText="True" />
+<PanelContainer
+    xmlns="https://spacestation14.io"
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    HorizontalExpand="True"
+    StyleClasses="BackgroundPanel">
+
+    <!-- Main Container -->
+    <BoxContainer Orientation="Vertical"
+                  HorizontalExpand="True"
+                  SeparationOverride="6"
+                  Margin="-14 -2">
+
+        <BoxContainer Orientation="Vertical">
+            <Control>
+                <PanelContainer StyleClasses="WindowHeadingBackground" />
+
+                <BoxContainer Margin="6">
+                    <Label Name="Title"
+                           Access="Public"
+                           MaxHeight="28"
+                           StyleClasses="LabelKeyText"/>
+                </BoxContainer>
+            </Control>
+
+            <PanelContainer Name="Stride"
+                Access="Public"
+                StyleClasses="LowDivider" />
         </BoxContainer>
-        <Button Name="Approve"
-                Access="Public"
-                Text="{Loc 'cargo-console-menu-cargo-order-row-approve-button'}"
-                StyleClasses="OpenRight" />
-        <Button Name="Cancel"
-                Access="Public"
-                Text="{Loc 'cargo-console-menu-cargo-order-row-cancel-button'}"
-                StyleClasses="OpenLeft" />
+
+        <!-- Info -->
+        <BoxContainer>
+            <TextureRect Name="Icon"
+                         Access="Public"
+                         MinSize="32 32"
+                         Margin="4"
+                         Stretch="KeepAspectCentered"
+                         RectClipContent="True"
+                         VerticalAlignment="Center"/>
+
+            <PanelContainer StyleClasses="LowDivider" Margin="4 0"/>
+
+            <BoxContainer Orientation="Vertical"
+                          HorizontalExpand="True"
+                          VerticalExpand="True">
+
+                <RichTextLabel Name="ProductName"
+                       Access="Public"
+                       HorizontalExpand="True"
+                       VerticalExpand="True"
+                       StyleClasses="LabelSubText" />
+
+                <Label Name="Description"
+                       Access="Public"
+                       HorizontalExpand="True"
+                       VerticalExpand="True"
+                       StyleClasses="LabelSubText"
+                       ClipText="True" />
+            </BoxContainer>
+        </BoxContainer>
+
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer StyleClasses="LowDivider" />
+
+            <!-- Buttons -->
+            <!-- Btn's position hardcoded (args.Button.Parent?.Parent?.Parent type) in CargoConsoleBUI 158 & 166 line -->
+            <BoxContainer Margin="6">
+                <Button Name="Approve"
+                        Access="Public"
+                        Text="{Loc 'cargo-console-menu-order-row-button-approve'}"
+                        StyleClasses="OpenRight"
+                        HorizontalExpand="True"/>
+
+                <Button Name="Cancel"
+                        Access="Public"
+                        Text="{Loc 'cargo-console-menu-order-row-button-cancel'}"
+                        StyleClasses="OpenLeft"
+                        HorizontalExpand="True" />
+            </BoxContainer>
+        </BoxContainer>
     </BoxContainer>
 </PanelContainer>

@@ -5,20 +5,18 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.RichText;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.MapText;
 
 /// <inheritdoc/>
-public sealed class MapTextSystem : SharedMapTextSystem
+public sealed partial class MapTextSystem : SharedMapTextSystem
 {
-    [Dependency] private readonly IConfigurationManager _configManager = default!;
-    [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly IResourceCache _resourceCache = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IOverlayManager _overlayManager = default!;
+    [Dependency] private IConfigurationManager _configManager = default!;
+    [Dependency] private IUserInterfaceManager _uiManager = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IResourceCache _resourceCache = default!;
+    [Dependency] private IOverlayManager _overlayManager = default!;
 
     private MapTextOverlay _overlay = default!;
 
@@ -28,18 +26,18 @@ public sealed class MapTextSystem : SharedMapTextSystem
         SubscribeLocalEvent<MapTextComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<MapTextComponent, ComponentHandleState>(HandleCompState);
 
-        _overlay = new MapTextOverlay(_configManager, EntityManager, _uiManager, _transform, _resourceCache, _prototypeManager);
+        _overlay = new MapTextOverlay(_configManager, EntityManager, _uiManager, _transform, _resourceCache, ProtoMan);
         _overlayManager.AddOverlay(_overlay);
 
         // TODO move font prototype to robust.shared, then use ProtoId<FontPrototype>
-        DebugTools.Assert(_prototypeManager.HasIndex<FontPrototype>(SharedMapTextComponent.DefaultFont));
+        DebugTools.Assert(ProtoMan.HasIndex<FontPrototype>(SharedMapTextComponent.DefaultFont));
     }
 
     private void OnComponentStartup(Entity<MapTextComponent> ent, ref ComponentStartup args)
     {
         CacheText(ent.Comp);
         // TODO move font prototype to robust.shared, then use ProtoId<FontPrototype>
-        DebugTools.Assert(_prototypeManager.HasIndex<FontPrototype>(ent.Comp.FontId));
+        DebugTools.Assert(ProtoMan.HasIndex<FontPrototype>(ent.Comp.FontId));
     }
 
     private void HandleCompState(Entity<MapTextComponent> ent, ref ComponentHandleState args)
@@ -65,12 +63,12 @@ public sealed class MapTextSystem : SharedMapTextSystem
             ? Loc.GetString(component.LocText)
             : component.Text;
 
-        if (!_prototypeManager.TryIndex<FontPrototype>(component.FontId, out var fontPrototype))
+        if (!ProtoMan.TryIndex<FontPrototype>(component.FontId, out var fontPrototype))
         {
             component.CachedText = Loc.GetString("map-text-font-error");
             component.Color = Color.Red;
 
-            if(_prototypeManager.TryIndex<FontPrototype>(SharedMapTextComponent.DefaultFont, out var @default))
+            if (ProtoMan.TryIndex<FontPrototype>(SharedMapTextComponent.DefaultFont, out var @default))
                 component.CachedFont = new VectorFont(_resourceCache.GetResource<FontResource>(@default.Path), 14);
             return;
         }

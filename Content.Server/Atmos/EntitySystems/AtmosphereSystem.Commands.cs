@@ -12,14 +12,17 @@ namespace Content.Server.Atmos.EntitySystems;
 
 public sealed partial class AtmosphereSystem
 {
-    [Dependency] private readonly IConsoleHost _consoleHost = default!;
+    [Dependency] private IConsoleHost _consoleHost = default!;
+    [Dependency] private EntityQuery<AtmosFixMarkerComponent> _atmosFixMarkerQuery = default!;
 
     private void InitializeCommands()
     {
         // Fix Grid Atmos command.
         _consoleHost.RegisterCommand("fixgridatmos",
             "Makes every tile on a grid have a roundstart gas mix.",
-            "fixgridatmos <grid Ids>", FixGridAtmosCommand, FixGridAtmosCommandCompletions);
+            "fixgridatmos <grid Ids>",
+            FixGridAtmosCommand,
+            FixGridAtmosCommandCompletions);
     }
 
     private void ShutdownCommands()
@@ -30,94 +33,105 @@ public sealed partial class AtmosphereSystem
     [AdminCommand(AdminFlags.Debug)]
     private void FixGridAtmosCommand(IConsoleShell shell, string argstr, string[] args)
     {
-       if (args.Length == 0)
-       {
-           shell.WriteError("Not enough arguments.");
-           return;
-       }
+        if (args.Length == 0)
+        {
+            shell.WriteError("Not enough arguments.");
+            return;
+        }
 
-       var mixtures = new GasMixture[9];
-       for (var i = 0; i < mixtures.Length; i++)
-           mixtures[i] = new GasMixture(Atmospherics.CellVolume) { Temperature = Atmospherics.T20C };
+        foreach (var arg in args)
+        {
+            if (!NetEntity.TryParse(arg, out var netEntity) || !TryGetEntity(netEntity, out var euid))
+            {
+                shell.WriteError($"Failed to parse euid '{arg}'.");
+                return;
+            }
 
-       // 0: Air
-       mixtures[0].AdjustMoles(Gas.Oxygen, Atmospherics.OxygenMolesStandard);
-       mixtures[0].AdjustMoles(Gas.Nitrogen, Atmospherics.NitrogenMolesStandard);
+            if (!TryComp(euid, out MapGridComponent? gridComp))
+            {
+                shell.WriteError($"Euid '{euid}' does not exist or is not a grid.");
+                return;
+            }
 
-       // 1: Vaccum
+            if (!TryComp(euid, out GridAtmosphereComponent? gridAtmosphere))
+            {
+                shell.WriteError($"Grid \"{euid}\" has no atmosphere component, try addatmos.");
+                continue;
+            }
 
-       // 2: Oxygen (GM)
-       mixtures[2].AdjustMoles(Gas.Oxygen, Atmospherics.MolesCellGasMiner);
+            RebuildGridAtmosphere((euid.Value, gridAtmosphere, gridComp));
+        }
+    }
 
-       // 3: Nitrogen (GM)
-       mixtures[3].AdjustMoles(Gas.Nitrogen, Atmospherics.MolesCellGasMiner);
+    /// <summary>
+    /// Rebuilds all <see cref="TileAtmosphere"/>s on a grid to have roundstart gas mixes.
+    /// </summary>
+    /// <remarks>Please be responsible with this method. Used only by tests and fixgridatmos.</remarks>
+    public void RebuildGridAtmosphere(Entity<GridAtmosphereComponent, MapGridComponent> ent)
+    {
+        var mixtures = new GasMixture[9];
+        for (var i = 0; i < mixtures.Length; i++)
+        {
+            mixtures[i] = new GasMixture(Atmospherics.CellVolume) { Temperature = Atmospherics.T20C };
+        }
 
-       // 4: Plasma (GM)
-       mixtures[4].AdjustMoles(Gas.Plasma, Atmospherics.MolesCellGasMiner);
+        // 0: Air
+        mixtures[0].AdjustMoles(Gas.Oxygen, Atmospherics.OxygenMolesStandard);
+        mixtures[0].AdjustMoles(Gas.Nitrogen, Atmospherics.NitrogenMolesStandard);
 
-       // 5: Instant Plasmafire (r)
-       mixtures[5].AdjustMoles(Gas.Oxygen, Atmospherics.MolesCellGasMiner);
-       mixtures[5].AdjustMoles(Gas.Plasma, Atmospherics.MolesCellGasMiner);
-       mixtures[5].Temperature = 5000f;
+        // 1: Vaccum
 
-       // 6: (Walk-In) Freezer
-       mixtures[6].AdjustMoles(Gas.Oxygen, Atmospherics.OxygenMolesFreezer);
-       mixtures[6].AdjustMoles(Gas.Nitrogen, Atmospherics.NitrogenMolesFreezer);
-       mixtures[6].Temperature = Atmospherics.FreezerTemp; // Little colder than an actual freezer but gives a grace period to get e.g. themomachines set up, should keep warm for a few door openings
+        // 2: Oxygen (GM)
+        mixtures[2].AdjustMoles(Gas.Oxygen, Atmospherics.MolesCellGasMiner);
 
-       // 7: Nitrogen (101kpa) for vox rooms
-       mixtures[7].AdjustMoles(Gas.Nitrogen, Atmospherics.MolesCellStandard);
+        // 3: Nitrogen (GM)
+        mixtures[3].AdjustMoles(Gas.Nitrogen, Atmospherics.MolesCellGasMiner);
 
-       // 8: Air (GM)
-       mixtures[8].AdjustMoles(Gas.Oxygen, Atmospherics.OxygenMolesGasMiner);
-       mixtures[8].AdjustMoles(Gas.Nitrogen, Atmospherics.NitrogenMolesGasMiner);
+        // 4: Plasma (GM)
+        mixtures[4].AdjustMoles(Gas.Plasma, Atmospherics.MolesCellGasMiner);
 
-       foreach (var arg in args)
-       {
-           if (!NetEntity.TryParse(arg, out var netEntity) || !TryGetEntity(netEntity, out var euid))
-           {
-               shell.WriteError($"Failed to parse euid '{arg}'.");
-               return;
-           }
+        // 5: Instant Plasmafire (r)
+        mixtures[5].AdjustMoles(Gas.Oxygen, Atmospherics.MolesCellGasMiner);
+        mixtures[5].AdjustMoles(Gas.Plasma, Atmospherics.MolesCellGasMiner);
+        mixtures[5].Temperature = 5000f;
 
-           if (!TryComp(euid, out MapGridComponent? gridComp))
-           {
-               shell.WriteError($"Euid '{euid}' does not exist or is not a grid.");
-               return;
-           }
+        // 6: (Walk-In) Freezer
+        mixtures[6].AdjustMoles(Gas.Oxygen, Atmospherics.OxygenMolesFreezer);
+        mixtures[6].AdjustMoles(Gas.Nitrogen, Atmospherics.NitrogenMolesFreezer);
+        mixtures[6].Temperature = Atmospherics.FreezerTemp; // Little colder than an actual freezer but gives a grace period to get e.g. themomachines set up, should keep warm for a few door openings
 
-           if (!TryComp(euid, out GridAtmosphereComponent? gridAtmosphere))
-           {
-               shell.WriteError($"Grid \"{euid}\" has no atmosphere component, try addatmos.");
-               continue;
-           }
+        // 7: Nitrogen (101kpa) for vox rooms
+        mixtures[7].AdjustMoles(Gas.Nitrogen, Atmospherics.MolesCellStandard);
 
-           // Force Invalidate & update air on all tiles
-           Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> grid =
-               new(euid.Value, gridAtmosphere, Comp<GasTileOverlayComponent>(euid.Value), gridComp, Transform(euid.Value));
+        // 8: Air (GM)
+        mixtures[8].AdjustMoles(Gas.Oxygen, Atmospherics.OxygenMolesGasMiner);
+        mixtures[8].AdjustMoles(Gas.Nitrogen, Atmospherics.NitrogenMolesGasMiner);
 
-           RebuildGridTiles(grid);
 
-           var query = GetEntityQuery<AtmosFixMarkerComponent>();
-           foreach (var (indices, tile) in gridAtmosphere.Tiles.ToArray())
-           {
-               if (tile.Air is not {Immutable: false} air)
-                   continue;
+        // Force Invalidate & update air on all tiles
+        Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> grid =
+            new(ent.Owner, ent.Comp1, Comp<GasTileOverlayComponent>(ent), ent.Comp2, Transform(ent));
 
-               air.Clear();
-               var mixtureId = 0;
-               var enumerator = _mapSystem.GetAnchoredEntitiesEnumerator(grid, grid, indices);
-               while (enumerator.MoveNext(out var entUid))
-               {
-                   if (query.TryComp(entUid, out var marker))
-                       mixtureId = marker.Mode;
-               }
+        RebuildGridTiles(grid);
 
-               var mixture = mixtures[mixtureId];
-               Merge(air, mixture);
-               air.Temperature = mixture.Temperature;
-           }
-       }
+        foreach (var (indices, tile) in ent.Comp1.Tiles.ToArray())
+        {
+            if (tile.Air is not { Immutable: false } air)
+                continue;
+
+            air.Clear();
+            var mixtureId = 0;
+            var enumerator = _mapSystem.GetAnchoredEntities(grid, grid, indices);
+            while (enumerator.MoveNext(out var entUid))
+            {
+                if (_atmosFixMarkerQuery.TryComp(entUid, out var marker))
+                    mixtureId = marker.Mode;
+            }
+
+            var mixture = mixtures[mixtureId];
+            Merge(air, mixture);
+            air.Temperature = mixture.Temperature;
+        }
     }
 
     /// <summary>
@@ -148,7 +162,7 @@ public sealed partial class AtmosphereSystem
         var volume = GetVolumeForTiles(ent);
         TryComp(ent.Comp4.MapUid, out MapAtmosphereComponent? mapAtmos);
 
-        var enumerator = _map.GetAllTilesEnumerator(ent, ent);
+        var enumerator = _map.GetAllTiles(ent, ent);
         while (enumerator.MoveNext(out var tileRef))
         {
             var tile = GetOrNewTile(ent, ent, tileRef.Value.GridIndices);
@@ -169,7 +183,7 @@ public sealed partial class AtmosphereSystem
         if (playerMap == null)
             return CompletionResult.FromOptions(options);
 
-        foreach (var grid in _mapManager.GetAllGrids(playerMap.Value).OrderBy(o => o.Owner))
+        foreach (var grid in _mapSystem.GetAllGrids(playerMap.Value).OrderBy(o => o.Owner))
         {
             var uid = grid.Owner;
             if (!TryComp(uid, out TransformComponent? gridXform))

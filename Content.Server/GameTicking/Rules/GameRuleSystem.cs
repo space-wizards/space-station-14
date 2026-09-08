@@ -1,5 +1,4 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Chat.Managers;
 using Content.Shared.GameTicking.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
@@ -9,82 +8,56 @@ namespace Content.Server.GameTicking.Rules;
 
 public abstract partial class GameRuleSystem<T> : EntitySystem where T : IComponent
 {
-    [Dependency] protected readonly IRobustRandom RobustRandom = default!;
-    [Dependency] protected readonly IChatManager ChatManager = default!;
-    [Dependency] protected readonly GameTicker GameTicker = default!;
-    [Dependency] protected readonly IGameTiming Timing = default!;
+    [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] protected IRobustRandom RobustRandom = default!;
+    [Dependency] protected GameTicker GameTicker = default!;
 
     // Not protected, just to be used in utility methods
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-    [Dependency] private readonly MapSystem _map = default!;
+    [Dependency] private AtmosphereSystem _atmosphere = default!;
+    [Dependency] private MapSystem _map = default!;
+
+    [Dependency] protected EntityQuery<GameRuleComponent> GameRuleQuery = default!;
+    [Dependency] protected EntityQuery<T> RuleQuery = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<T, GameRuleAddedEvent>(OnGameRuleAdded);
         SubscribeLocalEvent<T, GameRuleStartedEvent>(OnGameRuleStarted);
         SubscribeLocalEvent<T, GameRuleEndedEvent>(OnGameRuleEnded);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndTextAppend);
     }
 
-    private void OnStartAttempt(RoundStartAttemptEvent args)
-    {
-        if (args.Forced || args.Cancelled)
-            return;
-
-        var query = QueryAllRules();
-        while (query.MoveNext(out var uid, out _, out var gameRule))
-        {
-            var minPlayers = gameRule.MinPlayers;
-            if (args.Players.Length >= minPlayers)
-                continue;
-
-            if (gameRule.CancelPresetOnTooFewPlayers)
-            {
-                ChatManager.SendAdminAnnouncement(Loc.GetString("preset-not-enough-ready-players",
-                    ("readyPlayersCount", args.Players.Length),
-                    ("minimumPlayers", minPlayers),
-                    ("presetName", ToPrettyString(uid))));
-                args.Cancel();
-            }
-            else
-            {
-                ForceEndSelf(uid, gameRule);
-            }
-        }
-    }
-
     private void OnGameRuleAdded(EntityUid uid, T component, ref GameRuleAddedEvent args)
     {
-        if (!TryComp<GameRuleComponent>(uid, out var ruleData))
+        if (!GameRuleQuery.TryComp(uid, out var ruleData))
             return;
+
         Added(uid, component, ruleData, args);
     }
 
     private void OnGameRuleStarted(EntityUid uid, T component, ref GameRuleStartedEvent args)
     {
-        if (!TryComp<GameRuleComponent>(uid, out var ruleData))
+        if (!GameRuleQuery.TryComp(uid, out var ruleData))
             return;
+
         Started(uid, component, ruleData, args);
     }
 
     private void OnGameRuleEnded(EntityUid uid, T component, ref GameRuleEndedEvent args)
     {
-        if (!TryComp<GameRuleComponent>(uid, out var ruleData))
+        if (!GameRuleQuery.TryComp(uid, out var ruleData))
             return;
+
         Ended(uid, component, ruleData, args);
     }
 
     private void OnRoundEndTextAppend(RoundEndTextAppendEvent ev)
     {
-        var query = AllEntityQuery<T>();
-        while (query.MoveNext(out var uid, out var comp))
+        var query = QueryAllRules();
+        while (query.MoveNext(out var uid, out var comp, out var ruleData))
         {
-            if (!TryComp<GameRuleComponent>(uid, out var ruleData))
-                continue;
-
             AppendRoundEndText(uid, comp, ruleData, ref ev);
         }
     }

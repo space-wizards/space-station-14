@@ -5,9 +5,10 @@
   description: Split apart into 3 nymphs.
   components:
   - type: Action
-    icon:
-      sprite: Mobs/Species/Diona/organs.rsi
-      state: brain
+  - type: Sprite
+    sprite: Mobs/Species/Diona/organs.rsi
+    layers:
+    - state: brain
   - type: InstantAction
     event: !type:GibActionEvent {}
 
@@ -19,8 +20,9 @@
   components:
   - type: Action
     useDelay: 600 # Once every 10 minutes. Keep them dead for a fair bit before reforming
-    icon:
-      sprite: Mobs/Species/Diona/parts.rsi
-      state: full
+  - type: Sprite
+    sprite: Mobs/Species/Diona/parts.rsi
+    layers:
+    - state: full
   - type: InstantAction
     event: !type:ReformEvent {}

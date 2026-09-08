@@ -8,9 +8,9 @@ namespace Content.Shared.Engineering.Systems;
 
 public sealed partial class DisassembleOnAltVerbSystem : EntitySystem
 {
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedHandsSystem _handsSystem = default!;
+    [Dependency] private INetManager _net = default!;
 
     public override void Initialize()
     {
@@ -19,14 +19,15 @@ public sealed partial class DisassembleOnAltVerbSystem : EntitySystem
         SubscribeLocalEvent<DisassembleOnAltVerbComponent, GetVerbsEvent<AlternativeVerb>>(AddDisassembleVerb);
         SubscribeLocalEvent<DisassembleOnAltVerbComponent, DisassembleDoAfterEvent>(OnDisassembleDoAfter);
     }
-    private void AddDisassembleVerb(Entity<DisassembleOnAltVerbComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
-    {
-        if (!args.CanInteract || !args.CanAccess || args.Hands == null)
-            return;
 
+    /// <summary>
+    /// Begins disassembly of an entity.
+    /// </summary>
+    public void StartDisassembly(Entity<DisassembleOnAltVerbComponent> entity, EntityUid user)
+    {
         // Doafter setup
         var doAfterArgs = new DoAfterArgs(EntityManager,
-            args.User,
+            user,
             entity.Comp.DisassembleTime,
             new DisassembleDoAfterEvent(),
             entity,
@@ -35,12 +36,22 @@ public sealed partial class DisassembleOnAltVerbSystem : EntitySystem
             BreakOnMove = true,
         };
 
+        _doAfter.TryStartDoAfter(doAfterArgs);
+    }
+
+    private void AddDisassembleVerb(Entity<DisassembleOnAltVerbComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanInteract || !args.CanAccess || args.Hands == null)
+            return;
+
+        var user = args.User;
+
         // Actual verb stuff
         AlternativeVerb verb = new()
         {
             Act = () =>
             {
-                _doAfter.TryStartDoAfter(doAfterArgs);
+                StartDisassembly(entity, user);
             },
             Text = Loc.GetString("disassemble-system-verb-disassemble"),
             Priority = 2

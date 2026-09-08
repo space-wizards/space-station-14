@@ -1,15 +1,18 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using System.Runtime.CompilerServices;
+using Content.Shared.Examine;
 using Content.Shared.Tag;
+using Content.Shared.Wall;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Dependency = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Shared.Pinpointer;
 
-public abstract class SharedNavMapSystem : EntitySystem
+public abstract partial class SharedNavMapSystem : EntitySystem
 {
     public const int Categories = 3;
     public const int Directions = 4; // Not directly tied to number of atmos directions
@@ -22,11 +25,13 @@ public abstract class SharedNavMapSystem : EntitySystem
     public const int WallMask = AllDirMask << (int) NavMapChunkType.Wall;
     public const int FloorMask = AllDirMask << (int) NavMapChunkType.Floor;
 
-    [Robust.Shared.IoC.Dependency] private readonly TagSystem _tagSystem = default!;
-    [Robust.Shared.IoC.Dependency] private readonly INetManager _net = default!;
+    [Dependency] private TagSystem _tagSystem = default!;
+    [Dependency] private INetManager _net = default!;
 
-    private static readonly ProtoId<TagPrototype>[] WallTags = {"Wall", "Window"};
-    private EntityQuery<NavMapDoorComponent> _doorQuery;
+    [Dependency] private EntityQuery<NavMapDoorComponent> _doorQuery;
+    [Dependency] private EntityQuery<WallComponent> _wallQuery;
+
+    private static readonly ProtoId<TagPrototype>[] WallTags = ["Window"];
 
     public override void Initialize()
     {
@@ -34,7 +39,7 @@ public abstract class SharedNavMapSystem : EntitySystem
 
         // Data handling events
         SubscribeLocalEvent<NavMapComponent, ComponentGetState>(OnGetState);
-        _doorQuery = GetEntityQuery<NavMapDoorComponent>();
+        SubscribeLocalEvent<ConfigurableNavMapBeaconComponent, ExaminedEvent>(OnConfigurableExamined);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -59,7 +64,7 @@ public abstract class SharedNavMapSystem : EntitySystem
         if (_doorQuery.HasComp(uid))
             return NavMapChunkType.Airlock;
 
-        if (_tagSystem.HasAnyTag(uid, WallTags))
+        if (_wallQuery.HasComp(uid) || _tagSystem.HasAnyTag(uid, WallTags))
             return NavMapChunkType.Wall;
 
         return NavMapChunkType.Invalid;
@@ -162,6 +167,17 @@ public abstract class SharedNavMapSystem : EntitySystem
         }
 
         args.State = new NavMapDeltaState(chunks, component.Beacons, component.RegionProperties, new(component.Chunks.Keys));
+    }
+
+    private void OnConfigurableExamined(Entity<ConfigurableNavMapBeaconComponent> ent, ref ExaminedEvent args)
+    {
+        if (!args.IsInDetailsRange || !TryComp<NavMapBeaconComponent>(ent, out var navMap))
+            return;
+
+        args.PushMarkup(Loc.GetString("nav-beacon-examine-text",
+            ("enabled", navMap.Enabled),
+            ("color", navMap.Color.ToHexNoAlpha()),
+            ("label", navMap.Text ?? string.Empty)));
     }
 
     #endregion

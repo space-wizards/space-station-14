@@ -68,7 +68,7 @@
           - !type:KeyFloatLessPrecondition
             key: Count
             value: 50
-      
+
       - !type:HTNPrimitiveTask
           operator: !type:RandomOperator
             targetKey: IdleTime
@@ -85,6 +85,5 @@
     - tasks:
       - !type:HTNPrimitiveTask
         operator: !type:SpeakOperator
-          speech: "fuck!"
-
- 
+          speech: !type:SingleSpeakOperatorSpeech
+            line: "fuck!"

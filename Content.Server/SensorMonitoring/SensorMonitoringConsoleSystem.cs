@@ -1,9 +1,8 @@
 ﻿using Content.Server.Atmos.Monitor.Components;
-using Content.Server.Atmos.Monitor.Systems;
-using Content.Server.Atmos.Piping.Components;
-using Content.Server.Atmos.Piping.Unary.Components;
+using Content.Server.Atmos.Monitor.Payloads;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Generation.Teg;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
@@ -11,6 +10,7 @@ using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Systems;
+using Content.Shared.Power.Generation.Teg;
 using Content.Shared.SensorMonitoring;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
@@ -27,11 +27,10 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
     // Deleting connected devices causes exceptions
     // UI sucks. need a way to make basic dashboards like Grafana, and save them.
 
-    private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery;
-
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
-    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
+    [Dependency] private UserInterfaceSystem _userInterface = default!;
+    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
 
     public override void Initialize()
     {
@@ -43,10 +42,7 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
 
         SubscribeLocalEvent<SensorMonitoringConsoleComponent, DeviceListUpdateEvent>(DeviceListUpdated);
         SubscribeLocalEvent<SensorMonitoringConsoleComponent, ComponentStartup>(ConsoleStartup);
-        SubscribeLocalEvent<SensorMonitoringConsoleComponent, DeviceNetworkPacketEvent>(DevicePacketReceived);
         SubscribeLocalEvent<SensorMonitoringConsoleComponent, AtmosDeviceUpdateEvent>(AtmosUpdate);
-
-        _deviceNetworkQuery = GetEntityQuery<DeviceNetworkComponent>();
     }
 
     public override void Update(float frameTime)
@@ -147,99 +143,86 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
         return SensorDeviceType.Unknown;
     }
 
-    private void DevicePacketReceived(EntityUid uid, SensorMonitoringConsoleComponent component,
-        DeviceNetworkPacketEvent args)
+    [SubscribeLocalEvent]
+    private void OnTegReceived(Entity<SensorMonitoringConsoleComponent> ent, ref DeviceNetworkPacketEvent<TegSensorPayload> args)
     {
-        if (!component.Sensors.TryGetValue(args.Sender, out var sensorData))
+        var payload = args.Data;
+        if (!ent.Comp.Sensors.TryGetValue(args.Sender, out var sensorData))
             return;
 
-        if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command))
+        // @formatter:off
+        WriteSample(ent, sensorData, "teg_last_generated", SensorUnit.EnergyJ, payload.LastGeneration);
+        WriteSample(ent, sensorData, "teg_power",          SensorUnit.PowerW,  payload.PowerOutput);
+        if (ent.Comp.DebugStreams)
+            WriteSample(ent, sensorData, "teg_ramp_pos", SensorUnit.PowerW, payload.RampPosition);
+
+        WriteSample(ent, sensorData, "teg_circ_a_in_pressure",     SensorUnit.PressureKpa,  payload.CirculatorA.InletPressure);
+        WriteSample(ent, sensorData, "teg_circ_a_in_temperature",  SensorUnit.TemperatureK, payload.CirculatorA.InletTemperature);
+        WriteSample(ent, sensorData, "teg_circ_a_out_pressure",    SensorUnit.PressureKpa,  payload.CirculatorA.OutletPressure);
+        WriteSample(ent, sensorData, "teg_circ_a_out_temperature", SensorUnit.TemperatureK, payload.CirculatorA.OutletTemperature);
+
+        WriteSample(ent, sensorData, "teg_circ_b_in_pressure",     SensorUnit.PressureKpa,  payload.CirculatorB.InletPressure);
+        WriteSample(ent, sensorData, "teg_circ_b_in_temperature",  SensorUnit.TemperatureK, payload.CirculatorB.InletTemperature);
+        WriteSample(ent, sensorData, "teg_circ_b_out_pressure",    SensorUnit.PressureKpa,  payload.CirculatorB.OutletPressure);
+        WriteSample(ent, sensorData, "teg_circ_b_out_temperature", SensorUnit.TemperatureK, payload.CirculatorB.OutletTemperature);
+        // @formatter:on
+    }
+
+    [SubscribeLocalEvent]
+    private void OnAtmosSensorReceived(Entity<SensorMonitoringConsoleComponent> ent, ref DeviceNetworkPacketEvent<AtmosMonitorDataPayload> args)
+    {
+        var payload = args.Data.Data;
+        if (!ent.Comp.Sensors.TryGetValue(args.Sender, out var sensorData))
             return;
 
-        switch (sensorData.DeviceType)
-        {
-            case SensorDeviceType.Teg:
-                if (command != TegSystem.DeviceNetworkCommandSyncData)
-                    return;
+        // @formatter:off
+        WriteSample(ent, sensorData, "atmo_pressure",    SensorUnit.PressureKpa,  payload.Pressure);
+        WriteSample(ent, sensorData, "atmo_temperature", SensorUnit.TemperatureK, payload.Temperature);
+        // @formatter:on
+    }
 
-                if (!args.Data.TryGetValue(TegSystem.DeviceNetworkCommandSyncData, out TegSensorData? tegData))
-                    return;
+    [SubscribeLocalEvent]
+    private void OnThermoMachineReceived(Entity<SensorMonitoringConsoleComponent> ent, ref DeviceNetworkPacketEvent<GasThermoMachineDataPayload> args)
+    {
+        var payload = args.Data;
+        if (!ent.Comp.Sensors.TryGetValue(args.Sender, out var sensorData))
+            return;
 
-                // @formatter:off
-                WriteSample(component, sensorData, "teg_last_generated", SensorUnit.EnergyJ, tegData.LastGeneration);
-                WriteSample(component, sensorData, "teg_power",          SensorUnit.PowerW,  tegData.PowerOutput);
-                if (component.DebugStreams)
-                    WriteSample(component, sensorData, "teg_ramp_pos", SensorUnit.PowerW, tegData.RampPosition);
+        // @formatter:off
+        WriteSample(ent, sensorData, "abs_energy_delta", SensorUnit.EnergyJ, MathF.Abs(payload.EnergyDelta));
+        // @formatter:on
+    }
 
-                WriteSample(component, sensorData, "teg_circ_a_in_pressure",     SensorUnit.PressureKpa,  tegData.CirculatorA.InletPressure);
-                WriteSample(component, sensorData, "teg_circ_a_in_temperature",  SensorUnit.TemperatureK, tegData.CirculatorA.InletTemperature);
-                WriteSample(component, sensorData, "teg_circ_a_out_pressure",    SensorUnit.PressureKpa,  tegData.CirculatorA.OutletPressure);
-                WriteSample(component, sensorData, "teg_circ_a_out_temperature", SensorUnit.TemperatureK, tegData.CirculatorA.OutletTemperature);
+    [SubscribeLocalEvent]
+    private void OnVolumePipeReceived(Entity<SensorMonitoringConsoleComponent> ent, ref DeviceNetworkPacketEvent<GasVolumePumpDataPayload> args)
+    {
+        var payload = args.Data;
+        if (!ent.Comp.Sensors.TryGetValue(args.Sender, out var sensorData))
+            return;
 
-                WriteSample(component, sensorData, "teg_circ_b_in_pressure",     SensorUnit.PressureKpa,  tegData.CirculatorB.InletPressure);
-                WriteSample(component, sensorData, "teg_circ_b_in_temperature",  SensorUnit.TemperatureK, tegData.CirculatorB.InletTemperature);
-                WriteSample(component, sensorData, "teg_circ_b_out_pressure",    SensorUnit.PressureKpa,  tegData.CirculatorB.OutletPressure);
-                WriteSample(component, sensorData, "teg_circ_b_out_temperature", SensorUnit.TemperatureK, tegData.CirculatorB.OutletTemperature);
-                // @formatter:on
-                break;
+        // @formatter:off
+        WriteSample(ent, sensorData, "moles_transferred", SensorUnit.Moles, payload.LastMolesTransferred);
+        // @formatter:on
+    }
 
-            case SensorDeviceType.AtmosSensor:
-                if (command != AtmosDeviceNetworkSystem.SyncData)
-                    return;
+    [SubscribeLocalEvent]
+    private void OnBatteryReceived(Entity<SensorMonitoringConsoleComponent> ent, ref DeviceNetworkPacketEvent<BatterySensorDataPayload> args)
+    {
+        if (!ent.Comp.Sensors.TryGetValue(args.Sender, out var sensorData))
+            return;
 
-                if (!args.Data.TryGetValue(AtmosDeviceNetworkSystem.SyncData, out AtmosSensorData? atmosData))
-                    return;
+        var batteryData = args.Data.Data;
 
-                // @formatter:off
-                WriteSample(component, sensorData, "atmo_pressure",    SensorUnit.PressureKpa,    atmosData.Pressure);
-                WriteSample(component, sensorData, "atmo_temperature", SensorUnit.TemperatureK, atmosData.Temperature);
-                // @formatter:on
-                break;
+        // @formatter:off
+        WriteSample(ent, sensorData, "charge",        SensorUnit.EnergyJ, batteryData.Charge);
+        WriteSample(ent, sensorData, "charge_max",    SensorUnit.EnergyJ, batteryData.MaxCharge);
 
-            case SensorDeviceType.ThermoMachine:
-                if (command != AtmosDeviceNetworkSystem.SyncData)
-                    return;
+        WriteSample(ent, sensorData, "receiving",     SensorUnit.PowerW,  batteryData.Receiving);
+        WriteSample(ent, sensorData, "receiving_max", SensorUnit.PowerW,  batteryData.MaxReceiving);
 
-                if (!args.Data.TryGetValue(AtmosDeviceNetworkSystem.SyncData, out GasThermoMachineData? thermoData))
-                    return;
-
-                // @formatter:off
-                WriteSample(component, sensorData, "abs_energy_delta", SensorUnit.EnergyJ, MathF.Abs(thermoData.EnergyDelta));
-                // @formatter:on
-                break;
-
-            case SensorDeviceType.VolumePump:
-                if (command != AtmosDeviceNetworkSystem.SyncData)
-                    return;
-
-                if (!args.Data.TryGetValue(AtmosDeviceNetworkSystem.SyncData, out GasVolumePumpData? volumePumpData))
-                    return;
-
-                // @formatter:off
-                WriteSample(component, sensorData, "moles_transferred", SensorUnit.Moles, volumePumpData.LastMolesTransferred);
-                // @formatter:on
-                break;
-
-            case SensorDeviceType.Battery:
-                if (command != BatterySensorSystem.DeviceNetworkCommandSyncData)
-                    return;
-
-                if (!args.Data.TryGetValue(BatterySensorSystem.DeviceNetworkCommandSyncData, out BatterySensorData? batteryData))
-                    return;
-
-                // @formatter:off
-                WriteSample(component, sensorData, "charge",        SensorUnit.EnergyJ, batteryData.Charge);
-                WriteSample(component, sensorData, "charge_max",    SensorUnit.EnergyJ, batteryData.MaxCharge);
-
-                WriteSample(component, sensorData, "receiving",     SensorUnit.PowerW,  batteryData.Receiving);
-                WriteSample(component, sensorData, "receiving_max", SensorUnit.PowerW,  batteryData.MaxReceiving);
-
-                WriteSample(component, sensorData, "supplying",     SensorUnit.PowerW,  batteryData.Supplying);
-                WriteSample(component, sensorData, "supplying_max", SensorUnit.PowerW,  batteryData.MaxSupplying);
-                // @formatter:on
-
-                break;
-        }
+        WriteSample(ent, sensorData, "supplying",     SensorUnit.PowerW,  batteryData.Supplying);
+        WriteSample(ent, sensorData, "supplying_max", SensorUnit.PowerW,  batteryData.MaxSupplying);
+        // @formatter:on
     }
 
     private void WriteSample(
@@ -271,32 +254,22 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
         foreach (var (ent, data) in comp.Sensors)
         {
             // Send network requests for new data!
-            NetworkPayload payload;
+            INetworkPayload payload;
             switch (data.DeviceType)
             {
                 case SensorDeviceType.Teg:
-                    payload = new NetworkPayload
-                    {
-                        [DeviceNetworkConstants.Command] = TegSystem.DeviceNetworkCommandSyncData
-                    };
-                    break;
-
                 case SensorDeviceType.AtmosSensor:
                 case SensorDeviceType.ThermoMachine:
                 case SensorDeviceType.VolumePump:
-                    payload = new NetworkPayload
-                    {
-                        [DeviceNetworkConstants.Command] = AtmosDeviceNetworkSystem.SyncData
-                    };
+                    payload = new AtmosSyncPayload();
                     break;
-
                 default:
                     // Unknown device type, don't do anything.
                     continue;
             }
 
             var address = _deviceNetworkQuery.GetComponent(ent);
-            _deviceNetwork.QueuePacket(uid, address.Address, payload);
+            _deviceNetwork.SendPacket(uid, address.Address, ref payload);
         }
     }
 
@@ -305,23 +278,19 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
         foreach (var (ent, data) in comp.Sensors)
         {
             // Send network requests for new data!
-            NetworkPayload payload;
+            INetworkPayload payload;
             switch (data.DeviceType)
             {
                 case SensorDeviceType.Battery:
-                    payload = new NetworkPayload
-                    {
-                        [DeviceNetworkConstants.Command] = BatterySensorSystem.DeviceNetworkCommandSyncData
-                    };
+                    payload = new BatterySensorSyncPayload();
                     break;
-
                 default:
                     // Unknown device type, don't do anything.
                     continue;
             }
 
             var address = _deviceNetworkQuery.GetComponent(ent);
-            _deviceNetwork.QueuePacket(uid, address.Address, payload);
+            _deviceNetwork.SendPacket(uid, address.Address, ref payload);
         }
     }
 }

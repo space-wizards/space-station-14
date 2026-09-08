@@ -1,0 +1,34 @@
+- type: entity
+  id: OrganBloodsucker
+  abstract: true
+  suffix: bloodsucker
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Bloodsucker ]
+
+- type: entity
+  id: OrganBloodsuckerStomach
+  parent: [ OrganBloodsucker, OrganAnimalStomach ]
+
+- type: entity
+  id: OrganBloodsuckerLiver
+  parent: [ OrganBloodsucker, OrganAnimalLiver ]
+
+- type: entity
+  id: OrganBloodsuckerHeart
+  parent: [ OrganBloodsucker, OrganAnimalHeart ]
+
+- type: entity
+  id: BaseMobBloodsucker
+  abstract: true
+  components:
+  - type: Body
+  - type: EntityTableContainerFill
+    containers:
+      body_organs: !type:AllSelector
+        children:
+        - id: OrganAnimalLungs
+        - id: OrganBloodsuckerHeart
+        - id: OrganBloodsuckerStomach
+        - id: OrganBloodsuckerLiver
+        - id: OrganAnimalKidneys

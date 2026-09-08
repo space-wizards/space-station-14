@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Modified from anomalyscanner.rsi (at commit d0352e734d97f3762f2e9082ea61bd2f83101874) by Samuka-C (github)",
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "growing",
+      "delays": [
+        [ 0.2, 0.2, 0.2 ]
+      ]
+    },
+    {
+      "name": "decaying",
+      "delays": [
+        [ 0.2, 0.2, 0.2 ]
+      ]
+    },
+    {
+      "name": "severity_mask",
+      "delays": [
+        [ 0.25, 0.25, 0.25, 0.25 ]
+      ]
+    },
+    {
+      "name": "timer_1"
+    },
+    {
+      "name": "timer_2"
+    },
+    {
+      "name": "timer_3"
+    },
+    {
+      "name": "timer_4"
+    },
+    {
+      "name": "timer_5"
+    },
+    {
+      "name": "supercritical",
+      "delays": [
+        [ 0.125, 0.125, 0.125, 0.125 ]
+      ]
+    }
+  ]
+}

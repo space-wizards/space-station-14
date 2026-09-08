@@ -1,0 +1,348 @@
+# region Base
+- type: construction
+  abstract: true
+  id: BaseAtmos
+  placementMode: SnapgridCenter
+  category: construction-category-atmospherics
+  objectType: Structure
+  canRotate: true
+
+- type: construction
+  abstract: true
+  parent: BaseAtmos
+  id: BaseGasPipe
+  placementMode: AlignAtmosPipeLayers
+  graph: GasPipe
+  canBuildInImpassable: true # for player convenience
+
+- type: construction
+  abstract: true
+  parent: BaseAtmos
+  id: BaseGasDevice
+  conditions:
+  - !type:NoUnstackableInTile
+
+# we allow stacking for shit like radiators on top of atmosdevices
+# for now (trademark patent pending)
+- type: construction
+  abstract: true
+  parent: BaseAtmos
+  id: BaseGasDeviceStackable
+
+- type: construction
+  abstract: true
+  parent: BaseGasDevice
+  id: BaseGasUnary
+  graph: GasUnary
+
+- type: construction
+  abstract: true
+  parent: BaseGasDevice
+  id: BaseGasBinary
+  graph: GasBinary
+  placementMode: AlignAtmosPipeLayers # most binary devices support layers
+
+- type: construction
+  abstract: true
+  parent: BaseGasDeviceStackable
+  id: BaseGasBinaryStackable
+  graph: GasBinary
+  placementMode: AlignAtmosPipeLayers
+
+- type: construction
+  abstract: true
+  parent: BaseGasDevice
+  id: BaseGasTrinary
+  graph: GasTrinary
+# endregion Base
+
+# region Machines
+- type: construction
+  parent: BaseAtmos
+  id: AirAlarmFixture
+  graph: AirAlarm
+  targetNode: air_alarm
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition
+
+- type: construction
+  parent: BaseAtmos
+  id: FireAlarm
+  graph: FireAlarm
+  targetNode: fire_alarm
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition
+
+- type: construction
+  parent: BaseAtmos
+  id: AirSensor
+  graph: AirSensor
+  targetNode: sensor
+
+- type: construction
+  parent: BaseAtmos
+  id: !type:CreateVariants
+    values: [ GasPipeSensor, GasPipeSensorAlt1, GasPipeSensorAlt2 ]
+  placementMode: AlignAtmosPipeLayers
+  hide: !type:CreateVariants
+    values: [ false, true, true ]
+  graph: !type:CreateVariants
+    values: [ GasPipeSensor, GasPipeSensorAlt1, GasPipeSensorAlt2 ]
+  targetNode: sensor
+# endregion Machines
+
+# region Pipes
+- type: construction
+  parent: BaseGasPipe
+  id: !type:CreateVariants
+    values: [ GasPipeHalf, GasPipeHalfAlt1, GasPipeHalfAlt2 ]
+  hide: !type:CreateVariants
+    values: [ false, true, true ]
+  graph: !type:CreateVariants
+    values: [ GasPipe, GasPipeAlt1, GasPipeAlt2 ]
+  targetNode: half
+
+- type: construction
+  parent: BaseGasPipe
+  id: !type:CreateVariants
+    values: [ GasPipeStraight, GasPipeStraightAlt1, GasPipeStraightAlt2 ]
+  hide: !type:CreateVariants
+    values: [ false, true, true ]
+  graph: !type:CreateVariants
+    values: [ GasPipe, GasPipeAlt1, GasPipeAlt2 ]
+  targetNode: straight
+
+- type: construction
+  parent: BaseGasPipe
+  id: !type:CreateVariants
+    values: [ GasPipeBend, GasPipeBendAlt1, GasPipeBendAlt2 ]
+  hide: !type:CreateVariants
+    values: [ false, true, true ]
+  graph: !type:CreateVariants
+    values: [ GasPipe, GasPipeAlt1, GasPipeAlt2 ]
+  targetNode: bend
+
+- type: construction
+  parent: BaseGasPipe
+  id: !type:CreateVariants
+    values: [ GasPipeTJunction, GasPipeTJunctionAlt1, GasPipeTJunctionAlt2 ]
+  hide: !type:CreateVariants
+    values: [ false, true, true ]
+  graph: !type:CreateVariants
+    values: [ GasPipe, GasPipeAlt1, GasPipeAlt2 ]
+  targetNode: tjunction
+
+- type: construction
+  parent: BaseGasPipe
+  id: !type:CreateVariants
+    values: [ GasPipeFourway, GasPipeFourwayAlt1, GasPipeFourwayAlt2 ]
+  hide: !type:CreateVariants
+    values: [ false, true, true ]
+  graph: !type:CreateVariants
+    values: [ GasPipe, GasPipeAlt1, GasPipeAlt2 ]
+  targetNode: fourway
+
+- type: construction
+  parent: BaseGasPipe
+  id: GasPipeManifold
+  graph: GasPipeSpecial
+  targetNode: manifold
+  placementMode: SnapgridCenter
+# endregion Pipes
+
+# region Unary
+- type: construction
+  parent: BaseGasUnary
+  id: !type:CreateVariants
+    values: [ GasVentPump, GasVentPumpAlt1, GasVentPumpAlt2 ]
+  hide: !type:CreateVariants
+    values: [ false, true, true ]
+  graph: !type:CreateVariants
+    values: [ GasUnary, GasUnaryAlt1, GasUnaryAlt2 ]
+  targetNode: ventpump
+
+- type: construction
+  parent: BaseGasUnary
+  id: !type:CreateVariants
+    values: [ GasPassiveVent, GasPassiveVentAlt1, GasPassiveVentAlt2 ]
+  hide: !type:CreateVariants
+    values: [ false, true, true ]
+  graph: !type:CreateVariants
+    values: [ GasUnary, GasUnaryAlt1, GasUnaryAlt2 ]
+  targetNode: passivevent
+
+- type: construction
+  parent: BaseGasUnary
+  id: !type:CreateVariants
+    values: [ GasVentScrubber, GasVentScrubberAlt1, GasVentScrubberAlt2 ]
+  hide: !type:CreateVariants
+    values: [ false, true, true ]  
+  graph: !type:CreateVariants
+    values: [ GasUnary, GasUnaryAlt1, GasUnaryAlt2 ]
+  targetNode: ventscrubber
+
+- type: construction
+  parent: BaseGasUnary
+  id: !type:CreateVariants
+    values: [ GasOutletInjector, GasOutletInjectorAlt1, GasOutletInjectorAlt2 ]
+  hide: !type:CreateVariants
+    values: [ false, true, true ]
+  graph: !type:CreateVariants
+    values: [ GasUnary, GasUnaryAlt1, GasUnaryAlt2 ]
+  targetNode: outletinjector
+# endregion Unary
+
+# region Binary
+- type: construction
+  parent: BaseGasBinary
+  id: !type:CreateVariants
+    values: [ GasPressurePump, GasPressurePumpAlt1, GasPressurePumpAlt2 ]
+  hide: !type:CreateVariants
+    values: [ false, true, true ]
+  graph: !type:CreateVariants
+    values: [ GasBinary, GasBinaryAlt1, GasBinaryAlt2 ]
+  targetNode: pressurepump
+
+- type: construction
+  parent: BaseGasBinary
+  id: !type:CreateVariants
+    values: [ GasVolumePump, GasVolumePumpAlt1, GasVolumePumpAlt2 ]
+  hide: !type:CreateVariants
+    values: [ false, true, true ]
+  graph: !type:CreateVariants
+    values: [ GasBinary, GasBinaryAlt1, GasBinaryAlt2 ]
+  targetNode: volumepump
+
+- type: construction
+  parent: BaseGasBinary
+  id: !type:CreateVariants
+    values: [ GasPassiveGate, GasPassiveGateAlt1, GasPassiveGateAlt2 ]
+  hide: !type:CreateVariants
+    values: [ false, true, true ]
+  graph: !type:CreateVariants
+    values: [ GasBinary, GasBinaryAlt1, GasBinaryAlt2 ]
+  targetNode: passivegate
+
+- type: construction
+  parent: BaseGasBinary
+  id: !type:CreateVariants
+    values: [ GasPressureRegulator, GasPressureRegulatorAlt1, GasPressureRegulatorAlt2 ]
+  hide: !type:CreateVariants
+    values: [ false, true, true ]
+  graph: !type:CreateVariants
+    values: [ GasBinary, GasBinaryAlt1, GasBinaryAlt2 ]
+  targetNode: pressureregulator
+
+- type: construction
+  parent: BaseGasBinary
+  id: !type:CreateVariants
+    values: [ GasValve, GasValveAlt1, GasValveAlt2 ]
+  hide: !type:CreateVariants
+    values: [ false, true, true ]
+  graph: !type:CreateVariants
+    values: [ GasBinary, GasBinaryAlt1, GasBinaryAlt2 ]
+  targetNode: valve
+
+- type: construction
+  parent: BaseGasBinary
+  id: !type:CreateVariants
+    values: [ SignalControlledValve, SignalControlledValveAlt1, SignalControlledValveAlt2 ]
+  hide: !type:CreateVariants
+    values: [ false, true, true ]
+  graph: !type:CreateVariants
+    values: [ GasBinary, GasBinaryAlt1, GasBinaryAlt2 ]
+  targetNode: signalvalve
+
+- type: construction
+  parent: BaseGasBinary
+  id: !type:CreateVariants
+    values: [ GasPort, GasPortAlt1, GasPortAlt2 ]
+  hide: !type:CreateVariants
+    values: [ false, true, true ]
+  graph: !type:CreateVariants
+    values: [ GasBinary, GasBinaryAlt1, GasBinaryAlt2 ]
+  targetNode: port
+
+- type: construction
+  parent: BaseGasBinary
+  id: !type:CreateVariants
+    values: [ GasDualPortVentPump, GasDualPortVentPumpAlt1, GasDualPortVentPumpAlt2 ]
+  hide: !type:CreateVariants
+    values: [ false, true, true ]
+  graph: !type:CreateVariants
+    values: [ GasBinary, GasBinaryAlt1, GasBinaryAlt2 ]
+  targetNode: dualportventpump
+
+- type: construction
+  parent: BaseGasBinaryStackable
+  id: HeatExchanger
+  targetNode: radiator
+  placementMode: SnapgridCenter
+
+- type: construction
+  parent: BaseGasBinaryStackable
+  id: HeatExchangerBend
+  name: construction-recipe-heat-exchanger-bend
+  targetNode: bendradiator
+  placementMode: SnapgridCenter
+# endregion Binary
+
+# region Trinary
+- type: construction
+  parent: BaseGasTrinary
+  id: !type:CreateVariants
+    values: [ GasFilter, GasFilterAlt1, GasFilterAlt2 ]
+  hide: !type:CreateVariants
+    values: [ false, true, true ]
+  graph: !type:CreateVariants
+    values: [ GasTrinary, GasTrinaryAlt1, GasTrinaryAlt2 ]
+  targetNode: filter
+  mirror: !type:CreateVariants
+    values: [ GasFilterFlipped, GasFilterFlippedAlt1, GasFilterFlippedAlt2 ]
+
+- type: construction
+  parent: BaseGasTrinary
+  id: !type:CreateVariants
+    values: [ GasFilterFlipped, GasFilterFlippedAlt1, GasFilterFlippedAlt2 ]
+  hide: true
+  graph: !type:CreateVariants
+    values: [ GasTrinary, GasTrinaryAlt1, GasTrinaryAlt2 ]
+  targetNode: filterflipped
+  mirror: !type:CreateVariants
+    values: [ GasFilter, GasFilterAlt1, GasFilterAlt2 ]
+
+- type: construction
+  parent: BaseGasTrinary
+  id: !type:CreateVariants
+    values: [ GasMixer, GasMixerAlt1, GasMixerAlt2 ]
+  hide: !type:CreateVariants
+    values: [ false, true, true ]
+  graph: !type:CreateVariants
+    values: [ GasTrinary, GasTrinaryAlt1, GasTrinaryAlt2 ]
+  targetNode: mixer
+  mirror: !type:CreateVariants
+    values: [ GasMixerFlipped, GasMixerFlippedAlt1, GasMixerFlippedAlt2 ]
+
+- type: construction
+  parent: BaseGasTrinary
+  id: !type:CreateVariants
+    values: [ GasMixerFlipped, GasMixerFlippedAlt1, GasMixerFlippedAlt2 ]
+  hide: true
+  graph: !type:CreateVariants
+    values: [ GasTrinary, GasTrinaryAlt1, GasTrinaryAlt2 ]
+  targetNode: mixerflipped
+  mirror: !type:CreateVariants
+    values: [ GasMixer, GasMixerAlt1, GasMixerAlt2 ]
+
+- type: construction
+  parent: BaseGasTrinary
+  id: !type:CreateVariants
+    values: [ PressureControlledValve, PressureControlledValveAlt1, PressureControlledValveAlt2 ]
+  hide: !type:CreateVariants
+    values: [ false, true, true ]
+  graph: !type:CreateVariants
+    values: [ GasTrinary, GasTrinaryAlt1, GasTrinaryAlt2 ]
+  targetNode: pneumaticvalve
+# endregion Trinary

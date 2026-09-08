@@ -4,7 +4,7 @@ using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.DeviceLinking;
 using Robust.Shared.Network;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Atmos.Monitor.Components;
 
@@ -20,37 +20,37 @@ public sealed partial class AirAlarmComponent : Component
     public readonly HashSet<string> KnownDevices = new();
     public readonly Dictionary<string, GasVentPumpData> VentData = new();
     public readonly Dictionary<string, GasVentScrubberData> ScrubberData = new();
-    public readonly Dictionary<string, AtmosSensorData> SensorData = new();
+    public readonly Dictionary<string, AtmosMonitorData> SensorData = new();
 
     public bool CanSync = true;
 
     /// <summary>
     /// Previous alarm state for use with output ports.
     /// </summary>
-    [DataField("state")]
+    [DataField]
     public AtmosAlarmType State = AtmosAlarmType.Normal;
 
     /// <summary>
     /// The port that gets set to high while the alarm is in the danger state, and low when not.
     /// </summary>
-    [DataField("dangerPort", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>))]
-    public string DangerPort = "AirDanger";
+    [DataField]
+    public ProtoId<SourcePortPrototype> DangerPort = "AirDanger";
 
     /// <summary>
     /// The port that gets set to high while the alarm is in the warning state, and low when not.
     /// </summary>
-    [DataField("warningPort", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>))]
-    public string WarningPort = "AirWarning";
+    [DataField]
+    public ProtoId<SourcePortPrototype> WarningPort = "AirWarning";
 
     /// <summary>
     /// The port that gets set to high while the alarm is in the normal state, and low when not.
     /// </summary>
-    [DataField("normalPort", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>))]
-    public string NormalPort = "AirNormal";
+    [DataField]
+    public ProtoId<SourcePortPrototype> NormalPort = "AirNormal";
 
     /// <summary>
     /// Whether the panic wire is cut, forcing the alarm into panic mode.
     /// </summary>
-    [DataField, ViewVariables]
+    [DataField]
     public bool PanicWireCut;
 }

@@ -8,9 +8,9 @@ namespace Content.Server.Motd;
 /// A console command which acts as an alias for <see cref="GetMotdCommand"/> or <see cref="SetMotdCommand"/> depending on the number of arguments given.
 /// </summary>
 [AnyCommand]
-internal sealed class MOTDCommand : LocalizedCommands
+internal sealed partial class MOTDCommand : LocalizedCommands
 {
-    [Dependency] private readonly IAdminManager _adminManager = default!;
+    [Dependency] private IAdminManager _adminManager = default!;
 
     public override string Command => "motd";
 

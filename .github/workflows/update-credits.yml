@@ -13,7 +13,7 @@ jobs:
     if: github.repository == 'space-wizards/space-station-14'
 
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@v7
         with:
           ref: master
 

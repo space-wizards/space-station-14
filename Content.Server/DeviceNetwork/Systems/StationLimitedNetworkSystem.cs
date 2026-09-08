@@ -2,7 +2,6 @@ using Content.Server.DeviceNetwork.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.DeviceNetwork.Events;
 using JetBrains.Annotations;
-using Robust.Shared.Map;
 
 namespace Content.Server.DeviceNetwork.Systems
 {
@@ -10,9 +9,9 @@ namespace Content.Server.DeviceNetwork.Systems
     /// This system requires the StationLimitedNetworkComponent to be on the the sending entity as well as the receiving entity
     /// </summary>
     [UsedImplicitly]
-    public sealed class StationLimitedNetworkSystem : EntitySystem
+    public sealed partial class StationLimitedNetworkSystem : EntitySystem
     {
-        [Dependency] private readonly StationSystem _stationSystem = default!;
+        [Dependency] private StationSystem _stationSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -54,14 +53,15 @@ namespace Content.Server.DeviceNetwork.Systems
         /// <summary>
         /// Checks if both devices are limited to the same station
         /// </summary>
-        private void OnBeforePacketSent(EntityUid uid, StationLimitedNetworkComponent component, BeforePacketSentEvent args)
+        private void OnBeforePacketSent(Entity<StationLimitedNetworkComponent> ent, ref BeforePacketSentEvent args)
         {
+            var (uid, component) = ent;
             if (!component.StationId.HasValue)
                 TrySetStationId(uid, component);
 
             if (!CheckStationId(args.Sender, component.AllowNonStationPackets, component.StationId))
             {
-                args.Cancel();
+                args.Cancelled = true;
             }
         }
 

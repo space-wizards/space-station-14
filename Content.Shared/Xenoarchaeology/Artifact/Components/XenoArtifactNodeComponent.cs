@@ -1,11 +1,12 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.Components;
 
 /// <summary>
 /// Stores metadata about a particular artifact node
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedXenoArtifactSystem)), AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedXenoArtifactSystem)), AutoGenerateComponentState, EntityCategory("XenoArtifactEffects")]
 public sealed partial class XenoArtifactNodeComponent : Component
 {
     /// <summary>
@@ -31,7 +32,7 @@ public sealed partial class XenoArtifactNodeComponent : Component
     /// The entity whose graph this node is a part of.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public NetEntity? Attached;
+    public EntityUid? Attached;
 
     [DataField, AutoNetworkedField]
     public int Budget;

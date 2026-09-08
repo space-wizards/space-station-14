@@ -1,7 +1,6 @@
 using Content.Shared.Access.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Shared.Access.Components;
 
@@ -51,7 +50,7 @@ public record struct GetAccessTagsEvent(HashSet<ProtoId<AccessLevelPrototype>> T
 {
     public void AddGroup(ProtoId<AccessGroupPrototype> group)
     {
-        if (!PrototypeManager.TryIndex<AccessGroupPrototype>(group, out var groupPrototype))
+        if (!PrototypeManager.Resolve<AccessGroupPrototype>(group, out var groupPrototype))
             return;
 
         Tags.UnionWith(groupPrototype.Tags);

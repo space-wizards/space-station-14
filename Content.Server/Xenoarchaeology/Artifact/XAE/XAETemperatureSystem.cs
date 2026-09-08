@@ -11,7 +11,7 @@ namespace Content.Server.Xenoarchaeology.Artifact.XAE;
 /// <summary>
 /// System for xeno artifact effect that changes atmospheric temperature on adjacent tiles.
 /// </summary>
-public sealed class XAETemperatureSystem : BaseXAESystem<XAETemperatureComponent>
+public sealed partial class XAETemperatureSystem : BaseXAESystem<XAETemperatureComponent>
 {
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;

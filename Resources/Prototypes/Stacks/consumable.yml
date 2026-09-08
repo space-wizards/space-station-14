@@ -1,0 +1,80 @@
+# Food
+
+- type: stack
+  id: Pancake
+  name: stack-pancake
+  icon: { sprite: /Textures/Objects/Consumable/Food/Baked/misc.rsi, state: pancakes1 }
+  spawn: FoodBakedPancake
+  maxCount: 9
+
+- type: stack
+  id: PancakeBb
+  name: stack-blueberry-pancake
+  icon: { sprite: /Textures/Objects/Consumable/Food/Baked/misc.rsi, state: pancakesbb1 }
+  spawn: FoodBakedPancakeBb
+  maxCount: 9
+
+- type: stack
+  id: PancakeCc
+  name: stack-chocolate-chip-pancake
+  icon: { sprite: /Textures/Objects/Consumable/Food/Baked/misc.rsi, state: pancakescc1 }
+  spawn: FoodBakedPancakeCc
+  maxCount: 9
+
+# Smokeables
+
+- type: stack
+  parent: BaseVerySmallStack
+  id: PaperRolling
+  name: stack-rolling-paper
+  icon: { sprite: /Textures/Objects/Consumable/Smokeables/Cigarettes/paper.rsi, state: cigpaper }
+  spawn: PaperRolling
+
+- type: stack
+  parent: BaseVerySmallStack
+  id: CigaretteFilter
+  name: stack-cigarette-filter
+  icon: { sprite: /Textures/Objects/Consumable/Smokeables/Cigarettes/paper.rsi, state: cigfilter }
+  spawn: CigaretteFilter
+
+- type: stack
+  parent: BaseVerySmallStack
+  id: GroundTobacco
+  name: stack-ground-tobacco
+  icon: { sprite: /Textures/Objects/Misc/reagent_fillings.rsi, state: powderpile }
+  spawn: GroundTobacco
+
+- type: stack
+  parent: BaseVerySmallStack
+  id: GroundCannabis
+  name: stack-ground-cannabis
+  icon: { sprite: /Textures/Objects/Misc/reagent_fillings.rsi, state: powderpile }
+  spawn: GroundCannabis
+
+- type: stack
+  parent: BaseVerySmallStack
+  id: GroundCannabisRainbow
+  name: stack-ground-rainbow-cannabis
+  icon: { sprite: /Textures/Objects/Specific/Hydroponics/rainbow_cannabis.rsi, state: powderpile_rainbow }
+  spawn: GroundCannabisRainbow
+
+- type: stack
+  parent: BaseVerySmallStack
+  id: LeavesTobaccoDried
+  name: stack-dried-tobacco-leaves
+  icon: { sprite: /Textures/Objects/Specific/Hydroponics/tobacco.rsi, state: dried }
+  spawn: LeavesTobaccoDried
+
+- type: stack
+  parent: BaseVerySmallStack
+  id: LeavesCannabisDried
+  name: stack-dried-cannabis-leaves
+  icon: { sprite: /Textures/Objects/Specific/Hydroponics/tobacco.rsi, state: dried }
+  spawn: LeavesCannabisDried
+
+- type: stack
+  parent: BaseVerySmallStack
+  id: LeavesCannabisRainbowDried
+  name: stack-dried-rainbow-cannabis-leaves
+  icon: { sprite: /Textures/Objects/Specific/Hydroponics/rainbow_cannabis.rsi, state: dried }
+  spawn: LeavesCannabisRainbowDried

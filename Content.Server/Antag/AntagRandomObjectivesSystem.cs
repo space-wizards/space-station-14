@@ -10,11 +10,11 @@ namespace Content.Server.Antag;
 /// <summary>
 /// Adds fixed objectives to an antag made with <c>AntagRandomObjectivesComponent</c>.
 /// </summary>
-public sealed class AntagRandomObjectivesSystem : EntitySystem
+public sealed partial class AntagRandomObjectivesSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly ObjectivesSystem _objectives = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private ObjectivesSystem _objectives = default!;
 
     public override void Initialize()
     {

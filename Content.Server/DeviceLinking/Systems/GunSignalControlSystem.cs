@@ -7,8 +7,8 @@ namespace Content.Server.DeviceLinking.Systems;
 
 public sealed partial class GunSignalControlSystem : EntitySystem
 {
-    [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
-    [Dependency] private readonly SharedGunSystem _gun = default!;
+    [Dependency] private DeviceLinkSystem _signalSystem = default!;
+    [Dependency] private SharedGunSystem _gun = default!;
 
     public override void Initialize()
     {
@@ -27,18 +27,18 @@ public sealed partial class GunSignalControlSystem : EntitySystem
             return;
 
         if (args.Port == gunControl.Comp.TriggerPort)
-            _gun.AttemptShoot(gunControl, gun);
+            _gun.AttemptShoot((gunControl, gun));
 
         if (!TryComp<AutoShootGunComponent>(gunControl, out var autoShoot))
             return;
 
         if (args.Port == gunControl.Comp.TogglePort)
-           _gun.SetEnabled(gunControl, autoShoot, !autoShoot.Enabled);
+            _gun.SetEnabled((gunControl, autoShoot), !autoShoot.Enabled);
 
         if (args.Port == gunControl.Comp.OnPort)
-            _gun.SetEnabled(gunControl, autoShoot, true);
+            _gun.SetEnabled((gunControl, autoShoot), true);
 
         if (args.Port == gunControl.Comp.OffPort)
-            _gun.SetEnabled(gunControl, autoShoot, false);
+            _gun.SetEnabled((gunControl, autoShoot), false);
     }
 }

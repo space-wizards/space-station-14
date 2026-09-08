@@ -1,0 +1,49 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/debf90acfcafa4fb8d6723a37e0b8ac556c0702b. equipped-FEET-vox & on-equipped-FEET-vox state taken from vgstation13 at https://github.com/vgstation-coders/vgstation13/blob/31d6576ba8102135d058ef49c3cb6ecbe8db8a79/icons/mob/species/vox/shoes.dmi, and equipped-FEET-vox state modified to fix inconsistencies. ERT recolor by davyei for SS14.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "equipped-FEET",
+            "directions": 4
+        },
+        {
+            "name": "on-equipped-FEET",
+            "directions": 4
+        },
+        {
+            "name": "equipped-FEET-vox",
+            "directions": 4
+        },
+        {
+            "name": "on-equipped-FEET-vox",
+            "directions": 4
+        },
+        {
+            "name": "icon"
+        },
+        {
+            "name": "icon-on"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "on-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "on-inhand-right",
+            "directions": 4
+        }
+    ]
+}

@@ -2,39 +2,36 @@
 # Base
 
 - type: entity
-  parent: FoodInjectableBase
-  id: FoodPizzaBase
   abstract: true
+  parent: [SolutionNormal, FoodInjectableBase]
+  id: FoodPizzaBase
   components:
   - type: FlavorProfile
     flavors:
       - oily
       - bread
-  - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 40
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 30
-        - ReagentId: Vitamin
-          Quantity: 5
-  - type: SliceableFood
-    count: 8
+  - type: Solution
+    solution:
+      maxVol: 180
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 120
+      - ReagentId: Vitamin
+        Quantity: 12
   - type: Item
     size: Normal
     shape:
     - 0,0,2,1
+    storedOffset: 0,-5
   - type: Tag
     tags:
     - Pizza
     - ReptilianFood
 
 - type: entity
-  parent: FoodInjectableBase # Not sliceable
+  parent: [SolutionVeryTiny, FoodInjectableBase] # Not sliceable
   id: FoodPizzaSliceBase
   abstract: true
   components:
@@ -42,19 +39,15 @@
     flavors:
       - oily
       - bread
-  - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        # Note: Keep FoodPizzaMoldySlice & FoodPizzaSliceBase roughly in sync
-        maxVol: 6
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
-        - ReagentId: Vitamin
-          Quantity: 0.8
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+      - ReagentId: Vitamin
+        Quantity: 1
   - type: Item
     size: Tiny
   - type: Tag
@@ -67,7 +60,7 @@
 
 - type: entity
   name: margherita pizza
-  parent: FoodPizzaBase
+  parent: [FoodPizzaBase, BaseSlicingRefinableFood]
   id: FoodPizzaMargherita
   description: The flavor of Italy.
   components:
@@ -79,8 +72,10 @@
   - type: Sprite
     layers:
     - state: margherita
-  - type: SliceableFood
-    slice: FoodPizzaMargheritaSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPizzaMargheritaSlice
+      amount: 8
 
 - type: entity
   name: slice of margherita pizza
@@ -101,7 +96,7 @@
 
 - type: entity
   name: meat pizza
-  parent: FoodPizzaBase
+  parent: [FoodPizzaBase, BaseSlicingRefinableFood]
   id: FoodPizzaMeat
   description: Greasy pizza with delicious meat.
   components:
@@ -114,8 +109,10 @@
   - type: Sprite
     layers:
     - state: meat
-  - type: SliceableFood
-    slice: FoodPizzaMeatSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPizzaMeatSlice
+      amount: 8
   - type: Tag
     tags:
     - Meat
@@ -147,7 +144,7 @@
 
 - type: entity
   name: mushroom pizza
-  parent: FoodPizzaBase
+  parent: [FoodPizzaBase, BaseSlicingRefinableFood]
   id: FoodPizzaMushroom
   description: Very special pizza.
   components:
@@ -159,8 +156,10 @@
   - type: Sprite
     layers:
     - state: mushroom
-  - type: SliceableFood
-    slice: FoodPizzaMushroomSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPizzaMushroomSlice
+      amount: 8
 
 - type: entity
   name: slice of mushroom pizza
@@ -182,7 +181,7 @@
 
 - type: entity
   name: vegetable pizza
-  parent: FoodPizzaBase
+  parent: [FoodPizzaBase, BaseSlicingRefinableFood]
   id: FoodPizzaVegetable
   description: The station's vegetarians will thank you for making this.
   components:
@@ -197,19 +196,10 @@
   - type: Sprite
     layers:
     - state: vegetable
-  - type: SliceableFood
-    slice: FoodPizzaVegetableSlice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 40
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 25
-        - ReagentId: JuiceCarrot
-          Quantity: 5
-        - ReagentId: Vitamin
-          Quantity: 5
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPizzaVegetableSlice
+      amount: 8
 
 - type: entity
   name: slice of vegetable pizza
@@ -231,23 +221,12 @@
     - state: vegetable-slice
   - type: Item
     heldPrefix: vegetable-slice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 4
-        - ReagentId: JuiceCarrot
-          Quantity: 1
-        - ReagentId: Vitamin
-          Quantity: 1
 
 # Tastes like crust, tomato, cheese, carrot.
 
 - type: entity
   name: donk-pocket pizza
-  parent: FoodPizzaBase
+  parent: [FoodPizzaBase, BaseSlicingRefinableFood]
   id: FoodPizzaDonkpocket
   description: Who thought this would be a good idea?
   components:
@@ -257,24 +236,23 @@
   - type: Sprite
     layers:
     - state: donkpocket
-  - type: SliceableFood
-    slice: FoodPizzaDonkpocketSlice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 50
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 27
-        - ReagentId: Vitamin
-          Quantity: 6
-        - ReagentId: Omnizine
-          Quantity: 9
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPizzaDonkpocketSlice
+      amount: 8
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 120
+      - ReagentId: Vitamin
+        Quantity: 3
+      - ReagentId: Omnizine
+        Quantity: 9
   - type: Tag
     tags:
     - Meat
     - Pizza
-
 
 - type: entity
   name: slice of donk-pocket pizza
@@ -290,17 +268,15 @@
     - state: donkpocket-slice
   - type: Item
     heldPrefix: donkpocket-slice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 4.5
-        - ReagentId: Vitamin
-          Quantity: 1
-        - ReagentId: Omnizine
-          Quantity: 1.5
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+      - ReagentId: Vitamin
+        Quantity: 0.25
+      - ReagentId: Omnizine
+        Quantity: 0.75
   - type: Tag
     tags:
     - Meat
@@ -310,7 +286,7 @@
 
 - type: entity
   name: dank pizza
-  parent: FoodPizzaBase
+  parent: [FoodPizzaBase, BaseSlicingRefinableFood]
   id: FoodPizzaDank
   description: The hippie's pizza of choice.
   components:
@@ -323,17 +299,19 @@
   - type: Sprite
     layers:
     - state: dank
-  - type: SliceableFood
-    slice: FoodPizzaDankSlice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 50
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 20
-        - ReagentId: THC
-          Quantity: 30
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPizzaDankSlice
+      amount: 8
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 102
+      - ReagentId: Vitamin
+        Quantity: 3
+      - ReagentId: THC
+        Quantity: 30
 
 - type: entity
   name: slice of dank pizza
@@ -352,20 +330,20 @@
     - state: dank-slice
   - type: Item
     heldPrefix: dank-slice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3.5
-        - ReagentId: THC
-          Quantity: 5
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 0.5
+      - ReagentId: Vitamin
+        Quantity: 0.25
+      - ReagentId: THC
+        Quantity: 2.5
 # Tastes like crust, tomato, cheese, meat, satisfaction.
 
 - type: entity
   name: sassysage pizza
-  parent: FoodPizzaBase
+  parent: [FoodPizzaBase, BaseSlicingRefinableFood]
   id: FoodPizzaSassysage
   description: You can really smell the sassiness.
   components:
@@ -378,8 +356,10 @@
   - type: Sprite
     layers:
     - state: sassysage
-  - type: SliceableFood
-    slice: FoodPizzaSassysageSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPizzaSassysageSlice
+      amount: 8
   - type: Tag
     tags:
     - Meat
@@ -411,7 +391,7 @@
 
 - type: entity
   name: Hawaiian pizza
-  parent: FoodPizzaBase
+  parent: [FoodPizzaBase, BaseSlicingRefinableFood]
   id: FoodPizzaPineapple
   description: Makes people burst into tears. Tears of joy or sadness depends on the person's fondness for pineapple.
   components:
@@ -425,8 +405,10 @@
   - type: Sprite
     layers:
     - state: pineapple
-  - type: SliceableFood
-    slice: FoodPizzaPineappleSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPizzaPineappleSlice
+      amount: 8
   - type: Tag
     tags:
     - Meat
@@ -460,7 +442,7 @@
 #TODO: This is a meme pizza from /tg/. It has specially coded mechanics.
 - type: entity
   name: Arnold's pizza
-  parent: FoodPizzaBase
+  parent: [FoodPizzaBase, BaseSlicingRefinableFood]
   id: FoodPizzaArnold
   description: Hello, you've reached Arnold's pizza shop. I'm not here now, I'm out killing pepperoni.
   components:
@@ -474,21 +456,23 @@
   - type: Sprite
     layers:
     - state: arnold
-  - type: SliceableFood
-    slice: FoodPizzaArnoldSlice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 85
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 30
-        - ReagentId: Vitamin
-          Quantity: 5
-        - ReagentId: Iron
-          Quantity: 10
-        - ReagentId: Omnizine
-          Quantity: 30
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPizzaArnoldSlice
+      amount: 8
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 60
+      - ReagentId: Protein
+        Quantity: 18
+      - ReagentId: Vitamin
+        Quantity: 12
+      - ReagentId: Iron
+        Quantity: 18
+      - ReagentId: Omnizine
+        Quantity: 30
   - type: Tag
     tags:
     - Meat
@@ -512,19 +496,19 @@
     - state: arnold-slice
   - type: Item
     heldPrefix: arnold-slice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
-        - ReagentId: Vitamin
-          Quantity: 0.8
-        - ReagentId: Iron
-          Quantity: 1.6
-        - ReagentId: Omnizine
-          Quantity: 5
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Protein
+        Quantity: 1.5
+      - ReagentId: Vitamin
+        Quantity: 1
+      - ReagentId: Iron
+        Quantity: 1.5
+      - ReagentId: Omnizine
+        Quantity: 2.5
   - type: Tag
     tags:
     - Meat
@@ -552,23 +536,20 @@
   - type: Tag
     tags:
     - Trash
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        # Note: Keep FoodPizzaMoldySlice & FoodPizzaSliceBase roughly in sync
-        maxVol: 5
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Mold
-          Quantity: 2
-        - ReagentId: Vitamin
-          Quantity: 1
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 2
+      - ReagentId: Vitamin
+        Quantity: 1
+      - ReagentId: Mold
+        Quantity: 8
 # Tastes like stale crust, rancid cheese, mushroom.
 
 - type: entity
   name: spicy rock pizza
-  parent: FoodPizzaBase
+  parent: [FoodPizzaBase, BaseSlicingRefinableFood]
   id: FoodPizzaUranium
   description: Spicy pizza covered in peppers and uranium.
   components:
@@ -581,8 +562,10 @@
   - type: Sprite
     layers:
     - state: uranium-pizza
-  - type: SliceableFood
-    slice: FoodPizzaUraniumSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPizzaUraniumSlice
+      amount: 8
   - type: Tag
     tags:
     - Meat
@@ -590,17 +573,19 @@
   - type: PointLight
     enabled: true
     radius: 2
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 40
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 20
-        - ReagentId: Radium
-          Quantity: 4
-        - ReagentId: Uranium
-          Quantity: 16
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 102
+      - ReagentId: Vitamin
+        Quantity: 15
+      - ReagentId: CapsaicinOil
+        Quantity: 20
+      - ReagentId: Radium
+        Quantity: 4
+      - ReagentId: Uranium
+        Quantity: 16
 
 - type: entity
   name: slice of spicy rock pizza
@@ -627,23 +612,25 @@
   - type: PointLight
     enabled: true
     radius: 2
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 2.5
-        - ReagentId: Radium
-          Quantity: 0.5
-        - ReagentId: Uranium
-          Quantity: 2
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 8.5
+      - ReagentId: Vitamin
+        Quantity: 1.25
+      - ReagentId: CapsaicinOil
+        Quantity: 1.66
+      - ReagentId: Radium
+        Quantity: 0.33
+      - ReagentId: Uranium
+        Quantity: 1.33
 
 # Tastes like crust, tomato, cheese, radiation.
 
 - type: entity
   name: cotton pizza
-  parent: FoodPizzaBase
+  parent: [FoodPizzaBase, BaseSlicingRefinableFood]
   id: FoodPizzaCotton
   description: Flat fabric cotton dough with cotton topping. Incredible.
   components:
@@ -654,25 +641,25 @@
   - type: Sprite
     layers:
     - state: cotton-pizza
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
-  - type: SliceableFood
-    slice: FoodPizzaCottonSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPizzaCottonSlice
+      amount: 8
   - type: Tag
     tags:
     - ClothMade
     - Pizza
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 40
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 20
-        - ReagentId: Vitamin
-          Quantity: 5
-        - ReagentId: Fiber
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 20
+      - ReagentId: Fiber
+        Quantity: 90
+      - ReagentId: Vitamin
+        Quantity: 20
 
 - type: entity
   name: slice of cotton pizza
@@ -694,21 +681,19 @@
     - ClothMade
     - Pizza
     - Slice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 6
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3.5
-        - ReagentId: Vitamin
-          Quantity: 0.8
-        - ReagentId: Fiber
-          Quantity: 1.5
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 2.66
+      - ReagentId: Fiber
+        Quantity: 7.5
+      - ReagentId: Vitamin
+        Quantity: 2.66
 
 - type: entity
   name: world peazza
-  parent: FoodPizzaBase
+  parent: [FoodPizzaBase, BaseSlicingRefinableFood]
   id: FoodPizzaWorldpeas
   description: Modern diplomacy in the shape of a disc.
   components:
@@ -719,19 +704,19 @@
   - type: Sprite
     layers:
     - state: worldpeas
-  - type: SliceableFood
-    slice: FoodPizzaWorldpeasSlice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 45
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 20
-        - ReagentId: Happiness
-          Quantity: 12
-        - ReagentId: Pax
-          Quantity: 8
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPizzaWorldpeasSlice
+      amount: 8
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 90
+      - ReagentId: Happiness
+        Quantity: 15
+      - ReagentId: Pax
+        Quantity: 15
 
 - type: entity
   name: slice of world peazza
@@ -748,14 +733,12 @@
     - state: worldpeas-slice
   - type: Item
     heldPrefix: worldpeas-slice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3.5
-        - ReagentId: Happiness
-          Quantity: 2
-        - ReagentId: Pax
-          Quantity: 1.5
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 7.5
+      - ReagentId: Happiness
+        Quantity: 1.25
+      - ReagentId: Pax
+        Quantity: 1.25

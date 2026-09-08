@@ -1,0 +1,48 @@
+- type: stack
+  parent: BaseSheetStack
+  id: Glass
+  name: stack-glass
+  icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: glass }
+  spawn: SheetGlass1
+
+- type: stack
+  parent: BaseSheetStack
+  id: ReinforcedGlass
+  name: stack-reinforced-glass
+  icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: rglass }
+  spawn: SheetRGlass1
+
+- type: stack
+  parent: BaseSheetStack
+  id: PlasmaGlass
+  name: stack-plasma-glass
+  icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: pglass }
+  spawn: SheetPGlass1
+
+- type: stack
+  parent: BaseSheetStack
+  id: ReinforcedPlasmaGlass
+  name: stack-reinforced-plasma-glass
+  icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: rpglass }
+  spawn: SheetRPGlass1
+
+- type: stack
+  parent: BaseSheetStack
+  id: UraniumGlass
+  name: stack-uranium-glass
+  icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: uglass }
+  spawn: SheetUGlass1
+
+- type: stack
+  parent: BaseSheetStack
+  id: ReinforcedUraniumGlass
+  name: stack-reinforced-uranium-glass
+  icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: ruglass }
+  spawn: SheetRUGlass1
+
+- type: stack
+  parent: BaseSheetStack
+  id: ClockworkGlass
+  name: stack-clockwork-glass
+  icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: cglass }
+  spawn: SheetClockworkGlass1

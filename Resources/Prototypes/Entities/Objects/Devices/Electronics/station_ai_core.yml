@@ -1,0 +1,14 @@
+- type: entity
+  id: StationAiCoreElectronics
+  parent: BaseElectronics
+  name: station AI core electronics
+  description: An electronics board used in station AI cores.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: mainboard
+  - type: Tag
+    tags:
+      - StationAiCoreElectronics
+  - type: StaticPrice
+    price: 404

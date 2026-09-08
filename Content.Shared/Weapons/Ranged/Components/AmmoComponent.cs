@@ -1,7 +1,6 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Weapons.Ranged.Components;
 
@@ -23,12 +22,23 @@ public partial class AmmoComponent : Component, IShootable
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class CartridgeAmmoComponent : AmmoComponent
 {
-    [ViewVariables(VVAccess.ReadWrite), DataField("proto", required: true)]
+    /// <summary>
+    /// Prototype of the ammo to be shot.
+    /// </summary>
+    [DataField("proto", required: true)]
     public EntProtoId Prototype;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField]
-    [AutoNetworkedField]
+    /// <summary>
+    /// Is this cartridge spent?
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public bool Spent;
+
+    /// <summary>
+    /// Is this cartridge automatically marked as trash once spent?
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool MarkSpentAsTrash = true;
 
     /// <summary>
     /// Caseless ammunition.
@@ -36,6 +46,9 @@ public sealed partial class CartridgeAmmoComponent : AmmoComponent
     [DataField]
     public bool DeleteOnSpawn;
 
+    /// <summary>
+    /// Sound the case makes when it leaves the weapon.
+    /// </summary>
     [DataField("soundEject")]
     public SoundSpecifier? EjectSound = new SoundCollectionSpecifier("CasingEject");
 }

@@ -5,7 +5,7 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Gravity
 {
     [UsedImplicitly]
-    public sealed class GravitySystem : SharedGravitySystem
+    public sealed partial class GravitySystem : SharedGravitySystem
     {
         public override void Initialize()
         {
@@ -18,7 +18,7 @@ namespace Content.Server.Gravity
         /// </summary>
         public void RefreshGravity(EntityUid uid, GravityComponent? gravity = null)
         {
-            if (!Resolve(uid, ref gravity))
+            if (!GravityQuery.Resolve(uid, ref gravity))
                 return;
 
             if (gravity.Inherent)
@@ -61,7 +61,7 @@ namespace Content.Server.Gravity
         /// </summary>
         public void EnableGravity(EntityUid uid, GravityComponent? gravity = null)
         {
-            if (!Resolve(uid, ref gravity))
+            if (!GravityQuery.Resolve(uid, ref gravity))
                 return;
 
             if (gravity.Enabled || gravity.Inherent)

@@ -8,7 +8,7 @@ namespace Content.Client.Options;
 /// <summary>
 /// Implements <see cref="OptionsVisualizerComponent"/>.
 /// </summary>
-public sealed class OptionsVisualizerSystem : EntitySystem
+public sealed partial class OptionsVisualizerSystem : EntitySystem
 {
     private static readonly (OptionVisualizerOptions, CVarDef<bool>)[] OptionVars =
     {
@@ -16,9 +16,9 @@ public sealed class OptionsVisualizerSystem : EntitySystem
         (OptionVisualizerOptions.ReducedMotion, CCVars.ReducedMotion),
     };
 
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IReflectionManager _reflection = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IReflectionManager _reflection = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     private OptionVisualizerOptions _currentOptions;
 

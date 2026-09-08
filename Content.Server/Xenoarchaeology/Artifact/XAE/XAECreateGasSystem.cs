@@ -12,11 +12,11 @@ namespace Content.Server.Xenoarchaeology.Artifact.XAE;
 /// <summary>
 /// System for xeno artifact effect that creates certain atmospheric gas on artifact tile / adjacent tiles.
 /// </summary>
-public sealed class XAECreateGasSystem : BaseXAESystem<XAECreateGasComponent>
+public sealed partial class XAECreateGasSystem : BaseXAESystem<XAECreateGasComponent>
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly MapSystem _map = default!;
+    [Dependency] private AtmosphereSystem _atmosphere = default!;
+    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private MapSystem _map = default!;
 
     protected override void OnActivated(Entity<XAECreateGasComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {

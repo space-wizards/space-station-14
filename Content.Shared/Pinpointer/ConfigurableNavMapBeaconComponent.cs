@@ -8,10 +8,7 @@ namespace Content.Shared.Pinpointer;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedNavMapSystem))]
-public sealed partial class ConfigurableNavMapBeaconComponent : Component
-{
-
-}
+public sealed partial class ConfigurableNavMapBeaconComponent : Component;
 
 [Serializable, NetSerializable]
 public sealed class NavMapBeaconConfigureBuiMessage : BoundUserInterfaceMessage
@@ -31,11 +28,11 @@ public sealed class NavMapBeaconConfigureBuiMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public enum NavMapBeaconUiKey : byte
 {
-    Key
+    Key,
 }
 
 [Serializable, NetSerializable]
 public enum NavMapBeaconVisuals : byte
 {
-    Enabled
+    Enabled,
 }

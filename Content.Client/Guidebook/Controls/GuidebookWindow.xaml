@@ -13,6 +13,7 @@
             <cc:VSeparator StyleClasses="LowDivider" Margin="0 -2"/>
         </BoxContainer>
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+            <fancyTree:FancyTree Name="TableOfContents" HorizontalExpand="True"/>
             <BoxContainer Name="SearchContainer" Visible="False" HorizontalExpand="True">
                 <LineEdit
                     Name="SearchBar"

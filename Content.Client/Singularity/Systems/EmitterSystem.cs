@@ -4,14 +4,16 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Singularity.Systems;
 
-public sealed class EmitterSystem : SharedEmitterSystem
+public sealed partial class EmitterSystem : SharedEmitterSystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<EmitterComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 

@@ -1,6 +1,6 @@
+using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.Maps;
 
@@ -17,6 +17,6 @@ public sealed partial class GameMapPoolPrototype : IPrototype
     /// <summary>
     ///     Which maps are in this pool.
     /// </summary>
-    [DataField("maps", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<GameMapPrototype>), required: true)]
-    public HashSet<string> Maps = new(0);
+    [DataField(required: true)]
+    public HashSet<ProtoId<GameMapPrototype>> Maps = new(0);
 }

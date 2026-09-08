@@ -2,7 +2,6 @@
     xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-    xmlns:style="clr-namespace:Content.Client.Stylesheets"
     Title="{Loc 'microwave-menu-title'}"
     MinWidth="512"
     MinSize="512 256">
@@ -78,14 +77,14 @@
                                         Name="StartButton"
                                         Access="Public"
                                         Text="{Loc 'microwave-menu-start-button'}"
-                                        StyleClasses="ButtonColorGreen"
+                                        StyleClasses="positive"
                                         TextAlign="Center" />
                                     <Button
                                         Name="EjectButton"
                                         Access="Public"
                                         Text="{Loc 'microwave-menu-eject-all-text'}"
                                         ToolTip="{Loc 'microwave-menu-eject-all-tooltip'}"
-                                        StyleClasses="ButtonColorRed"
+                                        StyleClasses="negative"
                                         TextAlign="Center" />
                                 </BoxContainer>
                             </BoxContainer>

@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Alert;
@@ -7,8 +8,17 @@ namespace Content.Shared.Alert;
 /// An alert popup with associated icon, tooltip, and other data.
 /// </summary>
 [Prototype]
-public sealed partial class AlertPrototype : IPrototype
+public sealed partial class AlertPrototype : IPrototype, IInheritingPrototype
 {
+    /// <inheritdoc />
+    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<AlertPrototype>))]
+    public string[]? Parents { get; private set; }
+
+    /// <inheritdoc />
+    [NeverPushInheritance]
+    [AbstractDataField]
+    public bool Abstract { get; private set; }
+
     /// <summary>
     /// Type of alert, no 2 alert prototypes should have the same one.
     /// </summary>

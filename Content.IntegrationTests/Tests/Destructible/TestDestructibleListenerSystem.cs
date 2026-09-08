@@ -11,7 +11,7 @@ namespace Content.IntegrationTests.Tests.Destructible
     ///     threshold to a list for checking during testing.
     /// </summary>
     [Reflect(false)]
-    public sealed class TestDestructibleListenerSystem : EntitySystem
+    public sealed partial class TestDestructibleListenerSystem : EntitySystem
     {
         public readonly List<DamageThresholdReached> ThresholdsReached = new();
 

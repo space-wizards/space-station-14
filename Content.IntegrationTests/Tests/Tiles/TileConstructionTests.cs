@@ -100,4 +100,25 @@ public sealed class TileConstructionTests : InteractionTest
 
         await AssertEntityLookup((FloorItem, 1));
     }
+
+    /// <summary>
+    /// Test snowPlating -> floor -> snowPlating using tilestacking
+    /// </summary>
+    [Test]
+    public async Task BrassPlatingPlace()
+    {
+        await SetTile(PlatingSnow);
+
+        // Snow Plating -> Tile
+        await InteractUsing(FloorItem);
+        Assert.That(HandSys.GetActiveItem((SEntMan.GetEntity(Player), Hands)), Is.Null);
+        await AssertTile(Floor);
+        AssertGridCount(1);
+
+        // Tile -> Snow Plating
+        await InteractUsing(Pry);
+        await AssertTile(PlatingSnow);
+        AssertGridCount(1);
+        await AssertEntityLookup((FloorItem, 1));
+    }
 }

@@ -13,13 +13,12 @@ public sealed partial class DeviceFrequencyPrototype : IPrototype
     public string ID { get; private set; } = default!;
 
     // TODO Somehow Allow per-station or some other type of named but randomized frequencies?
-    [DataField("frequency", required: true)]
+    [DataField(required: true)]
     public uint Frequency;
 
     /// <summary>
     ///     Optional name for this frequency, for displaying in game.
     /// </summary>
-    [DataField("name")]
-    public string? Name;
-
+    [DataField]
+    public LocId? Name;
 }

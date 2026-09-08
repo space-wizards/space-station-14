@@ -2,8 +2,9 @@
                     xmlns:ui="clr-namespace:Content.Client.Changelog"
                     Title="{Loc 'changelog-window-title'}"
                     MinSize="500 400"
-                    SetSize="500 400">
-    <PanelContainer StyleClasses="AngleRect" />
+                    SetSize="500 400"
+                    Stylesheet="Interface">
+    <PanelContainer StyleClasses="BackgroundPanel" />
     <BoxContainer Orientation="Vertical">
         <TabContainer Name="Tabs" Access="Public" HorizontalExpand="True" VerticalExpand="True" />
         <PanelContainer StyleClasses="LowDivider" />

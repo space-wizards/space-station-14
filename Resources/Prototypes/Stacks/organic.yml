@@ -1,0 +1,59 @@
+- type: stack
+  parent: BaseVeryLargeStack
+  id: Biomass
+  name: stack-biomass
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
+  spawn: MaterialBiomass1
+
+# Stacks which come from plants
+
+- type: stack
+  parent: BaseMediumStack
+  id: WoodPlank
+  name: stack-wood-plank
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: wood }
+  spawn: MaterialWoodPlank1
+
+- type: stack
+  parent: BaseMediumStack
+  id: Cardboard
+  name: stack-cardboard
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cardboard }
+  spawn: MaterialCardboard1
+
+# Stacks which come from or might come from a creature
+
+- type: stack
+  parent: BaseLargeStack
+  id: WebSilk
+  name: stack-silk
+  icon: { sprite: /Textures/Objects/Materials/silk.rsi, state: icon }
+  spawn: MaterialWebSilk1
+
+- type: stack
+  parent: BaseMediumStack
+  id: Bones
+  name: stack-bones
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: bones }
+  spawn: MaterialBones1
+
+- type: stack
+  parent: BaseMediumStack
+  id: SpaceCarpTooth
+  name: stack-space-carp-tooth
+  icon: { sprite: /Textures/Objects/Materials/Mob/carptooth.rsi, state: tooth }
+  spawn: MaterialToothSpaceCarp1
+
+- type: stack
+  parent: BaseMediumStack
+  id: SharkMinnowTooth
+  name: stack-sharkminnow-tooth
+  icon: { sprite: /Textures/Objects/Materials/Mob/sharktooth.rsi, state: tooth }
+  spawn: MaterialToothSharkminnow1
+
+- type: stack
+  parent: BaseMediumStack
+  id: GoliathHide
+  name: stack-goliath-hide
+  icon: { sprite: /Textures/Objects/Materials/hide.rsi, state: goliath_hide }
+  spawn: MaterialGoliathHide1

@@ -1,0 +1,59 @@
+- type: constructionGraph
+  id: DetonatorGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: emptyDetonator
+      steps:
+      - material: Bananium
+        amount: 1
+        doAfter: 1
+  
+  - node: emptyDetonator
+    entity: EmptyDetonator
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: detonatorWithTrigger
+      steps:
+      - component: PayloadTrigger
+        store: payloadTrigger
+        name: construction-graph-component-payload-trigger
+        doAfter: 0.5
+
+  - node: detonatorWithTrigger
+    entity: EmptyDetonator
+    actions:
+    - !type:AppearanceChange
+    - !type:PlaySound
+      sound: /Audio/Machines/button.ogg
+    edges:
+    - to: emptyDetonator
+      steps:
+      - tool: Prying
+        doAfter: 0.5
+        completed:
+        - !type:EmptyContainer
+          container: payloadTrigger
+    - to: wiredDetonator
+      steps:
+      - material: CableDet
+        doAfter: 0.5
+
+  - node: wiredDetonator
+    entity: WiredDetonator
+    actions:
+    - !type:AppearanceChange
+    - !type:PlaySound
+      sound: /Audio/Machines/button.ogg
+    - !type:AdminLog
+      message: "A detonator cap was crafted"
+    edges:
+    - to: detonatorWithTrigger
+      steps:
+      - tool: Cutting
+        doAfter: 0.5
+        completed:
+        - !type:SpawnPrototype
+          prototype: CableDetStack1

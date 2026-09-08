@@ -1,6 +1,6 @@
 ﻿namespace Content.Shared.Emoting;
 
-public sealed class EmoteSystem : EntitySystem
+public sealed partial class EmoteSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -9,6 +9,9 @@ public sealed class EmoteSystem : EntitySystem
         SubscribeLocalEvent<EmoteAttemptEvent>(OnEmoteAttempt);
     }
 
+    /// <summary>
+    /// Tries to enable emoting component on an entity.
+    /// </summary>
     public void SetEmoting(EntityUid uid, bool value, EmotingComponent? component = null)
     {
         if (value && !Resolve(uid, ref component))

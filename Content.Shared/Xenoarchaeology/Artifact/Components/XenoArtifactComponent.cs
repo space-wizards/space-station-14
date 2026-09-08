@@ -1,6 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Destructible.Thresholds;
+using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.Xenoarchaeology.Artifact.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -139,7 +140,10 @@ public sealed partial class XenoArtifactComponent : Component
     /// Triggers that can be used during this artefact generation.
     /// </summary>
     [DataField]
-    public ProtoId<WeightedRandomXenoArchTriggerPrototype> TriggerWeights = "DefaultTriggers";
+    public EntityTableSelector TriggersTable = new NestedSelector
+    {
+        TableId = "XenoArtifactTriggerDefaultTable"
+    };
     #endregion
 
     /// <summary>
@@ -159,6 +163,30 @@ public sealed partial class XenoArtifactComponent : Component
     /// </summary>
     [DataField]
     public EntProtoId<InstantActionComponent> SelfActivateAction = "ActionArtifactActivate";
+
+    /// <summary>
+    /// Message shown on artifact unlock beginning.
+    /// </summary>
+    [DataField]
+    public LocId? UnlockBeginMsg = "artifact-unlock-state-begin";
+
+    /// <summary>
+    /// Message shown on trigger being applied successfully whilst the artifact is unlocking.
+    /// </summary>
+    [DataField]
+    public LocId? UnlockContinueMsg = "artifact-unlock-state-continue";
+
+    /// <summary>
+    /// Message shown on artifact unlocking ending successfully.
+    /// </summary>
+    [DataField]
+    public LocId? UnlockSuccessMsg = "artifact-unlock-state-end-success";
+
+    /// <summary>
+    /// Message shown on artifact unlocking ending with failure.
+    /// </summary>
+    [DataField]
+    public LocId? UnlockFailureMsg = "artifact-unlock-state-end-failure";
 }
 
 /// <summary>

@@ -6,9 +6,9 @@ using Robust.Shared.Animations;
 
 namespace Content.Client.Light.EntitySystems;
 
-public sealed class RotatingLightSystem : SharedRotatingLightSystem
+public sealed partial class RotatingLightSystem : SharedRotatingLightSystem
 {
-    [Dependency] private readonly AnimationPlayerSystem _animations = default!;
+    [Dependency] private AnimationPlayerSystem _animations = default!;
 
     private Animation GetAnimation(float speed)
     {

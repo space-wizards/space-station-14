@@ -1,0 +1,46 @@
+- type: constructionGraph
+  id: Bonfire
+  start: start
+  graph:
+
+  - node: start
+    edges:
+    - to: bonfire
+      steps:
+      - material: WoodPlank
+        amount: 10
+        doAfter: 4
+
+  - node: bonfire
+    entity: Bonfire
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWoodPlank1
+        amount: 10
+      - !type:DeleteEntity { }
+      steps:
+      - tool: Prying
+        doAfter: 4
+    - to: bonfireStake
+      completed:
+      - !type:AdminLog
+        message: "Construction"
+        impact: High
+      steps:
+      - material: WoodPlank
+        amount: 2
+        doAfter: 2
+
+  - node: bonfireStake
+    entity: BonfireStake
+    edges:
+    - to: bonfire
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWoodPlank1
+        amount: 2
+      steps:
+      - tool: Prying
+        doAfter: 1

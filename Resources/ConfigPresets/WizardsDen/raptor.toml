@@ -1,0 +1,23 @@
+# Configuration preset used on Wizard's Den Raptor
+
+[game]
+hostname = "[EN] Wizard's Den Raptor [NA East]"
+desc = "Official English server for Space Station 14.\nVanilla, roleplay ruleset.\n\nPlease report bugs on our GitHub, forum, or community Discord."
+panic_bunker.enabled = false
+panic_bunker.disable_with_admins = false
+panic_bunker.enable_without_admins = false
+panic_bunker.custom_reason = ""
+
+[hub]
+tags = "lang:en,region:am_n_e,rp:low"
+
+[server]
+# This needs to be specified even though it's identical to the hostname, because fallback lobby name is "Lobby <hostname>" which would be too long and go out of bounds
+lobby_name = "[EN] Wizard's Den Raptor [NA East]"
+force_client_hud_version_watermark = true
+
+[chat]
+motd = ""
+
+[feedback]
+valid_origins = "wizden wizden_master"

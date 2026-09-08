@@ -18,14 +18,19 @@ namespace Content.Server.Singularity.EntitySystems;
 /// Primarily responsible for managing <see cref="GravityWellComponent"/>s.
 /// Handles the gravitational pulses they can emit.
 /// </summary>
-public sealed class GravityWellSystem : SharedGravityWellSystem
+public sealed partial class GravityWellSystem : SharedGravityWellSystem
 {
     #region Dependencies
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IViewVariablesManager _vvManager = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IViewVariablesManager _vvManager = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+
+    [Dependency] private EntityQuery<GravityWellComponent> _wellQuery = default!;
+    [Dependency] private EntityQuery<MapComponent> _mapQuery = default!;
+    [Dependency] private EntityQuery<MapGridComponent> _gridQuery = default!;
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
     #endregion Dependencies
 
     /// <summary>
@@ -34,20 +39,11 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
     /// </summary>
     public const float MinGravPulseRange = 0.00001f;
 
-    private EntityQuery<GravityWellComponent> _wellQuery;
-    private EntityQuery<MapComponent> _mapQuery;
-    private EntityQuery<MapGridComponent> _gridQuery;
-    private EntityQuery<PhysicsComponent> _physicsQuery;
-
     private HashSet<EntityUid> _entSet = new();
 
     public override void Initialize()
     {
         base.Initialize();
-        _wellQuery = GetEntityQuery<GravityWellComponent>();
-        _mapQuery = GetEntityQuery<MapComponent>();
-        _gridQuery = GetEntityQuery<MapGridComponent>();
-        _physicsQuery = GetEntityQuery<PhysicsComponent>();
         SubscribeLocalEvent<GravityWellComponent, MapInitEvent>(OnGravityWellMapInit);
 
         var vvHandle = _vvManager.GetTypeHandler<GravityWellComponent>();
@@ -73,9 +69,6 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
     /// <param name="frameTime">The time elapsed since the last set of updates.</param>
     public override void Update(float frameTime)
     {
-        if(!_timing.IsFirstTimePredicted)
-            return;
-
         var query = EntityQueryEnumerator<GravityWellComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var gravWell, out var xform))
         {

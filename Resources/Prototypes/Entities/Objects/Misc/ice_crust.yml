@@ -21,7 +21,8 @@
     - type: Transform
       anchored: true
     - type: Tag
-      tags: [ Ice ]
+      tags:
+      - Ice
     - type: Physics
     - type: Fixtures
       fixtures:
@@ -35,6 +36,7 @@
           - MidImpassable
     - type: Damageable
       damageModifierSet: Wood
+    - type: Injurable
     - type: Destructible
       thresholds:
       - trigger:
@@ -44,10 +46,14 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
     - type: Temperature
+      temperature: 250
+      heatCapacity: 13440.002
+    - type: TemperatureDamage
       heatDamage:
         types:
           Heat: 5
       coldDamage: {}
+      heatDamageThreshold: 273.15
       coldDamageThreshold: 0
     - type: FrictionContacts
     - type: TileFrictionModifier

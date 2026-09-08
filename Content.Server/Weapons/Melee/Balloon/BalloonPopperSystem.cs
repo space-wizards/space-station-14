@@ -5,6 +5,7 @@ using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Throwing;
+using Content.Shared.Weapons.Melee.Balloon;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Weapons.Melee.Balloon;
@@ -12,12 +13,12 @@ namespace Content.Server.Weapons.Melee.Balloon;
 /// <summary>
 /// This handles popping ballons when attacked with <see cref="BalloonPopperComponent"/>
 /// </summary>
-public sealed class BalloonPopperSystem : EntitySystem
+public sealed partial class BalloonPopperSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly HandsSystem _hands = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private HandsSystem _hands = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private TagSystem _tag = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

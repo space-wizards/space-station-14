@@ -10,12 +10,11 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Players.JobWhitelist;
 
-public sealed class JobWhitelistSystem : EntitySystem
+public sealed partial class JobWhitelistSystem : EntitySystem
 {
-    [Dependency] private readonly IConfigurationManager _config = default!;
-    [Dependency] private readonly JobWhitelistManager _manager = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private IConfigurationManager _config = default!;
+    [Dependency] private JobWhitelistManager _manager = default!;
+    [Dependency] private IPlayerManager _player = default!;
 
     private ImmutableArray<ProtoId<JobPrototype>> _whitelistedJobs = [];
 
@@ -23,7 +22,7 @@ public sealed class JobWhitelistSystem : EntitySystem
     {
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
         SubscribeLocalEvent<StationJobsGetCandidatesEvent>(OnStationJobsGetCandidates);
-        SubscribeLocalEvent<IsJobAllowedEvent>(OnIsJobAllowed);
+        SubscribeLocalEvent<IsRoleAllowedEvent>(OnIsRoleAllowed);
         SubscribeLocalEvent<GetDisallowedJobsEvent>(OnGetDisallowedJobs);
 
         CacheJobs();
@@ -51,11 +50,18 @@ public sealed class JobWhitelistSystem : EntitySystem
         }
     }
 
-    private void OnIsJobAllowed(ref IsJobAllowedEvent ev)
+    private void OnIsRoleAllowed(ref IsRoleAllowedEvent ev)
     {
-        if (!_manager.IsAllowed(ev.Player, ev.JobId))
-            ev.Cancelled = true;
+        if (ev.Jobs is null)
+            return;
+
+        foreach (var proto in ev.Jobs)
+        {
+            if (!_manager.IsAllowed(ev.Player, proto))
+                ev.Cancelled = true;
+        }
     }
+    //TODO: Antagonist role whitelists?
 
     private void OnGetDisallowedJobs(ref GetDisallowedJobsEvent ev)
     {
@@ -72,7 +78,7 @@ public sealed class JobWhitelistSystem : EntitySystem
     private void CacheJobs()
     {
         var builder = ImmutableArray.CreateBuilder<ProtoId<JobPrototype>>();
-        foreach (var job in _prototypes.EnumeratePrototypes<JobPrototype>())
+        foreach (var job in ProtoMan.EnumeratePrototypes<JobPrototype>())
         {
             if (job.Whitelisted)
                 builder.Add(job.ID);

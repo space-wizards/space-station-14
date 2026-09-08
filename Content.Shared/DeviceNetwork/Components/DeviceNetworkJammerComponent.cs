@@ -21,6 +21,12 @@ public sealed partial class DeviceNetworkJammerComponent : Component
     /// Network ids are not guaranteed to be limited to DeviceNetIdDefaults.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public HashSet<string> JammableNetworks = [];
+    public HashSet<int> JammableNetworks = [];
+
+    /// <summary>
+    /// Device networks frequencies that wont be jammed.
+    /// </summary>
+    [DataField]
+    public HashSet<uint> FrequenciesExcluded = [];
 
 }

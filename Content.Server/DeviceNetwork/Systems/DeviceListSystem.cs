@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Systems;
@@ -8,9 +9,11 @@ using Robust.Shared.Map.Events;
 namespace Content.Server.DeviceNetwork.Systems;
 
 [UsedImplicitly]
-public sealed class DeviceListSystem : SharedDeviceListSystem
+public sealed partial class DeviceListSystem : SharedDeviceListSystem
 {
-    [Dependency] private readonly NetworkConfiguratorSystem _configurator = default!;
+    [Dependency] private NetworkConfiguratorSystem _configurator = default!;
+
+    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
 
     public override void Initialize()
     {
@@ -28,10 +31,9 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
             _configurator.OnDeviceListShutdown(conf, (uid, component));
         }
 
-        var query = GetEntityQuery<DeviceNetworkComponent>();
         foreach (var device in component.Devices)
         {
-            if (query.TryGetComponent(device, out var comp))
+            if (_deviceNetworkQuery.TryGetComponent(device, out var comp))
                 comp.DeviceLists.Remove(uid);
         }
         component.Devices.Clear();
@@ -82,17 +84,18 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
     /// <summary>
     /// Filters the broadcasts recipient list against the device list as either an allow or deny list depending on the components IsAllowList field
     /// </summary>
-    private void OnBeforeBroadcast(EntityUid uid, DeviceListComponent component, BeforeBroadcastAttemptEvent args)
+    private void OnBeforeBroadcast(Entity<DeviceListComponent> ent, ref BeforeBroadcastAttemptEvent args)
     {
+        var component = ent.Comp;
         //Don't filter anything if the device list is empty
         if (component.Devices.Count == 0)
         {
             if (component.IsAllowList)
-                args.Cancel();
+                args.Cancelled = true;
             return;
         }
 
-        HashSet<DeviceNetworkComponent> filteredRecipients = new(args.Recipients.Count);
+        HashSet<Device> filteredRecipients = new(args.Recipients.Count);
 
         foreach (var recipient in args.Recipients)
         {
@@ -106,10 +109,10 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
     /// <summary>
     /// Filters incoming packets if that is enabled <see cref="OnBeforeBroadcast"/>
     /// </summary>
-    private void OnBeforePacketSent(EntityUid uid, DeviceListComponent component, BeforePacketSentEvent args)
+    private void OnBeforePacketSent(Entity<DeviceListComponent> ent, ref BeforePacketSentEvent args)
     {
-        if (component.HandleIncomingPackets && component.Devices.Contains(args.Sender) != component.IsAllowList)
-            args.Cancel();
+        if (ent.Comp.HandleIncomingPackets && ent.Comp.Devices.Contains(args.Sender) != ent.Comp.IsAllowList)
+            args.Cancelled = true;
     }
 
     public void OnDeviceShutdown(Entity<DeviceListComponent?> list, Entity<DeviceNetworkComponent> device)
@@ -125,7 +128,6 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
     private void OnMapSave(BeforeSerializationEvent ev)
     {
         List<EntityUid> toRemove = new();
-        var query = GetEntityQuery<TransformComponent>();
         var enumerator = AllEntityQuery<DeviceListComponent, TransformComponent>();
         while (enumerator.MoveNext(out var uid, out var device, out var xform))
         {
@@ -134,7 +136,7 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
 
             foreach (var ent in device.Devices)
             {
-                if (!query.TryGetComponent(ent, out var linkedXform))
+                if (!TryComp(ent, out TransformComponent? linkedXform))
                 {
                     // Entity was deleted.
                     // TODO remove these on deletion instead of on-save.
@@ -190,7 +192,6 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
             return DeviceListUpdateResult.TooManyDevices;
         }
 
-        var query = GetEntityQuery<DeviceNetworkComponent>();
         var oldDevices = deviceList.Devices.ToList();
         foreach (var device in oldDevices)
         {
@@ -198,13 +199,13 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
                 continue;
 
             deviceList.Devices.Remove(device);
-            if (query.TryGetComponent(device, out var comp))
+            if (_deviceNetworkQuery.TryGetComponent(device, out var comp))
                 comp.DeviceLists.Remove(uid);
         }
 
         foreach (var device in newDevices)
         {
-            if (!query.TryGetComponent(device, out var comp))
+            if (!_deviceNetworkQuery.TryGetComponent(device, out var comp))
                 continue;
 
             if (!deviceList.Devices.Add(device))

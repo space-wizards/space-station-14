@@ -20,20 +20,4 @@ public sealed partial class IntellicardComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public int UploadTime = 3;
-
-    /// <summary>
-    /// The sound that plays for the AI
-    /// when they are being downloaded
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public SoundSpecifier? WarningSound = new SoundPathSpecifier("/Audio/Misc/notice2.ogg");
-
-    /// <summary>
-    /// The delay before allowing the warning to play again in seconds.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public TimeSpan WarningDelay = TimeSpan.FromSeconds(8);
-
-    [ViewVariables]
-    public TimeSpan NextWarningAllowed = TimeSpan.Zero;
 }

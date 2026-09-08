@@ -1,9 +1,8 @@
-﻿using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Power.Generator;
 
@@ -27,7 +26,7 @@ public sealed partial class ChemicalFuelGeneratorAdapterComponent : Component
     public string SolutionName = "tank";
 
     /// <summary>
-    /// The solution on the <see cref="SolutionContainerManagerComponent"/> to use.
+    /// The solution to use.
     /// </summary>
     [ViewVariables]
     public Entity<SolutionComponent>? Solution = null;

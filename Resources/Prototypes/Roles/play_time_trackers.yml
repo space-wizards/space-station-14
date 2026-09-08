@@ -143,13 +143,10 @@
   id: JobTechnicalAssistant
 
 - type: playTimeTracker
+  id: JobTramDriver
+
+- type: playTimeTracker
   id: JobVisitor
 
 - type: playTimeTracker
   id: JobWarden
-
-- type: playTimeTracker
-  id: JobBoxer
-
-- type: playTimeTracker
-  id: JobZookeeper

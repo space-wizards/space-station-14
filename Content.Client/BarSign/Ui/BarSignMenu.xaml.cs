@@ -8,23 +8,13 @@ namespace Content.Client.BarSign.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class BarSignMenu : FancyWindow
 {
-    private string? _currentId;
-
-    private readonly List<BarSignPrototype> _cachedPrototypes = new();
+    private List<BarSignPrototype> _cachedPrototypes = new();
 
     public event Action<string>? OnSignSelected;
 
-    public BarSignMenu(BarSignPrototype? currentSign, List<BarSignPrototype> signs)
+    public BarSignMenu()
     {
         RobustXamlLoader.Load(this);
-        _currentId = currentSign?.ID;
-
-        _cachedPrototypes.Clear();
-        _cachedPrototypes = signs;
-        foreach (var proto in _cachedPrototypes)
-        {
-            SignOptions.AddItem(Loc.GetString(proto.Name));
-        }
 
         SignOptions.OnItemSelected += idx =>
         {
@@ -32,18 +22,21 @@ public sealed partial class BarSignMenu : FancyWindow
             SignOptions.SelectId(idx.Id);
         };
 
-        if (currentSign != null)
+    }
+
+    public void LoadSigns(List<BarSignPrototype> signs)
+    {
+        _cachedPrototypes.Clear();
+        _cachedPrototypes = signs;
+
+        foreach (var proto in _cachedPrototypes)
         {
-            var idx = _cachedPrototypes.IndexOf(currentSign);
-            SignOptions.TrySelectId(idx);
+            SignOptions.AddItem(Loc.GetString(proto.Name));
         }
     }
 
     public void UpdateState(BarSignPrototype newSign)
     {
-        if (_currentId != null && newSign.ID == _currentId)
-            return;
-        _currentId = newSign.ID;
         var idx = _cachedPrototypes.IndexOf(newSign);
         SignOptions.TrySelectId(idx);
     }

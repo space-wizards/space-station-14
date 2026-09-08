@@ -10,11 +10,11 @@ namespace Content.Shared.Cabinet;
 /// <summary>
 /// Controls ItemCabinet slot locking and visuals.
 /// </summary>
-public sealed class ItemCabinetSystem : EntitySystem
+public sealed partial class ItemCabinetSystem : EntitySystem
 {
-    [Dependency] private readonly ItemSlotsSystem _slots = default!;
-    [Dependency] private readonly OpenableSystem _openable = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private ItemSlotsSystem _slots = default!;
+    [Dependency] private OpenableSystem _openable = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -37,7 +37,7 @@ public sealed class ItemCabinetSystem : EntitySystem
     private void OnMapInit(Entity<ItemCabinetComponent> ent, ref MapInitEvent args)
     {
         // update at mapinit to avoid copy pasting locked: true and locked: false for each closed/open prototype
-        SetSlotLock(ent, !_openable.IsOpen(ent));
+        SetSlotLock(ent, _openable.IsClosed(ent, null));
     }
 
     private void UpdateAppearance(Entity<ItemCabinetComponent> ent)
@@ -70,7 +70,7 @@ public sealed class ItemCabinetSystem : EntitySystem
         if (!TryComp<ItemSlotsComponent>(ent, out var slots))
             return false;
 
-        return _slots.TryGetSlot(ent, ent.Comp.Slot, out slot, slots);
+        return _slots.TryGetSlot((ent.Owner, slots), ent.Comp.Slot, out slot);
     }
 
     /// <summary>
@@ -89,7 +89,7 @@ public sealed class ItemCabinetSystem : EntitySystem
         if (!TryComp<ItemSlotsComponent>(ent, out var slots))
             return;
 
-        if (_slots.TryGetSlot(ent, ent.Comp.Slot, out var slot, slots))
-            _slots.SetLock(ent, slot, closed, slots);
+        if (_slots.TryGetSlot((ent.Owner, slots), ent.Comp.Slot, out var slot))
+            _slots.SetLock((ent.Owner, slots), slot, closed);
     }
 }

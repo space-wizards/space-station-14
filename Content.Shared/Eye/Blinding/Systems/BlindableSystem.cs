@@ -6,10 +6,10 @@ using JetBrains.Annotations;
 
 namespace Content.Shared.Eye.Blinding.Systems;
 
-public sealed class BlindableSystem : EntitySystem
+public sealed partial class BlindableSystem : EntitySystem
 {
-    [Dependency] private readonly BlurryVisionSystem _blurriness = default!;
-    [Dependency] private readonly EyeClosingSystem _eyelids = default!;
+    [Dependency] private BlurryVisionSystem _blurriness = default!;
+    [Dependency] private EyeClosingSystem _eyelids = default!;
 
     public override void Initialize()
     {
@@ -43,6 +43,10 @@ public sealed class BlindableSystem : EntitySystem
             args.Cancelled = true;
     }
 
+    /// <summary>
+    /// Checks and updates a blindable is blind state according to damage and other components to the entity.
+    /// </summary>
+    /// <param name="blindable">The entity to update.</param>
     [PublicAPI]
     public void UpdateIsBlind(Entity<BlindableComponent?> blindable)
     {
@@ -71,6 +75,11 @@ public sealed class BlindableSystem : EntitySystem
         Dirty(blindable);
     }
 
+    /// <summary>
+    /// Adjust eye damage and updates the relevant sub components.
+    /// </summary>
+    /// <param name="blindable">Entity to adjust for.</param>
+    /// <param name="amount">How much to change the eye damage. Can be positive and negative.</param>
     public void AdjustEyeDamage(Entity<BlindableComponent?> blindable, int amount)
     {
         if (!Resolve(blindable, ref blindable.Comp, false) || amount == 0)
@@ -79,6 +88,7 @@ public sealed class BlindableSystem : EntitySystem
         blindable.Comp.EyeDamage += amount;
         UpdateEyeDamage(blindable, true);
     }
+
     private void UpdateEyeDamage(Entity<BlindableComponent?> blindable, bool isDamageChanged)
     {
         if (!Resolve(blindable, ref blindable.Comp, false))
@@ -94,6 +104,13 @@ public sealed class BlindableSystem : EntitySystem
         var ev = new EyeDamageChangedEvent(blindable.Comp.EyeDamage);
         RaiseLocalEvent(blindable.Owner, ref ev);
     }
+
+    /// <summary>
+    /// Sets the minimum damage to an eye.
+    /// Updates also sub components.
+    /// </summary>
+    /// <param name="blindable">The entity to update.</param>
+    /// <param name="amount">The minimum amount the entity can be blinded.</param>
     public void SetMinDamage(Entity<BlindableComponent?> blindable, int amount)
     {
         if (!Resolve(blindable, ref blindable.Comp, false))

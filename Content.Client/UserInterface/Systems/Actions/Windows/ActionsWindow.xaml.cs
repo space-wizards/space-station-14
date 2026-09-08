@@ -8,6 +8,8 @@ namespace Content.Client.UserInterface.Systems.Actions.Windows;
 [GenerateTypedNameReferences]
 public sealed partial class ActionsWindow : DefaultWindow
 {
+    public const string StyleClassActionSearchBox = "actionSearchBox";
+
     public MultiselectOptionButton<Filters> FilterButton { get; private set; }
 
     /// <summary>

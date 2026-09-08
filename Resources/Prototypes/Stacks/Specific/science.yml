@@ -1,0 +1,13 @@
+﻿- type: stack
+  parent: BaseMediumStack
+  id: ArtifactFragment
+  name: stack-artifact-fragment
+  icon: { sprite: /Textures/Objects/Specific/Xenoarchaeology/artifact_fragments.rsi, state: martianball1 }
+  spawn: ArtifactFragment1
+
+- type: stack
+  parent: BaseSmallStack
+  id: Manipulator
+  name: stack-micro-manipulator
+  icon: { sprite: /Textures/Objects/Misc/stock_parts.rsi, state: micro_mani }
+  spawn: MicroManipulatorStockPart

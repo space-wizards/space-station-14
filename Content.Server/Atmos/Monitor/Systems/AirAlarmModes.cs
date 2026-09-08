@@ -1,7 +1,6 @@
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 
@@ -78,9 +77,9 @@ public sealed class AirAlarmModeFactory
 }
 
 // like a tiny little EntitySystem
-public abstract class AirAlarmModeExecutor : IAirAlarmMode
+public abstract partial class AirAlarmModeExecutor : IAirAlarmMode
 {
-    [Dependency] public readonly IEntityManager EntityManager = default!;
+    [Dependency] public IEntityManager EntityManager = default!;
     public readonly DeviceNetworkSystem DeviceNetworkSystem;
     public readonly AirAlarmSystem AirAlarmSystem;
 

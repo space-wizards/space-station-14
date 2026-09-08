@@ -6,8 +6,8 @@
           task: DouseFireTargetCompound
     - tasks:
         - !type:HTNCompoundTask
-          task: IdleCompound    
-          
+          task: IdleCompound
+
 - type: htnCompound
   id: DouseFireTargetCompound
   branches:
@@ -18,8 +18,9 @@
 
         - !type:HTNPrimitiveTask
           operator: !type:SpeakOperator
-            speech: firebot-fire-detected
-            hidden: true  
+            speech: !type:SingleSpeakOperatorSpeech
+              line: firebot-fire-detected
+            hidden: true
 
         - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
