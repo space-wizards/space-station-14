@@ -22,16 +22,27 @@ public sealed partial class TeleportOnVerbSystem : EntitySystem
     private void SubscribeVerb<TVerb>(TeleportVerbType type, Func<TVerb> createVerb) where TVerb : Verb
     {
         SubscribeLocalEvent<TeleportOnVerbComponent, GetVerbsEvent<TVerb>>(
-            (Entity<TeleportOnVerbComponent> ent, ref GetVerbsEvent<TVerb> args) => OnGetVerbs(ent, ref args, type, createVerb));
+            (Entity<TeleportOnVerbComponent> ent, ref GetVerbsEvent<TVerb> args) =>
+                OnGetVerbs(ent, ref args, type, createVerb));
     }
 
-    private void OnGetVerbs<TVerb>(Entity<TeleportOnVerbComponent> ent, ref GetVerbsEvent<TVerb> args, TeleportVerbType type, Func<TVerb> createVerb)
+    private void OnGetVerbs<TVerb>(
+        Entity<TeleportOnVerbComponent> ent,
+        ref GetVerbsEvent<TVerb> args,
+        TeleportVerbType type,
+        Func<TVerb> createVerb)
         where TVerb : Verb
     {
         if (ent.Comp.VerbType != type)
             return;
 
         if (!args.CanAccess)
+            return;
+
+        if (ent.Comp.RequireCanInteract && !args.CanInteract)
+            return;
+
+        if (ent.Comp.RequireHands && args.Hands == null)
             return;
 
         if (!IsUserAllowed(ent.Comp, args.User))

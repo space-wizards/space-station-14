@@ -24,6 +24,18 @@ public sealed partial class TeleportOnVerbComponent : Component
     public TeleportVerbType VerbType;
 
     /// <summary>
+    /// Require the user to pass the standard interaction blockers before offering this verb.
+    /// </summary>
+    [DataField]
+    public bool RequireCanInteract = true;
+
+    /// <summary>
+    /// Require the user to have a HandsComponent. Does not check hand count or whether a hand is empty.
+    /// </summary>
+    [DataField]
+    public bool RequireHands = true;
+
+    /// <summary>
     /// Text displayed for the teleport verb.
     /// </summary>
     [DataField(required: true)]
