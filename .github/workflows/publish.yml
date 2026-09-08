@@ -6,12 +6,24 @@ concurrency:
 
 on:
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Simulate a publish without any external side effects (no push, no PR, no CDN/Discord/RSS uploads, fail at the end to not clog list of successfu PRs because workflow relies on that).
+        required: false
+        default: false
+        type: boolean
+      version:
+        description: Optional version tag to apply to the released commit and push (used as-is, e.g. 'v2026.08.0'); adds no tag when empty.
+        required: false
+        type: string
   # schedule:
    # - cron: '0 10 * * *'
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      DRY_RUN: ${{ github.event.inputs.dry_run == 'true' }}
 
     steps:
     - name: Fail if we are attempting to run on the master branch
@@ -64,13 +76,37 @@ jobs:
         git config user.email "support@spacestation14.com"
         if [ -n "$(git status --porcelain Resources/Changelog)" ]; then
           git add Resources/Changelog
-          git commit -m "Update changelog"
-          git remote set-url origin "https://x-access-token:${CL_ACCESS_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
-          echo "committed=true" >> "$GITHUB_OUTPUT"
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "DRY-RUN: staged files:"
+            git diff --cached --name-only | sed 's/^/DRY-RUN:   /'
+            if git commit -m "Update changelog"; then
+              git push --dry-run "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:${GITHUB_REF_NAME}" || true
+              # Roll back the throwaway commit. Required by following step dry-run mode.
+              git reset --soft HEAD~1
+            fi
+          else
+            git commit -m "Update changelog"
+            git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+            echo "committed=true" >> "$GITHUB_OUTPUT"
+          fi
         fi
       env:
-        CL_ACCESS_TOKEN: ${{ secrets.CL_ACCESS_TOKEN }}
+        GH_TOKEN: ${{ secrets.CL_ACCESS_TOKEN }}
+
+    - name: Tag version commit
+      if: ${{ github.event.inputs.version != '' }}
+      env:
+        GH_TOKEN: ${{ secrets.CL_ACCESS_TOKEN }}
+        VERSION_TAG: ${{ github.event.inputs.version }}
+      run: |
+        HEAD_SHA=$(git rev-parse HEAD)
+        if [ "$DRY_RUN" = "true" ]; then
+          echo "DRY-RUN: would create tag '${VERSION_TAG}' at ${HEAD_SHA} and push it."
+        else
+          git tag "${VERSION_TAG}"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "refs/tags/${VERSION_TAG}"
+        fi
 
     - name: Create PR from stable to master
       if: steps.changelog.outputs.committed == 'true'
@@ -78,7 +114,13 @@ jobs:
         GH_TOKEN: ${{ secrets.CL_ACCESS_TOKEN }}
       run: |
         if [ -z "$(gh pr list --repo "$GITHUB_REPOSITORY" --head stable --base master --state open --json number --jq '.[].number')" ]; then
-          gh pr create --repo "$GITHUB_REPOSITORY" --base master --head stable --title "Update changelog" --body "Sync from release to master."
+          if [ "$DRY_RUN" = "true" ]; then
+            gh pr create --dry-run --repo "$GITHUB_REPOSITORY" --base master --head stable --title "Stable to master sync after release" --body "Sync from release to master." || echo "::warning::DRY-RUN: PR would not be created (see gh output above)."
+          else
+            gh pr create --repo "$GITHUB_REPOSITORY" --base master --head stable --title "Update changelog" --body "Sync from release to master."
+          fi
+        else
+          echo "A changelog PR already exists, skipping."
         fi
 
     - name: Build Packaging
@@ -104,7 +146,14 @@ jobs:
         LAST_PUBLISH_SHA: ${{ steps.last-publish.outputs.last_publish_sha }}
 
     - name: Publish changelog (RSS)
+      if: ${{ github.event.inputs.dry_run != 'true' }}
       continue-on-error: true
       run: Tools/actions_changelog_rss.py
       env:
         CHANGELOG_RSS_KEY: ${{ secrets.CHANGELOG_RSS_KEY }}
+
+    - name: Finalize dry run (not a publish)
+      if: ${{ github.event.inputs.dry_run == 'true' }}
+      run: |
+        echo "::error::Dry run completed - nothing was actually published. Exiting non-zero so this run is never recorded as a successful publish and is excluded from future 'Get last publish SHA' lookups."
+        exit 1
