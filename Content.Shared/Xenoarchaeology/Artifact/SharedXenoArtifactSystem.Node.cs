@@ -8,6 +8,8 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using System.Linq;
 using Content.Shared.EntityTable.EntitySelectors;
+using System.Linq;
+using Content.Shared.EntityTable.EntitySelectors;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Xenoarchaeology.Artifact;
@@ -103,20 +105,20 @@ public abstract partial class SharedXenoArtifactSystem
     /// <summary>
     /// Creates artifact node entity, attaching trigger and marking depth level for future use.
     /// </summary>
-    public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, EntProtoId trigger, int depth = 0)
+    public Entity<XenoArtifactNodeComponent>? CreateNode(
+        Entity<XenoArtifactComponent> ent,
+        EntProtoId triggerProtoId,
+        EntityTableSelector effects,
+        int depth = 0
+    )
     {
-        var triggerProto = ProtoMan.Index(trigger);
-        return CreateNode(ent, triggerProto, depth);
-    }
+        EntProtoId? effect = _entityTable.GetSpawns(effects)
+                                         .FirstOrDefault();
+        if (effect == null)
+            return null;
 
-    /// <summary>
-    /// Creates artifact node entity, attaching trigger and marking depth level for future use.
-    /// </summary>
-    public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, EntityPrototype trigger, int depth = 0)
-    {
-        var entProtoId = _entityTable.GetSpawns(ent.Comp.EffectsTable)
-                                     .First();
-        return CreateNode(ent, entProtoId, trigger, depth);
+        var trigger = ProtoMan.Index(triggerProtoId);
+        return CreateNode(ent, effect.Value, trigger, depth);
     }
 
     /// <summary>
@@ -431,7 +433,7 @@ public abstract partial class SharedXenoArtifactSystem
     /// <summary>
     /// Gets two-dimensional array (as lists inside enumeration) that contains artifact nodes, grouped by segment.
     /// </summary>
-    public IEnumerable<List<Entity<XenoArtifactNodeComponent>>> GetSegmentsFromNodes(Entity<XenoArtifactComponent> ent, List<Entity<XenoArtifactNodeComponent>> nodes)
+    public List<List<Entity<XenoArtifactNodeComponent>>> GetSegmentsFromNodes(Entity<XenoArtifactComponent> ent, IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> nodes)
     {
         var outSegments = new List<List<Entity<XenoArtifactNodeComponent>>>();
         foreach (var node in nodes)
@@ -439,10 +441,8 @@ public abstract partial class SharedXenoArtifactSystem
             var segment = new List<Entity<XenoArtifactNodeComponent>>();
             GetSegmentNodesRecursive(ent, node, segment, outSegments);
 
-            if (segment.Count == 0)
-                continue;
-
-            outSegments.Add(segment);
+            if (segment.Count != 0)
+                outSegments.Add(segment);
         }
 
         return outSegments;
