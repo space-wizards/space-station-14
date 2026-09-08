@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Popups;
 using Content.Shared.DoAfter;
@@ -7,6 +8,8 @@ using Content.Shared.Popups;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;
 using Robust.Server.Audio;
+using Robust.Server.GameObjects;
+using Robust.Shared.Map;
 
 namespace Content.Server.Teleportation;
 
@@ -21,6 +24,7 @@ public sealed partial class HandTeleporterSystem : EntitySystem
     [Dependency] private SharedDoAfterSystem _doafter = default!;
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private SharedPortalSystem _portal = default!;
+    [Dependency] private SharedMapSystem _map = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -28,6 +32,49 @@ public sealed partial class HandTeleporterSystem : EntitySystem
         SubscribeLocalEvent<HandTeleporterComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<HandTeleporterComponent, TeleporterDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<GridSplitEvent>(OnGridSplit);
+        // Check the original grid coordinates before tile removal detaches the portals.
+        SubscribeLocalEvent<TileChangedEvent>(OnTileChanged, before: new[] { typeof(TransformSystem) });
+    }
+
+    private void OnTileChanged(ref TileChangedEvent args)
+    {
+        if (!args.Changes.Any(change => change.NewTile == Tile.Empty))
+            return;
+
+        var query = EntityQueryEnumerator<HandTeleporterComponent>();
+        while (query.MoveNext(out var uid, out var teleporter))
+        {
+            if (IsPortalTileRemoved(teleporter.FirstPortal, args))
+            {
+                FizzlePortals((uid, teleporter), null, false);
+                continue;
+            }
+
+            if (IsPortalTileRemoved(teleporter.SecondPortal, args))
+                FizzlePortals((uid, teleporter), null, false);
+        }
+    }
+
+    private bool IsPortalTileRemoved(EntityUid? portal, TileChangedEvent args)
+    {
+        if (Deleted(portal))
+            return false;
+
+        var xform = Transform(portal.Value);
+        if (xform.GridUid != args.Entity.Owner)
+            return false;
+
+        var indices = _map.CoordinatesToTile(args.Entity, args.Entity.Comp, xform.Coordinates);
+        foreach (var change in args.Changes)
+        {
+            if (change.GridIndices != indices)
+                continue;
+
+            if (change.NewTile == Tile.Empty)
+                return true;
+        }
+
+        return false;
     }
 
     private void OnGridSplit(ref GridSplitEvent args)
@@ -82,6 +129,7 @@ public sealed partial class HandTeleporterSystem : EntitySystem
             BreakOnDamage = true,
             BreakOnMove = true,
             MovementThreshold = 0.5f,
+            NeedHand = true,
         };
 
         _doafter.TryStartDoAfter(doafterArgs);

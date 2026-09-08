@@ -13,20 +13,20 @@ public sealed partial class TeleportOnVerbSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeVerb<Verb>(TeleportVerbType.Verb);
-        SubscribeVerb<AlternativeVerb>(TeleportVerbType.Alternative);
-        SubscribeVerb<InteractionVerb>(TeleportVerbType.Interaction);
-        SubscribeVerb<ActivationVerb>(TeleportVerbType.Activation);
+        SubscribeVerb(TeleportVerbType.Verb, () => new Verb());
+        SubscribeVerb(TeleportVerbType.Alternative, () => new AlternativeVerb());
+        SubscribeVerb(TeleportVerbType.Interaction, () => new InteractionVerb());
+        SubscribeVerb(TeleportVerbType.Activation, () => new ActivationVerb());
     }
 
-    private void SubscribeVerb<TVerb>(TeleportVerbType type) where TVerb : Verb, new()
+    private void SubscribeVerb<TVerb>(TeleportVerbType type, Func<TVerb> createVerb) where TVerb : Verb
     {
         SubscribeLocalEvent<TeleportOnVerbComponent, GetVerbsEvent<TVerb>>(
-            (Entity<TeleportOnVerbComponent> ent, ref GetVerbsEvent<TVerb> args) => OnGetVerbs(ent, ref args, type));
+            (Entity<TeleportOnVerbComponent> ent, ref GetVerbsEvent<TVerb> args) => OnGetVerbs(ent, ref args, type, createVerb));
     }
 
-    private void OnGetVerbs<TVerb>(Entity<TeleportOnVerbComponent> ent, ref GetVerbsEvent<TVerb> args, TeleportVerbType type)
-        where TVerb : Verb, new()
+    private void OnGetVerbs<TVerb>(Entity<TeleportOnVerbComponent> ent, ref GetVerbsEvent<TVerb> args, TeleportVerbType type, Func<TVerb> createVerb)
+        where TVerb : Verb
     {
         if (ent.Comp.VerbType != type)
             return;
@@ -43,16 +43,15 @@ public sealed partial class TeleportOnVerbSystem : EntitySystem
         if (attempt.Cancelled && ent.Comp.HideWhenDisabled)
             return;
 
-        args.Verbs.Add(new TVerb
-        {
-            Priority = ent.Comp.Priority,
-            Act = () => RequestTeleport(ent, target),
-            Disabled = attempt.Cancelled,
-            Text = Loc.GetString(ent.Comp.VerbText),
-            Message = GetMessage(ent.Comp, attempt),
-            Icon = ent.Comp.VerbIcon,
-            Category = ent.Comp.VerbCategory is { } category ? new VerbCategory(category, null) : null,
-        });
+        var verb = createVerb();
+        verb.Priority = ent.Comp.Priority;
+        verb.Act = () => RequestTeleport(ent, target);
+        verb.Disabled = attempt.Cancelled;
+        verb.Text = Loc.GetString(ent.Comp.VerbText);
+        verb.Message = GetMessage(ent.Comp, attempt);
+        verb.Icon = ent.Comp.VerbIcon;
+        verb.Category = ent.Comp.VerbCategory is { } category ? new VerbCategory(category, null) : null;
+        args.Verbs.Add(verb);
     }
 
     private void RequestTeleport(Entity<TeleportOnVerbComponent> ent, EntityUid target)
