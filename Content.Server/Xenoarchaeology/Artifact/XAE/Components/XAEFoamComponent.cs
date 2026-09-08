@@ -1,5 +1,5 @@
-using System.Numerics;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Destructible.Thresholds;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Xenoarchaeology.Artifact.XAE.Components;
@@ -33,7 +33,7 @@ public sealed partial class XAEFoamComponent : Component
     /// Min and max value for foam duration.
     /// </summary>
     [DataField]
-    public Vector2 DurationRestrictions = new Vector2(5, 30);
+    public MinMax DurationRestrictions = new MinMax(5, 30);
 
     /// <summary>
     /// Range for foam spreading.
@@ -45,7 +45,7 @@ public sealed partial class XAEFoamComponent : Component
     /// Min and max value for foam spreading range.
     /// </summary>
     [DataField]
-    public Vector2 RangeRestrictions = new Vector2(2, 15);
+    public MinMax RangeRestrictions = new MinMax(2, 15);
 
     /// <summary>
     /// Default amount of foam reagent in foam mass.
@@ -57,7 +57,7 @@ public sealed partial class XAEFoamComponent : Component
     /// Min and max amount of foam reagent in foam mass.
     /// </summary>
     [DataField]
-    public Vector2 FoamAmountRestrictions = new Vector2(15f, 50f);
+    public MinMax FoamAmountRestrictions = new MinMax(15f, 50f);
 
     /// <summary>
     /// Marker, if entity where this component is placed should have description replaced with selected chemicals
