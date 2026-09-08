@@ -224,3 +224,8 @@
   license: "CC-BY-3.0"
   copyright: "Created by Tomlija, converted to OGG and modified by themias."
   source: "https://freesound.org/people/Tomlija/sounds/99565/"
+
+- files: ["mail_receive.ogg"]
+  license: "CC0-1.0"
+  copyright: "by melokacool on freesound.org"
+  source: "https://freesound.org/people/melokacool/sounds/616699/"

@@ -6,6 +6,7 @@ using Content.Shared.Disposal.Unit;
 using Content.Shared.Maps;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
@@ -16,16 +17,17 @@ namespace Content.Server.Disposal.Holder;
 /// <inheritdoc/>
 public sealed partial class DisposalHolderSystem : SharedDisposalHolderSystem
 {
-    [Dependency] private AtmosphereSystem _atmos = default!;
-    [Dependency] private SharedTransformSystem _xform = default!;
-    [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private ThrowingSystem _throwing = default!;
-    [Dependency] private SharedDisposalUnitSystem _disposalUnit = default!;
-    [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private SharedMapSystem _maps = default!;
-    [Dependency] private INetManager _net = default!;
-    [Dependency] private SharedStunSystem _stun = default!;
-    [Dependency] private TileSystem _tile = default!;
+    [Dependency] private readonly AtmosphereSystem _atmos = default!;
+    [Dependency] private readonly SharedTransformSystem _xform = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ThrowingSystem _throwing = default!;
+    [Dependency] private readonly SharedDisposalUnitSystem _disposalUnit = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedMapSystem _maps = default!;
+    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private readonly TileSystem _tile = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     private EntityQuery<DisposalUnitComponent> _disposalUnitQuery;
     private EntityQuery<MetaDataComponent> _metaQuery;
@@ -121,6 +123,8 @@ public sealed partial class DisposalHolderSystem : SharedDisposalHolderSystem
         // because the holder might have something teleported into it,
         // outside the usual container insertion logic.
         var children = xform.ChildEnumerator;
+        // no need to play the exit sound more than once
+        var soundPlayed = false;
         while (children.MoveNext(out var held))
         {
             DetachEntity(held);
@@ -132,6 +136,9 @@ public sealed partial class DisposalHolderSystem : SharedDisposalHolderSystem
             if (unit != null && unit.Value.Comp.Container != null && _container.Insert((held, heldXform, heldMeta), unit.Value.Comp.Container))
             {
                 _disposalUnit.Remove(unit.Value, held);
+                if (!soundPlayed && unit.Value.Comp.ExitSound != null)
+                    _audio.PlayPvs(unit.Value.Comp.ExitSound, unit.Value.Owner);
+                soundPlayed = true;
             }
             else
             {
