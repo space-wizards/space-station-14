@@ -234,7 +234,7 @@ public abstract partial class GameTicker
     /// <param name="rule">Rule prototype we're checking for</param>
     /// <returns>True if a game rule exists with this prototype, that has not ended yet.</returns>
     [PublicAPI]
-    [Obsolete]
+    [Obsolete($"Use generic {nameof(IsGameRuleAdded)} instead.")]
     public bool IsGameRuleAdded([ForbidLiteral] string rule)
     {
         foreach (var ruleEntity in GetAddedGameRules())
@@ -297,7 +297,7 @@ public abstract partial class GameTicker
     /// <param name="rule">Prototype we are looking for.</param>
     /// <returns>True if the game rule has been added, and has been started.</returns>
     [PublicAPI]
-    [Obsolete]
+    [Obsolete($"Use generic {nameof(IsGameRuleActive)} instead.")]
     public bool IsGameRuleActive([ForbidLiteral] string rule)
     {
         foreach (var ruleEntity in GetActiveGameRules())
