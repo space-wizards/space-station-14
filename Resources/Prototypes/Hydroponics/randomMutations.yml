@@ -1,5 +1,6 @@
 - type: randomPlantMutationList
   id: RandomPlantMutations
+  ignoreMutationMod: false
   mutations:
     - name: Sentient
       description: mutation-plant-sentient
@@ -159,7 +160,7 @@
         targetComponent: Plant
         targetDataField: Yield
         applyRange:
-          min: 3
+          min: 4
           max: 10
         up: !type:PlantAdjustYield
           amount: 1
@@ -241,6 +242,9 @@
       baseOdds: 0.072
       persists: false
       effect: !type:PlantMutateChemicals
+        randomChemTables:
+        - RandomPickBotanyGeneralReagent
+        - RandomPickBotanyFarmingReagent
     - name: ChangeExudeGasses
       baseOdds: 0.0145
       persists: false
@@ -253,3 +257,14 @@
       baseOdds: 0.036
       persists: false
       effect: !type:PlantMutateHarvest
+
+- type: randomPlantMutationList
+  id: EvilPlantMutations
+  ignoreMutationMod: true
+  mutations:
+  - name: MutateEvilChemicals
+    baseOdds: 1
+    persists: false
+    effect: !type:PlantMutateChemicals
+      randomChemTables:
+      - EvilRandomFillSolution

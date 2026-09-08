@@ -3,7 +3,6 @@
   mapName: 'Sushi Station'
   mapPath: /Maps/sushi.yml
   minPlayers: 45
-  maxPlayers: 70
   stations:
     Sushi:
       stationProto: StandardNanotrasenStation
@@ -26,7 +25,7 @@
             ResearchDirector: [ 1, 1 ]
             Quartermaster: [ 1, 1 ]
             # Service (11-13)
-            Bartender: [ 2, 2 ]
+            Bartender: [ 1, 1 ]
             Botanist: [ 2, 2 ]
             Chef: [ 2, 2 ]
             Janitor: [ 2, 2 ]
@@ -35,7 +34,7 @@
             Reporter: [ 1, 1 ]
             ServiceWorker: [ 1, 2 ]
             # Engineering (7-9)
-            AtmosphericTechnician: [ 3, 3 ]
+            AtmosphericTechnician: [ 2, 2 ]
             StationEngineer: [ 4, 4 ]
             TechnicalAssistant: [ 2, 2 ]
             # Medical (8-10)
@@ -49,7 +48,7 @@
             ResearchAssistant: [ 2, 2 ]
             # Security (9-11)
             Warden: [ 1, 1 ]
-            SecurityOfficer: [ 5, 5 ]
+            SecurityOfficer: [ 6, 6 ]
             Detective: [ 1, 1 ]
             SecurityCadet: [ 2, 2 ]
             Lawyer: [ 2, 2 ]

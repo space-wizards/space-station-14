@@ -290,10 +290,8 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         doAfter.NetUserPosition = GetNetCoordinates(doAfter.UserPosition);
         doAfter.NetMovementEntity = GetNetEntity(doAfter.MovementEntity);
 
-        // For this we need to stay on the same hand slot and need the same item in that hand slot
-        // (or if there is no item there we need to keep it free).
-        // The NeedFreeHand arg requires us to have our active hand empty.
-        if (args.NeedHand && (args.BreakOnHandChange || args.BreakOnDropItem))
+        // Check hand statuses; whether you have one, if its free (or any), and set up for breaking on change/drop.
+        if (args.NeedHand)
         {
             if (!TryComp(args.User, out HandsComponent? handsComponent))
                 return false;
@@ -301,8 +299,14 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             if (args.NeedFreeHand && !_hands.ActiveHandIsEmpty(args.User))
                 return false;
 
-            doAfter.InitialHand = handsComponent.ActiveHandId;
-            doAfter.InitialItem = _hands.GetActiveItem((args.User, handsComponent));
+            if (args.NeedAnyFreeHand && _hands.GetEmptyHandCount((args.User, handsComponent)) == 0)
+                return false;
+
+            if (args.BreakOnHandChange || args.BreakOnDropItem)
+            {
+                doAfter.InitialHand = handsComponent.ActiveHandId;
+                doAfter.InitialItem = _hands.GetActiveItem((args.User, handsComponent));
+            }
         }
 
         doAfter.NetInitialItem = GetNetEntity(doAfter.InitialItem);
