@@ -78,14 +78,14 @@ public sealed partial class XATAccessSystem : BaseXATSystem<XATAccessComponent>
 
         if (CheckAccess(args.Used, artifact, (node.Owner, node.Comp1)))
         {
-            _audio.PlayPredicted(node.Comp1.AccessSound, args.Used, args.User);
+            _audio.PlayPredicted(node.Comp1.AccessSound, args.Target, args.User);
             Trigger(artifact, node);
         }
         else
         {
             if (node.Comp1.WrongAccessPopup != null)
-                _popup.PopupEntity(Loc.GetString(node.Comp1.WrongAccessPopup), args.Used, args.User);
-            _audio.PlayPredicted(node.Comp1.DeniedSound, args.Used, args.User);
+                _popup.PopupEntity(Loc.GetString(node.Comp1.WrongAccessPopup), args.Target, args.User);
+            _audio.PlayPredicted(node.Comp1.DeniedSound, args.Target, args.User);
         }
     }
 
