@@ -1,4 +1,4 @@
-using System.Numerics;
+using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Xenoarchaeology.Artifact;
 
 namespace Content.Server.Xenoarchaeology.Artifact.XAE.Components;
@@ -20,7 +20,7 @@ public sealed partial class XAEChargeBatteryComponent : Component
     /// Min and max radius of the effect (restricting default and modifiers).
     /// </summary>
     [DataField]
-    public Vector2 RadiusRestrictions = new Vector2(5f, 40f);
+    public MinMax RadiusRestrictions = new(5f, 40f);
 
     /// <summary>
     /// Amount of charge to be added by effect activation.
@@ -32,5 +32,5 @@ public sealed partial class XAEChargeBatteryComponent : Component
     /// Min and max amount of charge, effect can give off.
     /// </summary>
     [DataField]
-    public Vector2 ChargeAmountRestrictions = new Vector2(50f, 10000000f);
+    public MinMax ChargeAmountRestrictions = new(50f, 10000000f);
 }

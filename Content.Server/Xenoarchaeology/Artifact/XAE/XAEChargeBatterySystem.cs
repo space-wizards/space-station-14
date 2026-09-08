@@ -24,13 +24,13 @@ public sealed partial class XAEChargeBatterySystem : BaseXAESystem<XAEChargeBatt
         var radius = component.DefaultRadius;
         if (args.Modifications.TryGetValue(XenoArtifactEffectModifier.Range, out var rangeModifier))
         {
-            radius = Math.Clamp(rangeModifier.Modify(radius), component.RadiusRestrictions.X, component.RadiusRestrictions.Y);
+            radius = Math.Clamp(rangeModifier.Modify(radius), component.RadiusRestrictions.Min, component.RadiusRestrictions.Max);
         }
 
         var addCharge = component.AddChargeAmount;
         if (args.Modifications.TryGetValue(XenoArtifactEffectModifier.Power, out var amountModifier))
         {
-            addCharge = Math.Clamp(amountModifier.Modify(addCharge), component.ChargeAmountRestrictions.X, component.ChargeAmountRestrictions.Y);
+            addCharge = Math.Clamp(amountModifier.Modify(addCharge), component.ChargeAmountRestrictions.Min, component.ChargeAmountRestrictions.Max);
         }
 
         _batteryEntities.Clear();
