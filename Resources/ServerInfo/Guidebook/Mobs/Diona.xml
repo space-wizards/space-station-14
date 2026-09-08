@@ -5,11 +5,9 @@
     <GuideEntityEmbed Entity="MobDiona" Caption=""/>
   </Box>
 
-  They move around using a dense network of roots. This prevents them from wearing footwear, but also allows them to
-  "root" themselves to the ground to move normally in zero-gravity environments and absorb puddles of liquid from the ground.
+  ## General information
 
   Their plant-like metabolisms mean they get hungry slower than other species do, but get thirsty faster.
-  While they can digest the same foods that most other species can, they're also affected by certain botanical reagents (such as EZ nutrient, robust harvest, and weed killer).
 
   Their "blood" is just sap, and therefore isn't replenished when metabolizing iron.
 
@@ -17,11 +15,24 @@
   but [color=#ffa500]50% more Heat damage[/color] and [color=#ffa500]20% more Shock damage[/color]. Their
   tree-like exteriors can [color=#ffa500]easily catch fire[/color] when receiving enough Heat damage from [bold]any[/bold] source.[/color]
 
+  ## Setting down roots
+
+  Diona move around using a dense network of roots. This prevents them from wearing [italic]any[/italic] footwear, but
+  these roots also allow a diona to firmly root themselves to the ground.
+
+  While rooted, a diona [color=#ffa500]moves 20% slower[/color], but is able to freely move around in zero-gravity environments instead of awkwardly
+  floating around. Being rooted also causes a diona to passively absorb reagents from puddles they're standing in; this can potentially be dangerous
+  if they're standing in something unsafe to drink!
+
   ## Make Like A Tree And Leave
   <Box>
     <GuideEntityEmbed Entity="FloraTree" Caption=""/>
   </Box>
-  Consuming robust harvest will heal a diona, but overdosing will cause them to grow out of control, turning into an immobile tree (and dropping all their equipment).
+
+  While diona can digest the same foods that most other species can, they're also affected by certain botanical reagents. Fertilizers will sate
+  their hunger, but pesticides will poison them!
+
+  Robust harvest (an especially potent fertilizer) will heal a diona's injuries, but overdosing will cause them to grow out of control, turning into an immobile tree (and dropping all their equipment).
   Cutting down the tree will "restore" the Diona to their regular, mobile state.
 
   ## Diona Nymphs
