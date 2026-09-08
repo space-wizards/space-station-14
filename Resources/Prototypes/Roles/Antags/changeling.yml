@@ -1,4 +1,4 @@
-﻿- type: antag
+- type: antag
   id: Changeling
   name: roles-antag-changeling-name
   antagonist: true
@@ -53,3 +53,80 @@
     inputValidation: false
   mindRoles:
   - MindRoleChangeling
+
+# for the mid round space-spawned changeling
+- type: antagSpecifier
+  parent: RestrictedAntag
+  id: SpaceChangeling
+  spawnerPrototype: SpawnPointGhostSpaceChangeling
+  pickPlayer: false
+  briefing:
+    text: space-changeling-role-greeting
+    color: Red
+    sound: /Audio/Ambience/Antag/changeling_start.ogg
+  mindRoles:
+  - MindRoleChangeling
+  components:
+  # meteor!
+  - type: PolymorphOnTrigger
+    polymorph: ChangelingMeteor
+    keysIn:
+    - poly
+  - type: TriggerOnSpawn
+    keyOut: poly
+
+- type: entity
+  name: strange meteor
+  description: This meteor looks more akin to a fossile than to an aggregate of minerals.
+  id: ChangelingMeteor
+  parent:
+  - BaseMeteor
+  - MobNightVision # dont think too hard about it not being a mob
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Mobs/Animals/headslug.rsi
+    state: shell
+    noRot: true
+  - type: FlingTowardStation
+    speed: 15
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 240
+      - ReagentId: LivingTissue
+        Quantity: 20
+  - type: Meteor
+    damageTypes:
+      types:
+        Blunt: 1
+        Structural: 5
+  - type: Explosive # very weak explosion for visuals
+    explosionType: DemolitionCharge
+    totalIntensity: 3
+    intensitySlope: 1
+    tileBreakScale: 0
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ExplodeBehavior
+      - !type:SpillBehavior
+        solution: solution
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodMeatHuman:
+            min: 1
+            max: 2
+  - type: ReplacementAccent # RAWR!!!!! (This is because polymorph calls makesentient...)
+    accent: genericAggressive
+  - type: Speech
+    speechVerb: LargeMob

@@ -66,6 +66,7 @@
         BaseUnshaded: alive-unshaded
       Critical:
         Base: crit
+        BaseUnshaded: crit-unshaded
       Dead:
         Base: dead
         BaseUnshaded: dead-unshaded

@@ -16,7 +16,7 @@ public sealed partial class SeedExtractorSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
 
-    [Dependency] private EntityQuery<ProduceComponent> _produceQuery = default!;
+    [Dependency] private EntityQuery<ProduceComponent> _produceQuery;
 
     [SubscribeLocalEvent]
     private void OnInteractUsing(Entity<SeedExtractorComponent> ent, ref InteractUsingEvent args)
@@ -38,20 +38,18 @@ public sealed partial class SeedExtractorSystem : EntitySystem
         {
             _popup.PopupCursor(Loc.GetString("seed-extractor-component-no-seeds", ("name", args.Used)),
                 args.User,
-                PopupType.MediumCaution);
+                PopupType.SmallCaution);
             return;
         }
 
         _popup.PopupCursor(Loc.GetString("seed-extractor-component-interact-message", ("name", args.Used)),
-            args.User,
-            PopupType.Medium);
+            args.User);
 
         PredictedQueueDel(args.Used);
         args.Handled = true;
 
-
         var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
-        var amount = random.NextFloat(ent.Comp.BaseSeeds.Min, ent.Comp.BaseSeeds.Max + 1);
+        var amount = ent.Comp.BaseSeeds.NextFloat(random);
         var coords = Transform(ent).Coordinates;
 
         for (var i = 0; i < amount; i++)

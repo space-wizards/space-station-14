@@ -525,6 +525,10 @@
     access: [["Command"]]
   - type: Lock
     unlockOnClick: false
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - storagebase
+
 
 - type: entity
   parent: ComputerStationTeleportersControl
@@ -533,7 +537,7 @@
   components:
   - type: StationTeleporterConsole
     autoLinkKey: Nanotrasen
-  
+
 - type: entity
   parent: ComputerStationTeleportersControl
   id: ComputerSyndicateTeleportersControl
@@ -559,7 +563,7 @@
     access: [["SyndicateAgent"]]
   - type: StationTeleporterConsole
     portalColor: "#c61414"
-  
+
 - type: entity
   parent: BaseComputerAiAccess
   id: ComputerResearchAndDevelopment
