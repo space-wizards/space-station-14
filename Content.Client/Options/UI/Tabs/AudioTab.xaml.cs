@@ -46,11 +46,6 @@ public sealed partial class AudioTab : Control
             scale: ContentAudioSystem.AmbienceMultiplier);
 
         Control.AddOptionPercentSlider(
-            CCVars.WeatherVolume,
-            SliderVolumeWeather,
-            scale: ContentAudioSystem.AmbienceMultiplier);
-
-        Control.AddOptionPercentSlider(
             CCVars.LobbyMusicVolume,
             SliderVolumeLobby,
             scale: ContentAudioSystem.LobbyMultiplier);

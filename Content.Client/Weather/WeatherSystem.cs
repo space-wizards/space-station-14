@@ -33,7 +33,7 @@ public sealed partial class WeatherSystem : SharedWeatherSystem
     {
         base.Initialize();
 
-        Subs.CVar(_cfg, CCVars.WeatherVolume, value => _weatherGain = value, true);
+        Subs.CVar(_cfg, CCVars.AmbienceVolume, value => _weatherGain = value, true);
         SubscribeLocalEvent<WeatherStatusEffectComponent, ComponentShutdown>(OnComponentShutdown);
     }
 
