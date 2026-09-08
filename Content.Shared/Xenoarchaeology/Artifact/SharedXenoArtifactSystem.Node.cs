@@ -1,22 +1,20 @@
 using Content.Shared.EntityTable;
+using Content.Shared.EntityTable.Conditions;
+using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.NameIdentifier;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Artifact.Modifiers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using System.Linq;
-using Content.Shared.EntityTable.EntitySelectors;
-using System.Linq;
-using Content.Shared.EntityTable.EntitySelectors;
-using Robust.Shared.Random;
 
 namespace Content.Shared.Xenoarchaeology.Artifact;
 
 public abstract partial class SharedXenoArtifactSystem
 {
-
     private static readonly Enum[] OnInitEffectModifiers = [XenoArtifactEffectModifier.Durability];
     private static readonly PlacementBudgetDistributionStrategyBase[] BudgetDistributionStrategies =
     [
@@ -139,16 +137,17 @@ public abstract partial class SharedXenoArtifactSystem
         return nodeEnt.Value;
     }
 
-    public Entity<XenoArtifactNodeComponent>? CreateNode(
-    Entity<XenoArtifactComponent> ent,
-    List<Entity<XenoArtifactNodeComponent>> directPredecessors,
-    EntityTableSelector triggers,
-    EntityTableSelector effects,
-    int depth = 0
-)
+    protected Entity<XenoArtifactNodeComponent>? CreateNode(
+        Entity<XenoArtifactComponent> ent,
+        IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> directPredecessors,
+        EntityTableSelector triggers,
+        TriggerPoolData triggerPool,
+        EntityTableSelector effects,
+        int depth = 0
+    )
     {
         // step 1 - pick trigger by budget
-        var predecessorBudgetSum = 0;
+        float predecessorBudgetSum = 0;
         if (directPredecessors.Count > 0)
             predecessorBudgetSum = directPredecessors.Sum(x => x.Comp.Budget);
 
@@ -156,41 +155,43 @@ public abstract partial class SharedXenoArtifactSystem
         var virtualNodeAdditionalBudget = perDepthAdditionalBudget * depth;
         var virtualNodeBudget = predecessorBudgetSum + virtualNodeAdditionalBudget;
 
-        var fittingTriggersByWeight = new Dictionary<XenoArchTriggerPrototype, float>();
-        foreach (var (t, weight) in triggers)
+        var pr = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
+
+        EntProtoId? triggerProtoId;
+        using (var _ = new TemporarilyAddToContext<float>(triggerPool.Context, HasBudgetInRangeCondition.BudgetContextKey, virtualNodeBudget))
         {
-            var budgetRange = t.BudgetRange;
-            if (budgetRange.Min <= virtualNodeBudget && budgetRange.Max >= virtualNodeBudget)
-                fittingTriggersByWeight.Add(t, weight);
+            triggerProtoId = _entityTable.GetFirstOrDefault(triggers, pr, triggerPool.Context);
         }
 
-        if (fittingTriggersByWeight.Count == 0)
+        if (triggerProtoId == null)
             return null;
 
-        var trigger = RobustRandom.PickAndTake(fittingTriggersByWeight);
+        var trigger = ProtoMan.Index(triggerProtoId.Value);
+        if (!trigger.Components.TryGetComponent<XenoArtifactTriggerBudgetComponent>(Factory, out var triggerBudget))
+        {
+            Log.Warning(
+                "Attempted to create artifact node but found no XenoArtifactTriggerBudgetComponent "
+                + "on selected trigger entity prototype - {entProtoId}!",
+                triggerProtoId
+            );
+            return null;
+        }
 
-        var actualBudget = predecessorBudgetSum + trigger.TriggerBudget;
+        var actualBudget = predecessorBudgetSum + triggerBudget.ActualBudget;
 
         // pick effect based on effect ranges and actual node budget.
-        Dictionary<(EntityPrototype Prototype, XenoArtifactNodeBudgetComponent Budget), float> fittingEffectsByWeight = new();
-        foreach (var (e, weight) in effects)
+        EntProtoId? effect;
+        using (var _ = new TemporarilyAddToContext<float>(triggerPool.Context, HasBudgetInRangeCondition.BudgetContextKey, actualBudget))
         {
-            if (!e.Components.TryGetComponent<XenoArtifactNodeBudgetComponent>(Factory, out var nodeBudgetComp))
-                continue;
-
-            var budgetRange = nodeBudgetComp.BudgetRange;
-            if (budgetRange.Min <= actualBudget && budgetRange.Max >= actualBudget)
-                fittingEffectsByWeight.Add((e, nodeBudgetComp), weight);
+            effect = _entityTable.GetFirstOrDefault(effects, pr, triggerPool.Context); // todo:add context
         }
 
-        if (fittingEffectsByWeight.Count == 0)
+        if (effect == null)
             return null;
 
-        var effect = RobustRandom.PickAndTake(fittingEffectsByWeight);
+        triggerPool.AddTriggerAsUsed(triggerProtoId.Value);
 
-        triggers.Remove(trigger);
-
-        AddNode((ent, ent), effect.Prototype, out var nodeEnt, dirty: false);
+        AddNode((ent, ent), effect.Value, out var nodeEnt, dirty: false);
         DebugTools.Assert(nodeEnt.HasValue, "Failed to create node on artifact.");
 
         var nodeComponent = nodeEnt.Value.Comp;
@@ -204,13 +205,13 @@ public abstract partial class SharedXenoArtifactSystem
         XenoArtifactEffectsModifications onInitAmplifications = new();
         foreach (var onInitEffectModifier in OnInitEffectModifiers)
         {
-            if (effect.Budget.ModifyBy.Dictionary.TryGetValue(onInitEffectModifier, out var value))
+            if (budget.ModifyBy.Dictionary.TryGetValue(onInitEffectModifier, out var value))
             {
                 onInitAmplifications.Dictionary.Add(onInitEffectModifier, value);
             }
         }
 
-        nodeComponent.TriggerTip = trigger.Tip;
+        nodeComponent.TriggerTip = trigger.Name;
         EntityManager.AddComponents(nodeEnt.Value, trigger.Components);
 
         if (!onInitAmplifications.IsEmpty)
@@ -504,7 +505,7 @@ public abstract partial class SharedXenoArtifactSystem
         nodeComponent.ResearchValue = (int)(Math.Pow(1.25, Math.Pow(predecessorNodes.Count, 1.5f)) * nodeComponent.BasePointValue * durabilityMultiplier);
     }
 
-    private void ApplyActualBudgetPlacement(Entity<XenoArtifactNodeBudgetComponent> budgetEnt, int actualBudget)
+    private void ApplyActualBudgetPlacement(Entity<XenoArtifactNodeBudgetComponent> budgetEnt, float actualBudget)
     {
         // Calculate where node is placed inside budget range.
         // For example for range  1000 - 2000 node with 2000 actual budget will be at '1'=100%,
@@ -537,7 +538,52 @@ public abstract partial class SharedXenoArtifactSystem
             return budget.ModifyBy;
 
         return currentAmplification;
+    }
 
+
+    /// <summary>
+    /// Container that represents pool of XenoArtifact triggers.
+    /// </summary>
+    protected sealed class TriggerPoolData
+    {
+        private readonly HashSet<EntProtoId> _usedTriggers;
+
+        public TriggerPoolData(int requestedSize)
+        {
+            _usedTriggers = new(requestedSize);
+            Context = new EntityTableContext(new Dictionary<string, object>
+            {
+                [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = _usedTriggers
+            });
+        }
+
+        public readonly EntityTableContext Context;
+
+        public void AddTriggerAsUsed(EntProtoId trigger)
+        {
+            if (!_usedTriggers.Add(trigger))
+                throw new ArgumentException();
+        }
+
+        public IReadOnlyCollection<EntProtoId> UsedTriggers => _usedTriggers;
+    }
+
+    private readonly struct TemporarilyAddToContext<T> : IDisposable where T : notnull
+    {
+        private readonly EntityTableContext _context;
+        private readonly string _key;
+
+        public TemporarilyAddToContext(EntityTableContext context, string key, T value)
+        {
+            _context = context;
+            _key = key;
+            _context.SetData(_key, value);
+        }
+
+        public void Dispose()
+        {
+            _context.RemoveData(_key);
+        }
     }
 }
 

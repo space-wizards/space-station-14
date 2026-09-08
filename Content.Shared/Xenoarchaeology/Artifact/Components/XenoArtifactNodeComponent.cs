@@ -35,7 +35,7 @@ public sealed partial class XenoArtifactNodeComponent : Component
     public EntityUid? Attached;
 
     [DataField, AutoNetworkedField]
-    public int Budget;
+    public float Budget;
     
     #region Durability
     /// <summary>

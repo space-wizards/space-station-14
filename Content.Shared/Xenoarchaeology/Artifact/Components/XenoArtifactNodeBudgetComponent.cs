@@ -20,3 +20,16 @@ public sealed partial class XenoArtifactNodeBudgetComponent : Component
     [DataField, AutoNetworkedField]
     public XenoArtifactEffectsModifications ModifyBy = new ();
 }
+
+/// <summary>
+/// Component for holding xeno artifact trigger budget info.
+/// </summary>
+[RegisterComponent]
+public sealed partial class XenoArtifactTriggerBudgetComponent : Component
+{
+    [DataField(required: true)]
+    public MinMax BudgetRange;
+
+    [DataField(required: true)]
+    public float ActualBudget;
+}

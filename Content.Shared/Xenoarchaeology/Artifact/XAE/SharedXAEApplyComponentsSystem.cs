@@ -25,7 +25,7 @@ public abstract partial class SharedXAEApplyComponentsSystem : BaseXAESystem<XAE
             }
 
             var clone = EntityManager.ComponentFactory.GetComponent(registry.Value);
-            TryApplyModifiers(clone, args.Modifications);
+            TryApplyModifiers(clone, args.Modifications, args.Artifact);
             AddComp(artifact, clone);
         }
     }

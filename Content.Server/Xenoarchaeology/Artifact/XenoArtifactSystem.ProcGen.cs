@@ -118,17 +118,9 @@ public sealed partial class XenoArtifactSystem
             var directPredecessors = SelectDirectPredecessors(_previousLayerNodes, scatterCount);
             scatterCount -= (directPredecessors.Count - 1);
 
-            EntProtoId? trigger = _entityTable.GetSpawns(triggers, RobustRandom, triggerPool.Context)
-                                              .FirstOrDefault();
-
-            if (trigger == null)
-                continue;
-
-            var nodeEntity = CreateNode(ent, trigger.Value, effects, iteration);
+            var nodeEntity = CreateNode(ent, directPredecessors, triggers, triggerPool, effects, iteration);
             if (!nodeEntity.HasValue)
                 continue;
-
-            triggerPool.AddTriggerAsUsed(trigger.Value);
 
             _currentLayerNodes.Add(nodeEntity.Value);
 
@@ -241,32 +233,5 @@ public sealed partial class XenoArtifactSystem
             else
                 AddEdge((ent, ent.Comp), node2, node1, false);
         }
-    }
-
-    /// <summary>
-    /// Container that represents pool of XenoArtifact triggers.
-    /// </summary>
-    private sealed class TriggerPoolData
-    {
-        private readonly HashSet<EntProtoId> _usedTriggers;
-
-        public TriggerPoolData(int requestedSize)
-        {
-            _usedTriggers = new(requestedSize);
-            Context = new EntityTableContext(new Dictionary<string, object>
-            {
-                [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = _usedTriggers
-            });
-        }
-
-        public readonly EntityTableContext Context;
-
-        public void AddTriggerAsUsed(EntProtoId trigger)
-        {
-            if (!_usedTriggers.Add(trigger))
-                throw new ArgumentException();
-        }
-
-        public IReadOnlyCollection<EntProtoId> UsedTriggers => _usedTriggers;
     }
 }

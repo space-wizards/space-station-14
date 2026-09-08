@@ -21,7 +21,11 @@ public sealed partial class XAEEmpInAreaSystem : BaseXAESystem<XAEEmpInAreaCompo
 
         var duration = ent.Comp.DisableDuration;
         if (args.Modifications.TryGetValue(XenoArtifactEffectModifier.Duration, out var durationModifier))
-            duration = Math.Max(1, durationModifier.Modify(duration));
+        {
+            var modify = durationModifier.Modify((float)duration.TotalSeconds);
+            var durationInSeconds = Math.Max(1, modify);
+            duration = TimeSpan.FromSeconds(durationInSeconds);
+        }
 
         _emp.EmpPulse(args.Coordinates, range, ent.Comp.EnergyConsumption, duration);
     }

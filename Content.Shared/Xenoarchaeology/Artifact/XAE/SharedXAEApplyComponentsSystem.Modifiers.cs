@@ -1,7 +1,9 @@
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Item;
 using Content.Shared.Radiation.Components;
+using Content.Shared.Radiation.Systems;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Storage;
 using Content.Shared.Tools.Components;
@@ -14,21 +16,26 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAE;
 
 public partial class SharedXAEApplyComponentsSystem
 {
-    [Dependency] private readonly HeldSpeedModifierSystem _heldSpeedModifier = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionsContainer = default!;
-    [Dependency] private readonly SharedToolSystem _tool = default!;
+    [Dependency] private HeldSpeedModifierSystem _heldSpeedModifier = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionsContainer = default!;
+    [Dependency] private SharedToolSystem _tool = default!;
+    [Dependency] private SharedRadiationSystem _radiation = default!;
 
-    protected virtual bool TryApplyModifiers(IComponent component, XenoArtifactEffectsModifications modifications)
+    protected virtual bool TryApplyModifiers(
+        IComponent component,
+        XenoArtifactEffectsModifications modifications,
+        EntityUid artifact
+    )
     {
         return component switch
         {
             StorageComponent storage => TryApplyModifiersFor(storage, modifications),
-            SolutionContainerManagerComponent solutionContainer => TryApplyModifiersFor(solutionContainer, modifications),
+            SolutionManagerComponent solutionContainer => TryApplyModifiersFor(solutionContainer, modifications, artifact),
             HeldSpeedModifierComponent speedModifier => TryApplyModifiersFor(speedModifier, modifications),
             MeleeWeaponComponent meleeWeapon => TryApplyModifiersFor(meleeWeapon, modifications),
             RevolverAmmoProviderComponent revolverAmmo => TryApplyModifiersFor(revolverAmmo, modifications),
             ToolComponent tool => TryApplyModifiersFor(tool, modifications),
-            RadiationSourceComponent radiation => TryApplyModifiersFor(radiation, modifications),
+            RadiationSourceComponent radiation => TryApplyModifiersFor(radiation, modifications, artifact),
             StealthOnMoveComponent stealthOnMove => TryApplyModifiersFor(stealthOnMove, modifications),
             _ => false
         };
@@ -46,11 +53,15 @@ public partial class SharedXAEApplyComponentsSystem
         return false;
     }
 
-    private bool TryApplyModifiersFor(RadiationSourceComponent radiationSource, XenoArtifactEffectsModifications modifications)
+    private bool TryApplyModifiersFor(
+        RadiationSourceComponent radiationSource,
+        XenoArtifactEffectsModifications modifications,
+        EntityUid node
+    )
     {
         if (modifications.TryGetValue(XenoArtifactEffectModifier.Power, out var modifier))
         {
-            radiationSource.Intensity = modifier.Modify(radiationSource.Intensity);
+            _radiation.ChangeIntensity(node, modifier.Modify(radiationSource.Intensity));
             return true;
         }
 
@@ -118,14 +129,16 @@ public partial class SharedXAEApplyComponentsSystem
     }
 
     private bool TryApplyModifiersFor(
-        SolutionContainerManagerComponent solutionStorage,
-        XenoArtifactEffectsModifications modifications
+        SolutionManagerComponent solutionStorage,
+        XenoArtifactEffectsModifications modifications,
+        EntityUid artifact
     )
     {
         if (modifications.TryGetValue(XenoArtifactEffectModifier.Power, out var modifier)
-            && _solutionsContainer.TryGetSolution(solutionStorage, "beaker", out var sol))
+            && _solutionsContainer.TryGetSolution((artifact, solutionStorage), "beaker", out var sol))
         {
-            sol.MaxVolume = MathF.Max(5, modifier.Modify(sol.MaxVolume.Value));
+            var modifiedMaxVolume = modifier.Modify(sol.Value.Comp.Solution.MaxVolume.Value);
+            sol.Value.Comp.Solution.MaxVolume = MathF.Max(5, modifiedMaxVolume);
             return true;
         }
 
