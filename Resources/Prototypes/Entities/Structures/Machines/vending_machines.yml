@@ -82,11 +82,11 @@
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     channels:
-    - Supply
+    - Service
   - type: ActiveRadio
     channels:
     - Common
-    - Supply
+    - Service
   - type: DoAfter
   - type: Electrified
     enabled: false
