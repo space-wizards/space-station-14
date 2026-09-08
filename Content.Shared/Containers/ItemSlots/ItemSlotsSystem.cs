@@ -68,21 +68,21 @@ public sealed partial class ItemSlotsSystem : EntitySystem
             if (string.IsNullOrEmpty(visual.SlotName))
             {
                 contains = ent.Comp.Slots.Values.Any(slot =>
-                    slot is { HasItem: true, Item: not null } && ItemMatchesVisual(slot.Item.Value, visual));
+                    slot is { HasItem: true, Item: not null } && ItemMatchesVisual(ent, visual));
             }
             else if (ent.Comp.Slots.TryGetValue(visual.SlotName, out var slot))
             {
                 if (slot.Item != null)
-                    contains = slot.HasItem && ItemMatchesVisual(slot.Item.Value, visual);
+                    contains = slot.HasItem && ItemMatchesVisual(ent, visual);
             }
 
             _appearance.SetData(ent, visual.Layer, contains, appearance);
         }
     }
 
-    private bool ItemMatchesVisual(EntityUid item, ItemSlotVisuals visual)
+    private bool ItemMatchesVisual(Entity<ItemSlotsComponent> ent, ItemSlotVisuals visual)
     {
-        return visual.Whitelist == null || _whitelistSystem.IsValid(visual.Whitelist, item);
+        return visual.Whitelist == null || _whitelistSystem.IsValid(visual.Whitelist, ent);
     }
 
     /// <summary>

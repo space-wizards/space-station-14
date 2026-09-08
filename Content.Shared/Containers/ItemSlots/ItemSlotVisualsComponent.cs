@@ -22,7 +22,7 @@ public sealed partial class ItemSlotVisualsComponent : Component
 
 [DataDefinition]
 [Serializable, NetSerializable]
-public partial struct ItemSlotVisuals()
+public partial struct ItemSlotVisuals
 {
     /// <summary>
     /// Enums from ItemSlotVisualLayers, makes multiple visuals possible. Used to specify Visuals.
