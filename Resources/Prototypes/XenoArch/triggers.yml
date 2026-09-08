@@ -59,7 +59,7 @@
     - id: TriggerAttackParticleEngine
       weight: 0.1
     - id: TriggerAccess
-      weight: 5000
+      weight: 0.5
 
 - type: entityTable
   id: XenoArtifactHandheldOnlyTriggerTable

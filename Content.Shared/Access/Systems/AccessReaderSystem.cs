@@ -714,27 +714,6 @@ public sealed partial class AccessReaderSystem : EntitySystem
         return !ev.Cancelled;
     }
 
-    /// <summary>
-    /// Replace the original access list with the current one.
-    /// Results in modifications appearing as if they were always the case in examination or diagnostics
-    /// </summary>
-    public void ReplaceOriginalAccess(Entity<AccessReaderComponent> ent, List<ProtoId<AccessLevelPrototype>> accesses)
-    {
-        TrySetAccesses(ent, accesses);
-        if (ent.Comp.AccessListsOriginal == null)
-            ent.Comp.AccessListsOriginal ??= [.. ent.Comp.AccessLists];
-        else
-        {
-            ent.Comp.AccessListsOriginal.Clear();
-            foreach (var access in accesses)
-                ent.Comp.AccessListsOriginal.Add(new HashSet<ProtoId<AccessLevelPrototype>>() { access });
-        }
-
-        //Log.Debug($"{ent.Comp.AccessListsOriginal}");
-        //RaiseLocalEvent(ent, new AccessReaderConfigurationChangedEvent());
-        Dirty(ent);
-    }
-
     #endregion
 
     #region: AccessKeys API

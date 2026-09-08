@@ -125,7 +125,7 @@ public sealed partial class XATAccessSystem : BaseXATSystem<XATAccessComponent>
         if (_proto.Index(access) == null) // invalid access, stop here.
             return;
 
-        _access.ReplaceOriginalAccess((ent.Owner, accessComp), new List<ProtoId<AccessLevelPrototype>>() { access }); //retcon the current access, it was always there, see?
+        _access.TrySetAccesses((ent.Owner, accessComp), new List<ProtoId<AccessLevelPrototype>>() { access });
     }
 
     /// <summary>
