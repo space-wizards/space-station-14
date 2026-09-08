@@ -84,47 +84,31 @@
   table: !type:GroupSelector
     children:
     - id: CybersunFlippo
-      orGroup: Lighterbox
-      weight: 0.15
+      weight: 3
     - id: InterdyneFlippo
-      orGroup: Lighterbox
-      weight: 0.15
+      weight: 3
     - id: NanotrasenFlippo
-      orGroup: Lighterbox
-      weight: 0.25
+      weight: 5
     - id: WaffleCoFlippo
-      orGroup: Lighterbox
-      weight: 0.35
+      weight: 7
     - id: HonkCoFlippo
-      orGroup: Lighterbox
     - id: GorlexMatchbox
-      orGroup: Lighterbox
-      weight: 0.15
+      weight: 3
     - id: DonkcoLighter
-      orGroup: Lighterbox
-      weight: 0.25
+      weight: 5
     - id: SyndicateFlippo
-      orGroup: Lighterbox
-      weight: 0.15
+      weight: 3
     - id: SpiderclanFlippo
-      orGroup: Lighterbox
-      weight: 0.15
+      weight: 3
 
 - type: entityTable
   id: LighterSyndicateTable
   table: !type:GroupSelector
     children:
     - id: CybersunFlippo
-      orGroup: Lighterbox
     - id: InterdyneFlippo
-      orGroup: Lighterbox
     - id: WaffleCoFlippo
-      orGroup: Lighterbox
     - id: HonkCoFlippo
-      orGroup: Lighterbox
     - id: GorlexMatchbox
-      orGroup: Lighterbox
     - id: DonkcoLighter
-      orGroup: Lighterbox
     - id: SyndicateFlippo
-      orGroup: Lighterbox
