@@ -31,4 +31,13 @@ public sealed partial class XATAccessComponent : Component
     [DataField, AutoNetworkedField]
     public HashSet<ProtoId<AccessLevelPrototype>>? PotentialAccess = new();
 
+    [DataField, AutoNetworkedField]
+    public LocId ExamineString = "xenoarch-trigger-examine-access";
+
+    /// <summary>
+    /// What to show in popup after an interaction with an ID that doesn't have the correct access.
+    /// If null - no popup will be shown.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public LocId? WrongAccessPopup = "interact-artifact-wrong-access";
 }

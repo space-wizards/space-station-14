@@ -5,12 +5,15 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
+using Content.Shared.Localizations;
+using Content.Shared.Popups;
+using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Artifact.XAT.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+
 
 namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
 
@@ -22,6 +25,7 @@ public sealed partial class XATAccessSystem : BaseXATSystem<XATAccessComponent>
 {
     [Dependency] private AccessReaderSystem _access = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedXenoArtifactSystem _xenoarch = default!;
@@ -37,48 +41,9 @@ public sealed partial class XATAccessSystem : BaseXATSystem<XATAccessComponent>
     /// Randomly choose access from list and add it to reader
     /// </summary>
     [SubscribeLocalEvent]
-    private void OnMapInit(Entity<XATAccessComponent> ent, ref ComponentStartup args)
+    private void OnStartup(Entity<XATAccessComponent> ent, ref MapInitEvent args)
     {
-        if (ent.Comp.PotentialAccess == null || !TryComp<AccessReaderComponent>(ent, out var accessComp)) // undefined, stop here.
-            return;
-
-        var access = ent.Comp.PotentialAccess.ElementAt(_random.Next(ent.Comp.PotentialAccess.Count)); //get random access from hashset.
-        if (_proto.Index(access) == null) // invalid access, stop here.
-            return;
-
-        _access.TryAddAccess((ent.Owner, accessComp), access);
-        Log.Debug($"{access}");
-        Dirty(ent);
-    }
-    private void OnInteractUsing(Entity<XenoArtifactComponent> artifact, Entity<XATAccessComponent, XenoArtifactNodeComponent> node, ref InteractUsingEvent args)
-    {
-        if (CheckAccess(args.Used, node.Owner)) //ONLY check the used item, you tap your ID to it.
-        {
-            Trigger(artifact, node);
-            _audio.PlayPredicted(node.Comp1.AccessSound, artifact.Owner, args.User);
-        }
-        else
-            _audio.PlayPredicted(node.Comp1.DeniedSound, artifact.Owner, args.User);
-    }
-    private void OnNodeEmagged(Entity<XenoArtifactComponent> artifact, Entity<XATAccessComponent, XenoArtifactNodeComponent> node, ref GotEmaggedEvent args)
-    {
-        Trigger(artifact, node);
-    }
-
-    /// <summary>
-    /// Read access from interaction
-    /// </summary>
-    /// <returns> true if appropriate access </returns>
-    private bool CheckAccess(EntityUid user, EntityUid node)
-    {
-        if (!TryComp<AccessReaderComponent>(node, out var accessComp)) //the access trigger should have an AccessReaderComponent alongside it
-            return false;
-
-        if (_access.IsAllowed(user, node, accessComp))
-            return true;
-
-        return false;
-
+        SetNodeAccess(ent);
     }
 
     /// <summary>
@@ -105,9 +70,76 @@ public sealed partial class XATAccessSystem : BaseXATSystem<XATAccessComponent>
             }
         }
     }
-    private void OnExamine(Entity<XenoArtifactComponent> artifact, Entity<XATAccessComponent, XenoArtifactNodeComponent> node, ref ExaminedEvent args)
+
+    private void OnInteractUsing(Entity<XenoArtifactComponent> artifact, Entity<XATAccessComponent, XenoArtifactNodeComponent> node, ref InteractUsingEvent args)
     {
-        RaiseLocalEvent(node, args); //raise on the node and let AccessReaderSystem handle it
+        if (!HasComp<AccessComponent>(args.Used)) //ONLY check the used item, you tap your ID to it.
+            return;
+
+        if (CheckAccess(args.Used, artifact, (node.Owner, node.Comp1)))
+        {
+            _audio.PlayPredicted(node.Comp1.AccessSound, args.Used, args.User);
+            Trigger(artifact, node);
+        }
+        else
+        {
+            if (node.Comp1.WrongAccessPopup != null)
+                _popup.PopupEntity(Loc.GetString(node.Comp1.WrongAccessPopup), args.Used, args.User);
+            _audio.PlayPredicted(node.Comp1.DeniedSound, args.Used, args.User);
+        }
     }
 
+    private void OnNodeEmagged(Entity<XenoArtifactComponent> artifact, Entity<XATAccessComponent, XenoArtifactNodeComponent> node, ref GotEmaggedEvent args)
+    {
+        Trigger(artifact, node); // zap
+    }
+
+    /// <summary>
+    /// Examination text. Could raise examined event again to go to the access reader but has misprediction issues.
+    /// </summary>
+    private void OnExamine(Entity<XenoArtifactComponent> artifact, Entity<XATAccessComponent, XenoArtifactNodeComponent> node, ref ExaminedEvent args)
+    {
+        if (!TryComp<AccessReaderComponent>(node, out var accessComp))
+            return;
+
+        var localizedNames = _access.GetLocalizedAccessNames(accessComp.AccessLists);
+
+        // If the string list is empty either there were no access restrictions or the localized names were invalid
+        if (localizedNames.Count == 0)
+            return;
+
+        var accessesFormatted = ContentLocalizationManager.FormatListToOr(localizedNames);
+        var settingsMessage = Loc.GetString(node.Comp1.ExamineString, ("access", accessesFormatted));
+        args.PushMarkup(settingsMessage);
+    }
+
+    /// <summary>
+    /// Set Accesses
+    /// </summary>
+    private void SetNodeAccess(Entity<XATAccessComponent> ent)
+    {
+        if (ent.Comp.PotentialAccess == null || !TryComp<AccessReaderComponent>(ent, out var accessComp)) // undefined, stop here.
+            return;
+
+        var access = ent.Comp.PotentialAccess.ElementAt(_random.Next(ent.Comp.PotentialAccess.Count)); //get random access from hashset.
+        if (_proto.Index(access) == null) // invalid access, stop here.
+            return;
+
+        _access.ReplaceOriginalAccess((ent.Owner, accessComp), new List<ProtoId<AccessLevelPrototype>>() { access }); //retcon the current access, it was always there, see?
+    }
+
+    /// <summary>
+    /// Read access from interaction
+    /// </summary>
+    /// <returns> true if appropriate access </returns>
+    private bool CheckAccess(EntityUid user, EntityUid used, Entity<XATAccessComponent> node)
+    {
+        if (!TryComp<AccessReaderComponent>(node.Owner, out var accessComp)) //the access trigger should have an AccessReaderComponent alongside it
+            return false;
+
+        if (_access.IsAllowed(user, node.Owner, accessComp))
+            return true;
+        else
+            return false;
+    }
 }

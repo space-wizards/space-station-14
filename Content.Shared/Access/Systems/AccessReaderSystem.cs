@@ -601,7 +601,6 @@ public sealed partial class AccessReaderSystem : EntitySystem
     /// <inheritdoc cref = "AddAccess"/>
     private void AddAccess(Entity<AccessReaderComponent> ent, ProtoId<AccessLevelPrototype> access, bool dirty = true)
     {
-        Log.Debug("access adding");
         AddAccess(ent, new HashSet<ProtoId<AccessLevelPrototype>>() { access }, dirty);
     }
 
@@ -713,6 +712,27 @@ public sealed partial class AccessReaderSystem : EntitySystem
         RaiseLocalEvent(ent, ev);
 
         return !ev.Cancelled;
+    }
+
+    /// <summary>
+    /// Replace the original access list with the current one.
+    /// Results in modifications appearing as if they were always the case in examination or diagnostics
+    /// </summary>
+    public void ReplaceOriginalAccess(Entity<AccessReaderComponent> ent, List<ProtoId<AccessLevelPrototype>> accesses)
+    {
+        TrySetAccesses(ent, accesses);
+        if (ent.Comp.AccessListsOriginal == null)
+            ent.Comp.AccessListsOriginal ??= [.. ent.Comp.AccessLists];
+        else
+        {
+            ent.Comp.AccessListsOriginal.Clear();
+            foreach (var access in accesses)
+                ent.Comp.AccessListsOriginal.Add(new HashSet<ProtoId<AccessLevelPrototype>>() { access });
+        }
+
+        //Log.Debug($"{ent.Comp.AccessListsOriginal}");
+        //RaiseLocalEvent(ent, new AccessReaderConfigurationChangedEvent());
+        Dirty(ent);
     }
 
     #endregion
@@ -950,7 +970,7 @@ public sealed partial class AccessReaderSystem : EntitySystem
         Dirty(ent);
     }
 
-    private List<string> GetLocalizedAccessNames(List<HashSet<ProtoId<AccessLevelPrototype>>> accessLists)
+    public List<string> GetLocalizedAccessNames(List<HashSet<ProtoId<AccessLevelPrototype>>> accessLists)
     {
         var localizedNames = new List<string>();
         string? andSeparator = null;
