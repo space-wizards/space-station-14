@@ -661,7 +661,7 @@
   color: "#1A0A2E"
   metabolisms:
     Bloodstream:
-      metabolismRate: 0.5
+      metabolismRate: 0.2
       effects:
       - !type:ModifyStatusEffect
         effectProto: StatusEffectNightVision
@@ -670,4 +670,4 @@
       - !type:HealthChange
         damage:
           types:
-           Radiation: 0.5
+           Radiation: 0.25
