@@ -350,7 +350,7 @@ public abstract partial class GameTicker
         var query = EntityQueryEnumerator<GameRuleComponent, MetaDataComponent>();
         while (query.MoveNext(out var uid, out var ruleData, out var meta))
         {
-            if (IsGameRuleAdded((uid, ruleData)) && meta.EntityPrototype?.Name is { } id && id == stationEvent)
+            if (IsGameRuleAdded((uid, ruleData)) && meta.EntityPrototype is { } id && id == stationEvent)
                 yield return uid;
         }
     }
@@ -378,7 +378,7 @@ public abstract partial class GameTicker
         var query = EntityQueryEnumerator<T, GameRuleComponent, MetaDataComponent>();
         while (query.MoveNext(out var uid, out var comp, out var ruleData, out var meta))
         {
-            if (IsGameRuleAdded((uid, ruleData)) && meta.EntityPrototype?.Name is { } id && id == stationEvent)
+            if (IsGameRuleAdded((uid, ruleData)) && meta.EntityPrototype is { } id && id == stationEvent)
                 yield return (uid, comp);
         }
     }
@@ -405,7 +405,7 @@ public abstract partial class GameTicker
         var query = EntityQueryEnumerator<ActiveGameRuleComponent, GameRuleComponent, MetaDataComponent>();
         while (query.MoveNext(out var uid, out _, out _, out var meta))
         {
-            if (meta.EntityPrototype?.Name is { } id && id == stationEvent)
+            if (meta.EntityPrototype is { } id && id == stationEvent)
                 yield return uid;
         }
     }
@@ -432,7 +432,7 @@ public abstract partial class GameTicker
         var query = EntityQueryEnumerator<T, ActiveGameRuleComponent, GameRuleComponent, MetaDataComponent>();
         while (query.MoveNext(out var uid, out var comp, out _, out _, out var meta))
         {
-            if (meta.EntityPrototype?.Name is { } id && id == stationEvent)
+            if (meta.EntityPrototype is { } id && id == stationEvent)
                 yield return (uid, comp);
         }
     }
@@ -472,7 +472,7 @@ public abstract partial class GameTicker
         var ruleQuery = EntityQueryEnumerator<GameRuleComponent, MetaDataComponent>();
         while (ruleQuery.MoveNext(out _, out var meta))
         {
-            if (meta.EntityPrototype?.Name is { } id&& id == stationEvent)
+            if (meta.EntityPrototype is { } id&& id == stationEvent)
                 count++;
         }
 
@@ -509,7 +509,7 @@ public abstract partial class GameTicker
         for (var i = AllRoundGameRules.Count - 1; i >= 0; i--)
         {
             var rule = AllRoundGameRules[i];
-            if (Deleted(rule.Uid) || MetaData(rule.Uid).EntityPrototype?.ID != proto.Id)
+            if (Deleted(rule.Uid) || MetaData(rule.Uid).EntityPrototype is not { } id || id != proto)
                 continue;
 
             return rule;
