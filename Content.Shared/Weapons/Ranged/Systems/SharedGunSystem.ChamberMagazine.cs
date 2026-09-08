@@ -363,8 +363,12 @@ public abstract partial class SharedGunSystem
 
         EntityUid? chamberEnt;
 
+        // A spent casing has no propellant left to work the action, so it can't cycle a fresh round in.
+        var chamberSpent = TryComp<CartridgeAmmoComponent>(GetChamberEntity(uid), out var chamberCartridge) &&
+                           chamberCartridge.Spent;
+
         // Normal behaviour for guns.
-        if (component.AutoCycle)
+        if (component.AutoCycle && !chamberSpent)
         {
             if (TryTakeChamberEntity(uid, out chamberEnt))
             {
@@ -416,7 +420,8 @@ public abstract partial class SharedGunSystem
 
             FinaliseMagazineTakeAmmo(uid, component, ammoEv.Count, ammoEv.Capacity, args.User, appearance);
         }
-        // If gun doesn't autocycle (e.g. bolt-action weapons) then we leave the chambered entity in there but still return it.
+        // If the gun doesn't autocycle (e.g. bolt-action weapons), or the chambered round is a dud, then we leave the
+        // chambered entity in there but still return it so it has to be cleared by hand.
         else if (Containers.TryGetContainer(uid, ChamberSlot, out var container) &&
                  container is ContainerSlot { ContainedEntity: not null } slot)
         {
