@@ -15,7 +15,7 @@
   but [color=#ffa500]50% more Heat damage[/color] and [color=#ffa500]20% more Shock damage[/color]. Their
   tree-like exteriors can [color=#ffa500]easily catch fire[/color] when receiving enough Heat damage from [bold]any[/bold] source.[/color]
 
-  ## Setting down roots
+  ## Rooting
 
   Diona move around using a dense network of roots. This prevents them from wearing [italic]any[/italic] footwear, but
   these roots also allow a diona to firmly root themselves to the ground.
@@ -24,7 +24,7 @@
   floating around. Being rooted also causes a diona to passively absorb reagents from puddles they're standing in; this can potentially be dangerous
   if they're standing in something unsafe to drink!
 
-  ## Make Like A Tree And Leave
+  ## Botanical reagents
   <Box>
     <GuideEntityEmbed Entity="FloraTree" Caption=""/>
   </Box>
@@ -35,15 +35,14 @@
   Robust harvest (an especially potent fertilizer) will heal a diona's injuries, but overdosing will cause them to grow out of control, turning into an immobile tree (and dropping all their equipment).
   Cutting down the tree will "restore" the Diona to their regular, mobile state.
 
-  ## Diona Nymphs
+  ## Diona nymphs
   <Box>
     <GuideEntityEmbed Entity="MobDionaNymph" Caption=""/>
     <GuideEntityEmbed Entity="MobDionaNymph" Caption=""/>
     <GuideEntityEmbed Entity="MobDionaNymph" Caption=""/>
   </Box>
   After death, a Diona can voluntarily destroy their own body, releasing their internal organs as three "nymphs",
-  with the player taking control of the nymph containing the brain.
-  The brain nymph can speak, but has no hands or inventory.
+  with the player taking control of the nymph containing the brain. The brain nymph can speak, but has no hands or inventory.
 
   After 10 minutes, the brain nymph can regrow into a "full" Diona. This will be a brand-new body with a randomized name, appearance, fingerprints, and even DNA,
   leaving little evidence beyond their word about who they were before.
