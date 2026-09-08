@@ -1,4 +1,5 @@
 using Content.Shared.Whitelist;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -7,7 +8,7 @@ namespace Content.Shared.Teleportation.Triggers;
 /// <summary>
 /// Requests teleportation when an allowed user activates a verb on the teleporter.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TeleportOnVerbComponent : Component
 {
     /// <summary>
@@ -26,13 +27,13 @@ public sealed partial class TeleportOnVerbComponent : Component
     /// <summary>
     /// Require the user to pass the standard interaction blockers before offering this verb.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool RequireCanInteract = true;
 
     /// <summary>
     /// Require the user to have a HandsComponent. Does not check hand count or whether a hand is empty.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool RequireHands = true;
 
     /// <summary>

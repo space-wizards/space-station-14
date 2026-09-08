@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Popups;
 using Content.Shared.DoAfter;
@@ -32,49 +31,36 @@ public sealed partial class HandTeleporterSystem : EntitySystem
         SubscribeLocalEvent<HandTeleporterComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<HandTeleporterComponent, TeleporterDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<GridSplitEvent>(OnGridSplit);
-        // Check the original grid coordinates before tile removal detaches the portals.
+        // Find supported portals before tile removal clears the grid's anchored entities.
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged, before: new[] { typeof(TransformSystem) });
     }
 
     private void OnTileChanged(ref TileChangedEvent args)
     {
-        if (!args.Changes.Any(change => change.NewTile == Tile.Empty))
-            return;
-
-        var query = EntityQueryEnumerator<HandTeleporterComponent>();
-        while (query.MoveNext(out var uid, out var teleporter))
-        {
-            if (IsPortalTileRemoved(teleporter.FirstPortal, args))
-            {
-                FizzlePortals((uid, teleporter), null, false);
-                continue;
-            }
-
-            if (IsPortalTileRemoved(teleporter.SecondPortal, args))
-                FizzlePortals((uid, teleporter), null, false);
-        }
-    }
-
-    private bool IsPortalTileRemoved(EntityUid? portal, TileChangedEvent args)
-    {
-        if (Deleted(portal))
-            return false;
-
-        var xform = Transform(portal.Value);
-        if (xform.GridUid != args.Entity.Owner)
-            return false;
-
-        var indices = _map.CoordinatesToTile(args.Entity, args.Entity.Comp, xform.Coordinates);
         foreach (var change in args.Changes)
         {
-            if (change.GridIndices != indices)
+            if (change.NewTile != Tile.Empty)
                 continue;
 
-            if (change.NewTile == Tile.Empty)
-                return true;
-        }
+            var anchored = _map.GetAnchoredEntities(args.Entity, args.Entity.Comp, change.GridIndices);
+            while (anchored.MoveNext(out var portal))
+            {
+                if (!TryComp<HandTeleporterPortalComponent>(portal, out var portalComponent))
+                    continue;
 
-        return false;
+                if (EntityManager.IsQueuedForDeletion(portal.Value))
+                    continue;
+
+                if (!TryComp<HandTeleporterComponent>(portalComponent.Teleporter, out var teleporter))
+                {
+                    // LinkedEntitySystem also removes the paired exit, even without the device.
+                    QueueDel(portal.Value);
+                    continue;
+                }
+
+                FizzlePortals((portalComponent.Teleporter, teleporter), null, false);
+            }
+        }
     }
 
     private void OnGridSplit(ref GridSplitEvent args)
@@ -196,6 +182,7 @@ public sealed partial class HandTeleporterSystem : EntitySystem
             return;
 
         component.FirstPortal = Spawn(component.FirstPortalPrototype, Transform(user).Coordinates);
+        EnsureComp<HandTeleporterPortalComponent>(component.FirstPortal.Value).Teleporter = uid;
         _portal.SetPortalTimeout(user, component.FirstPortal.Value);
         Dirty(uid, component);
         ConfigurePortalMapTravel(component.FirstPortal, component);
@@ -217,6 +204,7 @@ public sealed partial class HandTeleporterSystem : EntitySystem
         }
 
         component.SecondPortal = Spawn(component.SecondPortalPrototype, Transform(user).Coordinates);
+        EnsureComp<HandTeleporterPortalComponent>(component.SecondPortal.Value).Teleporter = uid;
         _portal.SetPortalTimeout(user, component.SecondPortal.Value);
         Dirty(uid, component);
         ConfigurePortalMapTravel(component.SecondPortal, component);

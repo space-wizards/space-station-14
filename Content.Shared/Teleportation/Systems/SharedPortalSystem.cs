@@ -115,6 +115,9 @@ public abstract partial class SharedPortalSystem : EntitySystem
         if (!TryValidateDestination(ent, destination, destinationEntity))
             return false;
 
+        if (!TryValidateExit(target, destination, destinationEntity))
+            return false;
+
         var source = Transform(target).Coordinates;
         var previousExit = CompOrNull<PortalTimeoutComponent>(target)?.ExitPortal;
         var timeoutSet = destinationEntity is { } exit && SetPortalTimeout(target, exit);
@@ -132,6 +135,25 @@ public abstract partial class SharedPortalSystem : EntitySystem
             if (timeoutSet)
                 RestoreTimeoutAfterFailedTeleport(target, previousExit, moved);
         }
+    }
+
+    private bool TryValidateExit(EntityUid target, EntityCoordinates destination, EntityUid? exit)
+    {
+        if (exit == null)
+            return true;
+
+        var mapCoordinates = _transform.ToMapCoordinates(destination);
+        var targetTransform = Transform(target);
+        var rotation = _transform.GetWorldRotation(targetTransform);
+        // Bodies without local rotation follow the destination parent's rotation after reparenting.
+        if (targetTransform.NoLocalRotation)
+            rotation = _transform.GetWorldRotation(destination.EntityId);
+
+        if (!_teleport.IsDestinationBlocked(target, mapCoordinates, rotation, LookupFlags.Static))
+            return true;
+
+        _popup.PopupEntity(Loc.GetString("portal-component-exit-blocked"), target, target);
+        return false;
     }
 
     private bool TryValidateDestination(
