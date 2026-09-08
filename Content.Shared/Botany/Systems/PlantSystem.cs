@@ -3,7 +3,6 @@ using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
 using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Examine;
-using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
 
