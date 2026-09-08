@@ -251,39 +251,59 @@ namespace Content.IntegrationTests.Tests.Buckle
 
             await Pair.RunTicksSync(5);
 
-            await Client.WaitAssertion(() =>
+            await Server.WaitAssertion(() =>
             {
-                var clientHuman = CEntMan.GetEntity(netHuman);
-                var clientChair = CEntMan.GetEntity(netChair);
-                var buckle = CEntMan.GetComponent<BuckleComponent>(clientHuman);
-                var buckleSystem = CEntMan.System<SharedBuckleSystem>();
-                var transformSystem = CEntMan.System<TransformSystem>();
-                var xform = CEntMan.GetComponent<TransformComponent>(clientHuman);
-
-                using (CGameTiming.StartStateApplicationArea())
-                    transformSystem.SetLocalPosition(clientHuman, new Vector2(0.5f, 0f), xform);
-
-                Assert.That(transformSystem.TryGetRenderPoseDebugData(clientHuman, out _), Is.True);
-                Assert.That(buckleSystem.TryBuckle(clientHuman, clientHuman, clientChair, buckle, popup: false), Is.True);
-                Assert.Multiple(() =>
-                {
-                    Assert.That(transformSystem.TryGetRenderPoseDebugData(clientHuman, out _), Is.False);
-                    Assert.That(transformSystem.GetRenderWorldPosition(clientHuman),
-                        Is.EqualTo(transformSystem.GetWorldPosition(clientHuman)));
-                });
-
-                using (CGameTiming.StartStateApplicationArea())
-                    transformSystem.SetLocalPosition(clientHuman, new Vector2(0.25f, 0f), xform);
-
-                Assert.That(transformSystem.TryGetRenderPoseDebugData(clientHuman, out _), Is.True);
-                buckleSystem.Unbuckle(clientHuman, clientHuman);
-                Assert.Multiple(() =>
-                {
-                    Assert.That(transformSystem.TryGetRenderPoseDebugData(clientHuman, out _), Is.False);
-                    Assert.That(transformSystem.GetRenderWorldPosition(clientHuman),
-                        Is.EqualTo(transformSystem.GetWorldPosition(clientHuman)));
-                });
+                var buckle = SEntMan.GetComponent<BuckleComponent>(human);
+                Assert.That(SEntMan.System<SharedBuckleSystem>()
+                    .TryBuckle(human, human, chair, buckle, popup: false), Is.True);
             });
+
+            var applied = false;
+            for (var i = 0; i < 5 && !applied; i++)
+            {
+                await Pair.RunTicksSync(1);
+                await Client.WaitAssertion(() =>
+                {
+                    var clientHuman = CEntMan.GetEntity(netHuman);
+                    var clientChair = CEntMan.GetEntity(netChair);
+                    var buckle = CEntMan.GetComponent<BuckleComponent>(clientHuman);
+                    var transformSystem = CEntMan.System<TransformSystem>();
+                    var xform = CEntMan.GetComponent<TransformComponent>(clientHuman);
+                    applied = buckle.Buckled && xform.ParentUid == clientChair;
+                    if (!applied)
+                        return;
+
+                    Assert.That(transformSystem.TryGetRenderPoseDebugData(clientHuman, out _), Is.False);
+                    Assert.That(transformSystem.GetRenderWorldPosition(clientHuman),
+                        Is.EqualTo(transformSystem.GetWorldPosition(clientHuman)));
+                });
+            }
+
+            Assert.That(applied, Is.True, "the authoritative buckle state was not applied!!!");
+
+            await Server.WaitAssertion(() =>
+                SEntMan.System<SharedBuckleSystem>().Unbuckle(human, human));
+
+            applied = false;
+            for (var i = 0; i < 5 && !applied; i++)
+            {
+                await Pair.RunTicksSync(1);
+                await Client.WaitAssertion(() =>
+                {
+                    var clientHuman = CEntMan.GetEntity(netHuman);
+                    var buckle = CEntMan.GetComponent<BuckleComponent>(clientHuman);
+                    var transformSystem = CEntMan.System<TransformSystem>();
+                    applied = !buckle.Buckled;
+                    if (!applied)
+                        return;
+
+                    Assert.That(transformSystem.TryGetRenderPoseDebugData(clientHuman, out _), Is.False);
+                    Assert.That(transformSystem.GetRenderWorldPosition(clientHuman),
+                        Is.EqualTo(transformSystem.GetWorldPosition(clientHuman)));
+                });
+            }
+
+            Assert.That(applied, Is.True, "the authoritative unbuckle state was not applied");
         }
 
         [Test]

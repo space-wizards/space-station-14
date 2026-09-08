@@ -34,6 +34,7 @@ public sealed partial class MoverController : SharedMoverController
         SubscribeLocalEvent<InputMoverComponent, UpdateIsPredictedEvent>(OnUpdatePredicted);
         SubscribeLocalEvent<MovementRelayTargetComponent, UpdateIsPredictedEvent>(OnUpdateRelayTargetPredicted);
         SubscribeLocalEvent<PullableComponent, UpdateIsPredictedEvent>(OnUpdatePullablePredicted);
+        SubscribeLocalEvent<RelayInputMoverComponent, GetPredictionReconciliationTargetEvent>(OnGetReconciliationTarget);
     }
 
     private void OnUpdatePredicted(Entity<InputMoverComponent> entity, ref UpdateIsPredictedEvent args)
@@ -61,6 +62,13 @@ public sealed partial class MoverController : SharedMoverController
 
         // TODO recursive pulling checks?
         // What if the entity is being pulled by a vehicle controlled by the player?
+    }
+
+    private void OnGetReconciliationTarget(
+        Entity<RelayInputMoverComponent> entity,
+        ref GetPredictionReconciliationTargetEvent args)
+    {
+        args.Target = GetEffectiveMover((entity.Owner, entity.Comp));
     }
 
     private void OnRelayPlayerAttached(Entity<RelayInputMoverComponent> entity, ref LocalPlayerAttachedEvent args)

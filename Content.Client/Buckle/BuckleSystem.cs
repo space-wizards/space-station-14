@@ -24,7 +24,7 @@ internal sealed partial class BuckleSystem : SharedBuckleSystem
         if (HasComp<StrapComponent>(args.Transform.ParentUid) ||
             args.OldParent is { } oldParent && HasComp<StrapComponent>(oldParent))
         {
-            _xformSystem.SnapRenderPose(ent, true);
+            _xformSystem.SnapRenderPoseAfterParentChange(ent, true);
         }
     }
 
