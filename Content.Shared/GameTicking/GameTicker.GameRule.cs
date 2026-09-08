@@ -506,7 +506,7 @@ public abstract partial class GameTicker
     [PublicAPI]
     public GameRule? GetLastGameRule(EntProtoId proto)
     {
-        for (var i = AllRoundGameRules.Count; i >= 0; i--)
+        for (var i = AllRoundGameRules.Count - 1; i >= 0; i--)
         {
             var rule = AllRoundGameRules[i];
             if (Deleted(rule.Uid) || MetaData(rule.Uid).EntityPrototype?.ID != proto.Id)
