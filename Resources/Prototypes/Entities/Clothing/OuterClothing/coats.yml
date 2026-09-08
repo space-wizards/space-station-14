@@ -482,16 +482,16 @@
 
 - type: entity
   parent: ClothingOuterStorageFoldableBase
-  id: ClothingOuterCoatVirtualTaro
-  name: Taro's coat
+  id: ClothingOuterCoatVirtualIce
+  name: ice singer's coat
   description: A white coat with blue trim, designed to protect against strong winds. The code 'CRV2' is printed on the chest.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/virtual_taro.rsi
+    sprite: Clothing/OuterClothing/Coats/virtual_ice.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/virtual_taro.rsi
+    sprite: Clothing/OuterClothing/Coats/virtual_ice.rsi
 
 - type: entity
-  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatVirtualTaro]
-  id: ClothingOuterCoatVirtualTaroOpened
-  name: Taro's coat
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatVirtualIce]
+  id: ClothingOuterCoatVirtualIceOpened
+  name: ice singer's coat

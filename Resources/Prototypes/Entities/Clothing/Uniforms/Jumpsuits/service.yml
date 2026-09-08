@@ -327,11 +327,11 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitVirtualTaro
-  name: Taro's sleeveless shirt
+  id: ClothingUniformJumpsuitVirtualIce
+  name: ice singer's sleeveless shirt
   description: This sleeveless shirt was custom-made for a certain Taro Yamada to wear during performances and training sessions.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuits/Service/virtual_taro.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Service/virtual_ice.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuits/Service/virtual_taro.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Service/virtual_ice.rsi

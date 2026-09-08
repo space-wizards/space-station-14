@@ -285,11 +285,11 @@
 
 - type: entity
   parent: ClothingShoesBase
-  id: ClothingShoesBootsVirtualTaro
-  name: Taro's boots
+  id: ClothingShoesBootsVirtualIce
+  name: ice singer's boots
   description: What was originally conceived as sneakers turned into tall, black boots for a virtual singer.
   components:
   - type: Sprite
-    sprite: Clothing/Shoes/Boots/virtual_taro.rsi
+    sprite: Clothing/Shoes/Boots/virtual_ice.rsi
   - type: Clothing
-    sprite: Clothing/Shoes/Boots/virtual_taro.rsi
+    sprite: Clothing/Shoes/Boots/virtual_ice.rsi

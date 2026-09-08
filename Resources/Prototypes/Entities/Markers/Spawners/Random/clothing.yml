@@ -42,9 +42,9 @@
         - id: ClothingShoesBootsVirtualForeigner
       - !type:AllSelector
         children:
-        - id: ClothingOuterCoatVirtualTaro
-        - id: ClothingUniformJumpsuitVirtualTaro
-        - id: ClothingShoesBootsVirtualTaro
-        - id: ClothingHeadVirtualTaroWig
-        - id: ClothingNeckScarfVirtualTaro
+        - id: ClothingOuterCoatVirtualIce
+        - id: ClothingUniformJumpsuitVirtualIce
+        - id: ClothingShoesBootsVirtualIce
+        - id: ClothingHeadVirtualIceWig
+        - id: ClothingNeckScarfVirtualIce
         - id: ClothingHandsGlovesFingerless

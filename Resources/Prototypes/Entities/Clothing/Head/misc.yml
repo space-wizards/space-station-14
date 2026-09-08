@@ -473,14 +473,14 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadVirtualTaroWig
-  name: Taro's wig
+  id: ClothingHeadVirtualIceWig
+  name: ice singer's wig
   description: Short blue hair with a hint of frost visible at the tips.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Misc/virtual-taro-wig.rsi
+    sprite: Clothing/Head/Misc/virtual-ice-wig.rsi
   - type: Clothing
-    sprite: Clothing/Head/Misc/virtual-taro-wig.rsi
+    sprite: Clothing/Head/Misc/virtual-ice-wig.rsi
   - type: Tag
     tags:
     - HamsterWearable

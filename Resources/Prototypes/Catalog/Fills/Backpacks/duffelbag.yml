@@ -512,19 +512,19 @@
 
 - type: entity
   parent: ClothingBackpackDuffel
-  id: ClothingBackpackDuffelVirtualTaro
-  name: Taro outfit bag
-  description: Contains the Taro's outfit. Have a great performance!
+  id: ClothingBackpackDuffelVirtualIce
+  name: ice singer outfit bag
+  description: Contains the ice singer's outfit. Have a great performance!
   components:
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
         children:
-        - id: ClothingOuterCoatVirtualTaro
-        - id: ClothingUniformJumpsuitVirtualTaro
-        - id: ClothingShoesBootsVirtualTaro
-        - id: ClothingHeadVirtualTaroWig
-        - id: ClothingNeckScarfVirtualTaro
+        - id: ClothingOuterCoatVirtualIce
+        - id: ClothingUniformJumpsuitVirtualIce
+        - id: ClothingShoesBootsVirtualIce
+        - id: ClothingHeadVirtualIceWig
+        - id: ClothingNeckScarfVirtualIce
         - id: ClothingHandsGlovesFingerless
         - id: FoodFrozenPopsicleJumbo
           amount: 2
