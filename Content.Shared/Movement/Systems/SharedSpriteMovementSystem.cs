@@ -6,7 +6,7 @@ namespace Content.Shared.Movement.Systems;
 public abstract partial class SharedSpriteMovementSystem : EntitySystem
 {
     [SubscribeLocalEvent]
-    private void OnSpriteMoveInput(Entity<SpriteMovementComponent> ent, ref SpriteMoveEvent args)
+    protected virtual void OnSpriteMoveInput(Entity<SpriteMovementComponent> ent, ref SpriteMoveEvent args)
     {
         if (ent.Comp.IsMoving == args.IsMoving)
             return;
