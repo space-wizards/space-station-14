@@ -124,7 +124,7 @@ public sealed partial class DisposalUnitComponent : Component
     /// </summary>
     /// <remarks>
     /// Does not play when ejecting unflushed entities
-    /// </remarks
+    /// </remarks>
     [DataField("soundExit")]
     public SoundSpecifier? ExitSound;
 
