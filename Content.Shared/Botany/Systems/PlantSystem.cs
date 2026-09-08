@@ -4,6 +4,7 @@ using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
 using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Examine;
+using Content.Shared.Interaction;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Botany.Systems;
