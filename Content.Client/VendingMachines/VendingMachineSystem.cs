@@ -5,6 +5,7 @@ using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.VendingMachines;
 using Content.Shared.VendingMachines.Components;
+using Content.Shared.VendingMachines.Events;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameStates;
@@ -32,6 +33,16 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
     protected override void OnEjectStateChanged(Entity<VendingMachineComponent?> entity, VendingMachineEjectComponent? ejectComponent = null)
     {
         TryUpdateVisualState(entity, ejectComponent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OpenStoreActionEvent(Entity<VendingMachineComponent> entity, ref OpenStoreActionEvent evt)
+    {
+        if (TryComp(entity, out UserInterfaceComponent? uiComp))
+        {
+            var uiEnt = new Entity<UserInterfaceComponent?>(entity.Owner, uiComp);
+            UISystem.TryOpenUi(uiEnt, VendingMachineUiKey.Key,evt.Performer,true);
+        }
     }
 
     [SubscribeLocalEvent]

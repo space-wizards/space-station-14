@@ -10,6 +10,7 @@
   - type: ActionGrant
     actions:
     - ActionVendingThrow
+    - ActionOpenVendingMachineStore
   - type: StationAiWhitelist
   - type: AmbientOnPowered
   - type: AmbientSound
@@ -59,6 +60,7 @@
     interfaces:
       enum.VendingMachineUiKey.Key:
         type: VendingMachineBoundUserInterface
+        requireInputValidation: false
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: WiresPanel
@@ -106,6 +108,9 @@
   - type: VendingMachineDispenseOnHit
     chance: 0.25
     threshold: 2
+  - type: Input
+    context: "human"
+  - type: Examiner
 
 - type: entity
   id: VendingMachine
