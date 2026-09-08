@@ -6,7 +6,6 @@ using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Power;
 using Content.Shared.SurveillanceCamera;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.SurveillanceCamera;
@@ -432,19 +431,6 @@ public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
         _surveillanceCameras.RemoveActiveViewers(monitor.ActiveCamera.Value, monitor.Viewers, uid);
 
         UpdateUserInterface(uid, monitor);
-    }
-
-    // This is public primarily because it might be useful to have the ability to
-    // have this component added to any entity, and have them open the BUI (somehow).
-    public void AfterOpenUserInterface(EntityUid uid, EntityUid player, SurveillanceCameraMonitorComponent? monitor = null, ActorComponent? actor = null)
-    {
-        if (!Resolve(uid, ref monitor)
-            || !Resolve(player, ref actor))
-        {
-            return;
-        }
-
-        AddViewer(uid, player);
     }
 
     private void UpdateUserInterface(EntityUid uid, SurveillanceCameraMonitorComponent? monitor = null, EntityUid? player = null)
