@@ -31,6 +31,7 @@ public sealed partial class VehicleSystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedEyeSystem _eye = default!;
     [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedMoverController _mover = default!;
@@ -166,6 +167,7 @@ public sealed partial class VehicleSystem : EntitySystem
         Dirty(operatorUid, vehicleOperator);
 
         _mover.SetRelay(operatorUid, entity);
+        _eye.SetTarget(operatorUid, entity.Owner);
 
         var enterEvent = new OnVehicleEnteredEvent(entity, operatorUid);
         RaiseLocalEvent(operatorUid, ref enterEvent);
@@ -190,6 +192,7 @@ public sealed partial class VehicleSystem : EntitySystem
         if (entity.Comp.Operator is not { } currentOperator)
             return false;
 
+        ClearEyeTarget(currentOperator, entity.Owner);
         _operatorQuery.TryComp(currentOperator, out var currentOperatorComponent);
 
         if (currentOperatorComponent != null)
@@ -254,11 +257,18 @@ public sealed partial class VehicleSystem : EntitySystem
         if (_vehicleQuery.TryComp(vehicleUid, out var vehicle))
             return TryRemoveOperator((vehicleUid.Value, vehicle));
 
+        ClearEyeTarget(operatorEntity.Owner, vehicleUid.Value);
         UnblockHands(vehicleUid.Value, operatorEntity.Owner);
         ClearOperatorRelays(operatorEntity.Owner, vehicleUid.Value);
         operatorEntity.Comp.Vehicle = null;
         RemCompDeferred<VehicleOperatorComponent>(operatorEntity.Owner);
         return true;
+    }
+
+    private void ClearEyeTarget(EntityUid operatorUid, EntityUid vehicleUid)
+    {
+        if (TryComp<EyeComponent>(operatorUid, out var eye) && eye.Target == vehicleUid)
+            _eye.SetTarget(operatorUid, null, eye);
     }
 
     /// <summary>
