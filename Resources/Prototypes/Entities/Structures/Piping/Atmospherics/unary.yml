@@ -19,6 +19,7 @@
           nodeGroupID: Pipe
           pipeDirection: South
     - type: CollideOnAnchor
+    - type: SandboxCopyable
 
 - type: entity
   parent: [GasUnaryBase, AirSensorBase]
@@ -300,7 +301,7 @@
   name: freezer
   description: Cools gas in connected pipes.
   categories: !type:CreateVariants
-    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]  
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   placement:
     mode: AlignAtmosPipeLayers
   components:
@@ -313,7 +314,7 @@
         - state: freezerPanelOpen
           map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
         - sprite: !type:CreateVariants
-            values: 
+            values:
             - Structures/Piping/Atmospherics/thermomachine.rsi
             - Structures/Piping/Atmospherics/thermomachine_alt1.rsi
             - Structures/Piping/Atmospherics/thermomachine_alt2.rsi
@@ -322,7 +323,7 @@
           renderingStrategy: Default
     - type: AtmosPipeLayers
       pipeLayer: !type:CreateVariants
-        values: [ 0, 1, 2 ] 
+        values: [ 0, 1, 2 ]
       spriteLayersRsiPaths:
         enum.PipeVisualLayers.Pipe:
           Primary: Structures/Piping/Atmospherics/thermomachine.rsi
@@ -378,7 +379,7 @@
         - state: heaterPanelOpen
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
         - sprite: !type:CreateVariants
-            values: 
+            values:
             - Structures/Piping/Atmospherics/thermomachine.rsi
             - Structures/Piping/Atmospherics/thermomachine_alt1.rsi
             - Structures/Piping/Atmospherics/thermomachine_alt2.rsi
@@ -387,7 +388,7 @@
           renderingStrategy: Default
     - type: AtmosPipeLayers
       pipeLayer: !type:CreateVariants
-        values: [ 0, 1, 2 ] 
+        values: [ 0, 1, 2 ]
       spriteLayersRsiPaths:
         enum.PipeVisualLayers.Pipe:
           Primary: Structures/Piping/Atmospherics/thermomachine.rsi
@@ -551,4 +552,3 @@
   - type: GuideHelp
     guides:
     - GasCondensing
-
