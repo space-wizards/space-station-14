@@ -147,7 +147,7 @@
     drawDepth: OverMobs
     layers:
     - sprite: Objects/Vehicles/janicart.rsi
-      state: vehicle
+      state: vehicle-overlay
   - type: ItemSlots
     slots:
       key_slot:
