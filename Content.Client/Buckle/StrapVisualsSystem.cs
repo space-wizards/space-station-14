@@ -39,8 +39,13 @@ public sealed partial class StrapVisualsSystem : EntitySystem
             return;
         }
 
-        if (_applied.ContainsKey(strap))
-            return;
+        if (_applied.TryGetValue(strap, out var existing))
+        {
+            if (Exists(existing))
+                return;
+
+            _applied.Remove(strap);
+        }
 
         var proxy = SpawnAttachedTo(OverlayPrototype, new EntityCoordinates(strap, 0f, 0f));
         var proxySprite = Comp<SpriteComponent>(proxy);
