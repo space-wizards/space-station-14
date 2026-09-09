@@ -41,15 +41,11 @@ public abstract partial class GameTicker
     [SubscribeLocalEvent]
     private void OnGameRuleStarted(Entity<ActiveGameRuleComponent> rule, ref MapInitEvent args)
     {
-        var meta = MetaData(rule);
-
-        DebugTools.Assert(LifeStage(rule, meta) >= EntityLifeStage.MapInitialized, $"GameRule {ToPrettyString(rule)} was started before it was fully initialized!");
-
         var ruleComp = RuleQuery.Comp(rule);
         Log.Info($"Started game rule {ToPrettyString(rule)}");
         Admin.Add(LogType.EventStarted, $"Started game rule {ToPrettyString(rule)}");
 
-        var ev = new GameRuleStartedEvent((rule, ruleComp), meta.EntityPrototype?.ID);
+        var ev = new GameRuleStartedEvent((rule, ruleComp), MetaData(rule).EntityPrototype?.ID);
         RaiseLocalEvent(rule, ref ev, true);
 
         if (ruleComp.Silent)
