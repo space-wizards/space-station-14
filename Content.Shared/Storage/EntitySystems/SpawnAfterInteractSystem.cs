@@ -38,14 +38,12 @@ public sealed partial class SpawnAfterInteractSystem : EntitySystem
         if (tileRef.Tile.IsEmpty || _turfSystem.IsTileBlocked(tileRef, CollisionGroup.MobMask))
             return;
 
-        if (ent.Comp.DoAfterTime <= 0)
-        {
-            var ev = new SpawnAfterInteractEvent(args.ClickLocation.SnapToGrid(grid));
-            RaiseLocalEvent(ent, ev);
-            return;
-        }
-
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.DoAfterTime, new SpawnAfterInteractEvent(args.ClickLocation.SnapToGrid(grid)), ent, used: ent)
+        var doAfterArgs = new DoAfterArgs(EntityManager,
+            args.User,
+            ent.Comp.DoAfterTime,
+            new SpawnAfterInteractEvent(GetNetCoordinates(args.ClickLocation.SnapToGrid(grid))),
+            ent,
+            used: ent)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
@@ -63,7 +61,7 @@ public sealed partial class SpawnAfterInteractSystem : EntitySystem
             return;
         }
 
-        PredictedSpawnAtPosition(ent.Comp.Prototype, args.Coordinates);
+        PredictedSpawnAtPosition(ent.Comp.Prototype, GetCoordinates(args.Coordinates));
 
         if (ent.Comp.RemoveOnInteract && stackComp == null)
             PredictedQueueDel(ent);
