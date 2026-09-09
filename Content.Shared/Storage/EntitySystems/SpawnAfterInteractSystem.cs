@@ -1,5 +1,4 @@
 using Content.Shared.Storage.Components;
-using Content.Server.Stack;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
@@ -11,13 +10,13 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.Engineering.EntitySystems;
+namespace Content.Shared.Storage.EntitySystems;
 
 [UsedImplicitly]
 public sealed partial class SpawnAfterInteractSystem : EntitySystem
 {
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private StackSystem _stackSystem = default!;
+    [Dependency] private SharedStackSystem _stackSystem = default!;
     [Dependency] private TurfSystem _turfSystem = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedMapSystem _maps = default!;
@@ -28,9 +27,6 @@ public sealed partial class SpawnAfterInteractSystem : EntitySystem
         if (!args.CanReach && !ent.Comp.IgnoreDistance)
             return;
 
-        if (string.IsNullOrEmpty(ent.Comp.Prototype))
-            return;
-
         var gridUid = _transform.GetGrid(args.ClickLocation);
 
         if (!TryComp<MapGridComponent>(gridUid, out var grid))
@@ -39,13 +35,14 @@ public sealed partial class SpawnAfterInteractSystem : EntitySystem
         if (!_maps.TryGetTileRef(gridUid.Value, grid, args.ClickLocation, out var tileRef))
             return;
 
-        if (!IsTileClear())
+        if (tileRef.Tile.IsEmpty || _turfSystem.IsTileBlocked(tileRef, CollisionGroup.MobMask))
             return;
 
         if (ent.Comp.DoAfterTime <= 0)
         {
             var ev = new SpawnAfterInteractEvent(args.ClickLocation.SnapToGrid(grid));
             RaiseLocalEvent(ent, ev);
+            return;
         }
 
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.DoAfterTime, new SpawnAfterInteractEvent(args.ClickLocation.SnapToGrid(grid)), ent, used: ent)
@@ -55,13 +52,6 @@ public sealed partial class SpawnAfterInteractSystem : EntitySystem
             BreakOnWeightlessMove = false,
         };
         _doAfterSystem.TryStartDoAfter(doAfterArgs);
-
-        return;
-
-        bool IsTileClear()
-        {
-            return !tileRef.Tile.IsEmpty && !_turfSystem.IsTileBlocked(tileRef, CollisionGroup.MobMask);
-        }
     }
 
     [SubscribeLocalEvent]
@@ -84,13 +74,13 @@ public sealed partial class SpawnAfterInteractSystem : EntitySystem
 public sealed partial class SpawnAfterInteractEvent : SimpleDoAfterEvent
 {
     [DataField(required:true)]
-    public EntityCoordinates Coordinates;
+    public NetCoordinates Coordinates;
 
     private SpawnAfterInteractEvent()
     {
     }
 
-    public SpawnAfterInteractEvent(EntityCoordinates coordinates)
+    public SpawnAfterInteractEvent(NetCoordinates coordinates)
     {
         Coordinates = coordinates;
     }
