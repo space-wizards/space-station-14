@@ -42,3 +42,9 @@
     strippingWindowPos: 0,0
     displayName: Head
     offset: 0, 0.09375
+
+# xenoborgs (hatless)
+- type: inventoryTemplate
+  id: xenoborg
+  # in terms of inventory slots they have no inventory slots
+  slots: []
