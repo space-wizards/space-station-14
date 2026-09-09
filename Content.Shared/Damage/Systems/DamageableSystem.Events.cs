@@ -122,17 +122,6 @@ public sealed partial class DamageableSystem
         );
     }
 
-    [SubscribeLocalEvent]
-    private void OnClone(Entity<DamageableComponent> ent, ref CloningEvent args)
-    {
-        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
-            return;
-
-        var cloneComp = Factory.GetComponent<DamageableComponent>();
-        cloneComp.DamageModifierSetId = ent.Comp.DamageModifierSetId;
-        AddComp(args.CloneUid, cloneComp, true);
-    }
-
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs ev)
     {
         if (!ev.WasModified<DamageContainerPrototype>() && !ev.WasModified<DamageGroupPrototype>())

@@ -86,7 +86,7 @@
 - type: entity
   parent:
   - AppearanceHorror
-  - BaseSpeciesMobOrganic
+  - BaseSpeciesMobOrganicNoCrawl
   id: MobHorror
   name: shambling abomination # no more Urist McHorror
   description: Its gaping maw open, an ever-expanding, all consuming mass of flesh stands before you.

@@ -94,18 +94,15 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
         if (!hasDropOption)
             return buttons;
 
+
         // Menu category for dropping identities.
         var dropMenuButton = new RadialMenuNestedLayerOption(dropButtons)
         {
-            // Menu category for dropping identities.
-            var dropMenuButton = new RadialMenuNestedLayerOption(dropButtons)
-            {
-                IconSpecifier = RadialMenuIconSpecifier.With(new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/delete.svg.192dpi.png"))),
-                ToolTip = Loc.GetString("changeling-transform-bui-drop-identity-menu"),
-                Order = 0, // Explicit first option.
-            };
-            buttons.Add(dropMenuButton);
-        }
+            IconSpecifier = RadialMenuIconSpecifier.With(new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/delete.svg.192dpi.png"))),
+            ToolTip = Loc.GetString("changeling-transform-bui-drop-identity-menu"),
+            Order = 0, // Explicit first option.
+        };
+        buttons.Add(dropMenuButton);
 
         return buttons;
     }

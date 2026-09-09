@@ -105,6 +105,13 @@ public abstract partial class SharedStunSystem
     }
 
     #region Startup and Shutdown
+    [SubscribeLocalEvent]
+    private void OnCrawlerShutdown(Entity<CrawlerComponent> entity, ref ComponentShutdown args)
+    {
+        // hate. let me tell you how much i hate...
+        // this may have unforseen consequences. blame scar
+        ForceStandUp((entity.Owner, null));
+    }
 
     private void OnKnockInit(Entity<KnockedDownComponent> entity, ref ComponentInit args)
     {

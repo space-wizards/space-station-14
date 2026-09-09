@@ -19,6 +19,7 @@ using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -172,10 +173,10 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
         if (TryComp<StoreComponent>(ent.Owner, out var _))
         {
             // do fancy math to add back DNA based on remaining time
-            Dictionary<string, FixedPoint2> dico = new() {
+            Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> dico = new() {
                 {"ChangelingDNA", TimeToDNA(ent.Comp.TimeBudget - (_timing.CurTime - ent.Comp.InitialTime), ent.Comp.SecondPerDNA, ent.Comp.GracePeriod) }
                 };
-            _stores.TryAddCurrency(dico, ent.Owner);
+            _stores.TryAddCurrency(dico, ent.Owner, null);
         }
     }
 
@@ -217,10 +218,10 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
             {
                 var k = store.Balance["ChangelingDNA"];
                 // remove all DNA points from the store, since they are being converted into time
-                Dictionary<string, FixedPoint2> dico = new() {
+                Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> dico = new() {
                     {"ChangelingDNA", -k }
                 };
-                _stores.TryAddCurrency(dico, ent.Owner);
+                _stores.TryAddCurrency(dico, ent.Owner, null);
                 transformationTime = DNAToTime(k, ent.Comp.SecondPerDNA, ent.Comp.GracePeriod);
             }
         }

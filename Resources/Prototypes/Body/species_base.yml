@@ -1,5 +1,12 @@
 - type: entity
   abstract: true
+  parent: BaseSpeciesMobNoCrawl
+  id: BaseSpeciesMob
+  components:
+  - type: Crawler
+
+- type: entity
+  abstract: true
   parent:
   - BaseMob
   - MobCombat
@@ -7,7 +14,7 @@
   - MobPolymorphable
   - StripableInventoryBase
   - BaseSpeciesAppearance
-  id: BaseSpeciesMob
+  id: BaseSpeciesMobNoCrawl
   save: false
   components:
   - type: DamageVisuals
@@ -100,7 +107,6 @@
   - type: SleepEmitSound
   - type: SSDIndicator
   - type: StandingState
-  - type: Crawler
   - type: Dna
   - type: MindContainer
   - type: MindExaminable
@@ -159,10 +165,10 @@
   - MobRespirator
   - MobAtmosStandard
   - MobFlammable
-  - BaseSpeciesMob
+  - BaseSpeciesMobNoCrawl
   - BaseMobDestructible
   - BaseHungerThirstSlowdown
-  id: BaseSpeciesMobOrganic
+  id: BaseSpeciesMobOrganicNoCrawl
   save: false
   components:
   - type: Satiation
@@ -226,3 +232,11 @@
   - type: FireVisuals
     alternateState: Standing
   - type: StunVisuals
+
+- type: entity
+  abstract: true
+  parent:
+  - BaseSpeciesMobOrganicNoCrawl
+  - BaseSpeciesCrawl
+  id: BaseSpeciesMobOrganic
+  save: false
