@@ -697,7 +697,6 @@ public sealed partial class ServerGameTicker
         _gameMapManager.ClearSelectedMap();
 
         // Clear up any game rules.
-        ClearGameRules();
         CurrentPreset = null;
 
         AllRoundGameRules.Clear();
