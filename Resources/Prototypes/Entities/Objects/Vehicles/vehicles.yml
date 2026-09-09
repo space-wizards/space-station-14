@@ -39,6 +39,16 @@
     - FootstepSound
 
 - type: entity
+  id: StrapVisualOverlay
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Tag
+    tags:
+    - HideContextMenu
+  - type: Sprite
+    noRot: true
+
+- type: entity
   id: VehicleWheelchair
   parent: [BaseVehicleStrap, BaseFoldable, BaseItem]
   name: wheelchair
@@ -64,6 +74,12 @@
   - type: GravityAffected
   - type: Strap
     buckleOffset: "0,-0.05"
+    modifyBuckleDrawDepth: false
+  - type: StrapVisuals
+    drawDepth: 7
+    layers:
+    - sprite: Objects/Vehicles/wheelchair.rsi
+      state: wheelchair_overlay
   - type: Fixtures
     fixtures:
       fix1:
@@ -87,7 +103,7 @@
   components:
   - type: Sprite
     sprite: Objects/Vehicles/janicart.rsi
-    drawdepth: Mobs # fixes layering like magic.
+    drawdepth: Objects
     layers:
     - state: vehicle
       map: ["movement"]
@@ -139,6 +155,11 @@
   - type: Strap
     buckleOffset: "0.01,0.15"
     modifyBuckleDrawDepth: false
+  - type: StrapVisuals
+    drawDepth: 7
+    layers:
+    - sprite: Objects/Vehicles/janicart.rsi
+      state: vehicle
   - type: ItemSlots
     slots:
       key_slot:
