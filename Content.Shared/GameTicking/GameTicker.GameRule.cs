@@ -62,7 +62,9 @@ public abstract partial class GameTicker
         RemComp<ActiveGameRuleComponent>(rule);
         var ev = new GameRuleEndedEvent(rule);
         RaiseLocalEvent(rule, ref ev, true);
-        EndRuleCache(rule);
+
+        if (!rule.Comp.Silent)
+            EndRuleCache(rule);
     }
 
     /// <summary>
