@@ -237,6 +237,7 @@
   abstract: true
   parent:
   - BaseSpeciesMobOrganicNoCrawl
-  - BaseSpeciesCrawl
   id: BaseSpeciesMobOrganic
   save: false
+  components:
+  - type: Crawler

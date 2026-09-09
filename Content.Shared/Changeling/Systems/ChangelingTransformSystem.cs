@@ -261,7 +261,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         var afterTransformEvent = new AfterChangelingTransformEvent(targetIdentity, oldIdentity);
         RaiseLocalEvent(ent.Owner, afterTransformEvent);
 
-        if (oldIdentity != null)
+        if (oldIdentity != null && !ent.Comp.ManualDrop)
             _changelingIdentity.DropStoredIdentity(ent.Owner, oldIdentity.Value);
 
     }
