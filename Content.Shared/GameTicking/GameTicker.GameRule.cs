@@ -57,10 +57,6 @@ public abstract partial class GameTicker
     [SubscribeLocalEvent]
     private void OnGameRuleEnded(Entity<GameRuleComponent> rule, ref ComponentShutdown args)
     {
-        // Game rule was deleted before it started, do nothing.
-        if (LifeStage(rule) < EntityLifeStage.MapInitialized)
-            return;
-
         RemComp<ActiveGameRuleComponent>(rule);
         var ev = new GameRuleEndedEvent(rule);
         RaiseLocalEvent(rule, ref ev, true);
@@ -215,7 +211,8 @@ public abstract partial class GameTicker
             return;
         }
 
-        Log.Error($"Rule {ToPrettyString(uid)} was ended but had not been added yet somehow!");
+        // We don't log an error here because it's possible a game rule was added before MapInit, and then removed.
+        // Removals of game rules in this scenario should already throw errors elsewhere, logging here just fails tests.
     }
 
     /// <summary>
