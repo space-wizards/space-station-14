@@ -1,3 +1,6 @@
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using DrawDepthTag = Robust.Shared.GameObjects.DrawDepth;
+
 namespace Content.Client.Buckle;
 
 /// <summary>
@@ -15,6 +18,6 @@ public sealed partial class StrapVisualsComponent : Component
     /// <summary>
     /// Draw depth used by the foreground proxy.
     /// </summary>
-    [DataField(required: true)]
+    [DataField(required: true, customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
     public int DrawDepth;
 }

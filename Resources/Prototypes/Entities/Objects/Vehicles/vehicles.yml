@@ -76,7 +76,7 @@
     buckleOffset: "0,-0.05"
     modifyBuckleDrawDepth: false
   - type: StrapVisuals
-    drawDepth: 7
+    drawDepth: OverMobs
     layers:
     - sprite: Objects/Vehicles/wheelchair.rsi
       state: wheelchair_overlay
@@ -156,7 +156,7 @@
     buckleOffset: "0.01,0.15"
     modifyBuckleDrawDepth: false
   - type: StrapVisuals
-    drawDepth: 7
+    drawDepth: OverMobs
     layers:
     - sprite: Objects/Vehicles/janicart.rsi
       state: vehicle
