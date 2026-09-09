@@ -9,20 +9,20 @@
 
   Slimes breathe nitrogen instead of oxygen (though inhaling oxygen has no ill effect on them). They exhale nitrous oxide and are unaffected by inhaling it.
 
-  They have an internal 2x3 slot inventory inside of their slime membrane. This allows them to carry a bit more than other species,
+  They have an [color=lightgreen]internal 2x3 slot inventory[/color] inside of their slime membrane. This allows them to carry a bit more than other species,
   though [italic]anyone[/italic] is able to reach inside this inventory without asking.
 
-  They have [color=lawngreen]slime[/color] rather than blood, which is replenished by metabolizing iron or drinking slime.
+  They have slime rather than blood, which replenishes when metabolizing iron or drinking slime.
   Slime is moderately nutritious when consumed by other species, though drinking the blood of your coworkers is usually frowned upon.
 
-  They metabolize reagents in one organ, up to six reagents per stage (digestion, bloodstream, and metabolites).
+  They metabolize reagents with a single organ, up to six reagents per metabolism stage (digestion, bloodstream, and metabolites).
 
-  They take [color=#1e90ff]40% less Blunt damage[/color] and [color=#1e90ff]20% less Poison damage[/color], but
-  [color=#ffa500]50% more Cold damage[/color], [color=#ffa500]20% more Slash damage[/color], and [color=#ffa500]20% more Piercing damage[/color].
-  They naturally recover from Heat damage [color=#1e90ff]twice as fast[/color] as most other species do (though proper medical treatment isn't any faster).
+  They take [color=lightgreen]40% less Blunt damage[/color] and [color=lightgreen]20% less Poison damage[/color], but
+  [color=palevioletred]50% more Cold damage[/color], [color=palevioletred]20% more Slash damage[/color], and [color=palevioletred]20% more Piercing damage[/color].
+  They naturally recover from Heat damage [color=lightgreen]twice as fast[/color] as most other species do (though proper medical treatment isn't any faster).
 
-  They [color=#1e90ff]suffocate five times as slow[/color], but [color=#ffa500]take pressure damage 9% faster[/color] than most species. This makes them by far the most capable of surviving the longest unprotected in a hard vacuum.
+  They [color=lightgreen]suffocate five times slower[/color], but [color=palevioletred]take pressure damage 9% faster[/color]. This makes them by far the most capable of surviving the longest unprotected in a hard vacuum.
 
-  They take minor Heat damage if their outer membranes come into contact with water or water vapor, though they can still [color=lightgreen]drink water with no ill effect[/color].
+  They take [color=palevioletred]minor Heat damage[/color] if their outer membranes come into contact with water or water vapor, though they can still drink water normally with no ill effect.
 
 </Document>

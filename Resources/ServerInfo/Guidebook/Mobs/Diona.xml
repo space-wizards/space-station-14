@@ -7,40 +7,41 @@
 
   ## General Information
 
-  Diona have plant-like metabolisms, getting [color=lightgreen]hungry slower[/color] than other species, but getting [color=lightblue]thirsty faster[/color].
+  Diona have large, dense bodies, so they're slowed less when dragging objects and slow others more when dragged themselves.
 
-  They metabolize reagents in one organ (similar to slimes), up to six reagents per stage (digestion, bloodstream, and metabolites).
+  They have plant-like metabolisms, [color=lightgreen]getting hungry slower[/color] than other species, but [color=palevioletred]getting thirsty faster[/color].
 
-  They have [color=peachpuff]sap[/color] rather than blood, which replenishes when metabolizing iron.
-  [color=peachpuff]Sap[/color] is slightly nutritious when consumed by other species, though drinking the blood of your coworkers is usually frowned upon.
+  They have sap rather than blood, which replenishes when metabolizing iron.
+  Sap is slightly nutritious when consumed by other species, though drinking the blood of your coworkers is usually frowned upon.
 
-  They take [color=#1e90ff]30% less Blunt damage[/color] and [color=#1e90ff]20% less Slash damage[/color],
-  but [color=#ffa500]50% more Heat damage[/color] and [color=#ffa500]20% more Shock damage[/color]. Their
-  bark-like skin can [color=#ffa500]easily catch fire[/color] when receiving enough Heat damage from [italic]any[/italic] source.[/color]
+  They metabolize reagents with a single organ, up to six reagents per metabolism stage (digestion, bloodstream, and metabolites).
 
-  They [color=#1e90ff]suffocate twice as slow[/color] as most other species.
+  They take [color=lightgreen]30% less Blunt damage[/color] and [color=lightgreen]20% less Slash damage[/color],
+  but [color=palevioletred]50% more Heat damage[/color] and [color=palevioletred]20% more Shock damage[/color]. Their
+  bark-like skin can [color=palevioletred]easily catch fire[/color] when receiving enough Heat damage from [italic]any[/italic] source.[/color]
 
-  They have [color=gray]large, dense bodies[/color], and are [color=gray]heavier to drag[/color] around.
+  They [color=lightgreen]suffocate 100% slower[/color].
 
   ## Rooting
 
-  Diona move around using a dense network of roots. [color=palevioletred]This prevents them from wearing [italic]any[/italic] footwear[/color], but
-  these roots also allow a diona to [color=lightgreen]firmly root themselves to the ground[/color].
+  Diona move around using a dense network of roots. This [color=palevioletred]prevents them from wearing [italic]any[/italic] footwear[/color], but
+  these roots also allow a diona to firmly root themselves to the ground.
 
-  While rooted, a diona [color=#ffa500]moves 20% slower[/color], but is able to freely move around in zero-gravity environments instead of awkwardly
-  floating around. Being rooted also causes a diona to passively absorb reagents from puddles they're standing in. This can potentially be dangerous
-  if they're standing in something unsafe to drink!
+  While rooted, a diona [color=palevioletred]moves 20% slower[/color], but is able to freely move around in zero-gravity environments
+  instead of awkwardly floating around. Being rooted also causes a diona to passively absorb reagents from puddles they're standing in;
+  this can potentially be dangerous if they're standing in something unsafe to drink!
 
   ## Botanical Reagents
   <Box>
     <GuideEntityEmbed Entity="FloraTree" Caption=""/>
   </Box>
 
-  While diona can digest the same foods that most other species can, they're also affected by certain botanical reagents. [color=lightgreen]Fertilizers[/color] will sate
-  their hunger, but [color=orchid]pesticides[/color] will poison them!
+  While diona can digest the same foods that most other species can, they're also affected by certain botanical reagents.
+  Fertilizers will [color=lightgreen]sate their hunger[/color], but pesticides will [color=palevioletred]poison[/color] them!
 
-  [color=lightgreen]Robust harvest[/color] (an especially potent fertilizer) will [color=lightgreen]heal a diona's injuries[/color], but [color=orchid]overdosing[/color] will cause them to grow out of control, [color=orchid]turning into an immobile tree[/color] (and dropping all their equipment).
-  Cutting down the tree will "restore" the Diona to their regular, mobile state.
+  Robust harvest (an especially potent fertilizer) will [color=lightgreen]heal a diona's injuries[/color], but overdosing will cause
+  them to [color=palevioletred]grow out of control[/color], turning into an immobile tree (and dropping all their equipment). Cutting down the tree will
+  "restore" the Diona to their regular, mobile state.
 
   ## Nymphs
   <Box>
@@ -51,7 +52,7 @@
   After death, a Diona can voluntarily destroy their own body, releasing their internal organs as three "nymphs",
   with the player taking control of the nymph containing the brain. The brain nymph can speak, but has no hands or inventory.
 
-  After [color=lightgreen]10 minutes[/color], the brain nymph can [color=lightgreen]regrow[/color] into a "full" Diona. This will be a [color=palevioletred]brand-new body[/color] with a new name, appearance, fingerprints, and even DNA,
-  leaving little evidence about who they were before.
+  After 10 minutes, the brain nymph can regrow into a "full" Diona. This will be a brand-new body with a new name, appearance, fingerprints, and even DNA,
+  leaving little definitive evidence about who they were before.
 
 </Document>

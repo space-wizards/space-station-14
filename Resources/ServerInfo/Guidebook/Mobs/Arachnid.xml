@@ -7,16 +7,16 @@
 
   ## General Information
 
-  Arachnids have [color=lightgreen]two extra pockets[/color] for item storage, crafted from their own silk.
+  Arachnids can use webbing to carry small items, effectively giving them [color=lightgreen]two extra pockets[/color] for item storage.
 
-  Their fangs make their unarmed attacks deal [color=hotpink]Piercing[/color] damage.
+  Their strong fangs make their unarmed attacks deal Piercing damage.
 
-  Their animal-like digestive system can process [color=lightgreen]raw meat[/color] and [color=lightgreen]blood[/color] without ill effects.
-  They are [color=orchid]poisoned[/color] by [color=orchid]allicin[/color] (found in garlic and onions) and [color=orchid]theobromine[/color] (found in caffeinated beverages and chocolate).
+  Their animal-like digestive system can [color=lightgreen]digest raw meat and blood[/color] without ill effects.
+  They are [color=palevioletred]poisoned[/color] by allicin (found in garlic and onions) and theobromine (found in caffeinated beverages and chocolate).
 
-  Their blue blood is [color=deepskyblue]copper-based[/color], and can be replenished by metabolizing [color=deepskyblue]copper[/color], rather than iron.
+  Their blue blood is copper-based, and is replenished by metabolizing copper, rather than iron.
 
-  They [color=#ffa500]suffocate 50% faster[/color] and [color=#ffa500]recover from Asphyxiation twice as slow[/color] as most species.
+  They [color=palevioletred]suffocate 50% faster[/color] and [color=palevioletred]recover from Asphyxiation damage 100% slower[/color].
 
   ## Sericulture
 
@@ -27,7 +27,6 @@
     <GuideEntityEmbed Entity="WallWeb" Caption=""/>
   </Box>
 
-  Arachnids can create silk at the cost of getting hungrier. They can craft bundles of silk into
-  clothing, shields, furniture, and even entire walls.
+  Arachnids can create silk on demand, at the cost of making themselves hungrier. They can craft silk into items such as clothing, furniture, and even entire walls.
 
 </Document>

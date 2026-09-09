@@ -9,14 +9,14 @@
 
   ## General Information
 
-  Vox have sharp talons, and their unarmed attacks deal [color=hotpink]Slash[/color] damage.
+  Their sharp talons make their unarmed attacks deal Slash damage.
 
-  The highly-efficient Vox digestive system can process regular foods, and also [color=lightgreen]raw meat, eggshells, banana peels,
-  snack packaging[/color], and even [color=lightgreen]welding fuel[/color].
+  The highly-efficient vox digestive system can digest [color=lightgreen]raw meat, blood, eggshells, banana peels,
+  snack packaging,[/color] and even [color=lightgreen]welding fuel[/color] without ill effects.
 
-  Their [color=cornflowerblue]ammonia-based[/color] blood is replenished when metabolizing iron.
+  Their ammonia-based blood is replenished when metabolizing iron.
 
-  They [color=#1e90ff]slowly recover from Poison damage[/color] on their own.
+  They [color=lightgreen]slowly recover from Poison damage[/color] on their own.
 
   ## Oxygen Allergy
 
@@ -26,7 +26,7 @@
     <GuideEntityEmbed Entity="SignDanger" Caption=""/>
   </Box>
 
-  Vox breathe nitrogen, and [color=#ffa500]oxygen is poisonous to them[/color]. Unfortunately, Nanotrasen space stations
+  Vox breathe nitrogen, and [color=palevioletred]oxygen is poisonous to them[/color]. Unfortunately, Nanotrasen space stations
   are designed for oxygen-breathing species, so Vox must breathe from a nitrogen tank at almost all times to avoid fatal exposure.
 
   Vox always spawn wearing working nitrogen internals. Similarly to most other species,
