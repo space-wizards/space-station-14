@@ -4,6 +4,7 @@ using Content.Shared.GameTicking.Components;
 using Content.Shared.GameTicking.Prototypes;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
+using Content.Shared.Station.Systems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -24,6 +25,7 @@ public abstract partial class GameTicker : EntitySystem
     // Behold! My massive wall of dependencies!!!
     [Dependency] protected IConfigurationManager Cfg = default!;
     [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] private INetManager _net = default!;
     [Dependency] protected ISharedAdminLogManager Admin = default!;
     [Dependency] protected IReplayRecordingManager Replay = default!;
     [Dependency] protected IRobustRandom Random = default!;
@@ -34,7 +36,7 @@ public abstract partial class GameTicker : EntitySystem
     [Dependency] protected SharedMapSystem Map = default!;
     [Dependency] protected SharedMindSystem Mind = default!;
     [Dependency] protected SharedRoleSystem Role = default!;
-    [Dependency] protected Station.Systems.StationSystem Station = default!;
+    [Dependency] protected StationSystem Station = default!;
     [Dependency] protected SharedTransformSystem XForm = default!;
 
     // A second wall of dependencies has hit the GameTicker...

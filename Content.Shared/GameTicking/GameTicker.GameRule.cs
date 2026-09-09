@@ -29,7 +29,7 @@ public abstract partial class GameTicker
     private void OnGameRuleAdded(Entity<GameRuleComponent> rule, ref MapInitEvent args)
     {
         // Cache it first in case the game rule is ended due to a fail state being reached!
-        if (!rule.Comp.Silent)
+        if (!rule.Comp.Silent && _net.IsServer)
             AllRoundGameRules.Add((GetRoundTime(), rule));
 
         var ev = new GameRuleAddedEvent(rule);
@@ -175,6 +175,9 @@ public abstract partial class GameTicker
 
     private void StartRuleCache(EntityUid uid)
     {
+        if (_net.IsClient)
+            return;
+
         // Very likely to be a recently added rule, so we start from the top!
         for (var i = AllRoundGameRules.Count - 1; i >= 0; i--)
         {
@@ -195,6 +198,9 @@ public abstract partial class GameTicker
 
     private void EndRuleCache(EntityUid uid)
     {
+        if (_net.IsClient)
+            return;
+
         // Very likely to be a recently added rule, so we start from the top!
         for (var i = AllRoundGameRules.Count - 1; i >= 0; i--)
         {
@@ -203,7 +209,7 @@ public abstract partial class GameTicker
                 continue;
 
             if (!rule.EndRule())
-                Log.Error($"Rule {uid} tried to be ended, but was already ended!");
+                Log.Error($"Rule {ToPrettyString(uid)} tried to be ended, but was already ended!");
 
             AllRoundGameRules[i] = rule;
             return;
