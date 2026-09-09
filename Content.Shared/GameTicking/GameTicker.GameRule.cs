@@ -49,6 +49,7 @@ public abstract partial class GameTicker
         var ev = new GameRuleStartedEvent((rule, ruleComp), MetaData(rule).EntityPrototype?.ID);
         RaiseLocalEvent(rule, ref ev, true);
 
+        // If the game rule isn't cached, then it shouldn't be running past start!
         if (ruleComp.Silent)
             EndGameRule((rule, ruleComp));
     }
