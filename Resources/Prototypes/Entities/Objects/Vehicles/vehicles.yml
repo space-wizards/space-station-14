@@ -39,17 +39,6 @@
     - FootstepSound
 
 - type: entity
-  id: StrapVisualOverlay
-  categories: [ HideSpawnMenu ]
-  save: false
-  components:
-  - type: Tag
-    tags:
-    - HideContextMenu
-  - type: Sprite
-    noRot: true
-
-- type: entity
   id: VehicleWheelchair
   parent: [BaseVehicleStrap, BaseFoldable, BaseItem]
   name: wheelchair
