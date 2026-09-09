@@ -107,9 +107,13 @@ public record struct GameRule(TimeSpan StartTime, EntityUid Uid, GameRuleLifeSta
     /// <summary>
     /// Marks that this GameRule has ended.
     /// </summary>
-    public void EndRule()
+    public bool EndRule()
     {
+        if (LifeStage == GameRuleLifeStage.Ended)
+            return false;
+
         LifeStage = GameRuleLifeStage.Ended;
+        return true;
     }
 
     public int CompareTo(GameRule other)

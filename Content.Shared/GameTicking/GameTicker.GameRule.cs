@@ -60,6 +60,7 @@ public abstract partial class GameTicker
     private void OnGameRuleEnded(Entity<GameRuleComponent> rule, ref ComponentShutdown args)
     {
         RemComp<ActiveGameRuleComponent>(rule);
+        EndRuleCache(rule);
         var ev = new GameRuleEndedEvent(rule);
         RaiseLocalEvent(rule, ref ev, true);
     }
@@ -186,6 +187,25 @@ public abstract partial class GameTicker
 
         Log.Error($"Rule {ToPrettyString(uid)} was started but had not been added yet somehow!");
         AllRoundGameRules.Add((GetRoundTime(), uid, GameRuleLifeStage.Started));
+    }
+
+    private void EndRuleCache(EntityUid uid)
+    {
+        // Very likely to be a recently added rule, so we start from the top!
+        for (var i = AllRoundGameRules.Count - 1; i >= 0; i--)
+        {
+            var rule = AllRoundGameRules[i];
+            if (rule.Uid != uid)
+                continue;
+
+            if (!rule.EndRule())
+                Log.Error($"Rule {uid} tried to be ended, but was already ended!");
+
+            AllRoundGameRules[i] = rule;
+            return;
+        }
+
+        Log.Error($"Rule {ToPrettyString(uid)} was ended but had not been added yet somehow!");
     }
 
     /// <summary>
