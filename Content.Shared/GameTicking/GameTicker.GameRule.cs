@@ -44,25 +44,25 @@ public abstract partial class GameTicker
             return;
 
         var ruleComp = RuleQuery.Comp(rule);
-        if (ruleComp.Silent)
-            EndGameRule((rule, ruleComp));
-        else
-            StartRuleCache(rule);
-
         Log.Info($"Started game rule {ToPrettyString(rule)}");
         Admin.Add(LogType.EventStarted, $"Started game rule {ToPrettyString(rule)}");
 
         var ev = new GameRuleStartedEvent((rule, ruleComp), proto.ID);
         RaiseLocalEvent(rule, ref ev, true);
+
+        if (ruleComp.Silent)
+            EndGameRule((rule, ruleComp));
+        else
+            StartRuleCache(rule);
     }
 
     [SubscribeLocalEvent]
     private void OnGameRuleEnded(Entity<GameRuleComponent> rule, ref ComponentShutdown args)
     {
         RemComp<ActiveGameRuleComponent>(rule);
-        EndRuleCache(rule);
         var ev = new GameRuleEndedEvent(rule);
         RaiseLocalEvent(rule, ref ev, true);
+        EndRuleCache(rule);
     }
 
     /// <summary>
