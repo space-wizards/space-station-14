@@ -13,14 +13,6 @@ public sealed partial class SuddenNukeArmRule : StationEventSystem<SuddenNukeArm
     [Dependency] private NukeSystem _nukeSystem = default!;
     [Dependency] private RoundEndSystem _roundEndSystem = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<NukeExplodedEvent>(OnNukeExploded);
-        SubscribeLocalEvent<NukeDisarmSuccessEvent>(OnNukeDisarm);
-    }
-
     private bool IsNukePicked(out HashSet<EntityUid> pickedNukes)
     {
         pickedNukes = [];
@@ -92,6 +84,7 @@ public sealed partial class SuddenNukeArmRule : StationEventSystem<SuddenNukeArm
     }
 
 
+    [SubscribeLocalEvent]
     private void OnNukeExploded(NukeExplodedEvent ev)
     {
         if (!IsNukePicked(out var pickedNukes) || !pickedNukes.Contains(ev.ExplodedNuke))
@@ -112,6 +105,7 @@ public sealed partial class SuddenNukeArmRule : StationEventSystem<SuddenNukeArm
         _roundEndSystem.EndRound();
     }
 
+    [SubscribeLocalEvent]
     private void OnNukeDisarm(NukeDisarmSuccessEvent ev)
     {
         var query = EntityQueryEnumerator<SuddenNukeArmRuleComponent>();
