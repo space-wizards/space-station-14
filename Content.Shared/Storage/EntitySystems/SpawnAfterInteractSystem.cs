@@ -29,13 +29,10 @@ public sealed partial class SpawnAfterInteractSystem : EntitySystem
 
         var gridUid = _transform.GetGrid(args.ClickLocation);
 
-        if (!TryComp<MapGridComponent>(gridUid, out var grid))
-            return;
-
-        if (!_maps.TryGetTileRef(gridUid.Value, grid, args.ClickLocation, out var tileRef))
-            return;
-
-        if (tileRef.Tile.IsEmpty || _turfSystem.IsTileBlocked(tileRef, CollisionGroup.MobMask))
+        if (!TryComp<MapGridComponent>(gridUid, out var grid) ||
+            !_maps.TryGetTileRef(gridUid.Value, grid, args.ClickLocation, out var tileRef) ||
+            tileRef.Tile.IsEmpty ||
+            _turfSystem.IsTileBlocked(tileRef, CollisionGroup.MobMask))
             return;
 
         var doAfterArgs = new DoAfterArgs(EntityManager,
@@ -55,7 +52,8 @@ public sealed partial class SpawnAfterInteractSystem : EntitySystem
     [SubscribeLocalEvent]
     private void AfterDoafter(Entity<SpawnAfterInteractComponent> ent, ref SpawnAfterInteractEvent args)
     {
-        if (TryComp<StackComponent>(ent, out var stackComp)
+        if (args.Cancelled ||
+            TryComp<StackComponent>(ent, out var stackComp)
             && ent.Comp.RemoveOnInteract && !_stackSystem.TryUse((ent, stackComp), 1))
         {
             return;
