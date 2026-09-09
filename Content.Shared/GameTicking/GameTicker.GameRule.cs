@@ -6,7 +6,6 @@ using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.GameTicking;
 
@@ -29,13 +28,12 @@ public abstract partial class GameTicker
     [SubscribeLocalEvent]
     private void OnGameRuleAdded(Entity<GameRuleComponent> rule, ref MapInitEvent args)
     {
+        // Cache it first in case the game rule is ended due to a fail state being reached!
+        if (!rule.Comp.Silent)
+            AllRoundGameRules.Add((GetRoundTime(), rule));
+
         var ev = new GameRuleAddedEvent(rule);
         RaiseLocalEvent(rule, ref ev, true);
-
-        if (rule.Comp.Silent)
-            return;
-
-        AllRoundGameRules.Add((GetRoundTime(), rule));
     }
 
     [SubscribeLocalEvent]
@@ -45,13 +43,14 @@ public abstract partial class GameTicker
         Log.Info($"Started game rule {ToPrettyString(rule)}");
         Admin.Add(LogType.EventStarted, $"Started game rule {ToPrettyString(rule)}");
 
+        if (!ruleComp.Silent)
+            StartRuleCache(rule);
+
         var ev = new GameRuleStartedEvent((rule, ruleComp), MetaData(rule).EntityPrototype?.ID);
         RaiseLocalEvent(rule, ref ev, true);
 
         if (ruleComp.Silent)
             EndGameRule((rule, ruleComp));
-        else
-            StartRuleCache(rule);
     }
 
     [SubscribeLocalEvent]
@@ -183,7 +182,7 @@ public abstract partial class GameTicker
                 continue;
 
             if (!rule.StartRule(GetRoundTime()))
-                Log.Error($"Rule {uid} tried to be started, but was already started!");
+                Log.Error($"Rule {ToPrettyString(uid)} tried to be started, but was already started!");
 
             AllRoundGameRules[i] = rule;
             return;
