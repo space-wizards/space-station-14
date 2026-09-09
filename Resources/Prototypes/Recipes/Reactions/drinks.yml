@@ -881,17 +881,6 @@
   products:
     Moonshine: 3
 
-# - type: reaction
-#   id: Neurotoxin
-#   reactants:
-#     GargleBlaster:
-#       amount: 1
-#     Morphine:
-#       amount: 1
-#   products:
-#     Neurotoxin: 2
-# Waiting until Morphine added
-
 - type: reaction
   id: NuclearCola
   reactants:
@@ -1571,3 +1560,17 @@
     Fluorine: 2
     Hydrogen: 0.5
     Oxygen: 0.5
+
+- type: reaction
+  id: ChangelingSting
+  reactants:
+    AcidSpit:
+      amount: 1
+    Whiskey:
+      amount: 1
+    SodaWater:
+      amount: 1
+    Ice:
+      amount: 1
+  products:
+    ChangelingSting: 2

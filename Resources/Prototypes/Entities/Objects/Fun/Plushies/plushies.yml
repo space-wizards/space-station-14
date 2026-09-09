@@ -1189,7 +1189,7 @@
     sprite: Objects/Fun/Plushies/sheep.rsi
     state: sheeptoy
   - type: Item
-    sprite: Objects/Fun/Plushies/carp.rsi
+    sprite: Objects/Fun/Plushies/sheep.rsi
     heldPrefix: sheeptoy
     storedRotation: -90
   - type: EmitSoundOnUse
@@ -1229,6 +1229,9 @@
   - type: Sprite
     sprite: Objects/Fun/Plushies/sheep.rsi
     state: spacesheeptoy
+  - type: Item
+    sprite: Objects/Fun/Plushies/sheep.rsi
+    heldPrefix: spacesheeptoy
   - type: FoodSequenceElement
     entries:
       CottonBurger: SheepSpacePlushie

@@ -16,13 +16,15 @@ public sealed partial class PlantTraitLigneousSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedToolSystem _tool = default!;
 
+    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery = default!;
+
     [SubscribeLocalEvent]
     private void OnInteractUsing(Entity<PlantTraitLigneousComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
             return;
 
-        if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder))
+        if (!_holderQuery.TryComp(ent.Owner, out var holder))
             return;
 
         if (!holder.ReadyForHarvest)

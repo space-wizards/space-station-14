@@ -574,3 +574,16 @@
       amount: 1
   products:
     Lye: 2
+
+- type: reaction
+  id: PhosphoricAcid
+  minTemp: 373.15
+  reactants:
+    Phosphorus:
+      amount: 2
+    Oxygen:
+      amount: 5
+    Water:
+      amount: 3
+  products:
+    PhosphoricAcid: 10

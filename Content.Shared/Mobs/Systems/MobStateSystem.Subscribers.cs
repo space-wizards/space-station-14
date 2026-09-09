@@ -2,6 +2,7 @@ using Content.Shared.Actions.Events;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Buckle.Components;
 using Content.Shared.CombatMode.Pacification;
+using Content.Shared.Cuffs;
 using Content.Shared.Damage.ForceSay;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Emoting;
@@ -20,6 +21,7 @@ using Content.Shared.Strip.Components;
 using Content.Shared.Throwing;
 using Content.Shared.Tools.Systems;
 using System.Linq;
+using Content.Shared.Popups;
 
 namespace Content.Shared.Mobs.Systems;
 
@@ -229,13 +231,21 @@ public partial class MobStateSystem
             return;
         }
 
-        if (ent.Comp.Popup is { } popup)
+        if (ent.Comp.FailReason != null)
         {
             var states = string.Join(", ", ent.Comp.States.Order().Select(s => Loc.GetString($"mob-state-{s}")));
-            _popup.PopupEntity(Loc.GetString("mob-state-action-requires-state", ("states", states)), args.User, args.User, popup);
+            args.Reason = Loc.GetString(ent.Comp.FailReason, ("states", states));
+            args.Type = ent.Comp.FailReasonPopupType;
         }
 
         args.Cancelled = true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnIncapCuffCheck(Entity<MobStateComponent> ent, ref CheckIncapacitatedCuffEvent args)
+    {
+        if (IsIncapacitated(ent, ent.Comp))
+            args.Incapacitated = true;
     }
 
     #endregion

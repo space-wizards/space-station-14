@@ -1,4 +1,5 @@
 - type: entity
+  parent: BaseStructureHealth
   id: TeslaCoil
   name: tesla coil
   description: A machine that converts lightning strikes into an electric current.
@@ -79,9 +80,6 @@
   - type: Pullable
   - type: Clickable
   - type: InteractionOutline
-  - type: Damageable
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: ExaminableDamage
     messages: WindowMessages
   - type: Repairable
@@ -113,6 +111,7 @@
     - SingularityTeslaEngine
 
 - type: entity
+  parent: BaseStructureHealth
   id: TeslaGroundingRod
   name: grounding rod
   description: A machine that keeps lightning from striking too far away.
@@ -169,9 +168,6 @@
   - type: ExaminableDamage
     messages: WindowMessages
   - type: Repairable
-  - type: Damageable
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: DamageVisuals
     thresholds: [8, 16, 25]
     damageDivisor: 3.333

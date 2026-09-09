@@ -8,12 +8,14 @@ using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Standing;
 using Content.Shared.Stunnable;
+using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Melee.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Security;
 
-[TestOf(typeof(StunbatonSystem))]
+[TestFixture]
 public sealed class StunBatonTests : InteractionTest
 {
     private static readonly EntProtoId StunBatonProtoId = "Stunbaton";
@@ -36,9 +38,9 @@ public sealed class StunBatonTests : InteractionTest
         var baton = await PlaceInHands(StunBatonProtoId, enableToggleable: true);
         var sBaton = ToServer(baton);
         var batonStaminaDamage = Comp<StaminaDamageOnHitComponent>(baton).Damage;
-        var batonComp = Comp<StunbatonComponent>(baton);
-        var batonIntialCharges = _battery.GetRemainingUses(sBaton, batonComp.EnergyPerUse);
-        var batonMaxCharges = _battery.GetMaxUses(sBaton, batonComp.EnergyPerUse);
+        var chargeUsePerHit = Comp<MeleeBatteryHitsLeftComponent>(baton).HitPowerCost;
+        var batonIntialCharges = _battery.GetRemainingUses(sBaton, chargeUsePerHit);
+        var batonMaxCharges = _battery.GetMaxUses(sBaton, chargeUsePerHit);
 
         using (Assert.EnterMultipleScope())
         {
@@ -71,7 +73,7 @@ public sealed class StunBatonTests : InteractionTest
         {
             Assert.That(_damageable.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero), "Activated stun baton caused damage.");
             Assert.That(staminaComp.StaminaDamage, Is.EqualTo(batonStaminaDamage), "Target mob did not take the correct amount of stamina damage.");
-            Assert.That(_battery.GetRemainingUses(sBaton, batonComp.EnergyPerUse), Is.EqualTo(batonMaxCharges - 1), "Stun baton did not loose a charge when used.");
+            Assert.That(_battery.GetRemainingUses(sBaton, chargeUsePerHit), Is.EqualTo(batonMaxCharges - 1), "Stun baton did not loose a charge when used.");
         }
 
         // Continue attacking, checking that the mob gets stunned when it's supposed to.
@@ -95,7 +97,7 @@ public sealed class StunBatonTests : InteractionTest
             Assert.That(HasComp<StunnedComponent>(), Is.True, "Target mob was not stunned from the expected number of stun baton hits.");
             Assert.That(standingStateComp.Standing, Is.False, "Target mob was not downed from the expected number of stun baton hits.");
             Assert.That(_damageable.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero), "Activated stun baton caused damage.");
-            Assert.That(_battery.GetRemainingUses(sBaton, batonComp.EnergyPerUse), Is.EqualTo(batonMaxCharges - NumberOfHitsToStun), "Stun baton did not loose the correct charge when stunning.");
+            Assert.That(_battery.GetRemainingUses(sBaton, chargeUsePerHit), Is.EqualTo(batonMaxCharges - NumberOfHitsToStun), "Stun baton did not loose the correct charge when stunning.");
         }
     }
 
@@ -109,9 +111,9 @@ public sealed class StunBatonTests : InteractionTest
         // Spawn a stun baton in the player's hands without turning it on.
         var baton = await PlaceInHands(StunBatonProtoId, enableToggleable: false);
         var sBaton = ToServer(baton);
-        var batonComp = Comp<StunbatonComponent>(baton);
-        var batonIntialCharges = _battery.GetRemainingUses(sBaton, batonComp.EnergyPerUse);
-        var batonMaxCharges = _battery.GetMaxUses(sBaton, batonComp.EnergyPerUse);
+        var chargeUsePerHit = Comp<MeleeBatteryHitsLeftComponent>(baton).HitPowerCost;
+        var batonIntialCharges = _battery.GetRemainingUses(sBaton, chargeUsePerHit);
+        var batonMaxCharges = _battery.GetMaxUses(sBaton, chargeUsePerHit);
 
         using (Assert.EnterMultipleScope())
         {
@@ -149,7 +151,7 @@ public sealed class StunBatonTests : InteractionTest
             Assert.That(HasComp<StunnedComponent>(), Is.False, "Target mob was stunned from harmbaton attacks.");
             Assert.That(standingStateComp.Standing, Is.True, "Target mob was downed from harmbaton attacks.");
             Assert.That(_damageable.GetPositiveDamage(mob).GetTotal(), Is.GreaterThan(FixedPoint2.Zero), "Deactivated stun baton did not cause damage.");
-            Assert.That(_battery.GetRemainingUses(sBaton, batonComp.EnergyPerUse), Is.EqualTo(batonMaxCharges), "Stun baton lost charge while deactivated.");
+            Assert.That(_battery.GetRemainingUses(sBaton, chargeUsePerHit), Is.EqualTo(batonMaxCharges), "Stun baton lost charge while deactivated.");
         }
     }
 

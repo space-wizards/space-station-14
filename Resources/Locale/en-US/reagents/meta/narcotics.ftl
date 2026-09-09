@@ -31,6 +31,9 @@ reagent-desc-nocturine = A highly effective sedative and hypnotic, developed by 
 reagent-name-mute-toxin = mute toxin
 reagent-desc-mute-toxin = A thick chemical that coats the vocal cords, making the user unable to speak during metabolization.
 
+reagent-name-tacitic-acid = tacitic acid
+reagent-desc-tacitic-acid = A paralytic agent that targets the larynx, rendering the user incapable of speech. Due to the numbing effect, the target is unaware until they try to speak.
+
 reagent-name-norepinephric-acid = norepinephric acid
 reagent-desc-norepinephric-acid = A smooth chemical that blocks the optical receptors, rendering the user blind during metabolization.
 

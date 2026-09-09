@@ -21,6 +21,11 @@ public sealed partial class PlantHarvestSystem : EntitySystem
     [Dependency] private PlantHolderSystem _plantHolder = default!;
     [Dependency] private PlantTraySystem _plantTray = default!;
 
+    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery = default!;
+    [Dependency] private EntityQuery<PlantHarvestComponent> _harvestQuery = default!;
+    [Dependency] private EntityQuery<PlantComponent> _plantQuery = default!;
+    [Dependency] private EntityQuery<PlantDataComponent> _dataQuery = default!;
+
     [SubscribeLocalEvent]
     private void OnInteractHand(Entity<PlantTrayComponent> ent, ref InteractHandEvent args)
     {
@@ -28,7 +33,7 @@ public sealed partial class PlantHarvestSystem : EntitySystem
             return;
 
         if (!_plantTray.TryGetPlant(ent.AsNullable(), out var plantUid)
-            || !TryComp<PlantHolderComponent>(plantUid, out var holder)
+            || !_holderQuery.TryComp(plantUid, out var holder)
             || !holder.ReadyForHarvest)
             return;
 
@@ -40,8 +45,8 @@ public sealed partial class PlantHarvestSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnPlantGrow(Entity<PlantHolderComponent> ent, ref PlantGrowEvent args)
     {
-        if (!TryComp<PlantHarvestComponent>(ent.Owner, out var harvest)
-            || !TryComp<PlantComponent>(ent.Owner, out var plant))
+        if (!_harvestQuery.TryComp(ent.Owner, out var harvest)
+            || !_plantQuery.TryComp(ent.Owner, out var plant))
             return;
 
         // If the plant is not mature, set the last harvest to the current age.
@@ -96,7 +101,7 @@ public sealed partial class PlantHarvestSystem : EntitySystem
         if (ent.Comp.HarvestRepeat != HarvestType.SelfHarvest)
             return;
 
-        if (TryComp<PlantDataComponent>(ent.Owner, out var plantData) && plantData.HarvestLogImpact != null)
+        if (_dataQuery.TryComp(ent.Owner, out var plantData) && plantData.HarvestLogImpact != null)
             _adminLogger.Add(LogType.Botany, plantData.HarvestLogImpact.Value, $"Auto-harvested {Loc.GetString(plantData.Name):seed} at Pos:{Transform(ent.Owner).Coordinates}.");
 
         DoHarvest(ent.Owner, user);
@@ -108,7 +113,7 @@ public sealed partial class PlantHarvestSystem : EntitySystem
     [PublicAPI]
     public void TryHandleHarvest(EntityUid plant, EntityUid user)
     {
-        if (TryComp<PlantDataComponent>(plant, out var plantData) && plantData.HarvestLogImpact != null)
+        if (_dataQuery.TryComp(plant, out var plantData) && plantData.HarvestLogImpact != null)
             _adminLogger.Add(LogType.Botany, plantData.HarvestLogImpact.Value, $"Auto-harvested {Loc.GetString(plantData.Name):seed} at Pos:{Transform(plant).Coordinates}.");
 
         DoHarvest(plant, user);
@@ -123,9 +128,9 @@ public sealed partial class PlantHarvestSystem : EntitySystem
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        if (!TryComp<PlantComponent>(ent.Owner, out var plant)
-            || !TryComp<PlantDataComponent>(ent.Owner, out var plantData)
-            || !TryComp<PlantHarvestComponent>(ent.Owner, out var harvest))
+        if (!_plantQuery.TryComp(ent.Owner, out var plant)
+            || !_dataQuery.TryComp(ent.Owner, out var plantData)
+            || !_harvestQuery.TryComp(ent.Owner, out var harvest))
             return;
 
         if (!ent.Comp.ReadyForHarvest || plantData.ProductPrototypes.Count == 0 || plant.Yield == 0)
@@ -141,11 +146,8 @@ public sealed partial class PlantHarvestSystem : EntitySystem
             totalYield = Math.Max(1, totalYield);
         }
 
-        var position = Transform(ent.Owner).Coordinates;
-        for (var i = 0; i < totalYield; i++)
-        {
-            _botany.SpawnProduce(ent.Owner, position);
-        }
+        var position = Transform(user).Coordinates;
+        _botany.SpawnProduce(ent.Owner, position, totalYield);
 
         ent.Comp.ReadyForHarvest = false;
         ent.Comp.LastHarvest = ent.Comp.Age;
@@ -170,7 +172,7 @@ public sealed partial class PlantHarvestSystem : EntitySystem
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        if (!TryComp<PlantComponent>(ent.Owner, out var plant))
+        if (!_plantQuery.TryComp(ent.Owner, out var plant))
             return;
 
         if (amount > 0)

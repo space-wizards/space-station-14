@@ -17,14 +17,16 @@ public sealed partial class PlantWeedPestSystem : EntitySystem
     [Dependency] private PlantHolderSystem _plantHolder = default!;
     [Dependency] private PlantTraySystem _plantTray = default!;
 
+    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery = default!;
+
     [SubscribeLocalEvent]
     private void OnCrossPollinate(Entity<PlantWeedPestComponent> ent, ref PlantCrossPollinateEvent args)
     {
         if (!_botany.TryGetPlantComponent<PlantWeedPestComponent>(args.PollenData, args.PollenProtoId, out var pollenData))
             return;
 
-        _mutation.CrossFloat(ent, ref ent.Comp.WeedTolerance, pollenData.WeedTolerance);
-        _mutation.CrossFloat(ent, ref ent.Comp.PestTolerance, pollenData.PestTolerance);
+        _mutation.CrossFloat(ref ent.Comp.WeedTolerance, pollenData.WeedTolerance);
+        _mutation.CrossFloat(ref ent.Comp.PestTolerance, pollenData.PestTolerance);
         Dirty(ent);
     }
 
@@ -32,7 +34,7 @@ public sealed partial class PlantWeedPestSystem : EntitySystem
     private void OnPlantGrow(Entity<PlantWeedPestComponent> ent, ref PlantGrowEvent args)
     {
         var trayUid = GetEntity(args.Tray);
-        if (!TryComp<PlantTrayComponent>(trayUid, out var tray))
+        if (!_trayQuery.TryComp(trayUid, out var tray))
             return;
 
         if (_random.Prob(ent.Comp.PestGrowthChance))

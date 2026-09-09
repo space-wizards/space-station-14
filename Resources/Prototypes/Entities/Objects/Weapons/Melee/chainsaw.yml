@@ -23,7 +23,6 @@
       types:
         Slash: 2
         Blunt: 2
-        Structural: 4
     soundHit:
       path: /Audio/Weapons/chainsaw_rev.ogg
       params:
@@ -32,7 +31,6 @@
     damage:
       types:
         Slash: 4
-        Structural: 4
   - type: Item
     size: Large
     shape:

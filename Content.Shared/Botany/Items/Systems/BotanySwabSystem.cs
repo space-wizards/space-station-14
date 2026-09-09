@@ -17,6 +17,8 @@ public sealed partial class BotanySwabSystem : EntitySystem
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
+    [Dependency] private EntityQuery<PlantComponent> _plantQuery = default!;
+
     /// <summary>
     /// This handles swab examination text
     /// so you can tell if they are used or not.
@@ -39,7 +41,7 @@ public sealed partial class BotanySwabSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<BotanySwabComponent> ent, ref AfterInteractEvent args)
     {
-        if (args.Target == null || !args.CanReach || !HasComp<PlantComponent>(args.Target))
+        if (args.Target == null || !args.CanReach || !_plantQuery.HasComp(args.Target))
             return;
 
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, ent.Comp.SwabDelay, new BotanySwabDoAfterEvent(), ent.Owner, target: args.Target, used: ent.Owner)
@@ -56,7 +58,7 @@ public sealed partial class BotanySwabSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnDoAfter(Entity<BotanySwabComponent> ent, ref BotanySwabDoAfterEvent args)
     {
-        if (args.Cancelled || args.Handled || !HasComp<PlantComponent>(args.Args.Target))
+        if (args.Cancelled || args.Handled || !_plantQuery.HasComp(args.Args.Target))
             return;
 
         var targetPlant = args.Args.Target.Value;

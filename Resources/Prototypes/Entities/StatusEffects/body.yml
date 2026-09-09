@@ -67,6 +67,8 @@
   - type: IgnoreSlowOnDamage
   - type: StatusEffectAlert
     alert: Adrenaline
+  - type: ExaminableStatusEffect
+    messageId: status-effect-examine-adrenaline
 
 - type: entity
   parent: MobStatusEffectBase

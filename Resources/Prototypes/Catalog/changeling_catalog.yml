@@ -78,7 +78,7 @@
   icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: blind_sting }
   applyToMob: true
   cost:
-    ChangelingDNA: 15
+    ChangelingDNA: 10
   categories:
   - ChangelingStoreCombat
   conditions:
@@ -132,6 +132,21 @@
   productAction: ActionChangelingStingHallucinogenic
 
 - type: listing
+  id: ChangelingStingMute
+  name: changeling-catalog-mute-sting-name
+  description: changeling-catalog-mute-sting-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: mute_sting }
+  applyToMob: true
+  cost:
+    ChangelingDNA: 15
+  categories:
+  - ChangelingStoreStealth
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productAction: ActionChangelingStingMute
+
+- type: listing
   id: ChangelingLastResort
   name: changeling-catalog-last-resort-name
   description: changeling-catalog-last-resort-desc
@@ -143,6 +158,10 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+  - !type:BuyerChangelingIdentityCountCondition
+    requireDevour: true
+    count: 1
+    lock: true
   productAction: ActionChangelingLastResort
 
 - type: listing

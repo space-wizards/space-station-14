@@ -5,8 +5,8 @@
   description: Transparent and hardened, yet slightly sticky to the touch.
   components:
   - type: Sprite
-    sprite: Structures/Windows/xeno_resin.rsi
+    sprite: Structures/Windows/exo-resin.rsi
   - type: Icon
-    sprite: Structures/Windows/xeno_resin.rsi
+    sprite: Structures/Windows/exo-resin.rsi
   - type: IconSmooth
     base: xwindow
