@@ -8,7 +8,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Buckle.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 [Access(typeof(SharedBuckleSystem))]
 public sealed partial class StrapComponent : Component
 {

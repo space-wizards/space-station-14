@@ -10,7 +10,7 @@ namespace Content.Shared.Buckle.Components;
 /// <summary>
 /// This component allows an entity to be buckled to an entity with a <see cref="StrapComponent"/>.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), AutoGenerateComponentPause]
 [Access(typeof(SharedBuckleSystem))]
 public sealed partial class BuckleComponent : Component
 {
