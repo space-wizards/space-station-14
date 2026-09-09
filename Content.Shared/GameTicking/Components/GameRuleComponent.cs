@@ -68,11 +68,11 @@ public readonly record struct GameRuleEndedEvent(EntityUid Rule);
 /// <summary>
 /// A simple struct to keep track of the Lifespan of a Gamerule in an organized fashion.
 /// </summary>
-/// <param name="StartTime"></param>
-/// <param name="Uid"></param>
-/// <param name="Lifetime"></param>
+/// <param name="StartTime">Time that this game rule was added, or started</param>
+/// <param name="Uid">EntityUid of the game rule</param>
+/// <param name="LifeStage">Current lifetime of the game rule.</param>
 [Access(typeof(GameTicker))]
-public record struct GameRule(TimeSpan StartTime, EntityUid Uid, GameRuleLifeStage Lifetime = GameRuleLifeStage.Added) : IComparable<GameRuleLifeStage>, IComparable<GameRule>
+public record struct GameRule(TimeSpan StartTime, EntityUid Uid, GameRuleLifeStage LifeStage = GameRuleLifeStage.Added) : IComparable<GameRuleLifeStage>, IComparable<GameRule>
 {
     /// <summary>
     /// The time that this rule has started, or was added if it hasn't started yet!
@@ -87,7 +87,7 @@ public record struct GameRule(TimeSpan StartTime, EntityUid Uid, GameRuleLifeSta
     /// <summary>
     /// The time that this rule has started, or was added if it hasn't started yet!
     /// </summary>
-    public GameRuleLifeStage LifeStage { get; private set; } = Lifetime;
+    public GameRuleLifeStage LifeStage { get; private set; } = LifeStage;
 
     /// <summary>
     /// Marks that this GameRule has been started.
