@@ -41,6 +41,7 @@
 - type: entity
   id: StrapVisualOverlay
   categories: [ HideSpawnMenu ]
+  save: false
   components:
   - type: Tag
     tags:
