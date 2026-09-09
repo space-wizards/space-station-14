@@ -1,5 +1,5 @@
 - type: entity
-  parent: [BaseMob, StripableInventoryBase]
+  parent: BaseMob
   id: BaseBorgChassisNotIonStormable
   name: cyborg
   description: A man-machine hybrid that assists in station activity. They love being asked to state their laws over and over.
@@ -83,8 +83,6 @@
     stunTime: 5
   - type: SiliconLawProvider
     laws: Crewsimov
-  - type: Inventory
-    templateId: borg
   - type: Hands
     showInHands: false
     disableExplosionRecursion: true
@@ -314,8 +312,24 @@
     canCreateVacuum: false
 
 - type: entity
+  abstract: true
+  parent: StripableInventoryBase
+  id: BorgInventory
+  components:
+  - type: Inventory
+    templateId: borg
+
+- type: entity
+  abstract: true
+  parent: InventoryBase
+  id: UnstrippableBorgInventory
+  components:
+  - type: Inventory
+    templateId: xenoborg
+
+- type: entity
   id: BaseBorgChassisNT
-  parent: [BaseBorgChassis, BaseBorgTransponder]
+  parent: [BaseBorgChassis, BaseBorgTransponder, BorgInventory]
   abstract: true
   components:
   - type: RandomMetadata
@@ -339,7 +353,7 @@
 
 - type: entity
   id: BaseBorgChassisSyndicate
-  parent: BaseBorgChassis
+  parent: [BaseBorgChassis, BorgInventory]
   abstract: true
   components:
   - type: NpcFactionMember
@@ -377,7 +391,7 @@
 
 - type: entity
   id: BaseBorgChassisDerelict
-  parent: BaseBorgChassis
+  parent: [BaseBorgChassis, BorgInventory]
   abstract: true
   components:
   - type: NpcFactionMember
@@ -397,7 +411,7 @@
 
 - type: entity
   id: BaseBorgChassisSyndicateDerelict #For assault borg and maybe others in time
-  parent: BaseBorgChassis # We don't want them to see Nukies or have syndi comms, their database is out of date
+  parent: [BaseBorgChassis, BorgInventory] # We don't want them to see Nukies or have syndi comms, their database is out of date
   abstract: true
   components:
   - type: SiliconLawProvider
@@ -436,7 +450,7 @@
     bypassDelay: 15 # We don't want people to easily be able to remove syndieborg brains.
 
 - type: entity
-  parent: BaseBorgChassisNotIonStormable
+  parent: [BaseBorgChassisNotIonStormable, UnstrippableBorgInventory]
   id: BaseXenoborgChassis
   name: xenoborg
   description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh Xenoborg chassis to grow their army.
@@ -525,8 +539,6 @@
     bypassDelay: 15 # We don't want people to easily be able to remove xenoborg brains.
   - type: EmpResistance
     strengthMultiplier: 0
-  - type: Inventory
-    templateId: xenoborg
 
 - type: entity
   abstract: true
