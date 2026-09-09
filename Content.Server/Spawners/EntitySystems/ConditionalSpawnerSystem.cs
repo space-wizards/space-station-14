@@ -61,9 +61,12 @@ public sealed partial class ConditionalSpawnerSystem : EntitySystem
         }
     }
 
-    public void RuleStarted(EntityUid uid, ConditionalSpawnerComponent component, GameRuleStartedEvent obj)
+    public void RuleStarted(EntityUid uid, ConditionalSpawnerComponent component, GameRuleStartedEvent args)
     {
-        if (component.GameRules.Contains(obj.RuleId))
+        if (args.RuleId is not { } id)
+            return;
+
+        if (component.GameRules.Contains(id))
             Spawn(uid, component);
     }
 
