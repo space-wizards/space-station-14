@@ -6,6 +6,7 @@ using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.GameTicking;
 
@@ -40,14 +41,15 @@ public abstract partial class GameTicker
     [SubscribeLocalEvent]
     private void OnGameRuleStarted(Entity<ActiveGameRuleComponent> rule, ref MapInitEvent args)
     {
-        if (MetaData(rule).EntityPrototype is not { } proto)
-            return;
+        var meta = MetaData(rule);
+
+        DebugTools.Assert(LifeStage(rule, meta) >= EntityLifeStage.MapInitialized, $"GameRule {ToPrettyString(rule)} was started before it was fully initialized!");
 
         var ruleComp = RuleQuery.Comp(rule);
         Log.Info($"Started game rule {ToPrettyString(rule)}");
         Admin.Add(LogType.EventStarted, $"Started game rule {ToPrettyString(rule)}");
 
-        var ev = new GameRuleStartedEvent((rule, ruleComp), proto.ID);
+        var ev = new GameRuleStartedEvent((rule, ruleComp), meta.EntityPrototype?.ID);
         RaiseLocalEvent(rule, ref ev, true);
 
         if (ruleComp.Silent)
@@ -59,6 +61,10 @@ public abstract partial class GameTicker
     [SubscribeLocalEvent]
     private void OnGameRuleEnded(Entity<GameRuleComponent> rule, ref ComponentShutdown args)
     {
+        // Game rule was deleted before it started, do nothing.
+        if (LifeStage(rule) < EntityLifeStage.MapInitialized)
+            return;
+
         RemComp<ActiveGameRuleComponent>(rule);
         var ev = new GameRuleEndedEvent(rule);
         RaiseLocalEvent(rule, ref ev, true);

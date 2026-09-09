@@ -56,7 +56,7 @@ public readonly record struct GameRuleAddedEvent(Entity<GameRuleComponent> Rule)
 /// Player-facing logic should begin here.
 /// </summary>
 [ByRefEvent]
-public readonly record struct GameRuleStartedEvent(Entity<GameRuleComponent> Rule, EntProtoId RuleId);
+public readonly record struct GameRuleStartedEvent(Entity<GameRuleComponent> Rule, EntProtoId? RuleId);
 
 /// <summary>
 /// Raised when the rule ends.
