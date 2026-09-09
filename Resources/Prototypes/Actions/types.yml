@@ -618,17 +618,17 @@
     event: !type:IntrinsicStoreActionEvent
 
 - type: entity
-  id: ActionOpenVendingMachineStore
-  name: Store
-  description: Opens the store
+  parent: BaseMentalAction
+  id: ActionOpenVendingMachineInterface
+  name: Toggle UI
+  description: Select free gifts from your inventory!
   components:
   - type: Action
-    useDelay: 1
   - type: Sprite
     layers:
     - texture: Interface/Actions/shop.png
   - type: InstantAction
-    event: !type:OpenStoreActionEvent
+    event: !type:OpenVendingUIActionEvent
 
 - type: entity
   parent: ActionChangeVoiceMask

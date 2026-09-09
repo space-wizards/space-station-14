@@ -78,6 +78,10 @@ public abstract partial class SharedVendingMachineSystem
     /// <param name="vendComponent"></param>
     public bool IsAuthorized(EntityUid uid, EntityUid sender, VendingMachineComponent? vendComponent = null)
     {
+        // The vending machine itself, as a ghost, is always authorized.
+        if (uid == sender)
+            return true;
+
         if (!Resolve(uid, ref vendComponent))
             return false;
 

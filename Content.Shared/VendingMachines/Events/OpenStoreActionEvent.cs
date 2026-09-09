@@ -6,4 +6,4 @@ namespace Content.Shared.VendingMachines.Events;
 /// Event fired by local action to open the store.
 /// Used by the ghost role mainly.
 /// </summary>
-public sealed partial class OpenStoreActionEvent : InstantActionEvent;
+public sealed partial class OpenVendingUIActionEvent : InstantActionEvent;
