@@ -34,8 +34,6 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         TryUpdateVisualState(entity, ejectComponent);
     }
 
-
-
     [SubscribeLocalEvent]
     private void OnVendingHandleState(Entity<VendingMachineComponent> entity, ref ComponentHandleState args)
     {
