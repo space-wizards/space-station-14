@@ -1,0 +1,263 @@
+# changeling horror specie
+# it needs to be a specie so that the changeling can morph into it, since the polymorph system is deprecated / going to get removed
+# its meant to be absurdly strong but on a timer
+
+- type: markingsGroup # there will never be markings here
+  parent: Undergarments
+  id: Horror
+  limits:
+    enum.HumanoidVisualLayers.HeadTop:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Hair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.FacialHair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Chest:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.Snout:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LFoot:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RFoot:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Tail:
+      limit: 0
+      required: false
+    enum.HumanoidVisualLayers.Special:
+      limit: 0
+      required: false
+
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: AppearanceHorror
+  categories: [ HideSpawnMenu ]
+  name: horror appearance
+  components:
+  - type: Inventory
+    templateId: horror
+  - type: InitialBody
+    organs:
+      Torso: OrganHorrorTorso
+      Head: OrganHorrorHead
+      ArmLeft: OrganHorrorArmLeft
+      ArmRight: OrganHorrorArmRight
+      HandRight: OrganHorrorHandRight
+      HandLeft: OrganHorrorHandLeft
+      LegLeft: OrganHorrorLegLeft
+      LegRight: OrganHorrorLegRight
+      FootLeft: OrganHorrorFootLeft
+      FootRight: OrganHorrorFootRight
+      Brain: OrganHorrorBrain
+      Eyes: OrganHorrorEyes
+      Tongue: OrganHorrorTongue
+      Appendix: OrganHorrorAppendix
+      Ears: OrganHorrorEars
+      Lungs: OrganHorrorLungs
+      Heart: OrganHorrorHeart
+      Stomach: OrganHorrorStomach
+      Liver: OrganHorrorLiver
+      Kidneys: OrganHorrorKidneys
+
+- type: entity
+  parent:
+  - AppearanceHorror
+  - BaseSpeciesMobOrganic
+  id: MobHorror
+  name: shambling abomination # no more Urist McHorror
+  description: Its gaping maw open, an ever-expanding, all consuming mass of flesh stands before you.
+  components:
+  # it speaks like a SPOOKY MONSTER!!!!
+  - type: Speech
+    speechVerb: Horror
+  - type: StutteringAccent
+  - type: PassiveDamage
+    allowedStates:
+    - Alive
+    damage:
+      types: # it regenerates very fast
+        Heat: -0.05
+        Blunt: -2
+        Piercing: -2
+        Slash: -2
+  - type: MeleeWeapon
+    soundHit:
+      collection: AlienClaw
+    angle: 30
+    animation: WeaponArcSlash
+    altDisarm: false
+    damage:
+      types:
+        Slash: 16 # a load of damage
+        Piercing: 12
+        Structural: 160 # break down walls absurdly easily
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - StunImmune
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      140: 0.7
+      175: 0.5
+  - type: Damageable
+    damageModifierSet: Horror
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 4.0 # faster than the speed at which they can break down walls
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: Vocal
+    screamAction: null # they dont get a scream action ):<
+  - type: ChangelingHorror # marks them as a changeling horror
+    spawnAnnouncementSound:
+      path: /Audio/Animals/space_dragon_roar.ogg
+  - type: FlashImmunity # please no flashing :(
+
+
+- type: entity
+  parent: OrganBaseOrganic
+  id: OrganHorror
+  abstract: true
+  suffix: horror
+
+- type: entity
+  id: OrganHorrorMetabolizer
+  abstract: true
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Human ] # todo: make them either unable to metabolize anything or give them a custom metabolizer
+
+- type: entity
+  parent: OrganHorror
+  id: OrganHorrorInternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+
+- type: entity
+  parent: OrganHorror
+  id: OrganHorrorExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Horror/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Horror/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Horror
+
+- type: entity
+  parent: [ OrganBaseTorso, OrganHorrorExternal ]
+  id: OrganHorrorTorso
+
+- type: entity
+  parent: [ OrganBaseHead, OrganHorrorExternal ]
+  id: OrganHorrorHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.Snout
+
+- type: entity
+  parent: [ OrganBaseArmLeft, OrganHorrorExternal ]
+  id: OrganHorrorArmLeft
+
+- type: entity
+  parent: [ OrganBaseArmRight, OrganHorrorExternal ]
+  id: OrganHorrorArmRight
+
+- type: entity
+  parent: [ OrganBaseHandLeft, OrganHorrorExternal ]
+  id: OrganHorrorHandLeft
+
+- type: entity
+  parent: [ OrganBaseHandRight, OrganHorrorExternal ]
+  id: OrganHorrorHandRight
+
+- type: entity
+  parent: [ OrganBaseLegLeft, OrganHorrorExternal ]
+  id: OrganHorrorLegLeft
+
+- type: entity
+  parent: [ OrganBaseLegRight, OrganHorrorExternal ]
+  id: OrganHorrorLegRight
+
+- type: entity
+  parent: [ OrganBaseFootLeft, OrganHorrorExternal ]
+  id: OrganHorrorFootLeft
+
+- type: entity
+  parent: [ OrganBaseFootRight, OrganHorrorExternal ]
+  id: OrganHorrorFootRight
+
+- type: entity
+  parent: [ OrganBaseBrain, OrganHorrorInternal ]
+  id: OrganHorrorBrain
+
+- type: entity
+  parent: [ OrganBaseEyes, OrganHorrorInternal, OrganHorrorExternal ]
+  id: OrganHorrorEyes
+  components:
+  - type: Sprite
+    visible: false
+
+- type: entity
+  parent: [ OrganBaseTongue, OrganHorrorInternal ]
+  id: OrganHorrorTongue
+
+- type: entity
+  parent: [ OrganBaseAppendix, OrganHorrorInternal ]
+  id: OrganHorrorAppendix
+
+- type: entity
+  parent: [ OrganBaseEars, OrganHorrorInternal ]
+  id: OrganHorrorEars
+
+- type: entity
+  parent: [ OrganBaseLungs, OrganHorrorInternal, OrganHorrorMetabolizer ]
+  id: OrganHorrorLungs
+
+- type: entity
+  parent: [ OrganBaseHeart, OrganHorrorInternal, OrganHorrorMetabolizer ]
+  id: OrganHorrorHeart
+
+- type: entity
+  parent: [ OrganBaseStomach, OrganHorrorInternal, OrganHorrorMetabolizer ]
+  id: OrganHorrorStomach
+
+- type: entity
+  parent: [ OrganBaseLiver, OrganHorrorInternal, OrganHorrorMetabolizer ]
+  id: OrganHorrorLiver
+
+- type: entity
+  parent: [ OrganBaseKidneys, OrganHorrorInternal, OrganHorrorMetabolizer ]
+  id: OrganHorrorKidneys

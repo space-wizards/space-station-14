@@ -13,31 +13,28 @@
   maxSeverity: 1
 
 - type: alert
-  id: ChemicalsChangeling
-  category: Chemicals
+  id: ChangelingHorrorTime
   icons:
-  - sprite: /Textures/Interface/Alerts/chemicals_counter.rsi
-    state: chemicals
-  alertViewEntity: AlertChemicalsSpriteView
-  name: alerts-changeling-chemicals-name
-  description: alerts-changeling-chemicals-desc
+  - sprite: /Textures/Interface/Alerts/telltale_heart.rsi
+    state: telltale
+  alertViewEntity: AlertChangelingHorrorTimeView
+  name: changeling-horror-alert-time-name
+  description: changeling-horror-alert-time-desc
 
 - type: entity
-  id: AlertChemicalsSpriteView
+  id: AlertChangelingHorrorTimeView
   categories: [ HideSpawnMenu ]
   components:
   - type: GenericCounterAlert
     centerGlyph: false
     hideLeadingZeroes: false
-  - type: SatiationCounterAlert
-    satiationType: Chemicals
   - type: Sprite
-    sprite: /Textures/Interface/Alerts/chemicals_counter.rsi
+    sprite: /Textures/Interface/Alerts/essence_counter.rsi
+    state: essence0
     layers:
     - map: [ "enum.AlertVisualLayers.Base" ]
     - map: [ "1" ]
-      offset: 0.4375, 0.25
+      offset: 0.25, 0
     - map: [ "10" ]
-      offset: 0.3125, 0.25
+      offset: 0.125, 0
     - map: [ "100" ]
-      offset: 0.1875, 0.25
