@@ -74,7 +74,6 @@
   - type: GravityAffected
   - type: Strap
     buckleOffset: "0,-0.05"
-    modifyBuckleDrawDepth: false
   - type: StrapVisuals
     drawDepth: OverMobs
     layers:
@@ -154,7 +153,6 @@
       #      max: 1
   - type: Strap
     buckleOffset: "0.01,0.15"
-    modifyBuckleDrawDepth: false
   - type: StrapVisuals
     drawDepth: OverMobs
     layers:
