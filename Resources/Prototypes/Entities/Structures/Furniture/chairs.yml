@@ -105,6 +105,11 @@
   components:
   - type: Sprite
     state: chair
+  - type: StrapVisuals
+    drawDepth: OverMobs
+    layers:
+    - sprite: Structures/Furniture/chairs.rsi
+      state: chair-overlay
   - type: Construction
     graph: Seat
     node: chair
@@ -133,6 +138,11 @@
   components:
   - type: Sprite
     state: chair-greyscale
+  - type: StrapVisuals
+    drawDepth: OverMobs
+    layers:
+    - sprite: Structures/Furniture/chairs.rsi
+      state: chair-greyscale-overlay
 
 - type: entity
   parent: [ ChairBase, StructureHealthFurniture ]
@@ -142,6 +152,11 @@
   components:
   - type: Sprite
     state: stool
+  - type: StrapVisuals
+    drawDepth: OverMobs
+    layers:
+    - sprite: Structures/Furniture/chairs.rsi
+      state: stool-overlay
   - type: Construction
     graph: Seat
     node: stool
@@ -157,6 +172,11 @@
   components:
   - type: Sprite
     state: bar
+  - type: StrapVisuals
+    drawDepth: OverMobs
+    layers:
+    - sprite: Structures/Furniture/chairs.rsi
+      state: bar-overlay
   - type: Construction
     graph: Seat
     node: stoolBar
@@ -172,6 +192,11 @@
   components:
   - type: Sprite
     state: brass_chair
+  - type: StrapVisuals
+    drawDepth: OverMobs
+    layers:
+    - sprite: Structures/Furniture/chairs.rsi
+      state: brass_chair-overlay
   - type: Construction
     graph: Seat
     node: chairBrass
@@ -193,6 +218,11 @@
   components:
   - type: Sprite
     state: office-white
+  - type: StrapVisuals
+    drawDepth: OverMobs
+    layers:
+    - sprite: Structures/Furniture/chairs.rsi
+      state: office-white-overlay
   - type: Construction
     graph: Seat
     node: chairOffice
@@ -208,6 +238,11 @@
   components:
   - type: Sprite
     state: office-dark
+  - type: StrapVisuals
+    drawDepth: OverMobs
+    layers:
+    - sprite: Structures/Furniture/chairs.rsi
+      state: office-dark-overlay
   - type: Construction
     graph: Seat
     node: chairOfficeDark
@@ -220,6 +255,11 @@
   components:
   - type: Sprite
     state: comfy
+  - type: StrapVisuals
+    drawDepth: OverMobs
+    layers:
+    - sprite: Structures/Furniture/chairs.rsi
+      state: comfy-overlay
   - type: Construction
     graph: Seat
     node: chairComfy
@@ -236,6 +276,11 @@
   components:
   - type: Sprite
     state: shuttle
+  - type: StrapVisuals
+    drawDepth: OverMobs
+    layers:
+    - sprite: Structures/Furniture/chairs.rsi
+      state: shuttle-overlay
   - type: Construction
     graph: Seat
     node: chairPilotSeat
@@ -251,6 +296,11 @@
   components:
   - type: Sprite
     state: wooden
+  - type: StrapVisuals
+    drawDepth: OverMobs
+    layers:
+    - sprite: Structures/Furniture/chairs.rsi
+      state: wooden-overlay
   - type: Construction
     graph: Seat
     node: chairWood
@@ -279,6 +329,11 @@
   components:
   - type: Sprite
     state: ritual
+  - type: StrapVisuals
+    drawDepth: OverMobs
+    layers:
+    - sprite: Structures/Furniture/chairs.rsi
+      state: ritual-overlay
   - type: Construction
     graph: RitualSeat
     node: chairRitual
@@ -291,6 +346,11 @@
   components:
   - type: Sprite
     state: meat
+  - type: StrapVisuals
+    drawDepth: OverMobs
+    layers:
+    - sprite: Structures/Furniture/chairs.rsi
+      state: meat-overlay
   - type: Construction
     graph: Seat
     node: chairMeat
@@ -315,6 +375,11 @@
   components:
   - type: Sprite
     state: cursed
+  - type: StrapVisuals
+    drawDepth: OverMobs
+    layers:
+    - sprite: Structures/Furniture/chairs.rsi
+      state: cursed-overlay
   - type: Strap
     buckleSound:
       collection: MaleScreams
@@ -372,6 +437,11 @@
     - state: folding_folded
       map: ["foldedLayer"]
       visible: false
+  - type: StrapVisuals
+    drawDepth: OverMobs
+    layers:
+    - sprite: Structures/Furniture/folding_chair.rsi
+      state: folding-overlay
   - type: Item
     size: Huge
   - type: MeleeWeapon
@@ -414,6 +484,11 @@
   components:
   - type: Sprite
     state: steel-bench
+  - type: StrapVisuals
+    drawDepth: OverMobs
+    layers:
+    - sprite: Structures/Furniture/chairs.rsi
+      state: steel-bench-overlay
   - type: Construction
     graph: Seat
     node: chairSteelBench
@@ -430,6 +505,11 @@
   components:
   - type: Sprite
     state: card-stool
+  - type: StrapVisuals
+    drawDepth: OverMobs
+    layers:
+    - sprite: Structures/Furniture/chairs.rsi
+      state: card-stool-overlay
   - type: Construction
     graph: Seat
     node: stoolCard
@@ -456,6 +536,11 @@
   components:
   - type: Sprite
     state: wooden-bench
+  - type: StrapVisuals
+    drawDepth: OverMobs
+    layers:
+    - sprite: Structures/Furniture/chairs.rsi
+      state: wooden-bench-overlay
   - type: Construction
     graph: Seat
     node: chairWoodBench
@@ -481,6 +566,11 @@
   components:
   - type: Sprite
     state: xeno-chair
+  - type: StrapVisuals
+    drawDepth: OverMobs
+    layers:
+    - sprite: Structures/Furniture/chairs.rsi
+      state: xeno-chair-overlay
   - type: Damageable
     damageModifierSet: SteelMod
   - type: Destructible
