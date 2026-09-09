@@ -5,23 +5,23 @@
     <GuideEntityEmbed Entity="MobVulpkanin" Caption=""/>
   </Box>
 
-  ## General information
+  ## General Information
 
-  Their sharp claws make their unarmed attacks deal Slash damage, rather than Blunt.
+  Vulpkanin have sharp claws, and their unarmed attacks deal [color=hotpink]Slash[/color] damage.
 
-  Their animal-like digestive systems can process raw meat and blood without any ill effects,
-  but are poisoned by chemicals such as allicin (found in garlic and onions) and theobromine (found in caffeinated beverages and chocolate).
+  Their animal-like digestive system can process [color=lightgreen]raw meat[/color] and [color=lightgreen]blood[/color] without ill effects,
+  but is [color=orchid]poisoned[/color] by [color=orchid]allicin[/color] (found in garlic and onions) and [color=orchid]theobromine[/color] (found in caffeinated beverages and chocolate).
 
-  Their weirdly shaped muzzle leads to difficulties drinking, making them sometimes spill small amounts of whatever they drink onto the ground.
+  Their shape of their muzzle makes drinking difficult, and they tend to [color=palevioletred]spill whatever they're drinking[/color] on the ground.
 
-  They take [color=#1e90ff]15% less Cold damage[/color], but [color=#ffa500]15% more Heat damage[/color].
-  Their dense fur makes them prefer a somewhat colder temperature range than humans, and also makes them [color=#ffa500]extremely vulnerable to fire[/color].
+  They take [color=#1e90ff]15% less Cold damage[/color], but [color=#ffa500]15% more Heat damage[/color] than most species.
+  Their dense fur makes them prefer cooler temperatures than humans, and also makes them [color=#ffa500]extremely vulnerable to fire[/color].
 
   ## Leaping
 
-  Vulpkanins' digitigrade legs give them the ability to leap an impressive distance. This is useful for leaping over ground-based hazards
-  (such as bottomless chasms), or just as a quick burst of speed to escape a dangerous situation or chase someone down.
+  Vulpkanins' digitigrade legs allow them to [color=lightgreen]leap impressive distances[/color]. This is useful for [color=lightgreen]jumping over ground-based hazards[/color]
+  (such as bottomless chasms), or for a [color=lightgreen]quick burst of speed[/color] to escape a dangerous situation or chase someone down.
 
-  Be careful not to crash into anything mid-leap, or you'll fall to the ground and drop what you're holding!
+  Be careful not to [color=palevioletred]crash into anything mid-leap[/color], or you'll fall to the ground and [color=palevioletred]drop what you're holding[/color]!
 
 </Document>

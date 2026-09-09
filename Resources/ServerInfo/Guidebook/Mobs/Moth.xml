@@ -5,16 +5,16 @@
     <GuideEntityEmbed Entity="AppearanceMoth" Caption=""/>
   </Box>
 
-  ## General information
+  ## General Information
 
-  Their wings give them better acceleration in zero-gravity environments, though like other species, they still can't move without equipment or a nearby surface when floating out in space.
+  Moths' wings give them [color=lightgreen]better acceleration in zero-gravity environments[/color], though they still can't move without equipment or a nearby surface when floating out in space.
 
-  Their specialized digestive systems can only process cotton and cotton-based items (such as cloth, clothing, towels, and MRE wrappers),
-  rather than any food that other species would consider "edible".
+  The moth digestive system [color=palevioletred]can only process cotton and fiber-based items[/color] (such as [color=lightgreen]cloth, clothing, towels, and MRE wrappers[/color]),
+  rather than any food that other species would consider edible.
 
-  Their insect blood isn't iron-based, and therefore isn't replenished when metabolizing iron.
+  Their [color=palegoldenrod]insect blood[/color] is iron-based, and is replenished when metabolizing iron.
 
   They take [color=#1e90ff]30% less Cold damage[/color], but [color=#ffa500]20% more Heat damage[/color].
-  Their fluff makes them prefer a somewhat colder temperature range than humans, and also makes them [color=#ffa500]extremely vulnerable to fire[/color].
+  Their fluff makes them prefer a cooler temperature range than humans, and also makes them [color=#ffa500]extremely vulnerable to fire[/color].
 
 </Document>

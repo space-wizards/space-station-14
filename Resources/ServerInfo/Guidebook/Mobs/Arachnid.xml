@@ -5,18 +5,18 @@
     <GuideEntityEmbed Entity="MobArachnid" Caption=""/>
   </Box>
 
-  ## General information
+  ## General Information
 
-  Their webbing provides them with two additional pockets for item storage.
+  Arachnids have [color=lightgreen]two extra pockets[/color] for item storage, crafted from their own silk.
 
-  Their strong fangs make their unarmed attacks deal Piercing damage, rather than Blunt.
+  Their fangs make their unarmed attacks deal [color=hotpink]Piercing[/color] damage.
 
-  Their animal-like digestive systems can process raw meat and blood without any ill effects,
-  but are poisoned by chemicals such as allicin (found in garlic and onions) and theobromine (found in caffeinated beverages and chocolate).
+  Their animal-like digestive system can process [color=lightgreen]raw meat[/color] and [color=lightgreen]blood[/color] without ill effects.
+  They are [color=orchid]poisoned[/color] by [color=orchid]allicin[/color] (found in garlic and onions) and [color=orchid]theobromine[/color] (found in caffeinated beverages and chocolate).
 
-  Their blue blood is copper-based, and is therefore replenished by metabolizing copper, rather than iron.
+  Their blue blood is [color=deepskyblue]copper-based[/color], and can be replenished by metabolizing [color=deepskyblue]copper[/color], rather than iron.
 
-  They [color=#ffa500]suffocate 50% faster[/color].
+  They [color=#ffa500]suffocate 50% faster[/color] and [color=#ffa500]recover from Asphyxiation twice as slow[/color] as most species.
 
   ## Sericulture
 
@@ -27,7 +27,7 @@
     <GuideEntityEmbed Entity="WallWeb" Caption=""/>
   </Box>
 
-  Arachnids can create websilk at the cost of getting more hungry. They (and only they) can craft bundles of websilk into
-  various items, such as clothing, shields, furniture, and even entire walls.
+  Arachnids can create silk at the cost of getting hungrier. They can craft bundles of silk into
+  clothing, shields, furniture, and even entire walls.
 
 </Document>

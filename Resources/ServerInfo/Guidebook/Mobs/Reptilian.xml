@@ -5,15 +5,15 @@
     <GuideEntityEmbed Entity="AppearanceReptilian" Caption=""/>
   </Box>
 
-  ## General information
+  ## General Information
 
-  They can use their tail to drag objects around, keeping both their hands free.
+  Reptilians can [color=lightgreen]use their tail to drag objects around, keeping both their hands free[/color].
 
-  Their sharp claws make their unarmed attacks deal Slash damage, rather than Blunt.
+  They have sharp claws, and their unarmed attacks deal [color=hotpink]Slash[/color] damage.
 
-  Their specialized digestive systems can only process fruits and meat, but they can also digest raw meat and blood without any ill effects.
-  They are also poisoned by chemicals such as allicin (found in garlic and onions) and theobromine (found in caffeinated beverages and chocolate).
+  The reptilian digestive system [color=palevioletred]can only process fruits and meat[/color], but they can also [color=lightgreen]digest raw meat[/color] and [color=lightgreen]blood[/color] without ill effects.
+  They are also [color=orchid]poisoned[/color] by [color=orchid]allicin[/color] (found in garlic and onions) and [color=orchid]theobromine[/color] (found in caffeinated beverages and chocolate).
 
-  They take [color=#ffa500]30% more Cold damage.[/color] They prefer a somewhat warmer temperature range than humans.
+  They take [color=#ffa500]30% more Cold damage.[/color] They prefer a warmer temperature range than humans.
 
 </Document>

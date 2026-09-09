@@ -5,10 +5,12 @@
     <GuideEntityEmbed Entity="MobDwarf" Caption=""/>
   </Box>
 
-  ## General information
+  ## General Information
 
-  They're physically smaller than most other species, so they're slowed more when dragging objects and are easier to drag themselves.
+  Dwarves are physically smaller than most other species, so they're [color=palevioletred]slowed more when dragging objects[/color] and are [color=palevioletred]easier to drag themselves[/color].
 
-  Their hardy digestive systems are more resistant to the effects of alcohol, and they can even heal minor injuries by drinking enough.
+  Their hardy digestive systems are more resistant to the effects of alcohol, and they can even [color=lightgreen]heal minor injuries[/color] by [color=lightgreen]drinking[/color].
+
+  They tend to be fond of food, and can [color=lightgreen]digest five reagents[/color] at once, where other species generally process three.
 
 </Document>
