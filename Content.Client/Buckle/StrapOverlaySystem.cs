@@ -8,33 +8,33 @@ namespace Content.Client.Buckle;
 /// <summary>
 /// Renders extra visual layers over entities buckled to this strap.
 /// </summary>
-public sealed partial class StrapVisualsSystem : EntitySystem
+public sealed partial class StrapOverlaySystem : EntitySystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
 
     private static readonly EntProtoId OverlayPrototype = "StrapVisualOverlay";
 
     [SubscribeLocalEvent]
-    private void OnStrapped(Entity<StrapVisualsComponent> ent, ref StrappedEvent args) => EnsureOverlay(ent);
+    private void OnStrapped(Entity<StrapOverlayComponent> ent, ref StrappedEvent args) => EnsureOverlay(ent);
 
     [SubscribeLocalEvent]
-    private void OnUnstrapped(Entity<StrapVisualsComponent> ent, ref UnstrappedEvent args) => EnsureOverlay(ent);
+    private void OnUnstrapped(Entity<StrapOverlayComponent> ent, ref UnstrappedEvent args) => EnsureOverlay(ent);
 
     [SubscribeLocalEvent]
     private void OnStrapState(Entity<StrapComponent> ent, ref AfterAutoHandleStateEvent args) => EnsureOverlay(ent);
 
     [SubscribeLocalEvent]
-    private void OnStrapVisualsShutdown(Entity<StrapVisualsComponent> ent, ref ComponentShutdown args) => RemoveOverlay(ent);
+    private void OnStrapOverlayShutdown(Entity<StrapOverlayComponent> ent, ref ComponentShutdown args) => RemoveOverlay(ent);
 
     private void EnsureOverlay(EntityUid strap)
     {
-        if (!TryComp<StrapVisualsComponent>(strap, out var visuals))
+        if (!TryComp<StrapOverlayComponent>(strap, out var overlay))
             return;
 
-        EnsureOverlay((strap, visuals));
+        EnsureOverlay((strap, overlay));
     }
 
-    private void EnsureOverlay(Entity<StrapVisualsComponent> ent)
+    private void EnsureOverlay(Entity<StrapOverlayComponent> ent)
     {
         if (!TryComp<StrapComponent>(ent, out var strap) ||
             strap.BuckledEntities.Count == 0 ||
@@ -44,12 +44,12 @@ public sealed partial class StrapVisualsSystem : EntitySystem
             return;
         }
 
-        if (ent.Comp.Overlay is { } existing)
+        if (ent.Comp.Proxy is { } existing)
         {
             if (Exists(existing))
                 return;
 
-            ent.Comp.Overlay = null;
+            ent.Comp.Proxy = null;
         }
 
         var proxy = SpawnAttachedTo(OverlayPrototype, new EntityCoordinates(ent, 0f, 0f));
@@ -62,15 +62,15 @@ public sealed partial class StrapVisualsSystem : EntitySystem
             _sprite.AddLayer((proxy, proxySprite), data, null);
         }
 
-        ent.Comp.Overlay = proxy;
+        ent.Comp.Proxy = proxy;
     }
 
-    private void RemoveOverlay(Entity<StrapVisualsComponent> ent)
+    private void RemoveOverlay(Entity<StrapOverlayComponent> ent)
     {
-        if (ent.Comp.Overlay is not { } proxy)
+        if (ent.Comp.Proxy is not { } proxy)
             return;
 
-        ent.Comp.Overlay = null;
+        ent.Comp.Proxy = null;
         TryQueueDel(proxy);
     }
 }

@@ -7,7 +7,7 @@ namespace Content.Client.Buckle;
 /// Defines extra visual layers shown while this strap is occupied.
 /// </summary>
 [RegisterComponent]
-public sealed partial class StrapVisualsComponent : Component
+public sealed partial class StrapOverlayComponent : Component
 {
     /// <summary>
     /// Layers shown while the strap is occupied.
@@ -24,5 +24,5 @@ public sealed partial class StrapVisualsComponent : Component
     /// <summary>
     /// Entity used to render the overlay.
     /// </summary>
-    public EntityUid? Overlay;
+    public EntityUid? Proxy;
 }
