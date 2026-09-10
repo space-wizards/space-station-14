@@ -4,6 +4,7 @@
   components:
   - type: Sprite
     noRot: true
+  - type: Appearance
   - type: InputMover
   - type: Clickable
   - type: InteractionOutline
