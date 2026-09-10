@@ -10,6 +10,7 @@ namespace Content.Client.Buckle;
 /// </summary>
 public sealed partial class StrapOverlaySystem : EntitySystem
 {
+    [Dependency] private AppearanceSystem _appearance = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
     private static readonly EntProtoId OverlayPrototype = "StrapOverlayVisual";
@@ -17,34 +18,23 @@ public sealed partial class StrapOverlaySystem : EntitySystem
     private readonly Dictionary<EntityUid, EntityUid> _overlays = new();
 
     [SubscribeLocalEvent]
-    private void OnStrapped(Entity<StrapOverlayComponent> ent, ref StrappedEvent args) => EnsureOverlay(ent);
-
-    [SubscribeLocalEvent]
-    private void OnUnstrapped(Entity<StrapOverlayComponent> ent, ref UnstrappedEvent args) => EnsureOverlay(ent);
-
-    [SubscribeLocalEvent]
-    private void OnStrapState(Entity<StrapComponent> ent, ref AfterAutoHandleStateEvent args) => EnsureOverlay(ent);
-
-    [SubscribeLocalEvent]
-    private void OnStrapOverlayShutdown(Entity<StrapOverlayComponent> ent, ref ComponentShutdown args) => RemoveOverlay(ent);
-
-    private void EnsureOverlay(EntityUid strap)
+    private void OnAppearanceChange(Entity<StrapOverlayComponent> ent, ref AppearanceChangeEvent args)
     {
-        if (!TryComp<StrapOverlayComponent>(strap, out var overlay))
-            return;
-
-        EnsureOverlay((strap, overlay));
-    }
-
-    private void EnsureOverlay(Entity<StrapOverlayComponent> ent)
-    {
-        var strap = Comp<StrapComponent>(ent);
-        if (strap.BuckledEntities.Count == 0)
+        if (!_appearance.TryGetData<bool>(ent, StrapVisuals.State, out var occupied, args.Component) ||
+            !occupied)
         {
             RemoveOverlay(ent);
             return;
         }
 
+        EnsureOverlay(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnStrapOverlayShutdown(Entity<StrapOverlayComponent> ent, ref ComponentShutdown args) => RemoveOverlay(ent);
+
+    private void EnsureOverlay(Entity<StrapOverlayComponent> ent)
+    {
         if (_overlays.TryGetValue(ent, out var existing))
         {
             if (Exists(existing))
