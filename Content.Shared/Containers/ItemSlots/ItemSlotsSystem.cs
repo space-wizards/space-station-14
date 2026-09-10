@@ -51,7 +51,7 @@ public sealed partial class ItemSlotsSystem : EntitySystem
     }
 
     /// <summary>
-    /// For updating ItemSlotVisuals, uses HasItem to check if something has been inserted then updates.
+    /// For updating ItemSlotVisuals, checks if an item has been inserted then updates.
     /// </summary>
     /// <param name="ent">For accessing ItemSlotsComponent.</param>
     private void UpdateAppearance(Entity<ItemSlotsComponent> ent)
@@ -64,25 +64,19 @@ public sealed partial class ItemSlotsSystem : EntitySystem
             var contains = false;
 
             // For the items that have one ItemSlot and for multiple.
-            // Also checks the ItemSlotsVisuals Whitelist if null/true through ItemMatchesVisual, then assigns a Layer when finished.
+            // Also checks the ItemSlotsVisuals Whitelist if null/valid, then assigns a Layer when finished.
             if (string.IsNullOrEmpty(visual.SlotName))
             {
                 contains = ent.Comp.Slots.Values.Any(slot =>
-                    slot is { HasItem: true, Item: not null } && ItemMatchesVisual(ent, visual));
+                    slot.Item is { } item && (visual.Whitelist == null || _whitelistSystem.IsValid(visual.Whitelist, item)));
             }
-            else if (ent.Comp.Slots.TryGetValue(visual.SlotName, out var slot))
+            else if (ent.Comp.Slots.TryGetValue(visual.SlotName, out var slot) && slot.Item is { } item)
             {
-                if (slot.Item != null)
-                    contains = slot.HasItem && ItemMatchesVisual(ent, visual);
+                contains = visual.Whitelist == null || _whitelistSystem.IsValid(visual.Whitelist, item);
             }
 
             _appearance.SetData(ent, visual.Layer, contains, appearance);
         }
-    }
-
-    private bool ItemMatchesVisual(Entity<ItemSlotsComponent> ent, ItemSlotVisuals visual)
-    {
-        return visual.Whitelist == null || _whitelistSystem.IsValid(visual.Whitelist, ent);
     }
 
     /// <summary>
