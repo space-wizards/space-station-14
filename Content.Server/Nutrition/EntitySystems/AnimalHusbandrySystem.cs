@@ -149,7 +149,7 @@ public sealed partial class AnimalHusbandrySystem : EntitySystem
         if (_failedAttempts.Contains(uid))
             return false;
 
-        if (Resolve(uid, ref component, false) && component.Gestating)
+        if (!Resolve(uid, ref component, false) || component.Gestating)
             return false;
 
         if (HasComp<InfantComponent>(uid))
@@ -160,12 +160,9 @@ public sealed partial class AnimalHusbandrySystem : EntitySystem
 
         // If no satiations, no limit to reproduction
         if (!TryComp<SatiationComponent>(uid, out var satiation))
-        {
             return true;
-        }
 
-        // Check minimum hunger requirement
-        if (component!.MinHungerThreshold is { } minHunger)
+        if (component.MinHungerThreshold is { } minHunger)
         {
             if (!satiation.Has(SatiationSystem.Hunger) ||
                 _satiation.IsValueInRange((uid, satiation), SatiationSystem.Hunger, below: minHunger))

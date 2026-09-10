@@ -23,12 +23,12 @@
   name: pain numbness
 
 - type: entity
-  parent: [MobStatusEffectBase, TraitStatusEffectBase] # TODO: Here we need to add a check to see if the entity has eyes that have a blinking component, or entity has blinking component.
+  parent: [MobStatusEffectBase, TraitStatusEffectBase, ChangelingStatusEffectBase] # TODO: Here we need to add a check to see if the entity has eyes that have a blinking component, or entity has blinking component.
   id: TraitStatusEffectBlinkDyspraxia
   name: blink dyspraxia
   components:
   - type: BlinkDyspraxiaStatusEffect
 
 - type: entity
-  parent: [ MutedStatusEffectBase, TraitStatusEffectBase ]
+  parent: [ MutedStatusEffectBase, TraitStatusEffectBase, ChangelingStatusEffectBase ]
   id: TraitStatusEffectMuted

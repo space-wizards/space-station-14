@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Power.Components;
 using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -54,8 +55,20 @@ public sealed partial class BallisticAmmoSelfRefillerComponent : Component
     public bool AffectedByEmp = false;
 
     /// <summary>
+    /// How much power in watts should this device consume each time it recharges ammo?
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float PowerConsumption;
+
+    /// <summary>
     /// When the next auto refill should occur. This is just implementation state.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
     public TimeSpan NextAutoRefill = TimeSpan.Zero;
+
+    /// <summary>
+    /// Optional sound that plays when this item successfully recharges a piece of ammo.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public SoundSpecifier? RechargeSound;
 }

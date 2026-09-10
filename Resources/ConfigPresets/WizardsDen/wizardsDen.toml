@@ -20,7 +20,7 @@ ipintel_bad_rating = 0.99
 ipintel_alert_admin_warn_rating = 0.95
 
 [infolinks]
-bug_report = "https://github.com/space-wizards/space-station-14/issues/new/choose"
+bug_report = "https://forum.spacestation14.com/c/development/bug-reports/53"
 discord    = "https://discord.spacestation14.io"
 forum      = "https://forum.spacestation14.io"
 github     = "https://github.com/space-wizards/space-station-14"
