@@ -93,6 +93,16 @@ public abstract partial class SharedStoreSystem
         if (!args.IsInDetailsRange)
             return;
 
+        // If we only wanna show the examine message to valid stores.
+        if (entity.Comp.StoreExaminable)
+        {
+            if (!HasComp<StoreComponent>(args.Examiner))
+                return;
+
+            if (!_whitelist.CheckBoth(args.Examiner, entity.Comp.Blacklist, entity.Comp.Whitelist))
+                return;
+        }
+
         if (!ProtoMan.TryIndex(entity.Comp.Currency, out var proto))
             return;
 

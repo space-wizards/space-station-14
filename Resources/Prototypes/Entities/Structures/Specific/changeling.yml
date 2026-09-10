@@ -70,6 +70,7 @@
     containers:
       storage: !type:Container
   - type: StoreCurrencyGenerator
+    storeExaminable: true
     currency: ChangelingDNA
   - type: StaticPrice
     price: 75

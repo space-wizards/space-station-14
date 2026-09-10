@@ -70,6 +70,13 @@ public sealed partial class StoreCurrencyGeneratorComponent : Component
     public TimeSpan NextGenerationTime = TimeSpan.Zero;
 
     /// <summary>
+    /// Makes this generator only examinable by valid stored. Otherwise, can be examined by anyone.
+    /// Shows the amount of currency and the type stored.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool StoreExaminable;
+
+    /// <summary>
     /// LocId of the text used for the verb the store sees when looking at this entity.
     /// </summary>
     [DataField]
