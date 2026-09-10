@@ -4,8 +4,8 @@ meta:
   engineVersion: 289.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/10/2026 23:40:08
-  entityCount: 9831
+  time: 09/10/2026 23:43:42
+  entityCount: 9833
 maps: []
 grids:
 - 1668
@@ -45052,6 +45052,13 @@ entities:
     - type: Transform
       parent: 1668
       pos: -3.3831449,-0.61700773
+- proto: Jukebox
+  entities:
+  - uid: 9768
+    components:
+    - type: Transform
+      parent: 1668
+      pos: 29.5,-15.5
 - proto: KillerTomatoSeeds
   entities:
   - uid: 1015
@@ -49130,6 +49137,14 @@ entities:
       parent: 1668
       rot: 3.141592653589793 rad
       pos: -23.5,-17.5
+- proto: PoweredlightPink
+  entities:
+  - uid: 9767
+    components:
+    - type: Transform
+      parent: 1668
+      rot: -1.5707963267948966 rad
+      pos: 30.5,-21.5
 - proto: PoweredlightRed
   entities:
   - uid: 802
