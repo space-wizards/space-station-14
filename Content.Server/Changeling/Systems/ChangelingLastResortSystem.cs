@@ -1,5 +1,4 @@
 using Content.Server.Antag;
-using Content.Shared.Administration.Systems;
 using Content.Shared.Antag;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Changeling.Systems;
@@ -13,7 +12,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Changeling.Systems;
 
-public sealed partial class ChangelingLastResortSystem : SharedChangelingLastResortSystem
+public sealed partial class ServerChangelingLastResortSystem : ChangelingLastResortSystem
 {
     private static readonly ProtoId<AntagSpecifierPrototype> ChangelingAntag = "Changeling";
 
@@ -67,7 +66,7 @@ public sealed partial class ChangelingLastResortSystem : SharedChangelingLastRes
         if (HasComp<ChangelingIdentityComponent>(target))
         {
             if (showPopups)
-                _popup.PopupEntity(Loc.GetString("changeling-takeover-is-changeling"), user);
+                _popup.PopupEntity(Loc.GetString("changeling-takeover-is-changeling"), user, user);
             return false;
         }
 
@@ -75,7 +74,7 @@ public sealed partial class ChangelingLastResortSystem : SharedChangelingLastRes
             return true;
 
         if (showPopups)
-            _popup.PopupEntity(Loc.GetString("changeling-takeover-not-dead"), user);
+            _popup.PopupEntity(Loc.GetString("changeling-takeover-not-dead"), user, user);
         return false;
     }
 
