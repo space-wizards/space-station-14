@@ -812,17 +812,13 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
                 // Check static objects that can overlap.
                 if (IsStatic(hitEntity))
                 {
-                    var hitCoords = TransformSystem.GetMapCoordinates(hitEntity);
-
-                    foreach (var r in res)
+                    for (var j = 1; j < res.Count; j++)
                     {
-                        // If overlapping with an other static, pick the one drawn on top.
-                        if (IsStatic(r.HitEntity) &&
-                            Interaction.CoversPoint(r.HitEntity, hitCoords) &&
-                            IsDrawnAbove(r.HitEntity, hitEntity))
-                        {
-                            hitEntity = r.HitEntity;
-                        }
+                        if (res[j].Distance - res[0].Distance > 0.1f)
+                            break;
+
+                        if (IsStatic(res[j].HitEntity) && IsDrawnAbove(res[j].HitEntity, hitEntity))
+                            hitEntity = res[j].HitEntity;
                     }
                 }
 

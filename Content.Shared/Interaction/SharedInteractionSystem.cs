@@ -58,6 +58,7 @@ namespace Content.Shared.Interaction
         [Dependency] private ISharedChatManager _chat = default!;
         [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private EntityLookupSystem _lookup = default!;
+        [Dependency] private FixtureSystem _fixtures = default!;
         [Dependency] private SharedHandsSystem _hands = default!;
         [Dependency] private InventorySystem _inventory = default!;
         [Dependency] private PullingSystem _pullSystem = default!;
@@ -935,11 +936,8 @@ namespace Content.Shared.Interaction
                 if (!fixture.Hard)
                     continue;
 
-                for (var i = 0; i < fixture.Shape.ChildCount; i++)
-                {
-                    if (fixture.Shape.ComputeAABB(transform, i).Contains(coords.Position))
-                        return true;
-                }
+                if (_fixtures.TestPoint(fixture.Shape, transform, coords.Position))
+                    return true;
             }
 
             return false;
