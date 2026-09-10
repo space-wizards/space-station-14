@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Content.Client.Resources;
+using Content.Client.Stylesheets;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -7,6 +9,8 @@ using Robust.Shared.Input;
 using Robust.Shared.Utility;
 using Content.Client.UserInterface.ControlExtensions;
 using Content.Client.UserInterface.Controls;
+using Robust.Client.Graphics;
+using Robust.Client.ResourceManagement;
 
 namespace Content.Client.UserInterface.RichText;
 
@@ -23,14 +27,15 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
 {
     [Dependency] private IEntityManager _entity = default!;
     [Dependency] private IUserInterfaceManager _ui = default!;
+    [Dependency] private IResourceCache _cache = default!;
 
     public string Name => "textlink";
     public static Color DefaultLinkColor => Color.CornflowerBlue;
-
     private const string EntityAttributeName = "entity";
     private const string LinkAttributeName = "link";
     private const string ColorOverrideAttributeName = "color"; // DefaultLinkColor override
     private const string UseEntityNameColorAttributeName = "entitynamecolor"; // entity links only: opt into per-entity name coloring
+
 
     private delegate bool TryResolveLink(MarkupNode node, out LinkData data);
     private readonly (string AttributeName, TryResolveLink Resolver)[] _resolvers; // for parsing link to correct resolver
@@ -54,7 +59,6 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
     /// </summary>
     public bool TryCreateControl(MarkupNode node, [NotNullWhen(true)] out Control? control)
     {
-
         control = null;
         LinkData linkData = default;
 
@@ -84,9 +88,15 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
 
         // color= > resolver-supplied color > default
         var linkColor = ResolveColorOverride(node) ?? linkData.Color ?? DefaultLinkColor;
-
         var linkLabel = new TextLinkLabel() { Text = text, LinkString = linkData.LinkString, LinkEntity = linkData.LinkEntity };
         linkLabel.FontColorOverride = linkColor;
+
+        // this is probably very cursed
+        var BoldFont = _cache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 12);
+        if (linkData.LinkEntity is not null)
+        {
+            linkLabel.FontOverride = BoldFont;
+        }
 
         if (linkData.Clickable)
         {
