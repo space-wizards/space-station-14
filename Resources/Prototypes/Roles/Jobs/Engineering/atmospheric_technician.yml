@@ -23,6 +23,7 @@
 - type: startingGear
   id: AtmosphericTechnicianGear
   equipment:
+    shoes: ClothingShoesGaloshes
     eyes: ClothingEyesGlassesMeson
     id: AtmosPDA
     belt: ClothingBeltUtilityEngineering
