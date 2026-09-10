@@ -1,6 +1,6 @@
 using Content.Shared.Buckle.Components;
+using Content.Shared.Coordinates;
 using Robust.Client.GameObjects;
-using Robust.Shared.Map;
 
 namespace Content.Client.Buckle;
 
@@ -40,7 +40,7 @@ public sealed partial class StrapOverlaySystem : EntitySystem
             _overlays.Remove(ent);
         }
 
-        var proxy = SpawnAttachedTo(ent.Comp.OverlayPrototype, new EntityCoordinates(ent, 0f, 0f));
+        var proxy = SpawnAttachedTo(ent.Comp.OverlayPrototype, ent.Owner.ToCoordinates());
         var proxySprite = Comp<SpriteComponent>(proxy);
 
         _sprite.SetDrawDepth((proxy, proxySprite), ent.Comp.OverlayDrawDepth);
