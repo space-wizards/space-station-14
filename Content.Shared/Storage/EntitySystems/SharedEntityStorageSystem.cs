@@ -499,7 +499,7 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
             }
         }
 
-        if (!component.BlocksProjectilesWhenOpen)
+        if (component.ToggleRequireProjectileTargetWhenOpen)
         {
             var requireTargetComp = EnsureComp<RequireProjectileTargetComponent>(uid);
             _requireProjectileTarget.SetActive((uid, requireTargetComp), component.Open);

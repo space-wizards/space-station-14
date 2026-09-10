@@ -45,6 +45,7 @@
         layer:
         - MachineLayer
   - type: EntityStorage
+    toggleRequireProjectileTargetWhenOpen: true
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container
@@ -135,7 +136,6 @@
       map: ["enum.WeldableLayers.BaseWelded"]
   - type: EntityStorage
     isCollidableWhenOpen: true
-    blocksProjectilesWhenOpen: true
     enteringOffset: 0, -0.6
     enteringRange: 0.03
     closeSound:
