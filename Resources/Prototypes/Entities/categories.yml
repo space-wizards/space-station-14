@@ -37,3 +37,8 @@
   id: XenoArtifactEffects
   name: entity-category-name-xeno-artifact-effects
   hideSpawnMenu: true
+
+- type: entityCategory
+  id: XenoArtifactTriggers
+  name: entity-category-name-xeno-artifact-triggers
+  hideSpawnMenu: true

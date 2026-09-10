@@ -1,6 +1,5 @@
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.Access;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Systems;
@@ -19,26 +18,25 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
 {
     [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
+    [Dependency] private DeviceListSystem _deviceList = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
 
-    /// Keys for the device network. See <see cref="DeviceNetworkConstants"/> for further examples.
-    public const string CmdSetArmamemtState = "set_armament_state";
-    public const string CmdSetAccessExemptions = "set_access_exemption";
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<DeployableTurretControllerComponent, BoundUIOpenedEvent>(OnBUIOpened);
-        SubscribeLocalEvent<DeployableTurretControllerComponent, DeviceListUpdateEvent>(OnDeviceListUpdate);
-        SubscribeLocalEvent<DeployableTurretControllerComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
-    }
-
+    [SubscribeLocalEvent]
     private void OnBUIOpened(Entity<DeployableTurretControllerComponent> ent, ref BoundUIOpenedEvent args)
     {
+        if (!TryComp<DeviceNetworkComponent>(ent, out var deviceNetwork))
+            return;
+
+        var payload = new TurretControllerRequestPayload();
+        foreach (var (address, _) in _deviceList.GetDeviceList(ent.Owner))
+        {
+            _deviceNetwork.SendPacket((ent.Owner, deviceNetwork), address, ref payload);
+        }
+
         UpdateUIState(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnDeviceListUpdate(Entity<DeployableTurretControllerComponent> ent, ref DeviceListUpdateEvent args)
     {
         if (!TryComp<DeviceNetworkComponent>(ent, out var deviceNetwork))
@@ -48,10 +46,7 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
         var turretsToAdd = args.Devices.Except(args.OldDevices);
 
         // Request data from newly linked devices
-        var payload = new NetworkPayload
-        {
-            [DeviceNetworkConstants.Command] = DeviceNetworkConstants.CmdUpdatedState,
-        };
+        var payload = new TurretControllerRequestPayload();
 
         foreach (var turretUid in turretsToAdd)
         {
@@ -61,7 +56,7 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
             if (!TryComp<DeviceNetworkComponent>(turretUid, out var turretDeviceNetwork))
                 continue;
 
-            _deviceNetwork.QueuePacket(ent, turretDeviceNetwork.Address, payload, device: deviceNetwork);
+            _deviceNetwork.SendPacket((ent.Owner, deviceNetwork), turretDeviceNetwork.Address, ref payload);
         }
 
         // Remove newly unlinked devices
@@ -81,21 +76,16 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
             UpdateUIState(ent);
     }
 
-    private void OnPacketReceived(Entity<DeployableTurretControllerComponent> ent, ref DeviceNetworkPacketEvent args)
+    [SubscribeLocalEvent]
+    private void OnPacketReceived(Entity<DeployableTurretControllerComponent> ent, ref DeviceNetworkPacketEvent<TurretStatePayload> args)
     {
-        if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command))
-            return;
-
         if (!TryComp<DeviceNetworkComponent>(ent, out var deviceNetwork) || deviceNetwork.ReceiveFrequency != args.Frequency)
             return;
 
         // If an update was received from a turret, connect to it and update the UI
-        if (command == DeviceNetworkConstants.CmdUpdatedState &&
-            args.Data.TryGetValue(command, out DeployableTurretState updatedState))
-        {
-            ent.Comp.LinkedTurrets[args.SenderAddress] = updatedState;
-            UpdateUIState(ent);
-        }
+
+        ent.Comp.LinkedTurrets[args.SenderAddress] = args.Data.State;
+        UpdateUIState(ent);
     }
 
     protected override void ChangeArmamentSetting(Entity<DeployableTurretControllerComponent> ent, int armamentState, EntityUid? user = null)
@@ -106,15 +96,14 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
             return;
 
         // Update linked turrets' armament statuses
-        var payload = new NetworkPayload
+        var payload = new TurretControllerSetArmamentPayload
         {
-            [DeviceNetworkConstants.Command] = CmdSetArmamemtState,
-            [CmdSetArmamemtState] = armamentState,
+            ArmamentState = armamentState,
         };
 
         _adminLogger.Add(LogType.ItemConfigure, LogImpact.Medium, $"{ToPrettyString(user)} set {ToPrettyString(ent)} to {armamentState}");
 
-        _deviceNetwork.QueuePacket(ent, null, payload, device: device);
+        _deviceNetwork.SendPacket((ent.Owner, device), null, ref payload);
     }
 
     protected override void ChangeExemptAccessLevels(
@@ -131,10 +120,9 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
             return;
 
         // Update linked turrets' target selection exemptions
-        var payload = new NetworkPayload
+        var payload = new TurretControllerSetAccessPayload
         {
-            [DeviceNetworkConstants.Command] = CmdSetAccessExemptions,
-            [CmdSetAccessExemptions] = turretTargetingSettings.ExemptAccessLevels,
+            AccessExemptions = turretTargetingSettings.ExemptAccessLevels,
         };
 
         foreach (var exemption in exemptions)
@@ -142,7 +130,7 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
             _adminLogger.Add(LogType.ItemConfigure, LogImpact.Medium, $"{ToPrettyString(user)} set {ToPrettyString(ent)} authorization of {exemption} to {enabled}");
         }
 
-        _deviceNetwork.QueuePacket(ent, null, payload, device: device);
+        _deviceNetwork.SendPacket((ent.Owner, device), null, ref payload);
     }
 
     private void UpdateUIState(Entity<DeployableTurretControllerComponent> ent)

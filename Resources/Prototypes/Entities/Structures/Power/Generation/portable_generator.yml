@@ -6,7 +6,7 @@
 - type: entity
   abstract: true
   id: PortableGeneratorBase
-  parent: [ BaseMachine, SmallConstructibleMachine, StructureWheeled, BaseSmallConstructibleMachineDestructible]
+  parent: [ BaseMachine, SmallConstructibleMachine, StructureWheeled, BaseConstructibleMachineDestructible]
   components:
   # Basic properties
   - type: Transform
@@ -57,9 +57,9 @@
 
   - type: Destructible
     thresholds:
-    - trigger:
+    - trigger: &DamageMachineNormal
         !type:DamageTrigger
-        damage: 100
+        damage: 175
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -322,9 +322,7 @@
     tileBreakScale: 0
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
+    - trigger: *DamageMachineNormal
       behaviors:
       - !type:SpillBehavior
         solution: tank

@@ -54,15 +54,14 @@ public class MapLoadBenchmark
         "CentComm",
         "Dev",
         "Empty",
-        "Fland",
         "Marathon",
         "MeteorArena",
-        "Oasis",
         "Packed",
         "Saltern",
         "Sushi",
         "TestTeg",
-        "Tram2"
+        "Tram2",
+        "Snowball"
     };
 
     [ParamsSource(nameof(MapsSource))]

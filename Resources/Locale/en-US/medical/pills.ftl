@@ -9,3 +9,4 @@ pill-label-dermaline-20u = dermaline 20u
 pill-label-tricordrazine-20u = tricordrazine 20u
 pill-label-bicaridine-20u = bicaridine 20u
 pill-label-charcoal-20u = charcoal 20u
+pill-label-ambuzol-15u = ambuzol 15u

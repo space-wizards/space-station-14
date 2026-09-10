@@ -1,0 +1,111 @@
+- type: entity
+  parent: BaseBullet
+  id: BulletAcid
+  categories: [ HideSpawnMenu ]
+  name: acid spit
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Caustic: 5
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/xeno_toxic.rsi
+    layers:
+    - state: xeno_toxic
+  - type: Ammo
+    muzzleFlash: null
+
+- type: entity
+  parent: [ SolutionVapor, SolutionSmall ]
+  id: BulletWaterShot
+  categories: [ HideSpawnMenu ]
+  name: water
+  components:
+  - type: Clickable
+  - type: Physics
+    bodyType: Dynamic
+  - type: TileFrictionModifier
+    modifier: 0
+  - type: TimedDespawn
+    lifetime: 10
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 0 #it's just water, bro
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/water_shot.rsi
+    layers:
+    - state: icon
+      map: [ "enum.VaporVisualLayers.Base" ]
+  - type: Ammo
+    muzzleFlash: null
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.10,-0.30,0.10,0.15"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+  - type: Vapor
+    active: true
+    transferAmountPercentage: 1
+  - type: Appearance
+  - type: VaporVisuals
+
+- type: entity
+  parent: BaseBullet
+  id: BulletHivebot
+  categories: [ HideSpawnMenu ]
+  name: hivebot bullet
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 10
+
+- type: entity
+  id: GrapplingHook
+  categories: [ HideSpawnMenu ]
+  name: grappling hook
+  components:
+  - type: EmbeddableProjectile
+    deleteOnRemove: true
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    noRot: false
+    sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
+    layers:
+    - state: hook
+  - type: Physics
+    bodyType: Dynamic
+  - type: TileFrictionModifier
+    modifier: 0
+  - type: Projectile
+    deleteOnCollide: false
+    damage:
+      types:
+        Blunt: 0
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.1,-0.1,0.1,0.1"
+        hard: false
+        mask:
+        - Impassable
+        - HighImpassable
+  - type: GrapplingProjectile
+
+- type: entity
+  parent: GrapplingHook
+  id: StickyHandPalm
+  categories: [ HideSpawnMenu ]
+  name: sticky hand palm
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/sticky_hand.rsi
+  - type: Ammo
+    muzzleFlash: null

@@ -48,6 +48,9 @@ public sealed partial class BatteryStatusControl : PollingItemStatusControl<Batt
         if (_powerCell.TryGetBatteryFromEntityOrSlot(_parent, out var battery))
             chargePercent = (int)(_battery.GetChargeLevel(battery.Value.AsNullable()) * 100);
 
+        if (battery is not null && !battery.Value.Comp.ShowItemStatus)
+            return default;
+
         // On/off state.
         bool? toggleState = null;
         if (_entityManager.TryGetComponent<ItemToggleComponent>(_parent, out var toggle))

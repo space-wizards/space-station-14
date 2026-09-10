@@ -34,15 +34,6 @@ namespace Content.Shared.Light.Components
         [DataField, AutoNetworkedField]
         public bool On = true;
 
-        [DataField]
-        public bool IgnoreGhostsBoo;
-
-        [DataField]
-        public TimeSpan GhostBlinkingTime = TimeSpan.FromSeconds(10);
-
-        [DataField]
-        public TimeSpan GhostBlinkingCooldown = TimeSpan.FromSeconds(60);
-
         [ViewVariables]
         public ContainerSlot LightBulbContainer = default!;
 
@@ -51,9 +42,6 @@ namespace Content.Shared.Light.Components
 
         [DataField, AutoNetworkedField, AutoPausedField]
         public TimeSpan LastThunk;
-
-        [DataField, AutoPausedField]
-        public TimeSpan? LastGhostBlink;
 
         [DataField]
         public ProtoId<SinkPortPrototype> OnPort = "On";

@@ -28,6 +28,9 @@ signal-port-description-doorbolt = Bolts door when HIGH.
 signal-port-name-trigger-receiver = Trigger
 signal-port-description-trigger-receiver = Triggers some mechanism on the device.
 
+signal-port-name-timer = Timer
+signal-port-description-timer = Starts the timer countdown of the device.
+
 signal-port-name-order-sender = Order sender
 signal-port-description-order-sender = Cargo console order sender
 
@@ -89,3 +92,9 @@ signal-port-description-logic-enable = Only loads the input signal into the memo
 
 signal-port-name-logic-random-input = Input Signal
 signal-port-description-logic-random-input = Receives any signal to trigger a random output.
+
+signal-port-name-target-receiver = Target receiver
+signal-port-description-target-receiver = Receives target information from a target finder.
+
+signal-port-name-target-source = Target Finder
+signal-port-description-target-source = Sends target information to a target receiver.

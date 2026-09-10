@@ -33,7 +33,7 @@ public sealed partial class StoreSystem : SharedStoreSystem
 
         // Add the bui key if it does not exist already (the check is needed to make sure that we don't overwrite existing InterfaceData).
         if (!UI.HasUi(uid, StoreUiKey.Key))
-            UI.SetUi(uid, StoreUiKey.Key, new InterfaceData("StoreBoundUserInterface"));
+            UI.SetUi(uid, StoreUiKey.Key, new InterfaceData("StoreBoundUserInterface", requireInputValidation: component.InputValidation));
     }
 
     private void OnStartup(EntityUid uid, StoreComponent component, ComponentStartup args)

@@ -11,7 +11,7 @@ namespace Content.Client.Singularity.Systems;
 /// The client-side version of <see cref="SharedSingularitySystem"/>.
 /// Primarily manages <see cref="SingularityComponent"/>s.
 /// </summary>
-public sealed class SingularitySystem : SharedSingularitySystem
+public sealed partial class SingularitySystem : SharedSingularitySystem
 {
     public override void Initialize()
     {
