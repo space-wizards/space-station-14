@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Buckle;
 
 /// <summary>
-/// Renders configured strap foreground layers on a proxy parented to the strap.
+/// Renders extra visual layers over entities buckled to this strap.
 /// </summary>
 public sealed partial class StrapVisualsSystem : EntitySystem
 {

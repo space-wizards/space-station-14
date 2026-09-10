@@ -4,25 +4,25 @@ using DrawDepthTag = Robust.Shared.GameObjects.DrawDepth;
 namespace Content.Client.Buckle;
 
 /// <summary>
-/// Defines foreground layers rendered by a client proxy while this strap is occupied.
+/// Defines extra visual layers shown while this strap is occupied.
 /// </summary>
 [RegisterComponent]
 public sealed partial class StrapVisualsComponent : Component
 {
     /// <summary>
-    /// Visual layers rendered by the foreground proxy, in drawing order.
+    /// Layers shown while the strap is occupied.
     /// </summary>
     [DataField(required: true)]
     public List<PrototypeLayerData> Layers = new();
 
     /// <summary>
-    /// Draw depth used by the foreground proxy.
+    /// Draw depth used for the overlay.
     /// </summary>
     [DataField(required: true, customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
     public int DrawDepth;
 
     /// <summary>
-    /// Client-side proxy currently rendering the configured layers.
+    /// Entity used to render the overlay.
     /// </summary>
     public EntityUid? Overlay;
 }
