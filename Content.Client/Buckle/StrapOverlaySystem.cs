@@ -6,13 +6,13 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Buckle;
 
 /// <summary>
-/// Renders extra visual layers over entities buckled to this strap.
+/// Renders extra visual layers while this strap is occupied.
 /// </summary>
 public sealed partial class StrapOverlaySystem : EntitySystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
 
-    private static readonly EntProtoId OverlayPrototype = "StrapVisualOverlay";
+    private static readonly EntProtoId OverlayPrototype = "StrapOverlay";
 
     [SubscribeLocalEvent]
     private void OnStrapped(Entity<StrapOverlayComponent> ent, ref StrappedEvent args) => EnsureOverlay(ent);
@@ -36,21 +36,15 @@ public sealed partial class StrapOverlaySystem : EntitySystem
 
     private void EnsureOverlay(Entity<StrapOverlayComponent> ent)
     {
-        if (!TryComp<StrapComponent>(ent, out var strap) ||
-            strap.BuckledEntities.Count == 0 ||
-            ent.Comp.LifeStage >= ComponentLifeStage.Stopping)
+        var strap = Comp<StrapComponent>(ent);
+        if (strap.BuckledEntities.Count == 0)
         {
             RemoveOverlay(ent);
             return;
         }
 
-        if (ent.Comp.Proxy is { } existing)
-        {
-            if (Exists(existing))
-                return;
-
-            ent.Comp.Proxy = null;
-        }
+        if (ent.Comp.Proxy != null)
+            return;
 
         var proxy = SpawnAttachedTo(OverlayPrototype, new EntityCoordinates(ent, 0f, 0f));
         var proxySprite = Comp<SpriteComponent>(proxy);
