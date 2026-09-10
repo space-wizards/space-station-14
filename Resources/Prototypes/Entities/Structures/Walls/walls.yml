@@ -569,7 +569,7 @@
   parent: [ WallMarbleIndestructible, StructureHealthWallStrong ]
   id: WallMarble
   name: marble wall
-  suffix:
+  suffix: ""
   components:
   - type: Injurable
     damageContainer: StructuralInorganic
