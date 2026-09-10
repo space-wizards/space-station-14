@@ -14,55 +14,63 @@ public sealed partial class StrapVisualsSystem : EntitySystem
 
     private static readonly EntProtoId OverlayPrototype = "StrapVisualOverlay";
 
-    private readonly Dictionary<EntityUid, EntityUid> _applied = new();
+    [SubscribeLocalEvent]
+    private void OnStrapped(Entity<StrapVisualsComponent> ent, ref StrappedEvent args) => EnsureOverlay(ent);
 
     [SubscribeLocalEvent]
-    private void OnStrapped(Entity<StrapVisualsComponent> ent, ref StrappedEvent args) => EnsureVisuals(ent);
+    private void OnUnstrapped(Entity<StrapVisualsComponent> ent, ref UnstrappedEvent args) => EnsureOverlay(ent);
 
     [SubscribeLocalEvent]
-    private void OnUnstrapped(Entity<StrapVisualsComponent> ent, ref UnstrappedEvent args) => EnsureVisuals(ent);
+    private void OnStrapState(Entity<StrapComponent> ent, ref AfterAutoHandleStateEvent args) => EnsureOverlay(ent);
 
     [SubscribeLocalEvent]
-    private void OnStrapState(Entity<StrapComponent> ent, ref AfterAutoHandleStateEvent args) => EnsureVisuals(ent);
+    private void OnStrapVisualsShutdown(Entity<StrapVisualsComponent> ent, ref ComponentShutdown args) => RemoveOverlay(ent);
 
-    [SubscribeLocalEvent]
-    private void OnStrapVisualsShutdown(Entity<StrapVisualsComponent> ent, ref ComponentShutdown args) => RemoveVisuals(ent);
-
-    private void EnsureVisuals(EntityUid strap)
+    private void EnsureOverlay(EntityUid strap)
     {
-        if (!TryComp<StrapComponent>(strap, out var strapComp) ||
-            strapComp.BuckledEntities.Count == 0 ||
-            !TryComp<StrapVisualsComponent>(strap, out var visuals) ||
-            visuals.LifeStage >= ComponentLifeStage.Stopping)
+        if (!TryComp<StrapVisualsComponent>(strap, out var visuals))
+            return;
+
+        EnsureOverlay((strap, visuals));
+    }
+
+    private void EnsureOverlay(Entity<StrapVisualsComponent> ent)
+    {
+        if (!TryComp<StrapComponent>(ent, out var strap) ||
+            strap.BuckledEntities.Count == 0 ||
+            ent.Comp.LifeStage >= ComponentLifeStage.Stopping)
         {
-            RemoveVisuals(strap);
+            RemoveOverlay(ent);
             return;
         }
 
-        if (_applied.TryGetValue(strap, out var existing))
+        if (ent.Comp.Overlay is { } existing)
         {
             if (Exists(existing))
                 return;
 
-            _applied.Remove(strap);
+            ent.Comp.Overlay = null;
         }
 
-        var proxy = SpawnAttachedTo(OverlayPrototype, new EntityCoordinates(strap, 0f, 0f));
+        var proxy = SpawnAttachedTo(OverlayPrototype, new EntityCoordinates(ent, 0f, 0f));
         var proxySprite = Comp<SpriteComponent>(proxy);
 
-        _sprite.SetDrawDepth((proxy, proxySprite), visuals.DrawDepth);
+        _sprite.SetDrawDepth((proxy, proxySprite), ent.Comp.DrawDepth);
 
-        foreach (var data in visuals.Layers)
+        foreach (var data in ent.Comp.Layers)
         {
             _sprite.AddLayer((proxy, proxySprite), data, null);
         }
 
-        _applied.Add(strap, proxy);
+        ent.Comp.Overlay = proxy;
     }
 
-    private void RemoveVisuals(EntityUid strap)
+    private void RemoveOverlay(Entity<StrapVisualsComponent> ent)
     {
-        if (_applied.Remove(strap, out var proxy))
-            TryQueueDel(proxy);
+        if (ent.Comp.Overlay is not { } proxy)
+            return;
+
+        ent.Comp.Overlay = null;
+        TryQueueDel(proxy);
     }
 }

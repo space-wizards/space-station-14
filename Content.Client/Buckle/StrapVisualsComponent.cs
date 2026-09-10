@@ -20,4 +20,9 @@ public sealed partial class StrapVisualsComponent : Component
     /// </summary>
     [DataField(required: true, customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
     public int DrawDepth;
+
+    /// <summary>
+    /// Client-side proxy currently rendering the configured layers.
+    /// </summary>
+    public EntityUid? Overlay;
 }
