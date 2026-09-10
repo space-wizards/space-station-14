@@ -28,4 +28,10 @@ public sealed partial class StrapOverlayComponent : Component
     /// </summary>
     [DataField(customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
     public int OverlayDrawDepth = (int) DrawDepth.DrawDepth.OverMobs;
+
+    /// <summary>
+    /// Client-side entity used to render the overlay.
+    /// </summary>
+    [ViewVariables]
+    public EntityUid? OverlayEntity;
 }
