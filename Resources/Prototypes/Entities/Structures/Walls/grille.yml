@@ -125,7 +125,6 @@
       mask: [ walls, windows, grilles, marble, doors ]
       base: state
       index: 0
-    base: state
   - type: Fixtures
     fixtures:
       fix1:

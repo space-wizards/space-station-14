@@ -1024,7 +1024,7 @@
     key: webs
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls, windows, grilles, marble, doors ]
+      mask: [ walls, windows, grilles, marble, doors, webs ]
       base: wall
   - type: Construction
     graph: WebStructures

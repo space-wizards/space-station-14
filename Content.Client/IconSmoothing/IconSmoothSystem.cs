@@ -41,7 +41,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
 
     // Allocation!!!
     private HashSet<string> _workingKeyRing = new(4);
-    private HashSet<string>?[] _adjacentKeys = new HashSet<string>[Directions];
+    private readonly HashSet<string>?[] _adjacentKeys = new HashSet<string>[Directions];
 
     // First free position in _toleranceData.
     // -1 indicates there are no free slots left and the storage must be expanded.
@@ -145,6 +145,21 @@ public sealed partial class IconSmoothSystem : EntitySystem
 
         entity.Comp.States[index].Base = state;
         _dirtyEntities.Enqueue((entity, entity.Comp));
+    }
+
+    [SubscribeLocalEvent]
+    private void OnIconSmoothGridShutdown(Entity<IconSmoothGridComponent> entity, ref ComponentShutdown args)
+    {
+        foreach (var (_, chunkData) in entity.Comp.Chunks)
+        {
+            foreach (var cache in chunkData.Tiles)
+            {
+                if (cache is not null)
+                    DecrementRefCount(cache.Value);
+            }
+        }
+
+        entity.Comp.Chunks.Clear();
     }
 
     [SubscribeLocalEvent]

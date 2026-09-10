@@ -66,7 +66,7 @@ public record struct IconChunkData()
 
     public byte? GetTileCache(int x, int y)
     {
-        DebugTools.Assert(x < MapGridComponent.DefaultChunkSize && y < MapGridComponent.DefaultChunkSize, "Vector2i passed exceeded the bounds of our jagged array!!!");
+        DebugTools.Assert(x >= 0 && x < MapGridComponent.DefaultChunkSize && y >= 0 && y < MapGridComponent.DefaultChunkSize, "Vector2i passed exceeded the bounds of our jagged array!!!");
         return GetTileCache((byte)(x + (y << 4)));
     }
 
@@ -87,7 +87,7 @@ public record struct IconChunkData()
 
     public void SetTileCache(int x, int y, byte value)
     {
-        DebugTools.Assert(x < MapGridComponent.DefaultChunkSize && y < MapGridComponent.DefaultChunkSize, $"Coordinates ({x},{y}) did not fit within the bounds of a chunk");
+        DebugTools.Assert(x >= 0 && x < MapGridComponent.DefaultChunkSize && y >= 0 && y < MapGridComponent.DefaultChunkSize, $"Coordinates ({x},{y}) did not fit within the bounds of a chunk");
         SetTileCache((byte)(x + (y << 4)), value);
     }
 

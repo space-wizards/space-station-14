@@ -13,12 +13,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private SpriteSystem _sprite = default!;
 
     [SubscribeLocalEvent]
-    private void OnPuddleInit(Entity<PuddleComponent> entity, ref ComponentInit args)
-    {
-        _sprite.AddRsiLayer(entity.Owner, $"{entity.Comp.PuddleState}a");
-    }
-
-    [SubscribeLocalEvent]
     private void OnPuddleAppearance(EntityUid uid, PuddleComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)

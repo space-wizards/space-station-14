@@ -27,11 +27,4 @@ public sealed partial class IconSmoothComponent : Component
     /// </summary>
     [DataField]
     public ISpriteSmoothState[] States { get; private set; } = [];
-
-    /// <summary>
-    ///     Prepended to the RSI state.
-    /// </summary>
-    [Obsolete]
-    [DataField("base")]
-    public string StateBase { get; set; } = string.Empty;
 }
