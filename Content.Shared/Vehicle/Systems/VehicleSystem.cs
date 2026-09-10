@@ -193,9 +193,7 @@ public sealed partial class VehicleSystem : EntitySystem
             return false;
 
         ClearEyeTarget(currentOperator, entity.Owner);
-        _operatorQuery.TryComp(currentOperator, out var currentOperatorComponent);
-
-        if (currentOperatorComponent != null)
+        if (_operatorQuery.TryComp(currentOperator, out var currentOperatorComponent))
         {
             var exitEvent = new OnVehicleExitedEvent(entity, currentOperator);
             RaiseLocalEvent(currentOperator, ref exitEvent);
@@ -214,7 +212,7 @@ public sealed partial class VehicleSystem : EntitySystem
         var setEvent = new VehicleOperatorSetEvent(null, currentOperator);
         RaiseLocalEvent(entity, ref setEvent);
 
-        Dirty(entity);
+        DirtyFields(entity.Owner, entity.Comp, null, nameof(VehicleComponent.Operator));
         return true;
     }
 
