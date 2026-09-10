@@ -177,7 +177,7 @@ public partial class SharedGunSystem
                 continue;
             }
 
-            var canInsertEv = new CanAmmoInsertionEvent();
+            var canInsertEv = new AmmoInsertAttemptEvent();
             RaiseLocalEvent(ent, ref canInsertEv);
             if (canInsertEv.Cancelled)
                 return false;

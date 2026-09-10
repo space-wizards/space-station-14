@@ -7,4 +7,4 @@ namespace Content.Shared.Weapons.Ranged.Events;
 /// </summary>
 /// <param name="Cancelled">If true, cancels the ammo insertion.</param>
 [ByRefEvent]
-public record struct CanAmmoInsertionEvent(bool Cancelled = false);
+public record struct AmmoInsertAttemptEvent(bool Cancelled = false);

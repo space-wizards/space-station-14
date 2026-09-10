@@ -118,7 +118,7 @@ public abstract partial class SharedGunSystem
         }
 
         // Final check before insertion
-        var providerEv = new CanAmmoInsertionEvent();
+        var providerEv = new AmmoInsertAttemptEvent();
         RaiseLocalEvent(args.Target.Value, ref providerEv);
         if (providerEv.Cancelled)
             return;
@@ -346,7 +346,7 @@ public abstract partial class SharedGunSystem
         if (!CanInsertBallistic(entity, ammo))
             return false;
 
-        var canInsertEv = new CanAmmoInsertionEvent();
+        var canInsertEv = new AmmoInsertAttemptEvent();
         RaiseLocalEvent(entity, ref canInsertEv);
         if (canInsertEv.Cancelled)
             return false;

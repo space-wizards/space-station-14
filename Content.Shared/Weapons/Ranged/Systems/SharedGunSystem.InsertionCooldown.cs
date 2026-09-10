@@ -13,7 +13,7 @@ public abstract partial class SharedGunSystem
 
     [SubscribeLocalEvent]
     private void OnCanAmmoInsertionEvent(Entity<AmmoProviderInsertionCooldownComponent> entity,
-        ref CanAmmoInsertionEvent args)
+        ref AmmoInsertAttemptEvent args)
     {
         if (args.Cancelled)
             return;
