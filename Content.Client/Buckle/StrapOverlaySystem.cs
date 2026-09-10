@@ -28,7 +28,10 @@ public sealed partial class StrapOverlaySystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnStrapOverlayShutdown(Entity<StrapOverlayComponent> ent, ref ComponentShutdown args) => RemoveOverlay(ent);
+    private void OnStrapOverlayShutdown(Entity<StrapOverlayComponent> ent, ref ComponentShutdown args)
+    {
+        RemoveOverlay(ent);
+    }
 
     private void EnsureOverlay(Entity<StrapOverlayComponent> ent)
     {
