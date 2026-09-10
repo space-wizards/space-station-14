@@ -159,7 +159,7 @@
     damage:
       types:
         Slash: 7.5
-        Pierce: 7.5
+        Piercing: 7.5
         Structural: 25 # to destroy lockers in which bodies could be hidden
   - type: InteractionPopup
     successChance: 0.01
