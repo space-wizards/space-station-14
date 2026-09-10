@@ -18,6 +18,6 @@ public sealed partial class StrapOverlayComponent : Component
     /// <summary>
     /// Draw depth used for the overlay.
     /// </summary>
-    [DataField(required: true, customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
-    public int DrawDepth;
+    [DataField(customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
+    public int OverlayDrawDepth = (int) DrawDepth.DrawDepth.OverMobs;
 }

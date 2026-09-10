@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: StrapOverlayVisual
   categories: [ HideSpawnMenu ]
   save: false

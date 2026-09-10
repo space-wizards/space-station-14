@@ -46,7 +46,7 @@ public sealed partial class StrapOverlaySystem : EntitySystem
         var proxy = SpawnAttachedTo(OverlayPrototype, new EntityCoordinates(ent, 0f, 0f));
         var proxySprite = Comp<SpriteComponent>(proxy);
 
-        _sprite.SetDrawDepth((proxy, proxySprite), ent.Comp.DrawDepth);
+        _sprite.SetDrawDepth((proxy, proxySprite), ent.Comp.OverlayDrawDepth);
 
         foreach (var data in ent.Comp.Layers)
         {
