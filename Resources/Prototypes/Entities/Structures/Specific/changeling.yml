@@ -45,6 +45,7 @@
   - type: Damageable
   - type: Injurable
   - type: Destructible
+    generateOverkillThreshold: false
     thresholds:
     - trigger:
         !type:DamageTrigger

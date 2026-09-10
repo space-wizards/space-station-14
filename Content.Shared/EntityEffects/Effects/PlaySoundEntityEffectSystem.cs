@@ -8,7 +8,7 @@ using Robust.Shared.Timing;
 namespace Content.Shared.EntityEffects.Effects;
 
 /// <summary>
-/// Causes this entity to glow.
+/// Plays a sound at the target entity.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class PlaySoundEntityEffectSystem : EntityEffectSystem<TransformComponent, PlaySound>
@@ -43,5 +43,6 @@ public sealed partial class PlaySound : EntityEffectBase<PlaySound>
     [DataField]
     public bool Predicted = true;
 
+    /// <inheritdoc/>
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => string.Empty;
 }

@@ -50,8 +50,9 @@ public sealed partial class TrapInContainer : EntityEffectBase<TrapInContainer>
     [DataField]
     public string Container = "entity_storage";
 
+    /// <inheritdoc/>
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Loc.GetString("entity-effect-guidebook-make-polymorph",
+        => Loc.GetString("entity-effect-guidebook-make-trap-in-container",
         ("chance", Probability),
         ("entityname", prototype.Index<EntityPrototype>(prototype.Index(Entity).Name)));
 }

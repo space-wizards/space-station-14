@@ -54,9 +54,6 @@ public abstract partial class SharedStoreSystem
     [SubscribeLocalEvent]
     private void OnStoreVerbs(Entity<StoreCurrencyGeneratorComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (entity.Comp.Amount == 0)
-            return;
-
         if (!TryComp<StoreComponent>(args.User, out var storeComp))
             return;
 
@@ -72,6 +69,7 @@ public abstract partial class SharedStoreSystem
         {
             Text = Loc.GetString(entity.Comp.Verb),
             Message = Loc.GetString(entity.Comp.VerbDescription, ("amount", entity.Comp.Amount), ("currency", Loc.GetString(proto.DisplayName)), ("entity", entity)),
+            Disabled = entity.Comp.Amount == 0, // Dont allow collection when empty
             Act = () =>
             {
                 Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> currency = new();
