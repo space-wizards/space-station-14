@@ -1,3 +1,4 @@
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using DrawDepthTag = Robust.Shared.GameObjects.DrawDepth;
 
@@ -9,6 +10,12 @@ namespace Content.Shared.Buckle.Components;
 [RegisterComponent]
 public sealed partial class StrapOverlayComponent : Component
 {
+    /// <summary>
+    /// Entity prototype used to render the overlay.
+    /// </summary>
+    [DataField]
+    public EntProtoId OverlayPrototype = "StrapOverlayVisual";
+
     /// <summary>
     /// Layers shown while the strap is occupied.
     /// </summary>

@@ -1,7 +1,6 @@
 using Content.Shared.Buckle.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Buckle;
 
@@ -12,8 +11,6 @@ public sealed partial class StrapOverlaySystem : EntitySystem
 {
     [Dependency] private AppearanceSystem _appearance = default!;
     [Dependency] private SpriteSystem _sprite = default!;
-
-    private static readonly EntProtoId OverlayPrototype = "StrapOverlayVisual";
 
     private readonly Dictionary<EntityUid, EntityUid> _overlays = new();
 
@@ -43,7 +40,7 @@ public sealed partial class StrapOverlaySystem : EntitySystem
             _overlays.Remove(ent);
         }
 
-        var proxy = SpawnAttachedTo(OverlayPrototype, new EntityCoordinates(ent, 0f, 0f));
+        var proxy = SpawnAttachedTo(ent.Comp.OverlayPrototype, new EntityCoordinates(ent, 0f, 0f));
         var proxySprite = Comp<SpriteComponent>(proxy);
 
         _sprite.SetDrawDepth((proxy, proxySprite), ent.Comp.OverlayDrawDepth);
