@@ -20,9 +20,4 @@ public sealed partial class StrapOverlayComponent : Component
     /// </summary>
     [DataField(required: true, customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
     public int DrawDepth;
-
-    /// <summary>
-    /// Entity used to render the overlay on the client.
-    /// </summary>
-    public EntityUid? Proxy;
 }

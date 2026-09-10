@@ -14,6 +14,8 @@ public sealed partial class StrapOverlaySystem : EntitySystem
 
     private static readonly EntProtoId OverlayPrototype = "StrapOverlay";
 
+    private readonly Dictionary<EntityUid, EntityUid> _overlays = new();
+
     [SubscribeLocalEvent]
     private void OnStrapped(Entity<StrapOverlayComponent> ent, ref StrappedEvent args) => EnsureOverlay(ent);
 
@@ -43,8 +45,13 @@ public sealed partial class StrapOverlaySystem : EntitySystem
             return;
         }
 
-        if (ent.Comp.Proxy != null)
-            return;
+        if (_overlays.TryGetValue(ent, out var existing))
+        {
+            if (Exists(existing))
+                return;
+
+            _overlays.Remove(ent);
+        }
 
         var proxy = SpawnAttachedTo(OverlayPrototype, new EntityCoordinates(ent, 0f, 0f));
         var proxySprite = Comp<SpriteComponent>(proxy);
@@ -56,15 +63,12 @@ public sealed partial class StrapOverlaySystem : EntitySystem
             _sprite.AddLayer((proxy, proxySprite), data, null);
         }
 
-        ent.Comp.Proxy = proxy;
+        _overlays.Add(ent, proxy);
     }
 
     private void RemoveOverlay(Entity<StrapOverlayComponent> ent)
     {
-        if (ent.Comp.Proxy is not { } proxy)
-            return;
-
-        ent.Comp.Proxy = null;
-        TryQueueDel(proxy);
+        if (_overlays.Remove(ent, out var proxy))
+            TryQueueDel(proxy);
     }
 }
