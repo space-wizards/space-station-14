@@ -40,7 +40,7 @@
         shape:
           !type:PhysShapeCircle
           radius: 0.2
-        density: 15
+        density: 100
         mask:
         - SmallMobMask
         layer:
@@ -64,6 +64,8 @@
   - type: ActionGrant
     actions:
     - ActionChangelingStasisWeak
+  - type: Puller
+    needsHands: false
   - type: Tag # Removes DoorBumpOpener
     tags:
       [ ]
