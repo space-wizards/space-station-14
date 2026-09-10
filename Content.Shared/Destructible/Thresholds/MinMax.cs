@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Random;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Destructible.Thresholds;
 
@@ -6,12 +6,12 @@ namespace Content.Shared.Destructible.Thresholds;
 public partial struct MinMax
 {
     [DataField]
-    public int Min;
+    public float Min;
 
     [DataField]
-    public int Max;
+    public float Max;
 
-    public MinMax(int min, int max)
+    public MinMax(float min, float max)
     {
         Min = min;
         Max = max;
@@ -19,7 +19,12 @@ public partial struct MinMax
 
     public readonly int Next(IRobustRandom random)
     {
-        return random.Next(Min, Max + 1);
+        return random.Next((int)Min, (int)Max + 1);
+    }
+
+    public readonly float NextFloat(IRobustRandom random)
+    {
+        return random.NextFloat(Min, Max + 1);
     }
 
     public static implicit operator MinMax((int Min, int Max) tuple)

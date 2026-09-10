@@ -50,10 +50,10 @@
           map: ["foldedLayer"]
 
 - type: entity
+  parent: [ BaseItem, BaseItemDestructible ]
   id: Fulton
-  parent: BaseItem
-  suffix: Full
   name: fulton
+  suffix: Full
   description: Used to extract containers, items, or forcibly recruit people into your base of operations.
   components:
   - type: Fulton
@@ -71,17 +71,6 @@
     drawdepth: SmallObjects
     sprite: Objects/Tools/fulton.rsi
     state: extraction_pack
-  - type: Damageable
-  - type: Injurable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   id: Fulton1

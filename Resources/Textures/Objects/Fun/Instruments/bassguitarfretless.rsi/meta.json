@@ -1,11 +1,11 @@
 {
-  "version": 1,
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Modified by noxypaws based on the bass guitar artwork created by EmoGarbage404 and RiceMar.",
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Modified by noxypaws based on the bass guitar artwork created by EmoGarbage404 and RiceMar.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
     "states": [
         {
             "name": "icon"

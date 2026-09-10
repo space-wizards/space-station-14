@@ -9,6 +9,6 @@ public sealed partial class LinearAntagCount : MinMaxAntagCountSelector
 {
     public override int GetTargetAntagCount(IRobustRandom random, int playerCount)
     {
-        return Math.Clamp(playerCount / PlayerRatio, Range.Min, Range.Max);
+        return Math.Clamp(playerCount / PlayerRatio, (int) Range.Min, (int) Range.Max);
     }
 }

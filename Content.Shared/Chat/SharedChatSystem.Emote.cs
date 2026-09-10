@@ -156,7 +156,10 @@ public abstract partial class SharedChatSystem
 
         // optional override params > general params for all sounds in set > individual sound params
         var param = audioParams ?? proto.GeneralParams ?? sound.Params;
-        _audio.PlayPvs(sound, uid, param);
+
+        if (_net.IsServer) // TODO: replace this call with PlayPredicted when chat is predicted.
+            _audio.PlayPvs(sound, uid, param);
+
         return true;
     }
     /// <summary>
@@ -222,10 +225,6 @@ public abstract partial class SharedChatSystem
 
         if (beforeEv.Cancelled)
         {
-            // Chat is not predicted anyways, so no need to predict this popup either.
-            if (_net.IsClient)
-                return false;
-
             if (beforeEv.Blocker != null)
             {
                 _popup.PopupEntity(
@@ -251,7 +250,7 @@ public abstract partial class SharedChatSystem
             return false;
         }
 
-        var ev = new EmoteEvent(proto);
+        var ev = new EmoteEvent(GetNetEntity(uid), proto);
         RaiseLocalEvent(uid, ref ev);
 
         return true;

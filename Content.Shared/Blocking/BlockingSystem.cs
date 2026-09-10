@@ -380,7 +380,7 @@ public sealed partial class BlockingSystem : EntitySystem
             ));
         }
 
-        foreach (var flat in modifiers.FlatReduction)
+        foreach (var flat in modifiers.FlatReductions)
         {
             msg.PushNewline();
             msg.AddMarkupOrThrow(Robust.Shared.Localization.Loc.GetString("blocking-reduction-value",

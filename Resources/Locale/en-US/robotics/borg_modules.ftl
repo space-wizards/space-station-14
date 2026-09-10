@@ -16,3 +16,4 @@ borg-slot-modules-empty = Modules
 borg-slot-powercell-empty = Powercells
 borg-slot-inflatable-door-empty = Inflatable Door
 borg-slot-inflatable-wall-empty = Inflatable Wall
+borg-slot-xenoborg-crystal-empty = Xenoborg crystals

@@ -8,7 +8,7 @@
     sprite: Clothing/Back/Backpacks/backpack.rsi
     state: icon
   - type: Item
-    size: Huge
+    size: Colossal
   - type: Clothing
     quickEquip: false
     slots:
@@ -277,14 +277,13 @@
     sprite: Clothing/Back/Backpacks/ertchaplain.rsi
 
 - type: entity
-  parent: ClothingBackpackERTSecurity
+  parent: [ ClothingBackpackHoldingBase, ClothingBackpackERTSecurity ]
   id: ClothingBackpackDeathSquad
   name: death squad backpack
   description: Holds the kit of CentComm's most feared agents.
   components:
-    - type: Storage
-      grid:
-      - 0,0,7,6
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/ertsec.rsi
 
 #Syndicate
 - type: entity
@@ -306,11 +305,25 @@
 
 #Special
 - type: entity
+  abstract: true
   parent: ClothingBackpack
+  id: ClothingBackpackHoldingBase
+  components:
+  - type: Item
+    size: Colossal
+  - type: Storage
+    maxItemSize: Ginormous
+    grid:
+    - 0,0,11,7 # Same with all bags of holding
+
+- type: entity
+  parent: ClothingBackpackHoldingBase
   id: ClothingBackpackHolding
-  name: bag of holding
+  name: backpack of holding
   description: A backpack that opens into a localized pocket of bluespace.
   components:
+  - type: Clothing
+    equippedPrefix: holding
   - type: Sprite
     sprite: Clothing/Back/Backpacks/holding.rsi
     state: holding
@@ -318,14 +331,6 @@
     - state: holding
     - state: holding-unlit
       shader: unshaded
-  - type: Clothing
-    equippedPrefix: holding
-  - type: Item
-    size: Ginormous
-  - type: Storage
-    maxItemSize: Huge
-    grid:
-    - 0,0,19,9
 
 - type: entity
   parent: ClothingBackpackClown
@@ -378,6 +383,9 @@
     - 6,4,7,5
     - 9,2,10,3
     - 9,5,9,5
+  - type: Tag
+    tags:
+    - Backpack # ignore "WhitelistChameleon" tag
 
 - type: entity
   parent: ClothingBackpack
@@ -389,6 +397,9 @@
   - type: Storage
     grid:
     - 0,0,39,24
+  - type: Tag
+    tags:
+    - Backpack # ignore "WhitelistChameleon" tag
 
 - type: entity
   parent: ClothingBackpack

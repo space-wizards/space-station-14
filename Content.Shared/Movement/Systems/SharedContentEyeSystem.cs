@@ -2,7 +2,7 @@ using System.Numerics;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Camera;
-using Content.Shared.Ghost;
+using Content.Shared.Ghost.Components;
 using Content.Shared.Input;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Input.Binding;

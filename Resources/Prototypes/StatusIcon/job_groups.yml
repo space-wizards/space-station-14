@@ -166,6 +166,7 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Syndicate
   icons:
+  - JobIconCluwne
   - JobIconNinja
   - JobIconPirate
   - JobIconPrisoner
@@ -174,6 +175,7 @@
   - JobIconSyndicateCorpsman
   - JobIconSyndicateOperative
   - JobIconWizard
+  - JobIconSus
 
 - type: jobIconGroup
   id: AdminIconGroup
@@ -183,7 +185,6 @@
     state: Admin
   icons:
   - JobIconAdmin
-  - JobIconCluwne
   - JobIconZombie
   - JobIconSeniorEngineer
   - JobIconSeniorPhysician

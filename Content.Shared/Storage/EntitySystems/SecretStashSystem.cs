@@ -94,7 +94,9 @@ public sealed partial class SecretStashSystem : EntitySystem
         if (!TryComp<ItemComponent>(itemToHideUid, out var itemComp))
             return false;
 
-        _audio.PlayPredicted(entity.Comp.TryInsertItemSound, entity, userUid, AudioParams.Default.WithVariation(0.25f));
+        var audioParams = entity.Comp.TryInsertItemSound?.Params ?? AudioParams.Default;
+        audioParams = audioParams.WithVariation(0.25f);
+        _audio.PlayPredicted(entity.Comp.TryInsertItemSound, entity, userUid, audioParams);
 
         // check if secret stash is already occupied
         var container = entity.Comp.ItemContainer;
@@ -136,7 +138,9 @@ public sealed partial class SecretStashSystem : EntitySystem
         if (!TryComp<HandsComponent>(userUid, out var handsComp))
             return false;
 
-        _audio.PlayPredicted(entity.Comp.TryRemoveItemSound, entity, userUid, AudioParams.Default.WithVariation(0.25f));
+        var audioParams = entity.Comp.TryRemoveItemSound?.Params ?? AudioParams.Default;
+        audioParams = audioParams.WithVariation(0.25f);
+        _audio.PlayPredicted(entity.Comp.TryRemoveItemSound, entity, userUid, audioParams);
 
         // check if secret stash has something inside
         var itemInStash = entity.Comp.ItemContainer.ContainedEntity;

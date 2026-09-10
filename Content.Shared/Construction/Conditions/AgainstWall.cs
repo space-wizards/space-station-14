@@ -1,4 +1,5 @@
 using Content.Shared.Tag;
+using Content.Shared.Wall;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -13,7 +14,6 @@ namespace Content.Shared.Construction.Conditions;
 public sealed partial class AgainstWall : IConstructionCondition
 {
     private static readonly ProtoId<TagPrototype> DiagonalTag = "Diagonal";
-    private static readonly ProtoId<TagPrototype> WallTag = "Wall";
 
     /// <summary>
     /// The angle to add to the direction of the entity to point it towards the wall.
@@ -33,7 +33,7 @@ public sealed partial class AgainstWall : IConstructionCondition
 
         foreach (var entity in lookupSys.GetEntitiesIntersecting(againstLocation, LookupFlags.Approximate | LookupFlags.Static))
         {
-            if (!tagSys.HasTag(entity, WallTag))
+            if (!entManager.HasComponent<WallComponent>(entity))
                 continue;
 
             if (tagSys.HasTag(entity, DiagonalTag)

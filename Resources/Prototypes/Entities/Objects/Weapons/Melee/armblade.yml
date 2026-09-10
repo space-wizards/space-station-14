@@ -1,7 +1,7 @@
 - type: entity
   name: arm blade
   parent: BaseItem
-  id: ArmBlade
+  id: Armblade
   description: A grotesque blade made out of bone and flesh that can pry open doors and cleaves through people as a hot knife through butter.
   components:
   - type: Tool
@@ -19,12 +19,25 @@
     attackRate: 1
     damage:
       types:
-        Slash: 11
-        Piercing: 11
-        Structural: 20
+        Slash: 10
+        Piercing: 10
+        Caustic: 5
+        Structural: 15
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/armblade.rsi
   - type: Prying
     speedModifier: 1.5 # Jaws of life speed
     pryPowered: true
+
+- type: entity
+  parent: Armblade
+  id: ArmbladeDull
+  components:
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 5
+        Piercing: 5
+        Caustic: 2.5
+        Structural: 10
