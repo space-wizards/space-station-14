@@ -2,7 +2,7 @@
   name: stun baton
   parent: [BaseItem, BaseSecurityContraband]
   id: Stunbaton
-  description: A stun baton for incapacitating people with. Actively harming with this is considered bad tone.
+  description: A stun baton for incapacitating people with. Has advanced wrist strap technology to prevent cadets accidentally dropping it.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/stunbaton.rsi
@@ -100,6 +100,7 @@
   - type: Tag
     tags:
     - Stunbaton
+  - type: PreventForcedThrow
 
 - type: entity
   name: truncheon

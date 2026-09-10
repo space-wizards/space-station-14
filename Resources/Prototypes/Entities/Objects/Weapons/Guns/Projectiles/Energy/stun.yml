@@ -119,7 +119,7 @@
       fly-by: *flybyfixture
   - type: Ammo
   - type: StunOnCollide
-    slowdownAmount: 1.3
+    slowdownAmount: 2.2
     walkSpeedModifier: 0.75
     sprintSpeedModifier: 0.75
   - type: Projectile
@@ -220,9 +220,9 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: StunOnCollide
-    slowdownAmount: 1.3
-    walkSpeedModifier: 0.6
-    sprintSpeedModifier: 0.6
+    slowdownAmount: 2.2
+    walkSpeedModifier: 0.65
+    sprintSpeedModifier: 0.65
 
 - type: entity
   parent: BulletDisablerSmgBase
@@ -245,7 +245,7 @@
 
 # Energy crossbow
 - type: entity
-  parent: [ SolutionAmmo, BaseBullet ]
+  parent: [SolutionAmmo, SolutionToolVeryTiny, BaseBullet]
   id: EnergyCrossbowBolt
   categories: [ HideSpawnMenu ]
   name: energy bolt
@@ -264,22 +264,12 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 2
-  - type: StunOnCollide #somewhat mirror to taser stats, meant to be tot 'sidegrade'
-    stunAmount: 0
-    knockdownAmount: 2.5
-    slowdownAmount: 2.5
-    walkSpeedModifier: 0.2
-    sprintSpeedModifier: 0.2
-    drop: false
-  - type: StaminaDamageOnCollide #additional stam damage to make repeated pushups less of a viable counter
-    damage: 45
+        Radiation: 1
   - type: Solution
     solution:
-      maxVol: 1.5
       reagents:
-      - ReagentId: Toxin
-        Quantity: 1.5
+      - ReagentId: HardlightToxin
+        Quantity: 7.5
   - type: SolutionInjectOnProjectileHit
-    transferAmount: 1.5
+    transferAmount: 7.5
     solution: ammo
