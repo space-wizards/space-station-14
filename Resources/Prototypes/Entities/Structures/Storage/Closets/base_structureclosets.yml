@@ -49,6 +49,8 @@
     containers:
       entity_storage: !type:Container
       paper_label: !type:ContainerSlot
+  - type: RequireProjectileTarget
+    active: false
   - type: Weldable
   - type: PlaceableSurface
     placeCentered: true
@@ -133,6 +135,7 @@
       map: ["enum.WeldableLayers.BaseWelded"]
   - type: EntityStorage
     isCollidableWhenOpen: true
+    blocksProjectilesWhenOpen: true
     enteringOffset: 0, -0.6
     enteringRange: 0.03
     closeSound:
