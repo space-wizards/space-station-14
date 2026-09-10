@@ -1,6 +1,7 @@
 using Content.Client.Movement.Systems;
 using Content.Shared.Actions;
-using Content.Shared.Ghost;
+using Content.Shared.Ghost.Components;
+using Content.Shared.Ghost.Systems;
 using Content.Shared.NightVision;
 using Content.Shared.Overlays;
 using Robust.Client.Console;

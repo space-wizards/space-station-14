@@ -57,16 +57,6 @@ public sealed partial class AtmosPipeLayersComponent : Component
     public Dictionary<string, Dictionary<AtmosPipeLayer, string>> SpriteLayersRsiPaths = new();
 
     /// <summary>
-    /// Entity prototypes that will be used to replace the current one when using
-    /// position dependent entity placement via AlignAtmosPipeLayers.
-    /// </summary>
-    /// <remarks>
-    /// If the dictionary is not empty there should be an entry for each atmos pipe layer.
-    /// </remarks>
-    [DataField]
-    public Dictionary<AtmosPipeLayer, EntProtoId> AlternativePrototypes = new();
-
-    /// <summary>
     /// The pipe layers of this entity cannot be changed when this value is true.
     /// </summary>
     [DataField]

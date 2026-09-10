@@ -30,6 +30,7 @@ materials-coal = coal
 materials-diamond = diamond
 materials-gunpowder = gunpowder
 materials-cotton = cotton
+materials-xenoborg-crystal = xenoborg crystal
 
 # Ores
 materials-raw-iron = raw iron

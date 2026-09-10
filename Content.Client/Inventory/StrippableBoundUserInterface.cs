@@ -57,10 +57,19 @@ namespace Content.Client.Inventory
 
         #region Admin overlay vars
 
-        private readonly ResPath _chameleonClothingTexturePath = new("/Textures/Interface/Default/Slots/camo.png");
-        private readonly ResPath _contrabandTexturePath = new("/Textures/Interface/Default/Slots/contra.png");
+        private readonly ResPath _chameleonClothingTexturePath =
+            new("/Textures/Interface/Default/Slots/ContrabandOverlay/camo.png");
 
         private readonly Color _chameleonColor = new(147, 112, 219);
+
+        private readonly string _hasContrabandTexturePathBeginning =
+            "/Textures/Interface/Default/Slots/ContrabandOverlay/has_contra";
+
+        private readonly string _hasContrabandTexturePathEnding = ".png";
+        private readonly int _hasContrabandMaximumValue = 9;
+
+        private readonly ResPath _contrabandTexturePath =
+            new("/Textures/Interface/Default/Slots/ContrabandOverlay/contra.png");
 
         #endregion
 
@@ -109,7 +118,8 @@ namespace Content.Client.Inventory
 
             _strippingMenu = this.CreateWindowCenteredLeft<StrippingMenu>();
             _strippingMenu.OnDirty += UpdateMenu;
-            _strippingMenu.Title = Loc.GetString("strippable-bound-user-interface-stripping-menu-title", ("ownerName", Identity.Name(Owner, EntMan)));
+            _strippingMenu.Title = Loc.GetString("strippable-bound-user-interface-stripping-menu-title",
+                ("ownerName", Identity.Name(Owner, EntMan)));
         }
 
         protected override void Dispose(bool disposing)
@@ -220,8 +230,12 @@ namespace Content.Client.Inventory
             // +20 horizontally and vertically from the ContentsContainer margin
             // +16 vertically from the BoxContainer margin
             // +27 vertically from the window header
-            var horizontalMenuSize = Math.Max(200, Math.Max(_handCount, _inventoryDimensions.X + 1) * (SlotControl.DefaultButtonSize + ButtonSeparation) + 20);
-            var verticalMenuSize = Math.Max(200, (_inventoryDimensions.Y + (_handCount > 0 ? 2 : 1)) * (SlotControl.DefaultButtonSize + ButtonSeparation) + 53);
+            var horizontalMenuSize = Math.Max(200,
+                Math.Max(_handCount, _inventoryDimensions.X + 1) * (SlotControl.DefaultButtonSize + ButtonSeparation) +
+                20);
+            var verticalMenuSize = Math.Max(200,
+                (_inventoryDimensions.Y + (_handCount > 0 ? 2 : 1)) *
+                (SlotControl.DefaultButtonSize + ButtonSeparation) + 53);
             verticalMenuSize += 25 * _strippingMenu.ButtonContainer.Children.Count();
             _strippingMenu.SetSize = new Vector2(horizontalMenuSize, verticalMenuSize);
         }
@@ -244,7 +258,8 @@ namespace Content.Client.Inventory
 
             UpdateEntityIcon(button, heldEntity);
 
-            LayoutContainer.SetPosition(button, new Vector2i(_handCount, 0) * (SlotControl.DefaultButtonSize + ButtonSeparation));
+            LayoutContainer.SetPosition(button,
+                new Vector2i(_handCount, 0) * (SlotControl.DefaultButtonSize + ButtonSeparation));
             _handCount++;
         }
 
@@ -293,7 +308,8 @@ namespace Content.Client.Inventory
 
             UpdateEntityIcon(button, entity);
 
-            LayoutContainer.SetPosition(button, slotDef.StrippingWindowPos * (SlotControl.DefaultButtonSize + ButtonSeparation));
+            LayoutContainer.SetPosition(button,
+                slotDef.StrippingWindowPos * (SlotControl.DefaultButtonSize + ButtonSeparation));
             if (slotDef.StrippingWindowPos.X > _inventoryDimensions.X)
                 _inventoryDimensions = new Vector2i(slotDef.StrippingWindowPos.X, _inventoryDimensions.Y);
             if (slotDef.StrippingWindowPos.Y > _inventoryDimensions.Y)
@@ -322,14 +338,37 @@ namespace Content.Client.Inventory
 
             button.SetEntity(viewEnt);
 
-            if (_admin.IsAdmin() && _isAdminView && EntMan.HasComponent<ChameleonClothingComponent>(entity))
+            if (_admin.IsAdmin() && _isAdminView)
             {
-                button.AddAdminOverlay(_chameleonClothingTexturePath, _chameleonColor);
-            }
+                // overlay for chameleon clothing
+                if (EntMan.HasComponent<ChameleonClothingComponent>(entity))
+                {
+                    button.AddAdminOverlay(_chameleonClothingTexturePath, _chameleonColor);
+                }
 
-            if (_admin.IsAdmin() && _isAdminView && _contraband.IsContraband(entity.Value, Owner, out var contraProtoId))
-            {
-                button.AddAdminOverlay(_contrabandTexturePath, _proto.Index(contraProtoId).Color);
+                // if the item has contraband, add a blue dotted outline (under the main contraband overlay if there is one)
+                if (_contraband.ContainerHasContraband(entity.Value, Owner, out var contraList))
+                {
+                    // Get the color of the "most important" contraband using O(n) shenanigans
+                    var hasContraColor = contraList
+                        .Select(x => _proto.Index(x))
+                        .MaxBy(x => x.Priority)!
+                        .Color;
+
+                    var path = new ResPath(_hasContrabandTexturePathBeginning +
+                                           Math.Min(_hasContrabandMaximumValue, contraList.Count) +
+                                           _hasContrabandTexturePathEnding);
+
+                    button.AddAdminOverlay(path, hasContraColor);
+                }
+
+                // overlay for items that are themselves contraband
+                if (_contraband.IsContraband(entity.Value, Owner, out var contraProtoId))
+                {
+                    button.AddAdminOverlay(_contrabandTexturePath, _proto.Index(contraProtoId).Color);
+                }
+
+                // more overlays can be added if needed...
             }
         }
     }
