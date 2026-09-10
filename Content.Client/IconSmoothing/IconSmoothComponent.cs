@@ -9,6 +9,7 @@ namespace Content.Client.IconSmoothing;
 ///     Any objects with the same <c>key</c> will connect.
 /// </remarks>
 [RegisterComponent]
+[Access(typeof(IconSmoothSystem))]
 public sealed partial class IconSmoothComponent : Component
 {
     [DataField]

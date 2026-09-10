@@ -28,10 +28,10 @@ public sealed partial class IconSmoothSystem : EntitySystem
     [Dependency] private EntityQuery<SpriteComponent> _spriteQuery;
 
     // If there ever exists more than 256 compass directions I will kill someone.
-    public static byte Directions = (byte)DirectionExtensions.AllDirections.Length;
+    public static readonly byte Directions = (byte)DirectionExtensions.AllDirections.Length;
 
     // Cannot access Chunk size in content even as read :P
-    private static ushort ChunkSize => MapGridComponent.DefaultChunkSize;
+    private const ushort ChunkSize = MapGridComponent.DefaultChunkSize;
 
     private readonly Queue<Entity<IconSmoothComponent>> _dirtyEntities = new();
 
@@ -132,10 +132,25 @@ public sealed partial class IconSmoothSystem : EntitySystem
             RemoveTile((entity, entity.Comp, xform), update);
     }
 
+    /// <summary>
+    /// Sets the base state of a given <see cref="ISpriteSmoothState"/> at a given index
+    /// </summary>
+    /// <param name="entity">Entity whose <see cref="IconSmoothComponent"/> we're updating</param>
+    /// <param name="index">Index of the state we're updating</param>
+    /// <param name="state">The new base state</param>
+    public void SetStateBase(Entity<IconSmoothComponent?> entity, int index, string state)
+    {
+        if (!_iconSmoothQuery.Resolve(entity, ref entity.Comp))
+            return;
+
+        entity.Comp.States[index].Base = state;
+        _dirtyEntities.Enqueue((entity, entity.Comp));
+    }
+
     [SubscribeLocalEvent]
     private void OnAnchorChanged(Entity<IconSmoothComponent> entity, ref AnchorStateChangedEvent args)
     {
-        if (!entity.Comp.Enabled)
+        if (!entity.Comp.Enabled || Deleted(entity)) // If deleted this will be handled by the shutdown event
             return;
 
         UpdateTile((entity, entity.Comp, args.Transform));
@@ -145,6 +160,12 @@ public sealed partial class IconSmoothSystem : EntitySystem
     private void OnStartup(Entity<IconSmoothComponent> entity, ref ComponentInit args)
     {
         StartupLayers(entity);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnShutdown(Entity<IconSmoothComponent> entity, ref ComponentShutdown args)
+    {
+        RemoveTile((entity, entity.Comp, Transform(entity)));
     }
 
     private void StartupLayers(Entity<IconSmoothComponent> entity)
@@ -157,7 +178,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
 
         foreach (var state in entity.Comp.States)
         {
-            state.InitializeStates((entity, sprite), _sprite);
+            state.Initialize((entity, sprite), _sprite);
         }
     }
 

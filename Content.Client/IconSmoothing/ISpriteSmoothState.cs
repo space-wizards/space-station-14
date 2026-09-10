@@ -10,7 +10,7 @@ public partial interface ISpriteSmoothState
     /// <summary>
     /// The Base string that we use to build the desired sprite state.
     /// </summary>
-    public string Base { get; set;  }
+    string Base { get; set; }
 
     /// <summary>
     /// List of keys that this sprite state smooths with.
@@ -31,6 +31,14 @@ public partial interface ISpriteSmoothState
     ProtoId<ShaderPrototype>? Shader { get; protected set;  }
 
     void InitializeStates(Entity<SpriteComponent> entity, SpriteSystem sprite);
+
+    void Initialize(Entity<SpriteComponent> entity, SpriteSystem sprite)
+    {
+        InitializeStates(entity, sprite);
+
+        if (Shader != null)
+            entity.Comp.LayerSetShader(LayerKey, Shader);
+    }
 
     IEnumerable<(string key, string state)> EnumerateStates(HashSet<string>?[] layers, Entity<SpriteComponent> entity, SpriteSystem sprite);
 }

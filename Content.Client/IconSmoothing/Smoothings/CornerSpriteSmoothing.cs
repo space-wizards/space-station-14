@@ -42,9 +42,6 @@ public partial class CornerSpriteSmoothing : ISpriteSmoothState
         var key = GetCornerLayerKey(offset);
         sprite.LayerMapSet(entity.AsNullable(), key, sprite.AddRsiLayer(entity.AsNullable(), GetState(0, 0), index: Index));
         sprite.LayerSetDirOffset(entity.AsNullable(), key, offset);
-
-        if (Shader != null)
-            entity.Comp.LayerSetShader(key, Shader);
     }
 
     public virtual IEnumerable<(string key, string state)> EnumerateStates(HashSet<string>?[] layers, Entity<SpriteComponent> entity, SpriteSystem sprite)

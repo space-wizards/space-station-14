@@ -28,9 +28,6 @@ public sealed partial class DirectionSpriteSmoothing : ISpriteSmoothState
     public void InitializeStates(Entity<SpriteComponent> entity, SpriteSystem sprite)
     {
         sprite.LayerMapSet(entity.AsNullable(), LayerKey, sprite.AddRsiLayer(entity.AsNullable(), Base + 0, index: Index));
-
-        if (Shader != null)
-            entity.Comp.LayerSetShader(LayerKey, Shader);
     }
 
     public IEnumerable<(string key, string state)> EnumerateStates(HashSet<string>?[] layers, Entity<SpriteComponent> entity, SpriteSystem sprite)
