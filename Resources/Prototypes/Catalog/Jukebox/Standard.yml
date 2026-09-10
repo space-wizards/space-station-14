@@ -39,3 +39,57 @@
   name: PigeonBeans - Sunset
   path:
     path: /Audio/Jukebox/sunset.ogg
+
+- type: jukebox
+  id: WeaponsDrawn
+  name: Elise Wattman - Credits Song (From "Weapons Drawn")
+  path:
+    path: /Audio/Jukebox/WeaponsDrawnCredits.ogg
+
+- type: jukebox
+  id: giftshop
+  name: BattleBlock Theater - Gift Shop
+  path:
+    path: /Audio/Jukebox/GiftShop.ogg
+
+- type: jukebox
+  id: FidoOro
+  name: Fido Oro
+  path:
+    path: /Audio/Jukebox/FidoOro.ogg
+
+- type: jukebox
+  id: LevelEditor1
+  name: BattleBlock Theater - Level Editor 1
+  path:
+    path: /Audio/Jukebox/LevelEditor1.ogg
+
+- type: jukebox
+  id: MUSEUM
+  name: Michael Wyckoff - The Museum (Boneworks OST)
+  path:
+    path: /Audio/Jukebox/TheMuseum.ogg
+
+- type: jukebox
+  id: DownWithTheDevil
+  name: Ridiculon - Down With The Devil
+  path:
+    path: /Audio/Jukebox/DownWithTheDevil.ogg
+
+- type: jukebox
+  id: shadi
+  name: Shadi
+  path:
+    path: /Audio/Jukebox/Shadi.ogg
+
+- type: jukebox
+  id: 
+  name: Russ Morgan Orchestra - Were You Foolin
+  path:
+    path: /Audio/Jukebox/WereYouFoolin.ogg
+
+- type: jukebox
+  id: ManInTheMirror
+  name: Micheal Jackson - Man in the Mirror
+  path:
+    path: /Audio/Jukebox/ManInTheMirror.ogg
