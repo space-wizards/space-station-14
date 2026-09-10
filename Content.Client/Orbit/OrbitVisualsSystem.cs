@@ -27,7 +27,6 @@ public sealed partial class OrbitVisualsSystem : EntitySystem
 
     private void OnComponentInit(EntityUid uid, OrbitVisualsComponent component, ComponentInit args)
     {
-        _robustRandom.SetSeed((int)_timing.CurTime.TotalMilliseconds);
         component.OrbitDistance =
             _robustRandom.NextFloat(0.75f * component.OrbitDistance, 1.25f * component.OrbitDistance);
 
