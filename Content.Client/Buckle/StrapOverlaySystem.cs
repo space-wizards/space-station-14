@@ -12,7 +12,7 @@ public sealed partial class StrapOverlaySystem : EntitySystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
 
-    private static readonly EntProtoId OverlayPrototype = "StrapOverlay";
+    private static readonly EntProtoId OverlayPrototype = "StrapOverlayVisual";
 
     private readonly Dictionary<EntityUid, EntityUid> _overlays = new();
 
