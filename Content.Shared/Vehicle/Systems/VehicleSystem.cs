@@ -192,7 +192,7 @@ public sealed partial class VehicleSystem : EntitySystem
         if (entity.Comp.Operator is not { } currentOperator)
             return false;
 
-        ClearEyeTarget(currentOperator, entity.Owner);
+        ClearEyeTarget(currentOperator);
         if (_operatorQuery.TryComp(currentOperator, out var currentOperatorComponent))
         {
             var exitEvent = new OnVehicleExitedEvent(entity, currentOperator);
@@ -255,7 +255,7 @@ public sealed partial class VehicleSystem : EntitySystem
         if (_vehicleQuery.TryComp(vehicleUid, out var vehicle))
             return TryRemoveOperator((vehicleUid.Value, vehicle));
 
-        ClearEyeTarget(operatorEntity.Owner, vehicleUid.Value);
+        ClearEyeTarget(operatorEntity.Owner);
         UnblockHands(vehicleUid.Value, operatorEntity.Owner);
         ClearOperatorRelays(operatorEntity.Owner, vehicleUid.Value);
         operatorEntity.Comp.Vehicle = null;
@@ -263,9 +263,9 @@ public sealed partial class VehicleSystem : EntitySystem
         return true;
     }
 
-    private void ClearEyeTarget(EntityUid operatorUid, EntityUid vehicleUid)
+    private void ClearEyeTarget(EntityUid operatorUid)
     {
-        if (TryComp<EyeComponent>(operatorUid, out var eye) && eye.Target == vehicleUid)
+        if (TryComp<EyeComponent>(operatorUid, out var eye))
             _eye.SetTarget(operatorUid, null, eye);
     }
 
