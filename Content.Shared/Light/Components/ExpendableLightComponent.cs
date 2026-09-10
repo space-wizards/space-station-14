@@ -23,14 +23,14 @@ public sealed partial class ExpendableLightComponent : Component
 
     /// <summary>
     /// The ID of the light behavior that will be used when the light it lit.
-    /// For more information, see <see cref=" LightBehaviorSystem"/>.
+    /// For more information, see <see cref="LightBehaviorSystem"/>.
     /// </summary>
     [DataField]
     public string TurnOnBehaviourID = string.Empty;
 
     /// <summary>
     /// The ID of the light behavior that will be used when the light starts fading out.
-    /// For more information, see <see cref=" LightBehaviorSystem"/>.
+    /// For more information, see <see cref="LightBehaviorSystem"/>.
     /// </summary>
     [DataField]
     public string FadeOutBehaviourID = string.Empty;
