@@ -1,7 +1,7 @@
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using DrawDepthTag = Robust.Shared.GameObjects.DrawDepth;
 
-namespace Content.Client.Buckle;
+namespace Content.Shared.Buckle.Components;
 
 /// <summary>
 /// Defines extra visual layers shown while this strap is occupied.
@@ -22,7 +22,7 @@ public sealed partial class StrapOverlayComponent : Component
     public int DrawDepth;
 
     /// <summary>
-    /// Entity used to render the overlay.
+    /// Entity used to render the overlay on the client.
     /// </summary>
     public EntityUid? Proxy;
 }
