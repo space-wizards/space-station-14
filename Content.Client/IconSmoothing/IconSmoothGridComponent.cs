@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
@@ -86,7 +87,7 @@ public record struct IconChunkData()
 
     public void SetTileCache(int x, int y, byte value)
     {
-        DebugTools.Assert(x < MapGridComponent.DefaultChunkSize && y < MapGridComponent.DefaultChunkSize, "Vector2i passed exceeded the bounds of our jagged array!!!");
+        DebugTools.Assert(x < MapGridComponent.DefaultChunkSize && y < MapGridComponent.DefaultChunkSize, $"Coordinates ({x},{y}) did not fit within the bounds of a chunk");
         SetTileCache((byte)(x + (y << 4)), value);
     }
 
@@ -159,15 +160,8 @@ public record struct IconChunkData()
         return Count == 0;
     }
 
-    private short CountChunks()
+    private int CountChunks()
     {
-        short count = 0;
-        foreach (var value in Tiles)
-        {
-            if (value != null)
-                count++;
-        }
-
-        return count;
+        return Tiles.Count(x => x != null);
     }
 }

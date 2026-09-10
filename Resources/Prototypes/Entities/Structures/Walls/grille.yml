@@ -39,7 +39,7 @@
     key: grilles
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls, grilles, marble ]
+      mask: [ walls, grilles, doors, marble ]
       base: grille
       index: 0
   - type: Electrified

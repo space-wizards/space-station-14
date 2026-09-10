@@ -80,6 +80,7 @@ public partial class CornerSpriteSmoothing : ISpriteSmoothState
         var direction = i switch
         {
             // John Shitcode called he said it's joever.
+            // We can't rotate by 45 degrees by subtracting 1 because of Direction.Southwest's state being applied at the 7th iteration...
             2 => Direction.SouthEast,
             4 => Direction.NorthEast,
             6 => Direction.NorthWest,
@@ -112,6 +113,9 @@ public partial class CornerSpriteSmoothing : ISpriteSmoothState
     protected bool GetCorners(byte i, out Direction8Flag directions)
     {
         // The stupid way!!!
+        // We do it this way because we need to have 3 directions known before we can do a corner.
+        // This means we do corners every 2 iterations, but need 3 for the first meaning we have to start at 2
+        // As a result, we need to do the last iteration at position 7 instead of 8 when all directions have been iterated over.
         switch (i)
         {
             case 2:

@@ -47,6 +47,12 @@ public sealed partial class EdgeSpriteSmoothing : ISpriteSmoothState
         yield break;
     }
 
+    /// <summary>
+    /// The same as .ToString() for <see cref="Direction"/> but the string is lower case :P
+    /// </summary>
+    /// <param name="i">byte value of our Direction</param>
+    /// <returns>the suffix for our sprite state for this direction.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Throws if we pass a value that doesn't correspond to a cardinal direction</exception>
     public string GetSuffix(byte i)
     {
         return i switch

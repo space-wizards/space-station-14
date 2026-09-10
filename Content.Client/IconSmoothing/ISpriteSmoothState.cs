@@ -30,8 +30,17 @@ public partial interface ISpriteSmoothState
 
     ProtoId<ShaderPrototype>? Shader { get; protected set;  }
 
+    /// <summary>
+    /// Sets up the layers for this state.
+    /// Do not call this directly.
+    /// </summary>
     void InitializeStates(Entity<SpriteComponent> entity, SpriteSystem sprite);
 
+    /// <summary>
+    /// Initializes this state for the attached entity.
+    /// </summary>
+    /// <param name="entity">Entity we're initializing the states of</param>
+    /// <param name="sprite">SpriteSystem</param>
     void Initialize(Entity<SpriteComponent> entity, SpriteSystem sprite)
     {
         InitializeStates(entity, sprite);

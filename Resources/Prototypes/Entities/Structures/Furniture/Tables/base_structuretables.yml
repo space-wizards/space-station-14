@@ -23,10 +23,10 @@
   - type: Icon
     state: full
   - type: IconSmooth
-    key: state
+    key: table
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ state ]
+      mask: [ table ]
       base: state_
   - type: Climbable
   - type: Bonkable
