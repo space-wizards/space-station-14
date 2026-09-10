@@ -74,7 +74,7 @@ public sealed class HandOrganTest : GameTest
                 Assert.That(hands, Has.Count.EqualTo(expectedCount));
             }
 
-            var protos = new List<string>() { LeftHand, RightHand };
+            List<string> protos = [LeftHand, RightHand];
             foreach (var proto in protos)
             {
                 expectedCount++;
