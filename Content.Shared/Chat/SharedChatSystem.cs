@@ -311,6 +311,9 @@ public abstract partial class SharedChatSystem : EntitySystem
         return trimmed;
     }
 
+    /// <summary>
+    /// Injects a tag inside the first found instance of a specific <paramref name="outerTag"/> string in a <see cref="ChatMessage"/>.
+    /// </summary>
     public static string InjectTagInsideTag(ChatMessage message, string outerTag, string innerTag, string? tagValue = null, params (string Key, string Value)[]? tagParameters)
     {
         var rawmsg = message.WrappedMessage;
