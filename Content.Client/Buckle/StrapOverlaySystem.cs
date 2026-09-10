@@ -59,6 +59,6 @@ public sealed partial class StrapOverlaySystem : EntitySystem
     private void RemoveOverlay(Entity<StrapOverlayComponent> ent)
     {
         if (_overlays.Remove(ent, out var proxy))
-            TryQueueDel(proxy);
+            QueueDel(proxy);
     }
 }

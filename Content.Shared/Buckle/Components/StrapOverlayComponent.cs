@@ -1,3 +1,4 @@
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using DrawDepthTag = Robust.Shared.GameObjects.DrawDepth;
@@ -7,7 +8,7 @@ namespace Content.Shared.Buckle.Components;
 /// <summary>
 /// Defines extra visual layers shown while this strap is occupied.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class StrapOverlayComponent : Component
 {
     /// <summary>
