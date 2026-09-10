@@ -44,7 +44,11 @@ public sealed partial class StrapOverlaySystem : EntitySystem
         }
 
         var proxy = SpawnAttachedTo(ent.Comp.OverlayPrototype, ent.Owner.ToCoordinates());
-        var proxySprite = Comp<SpriteComponent>(proxy);
+        if (!TryComp<SpriteComponent>(proxy, out var proxySprite))
+        {
+            Del(proxy);
+            return;
+        }
 
         _sprite.SetDrawDepth((proxy, proxySprite), ent.Comp.OverlayDrawDepth);
 
