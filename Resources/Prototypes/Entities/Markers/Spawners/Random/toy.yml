@@ -41,6 +41,7 @@
     - id: PlushieVulp
     - id: PlushieSheep
     - id: PlushieSpaceSheep
+    - id: PlushieGocrazy
     - !type:GroupSelector
       children:
       - id: PlushieBee
