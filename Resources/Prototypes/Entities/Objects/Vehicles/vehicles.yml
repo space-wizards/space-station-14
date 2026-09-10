@@ -64,7 +64,7 @@
   - type: GravityAffected
   - type: Strap
     buckleOffset: "0,-0.05"
-  - type: StrapVisuals
+  - type: StrapOverlay
     drawDepth: OverMobs
     layers:
     - sprite: Objects/Vehicles/wheelchair.rsi
@@ -143,7 +143,7 @@
       #      max: 1
   - type: Strap
     buckleOffset: "0.01,0.15"
-  - type: StrapVisuals
+  - type: StrapOverlay
     drawDepth: OverMobs
     layers:
     - sprite: Objects/Vehicles/janicart.rsi

@@ -105,7 +105,7 @@
   components:
   - type: Sprite
     state: chair
-  - type: StrapVisuals
+  - type: StrapOverlay
     drawDepth: OverMobs
     layers:
     - sprite: Structures/Furniture/chairs.rsi
@@ -138,7 +138,7 @@
   components:
   - type: Sprite
     state: chair-greyscale
-  - type: StrapVisuals
+  - type: StrapOverlay
     drawDepth: OverMobs
     layers:
     - sprite: Structures/Furniture/chairs.rsi
@@ -152,7 +152,7 @@
   components:
   - type: Sprite
     state: stool
-  - type: StrapVisuals
+  - type: StrapOverlay
     drawDepth: OverMobs
     layers:
     - sprite: Structures/Furniture/chairs.rsi
@@ -172,7 +172,7 @@
   components:
   - type: Sprite
     state: bar
-  - type: StrapVisuals
+  - type: StrapOverlay
     drawDepth: OverMobs
     layers:
     - sprite: Structures/Furniture/chairs.rsi
@@ -192,7 +192,7 @@
   components:
   - type: Sprite
     state: brass_chair
-  - type: StrapVisuals
+  - type: StrapOverlay
     drawDepth: OverMobs
     layers:
     - sprite: Structures/Furniture/chairs.rsi
@@ -218,7 +218,7 @@
   components:
   - type: Sprite
     state: office-white
-  - type: StrapVisuals
+  - type: StrapOverlay
     drawDepth: OverMobs
     layers:
     - sprite: Structures/Furniture/chairs.rsi
@@ -238,7 +238,7 @@
   components:
   - type: Sprite
     state: office-dark
-  - type: StrapVisuals
+  - type: StrapOverlay
     drawDepth: OverMobs
     layers:
     - sprite: Structures/Furniture/chairs.rsi
@@ -255,7 +255,7 @@
   components:
   - type: Sprite
     state: comfy
-  - type: StrapVisuals
+  - type: StrapOverlay
     drawDepth: OverMobs
     layers:
     - sprite: Structures/Furniture/chairs.rsi
@@ -276,7 +276,7 @@
   components:
   - type: Sprite
     state: shuttle
-  - type: StrapVisuals
+  - type: StrapOverlay
     drawDepth: OverMobs
     layers:
     - sprite: Structures/Furniture/chairs.rsi
@@ -296,7 +296,7 @@
   components:
   - type: Sprite
     state: wooden
-  - type: StrapVisuals
+  - type: StrapOverlay
     drawDepth: OverMobs
     layers:
     - sprite: Structures/Furniture/chairs.rsi
@@ -329,7 +329,7 @@
   components:
   - type: Sprite
     state: ritual
-  - type: StrapVisuals
+  - type: StrapOverlay
     drawDepth: OverMobs
     layers:
     - sprite: Structures/Furniture/chairs.rsi
@@ -346,7 +346,7 @@
   components:
   - type: Sprite
     state: meat
-  - type: StrapVisuals
+  - type: StrapOverlay
     drawDepth: OverMobs
     layers:
     - sprite: Structures/Furniture/chairs.rsi
@@ -375,7 +375,7 @@
   components:
   - type: Sprite
     state: cursed
-  - type: StrapVisuals
+  - type: StrapOverlay
     drawDepth: OverMobs
     layers:
     - sprite: Structures/Furniture/chairs.rsi
@@ -437,7 +437,7 @@
     - state: folding_folded
       map: ["foldedLayer"]
       visible: false
-  - type: StrapVisuals
+  - type: StrapOverlay
     drawDepth: OverMobs
     layers:
     - sprite: Structures/Furniture/folding_chair.rsi
@@ -484,7 +484,7 @@
   components:
   - type: Sprite
     state: steel-bench
-  - type: StrapVisuals
+  - type: StrapOverlay
     drawDepth: OverMobs
     layers:
     - sprite: Structures/Furniture/chairs.rsi
@@ -505,7 +505,7 @@
   components:
   - type: Sprite
     state: card-stool
-  - type: StrapVisuals
+  - type: StrapOverlay
     drawDepth: OverMobs
     layers:
     - sprite: Structures/Furniture/chairs.rsi
@@ -536,7 +536,7 @@
   components:
   - type: Sprite
     state: wooden-bench
-  - type: StrapVisuals
+  - type: StrapOverlay
     drawDepth: OverMobs
     layers:
     - sprite: Structures/Furniture/chairs.rsi
@@ -566,7 +566,7 @@
   components:
   - type: Sprite
     state: xeno-chair
-  - type: StrapVisuals
+  - type: StrapOverlay
     drawDepth: OverMobs
     layers:
     - sprite: Structures/Furniture/chairs.rsi
