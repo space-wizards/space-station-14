@@ -391,6 +391,10 @@
   - type: Sprite
     sprite: Structures/Web/chair.rsi
     state: icon
+  - type: StrapOverlay
+    layers:
+    - sprite: Structures/Web/chair.rsi
+      state: icon-overlay
   - type: MeleeSound
     soundGroups:
       Brute:
