@@ -4,13 +4,10 @@ using Content.Shared.Alert;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
-using Content.Shared.Effects;
 using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
-using Content.Shared.Flash;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
-using Content.Shared.Rejuvenate;
 using Content.Shared.Screech;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
@@ -291,6 +288,12 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
                 }
             }
         }
+    }
+
+    [SubscribeLocalEvent]
+    public void OnIsSafeEvent(Entity<ChangelingHorrorComponent> ent, ref IsIdentitySafeEvent args)
+    {
+        args.IsSafe = false;
     }
     #endregion
     #region helpers
