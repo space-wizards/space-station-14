@@ -56,36 +56,13 @@ public sealed partial class CargoSystem
         EntityUid? approvingConsole
     )
     {
-        if (approvingConsole == null)
+        if (approvingConsole is null)
             return false;
 
-        if (!TryGetLinkedConsoles(uid, out var consoles))
-            return false;
-
-        return consoles.Any(console => console.Owner == approvingConsole);
-    }
-
-    private bool TryGetLinkedConsoles(
-        EntityUid uid,
-        [NotNullWhen(true)] out List<Entity<CargoOrderConsoleComponent>>? consoles
-    )
-    {
-        consoles = new();
         if (!TryComp<DeviceLinkSinkComponent>(uid, out var sinkComponent))
-        {
-            consoles = null;
             return false;
-        }
 
-        consoles = new();
-        foreach (var linked in sinkComponent.LinkedSources)
-        {
-            if (!TryComp<CargoOrderConsoleComponent>(linked, out var consoleComp))
-                continue;
-            consoles.Add((linked, consoleComp));
-        }
-
-        return consoles.Count > 0;
+        return sinkComponent.LinkedSources.Any(ent => ent == approvingConsole.Value);
     }
 
     private void UpdateTelepad(float frameTime)
@@ -112,7 +89,7 @@ public sealed partial class CargoSystem
                 continue;
             }
 
-            if (comp.CurrentOrders.Count == 0 || !TryGetLinkedConsoles(uid, out var consoles))
+            if (comp.CurrentOrders.Count == 0)
             {
                 comp.Accumulator += comp.Delay;
                 continue;
