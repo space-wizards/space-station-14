@@ -4,4 +4,4 @@ namespace Content.Shared.Throwing;
 /// Raised on someone when they try to catch an item.
 /// </summary>
 [ByRefEvent]
-public record struct CatchAttemptEvent(EntityUid Item, float CatchChance, bool Cancelled = false);
+public record struct CatchAttemptEvent(EntityUid User, EntityUid Item, float CatchChance, bool Cancelled = false);

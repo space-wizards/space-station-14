@@ -25,12 +25,12 @@ public abstract partial class SharedNightVisionSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnRefreshStatusEffect(Entity<NightVisionComponent> ent, ref StatusEffectRelayedEvent<RefreshNightVisionEvent> args)
+    private void OnRefreshStatusEffect(Entity<NightVisionComponent> ent, ref RefreshNightVisionEvent args)
     {
         if (!ent.Comp.Enabled)
             return;
 
-        args.Args.Entities.Add(ent);
+        args.Entities.Add(ent);
     }
 
     [SubscribeLocalEvent]

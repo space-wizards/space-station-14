@@ -46,16 +46,16 @@ public sealed partial class FlashSystem : SharedFlashSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnPlayerAttached(Entity<FlashedStatusEffectComponent> ent, ref StatusEffectRelayedEvent<LocalPlayerAttachedEvent> args)
+    private void OnPlayerAttached(Entity<FlashedStatusEffectComponent> ent, ref LocalPlayerAttachedEvent args)
     {
         _overlay.RequestScreenTexture = true;
         _overlayMan.AddOverlay(_overlay);
     }
 
     [SubscribeLocalEvent]
-    private void OnPlayerDetached(Entity<FlashedStatusEffectComponent> ent, ref StatusEffectRelayedEvent<LocalPlayerDetachedEvent> args)
+    private void OnPlayerDetached(Entity<FlashedStatusEffectComponent> ent, ref LocalPlayerDetachedEvent args)
     {
-        if (_player.LocalEntity is null || _statusEffects.HasEffectComp<FlashedStatusEffectComponent>(_player.LocalEntity.Value))
+        if (_player.LocalEntity is not { } mob || _statusEffects.HasEffectComp<FlashedStatusEffectComponent>(mob))
             return;
 
         _overlay.ScreenshotTexture = null;
