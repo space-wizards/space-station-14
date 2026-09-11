@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.Interactable;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Instruments;
@@ -27,11 +28,12 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
     private readonly BandMidiSource _bandSource = new();
     private readonly InputMidiSource _inputSource = new();
 
-    private readonly ChannelsControl _channelsControl = new();
     private readonly MidiCollectionUtilsControl _midiCollectionUtilsControl = new();
     private readonly MinVolumeControl _minVolumeControl = new();
 
     private InstrumentMenu? _instrumentMenu;
+    private ChannelsControl? _channelsControl;
+
     private string _percussionLabel = "";
 
     public InstrumentBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
@@ -63,13 +65,13 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         _inputSource.OpenInputRequest += OnOpenInputRequest;
         _inputSource.CloseInputRequest += OnCloseInputRequest;
 
-        _channelsControl.ChannelsUpdateRequest += OnChannelsUpdateRequest;
-        _channelsControl.SwitchFilteredChannel += OnSwitchFilteredChannel;
-
         _minVolumeControl.MinVolumeChanged += OnMinVolumeChanged;
         _minVolumeControl.MinVolume = instrument.MinVolume;
 
         _instrumentMenu = this.CreateWindow<InstrumentMenu>();
+        _channelsControl = _instrumentMenu.GetChannelsControl();
+        _channelsControl.ChannelsUpdateRequest += OnChannelsUpdateRequest;
+        _channelsControl.SwitchFilteredChannel += OnSwitchFilteredChannel;
 
         if (EntMan.TryGetComponent<MetaDataComponent>(Owner, out var metaData))
             _instrumentMenu.Title = metaData.EntityName;
@@ -84,9 +86,6 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
 
         // Initialize controls used to configure various system parameters.
         // Append any additional configuration controls here.
-        _instrumentMenu.AddConfigurationControl(
-            _loc.GetString("instruments-component-menu-channels-label"),
-            _channelsControl);
         _instrumentMenu.AddConfigurationControl(
             _loc.GetString("instruments-component-midi-file-collection-label"),
             _midiCollectionUtilsControl);
@@ -297,8 +296,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         if (!EntMan.TryGetComponent<InstrumentComponent>(Owner, out var instrument))
             return;
 
-        List<MidiChannelInfo> channelSettings = [];
-
+        var channelSettings = new List<MidiChannelInfo>();
         var activeInstrument = ResolveActiveInstrument(instrument);
 
         for (var i = 0; i < RobustMidiEvent.MaxChannels; i++)
@@ -324,11 +322,14 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
                 channelUsed = true;
             }
 
-            if (channelUsed)
-                channelSettings.Add(new MidiChannelInfo(i, channelLabel, state));
+            List<MidiTrackInfo> tracksOnChannel = [];
+            if (_fileSource.CurrentMidiFileInfo != null)
+                tracksOnChannel.AddRange(_fileSource.CurrentMidiFileInfo.Tracks.Where(track => track.UsedChannels[i]));
+
+            channelSettings.Add(new MidiChannelInfo(i, channelLabel, state, tracksOnChannel.ToArray(), channelUsed));
         }
 
-        _channelsControl.SetChannels(channelSettings.ToArray());
+        _channelsControl?.SetChannels(channelSettings.ToArray());
     }
 }
 
@@ -340,4 +341,6 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
 public readonly record struct MidiChannelInfo(
     int Id,
     string Label,
-    bool FilterState);
+    bool FilterState,
+    MidiTrackInfo[] TracksOnChannel,
+    bool ChannelUsed = false);

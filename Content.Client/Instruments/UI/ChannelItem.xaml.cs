@@ -3,6 +3,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Input;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Instruments.UI;
 
@@ -45,6 +46,30 @@ public sealed partial class ChannelItem : Control
         set => ChannelNameLabel.Text = value;
     }
 
+    public string? ChannelInfo
+    {
+        get;
+        set
+        {
+            field = value;
+            var formatted = new FormattedMessage();
+            formatted.AddMarkupOrThrow(value ?? string.Empty);
+            ChannelInfoLabel.SetMessage(formatted);
+            UpdateInfoLabel();
+        }
+    }
+
+    public bool ShowChannelInfo
+    {
+        get;
+        set
+        {
+            field = value;
+            UpdateInfoLabel();
+        }
+    }
+
+
     public ChannelItem()
     {
         RobustXamlLoader.Load(this);
@@ -67,5 +92,10 @@ public sealed partial class ChannelItem : Control
     private void OnChannelEnableSwitchButtonPressed(BaseButton.ButtonEventArgs obj)
     {
         SwitchFilteredChannel?.Invoke(ChannelId, ChannelState);
+    }
+
+    private void UpdateInfoLabel()
+    {
+        ChannelInfoLabel.Visible = ShowChannelInfo && !string.IsNullOrEmpty(ChannelInfo);
     }
 }
