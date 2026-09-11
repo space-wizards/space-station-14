@@ -18,7 +18,9 @@
     - state: walkietalkie
     - map: [enum.RadioDeviceVisualLayers.Broadcasting]
       sprite: Objects/Devices/communication.rsi
-      state: walkietalkie-off
+      state: walkietalkie-on
+      shader: unshaded
+      visible: false
     - map: [enum.RadioDeviceVisualLayers.Speaker]
       sprite: Objects/Devices/communication.rsi
       state: walkietalkie-active
@@ -29,8 +31,8 @@
     visuals:
       enum.RadioDeviceVisuals.Broadcasting:
         enum.RadioDeviceVisualLayers.Broadcasting:
-          True: { state: walkietalkie-on, shader: unshaded }
-          False: { state: walkietalkie-off, shader: shaded }
+          True: { visible: true }
+          False: { visible: false }
       enum.RadioDeviceVisuals.Speaker:
         enum.RadioDeviceVisualLayers.Speaker:
           True: { visible: true }
