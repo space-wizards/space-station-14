@@ -1,5 +1,5 @@
 - type: entity
-  name: arm blade
+  name: armblade
   parent: BaseItem
   id: Armblade
   description: A grotesque blade made out of bone and flesh that can pry open doors and cleaves through people as a hot knife through butter.
@@ -33,6 +33,7 @@
 - type: entity
   parent: Armblade
   id: ArmbladeDull
+  suffix: Dull
   components:
   - type: MeleeWeapon
     damage:

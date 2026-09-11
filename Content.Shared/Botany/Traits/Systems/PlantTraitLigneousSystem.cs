@@ -46,9 +46,9 @@ public sealed partial class PlantTraitLigneousSystem : EntitySystem
     }
 
     [SubscribeLocalEvent(before: [typeof(PlantHarvestSystem)])]
-    private void OnDoHarvest(Entity<PlantTraitLigneousComponent> ent, ref DoHarvestEvent args)
+    private void OnHarvestAttempt(Entity<PlantTraitLigneousComponent> ent, ref PlantHarvestAttemptEvent args)
     {
         _popup.PopupCursor(Loc.GetString("plant-component-ligneous-cant-harvest-message"), args.User);
-        args.Cancel();
+        args.Cancelled = true;
     }
 }
