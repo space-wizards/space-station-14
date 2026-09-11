@@ -224,7 +224,10 @@ public sealed partial class CargoSystem
             order.SetApproverData(_identity.GetIdentityShortInfo(player, ent.Owner));
         }
 
-        var ev = new FulfillCargoOrderEvent((station.Value, stationData), order, ent);
+        order.ApprovingConsole = GetNetEntity(uid);
+        order.Approved = true;
+
+        var ev = new FulfillCargoOrderEvent((station.Value, stationData), order);
         RaiseLocalEvent(ref ev);
         ev.FulfillmentEntity ??= station.Value;
 
@@ -237,11 +240,12 @@ public sealed partial class CargoSystem
                 _popup.PopupCursor(Loc.GetString("cargo-console-unfulfilled"), args.Actor);
                 PlayDenySound(ent);
                 order.Approver = null;
+                order.ApprovingConsole = null;
+                order.Approved = false;
                 return;
             }
         }
 
-        order.Approved = true;
         _audio.PlayPvs(ApproveSound, ent.Owner);
 
         if (!emagged)
