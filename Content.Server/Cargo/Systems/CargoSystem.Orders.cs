@@ -224,7 +224,7 @@ public sealed partial class CargoSystem
             order.SetApproverData(_identity.GetIdentityShortInfo(player, ent.Owner));
         }
 
-        order.ApprovingConsole = GetNetEntity(uid);
+        order.ApprovingConsole = GetNetEntity(ent.Owner);
         order.Approved = true;
 
         var ev = new FulfillCargoOrderEvent((station.Value, stationData), order);
