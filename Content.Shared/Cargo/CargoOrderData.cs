@@ -54,7 +54,7 @@ namespace Content.Shared.Cargo
         /// <summary>
         /// The console that approved the order.
         /// </summary>
-        [ViewVariables]
+        [DataField]
         public NetEntity? ApprovingConsole { get; set; }
 
         /// <summary>
