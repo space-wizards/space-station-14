@@ -1,5 +1,5 @@
-changeling-catalog-arm-blade-name = Retractable Arm Blade
-changeling-catalog-arm-blade-desc = Transform your arm into a terrifying flesh blade. Can be toggled.
+changeling-catalog-arm-blade-name = Retractable Armblade
+changeling-catalog-arm-blade-desc = Transform your arm into a terrifying blade made of flesh and bone. Can double as means of prying open powered doors. Can be toggled.
 
 changeling-catalog-flesh-clothing-name = Flesh Clothing
 changeling-catalog-flesh-clothing-desc = Your body's surface will adapt to mirror the clothing of any person you are transforming into. However, these clothing items are non-functional and will make you easy to identify as a changeling if someone tries to remove them. Can be toggled.
@@ -27,6 +27,9 @@ changeling-catalog-hallucinogenic-sting-desc = Causes the target to get high and
 
 changeling-catalog-mute-sting-name = Mute Sting
 changeling-catalog-mute-sting-desc = Causes the target to be incapable of speech. Imperceptible until the target tries to speak. Can be used on self.
+
+changeling-catalog-armblade-sting-name = Armblade Sting
+changeling-catalog-armblade-sting-desc = Causes the target to spontaneously grow a dulled armblade after a lengthy delay. Instant with increased duration when used on corpses. Can be used on self.
 
 changeling-catalog-screech-name = Screech [TEMPORARY]
 changeling-catalog-screech-desc = We let out a powerful screech that disarms people who hear it without adequate ear protection. THIS ACTION WILL BE MOVED TO THE HORROR FORM WHEN IT IS IMPLEMENTED.

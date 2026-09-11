@@ -551,8 +551,11 @@ public abstract partial class SharedHandsSystem
     /// Unremoveable items will cause a hand to not be freeable.
     /// </summary>
     /// <param name="except">The hand this entity is in will be ignored when counting.</param>
-    public int CountFreeableHands(Entity<HandsComponent> hands, EntityUid? except = null)
+    public int CountFreeableHands(Entity<HandsComponent?> hands, EntityUid? except = null)
     {
+        if (!Resolve(hands, ref hands.Comp, false))
+            return 0;
+
         var freeable = 0;
         foreach (var name in hands.Comp.Hands.Keys)
         {

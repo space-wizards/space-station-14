@@ -2,7 +2,7 @@
   name: stun baton
   parent: [BaseItem, BaseSecurityContraband]
   id: Stunbaton
-  description: A stun baton for incapacitating people with. Actively harming with this is considered bad tone.
+  description: A stun baton for incapacitating people with. Has advanced wrist strap technology to prevent cadets accidentally dropping it.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/stunbaton.rsi
@@ -34,6 +34,7 @@
       types:
         Blunt: 0
   - type: MeleeWeapon
+    attackRate: 1.3
     wideAnimationRotation: -135
     damage:
       types:
@@ -45,12 +46,12 @@
   - type: MeleeBatteryHitsLeft
   - type: StaminaDamageOnHitRequiresToggle
   - type: StaminaDamageOnHitRequiresCharge
-    requiredCharge: 50
+    requiredCharge: 40
   - type: StaminaDamageOnHit
-    damage: 35
+    damage: 23
     sound: /Audio/Weapons/egloves.ogg
   - type: StaminaDamageOnCollide
-    damage: 35
+    damage: 23
     sound: /Audio/Weapons/egloves.ogg
   - type: LandAtCursor # it deals stamina damage when thrown
   - type: Battery
@@ -99,6 +100,7 @@
   - type: Tag
     tags:
     - Stunbaton
+  - type: PreventForcedThrow
 
 - type: entity
   name: truncheon

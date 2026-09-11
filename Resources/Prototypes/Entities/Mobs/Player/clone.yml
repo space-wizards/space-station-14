@@ -197,6 +197,7 @@
   - PlantTraitLigneous
   - PlantTraitScream
   - PlantTraitUnviable
+  - PlantTraitSeedless
 
 # for plant lifecycle clones
 - type: cloningSettings
@@ -205,6 +206,5 @@
   components:
   # traits
   - PlantTraitSampled
-  - PlantTraitSeedless
   eventComponents:
   - PlantHolder
