@@ -137,6 +137,14 @@
   - type: AccessReader
     access: [["Cargo"]]
 
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsCargoSalvage
+  suffix: Cargo, Salvage, Locked
+  components:
+  - type: AccessReader
+    access: [["Cargo"], ["Salvage"]]
+
 # Engineering
 - type: entity
   parent: DoorElectronics
@@ -153,6 +161,14 @@
   components:
   - type: AccessReader
     access: [["Atmospherics"]]
+
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsAtmosphericsEngineering
+  suffix: Atmospherics, Engineering, Locked
+  components:
+  - type: AccessReader
+    access: [["Atmospherics"], ["Engineering"]]
 
 - type: entity
   parent: DoorElectronics
