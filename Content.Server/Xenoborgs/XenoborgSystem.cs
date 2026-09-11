@@ -3,7 +3,6 @@ using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Silicons.Borgs;
 using Content.Shared.Destructible;
-using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
@@ -11,6 +10,7 @@ using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Xenoborgs.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Xenoborgs;
 
@@ -22,6 +22,18 @@ public sealed partial class XenoborgSystem : EntitySystem
     [Dependency] private XenoborgsRuleSystem _xenoborgsRule = default!;
 
     private static readonly Color XenoborgBriefingColor = Color.BlueViolet;
+    /// <summary>
+    /// The mindrole associated with the xenoborg
+    /// </summary>
+    private static readonly EntProtoId<MindRoleComponent> MindRoleXenoborg = "MindRoleXenoborg";
+    /// <summary>
+    /// The text that is sent when you become a xenoborg
+    /// </summary>
+    private static readonly LocId BriefingTextXenoborg = "xenoborgs-welcome";
+    /// <summary>
+    /// Briefing sound when you become a xenoborg
+    /// </summary>
+    private static readonly SoundSpecifier BriefingSoundXenoborg = new SoundPathSpecifier("/Audio/Ambience/Antag/xenoborg_start.ogg");
 
     public override void Initialize()
     {
@@ -82,15 +94,15 @@ public sealed partial class XenoborgSystem : EntitySystem
 
     private void OnXenoborgMindAdded(EntityUid ent, XenoborgComponent comp, MindAddedMessage args)
     {
-        _roles.MindAddRole(args.Mind, comp.MindRole, silent: true);
+        _roles.MindAddRole(args.Mind, MindRoleXenoborg, silent: true);
 
         if (!TryComp<ActorComponent>(ent, out var actorComp))
             return;
 
         _antag.SendBriefing(actorComp.PlayerSession,
-            Loc.GetString(comp.BriefingText),
+            Loc.GetString(BriefingTextXenoborg),
             XenoborgBriefingColor,
-            comp.BriefingSound
+            BriefingSoundXenoborg
         );
     }
 
@@ -98,6 +110,6 @@ public sealed partial class XenoborgSystem : EntitySystem
     {
         // We don't need to update the mind if the mind is being fully detached!
         if (args.TransferEntity != null)
-            _roles.MindRemoveRole(args.Mind.Owner, comp.MindRole);
+            _roles.MindRemoveRole(args.Mind.Owner, MindRoleXenoborg);
     }
 }
