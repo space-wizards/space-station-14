@@ -98,6 +98,25 @@
     magState: mag
     steps: 1
     zeroVisible: true
+  - type: ItemSlotVisuals
+    slotVisuals:
+      gun_magazine:
+        layer: Fill0
+        slotName: gun_magazine
+        iconVisuals:
+          filled:
+          - state: null
+        inhandVisuals:
+          left:
+          - state: inhand-left-mag
+          right:
+          - state: inhand-right-mag
+        clothingVisuals:
+          back:
+          - state: equipped-back-mag
+          suitstorage:
+          - state: equipped-suitstorage-mag
+
   - type: Appearance
 
 - type: entity

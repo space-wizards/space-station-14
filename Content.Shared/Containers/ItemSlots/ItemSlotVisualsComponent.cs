@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Chemistry.Components;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Hands.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Serialization;
 using Robust.Shared.GameStates;
@@ -53,16 +54,18 @@ public partial struct ItemSlotVisuals
     public Dictionary<string, List<PrototypeLayerData>> IconVisuals = new();
 
     /// <summary>
-    /// The name used for the Inhand Fills.
+    /// Layers to add to the sprite of the player that is holding this entity (while the component has an item inserted).
+    /// Works in tandem with Layer to show multiple layers at once.
     /// </summary>
     [DataField]
-    public string? InHandsFillBaseName = null;
+    public Dictionary<HandLocation, List<PrototypeLayerData>> InhandVisuals = new();
 
     /// <summary>
-    /// The name used for the Back/Belt Fills.
+    /// Layers to add to the sprite of the player wearing this entity (while the component has an item inserted).
+    /// Works in tandem with Layer to show multiple layers at once.
     /// </summary>
     [DataField]
-    public string? EquippedFillBaseName = null;
+    public Dictionary<string, List<PrototypeLayerData>> ClothingVisuals = new();
 }
 
 [Serializable, NetSerializable]
