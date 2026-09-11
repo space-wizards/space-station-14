@@ -52,13 +52,18 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
     private bool _isMidiFileDialogueWindowOpen;
     private bool _selectedInternally;
     private float _timeSinceLastRecoverAttempt;
-    private MidiFileInfo? _currentMidiFileInfo;
 
     /// <summary>
     /// The Instrument playing the tracks. This is needed for the UI to read out current track time.
     /// on <see cref="FrameUpdate" />.
     /// </summary>
     public Entity<InstrumentComponent> Instrument;
+
+    /// <summary>
+    /// MidiFileInfo of the current MIDI file being played or null if playback is halted.
+    /// </summary>
+    public MidiFileInfo? CurrentMidiFileInfo;
+
 
     private bool IsShuffle => ShuffleButton.Pressed;
     private string CurrentFilter => FilterBar.Text;
@@ -129,18 +134,18 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         }
         else if (Instrument.Comp.IsRendererAlive)
         {
-            if (_currentMidiFileInfo?.Header == null)
+            if (CurrentMidiFileInfo?.Header == null)
             {
                 TimeLabel.Text = "--.--/--.--";
                 return;
             }
 
             var currentTrackPositionInMinutes = MidiParser.MidiParser.CalculateMinutePositionFromTicks(
-                _currentMidiFileInfo.Header.TimeBase,
+                CurrentMidiFileInfo.Header.TimeBase,
                 Instrument.Comp.PlayerTick,
-                _currentMidiFileInfo.Tracks[0].TempoMap);
+                CurrentMidiFileInfo.Tracks[0].TempoMap);
 
-            var minutesPerSliderStep = _currentMidiFileInfo.PlayTimeMinutes / PositionSliderSteps;
+            var minutesPerSliderStep = CurrentMidiFileInfo.PlayTimeMinutes / PositionSliderSteps;
             var currentTrackPositionInSliderSteps =
                 (int)Math.Floor(currentTrackPositionInMinutes / minutesPerSliderStep);
 
@@ -149,7 +154,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
             PlaybackSlider.SetValueWithoutEvent(currentTrackPositionInSliderSteps);
 
             var totalTime =
-                TimeSpan.FromMinutes(_currentMidiFileInfo.PlayTimeMinutes);
+                TimeSpan.FromMinutes(CurrentMidiFileInfo.PlayTimeMinutes);
             var currentTime =
                 TimeSpan.FromMinutes(currentTrackPositionInMinutes);
 
@@ -302,14 +307,14 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
 
     private void InvokeTrackPositionChangeRequest(int sliderValue)
     {
-        if (_currentMidiFileInfo?.Header == null)
+        if (CurrentMidiFileInfo?.Header == null)
             return;
 
-        var minutesPerSliderStep = _currentMidiFileInfo.PlayTimeMinutes / PositionSliderSteps;
+        var minutesPerSliderStep = CurrentMidiFileInfo.PlayTimeMinutes / PositionSliderSteps;
         var currentTrackPositionInTicks = MidiParser.MidiParser.CalculateTickPositionFromMinutes(
-            _currentMidiFileInfo.Header.TimeBase,
+            CurrentMidiFileInfo.Header.TimeBase,
             minutesPerSliderStep * sliderValue,
-            _currentMidiFileInfo.Tracks[0].TempoMap);
+            CurrentMidiFileInfo.Tracks[0].TempoMap);
 
         TrackPositionChangeRequest?.Invoke(currentTrackPositionInTicks);
     }
@@ -354,6 +359,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         StopPlayingRequest?.Invoke();
         ResetTrackIndicators();
         UpdateFileRemoveButton();
+        CurrentMidiFileInfo = null;
     }
 
     private void StartPlaying(ItemList.Item item)
@@ -369,7 +375,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         StartPlayingRequest?.Invoke(midiData);
         if (MidiParser.MidiParser.TryParseMidi(midiData, out var info, out _))
         {
-            _currentMidiFileInfo = info;
+            CurrentMidiFileInfo = info;
             // There is some more info that might be nice to display somehow. (Format, Track list, etc.)
         }
 
