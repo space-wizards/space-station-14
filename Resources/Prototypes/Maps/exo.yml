@@ -39,11 +39,12 @@
             AtmosphericTechnician: [ 2, 2 ]
             StationEngineer: [ 4, 4 ]
             TechnicalAssistant: [ 2, 2 ]
-            #medical (8-8)
+            #medical (9-9)
             Chemist: [ 2, 2 ]
             MedicalDoctor: [ 3, 3 ]
             Paramedic: [ 1, 1 ]
             MedicalIntern: [ 2, 2 ]
+            Psychologist: [ 1, 1 ]
             #science (6-6)
             Scientist: [ 4, 4 ]
             ResearchAssistant: [ 2, 2 ]
