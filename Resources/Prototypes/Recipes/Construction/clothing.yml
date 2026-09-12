@@ -87,6 +87,12 @@
 
 - type: construction
   parent: BaseClothing
+  id: ClothingEyesGlassesMesonDiagnostic
+  graph: GlassesEngiHUD
+  targetNode: glassesEngi
+
+- type: construction
+  parent: BaseClothing
   id: ClothingBeltQuiver
   graph: Quiver
   targetNode: Quiver
