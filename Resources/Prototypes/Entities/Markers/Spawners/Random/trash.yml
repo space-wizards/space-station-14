@@ -19,6 +19,10 @@
       - id: FoodPacketSemkiTrash
       - id: FoodPacketSusTrash
       - id: FoodPacketSyndiTrash
+      - id: FoodPacketMothTrash
+      - id: FoodPacketMothSpheresTrash
+      - id: FoodPacketPuffTrash
+      - id: FoodPacketMothCakesTrash
       - id: BrokenBottle
     - !type:GroupSelector
       weight: 5

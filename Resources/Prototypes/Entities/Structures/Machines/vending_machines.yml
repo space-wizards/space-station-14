@@ -1093,6 +1093,36 @@
     color: "#737785"
 
 - type: entity
+  parent: VendingMachine
+  id: VendingMachineMothSnacks
+  name: Vend-O-Moth
+  description: Any moth's second favorite vending machine.
+  components:
+  - type: VendingMachine
+    pack: MothSnackInventory
+  - type: VendingMachineVisuals
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
+  - type: DatasetVocalizer
+    dataset: MothVendAds
+  - type: SpeakOnUIClosed
+    pack: GenericVendGoodbyes
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/snack-moth.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.8
+    energy: 3.0
+    color: "#e5c484"
+
+- type: entity
   parent: VendingMachineSnack
   id: VendingMachineSnackBlue
   suffix: Blue
