@@ -58,7 +58,7 @@ public sealed partial class RadiationDebugOverlay : Overlay
             if (ray.ReachedDestination)
             {
                 var screenCenter = args.ViewportControl.WorldToScreen(ray.Destination);
-                handle.DrawString(_font, screenCenter, ray.Rads.ToString("F2"), 2f, Color.White);
+                handle.DrawString(_font, screenCenter, ray.Rads.ToString("F2"), 2f, Color.White, TextOutline.Default);
             }
 
             foreach (var (netGrid, blockers) in ray.Blockers)
@@ -72,7 +72,7 @@ public sealed partial class RadiationDebugOverlay : Overlay
                 {
                     var worldPos = _mapSystem.GridTileToWorldPos(gridUid, grid, tile);
                     var screenCenter = args.ViewportControl.WorldToScreen(worldPos);
-                    handle.DrawString(_font, screenCenter, rads.ToString("F2"), 1.5f, Color.White);
+                    handle.DrawString(_font, screenCenter, rads.ToString("F2"), 1.5f, Color.White, TextOutline.Default);
                 }
             }
         }

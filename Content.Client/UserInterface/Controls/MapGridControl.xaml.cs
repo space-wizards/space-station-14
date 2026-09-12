@@ -225,7 +225,7 @@ public partial class MapGridControl : LayoutContainer
         var signalText = Loc.GetString("shuttle-console-no-signal");
         var dimensions = handle.GetDimensions(_largerFont, signalText, 1f);
         var position = MidPointVector - dimensions / 2f;
-        handle.DrawString(_largerFont, position, Loc.GetString("shuttle-console-no-signal"), greyColor);
+        handle.DrawString(_largerFont, position, Loc.GetString("shuttle-console-no-signal"), 1, greyColor, TextOutline.Default);
     }
 
     protected override void Draw(DrawingHandleScreen handle)
