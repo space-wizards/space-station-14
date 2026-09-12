@@ -69,7 +69,6 @@ public sealed partial class ChannelItem : Control
         }
     }
 
-
     public ChannelItem()
     {
         RobustXamlLoader.Load(this);

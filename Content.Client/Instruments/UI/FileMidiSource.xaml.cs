@@ -64,7 +64,6 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
     /// </summary>
     public MidiFileInfo? CurrentMidiFileInfo;
 
-
     private bool IsShuffle => ShuffleButton.Pressed;
     private string CurrentFilter => FilterBar.Text;
 

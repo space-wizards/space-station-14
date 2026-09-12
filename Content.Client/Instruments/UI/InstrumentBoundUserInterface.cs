@@ -33,7 +33,6 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
 
     private InstrumentMenu? _instrumentMenu;
     private ChannelsControl? _channelsControl;
-
     private string _percussionLabel = "";
 
     public InstrumentBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
