@@ -148,6 +148,9 @@
     sprite: Objects/Weapons/Guns/Cannons/syringe_gun.rsi
     layers:
     - state: syringe_gun
+  - type: Tag
+    tags:
+    - Sidearm
   - type: Storage
     maxItemSize: Normal
     grid:

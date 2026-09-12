@@ -27,6 +27,9 @@
   - type: GuideHelp
     guides:
     - Forensics
+  - type: Tag
+    tags:
+      - Scanner
   - type: StealTarget
     stealGroup: ForensicScanner
 
