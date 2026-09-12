@@ -44,20 +44,18 @@ public sealed partial class DeviceLinkSourceComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class DeviceLinkSourceComponentState : ComponentState
+public sealed class DeviceLinkSourceComponentState(
+    Dictionary<ProtoId<SourcePortPrototype>, HashSet<NetEntity>> outputs,
+    Dictionary<ProtoId<SourcePortPrototype>, bool> lastSignals,
+    Dictionary<NetEntity, HashSet<(ProtoId<SourcePortPrototype> Source, ProtoId<SinkPortPrototype> Sink)>> linkedPorts,
+    HashSet<ProtoId<SourcePortPrototype>> ports) : ComponentState
 {
     // This component state exists just because of this   V   nested EntityUid hashset. Someone send help.
-    public Dictionary<ProtoId<SourcePortPrototype>, HashSet<NetEntity>> Outputs;
-    public Dictionary<ProtoId<SourcePortPrototype>, bool> LastSignals;
-    public Dictionary<NetEntity, HashSet<(ProtoId<SourcePortPrototype> Source, ProtoId<SinkPortPrototype> Sink)>> LinkedPorts;
+    public Dictionary<ProtoId<SourcePortPrototype>, HashSet<NetEntity>> Outputs = outputs;
 
-    public DeviceLinkSourceComponentState(
-        Dictionary<ProtoId<SourcePortPrototype>, HashSet<NetEntity>> outputs,
-        Dictionary<ProtoId<SourcePortPrototype>, bool> lastSignals,
-        Dictionary<NetEntity, HashSet<(ProtoId<SourcePortPrototype> Source, ProtoId<SinkPortPrototype> Sink)>> linkedPorts)
-    {
-        Outputs = outputs;
-        LastSignals = lastSignals;
-        LinkedPorts = linkedPorts;
-    }
+    public Dictionary<ProtoId<SourcePortPrototype>, bool> LastSignals = lastSignals;
+
+    public Dictionary<NetEntity, HashSet<(ProtoId<SourcePortPrototype> Source, ProtoId<SinkPortPrototype> Sink)>> LinkedPorts = linkedPorts;
+
+    public HashSet<ProtoId<SourcePortPrototype>> Ports = ports;
 }

@@ -12,7 +12,7 @@ public sealed partial class DeviceLinkSinkComponent : Component
     /// <summary>
     /// The ports this sink has
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public HashSet<ProtoId<SinkPortPrototype>> Ports = new();
 
     /// <summary>

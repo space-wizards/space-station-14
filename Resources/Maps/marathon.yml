@@ -69156,7 +69156,6 @@ entities:
       pos: -21.5,-39.5
     - type: FaxMachine
       name: Engineering
-      destinationAddress: Engineering
   - uid: 10200
     components:
     - type: Transform

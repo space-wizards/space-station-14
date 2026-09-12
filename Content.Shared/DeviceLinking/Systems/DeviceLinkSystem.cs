@@ -33,7 +33,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
             netOutputs.Add(key, set);
         }
 
-        args.State = new DeviceLinkSourceComponentState(netOutputs, ent.Comp.LastSignals, GetNetEntityDictionary(ent.Comp.LinkedPorts));
+        args.State = new DeviceLinkSourceComponentState(netOutputs, ent.Comp.LastSignals, GetNetEntityDictionary(ent.Comp.LinkedPorts), ent.Comp.Ports);
     }
 
     [SubscribeLocalEvent]
