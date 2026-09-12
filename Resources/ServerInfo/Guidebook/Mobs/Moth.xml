@@ -5,11 +5,17 @@
     <GuideEntityEmbed Entity="AppearanceMoth" Caption=""/>
   </Box>
 
-  They can eat cotton, fabrics and clothing, but virtually none of the food that others would consider "edible". They prefer a somewhat lower temperature range than humans.
-  Their Insect Blood can't be metabolised from Iron like normal blood.
+  ## General Information
 
-  Their wings give them better acceleration if there is no gravity on the station, but they still can't move without equipment when floating out in space.
+  Moths' wings give them [color=lightgreen]better acceleration in zero-gravity environments[/color], though they still can't move without equipment or a nearby surface
+  when floating out in space.
 
-  They take [color=#1e90ff]50% less Cold damage[/color] but [color=#ffa500]100% more Heat damage, and catch on fire more easily[/color].
+  The moth digestive system [color=palevioletred]can only process cotton and fiber-based items[/color] (such as cloth, clothing, towels, and MRE wrappers),
+  rather than any food that other species would consider edible.
+
+  Their insect blood is iron-based, and is replenished when metabolizing iron.
+
+  They take [color=lightgreen]30% less Cold damage[/color], but [color=palevioletred]20% more Heat damage[/color].
+  Their fluff makes them prefer a somewhat cooler temperature range than humans, and also makes them [color=palevioletred]extremely vulnerable to fire[/color].
 
 </Document>
