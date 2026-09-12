@@ -47,3 +47,4 @@ comms-console-level-Red-flavour-label = Remain vigilant
 comms-console-level-Gamma-flavour-label = Suggest extreme caution
 comms-console-level-Delta-flavour-label = Good luck
 comms-console-level-Epsilon-flavour-label = You're fired
+comms-console-level-Unknown-flavour-label = Stay vigilent

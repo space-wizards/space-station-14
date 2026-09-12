@@ -21,10 +21,13 @@ public sealed partial class CommunicationsConsoleBoundUserInterface(EntityUid ow
     [Dependency] private SharedStationSystem _station = default!;
     [Dependency] private AlertLevelSystem _alertLevel = default!;
 
+    [Dependency] private EntityQuery<AlertLevelComponent> _alertLevelQuery;
+
     [ViewVariables]
     private CommunicationsConsoleMenu? _menu;
 
     private static readonly EntProtoId FallbackScreen = "Screen";
+    private static readonly ProtoId<AlertLevelPrototype> UnknownAlertLevel = "Unknown";
 
     /// <inheritdoc/>
     protected override void Open()
@@ -81,21 +84,30 @@ public sealed partial class CommunicationsConsoleBoundUserInterface(EntityUid ow
     {
         base.UpdateState(state);
 
+        if (_menu == null)
+            return;
+
         if (state is not CommunicationsConsoleInterfaceState commsState)
             return;
 
         var stationUid = _station.GetOwningStation(Owner);
 
-        if (!EntMan.TryGetComponent<AlertLevelComponent>(stationUid, out var alertComp))
-            return;
-
-        if (_menu != null)
+        ProtoId<AlertLevelPrototype> currentAlertLevel;
+        List<ProtoId<AlertLevelPrototype>> selectableAlertLevels;
+        bool canChangeAlertLevel;
+        if (_alertLevelQuery.TryGetComponent(stationUid, out var alertComp))
         {
-            var currentAlertLevel = alertComp.CurrentAlertLevel;
-            var selectableAlertLevels = _alertLevel.GetSelectableAlertLevels((stationUid.Value, alertComp));
-            var canChangeAlertLevel = _alertLevel.CanChangeAlertLevel((stationUid.Value, alertComp));
-
-            _menu.UpdateState(commsState, currentAlertLevel, selectableAlertLevels, canChangeAlertLevel);
+            currentAlertLevel = alertComp.CurrentAlertLevel;
+            selectableAlertLevels = _alertLevel.GetSelectableAlertLevels((stationUid.Value, alertComp));
+            canChangeAlertLevel = _alertLevel.CanChangeAlertLevel((stationUid.Value, alertComp));
         }
+        else
+        {
+            currentAlertLevel = UnknownAlertLevel;
+            selectableAlertLevels = new() { UnknownAlertLevel };
+            canChangeAlertLevel = false;
+        }
+
+        _menu.UpdateState(commsState, currentAlertLevel, selectableAlertLevels, canChangeAlertLevel);
     }
 }

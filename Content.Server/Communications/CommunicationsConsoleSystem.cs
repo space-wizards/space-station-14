@@ -18,24 +18,23 @@ using Content.Shared.Popups;
 using Content.Shared.Screens;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Communications
 {
     public sealed partial class CommunicationsConsoleSystem : EntitySystem
     {
+        [Dependency] private IAdminLogManager _adminLogger = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
         [Dependency] private AccessReaderSystem _accessReaderSystem = default!;
         [Dependency] private AlertLevelSystem _alertLevelSystem = default!;
         [Dependency] private ChatSystem _chatSystem = default!;
         [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
         [Dependency] private EmergencyShuttleSystem _emergency = default!;
+        [Dependency] private IdentitySystem _identity = default!;
         [Dependency] private PopupSystem _popupSystem = default!;
         [Dependency] private RoundEndSystem _roundEndSystem = default!;
         [Dependency] private StationSystem _stationSystem = default!;
         [Dependency] private UserInterfaceSystem _uiSystem = default!;
-        [Dependency] private IConfigurationManager _cfg = default!;
-        [Dependency] private IAdminLogManager _adminLogger = default!;
-        [Dependency] private IdentitySystem _identity = default!;
 
         private const float UIUpdateInterval = 5.0f;
 
@@ -44,7 +43,7 @@ namespace Content.Server.Communications
             // All events that refresh the BUI
             SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
             SubscribeLocalEvent<RoundEndSystemChangedEvent>(_ => OnGenericBroadcastEvent());
-            SubscribeLocalEvent<AlertLevelDelayFinishedEvent>((ref AlertLevelDelayFinishedEvent ev) => OnGenericBroadcastEvent());
+            SubscribeLocalEvent((ref AlertLevelDelayFinishedEvent ev) => OnGenericBroadcastEvent());
 
             // Messages from the BUI
             SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleSelectAlertLevelMessage>(OnSelectAlertLevelMessage);
@@ -134,15 +133,18 @@ namespace Content.Server.Communications
         {
             // TODO: Use component states and predict the UI
             _uiSystem.SetUiState(uid, CommunicationsConsoleUiKey.Key, new CommunicationsConsoleInterfaceState(
-                CanAnnounce(comp),
+                CanAnnounce((uid, comp)),
                 CanCallOrRecall(comp),
                 _roundEndSystem.ExpectedCountdownEnd
             ));
         }
 
-        private static bool CanAnnounce(CommunicationsConsoleComponent comp)
+        private bool CanAnnounce(Entity<CommunicationsConsoleComponent> ent, EntityUid? station = null)
         {
-            return comp.AnnouncementCooldownRemaining <= 0f;
+            if (station == null)
+                station = _stationSystem.GetOwningStation(ent) ?? EntityUid.Invalid;
+
+            return (station.Value.Valid || ent.Comp.Global) && ent.Comp.AnnouncementCooldownRemaining <= 0f;
         }
 
         private bool CanUse(EntityUid user, EntityUid console)
@@ -205,7 +207,7 @@ namespace Content.Server.Communications
             var author = Loc.GetString("comms-console-announcement-unknown-sender");
             if (message.Actor is { Valid: true } mob)
             {
-                if (!CanAnnounce(comp))
+                if (!CanAnnounce((uid, comp)))
                 {
                     return;
                 }
