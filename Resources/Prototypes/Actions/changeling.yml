@@ -166,12 +166,12 @@
     #amount: 50
     #failReason: changeling-not-enough-chemicals
   - type: ActionRequirements
-    Conditions:
+    conditions:
       Performer:
       - !type:SatiationCondition
         satiationType: Chemicals
         min: 50
-    Effects:
+    effects:
       Performer:
       - !type:Satiate
         satiationType: Chemicals

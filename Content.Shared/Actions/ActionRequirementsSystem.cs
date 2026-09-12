@@ -43,7 +43,7 @@ public sealed partial class ActionRequirementsSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnActionAttempt(Entity<ActionRequirementsComponent> ent, ref ActionPerformedEvent args)
+    private void OnActionPerformed(Entity<ActionRequirementsComponent> ent, ref ActionPerformedEvent args)
     {
         var performerEffects = GetEffects(ent, ActionRequirementTarget.Performer);
 
