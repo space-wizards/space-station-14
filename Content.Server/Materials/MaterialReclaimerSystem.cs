@@ -157,8 +157,6 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
         if (component.ReclaimMaterials)
             SpawnMaterialsFromComposition(uid, item, completion * component.Efficiency, xform: xform);
 
-        var playSound = true;
-
         if (CanDamageAndGib(uid, item, component))
         {
             var didBloody = false;
@@ -171,8 +169,6 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
                 var logImpact = HasComp<HumanoidProfileComponent>(item) ? LogImpact.Extreme : LogImpact.Medium;
                 _adminLogger.Add(LogType.Gib, logImpact, $"{ToPrettyString(item):victim} was gibbed by {ToPrettyString(uid):entity}");
 
-                playSound = false; // Gibbing already make the noise!
-
                 _gibbing.Gib(item);
 
                 didBloody = true;
@@ -180,10 +176,12 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
 
             if (didBloody)
                 _appearance.SetData(uid, RecyclerVisuals.Bloody, true);
+
+            return;
         }
 
         if (_destructible.CanDestroy(item) && component.ReclaimSolutions)
-            SpawnChemicalsFromComposition(uid, item, completion, playSound, component, xform);
+            SpawnChemicalsFromComposition(uid, item, completion, true, component, xform);
 
         _destructible.DestroyEntity(item);
     }
