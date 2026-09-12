@@ -1,13 +1,3 @@
-# Timers
-- type: loadoutEffectGroup
-  id: Command
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Command
-      time: 1h
-
 # Flowers
 - type: loadout
   id: FlowerWreath
@@ -90,7 +80,7 @@
   id: CigarCase
   effects:
   - !type:GroupLoadoutEffect
-    proto: Command
+    proto: CommandStarter
   storage:
     back:
     - CigarCase
@@ -100,7 +90,7 @@
   id: CigarGold
   effects:
   - !type:GroupLoadoutEffect
-    proto: Command
+    proto: CommandStarter
   storage:
     back:
     - CigarGold
@@ -125,7 +115,7 @@
   id: BoxFolderClipboardThreePapers
   effects:
   - !type:GroupLoadoutEffect
-    proto: Command
+    proto: CommandStarter
   storage:
     back:
     - BoxFolderClipboardThreePapers
