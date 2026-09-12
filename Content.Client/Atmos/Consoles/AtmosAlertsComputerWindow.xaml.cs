@@ -18,6 +18,9 @@ using System.Linq;
 
 namespace Content.Client.Atmos.Consoles;
 
+/// <summary>
+/// A window to display current atmospheric alerts and query the status of air alarms.
+/// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class AtmosAlertsComputerWindow : FancyWindow
 {
@@ -25,11 +28,9 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
     private readonly SpriteSystem _spriteSystem;
     private readonly SharedNavMapSystem _navMapSystem;
 
-    private EntityUid? _owner;
+    private EntityUid? _console;
     private NetEntity? _trackedEntity;
 
-    private AtmosAlertsComputerEntry[]? _airAlarms = null;
-    private AtmosAlertsComputerEntry[]? _fireAlarms = null;
     private IEnumerable<AtmosAlertsComputerEntry>? _allAlarms = null;
 
     private IEnumerable<AtmosAlertsComputerEntry>? _activeAlarms = null;
@@ -55,49 +56,23 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
     private Color _warningColor = new Color(255, 182, 72);
     private Color _dangerColor = new Color(255, 67, 67);
 
-    public AtmosAlertsComputerWindow(AtmosAlertsComputerBoundUserInterface userInterface, EntityUid? owner)
+    /// <inheritdoc cref="AtmosAlertsComputerWindow"/>
+    public AtmosAlertsComputerWindow()
     {
         RobustXamlLoader.Load(this);
         _entManager = IoCManager.Resolve<IEntityManager>();
         _spriteSystem = _entManager.System<SpriteSystem>();
         _navMapSystem = _entManager.System<SharedNavMapSystem>();
 
-        // Pass the owner to nav map
-        _owner = owner;
-        NavMap.Owner = _owner;
-
         // Set nav map colors
         NavMap.WallColor = _wallColor;
         NavMap.TileColor = _tileColor;
 
-        // Set nav map grid uid
-        var stationName = Loc.GetString("atmos-alerts-window-unknown-location");
-
-        if (_entManager.TryGetComponent<TransformComponent>(owner, out var xform))
-        {
-            NavMap.MapUid = xform.GridUid;
-
-            // Assign station name      
-            if (_entManager.TryGetComponent<MetaDataComponent>(xform.GridUid, out var stationMetaData))
-                stationName = stationMetaData.EntityName;
-
-            var msg = new FormattedMessage();
-            msg.TryAddMarkup(Loc.GetString("atmos-alerts-window-station-name", ("stationName", stationName)), out _);
-
-            StationName.SetMessage(msg);
-        }
-
-        else
-        {
-            StationName.SetMessage(stationName);
-            NavMap.Visible = false;
-        }
+        StationName.SetMessage(Loc.GetString("atmos-alerts-window-unknown-location"));
+        NavMap.Visible = false;
 
         // Set trackable entity selected action
         NavMap.TrackedEntitySelectedAction += SetTrackedEntityFromNavMap;
-
-        // Update nav map
-        NavMap.ForceNavMapUpdate();
 
         // Set tab container headers
         MasterTabContainer.SetTabTitle(0, Loc.GetString("atmos-alerts-window-tab-no-alerts"));
@@ -109,20 +84,52 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         ShowNormalAlarms.OnToggled += _ => OnShowAlarmsToggled(ShowNormalAlarms, AtmosAlarmType.Normal);
         ShowWarningAlarms.OnToggled += _ => OnShowAlarmsToggled(ShowWarningAlarms, AtmosAlarmType.Warning);
         ShowDangerAlarms.OnToggled += _ => OnShowAlarmsToggled(ShowDangerAlarms, AtmosAlarmType.Danger);
+    }
 
-        // Set atmos monitoring message action
-        SendFocusChangeMessageAction += userInterface.SendFocusChangeMessage;
-        SendDeviceSilencedMessageAction += userInterface.SendDeviceSilencedMessage;
+    /// <summary>
+    /// Sets the console entity this window represents.
+    /// </summary>
+    /// <remarks>
+    /// Populates the nav map data on call.
+    /// </remarks>
+    public void SetConsole(EntityUid console)
+    {
+        // Pass the owner to nav map
+        _console = console;
+        NavMap.Owner = _console;
+
+        // Set nav map grid uid
+        var stationName = Loc.GetString("atmos-alerts-window-unknown-location");
+
+        if (_entManager.TryGetComponent<TransformComponent>(_console, out var xform))
+        {
+            NavMap.MapUid = xform.GridUid;
+
+            // Assign station name
+            if (_entManager.TryGetComponent<MetaDataComponent>(xform.GridUid, out var stationMetaData))
+                stationName = stationMetaData.EntityName;
+
+            var msg = new FormattedMessage();
+            msg.TryAddMarkup(Loc.GetString("atmos-alerts-window-station-name", ("stationName", stationName)), out _);
+
+            StationName.SetMessage(msg);
+            NavMap.Visible = true;
+        }
+        else
+        {
+            StationName.SetMessage(stationName);
+            NavMap.Visible = false;
+        }
+
+        // Update nav map
+        NavMap.ForceNavMapUpdate();
     }
 
     #region Toggle handling
 
     private void OnShowAlarmsToggled(CheckBox toggle, AtmosAlarmType toggledAlarmState)
     {
-        if (_owner == null)
-            return;
-
-        if (!_entManager.TryGetComponent<AtmosAlertsComputerComponent>(_owner.Value, out var console))
+        if (!_entManager.TryGetComponent<AtmosAlertsComputerComponent>(_console, out var console))
             return;
 
         foreach (var device in console.AtmosDevices)
@@ -142,7 +149,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
 
     private void OnSilenceAlertsToggled(NetEntity netEntity, bool toggleState)
     {
-        if (!_entManager.TryGetComponent<AtmosAlertsComputerComponent>(_owner, out var console))
+        if (!_entManager.TryGetComponent<AtmosAlertsComputerComponent>(_console, out var console))
             return;
 
         if (toggleState)
@@ -164,10 +171,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
 
     public void UpdateUI(EntityCoordinates? consoleCoords, AtmosAlertsComputerEntry[] airAlarms, AtmosAlertsComputerEntry[] fireAlarms, AtmosAlertsFocusDeviceData? focusData)
     {
-        if (_owner == null)
-            return;
-
-        if (!_entManager.TryGetComponent<AtmosAlertsComputerComponent>(_owner.Value, out var console))
+        if (!_entManager.TryGetComponent<AtmosAlertsComputerComponent>(_console, out var console))
             return;
 
         if (_trackedEntity != focusData?.NetEntity)
@@ -177,8 +181,6 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         }
 
         // Retain alarm data for use inbetween updates
-        _airAlarms = airAlarms;
-        _fireAlarms = fireAlarms;
         _allAlarms = airAlarms.Concat(fireAlarms);
 
         var silenced = console.SilencedDevices;
@@ -221,7 +223,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         }
 
         // Show the monitor location
-        var consoleUid = _entManager.GetNetEntity(_owner);
+        var consoleUid = _entManager.GetNetEntity(_console);
 
         if (consoleCoords != null && consoleUid != null)
         {
@@ -291,11 +293,11 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         NavMap.RegionOverlays.Clear();
         var prioritizedRegionOverlays = new Dictionary<NavMapRegionOverlay, int>();
 
-        if (_owner != null &&
-            _entManager.TryGetComponent<TransformComponent>(_owner, out var xform) &&
+        if (_console != null &&
+            _entManager.TryGetComponent<TransformComponent>(_console, out var xform) &&
             _entManager.TryGetComponent<NavMapComponent>(xform.GridUid, out var navMap))
         {
-            var regionOverlays = _navMapSystem.GetNavMapRegionOverlays(_owner.Value, navMap, AtmosAlertsComputerUiKey.Key);
+            var regionOverlays = _navMapSystem.GetNavMapRegionOverlays(_console.Value, navMap, AtmosAlertsComputerUiKey.Key);
 
             foreach (var (regionOwner, regionOverlay) in regionOverlays)
             {
@@ -446,7 +448,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         if (netEntity == null)
             return;
 
-        if (!_entManager.TryGetComponent<AtmosAlertsComputerComponent>(_owner, out var console))
+        if (!_entManager.TryGetComponent<AtmosAlertsComputerComponent>(_console, out var console))
             return;
 
         _trackedEntity = netEntity;

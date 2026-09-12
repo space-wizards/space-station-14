@@ -1,10 +1,12 @@
-﻿using Content.Client.UserInterface.Fragments;
+using Content.Client.UserInterface.Fragments;
 using Content.Shared.CartridgeLoader.Cartridges;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.CartridgeLoader.Cartridges;
 
+/// <summary>
+/// A UI fragment for the crew manifest PDA app.
+/// </summary>
 public sealed partial class CrewManifestUi : UIFragment
 {
     private CrewManifestUiFragment? _fragment;
@@ -16,7 +18,7 @@ public sealed partial class CrewManifestUi : UIFragment
 
     public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
     {
-        _fragment = new CrewManifestUiFragment();
+        _fragment = userInterface.CreateDisposableControl<CrewManifestUiFragment>();
     }
 
     public override void UpdateState(BoundUserInterfaceState state)

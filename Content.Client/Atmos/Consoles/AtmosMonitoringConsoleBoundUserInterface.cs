@@ -1,21 +1,23 @@
 using Content.Shared.Atmos.Components;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Atmos.Consoles;
 
-public sealed class AtmosMonitoringConsoleBoundUserInterface : BoundUserInterface
+/// <summary>
+/// A BUI for the atmospheric network monitor, wraps an <see cref="AtmosMonitoringConsoleWindow"/>
+/// </summary>
+/// <seealso cref="AtmosMonitoringConsoleComponent"/>
+public sealed class AtmosMonitoringConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private AtmosMonitoringConsoleWindow? _menu;
-
-    public AtmosMonitoringConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey) { }
 
     protected override void Open()
     {
         base.Open();
 
-        _menu = new AtmosMonitoringConsoleWindow(this, Owner);
-        _menu.OpenCentered();
-        _menu.OnClose += Close;
+        _menu = this.CreateWindow<AtmosMonitoringConsoleWindow>();
+        _menu.SetConsole(Owner);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -27,14 +29,5 @@ public sealed class AtmosMonitoringConsoleBoundUserInterface : BoundUserInterfac
 
         EntMan.TryGetComponent<TransformComponent>(Owner, out var xform);
         _menu?.UpdateUI(xform?.Coordinates, castState.AtmosNetworks);
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing)
-            return;
-
-        _menu?.Dispose();
     }
 }

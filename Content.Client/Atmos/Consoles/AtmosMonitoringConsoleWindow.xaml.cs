@@ -17,14 +17,17 @@ using System.Numerics;
 
 namespace Content.Client.Atmos.Consoles;
 
+/// <summary>
+/// A window for monitoring the atmos pipe network and querying the gas pipe sensors on a station.
+/// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 {
-    private readonly IEntityManager _entManager;
-    private readonly IPrototypeManager _protoManager;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IPrototypeManager _protoManager = default!;
     private readonly SpriteSystem _spriteSystem;
 
-    private EntityUid? _owner;
+    private EntityUid? _console;
     private NetEntity? _focusEntity;
     private int? _focusNetId;
 
@@ -36,25 +39,45 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
     private readonly Vector2[] _pipeLayerOffsets = { new Vector2(0f, 0f), new Vector2(0.25f, 0.25f), new Vector2(-0.25f, -0.25f) };
 
-    public AtmosMonitoringConsoleWindow(AtmosMonitoringConsoleBoundUserInterface userInterface, EntityUid? owner)
+    /// <inheritdoc cref="AtmosMonitoringConsoleWindow" />
+    public AtmosMonitoringConsoleWindow()
     {
         RobustXamlLoader.Load(this);
-        _entManager = IoCManager.Resolve<IEntityManager>();
-        _protoManager = IoCManager.Resolve<IPrototypeManager>();
+        IoCManager.InjectDependencies(this);
         _spriteSystem = _entManager.System<SpriteSystem>();
 
+        StationName.SetMessage(Loc.GetString("atmos-monitoring-window-unknown-location"));
+        NavMap.Visible = false;
+
+        // Set trackable entity selected action
+        NavMap.TrackedEntitySelectedAction += SetTrackedEntityFromNavMap;
+
+        // Set tab container headers
+        MasterTabContainer.SetTabTitle(0, Loc.GetString("atmos-monitoring-window-tab-networks"));
+
+        // Set UI toggles
+        ShowPipeNetwork.OnToggled += _ => OnShowPipeNetworkToggled();
+        ShowGasPipeSensors.OnToggled += _ => OnShowGasPipeSensors();
+    }
+
+    /// <summary>
+    /// Sets the console that this window represents.
+    /// </summary>
+    public void SetConsole(EntityUid console)
+    {
         // Pass the owner to nav map
-        _owner = owner;
-        NavMap.Owner = _owner;
+        _console = console;
+        NavMap.Owner = _console;
 
         // Set nav map grid uid
         var stationName = Loc.GetString("atmos-monitoring-window-unknown-location");
         EntityCoordinates? consoleCoords = null;
 
-        if (_entManager.TryGetComponent<TransformComponent>(owner, out var xform))
+        if (_entManager.TryGetComponent<TransformComponent>(_console, out var xform))
         {
             consoleCoords = xform.Coordinates;
             NavMap.MapUid = xform.GridUid;
+            NavMap.Visible = true;
 
             // Assign station name
             if (_entManager.TryGetComponent<MetaDataComponent>(xform.GridUid, out var stationMetaData))
@@ -65,32 +88,21 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
             StationName.SetMessage(msg);
         }
-
         else
         {
             StationName.SetMessage(stationName);
             NavMap.Visible = false;
         }
 
-        // Set trackable entity selected action
-        NavMap.TrackedEntitySelectedAction += SetTrackedEntityFromNavMap;
-
         // Update nav map
         NavMap.ForceNavMapUpdate();
 
-        // Set tab container headers
-        MasterTabContainer.SetTabTitle(0, Loc.GetString("atmos-monitoring-window-tab-networks"));
-
-        // Set UI toggles
-        ShowPipeNetwork.OnToggled += _ => OnShowPipeNetworkToggled();
-        ShowGasPipeSensors.OnToggled += _ => OnShowGasPipeSensors();
-
         // Set nav map colors
-        if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_owner, out var console))
+        if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_console, out var atmosConsole))
             return;
 
-        NavMap.TileColor = console.NavMapTileColor;
-        NavMap.WallColor = console.NavMapWallColor;
+        NavMap.TileColor = atmosConsole.NavMapTileColor;
+        NavMap.WallColor = atmosConsole.NavMapWallColor;
 
         // Initalize
         UpdateUI(consoleCoords, Array.Empty<AtmosMonitoringConsoleEntry>());
@@ -100,10 +112,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
     private void OnShowPipeNetworkToggled()
     {
-        if (_owner == null)
-            return;
-
-        if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_owner.Value, out var console))
+        if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_console, out var console))
             return;
 
         NavMap.ShowPipeNetwork = ShowPipeNetwork.Pressed;
@@ -123,10 +132,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
     private void OnShowGasPipeSensors()
     {
-        if (_owner == null)
-            return;
-
-        if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_owner.Value, out var console))
+        if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_console, out var console))
             return;
 
         foreach (var (netEnt, device) in console.AtmosDevices)
@@ -148,10 +154,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
         (EntityCoordinates? consoleCoords,
         AtmosMonitoringConsoleEntry[] atmosNetworks)
     {
-        if (_owner == null)
-            return;
-
-        if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_owner.Value, out var console))
+        if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_console, out var console))
             return;
 
         // Reset nav map values
@@ -165,7 +168,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
         UpdateNavMapBlips();
 
         // Show the monitor location
-        var consoleNetEnt = _entManager.GetNetEntity(_owner);
+        var consoleNetEnt = _entManager.GetNetEntity(_console);
 
         if (consoleCoords != null && consoleNetEnt != null)
         {
@@ -196,7 +199,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
     private void UpdateNavMapBlips()
     {
-        if (_owner == null || !_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_owner.Value, out var console))
+        if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_console, out var console))
             return;
 
         if (NavMap.Visible)
@@ -317,7 +320,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
         if (focusEntity == null)
             return;
 
-        if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_owner, out var console))
+        if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_console, out var console))
             return;
 
         foreach (var (netEnt, device) in console.AtmosDevices)
@@ -426,7 +429,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
         UpdateNavMapBlips();
         NavMap.ForceNavMapUpdate();
 
-        if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_owner, out var console))
+        if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_console, out var console))
             return;
 
         for (int index = 0; index < AtmosNetworksTable.ChildCount; index++)

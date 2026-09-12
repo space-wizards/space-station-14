@@ -1,16 +1,15 @@
 ﻿using Content.Shared.Arcade;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Arcade.UI;
 
-public sealed class BlockGameBoundUserInterface : BoundUserInterface
+/// <summary>
+/// A BUI for the block game arcade machine, wraps an <see cref="BlockGameMenu"/>.
+/// </summary>
+/// <seealso cref="BlockGameArcadeComponent"/>
+public sealed class BlockGameBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     private BlockGameMenu? _menu;
-
-    public BlockGameBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
 
     protected override void Open()
     {
@@ -63,14 +62,5 @@ public sealed class BlockGameBoundUserInterface : BoundUserInterface
     public void SendAction(BlockGamePlayerAction action)
     {
         SendMessage(new BlockGameMessages.BlockGamePlayerActionMessage(action));
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing)
-            return;
-
-        _menu?.Dispose();
     }
 }
