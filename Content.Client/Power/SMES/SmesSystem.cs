@@ -6,12 +6,13 @@ namespace Content.Client.Power.SMES;
 
 public sealed partial class SmesVisualizerSystem : VisualizerSystem<SmesComponent>
 {
+    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, SmesComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        if (!AppearanceSystem.TryGetData<int>(uid, SmesVisuals.LastChargeLevel, out var level, args.Component) || level == 0)
+        if (!args.TryGetData<int>(SmesVisuals.LastChargeLevel, out var level) || level == 0)
         {
             SpriteSystem.LayerSetVisible((uid, args.Sprite), SmesVisualLayers.Charge, false);
         }
@@ -21,7 +22,7 @@ public sealed partial class SmesVisualizerSystem : VisualizerSystem<SmesComponen
             SpriteSystem.LayerSetRsiState((uid, args.Sprite), SmesVisualLayers.Charge, $"{comp.ChargeOverlayPrefix}{level}");
         }
 
-        if (!AppearanceSystem.TryGetData<ChargeState>(uid, SmesVisuals.LastChargeState, out var state, args.Component))
+        if (!args.TryGetData<ChargeState>(SmesVisuals.LastChargeState, out var state))
             state = ChargeState.Still;
 
         switch (state)

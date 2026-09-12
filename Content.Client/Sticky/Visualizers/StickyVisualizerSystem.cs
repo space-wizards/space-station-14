@@ -22,12 +22,13 @@ public sealed partial class StickyVisualizerSystem : VisualizerSystem<StickyVisu
         ent.Comp.OriginalDrawDepth = sprite.DrawDepth;
     }
 
+    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, StickyVisualizerComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        if (!AppearanceSystem.TryGetData<bool>(uid, StickyVisuals.IsStuck, out var isStuck, args.Component))
+        if (!args.TryGetData<bool>(StickyVisuals.IsStuck, out var isStuck))
             return;
 
         var drawDepth = isStuck ? comp.StuckDrawDepth : comp.OriginalDrawDepth;

@@ -110,10 +110,10 @@ public sealed partial class DoorSystem : SharedDoorSystem
         if (args.Sprite == null)
             return;
 
-        if (!AppearanceSystem.TryGetData<DoorState>(entity, DoorVisuals.State, out var state, args.Component))
+        if (!args.TryGetData<DoorState>(DoorVisuals.State, out var state))
             state = DoorState.Closed;
 
-        if (AppearanceSystem.TryGetData<string>(entity, PaintableVisuals.Prototype, out var prototype, args.Component))
+        if (args.TryGetData<string>(PaintableVisuals.Prototype, out var prototype))
             UpdateSpriteLayers((entity.Owner, args.Sprite), prototype);
 
         // We are checking beforehand since some doors may not have an emagging visual layer, and we don't want LayerSetVisible to throw an error.
