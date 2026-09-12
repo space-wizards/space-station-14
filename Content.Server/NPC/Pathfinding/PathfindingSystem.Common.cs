@@ -1,8 +1,4 @@
-using Content.Shared.Gravity;
-using Content.Shared.Maps;
 using Content.Shared.NPC;
-using Robust.Shared.Map.Components;
-using Robust.Shared.Spawners;
 
 namespace Content.Server.NPC.Pathfinding;
 
@@ -61,18 +57,20 @@ public sealed partial class PathfindingSystem
 
             // TODO: Handling power + door prying
             // Door we should be able to open
-            if (isDoor && !isAccess && (request.Flags & PathFlags.Interact) != 0x0)
+            if (isDoor)
             {
-                modifier += 0.5f;
-            }
-            // Door we can force open one way or another
-            else if (isDoor && isAccess && (request.Flags & PathFlags.Prying) != 0x0)
-            {
-                modifier += 10f;
+                if (!isAccess && (request.Flags & PathFlags.Interact) != 0x0)
+                    modifier += 0.5f;
+                else if (isAccess && (request.Flags & PathFlags.Prying) != 0x0)
+                    modifier += 10f;
+                else
+                    // Last ditch—try to bump the door if it's the only feasible option.
+                    modifier += 20f;
             }
             else if ((request.Flags & PathFlags.Smashing) != 0x0 && end.Data.Damage > 0f)
             {
-                modifier += 10f + end.Data.Damage / 100f;
+                // Breaking stuff should be usually last resort, especially because we WILL try to punch walls.
+                modifier += 10f + end.Data.Damage / 10f;
             }
             else if (isClimb && (request.Flags & PathFlags.Climbing) != 0x0)
             {
