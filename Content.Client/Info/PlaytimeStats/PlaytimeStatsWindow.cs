@@ -115,7 +115,7 @@ public sealed partial class PlaytimeStatsWindow : FancyWindow
         {
             var role = rolePlaytime.Key;
             var playtime = rolePlaytime.Value;
-            AddRolePlaytimeEntryToTable(Loc.GetString(role), playtime.ToString());
+            AddRolePlaytimeEntryToTable(role, playtime.ToString());
         }
     }
 
