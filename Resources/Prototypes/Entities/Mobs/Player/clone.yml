@@ -164,6 +164,7 @@
   - JumpAbility # vulp leaping
   - Bloodstream # blood reagents
   - Damageable # for horror form
+  - FlashImmunity
   copyInternalStorage: false
   copyImplants: false
   raiseEntityRenamedEvent: false
