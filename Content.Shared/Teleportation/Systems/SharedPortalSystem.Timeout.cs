@@ -96,14 +96,14 @@ public abstract partial class SharedPortalSystem
         if (TerminatingOrDeleted(target))
             return;
 
-        if (previousExit is not { } exit)
+        if (previousExit == null)
         {
             RemComp<PortalTimeoutComponent>(target);
             return;
         }
 
         var timeout = EnsureComp<PortalTimeoutComponent>(target);
-        timeout.ExitPortal = exit;
+        timeout.ExitPortal = previousExit.Value;
         Dirty(target, timeout);
     }
 }

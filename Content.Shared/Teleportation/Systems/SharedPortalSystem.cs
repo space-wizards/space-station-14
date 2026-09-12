@@ -120,7 +120,7 @@ public abstract partial class SharedPortalSystem : EntitySystem
 
         var source = Transform(target).Coordinates;
         var previousExit = CompOrNull<PortalTimeoutComponent>(target)?.ExitPortal;
-        var timeoutSet = destinationEntity is { } exit && SetPortalTimeout(target, exit);
+        var timeoutSet = destinationEntity != null && SetPortalTimeout(target, destinationEntity.Value);
         var moved = false;
         try
         {

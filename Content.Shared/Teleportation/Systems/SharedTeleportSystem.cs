@@ -113,12 +113,13 @@ public sealed partial class SharedTeleportSystem : EntitySystem
         if (!TryComp(target, out PullerComponent? targetPuller))
             return;
 
-        if (targetPuller.Pulling is not { } pulledTarget)
+        var pulledTarget = targetPuller.Pulling;
+        if (pulledTarget == null)
             return;
 
         if (!TryComp(pulledTarget, out PullableComponent? pulledEntity))
             return;
 
-        _pulling.TryStopPull(pulledTarget, pulledEntity);
+        _pulling.TryStopPull(pulledTarget.Value, pulledEntity);
     }
 }

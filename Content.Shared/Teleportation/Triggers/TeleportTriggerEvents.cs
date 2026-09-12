@@ -46,4 +46,4 @@ public record struct TeleportUseAttemptEvent(
 /// </summary>
 /// <param name="Target">The entity whose fixture contact ended.</param>
 [ByRefEvent, Serializable]
-public record struct TeleportTriggerExitedEvent(EntityUid Target);
+public readonly record struct TeleportTriggerExitedEvent(EntityUid Target);

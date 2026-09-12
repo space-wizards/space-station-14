@@ -11,7 +11,7 @@ namespace Content.Shared.Teleportation;
 /// </summary>
 /// <param name="Target">The entity being teleported.</param>
 [ByRefEvent, Serializable]
-public record struct BeforeTeleportEvent(EntityUid Target);
+public readonly record struct BeforeTeleportEvent(EntityUid Target);
 
 /// <summary>
 /// Triggers effects after a teleporter has moved a target and notified it with <see cref="TeleportedEvent"/>.
@@ -19,7 +19,7 @@ public record struct BeforeTeleportEvent(EntityUid Target);
 /// </summary>
 /// <param name="Target">The entity that was teleported.</param>
 [ByRefEvent, Serializable]
-public record struct TargetTeleportedEvent(EntityUid Target);
+public readonly record struct TargetTeleportedEvent(EntityUid Target);
 
 /// <summary>
 /// Notifies a target that it has been teleported.
@@ -28,4 +28,4 @@ public record struct TargetTeleportedEvent(EntityUid Target);
 /// </summary>
 /// <param name="Teleporter">The entity that performed the teleportation.</param>
 [ByRefEvent, Serializable]
-public record struct TeleportedEvent(EntityUid Teleporter);
+public readonly record struct TeleportedEvent(EntityUid Teleporter);

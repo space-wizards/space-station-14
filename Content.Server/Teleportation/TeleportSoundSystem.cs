@@ -18,7 +18,8 @@ public sealed partial class TeleportSoundSystem : EntitySystem
 
     private void OnBeforeTeleport(Entity<TeleportSoundComponent> ent, ref BeforeTeleportEvent args)
     {
-        if (ent.Comp.DepartureSound is not { } sound)
+        var sound = ent.Comp.DepartureSound;
+        if (sound == null)
             return;
 
         // Keep the sound at the departure location instead of letting it follow the teleported target.
@@ -27,7 +28,8 @@ public sealed partial class TeleportSoundSystem : EntitySystem
 
     private void OnTargetTeleported(Entity<TeleportSoundComponent> ent, ref TargetTeleportedEvent args)
     {
-        if (ent.Comp.ArrivalSound is not { } sound)
+        var sound = ent.Comp.ArrivalSound;
+        if (sound == null)
             return;
 
         // Keep the sound at the arrival location if the target moves away after teleporting.

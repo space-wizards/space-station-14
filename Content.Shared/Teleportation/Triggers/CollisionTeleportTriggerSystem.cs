@@ -49,12 +49,12 @@ public sealed partial class CollisionTeleportTriggerSystem : EntitySystem
     /// Whether the target's fixtures and filters allow it to activate this trigger after teleporting here.
     /// Does not check the teleport destination or current overlap.
     /// </summary>
-    public bool CanTrigger(EntityUid teleporter, EntityUid target)
+    public bool CanTrigger(Entity<CollisionTeleportTriggerComponent?> teleporter, EntityUid target)
     {
-        if (!TryComp<CollisionTeleportTriggerComponent>(teleporter, out var trigger))
+        if (!Resolve(teleporter, ref teleporter.Comp, logMissing: false))
             return false;
 
-        if (!IsTargetAllowed(trigger, target))
+        if (!IsTargetAllowed(teleporter.Comp, target))
             return false;
 
         if (!TryComp<PhysicsComponent>(teleporter, out var teleporterBody))
@@ -77,10 +77,10 @@ public sealed partial class CollisionTeleportTriggerSystem : EntitySystem
 
         foreach (var (teleporterId, teleporterFixture) in teleporterFixtures.Fixtures)
         {
-            if (!IsTriggerFixture(trigger, teleporterId))
+            if (!IsTriggerFixture(teleporter.Comp, teleporterId))
                 continue;
 
-            if (CanTriggerFixture(trigger, teleporterFixture, targetFixtures))
+            if (CanTriggerFixture(teleporter.Comp, teleporterFixture, targetFixtures))
                 return true;
         }
 
@@ -93,8 +93,11 @@ public sealed partial class CollisionTeleportTriggerSystem : EntitySystem
     /// disabling collisions does not release a target that is still inside the exit.
     /// Bounds can retain the block near the corners of rotated or non-rectangular shapes.
     /// </summary>
-    public bool IsInsideTriggerBounds(EntityUid teleporter, EntityUid target)
+    public bool IsInsideTriggerBounds(Entity<CollisionTeleportTriggerComponent?> teleporter, EntityUid target)
     {
+        if (!Resolve(teleporter, ref teleporter.Comp, logMissing: false))
+            return false;
+
         if (!Exists(teleporter))
             return false;
 
@@ -105,9 +108,6 @@ public sealed partial class CollisionTeleportTriggerSystem : EntitySystem
             return false;
 
         if (TerminatingOrDeleted(target))
-            return false;
-
-        if (!TryComp<CollisionTeleportTriggerComponent>(teleporter, out var trigger))
             return false;
 
         if (!TryComp<FixturesComponent>(teleporter, out var teleporterFixtures))
@@ -133,12 +133,12 @@ public sealed partial class CollisionTeleportTriggerSystem : EntitySystem
 
         foreach (var (teleporterId, teleporterFixture) in teleporterFixtures.Fixtures)
         {
-            if (!IsTriggerFixture(trigger, teleporterId))
+            if (!IsTriggerFixture(teleporter.Comp, teleporterId))
                 continue;
 
             foreach (var (targetId, targetFixture) in targetFixtures.Fixtures)
             {
-                if (!IsTargetFixtureAllowed(trigger, targetId, targetFixture))
+                if (!IsTargetFixtureAllowed(teleporter.Comp, targetId, targetFixture))
                     continue;
 
                 if (FixtureBoundsOverlap(teleporterFixture, targetFixture, teleporterTransform, targetTransform))

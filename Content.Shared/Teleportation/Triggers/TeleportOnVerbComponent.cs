@@ -43,11 +43,14 @@ public sealed partial class TeleportOnVerbComponent : Component
     public LocId VerbText;
 
     /// <summary>
-    /// Optional icon and localized category for the verb.
+    /// Optional icon displayed for the verb.
     /// </summary>
     [DataField]
     public SpriteSpecifier? VerbIcon;
 
+    /// <summary>
+    /// Optional localization key for the verb's category name.
+    /// </summary>
     [DataField]
     public LocId? VerbCategory;
 

@@ -61,7 +61,8 @@ public sealed partial class TeleportOnVerbSystem : EntitySystem
         verb.Text = Loc.GetString(ent.Comp.VerbText);
         verb.Message = GetMessage(ent.Comp, attempt);
         verb.Icon = ent.Comp.VerbIcon;
-        verb.Category = ent.Comp.VerbCategory is { } category ? new VerbCategory(category, null) : null;
+        var category = ent.Comp.VerbCategory;
+        verb.Category = category != null ? new VerbCategory(category.Value, null) : null;
         args.Verbs.Add(verb);
     }
 
@@ -86,6 +87,9 @@ public sealed partial class TeleportOnVerbSystem : EntitySystem
         var message = attempt.Cancelled
             ? attempt.CancelReason ?? component.DisabledMessage
             : component.EnabledMessage;
-        return message is { } key ? Loc.GetString(key) : null;
+        if (message == null)
+            return null;
+
+        return Loc.GetString(message.Value);
     }
 }
