@@ -8,4 +8,5 @@ department-Science-description = Research and develop new technologies for the s
 department-Security-description = Protect the station and keep the peace.
 department-Service-description = Attend to the crew's basic physical and psychological needs.
 department-Silicon-description = Fulfill the terms of your installed lawset.
+department-Task-Force-description = Perform special operations under Central Command's authority.
 department-Specific-description = Jobs that not all stations have.
