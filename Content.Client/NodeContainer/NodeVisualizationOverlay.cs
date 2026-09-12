@@ -199,8 +199,6 @@ namespace Content.Client.NodeContainer
                 _nodeIndex.Clear();
             }
 
-
-            handle.SetTransform(Matrix3x2.Identity);
             _gridIndex.Clear();
         }
 

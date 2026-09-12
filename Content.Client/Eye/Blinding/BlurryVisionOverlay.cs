@@ -100,7 +100,6 @@ namespace Content.Client.Eye.Blinding
 
                 worldHandle.UseShader(_circleMaskShader);
                 worldHandle.DrawRect(viewport, Color.White);
-                worldHandle.UseShader(null);
                 return;
             }
 
@@ -114,7 +113,6 @@ namespace Content.Client.Eye.Blinding
 
             worldHandle.UseShader(_cataractsShader);
             worldHandle.DrawRect(viewport, Color.White);
-            worldHandle.UseShader(null);
         }
     }
 }

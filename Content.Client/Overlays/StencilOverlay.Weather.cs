@@ -51,7 +51,5 @@ public sealed partial class StencilOverlay
                 modulate: (weather.Color ?? Color.White).WithAlpha(alpha));
         }
 
-        worldHandle.SetTransform(Matrix3x2.Identity);
-        worldHandle.UseShader(null);
     }
 }

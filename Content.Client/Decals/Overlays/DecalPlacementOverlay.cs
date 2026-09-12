@@ -64,6 +64,5 @@ public sealed partial class DecalPlacementOverlay : Overlay
         var box = new Box2Rotated(aabb, rotation, localPos);
 
         handle.DrawTextureRect(_sprite.Frame0(decal.Sprite), box, color);
-        handle.SetTransform(Matrix3x2.Identity);
     }
 }

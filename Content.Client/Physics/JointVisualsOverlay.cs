@@ -29,8 +29,6 @@ public sealed class JointVisualsOverlay : Overlay
         var joints = _entManager.EntityQueryEnumerator<JointVisualsComponent, TransformComponent>();
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
-        args.DrawingHandle.SetTransform(Matrix3x2.Identity);
-
         while (joints.MoveNext(out var visuals, out var xform))
         {
             if (xform.MapID != args.MapId)
