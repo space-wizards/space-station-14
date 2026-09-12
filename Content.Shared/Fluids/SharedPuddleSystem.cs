@@ -385,7 +385,8 @@ public abstract partial class SharedPuddleSystem : EntitySystem
         out EntityUid puddleUid,
         out Solution spilled,
         bool sound = true,
-        EntityUid? user = null);
+        EntityUid? user = null,
+        LocId? popup = null);
 
     // These methods are in Shared to make it easier to interact with PuddleSystem in Shared code.
     // Note that they always fail when run on the client, not creating a puddle and returning false.
@@ -405,7 +406,8 @@ public abstract partial class SharedPuddleSystem : EntitySystem
         Solution spilled,
         out EntityUid puddleUid,
         bool sound = true,
-        EntityUid? user = null);
+        EntityUid? user = null,
+        LocId? popup = null);
 
     /// <summary>
     /// Spills solution at the specified coordinates.

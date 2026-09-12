@@ -4,6 +4,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Destructible.Thresholds;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -23,6 +24,58 @@ public sealed partial class BloodstreamComponent : Component
     public const string DefaultBloodSolutionName = "bloodstream";
     public const string DefaultBloodTemporarySolutionName = "bloodstreamTemporary";
     public const string DefaultMetabolitesSolutionName = "metabolites";
+
+    /// <summary>
+    /// The blood droplet solution to which blood will be added.
+    /// </summary>
+    public const string DropletSolution = "solution";
+
+    /// <summary>
+    /// The blood droplet entity id.
+    /// </summary>
+    public static readonly EntProtoId DropletId = "Droplet";
+
+    /// <summary>
+    /// The base amount of blood that will be transferred to the blood droplet.
+    /// </summary>
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
+    public FixedPoint2 BasicDropletTransferAmount = 2f;
+
+    /// <summary>
+    /// The amount of blood that will be transferred to the blood droplet.
+    /// </summary>
+    [ViewVariables, AutoNetworkedField]
+    public FixedPoint2 DropletTransferAmount = 2f;
+
+    /// <summary>
+    /// The min range (inclusive) for droplets to fly.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int MinDropletRange = 2; // TODO: Make MinMax generic and fix tuples for field deltas.
+
+    /// <summary>
+    /// The max range (inclusive) for droplets to fly.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int MaxDropletRange = 4; // TODO: Make MinMax generic and fix tuples for field deltas.
+
+    /// <summary>
+    /// The force with which droplets will fly. From min (inclusive) to max (inclusive).
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public MinMax DropletForce = new(4f, 5f);
+
+    /// <summary>
+    /// The min (inclusive) number of droplets that will be spawned.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int MinDropletAmount = 1; // TODO: Make MinMax generic and fix tuples for field deltas.
+
+    /// <summary>
+    /// The max (inclusive) number of droplets that can be spawned.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int MaxDropletAmount = 3; // TODO: Make MinMax generic and fix tuples for field deltas.
 
     /// <summary>
     /// The next time that blood level will be updated and bloodloss damage dealt.

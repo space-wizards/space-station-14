@@ -1,0 +1,42 @@
+- type: entity
+  id: Droplet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: DeleteOnSolutionEmpty
+    solution: solution
+  - type: Solution
+    solution:
+      maxVol: 4
+      reagents:
+      - ReagentId: Blood
+        Quantity: 4
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    fillBaseName: drip
+  - type: Spillable
+    onSplashPopup: bloodstream-droplet-on-splash
+    solution: solution
+    playSound: false
+  - type: Appearance
+  - type: Sprite
+    sprite: Effects/drip.rsi
+    layers:
+    - state: drip1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+          position: 0,-0.1
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: Tag
+    tags:
+    - HideContextMenu

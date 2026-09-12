@@ -88,7 +88,7 @@ public sealed partial class SolutionContainerVisualsSystem : VisualizerSystem<So
                 SpriteSystem.LayerSetVisible(ent, fillLayer, false);
         }
 
-        var closestFillSprite = ContentHelpers.RoundToLevels(fraction, 1, maxFillLevels + 1);
+        var closestFillSprite = (fraction > float.Epsilon && maxFillLevels == 1) ? 1 : ContentHelpers.RoundToLevels(fraction, 1, maxFillLevels + 1);
 
         if (closestFillSprite > 0)
         {
