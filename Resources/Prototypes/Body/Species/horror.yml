@@ -136,6 +136,8 @@
   - type: ChangelingHorror # marks them as a changeling horror
     spawnAnnouncementSound:
       path: /Audio/Animals/space_dragon_roar.ogg
+    tagsToAdd:
+    - StunImmune
   - type: FlashImmunity # please no flashing :(
 
 
