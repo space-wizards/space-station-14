@@ -53,7 +53,9 @@ public sealed partial class RCDConstructionGhostSystem : EntitySystem
 
             return;
         }
-        var prototype = ProtoMan.Index(rcd.ProtoId);
+
+        if(!ProtoMan.TryIndex(rcd.ProtoId, out var prototype))
+            return;
 
         // Update the direction the RCD prototype based on the placer direction
         if (_placementDirection != _placementManager.Direction)
