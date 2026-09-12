@@ -1,5 +1,5 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Robust.Shared.Audio;
@@ -20,20 +20,27 @@ namespace Content.Server.StationEvents.Events
             if (!TryComp<StationEventComponent>(uid, out var stationEvent))
                 return;
 
-            // Essentially we'll pick out a target amount of gas to leak, then a rate to leak it at, then work out the duration from there.
-            if (TryFindRandomTile(out component.TargetTile, out var target, out component.TargetGrid, out component.TargetCoords))
+            var stationVents = GetEntitiesWithComponentOnStation<GasVentScrubberComponent>(true);
+            if (stationVents.Count == 0)
             {
-                component.TargetStation = target.Value;
-                component.FoundTile = true;
-
-                component.LeakGas = RobustRandom.Pick(component.LeakableGases);
-                // Was 50-50 on using normal distribution.
-                var totalGas = RobustRandom.Next(component.MinimumGas, component.MaximumGas);
-                component.MolesPerSecond = RobustRandom.Next(component.MinimumMolesPerSecond, component.MaximumMolesPerSecond);
-
-                if (gameRule.Delay is {} startAfter)
-                    stationEvent.EndTime = _timing.CurTime + TimeSpan.FromSeconds(totalGas / component.MolesPerSecond + startAfter.Next(RobustRandom));
+                ForceEndSelf(uid, gameRule);
+                return;
             }
+
+            var targetVent = RobustRandom.Pick(stationVents);
+
+            component.FoundTile = true;
+            component.TargetCoords = Transform(targetVent).Coordinates;
+            component.TargetGrid = Transform(targetVent).GridUid!.Value;
+
+            // Essentially we'll pick out a target amount of gas to leak, then a rate to leak it at, then work out the duration from there.
+            component.LeakGas = RobustRandom.Pick(component.LeakableGases);
+            // Was 50-50 on using normal distribution.
+            var totalGas = RobustRandom.Next(component.MinimumGas, component.MaximumGas);
+            component.MolesPerSecond = RobustRandom.Next(component.MinimumMolesPerSecond, component.MaximumMolesPerSecond);
+
+            if (gameRule.Delay is {} startAfter)
+                stationEvent.EndTime = _timing.CurTime + TimeSpan.FromSeconds(totalGas / component.MolesPerSecond + startAfter.Next(RobustRandom));
 
             // Look technically if you wanted to guarantee a leak you'd do this in announcement but having the announcement
             // there just to fuck with people even if there is no valid tile is funny.
@@ -57,7 +64,7 @@ namespace Content.Server.StationEvents.Events
                 return;
             }
 
-            var environment = _atmosphere.GetTileMixture(component.TargetGrid, null, component.TargetTile, true);
+            var environment = _atmosphere.GetTileMixture(component.TargetGrid, null, (Vector2i)component.TargetCoords.Position, true);
 
             environment?.AdjustMoles(component.LeakGas, component.LeakCooldown * component.MolesPerSecond);
         }
@@ -82,7 +89,7 @@ namespace Content.Server.StationEvents.Events
 
                 // Don't want it to be so obnoxious as to instantly murder anyone in the area but enough that
                 // it COULD start potentially start a bigger fire.
-                _atmosphere.HotspotExpose(component.TargetGrid, component.TargetTile, 700f, 50f, null, true);
+                _atmosphere.HotspotExpose(component.TargetGrid, (Vector2i)component.TargetCoords.Position, 700f, 50f, null, true);
                 Audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/sparks4.ogg"), component.TargetCoords);
             }
         }

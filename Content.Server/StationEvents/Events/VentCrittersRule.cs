@@ -1,8 +1,7 @@
+using System.Linq;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
-using Content.Shared.Station.Components;
 using Content.Shared.Storage;
-using Robust.Shared.Map;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
@@ -10,35 +9,18 @@ namespace Content.Server.StationEvents.Events;
 public sealed partial class VentCrittersRule : StationEventSystem<VentCrittersRuleComponent>
 {
     /*
-     * DO NOT COPY PASTE THIS TO MAKE YOUR MOB EVENT.
+     * DO NOT COPY AND PASTE THIS TO MAKE YOUR MOB EVENT.
      * USE THE PROTOTYPE.
      */
 
-    protected override void Started(EntityUid uid, VentCrittersRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    protected override void Started(EntityUid uid,
+        VentCrittersRuleComponent component,
+        GameRuleComponent gameRule,
+        GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
 
-        if (!TryGetRandomStation(out var station))
-        {
-            return;
-        }
-
-        var locations = EntityQueryEnumerator<VentCritterSpawnLocationComponent, TransformComponent>();
-        var validLocations = new List<EntityCoordinates>();
-        while (locations.MoveNext(out _, out _, out var transform))
-        {
-            if (!transform.Anchored)
-                continue;
-
-            if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == station)
-            {
-                validLocations.Add(transform.Coordinates);
-                foreach (var spawn in EntitySpawnCollection.GetSpawns(component.Entries, RobustRandom))
-                {
-                    Spawn(spawn, transform.Coordinates);
-                }
-            }
-        }
+        var validLocations = GetEntitiesWithComponentOnStation<VentCritterSpawnLocationComponent>(true);
 
         if (component.SpecialEntries.Count == 0 || validLocations.Count == 0)
         {
@@ -47,14 +29,17 @@ public sealed partial class VentCrittersRule : StationEventSystem<VentCrittersRu
 
         // guaranteed spawn
         var specialEntry = RobustRandom.Pick(component.SpecialEntries);
-        var specialSpawn = RobustRandom.Pick(validLocations);
+        var specialSpawn = Transform(RobustRandom.Pick(validLocations)).Coordinates;
         Spawn(specialEntry.PrototypeId, specialSpawn);
 
         foreach (var location in validLocations)
         {
-            foreach (var spawn in EntitySpawnCollection.GetSpawns(component.SpecialEntries, RobustRandom))
+            var spawns = EntitySpawnCollection.GetSpawns(component.Entries, RobustRandom)
+                .Concat(EntitySpawnCollection.GetSpawns(component.SpecialEntries, RobustRandom));
+
+            foreach (var spawn in spawns)
             {
-                Spawn(spawn, location);
+                Spawn(spawn, Transform(location).Coordinates);
             }
         }
     }

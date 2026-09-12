@@ -22,21 +22,14 @@ public sealed partial class VentClogRule : StationEventSystem<VentClogRuleCompon
     {
         base.Started(uid, component, gameRule, args);
 
-        if (!TryGetRandomStation(out var chosenStation))
-            return;
-
         // TODO: "safe random" for chems. Right now this includes admin chemicals.
         var allReagents = ProtoMan.EnumeratePrototypes<ReagentPrototype>()
             .Where(x => !x.Abstract)
             .Select(x => new ProtoId<ReagentPrototype>(x.ID)).ToList();
 
-        foreach (var (_, transform) in EntityQuery<GasVentPumpComponent, TransformComponent>())
+        foreach (var ventPump in GetEntitiesWithComponentOnStation<GasVentPumpComponent>(true))
         {
-            if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station != chosenStation)
-            {
-                continue;
-            }
-
+            var tragetCoords = Transform(ventPump).Coordinates;
             var solution = new Solution();
 
             if (!RobustRandom.Prob(0.33f))
@@ -49,10 +42,10 @@ public sealed partial class VentClogRule : StationEventSystem<VentClogRuleCompon
             var quantity = weak ? component.WeakReagentQuantity : component.ReagentQuantity;
             solution.AddReagent(reagent, quantity);
 
-            var foamEnt = Spawn(ChemicalReactionSystem.FoamReaction, transform.Coordinates);
+            var foamEnt = Spawn(ChemicalReactionSystem.FoamReaction, tragetCoords);
             var spreadAmount = weak ? component.WeakSpread : component.Spread;
             _smoke.StartSmoke(foamEnt, solution, component.Time, spreadAmount);
-            Audio.PlayPvs(component.Sound, transform.Coordinates);
+            Audio.PlayPvs(component.Sound, tragetCoords);
         }
     }
 }
