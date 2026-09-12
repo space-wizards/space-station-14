@@ -290,5 +290,5 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
 /// <summary>
 /// Unlocks an entity's horror form
 /// </summary>
-[Serializable, NetSerializable]
+[Serializable, NetSerializable, DataDefinition]
 public sealed partial class ChangelingUnlockHorrorEvent : EntityEventArgs;
