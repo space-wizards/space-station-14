@@ -25,6 +25,9 @@
     - WhitelistChameleonIdCard
   - type: StealTarget
     stealGroup: IDCard
+  - type: StatusIconEquipment
+    slots:
+    - idcard
 
 #IDs with layers
 
