@@ -70,10 +70,10 @@ namespace Content.Client.Kitchen.UI
                 return;
             }
 
-            _menu.IsBusy = cState.IsMicrowaveBusy;
-            _menu.CurrentCooktimeEnd = cState.CurrentCookTimeEnd;
+            _menu.IsBusy = cState.IsPowered ? cState.IsMicrowaveBusy : false;
+            _menu.CurrentCooktimeEnd = cState.IsPowered ? cState.CurrentCookTimeEnd : new TimeSpan();
 
-            _menu.ToggleBusyDisableOverlayPanel(cState.IsMicrowaveBusy || cState.ContainedSolids.Length == 0);
+            _menu.ToggleBusyDisableOverlayPanel(_menu.IsBusy || cState.ContainedSolids.Length == 0 || !cState.IsPowered);
             // TODO move this to a component state and ensure the net ids.
             RefreshContentsDisplay(EntMan.GetEntityArray(cState.ContainedSolids));
 
@@ -85,8 +85,8 @@ namespace Content.Client.Kitchen.UI
 
             _menu.CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
                                                          ("time", cookTime));
-            _menu.StartButton.Disabled = cState.IsMicrowaveBusy || cState.ContainedSolids.Length == 0;
-            _menu.EjectButton.Disabled = cState.IsMicrowaveBusy || cState.ContainedSolids.Length == 0;
+            _menu.StartButton.Disabled = cState.IsMicrowaveBusy || cState.ContainedSolids.Length == 0 || !cState.IsPowered;
+            _menu.EjectButton.Disabled = cState.IsMicrowaveBusy || cState.ContainedSolids.Length == 0 || !cState.IsPowered;
 
 
             //Set the correct button active button
@@ -101,7 +101,7 @@ namespace Content.Client.Kitchen.UI
             }
 
             //Set the "micowave light" ui color to indicate if the microwave is busy or not
-            if (cState.IsMicrowaveBusy && cState.ContainedSolids.Length > 0)
+            if (cState.IsMicrowaveBusy && cState.ContainedSolids.Length > 0 && cState.IsPowered)
             {
                 _menu.IngredientsPanel.PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#947300") };
             }
