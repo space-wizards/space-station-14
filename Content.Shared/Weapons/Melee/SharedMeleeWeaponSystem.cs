@@ -37,6 +37,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -70,6 +71,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
     [Dependency] private SharedEntityEffectsSystem _effects = default!;
 
     [Dependency] private EntityQuery<DamageableComponent> _damageQuery = default!;
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
     private const int AttackMask = (int) (CollisionGroup.MobMask | CollisionGroup.Opaque);
 
@@ -783,6 +785,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
     protected HashSet<EntityUid> ArcRayCast(Vector2 position, Angle angle, Angle arcWidth, float range, MapId mapId, EntityUid ignore)
     {
         // TODO: This is pretty sucky.
+        // TODO: Only ever called in Client, move to client?
         var widthRad = arcWidth;
         var increments = 1 + 35 * (int) Math.Ceiling(widthRad / (2 * Math.PI));
         var increment = widthRad / increments;
@@ -804,17 +807,39 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
 
             if (res.Count != 0)
             {
-                // If there's exact distance overlap, we simply have to deal with all overlapping objects to avoid selecting randomly.
-                var resChecked = res.Where(x => x.Distance.Equals(res[0].Distance));
-                foreach (var r in resChecked)
+                var hitEntity = res[0].HitEntity;
+
+                // Check static objects that can overlap.
+                if (IsStatic(hitEntity))
                 {
-                    if (Interaction.InRangeUnobstructed(ignore, r.HitEntity, range + 0.1f, overlapCheck: false))
-                        resSet.Add(r.HitEntity);
+                    for (var j = 1; j < res.Count; j++)
+                    {
+                        if (res[j].Distance - res[0].Distance > 0.1f)
+                            break;
+
+                        if (IsStatic(res[j].HitEntity) && IsDrawnAbove(res[j].HitEntity, hitEntity))
+                            hitEntity = res[j].HitEntity;
+                    }
                 }
+
+                // Normal hit detection.
+                if (Interaction.InRangeUnobstructed(ignore, hitEntity, range + 0.1f, overlapCheck: false))
+                    resSet.Add(hitEntity);
             }
         }
 
         return resSet;
+    }
+
+    private bool IsStatic(EntityUid uid)
+    {
+        return _physicsQuery.TryComp(uid, out var body) && body.BodyType == BodyType.Static;
+    }
+
+    protected virtual bool IsDrawnAbove(EntityUid uid, EntityUid other)
+    {
+        // Only matters for client.
+        return false;
     }
 
     protected virtual bool ArcRaySuccessful(EntityUid targetUid,

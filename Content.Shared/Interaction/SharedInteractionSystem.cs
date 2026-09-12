@@ -24,6 +24,7 @@ using Content.Shared.Players.RateLimiting;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Content.Shared.Strip;
+using Content.Shared.SubFloor;
 using Content.Shared.Tag;
 using Content.Shared.Timing.Components;
 using Content.Shared.Timing.Systems;
@@ -57,12 +58,12 @@ namespace Content.Shared.Interaction
         [Dependency] private ISharedChatManager _chat = default!;
         [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private EntityLookupSystem _lookup = default!;
+        [Dependency] private FixtureSystem _fixtures = default!;
         [Dependency] private SharedHandsSystem _hands = default!;
         [Dependency] private InventorySystem _inventory = default!;
         [Dependency] private PullingSystem _pullSystem = default!;
         [Dependency] private RotateToFaceSystem _rotateToFaceSystem = default!;
         [Dependency] private SharedContainerSystem _containerSystem = default!;
-        [Dependency] private SharedMapSystem _map = default!;
         [Dependency] private SharedPhysicsSystem _broadphase = default!;
         [Dependency] private SharedTransformSystem _transform = default!;
         [Dependency] private SharedVerbSystem _verbSystem = default!;
@@ -81,6 +82,7 @@ namespace Content.Shared.Interaction
         [Dependency] private EntityQuery<InteractionRelayComponent> _relayQuery = default!;
         [Dependency] private EntityQuery<CombatModeComponent> _combatQuery = default!;
         [Dependency] private EntityQuery<WallMountComponent> _wallMountQuery = default!;
+        [Dependency] private EntityQuery<SubFloorHideComponent> _subFloorQuery = default!;
         [Dependency] private EntityQuery<UseDelayComponent> _delayQuery = default!;
         [Dependency] private EntityQuery<ActivatableUIComponent> _uiQuery = default!;
 
@@ -859,6 +861,7 @@ namespace Content.Shared.Interaction
         /// </summary>
         /// <example>
         /// if the target entity is a wallmount we ignore all other entities on the tile.
+        /// Entities covering the target are ignored.
         /// </example>
         private Ignored GetPredicate(
             MapCoordinates originCoords,
@@ -869,6 +872,7 @@ namespace Content.Shared.Interaction
             Ignored? predicate = null)
         {
             HashSet<EntityUid> ignored = new();
+            var ignoreCovering = true;
 
             if (_itemQuery.HasComp(target) && _physicsQuery.TryComp(target, out var physics) && physics.CanCollide)
             {
@@ -893,22 +897,50 @@ namespace Content.Shared.Interaction
             {
                 // wall-mount exemptions may be restricted to a specific angle range.da
 
-                bool ignoreAnchored;
-                if (wallMount.Arc >= Math.Tau)
-                    ignoreAnchored = true;
-                else
+                if (wallMount.Arc < Math.Tau)
                 {
                     var angle = Angle.FromWorldVec(originCoords.Position - targetCoords.Position);
                     var angleDelta = (wallMount.Direction + targetRotation - angle).Reduced().FlipPositive();
-                    ignoreAnchored = angleDelta < wallMount.Arc / 2 || Math.Tau - angleDelta < wallMount.Arc / 2;
+                    ignoreCovering = angleDelta < wallMount.Arc / 2 || Math.Tau - angleDelta < wallMount.Arc / 2;
                 }
-
-                if (ignoreAnchored && _map.TryFindGridAt(targetCoords, out var gridUid, out var grid))
-                    ignored.UnionWith(_map.GetAnchoredEntities((gridUid, grid), targetCoords));
             }
 
-            Ignored combinedPredicate = e => e == target || (predicate?.Invoke(e) ?? false) || ignored.Contains(e);
-            return combinedPredicate;
+            // Ignore subfloor if covered.
+            if (_subFloorQuery.TryComp(target, out var subFloor) && subFloor.BlockInteractions)
+                ignoreCovering = false;
+
+            return e =>
+            {
+                if (e == target || (predicate?.Invoke(e) ?? false) || ignored.Contains(e))
+                    return true;
+
+                if (!ignoreCovering)
+                    return false;
+
+                return CoversPoint(e, targetCoords);
+            };
+        }
+
+        /// <summary>
+        /// Checks if another entity's hard fixtures cover the given coordinates.
+        /// </summary>
+        public bool CoversPoint(EntityUid uid, MapCoordinates coords)
+        {
+            if (!_fixtureQuery.TryComp(uid, out var fixtures) || fixtures.FixtureCount == 0)
+                return false;
+
+            var transform = _broadphase.GetPhysicsTransform(uid);
+
+            foreach (var fixture in fixtures.Fixtures.Values)
+            {
+                if (!fixture.Hard)
+                    continue;
+
+                if (_fixtures.TestPoint(fixture.Shape, transform, coords.Position))
+                    return true;
+            }
+
+            return false;
         }
 
         /// <summary>
