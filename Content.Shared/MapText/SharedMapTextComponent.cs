@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -17,7 +17,7 @@ public abstract partial class SharedMapTextComponent : Component
     /// The text to display. This will override <see cref="LocText"/>.
     /// </summary>
     [DataField]
-    public string? Text;
+    public string Text = "";
 
     /// <summary>
     /// The localized-id of the text that should be displayed.
