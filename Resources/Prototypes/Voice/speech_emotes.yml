@@ -204,6 +204,7 @@
   name: chat-emote-name-bark
   category: Vocal
   available: false
+  icon: Interface/Emotes/bark.png
   whitelist:
     components:
     - Vocal
@@ -222,6 +223,7 @@
   name: chat-emote-name-snarl
   category: Vocal
   available: false
+  icon: Interface/Emotes/snarl.png
   whitelist:
     components:
     - Vocal
@@ -240,6 +242,7 @@
   name: chat-emote-name-whine
   category: Vocal
   available: false
+  icon: Interface/Emotes/whine.png
   whitelist:
     components:
     - Vocal
@@ -258,6 +261,7 @@
   name: chat-emote-name-howl
   category: Vocal
   available: false
+  icon: Interface/Emotes/howl.png
   whitelist:
     components:
     - Vocal
@@ -276,6 +280,7 @@
   name: chat-emote-name-growl
   category: Vocal
   available: false
+  icon: Interface/Emotes/growl.png
   whitelist:
     components:
     - Vocal
@@ -311,7 +316,7 @@
   id: ClapSingle
   name: chat-emote-name-clap-single
   category: Hands
-  icon: Interface/Emotes/clap.png #TODO: Needs a sprite that distinguishes it better from clap
+  icon: Interface/Emotes/singleclap.png
   whitelist:
     components:
     - Hands
