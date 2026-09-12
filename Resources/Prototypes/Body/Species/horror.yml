@@ -132,7 +132,7 @@
     useSound:
       path: /Audio/Items/crowbar.ogg
   - type: Vocal
-    screamAction: null # they dont get a scream action ):<
+    emoteSounds: null # there should be a way to not make them scream but oh well
   - type: ChangelingHorror # marks them as a changeling horror
     spawnAnnouncementSound:
       path: /Audio/Animals/space_dragon_roar.ogg
