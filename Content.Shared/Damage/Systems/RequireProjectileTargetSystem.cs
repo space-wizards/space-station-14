@@ -45,7 +45,10 @@ public sealed partial class RequireProjectileTargetSystem : EntitySystem
         }
     }
 
-    private void SetActive(Entity<RequireProjectileTargetComponent> ent, bool value)
+    /// <summary>
+    /// Sets whether <see cref="RequireProjectileTargetComponent"/> is active and will require aiming at to be hit.
+    /// </summary>
+    public void SetActive(Entity<RequireProjectileTargetComponent> ent, bool value)
     {
         if (ent.Comp.Active == value)
             return;
