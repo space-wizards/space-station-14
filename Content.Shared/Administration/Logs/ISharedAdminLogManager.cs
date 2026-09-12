@@ -1,4 +1,4 @@
-﻿using System.Runtime.CompilerServices;
+using System.Runtime.CompilerServices;
 using Content.Shared.Database;
 
 namespace Content.Shared.Administration.Logs;

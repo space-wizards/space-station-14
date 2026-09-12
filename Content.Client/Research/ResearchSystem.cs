@@ -1,4 +1,4 @@
-﻿using Content.Shared.Research.Systems;
+using Content.Shared.Research.Systems;
 
 namespace Content.Client.Research;
 

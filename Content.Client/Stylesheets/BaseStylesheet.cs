@@ -1,4 +1,4 @@
-﻿namespace Content.Client.Stylesheets;
+namespace Content.Client.Stylesheets;
 
 public abstract partial class BaseStylesheet
 {

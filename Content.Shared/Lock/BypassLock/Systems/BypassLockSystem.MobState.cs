@@ -1,4 +1,4 @@
-﻿using Content.Shared.Lock.BypassLock.Components;
+using Content.Shared.Lock.BypassLock.Components;
 using Content.Shared.Mobs.Components;
 
 namespace Content.Shared.Lock.BypassLock.Systems;

@@ -1,4 +1,4 @@
-﻿using Content.Shared.StationRecords.Components;
+using Content.Shared.StationRecords.Components;
 
 namespace Content.Shared.StationRecords.Systems;
 

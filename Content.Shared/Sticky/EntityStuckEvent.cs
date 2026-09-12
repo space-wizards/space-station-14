@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Sticky;
+namespace Content.Shared.Sticky;
 
 /// <summary>
 ///     Risen on sticky entity to see if it can stick to another entity.

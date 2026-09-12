@@ -1,4 +1,4 @@
-﻿- type: stack
+- type: stack
   parent: BaseMediumStack
   id: ArtifactFragment
   name: stack-artifact-fragment

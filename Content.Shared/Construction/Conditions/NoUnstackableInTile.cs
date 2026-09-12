@@ -1,4 +1,4 @@
-﻿using Content.Shared.Construction.EntitySystems;
+using Content.Shared.Construction.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 

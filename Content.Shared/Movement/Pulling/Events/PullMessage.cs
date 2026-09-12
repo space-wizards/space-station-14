@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Movement.Pulling.Events;
+namespace Content.Shared.Movement.Pulling.Events;
 
 public abstract class PullMessage : EntityEventArgs
 {

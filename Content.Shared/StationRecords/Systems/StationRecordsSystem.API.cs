@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Random.Helpers;
 using Content.Shared.StationRecords.Components;
 using Content.Shared.StationRecords.Events;

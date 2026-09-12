@@ -1,4 +1,4 @@
-﻿using Content.Shared.ActionBlocker;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Chat;
 using Content.Shared.Movement.Events;
 using Content.Shared.StepTrigger.Systems;

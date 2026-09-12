@@ -1,4 +1,4 @@
-﻿using Content.Shared.CrewManifest;
+using Content.Shared.CrewManifest;
 using Content.Shared.StatusIcon;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;

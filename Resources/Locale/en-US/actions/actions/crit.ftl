@@ -1,1 +1,1 @@
-﻿action-name-crit-last-words = Say Last Words
+action-name-crit-last-words = Say Last Words

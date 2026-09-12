@@ -1,4 +1,4 @@
-﻿using Content.Shared.Item.ItemToggle;
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.ProximityDetection.Components;
 using Robust.Shared.Timing;

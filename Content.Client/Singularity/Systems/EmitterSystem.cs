@@ -1,4 +1,4 @@
-﻿using Content.Shared.Singularity.Components;
+using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
 using Robust.Client.GameObjects;
 

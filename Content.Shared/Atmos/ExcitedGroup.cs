@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Atmos;
+namespace Content.Shared.Atmos;
 
 /// <summary>
 /// <para>Internal Atmospherics class that stores data about a group of <see cref="TileAtmosphere"/>s

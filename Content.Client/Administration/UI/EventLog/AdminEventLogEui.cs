@@ -1,4 +1,4 @@
-﻿using Content.Client.Eui;
+using Content.Client.Eui;
 using Content.Shared.Administration.AdminEventLog;
 using Content.Shared.Eui;
 using JetBrains.Annotations;

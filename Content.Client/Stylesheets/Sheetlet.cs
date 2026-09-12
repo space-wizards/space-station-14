@@ -1,4 +1,4 @@
-﻿using Robust.Client.ResourceManagement;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Stylesheets;

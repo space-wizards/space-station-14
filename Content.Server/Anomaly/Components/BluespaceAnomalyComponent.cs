@@ -1,4 +1,4 @@
-﻿using Content.Server.Anomaly.Effects;
+using Content.Server.Anomaly.Effects;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Anomaly.Components;

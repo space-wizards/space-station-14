@@ -1,4 +1,4 @@
-﻿using Content.Shared.Radiation.Components;
+using Content.Shared.Radiation.Components;
 
 namespace Content.Shared.Radiation.Systems;
 

@@ -1,4 +1,4 @@
-﻿using Content.Shared.MapText;
+using Content.Shared.MapText;
 
 namespace Content.Server.MapText;
 

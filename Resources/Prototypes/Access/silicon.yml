@@ -1,4 +1,4 @@
-﻿- type: accessLevel
+- type: accessLevel
   id: Borg
   name: id-card-access-level-borg
   canAddToIdCard: false

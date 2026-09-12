@@ -1,4 +1,4 @@
-﻿using Content.Client.Markers;
+using Content.Client.Markers;
 using Content.Client.SubFloor;
 using Content.Client.Stylesheets;
 using Content.Shared.Silicons.StationAi;

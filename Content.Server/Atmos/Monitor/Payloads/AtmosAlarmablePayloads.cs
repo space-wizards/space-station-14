@@ -1,4 +1,4 @@
-﻿using Content.Shared.Atmos.Monitor;
+using Content.Shared.Atmos.Monitor;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;

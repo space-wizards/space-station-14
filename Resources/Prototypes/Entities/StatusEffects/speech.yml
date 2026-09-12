@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: MobStatusEffectDebuff
   id: SpeechStatusEffectBase
   abstract: true

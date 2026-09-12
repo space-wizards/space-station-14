@@ -1,4 +1,4 @@
-﻿using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Components;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Mobs;

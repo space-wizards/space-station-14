@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: MarkerBase
   id: PlaqueAtmos
   name: atmos plaque spawner

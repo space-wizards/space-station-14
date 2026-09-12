@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: Acidifier
   name: acid
   description: Melts you into a puddle of yuck!

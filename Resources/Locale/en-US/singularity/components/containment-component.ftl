@@ -1,4 +1,4 @@
-﻿comp-containment-turned-on = The containment field generator boots up.
+comp-containment-turned-on = The containment field generator boots up.
 comp-containment-turned-off = The containment field generator shuts down.
 
 comp-containment-on = It's switched [color=green]on[/color], ready to generate a connection.

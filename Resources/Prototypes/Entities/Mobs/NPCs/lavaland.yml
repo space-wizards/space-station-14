@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: watcher
   id: MobWatcherBase
   parent: [ SimpleSpaceMobBase, FlyingMobBase, BaseSlicingRefinable, BaseMobDestructible ]

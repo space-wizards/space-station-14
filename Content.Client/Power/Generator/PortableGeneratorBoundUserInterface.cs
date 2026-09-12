@@ -1,4 +1,4 @@
-﻿using Content.Shared.Power.Generator;
+using Content.Shared.Power.Generator;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
