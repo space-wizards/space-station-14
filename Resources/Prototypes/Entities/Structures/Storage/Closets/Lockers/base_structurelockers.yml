@@ -7,31 +7,49 @@
   - type: Lock
   - type: LockVisuals
   - type: Sprite
-    sprite: Structures/Storage/closet.rsi
+    sprite: Structures/Storage/Closets/generic-secure.rsi
     noRot: true
     layers:
-    - state: generic
-      map: ["enum.StorageVisualLayers.Base"]
-    - state: generic_door
+    - state: closed
       map: ["enum.StorageVisualLayers.Door"]
     - state: locked
+      sprite: Structures/Storage/Closets/closet-effects.rsi
       map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
     - state: welded
       visible: false
+      sprite: Structures/Storage/Closets/closet-effects.rsi
       map: ["enum.WeldableLayers.BaseWelded"]
     - state: paper
       visible: false
-      sprite: Structures/Storage/closet_labels.rsi
-      offset: "-0.065,0"
+      sprite: Structures/Storage/Closets/closet-effects.rsi
       map: ["enum.PaperLabelVisuals.Layer"]
+  - type: GenericVisualizer
+    visuals:
+      enum.PaperLabelVisuals.HasLabel:
+        enum.PaperLabelVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+      enum.StorageVisuals.Open:
+        enum.PaperLabelVisuals.Layer:
+          True: { visible: false }
+      enum.PaperLabelVisuals.LabelType:
+        enum.PaperLabelVisuals.Layer:
+          Paper: { state: paper }
+          Bounty: { state: bounty }
+          CaptainsPaper: { state: captains_paper }
+          Invoice: { state: invoice }
+      enum.LockVisuals.Locked:
+        enum.LockVisualLayers.Lock:
+          True: { state: locked }
+          False: { state: unlocked }
   - type: Construction
     graph: ClosetSteelSecure
     node: done
     containers:
     - entity_storage
-  - type: Paintable
-    group: Locker
+#  - type: Paintable
+#    group: Locker
   - type: Damageable
     damageModifierSet: PlasteelMod
   - type: Destructible

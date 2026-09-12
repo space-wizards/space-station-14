@@ -95,8 +95,8 @@
       components:
       - MobState
   - type: LockVisuals
-    stateLocked: cursed_door
-    stateUnlocked: decursed_door
+    stateLocked: locked
+    stateUnlocked: unlocked
   - type: Lock
     breakOnAccessBreaker: false
   - type: AccessReader
@@ -108,27 +108,47 @@
     damage:
       types: {}
   - type: Sprite
+    sprite: Structures/Storage/Closets/generic-secure.rsi
     noRot: true
-    sprite: Structures/Storage/closet.rsi
     layers:
-    - state: cursed
-      map: [ "enum.StorageVisualLayers.Base" ]
-    - state: decursed_door
-      map: [ "enum.StorageVisualLayers.Door" ]
-    - state: paper
-      visible: false
-      sprite: Structures/Storage/closet_labels.rsi
-      map: [ "enum.PaperLabelVisuals.Layer" ]
-    - state: cursed_door
-      map: [ "enum.LockVisualLayers.Lock" ]
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: locked
+      sprite: Structures/Storage/Closets/closet-effects.rsi
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
     - state: welded
       visible: false
-      map: [ "enum.WeldableLayers.BaseWelded" ]
+      sprite: Structures/Storage/Closets/closet-effects.rsi
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: paper
+      visible: false
+      sprite: Structures/Storage/Closets/closet-effects.rsi
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PaperLabelVisuals.HasLabel:
+        enum.PaperLabelVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+      enum.StorageVisuals.Open:
+        enum.PaperLabelVisuals.Layer:
+          True: { visible: false }
+      enum.PaperLabelVisuals.LabelType:
+        enum.PaperLabelVisuals.Layer:
+          Paper: { state: paper }
+          Bounty: { state: bounty }
+          CaptainsPaper: { state: captains_paper }
+          Invoice: { state: invoice }
+      enum.LockVisuals.Locked:
+        enum.LockVisualLayers.Lock:
+          True: { state: locked }
+          False: { state: unlocked }
   #TODO: Will have to eventually make a custom visualizer for cursed lockers
   - type: EntityStorageVisuals
-    stateBaseClosed: decursed
-    stateDoorOpen: decursed_open
-    stateDoorClosed: decursed_door
+    stateDoorOpen: open
+    stateDoorClosed: closed
   - type: Fixtures
     fixtures:
       fix1:

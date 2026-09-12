@@ -55,16 +55,16 @@
               max: 2
     - type: Sprite
       noRot: true
-      sprite: Structures/Storage/closet.rsi
+      sprite: Structures/Storage/Closets/misc-cardboard-box.rsi
       layers:
-      - state: cardboard
+      - state: base
         map: ["enum.StorageVisualLayers.Base"]
-      - state: cardboard_open
+      - state: open
         map: ["enum.StorageVisualLayers.Door"]
     - type: Appearance
     - type: EntityStorageVisuals
-      stateBaseClosed: cardboard
-      stateDoorOpen: cardboard_open
+      stateBaseClosed: base
+      stateDoorOpen: open
     - type: Tag
       tags:
         - DoorBumpOpener
