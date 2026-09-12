@@ -14,6 +14,7 @@ namespace Content.Shared.Interaction;
 /// </summary>
 public partial class SharedInteractionSystem
 {
+    [Dependency] EntityQuery<RelayInputMoverComponent> _relayInputMoverQuery;
     private void InitializeBlocking()
     {
         SubscribeLocalEvent<BlockMovementComponent, UpdateCanMoveEvent>(OnMoveAttempt);
@@ -42,10 +43,12 @@ public partial class SharedInteractionSystem
     private void OnMoveAttempt(EntityUid uid, BlockMovementComponent component, UpdateCanMoveEvent args)
     {
         // If we're relaying then don't cancel.
-        if (HasComp<RelayInputMoverComponent>(uid))
+        if (_relayInputMoverQuery.HasComp(uid))
             return;
 
-        args.Cancel(); // no more scurrying around
+        // Only handle events pre-shutdown.
+        if (component.LifeStage < ComponentLifeStage.Stopping)
+            args.Cancel();
     }
 
     private void CancellableInteractEvent(EntityUid uid, BlockMovementComponent component, CancellableEntityEventArgs args)
