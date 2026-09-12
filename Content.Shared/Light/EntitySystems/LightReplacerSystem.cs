@@ -25,33 +25,6 @@ public sealed partial class LightReplacerSystem : EntitySystem
 
     [Dependency] private EntityQuery<LightBulbComponent> _lightBulbQuery = default!;
 
-    /// <summary> Adds contents info into examine. </summary>
-    [SubscribeLocalEvent]
-    private void OnExamined(Entity<LightReplacerComponent> replacer, ref ExaminedEvent args)
-    {
-        if (!_provider.TryGetEntityCounter(replacer.Owner, out var entities))
-            return;
-
-        using (args.PushGroup(nameof(LightReplacerComponent)))
-        {
-            if (entities.Count == 0)
-            {
-                args.PushMarkup(Loc.GetString("comp-light-replacer-no-lights"));
-                return;
-            }
-
-            args.PushMarkup(Loc.GetString("comp-light-replacer-has-lights"));
-
-            foreach (var bulb in entities)
-            {
-                if (!ProtoMan.Resolve(bulb.Key, out var bulbPrototype))
-                    continue;
-
-                args.PushMarkup(Loc.GetString("comp-light-replacer-light-listing", ("amount", bulb.Value), ("name", bulbPrototype.Name)));
-            }
-        }
-    }
-
     /// <summary> Attempts to open UI for replacer, if there are any viable options to put into it. </summary>
     [SubscribeLocalEvent]
     private void OnUse(Entity<LightReplacerComponent> replacer, ref UseInHandEvent args)
