@@ -70,3 +70,23 @@ book-text-combat-bakery-kit = Thank you for choosing our combat bakery kit!
       Butter Slice x 1
       Glass Shard x 1
       Cook Time: 5 seconds
+
+book-text-lootbox-manual = [color=blue]█▄ █ ▀█▀ NANOTRASEN INFORMATION FORM
+      █ ▀█     █     [/color]LOCK BOX DELIVERY PROCEDURES
+      ───────────────────────────────────────
+
+      As with all deliveries, we expect our dutiful and valued NanoTrasen® employees to delivery on time, every time. Please ensure all lock boxes are appropriately anchored before, during, and up until shuttle transport has concluded at the specified destination goods-in processing bay. Do not engage with the locking procedure of the lock box. Do not strike the lock box with excessive force. Report immediately any audio, kinetic, or visual stimuli produced by the lock box. Ensure all cargo is unloaded via product convenyance belt systems where available.
+
+      Despite the hardships of prior expeditions, we have complete faith in our latest NanoTrasen® brand [italic]Faster-Than-Flight Prototype Accelerator Drive™[/italic]. This new generation of shuttle-scale interstellar transportation is essential to our ongoing goal to ensuring every corner of our corporate space receives their shipments. So that they themselves can perform their essential work.
+      You, as the shuttle pilot and delivery [man/woman/prefer not to say], are the lynchpin of our logistical hub. We have heard your worries and we can assure you that any rumours you have heard of malfunctions, anomalies behaviour, or missing shipments are merely propaganda maliciously produced by the illegal Syndicate-backed networks that operate without permission within our corporate borders.
+      The presence of these bad actors is temporary, their efforts futile, and they will be expunged for the safety of not only you, but this company as a whole. In the mean time the dedication we know some of you make to ensure quotas are met are what put you above the rest. Nanotrasen thanks you for your work, although please remember not to leave unsanitary litter behind in shuttles at shift change.
+
+      With your aid, and continued committment, we can not only enrich employee wellbeing by providing stations excellent product, but do so in a way that continues to meet and exceed the expecations set by our shareholders and Central Command.
+
+      It has always been the case that our intent is to provide a sense of Pride and Accomplishment for each successful delivery, in knowing that we as an intergalactic family can continue to do what we do best, no matter what adversities this galaxy might throw at us.
+
+      Yours faithfully:
+      - High Quartermaster-at-Arms, Corporal Iscariot
+
+stamp-lootbox-logistics = CentComm Logistics Division
+

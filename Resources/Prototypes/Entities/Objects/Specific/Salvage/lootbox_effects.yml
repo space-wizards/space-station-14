@@ -1,0 +1,653 @@
+- type: entityTable
+  id: LootboxEffectTableBasic
+  table: !type:GroupSelector
+    children:
+    - id: LootboxEffectBasic
+
+- type: entityTable
+  id: LootboxEffectTableEngineering
+  table: !type:GroupSelector
+    children:
+    - id: LootboxEffectEngineering
+
+- type: entityTable
+  id: LootboxEffectTableSecurity
+  table: !type:GroupSelector
+    children:
+    - id: LootboxEffectSecurity
+
+- type: entityTable
+  id: LootboxEffectTableMedical
+  table: !type:GroupSelector
+    children:
+    - id: LootboxEffectMedical
+
+- type: entityTable
+  id: LootboxEffectTableScience
+  table: !type:GroupSelector
+    children:
+    - id: LootboxEffectScience
+
+- type: entityTable
+  id: LootboxEffectTableService
+  table: !type:GroupSelector
+    children:
+    - id: LootboxEffectService
+
+- type: entity
+  id: LootboxEffectBasic
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Becomes a lootbox
+  components:
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: false
+    refreshOnReactivate: false
+    components:
+    - type: RequireProjectileTarget # this is here as PA's can't hit otherwise.
+    - type: Weldable
+    - type: Lock
+      locked: false
+    - type: EntityStorage
+    - type: EntityTableContainerFill #fill the crate up with the loot
+      containers:
+        entity_storage: !type:AllSelector
+          children:
+          - !type:NestedSelector
+            tableId: LootboxTableBasic
+            rolls: 3,5
+          - !type:NestedSelector
+            tableId: LootboxTableFluff
+  - type: XAERemoveArtifact #we're done now so kill it
+
+- type: entity
+  id: LootboxEffectEngineering
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Becomes a lootbox
+  components:
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: false
+    refreshOnReactivate: false
+    components:
+    - type: RequireProjectileTarget
+    - type: Weldable
+    - type: Lock
+      locked: false
+    - type: EntityStorage
+    - type: EntityTableContainerFill #fill the crate up with the loot
+      containers:
+        entity_storage: !type:AllSelector
+          children:
+          - !type:NestedSelector
+            tableId: LootboxTableBasic
+          - !type:NestedSelector
+            tableId: LootboxTableFluff
+          - !type:NestedSelector
+            tableId: LootboxTableCargoSalv
+          - !type:NestedSelector
+            tableId: LootboxTableEngineering
+            rolls: 2
+  - type: XAERemoveArtifact #we're done now so kill it
+
+- type: entity
+  id: LootboxEffectSecurity
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Becomes a lootbox
+  components:
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: false
+    refreshOnReactivate: false
+    components:
+    - type: RequireProjectileTarget
+    - type: Weldable
+    - type: Lock
+      locked: false
+    - type: EntityStorage
+    - type: EntityTableContainerFill #fill the crate up with the loot
+      containers:
+        entity_storage: !type:AllSelector
+          children:
+          - !type:NestedSelector
+            tableId: LootboxTableBasic
+          - !type:NestedSelector
+            tableId: LootboxTableFluff
+          - !type:NestedSelector
+            tableId: LootboxTableCargoSalv
+          - !type:NestedSelector
+            tableId: LootboxTableSecurity
+  - type: XAERemoveArtifact #we're done now so kill it
+
+- type: entity
+  id: LootboxEffectMedical
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Becomes a lootbox
+  components:
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: false
+    refreshOnReactivate: false
+    components:
+    - type: RequireProjectileTarget
+    - type: Weldable
+    - type: Lock
+      locked: false
+    - type: EntityStorage
+    - type: EntityTableContainerFill #fill the crate up with the loot
+      containers:
+        entity_storage: !type:AllSelector
+          children:
+          - !type:NestedSelector
+            tableId: LootboxTableBasic
+          - !type:NestedSelector
+            tableId: LootboxTableFluff
+          - !type:NestedSelector
+            tableId: LootboxTableCargoSalv
+          - !type:NestedSelector
+            tableId: LootboxTableMedical
+            rolls: 2
+  - type: XAERemoveArtifact #we're done now so kill it
+
+- type: entity
+  id: LootboxEffectScience
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Becomes a lootbox
+  components:
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: false
+    refreshOnReactivate: false
+    components:
+    - type: RequireProjectileTarget
+    - type: Weldable
+    - type: Lock
+      locked: false
+    - type: EntityStorage
+    - type: EntityTableContainerFill #fill the crate up with the loot
+      containers:
+        entity_storage: !type:AllSelector
+          children:
+          - !type:NestedSelector
+            tableId: LootboxTableBasic
+          - !type:NestedSelector
+            tableId: LootboxTableFluff
+          - !type:NestedSelector
+            tableId: LootboxTableCargoSalv
+          - !type:NestedSelector
+            tableId: LootboxTableScience
+            rolls: 2
+  - type: XAERemoveArtifact #we're done now so kill it
+
+- type: entity
+  id: LootboxEffectService
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Becomes a lootbox
+  components:
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: false
+    refreshOnReactivate: false
+    components:
+    - type: RequireProjectileTarget
+    - type: Weldable
+    - type: Lock
+      locked: false
+    - type: EntityStorage
+    - type: EntityTableContainerFill #fill the crate up with the loot
+      containers:
+        entity_storage: !type:AllSelector
+          children:
+          - !type:NestedSelector
+            tableId: LootboxTableBasic
+          - !type:NestedSelector
+            tableId: LootboxTableFluff
+          - !type:NestedSelector
+            tableId: LootboxTableCargoSalv
+          - !type:NestedSelector
+            tableId: LootboxTableService
+            rolls: 2,3
+  - type: XAERemoveArtifact #we're done now so kill it
+
+- type: entityTable
+  id: LootboxTableBasic #generically useful lootbox items
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector # lots of fun things in this, pre-made randomness
+      tableId: FillSmugglerBackpack
+      weight: 3
+    - !type:NestedSelector
+      tableId: RandomAllHighValueMaterialsTable
+    - !type:NestedSelector
+      tableId: RandomCommonSurplusMaterialTable
+      rolls: 2,3
+    - !type:NestedSelector
+      tableId: LotteryCashEntityTable
+      rolls: 1,2
+    - !type:GroupSelector # rare roll from other loot box table
+      weight: 0.25
+      children:
+      - !type:NestedSelector
+        tableId: LootboxTableEngineering
+      - !type:NestedSelector
+        tableId: LootboxTableScience
+      - !type:NestedSelector
+        tableId: LootboxTableMedical
+      - !type:NestedSelector
+        tableId: LootboxTableService
+      - !type:NestedSelector
+        tableId: LootboxTableCargoSalv
+        weight: 0.25
+      - !type:NestedSelector
+        tableId: LootboxTableSecurity
+        weight: 0.1
+    - !type:NestedSelector # winner winner roll again
+      tableId: LootboxMaintsSpawnTable
+      weight: 0.01
+
+- type: entityTable
+  id: LootboxTableFluff #not strictly useless, but clearly secondary.
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: MaintFluffTable
+      rolls: 3, 5
+    - !type:NestedSelector
+      tableId: AllToysTable
+      rolls: 1, 2
+    - !type:NestedSelector
+      tableId: AllPlushiesTable
+      rolls: 1, 2
+    - !type:NestedSelector
+      tableId: LotterySwagEntityTable
+      weight: 0.5
+    - !type:NestedSelector
+      tableId: RandomAllAlcoholTable
+      rolls: 1, 2
+    - id: MysteryFigureBox
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - !type:GroupSelector
+      weight: 0.333
+      children: # 1/33 chance..
+      - !type:NestedSelector
+        tableId: LootboxTableNaughty
+      - id: PaperLootboxInformation # ..with 50/50 chance of Pride and Accomplishment
+
+- type: entityTable
+  id: LootboxTableEngineering
+  table: !type:GroupSelector
+    children:
+    # normal rarity items
+    - id: RadiationCollectorFlatpack
+      amount: 4
+    - id: WelderExperimental
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - id: PowerDrill
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - id: JawsOfLife
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - id: HellfireFreezerMachineCircuitBoard
+      amount: 2
+    - id: ClothingHandsGlovesColorYellow
+      amount: !type:RangeNumberSelector
+        range: 1, 3
+    - id: WeaponParticleDecelerator
+      amount: 2
+    - id: PowerCellHyper
+      amount: !type:RangeNumberSelector
+        range: 2, 5
+    - !type:AllSelector
+      children:
+      - id: ShuttleConsoleCircuitboard
+      - id: ThrusterMachineCircuitboard
+        amount: 4
+      - id: GyroscopeMachineCircuitboard
+      - id: MiniGravityGeneratorCircuitboard
+    - !type:AllSelector
+      children:
+      - id: RCD
+        amount: !type:RangeNumberSelector
+        range: 1, 2
+      - id: RCDAmmo
+        amount: 2
+    - !type:AllSelector
+      children:
+      - id: SheetPlasteel
+        amount: 2
+      - id: SheetPlasma
+      - id: SheetUranium
+    # rare items
+    - id: JetpackVoid
+      amount: !type:RangeNumberSelector
+        range: 2, 4
+      weight: 0.5
+    - id: PowerCellMicroreactor
+      amount: !type:RangeNumberSelector
+        range: 4, 7
+      weight: 0.5
+    # !Legendary Item!
+    - id: ClothingShoesBootsMagBlinding
+      weight: 0.096 # ~1/125 chance
+
+- type: entityTable
+  id: LootboxTableSecurity
+  table: !type:GroupSelector
+    children:
+    # normal rarity items
+    - id: MedkitCombatFilled
+      amount: 2
+    - id: ClothingHeadHelmetSwat
+      amount: !type:RangeNumberSelector
+        range: 3, 5
+    - id: WeaponDisablerSMG
+      amount: 2
+    - id: WeaponLaserCannon
+      amount: 2
+    - id: WeaponXrayCannon
+      amount: 2
+    - id: ClothingBackpackHarmpack
+    - id: PortableRecharger
+      amount: 2
+    - !type:NestedSelector
+      tableId: IncendiaryAmmo
+      rolls: 2
+    - !type:NestedSelector
+      tableId: UraniumAmmo
+      rolls: 2
+    - !type:AllSelector
+      children:
+      - id: ClothingOuterArmorRiot
+        amount: 2
+      - id: ClothingHeadHelmetRiot
+        amount: 2
+    - !type:AllSelector
+      children:
+      - id: Truncheon
+        amount: 3
+      - id: TelescopicShield
+        amount: 3
+    # rare items
+    - id: WeaponShotgunEnforcer
+      amount: 2
+      weight: 0.5
+    - id: WeaponTemperatureGun
+      amount: 1
+      weight: 0.5
+    - id: WeaponAdvancedLaser
+      amount: 2
+      weight: 0.5
+    # !Legendary Item!
+    - id: WeaponPistolN1984 # Suprisingly powerful weapon
+      weight: 0.1 # ~1/125 chance
+
+- type: entityTable
+  id: IncendiaryAmmo
+  table: !type:GroupSelector
+    children:
+    - id: BoxShotgunIncendiary
+      amount: 3
+    - id: MagazineBoxPistolIncendiary
+      amount: 3
+    - id: MagazineBoxMagnumIncendiary
+      amount: 3
+    - id: MagazineBoxLightRifleIncendiary
+      amount: 3
+    - id: MagazineBoxRifleIncendiary
+      amount: 3
+
+- type: entityTable
+  id: UraniumAmmo
+  table: !type:GroupSelector
+    children:
+    - id: BoxShotgunUranium
+      amount: 3
+    - id: MagazineBoxPistolUranium
+      amount: 3
+    - id: MagazineBoxMagnumUranium
+      amount: 3
+    - id: MagazineBoxLightRifleUranium
+      amount: 3
+    - id: MagazineBoxRifleUranium
+      amount: 3
+
+- type: entityTable
+  id: LootboxTableMedical
+  table: !type:GroupSelector
+    children:
+  # normal rarity items
+    - id: VendingMachineRestockChemVend
+    - id: MedkitAdvancedFilled
+      amount: 3
+    - id: CryostasisBeaker
+      amount: 2
+    - id: SyringeCryostasis
+      amount: 2
+    - id: AdvancedJetInjector
+      amount: 4
+    - id: MedicalScannerMachineCircuitboard
+    - id: ChemistryBottleOmnizine
+      amount: !type:RangeNumberSelector
+        range: 2, 3
+    - id: MobMedibot
+      amount: 2
+    # rare items
+    - id: BluespaceBeaker
+      weight: 0.5
+    - id: SyringeBluespace
+      amount: 2
+      weight: 0.5
+    - !type:AllSelector
+      weight: 0.5
+      children:
+      - id: LauncherSyringe
+      - id: MiniSyringe
+        amount: 6
+    # !Legendary Item!
+    - !type:AllSelector
+      weight: 0.076 # ~1/125 chance
+      children: # body scanner is salvagable elsewhere, can't be too generous...
+        - id: CloningConsoleComputerCircuitboard
+        - id: CloningPodMachineCircuitboard
+
+- type: entityTable
+  id: LootboxTableService
+  table: !type:GroupSelector
+    children:
+    # normal rarity items
+    - id: FoodCheese
+      amount: 3
+    - id: FoodContainerEgg
+      amount: 3
+    - id: WeaponShotgunSawnEmpty
+      amount: 2
+    - id: HydroponicsTrayFlatpack
+      amount: 3
+    - id: TrashBagHolding
+      amount: 2
+    - id: MegaSprayBottleSpaceCleaner
+      amount: 2
+    - id: AdvMopItem
+      amount: 2
+    - !type:GroupSelector
+      rolls: 2
+      children:
+      - id: VendingMachineRestockBooze
+      - id: VendingMachineRestockNutriMax
+      - id: VendingMachineRestockChefvend
+      - id: ReagentGrinderIndustrialMachineCircuitboard
+      - id: DawInstrumentMachineCircuitboard
+      - id: ChemMasterMachineCircuitboard
+    - !type:NestedSelector
+      tableId: RandomInstrumentTable
+      rolls: 6
+    - !type:AllSelector
+      children:
+      - id: LauncherCreamPie
+      - id: FoodPieBananaCream
+        amount: !type:RangeNumberSelector
+          range: 3, 5
+    - !type:GroupSelector
+      rolls: 2
+      children:
+      - id: MobHonkBot
+      - id: MobHugBot
+      - id: MobMimeBot
+      - id: MobJonkBot
+        weight: 0.25
+      - id: MobCleanBot
+    - !type:AllSelector
+      children:
+      - id: WeaponSprayNozzle
+      - id: ClothingBackpackWaterTank
+    # Rare Items
+    - id: SyndicateMicrowaveFlatpack # Contraband? outside of the contraband lootbox entity table? It's more likely than you think.
+      weight: 0.5
+    # !Legendary Item!
+    - id: SuperSynthesizerInstrument
+      weight: 0.1 # ~1/125 chance
+
+- type: entityTable
+  id: LootboxTableScience
+  table: !type:GroupSelector
+    children:
+    # normal rarity items
+    - id: ArtifactFragment10
+    - id: ComplexXenoArtifactItem
+    - id: WeaponPistolCHIMP
+      amount: 2
+    - id: ArtifactCrusherMachineCircuitboard
+    - id: ResearchDisk5000
+      amount: !type:RangeNumberSelector
+        range: 1, 3
+    - id: TechnologyDisk
+      amount: !type:RangeNumberSelector
+        range: 8, 12
+    - id: AnomalyVesselExperimentalCircuitboard
+      amount: 2
+    - id: HoloprojectorField
+      amount: 2
+    - !type:AllSelector
+      children:
+      - id: SheetPlasma
+      - id: SheetUranium10
+      - id: IngotGold10
+      - id: IngotSilver10
+    - !type:AllSelector
+      children:
+      - id: WeaponGauntletGorilla
+      - !type:NestedSelector
+        tableId: RandomAnomalyCoreTable
+    - !type:AllSelector
+      children:
+      - id: WeaponForceGun
+      - id: WeaponTetherGun
+    # rare items
+    - id: DeviceQuantumSpinInverter
+      amount: 2
+      weight: 0.5
+    - id: DeviceDesynchronizer
+      weight: 0.5
+    - id: TechnologyDiskRare
+      weight: 0.5
+      amount: !type:RangeNumberSelector
+        range: 4, 6
+    # !Legendary Item!
+    - id: ResearchAndDevelopmentServerMachineCircuitboard
+      weight: 0.1 # ~1/125 chance
+
+- type: entityTable
+  id: RandomAnomalyCoreTable
+  table: !type:GroupSelector
+    children:
+    - id: AnomalyCorePyroclastic
+    - id: AnomalyCoreGravity
+    - id: AnomalyCoreIce
+    - id: AnomalyCoreFlesh
+    - id: AnomalyCoreLiquid
+    - id: AnomalyCoreBluespace
+    - id: AnomalyCoreElectricity
+    - id: AnomalyCoreFlora
+    - id: AnomalyCoreShadow
+
+- type: entityTable
+  id: LootboxTableCargoSalv
+  table: !type:GroupSelector
+    children:
+    # common items
+    - !type:NestedSelector
+      tableId: RandomAllHighValueMaterialsTable
+      weight: 3
+    - id: SpaceCash5000
+      weight: 2
+    # uncommon items (aka a reason for salvage to care about the lootbox)
+    - id: BlueprintFulton
+    - id: BlueprintDoubleEmergencyTank
+    - id: BlueprintSeismicCharge
+    - id: WeaponCrusherDagger
+      amount: 2
+    - id: WeaponCrusher
+    - id: WeaponCrusherGlaive
+    - id: MiningDrill
+      amount: 2
+    - id: MineralScanner
+      amount: 2
+    - id: ClothingOuterHardsuitSalvage
+    - id: SpaceCash10000
+    - id: MaterialDiamond1
+      amount: !type:RangeNumberSelector
+        range: 2, 5
+    - id: MaterialGoliathHide1
+      amount: !type:RangeNumberSelector
+        range: 5, 10
+    - !type:GroupSelector
+      rolls: 2
+      children:
+      - id: PKAUpgradeDamage
+      - id: PKAUpgradeRange
+      - id: PKAUpgradeFireRate
+    # rare items
+    - id: JetpackVoid
+      amount: 2
+      weight: 0.5
+    - id: AdvancedMineralScanner
+      weight: 0.5
+    - id: MiningDrillDiamond
+      weight: 0.5
+    - id: CargoTelepadMachineCircuitboard
+      weight: 0.5
+    # !Ultra-Legendary Item!
+    - id: ClothingOuterHardsuitMaxim # This being here means salvagers will personally hand deliver loot boxes every single time (plz).
+      weight: 0.02 # ~1/1250 chance
+
+- type: entityTable
+  id: LootboxTableNaughty # you can have a little contraband, as a treat. Mostly things that you could have some fun with without causing too much trouble.
+  table: !type:GroupSelector
+    children:
+    # Common, mostly harmless
+    - !type:NestedSelector
+      tableId: SyndieMaintLoot
+      weight: 3
+    - id: UplinkLighterBox
+    - id: ClothingBackpackSyndicate
+    - id: SyndicatePersonalAI
+    - id: BriefcaseSyndieLobbyingBundleFilled
+    - id: ClothingBackpackChameleonFillAgent
+    - id: DehydratedSpaceCarp
+      amount: !type:RangeNumberSelector
+        range: 1, 3
+    - id: SlipocalypseClusterSoap
+    - id: CombatBakeryKit
+    - id: ChemicalSynthesisKit
+    - id: GatfruitSeeds
+    - id: CameraBug
+    - id: EncryptionKeyBinarySyndicate
+    - id: ChameleonProjector
+    - id: StealthBox
+    - id: VoiceMaskImplanter
+    - id: SmokeGrenade
+    - id: BorgModuleSyndicateWeapon
+    # !Ultra-Legendary Item!
+    - id: BoxHoloparasite
+      weight: 0.2 # (1/66 chance to get any contraband, ~1/205 chance to get this, ~1/6666 chance overall)
+    - id: SyndicateBomb # there is no reward. Run.
+      weight: 0.2 # (1/66 chance to get any contraband, ~1/205 chance to get this, ~1/6666 chance overall)
+
+

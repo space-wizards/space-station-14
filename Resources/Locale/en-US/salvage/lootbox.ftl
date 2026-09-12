@@ -1,0 +1,26 @@
+lootbox-activation-fail = the lock rattles uselessly
+lootbox-unlock-end-success = the lock clicks open!
+
+lootbox-trigger-examine-brute-damage = The lock looks old and damaged, a single heavy hit could break it off.
+lootbox-trigger-examine-water = There's a small drain hole that you could pour something into, it looks wet.
+lootbox-trigger-examine-blood = There's a small drain hole. There's a metallic tinge wafting out of it.
+lootbox-trigger-examine-death = There's a small morbid-looking lock in the shape of an alien skull.
+lootbox-trigger-examine-heat = There's a bank of radiators protruding out from box.
+lootbox-trigger-examine-pressure-high = There's a small pressure warning on the side.
+lootbox-trigger-examine-plasma = There looks to be a small inflow gas fan covered in purple particulates.
+lootbox-trigger-examine-tritium = There looks to be a small inflow gas fan with a radiation warning.
+lootbox-trigger-examine-shock = There is an inset mechanical heart pulsing arrhythmically.
+lootbox-trigger-examine-toob = A single word is blazoned religiously upon the lock box: "TOOB". Perhaps it'll do something in the presence of a ritual associated with this cult.
+lootbox-trigger-examine-cuffs = Two small outstretched rods protude from the front. Linking them might complete a circuit.
+lootbox-trigger-examine-scanning = The lock uses a complex anomaly-based mechanism. More specialised equipment might be needed to take a closer look.
+lootbox-trigger-examine-knowledge = There is a clearly marked data-exchange matrix. A trade of knowledge is required.
+lootbox-trigger-examine-carbs = There looks to be an inlet port with a symbol of a wheat grain on it.
+lootbox-trigger-examine-meat = There looks to be an inlet port with a symbol of a drumstick on it.
+lootbox-trigger-examine-fruit = There looks to be an inlet port with a symbol of an apple on it.
+lootbox-trigger-examine-mushroom = There looks to be an inlet port with a symbol of a mushroom on it.
+lootbox-trigger-examine-particle-engine = A tiny singularity can be made out on its front of the lock.
+lootbox-trigger-examine-particle-anomaly = A tiny anomaly core can be made out on its front on the front of the lock.
+lootbox-trigger-examine-stamina-damage = A set of biomechanical musculature keep the device closed. Perhaps they can be exhausted.
+lootbox-trigger-examine-laser = The chain around the lock looks soft, a precise burst of heat might melt it.
+lootbox-trigger-examine-pie = There appears to be a symbol representing a clown, with an arrow pointing from it to a symbol representing a captain.
+lootbox-trigger-examine-stamp = There is a clearly printed laminate form attached demanding formal approval before unlocking is permitted.
