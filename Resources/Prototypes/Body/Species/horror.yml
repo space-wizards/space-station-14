@@ -138,8 +138,6 @@
       path: /Audio/Animals/space_dragon_roar.ogg
     tagsToAdd:
     - StunImmune
-  - type: FlashImmunity # please no flashing :(
-    showInExamine: false
 
 
 - type: entity
