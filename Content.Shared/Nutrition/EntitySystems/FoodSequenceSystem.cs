@@ -21,7 +21,6 @@ public sealed partial class FoodSequenceSystem : SharedFoodSequenceSystem
     [Dependency] private IngestionSystem _ingestion = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private TagSystem _tag = default!;
 
     public override void Initialize()
@@ -84,12 +83,9 @@ public sealed partial class FoodSequenceSystem : SharedFoodSequenceSystem
 
     private void Metamorf(Entity<FoodSequenceStartPointComponent> start, MetamorphRecipePrototype recipe)
     {
-        var result = PredictedSpawnNextToOrDrop(recipe.Result, start);
+        var result = PredictedSpawnNextToOrDrop(recipe.Result, start.Owner);
 
-        //Try putting in container
-        _transform.DropNextTo(result, (start, Transform(start)));
-
-        if (!_solutionContainer.TryGetSolution(result, start.Comp.Solution, out var resultSoln, out var resultSolution))
+        if (!_solutionContainer.TryGetSolution(result, start.Comp.Solution, out var resultSoln))
             return;
 
         if (!_solutionContainer.TryGetSolution(start.Owner, start.Comp.Solution, out var startSoln, out var startSolution))
