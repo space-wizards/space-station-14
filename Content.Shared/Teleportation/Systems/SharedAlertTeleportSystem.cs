@@ -1,0 +1,137 @@
+using Content.Shared.Alert;
+using Content.Shared.Follower;
+using Content.Shared.Teleportation.Components;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
+
+namespace Content.Shared.Teleportation.Systems;
+
+/// <summary>
+/// Allows you to create alerts with the ability to teleport to a specific entity in the presence of an <see cref="AlertTeleportEvent"/>.
+/// </summary>
+public abstract partial class SharedAlertTeleportSystem : EntitySystem
+{
+    [Dependency] private FollowerSystem _follower = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<AlertTeleportComponent>();
+        var curTime = _timing.CurTime;
+
+        while (query.MoveNext(out var _, out var comp))
+        {
+            foreach (var (alert, data) in comp.Targets)
+            {
+                if (data.EndTime <= curTime)
+                {
+                    comp.Targets.Remove(alert);
+                }
+            }
+        }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnAlertTeleport(Entity<AlertTeleportComponent> ent, ref AlertTeleportEvent args)
+    {
+        if (!ent.Comp.Targets.TryGetValue(args.AlertId, out var data))
+            return;
+
+        if (data.Targets.Count == 0)
+            return;
+
+        data.Queue++;
+
+        // Just go back to the top of the list.
+        if (data.Queue >= data.Targets.Count)
+            data.Queue = 0;
+
+        if (!TryGetEntity(data.Targets[data.Queue], out var target) || TerminatingOrDeleted(target))
+            return;
+
+        var targetCoords = _transform.GetMapCoordinates(target.Value);
+
+        if (targetCoords.MapId == MapId.Nullspace)
+            return;
+
+        // It's a struct, baby
+        ent.Comp.Targets[args.AlertId] = data;
+
+        Dirty(ent);
+
+        if (ent.Comp.Orbit)
+        {
+            _follower.StartFollowingEntity(ent, target.Value);
+        }
+        else
+        {
+            _transform.SetMapCoordinates(ent, _transform.GetMapCoordinates(target.Value));
+        }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnAfterClearAlertEvent(Entity<AlertTeleportComponent> ent, ref ClearAlertEvent args)
+    {
+        ent.Comp.Targets.Remove(args.AlertId);
+    }
+
+    /// <summary>
+    /// Adds a teleport alert for a specific entity
+    /// </summary>
+    /// <param name="ent">The entity to which the alert will be added</param>
+    /// <param name="target">The target to which <c>ent</c> will teleport when the alert is pressed</param>
+    /// <param name="alert">The alert that <c>ent</c> will receive</param>
+    /// <param name="cooldown">Alert lifetime</param>
+    public void AddAlertTeleport(Entity<AlertTeleportComponent> ent, EntityUid target, ProtoId<AlertPrototype> alert, TimeSpan cooldown)
+    {
+        var targetCoords = _transform.GetMapCoordinates(target);
+
+        // Without this, the client will try to create an alert for items from the spawn menu.
+        if (targetCoords.MapId == MapId.Nullspace)
+            return;
+
+        var comp = ent.Comp;
+
+        var curTime = _timing.CurTime;
+        var endTime = _timing.CurTime + cooldown;
+
+        if (!comp.Targets.TryGetValue(alert, out var data))
+            data = new AlertTeleportData();
+
+        data.Targets.Add(GetNetEntity(target));
+
+        data.EndTime = endTime;
+
+        comp.Targets[alert] = data;
+
+        Dirty(ent);
+
+        _alerts.ShowAlert(ent.Owner, alert, cooldown: (curTime, endTime), autoRemove: true, showCooldown: false);
+    }
+
+    /// <summary>
+    /// Gives teleport alert to all entities with a specific component
+    /// </summary>
+    /// <typeparam name="T">An additional component for the entity filter</typeparam>
+    /// <param name="target">The target that the entity will teleport to when the alert is pressed</param>
+    /// <param name="alert">The alert that the entity will receive</param>
+    /// <param name="cooldown">Alert lifetime</param>
+    /// <param name="sound">The sound that the entities will receive when the alert is received</param>
+    public void MakeTeleportAlert<T>(EntityUid target, ProtoId<AlertPrototype> alert, TimeSpan cooldown, SoundSpecifier? sound = null) where T : Component
+    {
+        var query = EntityQueryEnumerator<T, AlertTeleportComponent>();
+        while (query.MoveNext(out var uid, out var _, out var alertTeleport))
+        {
+            AddAlertTeleport((uid, alertTeleport), target, alert, cooldown);
+            _audioSystem.PlayEntity(sound, uid, uid);
+        }
+    }
+}

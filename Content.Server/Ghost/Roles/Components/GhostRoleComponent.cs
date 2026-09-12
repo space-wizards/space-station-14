@@ -1,6 +1,8 @@
 using Content.Server.Ghost.Roles.Raffles;
 using Content.Server.Mind.Commands;
+using Content.Shared.Alert;
 using Content.Shared.Roles;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Ghost.Roles.Components;
@@ -104,5 +106,24 @@ public sealed partial class GhostRoleComponent : Component
     [DataField("job")]
     [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // also FIXME Friends
     public ProtoId<JobPrototype>? JobProto = null;
+
+    /// <summary>
+    /// Creates an alert for ghosts.
+    /// can be null
+    /// </summary>
+    [DataField]
+    public ProtoId<AlertPrototype>? GhostAlert;
+
+    /// <summary>
+    /// Lifetime of the ghost alert
+    /// </summary>
+    [DataField]
+    public TimeSpan GhostAlertDuration = TimeSpan.FromSeconds(5);
+
+    /// <summary>
+    /// Sound of the ghost alert
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? GhostAlertSound;
 }
 
