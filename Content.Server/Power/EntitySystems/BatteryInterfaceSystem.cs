@@ -1,5 +1,6 @@
 ﻿using Content.Server.Administration.Logs;
 using Content.Server.Power.Components;
+using Content.Server.Power.Events;
 using Content.Shared.Database;
 using Content.Shared.Power;
 using Content.Shared.Power.Components;
@@ -51,6 +52,9 @@ public sealed partial class BatteryInterfaceSystem : EntitySystem
         netBattery.CanCharge = args.On;
 
         _adminLog.Add(LogType.Action, $"{ToPrettyString(args.Actor):actor} set input breaker to {args.On} on {ToPrettyString(ent):target}");
+
+        var chargedEvent = new PowerNetworkBatteryCanChargeChangedEvent(args.On);
+        RaiseLocalEvent(ent, ref chargedEvent);
     }
 
     private void HandleSetOutputBreaker(Entity<BatteryInterfaceComponent> ent, ref BatterySetOutputBreakerMessage args)
@@ -59,6 +63,9 @@ public sealed partial class BatteryInterfaceSystem : EntitySystem
         netBattery.CanDischarge = args.On;
 
         _adminLog.Add(LogType.Action, $"{ToPrettyString(args.Actor):actor} set output breaker to {args.On} on {ToPrettyString(ent):target}");
+
+        var dischargedEvent = new PowerNetworkBatteryCanDischargeChangedEvent(args.On);
+        RaiseLocalEvent(ent, ref dischargedEvent);
     }
 
     private void HandleSetChargeRate(Entity<BatteryInterfaceComponent> ent, ref BatterySetChargeRateMessage args)
