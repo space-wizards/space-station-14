@@ -42,10 +42,10 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
         };
     }
 
-    public void HandleClick(string link)
+    public bool HandleClick(string link)
     {
         if (!_entries.TryGetValue(link, out var entry))
-            return;
+            return false;
 
         if (Tree.TryGetIndexFromMetadata(entry, out var index))
         {
@@ -54,6 +54,8 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
         }
         else
             ShowGuide(entry);
+
+        return true;
     }
 
     public void HandleAnchor(IPrototypeLinkControl prototypeLinkControl)
