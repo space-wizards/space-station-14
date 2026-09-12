@@ -61,17 +61,27 @@
   components:
   - type: SignalTimer
     canEditLabel: true
+  - type: TextScreenTimerVisuals
+    runningState: running
+    finishedState: finished
   - type: TextScreenVisuals
     color: FloralWhite
-#    textOffset: 0,3
-#    timerOffset: 0,3
-    # textLength: 5 This field does not exist. Bug?
-    rows: 1
+    scrollEnabled: true
+    rowData: [{}]
+    horizontalScrollOffset: 1
+    leftInvisiblePixels: 2
+    rightInvisiblePixels: 1
+    frameState:
+      state: outer_frame
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/signalscreen.rsi
+    layers:
+    - state: signalscreen
+    - state: finished
+      shader: unshaded
+      map: [ enum.TimerVisualLayers.Light ]
     noRot: true
-    state: signalscreen
   - type: Construction
     graph: Timer
     node: screen
