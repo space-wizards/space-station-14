@@ -663,7 +663,6 @@
     name: ghost-role-information-hamlet-name
     description: ghost-role-information-hamlet-description
     rules: ghost-role-information-nonantagonist-rules
-  - type: GhostTakeoverAvailable
   - type: InteractionPopup
     successChance: 1
     interactSuccessString: petting-success-hamster
@@ -800,7 +799,6 @@
     name: ghost-role-information-willow-name
     description: ghost-role-information-willow-description
     rules: ghost-role-information-nonantagonist-rules
-  - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [ BoxingKangarooGear ]
 
@@ -899,7 +897,6 @@
     name: ghost-role-information-punpun-name
     description: ghost-role-information-punpun-description
     rules: ghost-role-information-nonantagonist-rules
-  - type: GhostTakeoverAvailable
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -933,7 +930,6 @@
 #    name: ghost-role-information-tropico-name
 #    description: ghost-role-information-tropico-description
 #    rules: ghost-role-information-nonantagonist-rules
-#  - type: GhostTakeoverAvailable
   - type: Tag
     tags:
     - VimPilot

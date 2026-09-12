@@ -204,7 +204,6 @@
     - MindRoleGhostRoleFreeAgentHarmless
     raffle:
       settings: default
-  - type: GhostTakeoverAvailable
   - type: InteractionPopup
     interactSuccessString: petting-success-honkbot
     interactFailureString: petting-failure-honkbot
@@ -363,7 +362,6 @@
     - MindRoleGhostRoleFreeAgentHarmless
     raffle:
       settings: default
-  - type: GhostTakeoverAvailable
   - type: InteractionPopup
     interactSuccessString: petting-success-mimebot
     interactFailureString: petting-failure-mimebot
@@ -395,7 +393,6 @@
     rules: ghost-role-information-nonantagonist-rules
     raffle:
       settings: default
-  - type: GhostTakeoverAvailable
   - type: Construction
     graph: SupplyBot
     node: bot

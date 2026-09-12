@@ -177,7 +177,6 @@
       rules: ghost-role-information-space-dragon-summoned-carp-rules
       mindRoles:
       - MindRoleGhostRoleTeamAntagonistFlock
-    - type: GhostTakeoverAvailable
     - type: HTN
       rootTask:
         task: DragonCarpCompound

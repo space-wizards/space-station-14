@@ -392,7 +392,6 @@
         settings: default
       mindRoles:
       - MindRoleGhostRoleFreeAgent
-    - type: GhostTakeoverAvailable
 
 - type: entity
   parent: BaseOneTimeXenoArtifactEffect

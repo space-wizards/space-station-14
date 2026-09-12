@@ -946,7 +946,6 @@
     rules: ghost-role-information-nonantagonist-rules
     raffle:
       settings: short
-  - type: GhostTakeoverAvailable
   - type: BarkAccent
   - type: Speech
     speechSounds: Dog

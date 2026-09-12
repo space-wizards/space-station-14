@@ -1,4 +1,5 @@
-﻿using Content.Server.Ghost.Roles.Components;
+﻿using Content.Server.Ghost.Roles;
+using Content.Server.Ghost.Roles.Components;
 using Content.Server.RuntimeFun;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects;
@@ -14,6 +15,7 @@ namespace Content.Server.EntityEffects.Effects;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class MakeSentientEntityEffectSystem : EntityEffectSystem<MetaDataComponent, MakeSentient>
 {
+    [Dependency] GhostRoleSystem _ghostRole = default!;
     protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<MakeSentient> args)
     {
         // Let affected entities speak normally to make this effect different from, say, the "random sentience" event
@@ -32,13 +34,12 @@ public sealed partial class MakeSentientEntityEffectSystem : EntityEffectSystem<
             return;
 
         // Don't add a ghost role to things that already have ghost roles
-        if (TryComp(entity, out GhostRoleComponent? ghostRole))
+        if (HasComp<GhostRoleComponent>(entity))
             return;
 
-        ghostRole = AddComp<GhostRoleComponent>(entity);
-        EnsureComp<GhostTakeoverAvailableComponent>(entity);
-
-        ghostRole.RoleName = entity.Comp.EntityName;
-        ghostRole.RoleDescription = Loc.GetString("ghost-role-information-cognizine-description");
+        _ghostRole.CreateGhostRole(entity.Owner,
+            name: entity.Comp.EntityName,
+            description: Loc.GetString("ghost-role-information-cognizine-description"),
+            rules: Loc.GetString(GhostRoleComponent.DefaultRules));
     }
 }
