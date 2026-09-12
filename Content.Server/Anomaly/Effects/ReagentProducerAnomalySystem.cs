@@ -2,8 +2,6 @@ using Content.Server.Anomaly.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Sprite;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 
@@ -29,7 +27,6 @@ public sealed partial class ReagentProducerAnomalySystem : EntitySystem
 
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private PointLightSystem _light = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
 
     public const string FallbackReagent = "Water";
@@ -77,27 +74,6 @@ public sealed partial class ReagentProducerAnomalySystem : EntitySystem
             _solutionContainer.TryAddSolution(component.Solution.Value, newSol); // TODO - the container is not fully filled.
 
             component.AccumulatedFrametime = 0;
-
-            // The component will repaint the sprites of the object to match the current color of the solution,
-            // if the RandomSprite component is hung correctly.
-
-            // Ideally, this should be put into a separate component, but I suffered for 4 hours,
-            // and nothing worked out for me. So for now it will be like this.
-            if (component.NeedRecolor)
-            {
-                var color = producerSolution.GetColor(ProtoMan);
-                _light.SetColor(uid, color);
-                if (TryComp<RandomSpriteComponent>(uid, out var randomSprite))
-                {
-                    foreach (var ent in randomSprite.Selected)
-                    {
-                        var state = randomSprite.Selected[ent.Key];
-                        state.Color = color;
-                        randomSprite.Selected[ent.Key] = state;
-                    }
-                    Dirty(uid, randomSprite);
-                }
-            }
         }
     }
 
