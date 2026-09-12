@@ -11,7 +11,7 @@ namespace Content.Shared.Mobs.Components;
 ///     (such as blur effect for unconsciousness) and managing the health HUD.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState(true)]
+[AutoGenerateComponentState]
 [Access(typeof(MobStateSystem), typeof(MobThresholdSystem))]
 public sealed partial class MobStateComponent : Component
 {
@@ -21,14 +21,7 @@ public sealed partial class MobStateComponent : Component
     [DataField, AutoNetworkedField]
     public MobState CurrentState = MobState.Alive; //default mobstate is always the lowest state level
 
-    /// <summary>
-    /// The last state that was received by the client
-    /// </summary>
-    [ViewVariables]
-    public MobState LastReceivedState = MobState.Alive;
-
-    [DataField]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public HashSet<MobState> AllowedStates = new()
     {
         MobState.Alive,

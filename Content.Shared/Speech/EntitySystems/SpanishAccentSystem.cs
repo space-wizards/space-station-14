@@ -4,7 +4,7 @@ using Content.Shared.Speech.Components;
 
 namespace Content.Shared.Speech.EntitySystems;
 
-public sealed class SpanishAccentSystem : RelayAccentSystem<SpanishAccentComponent>
+public sealed partial class SpanishAccentSystem : RelayAccentSystem<SpanishAccentComponent>
 {
     // for words in all lowercase (multiple "s" are allowed)
     private static readonly Regex RegexLower = new(@"(?<!\w)(s+h*[bcdfgjklmnpqrtvwxz])");

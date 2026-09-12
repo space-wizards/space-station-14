@@ -27,13 +27,6 @@ public enum AirAlarmWireStatus
     DeviceSync
 }
 
-public interface IAtmosDeviceData
-{
-    public bool Enabled { get; set; }
-    public bool Dirty { get; set; }
-    public bool IgnoreAlarms { get; set; }
-}
-
 [Serializable, NetSerializable]
 public sealed class AirAlarmUIState : BoundUserInterfaceState
 {
@@ -69,8 +62,7 @@ public sealed class AirAlarmUIState : BoundUserInterfaceState
 }
 
 [Serializable, NetSerializable]
-public sealed class AirAlarmResyncAllDevicesMessage : BoundUserInterfaceMessage
-{}
+public sealed class AirAlarmResyncAllDevicesMessage : BoundUserInterfaceMessage;
 
 [Serializable, NetSerializable]
 public sealed class AirAlarmUpdateAlarmModeMessage : BoundUserInterfaceMessage

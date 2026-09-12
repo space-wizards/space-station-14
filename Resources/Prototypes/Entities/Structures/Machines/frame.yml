@@ -1,4 +1,5 @@
 ﻿- type: entity
+  parent: StructureHealthMachineWeak
   id: UnfinishedMachineFrame
   name: machine frame
   description: A machine under construction. Needs more parts.
@@ -37,9 +38,7 @@
       machine_board: !type:Container
       machine_parts: !type:Container
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -51,14 +50,13 @@
           collection: MetalBreak
       - !type:ChangeConstructionNodeBehavior
         node: start
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Sprite
     sprite: Structures/Machines/parts.rsi
     state: box_0
     snapCardinals: true
 
 - type: entity
+  parent: StructureHealthMachineWeak
   id: MachineFrame
   name: machine frame
   suffix: Ready
@@ -93,9 +91,7 @@
     - machine_board
     - machine_parts
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -106,9 +102,12 @@
         sound:
           collection: MetalBreak
       - !type:ChangeConstructionNodeBehavior
-        node: missingWires
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+        node: start
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          CableApcStack1:
+            min: 0
+            max: 1
   - type: MachineFrame
   - type: ContainerContainer
     containers:
@@ -128,8 +127,8 @@
           - MachineBoard
 
 - type: entity
+  parent: [ BaseStructureDynamic, StructureHealthMachineFlimsy ]
   id: MachineFrameDestroyed
-  parent: BaseStructureDynamic
   name: destroyed machine frame
   placement:
     mode: SnapgridCenter
@@ -144,22 +143,18 @@
     graph: Machine
     node: destroyedMachineFrame
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 50
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
             min: 1
             max: 3
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Sprite
     sprite: Structures/Machines/parts.rsi
     state: destroyed

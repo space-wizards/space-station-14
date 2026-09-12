@@ -1,10 +1,11 @@
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.StationEvents.Components;
+using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;
+using Content.Shared.Whitelist;
 using JetBrains.Annotations;
-using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -12,6 +13,7 @@ namespace Content.Server.StationEvents.Events;
 public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRuleComponent>
 {
     [Dependency] private ApcSystem _apcSystem = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     protected override void Added(EntityUid uid, BreakerFlipRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
@@ -22,14 +24,13 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
         stationEvent.StartAnnouncement = str;
 
         base.Added(uid, component, gameRule, args);
-
     }
 
     protected override void Started(EntityUid uid, BreakerFlipRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
 
-        if (!TryGetRandomStation(out var chosenStation))
+        if (!TryGetRandomStation(out var chosenStation, uid => _whitelist.IsWhitelistFailOrNull(component.Blacklist, uid)))
             return;
 
         var stationApcs = new List<Entity<ApcComponent>>();
@@ -50,7 +51,12 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
 
         for (var i = 0; i < toDisable; i++)
         {
-            _apcSystem.ApcToggleBreaker(stationApcs[i], stationApcs[i]);
+            var apc = stationApcs[i];
+            _apcSystem.ApcToggleBreaker(apc, apc);
+
+            var stateString = apc.Comp.MainBreakerEnabled ? "Enabled" : "Disabled";
+            AdminLogManager.Add(LogType.ItemConfigure, LogImpact.Medium,
+                $"Station event {ToPrettyString(uid):user} set the main breaker state of {ToPrettyString(apc):entity} to {stateString:state}");
         }
     }
 }

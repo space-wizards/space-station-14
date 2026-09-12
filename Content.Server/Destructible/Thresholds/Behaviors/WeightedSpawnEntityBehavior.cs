@@ -76,7 +76,7 @@ public sealed partial class WeightedSpawnEntityBehavior : IThresholdBehavior
                 system.EntityManager.EnsureComponent<TimedDespawnComponent>(spawner, out var timedDespawnComponent);
                 timedDespawnComponent.Lifetime = SpawnAfter;
                 system.EntityManager.EnsureComponent<SpawnOnDespawnComponent>(spawner, out var spawnOnDespawnComponent);
-                system.EntityManager.System<SpawnOnDespawnSystem>().SetPrototype((spawner, spawnOnDespawnComponent), entity);
+                system.EntityManager.System<SpawnOnDespawnSystem>().SetPrototype((spawner, spawnOnDespawnComponent), entity.Id);
             }
         }
         else

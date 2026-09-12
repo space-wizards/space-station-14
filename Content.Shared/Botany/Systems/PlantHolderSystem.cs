@@ -1,8 +1,9 @@
-using JetBrains.Annotations;
 using Content.Shared.Botany.Components;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Damage.Systems;
+using JetBrains.Annotations;
 using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Botany.Systems;
 
@@ -12,6 +13,8 @@ namespace Content.Shared.Botany.Systems;
 public sealed partial class PlantHolderSystem : EntitySystem
 {
     [Dependency] private ISerializationManager _serialization = default!;
+
+    [Dependency] private EntityQuery<PlantComponent> _plantQuery;
 
     [SubscribeLocalEvent]
     private void OnCloning(Entity<PlantHolderComponent> ent, ref CloningEvent args)
@@ -39,7 +42,7 @@ public sealed partial class PlantHolderSystem : EntitySystem
         if (!Resolve(ent.Owner, ref ent.Comp))
             return;
 
-        if (!TryComp<PlantComponent>(ent.Owner, out var plant))
+        if (!_plantQuery.TryComp(ent.Owner, out var plant))
             return;
 
         ent.Comp.Health += amount;
@@ -52,14 +55,18 @@ public sealed partial class PlantHolderSystem : EntitySystem
     /// Adjusts the mutation level of the plant.
     /// </summary>
     [PublicAPI]
-    public void AdjustsMutationLevel(Entity<PlantHolderComponent?> ent, float amount)
+    public void AdjustsMutationLevel(Entity<PlantHolderComponent?> ent, ProtoId<RandomPlantMutationListPrototype> mutationTableId, float amount)
     {
         if (!Resolve(ent.Owner, ref ent.Comp))
             return;
 
-        ent.Comp.MutationLevel += amount * ent.Comp.MutationMod;
-        ent.Comp.MutationLevel = MathHelper.Clamp(ent.Comp.MutationLevel, 0f, ent.Comp.MaxMutationLevel);
-        DirtyField(ent, nameof(ent.Comp.MutationLevel));
+        var mutationTable = ProtoMan.Index(mutationTableId);
+
+        var current = ent.Comp.MutationLevels.GetValueOrDefault(mutationTableId);
+        var adjustmentAmount = mutationTable.IgnoreMutationMod ? amount : amount * ent.Comp.MutationMod;
+
+        ent.Comp.MutationLevels[mutationTableId] = MathHelper.Clamp(current + adjustmentAmount, 0f, ent.Comp.MaxMutationLevel);
+        DirtyField(ent, nameof(ent.Comp.MutationLevels));
         CheckHealth(ent);
     }
 
@@ -163,7 +170,7 @@ public sealed partial class PlantHolderSystem : EntitySystem
     public bool GetHealthThreshold(Entity<PlantHolderComponent?> ent)
     {
         if (!Resolve(ent.Owner, ref ent.Comp, false)
-            || !TryComp<PlantComponent>(ent.Owner, out var plant))
+            || !_plantQuery.TryComp(ent.Owner, out var plant))
             return false;
 
         return ent.Comp.Health <= plant.Endurance * 0.5f;

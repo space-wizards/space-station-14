@@ -5,7 +5,7 @@ using Robust.Shared.Random;
 namespace Content.Server.GameTicking.Rules.VariationPass;
 
 /// <inheritdoc cref="EntitySpawnVariationPassComponent"/>
-public sealed class EntitySpawnVariationPassSystem : VariationPassSystem<EntitySpawnVariationPassComponent>
+public sealed partial class EntitySpawnVariationPassSystem : VariationPassSystem<EntitySpawnVariationPassComponent>
 {
     protected override void ApplyVariation(Entity<EntitySpawnVariationPassComponent> ent, ref StationVariationPassEvent args)
     {

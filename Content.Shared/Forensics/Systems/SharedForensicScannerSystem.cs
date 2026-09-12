@@ -28,7 +28,7 @@ public sealed partial class SharedForensicScannerSystem : EntitySystem
     [Dependency] private SharedHandsSystem _handsSystem = default!;
     [Dependency] private SharedAudioSystem _audioSystem = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
-    [Dependency] private SharedForensicsSystem _forensicsSystem = default!;
+    [Dependency] private ForensicsSystem _forensicsSystem = default!;
     [Dependency] private TagSystem _tag = default!;
 
     private static readonly ProtoId<TagPrototype> DNASolutionScannableTag = "DNASolutionScannable";

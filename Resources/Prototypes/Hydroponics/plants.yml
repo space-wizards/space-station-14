@@ -46,7 +46,8 @@
 - type: entity
   parent: BasePlant
   id: WheatPlants
-  name: wheat
+  categories: [HideSpawnMenu]
+  name: wheat stalk
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/wheat.rsi
@@ -77,7 +78,8 @@
 - type: entity
   parent: BasePlant
   id: MeatWheatPlants
-  name: meatwheat
+  categories: [HideSpawnMenu]
+  name: meatwheat stalk
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/meatwheat.rsi
@@ -107,7 +109,8 @@
 - type: entity
   parent: BasePlant
   id: OatPlants
-  name: oat
+  categories: [HideSpawnMenu]
+  name: oat stalk
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/oat.rsi
@@ -137,7 +140,8 @@
 - type: entity
   parent: BasePlant
   id: BananaPlants
-  name: banana
+  categories: [HideSpawnMenu]
+  name: banana plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
@@ -156,8 +160,8 @@
   - type: PlantGrowth
     waterConsumption: 0.6
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantChemicals
     chemicals:
       Vitamin:
@@ -172,7 +176,8 @@
 - type: entity
   parent: BasePlant
   id: MimanaPlants
-  name: mimana
+  categories: [HideSpawnMenu]
+  name: mimana plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/mimana.rsi
@@ -190,8 +195,8 @@
   - type: PlantGrowth
     waterConsumption: 0.6
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantChemicals
     chemicals:
       MuteToxin:
@@ -206,6 +211,7 @@
 - type: entity
   parent: BasePlant
   id: CarrotPlants
+  categories: [HideSpawnMenu]
   name: carrot
   components:
   - type: Sprite
@@ -241,7 +247,8 @@
 - type: entity
   parent: BasePlant
   id: LaughinPeaPlants
-  name: laughin' peas
+  categories: [HideSpawnMenu]
+  name: laughin' pea
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/laughin_pea.rsi
@@ -280,7 +287,8 @@
 - type: entity
   parent: BasePlant
   id: LemonPlants
-  name: lemon
+  categories: [HideSpawnMenu]
+  name: lemon tree
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lemon.rsi
@@ -311,7 +319,8 @@
 - type: entity
   parent: BasePlant
   id: LemoonPlants
-  name: lemoon
+  categories: [HideSpawnMenu]
+  name: lemoon tree
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lemoon.rsi
@@ -341,7 +350,8 @@
 - type: entity
   parent: BasePlant
   id: LimePlants
-  name: lime
+  categories: [HideSpawnMenu]
+  name: lime tree
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lime.rsi
@@ -372,7 +382,8 @@
 - type: entity
   parent: BasePlant
   id: OrangePlants
-  name: orange
+  categories: [HideSpawnMenu]
+  name: orange tree
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/orange.rsi
@@ -403,7 +414,8 @@
 - type: entity
   parent: BasePlant
   id: ExtradimensionalOrangePlants
-  name: extradimensional orange
+  categories: [HideSpawnMenu]
+  name: extradimensional orange tree
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/extradimensional_orange.rsi
@@ -437,7 +449,8 @@
 - type: entity
   parent: BasePlant
   id: PineapplePlants
-  name: pineapple
+  categories: [HideSpawnMenu]
+  name: pineapple plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pineapple.rsi
@@ -472,6 +485,7 @@
 - type: entity
   parent: BasePlant
   id: PotatoPlants
+  categories: [HideSpawnMenu]
   name: potato
   components:
   - type: Sprite
@@ -503,6 +517,7 @@
 - type: entity
   parent: BasePlant
   id: SugarcanePlants
+  categories: [HideSpawnMenu]
   name: sugarcane
   components:
   - type: Sprite
@@ -522,8 +537,8 @@
   - type: PlantHarvest
     harvestRepeat: Repeat
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantChemicals
     chemicals:
       Sugar:
@@ -534,6 +549,7 @@
 - type: entity
   parent: BasePlant
   id: TeaPlantPlants
+  categories: [HideSpawnMenu]
   name: tea plant
   components:
   - type: Sprite
@@ -554,8 +570,8 @@
   - type: PlantGrowth
     waterConsumption: 0.6
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantChemicals
     chemicals:
       Vitamin:
@@ -566,6 +582,7 @@
 - type: entity
   parent: BasePlant
   id: PapercanePlants
+  categories: [HideSpawnMenu]
   name: papercane
   components:
   - type: Sprite
@@ -584,12 +601,13 @@
   - type: PlantHarvest
     harvestRepeat: Repeat
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
 
 - type: entity
   parent: BasePlant
   id: TowercapPlants
+  categories: [HideSpawnMenu]
   name: tower cap
   components:
   - type: Sprite
@@ -611,13 +629,14 @@
     waterConsumption: 0.6
     nutrientConsumption: 0.5
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantTraitLigneous
 
 - type: entity
   parent: BasePlant
   id: SteelcapPlants
+  categories: [HideSpawnMenu]
   name: steel cap
   components:
   - type: Sprite
@@ -638,14 +657,15 @@
     waterConsumption: 0.6
     nutrientConsumption: 0.8
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantTraitLigneous
 
 - type: entity
   parent: BasePlant
   id: TomatoPlants
-  name: tomato
+  categories: [HideSpawnMenu]
+  name: tomato plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tomato.rsi
@@ -666,8 +686,8 @@
     waterConsumption: 0.6
     nutrientConsumption: 0.4
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantChemicals
     chemicals:
       Nutriment:
@@ -686,7 +706,8 @@
 - type: entity
   parent: BasePlant
   id: BlueTomatoPlants
-  name: blue tomato
+  categories: [HideSpawnMenu]
+  name: blue tomato plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/blue_tomato.rsi
@@ -726,7 +747,8 @@
 - type: entity
   parent: BasePlant
   id: BloodTomatoPlants
-  name: blood tomato
+  categories: [HideSpawnMenu]
+  name: blood tomato plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/blood_tomato.rsi
@@ -747,8 +769,8 @@
     waterConsumption: 0.6
     nutrientConsumption: 0.7
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantChemicals
     chemicals:
       Blood:
@@ -763,7 +785,8 @@
 - type: entity
   parent: BasePlant
   id: KillerTomatoPlants
-  name: tomato killer
+  categories: [HideSpawnMenu]
+  name: tomato killer plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tomatokiller.rsi
@@ -786,8 +809,8 @@
     waterConsumption: 0.6
     nutrientConsumption: 0.7
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantChemicals
     chemicals:
       Blood:
@@ -802,6 +825,7 @@
 - type: entity
   parent: BasePlant
   id: EggplantPlants
+  categories: [HideSpawnMenu]
   name: eggplant
   components:
   - type: Sprite
@@ -821,8 +845,8 @@
   - type: PlantHarvest
     harvestRepeat: Repeat
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantChemicals
     chemicals:
       Nutriment:
@@ -837,6 +861,7 @@
 - type: entity
   parent: BasePlant
   id: CabbagePlants
+  categories: [HideSpawnMenu]
   name: cabbage
   components:
   - type: Sprite
@@ -866,6 +891,7 @@
 - type: entity
   parent: BasePlant
   id: GarlicPlants
+  categories: [HideSpawnMenu]
   name: garlic head
   components:
   - type: Sprite
@@ -899,7 +925,8 @@
 - type: entity
   parent: BasePlant
   id: ApplePlants
-  name: apple
+  categories: [HideSpawnMenu]
+  name: apple tree
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/apple.rsi
@@ -930,7 +957,8 @@
 - type: entity
   parent: BasePlant
   id: GoldenApplePlants
-  name: golden apple
+  categories: [HideSpawnMenu]
+  name: golden apple tree
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/golden_apple.rsi
@@ -966,7 +994,8 @@
 - type: entity
   parent: BasePlant
   id: CornPlants
-  name: corn
+  categories: [HideSpawnMenu]
+  name: ear of corn
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/corn.rsi
@@ -984,8 +1013,8 @@
   - type: PlantGrowth
     waterConsumption: 0.6
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantChemicals
     chemicals:
       Nutriment:
@@ -1000,6 +1029,7 @@
 - type: entity
   parent: BasePlant
   id: OnionPlants
+  categories: [HideSpawnMenu]
   name: onion
   components:
   - type: Sprite
@@ -1022,8 +1052,8 @@
     waterConsumption: 0.6
     nutrientConsumption: 0.5
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantChemicals
     chemicals:
       Nutriment:
@@ -1042,6 +1072,7 @@
 - type: entity
   parent: BasePlant
   id: OnionRedPlants
+  categories: [HideSpawnMenu]
   name: red onion
   components:
   - type: Sprite
@@ -1062,8 +1093,8 @@
   - type: PlantGrowth
     waterConsumption: 0.6
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantChemicals
     chemicals:
       Nutriment:
@@ -1082,7 +1113,8 @@
 - type: entity
   parent: BasePlant
   id: ChanterellePlants
-  name: chanterelle
+  categories: [HideSpawnMenu]
+  name: chanterelle mushroom
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/chanterelle.rsi
@@ -1102,8 +1134,8 @@
     waterConsumption: 0.6
     nutrientConsumption: 0.5
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantChemicals
     chemicals:
       Nutriment:
@@ -1114,6 +1146,7 @@
 - type: entity
   parent: BasePlant
   id: EggyPlants
+  categories: [HideSpawnMenu]
   name: egg-plant
   components:
   - type: Sprite
@@ -1133,8 +1166,8 @@
   - type: PlantGrowth
     nutrientConsumption: 0.5
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantChemicals
     chemicals:
       Egg:
@@ -1145,6 +1178,7 @@
 - type: entity
   parent: BasePlant
   id: CannabisPlants
+  categories: [HideSpawnMenu]
   name: cannabis
   components:
   - type: Sprite
@@ -1161,11 +1195,13 @@
     yield: 2
     potency: 20
     growthStages: 3
+  - type: PlantHarvest
+    harvestRepeat: Repeat
   - type: PlantGrowth
     waterConsumption: 0.4
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantChemicals
     chemicals:
       THC:
@@ -1176,6 +1212,7 @@
 - type: entity
   parent: BasePlant
   id: RainbowCannabisPlants
+  categories: [HideSpawnMenu]
   name: rainbow cannabis
   components:
   - type: Sprite
@@ -1190,11 +1227,13 @@
     production: 12
     yield: 2
     potency: 20
+  - type: PlantHarvest
+    harvestRepeat: Repeat
   - type: PlantGrowth
     nutrientConsumption: 0.5
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantChemicals
     chemicals:
       SpaceDrugs:
@@ -1220,7 +1259,8 @@
 - type: entity
   parent: BasePlant
   id: TobaccoPlants
-  name: tobacco
+  categories: [HideSpawnMenu]
+  name: tobacco plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tobacco.rsi
@@ -1240,8 +1280,8 @@
   - type: PlantGrowth
     waterConsumption: 0.4
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantChemicals
     chemicals:
       Nicotine:
@@ -1252,6 +1292,7 @@
 - type: entity
   parent: BasePlant
   id: NettlePlants
+  categories: [HideSpawnMenu]
   name: nettle
   components:
   - type: Sprite
@@ -1271,8 +1312,8 @@
   - type: PlantGrowth
     waterConsumption: 0.6
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantChemicals
     chemicals:
       Histamine:
@@ -1283,6 +1324,7 @@
 - type: entity
   parent: BasePlant
   id: DeathNettlePlants
+  categories: [HideSpawnMenu]
   name: death nettle
   components:
   - type: Sprite
@@ -1304,8 +1346,8 @@
     waterConsumption: 0.7
     nutrientConsumption: 0.8
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantChemicals
     chemicals:
       SulfuricAcid:
@@ -1320,7 +1362,8 @@
 - type: entity
   parent: BasePlant
   id: ChiliPlants
-  name: chili
+  categories: [HideSpawnMenu]
+  name: chili pepper
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/chili.rsi
@@ -1338,8 +1381,8 @@
   - type: PlantHarvest
     harvestRepeat: Repeat
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantChemicals
     chemicals:
       CapsaicinOil:
@@ -1358,7 +1401,8 @@
 - type: entity
   parent: BasePlant
   id: ChillyPlants
-  name: chilly
+  categories: [HideSpawnMenu]
+  name: chilly pepper
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/chilly.rsi
@@ -1375,8 +1419,8 @@
   - type: PlantHarvest
     harvestRepeat: Repeat
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantChemicals
     chemicals:
       FrostOil:
@@ -1395,6 +1439,7 @@
 - type: entity
   parent: BasePlant
   id: PoppyPlants
+  categories: [HideSpawnMenu]
   name: poppy
   components:
   - type: Sprite
@@ -1427,6 +1472,7 @@
 - type: entity
   parent: BasePlant
   id: LilyPlants
+  categories: [HideSpawnMenu]
   name: lily
   components:
   - type: Sprite
@@ -1459,6 +1505,7 @@
 - type: entity
   parent: BasePlant
   id: AloePlants
+  categories: [HideSpawnMenu]
   name: aloe
   components:
   - type: Sprite
@@ -1490,6 +1537,7 @@
 - type: entity
   parent: BasePlant
   id: LingzhiPlants
+  categories: [HideSpawnMenu]
   name: lingzhi
   components:
   - type: Sprite
@@ -1522,6 +1570,7 @@
 - type: entity
   parent: BasePlant
   id: AmbrosiaVulgarisPlants
+  categories: [HideSpawnMenu]
   name: ambrosia vulgaris
   components:
   - type: Sprite
@@ -1562,6 +1611,7 @@
 - type: entity
   parent: BasePlant
   id: AmbrosiaDeusPlants
+  categories: [HideSpawnMenu]
   name: ambrosia deus
   components:
   - type: Sprite
@@ -1597,6 +1647,7 @@
 - type: entity
   parent: BasePlant
   id: GalaxythistlePlants
+  categories: [HideSpawnMenu]
   name: galaxythistle
   components:
   - type: Sprite
@@ -1625,6 +1676,7 @@
 - type: entity
   parent: BasePlant
   id: GlasstlePlants
+  categories: [HideSpawnMenu]
   name: glasstle
   components:
   - type: Sprite
@@ -1654,6 +1706,7 @@
 - type: entity
   parent: BasePlant
   id: FlyAmanitaPlants
+  categories: [HideSpawnMenu]
   name: fly amanita
   components:
   - type: Sprite
@@ -1687,7 +1740,8 @@
 - type: entity
   parent: BasePlant
   id: GatfruitPlants
-  name: gatfruit
+  categories: [HideSpawnMenu]
+  name: gatfruit tree
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/gatfruit.rsi
@@ -1717,7 +1771,8 @@
 - type: entity
   parent: BasePlant
   id: FakeCapfruitPlants
-  name: fake capfruit
+  categories: [HideSpawnMenu]
+  name: capfruit tree
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/capfruit.rsi
@@ -1746,7 +1801,8 @@
 - type: entity
   parent: BasePlant
   id: RealCapfruitPlants
-  name: real capfruit
+  categories: [HideSpawnMenu]
+  name: capfruit tree
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/capfruit.rsi
@@ -1775,7 +1831,8 @@
 - type: entity
   parent: BasePlant
   id: RicePlants
-  name: rice
+  categories: [HideSpawnMenu]
+  name: rice stalk
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/rice.rsi
@@ -1807,7 +1864,8 @@
 - type: entity
   parent: BasePlant
   id: SoybeanPlants
-  name: soybeans
+  categories: [HideSpawnMenu]
+  name: soy plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/soybeans.rsi
@@ -1835,7 +1893,8 @@
 - type: entity
   parent: BasePlant
   id: SpacemansTrumpetPlants
-  name: spaceman's trumpet
+  categories: [HideSpawnMenu]
+  name: spaceman's trumpet plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/spacemans_trumpet.rsi
@@ -1866,7 +1925,8 @@
 - type: entity
   parent: BasePlant
   id: KoibeanPlants
-  name: koibeans
+  categories: [HideSpawnMenu]
+  name: koibean plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/koibean.rsi
@@ -1897,7 +1957,8 @@
 - type: entity
   parent: BasePlant
   id: GrapePlants
-  name: grape
+  categories: [HideSpawnMenu]
+  name: grape plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/grape.rsi
@@ -1926,7 +1987,8 @@
 - type: entity
   parent: BasePlant
   id: WatermelonPlants
-  name: watermelon
+  categories: [HideSpawnMenu]
+  name: watermelon vine
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/watermelon.rsi
@@ -1959,7 +2021,8 @@
 - type: entity
   parent: BasePlant
   id: HolymelonPlants
-  name: holymelon
+  categories: [HideSpawnMenu]
+  name: holymelon vine
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/holymelon.rsi
@@ -1991,7 +2054,8 @@
 - type: entity
   parent: BasePlant
   id: CocoaPlants
-  name: cocoa
+  categories: [HideSpawnMenu]
+  name: cocoa plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cocoa.rsi
@@ -2010,8 +2074,8 @@
     waterConsumption: 1.0
     nutrientConsumption: 0.8
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantChemicals
     chemicals:
       Vitamin:
@@ -2026,7 +2090,8 @@
 - type: entity
   parent: BasePlant
   id: BerryPlants
-  name: berries
+  categories: [HideSpawnMenu]
+  name: berry bush
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/berries.rsi
@@ -2057,7 +2122,8 @@
 - type: entity
   parent: BasePlant
   id: BungoPlants
-  name: bungo
+  categories: [HideSpawnMenu]
+  name: bungo plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/bungo.rsi
@@ -2077,8 +2143,8 @@
   - type: PlantGrowth
     waterConsumption: 0.6
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantChemicals
     chemicals:
       Nutriment:
@@ -2093,7 +2159,8 @@
 - type: entity
   parent: BasePlant
   id: PeaPlants
-  name: peas
+  categories: [HideSpawnMenu]
+  name: pea vine
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pea.rsi
@@ -2127,7 +2194,8 @@
 - type: entity
   parent: BasePlant
   id: WorldPeaPlants
-  name: world peas
+  categories: [HideSpawnMenu]
+  name: world pea vine
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/world_pea.rsi
@@ -2164,6 +2232,7 @@
 - type: entity
   parent: BasePlant
   id: PumpkinPlants
+  categories: [HideSpawnMenu]
   name: pumpkin
   components:
   - type: Sprite
@@ -2181,8 +2250,8 @@
     potency: 10
     growthStages: 3
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantChemicals
     chemicals:
       PumpkinFlesh:
@@ -2197,6 +2266,7 @@
 - type: entity
   parent: BasePlant
   id: BluePumpkinPlants
+  categories: [HideSpawnMenu]
   name: blue pumpkin
   components:
   - type: Sprite
@@ -2213,8 +2283,8 @@
     potency: 10
     growthStages: 3
   - type: PlantAtmospheric
-    lowHeatTolerance: 278 # 5°C
-    highHeatTolerance: 298 # 25°C
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantChemicals
     chemicals:
       Ammonia:
@@ -2233,7 +2303,8 @@
 - type: entity
   parent: BasePlant
   id: CottonPlants
-  name: cotton
+  categories: [HideSpawnMenu]
+  name: cotton plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cotton.rsi
@@ -2261,7 +2332,8 @@
 - type: entity
   parent: BasePlant
   id: PyrottonPlants
-  name: pyrotton
+  categories: [HideSpawnMenu]
+  name: pyrotton plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pyrotton.rsi
@@ -2292,7 +2364,8 @@
 - type: entity
   parent: BasePlant
   id: CherryPlants
-  name: cherry
+  categories: [HideSpawnMenu]
+  name: cherry tree
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cherry.rsi
@@ -2322,6 +2395,7 @@
 - type: entity
   parent: BasePlant
   id: AnomalyBerryPlants
+  categories: [HideSpawnMenu]
   name: anomaly berry
   components:
   - type: Sprite
@@ -2358,7 +2432,8 @@
 - type: entity
   parent: BasePlant
   id: BloonionPlants
-  name: bloonion
+  categories: [HideSpawnMenu]
+  name: bloonion bulb
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/bloonion.rsi

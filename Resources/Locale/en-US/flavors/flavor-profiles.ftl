@@ -318,7 +318,6 @@ flavor-complex-manhattan-project = like I am become Death, the destroyer of worl
 flavor-complex-margarita = like a very bad hangover
 flavor-complex-martini = like a spy movie
 flavor-complex-mojito = like going into the shade after being in the hot sun
-flavor-complex-neurotoxin = like an underground testing facility
 flavor-complex-patron = like being serenaded by mariachi
 flavor-complex-radler = like spiked lemonade
 flavor-complex-red-mead = like a viking battle

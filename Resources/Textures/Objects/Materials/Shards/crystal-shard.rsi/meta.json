@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "by vladimir.s",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "shard0"
+    },
+    {
+      "name": "shard1"
+    },
+    {
+      "name": "shard2"
+    },
+    {
+      "name": "shard3"
+    }
+  ]
+}

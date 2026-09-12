@@ -13,4 +13,10 @@ public sealed partial class ChangelingMindIdentityTrackerComponent : Component
     /// </summary>
     [DataField]
     public int Devoured;
+
+    /// <summary>
+    /// Amount of unique identities gained by this changeling (not necessarily devoured).
+    /// </summary>
+    [DataField]
+    public int Gained;
 }
