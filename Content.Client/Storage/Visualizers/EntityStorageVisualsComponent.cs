@@ -36,11 +36,11 @@ public sealed partial class EntityStorageVisualsComponent : Component
     /// The drawdepth the object has when it's open
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public int? OpenDrawDepth;
+    public byte? OpenDrawDepth;
 
     /// <summary>
     /// The drawdepth the object has when it's closed
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public int? ClosedDrawDepth;
+    public byte? ClosedDrawDepth;
 }

@@ -315,11 +315,11 @@ public sealed partial class DoorComponent : Component
     [DataField]
     public bool AllowMachineLayer;
 
-    [DataField(customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
-    public int OpenDrawDepth = (int) DrawDepth.DrawDepth.Doors;
+    [DataField(customTypeSerializer: typeof(ByteConstantSerializer<DrawDepthTag>))]
+    public byte OpenDrawDepth = (byte) DrawDepth.DrawDepth.Doors;
 
-    [DataField(customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
-    public int ClosedDrawDepth = (int) DrawDepth.DrawDepth.Doors;
+    [DataField(customTypeSerializer: typeof(ByteConstantSerializer<DrawDepthTag>))]
+    public byte ClosedDrawDepth = (byte) DrawDepth.DrawDepth.Doors;
 }
 
 [Serializable, NetSerializable]

@@ -254,7 +254,7 @@ public sealed partial class DragDropSystem : SharedDragDropSystem
             dragSprite.RenderOrder = EntityManager.CurrentTick.Value;
             _sprite.SetColor((_dragShadow.Value, dragSprite), dragSprite.Color.WithAlpha(0.7f));
             // keep it on top of everything
-            _sprite.SetDrawDepth((_dragShadow.Value, dragSprite), (int)DrawDepth.Overlays);
+            _sprite.SetDrawDepth((_dragShadow.Value, dragSprite), (byte)DrawDepth.Overlays);
             if (!dragSprite.NoRotation)
             {
                 _transformSystem.SetWorldRotationNoLerp(_dragShadow.Value, _transformSystem.GetWorldRotation(_draggedEntity.Value));
