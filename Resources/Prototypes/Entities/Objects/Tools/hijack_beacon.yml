@@ -13,6 +13,7 @@
   - type: Item
     size: Normal
   - type: HijackBeacon
+    remainingTime: 300
   - type: Fixtures
     fixtures:
       fix1:
