@@ -139,6 +139,7 @@
     tagsToAdd:
     - StunImmune
   - type: FlashImmunity # please no flashing :(
+    showInExamine: false
 
 
 - type: entity
