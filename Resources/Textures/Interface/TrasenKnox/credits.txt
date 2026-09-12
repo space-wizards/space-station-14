@@ -1,0 +1,4 @@
+License: CC-BY-SA 3.0
+Ported from /tg/station and taken from this commit: https://github.com/tgstation/tgstation/commit/5a3c1d63cb63edaac080414196658333316b277b
+Original sprites by @Imaginos16
+Ported, modified, and expanded for SS14 by @Salty145
