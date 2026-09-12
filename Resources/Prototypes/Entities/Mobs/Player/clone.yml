@@ -152,6 +152,7 @@
   - SlowOnDamage
   - PassiveDamage
   - Crawler
+  - PermanentStatusEffects
   eventComponents:
   # these need special treatment in the event subscription
   - Inventory # arachnid pockets and diona feet

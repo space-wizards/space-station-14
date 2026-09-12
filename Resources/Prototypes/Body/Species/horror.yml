@@ -229,6 +229,9 @@
   components:
   - type: Sprite
     visible: false
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Horror/parts.rsi
 
 - type: entity
   parent: [ OrganBaseTongue, OrganHorrorInternal ]
