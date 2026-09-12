@@ -29,7 +29,7 @@ public sealed class ContentPlayerData
     ///     The currently occupied mind of the player owning this data.
     ///     DO NOT DIRECTLY SET THIS UNLESS YOU KNOW WHAT YOU'RE DOING.
     /// </summary>
-    [ViewVariables, Access(typeof(SharedMindSystem), typeof(SharedGameTicker))]
+    [ViewVariables, Access(typeof(SharedMindSystem), typeof(GameTicker))]
     public EntityUid? Mind { get; set; }
 
     /// <summary>

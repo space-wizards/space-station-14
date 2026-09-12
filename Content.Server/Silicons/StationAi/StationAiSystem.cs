@@ -27,6 +27,8 @@ using Content.Shared.Power.Components;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Roles;
 using Content.Shared.Silicons.StationAi;
+using Content.Shared.Spawners.Components;
+using Content.Shared.Spawners.EntitySystems;
 using Content.Shared.Speech.Components;
 using Content.Shared.StationAi;
 using Content.Shared.Turrets;
@@ -55,8 +57,8 @@ public sealed partial class StationAiSystem : SharedStationAiSystem
     [Dependency] private SharedBatterySystem _battery = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private SharedPopupSystem _popups = default!;
-    [Dependency] private StationSystem _station = default!;
-    [Dependency] private StationJobsSystem _stationJobs = default!;
+    [Dependency] private ServerStationSystem _station = default!;
+    [Dependency] private ServerStationJobsSystem _stationJobs = default!;
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
 

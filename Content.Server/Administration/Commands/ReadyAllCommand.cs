@@ -1,5 +1,6 @@
 ﻿using Content.Server.GameTicking;
 using Content.Shared.Administration;
+using Content.Shared.GameTicking;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands;
@@ -7,7 +8,7 @@ namespace Content.Server.Administration.Commands;
 [AdminCommand(AdminFlags.Round)]
 public sealed partial class ReadyAllCommand : LocalizedEntityCommands
 {
-    [Dependency] private GameTicker _gameTicker = default!;
+    [Dependency] private ServerGameTicker _gameTicker = default!;
 
     public override string Command => "readyall";
 

@@ -31,7 +31,7 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
     [Dependency] private IChatManager _chatManager = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private SharedRoleSystem _roles = default!;
-    [Dependency] private StationSystem _station = default!;
+    [Dependency] private ServerStationSystem _station = default!;
     [Dependency] private UserInterfaceSystem _userInterface = default!;
     [Dependency] private EmagSystem _emag = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;

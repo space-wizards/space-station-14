@@ -21,7 +21,7 @@ namespace Content.IntegrationTests.Tests
     [TestOf(typeof(EntityUid))]
     public sealed class EntityTest : GameTest
     {
-        private static readonly HashSet<ProtoId<EntityCategoryPrototype>> IgnoredCategories = ["Spawner", "Debug"];
+        private static readonly HashSet<ProtoId<EntityCategoryPrototype>> IgnoredCategories = ["Spawner", "Debug", "GameRules"];
 
         public override PoolSettings PoolSettings => new()
         {
@@ -413,6 +413,7 @@ namespace Content.IntegrationTests.Tests
                 "Broadphase",
                 "StationData", // errors when removed mid-round
                 "StationJobs",
+                "ActiveGameRule", // Requires GameRule :P
                 "Actor", // We aren't testing actor components, those need their player session set.
                 "BiomeSelection", // Whaddya know, requires config.
                 "ActivatableUI", // Requires enum key

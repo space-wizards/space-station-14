@@ -1,8 +1,8 @@
 using Content.IntegrationTests.Fixtures;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Systems;
-using Content.Server.Station.Systems;
 using Content.Shared.Preferences;
+using Content.Shared.Station.Systems;
 
 namespace Content.IntegrationTests.Tests.Internals;
 

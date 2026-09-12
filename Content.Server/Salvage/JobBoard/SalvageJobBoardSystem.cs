@@ -26,7 +26,7 @@ public sealed partial class SalvageJobBoardSystem : EntitySystem
     [Dependency] private LabelSystem _label = default!;
     [Dependency] private PaperSystem _paper = default!;
     [Dependency] private RadioSystem _radio = default!;
-    [Dependency] private StationSystem _station = default!;
+    [Dependency] private ServerStationSystem _station = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
 
     /// <summary>

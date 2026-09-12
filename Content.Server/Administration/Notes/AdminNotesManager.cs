@@ -122,7 +122,7 @@ public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectI
 
         _sawmill.Info(sb.ToString());
 
-        _systems.TryGetEntitySystem(out GameTicker? ticker);
+        _systems.TryGetEntitySystem(out ServerGameTicker? ticker);
         int? roundId = ticker == null || ticker.RoundId == 0 ? null : ticker.RoundId;
         var serverName = _config.GetCVar(CCVars.AdminLogsServerName); // This could probably be done another way, but this is fine. For displaying only.
         var createdAt = DateTime.UtcNow;

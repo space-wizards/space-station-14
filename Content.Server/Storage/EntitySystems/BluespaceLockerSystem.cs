@@ -16,8 +16,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Prototypes;
-using Content.Server.Shuttles.Components;
-using Robust.Shared.Physics;
+using Content.Shared.Shuttles.Components;
 
 namespace Content.Server.Storage.EntitySystems;
 

@@ -1,7 +1,5 @@
-﻿using System.Linq;
-using Content.IntegrationTests.Fixtures;
+﻿using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
-using Content.Server.Antag;
 using Content.Server.GameTicking;
 using Content.Server.Mind;
 using Content.Shared.Antag;
@@ -25,7 +23,7 @@ public abstract partial class AntagTest : GameTest
     };
 
     [SidedDependency(Side.Server)] protected AntagSelectionSystem AntagSys = default!;
-    [SidedDependency(Side.Server)] protected GameTicker STicker = default!;
+    [SidedDependency(Side.Server)] protected ServerGameTicker STicker = default!;
     [SidedDependency(Side.Server)] protected MindSystem SMind = default!;
 
     /// <summary>

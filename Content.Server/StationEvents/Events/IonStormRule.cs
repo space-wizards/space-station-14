@@ -14,14 +14,14 @@ public sealed partial class IonStormRule : StationEventSystem<IonStormRuleCompon
     {
         base.Started(uid, comp, gameRule, args);
 
-        if (!TryGetRandomStation(out var chosenStation))
+        if (!Station.TryGetRandomStation(out var chosenStation))
             return;
 
         var query = EntityQueryEnumerator<SiliconLawBoundComponent, TransformComponent, IonStormTargetComponent>();
         while (query.MoveNext(out var ent, out var lawBound, out var xform, out var target))
         {
             // only affect law holders on the station
-            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation)
+            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation.Value.Owner)
                 continue;
 
             _ionStorm.IonStormTarget((ent, lawBound, target));

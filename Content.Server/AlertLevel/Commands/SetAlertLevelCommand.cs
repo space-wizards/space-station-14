@@ -2,6 +2,7 @@
 using Content.Shared.Administration;
 using Content.Shared.AlertLevel;
 using Content.Shared.Station;
+using Content.Shared.Station.Systems;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 
@@ -11,7 +12,7 @@ namespace Content.Server.AlertLevel.Commands;
 public sealed partial class SetAlertLevelCommand : LocalizedEntityCommands
 {
     [Dependency] private AlertLevelSystem _alertLevelSystem = default!;
-    [Dependency] private SharedStationSystem _stationSystem = default!;
+    [Dependency] private StationSystem _stationSystem = default!;
     [Dependency] private IPrototypeManager _prototype = default!;
 
     public override string Command => "setalertlevel";

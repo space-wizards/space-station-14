@@ -18,7 +18,7 @@ public sealed partial class VentCrittersRule : StationEventSystem<VentCrittersRu
     {
         base.Started(uid, component, gameRule, args);
 
-        if (!TryGetRandomStation(out var station))
+        if (!Station.TryGetRandomStation(out var station))
         {
             return;
         }
@@ -30,7 +30,7 @@ public sealed partial class VentCrittersRule : StationEventSystem<VentCrittersRu
             if (!transform.Anchored)
                 continue;
 
-            if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == station)
+            if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == station.Value.Owner)
             {
                 validLocations.Add(transform.Coordinates);
                 foreach (var spawn in EntitySpawnCollection.GetSpawns(component.Entries, RobustRandom))

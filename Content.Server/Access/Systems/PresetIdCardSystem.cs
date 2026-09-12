@@ -1,9 +1,9 @@
 using Content.Server.Access.Components;
-using Content.Server.GameTicking;
-using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
+using Content.Shared.GameTicking;
 using Content.Shared.Roles;
+using Content.Shared.Station.Components;
 
 namespace Content.Server.Access.Systems;
 
@@ -11,7 +11,7 @@ public sealed partial class PresetIdCardSystem : EntitySystem
 {
     [Dependency] private IdCardSystem _cardSystem = default!;
     [Dependency] private SharedAccessSystem _accessSystem = default!;
-    [Dependency] private StationSystem _stationSystem = default!;
+    [Dependency] private ServerStationSystem _stationSystem = default!;
 
     public override void Initialize()
     {

@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Numerics;
 using Content.Server.ImmovableRod;
 using Content.Server.StationEvents.Components;
@@ -5,8 +6,7 @@ using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Storage;
 using Robust.Shared.Prototypes;
-using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
-using System.Linq;
+using Robust.Shared.Spawners;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -27,7 +27,7 @@ public sealed partial class ImmovableRodRule : StationEventSystem<ImmovableRodRu
         if (proto.TryComp<ImmovableRodComponent>(out var rod, EntityManager.ComponentFactory) &&
             proto.TryComp<TimedDespawnComponent>(out var despawn, EntityManager.ComponentFactory))
         {
-            if (!TryFindRandomTile(out _, out _, out _, out var targetCoords))
+            if (!Station.TryFindRandomTile(out _, out _, out _, out var targetCoords))
                 return;
 
             var speed = RobustRandom.NextFloat(rod.MinSpeed, rod.MaxSpeed);

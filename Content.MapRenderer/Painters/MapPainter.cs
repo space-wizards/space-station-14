@@ -172,7 +172,7 @@ namespace Content.MapRenderer.Painters
 
                 if (_map is RenderMapPrototype)
                 {
-                    var mapId = sEntityManager.System<GameTicker>().DefaultMap;
+                    var mapId = sEntityManager.System<ServerGameTicker>().DefaultMap;
                     _grids = mapSys.GetAllGrids(mapId).ToArray();
                 }
 

@@ -1,4 +1,5 @@
 ﻿using Content.Server.Station.Systems;
+using Content.Shared.GameTicking.Rules;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules.VariationPass;
@@ -10,7 +11,7 @@ namespace Content.Server.GameTicking.Rules.VariationPass;
 public abstract partial class VariationPassSystem<T> : GameRuleSystem<T>
     where T: IComponent
 {
-    [Dependency] protected StationSystem Stations = default!;
+    [Dependency] protected ServerStationSystem Stations = default!;
     [Dependency] protected IRobustRandom Random = default!;
 
     public override void Initialize()
