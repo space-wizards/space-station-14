@@ -2,6 +2,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Radio;
 using Content.Shared.Speech;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chat;
 
@@ -74,4 +75,16 @@ public sealed class EntitySpokeEvent : EntityEventArgs
         Channel = channel;
         ObfuscatedMessage = obfuscatedMessage;
     }
+}
+
+[ByRefEvent]
+public record struct CanClickEntityLinkEvent
+{
+    public bool Handled;
+}
+
+[Serializable, NetSerializable]
+public sealed class ChatLinkClickedRequestEvent(NetEntity target) : EntityEventArgs
+{
+    public readonly NetEntity Target = target;
 }

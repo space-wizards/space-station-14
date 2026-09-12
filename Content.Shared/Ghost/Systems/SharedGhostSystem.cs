@@ -1,10 +1,13 @@
+using Content.Shared.Chat;
 using Content.Shared.Emoting;
 using Content.Shared.Examine;
+using Content.Shared.Follower;
 using Content.Shared.Ghost.Components;
 using Content.Shared.Hands;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Popups;
+using Content.Shared.Tag;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -18,6 +21,8 @@ public abstract partial class SharedGhostSystem : EntitySystem
 {
     [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] protected IGameTiming _gameTiming = default!;
+    [Dependency] private FollowerSystem _follower = default!;
+    [Dependency] private TagSystem _tag = default!;
 
     public override void Initialize()
     {
@@ -114,6 +119,12 @@ public abstract partial class SharedGhostSystem : EntitySystem
 
         entity.Comp.CanGhostInteract = value;
         Dirty(entity);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnGhostClickMessageSenderAttempt(Entity<GhostComponent> ent, ref CanClickEntityLinkEvent args)
+    {
+        args.Handled = true;
     }
 }
 
