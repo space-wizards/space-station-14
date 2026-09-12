@@ -5,12 +5,14 @@
         <PanelContainer.PanelOverride>
             <gfx:StyleBoxFlat BackgroundColor="#00000044" />
         </PanelContainer.PanelOverride>
-        <BoxContainer Orientation="Horizontal">
-            <Label Name="ChannelNumberLabel" Align="Right" HorizontalAlignment="Left" MinWidth="30" />
-            <controls:VSpacer Spacing="10" />
-            <Label Name="ChannelNameLabel" HorizontalAlignment="Center" />
-            <controls:VSpacer HorizontalExpand="True" />
-            <controls:SwitchButton Name="ChannelEnableSwitchButton"
+        <BoxContainer Orientation="Horizontal" SeparationOverride="10">
+            <Label Name="ChannelNumberLabel" Align="Right" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   MinWidth="30" />
+            <BoxContainer Orientation="Vertical" MinHeight="0">
+                <Label Name="ChannelNameLabel" />
+                <RichTextLabel Name="ChannelInfoLabel" />
+            </BoxContainer>
+            <controls:SwitchButton Name="ChannelEnableSwitchButton" VerticalAlignment="Top" HorizontalExpand="True"
                                    HorizontalAlignment="Right"
                                    OnStateText=""
                                    OffStateText="" />

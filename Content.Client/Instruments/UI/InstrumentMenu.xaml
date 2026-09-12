@@ -1,6 +1,7 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:instruments="clr-namespace:Content.Client.Instruments.UI"
                       MinSize="480 270"
                       SetSize="500 500">
     <BoxContainer Orientation="Vertical" Margin="1,0,0,5" SeparationOverride="10">
@@ -17,6 +18,7 @@
                 </BoxContainer>
                 <BoxContainer Name="MidiSourcesContainer" VerticalExpand="True" HorizontalExpand="True" />
             </BoxContainer>
+            <instruments:ChannelsControl Name="ChannelsControl" VerticalExpand="True" HorizontalExpand="True" />
             <ScrollContainer Name="ConfigScrollContainer" HScrollEnabled="False" HorizontalExpand="True"
                              VerticalExpand="True">
                 <BoxContainer

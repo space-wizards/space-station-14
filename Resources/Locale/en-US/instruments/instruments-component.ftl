@@ -8,6 +8,7 @@ instruments-component-menu-no-midi-support = MIDI support is currently not
                                              FluidSynth or a development package
                                              for FluidSynth.
 instruments-component-menu-play-tab-title = Play
+instruments-component-menu-channels-tab-title = Channels
 instruments-component-menu-config-tab-title = Configuration
 instruments-component-menu-midi-source-button = MIDI Source
 instruments-component-menu-unknown-midi-source-button = Unknown
@@ -36,6 +37,8 @@ instruments-component-channels-menu = MIDI Channel Selection
 instruments-component-channels-all-button = On
 instruments-component-channels-clear-button = Off
 instruments-component-channels-all-channels-label = All Channels
+instruments-component-channels-display-inactive-label = Display inactive
+instruments-component-channels-display-used-tracks-label = Display tracks
 instruments-component-channels-percussion-channel-name = [Percussion]
 instruments-component-channels-name-display-selector-label = Display Name
 instruments-component-channels-name-display-selector-track-button = Track
