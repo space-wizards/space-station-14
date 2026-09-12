@@ -16,7 +16,9 @@ namespace Content.Shared.Atmos
         public readonly Vector2i Index;
         public readonly Vector2i Origin;
 
-        public GasOverlayData[] TileData = new GasOverlayData[ChunkSize * ChunkSize];
+        public SharedFireData[] TileFireData = new SharedFireData[ChunkSize * ChunkSize];
+        public SharedVisibleGasData[] TileVisibleGasData = new SharedVisibleGasData[ChunkSize * ChunkSize];
+        public SharedGasTemperatureData[] TileGasTemperatureData = new SharedGasTemperatureData[ChunkSize * ChunkSize];
 
         [NonSerialized]
         public GameTick LastUpdate;
@@ -34,7 +36,9 @@ namespace Content.Shared.Atmos
 
             // This does not clone the opacity array. However, this chunk cloning is only used by the client,
             // which never modifies that directly. So this should be fine.
-            Array.Copy(data.TileData, TileData, data.TileData.Length);
+            Array.Copy(data.TileFireData, TileFireData, data.TileFireData.Length);
+            Array.Copy(data.TileVisibleGasData, TileVisibleGasData, data.TileVisibleGasData.Length);
+            Array.Copy(data.TileGasTemperatureData, TileGasTemperatureData, data.TileGasTemperatureData.Length);
         }
 
         /// <summary>
@@ -55,20 +59,20 @@ namespace Content.Shared.Atmos
         }
     }
 
-    public struct GasChunkEnumerator
+    public struct GasChunkEnumerator<T> where T : struct, IEquatable<T>
     {
-        private readonly GasOverlayData[] _tileData;
+        private readonly T[] _tileData;
         private int _index = -1;
 
         public int X = ChunkSize - 1;
         public int Y = -1;
 
-        public GasChunkEnumerator(GasOverlayChunk chunk)
+        public GasChunkEnumerator(T[] data)
         {
-            _tileData = chunk.TileData;
+            _tileData = data;
         }
 
-        public bool MoveNext(out GasOverlayData gas)
+        public bool MoveNext(out T gas)
         {
             while (++_index < _tileData.Length)
             {
@@ -80,6 +84,7 @@ namespace Content.Shared.Atmos
                 }
 
                 gas = _tileData[_index];
+
                 if (!gas.Equals(default))
                     return true;
             }
