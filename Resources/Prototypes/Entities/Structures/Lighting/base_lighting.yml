@@ -116,6 +116,7 @@
     enabled: false
   - type: PoweredLight
     bulb: Tube
+  - type: AntiFlickerPoweredLight
   - type: SpookyPoweredLight
   - type: ContainerContainer
     containers:
@@ -317,6 +318,7 @@
       light_bulb: !type:ContainerSlot
   - type: PoweredLight
     bulb: Bulb
+  - type: AntiFlickerPoweredLight
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
