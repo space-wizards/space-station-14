@@ -102,7 +102,7 @@
     deviceNetId: Wired
     receiveFrequencyId: SurveillanceCamera
     transmitFrequencyId: SurveillanceCamera
-  - type: WiredNetworkConnection
+  - type: WiredNetwork
   - type: SurveillanceCameraMonitor
 
 - type: entity
@@ -129,7 +129,7 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 20
   - type: DeviceLinkSink
     ports:

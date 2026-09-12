@@ -1,4 +1,5 @@
-﻿using Content.Shared.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Systems;
 
 namespace Content.Shared.Atmos.Monitor;
 
@@ -17,5 +18,5 @@ public partial interface IAtmosDeviceData
     /// <param name="uid">Owner of this atmos data.</param>
     /// <param name="address">The target address.</param>
     /// <param name="deviceNetSys">The device network system.</param>
-    void RaisePayload(EntityUid uid, string address, SharedDeviceNetworkSystem deviceNetSys);
+    void RaisePayload(EntityUid uid, DeviceAddress address, DeviceNetworkSystem deviceNetSys);
 }

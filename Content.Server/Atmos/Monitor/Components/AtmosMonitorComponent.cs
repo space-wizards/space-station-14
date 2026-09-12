@@ -1,8 +1,7 @@
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
+using Content.Shared.DeviceNetwork;
 using Robust.Shared.Prototypes;
-
-namespace Content.Server.Atmos.Monitor.Components;
 
 [RegisterComponent]
 public sealed partial class AtmosMonitorComponent : Component
@@ -64,7 +63,7 @@ public sealed partial class AtmosMonitorComponent : Component
     ///     to these devices.
     /// </summary>
     [DataField]
-    public HashSet<string> RegisteredDevices = new();
+    public HashSet<DeviceAddress> RegisteredDevices = new();
 
     /// <summary>
     /// Specifies whether this device monitors its own internal pipe network rather than the surrounding atmosphere.

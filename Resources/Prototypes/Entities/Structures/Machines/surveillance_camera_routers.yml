@@ -46,7 +46,7 @@
     receiveFrequencyId: SurveillanceCamera
     transmitFrequencyId: SurveillanceCamera
     prefix: device-address-prefix-camera-router
-  - type: WiredNetworkConnection
+  - type: WiredNetwork
   - type: DeviceNetworkRequiresPower
   - type: DeviceNetworkRouter
   - type: SurveillanceCameraRouter
@@ -190,7 +190,7 @@
     receiveFrequencyId: SurveillanceCamera
     transmitFrequencyId: SurveillanceCamera
     prefix: device-address-prefix-camera-router-wireless
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 200
   - type: DeviceNetworkRequiresPower
   - type: DeviceNetworkRouter
@@ -227,7 +227,7 @@
     deviceNetId: Wireless
     receiveFrequencyId: Mothership
     transmitFrequencyId: Mothership
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 2000 # longer range to get xenoborgs even when the mothership is far away
   - type: SurveillanceCameraRouter
     subnetFrequency: Xenoborg

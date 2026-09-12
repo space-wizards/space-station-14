@@ -1,7 +1,10 @@
 using System.Numerics;
-using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
+using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.Power.EntitySystems;
+using Content.Shared.SurveillanceCamera;
 using Content.Shared.SurveillanceCamera.Components;
 
 namespace Content.Server.SurveillanceCamera;
@@ -9,6 +12,7 @@ namespace Content.Server.SurveillanceCamera;
 public sealed partial class SurveillanceCameraMapSystem : EntitySystem
 {
     [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedPowerReceiverSystem _power = default!;
 
     public override void Initialize()
     {
@@ -102,7 +106,7 @@ public sealed partial class SurveillanceCameraMapSystem : EntitySystem
             return;
         }
 
-        var visible = exists ? existing.Visible : true;
+        var visible = !exists || existing.Visible;
 
         mapComp.Cameras[netEntity] = new CameraMarker
         {
@@ -110,7 +114,7 @@ public sealed partial class SurveillanceCameraMapSystem : EntitySystem
             Active = active,
             Address = address,
             Subnet = subnet,
-            Visible = visible
+            Visible = visible,
         };
         Dirty(gridUid.Value, mapComp);
     }
@@ -128,12 +132,13 @@ public sealed partial class SurveillanceCameraMapSystem : EntitySystem
             return;
 
         var netEntity = GetNetEntity(cameraUid);
-        if (mapComp.Cameras.TryGetValue(netEntity, out var marker) && marker.Visible != visible)
-        {
-            marker.Visible = visible;
-            mapComp.Cameras[netEntity] = marker;
-            Dirty(gridUid.Value, mapComp);
-        }
+        if (!mapComp.Cameras.TryGetValue(netEntity, out var marker)
+            || marker.Visible == visible)
+            return;
+
+        marker.Visible = visible;
+        mapComp.Cameras[netEntity] = marker;
+        Dirty(gridUid.Value, mapComp);
     }
 
     /// <summary>

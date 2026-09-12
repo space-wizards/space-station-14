@@ -1,3 +1,4 @@
+using Content.Shared.Examine;
 using Content.Shared.Station.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
@@ -6,30 +7,20 @@ namespace Content.Shared.Station;
 
 public abstract partial class SharedStationSystem
 {
-    private void InitializeTracker()
-    {
-        SubscribeLocalEvent<StationTrackerComponent, MapInitEvent>(OnTrackerMapInit);
-        SubscribeLocalEvent<StationTrackerComponent, ComponentRemove>(OnTrackerRemove);
-        SubscribeLocalEvent<StationTrackerComponent, GridUidChangedEvent>(OnTrackerGridChanged);
-        SubscribeLocalEvent<StationTrackerComponent, MetaFlagRemoveAttemptEvent>(OnMetaFlagRemoveAttempt);
-    }
-
+    [SubscribeLocalEvent]
     private void OnTrackerMapInit(Entity<StationTrackerComponent> ent, ref MapInitEvent args)
     {
         _meta.AddFlag(ent, MetaDataFlags.ExtraTransformEvents);
         UpdateStationTracker(ent.AsNullable());
     }
 
-    private void OnTrackerRemove(Entity<StationTrackerComponent> ent, ref ComponentRemove args)
-    {
-        _meta.RemoveFlag(ent, MetaDataFlags.ExtraTransformEvents);
-    }
-
+    [SubscribeLocalEvent]
     private void OnTrackerGridChanged(Entity<StationTrackerComponent> ent, ref GridUidChangedEvent args)
     {
         UpdateStationTracker((ent, ent.Comp, args.Transform));
     }
 
+    [SubscribeLocalEvent]
     private void OnMetaFlagRemoveAttempt(Entity<StationTrackerComponent> ent, ref MetaFlagRemoveAttemptEvent args)
     {
         if ((args.ToRemove & MetaDataFlags.ExtraTransformEvents) != 0 &&
@@ -37,6 +28,13 @@ public abstract partial class SharedStationSystem
         {
             args.ToRemove &= ~MetaDataFlags.ExtraTransformEvents;
         }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnExamine(Entity<StationTrackerComponent> ent, ref ExaminedEvent args)
+    {
+        if (ent.Comp.Station != null && ent.Comp.Examinable)
+            args.PushMarkup(Loc.GetString("station-tracker-component-examine", ("stationName", Name(ent.Comp.Station.Value))));
     }
 
     /// <summary>

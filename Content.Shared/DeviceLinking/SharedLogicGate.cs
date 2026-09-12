@@ -2,7 +2,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.DeviceLinking;
 
-
 /// <summary>
 /// Types of logic gates that can be used, determines how the output port is set.
 /// </summary>
@@ -50,5 +49,5 @@ public enum SignalState : byte
 {
     Momentary, // Instantaneous pulse high, compatibility behavior
     Low,
-    High
+    High,
 }

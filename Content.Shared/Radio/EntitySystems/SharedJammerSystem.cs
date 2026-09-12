@@ -14,7 +14,7 @@ namespace Content.Shared.Radio.EntitySystems;
 public abstract partial class SharedJammerSystem : EntitySystem
 {
     [Dependency] private ItemToggleSystem _itemToggle = default!;
-    [Dependency] private SharedDeviceNetworkJammerSystem _jammer = default!;
+    [Dependency] private DeviceNetworkJammerSystem _jammer = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
@@ -39,7 +39,7 @@ public abstract partial class SharedJammerSystem : EntitySystem
             // Add excluded frequencies using the system method
             foreach (var freq in entity.Comp.FrequenciesExcluded)
             {
-                _jammer.AddExcludedFrequency((entity, jammingComp), (uint)freq);
+                _jammer.AddExcludedFrequency((entity, jammingComp), freq);
             }
         }
         else

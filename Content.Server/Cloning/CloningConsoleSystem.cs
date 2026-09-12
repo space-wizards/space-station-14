@@ -1,15 +1,15 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Cloning.Components;
-using Content.Server.DeviceLinking.Systems;
 using Content.Server.Medical.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.UserInterface;
 using Content.Shared.Cloning;
 using Content.Shared.Cloning.CloningConsole;
 using Content.Shared.Database;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
@@ -89,7 +89,7 @@ namespace Content.Server.Cloning
             }
         }
 
-        private void OnNewLink(EntityUid uid, CloningConsoleComponent component, NewLinkEvent args)
+        private void OnNewLink(EntityUid uid, CloningConsoleComponent component, ref NewLinkEvent args)
         {
             if (TryComp<MedicalScannerComponent>(args.Sink, out var scanner) && args.SourcePort == CloningConsoleComponent.ScannerPort)
             {
@@ -105,7 +105,7 @@ namespace Content.Server.Cloning
             RecheckConnections(uid, component.CloningPod, component.GeneticScanner, component);
         }
 
-        private void OnPortDisconnected(EntityUid uid, CloningConsoleComponent component, PortDisconnectedEvent args)
+        private void OnPortDisconnected(EntityUid uid, CloningConsoleComponent component, ref PortDisconnectedEvent args)
         {
             if (args.Port == CloningConsoleComponent.ScannerPort)
                 component.GeneticScanner = null;

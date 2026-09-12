@@ -1,4 +1,4 @@
-using Content.Shared.FixedPoint;
+using Content.Shared.DeviceNetwork;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Radio;
@@ -28,16 +28,13 @@ public sealed partial class RadioChannelPrototype : IPrototype
     public char KeyCode { get; private set; } = '\0';
 
     /// <summary>
-    /// Frequency used by the channel.
-    /// </summary>
-    [DataField]
-    public FixedPoint2 Frequency { get; private set; } = 0;
-
-    /// <summary>
     /// Color used to display the channel.
     /// </summary>
     [DataField]
     public Color Color { get; private set; } = Color.Lime;
+
+    [DataField("frequency")]
+    public DeviceFrequency Frequency { get; private set; } = 1;
 
     /// <summary>
     /// Whether the channel can transmit across different stations without a telecommunications server.

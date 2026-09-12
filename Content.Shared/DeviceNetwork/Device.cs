@@ -1,5 +1,4 @@
-﻿using Content.Shared.DeviceNetwork.Components;
-using Content.Shared.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Shared.DeviceNetwork;
 
@@ -10,7 +9,11 @@ namespace Content.Shared.DeviceNetwork;
 /// This type is read-only. To change any parameters of the device, use <see cref="SharedDeviceNetworkSystem"/>'s API.
 /// </remarks>
 [DataRecord]
-public readonly partial record struct Device(EntityUid Owner, uint? ReceiveFrequency, string Address, bool ReceiveAll)
+public readonly partial record struct Device(
+    EntityUid Owner,
+    DeviceFrequency? ReceiveFrequency,
+    DeviceAddress Address,
+    bool ReceiveAll)
 {
     public Device(Entity<DeviceNetworkComponent> ent) : this(
         ent.Owner,
