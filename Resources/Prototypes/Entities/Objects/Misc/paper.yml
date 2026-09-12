@@ -155,10 +155,10 @@
   - type: Sprite
     layers:
     - state: paper
-      color: "#e6e6fa"
+      color: Paper.captain
     - state: paper_words
       map: ["enum.PaperVisualLayers.Writing"]
-      color: "#e6e6fa"
+      color: Paper.captain
       visible: false
     - state: paper_stamp-generic
       map: ["enum.PaperVisualLayers.Stamp"]
@@ -168,17 +168,17 @@
   - type: PaperVisuals
     headerImagePath: "/Textures/Interface/Paper/paper_heading_captains_thoughts.svg.96dpi.png"
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
-    backgroundModulate: "#e6e6fa"
+    backgroundModulate: Paper.captain
     backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
     contentMargin: 32.0, 0.0, 32.0, 16.0
   - type: Item
     inhandVisuals:
       left:
       - state: paper-inhand-left
-        color: "#e6e6fa"
+        color: Paper.captain
       right:
       - state: paper-inhand-right
-        color: "#e6e6fa"
+        color: Paper.captain
 
 - type: entity
   name: cargo invoice
@@ -189,10 +189,10 @@
   - type: Sprite
     layers:
     - state: paper
-      color: "#9ef5ff"
+      color: Paper.invoice
     - state: paper_words
       map: ["enum.PaperVisualLayers.Writing"]
-      color: "#9ef5ff"
+      color: Paper.invoice
       visible: false
     - state: paper_stamp-generic
       map: ["enum.PaperVisualLayers.Stamp"]
@@ -207,8 +207,8 @@
   - type: PaperVisuals
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
     contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
-    backgroundModulate: "#9ef5ff"
-    contentImageModulate: "#9ef5ff"
+    backgroundModulate: Paper.invoice
+    contentImageModulate: Paper.invoice
     backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
     contentMargin: 16.0, 16.0, 16.0, 16.0
     headerImagePath: "/Textures/Interface/Paper/paper_heading_cargo_invoice.svg.96dpi.png"
@@ -217,10 +217,10 @@
     inhandVisuals:
       left:
       - state: paper-inhand-left
-        color: "#9ef5ff"
+        color: Paper.invoice
       right:
       - state: paper-inhand-right
-        color: "#9ef5ff"
+        color: Paper.invoice
 
 - type: entity
   id: PaperNanoTaskItem
@@ -265,10 +265,10 @@
   - type: Sprite
     layers:
     - state: paper
-      color: "#f7e574"
+      color: Paper.bounty
     - state: paper_words
       map: ["enum.PaperVisualLayers.Writing"]
-      color: "#f7e574"
+      color: Paper.bounty
       visible: false
     - state: paper_stamp-generic
       map: ["enum.PaperVisualLayers.Stamp"]
@@ -283,8 +283,8 @@
   - type: PaperVisuals
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
     contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
-    backgroundModulate: "#f7e574"
-    contentImageModulate: "#f7e574"
+    backgroundModulate: Paper.bounty
+    contentImageModulate: Paper.bounty
     backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
     contentMargin: 16.0, 16.0, 16.0, 16.0
     headerImagePath: "/Textures/Interface/Paper/paper_heading_cargo_invoice.svg.96dpi.png"
@@ -300,10 +300,10 @@
     inhandVisuals:
       left:
       - state: paper-inhand-left
-        color: "#f7e574"
+        color: Paper.bounty
       right:
       - state: paper-inhand-right
-        color: "#f7e574"
+        color: Paper.bounty
 
 - type: entity
   id: PaperSalvageJobLabel
@@ -314,10 +314,10 @@
   - type: Sprite
     layers:
     - state: paper
-      color: "#f7e574"
+      color: Paper.bounty
     - state: paper_words
       map: ["enum.PaperVisualLayers.Writing"]
-      color: "#f7e574"
+      color: Paper.bounty
       visible: false
     - state: paper_stamp-generic
       map: ["enum.PaperVisualLayers.Stamp"]
@@ -332,8 +332,8 @@
   - type: PaperVisuals
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
     contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
-    backgroundModulate: "#f7e574"
-    contentImageModulate: "#f7e574"
+    backgroundModulate: Paper.bounty
+    contentImageModulate: Paper.bounty
     backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
     contentMargin: 16.0, 16.0, 16.0, 16.0
   - type: JobBoardLabel
@@ -343,10 +343,10 @@
     inhandVisuals:
       left:
       - state: paper-inhand-left
-        color: "#f7e574"
+        color: Paper.bounty
       right:
       - state: paper-inhand-right
-        color: "#f7e574"
+        color: Paper.bounty
 
 - type: entity
   name: character sheet
@@ -360,10 +360,10 @@
   - type: Sprite
     layers:
       - state: paper
-        color: "#cccccc"
+        color: Paper.cnc
       - state: paper_words
         map: ["enum.PaperVisualLayers.Writing"]
-        color: "#cccccc" #aaaaaaaaaaaaaaaaaaaaaaa
+        color: Paper.cnc
         visible: false
       - state: paper_stamp-generic
         map: ["enum.PaperVisualLayers.Stamp"]
@@ -371,18 +371,18 @@
   - type: PaperVisuals
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
     contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
-    backgroundModulate: "#cccccc"
-    contentImageModulate: "#cccccc"
+    backgroundModulate: Paper.cnc
+    contentImageModulate: Paper.cnc
     backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
     contentMargin: 16.0, 16.0, 16.0, 16.0
   - type: Item
     inhandVisuals:
       left:
       - state: paper-inhand-left
-        color: "#cccccc"
+        color: Paper.cnc
       right:
       - state: paper-inhand-right
-        color: "#cccccc"
+        color: Paper.cnc
 
 - type: entity
   parent: Paper

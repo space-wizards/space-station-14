@@ -1,6 +1,6 @@
 ﻿- type: palette
   id: Emagged
-  name: Emagged
+  name: palette-emagged
   colors:
     red: "#FF0000"
     orange: "#FFA500"
