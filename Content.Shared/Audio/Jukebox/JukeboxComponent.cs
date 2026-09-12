@@ -4,15 +4,16 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Audio.Jukebox;
 
-[NetworkedComponent, RegisterComponent, AutoGenerateComponentState(true)]
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState(true), AutoGenerateEntityRelations(shutdownEvent: false)]
 [Access(typeof(SharedJukeboxSystem))]
 public sealed partial class JukeboxComponent : Component
 {
     [DataField, AutoNetworkedField]
     public ProtoId<JukeboxPrototype>? SelectedSongId;
 
-    [DataField, AutoNetworkedField]
-    public EntityUid? AudioStream;
+    [DataField, AutoNetworkedField, AutoRelationField]
+    public EntityRelation AudioStream;
 
     /// <summary>
     /// RSI state for the jukebox being on.

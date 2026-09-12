@@ -3,7 +3,6 @@ using Content.Shared.Traits.Assorted;
 using Robust.Shared.Random;
 using Robust.Client.Player;
 using Robust.Shared.Player;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
@@ -43,7 +42,7 @@ public sealed partial class ParacusiaSystem : SharedParacusiaSystem
 
     private void OnPlayerDetach(EntityUid uid, ParacusiaComponent component, LocalPlayerDetachedEvent args)
     {
-        component.Stream = _audio.Stop(component.Stream);
+        _audio.Stop(component.Stream);
     }
 
     private void PlayParacusiaSounds(EntityUid uid)
@@ -69,7 +68,6 @@ public sealed partial class ParacusiaSystem : SharedParacusiaSystem
         var newCoords = Transform(uid).Coordinates.Offset(randomOffset);
 
         // Play the sound
-        paracusia.Stream = _audio.PlayStatic(paracusia.Sounds, uid, newCoords)?.Entity;
+        SetRelation(uid, ref paracusia.Stream, _audio.PlayStatic(paracusia.Sounds, uid, newCoords)?.Entity);
     }
-
 }

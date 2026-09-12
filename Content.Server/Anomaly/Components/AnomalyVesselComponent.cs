@@ -10,15 +10,15 @@ namespace Content.Server.Anomaly.Components;
 /// they generate points for the selected server based on
 /// the anomaly's stability and severity.
 /// </summary>
-[RegisterComponent, Access(typeof(SharedAnomalySystem)), AutoGenerateComponentPause]
+[RegisterComponent, Access(typeof(SharedAnomalySystem))]
+[AutoGenerateComponentPause, AutoGenerateEntityRelations]
 public sealed partial class AnomalyVesselComponent : Component
 {
     /// <summary>
     /// The anomaly that the vessel is storing.
-    /// Can be null.
     /// </summary>
-    [ViewVariables]
-    public EntityUid? Anomaly;
+    [DataField, AutoRelationField]
+    public EntityRelation Anomaly;
 
     /// <summary>
     /// A multiplier applied to the amount of points generated.

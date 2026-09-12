@@ -15,7 +15,8 @@ namespace Content.Shared.Materials;
 /// This is a machine that handles converting entities
 /// into the raw materials and chemicals that make them up.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState, AutoGenerateComponentPause, AutoGenerateEntityRelations(shutdownEvent: false)]
 [Access(typeof(SharedMaterialReclaimerSystem))]
 public sealed partial class MaterialReclaimerComponent : Component
 {
@@ -131,7 +132,8 @@ public sealed partial class MaterialReclaimerComponent : Component
     [DataField]
     public TimeSpan SoundCooldown = TimeSpan.FromSeconds(0.8f);
 
-    public EntityUid? Stream;
+    [DataField, AutoRelationField]
+    public EntityRelation Stream;
 
     /// <summary>
     /// A counter of how many items have been processed

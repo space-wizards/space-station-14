@@ -95,16 +95,18 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
         var grids = new List<(Entity<MapGridComponent> Entity, int Count, List<TileRef> Tiles)>();
         foreach (var possibleTarget in station.Comp.Grids)
         {
-            if (!TryComp<MapGridComponent>(possibleTarget, out var comp))
+            if (!TryComp<MapGridComponent>(possibleTarget.Entity, out var comp))
                 continue;
 
+            var possibleEntity = possibleTarget.Entity.Value;
+
             // Get the tile count for the given grid.
-            var tileCount = _map.GetFilledTileCount((possibleTarget, comp));
+            var tileCount = _map.GetFilledTileCount((possibleEntity, comp));
 
             // Just to be sure, no empty elements.
             if (tileCount > 0)
             {
-                grids.Add(((possibleTarget, comp), tileCount, new()));
+                grids.Add(((possibleEntity, comp), tileCount, new()));
                 totalTiles += tileCount;
             }
         }

@@ -1,8 +1,6 @@
 using System.Numerics;
-using Content.Shared.Salvage;
 using Content.Shared.Salvage.Expeditions;
 using Robust.Shared.Audio;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Salvage.Expeditions;
@@ -10,7 +8,7 @@ namespace Content.Server.Salvage.Expeditions;
 /// <summary>
 /// Designates this entity as holding a salvage expedition.
 /// </summary>
-[RegisterComponent, AutoGenerateComponentPause]
+[RegisterComponent, AutoGenerateComponentPause, AutoGenerateEntityRelations(shutdownEvent: false)]
 public sealed partial class SalvageExpeditionComponent : SharedSalvageExpeditionComponent
 {
     public SalvageMissionParams MissionParams = default!;
@@ -39,8 +37,8 @@ public sealed partial class SalvageExpeditionComponent : SharedSalvageExpedition
     /// <summary>
     /// Countdown audio stream.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public EntityUid? Stream = null;
+    [DataField, AutoRelationField]
+    public EntityRelation Stream;
 
     /// <summary>
     /// Sound that plays when the mission end is imminent.

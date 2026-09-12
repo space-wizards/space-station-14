@@ -33,7 +33,7 @@ public sealed partial class WeatherSystem : SharedWeatherSystem
 
     private void OnComponentShutdown(Entity<WeatherStatusEffectComponent> ent, ref ComponentShutdown args)
     {
-        ent.Comp.Stream = _audio.Stop(ent.Comp.Stream);
+        _audio.Stop(ent.Comp.Stream);
     }
 
     public override void Update(float frameTime)
@@ -55,11 +55,15 @@ public sealed partial class WeatherSystem : SharedWeatherSystem
         {
             if (weather.Sound == null || status.AppliedTo != playerXform.MapUid)
             {
-                weather.Stream = _audio.Stop(weather.Stream);
+                _audio.Stop(weather.Stream);
                 continue;
             }
 
-            weather.Stream ??= _audio.PlayGlobal(weather.Sound, Filter.Local(), true)?.Entity;
+            if (!weather.Stream.HasValue)
+            {
+                var sound = _audio.PlayGlobal(weather.Sound, Filter.Local(), true)?.Entity;
+                SetRelation(uid, ref weather.Stream, sound);
+            }
 
             if (!_audioQuery.TryComp(weather.Stream, out var audio))
                 continue;
