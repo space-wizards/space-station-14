@@ -118,6 +118,10 @@
   id: MobReptilian
   name: Urist McScales
   components:
+  - type: FootstepTrack
+    footprints:
+    - BloodClawprint1
+    - BloodClawprint2
   - type: Puller
     needsHands: false
   - type: Butcherable

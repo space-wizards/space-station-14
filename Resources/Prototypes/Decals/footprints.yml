@@ -1,0 +1,63 @@
+- type: decal
+  id: BloodFootprint1
+  showMenu: false
+  defaultCleanable: true
+  sprite:
+    sprite: Fluids/footprints.rsi
+    state: blood1
+
+- type: decal
+  id: BloodFootprint2
+  showMenu: false
+  defaultCleanable: true
+  sprite:
+    sprite: Fluids/footprints.rsi
+    state: blood2
+
+- type: decal
+  id: BloodPawprint1
+  showMenu: false
+  defaultCleanable: true
+  sprite:
+    sprite: Fluids/footprints.rsi
+    state: bloodpaw1
+
+- type: decal
+  id: BloodPawprint2
+  showMenu: false
+  defaultCleanable: true
+  sprite:
+    sprite: Fluids/footprints.rsi
+    state: bloodpaw2
+
+- type: decal
+  id: BloodClawprint1
+  showMenu: false
+  defaultCleanable: true
+  sprite:
+    sprite: Fluids/footprints.rsi
+    state: bloodclaw1
+
+- type: decal
+  id: BloodClawprint2
+  showMenu: false
+  defaultCleanable: true
+  sprite:
+    sprite: Fluids/footprints.rsi
+    state: bloodclaw2
+
+- type: decal
+  id: BloodBotprint1
+  showMenu: false
+  defaultCleanable: true
+  sprite:
+    sprite: Fluids/footprints.rsi
+    state: bloodbot1
+
+- type: decal
+  id: BloodBotprint2
+  showMenu: false
+  defaultCleanable: true
+  sprite:
+    sprite: Fluids/footprints.rsi
+    state: bloodbot2

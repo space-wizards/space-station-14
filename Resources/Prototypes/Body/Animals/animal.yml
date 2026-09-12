@@ -44,6 +44,10 @@
   abstract: true
   components:
   - type: Body
+  - type: FootstepTrack
+    footprints:
+    - BloodPawprint1
+    - BloodPawprint2
   - type: EntityTableContainerFill
     containers:
       body_organs: !type:AllSelector
