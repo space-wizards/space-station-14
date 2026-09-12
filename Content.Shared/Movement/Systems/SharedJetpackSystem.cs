@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Animation;
 using Content.Shared.Gravity;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Movement.Components;
@@ -183,11 +184,13 @@ public abstract partial class SharedJetpackSystem : EntitySystem
 
             SetupUser(user.Value, uid, component);
             EnsureComp<ActiveJetpackComponent>(uid);
+            EnsureComp<EffectGeneratorComponent>(uid);
         }
         else
         {
             RemoveUser(user.Value, component);
             RemComp<ActiveJetpackComponent>(uid);
+            RemComp<EffectGeneratorComponent>(uid);
         }
 
 
