@@ -109,6 +109,7 @@ namespace Content.Client.Verbs.UI
             Close();
 
             var menu = popup ?? _context.RootMenu;
+            menu.ResetBody();
             menu.MenuBody.RemoveAllChildren();
 
             CurrentTarget = target;
@@ -160,7 +161,6 @@ namespace Content.Client.Verbs.UI
                     AddVerbCategory(category, popup);
             }
 
-            popup.InvalidateMeasure();
         }
 
         /// <summary>

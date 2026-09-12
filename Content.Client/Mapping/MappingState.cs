@@ -153,8 +153,8 @@ public sealed partial class MappingState : GameplayStateBase
         Deselect();
 
         var coords = _transform.ToMapCoordinates(args.Coordinates);
-        if (_verbs.TryGetEntityMenuEntities(coords, out var entities))
-            _entityMenuController.OpenRootMenu(entities);
+        if (_verbs.TryGetEntityMenuEntities(coords, out var entities, out var visibility))
+            _entityMenuController.OpenRootMenu(entities, args.EntityUid, visibility);
 
         return true;
     }
