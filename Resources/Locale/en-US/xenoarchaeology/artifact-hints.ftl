@@ -22,12 +22,16 @@ artifact-effect-hint-polymorph = Transmogrificational activity
 artifact-effect-hint-magnet = Magnetic waves
 artifact-effect-hint-visual = Visual distortions
 
+xenoarch-trigger-tip-reactive-specific = {CAPITALIZE($reagent)}
+
 ### Description hints
 xenoarch-trigger-examine-wrenching = There's a loose bit spinning around.
 xenoarch-trigger-examine-prying = There's a panel coming up from the surface.
 xenoarch-trigger-examine-screwing = There's a raised section with a small inset on it.
 xenoarch-trigger-examine-pulsing = An exposed diode pokes out of the artifact's surface.
 xenoarch-trigger-examine-timer = Carvings and scratches cover the surface... You can just barely make out a number: [italic]{$time}[/italic]
+xenoarch-trigger-examine-reagent-specific = There's a small drain hole coated in a [color={$color}]{$description}[/color] substance. {$flavor}
+xenoarch-trigger-examine-reagent-specific-scan = There's a small drain hole coated in [color={$color}]{$reagent}[/color]
 
 ### Effects hints
 xenoarch-effect-puddle = Produces puddle of following reagents: {$reagent}

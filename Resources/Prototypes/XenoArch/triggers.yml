@@ -58,6 +58,14 @@
       weight: 0.5
     - id: TriggerAttackParticleEngine
       weight: 0.1
+    - id: TriggerReactiveEnergyDrink
+    - id: TriggerReactiveDrinkHard
+      weight: 0.5
+    - id: TriggerReactiveReagentEasy
+    - id: TriggerReactiveReagentHard
+      weight: 0.5
+    - id: TriggerReactiveReagentObscure
+      weight: 0.5
 
 - type: entityTable
   id: XenoArtifactHandheldOnlyTriggerTable
@@ -495,6 +503,143 @@
       tags:
       - EmitterBolt
 
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: TriggerReactiveEnergyDrink
+  name: Energy Drinks
+  components:
+  - type: XATReactive
+    reagents: # Drinks available round start from a vending machine
+    - Cola
+    - ChangelingSting
+    - DrGibb
+    - EnergyDrink
+    - FourteenLoko
+    - GrapeSoda
+    - LemonLime
+    - LemonLimeCranberry
+    - NuclearCola
+    - PwrGame
+    - ShamblersJuice
+    - SodaWater
+    - SolDry
+    - SpaceMountainWind
+    - SpaceUp
+    - Starkist
+
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: TriggerReactiveDrinkHard
+  name: Specific Reagent # should get overwritten
+  components:
+  - type: XATReactiveSpecific
+    reagents: #list of drinks someone that hasn't played bartender before could reasonably guess is a drink
+    - AlliesCocktail #drinks shouldn't be *too* hard to make, if no bartender is present you should be able to make it without access
+    - CogChamp
+    - BlackRussian
+    - BloodyMary
+    - CoconutRum
+    - CubaLibre
+    - GargleBlaster
+    - GinTonic
+    - Grog
+    - LongIslandIcedTea
+    - ManlyDorf
+    - Margarita
+    - Martini
+    - Moonshine
+    - PinaColada
+    - WhiskeyCola
+    - WhiteRussian
+    - ArnoldPalmer
+    - CafeLatte
+    - CreamOfCoconut
+    - IceCream
+    - IcedCoffee
+    - IcedGreenTea
+    - IcedTea
+    - OrangeLimeSoda
+    - Lemonade
+    - SoyLatte
+    - Pilk
+
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: TriggerReactiveReagentEasy
+  name: Specific Reagent # should get overwritten
+  components:
+  - type: XATReactiveSpecific
+    reagents: #things medical probably already has
+    - Arithrazine
+    - Dylovene
+    - Bicaridine
+    - Cryoxadone
+    - Dermaline
+    - Dexalin
+    - Inaprovaline
+    - Tricordrazine
+    - Saline
+    - Lacerinol
+    - Puncturase
+    - Bruizine
+    - Arcryox
+    - PotassiumIodide
+    - Charcoal
+
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: TriggerReactiveReagentHard
+  name: Specific Reagent # should get overwritten
+  components:
+  - type: XATReactiveSpecific
+    reagents: #things medical probably hasn't made already, not neccisarily hard for them to make
+    - Cryptobiolin #good reagents
+    - Doxarubixadone
+    - Ethylredoxrazine
+    - Haloperidol
+    - Lipozine
+    - Mannitol
+    - SpaceDrugs
+    - Synaptizine
+    - TranexamicAcid
+    - Phalanximine
+    - Psicodine
+    - Oculine
+    - Bleach  #evil reagents
+    - ChloralHydrate
+    - ChlorineTrifluoride
+    - HeartbreakerToxin
+    - Hemorrhinol
+    - Impedrezene
+    - Licoxide
+    - Lipolicide
+    - MindbreakerToxin
+    - Napalm
+    - Razorium
+    - Thermite
+    - UnstableMutagen
+
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: TriggerReactiveReagentObscure
+  name: Specific Reagent # should get overwritten
+  components:
+  - type: XATReactiveSpecific
+    reagents: #uncommon reagents (but still not super annoying to make)
+    - Ash #many of these can be acquired without assistance from a chemist
+    - Fiber
+    - JuiceThatMakesYouWeh
+    - Lye
+    - Nutriment
+    - PestKiller
+    - SpaceLube
+    - SpaceGlue
+    - SpaceCleaner
+    - Sugar
+    - TableSalt
+    - Vitamin
+    - WeedKiller
+    - WeldingFuel
 #endregion
 #region Handheld triggers
 
