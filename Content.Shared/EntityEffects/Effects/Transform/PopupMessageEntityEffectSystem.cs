@@ -1,5 +1,6 @@
-﻿using Content.Shared.Popups;
+using Content.Shared.Popups;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
@@ -21,7 +22,9 @@ public sealed partial class PopupMessageEntityEffectSystem : EntityEffectSystem<
         if (_net.IsClient)
             return;
 
-        var msg = Loc.GetString(_random.Pick(args.Effect.Messages), ("entity", entity));
+        var msg = Loc.GetString(_random.Pick(args.Effect.Messages),
+            ("name", entity.Owner),
+            ("entity", entity.Owner));
 
         switch ((args.Effect.Method, args.Effect.Type))
         {
@@ -36,6 +39,17 @@ public sealed partial class PopupMessageEntityEffectSystem : EntityEffectSystem<
                 break;
             case (PopupMethod.PopupCoordinates, PopupRecipients.Pvs):
                 _popup.PopupCoordinates(msg, Transform(entity).Coordinates, args.Effect.VisualType);
+                break;
+            case (PopupMethod.PopupEntity, PopupRecipients.PvsExceptTarget):
+                _popup.PopupEntity(msg, entity, Filter.PvsExcept(entity), true, args.Effect.VisualType);
+                break;
+            case (PopupMethod.PopupCoordinates, PopupRecipients.PvsExceptTarget):
+                _popup.PopupCoordinates(
+                    msg,
+                    Transform(entity).Coordinates,
+                    Filter.PvsExcept(entity),
+                    true,
+                    args.Effect.VisualType);
                 break;
         }
     }
@@ -76,6 +90,7 @@ public enum PopupRecipients : byte
 {
     Pvs,
     Local,
+    PvsExceptTarget,
 }
 
 [Serializable, NetSerializable]

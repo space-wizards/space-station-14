@@ -73,7 +73,7 @@ admin-smite-explode-description = Explode them.
 admin-smite-chess-dimension-description = Banishment to the Chess Dimension.
 admin-smite-set-alight-description = Makes them burn.
 admin-smite-monkeyify-description = Turns the target into a monkey.
-admin-smite-electrocute-description = Electrocutes them, rendering anything they were wearing useless.
+admin-smite-electrocute-description = Electrocutes them through any insulation.
 admin-smite-heartattack-description = Immediately kills them with asphyxiation damage.
 admin-smite-creampie-description = A creampie, condensed into a button.
 admin-smite-remove-blood-description = Removes all of their blood, messily.
@@ -151,3 +151,5 @@ admin-trick-pause-map-description = Pause the selected map. Note this doesn't en
 admin-trick-snap-joints-description = Remove all physics joints from an object. Unfortunately does not snap every bone in their body.
 admin-trick-minigun-fire-description = Makes the targetted gun fire like a minigun (very fast).
 admin-trick-set-bullet-amount-description = Quickly set the amount of unspawned bullets in a gun.
+
+admin-smite-ghostkick-reason = Smitten.
