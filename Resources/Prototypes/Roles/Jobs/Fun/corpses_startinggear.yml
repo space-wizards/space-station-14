@@ -1,0 +1,361 @@
+﻿# CENTCOMM
+- type: startingGear
+  id: CorpseCentcommOfficialGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentcomOfficial
+    shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHatCentcom
+    gloves: ClothingHandsGlovesColorBlack
+    pocket1: PenCentcom
+
+# COMMAND
+- type: startingGear
+  id: CorpseCaptainGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCaptain
+    shoes: ClothingShoesBootsLaceup
+    head: ClothingHeadHatCapcap
+    gloves: ClothingHandsGlovesCaptain
+    pocket1: Flash
+
+- type: startingGear
+  id: CorpseHeadOfPersonnelGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoP
+    shoes: ClothingShoesLeather
+    head: ClothingHeadHatHopcap
+    gloves: ClothingHandsGlovesHop
+    eyes: ClothingEyesGlassesCommand
+    belt: BoxFolderClipboardThreePapers
+
+- type: startingGear
+  id: CorpseChiefEngineerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChiefEngineer
+    shoes: ClothingShoesColorBrown
+    head: ClothingHeadHatHardhatWhite
+    gloves: ClothingHandsGlovesColorYellow
+    eyes: ClothingEyesGlassesMeson
+    belt: ClothingBeltUtilityEngineering
+
+- type: startingGear
+  id: CorpseChiefMedicalOfficerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCMO
+    shoes: ClothingShoesColorWhite
+    outerClothing: ClothingOuterCoatLabCmo
+    head: ClothingHeadHatBeretCmo
+    gloves: ClothingHandsGlovesLatex
+    neck: ClothingNeckStethoscope
+    eyes: ClothingEyesHudMedical
+    pocket1: JetInjector
+
+- type: startingGear
+  id: CorpseHeadOfSecurityGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoS
+    shoes: ClothingShoesBootsJack
+    outerClothing: ClothingOuterCoatHoSTrench
+    head: ClothingHeadHatBeretHoS
+    gloves: ClothingHandsGlovesColorBlack
+    eyes: ClothingEyesGlassesSecurity
+    belt: ClothingBeltSecurityFilled
+
+- type: startingGear
+  id: CorpseResearchDirectorGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitResearchDirector
+    shoes: ClothingShoesColorWhite
+    outerClothing: ClothingOuterCoatRD
+    head: ClothingHeadHatBeretRND
+    gloves: ClothingHandsGlovesLatex
+    pocket1: AnomalyScanner
+
+- type: startingGear
+  id: CorpseQuartermasterGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitQM
+    shoes: ClothingShoesColorBrown
+    head: ClothingHeadHatBeretQM
+    gloves: ClothingHandsGlovesColorBrown
+    belt: BoxFolderClipboardThreePapers
+    pocket1: AppraisalTool
+
+# SECURITY
+- type: startingGear
+  id: CorpseWardenGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitWarden
+    shoes: ClothingShoesBootsJack
+    outerClothing: ClothingOuterCoatWarden
+    head: ClothingHeadHatBeretWarden
+    gloves: ClothingHandsGlovesColorBlack
+    eyes: ClothingEyesGlassesSunglasses
+    belt: ClothingBeltSecurityFilled
+    pocket1: Handcuffs
+
+- type: startingGear
+  id: CorpseDetectiveGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitDetective
+    shoes: ClothingShoesColorBrown
+    outerClothing: ClothingOuterCoatDetectiveLoadout
+    head: ClothingHeadHatFedoraBrown
+    gloves: ClothingHandsGlovesColorBlack
+    neck: ClothingNeckTieDet
+    eyes: ClothingEyesGlassesSunglasses
+
+- type: startingGear
+  id: CorpseSecurityOfficerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSec
+    shoes: ClothingShoesBootsJack
+    outerClothing: ClothingOuterArmorBasic
+    head: ClothingHeadHatBeretSecurity
+    gloves: ClothingHandsGlovesColorBlack
+    belt: ClothingBeltSecurityFilled
+    pocket1: Handcuffs
+
+- type: startingGear
+  id: CorpseSecurityCadetGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSecGrey
+    shoes: ClothingShoesBootsJack
+    gloves: ClothingHandsGlovesColorBlack
+
+# SCIENCE
+- type: startingGear
+  id: CorpseScientistGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitScientist
+    shoes: ClothingShoesColorWhite
+    outerClothing: ClothingOuterCoatRnd
+    gloves: ClothingHandsGlovesLatex
+    pocket1: NodeScanner
+
+- type: startingGear
+  id: CorpseResearchAssistantGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitScientist
+    shoes: ClothingShoesColorWhite
+    gloves: ClothingHandsGlovesLatex
+
+# MEDICAL
+- type: startingGear
+  id: CorpseMedicalDoctorGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMedicalDoctor
+    shoes: ClothingShoesColorWhite
+    outerClothing: ClothingOuterCoatLab
+    head: ClothingHeadHatBeretMedic
+    gloves: ClothingHandsGlovesLatex
+    eyes: ClothingEyesGlasses
+    belt: ClothingBeltMedicalFilled
+    pocket1: HandheldHealthAnalyzer
+
+- type: startingGear
+  id: CorpseParamedicGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitParamedic
+    shoes: ClothingShoesColorBlack
+    outerClothing: ClothingOuterCoatParamedicWB
+    head: ClothingHeadHatParamedicsoft
+    gloves: ClothingHandsGlovesNitrile
+    belt: ClothingBeltMedicalEMTFilled
+    pocket1: EmergencyMedipen
+
+- type: startingGear
+  id: CorpseChemistGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChemistry
+    shoes: ClothingShoesColorWhite
+    outerClothing: ClothingOuterCoatLabChem
+    gloves: ClothingHandsGlovesLatex
+    eyes: ClothingEyesGlassesChemical
+    belt: ChemBag
+    pocket1: Beaker
+
+- type: startingGear
+  id: CorpsePsychologistGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitPsychologist
+    shoes: ClothingShoesColorBlack
+    eyes: ClothingEyesGlasses
+    belt: BoxFolderClipboardThreePapers
+    pocket1: Pen
+
+- type: startingGear
+  id: CorpseMedicalInternGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMedicalDoctor
+    shoes: ClothingShoesColorWhite
+    gloves: ClothingHandsGlovesLatex
+
+# ENGINEERING
+- type: startingGear
+  id: CorpseAtmosphericTechnicianGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAtmos
+    shoes: ClothingShoesColorWhite
+    gloves: ClothingHandsGlovesColorYellow
+    belt: ClothingBeltUtilityEngineering
+
+- type: startingGear
+  id: CorpseStationEngineerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitEngineering
+    shoes: ClothingShoesBootsWork
+    outerClothing: ClothingOuterVestHazard
+    head: ClothingHeadHatHardhatOrange
+    gloves: ClothingHandsGlovesColorYellow
+    eyes: ClothingEyesGlassesMeson
+    belt: ClothingBeltUtilityEngineering
+    pocket1: trayScanner
+
+- type: startingGear
+  id: CorpseTechnicalAssistantGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorYellow
+    shoes: ClothingShoesBootsWork
+    gloves: ClothingHandsGlovesFingerlessInsulated
+    belt: ClothingBeltUtility
+
+# CARGO
+- type: startingGear
+  id: CorpseSalvageSpecialistGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
+    shoes: ClothingShoesBootsSalvage
+    head: ClothingHeadHatCargosoft
+    gloves: ClothingHandsGlovesFingerless
+    belt: OreBag
+    pocket1: MineralScanner
+
+- type: startingGear
+  id: CorpseCargoTechnicianGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCargo
+    shoes: ClothingShoesColorBrown
+    head: ClothingHeadHatCargosoft
+    gloves: ClothingHandsGlovesColorOrange
+    pocket1: AppraisalTool
+
+# SERVICE / CIVILIAN
+- type: startingGear
+  id: CorpseBartenderGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBartender
+    shoes: ClothingShoesColorBlack
+    outerClothing: ClothingOuterApronBar
+    head: ClothingHeadHatTophat
+    eyes: ClothingEyesGlassesSunglasses
+    pocket1: RagItem
+
+- type: startingGear
+  id: CorpseBotanistGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHydroponics
+    shoes: ClothingShoesColorBrown
+    outerClothing: ClothingOuterApronBotanist
+    head: ClothingHeadBandBotany
+    gloves: ClothingHandsGlovesLeather
+    belt: ClothingBeltPlantFilled
+
+- type: startingGear
+  id: CorpseChefGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChef
+    shoes: ClothingShoesChef
+    outerClothing: ClothingOuterJacketChef
+    head: ClothingHeadHatChef
+    belt: ClothingBeltChefFilled
+    pocket1: RollingPin
+
+- type: startingGear
+  id: CorpseJanitorGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitJanitor
+    shoes: ClothingShoesGaloshes
+    head: ClothingHeadHatPurplesoft
+    gloves: ClothingHandsGlovesJanitor
+    belt: ClothingBeltJanitorFilled
+    pocket1: SoapNT
+
+- type: startingGear
+  id: CorpseLawyerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitLawyerBlack
+    shoes: ClothingShoesColorBlack
+    neck: ClothingNeckLawyerbadge
+    pocket1: Pen
+
+- type: startingGear
+  id: CorpseChaplainGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChaplain
+    shoes: ClothingShoesColorBlack
+    outerClothing: ClothingOuterHoodieChaplain
+    neck: ClothingNeckStoleChaplain
+    pocket1: Bible
+
+- type: startingGear
+  id: CorpseLibrarianGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitLibrarian
+    shoes: ClothingShoesBootsLaceup
+    eyes: ClothingEyesGlassesJamjar
+    belt: BooksBag
+    pocket1: BookRandom
+
+- type: startingGear
+  id: CorpseReporterGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitReporter
+    shoes: ClothingShoesColorBlack
+    eyes: ClothingEyesGlassesCheapSunglasses
+    pocket1: BoxFolderClipboardThreePapers
+
+- type: startingGear
+  id: CorpseMusicianGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMusician
+    shoes: ClothingShoesBootsLaceup
+    eyes: ClothingEyesGlassesCheapSunglasses
+    pocket1: HarmonicaInstrument
+
+- type: startingGear
+  id: CorpseServiceWorkerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBartender
+    shoes: ClothingShoesColorBlack
+    outerClothing: ClothingOuterVest
+    head: ClothingHeadHatBowlerHat
+
+- type: startingGear
+  id: CorpseMimeGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMime
+    shoes: ClothingShoesColorBlack
+    mask: ClothingMaskMime
+    head: ClothingHeadHatBeret
+    gloves: ClothingHandsGlovesColorWhite
+    belt: ClothingBeltSuspendersRed
+    pocket1: Pen
+
+- type: startingGear
+  id: CorpseClownGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitClown
+    shoes: ClothingShoesClown
+    mask: ClothingMaskClown
+    pocket1: BikeHorn
+
+- type: startingGear
+  id: CorpsePassengerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorGrey
+    shoes: ClothingShoesColorBlack
+    outerClothing: WetFloorSign
+    head: ClothingHeadHatCone
+    gloves: ClothingHandsGlovesFingerlessInsulated
+    pocket1: RubberStampGreytide
