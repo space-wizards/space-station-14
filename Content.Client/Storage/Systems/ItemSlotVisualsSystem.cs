@@ -113,12 +113,8 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
             if (layers == null && !visual.ClothingVisuals.TryGetValue(args.Slot, out layers))
                 return;
 
-            // Might need this later to improve the defaultKey
-            //var equippedPrefix = clothing.EquippedPrefix == null ? $"equipped-{args.Slot}" : $"{clothing.EquippedPrefix}-equipped-{args.Slot}";
-            //var layerKeyPrefix = equippedPrefix + visual.EquippedFillBaseName;
-
             var i = 0;
-            var defaultKey = $"{args.Slot}-{visual.Layer}";
+            var defaultKey = $"equipped-{args.Slot}-{visual.Layer}";
             foreach (var layer in layers)
             {
                 var key = layer.MapKeys?.FirstOrDefault();
