@@ -724,6 +724,9 @@
         Base: dead-0
       Dead:
         Base: dead-0
+  - type: Speech
+    speechVerb: SmallMob
+    speechSounds: Cluck
   - type: ToolRefinable
     refineResult:
     - id: FoodMeatDuck
@@ -947,6 +950,11 @@
     refineResult:
     - id: FoodMeat
       amount: 5
+  - type: Speech
+    speechVerb: LargeMob
+    speechSounds: Bass
+  - type: ReplacementAccent
+    accent: cow
   - type: Grammar
     attributes:
       gender: female # Milk-producing animals are female.
@@ -1425,6 +1433,11 @@
     refineResult:
     - id: FoodMeatChicken
       amount: 2
+  - type: Speech
+    speechVerb: Parrot
+    speechSounds: Alto
+  - type: ReplacementAccent
+    accent: duck
   - type: InteractionPopup # TODO: Make it so there's a separate chance to make certain animals outright hostile towards you.
     successChance: 0.1 # Yeah, good luck with that.
     interactSuccessString: petting-success-goose
@@ -1477,6 +1490,10 @@
     refineResult:
     - id: FoodMeat
       amount: 4
+  - type: Speech
+    speechVerb: LargeMob
+    speechSounds: Bass
+  - type: MonkeyAccent
   - type: Bloodstream
     bloodReferenceSolution:
       reagents:
@@ -1556,6 +1573,9 @@
   - type: Inventory
     speciesId: kangaroo
     templateId: kangaroo
+  - type: Speech
+    speechVerb: LargeMob
+    speechSounds: Bass
   - type: ReplacementAccent
     accent: kangaroo
   - type: ToolRefinable
@@ -2293,6 +2313,11 @@
     refineResult:
     - id: FoodMeatLizard
       amount: 1
+  - type: Speech
+    speechVerb: Reptilian
+    speechSounds: Lizard
+  - type: ReplacementAccent
+    accent: kobold
   - type: InteractionPopup
     successChance: 0.3
     interactSuccessString: petting-success-reptile
@@ -2555,6 +2580,11 @@
     refineResult:
     - id: FoodMeatPenguin
       amount: 3
+  - type: Speech
+    speechVerb: Vox
+    speechSounds: Cluck
+  - type: ReplacementAccent
+    accent: duck
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-bird
@@ -2691,6 +2721,11 @@
     refineResult:
     - id: FoodMeatSnake
       amount: 1
+  - type: Speech
+    speechVerb: SmallMob
+    speechSounds: Lizard
+  - type: ReplacementAccent
+    accent: xeno
   - type: InteractionPopup
     successChance: 0.6
     interactSuccessString: petting-success-reptile
@@ -2968,6 +3003,11 @@
     refineResult:
     - id: FoodMeat
       amount: 3
+  - type: Speech
+    speechVerb: SmallMob
+    speechSounds: Tenor
+  - type: ReplacementAccent
+    accent: mouse
   - type: InteractionPopup
     successChance: 0.2 # Low when undomesticated.
     interactSuccessString: petting-success-possum # Possums don't really make much noise when they're happy. They make clicking noises as a mating call, but that is NOT the same thing!
@@ -3041,6 +3081,11 @@
     refineResult:
     - id: FoodMeat
       amount: 3
+  - type: Speech
+    speechVerb: SmallMob
+    speechSounds: Tenor
+  - type: ReplacementAccent
+    accent: kangaroo
   - type: InteractionPopup
     successChance: 0.2 # Low when undomesticated.
     interactSuccessString: petting-success-soft-floofy
@@ -3089,6 +3134,9 @@
   - type: Inventory
     speciesId: fox
     templateId: pet
+  - type: Speech
+    speechVerb: Canine
+    speechSounds: Dog
   - type: DamageStateVisuals
     states:
       Alive:
@@ -3101,6 +3149,8 @@
     refineResult:
     - id: FoodMeat
       amount: 3
+  - type: ReplacementAccent
+    accent: dog
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-soft-floofy
@@ -3599,6 +3649,11 @@
     refineResult:
     - id: FoodMeat
       amount: 3
+  - type: Speech
+    speechVerb: SmallMob
+    speechSounds: Bass
+  - type: ReplacementAccent
+    accent: kangaroo
   - type: InteractionPopup
     successChance: 0.9
     interactSuccessString: petting-success-sloth
@@ -3653,6 +3708,11 @@
     refineResult:
     - id: FoodMeat
       amount: 3
+  - type: Speech
+    speechVerb: SmallMob
+    speechSounds: Tenor
+  - type: ReplacementAccent
+    accent: mouse
   - type: InteractionPopup
     successChance: 0.8
     interactDelay: 1.5 # Avoids overlapping SFX due to spam - these SFX are a little longer than the typical 1 second.
@@ -3886,6 +3946,9 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/pig_oink.ogg
+  - type: Speech
+    speechVerb: LargeMob
+    speechSounds: Bass
   - type: ReplacementAccent
     accent: pig
   - type: SentienceTarget
@@ -4028,6 +4091,11 @@
     refineResult:
     - id: FoodMeat
       amount: 4
+  - type: Speech
+    speechVerb: LargeMob
+    speechSounds: Bass
+  - type: ReplacementAccent
+    accent: cow
   - type: Bloodstream
     bloodReferenceSolution:
       reagents:

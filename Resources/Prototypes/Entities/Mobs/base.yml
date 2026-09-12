@@ -27,6 +27,7 @@
   - type: Actions
   - type: Alerts
   - type: Appearance
+  - type: Emoting
   - type: RotationVisuals
     defaultRotation: 0
     horizontalRotation: 0
