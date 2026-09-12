@@ -70,16 +70,6 @@
       stateDoorClosed: artifact_container_door
     - type: GenericVisualizer
       visuals:
-        enum.PaperLabelVisuals.HasLabel:
-          enum.PaperLabelVisuals.Layer:
-            True: { visible: true }
-            False: { visible: false }
-        enum.PaperLabelVisuals.LabelType:
-          enum.PaperLabelVisuals.Layer:
-            Paper: { state: paper }
-            Bounty: { state: bounty }
-            CaptainsPaper: { state: captains_paper }
-            Invoice: { state: invoice }
         enum.StorageVisuals.Open:
           enum.PaperLabelVisuals.Layer:
             True: { offset: "0.0,0.3125" }
@@ -93,7 +83,7 @@
       price: 250
 
 - type: entity
-  parent: [ BaseStorageItem, StructureHealthContainerWeak ]
+  parent: [ BaseStorageItem, BasePaperLabelableVisualized, StructureHealthContainerWeak ]
   id: HandheldArtifactContainer
   name: handheld artifact container
   description: A handheld case used to safely contain and move small artifacts.
@@ -102,11 +92,13 @@
     sprite: Objects/Storage/artifact_container.rsi
     state: icon
     layers:
-      - state: icon
-        map: [ base ]
-      - state: locked
-        map: ["enum.LockVisualLayers.Lock"]
-        shader: unshaded
+    - state: icon
+      map: [ base ]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: paper
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: Storage
     maxItemSize: Normal
     grid:
@@ -146,32 +138,12 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
-  - type: PaperLabel
-    labelSlot:
-      insertVerbText: Attach Label
-      ejectVerbText: Remove Label
-      whitelist:
-        components:
-          - Paper
-      blacklist:
-        tags:
-        - Book
   - type: GenericVisualizer
     visuals:
       enum.StorageVisuals.Open:
         base:
           True: { state: icon-open }
           False: { state: icon }
-      enum.PaperLabelVisuals.HasLabel:
-        enum.PaperLabelVisuals.Layer:
-          True: { visible: true }
-          False: { visible: false }
-      enum.PaperLabelVisuals.LabelType:
-        enum.PaperLabelVisuals.Layer:
-          Paper: { state: paper }
-          Bounty: { state: bounty }
-          CaptainsPaper: { state: captain }
-          Invoice: { state: invoice }
   - type: ItemSlots
   - type: ContainerContainer
     containers:

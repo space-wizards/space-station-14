@@ -461,16 +461,6 @@
     sprite: Structures/Storage/Crates/lockbox.rsi
   - type: GenericVisualizer
     visuals:
-      enum.PaperLabelVisuals.HasLabel:
-        enum.PaperLabelVisuals.Layer:
-          True: { visible: true }
-          False: { visible: false }
-      enum.PaperLabelVisuals.LabelType:
-        enum.PaperLabelVisuals.Layer:
-          Paper: { state: paper }
-          Bounty: { state: bounty }
-          CaptainsPaper: { state: captains_paper }
-          Invoice: { state: invoice }
       enum.StorageVisuals.Open:
         lid_overlay:
           True: { visible: false }
@@ -729,6 +719,12 @@
     node: cratecoffin
     containers:
     - entity_storage
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        enum.PaperLabelVisuals.Layer:
+          True: { visible: false }
+          False: { visible: true }
 
 - type: entity
   parent: [ BaseCrate, StructureHealthContainer ]
