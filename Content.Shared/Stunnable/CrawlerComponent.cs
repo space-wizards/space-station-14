@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameStates;
+using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Stunnable;
 
@@ -37,4 +38,16 @@ public sealed partial class CrawlerComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float FrictionModifier = 1f;
+
+    /// <summary>
+    /// This is how much stamina damage a mob takes when it forces itself to stand up before modifiers
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float ForceStandStamina = 10f;
+
+    /// <summary>
+    /// What sound should play when we successfully stand up
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public SoundSpecifier ForceStandSuccessSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
 }

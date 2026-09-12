@@ -79,18 +79,6 @@ public sealed partial class StaminaComponent : Component
     public float AfterCritDecayMultiplier = 5f;
 
     /// <summary>
-    /// This is how much stamina damage a mob takes when it forces itself to stand up before modifiers
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public float ForceStandStamina = 10f;
-
-    /// <summary>
-    /// What sound should play when we successfully stand up
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public SoundSpecifier ForceStandSuccessSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
-
-    /// <summary>
     /// Thresholds that determine an entity's slowdown as a function of stamina damage, in percentages.
     /// </summary>
     [DataField]

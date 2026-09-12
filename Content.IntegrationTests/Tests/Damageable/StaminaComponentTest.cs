@@ -37,7 +37,6 @@ public sealed class StaminaComponentTest : GameTest
                 Assert.That(comp.BaseCritThreshold, Is.Positive);
                 Assert.That(comp.CritThreshold, Is.Positive);
                 Assert.That(comp.AfterCritDecayMultiplier, Is.Positive);
-                Assert.That(comp.ForceStandStamina, Is.Positive);
 
                 // NUnit's analyzer is defective here. Cool.
 #pragma warning disable NUnit2041
