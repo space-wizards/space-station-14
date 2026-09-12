@@ -4,6 +4,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.EntityEffects;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
+using Content.Shared.Interaction;
 using Content.Shared.Random.Helpers;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
@@ -23,6 +24,7 @@ public sealed partial class PlantTraySystem : EntitySystem
     [Dependency] private PlantSystem _plant = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
@@ -89,6 +91,13 @@ public sealed partial class PlantTraySystem : EntitySystem
         // Make sure the removed entity was our contained solution and clear our cached reference
         if (args.Entity == ent.Comp.SoilSolution?.Owner)
             ent.Comp.SoilSolution = null;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnRelayInteractUsing(Entity<PlantTrayComponent> ent,
+        ref PlantHolderRelayedEvent<InteractUsingEvent> args)
+    {
+        _interaction.InteractUsing(args.Args.User, args.Args.Used, ent, args.Args.ClickLocation);
     }
 
     /// <summary>
