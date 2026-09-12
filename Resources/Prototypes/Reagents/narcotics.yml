@@ -40,7 +40,9 @@
         effectProto: StatusEffectAdrenaline
         time: 3
       # Side effects
-      - !type:Jitter
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectFastJitter
+        type: Add
       - !type:GenericStatusEffect
         key: Stutter
         component: StutteringAccent
@@ -89,7 +91,9 @@
         time: 1
         type: Remove
       # Side effects
-      - !type:Jitter
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectJitter
+        type: Add
       - !type:PopupMessage
         visualType: Medium
         messages: ["ephedrine-effect-tight-pain", "ephedrine-effect-heart-pounds"]
@@ -175,7 +179,9 @@
         effectProto: StatusEffectAdrenaline
         time: 3
       # Side effects
-      - !type:Jitter
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectFastJitter
+        type: Add
       # OD
       - !type:HealthChange
         conditions:
@@ -247,6 +253,10 @@
       - !type:ModifyStatusEffect
         effectProto: StatusEffectSeeingRainbow
         time: 16
+        type: Add
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSway
+        time: 6
         type: Add
 
 - type: reagent
@@ -553,7 +563,9 @@
       - !type:GenericStatusEffect
         key: Stutter
         component: StutteringAccent
-      - !type:Jitter
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectFastJitter
+        type: Add
 
 - type: reagent
   id: Hydroxysomnolene
