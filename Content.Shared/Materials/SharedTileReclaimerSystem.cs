@@ -4,6 +4,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 
@@ -22,6 +23,8 @@ public abstract partial class SharedTileReclaimerSystem : EntitySystem
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private TurfSystem _turf = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
+
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsComponentQuery = default!;
 
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<TileReclaimerComponent> ent, ref MapInitEvent args)
@@ -67,6 +70,9 @@ public abstract partial class SharedTileReclaimerSystem : EntitySystem
 
         foreach (var grid in grids)
         {
+            if (TerminatingOrDeleted(grid) || EntityManager.IsQueuedForDeletion(grid))
+                continue;
+
             if (grid == reclaimerGrid)
                 continue;
 
@@ -86,13 +92,24 @@ public abstract partial class SharedTileReclaimerSystem : EntitySystem
 
                 foreach (var entityOnTile in intersectingEntities)
                 {
-                    _physics.SetCanCollide(entityOnTile, true);
-                    _physics.ApplyLinearImpulse(entityOnTile, _physics.GetLinearVelocity(grid.Owner, Transform(entityOnTile).LocalPosition));
+                    if (!_physicsComponentQuery.TryComp(entityOnTile, out var physicsComp))
+                    {
+                        // Marker/Spawn entities and similar don't have physics, so we just plain remove them.
+                        QueueDel(entityOnTile);
+                        continue;
+                    }
+
+                    _physics.SetCanCollide(entityOnTile, true, body: physicsComp);
+                    _physics.ApplyLinearImpulse(entityOnTile, _physics.GetLinearVelocity(grid.Owner, Transform(entityOnTile).LocalPosition), body: physicsComp);
                 }
 
                 _mapSystem.SetTile(tile.GridUid, grid, tile.GridIndices, Tile.Empty);
                 SpawnMaterialsFromComposition((ent, null, ent.Comp2), tileDef, ent.Comp1.Efficiency);
                 shredded = true;
+
+                // If it was the last tile, grid's probably gone
+                if (TerminatingOrDeleted(grid))
+                    continue;
 
                 // We suck in the grid slurrrrp
                 // TODO: This can probably be refined, as it applies a stacking speed which could theoretically get out of hand if a grid is very long.

@@ -170,6 +170,8 @@
       - Pda
       - IdCard
       - GrapplingProjectile
+      - Circuitboard
+      - Computer
       tags:
       - HighRiskItem
       - SmeltingImmune
@@ -183,7 +185,7 @@
       path: /Audio/Effects/grind.ogg # TODO: Needs more CRONCH, more SMELT
       params:
         volume: -3
-    recyclingBox: "-0.35, 0.5, 0.35, 0.75"
+    recyclingBox: "-0.35, 0.5, 0.35, 1"
     blacklist:
       components:
       - StationMember
