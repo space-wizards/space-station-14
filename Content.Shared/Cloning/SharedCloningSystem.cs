@@ -56,7 +56,8 @@ public abstract partial class SharedCloningSystem : EntitySystem
 
     /// <summary>
     /// Copies the equipment the original has to the clone.
-    /// This uses the original prototype of the items, so any changes to components that are done after spawning are lost!
+    /// This uses the original prototype of the items and applies the components from the ItemClone CloningSettings.
+    /// Any other changes to components that are done after spawning are lost!
     /// </summary>
     public virtual void CopyEquipment(
         Entity<InventoryComponent?> original,

@@ -1,6 +1,5 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
-using Content.Shared.Cloning.Events;
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
@@ -34,8 +33,6 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
         SubscribeLocalEvent<ActiveLeaperComponent, StartCollideEvent>(OnLeaperCollide);
         SubscribeLocalEvent<ActiveLeaperComponent, LandEvent>(OnLeaperLand);
         SubscribeLocalEvent<ActiveLeaperComponent, StopThrowEvent>(OnLeaperStopThrow);
-
-        SubscribeLocalEvent<JumpAbilityComponent, CloningEvent>(OnClone);
     }
 
     private void OnInit(Entity<JumpAbilityComponent> entity, ref MapInitEvent args)
@@ -92,22 +89,5 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
         }
 
         args.Handled = true;
-    }
-
-    private void OnClone(Entity<JumpAbilityComponent> ent, ref CloningEvent args)
-    {
-        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
-            return;
-
-        // Make sure to set the datafields before adding the component so that the correct action gets spawned on map init.
-        var targetComp = Factory.GetComponent<JumpAbilityComponent>();
-        targetComp.Action = ent.Comp.Action;
-        targetComp.JumpDistance = ent.Comp.JumpDistance;
-        targetComp.JumpThrowSpeed = ent.Comp.JumpThrowSpeed;
-        targetComp.CanCollide = ent.Comp.CanCollide;
-        targetComp.CollideKnockdown = ent.Comp.CollideKnockdown;
-        targetComp.JumpSound = ent.Comp.JumpSound;
-        targetComp.JumpFailedPopup = ent.Comp.JumpFailedPopup;
-        AddComp(args.CloneUid, targetComp, true);
     }
 }
