@@ -222,3 +222,17 @@
   - !type:ListingLimitedStockCondition
     stock: 1
   productComponents: ChangelingFakeMindshieldDummy
+
+- type: listing
+  id: ChangelingFleshtomb
+  name: changeling-catalog-fleshtomb-name
+  description: changeling-catalog-fleshtomb-desc
+  applyToMob: true
+  cost:
+    ChangelingDNA: 10
+  categories:
+  - ChangelingStoreUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productAction: ActionChangelingFleshtomb

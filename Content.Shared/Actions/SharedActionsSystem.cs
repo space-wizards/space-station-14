@@ -324,6 +324,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
             User = user,
             Provider = provider
         };
+
         RaiseLocalEvent(action, ref validateEv);
         if (validateEv.Invalid)
             return false;

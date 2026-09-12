@@ -223,6 +223,13 @@ public abstract partial class SharedStoreSystem : EntitySystem
     {
         ToggleUi(args.Performer, ent.Owner, ent.Comp);
     }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        UpdateGenerator(frameTime);
+    }
 }
 
 [ByRefEvent]
