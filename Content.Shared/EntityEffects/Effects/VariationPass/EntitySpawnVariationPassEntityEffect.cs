@@ -1,10 +1,12 @@
 ﻿using System.Linq;
 using Content.Shared.EntityTable;
 using Content.Shared.EntityTable.EntitySelectors;
+using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Shared.EntityEffects.Effects.VariationPass;
@@ -19,10 +21,19 @@ public sealed partial class EntitySpawnVariationPassEntityEffectSystem : EntityE
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private EntityTableSystem _tables = default!;
+    [Dependency] private ITileDefinitionManager _tileDefManager = default!;
 
     protected override void Effect(Entity<MapGridComponent> entity, ref EntityEffectEvent<EntitySpawnVariationPass> args)
     {
         var tiles = _map.GetAllTiles(entity, entity).ToList();
+
+        if (args.Effect.EligibleTiles != null)
+        {
+            var variationPass = args.Effect;
+            tiles = tiles.Where(tile => variationPass.EligibleTiles.Contains(_tileDefManager[tile.Tile.TypeId].ID))
+                .ToList();
+        }
+
         var totalTiles = tiles.Count();
 
         var dirtyMod = _random.NextGaussian(args.Effect.TilesPerEntityAverage, args.Effect.TilesPerEntityStdDev);
@@ -91,6 +102,12 @@ public sealed partial class EntitySpawnVariationPassEntityEffectSystem : EntityE
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class EntitySpawnVariationPass : EntityEffectBase<EntitySpawnVariationPass>
 {
+    /// <summary>
+    /// The tiles that the entities map spawn on. If null, all tiles are eligible.
+    /// </summary>
+    [DataField]
+    public List<ProtoId<ContentTileDefinition>>? EligibleTiles;
+
     /// <summary>
     /// Number of tiles before we spawn one entity on average.
     /// </summary>
