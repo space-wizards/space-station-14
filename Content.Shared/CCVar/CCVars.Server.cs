@@ -59,4 +59,15 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> ForceClientHudVersionWatermark =
         CVarDef.Create("server.force_client_hud_version_watermark", false, CVar.REPLICATED | CVar.SERVER);
+
+    /// <summary>
+    ///     The list of fallback servers that will be offered to the player, if the server is full.
+    /// </summary>
+    /// <remarks>
+    /// Servers have a name and an URL, these are separated by a semicolon ";").
+    /// The name;url pairs are separated from other pairs by "|".
+    /// Example: "Vulture;ss14://vulture.spacestation14.com|Leviathan;ss14://leviathan.spacestation14.com"
+    /// </remarks>
+    public static readonly CVarDef<string> FallbackServers =
+        CVarDef.Create("server.fallback_servers", "", CVar.SERVERONLY);
 }

@@ -187,7 +187,7 @@ namespace Content.Server.Entry
                     _updateManager.Update();
                     _playTimeTracking.Update();
                     _watchlistWebhookManager.Update();
-                    _connection.Update();
+                    _connection.Update(frameEventArgs);
                     break;
             }
         }
