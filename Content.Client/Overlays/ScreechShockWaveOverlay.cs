@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared.Screech;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
@@ -13,7 +14,7 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IGameTiming _timing = default!;
 
-    private SharedTransformSystem? _xformSystem;
+    private TransformSystem? _xformSystem;
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
     private readonly ShaderInstance _shader;
@@ -79,7 +80,7 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
                 continue;
 
             // shorthand
-            var mapPos = _xformSystem.GetWorldPosition(xform);
+            var mapPos = _xformSystem.GetRenderWorldPosition((entityUid, xform));
             var tempCoords = args.Viewport.WorldToLocal(mapPos);
 
             // normalized coords, 0 - 1 plane. This is pure hell, we subtract 1 because fragment calculates from the bottom and local goes from the top of the viewport
