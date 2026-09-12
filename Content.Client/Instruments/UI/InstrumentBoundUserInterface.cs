@@ -172,9 +172,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
     private void OnLoopToggledRequest(bool toggled)
     {
         if (EntMan.TryGetComponent(Owner, out InstrumentComponent? instrumentComp))
-        {
             instrumentComp.LoopMidi = toggled;
-        }
 
         _instruments.UpdateRenderer(Owner);
     }
