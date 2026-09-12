@@ -24,10 +24,6 @@ public sealed partial class SlowOnDamageSystem : EntitySystem
         SubscribeLocalEvent<ClothingSlowOnDamageModifierComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<ClothingSlowOnDamageModifierComponent, ClothingGotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<ClothingSlowOnDamageModifierComponent, ClothingGotUnequippedEvent>(OnGotUnequipped);
-
-        SubscribeLocalEvent<IgnoreSlowOnDamageComponent, StatusEffectAppliedEvent>(OnIgnoreApplied);
-        SubscribeLocalEvent<IgnoreSlowOnDamageComponent, StatusEffectRemovedEvent>(OnIgnoreRemoved);
-        SubscribeLocalEvent<IgnoreSlowOnDamageComponent, StatusEffectRelayedEvent<ModifySlowOnDamageSpeedEvent>>(OnIgnoreModifySpeed);
     }
 
     private void OnRefreshMovespeed(EntityUid uid, SlowOnDamageComponent component, RefreshMovementSpeedModifiersEvent args)
@@ -55,7 +51,8 @@ public sealed partial class SlowOnDamageSystem : EntitySystem
 
             var ev = new ModifySlowOnDamageSpeedEvent(speed);
             RaiseLocalEvent(uid, ref ev);
-            args.ModifySpeed(ev.Speed, ev.Speed);
+            if (!ev.Cancelled)
+                args.ModifySpeed(ev.Speed, ev.Speed);
         }
     }
 
@@ -93,24 +90,27 @@ public sealed partial class SlowOnDamageSystem : EntitySystem
         _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(args.Wearer);
     }
 
+    [SubscribeLocalEvent]
     private void OnIgnoreApplied(Entity<IgnoreSlowOnDamageComponent> ent, ref StatusEffectAppliedEvent args)
     {
         _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(args.Target);
     }
 
+    [SubscribeLocalEvent]
     private void OnIgnoreRemoved(Entity<IgnoreSlowOnDamageComponent> ent, ref StatusEffectRemovedEvent args)
     {
         _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(args.Target);
     }
 
-    private void OnIgnoreModifySpeed(Entity<IgnoreSlowOnDamageComponent> ent, ref StatusEffectRelayedEvent<ModifySlowOnDamageSpeedEvent> args)
+    [SubscribeLocalEvent]
+    private void OnIgnoreModifySpeed(Entity<IgnoreSlowOnDamageComponent> ent, ref ModifySlowOnDamageSpeedEvent args)
     {
-        args.Args = args.Args with { Speed = 1f };
+        args.Cancelled = true;
     }
 }
 
 [ByRefEvent]
-public record struct ModifySlowOnDamageSpeedEvent(float Speed) : IInventoryRelayEvent
+public record struct ModifySlowOnDamageSpeedEvent(float Speed, bool Cancelled = false) : IInventoryRelayEvent
 {
     public SlotFlags TargetSlots => SlotFlags.WITHOUT_POCKET;
 }

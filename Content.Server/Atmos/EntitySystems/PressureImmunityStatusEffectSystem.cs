@@ -27,8 +27,8 @@ public sealed partial class PressureImmunityStatusEffectSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnRefreshPressureImmunity(Entity<PressureImmunityStatusEffectComponent> ent, ref StatusEffectRelayedEvent<RefreshPressureImmunityEvent> args)
+    private void OnRefreshPressureImmunity(Entity<PressureImmunityStatusEffectComponent> ent, ref RefreshPressureImmunityEvent args)
     {
-        args.Args = args.Args with { IsImmune = true };
+        args.IsImmune = true;
     }
 }

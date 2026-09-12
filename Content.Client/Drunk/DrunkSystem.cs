@@ -19,15 +19,10 @@ public sealed partial class DrunkSystem : SharedDrunkSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DrunkStatusEffectComponent, StatusEffectAppliedEvent>(OnStatusApplied);
-        SubscribeLocalEvent<DrunkStatusEffectComponent, StatusEffectRemovedEvent>(OnStatusRemoved);
-
-        SubscribeLocalEvent<DrunkStatusEffectComponent, StatusEffectRelayedEvent<LocalPlayerAttachedEvent>>(OnPlayerAttached);
-        SubscribeLocalEvent<DrunkStatusEffectComponent, StatusEffectRelayedEvent<LocalPlayerDetachedEvent>>(OnPlayerDetached);
-
         _overlay = new();
     }
 
+    [SubscribeLocalEvent]
     private void OnStatusApplied(Entity<DrunkStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
     {
         if (!_overlayMan.HasOverlay<DrunkOverlay>())
@@ -37,6 +32,7 @@ public sealed partial class DrunkSystem : SharedDrunkSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnStatusRemoved(Entity<DrunkStatusEffectComponent> entity, ref StatusEffectRemovedEvent args)
     {
         if (Status.HasEffectComp<DrunkStatusEffectComponent>(args.Target))
@@ -49,13 +45,14 @@ public sealed partial class DrunkSystem : SharedDrunkSystem
         _overlayMan.RemoveOverlay(_overlay);
     }
 
-    private void OnPlayerAttached(Entity<DrunkStatusEffectComponent> entity, ref StatusEffectRelayedEvent<LocalPlayerAttachedEvent> args)
+    [SubscribeLocalEvent]
+    private void OnPlayerAttached(Entity<DrunkStatusEffectComponent> entity, ref LocalPlayerAttachedEvent args)
     {
         _overlayMan.AddOverlay(_overlay);
-
     }
 
-    private void OnPlayerDetached(Entity<DrunkStatusEffectComponent> entity, ref StatusEffectRelayedEvent<LocalPlayerDetachedEvent> args)
+    [SubscribeLocalEvent]
+    private void OnPlayerDetached(Entity<DrunkStatusEffectComponent> entity, ref LocalPlayerDetachedEvent args)
     {
         _overlay.CurrentBoozePower = 0;
         _overlayMan.RemoveOverlay(_overlay);

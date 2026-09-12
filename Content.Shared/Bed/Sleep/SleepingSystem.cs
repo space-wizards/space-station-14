@@ -42,6 +42,7 @@ public sealed partial class SleepingSystem : EntitySystem
     [Dependency] private SharedEmitSoundSystem _emitSound = default!;
     [Dependency] private StatusEffectsSystem _statusEffect = default!;
     [Dependency] private SharedStunSystem _stun = default!;
+    [Dependency] private EntityQuery<SleepingComponent> _query = default!;
 
     public static readonly EntProtoId SleepActionId = "ActionSleep";
     public static readonly EntProtoId WakeActionId = "ActionWake";
@@ -74,8 +75,6 @@ public sealed partial class SleepingSystem : EntitySystem
         SubscribeLocalEvent<SleepingComponent, StunEndAttemptEvent>(OnStunEndAttempt);
         SubscribeLocalEvent<SleepingComponent, StandUpAttemptEvent>(OnStandUpAttempt);
 
-        SubscribeLocalEvent<ForcedSleepingStatusEffectComponent, StatusEffectRelayedEvent<MobStateChangedEvent>>(OnStatusMobStateChanged);
-        SubscribeLocalEvent<ForcedSleepingStatusEffectComponent, StatusEffectAppliedEvent>(OnStatusEffectApplied);
         SubscribeLocalEvent<SleepingComponent, UnbuckleAttemptEvent>(OnUnbuckleAttempt);
         SubscribeLocalEvent<SleepingComponent, EmoteAttemptEvent>(OnEmoteAttempt);
 
@@ -284,14 +283,16 @@ public sealed partial class SleepingSystem : EntitySystem
             RemCompDeferred<SleepingComponent>(ent);
     }
 
-    private void OnStatusMobStateChanged(Entity<ForcedSleepingStatusEffectComponent> ent, ref StatusEffectRelayedEvent<MobStateChangedEvent> args)
+    [SubscribeLocalEvent]
+    private void OnStatusMobStateChanged(Entity<ForcedSleepingStatusEffectComponent> ent, ref MobStateChangedEvent args)
     {
-        if (args.Args.NewMobState == MobState.Dead || HasComp<SleepingComponent>(args.Args.Target))
+        if (args.NewMobState == MobState.Dead || _query.HasComp(args.Target))
             return;
 
-        TrySleeping(args.Args.Target);
+        TrySleeping(args.Target);
     }
 
+    [SubscribeLocalEvent]
     private void OnStatusEffectApplied(Entity<ForcedSleepingStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
         // Applying state check needed so we don't add SleepingComp during

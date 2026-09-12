@@ -11,37 +11,27 @@ public sealed partial class BlindnessSystem : EntitySystem
 
     [Dependency] private BlindableSystem _blindableSystem = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<BlindnessStatusEffectComponent, StatusEffectAppliedEvent>(OnApplied);
-        SubscribeLocalEvent<BlindnessStatusEffectComponent, StatusEffectRemovedEvent>(OnRemoved);
-        SubscribeLocalEvent<BlindnessStatusEffectComponent, StatusEffectRelayedEvent<CanSeeAttemptEvent>>(OnBlindTrySee);
-        SubscribeLocalEvent<BlindnessStatusEffectComponent, StatusEffectRelayedEvent<FlashAttemptEvent>>(OnFlashAttempt);
-    }
-
+    [SubscribeLocalEvent]
     private void OnApplied(Entity<BlindnessStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
         _blindableSystem.UpdateIsBlind(args.Target);
     }
 
+    [SubscribeLocalEvent]
     private void OnRemoved(Entity<BlindnessStatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
     {
         _blindableSystem.UpdateIsBlind(args.Target);
     }
 
-    private void OnBlindTrySee(Entity<BlindnessStatusEffectComponent> ent, ref StatusEffectRelayedEvent<CanSeeAttemptEvent> args)
+    [SubscribeLocalEvent]
+    private void OnBlindTrySee(Entity<BlindnessStatusEffectComponent> ent, ref CanSeeAttemptEvent args)
     {
-        var ev = args.Args;
-        ev.Cancel();
-        args.Args = ev;
+        args.Cancel();
     }
 
-    private void OnFlashAttempt(Entity<BlindnessStatusEffectComponent> ent, ref StatusEffectRelayedEvent<FlashAttemptEvent> args)
+    [SubscribeLocalEvent]
+    private void OnFlashAttempt(Entity<BlindnessStatusEffectComponent> ent, ref FlashAttemptEvent args)
     {
-        var ev = args.Args;
-        ev.Cancelled = true;
-        args.Args = ev;
+        args.Cancelled = true;
     }
 }

@@ -25,15 +25,6 @@ public abstract partial class SharedNightVisionSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnRefreshStatusEffect(Entity<NightVisionComponent> ent, ref StatusEffectRelayedEvent<RefreshNightVisionEvent> args)
-    {
-        if (!ent.Comp.Enabled)
-            return;
-
-        args.Args.Entities.Add(ent);
-    }
-
-    [SubscribeLocalEvent]
     private void OnRemove(Entity<NightVisionComponent> ent, ref ComponentShutdown args)
     {
         if (ent.Comp.RelayOverlay)
@@ -63,13 +54,13 @@ public abstract partial class SharedNightVisionSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    protected virtual void OnRefreshEquipmentHud(Entity<NightVisionComponent> ent, ref InventoryRelayedEvent<RefreshNightVisionEvent> args)
+    private void OnRefreshEquipmentHud(Entity<NightVisionComponent> ent, ref InventoryRelayedEvent<RefreshNightVisionEvent> args)
     {
         OnRefreshComponentHud(ent, ref args.Args);
     }
 
     [SubscribeLocalEvent]
-    protected virtual void OnRefreshComponentHud(Entity<NightVisionComponent> ent, ref RefreshNightVisionEvent args)
+    private void OnRefreshComponentHud(Entity<NightVisionComponent> ent, ref RefreshNightVisionEvent args)
     {
         if (!ent.Comp.Enabled)
             return;

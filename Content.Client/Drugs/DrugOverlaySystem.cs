@@ -22,15 +22,10 @@ public sealed partial class DrugOverlaySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SeeingRainbowsStatusEffectComponent, StatusEffectAppliedEvent>(OnApplied);
-        SubscribeLocalEvent<SeeingRainbowsStatusEffectComponent, StatusEffectRemovedEvent>(OnRemoved);
-
-        SubscribeLocalEvent<SeeingRainbowsStatusEffectComponent, StatusEffectRelayedEvent<LocalPlayerAttachedEvent>>(OnPlayerAttached);
-        SubscribeLocalEvent<SeeingRainbowsStatusEffectComponent, StatusEffectRelayedEvent<LocalPlayerDetachedEvent>>(OnPlayerDetached);
-
         _overlay = new();
     }
 
+    [SubscribeLocalEvent]
     private void OnRemoved(Entity<SeeingRainbowsStatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
     {
         if (_player.LocalEntity != args.Target)
@@ -41,6 +36,7 @@ public sealed partial class DrugOverlaySystem : EntitySystem
         _overlayMan.RemoveOverlay(_overlay);
     }
 
+    [SubscribeLocalEvent]
     private void OnApplied(Entity<SeeingRainbowsStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
         if (_player.LocalEntity != args.Target)
@@ -50,12 +46,14 @@ public sealed partial class DrugOverlaySystem : EntitySystem
         _overlayMan.AddOverlay(_overlay);
     }
 
-    private void OnPlayerAttached(Entity<SeeingRainbowsStatusEffectComponent> ent, ref StatusEffectRelayedEvent<LocalPlayerAttachedEvent> args)
+    [SubscribeLocalEvent]
+    private void OnPlayerAttached(Entity<SeeingRainbowsStatusEffectComponent> ent, ref LocalPlayerAttachedEvent args)
     {
         _overlayMan.AddOverlay(_overlay);
     }
 
-    private void OnPlayerDetached(Entity<SeeingRainbowsStatusEffectComponent> ent, ref StatusEffectRelayedEvent<LocalPlayerDetachedEvent> args)
+    [SubscribeLocalEvent]
+    private void OnPlayerDetached(Entity<SeeingRainbowsStatusEffectComponent> ent, ref LocalPlayerDetachedEvent args)
     {
         _overlay.Intoxication = 0;
         _overlay.TimeTicker = 0;

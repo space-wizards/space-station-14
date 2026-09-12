@@ -31,8 +31,6 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         SubscribeLocalEvent<StatusEffectContainerComponent, ComponentShutdown>(OnStatusContainerShutdown);
         SubscribeLocalEvent<StatusEffectContainerComponent, EntInsertedIntoContainerMessage>(OnEntityInserted);
         SubscribeLocalEvent<StatusEffectContainerComponent, EntRemovedFromContainerMessage>(OnEntityRemoved);
-
-        SubscribeLocalEvent<RejuvenateRemovedStatusEffectComponent, StatusEffectRelayedEvent<RejuvenateEvent>>(OnRejuvenate);
     }
 
     public override void Update(float frameTime)
@@ -113,8 +111,8 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         Dirty(args.Entity, statusComp);
     }
 
-    private void OnRejuvenate(Entity<RejuvenateRemovedStatusEffectComponent> ent,
-        ref StatusEffectRelayedEvent<RejuvenateEvent> args)
+    [SubscribeLocalEvent]
+    private void OnRejuvenate(Entity<RejuvenateRemovedStatusEffectComponent> ent, ref RejuvenateEvent args)
     {
         PredictedQueueDel(ent.Owner);
     }
