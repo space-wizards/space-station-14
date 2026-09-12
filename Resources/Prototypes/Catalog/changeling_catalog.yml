@@ -224,7 +224,6 @@
   - !type:ListingLimitedStockCondition
     stock: 1
   productEvent: !type:ChangelingUnlockHorrorEvent
-  productComponents: ChangelingHorrorDummy
   raiseProductEventOnUser: true
 
 - type: listing

@@ -145,17 +145,6 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
             }
         }
 
-        // remove horror actions
-        if (TryComp<ChangelingHorrorActionStorageComponent>(ent.Owner, out var lingActions))
-        {
-            foreach (var action in lingActions.CreatedActions)
-            {
-                _actions.RemoveAction(ent.Owner, action);
-            }
-
-            lingActions.CreatedActions.Clear();
-        }
-
         // Remove the horror's tags
         if (ent.Comp.TagsToAdd != null)
             _tag.RemoveTags(ent.Owner, ent.Comp.TagsToAdd);
@@ -266,23 +255,6 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
                 }
 
                 _actions.SetEnabled((action.Owner, action.Comp), false);
-            }
-        }
-
-        // give horror actions
-        if (TryComp<ChangelingHorrorActionStorageComponent>(ent.Owner, out var lingActions))
-        {
-            // this shouldn't be needed, but just in case...
-            lingActions.CreatedActions.Clear();
-
-            foreach (var action in lingActions.Actions)
-            {
-                var k = _actions.AddAction(ent.Owner, action);
-                if (k.HasValue)
-                {
-                    // we keep track of them to delete them later when turning back
-                    lingActions.CreatedActions.Add(k.Value);
-                }
             }
         }
     }
