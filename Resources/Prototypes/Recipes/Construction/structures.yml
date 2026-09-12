@@ -624,6 +624,15 @@
 
 - type: construction
   parent: BaseStructureFullTileDirectional
+  id: SolidSecretReinforcedDoor
+  name: recipes-secret-reinforced-door-name
+  description: recipes-secret-reinforced-door-desc
+  graph: SecretReinforcedDoor
+  targetNode: solidSecretReinforcedDoor
+  placementMode: SnapgridCenter
+
+- type: construction
+  parent: BaseStructureFullTileDirectional
   id: EnergyGate
   graph: EnergyGate
   targetNode: energyGate
