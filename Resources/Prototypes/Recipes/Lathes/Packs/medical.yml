@@ -49,6 +49,7 @@
   - OffsetCane
   - OffsetCaneWood
   - JetInjector
+  - VehicleWheelchairFolded
 
 - type: latheRecipePack
   id: RollerBedsStatic
