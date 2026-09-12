@@ -277,7 +277,7 @@
   components:
   - type: Metabolizer
     maxReagents: 6
-    stages: [ Digestion, Bloodstream, Metabolites ]
+    stages: [ Metabolites, Bloodstream, Digestion ]
 
 - type: entity
   abstract: true
