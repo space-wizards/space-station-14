@@ -16,61 +16,59 @@ public partial class SharedInteractionSystem
 {
     [Dependency] EntityQuery<RelayInputMoverComponent> _relayInputMoverQuery;
 
-    private void InitializeBlocking()
-    {
-        SubscribeLocalEvent<BlockMovementComponent, UpdateCanMoveEvent>(OnMoveAttempt);
-        SubscribeLocalEvent<BlockMovementComponent, UseAttemptEvent>(CancelUseEvent);
-        SubscribeLocalEvent<BlockMovementComponent, InteractionAttemptEvent>(CancelInteractEvent);
-        SubscribeLocalEvent<BlockMovementComponent, DropAttemptEvent>(CancellableInteractEvent);
-        SubscribeLocalEvent<BlockMovementComponent, PickupAttemptEvent>(CancellableInteractEvent);
-        SubscribeLocalEvent<BlockMovementComponent, ChangeDirectionAttemptEvent>(CancelEvent);
-
-        SubscribeLocalEvent<BlockMovementComponent, ComponentStartup>(OnBlockingStartup);
-        SubscribeLocalEvent<BlockMovementComponent, ComponentShutdown>(OnBlockingShutdown);
-    }
-
+    [SubscribeLocalEvent]
     private void CancelInteractEvent(Entity<BlockMovementComponent> ent, ref InteractionAttemptEvent args)
     {
         if (ent.Comp.BlockInteraction)
             args.Cancelled = true;
     }
 
+    [SubscribeLocalEvent]
     private void CancelUseEvent(Entity<BlockMovementComponent> ent, ref UseAttemptEvent args)
     {
         if (ent.Comp.BlockUse)
             args.Cancel();
     }
 
-    private void OnMoveAttempt(EntityUid uid, BlockMovementComponent component, UpdateCanMoveEvent args)
+    [SubscribeLocalEvent]
+    private void OnMoveAttempt(Entity<BlockMovementComponent> ent, ref UpdateCanMoveEvent args)
     {
         // If we're relaying then don't cancel.
-        if (_relayInputMoverQuery.HasComp(uid))
+        if (_relayInputMoverQuery.HasComp(ent))
             return;
 
-        // Only handle events pre-shutdown.
-        if (component.LifeStage < ComponentLifeStage.Stopping)
-            args.Cancel();
+        args.Cancel();
     }
 
-    private void CancellableInteractEvent(EntityUid uid, BlockMovementComponent component, CancellableEntityEventArgs args)
+    [SubscribeLocalEvent]
+    private void OnDropAttempt(Entity<BlockMovementComponent> ent, ref DropAttemptEvent args)
     {
-        if (component.BlockInteraction)
+        if (ent.Comp.BlockInteraction)
             args.Cancel();
     }
 
-    private void CancelEvent(EntityUid uid, BlockMovementComponent component, CancellableEntityEventArgs args)
+    [SubscribeLocalEvent]
+    private void OnPickupAttempt(Entity<BlockMovementComponent> ent, ref PickupAttemptEvent args)
+    {
+        if (ent.Comp.BlockInteraction)
+            args.Cancel();
+    }
+
+    [SubscribeLocalEvent]
+    private void CancelEvent(Entity<BlockMovementComponent> ent, ref ChangeDirectionAttemptEvent args)
     {
         args.Cancel();
     }
 
-    private void OnBlockingStartup(EntityUid uid, BlockMovementComponent component, ComponentStartup args)
+    [SubscribeLocalEvent]
+    private void OnBlockingStartup(Entity<BlockMovementComponent> ent, ref ComponentStartup args)
     {
-        _actionBlockerSystem.UpdateCanMove(uid);
+        _actionBlockerSystem.UpdateCanMove(ent);
     }
 
-    private void OnBlockingShutdown(EntityUid uid, BlockMovementComponent component, ComponentShutdown args)
+    [SubscribeLocalEvent]
+    private void OnBlockingRemove(Entity<BlockMovementComponent> ent, ref ComponentRemove args)
     {
-        _actionBlockerSystem.UpdateCanMove(uid);
+        _actionBlockerSystem.UpdateCanMove(ent);
     }
 }
-
