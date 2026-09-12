@@ -161,10 +161,21 @@
     - state: "extract_dna_on"
       map: ["enum.ActionVisuals.IconToggled"]
       visible: false
-  - type: ActionRequireSatiation
-    satiation: Chemicals
-    amount: 50
-    failReason: changeling-not-enough-chemicals
+  #- type: ActionRequireSatiation
+   # satiation: Chemicals
+    #amount: 50
+    #failReason: changeling-not-enough-chemicals
+  - type: ActionRequirements
+    Conditions:
+      Performer:
+      - !type:SatiationCondition
+        satiationType: Chemicals
+        min: 50
+    Effects:
+      Performer:
+      - !type:Satiate
+        satiationType: Chemicals
+        factor: -50
   - type: TargetAction
   - type: EntityTargetAction
     canTargetSelf: false
