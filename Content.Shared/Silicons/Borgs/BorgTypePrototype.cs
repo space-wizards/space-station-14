@@ -1,10 +1,11 @@
-﻿using Content.Shared.Interaction.Components;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Radio;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Silicons.Borgs;
 
@@ -76,11 +77,19 @@ public sealed partial class BorgTypePrototype : IPrototype
     /// Borg module types that are always available to borgs of this type.
     /// </summary>
     /// <remarks>
-    /// These modules still work like modules, although they cannot be removed from the borg.
+    /// These modules still work like modules, although they cannot be removed from the borg unless allowed by <see cref="ModuleTypeRequirements"/>.
     /// </remarks>
-    /// <seealso cref="BorgModuleComponent.DefaultModule"/>
+    /// <seealso cref="BorgModuleComponent.Required"/>
     [DataField]
     public EntProtoId[] DefaultModules = [];
+
+    /// <summary>
+    /// The modules required by this borg type. Default modules which don't match any of these requirements are
+    /// implicitly always required.
+    /// </summary>
+    /// <seealso cref="CyborgModuleRequirement"/>
+    [DataField]
+    public CyborgModuleRequirement[] RequiredModules = [];
 
     /// <summary>
     /// Additional components to add to the borg entity when this type is selected.
@@ -151,4 +160,21 @@ public sealed partial class BorgTypePrototype : IPrototype
     /// </summary>
     [DataField]
     public SoundSpecifier FootstepCollection { get; set; } = new SoundCollectionSpecifier(DefaultFootsteps);
+}
+
+/// <summary>
+/// A description of modules required by a <seealso cref="BorgTypePrototype"/>. A cyborg must contain at least one
+/// module which matches the <seealso cref="Whitelist"/> of all of its
+/// <seealso cref="BorgTypePrototype.RequiredModules"/>. One module may satisfy multiple requirements.
+/// When a module is not required (either it does not match any requirements, or there are multiple modules which match
+/// a single requirement), it can be removed from the chassis.
+/// </summary>
+[DataRecord, Serializable, NetSerializable]
+public partial record CyborgModuleRequirement
+{
+    [DataField(required: true)]
+    public EntityWhitelist Whitelist = default!;
+
+    [DataField(required: true)]
+    public LocId SimpleDescription;
 }
