@@ -1,0 +1,80 @@
+- type: itemStatus
+  id: AmmoCounter
+  priority: 2
+  whitelist: [] # Takes up too much space to show other statuses
+
+- type: itemStatus
+  id: Anomaly
+
+- type: itemStatus
+  id: Battery
+  blacklist:
+  - Cell
+
+- type: itemStatus
+  id: Cell
+  blacklist:
+  - Battery
+
+- type: itemStatus
+  id: Charge
+
+- type: itemStatus
+  id: Crayon
+
+- type: itemStatus
+  id: DoorRemote
+
+- type: itemStatus
+  id: Flashlight
+
+- type: itemStatus
+  id: GasTank
+
+- type: itemStatus
+  id: Geiger
+
+- type: itemStatus
+  id: GPS
+
+- type: itemStatus
+  id: Implanter
+
+- type: itemStatus
+  id: Injector
+
+- type: itemStatus
+  id: LightReplacer
+
+- type: itemStatus
+  id: Magazine
+
+- type: itemStatus
+  id: Mop
+
+- type: itemStatus
+  id: MultipleTool
+
+- type: itemStatus
+  id: NetworkConfigurator
+
+- type: itemStatus
+  id: Solution
+
+- type: itemStatus
+  id: SprayPainter
+
+- type: itemStatus
+  id: Stack
+
+- type: itemStatus
+  id: TimerTrigger
+
+- type: itemStatus
+  id: TrayScanner
+
+- type: itemStatus
+  id: VirtualItem
+
+- type: itemStatus
+  id: Welder
