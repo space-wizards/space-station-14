@@ -15,6 +15,18 @@ public sealed partial class XAEEmpInAreaSystem : BaseXAESystem<XAEEmpInAreaCompo
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEEmpInAreaComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
-        _emp.EmpPulse(args.Coordinates, ent.Comp.Range, ent.Comp.EnergyConsumption, ent.Comp.DisableDuration);
+        var range = ent.Comp.Range;
+        if (args.Modifications.TryGetValue(XenoArtifactEffectModifier.Range, out var rangeModifier))
+            range = Math.Max(4, rangeModifier.Modify(range));
+
+        var duration = ent.Comp.DisableDuration;
+        if (args.Modifications.TryGetValue(XenoArtifactEffectModifier.Duration, out var durationModifier))
+        {
+            var modify = durationModifier.Modify((float)duration.TotalSeconds);
+            var durationInSeconds = Math.Max(1, modify);
+            duration = TimeSpan.FromSeconds(durationInSeconds);
+        }
+
+        _emp.EmpPulse(args.Coordinates, range, ent.Comp.EnergyConsumption, duration);
     }
 }

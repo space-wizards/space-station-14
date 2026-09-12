@@ -164,9 +164,6 @@
   components:
   - type: XenoArtifactNode
     maxDurability: 1
-    maxDurabilityCanDecreaseBy:
-      min: 0
-      max: 0
   - type: NameIdentifier
     group: XenoArtifactNode
 
@@ -196,6 +193,10 @@
   id: XenoArtifactEffectUniversalIntercom
   description: Obtains ability of long-distance communication device
   components:
+  - type: XenoArtifactNode
+    budgetRange:
+      min: 1500
+      max: 5000
   - type: XAEApplyComponents
     components:
     - type: RadioMicrophone
@@ -225,6 +226,10 @@
   id: XenoArtifactBecomeRandomInstrument
   description: Obtains ability of musical instrument
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 0
+      max: 5000
   - type: XAEApplyComponents
     components:
     - type: Instrument
@@ -238,6 +243,12 @@
   id: XenoArtifactStorage
   description: Obtains ability of hidden storage
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 9000
+      max: 20000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Power: "budgetDependant add -5,5"
   - type: XAEApplyComponents
     components:
     - type: Item
@@ -252,6 +263,10 @@
   id: XenoArtifactPhasing
   description: Becomes phased
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 8000
+      max: 16000
   - type: XAERemoveCollision
 
 - type: entity
@@ -259,6 +274,10 @@
   id: XenoArtifactWandering
   description: Starts to move sporadically
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 0
+      max: 8000
   - type: XAEApplyComponents
     components:
     - type: RandomWalk
@@ -272,6 +291,12 @@
   id: XenoArtifactSolutionStorage
   description: Obtains ability of container for chemical solutions
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 0
+      max: 8000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Power: "budgetDependant add -100,100"
   - type: XAEApplyComponents
     components:
     - type: Solution
@@ -303,6 +328,12 @@
   id: XenoArtifactSpeedUp
   description: Improves holder movement speed
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 16000
+      max: 30000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Power: "budgetDependant multiply 0.9,1,1.3"
   - type: XAEApplyComponents
     components:
     - type: HeldSpeedModifier
@@ -314,12 +345,18 @@
   id: XenoArtifactDrill
   description: Obtains ability of drill
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 0
+      max: 12000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Power: "budgetDependant add -3,3"
   - type: XAEApplyComponents
     components:
     - type: MeleeWeapon
       damage:
         types:
-          Piercing: 18
+          Piercing: 14
           Blunt: 4
       soundHit:
         path: /Audio/Weapons/bladeslice.ogg
@@ -332,6 +369,12 @@
   id: XenoArtifactGenerateEnergy
   description: Produces power
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 10000
+      max: 70000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Power: "budgetDependant multiply 0.5,2,4"
   - type: XAEApplyComponents
     components:
     - type: PowerSupplier
@@ -348,6 +391,12 @@
   id: XenoArtifactGun
   description: Obtains ability of firearm
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 8000
+      max: 17000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Power: "budgetDependant add -3,8"
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -379,6 +428,10 @@
   id: XenoArtifactGhost
   description: Becomes sentient
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 12000
+      max: 17000
   - type: XAEApplyComponents
     components:
     - type: GhostRole
@@ -399,6 +452,12 @@
   id: XenoArtifactOmnitool
   description: Obtains ability of omnitool
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 5000
+      max: 8000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Power: "budgetDependant multiply 4,1.5,0.8"
   - type: XAEApplyComponents
     components:
     - type: UserInterface
@@ -446,6 +505,10 @@
   id: XenoArtifactEffectBadFeeling
   description: Broadcasts sublime message
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 0
+      max: 2000
   - type: XAETelepathic
     messages:
     - badfeeling-artifact-1
@@ -476,6 +539,10 @@
   id: XenoArtifactEffectGoodFeeling
   description: Broadcasts sublime message
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 0
+      max: 4000
   - type: XAETelepathic
     messages:
     - goodfeeling-artifact-1
@@ -505,6 +572,10 @@
   id: XenoArtifactEffectJunkSpawn
   description: Create recyclable junk
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 0
+      max: 10000 #todo
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -526,6 +597,12 @@
   id: XenoArtifactEffectLightFlicker
   description: Minor electromagnetic interference
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 0
+      max: 9000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Range: "budgetDependant add -2,10"
   - type: XAELightFlicker
 
 - type: entity
@@ -533,6 +610,12 @@
   id: XenoArtifactPotassiumWave
   description: Produces potassium
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 15000
+      max: 40000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Power: "budgetDependant add -90,100"
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -558,6 +641,10 @@
   id: XenoArtifactFloraSpawn
   description: Produces flora
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 3000
+      max: 8000
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -572,6 +659,12 @@
   id: XenoArtifactChemicalPuddle
   description: Produces puddle of chemical mixture # todo: make description say what exact chemical is produced, maybe add mixes into possible chemicals
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 6000
+      max: 28000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Power: "budgetDependant add -450,-200,450"
   - type: XAECreatePuddle
     chemAmount:
       min: 1
@@ -608,6 +701,10 @@
   id: XenoArtifactThrowThingsAround
   description: Minor implosion
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 0
+      max: 6000
   - type: XAEThrowThingsAround
 
 - type: entity
@@ -615,6 +712,12 @@
   id: XenoArtifactColdWave
   description: Cools down surrounding gas
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 9500
+      max: 22000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Power: "budgetDependant add 150,70,-29"
   - type: XAETemperature
     targetTemp: 50
 
@@ -623,14 +726,27 @@
   id: XenoArtifactHeatWave
   description: Heats up surrounding gas greatly
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 9500
+      max: 22000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Power: "budgetDependant add -200,100,300"
   - type: XAETemperature
-    targetTemp: 500
+    targetTemp: 300
 
 - type: entity
   parent: BaseXenoArtifactEffect
   id: XenoArtifactFoamMild
   description: Produces chemical foam # todo: separate in 1 for each chemical for description? actually sounds like a very good idea
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 0
+      max: 12000
+      enum.XenoArtifactEffectModifier.Power: "budgetDependant add -15,30"
+      enum.XenoArtifactEffectModifier.Range: "budgetDependant add -3,0,10"
+      enum.XenoArtifactEffectModifier.Duration: "budgetDependant add -5,15,20"
   - type: XAEFoam
     replaceDescription: true
     reagents:
@@ -653,9 +769,12 @@
   components:
   - type: XenoArtifactNode
     maxDurability: 2
-    maxDurabilityCanDecreaseBy:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
       min: 0
-      max: 1
+      max: 6000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Durability: "budgetDependant add -1,0"
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -672,9 +791,12 @@
   components:
   - type: XenoArtifactNode
     maxDurability: 3
-    maxDurabilityCanDecreaseBy:
-      min: 0
-      max: 2
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 5000
+      max: 12000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Durability: "budgetDependant add -2,0"
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -693,6 +815,12 @@
   id: XenoArtifactRadioactive
   description: Becomes mildly radioactive
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 8000
+      max: 16000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Power: "budgetDependant multiply 0.8,1,1.5"
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -706,7 +834,39 @@
   id: XenoArtifactChargeBattery
   description: Charges up batteries
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 0
+      max: 12000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Range: "budgetDependant add 5,-10"
+      enum.XenoArtifactEffectModifier.Power: "budgetDependant add -300,600"
   - type: XAEChargeBattery
+    defaultRadius: 5
+    radiusRestrictions: 5,40
+    addChargeAmount: 400
+    chargeAmountRestrictions: 50,2000
+  - type: XAETelepathic
+    messages:
+    - charge-artifact-popup
+
+- type: entity
+  id: XenoArtifactChargeEnergyStorage
+  parent: BaseXenoArtifactEffect
+  description: Charges up energy storages in short range
+  components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 25000
+      max: 70000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Range: "budgetDependant add 5,-10"
+      enum.XenoArtifactEffectModifier.Power: "budgetDependant multiply 0.2,,5"
+  - type: XAEChargeBattery
+    defaultRadius: 3
+    radiusRestrictions: 2,8
+    addChargeAmount: 100000
+    chargeAmountRestrictions: 20000,1000000
   - type: XAETelepathic
     messages:
     - charge-artifact-popup
@@ -716,7 +876,14 @@
   id: XenoArtifactKnock
   description: Mild electromagnetic interference
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 12000
+      max: 24000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Range: "budgetDependant add -2,4"
   - type: XAEKnock
+    knockRange: 3
   - type: XAELightFlicker
 
 - type: entity
@@ -724,6 +891,10 @@
   id: XenoArtifactMagnet
   description: Create small gravity well
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 0
+      max: 6000
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -738,6 +909,10 @@
   id: XenoArtifactMagnetNegative
   description: Create small gravity well
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 0
+      max: 6000
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -752,6 +927,12 @@
   id: XenoArtifactStealth
   description: Create light interference
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 6000
+      max: 15000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Power: "budgetDependant multiply 0.8,1,1.5"
   - type: XAEApplyComponents
     components:
     - type: Stealth
@@ -767,9 +948,12 @@
   components:
   - type: XenoArtifactNode
     maxDurability: 4
-    maxDurabilityCanDecreaseBy:
-      min: 0
-      max: 2
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 12000
+      max: 34000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Durability: "budgetDependant add -2,0"
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -790,9 +974,12 @@
   components:
   - type: XenoArtifactNode
     maxDurability: 4
-    maxDurabilityCanDecreaseBy:
-      min: 0
-      max: 2
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 8000
+      max: 30000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Durability: "budgetDependant add -2,0"
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -813,9 +1000,12 @@
   components:
   - type: XenoArtifactNode
     maxDurability: 3
-    maxDurabilityCanDecreaseBy:
-      min: 0
-      max: 1
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 10000
+      max: 30000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Durability: "budgetDependant add -1,0"
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -836,9 +1026,12 @@
   components:
   - type: XenoArtifactNode
     maxDurability: 4
-    maxDurabilityCanDecreaseBy:
-      min: 0
-      max: 2
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 12000
+      max: 60000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Durability: "budgetDependant add -2,0"
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -859,9 +1052,12 @@
   components:
   - type: XenoArtifactNode
     maxDurability: 3
-    maxDurabilityCanDecreaseBy:
-      min: 0
-      max: 2
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 8000
+      max: 24000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Durability: "budgetDependant add -2,2"
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -880,9 +1076,12 @@
   components:
   - type: XenoArtifactNode
     maxDurability: 4
-    maxDurabilityCanDecreaseBy:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
       min: 0
-      max: 3
+      max: 12000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Durability: "budgetDependant add -3,0"
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -947,9 +1146,12 @@
   components:
   - type: XenoArtifactNode
     maxDurability: 2
-    maxDurabilityCanDecreaseBy:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
       min: 0
-      max: 1
+      max: 100000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Durability: "budgetDependant add -1,0"
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -973,11 +1175,15 @@
   id: XenoArtifactShatterWindows
   description: Break windows
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 0
+      max: 12000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Durability: "budgetDependant add -2,0"
+      enum.XenoArtifactEffectModifier.Power: 10
   - type: XenoArtifactNode
     maxDurability: 3
-    maxDurabilityCanDecreaseBy:
-      min: 0
-      max: 2
   - type: XAEDamageInArea
     damageChance: 0.75
     whitelist:
@@ -992,11 +1198,18 @@
   id: XenoArtifactFoamGood
   description: Creates wave of helpful foam
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 0
+      max: 50000
+    modifyBy:
+      dictionary:
+        enum.XenoArtifactEffectModifier.Durability: "budgetDependant add -5,0"
+        enum.XenoArtifactEffectModifier.Power: "budgetDependant add -15,30"
+        enum.XenoArtifactEffectModifier.Range: "budgetDependant add -3,0,10"
+        enum.XenoArtifactEffectModifier.Duration: "budgetDependant add -5,15,20"
   - type: XenoArtifactNode
     maxDurability: 7
-    maxDurabilityCanDecreaseBy:
-      min: 0
-      max: 5
   - type: XAEFoam
     replaceDescription: true
     reagents:
@@ -1013,9 +1226,17 @@
   id: XenoArtifactFoamDangerous
   description: Creates wave of harmful foam
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 0
+      max: 50000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Power: "budgetDependant add -15,30"
+      enum.XenoArtifactEffectModifier.Range: "budgetDependant add -3,0,10"
+      enum.XenoArtifactEffectModifier.Duration: "budgetDependant add -5,15,20"
   - type: XAEFoam
-    minFoamAmount: 20
-    maxFoamAmount: 30
+    defaultFoamAmount: 25
+    foamAmountRestrictions: 10,50
     replaceDescription: true
     reagents:
     - Tritium
@@ -1035,6 +1256,12 @@
   id: XenoArtifactPuddleRare
   description: Creates puddle of helpful chemicals
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 0
+      max: 50000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Power: 450
   - type: XAECreatePuddle
     chemAmount:
       min: 1
@@ -1065,6 +1292,12 @@
   id: XenoArtifactAnomalySpawn
   description: Creates anomaly
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 25000
+      max: 70000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Durability: 3
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -1080,6 +1313,13 @@
   id: XenoArtifactIgnite
   description: Pyrokinesis
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 5000
+      max: 50000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Range: 15
+      enum.XenoArtifactEffectModifier.Power: 8
   - type: XAEIgnite
     range: 7
     fireStack:
@@ -1091,6 +1331,12 @@
   id: XenoArtifactTeleport
   description: Teleportation
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 9500
+      max: 50000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Range: 15
   - type: XAERandomTeleportInvoker
 
 - type: entity
@@ -1098,11 +1344,16 @@
   id: XenoArtifactEmp
   description: Dangerous electromagnetic interference
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 9500
+      max: 28000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Durability: "budgetDependant add -3,3"
+      enum.XenoArtifactEffectModifier.Range: 15
+      enum.XenoArtifactEffectModifier.Duration: 3
   - type: XenoArtifactNode
     maxDurability: 5
-    maxDurabilityCanDecreaseBy:
-      min: 0
-      max: 3
   - type: XAEEmpInArea
 
 - type: entity
@@ -1110,6 +1361,13 @@
   id: XenoArtifactPolyMonkey
   description: Temporarily reshape flesh to fur
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 25000
+      max: 45000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Duration: 15
+      enum.XenoArtifactEffectModifier.Durability: 3
   - type: XAEPolymorph
 
 - type: entity
@@ -1117,6 +1375,13 @@
   id: XenoArtifactPolyLizard
   description: Temporarily reshape flesh to scale
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 25000
+      max: 45000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Duration: 15
+      enum.XenoArtifactEffectModifier.Durability: 3
   - type: XAEPolymorph
     polymorphPrototypeName: ArtifactLizard
 
@@ -1125,6 +1390,13 @@
   id: XenoArtifactPolyLuminous
   description: Temporarily reshape flesh to light
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 25000
+      max: 45000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Duration: 15
+      enum.XenoArtifactEffectModifier.Durability: 3
   - type: XAEPolymorph
     polymorphPrototypeName: ArtifactLuminous
 
@@ -1133,6 +1405,12 @@
   id: XenoArtifactRadioactiveStrong
   description: Becomes highly radioactive
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 15000
+      max: 25000
+    # modifyBy:
+    #   :0
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -1146,6 +1424,13 @@
   id: XenoArtifactMaterialSpawnGlass
   description: Create glass
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 0000
+      max: 50000
+    modifyBy:
+      dictionary:
+        enum.XenoArtifactEffectModifier.Power: "budgetDependant add -25,25"
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -1161,6 +1446,13 @@
   id: XenoArtifactMaterialSpawnSteel
   description: Create steel
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 11000
+      max: 50000
+    modifyBy:
+      dictionary:
+        enum.XenoArtifactEffectModifier.Power: "budgetDependant add -25,25"
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -1176,6 +1468,13 @@
   id: XenoArtifactMaterialSpawnPlastic
   description: Create plastic
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 9000
+      max: 50000
+    modifyBy:
+      dictionary:
+        enum.XenoArtifactEffectModifier.Power: "budgetDependant add -25,25"
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -1191,6 +1490,13 @@
   id: XenoArtifactPortal
   description: Create short-living bluespace portal
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 9000
+      max: 18000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Durability: "budgetDependant add -2,-1"
+      enum.XenoArtifactEffectModifier.Duration: "budgetDependant add -2,15"
   - type: XAEPortal
 
 - type: entity
@@ -1198,11 +1504,14 @@
   id: XenoArtifactArtifactSpawn
   description: Create artifact
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 30000
+      max: 70000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Durability: "budgetDependant add -1,0"
   - type: XenoArtifactNode
     maxDurability: 2
-    maxDurabilityCanDecreaseBy:
-      min: 0
-      max: 1
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -1217,7 +1526,15 @@
   id: XenoArtifactShuffle
   description: Switch places of sentient beings #not ALL beings, but oh well...
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 8000
+      max: 25000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Range: "budgetDependant add 0,15"
+      enum.XenoArtifactEffectModifier.Durability: "budgetDependant add -3,1"
   - type: XAEShuffle
+    range: 5
   - type: XAETelepathic
     range: 7.5
     messages:
@@ -1228,6 +1545,13 @@
   id: XenoArtifactHealAll
   description: Miraculous healing
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 8000
+      max: 30000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Power: "budgetDependant add -20,-250"
+      enum.XenoArtifactEffectModifier.Durability: "budgetDependant add -2,3"
   - type: XAEDamageInArea
     damageChance: 1
     radius: 8
@@ -1248,6 +1572,10 @@
   id: XenoArtifactTesla
   description: Mass destruction
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 70000
+      max: 100000
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -1262,6 +1590,10 @@
   id: XenoArtifactSingularity
   description: Imminent doom
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 70000
+      max: 100000
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -1277,6 +1609,12 @@
   description: Small scale high-speed nuclear reaction
   components:
   - type: XAETriggerExplosives
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 10000
+      max: 30000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Power: 100
   - type: Explosive
     deleteAfterExplosion: false
     explosionType: Radioactive
@@ -1291,6 +1629,12 @@
   id: XenoArtifactBoom
   description: Explosion
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 13000
+      max: 50000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Power: 200
   - type: XAETriggerExplosives
   - type: Explosive
     deleteAfterExplosion: false
@@ -1305,6 +1649,12 @@
   id: XenoArtifactEffectCreationGasPlasma
   description: Expels plasma
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 8000
+      max: 30000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Power: 150
   - type: XAECreateGas
     gases:
       Plasma: 300
@@ -1314,6 +1664,12 @@
   id: XenoArtifactEffectCreationGasTritium
   description: Expels tritium
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 11000
+      max: 32000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Power: 150
   - type: XAECreateGas
     gases:
       Tritium: 300
@@ -1323,6 +1679,12 @@
   id: XenoArtifactEffectCreationGasAmmonia
   description: Expels ammonia
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 7000
+      max: 12000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Power: 150
   - type: XAECreateGas
     gases:
       Ammonia: 300
@@ -1332,6 +1694,12 @@
   id: XenoArtifactEffectCreationGasFrezon
   description: Expels frezon
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 11000
+      max: 32000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Power: 150
   - type: XAECreateGas
     gases:
       Frezon: 300
@@ -1341,6 +1709,12 @@
   id: XenoArtifactEffectCreationGasNitrousOxide
   description: Expels nitrous oxide
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 0
+      max: 8000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Power: 150
   - type: XAECreateGas
     gases:
       NitrousOxide: 300
@@ -1350,6 +1724,12 @@
   id: XenoArtifactEffectCreationGasCarbonDioxide
   description: Expels carbon dioxide
   components:
+  - type: XenoArtifactNodeBudget
+    budgetRange:
+      min: 9000
+      max: 15000
+    modifyBy:
+      enum.XenoArtifactEffectModifier.Power: 150
   - type: XAECreateGas
     gases:
       CarbonDioxide: 300

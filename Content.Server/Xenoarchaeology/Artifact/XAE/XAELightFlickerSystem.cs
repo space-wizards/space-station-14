@@ -2,6 +2,7 @@ using Content.Server.Ghost;
 using Content.Server.Xenoarchaeology.Artifact.XAE.Components;
 using Content.Shared.Light.Components;
 using Content.Shared.Xenoarchaeology.Artifact;
+using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Artifact.XAE;
 using Robust.Shared.Random;
 
@@ -23,8 +24,12 @@ public sealed partial class XAELightFlickerSystem : BaseXAESystem<XAELightFlicke
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAELightFlickerComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
+        var radius = ent.Comp.Radius;
+        if (args.Modifications.TryGetValue(XenoArtifactEffectModifier.Range, out var rangeModifier))
+            radius = Math.Max(radius, rangeModifier.Modify(radius));
+
         _entities.Clear();
-        _lookup.GetEntitiesInRange(ent.Owner, ent.Comp.Radius, _entities, LookupFlags.StaticSundries);
+        _lookup.GetEntitiesInRange(ent.Owner, radius, _entities, LookupFlags.StaticSundries);
         foreach (var light in _entities)
         {
             if (!_poweredLightsQuery.HasComponent(light))
@@ -38,3 +43,4 @@ public sealed partial class XAELightFlickerSystem : BaseXAESystem<XAELightFlicke
         }
     }
 }
+

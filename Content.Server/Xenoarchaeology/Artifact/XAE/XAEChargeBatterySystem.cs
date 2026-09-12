@@ -1,7 +1,6 @@
 using Content.Server.Power.EntitySystems;
 using Content.Server.Xenoarchaeology.Artifact.XAE.Components;
 using Content.Shared.Power.Components;
-using Content.Shared.Power.EntitySystems;
 using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Artifact.XAE;
 
@@ -21,12 +20,25 @@ public sealed partial class XAEChargeBatterySystem : BaseXAESystem<XAEChargeBatt
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEChargeBatteryComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
+        XAEChargeBatteryComponent component = ent;
+        var radius = component.DefaultRadius;
+        if (args.Modifications.TryGetValue(XenoArtifactEffectModifier.Range, out var rangeModifier))
+        {
+            radius = Math.Clamp(rangeModifier.Modify(radius), component.RadiusRestrictions.Min, component.RadiusRestrictions.Max);
+        }
+
+        var addCharge = component.AddChargeAmount;
+        if (args.Modifications.TryGetValue(XenoArtifactEffectModifier.Power, out var amountModifier))
+        {
+            addCharge = Math.Clamp(amountModifier.Modify(addCharge), component.ChargeAmountRestrictions.Min, component.ChargeAmountRestrictions.Max);
+        }
+
         _batteryEntities.Clear();
 
-        _lookup.GetEntitiesInRange(args.Coordinates, ent.Comp.Radius, _batteryEntities);
+        _lookup.GetEntitiesInRange(args.Coordinates, radius, _batteryEntities);
         foreach (var battery in _batteryEntities)
         {
-            _battery.SetCharge(battery.AsNullable(), battery.Comp.MaxCharge);
+            _battery.ChangeCharge(battery.AsNullable(), addCharge);
         }
     }
 }

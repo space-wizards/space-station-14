@@ -24,6 +24,10 @@ public sealed partial class XAEPolymorphSystem : BaseXAESystem<XAEPolymorphCompo
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEPolymorphComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
+        var duration = ent.Comp.AdditionalDuration;
+        if (args.Modifications.TryGetValue(XenoArtifactEffectModifier.Duration, out var durationModifier))
+            duration = Math.Max(1, durationModifier.Modify(duration));
+
         _humanoids.Clear();
         _lookup.GetEntitiesInRange(args.Coordinates, ent.Comp.Range, _humanoids);
         foreach (var comp in _humanoids)
@@ -32,7 +36,10 @@ public sealed partial class XAEPolymorphSystem : BaseXAESystem<XAEPolymorphCompo
             if (!_mob.IsAlive(target))
                 continue;
 
-            _poly.PolymorphEntity(target, ent.Comp.PolymorphPrototypeName);
+            var uidAfter = _poly.PolymorphEntity(target, ent.Comp.PolymorphPrototypeName);
+            if (uidAfter.HasValue)
+                _poly.TryAddDuration(uidAfter.Value, (int) duration);
+
             _audio.PlayPvs(ent.Comp.PolySound, ent);
         }
     }
