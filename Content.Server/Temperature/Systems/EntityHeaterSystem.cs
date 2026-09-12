@@ -26,9 +26,10 @@ public sealed partial class EntityHeaterSystem : SharedEntityHeaterSystem
         if (TryComp<ApcPowerReceiverComponent>(ent, out var power))
             power.Load = SettingPower(ent.Comp.Setting, ent.Comp.Power);
     }
-
+/*
     public override void Update(float deltaTime)
     {
+
         var query = EntityQueryEnumerator<EntityHeaterComponent, ItemPlacerComponent, ApcPowerReceiverComponent>();
         while (query.MoveNext(out _, out _, out var placer, out var power))
         {
@@ -45,6 +46,7 @@ public sealed partial class EntityHeaterSystem : SharedEntityHeaterSystem
             }
         }
     }
+*/
 
     /// <remarks>
     /// <see cref="ApcPowerReceiverComponent"/> doesn't exist on the client, so we need
