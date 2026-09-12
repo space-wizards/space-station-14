@@ -29,7 +29,7 @@ public abstract partial class SharedStrippableSystem : EntitySystem
 
     [Dependency] private InventorySystem _inventorySystem = default!;
 
-    [Dependency] private SharedCuffableSystem _cuffableSystem = default!;
+    [Dependency] private CuffableSystem _cuffableSystem = default!;
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private SharedHandsSystem _handsSystem = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;

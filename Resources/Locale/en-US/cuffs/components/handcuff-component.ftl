@@ -1,6 +1,5 @@
 handcuff-component-target-self = You start restraining yourself.
 handcuff-component-cuffs-broken-error = The restraints are broken!
-handcuff-component-target-has-no-hands-error = {$targetName} has no hands!
 handcuff-component-target-has-no-free-hands-error = {$targetName} has no free hands!
 handcuff-component-too-far-away-error = You are too far away to use the restraints!
 handcuff-component-start-cuffing-observer = {$user} starts restraining {$target}!

@@ -17,7 +17,7 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
 {
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private SharedCuffableSystem _cuffable = default!;
+    [Dependency] private CuffableSystem _cuffable = default!;
     [Dependency] private SharedEnsnareableSystem _snare = default!;
     [Dependency] private PullingSystem _pulling = default!;
     [Dependency] private SharedStunSystem _stun = default!;
