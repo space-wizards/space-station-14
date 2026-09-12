@@ -340,8 +340,7 @@
     trash:
     - TrashBananaPeel
   - type: ToolRefinable
-    refineResult:
-    - id: TrashBananaPeel
+    refineResult: [] # Spawns trash on refine
   - type: Solution
     solution:
       reagents:
@@ -385,8 +384,7 @@
     trash:
     - TrashMimanaPeel
   - type: ToolRefinable
-    refineResult:
-    - id: TrashMimanaPeel
+    refineResult: [] # Spawns trash on refine
   - type: Solution
     solution:
       reagents:
@@ -1188,8 +1186,7 @@
     trash:
     - FoodCornTrash
   - type: ToolRefinable
-    refineResult:
-    - id: FoodCornTrash #no idea why you'd ever do this, but it's just here for consistency
+    refineResult: [] # Spawns trash on refine
   - type: Solution
     solution:
       reagents:
@@ -1865,8 +1862,7 @@
     trash:
     - WeaponRevolverPython
   - type: ToolRefinable
-    refineResult:
-    - id: WeaponRevolverPython
+    refineResult: [] # Spawns trash on refine
   - type: Tag
     tags:
     - Fruit # It's in the name
@@ -1903,8 +1899,7 @@
     trash:
     - RevolverCapGun
   - type: ToolRefinable
-    refineResult:
-    - id: RevolverCapGun
+    refineResult: [] # Spawns trash on refine
   - type: Tag
     tags:
     - Fruit
@@ -1925,8 +1920,7 @@
     trash:
     - RevolverCapGunFake
   - type: ToolRefinable
-    refineResult:
-    - id: RevolverCapGunFake
+    refineResult: [] # Spawns trash on refine
 
 - type: entity
   name: rice bushel
@@ -2335,8 +2329,7 @@
     trash:
     - FoodBungoPit
   - type: ToolRefinable
-    refineResult:
-    - id: FoodBungoPit
+    refineResult: [] # Spawns trash on refine
   - type: Solution
     solution:
       reagents:
@@ -2639,8 +2632,7 @@
     trash:
     - TrashCherryPit
   - type: ToolRefinable
-    refineResult:
-    - id: TrashCherryPit
+    refineResult: [] # Spawns trash on refine
   - type: Solution
     solution:
       maxVol: 15
