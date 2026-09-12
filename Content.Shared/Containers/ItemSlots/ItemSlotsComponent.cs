@@ -85,6 +85,18 @@ public sealed partial class ItemSlot
     public SoundSpecifier? EjectSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagOut/revolver_magout.ogg");
 
     /// <summary>
+    /// How long a user must wait before ejecting the item from this slot.
+    /// </summary>
+    [DataField]
+    public TimeSpan EjectDelay;
+
+    /// <summary>
+    /// How long a user must wait before inserting an item into this slot.
+    /// </summary>
+    [DataField]
+    public TimeSpan InsertDelay;
+
+    /// <summary>
     /// The name of this item slot. This will be shown to the user in the verb menu.
     /// </summary>
     /// <remarks>

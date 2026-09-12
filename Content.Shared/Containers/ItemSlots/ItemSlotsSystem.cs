@@ -2,6 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Destructible;
+using Content.Shared.DoAfter;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Whitelist;
@@ -21,11 +23,15 @@ public sealed partial class ItemSlotsSystem : EntitySystem
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private SharedContainerSystem _containers = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private SharedHandsSystem _handsSystem = default!;
     [Dependency] private SharedAudioSystem _audioSystem = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private ISerializationManager _serializationManager = default!;
+
+    [Dependency] private EntityQuery<ItemSlotsComponent> _itemSlotsQuery;
+    [Dependency] private EntityQuery<HandsComponent> _handsQuery;
 
     /// <summary>
     /// Spawn in starting items for any item slots that should have one.
@@ -133,7 +139,7 @@ public sealed partial class ItemSlotsSystem : EntitySystem
 
         // Don't log missing resolves. When an entity has all of its components removed, the ItemSlotsComponent may
         // have been removed before some other component that added an item slot (and is now trying to remove it).
-        if (!Resolve(ent, ref ent.Comp, logMissing: false))
+        if (!_itemSlotsQuery.Resolve(ent, ref ent.Comp, false))
             return;
 
         ent.Comp.Slots.Remove(slot.ContainerSlot.ID);
@@ -150,7 +156,7 @@ public sealed partial class ItemSlotsSystem : EntitySystem
     {
         itemSlot = null;
 
-        if (!Resolve(ent, ref ent.Comp))
+        if (!_itemSlotsQuery.Resolve(ent, ref ent.Comp))
             return false;
 
         return ent.Comp.Slots.TryGetValue(slotId, out itemSlot);
@@ -162,7 +168,7 @@ public sealed partial class ItemSlotsSystem : EntitySystem
     /// <returns>The item in the slot, or null if the slot is empty or the entity doesn't have an <see cref="ItemSlotsComponent"/>.</returns>
     public EntityUid? GetItemOrNull(Entity<ItemSlotsComponent?> ent, string id)
     {
-        if (!Resolve(ent, ref ent.Comp, logMissing: false))
+        if (!_itemSlotsQuery.Resolve(ent, ref ent.Comp, false))
             return null;
 
         return ent.Comp.Slots.GetValueOrDefault(id)?.Item;
