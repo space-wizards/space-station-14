@@ -97,7 +97,7 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
                 || !hasItem)
                 continue;
 
-            if (!TryComp<ClothingComponent>(ent, out var clothing))
+            if (!TryComp<ClothingComponent>(ent, out _))
                 return;
 
             if (!TryComp(args.Equipee, out InventoryComponent? inventory))
