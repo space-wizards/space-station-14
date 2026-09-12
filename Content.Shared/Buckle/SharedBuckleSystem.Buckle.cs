@@ -260,7 +260,7 @@ public abstract partial class SharedBuckleSystem
         if (!_container.IsInSameOrNoContainer((buckleUid, null, null), (strapUid, null, null)))
             return false;
 
-        if (user != null && !HasComp<HandsComponent>(user))
+        if (user != null && !HasComp<HandsComponent>(user) && strapUid != user)
         {
             if (popup)
                 _popup.PopupEntity(Loc.GetString("buckle-component-no-hands-message"), user.Value, user);
@@ -526,7 +526,7 @@ public abstract partial class SharedBuckleSystem
             if (!_interaction.InRangeUnobstructed(user.Value, strap.Owner, buckle.Comp.Range, popup: popup))
                 return false;
 
-            if (user.Value != buckle.Owner && !ActionBlocker.CanComplexInteract(user.Value))
+            if (user.Value != buckle.Owner && !ActionBlocker.CanComplexInteract(user.Value) && user.Value != strap.Owner)
                 return false;
         }
 
