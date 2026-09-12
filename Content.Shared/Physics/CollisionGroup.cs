@@ -14,7 +14,7 @@ namespace Content.Shared.Physics;
 public enum CollisionGroup
 {
     None               = 0,
-    Opaque             = 1 << 0, // 1 Blocks light, can be hit by lasers
+    Opaque             = 1 << 0, // 1 Blocks lasers
     Impassable         = 1 << 1, // 2 Walls, objects impassable by any means
     MidImpassable      = 1 << 2, // 4 Mobs, players, crabs, etc
     HighImpassable     = 1 << 3, // 8 Things on top of tables and things that block tall/large mobs.
@@ -24,6 +24,7 @@ public enum CollisionGroup
     InteractImpassable = 1 << 7, // 128 Blocks interaction/InRangeUnobstructed
     // Y dis door passable when all the others impassable / collision.
     DoorPassable       = 1 << 8, // 256 Allows door to close over top, Like blast doors over conveyors for disposals rooms/cargo.
+    BlocksVision       = 1 << 9, // 512 Things that entirely block line of sight (e.g., solid walls).
 
     MapGrid = MapGridHelpers.CollisionGroup, // Map grids, like shuttles. This is the actual grid itself, not the walls or other entities connected to the grid.
 
@@ -66,7 +67,7 @@ public enum CollisionGroup
 
     // Airlocks, windoors, firelocks
     GlassAirlockLayer = HighImpassable | MidImpassable | BulletImpassable | InteractImpassable,
-    AirlockLayer = Opaque | GlassAirlockLayer,
+    AirlockLayer = Opaque | GlassAirlockLayer | BlocksVision,
 
     // Airlock assembly
     HumanoidBlockLayer = HighImpassable | MidImpassable,
@@ -75,10 +76,10 @@ public enum CollisionGroup
     SlipLayer = MidImpassable | LowImpassable,
     ItemMask = Impassable | HighImpassable,
     ThrownItem = Impassable | HighImpassable | BulletImpassable,
-    WallLayer = Opaque | Impassable | HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable,
+    WallLayer = Opaque | Impassable | HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable | BlocksVision,
     GlassLayer = Impassable | HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable,
     HalfWallLayer = MidImpassable | LowImpassable,
-    FlimsyLayer = Opaque | HighImpassable | MidImpassable | LowImpassable | InteractImpassable,
+    FlimsyLayer = Opaque | HighImpassable | MidImpassable | LowImpassable | InteractImpassable | BlocksVision,
 
     // Allows people to interact past and target players inside of this
     SpecialWallLayer = Opaque | HighImpassable | MidImpassable | LowImpassable | BulletImpassable,
