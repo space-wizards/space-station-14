@@ -17,6 +17,12 @@ public sealed partial class ReplacementAccentPrototype : IPrototype
     public string[]? FullReplacements;
 
     /// <summary>
+    /// Default to use with FullReplacements if the text doesn't end with special punctuation
+    /// </summary>
+    [DataField]
+    public string DefaultPunctuation = ".";
+
+    /// <summary>
     /// If this dictionary is non-null and <see cref="FullReplacements"/> is null, any keys surrounded by spaces
     /// (words) will be replaced by the value, attempting to intelligently keep capitalization.
     /// </summary>
