@@ -6,6 +6,11 @@
     mode: SnapgridCenter
   components:
   - type: DragonRift
+    spawn: !type:GroupSelector
+      children:
+      - id: MobCarpDragon
+      - id: MobSharkDragon
+        weight: 0.15
   - type: Transform
     anchored: true
   - type: Physics
@@ -46,3 +51,24 @@
   - type: EmitSoundOnSpawn
     sound:
       path: /Audio/Weapons/Guns/Gunshots/rocket_launcher.ogg
+
+- type: entity
+  id: MobDragonBrood
+  abstract: true
+  components:
+  - type: GhostTakeoverAvailable
+  - type: HTN
+    rootTask:
+      task: DragonCarpCompound
+  - type: Flammable
+    damage:
+      types: { }
+  - type: Temperature
+  - type: TemperatureDamage
+    heatDamageThreshold: 1200
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonistFlock
