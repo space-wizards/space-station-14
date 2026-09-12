@@ -1,9 +1,6 @@
-using System.ComponentModel.Design;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.StatusEffectNew.Components;
 using Robust.Shared.Prototypes;
-using YamlDotNet.Core.Tokens;
 
 namespace Content.Shared.StatusEffectNew;
 
@@ -23,7 +20,7 @@ public sealed partial class StatusEffectsSystem
         EntityUid target,
         EntProtoId effectProto,
         [NotNullWhen(true)] out EntityUid? statusEffect,
-        TimeSpan duration,
+        TimeSpan? duration,
         TimeSpan? delay = null
     )
     {
@@ -44,8 +41,8 @@ public sealed partial class StatusEffectsSystem
     }
 
 
-    ///<inheritdoc cref="TryAddStatusEffectDuration(EntityUid,EntProtoId,out EntityUid?,TimeSpan,TimeSpan?)"/>
-    public bool TryAddStatusEffectDuration(EntityUid target, EntProtoId effectProto, TimeSpan duration, TimeSpan? delay = null)
+    ///<inheritdoc cref="TryAddStatusEffectDuration(EntityUid,EntProtoId,out EntityUid?,TimeSpan?,TimeSpan?)"/>
+    public bool TryAddStatusEffectDuration(EntityUid target, EntProtoId effectProto, TimeSpan? duration, TimeSpan? delay = null)
     {
         return TryAddStatusEffectDuration(target, effectProto, out _, duration, delay);
     }
@@ -59,7 +56,7 @@ public sealed partial class StatusEffectsSystem
     /// <param name="duration">Duration of status effect. Leave null and the effect will be permanent until it is removed using <c>TryRemoveStatusEffect</c>.</param>
     /// <param name="delay">The delay of the effect. If a start time already exists, the closest time takes precedence. Leave null for the effect to be instant.</param>
     /// <param name="statusEffect">The EntityUid of the status effect we have just created or null if it doesn't exist.</param>
-    /// <returns>True if effect exists and its duration is set properly, false in case effect cannot be applied.</returns>
+    /// <returns>True if effect exists and its duration is set properly, false in case effect cannot be applied. Delay adjustment success/failure is not reported.</returns>
     public bool TrySetStatusEffectDuration(
         EntityUid target,
         EntProtoId effectProto,
@@ -95,14 +92,15 @@ public sealed partial class StatusEffectsSystem
 
     /// <summary>
     /// Updates duration of effect to larger value between provided <see cref="duration"/> and current effect duration.
-    /// Tries to add status effect if it is not yet present on entity.
+    /// Tries to add status effect if it is not yet present on entity.<br/>
+    /// Use <see cref="TrySetDuration"/> to overwrite duration to a potentially smaller value.
     /// </summary>
     /// <param name="target">The target entity to which the effect should be added.</param>
     /// <param name="effectProto">ProtoId of the status effect entity. Make sure it has StatusEffectComponent on it.</param>
-    /// <param name="duration">Duration of status effect. Leave null and the effect will be permanent until it is removed using <c>TryRemoveStatusEffect</c>.</param>
+    /// <param name="duration">Duration of status effect. Leave null and the effect will be permanent until it is removed using <c>TryRemoveStatusEffect</c>. Method fails if duration ≤ 0.</param>
     /// <param name="delay">The delay of the effect. If a start time already exists, the closest time takes precedence. Leave null for the effect to be instant.</param>
     /// <param name="statusEffect">The EntityUid of the status effect we have just created or null if it doesn't exist.</param>
-    /// <returns>True if effect exists and its duration is set properly, false in case effect cannot be applied.</returns>
+    /// <returns>True if effect exists and its duration is set properly, false in case effect cannot be applied. Delay adjustment success/failure is not reported.</returns>
     public bool TryUpdateStatusEffectDuration(
         EntityUid target,
         EntProtoId effectProto,
@@ -274,10 +272,10 @@ public sealed partial class StatusEffectsSystem
     /// <param name="effectProto">The prototype ID of the status effect to modify.</param>
     /// <param name="time">
     /// The time adjustment to apply to the status effect. Positive values extend the duration,
-    /// while negative values reduce it.
+    /// while negative values reduce it. Null makes it permanent.
     /// </param>
     /// <returns> True if duration was edited successfully, false otherwise.</returns>
-    public bool TryAddTime(EntityUid uid, EntProtoId effectProto, TimeSpan time)
+    public bool TryAddTime(EntityUid uid, EntProtoId effectProto, TimeSpan? time)
     {
         if (!_containerQuery.TryComp(uid, out var container))
             return false;
@@ -301,7 +299,7 @@ public sealed partial class StatusEffectsSystem
     /// <param name="effectProto">The prototype ID of the status effect to modify.</param>
     /// <param name="time">
     /// The time adjustment to apply to the status effect. Positive values extend the duration,
-    /// while negative values reduce it.
+    /// while negative values reduce it. Null removes the status effect.
     /// </param>
     /// <returns> True if duration was edited successfully, false otherwise.</returns>
     public bool TryRemoveTime(EntityUid uid, EntProtoId effectProto, TimeSpan? time)
@@ -310,13 +308,14 @@ public sealed partial class StatusEffectsSystem
     }
 
     /// <summary>
-    /// Attempts to set the remaining time for a status effect on an entity.
+    /// Attempts to set the end time for an existing status effect on an entity (as in the exact timespan when the effect will end).
+    /// Does nothing if this effect is not present on the entity.
     /// </summary>
     /// <param name="uid">The target entity on which the effect is applied.</param>
     /// <param name="effectProto">The prototype ID of the status effect to modify.</param>
-    /// <param name="time">The new duration for the status effect.</param>
-    /// <returns> True if duration was set successfully, false otherwise.</returns>
-    public bool TrySetTime(EntityUid uid, EntProtoId effectProto, TimeSpan time)
+    /// <param name="time">The new end time for the status effect. Null makes the effect last indefinitely.</param>
+    /// <returns> True if end time was set successfully, false otherwise.</returns>
+    public bool TrySetTime(EntityUid uid, EntProtoId effectProto, TimeSpan? time)
     {
         if (!_containerQuery.TryComp(uid, out var container))
             return false;
@@ -327,6 +326,39 @@ public sealed partial class StatusEffectsSystem
             if (meta.EntityPrototype is not null && meta.EntityPrototype == effectProto)
             {
                 SetStatusEffectEndTime(effect, time);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Attempts to set a new duration for an existing status effect on an entity.
+    /// Does nothing if this effect is not present on the entity.
+    /// </summary>
+    /// <param name="uid">The target entity on which the effect is applied.</param>
+    /// <param name="effectProto">The prototype ID of the status effect to modify.</param>
+    /// <param name="duration">The new duration for the status effect. Null makes the effect last indefinitely.</param>
+    /// <returns> True if end time was set successfully, false otherwise.</returns>
+    public bool TrySetDuration(EntityUid uid, EntProtoId effectProto, TimeSpan? duration)
+    {
+        if (!_containerQuery.TryComp(uid, out var container))
+            return false;
+        
+        foreach (var effect in container.ActiveStatusEffects?.ContainedEntities ?? [])
+        {
+            var meta = MetaData(effect);
+            if (meta.EntityPrototype is not null && meta.EntityPrototype == effectProto)
+            {
+                if (duration is null)
+                {
+                    SetStatusEffectEndTime(effect, duration);
+                    return true;
+                }
+                if (!_effectQuery.TryComp(effect, out var effectComp))
+                    continue;
+                
+                SetStatusEffectEndTime(effect, effectComp.StartEffectTime + duration.Value);
                 return true;
             }
         }
