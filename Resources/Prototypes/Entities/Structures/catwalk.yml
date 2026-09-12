@@ -21,7 +21,10 @@
     anchored: true
   - type: IconSmooth
     key: catwalk
-    base: catwalk_
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ catwalk ]
+      base: catwalk_
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepCatwalk

@@ -33,9 +33,10 @@
     state: full
   - type: IconSmooth
     key: phoron
-    base: water
-    additionalKeys:
-    - walls
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ phoron, walls ]
+      base: water
   - type: Physics
     bodyType: Static
   - type: Fixtures
