@@ -1,5 +1,10 @@
 ## UI
 
+gas-canister-description = A canister that can contain any type of gas. {$isBeingPainted ->
+    [true] This one is supposed to contain {$gas}.
+    *[false] {""}
+} It can be attached to connector ports using a wrench.
+
 # Bound Interface
 
 gas-canister-bound-user-interface-title = Gas Canister
