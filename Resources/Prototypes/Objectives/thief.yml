@@ -205,17 +205,21 @@
 
 - type: entity
   parent: BaseThiefStealObjective
-  id: ClothingHeadHatWardenStealObjective
+  id: SecurityTechFabCircuitboardStealObjective
   components:
+  - type: NotJobRequirement
+    jobs: [ SecurityOfficer, Detective, Warden ]
   - type: StealCondition
-    stealGroup: ClothingHeadHatWarden
+    stealGroup: SecurityTechFabCircuitboard
   - type: Objective
-    difficulty: 1.2
+    difficulty: 2
 
 - type: entity
   parent: BaseThiefStealObjective
   id: WantedListCartridgeStealObjective
   components:
+  - type: NotJobRequirement
+    jobs: [ SecurityOfficer, Detective, Warden ]
   - type: StealCondition
     stealGroup: WantedListCartridge
   - type: Objective
@@ -245,12 +249,14 @@
 
 - type: entity
   parent: BaseThiefStealObjective
-  id: ClothingHeadsetAltMedicalStealObjective
+  id: HeadsetAltStealObjective
   components:
   - type: NotJobRequirement
-    jobs: [ ChiefMedicalOfficer ]
+    jobs: [ Captain ]
   - type: StealCondition
-    stealGroup: ClothingHeadsetAltMedical
+    stealGroup: HeadsetAlt
+    minCollectionSize: 3
+    maxCollectionSize: 5
   - type: Objective
     difficulty: 1
 
@@ -292,7 +298,7 @@
   id: ExpeditionsCircuitboardStealObjective
   components:
   - type: NotJobRequirement
-    jobs: [ SalvageSpecialist ]
+    jobs: [ CargoTechnician, SalvageSpecialist ]
   - type: StealCondition
     stealGroup: SalvageExpeditionsComputerCircuitboard
   - type: Objective
@@ -306,6 +312,17 @@
     jobs: [ CargoTechnician, SalvageSpecialist ]
   - type: StealCondition
     stealGroup: CargoShuttleConsoleCircuitboard
+  - type: Objective
+    difficulty: 0.7
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: SalvageMagnetCircuitboardStealObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ CargoTechnician, SalvageSpecialist ]
+  - type: StealCondition
+    stealGroup: SalvageMagnetMachineCircuitboard
   - type: Objective
     difficulty: 0.7
 
@@ -376,39 +393,6 @@
     stealGroup: FaxMachineCaptain
   - type: Objective
     difficulty: 2
-
-- type: entity
-  parent: BaseThiefStealStructureObjective
-  id: ChemDispenserStealObjective
-  components:
-  - type: NotJobRequirement
-    jobs: [ Chemist, Scientist ]
-  - type: StealCondition
-    stealGroup: ChemDispenser
-  - type: Objective
-    difficulty: 1
-
-- type: entity
-  parent: BaseThiefStealStructureObjective
-  id: XenoArtifactStealObjective
-  components:
-  - type: NotJobRequirement
-    jobs: [ Scientist ]
-  - type: StealCondition
-    stealGroup: XenoArtifact
-  - type: Objective
-    difficulty: 0.5
-
-- type: entity
-  parent: BaseThiefStealStructureObjective
-  id: FreezerHeaterStealObjective
-  components:
-  - type: NotJobRequirement
-    jobs: [ AtmosphericTechnician, MedicalDoctor, Chemist, Paramedic, Psychologist, Scientist, Chef ]
-  - type: StealCondition
-    stealGroup: FreezerHeater
-  - type: Objective
-    difficulty: 0.5
 
 - type: entity
   parent: BaseThiefStealStructureObjective
