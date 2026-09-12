@@ -108,3 +108,13 @@
   category: Disabilities
   components:
     - type: ImpairedMobility
+
+- type: trait
+  id: WheelchairUser
+  name: trait-wheelchair-user-name
+  description: trait-wheelchair-user-desc
+  category: Disabilities
+  components:
+    - type: BuckleOnMapInit
+      prototype: VehicleWheelchair
+    - type: LegsParalyzed

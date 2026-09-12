@@ -261,6 +261,10 @@ public abstract partial class SharedStunSystem
         if (!Resolve(entity, ref entity.Comp1, false) || !_cfgManager.GetCVar(CCVars.MovementCrawling))
             return;
 
+        if (TryComp<BuckleComponent>(entity, out var buckle) && buckle.Buckled) // if the person is buckled you shouldn't be able to lay down.
+        {
+            return;
+        }
         if (!Resolve(entity, ref entity.Comp2, false))
         {
             TryKnockdown(entity.Owner, entity.Comp1.DefaultKnockedDuration, true, false, false);
