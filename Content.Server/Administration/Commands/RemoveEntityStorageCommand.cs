@@ -36,9 +36,9 @@ namespace Content.Server.Administration.Commands
 
             var parent = transform.ParentUid;
 
-            if (_entManager.TryGetComponent<EntityStorageComponent>(parent, out var storage))
+            if (_entManager.HasComponent<EntityStorageComponent>(parent))
             {
-                entstorage.Remove(entityUid.Value, parent, storage);
+                entstorage.Remove(entityUid.Value);
             }
             else
             {
