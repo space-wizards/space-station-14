@@ -8,5 +8,4 @@
     bodyType: Static
     canCollide: false
   - type: TimedDespawn
-  - type: SpawnOnDespawn
-    prototype: Ash # placeholder (required by component), overridden at runtime
+    # we can't declare the SpawnOnDespawnComponent because the entity is required on yml

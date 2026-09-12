@@ -5,10 +5,10 @@
   components:
   - type: Action
     itemIconStyle: BigAction
-    icon:
-      sprite: Objects/Magic/magicactions.rsi
-      state: spell_default
-
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
 - type: entity
   parent: BaseRuneAction
   id: ActionFlashRune

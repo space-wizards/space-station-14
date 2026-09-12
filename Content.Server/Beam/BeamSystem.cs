@@ -5,7 +5,6 @@ using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
@@ -19,7 +18,6 @@ public sealed partial class BeamSystem : SharedBeamSystem
     [Dependency] private TransformSystem _transform = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedBroadphaseSystem _broadphase = default!;
-    [Dependency] private SharedPhysicsSystem _physics = default!;
 
     private static readonly EntProtoId VirtualBeamEntityControllerId = "VirtualBeamEntityController";
 
@@ -81,23 +79,22 @@ public sealed partial class BeamSystem : SharedBeamSystem
         var ent = Spawn(prototype, beamSpawnPos, rotation: userAngle);
         var shape = new EdgeShape(distanceCorrection, new Vector2(0, 0));
 
-        if (!TryComp<PhysicsComponent>(ent, out var physics) || !TryComp<BeamComponent>(ent, out var beam))
+        if (!TryComp<BeamComponent>(ent, out var beam))
             return;
 
-        FixturesComponent? manager = null;
-        _fixture.TryCreateFixture(
-            ent,
-            shape,
-            "BeamBody",
-            hard: false,
-            collisionMask: (int)CollisionGroup.ItemMask,
-            collisionLayer: (int)CollisionGroup.MobLayer,
-            manager: manager,
-            body: physics);
+        if (TryComp<PhysicsComponent>(ent, out var physics) && physics.CanCollide)
+        {
+            _fixture.TryCreateFixture(
+                    ent,
+                    shape,
+                    BeamComponent.FixtureID,
+                    hard: false,
+                    collisionMask: (int)CollisionGroup.ItemMask,
+                    collisionLayer: (int)CollisionGroup.MobLayer,
+                    body: physics);
 
-        _physics.SetBodyType(ent, BodyType.Dynamic, manager: manager, body: physics);
-        _physics.SetCanCollide(ent, true, manager: manager, body: physics);
-        _broadphase.RegenerateContacts((ent, physics, manager));
+            _broadphase.RegenerateContacts((ent, physics));
+        }
 
         var distanceLength = distanceCorrection.Length();
 

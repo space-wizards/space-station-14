@@ -1,9 +1,12 @@
-using System.Linq;
-using System.Numerics;
 using Content.Shared.EntityTable;
+using Content.Shared.EntityTable.Conditions;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
+using System;
+using System.Linq;
+using System.Numerics;
 
 namespace Content.Shared.Containers;
 
@@ -27,24 +30,25 @@ public sealed partial class ContainerFillSystem : EntitySystem
             return;
 
         var xform = Transform(uid);
-        var coords = new EntityCoordinates(uid, Vector2.Zero);
 
-        foreach (var (contaienrId, prototypes) in component.Containers)
+        if (!_transform.TryGetMapOrGridCoordinates(uid, out var coords, xform))
+            return;
+
+        foreach (var (containerId, prototypes) in component.Containers)
         {
-            if (!_containerSystem.TryGetContainer(uid, contaienrId, out var container, containerComp))
+            if (!_containerSystem.TryGetContainer(uid, containerId, out var container, containerComp))
             {
-                Log.Error($"Entity {ToPrettyString(uid)} with a {nameof(ContainerFillComponent)} is missing a container ({contaienrId}).");
+                Log.Error($"Entity {ToPrettyString(uid)} with a {nameof(ContainerFillComponent)} is missing a container ({containerId}).");
                 continue;
             }
 
             foreach (var proto in prototypes)
             {
-                var ent = Spawn(proto, coords);
+                var ent = Spawn(proto, coords.Value);
                 if (!_containerSystem.Insert(ent, container, containerXform: xform))
                 {
                     var alreadyContained = container.ContainedEntities.Count > 0 ? string.Join("\n", container.ContainedEntities.Select(e => $"\t - {ToPrettyString(e)}")) : "< empty >";
                     Log.Error($"Entity {ToPrettyString(uid)} with a {nameof(ContainerFillComponent)} failed to insert an entity: {ToPrettyString(ent)}.\nCurrent contents:\n{alreadyContained}");
-                    _transform.AttachToGridOrMap(ent);
                     break;
                 }
             }
@@ -70,7 +74,19 @@ public sealed partial class ContainerFillSystem : EntitySystem
                 continue;
             }
 
-            var spawns = _entityTable.GetSpawns(table).ToList();
+            EntityTableContext? ctx = null;
+            if (ent.Comp.ContextContainers)
+            {
+                // Pass in the container being filled so conditions can look at it
+                ctx = new EntityTableContext(
+                    new Dictionary<string, object>
+                    {
+                        [EmptyContainerCondition.ContainerContextKey] = container,
+                    }
+                );
+            }
+
+            var spawns = _entityTable.GetSpawns(table, ctx: ctx).ToList();
 
             if (ent.Comp.Sort)
             {

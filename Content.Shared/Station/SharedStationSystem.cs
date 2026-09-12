@@ -1,8 +1,10 @@
 using System.Linq;
 using Content.Shared.Station.Components;
 using JetBrains.Annotations;
+using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Player;
 
 namespace Content.Shared.Station;
 
@@ -10,8 +12,14 @@ public abstract partial class SharedStationSystem : EntitySystem
 {
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private MetaDataSystem _meta = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private ISharedPlayerManager _player = default!;
 
-    [Dependency] private EntityQuery<StationMemberComponent> _stationMemberQuery = default!;
+    [Dependency] private EntityQuery<StationMemberComponent> _stationMemberQuery;
+    [Dependency] private EntityQuery<MapGridComponent> _gridQuery;
+
+    private ValueList<MapId> _mapIds;
+    private ValueList<(Box2Rotated Bounds, MapId MapId)> _gridBounds;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -177,6 +185,104 @@ public abstract partial class SharedStationSystem : EntitySystem
     }
 
     /// <summary>
+    /// Tries to retrieve a filter for everything in the station the source is on.
+    /// </summary>
+    /// <param name="source">The entity to use to find the station.</param>
+    /// <param name="range">The range around the station</param>
+    /// <returns></returns>
+    public Filter GetInOwningStation(EntityUid source, float range = 32f)
+    {
+        var station = GetOwningStation(source);
+
+        if (TryComp<StationDataComponent>(station, out var data))
+        {
+            return GetInStation(data);
+        }
+
+        return Filter.Empty();
+    }
+
+    /// <summary>
+    /// Retrieves a filter for everything in a particular station or near its member grids.
+    /// </summary>
+    public Filter GetInStation(StationDataComponent dataComponent, float range = 32f)
+    {
+        var filter = Filter.Empty();
+        _mapIds.Clear();
+
+        // First collect all valid map IDs where station grids exist
+        foreach (var gridUid in dataComponent.Grids)
+        {
+            if (!TryComp(gridUid, out TransformComponent? xform))
+                continue;
+
+            var mapId = xform.MapID;
+            if (!_mapIds.Contains(mapId))
+                _mapIds.Add(mapId);
+        }
+
+        // Cache the rotated bounds for each grid
+        _gridBounds.Clear();
+
+        foreach (var gridUid in dataComponent.Grids)
+        {
+            if (!_gridQuery.TryComp(gridUid, out var grid) ||
+                !TryComp(gridUid, out TransformComponent? gridXform))
+            {
+                continue;
+            }
+
+            var (worldPos, worldRot) = _transform.GetWorldPositionRotation(gridXform);
+            var localBounds = grid.LocalAABB.Enlarged(range);
+
+            // Create a rotated box using the grid's transform
+            var rotatedBounds = new Box2Rotated(
+                localBounds,
+                worldRot,
+                worldPos);
+
+            _gridBounds.Add((rotatedBounds, gridXform.MapID));
+        }
+
+        foreach (var session in Filter.GetAllPlayers(_player))
+        {
+            var entity = session.AttachedEntity;
+            if (entity == null || !TryComp(entity, out TransformComponent? xform))
+                continue;
+
+            var mapId = xform.MapID;
+
+            if (!_mapIds.Contains(mapId))
+                continue;
+
+            // Check if the player is directly on any station grid
+            var gridUid = xform.GridUid;
+            if (gridUid != null && dataComponent.Grids.Contains(gridUid.Value))
+            {
+                filter.AddPlayer(session);
+                continue;
+            }
+
+            // If not directly on a grid, check against cached rotated bounds
+            var position = _transform.GetWorldPosition(xform);
+
+            foreach (var (bounds, boundsMapId) in _gridBounds)
+            {
+                // Skip bounds on different maps
+                if (boundsMapId != mapId)
+                    continue;
+
+                if (!bounds.Contains(position))
+                    continue;
+
+                filter.AddPlayer(session);
+                break;
+            }
+        }
+
+        return filter;
+    }
+
     /// Returns true if a entity's parent is the station, and false if the entity is not on the station
     /// </summary>
     /// <param name="entity">The entity to check if is on a grid</param>

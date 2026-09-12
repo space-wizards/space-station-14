@@ -301,6 +301,20 @@ public sealed partial class DoorComponent : Component
     [DataField]
     public bool ClickOpen = true;
 
+    /// <summary>
+    /// If true, the door closing check will try to match only entities intersecting the door's first fixture.
+    /// If false, the door will check the full tile the door is on.
+    /// </summary>
+    [DataField]
+    public bool CheckFixtureCollision;
+
+    /// <summary>
+    /// If true, the door will be able to close over entities with the MachineLayer fixture layer.
+    /// Useful for windoors or other thin doors.
+    /// </summary>
+    [DataField]
+    public bool AllowMachineLayer;
+
     [DataField(customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
     public int OpenDrawDepth = (int) DrawDepth.DrawDepth.Doors;
 

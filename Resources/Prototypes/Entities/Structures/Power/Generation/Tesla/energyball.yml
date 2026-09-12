@@ -92,7 +92,7 @@
     jumpMaxInterval: 15
   - type: WarpPoint
     follow: true
-    location: tesla ball
+    location: location-tesla-ball
   - type: Sprite
     drawdepth: Effects
     sprite: Structures/Power/Generation/Tesla/energy_ball.rsi

@@ -39,6 +39,7 @@
       curve: !type:PresetCurve
         preset: TargetDistance
     - !type:FoodValueCon
+      hungerThreshold: Peckish
       curve: !type:QuadraticCurve
         slope: 1.0
         exponent: 0.4
@@ -58,6 +59,7 @@
     curve: !type:PresetCurve
       preset: TargetDistance
   - !type:DrinkValueCon
+    thirstThreshold: Thirsty
     curve: !type:QuadraticCurve
       slope: 1.0
       exponent: 0.4

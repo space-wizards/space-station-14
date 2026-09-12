@@ -1,0 +1,17 @@
+- type: antagTag
+  id: OffStation # The antag comes from space or is otherwise uninvolved in the station gameplay loop. (Ex. Ninja, Nukies, Blob)
+
+- type: antagTag
+  id: OnStation # The antag comes from the station or is otherwise involved in the station gameplay loop. (Ex. Traitor, Thieves, Lings)
+
+- type: antagTag
+  id: Unkillable # The antag cannot be killed by conventional means or is fully unkillable. (Ex. Lings)
+
+- type: antagTag
+  id: Roundstart # This antag is selected at the start of the round. (Ex. Traitors, Initial Infected, Revs)
+
+- type: antagTag
+  id: Midround # This antag can be chosen midround via events. (Ex. Clones, Initial Infected)
+
+- type: antagTag
+  id: Converted # This antag is selected by being converted midround. (Ex. Revs, Zombies, Xorgs)

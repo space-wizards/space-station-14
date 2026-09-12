@@ -13,5 +13,5 @@ public sealed partial class RecyclerVisualsComponent : Component
     /// Base key for the visual state.
     /// </summary>
     [DataField]
-    public string BaseKey = "grinder-o";
+    public string BaseKey = "recycler-o";
 }

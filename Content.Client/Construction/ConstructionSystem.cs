@@ -25,7 +25,6 @@ namespace Content.Client.Construction
     {
         [Dependency] private IPlayerManager _playerManager = default!;
         [Dependency] private ExamineSystemShared _examineSystem = default!;
-        [Dependency] private SharedTransformSystem _transformSystem = default!;
         [Dependency] private SpriteSystem _sprite = default!;
         [Dependency] private PopupSystem _popupSystem = default!;
 
@@ -284,18 +283,17 @@ namespace Content.Client.Construction
             if (GhostPresent(loc))
                 return false;
 
-            var predicate = GetPredicate(prototype.CanBuildInImpassable, _transformSystem.ToMapCoordinates(loc));
+            var predicate = GetPredicate(prototype.CanBuildInImpassable, TransformSystem.ToMapCoordinates(loc));
             if (!_examineSystem.InRangeUnOccluded(user, loc, 20f, predicate: predicate))
                 return false;
 
             if (!CheckConstructionConditions(prototype, loc, dir, user, showPopup: true))
                 return false;
 
-            ghost = Spawn("constructionghost", loc);
+            ghost = SpawnAttachedTo("constructionghost", loc, rotation: dir.ToAngle());
             var comp = Comp<ConstructionGhostComponent>(ghost.Value);
             comp.Prototype = prototype;
             comp.GhostId = ghost.GetHashCode();
-            Comp<TransformComponent>(ghost.Value).LocalRotation = dir.ToAngle();
             _ghosts.Add(comp.GhostId, ghost.Value);
 
             var sprite = Comp<SpriteComponent>(ghost.Value);

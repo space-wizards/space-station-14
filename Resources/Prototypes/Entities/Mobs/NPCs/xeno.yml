@@ -2,7 +2,7 @@
 - type: entity
   name: burrower
   id: MobXeno
-  parent: [ SimpleSpaceMobBase, MobNightVision ]
+  parent: [ SimpleSpaceMobBase, MobNightVision, BaseMobDestructible ]
   description: They mostly come at night. Mostly.
   components:
   - type: Insulated
@@ -105,8 +105,6 @@
   - type: GhostTakeoverAvailable
   - type: TypingIndicator
     proto: alien
-  - type: Temperature
-    currentTemperature: 310.15
   - type: TemperatureDamage
     heatDamageThreshold: 360
     coldDamageThreshold: -150
@@ -360,7 +358,7 @@
 
 - type: entity
   name: space adder
-  parent: [SimpleSpaceMobBase, BaseSlicingRefinable]
+  parent: [SimpleSpaceMobBase, BaseSlicingRefinable, BaseMobDestructible]
   id: MobPurpleSnake
   description: A menacing purple snake from Kepler-283c.
   components:
@@ -469,7 +467,7 @@
 - type: entity
   name: '"Dale"'
   description: A praetorian left over from the station's initial security sweep. Has a pair of bloodied dog tags engraved with the name "Pvt. Dale" stuck in its maw.
-  parent: SimpleSpaceMobBase
+  parent: [SimpleSpaceMobBase, BaseMobDestructible]
   id: MobXenoLonePraetorianNoGhost
   components:
   - type: Insulated
@@ -529,8 +527,6 @@
       amount: 5
   - type: TypingIndicator
     proto: alien
-  - type: Temperature
-    currentTemperature: 310.15
   - type: TemperatureDamage
     heatDamageThreshold: 360
     coldDamageThreshold: -150

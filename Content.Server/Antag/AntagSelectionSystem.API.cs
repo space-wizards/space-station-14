@@ -4,7 +4,7 @@ using Content.Server.Antag.Selectors;
 using Content.Shared.Antag;
 using Content.Shared.Chat;
 using Content.Shared.GameTicking.Components;
-using Content.Shared.Ghost;
+using Content.Shared.Ghost.Components;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
 using JetBrains.Annotations;

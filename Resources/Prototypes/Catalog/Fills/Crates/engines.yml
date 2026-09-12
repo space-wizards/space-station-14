@@ -133,21 +133,6 @@
 
 - type: entity
   parent: CrateEngineeringSecure
-  id: CrateEngineeringShuttle
-  name: shuttle powering crate
-  description: A crate containing all needs for shuttle powering.
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: WallmountSubstationElectronics
-        - id: WallmountGeneratorAPUElectronics
-        - id: HandheldGPSBasic
-        - id: InflatableDoorStack1
-
-- type: entity
-  parent: CrateEngineeringSecure
   id: CrateEngineeringTeslaGenerator
   name: tesla generator crate
   description: A tesla generator. God save you.

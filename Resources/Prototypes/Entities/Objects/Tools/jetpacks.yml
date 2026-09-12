@@ -70,13 +70,15 @@
   description: Toggles the jetpack, giving you movement outside the station.
   components:
   - type: Action
-    icon:
-      sprite: Objects/Tanks/Jetpacks/blue.rsi
-      state: icon
-    iconOn:
-      sprite: Objects/Tanks/Jetpacks/blue.rsi
-      state: icon-on
     useDelay: 1.0
+  - type: Sprite
+    sprite: Objects/Tanks/Jetpacks/blue.rsi
+    layers:
+    - state: icon
+      map: ["enum.ActionVisuals.Icon"]
+    - state: icon-on
+      map: ["enum.ActionVisuals.IconToggled"]
+      visible: false
   - type: InstantAction
     event: !type:ToggleJetpackEvent
 

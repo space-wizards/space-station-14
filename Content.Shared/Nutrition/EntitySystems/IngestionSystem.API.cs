@@ -59,11 +59,22 @@ public sealed partial class IngestionSystem
     }
 
     /// <summary>
+    /// Check if the action user has an unblocked mouth.
+    /// </summary>
+    /// <param name="user">The mouth action's user to check</param>
+    /// <param name="flags">The slots to check that are not being blocked.</param>
+    /// <returns>True if the user has a free mouth, otherwise False</returns>
+    public bool HasMouthAvailable(EntityUid user, SlotFlags flags = DefaultFlags)
+    {
+        return HasMouthAvailable(user, user, flags);
+    }
+
+    /// <summary>
     ///     Check whether we have an open pie-hole that's in range.
     /// </summary>
     /// <param name="user">The one performing the action</param>
     /// <param name="target">The target whose mouth is checked</param>
-    /// <returns></returns>
+    /// <returns>True if the user has a free mouth that can reach the target, otherwise False</returns>
     public bool HasMouthAvailable(EntityUid user, EntityUid target)
     {
         return HasMouthAvailable(user, target, DefaultFlags);
@@ -224,9 +235,9 @@ public sealed partial class IngestionSystem
                 foreach (var effect in entry.Effects)
                 {
                     // ignores any effect conditions, just cares about how much it can hydrate
-                    if (effect is SatiateHunger hunger)
+                    if (effect is Satiate satiate && satiate.SatiationType == SatiationSystem.Hunger)
                     {
-                        total += hunger.Factor * quantity.Quantity.Float();
+                        total += satiate.Factor * quantity.Quantity.Float();
                     }
                 }
             }
@@ -275,9 +286,9 @@ public sealed partial class IngestionSystem
                 foreach (var effect in entry.Effects)
                 {
                     // ignores any effect conditions, just cares about how much it can hydrate
-                    if (effect is SatiateThirst thirst)
+                    if (effect is Satiate satiate && satiate.SatiationType == SatiationSystem.Thirst)
                     {
-                        total += thirst.Factor * quantity.Quantity.Float();
+                        total += satiate.Factor * quantity.Quantity.Float();
                     }
                 }
             }

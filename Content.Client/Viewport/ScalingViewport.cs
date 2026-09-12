@@ -1,14 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using Content.Shared.CCVar;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Configuration;
 using Robust.Shared.Graphics;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -24,6 +27,8 @@ namespace Content.Client.Viewport
         [Dependency] private IClyde _clyde = default!;
         [Dependency] private IEntityManager _entityManager = default!;
         [Dependency] private IInputManager _inputManager = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
 
         // Internal viewport creation is deferred.
         private IClydeViewport? _viewport;
@@ -36,6 +41,10 @@ namespace Content.Client.Viewport
         private int _fixedRenderScale = 1;
 
         private readonly List<CopyPixelsDelegate<Rgba32>> _queuedScreenshots = new();
+
+        private float _sharpnessStrength;
+        private ShaderInstance? _sharpnessShader;
+        private const string SharpnessShader = "Sharpness";
 
         public int CurrentRenderScale => _curRenderScale;
 
@@ -122,6 +131,13 @@ namespace Content.Client.Viewport
         {
             IoCManager.InjectDependencies(this);
             RectClipContent = true;
+
+            _cfg.OnValueChanged(CCVars.ViewportSharpnessStrength, OnSharpnessStrengthChanged, true);
+        }
+
+        private void OnSharpnessStrengthChanged(int value)
+        {
+            _sharpnessStrength = value / 10f;
         }
 
         protected override void KeyBindDown(GUIBoundKeyEventArgs args)
@@ -170,8 +186,30 @@ namespace Content.Client.Viewport
             var drawBox = GetDrawBox();
             var drawBoxGlobal = drawBox.Translated(GlobalPixelPosition);
             _viewport.RenderScreenOverlaysBelow(handle, this, drawBoxGlobal);
+
+            ApplySharpnessShader(handle);
+
             handle.DrawingHandleScreen.DrawTextureRect(_viewport.RenderTarget.Texture, drawBox);
+
+            if (_sharpnessStrength > 0)
+                handle.DrawingHandleScreen.UseShader(null);
+
             _viewport.RenderScreenOverlaysAbove(handle, this, drawBoxGlobal);
+        }
+
+        private void ApplySharpnessShader(IRenderHandle handle)
+        {
+            if (_sharpnessStrength <= 0)
+                return;
+
+            _sharpnessShader ??= _prototypeManager.Index<ShaderPrototype>(SharpnessShader).InstanceUnique();
+
+            var texture = _viewport!.RenderTarget.Texture;
+            var size = texture.Size;
+            _sharpnessShader.SetParameter("PixelSize", new Vector2(1f / size.X, 1f / size.Y));
+            _sharpnessShader.SetParameter("Strength", _sharpnessStrength);
+
+            handle.DrawingHandleScreen.UseShader(_sharpnessShader);
         }
 
         public void Screenshot(CopyPixelsDelegate<Rgba32> callback)

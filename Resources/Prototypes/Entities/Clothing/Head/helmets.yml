@@ -27,21 +27,34 @@
         Piercing: 0.9
         Heat: 0.9
 
-#Basic Helmet (Security Helmet)
+#Security Helmet
 - type: entity
-  parent: [ClothingHeadHelmetArmoredBase, BaseSecurityContraband]
+  parent: [ClothingHeadHelmetArmoredBase, BaseFoldable, BaseSecurityContraband]
   id: ClothingHeadHelmetBasic
-  name: helmet
-  description: Standard security gear. Protects the head from impacts.
+  name: security helmet
+  description: Standard security gear. Protects the head from impacts, and comes with a visor which can be lowered to protect the eyes.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/security.rsi
+    layers:
+    - state: icon
+      map: [ "unfoldedLayer" ]
+    - state: icon-visor
+      map: [ "foldedLayer" ]
+      visible: false
   - type: Clothing
     sprite: Clothing/Head/Helmets/security.rsi
   - type: Tag
     tags:
     - WhitelistChameleon
     - SecurityHelmet
+  - type: Foldable
+    canFoldInsideContainer: true
+    unfoldVerbText: fold-raise-visor-verb
+    foldVerbText: fold-lower-visor-verb
+  - type: FoldableClothing
+    foldedEquippedPrefix: visor
+    foldedHeldPrefix: visor
   - type: HideLayerClothing
     layers:
       Hair: HEAD
@@ -105,13 +118,19 @@
 
 #Light Riot Helmet
 - type: entity
-  parent: [ClothingHeadHelmetBase, BaseSecurityContraband]
+  parent: [ClothingHeadHelmetBase, BaseFoldable, BaseSecurityContraband]
   id: ClothingHeadHelmetRiot
   name: light riot helmet
-  description: It's a helmet specifically designed to protect against close range attacks.
+  description: It's a helmet specifically designed to protect against close range attacks, it has a foldable visor.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/light_riot.rsi
+    layers:
+    - state: icon
+      map: [ "unfoldedLayer" ]
+    - state: visor-icon
+      map: [ "foldedLayer" ]
+      visible: false
   - type: Clothing
     sprite: Clothing/Head/Helmets/light_riot.rsi
   - type: IngestionBlocker
@@ -121,6 +140,17 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.95
+  - type: Foldable
+    canFoldInsideContainer: true
+    unfoldVerbText: fold-lower-visor-verb
+    foldVerbText: fold-raise-visor-verb
+  - type: FoldableClothing
+    foldedEquippedPrefix: visor
+    foldedHeldPrefix: visor
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - SecurityHelmet
   - type: HideLayerClothing
     layers:
       Hair: HEAD
@@ -263,22 +293,31 @@
 
 #Fire Helmet
 - type: entity
-  parent: ClothingHeadLightBase
+  parent: [ClothingHeadLightBase, TemperatureProtection]
   id: ClothingHeadHelmetFire
   name: fire helmet
   description: An atmos tech's best friend. Provides some heat resistance and looks cool.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/firehelmet.rsi
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-helmet-light
+        shader: unshaded
   - type: Clothing
-    sprite: Clothing/Head/Helmets/firehelmet.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-helmet
     quickEquip: true
   - type: IngestionBlocker
-  - type: TemperatureProtection
-    heatingCoefficient: 0.5
-    coolingCoefficient: 0.8
   - type: FireProtection
     reduction: 0.15 # not fully sealed so less protection
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
   - type: IdentityBlocker
   - type: Tag
     tags:
@@ -288,23 +327,34 @@
     layers:
       Hair: HEAD
       Snout: HEAD
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
 
 #Atmos Fire Helmet
 - type: entity
-  parent: [ClothingHeadLightBase, BaseEngineeringContraband]
+  parent: [ClothingHeadLightBase, TemperatureProtection, BaseEngineeringContraband]
   id: ClothingHeadHelmetAtmosFire
   name: atmos fire helmet
   description: An atmos fire helmet, able to keep the user cool in any situation.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/atmos_firehelmet.rsi
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-helmet-light
+        shader: unshaded
   - type: Clothing
     sprite: Clothing/Head/Helmets/atmos_firehelmet.rsi
     quickEquip: true
+    clothingVisuals:
+      head:
+      - state: equipped-helmet
   - type: IngestionBlocker
-  - type: TemperatureProtection
-    heatingCoefficient: 0.3
-    coolingCoefficient: 0.8
   - type: FireProtection
     reduction: 0.2
   - type: PressureProtection
@@ -320,6 +370,12 @@
       Hair: HEAD
       Snout: HEAD
   - type: BreathMask
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
 
 #Chitinous Helmet
 - type: entity
@@ -473,7 +529,7 @@
 
 #Justice Helmet
 - type: entity
-  parent: ClothingHeadHelmetBasic
+  parent: [ClothingHeadHelmetArmoredBase, BaseSecurityContraband]
   id: ClothingHeadHelmetJustice
   name: justice helm
   description: Advanced security gear. Protects the station from ne'er-do-wells.
@@ -490,6 +546,7 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/justice.rsi
     equippedPrefix: off
+  - type: ItemToggleExaminableStatus
   - type: ItemToggle
     predictable: false # issues between ToggleCellDraw and ItemToggleActiveSound
     onUse: false
@@ -522,7 +579,7 @@
     energy: 2.5
     color: red
     netsync: false
-    mask: /Textures/Effects/LightMasks/double_cone.png
+    lightMask: ConeDouble
   - type: RotatingLight
     speed: 360
   - type: PowerCellSlot
@@ -544,6 +601,10 @@
   - type: HideLayerClothing
     layers:
       Hair: HEAD
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - SecurityHelmet
 
 - type: entity
   parent: ClothingHeadHelmetJustice

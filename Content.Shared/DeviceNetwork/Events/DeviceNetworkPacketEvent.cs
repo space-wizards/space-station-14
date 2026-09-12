@@ -1,47 +1,38 @@
+using Content.Shared.DeviceNetwork.Components;
+
 namespace Content.Shared.DeviceNetwork.Events;
 
 /// <summary>
-/// Event raised when a device network packet gets sent.
+/// Event raised when a device network packet is received by an entity.
 /// </summary>
-public sealed class DeviceNetworkPacketEvent : EntityEventArgs
-{
-    /// <summary>
-    /// The id of the network that this packet is being sent on.
-    /// </summary>
-    public int NetId;
-
-    /// <summary>
-    /// The frequency the packet is sent on.
-    /// </summary>
-    public readonly uint Frequency;
-
-    /// <summary>
-    /// Address of the intended recipient. Null if the message was broadcast.
-    /// </summary>
-    public string? Address;
-
-    /// <summary>
-    /// The device network address of the sending entity.
-    /// </summary>
-    public readonly string SenderAddress;
-
-    /// <summary>
-    /// The entity that sent the packet.
-    /// </summary>
-    public EntityUid Sender;
-
-    /// <summary>
-    /// The data that is being sent.
-    /// </summary>
-    public readonly NetworkPayload Data;
-
-    public DeviceNetworkPacketEvent(int netId, string? address, uint frequency, string senderAddress, EntityUid sender, NetworkPayload data)
-    {
-        NetId = netId;
-        Address = address;
-        Frequency = frequency;
-        SenderAddress = senderAddress;
-        Sender = sender;
-        Data = data;
-    }
-}
+/// <param name="NetId">
+/// ID of the network that this packet is translated on.
+/// Device networks are currently global and only represent the way of signal transmission.
+/// </param>
+/// <param name="Address">
+/// Address of the target device in a target network.
+/// If null, this packet gets broadcasted to all devices in the network.
+/// Empty string means invalid address.
+/// </param>
+/// <param name="Frequency">
+/// Transmit frequency of the sender and receive frequency of the targeted device.
+/// </param>
+/// <param name="SenderAddress">
+/// The device address of the sender. Can be used to send responses to payloads.
+/// </param>
+/// <param name="Sender">
+/// The sender entity with its <see cref="DeviceNetworkComponent"/>.
+/// </param>
+/// <param name="Data">
+/// The <see cref="INetworkPayload"/> of a specific type.
+/// This is the main container for custom information.
+/// </param>
+/// <typeparam name="T">Type of the payload sent by this event.</typeparam>
+[ByRefEvent]
+public readonly record struct DeviceNetworkPacketEvent<T>(
+    int NetId,
+    string? Address,
+    uint Frequency,
+    string SenderAddress,
+    Entity<DeviceNetworkComponent> Sender,
+    T Data) where T : INetworkPayload;

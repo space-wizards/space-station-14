@@ -36,8 +36,7 @@ public sealed partial class RiggableSystem : EntitySystem
         if (!entity.Comp.IsRigged)
             return;
 
-        var charge = _battery.GetCharge(entity.Owner);
-        Explode(entity, charge, args.User);
+        Explode(entity, _battery.GetCharge(entity.Owner).Charge, args.User);
         args.Handled = true;
     }
 
@@ -60,7 +59,7 @@ public sealed partial class RiggableSystem : EntitySystem
         if (!TryComp<ItemToggleComponent>(entity, out var toggleComp) || !toggleComp.Activated)
             return;
 
-        Explode(entity, _battery.GetCharge(entity.Owner));
+        Explode(entity, _battery.GetCharge(entity.Owner).Charge);
     }
 
     [SubscribeLocalEvent]
@@ -85,7 +84,7 @@ public sealed partial class RiggableSystem : EntitySystem
         if (!args.Activated || !entity.Comp.IsRigged)
             return;
 
-        Explode(entity, _battery.GetCharge(entity.Owner), args.User);
+        Explode(entity, _battery.GetCharge(entity.Owner).Charge, args.User);
     }
 
     public void Explode(Entity<RiggableComponent> entity, float charge, EntityUid? cause = null)

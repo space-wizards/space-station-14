@@ -1,7 +1,7 @@
 - type: entity
-  parent: StorageTank
-  id: BaseBarrelChem
   abstract: true
+  parent: [ StorageTankIndestructible, StructureHealthContainerFlimsy ]
+  id: BaseBarrelChem
   name: chemical barrel
   description: A small metal drum. How tropical.
   components:
@@ -24,15 +24,18 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 25
+        damage: 20
       behaviors:
       - !type:SpillBehavior
         solution: tank
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 5
   - type: PhysicalComposition
     materialComposition:
       Steel: 3000 # 30 sheets, 1 stack

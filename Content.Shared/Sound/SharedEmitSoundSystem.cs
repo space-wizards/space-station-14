@@ -188,7 +188,9 @@ public abstract partial class SharedEmitSoundSystem : EntitySystem
 
         if (_netMan.IsServer && sound != null)
         {
-            _audioSystem.PlayPvs(_audioSystem.ResolveSound(sound), uid, AudioParams.Default.WithVolume(volume));
+            var audioParams = component.Sound?.Params ?? AudioParams.Default;
+            audioParams = audioParams.AddVolume(volume);
+            _audioSystem.PlayPvs(_audioSystem.ResolveSound(sound), uid, audioParams);
         }
     }
 

@@ -1,14 +1,13 @@
 {
     "version": 1,
+    "license": "CC-BY-NC-SA-3.0",
+    "copyright": "Made by SharkSnake98 on Github",
     "size":
     {
         "x": 32,
         "y": 32
     },
-    "license": "CC-BY-NC-SA-3.0",
-    "copyright": "Made by SharkSnake98 on Github",
-    "states":
-    [
+    "states": [
         {
             "name": "icon"
         },

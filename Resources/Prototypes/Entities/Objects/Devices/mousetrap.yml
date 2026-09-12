@@ -14,6 +14,9 @@
       intersectRatio: 0.2
       requiredTriggeredSpeed: 2
     - type: Mousetrap
+    - type: ItemToggleExaminableStatus
+      onText: item-toggle-examined-active
+      offText: item-toggle-examined-not-active
     - type: ItemToggle
       soundActivate: "/Audio/Items/Handcuffs/cuff_end.ogg"
       soundDeactivate: "/Audio/Items/snap.ogg"

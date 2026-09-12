@@ -55,8 +55,6 @@ public abstract partial class SharedGasValveSystem : EntitySystem
     private void OnExamined(Entity<GasValveComponent> ent, ref ExaminedEvent args)
     {
         var valve = ent.Comp;
-        if (!Transform(ent).Anchored)
-            return;
 
         if (Loc.TryGetString("gas-valve-system-examined", out var str,
                 ("statusColor", valve.Open ? "green" : "orange"),
