@@ -92,6 +92,31 @@ public sealed class SatiationTest : GameTest
     }
 
     [Test, RunOnSide(Side.Server)]
+    [Description("Verifies that entities spawned from the same prototype do not share satiation state.")]
+    public void SatiationStateNotSharedBetweenSpawns()
+    {
+        var first = SEntity<SatiationComponent>(SSpawn(TestProto));
+        var second = SEntity<SatiationComponent>(SSpawn(TestProto));
+
+        var firstSatiation = first.Comp.Satiations[TestSatiationType];
+        var secondSatiation = second.Comp.Satiations[TestSatiationType];
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(first.Comp.Satiations, Is.Not.SameAs(second.Comp.Satiations));
+            Assert.That(firstSatiation, Is.Not.SameAs(secondSatiation));
+        }
+
+        _satiation.SetValue(first, TestSatiationType, MaxxedKey);
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(_satiation.GetValueOrNull(first, TestSatiationType), Is.EqualTo(MaxValue));
+            Assert.That(_satiation.GetValueOrNull(second, TestSatiationType), Is.Not.EqualTo(MaxValue));
+        }
+    }
+
+    [Test, RunOnSide(Side.Server)]
     [Description("Verifies 'SatiationSystem.TryGetValueByThreshold' when threshold keys are integers")]
     public void SatiationGetValueByThresholdTest()
     {
