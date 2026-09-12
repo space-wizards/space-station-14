@@ -53,6 +53,8 @@
       temperature: 293.15
   - type: Jetpack
     moleUsage: 0.00085
+  - type: ParticleEmitter
+    effectPrototype: JetpackEffect
   - type: Appearance
   - type: GenericVisualizer
     visuals:
