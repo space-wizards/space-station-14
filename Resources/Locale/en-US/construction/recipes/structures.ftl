@@ -22,6 +22,6 @@ construction-recipe-fence-wood-t-junction-small = small wooden fence T-junction
 construction-recipe-fence-wood-gate-small = small wooden fence gate
 construction-recipe-pinion-airlock = clockwork airlock
 construction-recipe-pinion-airlock-glass = glass clockwork airlock
-construction-recipe-airlock-glass-shuttle = glass shuttle airlock
+construction-recipe-airlock-glass-shuttle = glass docking airlock
 construction-recipe-plastic-flaps-clear = plastic flaps (clear)
 construction-recipe-plastic-flaps-opaque = plastic flaps (opaque)
