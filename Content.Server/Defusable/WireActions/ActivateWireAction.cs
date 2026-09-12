@@ -23,19 +23,19 @@ public sealed partial class ActivateWireAction : ComponentWireAction<DefusableCo
 
     public override object StatusKey { get; } = DefusableWireStatus.LiveIndicator;
 
-    public override bool Cut(EntityUid user, Wire wire, DefusableComponent comp)
+    public override bool Cut(EntityUid? user, Wire wire, DefusableComponent comp)
     {
         return EntityManager.System<DefusableSystem>().ActivateWireCut(user, wire, comp);
     }
 
-    public override bool Mend(EntityUid user, Wire wire, DefusableComponent comp)
+    public override bool Mend(EntityUid? user, Wire wire, DefusableComponent comp)
     {
         // if its not disposable defusable system already handles* this
         // *probably
         return true;
     }
 
-    public override void Pulse(EntityUid user, Wire wire, DefusableComponent comp)
+    public override void Pulse(EntityUid? user, Wire wire, DefusableComponent comp)
     {
         EntityManager.System<DefusableSystem>().ActivateWirePulse(user, wire, comp);
     }

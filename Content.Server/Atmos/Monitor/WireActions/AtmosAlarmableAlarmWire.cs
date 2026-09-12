@@ -39,19 +39,19 @@ public sealed partial class AtmosMonitorDeviceNetWire : ComponentWireAction<Atmo
         _atmosAlarmableSystem = EntityManager.System<AtmosAlarmableSystem>();
     }
 
-    public override bool Cut(EntityUid user, Wire wire, AtmosAlarmableComponent comp)
+    public override bool Cut(EntityUid? user, Wire wire, AtmosAlarmableComponent comp)
     {
         comp.IgnoreAlarms = true;
         return true;
     }
 
-    public override bool Mend(EntityUid user, Wire wire, AtmosAlarmableComponent comp)
+    public override bool Mend(EntityUid? user, Wire wire, AtmosAlarmableComponent comp)
     {
         comp.IgnoreAlarms = false;
         return true;
     }
 
-    public override void Pulse(EntityUid user, Wire wire, AtmosAlarmableComponent comp)
+    public override void Pulse(EntityUid? user, Wire wire, AtmosAlarmableComponent comp)
     {
         if (_alarmOnPulse)
             _atmosAlarmableSystem.ForceAlert(wire.Owner, AtmosAlarmType.Danger, comp);
