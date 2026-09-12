@@ -83,4 +83,13 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<string> ChatHighlightsColor =
         CVarDef.Create("chat.highlights_color", "#17FFC1FF", CVar.CLIENTONLY | CVar.ARCHIVE, "The color in which the highlights will be displayed.");
+
+    /// <summary>
+    /// A string containing a list of newline-separated words to be masked in the chat.
+    /// </summary>
+    public static readonly CVarDef<string> ChatWordFilters =
+        CVarDef.Create("chat.word_filters", "", CVar.CLIENTONLY | CVar.ARCHIVE, "A list of newline-separated words to be masked in the chat.");
+
+    public static readonly CVarDef<string> ChatWordFiltersSymbol = 
+        CVarDef.Create("chat.word_filters_symbol", "*", CVar.CLIENTONLY | CVar.ARCHIVE, "The symbol used to mask words in the chat.");
 }
