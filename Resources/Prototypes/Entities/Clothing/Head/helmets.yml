@@ -526,6 +526,11 @@
   - type: HideLayerClothing
     layers:
       Hair: HEAD
+  - type: BreathMask
+  - type: IngestionBlocker
+  - type: PressureProtection
+    highPressureMultiplier: 0.25
+    lowPressureMultiplier: 1000
 
 #Justice Helmet
 - type: entity
