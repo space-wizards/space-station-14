@@ -84,7 +84,7 @@ namespace Content.Client.Cargo.UI
                     !_entityManager.TryGetComponent<StationBankAccountComponent>(_station, out var bank))
                     return true;
 
-                return val >= 0 && val <= (int) (console.TransferLimit * bank.Accounts[console.Account]);
+                return val >= 0 && val <= (int) (console.TransferLimit * bank.Accounts[console.Account].Balance);
             };
 
             AccountActionButton.OnPressed += _ =>
@@ -308,19 +308,19 @@ namespace Content.Client.Cargo.UI
             base.FrameUpdate(args);
 
             if (!_bankQuery.TryComp(_station, out var bankAccount) ||
-                !_orderConsoleQuery.TryComp(_owner, out var orderConsole))
+                !_orderConsoleQuery.TryComp(_owner, out var orderConsole) ||
+                !_cargoSystem.TryGetAccountBalance((_station.Value, bankAccount), orderConsole.Account, out var balance))
             {
                 return;
             }
 
-            var balance = _cargoSystem.GetBalanceFromAccount((_station.Value, bankAccount), orderConsole.Account);
             PointsLabel.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", balance));
             TransferLimitLabel.Text = Loc.GetString("cargo-console-menu-account-action-transfer-limit",
                 ("limit", (int) (balance * orderConsole.TransferLimit)));
 
             UnlimitedNotifier.Visible = orderConsole.TransferUnbounded;
             AccountActionButton.Disabled = TransferSpinBox.Value <= 0 ||
-                                           TransferSpinBox.Value > bankAccount.Accounts[orderConsole.Account] * orderConsole.TransferLimit ||
+                                           TransferSpinBox.Value > bankAccount.Accounts[orderConsole.Account].Balance * orderConsole.TransferLimit ||
                                            _timing.CurTime < orderConsole.NextAccountActionTime;
 
             RightPart.Visible = orderConsole.Mode != CargoOrderConsoleMode.PrintSlip;
