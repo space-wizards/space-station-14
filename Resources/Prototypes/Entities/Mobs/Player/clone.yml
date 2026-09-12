@@ -153,6 +153,7 @@
   - PassiveDamage
   - Crawler
   - PermanentStatusEffects
+  - FlashImmunity
   eventComponents:
   # these need special treatment in the event subscription
   - Inventory # arachnid pockets and diona feet
@@ -164,7 +165,6 @@
   - JumpAbility # vulp leaping
   - Bloodstream # blood reagents
   - Damageable # for horror form
-  - FlashImmunity
   copyInternalStorage: false
   copyImplants: false
   raiseEntityRenamedEvent: false
