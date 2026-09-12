@@ -28,6 +28,8 @@ namespace Content.Server.Atmos.EntitySystems
         public bool DeltaPressureDamage { get; private set; }
         public int DeltaPressureParallelProcessPerIteration { get; private set; }
         public int DeltaPressureParallelBatchSize { get; private set; }
+        public bool PipeDamage { get; private set; }
+        public bool PipeDamageRandomness { get; private set; }
 
         /// <summary>
         /// Time between each atmos sub-update.  If you are writing an atmos device, use AtmosDeviceUpdateEvent.dt
@@ -59,6 +61,8 @@ namespace Content.Server.Atmos.EntitySystems
             Subs.CVar(_cfg, CCVars.DeltaPressureDamage, value => DeltaPressureDamage = value, true);
             Subs.CVar(_cfg, CCVars.DeltaPressureParallelToProcessPerIteration, value => DeltaPressureParallelProcessPerIteration = value, true);
             Subs.CVar(_cfg, CCVars.DeltaPressureParallelBatchSize, value => DeltaPressureParallelBatchSize = value, true);
+            Subs.CVar(_cfg, CCVars.PipeDamage, value => PipeDamage = value, true);
+            Subs.CVar(_cfg, CCVars.PipeDamageRandomness, value => PipeDamageRandomness = value, true);
         }
     }
 }
