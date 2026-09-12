@@ -143,7 +143,7 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
             return;
 
         args.Handled = true;
-        EjectRandom((entity.Owner, entity.Comp), throwItem: true, forceEject: false);
+        EjectRandom((entity.Owner, entity.Comp), throwItem: args.ThrowItem, forceEject: false);
     }
 
     [SubscribeLocalEvent]
