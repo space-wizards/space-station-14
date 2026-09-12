@@ -5,6 +5,7 @@ using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Examine;
 using Content.Shared.Input;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Wall;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -249,6 +250,9 @@ namespace Content.Client.Construction
                 return false;
 
             if (!HasComp<ConstructionGhostComponent>(args.EntityUid))
+                return false;
+
+            if (HasComp<BlockGridConstructionComponent>(TransformSystem.GetGrid(args.EntityUid)) || args.Session != null && args.Session.AttachedEntity != null && HasComp<BlockGridConstructionComponent>(args.Session.AttachedEntity.Value))
                 return false;
 
             TryStartConstruction(args.EntityUid);

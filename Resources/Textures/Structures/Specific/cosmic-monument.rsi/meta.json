@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "A custom item by AftrLite (Github). Updated Monument sprite by CoolioDudio, with further changes by AftrLite.",
+    "size": {
+        "x": 96,
+        "y": 112
+    },
+    "states": [
+        {
+            "name": "base"
+        }
+    ]
+}

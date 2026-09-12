@@ -1,0 +1,7 @@
+- type: typingIndicator
+  id: CosmicTyping
+  spritePath: /Textures/_ST/CosmicCult/Misc/cosmic-speech.rsi
+  typingState: malign0
+  idleState: malign0
+  offset: -0.2, 0.1
+  shader: unshaded

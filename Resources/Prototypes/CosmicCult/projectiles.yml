@@ -1,0 +1,140 @@
+- type: entity
+  id: ProjectileCosmicNova
+  name: Astral Nova
+  description: Uh oh.
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PointLight
+    color: "#42a4ae"
+    radius: 3.5
+    energy: 5.0
+  - type: TimedDespawn
+    lifetime: 10
+  - type: Projectile
+    impactEffect: EffectCosmicActionNovaImpact
+    forceSound: true
+    soundHit:
+      path: "/Audio/Cosmic/Abilities/ability-nova-impact.ogg"
+      params:
+        variation: 0.1
+        volume: +14
+  - type: CosmicNova
+  - type: Sprite
+    sprite: Effects/Cosmic/ability-nova.rsi
+    layers:
+    - state: vfx
+      shader: unshaded
+  - type: GravityWell
+    maxRange: 4
+    baseRadialAcceleration: 12.5
+    baseTangentialAcceleration: 4
+    gravPulsePeriod: 0.05
+  - type: AmbientSound
+    enabled: true
+    volume: 0
+    range: 10
+    sound:
+      path: "/Audio/Cosmic/Abilities/ability-nova-ambient.ogg"
+
+- type: entity
+  id: ProjectileCosmic
+  name: Malign Bolt
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  description: Ouch.
+  components:
+  - type: Reflective
+    reflective:
+    - Energy
+  - type: Sprite
+    noRot: false
+    sprite: Effects/Cosmic/base-projectile.rsi
+    state: vfx
+    shader: unshaded
+  - type: Projectile
+    impactEffect: BulletImpactEffectCosmic
+    damage:
+      types:
+        Cold: 12
+    soundHit:
+      path: "/Audio/Cosmic/Abilities/cosmic-projectile-hit.ogg"
+      params:
+        variation: 0.08
+  - type: Ammo
+    muzzleFlash: null
+  # Short lifespan
+  - type: TimedDespawn
+    lifetime: 0.6
+  - type: PointLight
+    color: "#42a4ae"
+    radius: 1.5
+    energy: 6
+    castShadows: false
+  - type: LightBehaviour
+    behaviours:
+      - !type:FadeBehaviour
+        interpolate: Linear
+        minDuration: 0.58
+        maxDuration: 0.59
+        startValue: 0.1
+        endValue: 6
+        property: Energy
+        enabled: true
+        reverseWhenFinished: true
+
+- type: entity
+  id: ProjectileCosmicRazor
+  name: Astral Bolt
+  parent: ProjectileCosmic
+  categories: [ HideSpawnMenu ]
+  description: Ouch.
+  components:
+  - type: DamageMarkerOnCollide
+    whitelist:
+      components:
+      - MobState
+    damage:
+      types:
+        Cold: 15
+        Asphyxiation: 10
+  - type: Projectile
+    impactEffect: BulletImpactEffectCosmic
+    damage:
+      types:
+        Cold: 10
+        Asphyxiation: 5
+
+- type: entity
+  id: BulletImpactEffectCosmic
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TimedDespawn
+    lifetime: 0.66
+  - type: Sprite
+    drawdepth: Effects
+    layers:
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+      sprite: Effects/Cosmic/attack-weapons.rsi
+      state: vfx
+  - type: EffectVisuals
+  - type: PointLight
+    color: "#42a4ae"
+    radius: 1.5
+    energy: 6
+    castShadows: false
+  - type: LightBehaviour
+    behaviours:
+      - !type:FadeBehaviour
+        interpolate: Linear
+        minDuration: 0.64
+        maxDuration: 0.65
+        startValue: 0.1
+        endValue: 6
+        property: Energy
+        enabled: true
+        reverseWhenFinished: true
+  - type: Tag
+    tags:
+      - HideContextMenu

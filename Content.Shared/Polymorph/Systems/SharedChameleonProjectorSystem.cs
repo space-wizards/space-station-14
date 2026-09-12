@@ -146,6 +146,12 @@ public abstract partial class SharedChameleonProjectorSystem : EntitySystem
 
     public bool TryDisguise(Entity<ChameleonProjectorComponent> ent, EntityUid user, EntityUid target)
     {
+        if (HasComp<ChameleonBlockedGridComponent>(Transform(user).GridUid))
+        {
+            _popup.PopupEntity(Loc.GetString("chameleon-projector-grid-blocked"), target, user);
+            return false;
+        }
+
         if (_container.IsEntityInContainer(target) || _container.IsEntityInContainer(user))
         {
             _popup.PopupEntity(Loc.GetString("chameleon-projector-inside-container"), target, user);

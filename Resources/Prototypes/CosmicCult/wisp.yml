@@ -1,0 +1,81 @@
+- type: entity
+  name: Wisp
+  parent: [ BaseSimpleMob, FlyingMobBase ]
+  id: MobCosmicWisp
+  categories: [ ForkFiltered ]
+  components:
+  - type: AntagImmune
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Cosmic/cosmic-wisp.rsi
+    layers:
+    - state: shadow-medium
+      offset: 0, -0.25
+    - state: wisp
+      offset: 0, 0.25
+      shader: unshaded
+  - type: Physics
+    bodyStatus: InAir
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 10
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
+  - type: Body
+  - type: Speech
+    speechSounds: Alto
+    speechVerb: Ghost
+    allowedEmotes: []
+  - type: TypingIndicator
+    proto: CosmicTyping
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: epicene
+  - type: Tag
+    tags:
+    - CannotSuicide
+  - type: PointLight
+    color: "#42a4ae"
+    radius: 2.25
+    energy: 12
+    castShadows: false
+  - type: LightBehaviour
+    behaviours:
+     - !type:FadeBehaviour
+       interpolate: Linear
+       minDuration: 5.5
+       maxDuration: 5.5
+       startValue: 4
+       endValue: 12
+       property: Energy
+       enabled: true
+       isLooped: true
+       reverseWhenFinished: true
+  - type: MovementSpeedModifier
+    baseWeightlessFriction: 0.2
+    baseWeightlessModifier: 0.35
+  - type: MovementIgnoreGravity
+    weightless: true
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  id: CosmicChantryWisp
+  name: Trapped Wisp
+  components:
+  - type: Sprite
+    sprite: _ST/CosmicCult/Mobs/wisp.rsi
+    layers:
+      - state: shadow-medium
+        visible: false
+  - type: Speech
+  - type: Transform
+  - type: Physics
+    bodyType: Static
+    canCollide: False
