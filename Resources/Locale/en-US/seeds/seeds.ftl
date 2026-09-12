@@ -74,3 +74,4 @@ seeds-capfruit-name = capfruit
 seeds-cherry-name = cherry
 seeds-anomaly-berry-name = anomaly berry
 seeds-bloonion-name = bloonion
+seeds-sunion-name = sunion
