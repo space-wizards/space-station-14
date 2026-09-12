@@ -9,5 +9,6 @@ department-Security = Security
 department-Service = Service
 department-Silicon = Silicon
 department-Specific = Station specific
+department-Theatre = Theatre
 
 department-Unknown = Unknown
