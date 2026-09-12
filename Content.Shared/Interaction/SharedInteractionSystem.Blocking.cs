@@ -15,6 +15,7 @@ namespace Content.Shared.Interaction;
 public partial class SharedInteractionSystem
 {
     [Dependency] EntityQuery<RelayInputMoverComponent> _relayInputMoverQuery;
+
     private void InitializeBlocking()
     {
         SubscribeLocalEvent<BlockMovementComponent, UpdateCanMoveEvent>(OnMoveAttempt);
