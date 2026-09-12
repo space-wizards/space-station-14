@@ -34,13 +34,6 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
             args.PushText(Loc.GetString("device-address-examine-message", ("address", DeviceLocalizationHelpers.GetAddressFromId(ent.Comp))));
     }
 
-    [SubscribeLocalEvent]
-    private void OnStartup(Entity<DeviceNetworkComponent> ent, ref ComponentStartup args)
-    {
-        if (ent.Comp.AutoConnect)
-            ConnectDevice(ent.AsNullable());
-    }
-
     /// <summary>
     /// Automatically attempt to connect some devices when a map starts.
     /// </summary>
