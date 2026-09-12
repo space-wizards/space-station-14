@@ -37,7 +37,7 @@ public sealed class MovementRenderTest : MovementTest
             var sourceWorldPosition = transforms.GetWorldPosition(CPlayer);
             var targetPosition = sourcePosition + Vector2.UnitX;
             var targetRotation = xform.LocalRotation + Angle.FromDegrees(90);
-            transforms.ResetRenderPoses();
+            transforms.ResetRenderTransforms();
 
             using (CGameTiming.StartStateApplicationArea())
                 transforms.SetLocalPositionRotation(CPlayer, targetPosition, targetRotation, xform);
@@ -53,7 +53,7 @@ public sealed class MovementRenderTest : MovementTest
                 Assert.That(transforms.GetRenderWorldPosition(CPlayer), Is.EqualTo(sourceWorldPosition));
                 Assert.That(transforms.GetRenderWorldRotation(CPlayer).EqualsApprox(
                     transforms.GetWorldRotation(CPlayer)), Is.True);
-                Assert.That(transforms.TryGetRenderPoseDebugData(CPlayer, out _), Is.True);
+                Assert.That(transforms.TryGetRenderTransformDebugData(CPlayer, out _), Is.True);
             });
         });
     }
@@ -64,7 +64,7 @@ public sealed class MovementRenderTest : MovementTest
         await OverrideCVar(Side.Client, CVars.NetPredictTickBias, 12);
         await RunTicks(5);
 
-        await Client.WaitPost(() => CEntMan.System<TransformSystem>().ResetRenderPoses());
+        await Client.WaitPost(() => CEntMan.System<TransformSystem>().ResetRenderTransforms());
         await SetMovementKey(DirectionFlag.East, BoundKeyState.Down);
 
         var captures = new List<RotationCapture>();
@@ -112,7 +112,7 @@ public sealed class MovementRenderTest : MovementTest
         await Client.WaitPost(() =>
         {
             var transforms = CEntMan.System<TransformSystem>();
-            transforms.ResetRenderPoses();
+            transforms.ResetRenderTransforms();
             initialRotation = transforms.GetWorldRotation(CPlayer);
             var xform = CEntMan.GetComponent<TransformComponent>(CPlayer);
             target = CEntMan.GetNetCoordinates(xform.Coordinates.Offset(new Vector2(2f, 1f)));
@@ -168,7 +168,7 @@ public sealed class MovementRenderTest : MovementTest
 
                         var transforms = CEntMan.System<TransformSystem>();
                         var simulation = transforms.GetWorldRotation(CPlayer);
-                        var hasDebugData = transforms.TryGetRenderPoseDebugData(CPlayer, out var debugData);
+                        var hasDebugData = transforms.TryGetRenderTransformDebugData(CPlayer, out var debugData);
                         Assert.That(transforms.GetRenderWorldRotation(CPlayer).EqualsApprox(simulation), Is.True,
                             $"tick {tick}, frame {frame}, clicked {clickedRotation}, simulation {simulation}, data {debugData}");
                         if (hasDebugData)
@@ -205,7 +205,7 @@ public sealed class MovementRenderTest : MovementTest
         await Client.WaitPost(() =>
         {
             var transforms = CEntMan.System<TransformSystem>();
-            transforms.ResetRenderPoses();
+            transforms.ResetRenderTransforms();
             var coordinates = CEntMan.GetComponent<TransformComponent>(CPlayer).Coordinates;
             targets[0] = CEntMan.GetNetCoordinates(coordinates.Offset(Vector2.UnitX * 2f));
             targets[1] = CEntMan.GetNetCoordinates(coordinates.Offset(-Vector2.UnitX * 2f));
@@ -402,7 +402,7 @@ public sealed class MovementRenderTest : MovementTest
                         Assert.That(transforms.GetRenderWorldRotation(CPlayer).EqualsApprox(displayedRotation), Is.True,
                             $"displayed cursor tick {tick}, frame {frame}");
 
-                        if (transforms.TryGetRenderPoseDebugData(CPlayer, out var data))
+                        if (transforms.TryGetRenderTransformDebugData(CPlayer, out var data))
                         {
                             Assert.That(data.Type, Is.Not.EqualTo(RenderInterpolationType.PredictionCorrection),
                                 $"correction type tick {tick}, frame {frame}: {data}");
@@ -481,7 +481,7 @@ public sealed class MovementRenderTest : MovementTest
                 var renderedPosition = transforms.GetRenderWorldPosition(CPlayer);
                 var sourcePosition = simulationPosition;
                 var targetPosition = simulationPosition;
-                if (transforms.TryGetRenderPoseDebugData(CPlayer, out var data))
+                if (transforms.TryGetRenderTransformDebugData(CPlayer, out var data))
                 {
                     type = data.Type;
                     alpha = data.Alpha;

@@ -233,7 +233,7 @@ namespace Content.IntegrationTests.Tests.Buckle
         }
 
         [Test]
-        public async Task BuckleAndUnbuckleSnapClientRenderPoseTest()
+        public async Task BuckleAndUnbuckleSnapClientRenderTransformTest()
         {
             var map = await Pair.CreateTestMap();
             EntityUid human = default;
@@ -273,7 +273,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                     if (!applied)
                         return;
 
-                    Assert.That(transformSystem.TryGetRenderPoseDebugData(clientHuman, out _), Is.False);
+                    Assert.That(transformSystem.TryGetRenderTransformDebugData(clientHuman, out _), Is.False);
                     Assert.That(transformSystem.GetRenderWorldPosition(clientHuman),
                         Is.EqualTo(transformSystem.GetWorldPosition(clientHuman)));
                 });
@@ -297,7 +297,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                     if (!applied)
                         return;
 
-                    Assert.That(transformSystem.TryGetRenderPoseDebugData(clientHuman, out _), Is.False);
+                    Assert.That(transformSystem.TryGetRenderTransformDebugData(clientHuman, out _), Is.False);
                     Assert.That(transformSystem.GetRenderWorldPosition(clientHuman),
                         Is.EqualTo(transformSystem.GetWorldPosition(clientHuman)));
                 });

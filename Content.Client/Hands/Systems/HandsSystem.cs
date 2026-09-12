@@ -119,7 +119,7 @@ namespace Content.Client.Hands.Systems
             if (held == null || IsHolding(ent, held.Value))
                 return;
 
-            _renderTransforms.SnapRenderPose(held.Value, true);
+            _renderTransforms.SnapRenderTransform(held.Value, true);
 
             if (TryComp(held, out SpriteComponent? sprite))
                 sprite.RenderOrder = EntityManager.CurrentTick.Value;

@@ -24,7 +24,7 @@ internal sealed partial class BuckleSystem : SharedBuckleSystem
         if (HasComp<StrapComponent>(args.Transform.ParentUid) ||
             args.OldParent is { } oldParent && HasComp<StrapComponent>(oldParent))
         {
-            _xformSystem.SnapRenderPoseAfterParentChange(ent, true);
+            _xformSystem.SnapRenderTransformAfterParentChange(ent, true);
         }
     }
 
@@ -99,7 +99,7 @@ internal sealed partial class BuckleSystem : SharedBuckleSystem
     [SubscribeLocalEvent]
     private void OnBuckledEvent(Entity<BuckleComponent> ent, ref BuckledEvent args)
     {
-        _xformSystem.SnapRenderPose(ent, true);
+        _xformSystem.SnapRenderTransform(ent, true);
 
         if (!args.Strap.Comp.ModifyBuckleDrawDepth)
             return;
@@ -125,7 +125,7 @@ internal sealed partial class BuckleSystem : SharedBuckleSystem
     [SubscribeLocalEvent]
     private void OnUnbuckledEvent(Entity<BuckleComponent> ent, ref UnbuckledEvent args)
     {
-        _xformSystem.SnapRenderPose(ent, true);
+        _xformSystem.SnapRenderTransform(ent, true);
 
         if (!args.Strap.Comp.ModifyBuckleDrawDepth)
             return;
