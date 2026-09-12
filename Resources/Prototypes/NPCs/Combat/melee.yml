@@ -169,7 +169,6 @@
         shutdownState: TaskFinished
     - !type:HTNPrimitiveTask
       operator: !type:EscapeOperator
-        targetKey: Target
       preconditions:
       - !type:InContainerPrecondition
         isInContainer: true
