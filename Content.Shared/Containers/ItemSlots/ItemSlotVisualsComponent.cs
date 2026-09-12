@@ -15,7 +15,7 @@ public sealed partial class ItemSlotVisualsComponent : Component
 {
     /// <summary>
     /// A Dictionary that handles multiple instances of ItemSlotVisuals. ItemSlotVisuals is for setting the Name, Layer,
-    /// & sprite of an Icon/Inhand/Equipped Fill Sprites.
+    /// & sprite of an Icon/Inhand/Wielded/Equipped Fill Sprites.
     /// </summary>
     [DataField]
     public Dictionary<string, ItemSlotVisuals> SlotVisuals = new();
@@ -54,15 +54,19 @@ public partial struct ItemSlotVisuals
     public Dictionary<string, List<PrototypeLayerData>> IconVisuals = new();
 
     /// <summary>
-    /// Layers to add to the sprite of the player that is holding this entity (while the component has an item inserted).
-    /// Works in tandem with Layer to show multiple layers at once.
+    /// Layers to add to the sprite of the player that is holding this object (while the object has an item inserted)
     /// </summary>
     [DataField]
     public Dictionary<HandLocation, List<PrototypeLayerData>> InhandVisuals = new();
 
     /// <summary>
-    /// Layers to add to the sprite of the player wearing this entity (while the component has an item inserted).
-    /// Works in tandem with Layer to show multiple layers at once.
+    /// Layers to add to the sprite of the player that is wielding this object (while the object has an item inserted).
+    /// </summary>
+    [DataField]
+    public Dictionary<HandLocation, List<PrototypeLayerData>>? WieldedInhandVisuals;
+
+    /// <summary>
+    /// Layers to add to the sprite of the player wearing this object (while the object has an item inserted).
     /// </summary>
     [DataField]
     public Dictionary<string, List<PrototypeLayerData>> ClothingVisuals = new();

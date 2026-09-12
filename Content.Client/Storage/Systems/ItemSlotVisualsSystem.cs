@@ -7,6 +7,7 @@ using Content.Shared.Containers.ItemSlot;
 using Content.Shared.Hands;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
+using Content.Shared.Wieldable.Components;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Storage.Systems;
@@ -47,6 +48,8 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
     [SubscribeLocalEvent(after: [typeof(ItemSystem)])]
     private void OnGetHeldVisuals(Entity<ItemSlotVisualsComponent> ent, ref GetInhandVisualsEvent args)
     {
+        var wielded = TryComp<WieldableComponent>(ent, out var wieldable) && wieldable.Wielded;
+
         foreach (var visual in ent.Comp.SlotVisuals.Values)
         {
             if (!TryComp<AppearanceComponent>(ent, out var appearance)
@@ -55,19 +58,21 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
                 continue;
 
             if (!TryComp<ItemComponent>(ent, out var item))
-                return;
+                continue;
 
-            if (!visual.InhandVisuals.TryGetValue(args.Location, out var layers))
-                return;
+            // Determines which visuals show if the item is wielded and WieldedInhandVisuals is not null. If either isn't
+            // so, then it uses InhandVisuals instead.
+            var inhandVisuals = wielded && visual.WieldedInhandVisuals != null
+                ? visual.WieldedInhandVisuals
+                : visual.InhandVisuals;
 
-            // Might be our clue on how to fix the wield sprite bug, either way might be good for the defaultKey
-            //var heldPrefix = item.HeldPrefix == null ? "inhand-" : $"{item.HeldPrefix}-inhand-";
+            if (!inhandVisuals.TryGetValue(args.Location, out var layers))
+                continue;
 
-            // No need for fillLevels if it'll just fit one item.
-            //var layerKeyPrefix = heldPrefix + args.Location.ToString().ToLowerInvariant() + visual.InHandsFillBaseName;
+            var heldPrefix = item.HeldPrefix == null ? "inhand-" : $"{item.HeldPrefix}-inhand-";
 
             var i = 0;
-            var defaultKey = $"inhand-{args.Location.ToString().ToLowerInvariant()}-fill-{visual.Layer}";
+            var defaultKey = $"{heldPrefix}{args.Location.ToString().ToLowerInvariant()}-{visual.Layer}";
             foreach (var layer in layers)
             {
                 var key = layer.MapKeys?.FirstOrDefault();
@@ -113,7 +118,7 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
             //var layerKeyPrefix = equippedPrefix + visual.EquippedFillBaseName;
 
             var i = 0;
-            var defaultKey = $"{args.Slot}-fill-{visual.Layer}";
+            var defaultKey = $"{args.Slot}-{visual.Layer}";
             foreach (var layer in layers)
             {
                 var key = layer.MapKeys?.FirstOrDefault();

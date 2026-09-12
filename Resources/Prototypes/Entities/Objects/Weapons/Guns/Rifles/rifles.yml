@@ -111,12 +111,16 @@
           - state: inhand-left-mag
           right:
           - state: inhand-right-mag
+        wieldedInhandVisuals:
+          left:
+          - state: wielded-inhand-left-mag
+          right:
+          - state: wielded-inhand-right-mag
         clothingVisuals:
           back:
           - state: equipped-back-mag
           suitstorage:
           - state: equipped-suitstorage-mag
-
   - type: Appearance
 
 - type: entity
