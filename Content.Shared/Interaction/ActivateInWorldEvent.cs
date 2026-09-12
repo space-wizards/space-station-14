@@ -28,6 +28,11 @@ public sealed class ActivateInWorldEvent : HandledEntityEventArgs
     /// </summary>
     public bool WasLogged { get; set; }
 
+    /// <summary>
+    ///     Set to false if this interaction shouldn't have an interaction particle
+    /// </summary>
+    public bool InteractionParticle = true;
+
     public ActivateInWorldEvent(EntityUid user, EntityUid target, bool complex)
     {
         User = user;

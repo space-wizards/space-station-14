@@ -75,6 +75,8 @@ public sealed partial class PlaceableSurfaceSystem : EntitySystem
         _transformSystem.SetCoordinates(args.Used,
             surface.PlaceCentered ? Transform(uid).Coordinates.Offset(surface.PositionOffset) : args.ClickLocation);
 
+        args.SpawnInteractionParticles = false;
+
         args.Handled = true;
     }
 

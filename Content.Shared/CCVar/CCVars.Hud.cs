@@ -19,6 +19,9 @@ public sealed partial class CCVars
     public static readonly CVarDef<float> HudHeldItemOffset =
         CVarDef.Create("hud.held_item_offset", 28f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
+    public static readonly CVarDef<bool> InteractionParticleShow =
+        CVarDef.Create("hud.show_interaction_particles", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
     /// <summary>
     ///     Displays framerate counter
     /// </summary>
