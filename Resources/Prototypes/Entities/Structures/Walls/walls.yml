@@ -323,7 +323,6 @@
     resistance: 5
   - type: Tag
     tags:
-    - Wall
     - SmeltingImmune
 
 - type: entity
@@ -359,7 +358,6 @@
     resistance: 5
   - type: Tag
     tags:
-    - Wall
     - Diagonal
     - SmeltingImmune
 
