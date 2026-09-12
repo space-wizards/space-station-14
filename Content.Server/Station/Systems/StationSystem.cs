@@ -308,6 +308,19 @@ public sealed partial class StationSystem : SharedStationSystem
 
         QueueDel(station);
     }
+
+    public HashSet<EntityUid> GetAllStationGrids()
+    {
+        var grids = new HashSet<EntityUid>();
+
+        var query = EntityQueryEnumerator<StationDataComponent>();
+        while (query.MoveNext(out var data))
+        {
+            grids.UnionWith(data.Grids);
+        }
+
+        return grids;
+    }
 }
 
 /// <summary>

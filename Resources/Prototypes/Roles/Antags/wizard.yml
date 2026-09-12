@@ -42,6 +42,8 @@
     - NamesWizardFirst
     - NamesWizardLast
     nameFormat: name-format-wizard
+  - type: CombatPower
+    factor: 15.0
   mindRoles:
   - MindRoleWizard
 

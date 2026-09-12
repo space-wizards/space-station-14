@@ -370,6 +370,9 @@
   - type: Battery
     maxCharge: 5000
     startingCharge: 5000
+  - type: Tag
+    tags:
+      - Rifle
 
 - type: entity
   name: pulse rifle
@@ -406,6 +409,9 @@
   - type: Battery
     maxCharge: 40000
     startingCharge: 40000
+  - type: Tag
+    tags:
+      - Rifle
 
 - type: entity
   name: laser cannon
@@ -442,6 +448,7 @@
   - type: Tag
     tags:
     - TurretCompatibleWeapon
+    - Rifle
 
 - type: entity
   name: portable particle decelerator
@@ -507,6 +514,9 @@
     steps: 5
     zeroVisible: true
   - type: Appearance
+  - type: Tag
+    tags:
+      - Rifle
 
 - type: entity
   name: practice disabler

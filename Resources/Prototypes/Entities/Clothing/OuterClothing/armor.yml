@@ -14,6 +14,9 @@
     sprite: Clothing/OuterClothing/Armor/security.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/security.rsi
+  - type: Tag
+    tags:
+    - Armor
   - type: Armor #Based on /tg/ but slightly compensated to fit the fact that armor stacks in SS14.
     modifiers:
       coefficients:
@@ -115,6 +118,9 @@
         Heat: 0.5
         Caustic: 0.9
   - type: GroupExamine
+  - type: Tag
+    tags:
+    - Armor
 
 - type: entity
   parent: [ClothingOuterArmorBaseCarapace, BaseCommandContraband]
@@ -281,6 +287,9 @@
     autoRechargeRate: 2
   - type: Item
     size: Normal
+  - type: Tag
+    tags:
+    - HeavyArmor
 
 - type: entity
   parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseSecurityContraband]
@@ -303,6 +312,9 @@
   - type: ExplosionResistance
     damageCoefficient: 0.9
   - type: GroupExamine
+  - type: Tag
+    tags:
+    - HeavyArmor
 
 - type: entity
   parent: [ ClothingOuterBaseLarge, BaseMajorContraband, AllowSuitStorageClothing ]
@@ -322,6 +334,9 @@
         Piercing: 0.5
         Heat: 0.5
   - type: GroupExamine
+  - type: Tag
+    tags:
+    - HeavyArmor
 
 - type: entity
   parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing]
@@ -345,6 +360,9 @@
   - type: GroupExamine
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
+  - type: Tag
+    tags:
+    - HeavyArmor
 
 - type: entity
   parent: ClothingOuterArmorHeavy
@@ -446,6 +464,9 @@
     node: armor
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
+  - type: Tag
+    tags:
+    - HeavyArmor
 
 - type: entity
   parent: [ ClothingOuterBaseLarge, BaseMajorContraband, AllowSuitStorageClothing ]
@@ -467,6 +488,9 @@
   - type: GroupExamine
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
+  - type: Tag
+    tags:
+    - HeavyArmor
 
 - type: entity
   parent: ClothingOuterArmorBase
