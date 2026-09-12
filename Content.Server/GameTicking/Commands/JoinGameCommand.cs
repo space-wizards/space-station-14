@@ -1,10 +1,7 @@
-using Content.Server.Administration.Managers;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
-using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Roles;
-using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 
@@ -15,8 +12,6 @@ namespace Content.Server.GameTicking.Commands
     {
         [Dependency] private IEntityManager _entManager = default!;
         [Dependency] private IPrototypeManager _prototypeManager = default!;
-        [Dependency] private IAdminManager _adminManager = default!;
-        [Dependency] private IConfigurationManager _cfg = default!;
         [Dependency] private ILogManager _logManager = default!;
 
         private readonly ISawmill _sawmill;
@@ -75,11 +70,6 @@ namespace Content.Server.GameTicking.Commands
             {
                 shell.WriteLine($"{jobPrototype.LocalizedName} has no available slots.");
                 return;
-            }
-
-            if (_adminManager.IsAdmin(player) && _cfg.GetCVar(CCVars.AdminDeadminOnJoin))
-            {
-                _adminManager.DeAdmin(player);
             }
 
             ticker.MakeJoinGame(player, station, id);
