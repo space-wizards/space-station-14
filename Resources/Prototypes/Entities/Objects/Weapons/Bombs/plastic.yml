@@ -98,6 +98,8 @@
       festive: Objects/Weapons/Bombs/c4gift.rsi
   - type: StaticPrice
     price: 625 # 5000 for a bundle of 8
+  - type: TimerTriggerVisuals
+    inHandPrimedName: -primed
 
 - type: entity
   parent: [ BasePlasticExplosive, BaseSecurityCargoContraband ]
@@ -123,3 +125,5 @@
     totalIntensity: 120
     maxIntensity: 30
     canCreateVacuum: false
+  - type: TimerTriggerVisuals
+    inHandPrimedName: -primed
