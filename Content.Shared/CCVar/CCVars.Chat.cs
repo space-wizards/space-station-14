@@ -42,17 +42,14 @@ public sealed partial class CCVars
     public static readonly CVarDef<bool> ChatShowTypingIndicator =
         CVarDef.Create("chat.show_typing_indicator", true, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
 
-    public static readonly CVarDef<bool> ChatEnableFancyBubbles =
-        CVarDef.Create("chat.enable_fancy_bubbles",
+    /// <summary>
+    /// When enabled, shows the speakers name below overheat chat text.
+    /// </summary>
+    public static readonly CVarDef<bool> ChatBubbleEnableNames =
+        CVarDef.Create("chat.enable_bubble_names",
             true,
             CVar.CLIENTONLY | CVar.ARCHIVE,
-            "Toggles displaying fancy speech bubbles, which display the speaking character's name.");
-
-    public static readonly CVarDef<bool> ChatFancyNameBackground =
-        CVarDef.Create("chat.fancy_name_background",
-            false,
-            CVar.CLIENTONLY | CVar.ARCHIVE,
-            "Toggles displaying a background under the speaking character's name.");
+            "Toggles displaying player names below overhead chat");
 
     /// <summary>
     ///     A message broadcast to each player that joins the lobby.

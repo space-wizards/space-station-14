@@ -16,8 +16,7 @@
                        StyleClasses="LabelKeyText"/>
                 <CheckBox Name="ShowOocPatronColor" Text="{Loc 'ui-options-show-ooc-patron-color'}" />
                 <CheckBox Name="ShowLoocAboveHeadCheckBox" Text="{Loc 'ui-options-show-looc-on-head'}" />
-                <CheckBox Name="FancySpeechBubblesCheckBox" Text="{Loc 'ui-options-fancy-speech'}" />
-                <CheckBox Name="FancyNameBackgroundsCheckBox" Text="{Loc 'ui-options-fancy-name-background'}" />
+                <CheckBox Name="SpeechBubblesEnableNamesCheckBox" Text="{Loc 'ui-options-chat-bubble-names'}" />
                 <CheckBox Name="ChatFollowButton" Text="{Loc 'ui-options-chat-follow-button'}" />
                 <Label Text="{Loc 'ui-options-general-cursor'}"
                        StyleClasses="LabelKeyText"/>
