@@ -2,6 +2,7 @@
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
          xmlns:style="clr-namespace:Content.Client.Stylesheets"
+         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
          xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
          VerticalExpand="True">
     <Control>
@@ -12,21 +13,25 @@
                        Margin="8 0 0 0" VAlign="Center"
                        StyleClasses="LabelHeadingBigger" />
 
-                <Button Name="StatsButton" HorizontalExpand="True"
-                        Text="{Loc 'character-setup-gui-character-setup-stats-button'}"
-                        StyleClasses="ButtonBig"
-                        HorizontalAlignment="Right" />
-                <cc:CommandButton Name="AdminRemarksButton"
-                                  Command="adminremarks"
-                                  Text="{Loc 'character-setup-gui-character-setup-adminremarks-button'}"
-                                  StyleClasses="ButtonBig" />
-                <Button Name="RulesButton"
-                        Text="{Loc 'character-setup-gui-character-setup-rules-button'}"
-                        StyleClasses="ButtonBig"/>
-                <Button Name="CloseButton"
-                        Access="Public"
-                        Text="{Loc 'character-setup-gui-character-setup-close-button'}"
-                        StyleClasses="ButtonBig"/>
+                <BoxContainer HorizontalAlignment="Right" HorizontalExpand="True">
+                    <controls:StripeBack Margin="16 0 16 0" Name="JoinRoundStripeBack" Access="Public">
+                        <BoxContainer Name="JoinRoundPanel" Access="Public" Orientation="Horizontal" />
+                    </controls:StripeBack>
+                    <Button Name="StatsButton"
+                            Text="{Loc 'character-setup-gui-character-setup-stats-button'}"
+                            StyleClasses="ButtonBig" />
+                    <cc:CommandButton Name="AdminRemarksButton"
+                                      Command="adminremarks"
+                                      Text="{Loc 'character-setup-gui-character-setup-adminremarks-button'}"
+                                      StyleClasses="ButtonBig" />
+                    <Button Name="RulesButton"
+                            Text="{Loc 'character-setup-gui-character-setup-rules-button'}"
+                            StyleClasses="ButtonBig" />
+                    <Button Name="CloseButton"
+                            Access="Public"
+                            Text="{Loc 'character-setup-gui-character-setup-close-button'}"
+                            StyleClasses="ButtonBig" />
+                </BoxContainer>
             </BoxContainer>
             <PanelContainer StyleClasses="highlight" MinHeight="2" />
             <BoxContainer Orientation="Horizontal" VerticalExpand="True" SeparationOverride="0">
