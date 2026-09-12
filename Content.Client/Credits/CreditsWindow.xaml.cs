@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Content.Client.Stylesheets;
 using Content.Shared.CCVar;
@@ -60,6 +61,9 @@ public sealed partial class CreditsWindow : DefaultWindow
 
         MasterTabContainer.OnTabChanged += OnTabChanged;
 
+        PageJumpLineEdit.OnTextEntered +=
+            _ => PopulateAttributions(AttributionsContainer, ButtonsContainer, (PageJumpLineEdit.Value() - 1) * AttributionsSourcesPerPage);
+
         PopulateContributors(Ss14ContributorsContainer);
     }
 
@@ -75,13 +79,17 @@ public sealed partial class CreditsWindow : DefaultWindow
         else if (tab == LicensesTab.GetPositionInParent())
             PopulateLicenses(LicensesContainer);
         else if (tab == AttributionsTab.GetPositionInParent())
-            PopulateAttributions(AttributionsContainer, 0);
+            PopulateAttributions(AttributionsContainer, ButtonsContainer, 0);
     }
 
-    private async void PopulateAttributions(BoxContainer attributionsContainer, int count)
+    private async void PopulateAttributions(BoxContainer attributionsContainer, BoxContainer buttonsContainer, int count)
     {
         attributionsContainer.RemoveAllChildren();
+        buttonsContainer.RemoveAllChildren();
 
+        PageJumpLineEdit.Text = (count / AttributionsSourcesPerPage + 1).ToString();
+
+        // Assemble attributions
         if (_attributions.Count == 0)
         {
             var rsi = await CollectRSiAttributions();
@@ -89,8 +97,12 @@ public sealed partial class CreditsWindow : DefaultWindow
 
             _attributions.AddRange(rsi);
             _attributions.AddRange(rga);
+
+            // A page can't be entered that we can't go to
+            PageJumpLineEdit.MaxValue = _attributions.Count / AttributionsSourcesPerPage + 1;
         }
 
+        // Pick the attributions for this page
         foreach (var message in _attributions.Skip(count).Take(AttributionsSourcesPerPage))
         {
             var rich = new RichTextLabel();
@@ -98,22 +110,26 @@ public sealed partial class CreditsWindow : DefaultWindow
             attributionsContainer.AddChild(rich);
         }
 
-        var container = new BoxContainer { Orientation = LayoutOrientation.Horizontal };
+        // Create and add the buttons
+        var previousButton = new Button
+        {
+            Text = Loc.GetString("credits-window-previous-page-button"),
+            Disabled = count - AttributionsSourcesPerPage < 0,
+            StyleClasses = { StyleClass.ButtonOpenRight },
+        };
+        previousButton.OnPressed +=
+            _ => PopulateAttributions(attributionsContainer, buttonsContainer, count - AttributionsSourcesPerPage);
+        buttonsContainer.AddChild(previousButton);
 
-        var previousPageButton = new Button { Text = Loc.GetString("credits-window-previous-page-button") };
-        previousPageButton.OnPressed +=
-            _ => PopulateAttributions(attributionsContainer, count - AttributionsSourcesPerPage);
-
-        var nextPageButton = new Button { Text = Loc.GetString("credits-window-next-page-button") };
-        nextPageButton.OnPressed +=
-            _ => PopulateAttributions(attributionsContainer, count + AttributionsSourcesPerPage);
-
-        if (count - AttributionsSourcesPerPage >= 0)
-            container.AddChild(previousPageButton);
-        if (count + AttributionsSourcesPerPage < _attributions.Count)
-            container.AddChild(nextPageButton);
-
-        attributionsContainer.AddChild(container);
+        var nextButton = new Button
+        {
+            Text = Loc.GetString("credits-window-next-page-button"),
+            Disabled = count + AttributionsSourcesPerPage >= _attributions.Count,
+            StyleClasses = { StyleClass.ButtonOpenLeft },
+        };
+        nextButton.OnPressed +=
+            _ => PopulateAttributions(attributionsContainer, buttonsContainer, count + AttributionsSourcesPerPage);
+        buttonsContainer.AddChild(nextButton);
     }
 
     private Task<List<FormattedMessage>> CollectRSiAttributions()
@@ -216,7 +232,7 @@ public sealed partial class CreditsWindow : DefaultWindow
                         var files = _serialization.Read<string[]>(filesNode, notNullableOverride: true);
                         var copyright = copyrightNode.ToString();
                         var license = licenseNode.ToString();
-                        var source = sourceNode.ToString();
+                        var source = _serialization.Read<string[]>(sourceNode, notNullableOverride: true);
 
                         m.AddMarkupPermissive(_loc.GetString("credits-window-attributions-directory",
                             ("directory", stream.Directory.ToString())));
@@ -230,7 +246,8 @@ public sealed partial class CreditsWindow : DefaultWindow
                         m.AddMarkupPermissive(
                             _loc.GetString("credits-window-attributions-license", ("license", license)));
                         m.AddText("\n");
-                        m.AddMarkupPermissive(_loc.GetString("credits-window-attributions-source", ("source", source)));
+                        m.AddMarkupPermissive(_loc.GetString("credits-window-attributions-source",
+                            ("source", string.Join(", ", source))));
                         m.AddText("\n");
 
                         attrs.Add(m);
