@@ -12,6 +12,7 @@ namespace Content.Client.Changeling.UI;
 [UsedImplicitly]
 public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
+    [Dependency] private SharedChangelingIdentitySystem _identity = default!;
     private SimpleRadialMenu? _menu;
     private static readonly Color SelectedOptionBackground = Palettes.Green.Element.WithAlpha(128);
     private static readonly Color DisabledOptionBackground = Palettes.Slate.Element.WithAlpha(128);
@@ -40,21 +41,22 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
         if (EntMan.TryGetComponent<ChangelingTransformComponent>(Owner, out var lingTransform))
             manualDrop = lingTransform.ManualDrop;
 
-        var models = ConvertToButtons(lingIdentity.ConsumedIdentities, lingIdentity.CurrentIdentity, manualDrop);
+        var models = ConvertToButtons((Owner, lingIdentity), manualDrop);
 
         _menu.SetButtons(models);
     }
 
     private IEnumerable<RadialMenuOptionBase> ConvertToButtons(
-        IEnumerable<ChangelingIdentityData> identities,
-        EntityUid? currentIdentity,
+        Entity<ChangelingIdentityComponent> ling,
         bool canDrop
     )
     {
+        var identities = ling.Comp.ConsumedIdentities;
+        var currentIdentity = ling.Comp.CurrentIdentity;
         var buttons = new List<RadialMenuOptionBase>();
         var dropButtons = new List<RadialMenuOptionBase>();
-        // To prevent dropping identities while in horror form & only having one other identity
-        var hasDropOption = !(identities.Count() <= 2 && EntMan.HasComponent<ChangelingHorrorComponent>(currentIdentity));
+        // To prevent dropping identities while having only one safe identity
+        var hasDropOption = !(_identity.GetSafeIdentityCount(ling) <= 1);
 
         foreach (var identity in identities)
         {

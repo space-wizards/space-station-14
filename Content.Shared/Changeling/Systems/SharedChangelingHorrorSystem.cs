@@ -38,7 +38,6 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
     [Dependency] private ChangelingTransformSystem _transform = default!;
     [Dependency] private SharedStunSystem _stuns = default!;
     [Dependency] private SharedPopupSystem _popups = default!;
-    [Dependency] private SharedContainerSystem _containers = default!;
     [Dependency] private ScreechSystem _screech = default!;
     [Dependency] private SharedEntityEffectsSystem _effects = default!;
     [Dependency] private TagSystem _tag = default!;
@@ -52,7 +51,8 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
         var enumerator = EntityQueryEnumerator<ChangelingHorrorComponent, ChangelingIdentityComponent>();
         while (enumerator.MoveNext(out var uid, out var comp, out var identities))
         {
-            // todo: check for paused maps etc.
+            if (IsPaused(uid))
+                continue;
 
             // calculate the timeout
             if (_timing.CurTime - comp.InitialTime > comp.TimeBudget)
@@ -74,7 +74,7 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
                     var identity = id.First();
 
                     if (!identity.Identity.HasValue)
-                        return;
+                        continue;
 
                     // we force the transformation, this will call all cleanup code in OnBeforeTransform
                     var tComp = EnsureComp<ChangelingTransformComponent>(uid);
@@ -303,7 +303,7 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
     /// </summary>
     public static TimeSpan DNAToTime(FixedPoint2 dna, double secondPerDNA, double grace)
     {
-        return TimeSpan.FromSeconds((double)dna * secondPerDNA);
+        return TimeSpan.FromSeconds((double)dna * secondPerDNA + grace);
     }
 
     /// <summary>
