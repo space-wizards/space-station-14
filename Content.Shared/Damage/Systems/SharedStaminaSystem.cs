@@ -8,6 +8,8 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Database;
 using Content.Shared.Effects;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Movement.Components;
@@ -51,6 +53,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     [Dependency] private ItemToggleSystem _itemToggle = default!;
     [Dependency] protected SharedStunSystem StunSystem = default!;
     [Dependency] private MeleeBatteryHitsLeftSystem _meleeBattery = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
 
     [Dependency] private EntityQuery<StaminaComponent> _stamQuery = default!;
 
@@ -231,6 +234,27 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     private void OnThrowHit(EntityUid uid, StaminaDamageOnCollideComponent component, ThrowDoHitEvent args)
     {
         OnCollide(uid, component, args.Target);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnMeleeCollideHit(Entity<StaminaDamageOnCollideComponent> ent, ref MeleeHitEvent args)
+    {
+        if (!TryComp<HandsComponent>(args.User, out var hands) || !TryComp<MeleeWeaponComponent>(ent.Owner, out var melee))
+            return;
+
+        if (hands.NextThrowTime < melee.NextAttack)
+            _hands.ResetThrowCooldown(args.User, hands, melee.NextAttack);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnThrown(Entity<StaminaDamageOnCollideComponent> ent, ref ThrownEvent args)
+    {
+        if (!TryComp<HandsComponent>(args.User, out var hands) || !TryComp<MeleeWeaponComponent>(ent.Owner, out var melee))
+            return;
+
+        var throwCooldown = Timing.CurTime + TimeSpan.FromSeconds(1 / melee.AttackRate);
+        if (hands.NextThrowTime < throwCooldown)
+            _hands.ResetThrowCooldown(args.User.Value, hands, throwCooldown);
     }
 
     [SubscribeLocalEvent]
