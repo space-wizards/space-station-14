@@ -7,6 +7,7 @@ using Content.Server.Antag.Components;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
+using Content.Server.Objectives.Components;
 using Content.Shared.Antag;
 using Content.Shared.Players;
 using Robust.Shared.GameObjects;
@@ -132,5 +133,39 @@ public sealed partial class AntagGhostRoleTest : AntagTest
         // I will not get heisentest due to floating point errors
         Assert.That(MathHelper.CloseTo(sessionXform.Coordinates.X, xform.Coordinates.X, 0.001f), Is.True);
         Assert.That(MathHelper.CloseTo(sessionXform.Coordinates.Y, xform.Coordinates.Y, 0.001f), Is.True);
+    }
+    
+    [Test]
+    [TestOf(typeof(TraitorProfileBlacklistComponent))]
+    [Description("Tests to make sure that ghost-role reinforcement antagonists won't spawn in with a traitor objective they're not supposed to have.")]
+    [RunOnSide(Side.Server)]
+    public void TestTraitorReinforcementObjectives()
+    {
+        // TODO: very hacky, probably does need to be rewritten
+        
+        // 10 iterations to account for the RNG factor of objective assignment
+        for (int i = 0; i < 10; i++)
+        {
+            var roleEnumerator = SEntMan.EntityQueryEnumerator<GhostRoleAntagSpawnerComponent, GhostRoleComponent, TransformComponent>();
+            while (roleEnumerator.MoveNext(out var spawner, out var role, out var xform))
+            {
+                AssertGhostRoleTaken(spawner, role, xform);
+                var newMind = ServerSession!.GetMind();
+
+                bool Condition()
+                {
+                    if (SEntMan.TryGetComponent(newMind, out TraitorProfileBlacklistComponent? roleBlacklist))
+                    {
+                        return !roleBlacklist.Profiles.Contains("TraitorReinforcement");
+                    }
+
+                    return true;
+                }
+
+                Assert.That(Condition, "A reinforcement traitor was given a blacklisted objective!");
+            }
+        }
+        // End all rules
+        STicker.ClearGameRules();
     }
 }
