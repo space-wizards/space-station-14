@@ -90,6 +90,7 @@
   - type: Tool
     qualities:
     - Slicing
+    - Sawing
   - type: Execution
     doAfterDuration: 4.0
   - type: UnpoweredFlashlight
