@@ -355,3 +355,15 @@
   - type: ChangelingRole
   - type: RoleBriefing
     briefing: changeling-briefing
+
+# Maddened (Throngler)
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleMaddened
+  name: Maddened Role
+  components:
+  - type: MindRole
+    antagPrototype: Maddened
+    roleType: SoloAntagonist
+    subtype: role-subtype-maddened
+  - type: MaddenedRole
