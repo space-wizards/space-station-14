@@ -4,7 +4,7 @@ using Content.Shared.Maps;
 namespace Content.Server.Materials;
 
 /// <inheritdoc/>
-public sealed partial class TileReclaimerSystem : SharedTileReclaimerSystem
+public sealed partial class ServerTileReclaimerSystem : TileReclaimerSystem
 {
     [Dependency] private MaterialStorageSystem _materialStorage = default!;
 

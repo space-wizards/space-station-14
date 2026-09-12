@@ -21,7 +21,6 @@
     tags:
       - ForceFixRotations
       - Window
-      - SmeltingImmune
   - type: Physics
     bodyType: Static
   - type: ExaminableDamage
@@ -87,6 +86,11 @@
   components:
   - type: ExaminableDamage
     messages: null
+  - type: Tag
+    tags:
+    - ForceFixRotations
+    - Window
+    - SmeltingImmune
 
 - type: entity
   parent: [ PlastitaniumWindowSquareBase, StructureHealthBarrierStrong ]
@@ -172,6 +176,11 @@
   components:
   - type: ExaminableDamage
     messages: null
+  - type: Tag
+    tags:
+    - ForceFixRotations
+    - Window
+    - SmeltingImmune
 
 - type: entity
   id: PlastitaniumWindowDiagonal

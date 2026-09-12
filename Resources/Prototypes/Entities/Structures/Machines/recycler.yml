@@ -232,7 +232,6 @@
     volume: -8
     range: 5
     sound:
-      # TODO: https://freesound.org/people/derjuli/sounds/448133/ CC-NC-
       path: /Audio/Ambience/Objects/circular_saw.ogg
   - type: Transform
     anchored: true

@@ -13,7 +13,7 @@ namespace Content.Shared.Materials;
 /// <summary>
 /// Handles interactions and logic related to <see cref="TileReclaimerComponent"/>.
 /// </summary>
-public abstract partial class SharedTileReclaimerSystem : EntitySystem
+public abstract partial class TileReclaimerSystem : EntitySystem
 {
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
@@ -29,7 +29,8 @@ public abstract partial class SharedTileReclaimerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<TileReclaimerComponent> ent, ref MapInitEvent args)
     {
-        ent.Comp.NextRecycle = _timing.CurTime;
+        ent.Comp.NextRecycle = _timing.CurTime + ent.Comp.RecycleDelay;
+        DirtyField(ent.Owner, ent.Comp, nameof(TileReclaimerComponent.NextRecycle));
     }
 
     public override void Update(float frameTime)
@@ -47,6 +48,7 @@ public abstract partial class SharedTileReclaimerSystem : EntitySystem
     private void Update(Entity<TileReclaimerComponent, TransformComponent> ent)
     {
         ent.Comp1.NextRecycle += ent.Comp1.RecycleDelay;
+        DirtyField(ent.Owner, ent.Comp1, nameof(TileReclaimerComponent.NextRecycle));
 
         //TODO: The recycler is hardcoded to rely on the conveyor component for its powered state, and this system is based on the same functionality. That should be fixed into a more general solution for both systems, but for the sake of consistency I'm not doing that now.
         if (!TryComp<ConveyorComponent>(ent, out var conveyor) || conveyor.State == ConveyorState.Off)

@@ -9,16 +9,10 @@ namespace Content.Shared.Materials;
 /// <summary>
 /// Makes an entity into a grid reclaimer, able to delete grids in front of it and produce materials.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
-[Access(typeof(SharedTileReclaimerSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause]
+[Access(typeof(TileReclaimerSystem))]
 public sealed partial class TileReclaimerComponent : Component
 {
-    /// <summary>
-    /// Whether or not the machine has power.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool Powered;
-
     /// <summary>
     /// An "enable" toggle for things like interfacing with machine linking.
     /// </summary>
