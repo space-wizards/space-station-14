@@ -6,3 +6,5 @@ shuffle-artifact-popup = You feel yourself teleport instantly!
 charge-artifact-popup = You feel the air buzz with electricity.
 
 activate-artifact-popup-self = You activate node {$node}.
+
+interact-artifact-wrong-access = The artifact denies access!

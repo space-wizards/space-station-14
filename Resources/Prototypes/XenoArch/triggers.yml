@@ -58,6 +58,8 @@
       weight: 0.5
     - id: TriggerAttackParticleEngine
       weight: 0.1
+    - id: TriggerAccess
+      weight: 0.5
 
 - type: entityTable
   id: XenoArtifactHandheldOnlyTriggerTable
@@ -494,6 +496,33 @@
       - LaserProjectile
       tags:
       - EmitterBolt
+
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: TriggerAccess
+  name: Direct access protocols exposure
+  components:
+  - type: AccessReader # Required for processing access functions
+    loggingDisabled: true # this comment commemorates the three days of my life lost trying to understand why i couldn't override accesses at component intialisation only to realise it was due to AccessReaderComponent being placed AFTER XATAccessComponent. Order of operation matters folks.
+  - type: XATAccess
+    accessSound:
+      path: /Audio/Machines/beep.ogg
+    deniedSound:
+      path: /Audio/Machines/airlock_deny.ogg
+    potentialAccess:
+    - Command
+    - Bar
+    - Kitchen
+    - Hydroponics
+    - Chapel
+    - Theatre
+    - Janitor
+    - Service
+    - Cargo
+    - Engineering
+    - Security
+    - Medical
+    - External
 
 #endregion
 #region Handheld triggers
