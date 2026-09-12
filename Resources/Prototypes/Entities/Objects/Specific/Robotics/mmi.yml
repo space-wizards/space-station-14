@@ -12,6 +12,10 @@
       visible: false
     - state: mmi_off
       map: ["enum.MMIVisualLayers.Base"]
+    - state: mmi_light
+      map: ["enum.MMIVisualLayers.Unlit"]
+      shader: unshaded
+      visible: false
   - type: Input
     context: human
   - type: MMI
@@ -76,7 +80,8 @@
       sprite: Objects/Specific/Robotics/mmi.rsi
       layers:
       - state: posibrain
-        map: ["base"]
+      - map: ["light"]
+        shader: unshaded
     - type: Input
       context: human
     - type: ToggleableGhostRole
@@ -125,8 +130,8 @@
     - type: GenericVisualizer
       visuals:
         enum.ToggleableGhostRoleVisuals.Status:
-          base:
-            Off: { state: posibrain }
+          light:
+            Off: { state: null }
             Searching: { state: posibrain-searching }
             On: { state: posibrain-occupied }
     - type: GuideHelp
