@@ -1,9 +1,11 @@
+using System.Linq;
 using System.Reflection;
 using Content.Shared.Guidebook;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Reflection;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Guidebook;
@@ -14,6 +16,7 @@ namespace Content.Server.Guidebook;
 /// </summary>
 public sealed partial class GuidebookDataSystem : EntitySystem
 {
+    [Dependency] private IReflectionManager _reflection = default!;
     [Dependency] private IPlayerManager _player = default!;
 
     private readonly Dictionary<string, List<MemberInfo>> _tagged = [];
@@ -59,51 +62,34 @@ public sealed partial class GuidebookDataSystem : EntitySystem
         // Just for debug metrics
         var memberCount = 0;
         var prototypeCount = 0;
+        var components = _reflection
+            .GetAllChildren<IGuidebookData>()
+            .Select(t => EntityManager.ComponentFactory.GetComponentName(t))
+            .ToHashSet();
 
-        if (_tagged.Count == 0)
-        {
-            // Scan component registrations to find members tagged for extraction
-            foreach (var registration in EntityManager.ComponentFactory.GetAllRegistrations())
-            {
-                foreach (var member in registration.Type.GetMembers())
-                {
-                    if (member.HasCustomAttribute<GuidebookDataAttribute>())
-                    {
-                        // Note this component-member pair for later
-                        _tagged.GetOrNew(registration.Name).Add(member);
-                        memberCount++;
-                    }
-                }
-            }
-        }
-
-        // Scan entity prototypes for the component-member pairs we noted
+        // Scan component registrations to find members tagged for extraction
         var entityPrototypes = ProtoMan.EnumeratePrototypes<EntityPrototype>();
         foreach (var prototype in entityPrototypes)
         {
             foreach (var (component, entry) in prototype.Components)
             {
-                if (!_tagged.TryGetValue(component, out var members))
+                if (!components.Contains(component))
                     continue;
 
                 prototypeCount++;
 
-                foreach (var member in members)
+                var data = (IGuidebookData)entry.Component;
+                foreach (var name in data.GetFieldNames())
                 {
-                    // It's dumb that we can't just do member.GetValue, but we can't, so
-                    var value = member switch
-                    {
-                        FieldInfo field => field.GetValue(entry.Component),
-                        PropertyInfo property => property.GetValue(entry.Component),
-                        _ => throw new NotImplementedException("Unsupported member type")
-                    };
                     // Add it into the data cache
-                    cache.AddData(prototype.ID, component, member.Name, value);
+                    var value = data.GetFieldValue(name);
+                    cache.AddData(prototype.ID, component, name, value);
+                    memberCount++;
                 }
             }
         }
 
-        Log.Debug($"Collected {cache.Count} Guidebook Protodata value(s) - {prototypeCount} matched prototype(s), {_tagged.Count} component(s), {memberCount} member(s)");
+        Log.Debug($"Collected {cache.Count} Guidebook Protodata value(s) - {prototypeCount} matched prototype(s), {components.Count} component(s), {memberCount} member(s)");
     }
 
     /// <summary>
