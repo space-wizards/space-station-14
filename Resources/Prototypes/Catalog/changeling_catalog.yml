@@ -58,6 +58,21 @@
   productAction: ActionChangelingBiodegrade
 
 - type: listing
+  id: ChangelingChameleonSkin
+  name: changeling-catalog-chameleon-skin-name
+  description: changeling-catalog-chameleon-skin-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: camo-undies-on }
+  applyToMob: true
+  cost:
+    ChangelingDNA: 20
+  categories:
+  - ChangelingStoreStealth
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productAction: ActionChangelingChameleonSkin
+
+- type: listing
   id: ChangelingStingDna
   name: changeling-catalog-sting-dna-name
   description: changeling-catalog-sting-dna-desc
