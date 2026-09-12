@@ -118,7 +118,7 @@ public sealed partial class DoorSystem : SharedDoorSystem
 
         // We are checking beforehand since some doors may not have an emagging visual layer, and we don't want LayerSetVisible to throw an error.
         if (_sprite.TryGetLayer(entity.Owner, DoorVisualLayers.BaseEmagging, out var _, false))
-            _sprite.LayerSetVisible(entity.Owner, DoorVisualLayers.BaseEmagging, state == DoorState.Emagging);
+            _sprite.LayerSetVisible(entity.Owner, DoorVisualLayers.BaseEmagging, state is DoorState.Emagging or DoorState.EmaggingWelded);
 
         UpdateAppearanceForDoorState(entity, args.Sprite, state);
     }
@@ -192,7 +192,7 @@ public sealed partial class DoorSystem : SharedDoorSystem
                 _animationSystem.Play(entity, (Animation)entity.Comp.DenyingAnimation, DoorComponent.DenyKey);
 
                 return;
-            case DoorState.Emagging:
+            case DoorState.Emagging or DoorState.EmaggingWelded:
                 if (_animationSystem.HasRunningAnimation(entity, DoorComponent.EmagKey))
                     return;
 
