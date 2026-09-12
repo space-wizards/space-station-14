@@ -211,7 +211,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         {
             controller.CurTickSprintMovement = Vector2.Zero;
 
-            var ev = new SpriteMoveEvent(false);
+            var ev = new NPCMoveEvent(Vector2.Zero);
             RaiseLocalEvent(uid, ref ev);
         }
 
@@ -292,7 +292,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         component.LastInputTick = _timing.CurTick;
         component.LastInputSubTick = ushort.MaxValue;
 
-        var ev = new SpriteMoveEvent(true);
+        var ev = new NPCMoveEvent(value);
         RaiseLocalEvent(uid, ref ev);
     }
 

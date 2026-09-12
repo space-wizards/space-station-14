@@ -20,6 +20,9 @@ public sealed partial class SpriteMovementComponent : Component
     [DataField]
     public Dictionary<string, PrototypeLayerData> NoMovementLayers = new();
 
+    /// <summary>
+    /// Whether the sprite is moving.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public bool IsMoving;
 }
