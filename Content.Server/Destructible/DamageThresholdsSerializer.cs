@@ -18,7 +18,7 @@ public sealed class DamageThresholdsSerializer : ITypeSerializer<List<DamageThre
         IDependencyCollection dependencies,
         ISerializationContext context = null)
     {
-        var list = new List<ValidationNode>();
+        var list = new List<ValidationNode>(node.Count);
         foreach (var elem in node.Sequence)
         {
             list.Add(serializationManager.ValidateNode<DamageThreshold>(elem, context));
@@ -62,7 +62,6 @@ public sealed class DamageThresholdsSerializer : ITypeSerializer<List<DamageThre
             list.Add(item);
         }
 
-        list.Sort();
         return list;
     }
 
@@ -72,7 +71,7 @@ public sealed class DamageThresholdsSerializer : ITypeSerializer<List<DamageThre
         bool alwaysWrite = false,
         ISerializationContext context = null)
     {
-        var sequence = new SequenceDataNode();
+        var sequence = new SequenceDataNode(value.Count);
 
         foreach (var elem in value)
         {
