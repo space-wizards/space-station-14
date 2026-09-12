@@ -11,12 +11,7 @@ public sealed partial class ChangelingHorrorSystem : SharedChangelingHorrorSyste
 {
     [Dependency] private IGameTiming _timing = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<ChangelingHorrorComponent, GetGenericAlertCounterAmountEvent>(OnGetCounterAmount);
-    }
-
+    [SubscribeLocalEvent]
     private void OnGetCounterAmount(Entity<ChangelingHorrorComponent> ent, ref GetGenericAlertCounterAmountEvent args)
     {
         if (ent.Comp.TimeAlert != args.Alert)

@@ -41,10 +41,7 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
     [Dependency] private ScreechSystem _screech = default!;
     [Dependency] private SharedEntityEffectsSystem _effects = default!;
     [Dependency] private TagSystem _tag = default!;
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -82,7 +79,7 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
                 }
                 var selfMessage = Loc.GetString("changeling-horror-force-transform-self", ("user", Identity.Entity(uid, EntityManager)));
                 var othersMessage = Loc.GetString("changeling-horror-force-transform-others", ("user", Identity.Entity(uid, EntityManager)));
-                _popups.PopupPredicted(
+                _popups.PopupEntity(
                 selfMessage,
                 othersMessage,
                 uid,
