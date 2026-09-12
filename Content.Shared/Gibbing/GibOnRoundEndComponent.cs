@@ -19,4 +19,10 @@ public sealed partial class GibOnRoundEndComponent : Component
     /// </summary>
     [DataField]
     public EntProtoId? SpawnProto;
+
+    /// <summary>
+    /// If true, items held/equipped by the entity will be deleted.
+    /// </summary>
+    [DataField]
+    public bool DeleteItems;
 }
