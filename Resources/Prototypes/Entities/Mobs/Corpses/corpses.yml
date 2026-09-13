@@ -4,17 +4,29 @@
   suffix: Dead, Service
   components:
   - type: Loadout
+    selectSame: true
     prototypes:
-      - HoPGear
-      - ClownGear
-      - MimeGear
-      - JanitorGear
-      - ServiceWorkerGear
-      - MusicianGear
-      - BotanistGear
-      - ChefGear
-      - ChaplainGear
-      - PassengerGear
+    - HoPGear
+    - ClownGear
+    - MimeGear
+    - JanitorGear
+    - ServiceWorkerGear
+    - MusicianGear
+    - BotanistGear
+    - ChefGear
+    - ChaplainGear
+    - PassengerGear
+    roleLoadout:
+    - JobHeadOfPersonnel
+    - JobClown
+    - JobMime
+    - JobJanitor
+    - JobServiceWorker
+    - JobMusician
+    - JobBotanist
+    - JobChef
+    - JobChaplain
+    - JobPassenger
 
 - type: entity
   parent: SalvageHumanCorpse
@@ -22,10 +34,15 @@
   suffix: Dead, Engineer
   components:
   - type: Loadout
+    selectSame: true
     prototypes:
     - TechnicalAssistantGear
     - AtmosphericTechnicianGear
     - StationEngineerGear
+    roleLoadout:
+    - JobTechnicalAssistant
+    - JobAtmosphericTechnician
+    - JobStationEngineer
 
 - type: entity
   parent: SalvageHumanCorpse
@@ -33,9 +50,13 @@
   suffix: Dead, Cargo
   components:
   - type: Loadout
+    selectSame: true
     prototypes:
     - CargoTechGear
     - SalvageSpecialistGear
+    roleLoadout:
+    - JobCargoTechnician
+    - JobSalvageSpecialist
 
 - type: entity
   parent: SalvageHumanCorpse
@@ -43,11 +64,17 @@
   suffix: Dead, Medic
   components:
   - type: Loadout
+    selectSame: true
     prototypes:
     - MedicalInternGear
     - PsychologistGear
     - ChemistGear
     - DoctorGear
+    roleLoadout:
+    - JobMedicalIntern
+    - JobPsychologist
+    - JobChemist
+    - JobMedicalDoctor
 
 - type: entity
   parent: SalvageHumanCorpse
@@ -55,9 +82,13 @@
   suffix: Dead, Science
   components:
   - type: Loadout
+    selectSame: true
     prototypes:
     - ResearchAssistantGear
     - ScientistGear
+    roleLoadout:
+    - JobResearchAssistant
+    - JobScientist
 
 - type: entity
   parent: SalvageHumanCorpse
@@ -65,11 +96,17 @@
   suffix: Dead, Security
   components:
   - type: Loadout
+    selectSame: true
     prototypes:
     - SecurityCadetGear
     - SecurityOfficerGear
     - DetectiveGear
     - WardenGear
+    roleLoadout:
+    - JobSecurityCadet
+    - JobSecurityOfficer
+    - JobDetective
+    - JobWarden
 
 - type: entity
   parent: SalvageHumanCorpse
@@ -77,6 +114,7 @@
   suffix: Dead, Command
   components:
   - type: Loadout
+    selectSame: true
     prototypes:
     - HoPGear
     - CentcommGear
@@ -86,3 +124,12 @@
     - CMOGear
     - ChiefEngineerGear
     - QuartermasterGear
+    roleLoadout:
+    - JobHeadOfPersonnel
+    - JobCentralCommandOfficial
+    - JobCaptain
+    - JobHeadOfSecurity
+    - JobResearchDirector
+    - JobChiefMedicalOfficer
+    - JobChiefEngineer
+    - JobQuartermaster

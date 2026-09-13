@@ -141,29 +141,33 @@ public sealed partial class LoadoutSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, LoadoutComponent component, MapInitEvent args)
     {
-        Equip(uid, component.StartingGear, component.RoleLoadout);
+        Equip(uid, component.StartingGear, component.RoleLoadout, component.SelectSame);
     }
 
     public void Equip(EntityUid uid, List<ProtoId<StartingGearPrototype>>? startingGear,
-        List<ProtoId<RoleLoadoutPrototype>>? loadoutGroups)
+        List<ProtoId<RoleLoadoutPrototype>>? loadoutGroups, bool selectSame = false)
     {
-        // First, randomly pick a startingGear profile from those specified, and equip it.
-        if (startingGear != null && startingGear.Count > 0)
-            _station.EquipStartingGear(uid, _random.Pick(startingGear), false);
-
-        if (loadoutGroups == null)
+        // RoleLoadout goes first since it's more likely to have clothing.
+        // First, randomly pick a RoleLoadout profile from those specified, and process/equip all LoadoutGroups from it.
+        // For non-roundstart mobs there is no SelectedLoadout data, so minValue must be set in each LoadoutGroup to force selection.
+        int? index = null;
+        if (loadoutGroups != null && loadoutGroups.Count > 0)
         {
-            GearEquipped(uid);
-            return;
+            index = _random.Next(loadoutGroups.Count);
+
+            var selected = loadoutGroups[index.Value];
+            var proto = ProtoMan.Index(selected);
+            var loadout = new RoleLoadout(selected);
+            loadout.SetDefault(GetProfile(uid), _actors.GetSession(uid), ProtoMan, true);
+            _station.EquipRoleLoadout(uid, loadout, proto);
         }
 
-        // Then, randomly pick a RoleLoadout profile from those specified, and process/equip all LoadoutGroups from it.
-        // For non-roundstart mobs there is no SelectedLoadout data, so minValue must be set in each LoadoutGroup to force selection.
-        var id = _random.Pick(loadoutGroups);
-        var proto = ProtoMan.Index(id);
-        var loadout = new RoleLoadout(id);
-        loadout.SetDefault(GetProfile(uid), _actors.GetSession(uid), ProtoMan, true);
-        _station.EquipRoleLoadout(uid, loadout, proto);
+        // Then, randomly pick a startingGear profile from those specified, and equip it.
+        if (startingGear != null && startingGear.Count > 0)
+        {
+            _station.EquipStartingGear(uid, (selectSame && index != null && startingGear.Count == loadoutGroups?.Count) ?
+                startingGear[index.Value] : _random.Pick(startingGear), false);
+        }
 
         GearEquipped(uid);
     }
