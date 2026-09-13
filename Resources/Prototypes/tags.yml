@@ -452,6 +452,9 @@
 
 ## D ##
 
+- type: Tag
+  id: Deimplantable # Used by whitelist for removable implants
+
 - type: Tag # Exists on diagonal walls and windows
   id: Diagonal # Used by TileWallsCommand and FixRotationsCommand
 

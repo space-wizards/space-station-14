@@ -90,11 +90,10 @@ public sealed partial class ImplanterComponent : Component
     public bool AllowDeimplantAll = false;
 
     /// <summary>
-    /// The subdermal implants that may be removed via this implanter
-    /// TODO: This should be a EntityWhitelist! Don't use protoIds for whitelisting purposes.
+    /// Whitelist of implants that may be removed via this implanter
     /// </summary>
     [DataField]
-    public List<EntProtoId> DeimplantWhitelist = new();
+    public EntityWhitelist DeimplantWhitelist = new();
 
     /// <summary>
     /// The subdermal implants that may be removed via this implanter
@@ -107,6 +106,16 @@ public sealed partial class ImplanterComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntProtoId? DeimplantChosen = null;
+
+    /// <summary>
+    /// Chosen target to draw implant
+    /// </summary>
+    public EntityUid? TargetToDrawImplant = null;
+
+    /// <summary>
+    /// User entity that triggers draw implant event
+    /// </summary>
+    public EntityUid? UserTrigger = null;
 
     /// <summary>
     /// The sound to be played when an implanter catastrophically fails.
