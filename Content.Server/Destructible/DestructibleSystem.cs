@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Shared.Damage.Components;
@@ -58,7 +59,8 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
 
                 var logImpact = LogImpact.Low;
                 // Convert behaviors into string for logs
-                var triggeredBehaviors = string.Join(", ", threshold.Behaviors.Select(behavior =>
+                var triggeredBehaviors = string.Join(", ",
+                    threshold.Behaviors.Select(behavior =>
                 {
                     if (logImpact <= behavior.Impact)
                         logImpact = behavior.Impact;
@@ -127,9 +129,6 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
     /// </summary>
     public bool Reached(DamageThreshold threshold, Entity<DamageableComponent> owner)
     {
-        if (threshold.Trigger == null)
-            return false;
-
         return threshold.Trigger.Reached(owner, this);
     }
 

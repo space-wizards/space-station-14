@@ -1,6 +1,6 @@
 ﻿#nullable disable
 using System.Linq;
-using Content.Server.Destructible.Thresholds;
+using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Destructible.Thresholds.Triggers;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
@@ -9,7 +9,7 @@ using Robust.Shared.Serialization.Markdown.Sequence;
 using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 
-namespace Content.Server.Destructible;
+namespace Content.Shared.Destructible;
 
 public sealed class DamageThresholdsSerializer : ITypeSerializer<List<DamageThreshold>, SequenceDataNode>
 {
@@ -37,7 +37,7 @@ public sealed class DamageThresholdsSerializer : ITypeSerializer<List<DamageThre
         if (instanceProvider != null)
         {
             var sawmill = dependencies.Resolve<ILogManager>().GetSawmill("szr");
-            sawmill.Warning($"Provided value to a Read-call for a {nameof(List<DamageThreshold>)}. Ignoring...");
+            sawmill.Warning($"Provided value to a Read-call for a {nameof(List<>)}. Ignoring...");
         }
 
         var list = new List<DamageThreshold>();
@@ -54,7 +54,7 @@ public sealed class DamageThresholdsSerializer : ITypeSerializer<List<DamageThre
                 var item2 = serializationManager.Read<DamageThreshold>(node.Sequence[j], hookCtx, context);
                 if (IsEqual(item, item2))
                 {
-                    item.Behaviors = item.Behaviors.Union(item2.Behaviors).ToList();
+                    item.Behaviors = [.. item.Behaviors.Union(item2.Behaviors)];
                     ignore.Add(j);
                 }
             }
