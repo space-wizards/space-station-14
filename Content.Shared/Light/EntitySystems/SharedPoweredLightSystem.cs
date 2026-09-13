@@ -3,8 +3,8 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.DeviceNetwork.Payloads;
 using Content.Shared.DoAfter;
 using Content.Shared.Emp;
 using Content.Shared.Hands.EntitySystems;
@@ -51,7 +51,6 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
         SubscribeLocalEvent<PoweredLightComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<PoweredLightComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<PoweredLightComponent, SignalReceivedEvent>(OnSignalReceived);
-        SubscribeLocalEvent<PoweredLightComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<PoweredLightComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<PoweredLightComponent, PoweredLightDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<PoweredLightComponent, DamageChangedEvent>(HandleLightDamaged);
@@ -130,15 +129,12 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
     }
 
     /// <summary>
-    /// Turns the light on or of when receiving a <see cref="DeviceNetworkConstants.CmdSetState"/> command.
-    /// The light is turned on or of according to the <see cref="DeviceNetworkConstants.StateEnabled"/> value
+    /// Turns the light on or of when receiving a <see cref="ApcNetTogglePayload"/>.
     /// </summary>
-    private void OnPacketReceived(EntityUid uid, PoweredLightComponent component, DeviceNetworkPacketEvent args)
+    [SubscribeLocalEvent]
+    private void OnPacketReceived(Entity<PoweredLightComponent> ent, ref DeviceNetworkPacketEvent<ApcNetTogglePayload> args)
     {
-        if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command) || command != DeviceNetworkConstants.CmdSetState) return;
-        if (!args.Data.TryGetValue(DeviceNetworkConstants.StateEnabled, out bool enabled)) return;
-
-        SetState(uid, enabled, component);
+        SetState(ent, args.Data.Enabled, ent.Comp);
     }
 
     /// <summary>

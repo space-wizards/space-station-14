@@ -40,7 +40,7 @@
     damage:
       types:
         Piercing: 10
-        Structural: 8
+        Structural: 6
 
 - type: entity
   parent: PelletShotgun
