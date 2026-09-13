@@ -63,6 +63,9 @@
     damage:
       types:
         Blunt: 0
+  - type: Tag
+    tags:
+    - Ingredient
 
 - type: entity
   abstract: true
@@ -268,6 +271,9 @@
         Quantity: 50
   - type: Edible
     edible: Drink # slurping sounds!
+  - type: Tag
+    tags:
+    - Condiment
 
 - type: entity
   parent: ReagentPacketBase # TODO Move to condiments.yml and parent off of BaseFoodCondimentBottle
@@ -307,6 +313,8 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/ingredients.rsi
+  - type: Tag
+    tags: [ Ingredient ]
 
 # TODO Replace all nutriment in dough with something that is less metabolically efficient
 
@@ -320,6 +328,8 @@
     sourceSolution: food
     ignoreEmpty: true
     popup: spike-solution-mix
+  - type: Tag
+    tags: [ Ingredient ]
 
 - type: entity
   abstract: true

@@ -96,6 +96,8 @@
     sprite: Objects/Consumable/Food/burger.rsi
     shape:
     - 0,0,1,0
+  - type: Tag
+    tags: [ FinishedMeal ]
 
 # Custom Burger Example
 
@@ -147,6 +149,7 @@
   - type: Tag
     tags:
     - Meat
+    - FinishedMeal
   - type: Item
     inhandVisuals:
       left:
@@ -187,6 +190,7 @@
   - type: Tag
     tags:
     - Meat
+    - FinishedMeal
   - type: Item
     inhandVisuals:
       left:
@@ -226,7 +230,7 @@
         Quantity: 5
   - type: Tag
     tags:
-    - Meat
+    - FinishedMeal
   - type: Item
     inhandVisuals:
       left:
@@ -260,6 +264,7 @@
   - type: Tag
     tags:
     - Meat
+    - FinishedMeal
 
 - type: entity
   parent: [SolutionNormal, FoodBurgerBase]
@@ -297,6 +302,7 @@
   - type: Tag
     tags:
     - Meat
+    - FinishedMeal
 # Tastes like bun, silver, magic.
 
 - type: entity
@@ -321,6 +327,7 @@
   - type: Tag
     tags:
     - Meat
+    - FinishedMeal
 # Tastes like bun, brains.
 
 - type: entity
@@ -348,6 +355,7 @@
   - type: Tag
     tags:
     - Meat
+    - FinishedMeal
 
 - type: entity
   parent: FoodBurgerBase
@@ -372,6 +380,7 @@
   - type: Tag
     tags:
     - Meat
+    - FinishedMeal
   - type: Item
     inhandVisuals:
       left:
@@ -414,6 +423,7 @@
   - type: Tag
     tags:
     - Meat
+    - FinishedMeal
   - type: Item
     inhandVisuals:
       left:
@@ -452,6 +462,7 @@
   - type: Tag
     tags:
     - Meat
+    - FinishedMeal
 
 - type: entity
   parent: FoodBurgerBase
@@ -477,6 +488,7 @@
   - type: Tag
     tags:
     - Meat
+    - FinishedMeal
   - type: Item
     inhandVisuals:
       left:
@@ -499,6 +511,7 @@
   - type: Tag
     tags:
     - Meat
+    - FinishedMeal
   - type: Item
     inhandVisuals:
       left:
@@ -568,6 +581,7 @@
   - type: Tag
     tags:
     - Meat
+    - FinishedMeal
 
 - type: entity
   parent: FoodBurgerBase
@@ -599,6 +613,7 @@
   - type: Tag
     tags:
     - Meat
+    - FinishedMeal
 # Tastes like bun, duck.
 
 - type: entity
@@ -661,6 +676,7 @@
   - type: Tag
     tags:
     - Meat
+    - FinishedMeal
 # Tastes like bun, fish.
 
 - type: entity
@@ -700,6 +716,7 @@
   - type: Tag
     tags:
     - Meat
+    - FinishedMeal
 
 # Tastes like bun, HEAT.
 
@@ -747,6 +764,7 @@
     tags:
       - ClothMade
       - Meat
+      - FinishedMeal
 # Tastes like bun, ectoplasm.
 
 - type: entity
@@ -764,6 +782,7 @@
   - type: Tag
     tags:
     - Meat
+    - FinishedMeal
   - type: Item
     inhandVisuals:
       left:
@@ -812,6 +831,7 @@
   - type: Tag
     tags:
     - Meat
+    - FinishedMeal
 
 - type: entity
   parent: [SolutionNormal, FoodBurgerBase]
@@ -844,6 +864,7 @@
   - type: Tag
     tags:
     - Meat
+    - FinishedMeal
   - type: Item
     size: Normal
     shape:
@@ -906,6 +927,7 @@
   - type: Tag
     tags:
     - Meat
+    - FinishedMeal
   - type: Item
     inhandVisuals:
       left:
@@ -939,6 +961,7 @@
   - type: Tag
     tags:
     - Meat
+    - FinishedMeal
   - type: Item
     inhandVisuals:
       left:
@@ -983,6 +1006,7 @@
   - type: Tag
     tags:
     - Meat
+    - FinishedMeal
   - type: Item
     inhandVisuals:
       left:
@@ -1101,6 +1125,7 @@
   - type: Tag
     tags:
     - Meat
+    - FinishedMeal
 # Tastes like bun, diabetes.
 
 - type: entity
@@ -1156,6 +1181,7 @@
   - type: Tag
     tags:
     - Meat
+    - FinishedMeal
   - type: Item
     inhandVisuals:
       left:
@@ -1199,4 +1225,5 @@
   - type: Tag
     tags:
     - Meat
+    - FinishedMeal
 

@@ -594,6 +594,8 @@
         Quantity: 15
       - ReagentId: Vodka
         Quantity: 5
+  - type: Tag
+    tags: [ FinishedMeal ]
 
 # Soup
 

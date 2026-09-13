@@ -244,6 +244,7 @@
   - type: Tag
     tags:
     - Fruit
+    - FoodSnack
 
 - type: entity
   parent: FoodSnackBase

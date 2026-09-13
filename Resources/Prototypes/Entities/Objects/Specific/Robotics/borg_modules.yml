@@ -1183,10 +1183,26 @@
         emptyRepresentative: FoodPlate
         whitelist:
           tags:
+          - Bread
+          - Cake
+          - ChiliBowl
+          - Cooked
+          - Cookie
           - Dinnerware
-          - DrinkCup
-          components:
-          - Edible
+          - DonkPocket
+          - Donut
+          - Muffin
+          - Pancake
+          - Pie
+          - Pizza
+          - Soup
+          - FoodSnack
+          - FinishedMeal
+          - FrozenTreat
+        blacklist:
+          tags:
+          - Ingredient
+          - Raw
     - item: KitchenKnife
     - item: RollingPin
     - item: BorgDropper
@@ -1206,18 +1222,41 @@
           - Ingredient
           - Meat
           - Packet
+          - Raw
           - WrappedCube
+          - FoodSnack
           components:
           - Produce
           - Rehydratable # For butchering
         blacklist:
           tags:
-          - Soup
           - Bread
+          - Cake
+          - ChiliBowl
+          - Cooked
+          - Cookie
+          - Dinnerware
+          - Donut
+          - DonkPocket
+          - Muffin
+          - Pancake
+          - Pie
           - Pizza
+          - Soup
+          - FoodSnack
+          - FinishedMeal
+          - FrozenTreat
 
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: cooking-module }
+
+- type: entity
+  id: BorgModuleSeedProducePlaceholder
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/seeds.rsi
+    state: seed-produce-icon
 
 - type: entity
   id: BorgModuleBotany
@@ -1236,21 +1275,22 @@
         whitelist:
           tags:
             - BotanyTool
+    - hand:
+        emptyLabel: borg-slot-gardening-tools-empty
+        emptyRepresentative: HydroponicsToolClippers
+        whitelist:
+          tags:
+          - BotanyTool
     - item: BorgDropper
     - item: BorgBucket
     - item: PlantBag
     - hand:
-        emptyLabel: borg-slot-seeds-empty
-        emptyRepresentative: WheatSeeds
-        whitelist:
-          components:
-          - Seed
-    - hand:
-        emptyLabel: borg-slot-produce-empty
-        emptyRepresentative: FoodTomato
+        emptyLabel: borg-slot-seed-produce-empty
+        emptyRepresentative: BorgModuleSeedProducePlaceholder
         whitelist:
           components:
           - Produce
+          - Seed
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: botany-module }
 

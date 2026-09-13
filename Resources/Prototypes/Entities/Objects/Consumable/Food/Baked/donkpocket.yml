@@ -16,9 +16,7 @@
   - type: Item
     size: Tiny
   - type: Tag
-    tags:
-    - DonkPocket
-    - Meat
+    tags: [ DonkPocket, Meat ]
 
 # Donkpocket
 

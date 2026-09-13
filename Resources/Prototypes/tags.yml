@@ -361,13 +361,19 @@
   id: ComputerTelevisionCircuitboard # ConstructionGraph: WallmountTelevision
 
 - type: Tag
-  id: Condiment # For borg cooking module whitelisted slot
+  id: Condiment #  Storage whitelist: BorgModuleCooking
 
 - type: Tag
   id: ConstructionMaterial # Storage whitelist: BorgModuleConstruction
 
 - type: Tag
   id: Cooked # MetamorphRecipe: FoodBurgerCheese, FoodBurgerChicken, FoodBurgerCrab, FoodBurgerDuck
+
+- type: Tag
+  id: Cookie #  Storage whitelist: BorgModuleCooking
+
+- type: Tag
+  id: FinishedMeal # Storage whitelist: BorgModuleCooking
 
 - type: Tag
   id: CoordinatesDisk # Storage whitelist: DiskCase
@@ -458,6 +464,9 @@
 
 ## D ##
 
+- type: Tag
+  id: Dessert # Storage whitelist: BorgModuleCooking
+
 - type: Tag # Exists on diagonal walls and windows
   id: Diagonal # Used by TileWallsCommand and FixRotationsCommand
 
@@ -465,7 +474,7 @@
   id: Diamond # CargoBounty: BountySalvageDiamond
 
 - type: Tag
-  id: Dinnerware # service cyborg whitelisted slot
+  id: Dinnerware # Storage whitelist: BorgModuleCooking
 
 - type: Tag
   id: Dice # Storage whitelist: BorgModuleService, DiceBag, BooksBag
@@ -627,6 +636,9 @@
 
 - type: Tag
   id: FreezerElectronics # ConstructionGraph: CrateFreezer, ClosetFreezer
+
+- type: Tag
+  id: FrozenTreat # Storage whitelist: BorgModuleCooking
 
 - type: Tag
   id: Fruit # SpecialDigestible: OrganReptilianStomach. CargoBounty: BountyFruit
@@ -1008,6 +1020,9 @@
 
 - type: Tag
   id: Mouse # CargoBounty: BountyMouse
+
+- type: Tag
+  id: Muffin #  Storage whitelist: BorgModuleCooking
 
 - type: Tag
   id: Multitool # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering. ConstructionGraph: LogicGate

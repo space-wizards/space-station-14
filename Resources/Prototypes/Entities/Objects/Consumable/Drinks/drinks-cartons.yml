@@ -10,8 +10,7 @@
     closeSound:
       collection: bottleCloseSounds
   - type: Tag
-    tags:
-    - Ingredient
+    tags: [ Ingredient ]
 
 - type: entity
   abstract: true
@@ -39,7 +38,7 @@
   suffix: Full
   components:
   - type: Tag
-    tags: [ ]
+    tags: [ Ingredient ]
 
 - type: entity
   abstract: true
@@ -51,9 +50,8 @@
     shape:
     - 0,0,1,3
   - type: Tag
-    tags:
-    - DrinkBottle # Need this to fit in the soda dispenser, probably needs a better name
-    - Trash
+    tags: [ DrinkBottle, Trash ] # Need this to fit in the soda dispenser, probably needs a better name
+
 
 - type: entity
   abstract: true
@@ -62,8 +60,7 @@
   suffix: Full
   components:
   - type: Tag
-    tags:
-    - DrinkBottle # Need this to fit in the soda dispenser, probably needs a better name
+    tags: [ DrinkBottle ] # Need this to fit in the soda dispenser, probably needs a better name
 
 # Small carton
 
@@ -219,7 +216,7 @@
       - ReagentId: Milk
         Quantity: 120
   - type: Tag
-    tags: [ ]
+    tags: [ Ingredient ]
 
 - type: entity
   parent: DrinkCartonNormalBase
@@ -241,7 +238,7 @@
       - ReagentId: MilkSoy
         Quantity: 120
   - type: Tag
-    tags: [ ]
+    tags: [ Ingredient ]
 
 - type: entity
   parent: [DrinkBaseMaterialPlastic, DrinkCartonNormalBase]
@@ -264,7 +261,7 @@
       - ReagentId: MilkOat
         Quantity: 120
   - type: Tag
-    tags: [ ]
+    tags: [ Ingredient ]
 
 # Large cartons
 
