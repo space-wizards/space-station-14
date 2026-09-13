@@ -12,7 +12,6 @@ public sealed class ReplayTests : GameTest
     public override PoolSettings PoolSettings => new()
     {
         DummyTicker = false,
-        Dirty = true
     };
 
     /// <summary>

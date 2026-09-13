@@ -9,8 +9,6 @@ namespace Content.IntegrationTests.Tests.GameRules;
 [TestFixture]
 public sealed class SecretStartsTest : GameTest
 {
-    public override PoolSettings PoolSettings => new PoolSettings { Dirty = true };
-
     private static readonly EntProtoId SecretGameRule = "Secret";
 
     /// <summary>
@@ -23,7 +21,6 @@ public sealed class SecretStartsTest : GameTest
 
         var server = pair.Server;
         await server.WaitIdleAsync();
-        var entMan = server.ResolveDependency<IEntityManager>();
         var gameTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
 
         await server.WaitAssertion(() =>
