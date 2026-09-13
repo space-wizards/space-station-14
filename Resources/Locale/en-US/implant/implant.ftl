@@ -16,6 +16,7 @@ implanter-set-draw-type = Implant type:
 
 implanter-draw-text = Draw
 implanter-inject-text = Inject
+injector-invalid-injector-toggle-mode = You cannot toggle the injector while it is configured to this mode
 
 implanter-empty-text = Empty
 
