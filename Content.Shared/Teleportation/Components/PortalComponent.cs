@@ -1,32 +1,19 @@
-﻿using Robust.Shared.Audio;
+﻿using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Teleportation.Components;
 
 /// <summary>
-///     Marks an entity as being a 'portal' which teleports entities sent through it to linked entities.
-///     Relies on <see cref="LinkedEntityComponent"/> being set up.
+/// Resolves teleport requests to destinations linked through <see cref="LinkedEntityComponent"/>.
+/// When no destinations are linked, can choose a random nearby destination if <see cref="RandomTeleport"/> is enabled.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class PortalComponent : Component
 {
     /// <summary>
-    ///     Sound played on arriving to this portal, centered on the destination.
-    ///     The arrival sound of the entered portal will play if the destination is not a portal.
-    /// </summary>
-    [DataField("arrivalSound")]
-    public SoundSpecifier ArrivalSound = new SoundPathSpecifier("/Audio/Effects/teleport_arrival.ogg");
-
-    /// <summary>
-    ///     Sound played on departing from this portal, centered on the original portal.
-    /// </summary>
-    [DataField("departureSound")]
-    public SoundSpecifier DepartureSound = new SoundPathSpecifier("/Audio/Effects/teleport_departure.ogg");
-
-    /// <summary>
     ///     If no portals are linked, the subject will be teleported a random distance at maximum this far away.
     /// </summary>
-    [DataField("maxRandomRadius"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float MaxRandomRadius = 7.0f;
 
     /// <summary>
@@ -35,7 +22,7 @@ public sealed partial class PortalComponent : Component
     /// <remarks>
     ///     Shouldn't be able to teleport people to centcomm or the eshuttle from the station
     /// </remarks>
-    [DataField("canTeleportToOtherMaps"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool CanTeleportToOtherMaps = false;
 
     /// <summary>
@@ -45,12 +32,26 @@ public sealed partial class PortalComponent : Component
     /// <remarks>
     ///     Obviously this should strictly be larger than <see cref="MaxRandomRadius"/> (or null)
     /// </remarks>
-    [DataField("maxTeleportRadius"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float? MaxTeleportRadius;
 
     /// <summary>
     /// Should we teleport randomly if nothing is linked.
     /// </summary>
-    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public bool RandomTeleport = true;
+
+    /// <summary>
+    /// Restricts explicit initiators when the portal has no linked destinations.
+    /// Null adds no restriction. Automatic activations without a user are unaffected.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntityWhitelist? UnlinkedUserWhitelist;
+
+    /// <summary>
+    /// Blocks matching explicit initiators when the portal has no linked destinations.
+    /// Takes precedence over <see cref="UnlinkedUserWhitelist"/>. Automatic activations are unaffected.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntityWhitelist? UnlinkedUserBlacklist;
 }

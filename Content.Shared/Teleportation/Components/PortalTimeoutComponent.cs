@@ -3,15 +3,17 @@
 namespace Content.Shared.Teleportation.Components;
 
 /// <summary>
-///     Attached to an entity after portal transit to mark that they should not immediately be portaled back
-///     at the end destination.
+/// Blocks portal use until the target leaves the bounds of its exit trigger.
+/// Also protects the creator of a hand-teleporter portal until they step out.
+/// Attached to the target; no component means no portal exit block.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class PortalTimeoutComponent : Component
 {
     /// <summary>
-    ///     The portal that was entered. Null if coming from a hand teleporter, etc.
+    /// The portal whose trigger bounds must be left before another portal can be used.
+    /// For a hand teleporter, this is the portal just created beneath the user.
     /// </summary>
     [ViewVariables, DataField, AutoNetworkedField]
-    public EntityUid? EnteredPortal;
+    public EntityUid ExitPortal;
 }

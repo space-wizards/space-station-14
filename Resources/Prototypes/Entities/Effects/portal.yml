@@ -1,6 +1,36 @@
 ﻿# Standing portals
 - type: entity
   abstract: true
+  id: BasePortalTeleportation
+  components:
+  - type: Portal
+    unlinkedUserBlacklist:
+      tags:
+      - AllowPortalTraversal
+  - type: CollisionTeleportTrigger
+    triggerFixtureId: portalFixture
+    allowedNonHardTargetFixtureIds:
+    - projectile
+    targetBlacklist:
+      tags:
+      - PreventPortalCollision
+  - type: TeleportSound
+    departureSound: /Audio/Effects/teleport_departure.ogg
+    arrivalSound: /Audio/Effects/teleport_arrival.ogg
+  - type: TeleportOnVerb
+    triggerEffects: false
+    requireCanInteract: false
+    requireHands: false
+    verbType: Alternative
+    verbText: portal-component-ghost-traverse
+    priority: 11
+    userWhitelist:
+      tags:
+      - AllowPortalTraversal
+
+- type: entity
+  abstract: true
+  parent: BasePortalTeleportation
   id: BasePortal
   name: bluespace portal
   description: Transports you to a linked destination!
@@ -25,7 +55,6 @@
         layer:
         - WallLayer
         hard: false
-  - type: Portal
   - type: PointLight
     radius: 3
     energy: 1
@@ -36,6 +65,8 @@
   id: PortalRed
   description: This one looks more like a redspace portal.
   components:
+  - type: TeleportOnVerb
+    verbIcon: /Textures/Interface/VerbIcons/open.svg.192dpi.png
   - type: Sprite
     layers:
     - state: portal-red
@@ -46,6 +77,8 @@
   parent: BasePortal
   id: PortalBlue
   components:
+  - type: TeleportOnVerb
+    verbIcon: /Textures/Interface/VerbIcons/open.svg.192dpi.png
   - type: Sprite
     layers:
     - state: portal-blue
@@ -56,6 +89,8 @@
   parent: BasePortal
   id: PortalArtifact
   components:
+  - type: TeleportOnVerb
+    verbIcon: /Textures/Interface/VerbIcons/open.svg.192dpi.png
   - type: Sprite
     layers:
     - state: portal-artifact
@@ -72,7 +107,9 @@
   name: shadow rift
   description: Looks unstable.
   components:
-  - type: Portal
+  - type: TeleportOnVerb
+    verbIcon: /Textures/Interface/VerbIcons/open.svg.192dpi.png
+  - type: TeleportSound
     arrivalSound: /Audio/Items/hiss.ogg
     departureSound: /Audio/Items/hiss.ogg
   - type: Sprite
@@ -113,6 +150,8 @@
   parent: BasePortalGateway
   id: PortalGatewayBlue
   components:
+  - type: TeleportOnVerb
+    verbIcon: /Textures/Interface/VerbIcons/open.svg.192dpi.png
   - type: Sprite
     color: SkyBlue
     layers:
@@ -124,6 +163,8 @@
   parent: BasePortalGateway
   id: PortalGatewayOrange
   components:
+  - type: TeleportOnVerb
+    verbIcon: /Textures/Interface/VerbIcons/open.svg.192dpi.png
   - type: Sprite
     color: OrangeRed
     layers:
