@@ -9,6 +9,7 @@ using Content.Client.Voting;
 using Content.Shared.CCVar;
 using Robust.Client;
 using Robust.Client.Console;
+using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -23,6 +24,7 @@ namespace Content.Client.Lobby
         [Dependency] private IBaseClient _baseClient = default!;
         [Dependency] private IConfigurationManager _cfg = default!;
         [Dependency] private IClientConsoleHost _consoleHost = default!;
+        [Dependency] private IClyde _clyde = default!;
         [Dependency] private IEntityManager _entityManager = default!;
         [Dependency] private IResourceCache _resourceCache = default!;
         [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;
@@ -33,6 +35,8 @@ namespace Content.Client.Lobby
 
         private ClientGameTicker _gameTicker = default!;
         private ContentAudioSystem _contentAudioSystem = default!;
+
+        private OwnedTexture? _currentBackground;
 
         protected override Type? LinkedScreenType { get; } = typeof(LobbyGui);
         public LobbyGui? Lobby;
@@ -91,6 +95,8 @@ namespace Content.Client.Lobby
             Lobby!.CharacterPreview.CharacterSetupButton.OnPressed -= OnSetupPressed;
             Lobby!.ReadyButton.OnPressed -= OnReadyPressed;
             Lobby!.ReadyButton.OnToggled -= OnReadyToggled;
+
+            UnloadLobbyBackground();
 
             Lobby = null;
         }
@@ -254,7 +260,10 @@ namespace Content.Client.Lobby
         {
             if (_protoMan.TryIndex(_gameTicker.LobbyBackground, out var proto))
             {
-                Lobby!.Background.Texture = _resourceCache.GetResource<TextureResource>(proto.Background);
+                UnloadLobbyBackground();
+
+                _currentBackground = TextureResource.LoadOwnedTexture(_resourceCache, _clyde, proto.Background);
+                Lobby!.Background.Texture = _currentBackground;
 
                 var markup = Loc.GetString("lobby-state-background-text",
                     ("backgroundTitle", Loc.GetString(proto.Title)),
@@ -264,7 +273,7 @@ namespace Content.Client.Lobby
             }
             else
             {
-                Lobby!.Background.Texture = null;
+                UnloadLobbyBackground();
 
                 Lobby!.LobbyBackground.SetMarkup(Loc.GetString("lobby-state-background-no-background-text"));
             }
@@ -278,6 +287,16 @@ namespace Content.Client.Lobby
             }
 
             _consoleHost.ExecuteCommand($"toggleready {newReady}");
+        }
+
+        private void UnloadLobbyBackground()
+        {
+            if (_currentBackground is null)
+                return;
+
+            Lobby!.Background.Texture = null;
+            _currentBackground.Dispose();
+            _currentBackground = null;
         }
     }
 }
