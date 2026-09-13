@@ -9,12 +9,14 @@ using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Wieldable.Components;
 using Robust.Client.GameObjects;
+using Robust.Shared.Reflection;
 
 namespace Content.Client.Storage.Systems;
 
 public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVisualsComponent>
 {
     [Dependency] private ItemSystem _itemSystem = default!;
+    [Dependency] private IReflectionManager _reflection = default!;
 
     protected override void OnAppearanceChange(EntityUid uid, ItemSlotVisualsComponent component, ref AppearanceChangeEvent args)
     {
@@ -23,10 +25,14 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
 
         foreach (var visual in component.SlotVisuals.Values)
         {
-            if (!SpriteSystem.LayerMapTryGet((uid, args.Sprite), visual.Layer, out var layerIndex, false))
+            // Uses a string to find an enum, then uses the enum to set the Visuals.
+            if (!_reflection.TryParseEnumReference(visual.Layer, out var layerEnum))
                 continue;
 
-            var filled = AppearanceSystem.TryGetData(uid, visual.Layer, out bool hasItem, args.Component) && hasItem;
+            if (!SpriteSystem.LayerMapTryGet((uid, args.Sprite), layerEnum, out var layerIndex, false))
+                continue;
+
+            var filled = AppearanceSystem.TryGetData(uid, layerEnum, out bool hasItem, args.Component) && hasItem;
 
             if (!filled)
             {
@@ -53,7 +59,8 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
         foreach (var visual in ent.Comp.SlotVisuals.Values)
         {
             if (!TryComp<AppearanceComponent>(ent, out var appearance)
-                || !AppearanceSystem.TryGetData(ent, visual.Layer, out bool hasItem, appearance)
+                || !_reflection.TryParseEnumReference(visual.Layer, out var layerEnum)
+                || !AppearanceSystem.TryGetData(ent, layerEnum, out bool hasItem, appearance)
                 || !hasItem)
                 continue;
 
@@ -93,7 +100,8 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
         foreach (var visual in ent.Comp.SlotVisuals.Values)
         {
             if (!TryComp(ent, out AppearanceComponent? appearance)
-                || !AppearanceSystem.TryGetData(ent, visual.Layer, out bool hasItem, appearance)
+                || !_reflection.TryParseEnumReference(visual.Layer, out var layerEnum)
+                || !AppearanceSystem.TryGetData(ent, layerEnum, out bool hasItem, appearance)
                 || !hasItem)
                 continue;
 

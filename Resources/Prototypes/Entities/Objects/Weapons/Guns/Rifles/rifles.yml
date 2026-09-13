@@ -101,7 +101,7 @@
   - type: ItemSlotVisuals
     slotVisuals:
       gun_magazine:
-        layer: Fill0
+        layer: "enum.ItemSlotVisualLayers.Fill0"
         slotName: gun_magazine
         iconVisuals:
           filled:

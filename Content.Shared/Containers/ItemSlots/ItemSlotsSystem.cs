@@ -10,6 +10,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Reflection;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
 
@@ -29,6 +30,7 @@ public sealed partial class ItemSlotsSystem : EntitySystem
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private ISerializationManager _serializationManager = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private IReflectionManager _reflection = default!;
 
     /// <summary>
     /// Spawn in starting items for any item slots that should have one.
@@ -75,7 +77,8 @@ public sealed partial class ItemSlotsSystem : EntitySystem
                 contains = visual.Whitelist == null || _whitelistSystem.IsValid(visual.Whitelist, item);
             }
 
-            _appearance.SetData(ent, visual.Layer, contains, appearance);
+            if (_reflection.TryParseEnumReference(visual.Layer, out var layerEnum))
+                _appearance.SetData(ent, layerEnum, contains, appearance);
         }
     }
 

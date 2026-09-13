@@ -47,7 +47,7 @@
   - type: ItemSlotVisuals
     slotVisuals:
       item:
-        layer: Fill0
+        layer: "enum.ItemSlotVisualLayers.Fill0"
         slotName: item
         iconVisuals:
           filled:
@@ -61,7 +61,7 @@
            belt:
            - state: equipped-belt-sabre
       item1:
-        layer: Fill1
+        layer: "enum.ItemSlotVisualLayers.Fill1"
         slotName: item1
         iconVisuals:
           filled:

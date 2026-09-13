@@ -26,10 +26,10 @@ public sealed partial class ItemSlotVisualsComponent : Component
 public partial struct ItemSlotVisuals
 {
     /// <summary>
-    /// Enums from ItemSlotVisualLayers, makes multiple visuals possible. Used to specify Visuals.
+    /// A string that looks up Enums in ItemSlotVisualLayers then those enums are used for visuals. Makes multiple visuals possible.
     /// </summary>
     [DataField]
-    public ItemSlotVisualLayers Layer = ItemSlotVisualLayers.Fill0;
+    public string Layer = "enum.ItemSlotVisualLayers.Fill0";
 
     /// <summary>
     /// A string to specify which slot to use from ItemSlots. Specifically the third string below the slots Dictionary.
