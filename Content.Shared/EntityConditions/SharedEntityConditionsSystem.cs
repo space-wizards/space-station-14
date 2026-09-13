@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Content.Shared.Chemistry.Components;
 using Robust.Shared.Prototypes;
 
@@ -34,22 +35,22 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
         return true;
     }
 
-    public bool TryCondition<TCondition, TData>(TData target, TCondition condition)
+    public bool TryConditionOnData<TCondition, TData>(TData target, TCondition condition, EntityUid? sourceEnt=null)
         where TCondition : EntityCondition
     {
         if (condition is not IArbitraryEvaluationEnabled<TData, TCondition> evaluatorInfo)
             return false;
-        return (IoCManager.ResolveType(evaluatorInfo.EvaluatorType) as IArbitaryConditionEvaluator<TData, TCondition>)
-            ?.DoesSatisfy(target, condition) ?? false;
+        return condition.Inverted != ((IoCManager.ResolveType(evaluatorInfo.EvaluatorType) as IArbitraryConditionEvaluator<TData, TCondition>)
+            ?.DoesSatisfy(target, condition, sourceEnt) ?? false);
     }
 
-    public float TryConditionScale<TCondition, TData>(TData target, TCondition condition)
+    public float TryConditionScaleOnData<TCondition, TData>(TData target, TCondition condition, EntityUid? sourceEnt=null)
         where TCondition : EntityCondition
     {
         if (condition is not IArbitraryEvaluationEnabled<TData, TCondition> evaluatorInfo)
             return condition.ValueIfScaleNull;
-        return (IoCManager.ResolveType(evaluatorInfo.EvaluatorType) as IArbitaryConditionEvaluator<TData, TCondition>)
-            ?.Scale(target, condition) ?? condition.ValueIfScaleNull;
+        return (IoCManager.ResolveType(evaluatorInfo.EvaluatorType) as IArbitraryConditionEvaluator<TData, TCondition>)
+            ?.Scale(target, condition,sourceEnt) ?? condition.ValueIfScaleNull;
     }
 
     /// <summary>
@@ -84,7 +85,7 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
     /// <param name="sourceEnt">An optional "source entity" which is checking the condition on the entity this is being raised to.
     /// Sometimes needed for additional context with conditions.</param>
     /// <returns>Returns true if we meet the condition and false otherwise</returns>
-    public bool TryCondition<T>(EntityUid target, T condition, EntityUid? sourceEnt = null) where T : EntityCondition
+    private bool TryCondition<T>(EntityUid target, T condition, EntityUid? sourceEnt = null) where T : EntityCondition
     {
         return condition.Inverted != condition.RaiseEvent(target, this, sourceEnt);
     }
@@ -130,11 +131,11 @@ public abstract partial class EntityConditionSystem<T, TCon> : EntitySystem
     protected abstract void Condition(Entity<T> entity, ref EntityConditionEvent<TCon> args);
 }
 
-public interface IArbitaryConditionEvaluator<in TData, in TCondition> where TCondition : EntityCondition
+public interface IArbitraryConditionEvaluator<in TData, in TCondition> where TCondition : EntityCondition
 {
-    abstract bool DoesSatisfy(TData target, TCondition condition);
+    abstract bool DoesSatisfy(TData target, TCondition condition, EntityUid? sourceEnt);
 
-    abstract float? Scale(TData target, TCondition condition);
+    abstract float? Scale(TData target, TCondition condition, EntityUid? sourceEnt);
 }
 
 /// <summary>
@@ -198,7 +199,7 @@ public interface IArbitraryEvaluationEnabled<TData, TCondition>
 }
 
 /// <summary>
-/// Attach to a condition with a fixed <see cref="EntitySystem"/> implementing <see cref="IArbitaryConditionEvaluator{TData,TCondition}"/> to enable evaluation of the condition with arbitrary data.
+/// Attach to a condition with a fixed <see cref="EntitySystem"/> implementing <see cref="IArbitraryConditionEvaluator{TData,TCondition}"/> to enable evaluation of the condition with arbitrary data.
 /// </summary>
 /// <typeparam name="TData"></typeparam>
 /// <typeparam name="TCondition"></typeparam>
@@ -206,7 +207,7 @@ public interface IArbitraryEvaluationEnabled<TData, TCondition>
 public interface IArbitraryEvaluationEnabled<TData, TCondition, TEvaluator>
     : IArbitraryEvaluationEnabled<TData, TCondition>
     where TCondition : EntityCondition
-    where TEvaluator : EntitySystem, IArbitaryConditionEvaluator<TData, TCondition>
+    where TEvaluator : EntitySystem, IArbitraryConditionEvaluator<TData, TCondition>
 {
     /// <inheritdoc/>
     Type IArbitraryEvaluationEnabled<TData, TCondition>.EvaluatorType => typeof(TEvaluator);

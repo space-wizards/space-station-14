@@ -9,7 +9,7 @@ namespace Content.Shared.EntityConditions.Conditions;
 /// Returns true if this solution entity has an amount of reagent in it within a specified minimum and maximum.
 /// </summary>
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
-public sealed partial class ReagentEntityConditionSystem : EntityConditionSystem<SolutionComponent,ReagentCondition>, IArbitaryConditionEvaluator<Solution, ReagentCondition>
+public sealed partial class ReagentEntityConditionSystem : EntityConditionSystem<SolutionComponent,ReagentCondition>, IArbitraryConditionEvaluator<Solution, ReagentCondition>
 {
 
     protected override void Condition(Entity<SolutionComponent> entity,
