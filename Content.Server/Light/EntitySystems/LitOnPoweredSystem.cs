@@ -19,25 +19,17 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnMapInit(EntityUid uid, LitOnPoweredComponent component, MapInitEvent args)
         {
-            SetLit(uid, _powerReceiver.IsPowered(uid));
+            _lights.SetEnabled(uid, _powerReceiver.IsPowered(uid));
         }
 
         private void OnPowerChanged(EntityUid uid, LitOnPoweredComponent component, ref PowerChangedEvent args)
         {
-            SetLit(uid, args.Powered);
+            _lights.SetEnabled(uid, args.Powered);
         }
 
         private void OnPowerSupply(EntityUid uid, LitOnPoweredComponent component, ref PowerNetBatterySupplyEvent args)
         {
-            SetLit(uid, args.Supply);
-        }
-
-        private void SetLit(EntityUid uid, bool lit)
-        {
-            if (_lights.TryGetLight(uid, out var light))
-            {
-                _lights.SetEnabled(uid, lit, light);
-            }
+            _lights.SetEnabled(uid, args.Supply);
         }
     }
 }
