@@ -42,23 +42,6 @@
       "directions": 4
     },
     {
-      "name": "plastitaniumglass"
-    },
-    {
-      "name": "plastitaniumglass_2"
-    },
-    {
-      "name": "plastitaniumglass_3"
-    },
-    {
-      "name": "plastitaniumglass-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "plastitaniumglass-inhand-right",
-      "directions": 4
-    },
-    {
       "name": "rpglass"
     },
     {
@@ -90,23 +73,6 @@
     },
     {
       "name": "rglass-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "titaniumglass"
-    },
-    {
-      "name": "titaniumglass_2"
-    },
-    {
-      "name": "titaniumglass_3"
-    },
-    {
-      "name": "titaniumglass-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "titaniumglass-inhand-right",
       "directions": 4
     },
     {
