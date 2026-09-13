@@ -73,6 +73,24 @@ namespace Content.Server.Database
             cfg.OnValueChanged(CCVars.DatabaseSqliteDelay, v => _msDelay = v, true);
         }
 
+        protected override Task UpsertIPIntelCacheCore(
+            ServerDbContext db,
+            DateTime time,
+            IPAddress ip,
+            float score)
+        {
+            var address = ip.ToString();
+
+            return db.Database.ExecuteSqlAsync($"""
+                INSERT INTO ipintel_cache (address, time, score)
+                VALUES ({address}, {time}, {score})
+                ON CONFLICT (address) DO UPDATE
+                SET
+                    time = excluded.time,
+                    score = excluded.score;
+                """);
+        }
+
         #region Ban
         public override async Task<BanDef?> GetBanAsync(int id)
         {
