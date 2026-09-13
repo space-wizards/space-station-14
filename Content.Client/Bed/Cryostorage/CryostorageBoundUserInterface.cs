@@ -29,6 +29,11 @@ public sealed class CryostorageBoundUserInterface : BoundUserInterface
         {
             SendMessage(new CryostorageRemoveItemBuiMessage(ent, hand, CryostorageRemoveItemBuiMessage.RemovalType.Hand));
         };
+
+        _menu.InsidePlayerRemoveButtonPressed += (ent, hand) =>
+        {
+            SendMessage(new CryostorageRemoveItemBuiMessage(ent, hand, CryostorageRemoveItemBuiMessage.RemovalType.InsidePlayer));
+        };
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
