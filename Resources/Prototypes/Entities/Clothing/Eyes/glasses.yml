@@ -34,7 +34,7 @@
         Blunt: 10
 
 - type: entity
-  parent: [ClothingEyesBase, ClothingEyesGlassesGarOrange]
+  parent: ClothingEyesGlassesGarOrange
   id: ClothingEyesGlassesGarGiga
   name: giga gar glasses
   description: We evolve past the person we were a minute before. Little by little we advance with each turn. That's how a drill works!
@@ -148,7 +148,7 @@
 - type: entity
   parent: [ClothingEyesGlassesCheapSunglasses, ClothingEyesSunglassesBase]
   id: ClothingEyesGlassesSunglasses
-  name: sun glasses
+  name: sunglasses
   description: A pair of black sunglasses.
   components:
   - type: Tag
