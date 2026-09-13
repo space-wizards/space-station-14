@@ -66,18 +66,18 @@ public sealed partial class FirelockSystem : SharedFirelockSystem
             || state == DoorState.Welded
             || state == DoorState.Denying;
 
-        if (_sprite.LayerMapTryGet((uid, args.Sprite), FirelockVisualLayersPressure.Base, out var pressureLayerIndex, logMissing: false)
-            && args.TryGetData<bool>(FirelockVisuals.PressureWarning, out var pressure))
+        if (_sprite.LayerMapTryGet((uid, args.Sprite), FirelockVisualLayersPressure.Base, out var pressureLayerIndex, logMissing: false))
         {
-            _sprite.LayerSetRsiState((uid, args.Sprite), pressureLayerIndex, pressure ? comp.PressureWarningSpriteState : null);
-            _sprite.LayerSetVisible((uid, args.Sprite), pressureLayerIndex, warningLightsVisible);
+            if (!args.TryGetData<bool>(FirelockVisuals.PressureWarning, out var pressure))
+                pressure = false;
+            _sprite.LayerSetVisible((uid, args.Sprite), pressureLayerIndex, pressure && warningLightsVisible);
         }
 
-        if (_sprite.LayerMapTryGet((uid, args.Sprite), FirelockVisualLayersTemperature.Base, out var tempLayerIndex, logMissing: false)
-            && args.TryGetData<bool>(FirelockVisuals.TemperatureWarning, out var temp))
+        if (_sprite.LayerMapTryGet((uid, args.Sprite), FirelockVisualLayersTemperature.Base, out var tempLayerIndex, logMissing: false))
         {
-            _sprite.LayerSetRsiState((uid, args.Sprite), tempLayerIndex, temp ? comp.TemperatureWarningSpriteState : null);
-            _sprite.LayerSetVisible((uid, args.Sprite), tempLayerIndex, warningLightsVisible);
+            if (!args.TryGetData<bool>(FirelockVisuals.TemperatureWarning, out var temp))
+                temp = false;
+            _sprite.LayerSetVisible((uid, args.Sprite), tempLayerIndex, temp && warningLightsVisible);
         }
     }
 }

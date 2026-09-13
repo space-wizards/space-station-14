@@ -57,12 +57,16 @@
     - state: panel_open
       sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-    - shader: unshaded
+    - state: pressure_unlit
+      visible: false
+      shader: unshaded
       sprite: Structures/Doors/Airlocks/Effects/airlock-effects-firelock.rsi
-      map: ["enum.FirelockVisualLayersPressure.Base"]
-    - shader: unshaded
+      map: [ "enum.FirelockVisualLayersPressure.Base" ]
+    - state: temperature_unlit
+      visible: false
+      shader: unshaded
       sprite: Structures/Doors/Airlocks/Effects/airlock-effects-firelock.rsi
-      map: ["enum.FirelockVisualLayersTemperature.Base"]
+      map: [ "enum.FirelockVisualLayersTemperature.Base" ]
   - type: AnimationPlayer
   - type: Fixtures
     fixtures:
@@ -215,10 +219,14 @@
       - state: panel_open
         sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
         map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-      - shader: unshaded
+      - state: pressure_unlit
+        visible: false
+        shader: unshaded
         sprite: Structures/Doors/Misc/edge_door_hazard.rsi
         map: [ "enum.FirelockVisualLayersPressure.Base" ]
-      - shader: unshaded
+      - state: temperature_unlit
+        visible: false
+        shader: unshaded
         sprite: Structures/Doors/Misc/edge_door_hazard.rsi
         map: [ "enum.FirelockVisualLayersTemperature.Base" ]
     - type: Airtight
