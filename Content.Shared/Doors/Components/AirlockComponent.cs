@@ -108,50 +108,50 @@ public sealed partial class AirlockComponent : Component
     /// The sprite state used to animate the airlock frame when the airlock opens.
     /// </summary>
     [DataField]
-    public string OpeningSpriteState = "opening_unlit";
+    public string? OpeningSpriteState = "opening_unlit";
 
     /// <summary>
     /// The sprite state used to animate the airlock panel when the airlock opens.
     /// </summary>
     [DataField]
-    public string OpeningPanelSpriteState = "panel_opening";
+    public string? OpeningPanelSpriteState = "panel_opening";
 
     /// <summary>
     /// The sprite state to use for the wire panel when the airlock is open. The
     /// first frame will be used for when the airlock is closed.
     /// </summary>
     [DataField]
-    public string OpenPanelSpriteState = "panel_open";
+    public string? OpenPanelSpriteState = "panel_open";
 
     /// <summary>
     /// The sprite state used to animate the airlock frame when the airlock closes.
     /// </summary>
     [DataField]
-    public string ClosingSpriteState = "closing_unlit";
+    public string? ClosingSpriteState = "closing_unlit";
 
     /// <summary>
     /// The sprite state used to animate the airlock panel when the airlock closes.
     /// </summary>
     [DataField]
-    public string ClosingPanelSpriteState = "panel_closing";
+    public string? ClosingPanelSpriteState = "panel_closing";
 
     /// <summary>
     /// The sprite state used for the open airlock lights.
     /// </summary>
     [DataField]
-    public string OpenSpriteState = "open_unlit";
+    public string? OpenSpriteState = "open_unlit";
 
     /// <summary>
     /// The sprite state used for the closed airlock lights.
     /// </summary>
     [DataField]
-    public string ClosedSpriteState = "closed_unlit";
+    public string? ClosedSpriteState = "closed_unlit";
 
     /// <summary>
     /// The sprite state used for the 'access denied' lights animation.
     /// </summary>
     [DataField]
-    public string DenySpriteState = "deny_unlit";
+    public string? DenySpriteState = "deny_unlit";
 
     /// <summary>
     /// How long the animation played when the airlock denies access is in seconds.
