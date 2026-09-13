@@ -52,9 +52,7 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         private GameRunLevel _runLevel;
 
-        private RoundEndMessageEvent.RoundEndPlayerInfo[]? _replayRoundPlayerInfo;
-
-        private string? _replayRoundText;
+        private RoundEndMessageInfo? _lastRoundInfo = null;
 
         [ViewVariables]
         public GameRunLevel RunLevel
@@ -523,7 +521,7 @@ namespace Content.Server.GameTicking
             var roundDuration = RoundDuration();
 
             //Generate a list of basic player info to display in the end round summary.
-            var listOfPlayerInfo = new List<RoundEndMessageEvent.RoundEndPlayerInfo>();
+            var listOfPlayerInfo = new List<RoundEndPlayerInfo>();
             // Grab the great big book of all the Minds, we'll need them for this.
             var allMinds = EntityQueryEnumerator<MindComponent>();
             var pvsOverride = _cfg.GetCVar(CCVars.RoundEndPVSOverrides);
@@ -564,7 +562,7 @@ namespace Content.Server.GameTicking
 
                 var roles = _roles.MindGetAllRoleInfo(mindId);
 
-                var playerEndRoundInfo = new RoundEndMessageEvent.RoundEndPlayerInfo()
+                var playerEndRoundInfo = new RoundEndPlayerInfo()
                 {
                     // Note that contentPlayerData?.Name sticks around after the player is disconnected.
                     // This is as opposed to ply?.Name which doesn't.
@@ -589,20 +587,16 @@ namespace Content.Server.GameTicking
             var listOfPlayerInfoFinal = listOfPlayerInfo.OrderBy(pi => pi.PlayerOOCName).ToArray();
             var sound = RoundEndSoundCollection == null ? null : _audio.ResolveSound(new SoundCollectionSpecifier(RoundEndSoundCollection));
 
-            var roundEndMessageEvent = new RoundEndMessageEvent(
+            _lastRoundInfo = new RoundEndMessageInfo(
                 gamemodeTitle,
                 roundEndText,
                 roundDuration,
                 RoundId,
                 listOfPlayerInfoFinal.Length,
-                listOfPlayerInfoFinal,
-                sound
-            );
+                listOfPlayerInfoFinal);
+            var roundEndMessageEvent = new RoundEndMessageEvent(_lastRoundInfo, sound);
             RaiseNetworkEvent(roundEndMessageEvent);
             RaiseLocalEvent(roundEndMessageEvent);
-
-            _replayRoundPlayerInfo = listOfPlayerInfoFinal;
-            _replayRoundText = roundEndText;
         }
 
         private async void SendRoundEndDiscordMessage()
