@@ -53,7 +53,7 @@ public sealed partial class FTLDiskCommand : LocalizedCommands
         var coords = _entManager.GetComponent<TransformComponent>(entity).Coordinates;
 
         var handsSystem = _entSystemManager.GetEntitySystem<SharedHandsSystem>();
-        var labelSystem = _entSystemManager.GetEntitySystem<LabelSystem>();
+        var labelSystem = _entSystemManager.GetEntitySystem<SharedLabelSystem>();
         var mapSystem = _entSystemManager.GetEntitySystem<SharedMapSystem>();
         var storageSystem = _entSystemManager.GetEntitySystem<SharedStorageSystem>();
 

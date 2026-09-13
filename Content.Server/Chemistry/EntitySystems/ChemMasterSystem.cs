@@ -37,7 +37,7 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private StorageSystem _storageSystem = default!;
-        [Dependency] private LabelSystem _labelSystem = default!;
+        [Dependency] private SharedLabelSystem _labelSystem = default!;
         [Dependency] private ISharedAdminLogManager _adminLogger = default!;
 
         private static readonly EntProtoId PillPrototypeId = "Pill";
