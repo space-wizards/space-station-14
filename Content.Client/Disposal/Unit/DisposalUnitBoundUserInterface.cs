@@ -1,3 +1,4 @@
+using Content.Client.Power.Components;
 using Content.Client.Power.EntitySystems;
 using Content.Shared.Disposal.Components;
 using JetBrains.Annotations;
@@ -52,22 +53,20 @@ namespace Content.Client.Disposal.Unit
             if (_disposalUnitWindow == null)
                 return;
 
-            var name = EntMan.GetComponent<MetaDataComponent>(entity.Owner).EntityName;
+            var name = EntMan.GetComponent<MetaDataComponent>(entity).EntityName;
             _disposalUnitWindow.Title = Loc.GetString("ui-disposal-unit-title", ("name", name));
-
-            if (!EntMan.TryGetComponent(entity.Owner, out DisposalUnitComponent? disposals))
-                return;
 
             var disposalUnit = EntMan.System<DisposalUnitSystem>();
             var disposalState = disposalUnit.GetState(entity);
-            var fullPressure = disposalUnit.EstimatedFullPressure((Owner, disposals));
-            var pressurePerSecond = disposals.PressurePerSecond;
+            var fullPressure = disposalUnit.EstimatedFullPressure(entity);
+            var pressurePerSecond = entity.Comp.PressurePerSecond;
 
             _disposalUnitWindow.UnitState.Text = Loc.GetString($"disposal-unit-state-{disposalState}");
             _disposalUnitWindow.FullPressure = disposalUnit.EstimatedFullPressure(entity);
-            _disposalUnitWindow.PressurePerSecond = entity.Comp.PressurePerSecond;
-            _disposalUnitWindow.PressureBar.UpdatePressure(fullPressure, pressurePerSecond);
-            _disposalUnitWindow.Power.Pressed = EntMan.System<PowerReceiverSystem>().IsPowered(Owner);
+            _disposalUnitWindow.PressurePerSecond = pressurePerSecond;
+            _disposalUnitWindow.PowerOff = entity.Comp.PowerOff;
+            _disposalUnitWindow.PressureBar.UpdatePressure(fullPressure, pressurePerSecond, entity.Comp.PowerOff);
+            _disposalUnitWindow.Power.Pressed = !EntMan.TryGetComponent(entity, out ApcPowerReceiverComponent? apc) || !apc.PowerDisabled;
             _disposalUnitWindow.Engage.Pressed = entity.Comp.Engaged;
         }
     }
