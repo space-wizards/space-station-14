@@ -11,12 +11,18 @@
             "name": "walkietalkie"
         },
         {
+            "name": "walkietalkie-active"
+        },
+        {
             "name": "walkietalkie-inhand-left",
             "directions": 4
         },
         {
             "name": "walkietalkie-inhand-right",
             "directions": 4
+        },
+        {
+            "name": "walkietalkie-on"
         }
     ]
 }

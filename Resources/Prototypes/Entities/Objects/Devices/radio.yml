@@ -17,12 +17,10 @@
     layers:
     - state: walkietalkie
     - map: [enum.RadioDeviceVisualLayers.Broadcasting]
-      sprite: Objects/Devices/communication.rsi
       state: walkietalkie-on
       shader: unshaded
       visible: false
     - map: [enum.RadioDeviceVisualLayers.Speaker]
-      sprite: Objects/Devices/communication.rsi
       state: walkietalkie-active
       shader: unshaded
       visible: false
@@ -60,4 +58,3 @@
     sprite: Objects/Devices/securityhandy.rsi
   - type: Item
     sprite: Objects/Devices/securityhandy.rsi
-    heldPrefix: walkietalkie
