@@ -4,22 +4,12 @@ using Robust.Shared.Player;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed partial class TippyOnTriggerSystem : EntitySystem
+public sealed partial class TippyOnTriggerSystem : XOnTriggerSystem<TippyOnTriggerComponent>
 {
     [Dependency] private SharedTipsSystem _tips = default!;
 
-    public override void Initialize()
+    protected override void OnTrigger(Entity<TippyOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<TippyOnTriggerComponent, TriggerEvent>(OnTrigger);
-    }
-
-    private void OnTrigger(Entity<TippyOnTriggerComponent> ent, ref TriggerEvent args)
-    {
-        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
-            return;
-
         var msg = ent.Comp.Message;
         var prototype = ent.Comp.Prototype;
 
@@ -37,7 +27,6 @@ public sealed partial class TippyOnTriggerSystem : EntitySystem
         }
         else
         {
-            var target = ent.Comp.TargetUser ? args.User : ent.Owner;
             if (!TryComp<ActorComponent>(target, out var actor))
                 return;
 

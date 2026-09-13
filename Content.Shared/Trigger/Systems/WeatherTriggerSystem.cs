@@ -15,13 +15,13 @@ public sealed partial class WeatherTriggerSystem : XOnTriggerSystem<WeatherOnTri
 
         if (ent.Comp.Weather == null) //Clear weather if nothing is set
         {
-            _weather.TrySetWeather(xform.MapID, null, out _);
+            args.Handled |= _weather.TrySetWeather(xform.MapID, null, out _);
             return;
         }
 
         var endTime = ent.Comp.Duration == null ? null : ent.Comp.Duration + _timing.CurTime;
 
         if (ProtoMan.Resolve(ent.Comp.Weather, out var weatherPrototype))
-            _weather.TrySetWeather(xform.MapID, weatherPrototype, out _, endTime);
+            args.Handled |= _weather.TrySetWeather(xform.MapID, weatherPrototype, out _, endTime);
     }
 }
