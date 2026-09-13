@@ -1,16 +1,16 @@
 meta:
   format: 7
-  category: Map
+  category: Grid
   engineVersion: 289.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/13/2026 10:31:16
-  entityCount: 1195
-maps:
-- 1
+  time: 09/13/2026 12:42:10
+  entityCount: 1194
+maps: []
 grids:
 - 2
-orphans: []
+orphans:
+- 2
 nullspace:
 - 380
 - 381
@@ -39,24 +39,12 @@ tilemap:
 entities:
 - proto: ""
   entities:
-  - uid: 1
-    components:
-    - type: MetaData
-      name: Map Entity
-    - type: Transform
-    - type: Map
-      mapPaused: True
-    - type: GridTree
-    - type: Broadphase
-    - type: ChunkContainer
-      chunkEntities: []
-    - type: OccluderTree
   - uid: 2
     components:
     - type: MetaData
       name: grid
     - type: Transform
-      parent: 1
+      parent: invalid
       pos: -0.59375,0.0785262
     - type: MapGrid
       chunks:
@@ -3925,9 +3913,6 @@ entities:
       parent: 2
       rot: 1.5707963267948966 rad
       pos: 0.5,-2.5
-    - type: DeviceList
-      devices:
-      - 377
   - uid: 2495
     components:
     - type: Transform
@@ -3937,7 +3922,18 @@ entities:
     - type: DeviceList
       devices:
       - 2338
-      - 377
+      - 1
+- proto: FirelockEdge
+  entities:
+  - uid: 1
+    components:
+    - type: Transform
+      parent: 2
+      rot: 3.141592653589793 rad
+      pos: 5.5,-1.5
+    - type: DeviceNetwork
+      deviceLists:
+      - 2495
 - proto: FirelockGlass
   entities:
   - uid: 263
@@ -3949,17 +3945,6 @@ entities:
       deviceLists:
       - 2488
       - 2487
-  - uid: 377
-    components:
-    - type: Transform
-      parent: 2
-      pos: 2.5,-0.5
-    - type: DeviceNetwork
-      deviceLists:
-      - 2491
-      - 2495
-      configurators:
-      - invalid
   - uid: 1925
     components:
     - type: Transform
