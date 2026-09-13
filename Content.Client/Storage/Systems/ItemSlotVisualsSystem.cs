@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Content.Client.Items.Systems;
 using Content.Shared.Clothing;
-using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Containers.ItemSlot;
 using Content.Shared.Hands;
@@ -105,11 +104,8 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
                 || !hasItem)
                 continue;
 
-            if (!TryComp<ClothingComponent>(ent, out _))
-                return;
-
             if (!TryComp(args.Equipee, out InventoryComponent? inventory))
-                return;
+                continue;
 
             List<PrototypeLayerData>? layers = null;
 
@@ -119,7 +115,7 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
 
             // No species specific data. Try to default to generic data.
             if (layers == null && !visual.ClothingVisuals.TryGetValue(args.Slot, out layers))
-                return;
+                continue;
 
             var i = 0;
             var defaultKey = $"equipped-{args.Slot}-{visual.Layer}";
