@@ -41,6 +41,7 @@ public sealed partial class AdminEventLogEui : BaseEui
 
         EventLogWindow.SetCurrentRound(s.RoundId);
         EventLogWindow.SetRoundSpinBox(s.RoundId);
+        EventLogWindow.SetAllowNoCategory(s.AllowNoneCategory);
     }
 
     private void OnSendEventLogPressed(ButtonEventArgs args)
@@ -53,7 +54,8 @@ public sealed partial class AdminEventLogEui : BaseEui
         var message = new AdminEventLogEuiMsg(
             EventLogWindow.RoundSpinBox.Value,
             _playerManager.LocalSession!.Name,
-            eventText);
+            eventText,
+            EventLogWindow.EventCategory);
 
         SendMessage(message);
 
