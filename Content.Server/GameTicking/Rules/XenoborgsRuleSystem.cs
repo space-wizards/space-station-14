@@ -22,7 +22,7 @@ public sealed partial class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleCo
     [Dependency] private RoundEndSystem _roundEnd = default!;
     [Dependency] private SharedMindSystem _mindSystem = default!;
     [Dependency] private StationSystem _station = default!;
-    [Dependency] private TargetSystem _target = default!;
+    [Dependency] private AliveHumanoidTargetSystem _target = default!;
 
     private static readonly Color AnnouncmentColor = Color.Gold;
 
@@ -55,7 +55,7 @@ public sealed partial class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleCo
         base.AppendRoundEndText(uid, component, gameRule, ref args);
 
         var numXenoborgs = GetNumberXenoborgs();
-        var numHumans = _target.GetAliveHumans().Count;
+        var numHumans = _target.GetMinds().Count;
 
         if (numXenoborgs < 5)
             args.AddLine(Loc.GetString("xenoborgs-crewmajor"));
@@ -98,7 +98,7 @@ public sealed partial class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleCo
     private void CheckRoundEnd(XenoborgsRuleComponent xenoborgsRuleComponent)
     {
         var numXenoborgs = GetNumberXenoborgs();
-        var numHumans = _target.GetAliveHumans().Count;
+        var numHumans = _target.GetMinds().Count;
 
         xenoborgsRuleComponent.MaxNumberXenoborgs = Math.Max(xenoborgsRuleComponent.MaxNumberXenoborgs, numXenoborgs);
 

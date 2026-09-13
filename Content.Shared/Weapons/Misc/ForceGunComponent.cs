@@ -18,6 +18,6 @@ public sealed partial class ForceGunComponent : BaseForceGunComponent
     [DataField("soundLaunch")]
     public SoundSpecifier? LaunchSound = new SoundPathSpecifier("/Audio/Weapons/soup.ogg")
     {
-        Params = AudioParams.Default.WithVolume(5f),
+        Params = AudioParams.Default.AddVolume(5f),
     };
 }

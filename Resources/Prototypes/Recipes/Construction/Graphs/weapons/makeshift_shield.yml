@@ -10,7 +10,7 @@
               amount: 5
               doAfter: 2
             - material: Steel
-              amount: 5
+              amount: 10
               doAfter: 2
 
     - node: makeshiftShield

@@ -60,14 +60,14 @@ public abstract partial class SharedSolutionContainerMixerSystem : EntitySystem
         if (!HasPower(entity))
         {
             if (user != null)
-                _popup.PopupClient(Loc.GetString("solution-container-mixer-no-power"), entity, user.Value);
+                _popup.PopupEntity(Loc.GetString("solution-container-mixer-no-power"), entity, user.Value);
             return;
         }
 
         if (!_container.TryGetContainer(uid, comp.ContainerId, out var container) || container.Count == 0)
         {
             if (user != null)
-                _popup.PopupClient(Loc.GetString("solution-container-mixer-popup-nothing-to-mix"), entity, user.Value);
+                _popup.PopupEntity(Loc.GetString("solution-container-mixer-popup-nothing-to-mix"), entity, user.Value);
             return;
         }
 

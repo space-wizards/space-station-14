@@ -8,7 +8,7 @@ using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Pointing;
 
-public sealed partial class PointingSystem : SharedPointingSystem
+public sealed partial class PointingSystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
 
@@ -48,10 +48,19 @@ public sealed partial class PointingSystem : SharedPointingSystem
             Text = Loc.GetString("pointing-verb-get-data-text"),
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/point.svg.192dpi.png")),
             ClientExclusive = true,
-            Act = () => RaiseNetworkEvent(new PointingAttemptEvent(GetNetEntity(args.Target)))
+            Act = () => TryPointAtEntity(GetNetEntity(args.Target))
         };
 
         args.Verbs.Add(verb);
+    }
+
+    /// <summary>
+    /// Tries to point at a target entity
+    /// </summary>
+    /// <param name="target">The target to point at</param>
+    public void TryPointAtEntity(NetEntity target)
+    {
+        RaiseNetworkEvent(new PointingAttemptEvent(target));
     }
 
     private void OnArrowStartup(EntityUid uid, PointingArrowComponent component, ComponentStartup args)

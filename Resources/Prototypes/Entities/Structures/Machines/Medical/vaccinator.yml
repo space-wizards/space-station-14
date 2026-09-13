@@ -1,6 +1,6 @@
 - type: entity
   id: Vaccinator
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, BaseMachineDestructible ]
   name: vaccinator
   description: A machine that creates vaccines.
   placement:
@@ -22,3 +22,11 @@
       machine_board: !type:Container
       machine_parts: !type:Container
   - type: RequireProjectileTarget
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 175
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak

@@ -124,7 +124,7 @@ public abstract partial class SharedStationAiFixerConsoleSystem : EntitySystem
         if (!TryComp<ItemSlotsComponent>(ent, out var slots))
             return;
 
-        if (!_itemSlots.TryGetSlot(ent, ent.Comp.StationAiHolderSlot, out var holderSlot, slots))
+        if (!_itemSlots.TryGetSlot((ent.Owner, slots), ent.Comp.StationAiHolderSlot, out var holderSlot))
             return;
 
         if (_itemSlots.TryEjectToHands(ent, holderSlot, user, true))

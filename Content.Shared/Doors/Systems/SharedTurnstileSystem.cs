@@ -73,7 +73,7 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
         {
             if (_timing.CurTime >= ent.Comp.NextResistTime)
             {
-                _popup.PopupClient(Loc.GetString("turnstile-component-popup-resist", ("turnstile", ent.Owner)), ent, args.OtherEntity);
+                _popup.PopupEntity(Loc.GetString("turnstile-component-popup-resist", ("turnstile", ent.Owner)), ent, args.OtherEntity);
                 ent.Comp.NextResistTime = _timing.CurTime + TimeSpan.FromSeconds(0.1);
                 Dirty(ent);
             }
@@ -89,14 +89,14 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
                 if (!_accessReader.IsAllowed(args.OtherEntity, ent))
                 {
                     _audio.PlayPredicted(ent.Comp.DenySound, ent, args.OtherEntity);
-                    PlayAnimation(ent, ent.Comp.DenyState);
+                    PlayAnimation(ent, TurnstileStates.Deny);
                 }
             }
 
             return;
         }
         // if they passed through:
-        PlayAnimation(ent, ent.Comp.SpinState);
+        PlayAnimation(ent, TurnstileStates.Spin);
         _audio.PlayPredicted(ent.Comp.TurnSound, ent, args.OtherEntity);
     }
 
@@ -128,7 +128,7 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
         return diff < Math.PI / 4;
     }
 
-    protected virtual void PlayAnimation(EntityUid uid, string stateId)
+    protected virtual void PlayAnimation(EntityUid uid, TurnstileStates state)
     {
 
     }

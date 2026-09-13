@@ -9,7 +9,6 @@ public sealed partial class FeedbackSystem : EntitySystem
 {
     [Dependency] private ServerFeedbackManager _feedbackManager = null!;
     [Dependency] private GameTicker _gameTicker = null!;
-    [Dependency] private IPrototypeManager _prototypeManager = null!;
 
     public override void Initialize()
     {
@@ -24,7 +23,7 @@ public sealed partial class FeedbackSystem : EntitySystem
 
         foreach (var feedback in _feedbackManager.GetOriginFeedbackPrototypes(true, true))
         {
-            if (_gameTicker.IsGameRuleAdded(_prototypeManager.Index(feedback).RuleWhitelist))
+            if (_gameTicker.IsGameRuleAdded(ProtoMan.Index(feedback).RuleWhitelist))
                 validPopups.Add(feedback);
             else
                 notValidPopups.Add(feedback);

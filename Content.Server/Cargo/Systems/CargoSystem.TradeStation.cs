@@ -6,7 +6,6 @@ using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.CCVar;
-using Content.Shared.HijackBeacon;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
@@ -169,13 +168,13 @@ public sealed partial class CargoSystem
                 // - anything anchored (e.g. light fixtures)
                 // - anything blacklisted (e.g. players).
                 if (toSell.Contains(ent) ||
-                    _xformQuery.TryGetComponent(ent, out var xform) &&
-                    (xform.Anchored || !CanSell(ent, xform)))
+                    TryComp(ent, out TransformComponent? xform) &&
+                    (xform.Anchored || !CanSell(ent)))
                 {
                     continue;
                 }
 
-                if (_blacklistQuery.HasComponent(ent))
+                if (_cargoSellBlacklistQuery.HasComponent(ent))
                     continue;
 
                 var price = _pricing.GetPrice(ent);
@@ -187,9 +186,9 @@ public sealed partial class CargoSystem
         }
     }
 
-    private bool CanSell(EntityUid uid, TransformComponent xform)
+    private bool CanSell(EntityUid uid)
     {
-        if (_mobQuery.HasComponent(uid))
+        if (_mobStateQuery.HasComponent(uid))
         {
             return false;
         }
@@ -197,13 +196,14 @@ public sealed partial class CargoSystem
         var complete = IsBountyComplete(uid, out var bountyEntities);
 
         // Recursively check for mobs at any point.
+        var xform = Transform(uid);
         var children = xform.ChildEnumerator;
         while (children.MoveNext(out var child))
         {
             if (complete && bountyEntities.Contains(child))
                 continue;
 
-            if (!CanSell(child, _xformQuery.GetComponent(child)))
+            if (!CanSell(child))
                 return false;
         }
 
