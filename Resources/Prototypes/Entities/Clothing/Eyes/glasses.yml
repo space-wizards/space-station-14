@@ -34,7 +34,7 @@
         Blunt: 10
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: [ClothingEyesBase, ClothingEyesGlassesGarOrange]
   id: ClothingEyesGlassesGarGiga
   name: giga gar glasses
   description: We evolve past the person we were a minute before. Little by little we advance with each turn. That's how a drill works!
@@ -47,10 +47,6 @@
     equippedPrefix: super
   - type: Item
     heldPrefix: super
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 10
 
 - type: entity
   parent: [ClothingEyesBase, BaseEngineeringContraband]
@@ -150,14 +146,11 @@
     coverage: EYES
 
 - type: entity
-  parent: ClothingEyesGlassesCheapSunglasses
+  parent: [ClothingEyesGlassesCheapSunglasses, ClothingEyesSunglassesBase]
   id: ClothingEyesGlassesSunglasses
   name: sun glasses
   description: A pair of black sunglasses.
   components:
-  - type: FlashImmunity
-  - type: EyeProtection
-    protectionTime: 5
   - type: Tag
     tags:
     - Sunglasses
@@ -166,7 +159,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband]
+  parent: [ClothingEyesSunglassesBase, ShowSecurityIcons, BaseSecurityContraband]
   id: ClothingEyesGlassesSecurity
   name: security glasses
   description: Upgraded sunglasses that provide flash immunity and a security HUD.
@@ -175,9 +168,6 @@
     sprite: Clothing/Eyes/Glasses/secglasses.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/secglasses.rsi
-  - type: FlashImmunity
-  - type: EyeProtection
-    protectionTime: 5
   - type: Construction
     graph: GlassesSecHUD
     node: glassesSec
@@ -190,11 +180,9 @@
     guides:
     - Security
     - Antagonists
-  - type: IdentityBlocker
-    coverage: EYES
 
 - type: entity
-  parent: [ClothingEyesBase, BaseCommandContraband]
+  parent: [ClothingEyesSunglassesBase, BaseCommandContraband]
   id: ClothingEyesGlassesCommand
   name: administration glasses
   description: Upgraded sunglasses that provide flash immunity and show ID card status.
@@ -203,20 +191,15 @@
     sprite: Clothing/Eyes/Glasses/commandglasses.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/commandglasses.rsi
-  - type: FlashImmunity
-  - type: EyeProtection
-    protectionTime: 5
   - type: Tag
     tags:
     - HamsterWearable
     - PetWearable
     - WhitelistChameleon
-  - type: IdentityBlocker
-    coverage: EYES
   - type: ShowJobIcons
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: ClothingEyesSunglassesBase
   id: ClothingEyesGlassesMercenary
   name: mercenary glasses
   description: Glasses made for combat, to protect the eyes from bright blinding flashes.
@@ -225,11 +208,6 @@
     sprite: Clothing/Eyes/Glasses/mercglasses.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/mercglasses.rsi
-  - type: FlashImmunity
-  - type: EyeProtection
-    protectionTime: 5
-  - type: IdentityBlocker
-    coverage: EYES
 
 #Make a scanner category when these actually function and we get the trayson
 - type: entity
@@ -282,7 +260,7 @@
   - type: FlashImmunity
 
 - type: entity
-  parent: [ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband]
+  parent: [ClothingEyesSunglassesBase, ShowSecurityIcons, BaseSecurityContraband]
   id: ClothingEyesGlassesNoir
   name: noir-tech glasses
   description: A pair of glasses that simulate what the world looked like before the invention of color.
@@ -291,11 +269,6 @@
     sprite: Clothing/Eyes/Glasses/noir.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/sunglasses.rsi
-  - type: IdentityBlocker
-    coverage: EYES
-  - type: FlashImmunity
-  - type: EyeProtection
-    protectionTime: 5
   - type: NoirOverlay
   - type: Tag
     tags:
