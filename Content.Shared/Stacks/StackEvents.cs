@@ -4,8 +4,9 @@
 ///     Raised on the original stack entity when it is split to create another.
 /// </summary>
 /// <param name="NewId">The entity id of the new stack.</param>
+/// <param name="User">The entity id of the user splitting the stack.</param>
 [ByRefEvent]
-public readonly record struct StackSplitEvent(EntityUid NewId, EntityUid? user);
+public readonly record struct StackSplitEvent(EntityUid NewId, EntityUid? User);
 
 /// <summary>
 ///     Raised on the recipient stack entity when it is merged with another stack.
