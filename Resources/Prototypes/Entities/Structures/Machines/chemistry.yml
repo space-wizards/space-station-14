@@ -34,6 +34,7 @@
       map: [ "enum.ThermobathVisualLayers.LidHeating" ]
   - type: Thermobath
   - type: Thermoregulator
+    heatCapacity: 50
     heatingPower: 1200
     coolingPower: 400
   - type: ApcPowerReceiver
