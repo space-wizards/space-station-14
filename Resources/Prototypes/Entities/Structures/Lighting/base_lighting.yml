@@ -68,8 +68,8 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
-      - !type:EmptyAllContainersBehaviour
-      - !type:PlaySoundBehavior
+      - !type:EmptyAllContainers
+      - !type:PlaySound
         sound:
           collection: GlassBreak
 
@@ -95,7 +95,7 @@
     thresholds:
     - trigger: *DamageMachineFlimsy
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetSteel1:
             min: 2
@@ -288,7 +288,7 @@
       thresholds:
       - trigger: *DamageMachineFlimsy
         behaviors:
-        - !type:SpawnEntitiesBehavior
+        - !type:SpawnEntities
           spawn:
             SheetSteel1:
               min: 1
@@ -462,7 +462,7 @@
     thresholds:
     - trigger: *DamageMachineFlimsy
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetSteel1:
             min: 1

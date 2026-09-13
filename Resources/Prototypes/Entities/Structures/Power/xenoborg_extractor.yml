@@ -42,8 +42,8 @@
         !type:DamageTrigger
         damage: 175
       behaviors:
-      - !type:ExplodeBehavior
-      - !type:PlaySoundBehavior
+      - !type:Explode
+      - !type:PlaySound
         sound:
           collection: MetalGlassBreak
   - type: Explosive # small explosion when destroyed

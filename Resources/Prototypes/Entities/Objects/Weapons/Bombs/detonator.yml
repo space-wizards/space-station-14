@@ -24,8 +24,8 @@
         damageType: Structural # as close as we can get to only letting explosives trigger it.
         damage: 120
       behaviors:
-      - !type:TriggerBehavior
-      - !type:DoActsBehavior
+      - !type:Trigger
+      - !type:DoActs
         acts: [ "Destruction" ]
     # the 50 damage destruction node is inherited from the parent
     # idea here is to prevent you from just beating it until it explodes.

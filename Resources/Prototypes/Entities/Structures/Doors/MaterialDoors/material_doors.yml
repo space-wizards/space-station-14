@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   parent: BaseStructure
   id: BaseMaterialDoor
@@ -84,10 +84,10 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - &SoundMetalBreak !type:PlaySoundBehavior
+      - &SoundMetalBreak !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetPlasma1: &BaseDoorSpawn
             min: 3
@@ -110,7 +110,7 @@
     - trigger: *DamageDoorWeak
       behaviors:
       - *SoundMetalBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           IngotGold1: *BaseDoorSpawn
 
@@ -131,7 +131,7 @@
     - trigger: *DamageDoorWeak
       behaviors:
       - *SoundMetalBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           IngotSilver1: *BaseDoorSpawn
 
@@ -160,10 +160,10 @@
         !type:DamageTrigger
         damage: 120
       behaviors:
-      - &SoundWoodDestroy !type:PlaySoundBehavior
+      - &SoundWoodDestroy !type:PlaySound
         sound:
           collection: WoodDestroy
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           MaterialWoodPlank1: *BaseDoorSpawn
 
@@ -190,10 +190,10 @@
         !type:DamageTrigger
         damage: 30
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           path: /Audio/Effects/poster_broken.ogg
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetPaper1: *BaseDoorSpawn
 
@@ -222,7 +222,7 @@
         damage: 30
       behaviors:
       - *SoundWoodDestroy
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           MaterialWebSilk1:
             min: 1
@@ -256,10 +256,10 @@
         !type:DamageTrigger
         damage: 30
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: WoodDestroy
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           MaterialCardboard: *BaseDoorSpawn
   - type: IconSmooth

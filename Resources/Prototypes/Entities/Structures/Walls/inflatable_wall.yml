@@ -28,7 +28,7 @@
         !type:DamageTrigger
         damage: 30
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           path: /Audio/Effects/balloon-pop.ogg
   - type: DisassembleOnAltVerb
@@ -90,7 +90,7 @@
         !type:DamageTrigger
         damage: 30
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           path: /Audio/Effects/balloon-pop.ogg
   - type: DisassembleOnAltVerb

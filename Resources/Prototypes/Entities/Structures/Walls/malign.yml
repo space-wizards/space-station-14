@@ -47,8 +47,8 @@
         !type:DamageTrigger
         damage: 200
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalSlam
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: ["Destruction"]

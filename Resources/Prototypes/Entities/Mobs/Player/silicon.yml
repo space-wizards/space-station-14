@@ -1,4 +1,4 @@
-﻿# Be careful with these as they get removed on shutdown too!
+# Be careful with these as they get removed on shutdown too!
 - type: entity
   id: AiHeld
   description: Components added / removed from an entity that gets inserted into an AI core.
@@ -206,19 +206,19 @@
         !type:DamageTrigger
         damage: 500
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Breakage" ]
     - trigger:
         !type:DamageTrigger
         damage: 1000
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           ShardGlassReinforced:
             min: 1
@@ -226,7 +226,7 @@
           SheetPlasteel:
             min: 2
             max: 2
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: ["Destruction"]
   - type: DamageVisuals
     thresholds: [25, 50, 75, 100, 200, 300, 400]
@@ -388,19 +388,19 @@
         !type:DamageTrigger
         damage: 400
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetPlasteel:
             min: 2
             max: 4
-      - !type:EmptyContainersBehaviour
+      - !type:EmptyContainers
         containers:
         - station_ai_brain_slot
         - board
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: ["Destruction"]
   - type: Construction
     graph: StationAiCore

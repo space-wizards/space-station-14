@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: FatExtractor
   parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   name: lipid extractor
@@ -81,7 +81,7 @@
     - trigger: !type:DamageTrigger
         damage: 175
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalGlassBreak
   - type: Machine

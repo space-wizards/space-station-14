@@ -19,10 +19,10 @@
         !type:DamageTrigger
         damage: 120
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: WindowShatter
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           ShardGlassReinforced:
             min: 1

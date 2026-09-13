@@ -91,9 +91,9 @@
         !type:DamageTrigger
         damage: 1
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
-      - !type:SpawnEntitiesBehavior # todo this is not a good way to be doing this. Should probably use a construction graph
+      - !type:SpawnEntities # todo this is not a good way to be doing this. Should probably use a construction graph
         offset: 0
         spawn:
           WeaponTurretSyndicateDisposable:

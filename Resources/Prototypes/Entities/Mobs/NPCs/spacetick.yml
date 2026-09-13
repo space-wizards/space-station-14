@@ -49,7 +49,7 @@
         damageType: Blunt
         damage: 30
       behaviors:
-      - !type:GibBehavior
+      - !type:Gib
         recursive: false
   - type: Stamina
     baseCritThreshold: 15

@@ -61,7 +61,7 @@
         !type:DamageTrigger
         damage: 175
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
   - type: Sprite
@@ -109,7 +109,7 @@
         !type:DamageTrigger
         damage: 400
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
   - type: Fixtures
@@ -234,7 +234,7 @@
         !type:DamageTrigger
         damage: 175
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalGlassBreak
   - type: StaticPrice
@@ -312,7 +312,7 @@
         !type:DamageTrigger
         damage: 100  # Considering we need a lot of thrusters didn't want to make an individual one too tanky
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
   - type: PhysicalComposition

@@ -76,7 +76,7 @@
         !type:DamageTrigger
         damage: 175
       behaviors:
-      - &SoundGlassBreak !type:PlaySoundBehavior
+      - &SoundGlassBreak !type:PlaySound
         sound:
           collection: GlassBreak
     - trigger:
@@ -84,7 +84,7 @@
         damage: 75
       behaviors:
       - *SoundGlassBreak
-      - !type:ChangeConstructionNodeBehavior
+      - !type:ChangeConstructionNode
         node: solarpanelplasma_broken
   - type: Construction
     graph: SolarPanel
@@ -118,7 +118,7 @@
         damage: 175
       behaviors:
       - *SoundGlassBreak
-      - !type:ChangeConstructionNodeBehavior
+      - !type:ChangeConstructionNode
         node: solarpaneluranium_broken
   - type: Construction
     graph: SolarPanel
@@ -148,7 +148,7 @@
         damage: 50
       behaviors:
       - *SoundGlassBreak
-      - !type:ChangeConstructionNodeBehavior
+      - !type:ChangeConstructionNode
         node: solarpanel_broken
   - type: Construction
     graph: SolarPanel
@@ -173,9 +173,9 @@
         damage: 50
       behaviors:
       - *SoundGlassBreak
-      - &ChangeNodeAssembly !type:ChangeConstructionNodeBehavior
+      - &ChangeNodeAssembly !type:ChangeConstructionNode
         node: solarassembly
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           ShardGlass:
             min: 1
@@ -201,7 +201,7 @@
       behaviors:
       - *SoundGlassBreak
       - *ChangeNodeAssembly
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           ShardGlassPlasma:
             min: 1
@@ -227,7 +227,7 @@
       behaviors:
       - *SoundGlassBreak
       - *ChangeNodeAssembly
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           ShardGlassUranium:
             min: 1
@@ -271,7 +271,7 @@
     thresholds:
     - trigger: *DamageMachineFlimsy
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
   - type: Anchorable
@@ -321,7 +321,7 @@
       behaviors:
       - *SoundGlassBreak
       - *ChangeNodeAssembly
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           ShardGlass:
             min: 0

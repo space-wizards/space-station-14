@@ -30,23 +30,23 @@
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: GlassBreak
           params:
             volume: -4
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Breakage" ]
     - trigger: &DamageTrigger10
         !type:DamageTrigger
         damage: 10
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: GlassBreak
           params:
             volume: -4
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: Appearance
   - type: Tag
@@ -69,7 +69,7 @@
     thresholds:
     - trigger: *DamageTrigger10
       behaviors: &BehaviorsSpawnShardGlass
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           ShardGlass:
             min: 1

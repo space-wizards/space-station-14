@@ -103,10 +103,10 @@
         !type:DamageTrigger
         damage: 275
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         offset: 0
         spawn:
           MachineFrameDestroyed:
@@ -116,7 +116,7 @@
         !type:DamageTrigger
         damage: 175
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalCrunch
   - type: InteractionPopup

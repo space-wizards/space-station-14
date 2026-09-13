@@ -1,4 +1,4 @@
-﻿# Feature-reduced parent, compatible with the requirements of the High Security Door
+# Feature-reduced parent, compatible with the requirements of the High Security Door
 # You probably want to inherit from Airlock rather than this
 - type: entity
   abstract: true
@@ -204,7 +204,7 @@
         damage: 200
       behaviors:
       # TODO this should go to the broken node first
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalSlam
   - type: Paintable

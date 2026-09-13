@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: StationAnchorBase
   abstract: true
   name: station anchor
@@ -86,13 +86,13 @@
         !type:DamageTrigger
         damage: 400
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:EmptyContainersBehaviour
+      - !type:EmptyContainers
         containers:
         - machine_board
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         offset: 0
         spawn:
           MachineFrameDestroyed:

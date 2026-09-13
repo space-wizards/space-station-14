@@ -1,13 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Destructible.Thresholds.Triggers;
+using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Effects.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
 using JetBrains.Annotations;
@@ -18,7 +19,7 @@ namespace Content.Server.Destructible;
 public sealed partial class DestructibleSystem : SharedDestructibleSystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;
-    [Dependency] private IEntitySystemManager _entitySystemManager = default!;
+    [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
 
     /// <summary>
     /// Minimum damage to invoke overkill behavior.
@@ -62,11 +63,11 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
                 var triggeredBehaviors = string.Join(", ",
                     threshold.Behaviors.Select(behavior =>
                 {
-                    if (logImpact <= behavior.Impact)
-                        logImpact = behavior.Impact;
-                    if (behavior is DoActsBehavior doActsBehavior)
+                    if (behavior.Impact is { } impact && logImpact <= impact)
+                        logImpact = impact;
+                    if (behavior is DoActs doActs)
                     {
-                        return $"{behavior.GetType().Name}:{doActsBehavior.Acts.ToString()}";
+                        return $"{behavior.GetType().Name}:{doActs.Acts.ToString()}";
                     }
                     return behavior.GetType().Name;
                 }));
@@ -93,8 +94,8 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
 
             if (threshold.OldTriggered)
             {
-                comp.IsBroken |= threshold.Behaviors.Any(b => b is DoActsBehavior doActsBehavior &&
-                    (doActsBehavior.HasAct(ThresholdActs.Breakage) || doActsBehavior.HasAct(ThresholdActs.Destruction)));
+                comp.IsBroken |= threshold.Behaviors.Any(b => b is DoActs doActs &&
+                    (doActs.HasAct(ThresholdActs.Breakage) || doActs.HasAct(ThresholdActs.Destruction)));
             }
 
             // if destruction behavior (or some other deletion effect) occurred, don't run other triggers.
@@ -148,10 +149,7 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
             if (!Exists(owner))
                 return;
 
-            // TODO: Replace with EntityEffects.
-            var deps = _entitySystemManager.DependencyCollection;
-            deps.InjectDependencies(behavior);
-            behavior.Execute(owner, cause);
+            _entityEffects.ApplyEffect(owner, behavior, 1f, cause);
         }
     }
 
@@ -200,7 +198,7 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
             foreach (var behavior in threshold.Behaviors)
             {
                 // Not a destruction behavior
-                if (behavior is not DoActsBehavior actBehavior || !actBehavior.HasAct(ThresholdActs.Destruction))
+                if (behavior is not DoActs actBehavior || !actBehavior.HasAct(ThresholdActs.Destruction))
                     continue;
 
                 // Already has a pure destruction behavior
@@ -218,7 +216,7 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
         var autoThreshold = new DamageThreshold
         {
             Trigger = new DamageTrigger { Damage = FixedPoint2.Max(MinimumOverkill, OverkillMultiplier * maxTrigger) },
-            Behaviors = { new DoActsBehavior { Acts = ThresholdActs.Destruction } },
+            Behaviors = { new DoActs { Acts = ThresholdActs.Destruction } },
         };
 
         // Thresholds are evaluated in order, so overkill must be first to avoid triggering effects
@@ -259,7 +257,7 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
 
             foreach (var behavior in threshold.Behaviors)
             {
-                if (behavior is DoActsBehavior actBehavior &&
+                if (behavior is DoActs actBehavior &&
                     actBehavior.HasAct(ThresholdActs.Destruction | ThresholdActs.Breakage))
                 {
                     damageNeeded = FixedPoint2.Min(damageNeeded, trigger.Damage);

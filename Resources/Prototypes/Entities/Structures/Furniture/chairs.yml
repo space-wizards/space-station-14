@@ -116,10 +116,10 @@
         !type:DamageTrigger
         damage: 40
       behaviors:
-      - &SoundMetalBreak !type:PlaySoundBehavior
+      - &SoundMetalBreak !type:PlaySound
         sound:
           collection: MetalBreak
-      - &SpawnSteel01 !type:SpawnEntitiesBehavior
+      - &SpawnSteel01 !type:SpawnEntities
         spawn:
           SheetSteel1: &Min0Max1
             min: 0
@@ -182,7 +182,7 @@
     - trigger: *DamageFurnitureNormal
       behaviors:
       - *SoundMetalBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetBrass1: *Min0Max1
 
@@ -260,12 +260,12 @@
     thresholds:
     - trigger: *DamageFurnitureNormal
       behaviors:
-      - &SoundWoodDestroy !type:PlaySoundBehavior
+      - &SoundWoodDestroy !type:PlaySound
         sound:
           collection: WoodDestroy
           params:
             volume: -3
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           MaterialWoodPlank1: *Min0Max1
   - type: StaticPrice
@@ -300,10 +300,10 @@
     thresholds:
     - trigger: *DamageFurnitureNormal
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: gib
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           MaterialSheetMeat1: *Min0Max1
 
@@ -322,7 +322,7 @@
     thresholds:
     - trigger: *DamageFurnitureNormal
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           path: /Audio/Voice/Human/womanlaugh.ogg
   - type: Construction
@@ -350,7 +350,7 @@
     - trigger: *DamageFurnitureNormal
       behaviors:
       - *SoundWoodDestroy
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           MaterialWebSilk1: *Min0Max1
   - type: Construction
@@ -391,7 +391,7 @@
     - trigger: *DamageFurnitureNormal
       behaviors:
       - *SoundMetalBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetPlastic1: *Min0Max1
           PartRodMetal1: *Min0Max1
@@ -441,10 +441,10 @@
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           path: /Audio/Effects/poster_broken.ogg
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           MaterialCardboard: *Min0Max1
 
@@ -466,7 +466,7 @@
     - trigger: *DamageFurnitureNormal
       behaviors:
       - *SoundWoodDestroy
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           MaterialWoodPlank:
             min: 2

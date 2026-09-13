@@ -67,9 +67,9 @@
         !type:DamageTrigger
         damage: 10
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           MaterialWebSilk:
             min: 0
@@ -108,7 +108,7 @@
         !type:DamageTrigger
         damage: 10
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: FlavorProfile
     flavors:

@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: [ BaseStructure, StructureHealthBarrier ]
   id: BaseFenceMetal
   name: chain link fence
@@ -25,10 +25,10 @@
         !type:DamageTrigger
         damage: 80
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           PartRodMetal1:
             min: 1
@@ -145,7 +145,7 @@
     thresholds:
     - trigger: *DamageBarrierNormal
       behaviors:
-      - !type:ChangeConstructionNodeBehavior
+      - !type:ChangeConstructionNode
         node: broken
   - type: Construction
     graph: FenceMetal

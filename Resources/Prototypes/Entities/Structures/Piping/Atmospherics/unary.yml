@@ -526,9 +526,9 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:SpillBehavior
+      - !type:Spill
         solution: tank
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
   - type: NodeContainer

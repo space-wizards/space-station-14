@@ -67,7 +67,7 @@
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           ShardGlass:
             min: 0
@@ -119,7 +119,7 @@
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           ShardGlass:
             min: 0

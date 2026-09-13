@@ -113,15 +113,15 @@
         !type:DamageTrigger
         damage: 1
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:ExplodeBehavior
-      - !type:SpillBehavior
+      - !type:Explode
+      - !type:Spill
         solution: solution
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           FoodMeatHuman:
             min: 1

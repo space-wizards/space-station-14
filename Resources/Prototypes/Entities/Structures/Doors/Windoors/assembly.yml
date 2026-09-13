@@ -37,7 +37,7 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetSteel1: &BaseWindoorDrop
             min: 1
@@ -61,7 +61,7 @@
     thresholds:
     - trigger: *DamageDoorWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetPGlass1: *BaseWindoorDrop
   - type: Construction
@@ -83,7 +83,7 @@
     thresholds:
     - trigger: *DamageDoorWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetUGlass1: *BaseWindoorDrop
   - type: Construction

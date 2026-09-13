@@ -13,7 +13,7 @@
         !type:DamageTrigger
         damage: 80
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           path: /Audio/Effects/break_stone.ogg
 
@@ -91,7 +91,7 @@
         !type:DamageTrigger
         damage: 80
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SteelOre1:
             min: 1

@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BaseCurtains
   parent: BaseStructure
   name: curtains
@@ -46,9 +46,9 @@
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: ["Destruction"]
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           MaterialCloth1:
             min: 1

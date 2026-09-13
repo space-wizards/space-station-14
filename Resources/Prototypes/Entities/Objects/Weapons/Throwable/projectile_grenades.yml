@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   parent: BaseItem
   id: ProjectileGrenadeBase
@@ -16,7 +16,7 @@
         !type:DamageTrigger
         damage: 10
       behaviors:
-      - !type:TriggerBehavior
+      - !type:Trigger
         keyOut: timer # explode immediately
   - type: ContainerContainer
     containers:

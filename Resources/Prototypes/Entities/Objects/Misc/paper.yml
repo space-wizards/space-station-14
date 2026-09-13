@@ -32,12 +32,12 @@
         !type:DamageTrigger
         damage: 15
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           Ash:
             min: 1
             max: 1
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: Edible
     delay: 7
@@ -510,8 +510,8 @@
         !type:DamageTrigger
         damage: 15
       behaviors:
-      - !type:EmptyAllContainersBehaviour
-      - !type:DoActsBehavior
+      - !type:EmptyAllContainers
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: Injurable
   - type: StationAiWhitelist

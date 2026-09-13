@@ -332,7 +332,7 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
-      - !type:TriggerBehavior
+      - !type:Trigger
   - type: Appearance
   - type: GenericVisualizer
     visuals:

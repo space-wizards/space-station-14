@@ -84,10 +84,10 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalGlassBreak
-      - !type:EmptyContainersBehaviour
+      - !type:EmptyContainers
         containers:
         - microwave_entity_container
   - type: Explosive

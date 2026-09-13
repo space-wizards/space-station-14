@@ -47,7 +47,7 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
-      - !type:ExplodeBehavior
+      - !type:Explode
   - type: Construction
     graph: FireBomb
     node: firebomb

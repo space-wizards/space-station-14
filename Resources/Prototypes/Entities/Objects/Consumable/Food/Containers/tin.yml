@@ -30,13 +30,13 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 6
       behaviors:
-      - !type:OpenBehavior
+      - !type:Open
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: packet

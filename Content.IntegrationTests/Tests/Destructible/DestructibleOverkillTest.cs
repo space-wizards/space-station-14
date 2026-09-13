@@ -2,11 +2,11 @@ using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Destructible;
-using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Destructible;
+using Content.Shared.EntityEffects.Effects.Damage;
 using Robust.Shared.GameObjects;
 using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototypes;
 
@@ -65,7 +65,7 @@ public sealed class DestructibleOverkillTest : GameTest
                 Assert.That(threshold.Behaviors, Has.Count.EqualTo(1));
             }
 
-            var doActsBehavior = (DoActsBehavior)threshold.Behaviors.Single(b => b is DoActsBehavior);
+            var doActsBehavior = (DoActs)threshold.Behaviors.Single(b => b is DoActs);
 
             // Ensure that the one act in this behavior is destruction
             Assert.That(doActsBehavior.HasAct(ThresholdActs.Destruction));

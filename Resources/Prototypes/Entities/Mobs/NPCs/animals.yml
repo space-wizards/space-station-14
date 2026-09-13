@@ -76,7 +76,7 @@
         damageType: Blunt
         damage: 120
       behaviors:
-      - !type:GibBehavior
+      - !type:Gib
         recursive: false
   - type: Tag
     tags:
@@ -163,7 +163,7 @@
         damageType: Blunt
         damage: 20
       behaviors:
-      - !type:GibBehavior
+      - !type:Gib
         recursive: false
 
 - type: entity
@@ -467,7 +467,7 @@
         damageType: Blunt
         damage: 10
       behaviors:
-      - !type:GibBehavior
+      - !type:Gib
         recursive: false
 
 - type: entity
@@ -630,7 +630,7 @@
         damageType: Blunt
         damage: 60
       behaviors:
-      - !type:GibBehavior
+      - !type:Gib
         recursive: false
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
@@ -887,7 +887,7 @@
         damageType: Blunt
         damage: 20
       behaviors:
-      - !type:GibBehavior
+      - !type:Gib
         recursive: false
   - type: ZombieImmune
 
@@ -1290,7 +1290,7 @@
     interactDelay: 1
     interactSuccessString: petting-success-sheep
     interactFailureString: petting-failure-sheep
-    interactSuccessSpawn: EffectHearts #🥰
+    interactSuccessSpawn: EffectHearts #рџҐ°
     interactSuccessSound:
       collection: Sheep
       params:
@@ -2125,7 +2125,7 @@
         damageType: Blunt
         damage: 60
       behaviors:
-      - !type:GibBehavior
+      - !type:Gib
         recursive: false
 
 - type: entity
@@ -2429,7 +2429,7 @@
         damageType: Blunt
         damage: 60
       behaviors:
-      - !type:GibBehavior
+      - !type:Gib
         recursive: false
 
 # Would be cool to have some functionality for the parrot to be able to sit on stuff
@@ -2652,7 +2652,7 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
-      - !type:ExplodeBehavior
+      - !type:Explode
 
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
 - type: entity
@@ -3822,7 +3822,7 @@
         damageType: Blunt
         damage: 120
       behaviors:
-      - !type:GibBehavior
+      - !type:Gib
         recursive: false
 
 - type: entity

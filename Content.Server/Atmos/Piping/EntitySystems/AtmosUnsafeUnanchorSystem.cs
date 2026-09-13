@@ -66,7 +66,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
         private void OnBreak(EntityUid uid, AtmosUnsafeUnanchorComponent component, BreakageEventArgs args)
         {
             LeakGas(uid, false);
-            // Can't use DoActsBehavior["Destruction"] in the same trigger because that would prevent us
+            // Can't use DoActs["Destruction"] in the same trigger because that would prevent us
             // from leaking. So we make up for this by queueing deletion here.
             QueueDel(uid);
         }

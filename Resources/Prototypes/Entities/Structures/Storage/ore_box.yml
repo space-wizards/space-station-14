@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: [ BaseStructureDynamic, StructureHealthContainer ]
   id: OreBox
   name: ore box
@@ -16,8 +16,8 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:EmptyAllContainersBehaviour
-      - !type:SpawnEntitiesBehavior
+      - !type:EmptyAllContainers
+      - !type:SpawnEntities
         spawn:
           MaterialWoodPlank1:
             min: 3

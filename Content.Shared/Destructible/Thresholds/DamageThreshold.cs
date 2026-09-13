@@ -1,5 +1,5 @@
-using Content.Shared.Destructible.Thresholds.Behaviors;
 using Content.Shared.Destructible.Thresholds.Triggers;
+using Content.Shared.EntityEffects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Destructible.Thresholds;
@@ -39,10 +39,9 @@ public sealed partial class DamageThreshold : IComparable<DamageThreshold>
 
     /// <summary>
     /// Behaviors to activate once this threshold is triggered.
-    /// TODO: Replace with EntityEffects.
     /// </summary>
     [DataField]
-    public List<IThresholdBehavior> Behaviors = [];
+    public EntityEffect[] Behaviors = [];
 
     public int CompareTo(DamageThreshold? other)
     {

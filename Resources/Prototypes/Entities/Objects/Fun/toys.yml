@@ -21,12 +21,12 @@
         !type:DamageTrigger
         damage: 1
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: ["Destruction"]
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           path: /Audio/Effects/snap.ogg
-      - !type:ExplodeBehavior
+      - !type:Explode
   - type: DamageOnLand
     damage:
       types:

@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   parent: StructureHealthMachineFlimsy
   id: BaseLandMine
@@ -48,7 +48,7 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
-      - !type:TriggerBehavior
+      - !type:Trigger
   - type: LandMine
     sound:
         path: /Audio/Effects/beep_landmine.ogg

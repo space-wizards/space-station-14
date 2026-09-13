@@ -61,7 +61,7 @@
         !type:DamageTrigger
         damage: 175
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
   - type: GuideHelp
@@ -324,12 +324,12 @@
     thresholds:
     - trigger: *DamageMachineNormal
       behaviors:
-      - !type:SpillBehavior
+      - !type:Spill
         solution: tank
     - trigger:
         !type:DamageTypeTrigger
         damageType: Piercing
         damage: 75
       behaviors:
-      - !type:SolutionExplosionBehavior
+      - !type:SolutionExplosion
         solution: tank

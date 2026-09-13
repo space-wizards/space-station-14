@@ -53,7 +53,7 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
-      - !type:ExplodeBehavior
+      - !type:Explode
   - type: Explosive # Powerful explosion in a very small radius. Doesn't break underplating.
     explosionType: DemolitionCharge
     totalIntensity: 60

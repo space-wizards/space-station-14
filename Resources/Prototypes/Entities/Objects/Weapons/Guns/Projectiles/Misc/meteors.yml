@@ -74,12 +74,12 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:ExplodeBehavior
+      - !type:Explode
 
 - type: entity
   parent: BaseMeteor
@@ -109,13 +109,13 @@
         !type:DamageTrigger
         damage: 150
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:ExplodeBehavior
-      - !type:WeightedSpawnEntityBehavior
+      - !type:Explode
+      - !type:WeightedSpawnEntity
         weightedEntityTable: "MeteorSpawnAsteroidWallTable"
         minSpawn: 2
         maxSpawn: 4
@@ -149,13 +149,13 @@
         !type:DamageTrigger
         damage: 450
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:ExplodeBehavior
-      - !type:WeightedSpawnEntityBehavior
+      - !type:Explode
+      - !type:WeightedSpawnEntity
         weightedEntityTable: "MeteorSpawnAsteroidWallTable"
         spawnOffset: 2
         minSpawn: 3
@@ -177,13 +177,13 @@
         !type:DamageTrigger
         damage: 900
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:ExplodeBehavior
-      - !type:WeightedSpawnEntityBehavior
+      - !type:Explode
+      - !type:WeightedSpawnEntity
         weightedEntityTable: "MeteorSpawnAsteroidWallTable"
         spawnOffset: 3
         minSpawn: 5
@@ -217,21 +217,21 @@
         !type:DamageTrigger
         damage: 1500
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MaleScreams
           params:
             volume: 10
-      - !type:SpillBehavior
+      - !type:Spill
         solution: solution
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           FoodMeatHuman:
             min: 1
             max: 2
-      - !type:ExplodeBehavior
+      - !type:Explode
 
 # Cow Meteor
 - type: entity
@@ -256,14 +256,14 @@
         !type:DamageTrigger
         damage: 1500
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           path: /Audio/Animals/cow_moo.ogg
-      - !type:SpillBehavior
+      - !type:Spill
         solution: solution
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           FoodMeat:
             min: 1
@@ -271,7 +271,7 @@
           FoodCheeseSlice:
             min: 1
             max: 2
-      - !type:ExplodeBehavior
+      - !type:Explode
 
 # Clown Meteor
 - type: entity
@@ -296,14 +296,14 @@
         !type:DamageTrigger
         damage: 1500
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           path: /Audio/Items/bikehorn.ogg
-      - !type:SpillBehavior
+      - !type:Spill
         solution: solution
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           FoodMeatClown:
             min: 1
@@ -314,7 +314,7 @@
           RubberChicken:
             min: 0
             max: 1
-      - !type:ExplodeBehavior
+      - !type:Explode
 
 # Potato Meteor
 - type: entity
@@ -338,13 +338,13 @@
         !type:DamageTrigger
         damage: 1500
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
-      - !type:SpillBehavior
+      - !type:Spill
         solution: solution
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           FoodMealFries:
             min: 1
             max: 5
-      - !type:ExplodeBehavior
+      - !type:Explode

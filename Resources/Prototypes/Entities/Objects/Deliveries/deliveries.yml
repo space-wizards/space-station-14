@@ -199,10 +199,10 @@
         !type:DamageTrigger
         damage: 1
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: DeliveryOpenSounds
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Breakage" ]
 
 - type: entity
