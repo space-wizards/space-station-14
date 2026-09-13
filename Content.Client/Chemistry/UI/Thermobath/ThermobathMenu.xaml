@@ -168,15 +168,19 @@
                         <PanelContainer StyleClasses="BackgroundPanel"
                                         ModulateSelfOverride="#212123"
                                         Margin="0 0 0 5">
-                            <BoxContainer Orientation="Horizontal" VerticalExpand="False" Margin="5 2" SeparationOverride="5">
-                                <Button Name="DecreaseButton"
-                                        Text="-"
-                                        StyleClasses="ButtonSquare"
-                                        SetSize="70 40" />
-                                <Button Name="IncreaseButton"
-                                        Text="+"
-                                        StyleClasses="ButtonSquare"
-                                        SetSize="70 40" />
+                            <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" Margin="5 2" SeparationOverride="2">
+                                <LineEdit Name="SetpointInput" SetWidth="145"
+                                          ToolTip="{Loc 'thermobath-menu-setpoint'}" />
+                                <BoxContainer Orientation="Horizontal" SeparationOverride="5">
+                                    <Button Name="DecreaseButton"
+                                            Text="-"
+                                            StyleClasses="ButtonSquare"
+                                            SetSize="70 28" />
+                                    <Button Name="IncreaseButton"
+                                            Text="+"
+                                            StyleClasses="ButtonSquare"
+                                            SetSize="70 28" />
+                                </BoxContainer>
                             </BoxContainer>
                         </PanelContainer>
                     </BoxContainer>
