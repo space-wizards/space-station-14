@@ -21,6 +21,7 @@ public sealed partial class EmergencyLightSystem : EntitySystem
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedBatterySystem _battery = default!;
     [Dependency] private SharedPointLightSystem _pointLight = default!;
+    [Dependency] private SharedPowerReceiverSystem _receiver = default!;
     [Dependency] private SharedStationSystem _station = default!;
 
     [Dependency] private EntityQuery<StationMemberComponent> _stationMemberQuery;
@@ -87,14 +88,14 @@ public sealed partial class EmergencyLightSystem : EntitySystem
         if (!ProtoMan.Resolve(ev.AlertLevel, out var level))
             return;
 
-        var query = EntityQueryEnumerator<EmergencyLightComponent, SharedPointLightComponent, AppearanceComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var light, out var pointLight, out var appearance, out var xform))
+        var query = EntityQueryEnumerator<EmergencyLightComponent, AppearanceComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var light, out var appearance, out var xform))
         {
             if (!_stationMemberQuery.TryComp(xform.GridUid, out var stationMember)
                 || stationMember.Station != ev.Station)
                 continue;
 
-            _pointLight.SetColor(uid, level.EmergencyLightColor, pointLight);
+            _pointLight.SetColor(uid, level.EmergencyLightColor);
             _appearance.SetData(uid, EmergencyLightVisuals.Color, level.EmergencyLightColor, appearance);
 
             if (level.ForceEnableEmergencyLights && !light.ForciblyEnabled)
@@ -152,7 +153,8 @@ public sealed partial class EmergencyLightSystem : EntitySystem
             if (!_battery.IsFull((ent.Owner, battery)))
                 return;
 
-            if (TryComp<SharedApcPowerReceiverComponent>(ent.Owner, out var receiver))
+            SharedApcPowerReceiverComponent? receiver = null;
+            if (_receiver.ResolveApc(ent, ref receiver))
                 receiver.Load = 1;
 
             SetState(ent, EmergencyLightState.Full);
@@ -164,7 +166,8 @@ public sealed partial class EmergencyLightSystem : EntitySystem
     /// </summary>
     public void UpdateState(Entity<EmergencyLightComponent> ent)
     {
-        if (!TryComp<SharedApcPowerReceiverComponent>(ent.Owner, out var receiver))
+        SharedApcPowerReceiverComponent? receiver = null;
+        if (!_receiver.ResolveApc(ent, ref receiver))
             return;
 
         // Show alert level on the light itself.
