@@ -1,3 +1,4 @@
+using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature.HeatContainer;
@@ -19,16 +20,10 @@ public sealed partial class ThermoregulatorSystem : SharedThermoregulatorSystem
         var query = EntityQueryEnumerator<ThermoregulatorComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            var powered = _power.IsPowered(uid);
-            if (!powered)
-            {
-                SetActiveMode((uid, comp), ThermoregulatorActiveMode.Idle);
-            }
-
             if (curTime < comp.NextUpdate)
                 continue;
 
-            UpdateThermoregulator((uid, comp), powered);
+            UpdateThermoregulator((uid, comp), _power.IsPowered(uid));
         }
     }
 
@@ -36,6 +31,13 @@ public sealed partial class ThermoregulatorSystem : SharedThermoregulatorSystem
     private void OnMapInit(Entity<ThermoregulatorComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextUpdate = _timing.CurTime + ent.Comp.UpdateInterval;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnPowerChanged(Entity<ThermoregulatorComponent> ent, ref PowerChangedEvent args)
+    {
+        if (!args.Powered)
+            SetActiveMode(ent, ThermoregulatorActiveMode.Idle);
     }
 
     private void UpdateThermoregulator(Entity<ThermoregulatorComponent> ent, bool powered)
