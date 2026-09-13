@@ -129,7 +129,7 @@ public sealed partial class CCVars
     ///     Is map rotation enabled?
     /// </summary>
     public static readonly CVarDef<bool>
-        GameMapRotation = CVarDef.Create("game.map_rotation", true, CVar.SERVERONLY);
+        GameMapRotation = CVarDef.Create("game.map_rotation", false, CVar.SERVERONLY);
 
     /// <summary>
     ///     If roles should be restricted based on time.

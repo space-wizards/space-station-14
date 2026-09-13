@@ -156,8 +156,36 @@ public sealed partial class GameMapManager : IGameMapManager
 
     public void SelectMapRandom()
     {
+        _log.Info("Selecting a random map...");
         var maps = CurrentlyEligibleMaps().ToList();
-        _selectedMap = _random.Pick(maps);
+        if (maps.Count == 0)
+            return;
+
+        var totalWeight = maps.Sum(map => map.Weight);
+        _log.Info($"Total weight for {maps.Count}: {totalWeight}");
+        if (totalWeight == 0)
+        {
+            _selectedMap = _random.Pick(maps);
+            return;
+        }
+
+        var normalizedWeights = maps.Select(map => map.Weight / totalWeight);
+        var rand = _random.NextFloat();
+        _log.Info($"Normalized values for all maps: {normalizedWeights.Aggregate("", (acc, val) => $"{acc},{val}")}");
+        _log.Info($"Value selected for rolling random map is: {rand}");
+
+        foreach (var (index, weight) in normalizedWeights.Index())
+        {
+            rand -= weight;
+            if (rand <= 0)
+            {
+                _log.Info($"Selected: {maps[index].MapName}");
+                _selectedMap = maps[index];
+                return;
+            }
+        }
+        //Failsafe
+        _selectedMap = maps.Last();
     }
 
     public void SelectMapFromRotationQueue(bool markAsPlayed = false)
