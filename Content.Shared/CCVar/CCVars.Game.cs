@@ -415,12 +415,8 @@ public sealed partial class CCVars
     /// <summary>
     ///     If true, players can place objects onto tabletop games like chess boards.
     /// </summary>
-    /// <remarks>
-    ///     This feature is currently highly abusable and can easily be used to crash the server,
-    ///     so it's off by default.
-    /// </remarks>
     public static readonly CVarDef<bool> GameTabletopPlace =
-        CVarDef.Create("game.tabletop_place", false, CVar.SERVERONLY);
+        CVarDef.Create("game.tabletop_place", true, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     ///     If true, contraband severity can be viewed in the examine menu

@@ -1,11 +1,22 @@
 ﻿<DefaultWindow xmlns="https://spacestation14.io"
-            xmlns:viewport="clr-namespace:Content.Client.Viewport">
-    <viewport:ScalingViewport Name="ScalingVp" MouseFilter="Stop" RenderScaleMode="CeilInt">
+            xmlns:viewport="clr-namespace:Content.Client.Viewport"
+            MinWidth="500"
+            MinHeight="436"
+            Title="{ Loc 'tabletop-default-board-name' }">
+    <viewport:ScalingViewport Name="ScalingVp"
+                              MouseFilter="Pass"
+                              RenderScaleMode="CeilInt"
+                              Visible="False">
         <Button Name="FlipButton"
                 Text="{ Loc 'tabletop-chess-flip' }"
                 MinSize="60 30"
                 MaxSize="60 30"
                 HorizontalAlignment="Right"
-                VerticalAlignment="Top" />
+                VerticalAlignment="Top"
+                Visible="False" />
+        <Label Name="LoadingLabel"
+                Text="{ Loc 'tabletop-loading' }"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center" />
     </viewport:ScalingViewport>
 </DefaultWindow>

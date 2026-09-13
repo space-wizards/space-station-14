@@ -3,7 +3,6 @@ using System.Numerics;
 using System.Threading;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.EntitySystems;
-using Content.Server.Body.Systems;
 using Content.Server.Electrocution;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.GhostKick;
@@ -15,7 +14,6 @@ using Content.Server.Popups;
 using Content.Server.Roles;
 using Content.Shared.Speech.Components;
 using Content.Server.Storage.EntitySystems;
-using Content.Server.Tabletop;
 using Content.Shared.Actions;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Components;
@@ -51,6 +49,7 @@ using Content.Shared.StatusEffectNew;
 using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.Suicide;
+using Content.Shared.Tabletop;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
@@ -154,7 +153,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = chessName,
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Fun/Tabletop/chessboard.rsi"), "chessboard"),
+            Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Fun/Tabletop/boards.rsi"), "chess"),
             Act = () =>
             {
                 _sharedGodmodeSystem.EnableGodmode(args.Target); // So they don't suffocate.
@@ -166,8 +165,9 @@ public sealed partial class AdminVerbSystem
                     Loc.GetString("admin-smite-chess-others", ("name", args.Target)), xform.Coordinates,
                     Filter.PvsExcept(args.Target), true, PopupType.MediumCaution);
                 var board = Spawn("ChessBoard", xform.Coordinates);
-                var session = _tabletopSystem.EnsureSession(Comp<TabletopGameComponent>(board));
-                _transformSystem.SetMapCoordinates(args.Target, session.Position);
+                var tabletopGame = Comp<TabletopGameComponent>(board);
+                _tabletopSystem.EnsureBoard((board, tabletopGame));
+                _transformSystem.SetParent(args.Target, tabletopGame.Board!.Value);
                 _transformSystem.SetWorldRotationNoLerp((args.Target, xform), Angle.Zero);
             },
             Impact = LogImpact.Extreme,

@@ -1,0 +1,15 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Stanbery Trask#5343, Visne, edited by whatston3",
+    "size": {
+        "x": 338,
+        "y": 274
+    },
+    "metaAtlas": false,
+    "states": [
+        {
+            "name": "board"
+        }
+    ]
+}

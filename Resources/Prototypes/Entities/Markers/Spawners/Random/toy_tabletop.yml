@@ -28,8 +28,8 @@
   - type: Sprite
     layers:
     - state: red
-    - sprite: Objects/Fun/Tabletop/chessboard.rsi
-      state: chessboard
+    - sprite: Objects/Fun/Tabletop/boards.rsi
+      state: chess
   - type: EntityTableSpawner
     offset: 0
     table: !type:NestedSelector
@@ -44,8 +44,8 @@
   - type: Sprite
     layers:
     - state: red
-    - sprite: Objects/Fun/Tabletop/Battlemaps/grassbm.rsi
-      state: icon
+    - sprite: Objects/Fun/Tabletop/boards.rsi
+      state: battlemap-grass
   - type: EntityTableSpawner
     offset: 0
     table: !type:NestedSelector

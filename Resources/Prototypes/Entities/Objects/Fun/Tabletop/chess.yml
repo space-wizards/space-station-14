@@ -5,30 +5,30 @@
   description: A chessboard. Pieces included!
   components:
   - type: Sprite
-    sprite: Objects/Fun/Tabletop/chessboard.rsi
-    state: chessboard
+    state: chess
   - type: TabletopGame
     boardName: tabletop-chess-board-name
     size: 338, 274
-    setup:
-      !type:TabletopChessSetup
-      boardPrototype: &ChessBoard ChessBoardTabletop
+    spawnOffset: -1, 0
+    setup: !type:TabletopChessSetup
+      boardPrototype: ChessBoardTabletop
 
 - type: entity
   parent: BaseBoardTabletop
-  id: *ChessBoard
+  id: ChessBoardTabletop
   name: chessboard
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Fun/Tabletop/chessboard_tabletop.rsi
-    state: chessboard_tabletop
+    sprite: Objects/Fun/Tabletop/Tabletops/chess.rsi
+    state: board
 
 # White pieces
 - type: entity
   parent: BaseTabletopPiece
   id: WhiteKing
   name: white king
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
@@ -38,6 +38,7 @@
   parent: BaseTabletopPiece
   id: WhiteQueen
   name: white queen
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
@@ -47,6 +48,7 @@
   parent: BaseTabletopPiece
   id: WhiteRook
   name: white rook
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
@@ -56,6 +58,7 @@
   parent: BaseTabletopPiece
   id: WhiteBishop
   name: white bishop
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
@@ -65,6 +68,7 @@
   parent: BaseTabletopPiece
   id: WhiteKnight
   name: white knight
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
@@ -74,6 +78,7 @@
   parent: BaseTabletopPiece
   id: WhitePawn
   name: white pawn
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
@@ -84,6 +89,7 @@
   parent: BaseTabletopPiece
   id: BlackKing
   name: black king
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
@@ -93,6 +99,7 @@
   parent: BaseTabletopPiece
   id: BlackQueen
   name: black queen
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
@@ -102,6 +109,7 @@
   parent: BaseTabletopPiece
   id: BlackRook
   name: black rook
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
@@ -111,6 +119,7 @@
   parent: BaseTabletopPiece
   id: BlackBishop
   name: black bishop
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
@@ -120,6 +129,7 @@
   parent: BaseTabletopPiece
   id: BlackKnight
   name: black knight
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
@@ -129,6 +139,7 @@
   parent: BaseTabletopPiece
   id: BlackPawn
   name: black pawn
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
