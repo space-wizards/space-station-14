@@ -3934,8 +3934,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 233
-      configurators:
-      - invalid
 - proto: FirelockGlass
   entities:
   - uid: 263
