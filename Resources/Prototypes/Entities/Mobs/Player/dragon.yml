@@ -100,19 +100,6 @@
         damage: 600
       behaviors:
       - !type:GibBehavior
-    - trigger: !type:DamageTypeTrigger
-        damageType: Radiation
-        damage: 15
-      behaviors:
-      - !type:PopupBehavior
-        popup: mouth-taste-metal
-        popupType: LargeCaution
-        targetOnly: true
-    - trigger: !type:DamageTypeTrigger
-        damageType: Radiation
-        damage: 40
-      behaviors:
-      - !type:VomitBehavior
   - type: SlowOnDamage
     speedModifierThresholds:
       250: 0.7
