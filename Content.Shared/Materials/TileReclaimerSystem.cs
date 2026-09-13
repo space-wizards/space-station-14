@@ -106,6 +106,7 @@ public abstract partial class TileReclaimerSystem : EntitySystem
                 }
 
                 _mapSystem.SetTile(tile.GridUid, grid, tile.GridIndices, Tile.Empty);
+                // TODO: Ideally this should be using tilestacking to get materials out of every tile in the stack, as opposed to the top one. Not doing it right now as it may be reworked however.
                 SpawnMaterialsFromComposition((ent, null, ent.Comp2), tileDef, ent.Comp1.Efficiency);
                 shredded = true;
 
