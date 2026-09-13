@@ -43,6 +43,8 @@ namespace Content.Client.Inventory
         [Dependency] private IPrototypeManager _proto = default!;
         [Dependency] private IConfigurationManager _cvar = default!;
 
+        [Dependency] private EntityQuery<InventorySlotBlockComponent> _slotBlockQuery = default!;
+
         private readonly ExamineSystem _examine;
         private readonly HandsSystem _hands;
         private readonly InventorySystem _inv;
@@ -301,8 +303,25 @@ namespace Content.Client.Inventory
             if (entity != null && _strippable.IsStripHidden(slotDef, _player.LocalEntity))
                 entity = _virtualHiddenEntity;
 
-            var button = new SlotButton(new SlotData(slotDef, container));
+            var slotData = new SlotData(slotDef, container);
+            var button = new SlotButton(slotData);
             button.Pressed += SlotPressed;
+
+            // TODO: Rework how stripping BUI works. Updating this on every action is stupid.
+            // Maybe make InventoryUIController somehow support multiple BUI inventories?
+            var enumerator = _inv.GetSlotEnumerator(invUid, ~slotDef.SlotFlags);
+            while (enumerator.NextItem(out var item))
+            {
+                if (!_slotBlockQuery.TryComp(item, out var comp))
+                    continue;
+
+                if ((slotDef.SlotFlags & comp.Slots) == 0)
+                    continue;
+
+                slotData.Blockers.Add(item);
+            }
+
+            button.UpdateBlockers(slotData.Blockers);
 
             _strippingMenu!.InventoryContainer.AddChild(button);
 
