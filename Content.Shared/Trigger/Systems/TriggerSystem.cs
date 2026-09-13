@@ -47,20 +47,6 @@ public sealed partial class TriggerSystem : EntitySystem
 
     public const string DefaultTriggerKey = "trigger";
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        InitializeCollide();
-        InitializeCondition();
-        InitializeInteraction();
-        InitializeProximity();
-        InitializeSignal();
-        InitializeTimer();
-        InitializeSpawn();
-        InitializeVoice();
-    }
-
     /// <summary>
     /// Trigger the given entity.
     /// </summary>

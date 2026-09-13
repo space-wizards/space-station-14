@@ -9,14 +9,7 @@ namespace Content.Shared.Trigger.Systems;
 
 public sealed partial class TriggerSystem
 {
-    private void InitializeVoice()
-    {
-        SubscribeLocalEvent<TriggerOnVoiceComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<TriggerOnVoiceComponent, ExaminedEvent>(OnVoiceExamine);
-        SubscribeLocalEvent<TriggerOnVoiceComponent, ListenEvent>(OnListen);
-        SubscribeLocalEvent<TriggerOnVoiceComponent, GetVerbsEvent<AlternativeVerb>>(OnVoiceGetAltVerbs);
-    }
-
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<TriggerOnVoiceComponent> ent, ref MapInitEvent args)
     {
         if (ent.Comp.DefaultKeyPhrase != null)
@@ -28,6 +21,7 @@ public sealed partial class TriggerSystem
         UpdateListening(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnVoiceExamine(EntityUid uid, TriggerOnVoiceComponent component, ExaminedEvent args)
     {
         if (!args.IsInDetailsRange || !component.ShowExamine)
@@ -43,6 +37,7 @@ public sealed partial class TriggerSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnListen(Entity<TriggerOnVoiceComponent> ent, ref ListenEvent args)
     {
         var component = ent.Comp;
@@ -78,6 +73,7 @@ public sealed partial class TriggerSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnVoiceGetAltVerbs(Entity<TriggerOnVoiceComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess || !ent.Comp.ShowVerbs)

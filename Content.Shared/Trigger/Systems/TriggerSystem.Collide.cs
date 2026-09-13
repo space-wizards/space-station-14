@@ -6,16 +6,7 @@ namespace Content.Shared.Trigger.Systems;
 
 public sealed partial class TriggerSystem
 {
-    private void InitializeCollide()
-    {
-        SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnCollide);
-        SubscribeLocalEvent<TriggerOnStepTriggerComponent, StepTriggeredOffEvent>(OnStepTriggered);
-
-        SubscribeLocalEvent<TriggerOnTimedCollideComponent, StartCollideEvent>(OnTimedCollide);
-        SubscribeLocalEvent<TriggerOnTimedCollideComponent, EndCollideEvent>(OnTimedEndCollide);
-        SubscribeLocalEvent<TriggerOnTimedCollideComponent, ComponentShutdown>(OnTimedShutdown);
-    }
-
+    [SubscribeLocalEvent]
     private void OnCollide(Entity<TriggerOnCollideComponent> ent, ref StartCollideEvent args)
     {
         if (
@@ -35,11 +26,13 @@ public sealed partial class TriggerSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnStepTriggered(Entity<TriggerOnStepTriggerComponent> ent, ref StepTriggeredOffEvent args)
     {
         Trigger(ent, args.Tripper, ent.Comp.KeyOut);
     }
 
+    [SubscribeLocalEvent]
     private void OnTimedCollide(Entity<TriggerOnTimedCollideComponent> ent, ref StartCollideEvent args)
     {
         //Ensures the trigger entity will have an active component
@@ -51,6 +44,7 @@ public sealed partial class TriggerSystem
         Dirty(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnTimedEndCollide(Entity<TriggerOnTimedCollideComponent> ent, ref EndCollideEvent args)
     {
         var otherUID = args.OtherEntity;
@@ -61,6 +55,7 @@ public sealed partial class TriggerSystem
             RemComp<ActiveTriggerOnTimedCollideComponent>(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnTimedShutdown(Entity<TriggerOnTimedCollideComponent> ent, ref ComponentShutdown args)
     {
         RemComp<ActiveTriggerOnTimedCollideComponent>(ent);

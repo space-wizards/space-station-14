@@ -6,15 +6,8 @@ namespace Content.Shared.Trigger.Systems;
 
 public sealed partial class TriggerSystem
 {
-    private void InitializeProximity()
-    {
-        SubscribeLocalEvent<TriggerOnProximityComponent, StartCollideEvent>(OnProximityStartCollide);
-        SubscribeLocalEvent<TriggerOnProximityComponent, EndCollideEvent>(OnProximityEndCollide);
-        SubscribeLocalEvent<TriggerOnProximityComponent, MapInitEvent>(OnMapInit);
-        // Shouldn't need re-anchoring.
-        SubscribeLocalEvent<TriggerOnProximityComponent, AnchorStateChangedEvent>(OnProximityAnchor);
-    }
-
+    // Shouldn't need re-anchoring
+    [SubscribeLocalEvent]
     private void OnProximityAnchor(Entity<TriggerOnProximityComponent> ent, ref AnchorStateChangedEvent args)
     {
         ent.Comp.Enabled = !ent.Comp.RequiresAnchored || args.Anchored;
@@ -34,6 +27,7 @@ public sealed partial class TriggerSystem
         Dirty(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<TriggerOnProximityComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.Enabled = !ent.Comp.RequiresAnchored || Transform(ent).Anchored;
@@ -54,6 +48,7 @@ public sealed partial class TriggerSystem
         Dirty(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnProximityStartCollide(EntityUid uid, TriggerOnProximityComponent component, ref StartCollideEvent args)
     {
         if (args.OurFixtureId != TriggerOnProximityComponent.FixtureID)
@@ -62,6 +57,7 @@ public sealed partial class TriggerSystem
         component.Colliding[args.OtherEntity] = args.OtherBody;
     }
 
+    [SubscribeLocalEvent]
     private static void OnProximityEndCollide(EntityUid uid, TriggerOnProximityComponent component, ref EndCollideEvent args)
     {
         if (args.OurFixtureId != TriggerOnProximityComponent.FixtureID)

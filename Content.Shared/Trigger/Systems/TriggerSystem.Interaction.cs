@@ -10,32 +10,14 @@ namespace Content.Shared.Trigger.Systems;
 
 public sealed partial class TriggerSystem
 {
-    private void InitializeInteraction()
-    {
-        SubscribeLocalEvent<TriggerOnExaminedComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<TriggerOnActivateComponent, ActivateInWorldEvent>(OnActivate);
-        SubscribeLocalEvent<TriggerOnUseComponent, UseInHandEvent>(OnUse);
-        SubscribeLocalEvent<TriggerOnInteractHandComponent, InteractHandEvent>(OnInteractHand);
-        SubscribeLocalEvent<TriggerOnUserInteractHandComponent, UserInteractHandEvent>(OnUserInteractHand);
-        SubscribeLocalEvent<TriggerOnInteractUsingComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<TriggerOnUserInteractUsingComponent, UserInteractUsingEvent>(OnUserInteractUsing);
 
-        SubscribeLocalEvent<TriggerOnThrowComponent, ThrowEvent>(OnThrow);
-        SubscribeLocalEvent<TriggerOnThrownComponent, ThrownEvent>(OnThrown);
-
-        SubscribeLocalEvent<TriggerOnUiOpenComponent, BoundUIOpenedEvent>(OnUiOpened);
-        SubscribeLocalEvent<TriggerOnUiCloseComponent, BoundUIClosedEvent>(OnUiClosed);
-
-        SubscribeLocalEvent<ItemToggleOnTriggerComponent, TriggerEvent>(HandleItemToggleOnTrigger);
-        SubscribeLocalEvent<AnchorOnTriggerComponent, TriggerEvent>(HandleAnchorOnTrigger);
-        SubscribeLocalEvent<UseDelayOnTriggerComponent, TriggerEvent>(HandleUseDelayOnTrigger);
-    }
-
+    [SubscribeLocalEvent]
     private void OnExamined(Entity<TriggerOnExaminedComponent> ent, ref ExaminedEvent args)
     {
         Trigger(ent.Owner, args.Examiner, ent.Comp.KeyOut);
     }
 
+    [SubscribeLocalEvent]
     private void OnActivate(Entity<TriggerOnActivateComponent> ent, ref ActivateInWorldEvent args)
     {
         if (args.Handled)
@@ -48,6 +30,7 @@ public sealed partial class TriggerSystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnUse(Entity<TriggerOnUseComponent> ent, ref UseInHandEvent args)
     {
         if (args.Handled)
@@ -57,6 +40,7 @@ public sealed partial class TriggerSystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnInteractHand(Entity<TriggerOnInteractHandComponent> ent, ref InteractHandEvent args)
     {
         if (args.Handled)
@@ -66,6 +50,7 @@ public sealed partial class TriggerSystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnUserInteractHand(Entity<TriggerOnUserInteractHandComponent> ent, ref UserInteractHandEvent args)
     {
         if (args.Handled)
@@ -77,6 +62,7 @@ public sealed partial class TriggerSystem
             args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnInteractUsing(Entity<TriggerOnInteractUsingComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
@@ -89,6 +75,7 @@ public sealed partial class TriggerSystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnUserInteractUsing(Entity<TriggerOnUserInteractUsingComponent> ent, ref UserInteractUsingEvent args)
     {
         if (args.Handled)
@@ -103,16 +90,19 @@ public sealed partial class TriggerSystem
             args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnThrow(Entity<TriggerOnThrowComponent> ent, ref ThrowEvent args)
     {
         Trigger(ent.Owner, args.Thrown, ent.Comp.KeyOut);
     }
 
+    [SubscribeLocalEvent]
     private void OnThrown(Entity<TriggerOnThrownComponent> ent, ref ThrownEvent args)
     {
         Trigger(ent.Owner, args.User, ent.Comp.KeyOut);
     }
 
+    [SubscribeLocalEvent]
     private void OnUiOpened(Entity<TriggerOnUiOpenComponent> ent, ref BoundUIOpenedEvent args)
     {
         if (ent.Comp.UiKeys == null || ent.Comp.UiKeys.Contains(args.UiKey))
@@ -121,6 +111,7 @@ public sealed partial class TriggerSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnUiClosed(Entity<TriggerOnUiCloseComponent> ent, ref BoundUIClosedEvent args)
     {
         if (ent.Comp.UiKeys == null || ent.Comp.UiKeys.Contains(args.UiKey))
@@ -129,6 +120,7 @@ public sealed partial class TriggerSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void HandleItemToggleOnTrigger(Entity<ItemToggleOnTriggerComponent> ent, ref TriggerEvent args)
     {
         if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
@@ -148,6 +140,7 @@ public sealed partial class TriggerSystem
         args.Handled |= handled;
     }
 
+    [SubscribeLocalEvent]
     private void HandleAnchorOnTrigger(Entity<AnchorOnTriggerComponent> ent, ref TriggerEvent args)
     {
         if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
@@ -171,6 +164,7 @@ public sealed partial class TriggerSystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void HandleUseDelayOnTrigger(Entity<UseDelayOnTriggerComponent> ent, ref TriggerEvent args)
     {
         if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))

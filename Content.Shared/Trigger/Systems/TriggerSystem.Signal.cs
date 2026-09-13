@@ -6,25 +6,19 @@ namespace Content.Shared.Trigger.Systems;
 
 public sealed partial class TriggerSystem
 {
-    private void InitializeSignal()
-    {
-        SubscribeLocalEvent<SignalOnTriggerComponent, ComponentInit>(SignalOnTriggerInit);
-        SubscribeLocalEvent<TriggerOnSignalComponent, ComponentInit>(TriggerOnSignalInit);
-
-        SubscribeLocalEvent<SignalOnTriggerComponent, TriggerEvent>(HandleSignalOnTrigger);
-        SubscribeLocalEvent<TriggerOnSignalComponent, SignalReceivedEvent>(OnSignalReceived);
-    }
-
+    [SubscribeLocalEvent]
     private void SignalOnTriggerInit(Entity<SignalOnTriggerComponent> ent, ref ComponentInit args)
     {
         _deviceLink.EnsureSourcePorts(ent.Owner, ent.Comp.Port);
     }
 
+    [SubscribeLocalEvent]
     private void TriggerOnSignalInit(Entity<TriggerOnSignalComponent> ent, ref ComponentInit args)
     {
         _deviceLink.EnsureSinkPorts(ent.Owner, ent.Comp.Port);
     }
 
+    [SubscribeLocalEvent]
     private void HandleSignalOnTrigger(Entity<SignalOnTriggerComponent> ent, ref TriggerEvent args)
     {
         if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
@@ -34,6 +28,7 @@ public sealed partial class TriggerSystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnSignalReceived(Entity<TriggerOnSignalComponent> ent, ref SignalReceivedEvent args)
     {
         if (args.Port != ent.Comp.Port)
