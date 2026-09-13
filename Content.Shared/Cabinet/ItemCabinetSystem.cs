@@ -70,7 +70,7 @@ public sealed partial class ItemCabinetSystem : EntitySystem
         if (!TryComp<ItemSlotsComponent>(ent, out var slots))
             return false;
 
-        return _slots.TryGetSlot(ent, ent.Comp.Slot, out slot, slots);
+        return _slots.TryGetSlot((ent.Owner, slots), ent.Comp.Slot, out slot);
     }
 
     /// <summary>
@@ -89,7 +89,7 @@ public sealed partial class ItemCabinetSystem : EntitySystem
         if (!TryComp<ItemSlotsComponent>(ent, out var slots))
             return;
 
-        if (_slots.TryGetSlot(ent, ent.Comp.Slot, out var slot, slots))
-            _slots.SetLock(ent, slot, closed, slots);
+        if (_slots.TryGetSlot((ent.Owner, slots), ent.Comp.Slot, out var slot))
+            _slots.SetLock((ent.Owner, slots), slot, closed);
     }
 }

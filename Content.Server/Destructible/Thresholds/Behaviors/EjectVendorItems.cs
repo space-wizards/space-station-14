@@ -1,6 +1,6 @@
 using Content.Server.VendingMachines;
 using Content.Shared.Destructible.Thresholds.Behaviors;
-using Content.Shared.VendingMachines;
+using Content.Shared.VendingMachines.Components;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors;
 
@@ -28,18 +28,17 @@ public sealed partial class EjectVendorItems : EntitySystem, IThresholdBehavior
 
     public void Execute(EntityUid owner, EntityUid? cause = null)
     {
-        if (!TryComp<VendingMachineComponent>(owner, out var vendingcomp))
+        if (!HasComp<VendingMachineComponent>(owner))
             return;
 
-        var inventory = _vendingMachine.GetAvailableInventory(owner, vendingcomp);
+        var inventory = _vendingMachine.GetAvailableInventory(owner);
         if (inventory.Count <= 0)
             return;
 
         var toEject = Math.Min(inventory.Count * Percent, Max);
         for (var i = 0; i < toEject; i++)
         {
-            _vendingMachine.EjectRandom(owner, throwItem: true, forceEject: true, vendingcomp);
+            _vendingMachine.EjectRandom(owner, throwItem: true, forceEject: true);
         }
     }
 }
-

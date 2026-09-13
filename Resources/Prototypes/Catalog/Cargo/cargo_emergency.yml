@@ -19,22 +19,12 @@
   group: market
 
 - type: cargoProduct
-  id: EmergencyInternals
+  id: EmergencyEVA
   icon:
-    sprite: Clothing/Mask/breath.rsi
+    sprite: Clothing/Head/Helmets/eva_large.rsi
     state: icon
-  product: CrateEmergencyInternals
-  cost: 600
-  category: cargoproduct-category-name-emergency
-  group: market
-
-- type: cargoProduct
-  id: EmergencyInternalsLarge
-  icon:
-    sprite: Clothing/Mask/breath.rsi
-    state: icon
-  product: CrateEmergencyInternalsLarge
-  cost: 1200
+  product: CrateEmergencyEVA
+  cost: 1000
   category: cargoproduct-category-name-emergency
   group: market
 
@@ -59,16 +49,6 @@
     entity: WrappedParcel
     containerId: contents
   cost: 500
-  category: cargoproduct-category-name-emergency
-  group: market
-
-- type: cargoProduct
-  id: EmergencyNitrogenTanks
-  icon:
-    sprite: Objects/Tanks/red.rsi
-    state: icon
-  product: CrateNitrogenInternals
-  cost: 350
   category: cargoproduct-category-name-emergency
   group: market
 

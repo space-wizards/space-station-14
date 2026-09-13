@@ -4,7 +4,7 @@ using Robust.Shared.Spawners;
 
 namespace Content.Server.Spawners.EntitySystems;
 
-public sealed class SpawnOnDespawnSystem : EntitySystem
+public sealed partial class SpawnOnDespawnSystem : EntitySystem
 {
     public override void Initialize()
     {

@@ -1,8 +1,7 @@
 using System.Numerics;
-using Content.Server.Forensics;
 using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Destructible.Thresholds.Behaviors;
-using Content.Shared.Prototypes;
+using Content.Shared.Forensics.Components;
 using Content.Shared.Stacks;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
@@ -37,7 +36,7 @@ public sealed partial class SpawnEntitiesBehavior : EntitySystem, IThresholdBeha
     public void Execute(EntityUid owner, EntityUid? cause = null)
     {
         var position = _transform.GetMapCoordinates(owner);
-        var getRandomVector = () => new Vector2(_random.NextFloat(-Offset, Offset), _random.NextFloat(-Offset, Offset));
+        Vector2 GetRandomVector() => new(_random.NextFloat(-Offset, Offset), _random.NextFloat(-Offset, Offset));
 
         var executions = 1;
         if (TryComp<StackComponent>(owner, out var stack))
@@ -51,17 +50,17 @@ public sealed partial class SpawnEntitiesBehavior : EntitySystem, IThresholdBeha
             {
                 var count = minMax.Min >= minMax.Max
                     ? minMax.Min
-                    : _random.Next(minMax.Min, minMax.Max + 1);
+                    : _random.NextFloat(minMax.Min, minMax.Max + 1);
 
                 if (count == 0)
                     continue;
 
-                if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, _prototypeManager, EntityManager.ComponentFactory))
+                if (HasComp<StackComponent>(entityId))
                 {
                     var spawned = SpawnInContainer
                         ? SpawnNextToOrDrop(entityId, owner)
-                        : Spawn(entityId, position.Offset(getRandomVector()));
-                    _stack.SetCount((spawned, null), count);
+                        : Spawn(entityId, position.Offset(GetRandomVector()));
+                    _stack.SetCount((spawned, null), (int)count);
 
                     TransferForensics(spawned, owner);
                 }
@@ -71,7 +70,7 @@ public sealed partial class SpawnEntitiesBehavior : EntitySystem, IThresholdBeha
                     {
                         var spawned = SpawnInContainer
                             ? SpawnNextToOrDrop(entityId, owner)
-                            : Spawn(entityId, position.Offset(getRandomVector()));
+                            : Spawn(entityId, position.Offset(GetRandomVector()));
 
                         TransferForensics(spawned, owner);
                     }

@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Server.Spawners.Components;
 using Content.Server.Spawners.EntitySystems;
 using Content.Shared.Destructible.Thresholds.Behaviors;
@@ -81,7 +81,7 @@ public sealed partial class WeightedSpawnEntityBehavior : EntitySystem, IThresho
                 EnsureComp<TimedDespawnComponent>(spawner, out var timedDespawnComponent);
                 timedDespawnComponent.Lifetime = SpawnAfter;
                 EnsureComp<SpawnOnDespawnComponent>(spawner, out var spawnOnDespawnComponent);
-                _spawnOnDespawn.SetPrototype((spawner, spawnOnDespawnComponent), entity);
+                _spawnOnDespawn.SetPrototype((spawner, spawnOnDespawnComponent), entity.Id);
             }
         }
         else

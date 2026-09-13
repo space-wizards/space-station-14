@@ -1,9 +1,6 @@
 using Content.Shared.Destructible.Thresholds.Behaviors;
-using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
-using Content.Shared.VendingMachines;
-using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
+using Content.Shared.VendingMachines.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors;
@@ -17,7 +14,6 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 public sealed partial class DumpRestockInventory : EntitySystem, IThresholdBehavior
 {
     [Dependency] private SharedStackSystem _stack = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IRobustRandom _random = default!;
 
     /// <summary>
@@ -36,8 +32,7 @@ public sealed partial class DumpRestockInventory : EntitySystem, IThresholdBehav
             return;
 
         var randomInventory = _random.Pick(packagecomp.CanRestock);
-
-        if (!_prototypeManager.TryIndex(randomInventory, out VendingMachineInventoryPrototype? packPrototype))
+        if (!ProtoMan.TryIndex(randomInventory, out var packPrototype))
             return;
 
         foreach (var (entityId, count) in packPrototype.StartingInventory)
@@ -47,18 +42,21 @@ public sealed partial class DumpRestockInventory : EntitySystem, IThresholdBehav
             if (toSpawn == 0)
                 continue;
 
-            if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, _prototypeManager, EntityManager.ComponentFactory))
+            if (ProtoMan.TryIndex(entityId, out var entProto)
+                && entProto.HasComp<StackComponent>(EntityManager.ComponentFactory))
             {
-                var spawned = Spawn(entityId, Transform(owner).Coordinates.Offset(_random.NextVector2(-Offset, Offset)));
+                var spawned = SpawnAttachedTo(entityId,
+                    Transform(owner).Coordinates.Offset(_random.NextVector2(-Offset, Offset)),
+                    rotation: _random.NextAngle());
                 _stack.SetCount((spawned, null), toSpawn);
-                Transform(spawned).LocalRotation = _random.NextAngle();
             }
             else
             {
                 for (var i = 0; i < toSpawn; i++)
                 {
-                    var spawned = Spawn(entityId, Transform(owner).Coordinates.Offset(_random.NextVector2(-Offset, Offset)));
-                    Transform(spawned).LocalRotation = _random.NextAngle();
+                    SpawnAttachedTo(entityId,
+                        Transform(owner).Coordinates.Offset(_random.NextVector2(-Offset, Offset)),
+                        rotation: _random.NextAngle());
                 }
             }
         }

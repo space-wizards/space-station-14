@@ -46,10 +46,20 @@ public sealed partial class FeedbackPopupPrototype : IPrototype
     public string? ResponseLink;
 
     /// <summary>
+    /// Should this feedback always be shown upon opening the feedback window?
+    /// Ignores <see cref="ShowRoundEnd"/> and <see cref="RuleWhitelist"/>.
+    /// </summary>
+    /// <remarks>
+    /// Still requires a valid origin to display.
+    /// </remarks>
+    [DataField]
+    public bool AlwaysShow = false;
+
+    /// <summary>
     /// Should this feedback be shown when the round ends.
     /// </summary>
     /// <remarks>
-    /// If this is false popups have to be shown to players by running the <pre>feedback:add</pre> command.<br />
+    /// If this and <see cref="AlwaysShow"/> are false, popups have to be shown to players by running the <pre>feedback:add</pre> command.<br />
     /// This allows admins to show popups to only specific people.
     /// </remarks>
     [DataField]
