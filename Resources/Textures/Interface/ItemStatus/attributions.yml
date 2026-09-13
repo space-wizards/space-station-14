@@ -3,6 +3,11 @@
   copyright: "Created by Samuka-C"
   source: "https://github.com/space-wizards/space-station-14/pull/44368"
 
+- files: ["Caseless/*.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Samuka-C"
+  source: "https://github.com/space-wizards/space-station-14/pull/44488"
+
 - files: ["Shotgun_Shells/*.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Created by Samuka-C"

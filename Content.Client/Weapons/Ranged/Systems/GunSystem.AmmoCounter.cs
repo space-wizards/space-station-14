@@ -158,9 +158,32 @@ public sealed partial class GunSystem
         }
     }
 
+    /// TextureRect but rotates the texture 90 degrees clockwise and also flipped vertically (after the rotation)
+    private sealed class RotatedFlippedTextureRect : TextureRect
+    {
+        protected override Vector2 MeasureOverride(Vector2 availableSize)
+        {
+            var reqSize = base.MeasureOverride(availableSize);
+            return new Vector2(reqSize.Y, reqSize.X);
+        }
+
+        protected override void Draw(DrawingHandleScreen handle)
+        {
+            var position = GlobalPosition + new Vector2(TextureSizeTarget.Y, TextureSizeTarget.X);
+            var orientation = new Angle(MathF.PI * 0.5f);
+            handle.SetTransform(position * UIScale, orientation, new Vector2(-1, 1));
+            base.Draw(handle);
+            handle.SetTransform(Matrix3x2.Identity);
+        }
+    }
+
     public sealed class CustomIconStatusControl : Control
     {
+        private readonly Texture _loadedSprite;
+        private readonly Texture _spentSprite;
+
         private readonly CustomBulletRenderer _customBulletRenderer;
+        private readonly TextureRect _chamberedBullet;
 
         public CustomIconStatusControl(Texture loadedSprite, Texture spentTexture, int numberOfRows)
         {
@@ -168,17 +191,47 @@ public sealed partial class GunSystem
             HorizontalExpand = true;
             VerticalAlignment = VAlignment.Center;
 
-            AddChild(_customBulletRenderer = new CustomBulletRenderer(loadedSprite, spentTexture, numberOfRows)
+            _loadedSprite = loadedSprite;
+            _spentSprite = spentTexture;
+
+            AddChild(new BoxContainer
             {
+                Orientation = BoxContainer.LayoutOrientation.Horizontal,
                 HorizontalAlignment = HAlignment.Right,
-                VerticalAlignment = VAlignment.Bottom,
+                HorizontalExpand = true,
+                Children =
+                {
+                    (_customBulletRenderer = new CustomBulletRenderer(loadedSprite, spentTexture, numberOfRows)
+                    {
+                        HorizontalAlignment = HAlignment.Right,
+                        VerticalAlignment = VAlignment.Center,
+                    }
+                    ),
+                    (_chamberedBullet = new RotatedFlippedTextureRect
+                    {
+                        Texture = spentTexture,
+                        Margin = new Thickness(2, 0, 0, 0),
+                        HorizontalAlignment = HAlignment.Left,
+                        VerticalAlignment = VAlignment.Center,
+                    }),
+                },
             });
         }
 
-        public void Update(int count, int capacity)
+        public void Update(int count, int capacity, bool drawMagazine=true, bool drawChamber=false, bool chambered=false)
         {
-            _customBulletRenderer.Capacity = capacity;
-            _customBulletRenderer.Count = count;
+            _customBulletRenderer.Visible = drawMagazine;
+            if (drawMagazine)
+            {
+                _customBulletRenderer.Capacity = capacity - (drawChamber ? 1 : 0);
+                _customBulletRenderer.Count = count - (drawChamber && chambered ? 1 : 0);
+            }
+
+            _chamberedBullet.Visible = drawChamber;
+            if (drawChamber)
+            {
+                _chamberedBullet.Texture = chambered ? _loadedSprite : _spentSprite;
+            }
         }
     }
 
