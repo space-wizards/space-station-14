@@ -129,6 +129,18 @@ namespace Content.Shared.Doors.Components
         [DataField]
         public string DenySpriteState = "deny_unlit";
 
+        /// <summary>
+        /// The sprite state used for the temperature warning lights.
+        /// </summary>
+        [DataField]
+        public string? TemperatureWarningSpriteState = "temperature_unlit";
+
+        /// <summary>
+        /// The sprite state used for the pressure warning lights.
+        /// </summary>
+        [DataField]
+        public string? PressureWarningSpriteState = "pressure_unlit";
+
         #endregion
     }
 }

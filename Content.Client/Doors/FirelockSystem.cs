@@ -60,5 +60,24 @@ public sealed partial class FirelockSystem : SharedFirelockSystem
 
         _sprite.LayerSetVisible((uid, args.Sprite), DoorVisualLayers.BaseUnlit, unlitVisible && !boltedVisible);
         _sprite.LayerSetVisible((uid, args.Sprite), DoorVisualLayers.BaseBolted, boltedVisible);
+
+        var warningLightsVisible =
+            state == DoorState.Closed
+            || state == DoorState.Welded
+            || state == DoorState.Denying;
+
+        if (_sprite.LayerMapTryGet((uid, args.Sprite), FirelockVisualLayersPressure.Base, out var pressureLayerIndex, logMissing: false)
+            && args.TryGetData<bool>(FirelockVisuals.PressureWarning, out var pressure))
+        {
+            _sprite.LayerSetRsiState((uid, args.Sprite), pressureLayerIndex, pressure ? comp.PressureWarningSpriteState : null);
+            _sprite.LayerSetVisible((uid, args.Sprite), pressureLayerIndex, warningLightsVisible);
+        }
+
+        if (_sprite.LayerMapTryGet((uid, args.Sprite), FirelockVisualLayersTemperature.Base, out var tempLayerIndex, logMissing: false)
+            && args.TryGetData<bool>(FirelockVisuals.TemperatureWarning, out var temp))
+        {
+            _sprite.LayerSetRsiState((uid, args.Sprite), tempLayerIndex, temp ? comp.TemperatureWarningSpriteState : null);
+            _sprite.LayerSetVisible((uid, args.Sprite), tempLayerIndex, warningLightsVisible);
+        }
     }
 }
