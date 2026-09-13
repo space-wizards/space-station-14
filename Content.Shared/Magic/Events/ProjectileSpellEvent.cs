@@ -16,4 +16,10 @@ public sealed partial class ProjectileSpellEvent : WorldTargetActionEvent
     /// </summary>
     [DataField]
     public float ProjectileSpeed = 25f;
+
+    /// <summary>
+    /// Wether or not this should inherit the velocity of the shooter.
+    /// </summary>
+    [DataField]
+    public bool InheritVelocity = true;
 }
