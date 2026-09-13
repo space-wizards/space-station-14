@@ -48429,6 +48429,11 @@ entities:
       parent: 2
       rot: 3.141592653589793 rad
       pos: 24.5,-87.5
+    - type: DeviceLinkSource
+      linkedPorts:
+        17301:
+        - - OrderSender
+          - OrderReceiver
 - proto: ComputerCargoOrdersEngineering
   entities:
   - uid: 5635
