@@ -4,6 +4,8 @@
   name: gateway
   description: A mysterious gateway built by unknown hands, it allows for faster than light travel to far-flung locations.
   components:
+  - type: TeleportOnVerb
+    verbIcon: /Textures/Interface/VerbIcons/open.svg.192dpi.png
   - type: Sprite
     sprite: Structures/Machines/gateway.rsi
     noRot: true

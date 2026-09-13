@@ -20,7 +20,6 @@
     requireHands: false
     verbType: Alternative
     verbText: portal-component-ghost-traverse
-    verbIcon: /Textures/Interface/VerbIcons/open.svg.192dpi.png
     priority: 11
     userWhitelist:
       tags:
@@ -63,6 +62,8 @@
   id: PortalRed
   description: This one looks more like a redspace portal.
   components:
+  - type: TeleportOnVerb
+    verbIcon: /Textures/Interface/VerbIcons/open.svg.192dpi.png
   - type: Sprite
     layers:
     - state: portal-red
@@ -73,6 +74,8 @@
   parent: BasePortal
   id: PortalBlue
   components:
+  - type: TeleportOnVerb
+    verbIcon: /Textures/Interface/VerbIcons/open.svg.192dpi.png
   - type: Sprite
     layers:
     - state: portal-blue
@@ -83,6 +86,8 @@
   parent: BasePortal
   id: PortalArtifact
   components:
+  - type: TeleportOnVerb
+    verbIcon: /Textures/Interface/VerbIcons/open.svg.192dpi.png
   - type: Sprite
     layers:
     - state: portal-artifact
@@ -99,6 +104,8 @@
   name: shadow rift
   description: Looks unstable.
   components:
+  - type: TeleportOnVerb
+    verbIcon: /Textures/Interface/VerbIcons/open.svg.192dpi.png
   - type: TeleportSound
     arrivalSound: /Audio/Items/hiss.ogg
     departureSound: /Audio/Items/hiss.ogg
@@ -140,6 +147,8 @@
   parent: BasePortalGateway
   id: PortalGatewayBlue
   components:
+  - type: TeleportOnVerb
+    verbIcon: /Textures/Interface/VerbIcons/open.svg.192dpi.png
   - type: Sprite
     color: SkyBlue
     layers:
@@ -151,6 +160,8 @@
   parent: BasePortalGateway
   id: PortalGatewayOrange
   components:
+  - type: TeleportOnVerb
+    verbIcon: /Textures/Interface/VerbIcons/open.svg.192dpi.png
   - type: Sprite
     color: OrangeRed
     layers:

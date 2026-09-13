@@ -278,6 +278,8 @@
   parent: [ BaseAnomaly, BasePortalTeleportation ]
   suffix: Bluespace
   components:
+  - type: TeleportOnVerb
+    verbIcon: /Textures/Interface/VerbIcons/open.svg.192dpi.png
   - type: Sprite
     layers:
     - state: anom4
@@ -944,6 +946,8 @@
   parent: [ BaseAnomaly, BasePortalTeleportation ]
   suffix: Shadow
   components:
+  - type: TeleportOnVerb
+    verbIcon: /Textures/Interface/VerbIcons/open.svg.192dpi.png
   - type: Sprite
     sprite: Structures/Specific/Anomalies/shadow_anom.rsi
     layers:

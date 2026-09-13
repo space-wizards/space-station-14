@@ -15,22 +15,22 @@ public sealed partial class SharedTeleportSystem
     /// <summary>
     /// Checks whether the entity would collide with another hard, collidable entity at the target coordinates.
     /// </summary>
-    /// <param name="user">The entity being checked.</param>
+    /// <param name="user">The entity being checked, with optional cached fixtures and physics components.</param>
     /// <param name="target">The map coordinates to check.</param>
     /// <param name="rotation">The entity's world rotation at the destination.</param>
     /// <param name="flags">Which types of obstacles to consider.</param>
-    /// <returns>Whether the destination is blocked.</returns>
+    /// <returns>Whether the destination is blocked. Returns false if either required component is missing.</returns>
     public bool IsDestinationBlocked(
-        EntityUid user,
+        Entity<FixturesComponent?, PhysicsComponent?> user,
         MapCoordinates target,
         Angle rotation,
         LookupFlags flags = LookupFlags.Dynamic | LookupFlags.Static)
     {
-        if (!TryComp<FixturesComponent>(user, out var fixtures))
+        if (!Resolve(user, ref user.Comp1, ref user.Comp2, logMissing: false))
             return false;
 
-        if (!TryComp<PhysicsComponent>(user, out var physics))
-            return false;
+        var fixtures = user.Comp1;
+        var physics = user.Comp2;
 
         if (!physics.CanCollide)
             return false;
@@ -55,10 +55,10 @@ public sealed partial class SharedTeleportSystem
 
             foreach (var other in _destinationIntersecting)
             {
-                if (other.Owner == user)
+                if (other.Owner == user.Owner)
                     continue;
 
-                if (_physics.IsCurrentlyHardCollidable((other.Owner, null, other.Comp), (user, fixtures, physics)))
+                if (_physics.IsCurrentlyHardCollidable((other.Owner, null, other.Comp), user))
                     return true;
             }
         }
