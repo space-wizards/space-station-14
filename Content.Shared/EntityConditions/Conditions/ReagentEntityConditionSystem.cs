@@ -16,16 +16,16 @@ public sealed partial class ReagentEntityConditionSystem : EntityConditionSystem
         ref EntityConditionEvent<ReagentCondition> args)
     {
         var soln = entity.Comp.Solution;
-        args.Result = DoesSatisfy(soln,args.Condition);
+        args.Result = DoesSatisfy(soln,args.Condition,args.SourceEnt);
     }
 
-    public bool DoesSatisfy(Solution soln, ReagentCondition condition)
+    public bool DoesSatisfy(Solution soln, ReagentCondition condition, EntityUid? _)
     {
         var quant = soln.GetTotalPrototypeQuantity(condition.Reagent);
         return quant >= condition.Min && quant <= condition.Max;
     }
 
-    public float? Scale(Solution solution, ReagentCondition condition)
+    public float? Scale(Solution solution, ReagentCondition condition, EntityUid? _)
     {
         return ((solution.Temperature - condition.Min) / (condition.Max - condition.Min)).Float();
     }

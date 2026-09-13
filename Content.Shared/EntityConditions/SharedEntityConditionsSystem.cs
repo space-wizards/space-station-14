@@ -85,7 +85,7 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
     /// <param name="sourceEnt">An optional "source entity" which is checking the condition on the entity this is being raised to.
     /// Sometimes needed for additional context with conditions.</param>
     /// <returns>Returns true if we meet the condition and false otherwise</returns>
-    private bool TryCondition<T>(EntityUid target, T condition, EntityUid? sourceEnt = null) where T : EntityCondition
+    public bool TryCondition<T>(EntityUid target, T condition, EntityUid? sourceEnt = null) where T : EntityCondition
     {
         return condition.Inverted != condition.RaiseEvent(target, this, sourceEnt);
     }
@@ -150,7 +150,6 @@ public interface IEntityConditionRaiser
     /// <param name="condition">The condition to be evaluated</param>
     /// <param name="sourceObject">The optional source object</param>
     /// <typeparam name="TCondition">Type of the condition</typeparam>
-    /// <typeparam name="TSource">Type of the source. Expect <see cref="EntityUid"/> or <see cref="Solution"/>> but could be any other DataDefinition, if necessary in the future.</typeparam>
     /// <returns></returns>
     bool RaiseConditionEvent<TCondition>(EntityUid target, TCondition condition, EntityUid? sourceObject)
         where TCondition : EntityConditionBase<TCondition>;
