@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameStates;
+﻿using Content.Shared.Whitelist;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Teleportation.Components;
 
@@ -39,4 +40,18 @@ public sealed partial class PortalComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool RandomTeleport = true;
+
+    /// <summary>
+    /// Restricts explicit initiators when the portal has no linked destinations.
+    /// Null adds no restriction. Automatic activations without a user are unaffected.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntityWhitelist? UnlinkedUserWhitelist;
+
+    /// <summary>
+    /// Blocks matching explicit initiators when the portal has no linked destinations.
+    /// Takes precedence over <see cref="UnlinkedUserWhitelist"/>. Automatic activations are unaffected.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntityWhitelist? UnlinkedUserBlacklist;
 }

@@ -12,7 +12,10 @@ public sealed partial class SharedTeleportSystem
     /// Checks use restrictions without starting a teleport or running effects.
     /// May also be used when collecting verbs.
     /// </summary>
-    public TeleportUseAttemptEvent CheckTeleportUse(EntityUid teleporter, EntityUid target, EntityUid user)
+    /// <param name="teleporter">The teleporter being activated.</param>
+    /// <param name="target">The entity to teleport.</param>
+    /// <param name="user">The explicit initiator, or null for automatic activation. A supplied initiator must still exist.</param>
+    public TeleportUseAttemptEvent CheckTeleportUse(EntityUid teleporter, EntityUid target, EntityUid? user)
     {
         var attempt = new TeleportUseAttemptEvent(target, user, Cancelled: true);
 
@@ -28,6 +31,12 @@ public sealed partial class SharedTeleportSystem
         if (TerminatingOrDeleted(target))
             return attempt;
 
+        if (user != null && !Exists(user.Value))
+            return attempt;
+
+        if (user != null && TerminatingOrDeleted(user.Value))
+            return attempt;
+
         if (HasComp<TeleportingComponent>(target))
             return attempt;
 
@@ -40,7 +49,11 @@ public sealed partial class SharedTeleportSystem
     /// Checks whether a teleporter can be used, then dispatches a request to its implementation.
     /// The target remains protected from nested requests until all teleport events have finished.
     /// </summary>
-    public bool RequestTeleport(EntityUid teleporter, EntityUid target, EntityUid user, bool triggerEffects = true)
+    /// <param name="teleporter">The teleporter being activated.</param>
+    /// <param name="target">The entity to teleport.</param>
+    /// <param name="user">The explicit initiator, or null for automatic activation.</param>
+    /// <param name="triggerEffects">Whether to run effects before and after movement.</param>
+    public bool RequestTeleport(EntityUid teleporter, EntityUid target, EntityUid? user, bool triggerEffects = true)
     {
         var attempt = CheckTeleportUse(teleporter, target, user);
         if (attempt.Cancelled)

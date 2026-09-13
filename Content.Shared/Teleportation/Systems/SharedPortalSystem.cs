@@ -2,6 +2,7 @@
 using Content.Shared.Popups;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Triggers;
+using Content.Shared.Whitelist;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -22,6 +23,7 @@ public abstract partial class SharedPortalSystem : EntitySystem
     [Dependency] private SharedTeleportSystem _teleport = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private CollisionTeleportTriggerSystem _collisionTrigger = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     private const int MaxRandomTeleportAttempts = 20;
 
@@ -36,19 +38,34 @@ public abstract partial class SharedPortalSystem : EntitySystem
 
     private void OnTeleportUseAttempt(Entity<PortalComponent> ent, ref TeleportUseAttemptEvent args)
     {
+        if (args.Cancelled)
+            return;
+
         if (TryComp<PortalTimeoutComponent>(args.Target, out var timeout) && IsTimeoutActive(args.Target, timeout))
         {
-            args.Cancelled = true;
+            args.Cancel();
             return;
         }
-
-        if (ent.Comp.RandomTeleport)
-            return;
 
         if (TryComp<LinkedEntityComponent>(ent, out var link) && link.LinkedEntities.Count != 0)
             return;
 
-        args.Cancelled = true;
+        if (!ent.Comp.RandomTeleport)
+        {
+            args.Cancel();
+            return;
+        }
+
+        if (args.User == null)
+            return;
+
+        if (!_whitelist.CheckBoth(
+                args.User.Value,
+                blacklist: ent.Comp.UnlinkedUserBlacklist,
+                whitelist: ent.Comp.UnlinkedUserWhitelist))
+        {
+            args.Cancel("portal-component-unlinked-user-denied");
+        }
     }
 
     private void OnTeleportTriggerExited(Entity<PortalComponent> ent, ref TeleportTriggerExitedEvent args)

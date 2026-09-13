@@ -4,6 +4,9 @@
   id: BasePortalTeleportation
   components:
   - type: Portal
+    unlinkedUserBlacklist:
+      tags:
+      - AllowPortalTraversal
   - type: CollisionTeleportTrigger
     triggerFixtureId: portalFixture
     allowedNonHardTargetFixtureIds:

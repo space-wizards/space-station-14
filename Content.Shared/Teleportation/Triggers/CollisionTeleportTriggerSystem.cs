@@ -33,7 +33,7 @@ public sealed partial class CollisionTeleportTriggerSystem : EntitySystem
         if (!IsTargetAllowed(ent.Comp, target))
             return;
 
-        _teleport.RequestTeleport(ent, target, target);
+        _teleport.RequestTeleport(ent, target, user: null);
     }
 
     private void OnEndCollide(Entity<CollisionTeleportTriggerComponent> ent, ref EndCollideEvent args)
