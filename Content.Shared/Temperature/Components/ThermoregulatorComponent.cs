@@ -47,6 +47,16 @@ public sealed partial class ThermoregulatorComponent : Component, IHeatContainer
     public ThermoregulatorActiveMode ActiveMode = ThermoregulatorActiveMode.Idle;
 
     /// <summary>
+    /// Cached minimum energy change in joules per update for the active mode.
+    /// </summary>
+    public float MinEnergy;
+
+    /// <summary>
+    /// Cached maximum energy change in joules per update for the active mode.
+    /// </summary>
+    public float MaxEnergy;
+
+    /// <summary>
     /// Operation mode of the thermoregulator.
     /// <seealso cref="ThermoregulatorMode"/>
     /// </summary>

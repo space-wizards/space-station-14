@@ -28,6 +28,12 @@ public sealed partial class ThermoregulatorSystem : SharedThermoregulatorSystem
     }
 
     [SubscribeLocalEvent]
+    private void OnInit(Entity<ThermoregulatorComponent> ent, ref ComponentInit args)
+    {
+        UpdateEnergyLimits(ent.Comp);
+    }
+
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<ThermoregulatorComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextUpdate = _timing.CurTime + ent.Comp.UpdateInterval;
@@ -42,19 +48,13 @@ public sealed partial class ThermoregulatorSystem : SharedThermoregulatorSystem
 
     private void UpdateThermoregulator(Entity<ThermoregulatorComponent> ent, bool powered)
     {
-        var dt = (float) ent.Comp.UpdateInterval.TotalSeconds;
         var energyToSetpoint = HeatContainerHelpers.ConductHeatToTempQuery(ref ent.Comp, ent.Comp.Setpoint);
         var newState = powered ? GetActiveMode(ent.Comp) : ThermoregulatorActiveMode.Idle;
-        var energy = newState switch
-        {
-            ThermoregulatorActiveMode.Heating => Math.Clamp(energyToSetpoint, 0f, ent.Comp.HeatingPower * dt),
-            ThermoregulatorActiveMode.Cooling => Math.Clamp(energyToSetpoint, -ent.Comp.CoolingPower * dt, 0f),
-            _ => 0f
-        };
+        SetActiveMode(ent, newState);
+        var energy = Math.Clamp(energyToSetpoint, ent.Comp.MinEnergy, ent.Comp.MaxEnergy);
 
         var originalTemperature = ent.Comp.Temperature;
         HeatContainerHelpers.AddHeat(ref ent.Comp, energy);
-        SetActiveMode(ent, newState);
 
         ent.Comp.NextUpdate += ent.Comp.UpdateInterval;
 
@@ -92,7 +92,19 @@ public sealed partial class ThermoregulatorSystem : SharedThermoregulatorSystem
             return;
 
         ent.Comp.ActiveMode = mode;
+        UpdateEnergyLimits(ent.Comp);
         DirtyField(ent.AsNullable(), nameof(ThermoregulatorComponent.ActiveMode));
+    }
+
+    private static void UpdateEnergyLimits(ThermoregulatorComponent comp)
+    {
+        var dt = (float) comp.UpdateInterval.TotalSeconds;
+        (comp.MinEnergy, comp.MaxEnergy) = comp.ActiveMode switch
+        {
+            ThermoregulatorActiveMode.Heating => (0f, comp.HeatingPower * dt),
+            ThermoregulatorActiveMode.Cooling => (-comp.CoolingPower * dt, 0f),
+            _ => (0f, 0f)
+        };
     }
 
     /// <summary>
