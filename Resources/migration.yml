@@ -987,9 +987,6 @@ IronsandStepConcaveCorner: null
 IronsandStep: null
 
 # 2026-07-27
-TurnstileGenpopEnter: EnergyGateGenpopEnter
-TurnstileGenpopLeave: EnergyGateGenpopLeave
-Turnstile: EnergyGate
 MetalDoor: SilverDoor
 MiningWindow: ReinforcedWindow
 MiningWindowDiagonal: ReinforcedWindowDiagonal
@@ -1135,3 +1132,9 @@ DrinkWaterJug: JugWater
 
 #2026-09-05
 AsimovCircuitBoard: CrewsimovCircuitBoard
+
+#2026-09-13
+EnergyGate: Turnstile
+EnergyGateAirtight: TurnstileAirtight
+EnergyGateGenpopEnter: TurnstileGenpopEnter
+EnergyGateGenpopLeave: TurnstileGenpopLeave

@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: EnergyGate
+  id: Turnstile
   start: start
   graph:
   - node: start
@@ -17,7 +17,7 @@
         doAfter: 6
 
   - node: energyGate
-    entity: EnergyGate
+    entity: Turnstile
     edges:
     - to: start
       completed:

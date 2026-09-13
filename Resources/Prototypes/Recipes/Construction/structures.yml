@@ -624,8 +624,8 @@
 
 - type: construction
   parent: BaseStructureFullTileDirectional
-  id: EnergyGate
-  graph: EnergyGate
+  id: Turnstile
+  graph: Turnstile
   targetNode: energyGate
 
 - type: construction
