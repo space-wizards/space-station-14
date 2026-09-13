@@ -18,7 +18,7 @@
     delay: 6
     fx: EffectRCDDeconstruct6
   - type: Damageable
-    damageModifierSet: PlasteelMod
+    damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
     - trigger:

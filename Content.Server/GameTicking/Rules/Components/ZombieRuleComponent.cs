@@ -2,6 +2,7 @@ using Content.Shared.Roles;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Content.Server.RoundEnd;
 
 namespace Content.Server.GameTicking.Rules.Components;
 
@@ -25,4 +26,16 @@ public sealed partial class ZombieRuleComponent : Component
     /// </summary>
     [DataField]
     public float ZombieShuttleCallPercentage = 0.7f;
+
+    /// <summary>
+    /// What will happen if zombies get more than 80%
+    /// </summary>
+    [DataField]
+    public RoundEndBehavior ZombieRoundEndBehavior = RoundEndBehavior.ShuttleCall;
+
+    /// <summary>
+    /// Shuttle timer for when shuttle is called
+    /// </summary>
+    [DataField]
+    public TimeSpan ZombieEvacShuttleTime = TimeSpan.FromMinutes(5);
 }

@@ -41,7 +41,7 @@
   id: FloorHullReinforced
   parent: BasePlating
   name: tiles-hull-reinforced
-  sprite: /Textures/Tiles/hull_reinforced.png
+  sprite: /Textures/Tiles/debug-indestructible.png
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemSteel

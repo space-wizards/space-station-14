@@ -2,7 +2,7 @@
   id: Elkridge
   mapName: 'Elkridge Depot'
   mapPath: /Maps/elkridge.yml
-  minPlayers: 25
+  minPlayers: 20
   maxPlayers: 44
   stations:
     Elkridge:
@@ -30,8 +30,8 @@
             #service 7-11
             Bartender: [ 1, 1 ]
             Botanist: [ 2, 2 ]
-            Chef: [ 1, 1 ]
-            Janitor: [ 1, 2 ]
+            Chef: [ 2, 2 ]
+            Janitor: [ 2, 2 ]
             Chaplain: [ 1, 1 ]
             Librarian: [ 1, 1 ]
             Reporter: [ 1, 1 ]
@@ -45,7 +45,7 @@
             MedicalDoctor: [ 3, 3 ]
             MedicalIntern: [ 2, 2 ]
             Paramedic: [ 1, 1 ]
-            Psychologist: [ 0, 1 ]
+            Psychologist: [ 1, 1 ]
             #science 5-6
             Scientist: [ 4, 4 ]
             ResearchAssistant: [ 2, 2 ]
