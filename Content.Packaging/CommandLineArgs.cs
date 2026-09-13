@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 
 namespace Content.Packaging;
 
@@ -32,6 +33,11 @@ public sealed class CommandLineArgs
     public bool HybridAcz { get; set; }
 
     /// <summary>
+    /// Build a standalone runnable client package instead of a client content package.
+    /// </summary>
+    public bool Standalone { get; set; }
+
+    /// <summary>
     /// Configuration used for when packaging the server. (Release, Debug, Tools)
     /// </summary>
     public string Configuration { get; set; }
@@ -41,16 +47,37 @@ public sealed class CommandLineArgs
     /// </summary>
     public bool LogBuild { get; set; }
 
+    /// <summary>
+    /// Root directory of the content repository to package.
+    /// </summary>
+    public string ContentRoot { get; set; }
+
+    /// <summary>
+    /// Whether help was requested.
+    /// </summary>
+    public bool Help { get; set; }
+
     // CommandLineArgs, 3rd of her name.
-    public static bool TryParse(IReadOnlyList<string> args, [NotNullWhen(true)] out CommandLineArgs? parsed)
+    public static bool TryParse(IReadOnlyList<string> args, [NotNullWhen(true)] out CommandLineArgs? parsed, out bool help)
     {
         parsed = null;
+        help = false;
+
+        if (args.Contains("--help"))
+        {
+            PrintHelp();
+            help = true;
+            return false;
+        }
+
         bool? client = null;
         var skipBuild = false;
         var wipeRelease = true;
         var hybridAcz = false;
+        var standalone = false;
         var logBuild = false;
         var configuration = "Release";
+        var contentRoot = Directory.GetCurrentDirectory();
         List<string>? platforms = null;
 
         using var enumerator = args.GetEnumerator();
@@ -90,6 +117,10 @@ public sealed class CommandLineArgs
             {
                 hybridAcz = true;
             }
+            else if (arg == "--standalone")
+            {
+                standalone = true;
+            }
             else if (arg == "--log-build")
             {
                 logBuild = true;
@@ -103,7 +134,9 @@ public sealed class CommandLineArgs
                 }
 
                 platforms ??= new List<string>();
-                platforms.Add(enumerator.Current);
+                platforms.Add(enumerator.Current == "current"
+                    ? RuntimeInformation.RuntimeIdentifier
+                    : enumerator.Current);
             }
             else if (arg == "--configuration")
             {
@@ -115,14 +148,20 @@ public sealed class CommandLineArgs
 
                 configuration = enumerator.Current;
             }
-            else if (arg == "--help")
+            else if (arg == "--content-root")
             {
-                PrintHelp();
-                return false;
+                if (!enumerator.MoveNext())
+                {
+                    Console.WriteLine("No content root provided");
+                    return false;
+                }
+
+                contentRoot = enumerator.Current;
             }
             else
             {
                 Console.WriteLine("Unknown argument: {0}", arg);
+                return false;
             }
         }
 
@@ -132,7 +171,7 @@ public sealed class CommandLineArgs
             return false;
         }
 
-        parsed = new CommandLineArgs(client.Value, skipBuild, wipeRelease, hybridAcz, logBuild, platforms, configuration);
+        parsed = new CommandLineArgs(client.Value, skipBuild, wipeRelease, hybridAcz, standalone, logBuild, platforms, configuration, contentRoot, help);
         return true;
     }
 
@@ -145,8 +184,10 @@ Options:
   --skip-build          Should we skip building the project and use what's already there.
   --no-wipe-release     Don't wipe the release folder before creating files.
   --hybrid-acz          Use HybridACZ for server builds.
-  --platform            Platform for server builds. Default will output several x64 targets.
+  --standalone          Build a runnable standalone client package.
+  --platform            Platform for server or standalone client builds. Use 'current' for this machine.
   --configuration       Configuration to use for building the server (Release, Debug, Tools). Default is Release.
+  --content-root        Root directory of the content repository to package. Defaults to the current directory.
   --log-build           Log builds with MSBuild binlog. Logs get saved to release/
 ");
     }
@@ -156,16 +197,22 @@ Options:
         bool skipBuild,
         bool wipeRelease,
         bool hybridAcz,
+        bool standalone,
         bool logBuild,
         List<string>? platforms,
-        string configuration)
+        string configuration,
+        string contentRoot,
+        bool help)
     {
         Client = client;
         SkipBuild = skipBuild;
         WipeRelease = wipeRelease;
         HybridAcz = hybridAcz;
+        Standalone = standalone;
         Platforms = platforms;
         Configuration = configuration;
         LogBuild = logBuild;
+        ContentRoot = contentRoot;
+        Help = help;
     }
 }
