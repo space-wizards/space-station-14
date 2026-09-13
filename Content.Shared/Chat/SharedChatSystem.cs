@@ -2,6 +2,7 @@ using System.Collections.Frozen;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Follower;
@@ -54,6 +55,7 @@ public abstract partial class SharedChatSystem : EntitySystem
     [Dependency] private INetManager _net = default!;
     [Dependency] protected IRobustRandom Random = default!;
     [Dependency] private ISharedPlayerManager _player = default!;
+    [Dependency] private ISharedAdminManager _admin = default!;
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private FollowerSystem _follower = default!;
@@ -108,8 +110,10 @@ public abstract partial class SharedChatSystem : EntitySystem
             return;
 
         // TODO: Move this to Ghost System!
-        if (_tag.HasTag(target, FollowerSystem.PreventGhostnadoWarpTag)) //tag is used on any ghost that shouldn't be teleported to
+        if (_tag.HasTag(target, FollowerSystem.PreventGhostnadoWarpTag) || !_admin.IsAdmin(ent)) //tag is used on any ghost that shouldn't be teleported to
+        {
             return;
+        }
 
         _follower.StartFollowingEntity(ent, target);
     }
