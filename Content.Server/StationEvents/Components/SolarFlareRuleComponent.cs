@@ -54,7 +54,6 @@ public sealed partial class SolarFlareRuleComponent : Component
     [DataField]
     public HashSet<(EntityUid, AirlockComponent)> AffectedAirlocks = [];
 
-
     /// <summary>
     ///     Chance light bulb breaks per second during event
     /// </summary>
