@@ -37,7 +37,6 @@
       board: !type:Container
       key_slots: !type:Container
   - type: Sprite
-    noRot: false
     drawdepth: SmallObjects
     sprite: Structures/Wallmounts/intercom.rsi
     offset: 0, -0.25

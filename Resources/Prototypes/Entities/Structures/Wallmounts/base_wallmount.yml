@@ -6,15 +6,9 @@
     snap:
     - Wallmount
   components:
-  - type: Anchorable
-    flags:
-    - Anchorable
-  - type: Rotatable
-  - type: Physics
-    canCollide: false
-  - type: Fixtures
   - type: Clickable
   - type: WallMount
+  - type: ParentToWall
   - type: InteractionOutline
   - type: Transform
     anchored: true
