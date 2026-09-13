@@ -1507,6 +1507,56 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         #endregion
 
+        #region Flagged Words
+        public async Task<List<FlaggedWord>> GetFlaggedWordsAsync(FlaggedWordSeverity minSeverity = FlaggedWordSeverity.Low, CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            return await db.DbContext.FlaggedWords
+                .Where(w => w.Enabled)
+                .Where(w => w.Severity >= minSeverity)
+                .ToListAsync(cancel);
+        }
+
+        public async Task AddFlaggedWordAsync(string word, FlaggedWordSeverity severity = FlaggedWordSeverity.Low, bool matchPartials = false, CancellationToken cancel = default)
+        {
+            word = word.Trim().ToLowerInvariant();
+
+            if (string.IsNullOrWhiteSpace(word))
+                return;
+
+            await using var db = await GetDb(cancel);
+
+            var exists = await db.DbContext.FlaggedWords
+                .AnyAsync(w => w.Word == word, cancel);
+
+            if (exists)
+                return;
+
+            db.DbContext.FlaggedWords.Add(new FlaggedWord
+            {
+                Word = word,
+                Severity = severity,
+                FlagPartialMatches = matchPartials,
+                Enabled = true,
+            });
+
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        #endregion
+
+        public async Task RemoveFlaggedWordAsync(string word, CancellationToken cancel = default)
+        {
+            word = word.Trim().ToLowerInvariant();
+
+            await using var db = await GetDb(cancel);
+
+            await db.DbContext.FlaggedWords
+                .Where(w => w.Word == word)
+                .ExecuteDeleteAsync(cancel);
+        }
+
         #region Job Whitelists
 
         public async Task<bool> AddJobWhitelist(Guid player, ProtoId<JobPrototype> job)
