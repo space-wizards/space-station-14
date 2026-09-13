@@ -1,0 +1,14 @@
+- type: constructionGraph
+  id: Barrel
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: barrel
+          steps:
+            - material: Steel
+              amount: 5
+              doAfter: 2
+    
+    - node: barrel
+      entity: BarrelChemEmpty
