@@ -1,6 +1,6 @@
 - type: itemStatus
   id: AmmoCounter
-  priority: 2
+  priority: 3
   whitelist: [] # Takes up too much space to show other statuses
 
 - type: itemStatus
@@ -27,6 +27,8 @@
 
 - type: itemStatus
   id: Flashlight
+  priority: 2
+  whitelist: [] # Takes up too much space to show other statuses
 
 - type: itemStatus
   id: GasTank
