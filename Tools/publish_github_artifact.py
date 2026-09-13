@@ -11,13 +11,21 @@ GITHUB_REPOSITORY = os.environ["GITHUB_REPOSITORY"]
 VERSION = os.environ['GITHUB_SHA']
 
 #
-# CONFIGURATION PARAMETERS
-# Forks should change these to publish to their own infrastructure.
+# DEFAULT CONFIGURATION PARAMETERS
+# Forks can change these to point at their own infrastructure.
 #
 ROBUST_CDN_URL = "https://wizards.cdn.spacestation14.com/"
 FORK_ID = "wizards"
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--fork-id", default=FORK_ID)
+    parser.add_argument("--cdn-url", default=ROBUST_CDN_URL)
+
+    args = parser.parse_args()
+    fork_id = args.fork_id
+    robust_cdn_url = args.cdn_url
+
     print("Fetching artifact URL from API...")
     artifact_url = get_artifact_url()
     print(f"Artifact URL is {artifact_url}, publishing to Robust.Cdn")
@@ -31,7 +39,7 @@ def main():
         "Authorization": f"Bearer {PUBLISH_TOKEN}",
         "Content-Type": "application/json"
     }
-    resp = requests.post(f"{ROBUST_CDN_URL}fork/{FORK_ID}/publish", json=data, headers=headers)
+    resp = requests.post(f"{robust_cdn_url}fork/{fork_id}/publish", json=data, headers=headers)
     resp.raise_for_status()
     print("Publish succeeded!")
 

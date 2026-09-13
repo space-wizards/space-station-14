@@ -8,6 +8,7 @@ on:
 
 jobs:
   hunt:
+    if: ${{ github.repository == vars.UPSTREAM_REPO_NAME }}
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.get_fails.outputs.matrix }}
