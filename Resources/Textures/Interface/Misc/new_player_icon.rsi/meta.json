@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "By SlamBamActionman (Github)",
+    "size": {
+        "x": 9,
+        "y": 7
+    },
+    "states": [
+        {
+            "name": "new_player_icon"
+        }
+    ]
+}

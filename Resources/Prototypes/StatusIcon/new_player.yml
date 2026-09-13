@@ -1,0 +1,13 @@
+﻿- type: statusIcon
+  id: NewPlayerIcon
+  priority: 11
+  icon:
+    sprite: /Textures/Interface/Misc/new_player_icon.rsi
+    state: new_player_icon
+  visibleToGhosts: false
+  locationPreference: Fixed
+  offsetHorizontal: 11
+  isShaded: true
+  showTo:
+    components:
+    - ShowNewPlayerIcon

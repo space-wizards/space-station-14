@@ -215,7 +215,7 @@ public sealed partial class WantedListUiFragment : BoxContainer
                 _ => record.Status.ToString(),
             };
 
-            if (_prototypeManager.TryIndex<SecurityIconPrototype>(proto, out var prototype))
+            if (_prototypeManager.TryIndex<StatusIconPrototype>(proto, out var prototype))
             {
                 rect.Texture = _spriteSystem.Frame0(prototype.Icon);
             }
