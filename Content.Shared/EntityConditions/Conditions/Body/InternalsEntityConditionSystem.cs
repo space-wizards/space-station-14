@@ -9,7 +9,7 @@ namespace Content.Shared.EntityConditions.Conditions.Body;
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class InternalsOnEntityConditionSystem : EntityConditionSystem<InternalsComponent, InternalsCondition>
 {
-    protected override void Condition(Entity<InternalsComponent> entity, ref EntityConditionEvent<InternalsCondition,EntityUid> args)
+    protected override void Condition(Entity<InternalsComponent> entity, ref EntityConditionEvent<InternalsCondition> args)
     {
         args.Result = entity.Comp.GasTankEntity != null;
     }

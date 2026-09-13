@@ -16,7 +16,7 @@ public sealed partial class SatiationEntityConditionSystem : EntityConditionSyst
 
     /// <inheritdoc/>
     protected override void Condition(Entity<SatiationComponent> entity,
-        ref EntityConditionEvent<SatiationCondition,EntityUid> args)
+        ref EntityConditionEvent<SatiationCondition> args)
     {
         if (_satiation.GetValueOrNull(entity, args.Condition.SatiationType) is not { } satiation)
             return;

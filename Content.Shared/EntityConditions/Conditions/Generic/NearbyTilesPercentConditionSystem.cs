@@ -17,7 +17,7 @@ public sealed partial class NearbyTilesPercentConditionSystem : EntityConditionS
 
     [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
-    protected override void Condition(Entity<TransformComponent> entity, ref EntityConditionEvent<NearbyTilesPercentCondition,EntityUid> args)
+    protected override void Condition(Entity<TransformComponent> entity, ref EntityConditionEvent<NearbyTilesPercentCondition> args)
     {
         if (!TryComp<MapGridComponent>(entity.Comp.GridUid, out var grid))
         {

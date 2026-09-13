@@ -11,7 +11,7 @@ public sealed partial class HasTagEntityConditionSystem : EntityConditionSystem<
 {
     [Dependency] private TagSystem _tag = default!;
 
-    protected override void Condition(Entity<TagComponent> entity, ref EntityConditionEvent<TagCondition,EntityUid> args)
+    protected override void Condition(Entity<TagComponent> entity, ref EntityConditionEvent<TagCondition> args)
     {
         args.Result = _tag.HasTag(entity.Comp, args.Condition.Tag);
     }

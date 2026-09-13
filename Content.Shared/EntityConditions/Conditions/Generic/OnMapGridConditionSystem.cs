@@ -7,7 +7,7 @@ namespace Content.Shared.EntityConditions.Conditions.Generic;
 /// </summary>
 public sealed partial class OnMapGridConditionSystem : EntityConditionSystem<TransformComponent, OnMapGridCondition>
 {
-    protected override void Condition(Entity<TransformComponent> entity, ref EntityConditionEvent<OnMapGridCondition,EntityUid> args)
+    protected override void Condition(Entity<TransformComponent> entity, ref EntityConditionEvent<OnMapGridCondition> args)
     {
         args.Result = entity.Comp.GridUid == entity.Comp.MapUid && entity.Comp.MapUid != null;
     }

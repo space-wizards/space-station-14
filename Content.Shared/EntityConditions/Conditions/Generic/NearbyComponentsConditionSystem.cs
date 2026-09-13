@@ -11,7 +11,7 @@ public sealed partial class NearbyComponentsConditionSystem : EntityConditionSys
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
 
-    protected override void Condition(Entity<TransformComponent> entity, ref EntityConditionEvent<NearbyComponentsCondition,EntityUid> args)
+    protected override void Condition(Entity<TransformComponent> entity, ref EntityConditionEvent<NearbyComponentsCondition> args)
     {
         var worldPos = _transform.GetWorldPosition(entity.Comp);
         var count = 0;

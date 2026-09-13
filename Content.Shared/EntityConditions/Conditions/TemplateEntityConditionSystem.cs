@@ -7,7 +7,7 @@ namespace Content.Shared.EntityConditions.Conditions;
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class TemplateEntityConditionSystem : EntityConditionSystem<MetaDataComponent, TemplateCondition>
 {
-    protected override void Condition(Entity<MetaDataComponent> entity, ref EntityConditionEvent<TemplateCondition,EntityUid> args)
+    protected override void Condition(Entity<MetaDataComponent> entity, ref EntityConditionEvent<TemplateCondition> args)
     {
         // Condition goes here.
     }

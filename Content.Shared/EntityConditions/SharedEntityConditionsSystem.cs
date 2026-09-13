@@ -35,19 +35,21 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
     }
 
     public bool TryCondition<TCondition, TData>(TData target, TCondition condition)
-        where TCondition: EntityConditionBase<TCondition>
+        where TCondition : EntityCondition
     {
-        if (condition is not EntityConditionBaseWithArbitrage<TCondition, TData> validCondition)
+        if (condition is not IArbitraryEvaluationEnabled<TData, TCondition> evaluatorInfo)
             return false;
-        return condition.Inverted !=validCondition.DoesSatisfy(target);
+        return (IoCManager.ResolveType(evaluatorInfo.EvaluatorType) as IArbitaryConditionEvaluator<TData, TCondition>)
+            ?.DoesSatisfy(target, condition) ?? false;
     }
 
     public float TryConditionScale<TCondition, TData>(TData target, TCondition condition)
-        where TCondition: EntityConditionBase<TCondition>
+        where TCondition : EntityCondition
     {
-        if (condition is not EntityConditionBaseWithArbitrage<TCondition, TData> validCondition)
+        if (condition is not IArbitraryEvaluationEnabled<TData, TCondition> evaluatorInfo)
             return condition.ValueIfScaleNull;
-        return validCondition.GetScale(target);
+        return (IoCManager.ResolveType(evaluatorInfo.EvaluatorType) as IArbitaryConditionEvaluator<TData, TCondition>)
+            ?.Scale(target, condition) ?? condition.ValueIfScaleNull;
     }
 
     /// <summary>
@@ -90,10 +92,10 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
     /// <summary>
     /// Raises a condition to an entity. You should not be calling this unless you know what you're doing.
     /// </summary>
-    public bool RaiseConditionEvent<TCondition, TSource>(EntityUid target, TCondition condition, TSource? sourceObj)
+    public bool RaiseConditionEvent<TCondition>(EntityUid target, TCondition condition, EntityUid? sourceObj)
         where TCondition : EntityConditionBase<TCondition>
     {
-        var effectEv = new EntityConditionEvent<TCondition, TSource>(condition, sourceObj);
+        var effectEv = new EntityConditionEvent<TCondition>(condition, sourceObj);
         RaiseLocalEvent(target, ref effectEv);
         return effectEv.Result;
     }
@@ -101,11 +103,11 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
     /// <summary>
     /// Raises a condition to an entity. You should not be calling this unless you know what you're doing.
     /// </summary>
-    public float? RaiseConditionScaleEvent<TCondition, TSource>(EntityUid target,
+    public float? RaiseConditionScaleEvent<TCondition>(EntityUid target,
         TCondition condition,
-        TSource? sourceObj) where TCondition : EntityConditionBase<TCondition>
+        EntityUid? sourceEnt) where TCondition : EntityConditionBase<TCondition>
     {
-        var effectEv = new EntityConditionScaleEvent<TCondition, TSource>(condition, sourceObj);
+        var effectEv = new EntityConditionScaleEvent<TCondition>(condition, sourceEnt);
         RaiseLocalEvent(target, ref effectEv);
         return effectEv.Result;
     }
@@ -122,17 +124,17 @@ public abstract partial class EntityConditionSystem<T, TCon> : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<T, EntityConditionEvent<TCon, EntityUid>>(Condition);
+        SubscribeLocalEvent<T, EntityConditionEvent<TCon>>(Condition);
     }
 
-    protected abstract void Condition(Entity<T> entity, ref EntityConditionEvent<TCon, EntityUid> args);
+    protected abstract void Condition(Entity<T> entity, ref EntityConditionEvent<TCon> args);
 }
 
-public interface IArbitaryConditionEvaluator<TData, TCondition> where TCondition : EntityCondition
+public interface IArbitaryConditionEvaluator<in TData, in TCondition> where TCondition : EntityCondition
 {
-    abstract static bool DoesSatisfy(TData target, TCondition condition);
+    abstract bool DoesSatisfy(TData target, TCondition condition);
 
-    abstract static float? Scale(TData target, TCondition condition);
+    abstract float? Scale(TData target, TCondition condition);
 }
 
 /// <summary>
@@ -141,7 +143,7 @@ public interface IArbitaryConditionEvaluator<TData, TCondition> where TCondition
 public interface IEntityConditionRaiser
 {
     /// <summary>
-    /// Fire a <see cref="EntityConditionEvent{TCondition,TSource}"/> on target, using condition and source object as parameter.
+    /// Fire a <see cref="EntityConditionEvent{TCondition}"/> on target, using condition and source object as parameter.
     /// </summary>
     /// <param name="target">Where the event will be raised</param>
     /// <param name="condition">The condition to be evaluated</param>
@@ -149,10 +151,10 @@ public interface IEntityConditionRaiser
     /// <typeparam name="TCondition">Type of the condition</typeparam>
     /// <typeparam name="TSource">Type of the source. Expect <see cref="EntityUid"/> or <see cref="Solution"/>> but could be any other DataDefinition, if necessary in the future.</typeparam>
     /// <returns></returns>
-    bool RaiseConditionEvent<TCondition, TSource>(EntityUid target, TCondition condition, TSource? sourceObject)
+    bool RaiseConditionEvent<TCondition>(EntityUid target, TCondition condition, EntityUid? sourceObject)
         where TCondition : EntityConditionBase<TCondition>;
 
-    float? RaiseConditionScaleEvent<TCondition, TSource>(EntityUid target, TCondition condition, TSource? sourceObject)
+    float? RaiseConditionScaleEvent<TCondition>(EntityUid target, TCondition condition, EntityUid? sourceObject)
         where TCondition : EntityConditionBase<TCondition>;
 }
 
@@ -162,62 +164,52 @@ public interface IEntityConditionRaiser
 /// <typeparam name="T">The Condition wer are raising.</typeparam>
 public abstract partial class EntityConditionBase<T> : EntityCondition where T : EntityConditionBase<T>
 {
-    public override bool RaiseEvent<TSource>(EntityUid target, IEntityConditionRaiser raiser, TSource? sourceObj)
-        where TSource : default
+    public override bool RaiseEvent(EntityUid target, IEntityConditionRaiser raiser, EntityUid? sourceObj)
     {
         if (this is not T type)
             return false;
 
         // If the result of the event matches the result we're looking for then we pass.
-        return raiser.RaiseConditionEvent<T, TSource>(target, type, sourceObj);
+        return raiser.RaiseConditionEvent(target, type, sourceObj);
     }
 
-    public override float RaiseScaleEvent<TSource>(EntityUid target, IEntityConditionRaiser raiser, TSource? sourceObj)
-        where TSource : default
+    public override float RaiseScaleEvent(EntityUid target, IEntityConditionRaiser raiser, EntityUid? sourceObj)
     {
         if (this is not T type)
             return ValueIfScaleNull;
 
         // If the result of the event matches the result we're looking for then we pass.
-        return raiser.RaiseConditionScaleEvent<T, TSource>(target, type, sourceObj) ?? ValueIfScaleNull;
+        return raiser.RaiseConditionScaleEvent(target, type, sourceObj) ?? ValueIfScaleNull;
     }
 }
 
 /// <summary>
-/// For conditions which could be evaluated on a single data structure, like solution. We can hard-wire the evaluation into it.
+/// Use <see cref="IArbitraryEvaluationEnabled{TData,TCondition,TEvaluator}"/> instead!
 /// </summary>
-/// <typeparam name="TCondition">The Condition wer are raising.</typeparam>
-/// <typeparam name="TData">The data structure this condition satisfies</typeparam>
-public abstract partial class
-    EntityConditionBaseWithArbitrage<TCondition, TData> : EntityConditionBase<TCondition>
-    where TCondition : EntityConditionBase<TCondition>
+/// <typeparam name="TData"></typeparam>
+/// <typeparam name="TCondition"></typeparam>
+public interface IArbitraryEvaluationEnabled<TData, TCondition>
+    where TCondition : EntityCondition
 {
-    public abstract bool DoesSatisfy(TData target);
-
-    public abstract float GetScale(TData target);
+    /// <summary>
+    /// Type of the Evaluating System for TCondition to be resolved from <see cref="IoCManager"/>
+    /// </summary>
+    Type EvaluatorType { get; }
 }
 
 /// <summary>
-/// For conditions which could be evaluated on a single data structure, like solution. We can hard-wire the evaluation into it.
+/// Attach to a condition with a fixed <see cref="EntitySystem"/> implementing <see cref="IArbitaryConditionEvaluator{TData,TCondition}"/> to enable evaluation of the condition with arbitrary data.
 /// </summary>
-/// <typeparam name="TCondition">The Condition wer are raising.</typeparam>
-/// <typeparam name="TData">The data structure this condition satisfies</typeparam>
-/// <typeparam name="TEvaluator">The evaluator this condition is tied to.</typeparam>
-public abstract partial class
-    EntityConditionBaseWithArbitrageBase<TCondition, TData, TEvaluator> : EntityConditionBaseWithArbitrage<TCondition,TData>
-    where TCondition : EntityConditionBase<TCondition> where TEvaluator : IArbitaryConditionEvaluator<TData, TCondition>
+/// <typeparam name="TData"></typeparam>
+/// <typeparam name="TCondition"></typeparam>
+/// <typeparam name="TEvaluator"></typeparam>
+public interface IArbitraryEvaluationEnabled<TData, TCondition, TEvaluator>
+    : IArbitraryEvaluationEnabled<TData, TCondition>
+    where TCondition : EntityCondition
+    where TEvaluator : EntitySystem, IArbitaryConditionEvaluator<TData, TCondition>
 {
-    public override bool DoesSatisfy(TData target)
-    {
-        return this is TCondition condition && TEvaluator.DoesSatisfy(target, condition);
-    }
-
-    public override float GetScale(TData target)
-    {
-        if (this is not TCondition condition)
-            return ValueIfScaleNull;
-        return TEvaluator.Scale(target, condition) ?? ValueIfScaleNull;
-    }
+    /// <inheritdoc/>
+    Type IArbitraryEvaluationEnabled<TData, TCondition>.EvaluatorType => typeof(TEvaluator);
 }
 
 /// <summary>
@@ -229,12 +221,12 @@ public abstract partial class EntityCondition
     /// <summary>
     /// Check this condition on a target.
     /// </summary>
-    public abstract bool RaiseEvent<TSource>(EntityUid target, IEntityConditionRaiser raiser, TSource? sourceObj);
+    public abstract bool RaiseEvent(EntityUid target, IEntityConditionRaiser raiser, EntityUid? sourceObj);
 
     /// <summary>
     /// Check this condition on a target.
     /// </summary>
-    public abstract float RaiseScaleEvent<TSource>(EntityUid target, IEntityConditionRaiser raiser, TSource? sourceObj);
+    public abstract float RaiseScaleEvent(EntityUid target, IEntityConditionRaiser raiser, EntityUid? sourceObj);
 
     /// <summary>
     /// If true, invert the result. So false returns true and true returns false!
@@ -243,7 +235,7 @@ public abstract partial class EntityCondition
     public bool Inverted;
 
     /// <summary>
-    /// The Value if <see cref="RaiseScaleEvent{TSource}"/> returns null.
+    /// The Value if <see cref="RaiseScaleEvent"/> returns null.
     /// Thus depending on the context/use of the condition, failure to evaluate this condition can be treated as 0, 1, etc.
     /// </summary>
     [DataField]
@@ -261,7 +253,7 @@ public abstract partial class EntityCondition
 /// <param name="Condition">The Condition we're checking</param>
 [ByRefEvent]
 [DataRecord]
-public partial record struct EntityConditionEvent<TCondition, TSource>(TCondition Condition, TSource? SourceObject)
+public partial record struct EntityConditionEvent<TCondition>(TCondition Condition, EntityUid? SourceEnt)
     where TCondition : EntityConditionBase<TCondition>
 {
     /// <summary>
@@ -280,7 +272,7 @@ public partial record struct EntityConditionEvent<TCondition, TSource>(TConditio
     /// Sometimes needed for additional context with conditions.
     /// This can be an EntityUID, a solution or any other item.
     /// </summary>
-    public readonly TSource? SourceObject = SourceObject;
+    public readonly EntityUid? SourceEnt = SourceEnt;
 }
 
 /// <summary>
@@ -289,7 +281,7 @@ public partial record struct EntityConditionEvent<TCondition, TSource>(TConditio
 /// <param name="Condition">The Condition we're checking</param>
 [ByRefEvent]
 [DataRecord]
-public partial record struct EntityConditionScaleEvent<TCondition, TSource>(TCondition Condition, TSource? SourceObject)
+public partial record struct EntityConditionScaleEvent<TCondition>(TCondition Condition, EntityUid? SourceEnt)
     where TCondition : EntityConditionBase<TCondition>
 {
     /// <summary>
@@ -309,5 +301,5 @@ public partial record struct EntityConditionScaleEvent<TCondition, TSource>(TCon
     /// Sometimes needed for additional context with conditions.
     /// This can be an EntityUID, a solution or any other item.
     /// </summary>
-    public readonly TSource? SourceObject = SourceObject;
+    public readonly EntityUid? SourceEnt = SourceEnt;
 }

@@ -10,7 +10,7 @@ namespace Content.Shared.EntityConditions.Conditions;
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class TemperatureEntityConditionSystem : EntityConditionSystem<TemperatureComponent, TemperatureCondition>
 {
-    protected override void Condition(Entity<TemperatureComponent> entity, ref EntityConditionEvent<TemperatureCondition,EntityUid> args)
+    protected override void Condition(Entity<TemperatureComponent> entity, ref EntityConditionEvent<TemperatureCondition> args)
     {
         if (entity.Comp.Temperature >= args.Condition.Min && entity.Comp.Temperature <= args.Condition.Max)
             args.Result = true;
@@ -23,7 +23,7 @@ public sealed partial class TemperatureEntityConditionSystem : EntityConditionSy
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class SolutionTemperatureEntityConditionSystem : EntityConditionSystem<SolutionComponent, TemperatureCondition>
 {
-    protected override void Condition(Entity<SolutionComponent> entity, ref EntityConditionEvent<TemperatureCondition,EntityUid> args)
+    protected override void Condition(Entity<SolutionComponent> entity, ref EntityConditionEvent<TemperatureCondition> args)
     {
         if (entity.Comp.Solution.Temperature >= args.Condition.Min && entity.Comp.Solution.Temperature <= args.Condition.Max)
             args.Result = true;

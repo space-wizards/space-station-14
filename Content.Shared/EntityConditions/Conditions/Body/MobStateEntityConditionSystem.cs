@@ -10,7 +10,7 @@ namespace Content.Shared.EntityConditions.Conditions.Body;
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class MobStateEntityConditionSystem : EntityConditionSystem<MobStateComponent, MobStateCondition>
 {
-    protected override void Condition(Entity<MobStateComponent> entity, ref EntityConditionEvent<MobStateCondition,EntityUid> args)
+    protected override void Condition(Entity<MobStateComponent> entity, ref EntityConditionEvent<MobStateCondition> args)
     {
         if (entity.Comp.CurrentState == args.Condition.Mobstate)
             args.Result = true;

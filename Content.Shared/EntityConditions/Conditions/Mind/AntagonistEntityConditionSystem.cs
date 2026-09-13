@@ -8,7 +8,7 @@ public sealed partial class AntagonistEntityConditionSystem : EntityConditionSys
 {
     [Dependency] private SharedRoleSystem _roleSystem = default!;
 
-    protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<AntagonistCondition,EntityUid> args)
+    protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<AntagonistCondition> args)
     {
         args.Result = _roleSystem.MindIsAntagonist(entity);
     }

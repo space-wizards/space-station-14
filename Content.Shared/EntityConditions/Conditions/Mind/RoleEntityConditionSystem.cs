@@ -18,7 +18,7 @@ public sealed partial class MindContainerRoleEntityConditionSystem : EntityCondi
 {
     [Dependency] private SharedRoleSystem _role = default!;
 
-    protected override void Condition(Entity<MindContainerComponent> entity, ref EntityConditionEvent<RoleCondition,EntityUid> args)
+    protected override void Condition(Entity<MindContainerComponent> entity, ref EntityConditionEvent<RoleCondition> args)
     {
         if (!TryComp<MindComponent>(entity.Comp.Mind, out var mind))
             return;
@@ -35,7 +35,7 @@ public sealed partial class MindRoleEntityConditionSystem : EntityConditionSyste
 {
     [Dependency] private SharedRoleSystem _role = default!;
 
-    protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<RoleCondition,EntityUid> args)
+    protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<RoleCondition> args)
     {
         args.Result = _role.MindHasRole(entity, args.Condition.Whitelist);
     }

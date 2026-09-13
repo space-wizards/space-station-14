@@ -11,7 +11,7 @@ public sealed partial class ObjectiveEntityConditionSystem : EntityConditionSyst
 {
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
-    protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<ObjectiveCondition,EntityUid> args)
+    protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<ObjectiveCondition> args)
     {
         foreach (var obj in entity.Comp.Objectives)
         {

@@ -16,9 +16,9 @@ public sealed partial class ObjectiveTargetEntityConditionSystem : EntityConditi
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private EntityQuery<TargetObjectiveComponent> _targetQuery;
 
-    protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<ObjectiveTargetCondition,EntityUid> args)
+    protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<ObjectiveTargetCondition> args)
     {
-        if (!TryComp<MindComponent>(args.SourceObject, out var mind))
+        if (!TryComp<MindComponent>(args.SourceEnt, out var mind))
             return;
 
         foreach (var objective in mind.Objectives)

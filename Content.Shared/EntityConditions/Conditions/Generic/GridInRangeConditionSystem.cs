@@ -13,7 +13,7 @@ public sealed partial class GridInRangeConditionSystem : EntityConditionSystem<T
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedMapSystem _map = default!;
 
-    protected override void Condition(Entity<TransformComponent> entity, ref EntityConditionEvent<GridInRangeCondition,EntityUid> args)
+    protected override void Condition(Entity<TransformComponent> entity, ref EntityConditionEvent<GridInRangeCondition> args)
     {
         if (entity.Comp.GridUid != null)
         {

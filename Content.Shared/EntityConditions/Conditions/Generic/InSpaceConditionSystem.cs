@@ -7,7 +7,7 @@ namespace Content.Shared.EntityConditions.Conditions.Generic;
 /// </summary>
 public sealed partial class InSpaceConditionSystem : EntityConditionSystem<TransformComponent, InSpaceCondition>
 {
-    protected override void Condition(Entity<TransformComponent> entity, ref EntityConditionEvent<InSpaceCondition,EntityUid> args)
+    protected override void Condition(Entity<TransformComponent> entity, ref EntityConditionEvent<InSpaceCondition> args)
     {
         args.Result = entity.Comp.GridUid == null;
     }

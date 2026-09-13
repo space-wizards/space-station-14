@@ -16,7 +16,7 @@ public sealed partial class MindContainerJobEntityConditionSystem : EntityCondit
 {
     [Dependency] private SharedJobSystem _job = default!;
 
-    protected override void Condition(Entity<MindContainerComponent> entity, ref EntityConditionEvent<JobCondition,EntityUid> args)
+    protected override void Condition(Entity<MindContainerComponent> entity, ref EntityConditionEvent<JobCondition> args)
     {
         args.Result = _job.MindHasJobWithId(entity.Comp.Mind, args.Condition.Jobs);
     }
@@ -30,7 +30,7 @@ public sealed partial class MindJobEntityConditionSystem : EntityConditionSystem
 {
     [Dependency] private SharedJobSystem _job = default!;
 
-    protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<JobCondition,EntityUid> args)
+    protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<JobCondition> args)
     {
         args.Result = _job.MindHasJobWithId(entity, args.Condition.Jobs);
     }
