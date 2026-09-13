@@ -22,18 +22,18 @@ public sealed partial class TriggerSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnVoiceExamine(EntityUid uid, TriggerOnVoiceComponent component, ExaminedEvent args)
+    private void OnVoiceExamine(Entity<TriggerOnVoiceComponent> ent, ref ExaminedEvent args)
     {
-        if (!args.IsInDetailsRange || !component.ShowExamine)
+        if (!args.IsInDetailsRange || !ent.Comp.ShowExamine)
             return;
 
-        if (component.InspectUninitializedLoc != null && string.IsNullOrWhiteSpace(component.KeyPhrase))
+        if (ent.Comp.InspectUninitializedLoc != null && string.IsNullOrWhiteSpace(ent.Comp.KeyPhrase))
         {
-            args.PushText(Loc.GetString(component.InspectUninitializedLoc));
+            args.PushText(Loc.GetString(ent.Comp.InspectUninitializedLoc));
         }
-        else if (component.InspectInitializedLoc != null && !string.IsNullOrWhiteSpace(component.KeyPhrase))
+        else if (ent.Comp.InspectInitializedLoc != null && !string.IsNullOrWhiteSpace(ent.Comp.KeyPhrase))
         {
-            args.PushText(Loc.GetString(component.InspectInitializedLoc.Value, ("keyphrase", component.KeyPhrase)));
+            args.PushText(Loc.GetString(ent.Comp.InspectInitializedLoc.Value, ("keyphrase", ent.Comp.KeyPhrase)));
         }
     }
 

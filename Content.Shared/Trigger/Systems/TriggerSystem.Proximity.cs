@@ -49,21 +49,21 @@ public sealed partial class TriggerSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnProximityStartCollide(EntityUid uid, TriggerOnProximityComponent component, ref StartCollideEvent args)
+    private void OnProximityStartCollide(Entity<TriggerOnProximityComponent> ent, ref StartCollideEvent args)
     {
         if (args.OurFixtureId != TriggerOnProximityComponent.FixtureID)
             return;
 
-        component.Colliding[args.OtherEntity] = args.OtherBody;
+        ent.Comp.Colliding[args.OtherEntity] = args.OtherBody;
     }
 
     [SubscribeLocalEvent]
-    private static void OnProximityEndCollide(EntityUid uid, TriggerOnProximityComponent component, ref EndCollideEvent args)
+    private static void OnProximityEndCollide(Entity<TriggerOnProximityComponent> ent, ref EndCollideEvent args)
     {
         if (args.OurFixtureId != TriggerOnProximityComponent.FixtureID)
             return;
 
-        component.Colliding.Remove(args.OtherEntity);
+        ent.Comp.Colliding.Remove(args.OtherEntity);
     }
 
     private void SetProximityAppearance(Entity<TriggerOnProximityComponent> ent)

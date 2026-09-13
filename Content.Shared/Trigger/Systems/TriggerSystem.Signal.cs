@@ -1,3 +1,4 @@
+using Content.Shared.DeviceLinking;
 using Content.Shared.Trigger.Components.Triggers;
 using Content.Shared.Trigger.Components.Effects;
 using Content.Shared.DeviceLinking.Events;
@@ -19,21 +20,22 @@ public sealed partial class TriggerSystem
     }
 
     [SubscribeLocalEvent]
-    private void HandleSignalOnTrigger(Entity<SignalOnTriggerComponent> ent, ref TriggerEvent args)
-    {
-        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
-            return;
-
-        _deviceLink.InvokePort(ent.Owner, ent.Comp.Port);
-        args.Handled = true;
-    }
-
-    [SubscribeLocalEvent]
     private void OnSignalReceived(Entity<TriggerOnSignalComponent> ent, ref SignalReceivedEvent args)
     {
         if (args.Port != ent.Comp.Port)
             return;
 
         Trigger(ent.Owner, args.Trigger, ent.Comp.KeyOut);
+    }
+}
+
+public sealed partial class SignalOnTriggerSystem : XOnTriggerSystem<SignalOnTriggerComponent>
+{
+    [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
+
+    protected override void OnTrigger(Entity<SignalOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
+    {
+        _deviceLink.InvokePort(ent.Owner, ent.Comp.Port);
+        args.Handled = true;
     }
 }

@@ -1,8 +1,10 @@
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Throwing;
+using Content.Shared.Timing.Systems;
 using Content.Shared.Trigger.Components.Triggers;
 using Content.Shared.Trigger.Components.Effects;
 
@@ -119,62 +121,53 @@ public sealed partial class TriggerSystem
             Trigger(ent, args.Actor, ent.Comp.KeyOut);
         }
     }
+}
 
-    [SubscribeLocalEvent]
-    private void HandleItemToggleOnTrigger(Entity<ItemToggleOnTriggerComponent> ent, ref TriggerEvent args)
+public sealed partial class ItemToggleOnTriggerSystem : XOnTriggerSystem<ItemToggleOnTriggerComponent>
+{
+    [Dependency] private ItemToggleSystem _itemToggle = default!;
+
+    protected override void OnTrigger(Entity<ItemToggleOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
-            return;
-
-        var target = ent.Comp.TargetUser ? args.User : ent.Owner;
-
         if (!TryComp<ItemToggleComponent>(target, out var itemToggle))
             return;
 
         var handled = false;
         if (itemToggle.Activated && ent.Comp.CanDeactivate)
-            handled = _itemToggle.TryDeactivate((target.Value, itemToggle), args.User, ent.Comp.Predicted, ent.Comp.ShowPopup, ent.Comp.ConsciousAction);
+            handled = _itemToggle.TryDeactivate((target, itemToggle), args.User, ent.Comp.Predicted, ent.Comp.ShowPopup, ent.Comp.ConsciousAction);
         else if (ent.Comp.CanActivate)
-            handled = _itemToggle.TryActivate((target.Value, itemToggle), args.User, ent.Comp.Predicted, ent.Comp.ShowPopup, ent.Comp.ConsciousAction);
+            handled = _itemToggle.TryActivate((target, itemToggle), args.User, ent.Comp.Predicted, ent.Comp.ShowPopup, ent.Comp.ConsciousAction);
 
         args.Handled |= handled;
     }
+}
 
-    [SubscribeLocalEvent]
-    private void HandleAnchorOnTrigger(Entity<AnchorOnTriggerComponent> ent, ref TriggerEvent args)
+public sealed partial class AnchorOnTriggerSystem : XOnTriggerSystem<AnchorOnTriggerComponent>
+{
+    [Dependency] private SharedTransformSystem _transform = default!;
+
+    protected override void OnTrigger(Entity<AnchorOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
-            return;
-
-        var target = ent.Comp.TargetUser ? args.User : ent.Owner;
-
-        if (target == null)
-            return;
-
-        var xform = Transform(target.Value);
+        var xform = Transform(target);
 
         if (xform.Anchored && ent.Comp.CanUnanchor)
-            _transform.Unanchor(target.Value, xform);
+            _transform.Unanchor(target, xform);
         else if (ent.Comp.CanAnchor)
-            _transform.AnchorEntity(target.Value, xform);
+            _transform.AnchorEntity(target, xform);
 
         if (ent.Comp.RemoveOnTrigger)
-            RemCompDeferred<AnchorOnTriggerComponent>(target.Value);
+            RemCompDeferred<AnchorOnTriggerComponent>(target);
 
         args.Handled = true;
     }
+}
 
-    [SubscribeLocalEvent]
-    private void HandleUseDelayOnTrigger(Entity<UseDelayOnTriggerComponent> ent, ref TriggerEvent args)
+public sealed partial class UseDelayOnTriggerSystem : XOnTriggerSystem<UseDelayOnTriggerComponent>
+{
+    [Dependency] private UseDelaySystem _useDelay = default!;
+
+    protected override void OnTrigger(Entity<UseDelayOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
-            return;
-
-        var target = ent.Comp.TargetUser ? args.User : ent.Owner;
-
-        if (target == null)
-            return;
-
-        args.Handled |= _useDelay.TryResetDelay(target.Value, ent.Comp.CheckDelayed);
+        args.Handled |= _useDelay.TryResetDelay(target, ent.Comp.CheckDelayed);
     }
 }
