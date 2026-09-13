@@ -215,14 +215,10 @@
       - state: panel_open
         sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
         map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-      - state: pressure_unlit
-        visible: false
-        shader: unshaded
+      - shader: unshaded
         sprite: Structures/Doors/Misc/edge_door_hazard.rsi
         map: [ "enum.FirelockVisualLayersPressure.Base" ]
-      - state: temperature_unlit
-        visible: false
-        shader: unshaded
+      - shader: unshaded
         sprite: Structures/Doors/Misc/edge_door_hazard.rsi
         map: [ "enum.FirelockVisualLayersTemperature.Base" ]
     - type: Airtight
