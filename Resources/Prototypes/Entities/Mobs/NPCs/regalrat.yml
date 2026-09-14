@@ -233,7 +233,7 @@
         damage: 60
       behaviors:
       - !type:Gib
-        recursive: false
+        dropGiblets: false
   - type: Stamina
     baseCritThreshold: 60
   - type: MeleeWeapon

@@ -563,7 +563,7 @@
         damage: 40
       behaviors:
       - !type:Gib
-        recursive: false
+        dropGiblets: false
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
     baseSprintSpeed : 3

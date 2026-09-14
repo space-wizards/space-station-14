@@ -50,7 +50,7 @@
         damage: 30
       behaviors:
       - !type:Gib
-        recursive: false
+        dropGiblets: false
   - type: Stamina
     baseCritThreshold: 15
     animationThreshold: 5
