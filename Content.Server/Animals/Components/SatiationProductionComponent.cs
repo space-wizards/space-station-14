@@ -94,6 +94,11 @@ public enum SatiationProductionFailure : byte
     Dead,
 
     /// <summary>
+    /// The selected producer is a zombie
+    /// </summary>
+    Zombie,
+
+    /// <summary>
     /// The selected producer does not meet the configured satiation requirement.
     /// </summary>
     InsufficientSatiation,

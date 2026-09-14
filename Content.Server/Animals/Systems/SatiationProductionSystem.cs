@@ -2,6 +2,7 @@ using Content.Server.Animals.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Zombies;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -19,6 +20,7 @@ public sealed partial class SatiationProductionSystem : EntitySystem
     [Dependency] private EntityQuery<ActorComponent> _actorQuery;
     [Dependency] private EntityQuery<SatiationComponent> _satiationQuery;
     [Dependency] private EntityQuery<SatiationProductionComponent> _productionQuery;
+    [Dependency] private EntityQuery<ZombieComponent> _zombieQuery;
 
     public override void Update(float frameTime)
     {
@@ -71,6 +73,12 @@ public sealed partial class SatiationProductionSystem : EntitySystem
             !HasEnoughSatiation(ent.Comp, (owner, satiation)))
         {
             failure = SatiationProductionFailure.InsufficientSatiation;
+            return false;
+        }
+
+        if (_zombieQuery.HasComp(owner))
+        {
+            failure = SatiationProductionFailure.Zombie;
             return false;
         }
 

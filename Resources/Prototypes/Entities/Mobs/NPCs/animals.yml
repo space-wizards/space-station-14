@@ -274,6 +274,7 @@
         Quantity: 100
   - type: EntityProducerAction
     insufficientSatiationPopup: action-popup-lay-egg-too-hungry
+    zombifiedPopup: action-popup-lay-egg-zombified
     userPopup: action-popup-lay-egg-user
     othersPopup: action-popup-lay-egg-others
   - type: SatiationProduction
@@ -742,6 +743,7 @@
         Quantity: 100
   - type: EntityProducerAction
     insufficientSatiationPopup: action-popup-lay-egg-too-hungry
+    zombifiedPopup: action-popup-lay-egg-zombified
     userPopup: action-popup-lay-egg-user
     othersPopup: action-popup-lay-egg-others
   - type: SatiationProduction

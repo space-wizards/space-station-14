@@ -22,6 +22,12 @@ public sealed partial class EntityProducerActionComponent : Component
     public LocId InsufficientSatiationPopup = "entity-producer-action-popup-too-hungry";
 
     /// <summary>
+    /// Popup shown to the acting entity when production fails due to zombification.
+    /// </summary>
+    [DataField]
+    public LocId ZombifiedPopup = "entity-producer-action-popup-zombified";
+
+    /// <summary>
     /// Feedback shown to the producer after successful entity production.
     /// </summary>
     [DataField]

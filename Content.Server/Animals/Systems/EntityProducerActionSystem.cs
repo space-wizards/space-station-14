@@ -19,8 +19,15 @@ public sealed partial class EntityProducerActionSystem : EntitySystem
     private void OnProductionAction(Entity<EntityProducerActionComponent> ent, ref EntityProductionActionEvent args)
     {
         args.Handled = _satiationProduction.TryProduce(ent.Owner, out var failure);
-        if (failure == SatiationProductionFailure.InsufficientSatiation)
-            _popup.PopupEntity(Loc.GetString(ent.Comp.InsufficientSatiationPopup), ent.Owner, ent.Owner);
+        switch (failure)
+        {
+            case SatiationProductionFailure.InsufficientSatiation:
+                _popup.PopupEntity(Loc.GetString(ent.Comp.InsufficientSatiationPopup), ent.Owner, ent.Owner);
+                break;
+            case SatiationProductionFailure.Zombie:
+                _popup.PopupEntity(Loc.GetString(ent.Comp.ZombifiedPopup), ent.Owner, ent.Owner);
+                break;
+        }
     }
 
     [SubscribeLocalEvent]
