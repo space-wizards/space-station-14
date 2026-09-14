@@ -18,9 +18,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Station.Systems;
 
-/// <summary>
-/// Manages job slots for stations.
-/// </summary>
+/// <inheritdoc/>
 [PublicAPI]
 public sealed partial class ServerStationJobsSystem : StationJobsSystem
 {

@@ -64,6 +64,7 @@ public abstract partial class GameTicker : EntitySystem
 
     public override void Shutdown()
     {
+        base.Shutdown();
         Replay.RecordingStarted -= OnRecordingStart;
     }
 

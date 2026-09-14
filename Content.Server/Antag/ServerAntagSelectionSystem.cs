@@ -19,9 +19,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Antag;
 
-/// <summary>
-/// This handles...
-/// </summary>
+/// <inheritdoc/>
 public sealed partial class ServerAntagSelectionSystem : AntagSelectionSystem
 {
     [Dependency] private IBanManager _ban = default!;

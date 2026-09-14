@@ -499,7 +499,7 @@ public abstract partial class GameTicker
         var ruleQuery = EntityQueryEnumerator<GameRuleComponent, MetaDataComponent>();
         while (ruleQuery.MoveNext(out _, out var meta))
         {
-            if (meta.EntityPrototype is { } id&& id == stationEvent)
+            if (meta.EntityPrototype is { } id && id == stationEvent)
                 count++;
         }
 

@@ -14,7 +14,7 @@ using Robust.Shared.Timing;
 namespace Content.Shared.Shuttles.Systems;
 
 /// <summary>
-/// This handles...
+/// Handles the arrivals shuttle spawning system, and the arrivals shuttle.
 /// </summary>
 public abstract partial class ArrivalsSystem : EntitySystem
 {

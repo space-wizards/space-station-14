@@ -36,9 +36,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems;
 
-/// <summary>
-/// If enabled spawns players on a separate arrivals station before they can transfer to the main station.
-/// </summary>
+/// <inheritdoc/>
 public sealed partial class ServerArrivalsSystem : ArrivalsSystem
 {
     [Dependency] private IChatManager _chat = default!;

@@ -12,7 +12,8 @@ using Robust.Shared.Random;
 namespace Content.Shared.GameTicking.Rules;
 
 /// <summary>
-/// This handles...
+/// This handles the game rule logic for the <see cref="NukeopsGameRule"/> and <see cref="NukeopsRuleComponent"/>
+/// If you do not know what NukeOps is you should try playing the game.
 /// </summary>
 public abstract partial class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 {

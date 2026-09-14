@@ -41,6 +41,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules;
 
+/// <inheritdoc/>
 public sealed partial class ServerNukeopsRuleSystem : NukeopsRuleSystem
 {
     [Dependency] private EmergencyShuttleSystem _emergency = default!;

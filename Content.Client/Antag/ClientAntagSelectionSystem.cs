@@ -7,9 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Antag;
 
-/// <summary>
-/// This handles...
-/// </summary>
+/// <inheritdoc/>
 public sealed partial class ClientAntagSelectionSystem : AntagSelectionSystem
 {
     public override void SendBriefing(ICommonSession? session, string briefing, Color? briefingColor, SoundSpecifier? briefingSound)
