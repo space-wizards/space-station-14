@@ -1,3 +1,4 @@
+using Content.Shared.Conditions;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Nutrition.Prototypes;
@@ -10,25 +11,29 @@ namespace Content.Shared.EntityConditions.Conditions.Body;
 /// <see cref="SatiationCondition.Min"/> and <see cref="SatiationCondition.Max"/>. If the entity does not have the
 /// specified satiation, the condition evaluates to false.
 /// </summary>
-public sealed partial class SatiationEntityConditionSystem : EntityConditionSystem<SatiationComponent, SatiationCondition>
+public sealed partial class SatiationEntityConditionSystem : EntitySystem
 {
     [Dependency] private SatiationSystem _satiation = default!;
 
-    /// <inheritdoc/>
-    protected override void Condition(Entity<SatiationComponent> entity,
-        ref EntityConditionEvent<SatiationCondition> args)
-    {
-        if (_satiation.GetValueOrNull(entity, args.Condition.SatiationType) is not { } satiation)
+    [SubscribeLocalEvent]
+   private void Condition(Entity<SatiationComponent> entity,
+        ref ConditionEvaluationEvent args)
+   {
+       if (args.Handled || args.Condition is not SatiationCondition condition)
+           return;
+
+       args.Handled = true;
+
+        if (_satiation.GetValueOrNull(entity, condition.SatiationType) is not { } satiation)
             return;
 
-        args.Result =
-            (args.Condition.MinInclusive && satiation >= args.Condition.Min || satiation > args.Condition.Min) &&
-            (args.Condition.MaxInclusive && satiation <= args.Condition.Max || satiation < args.Condition.Max);
+        args.Value = (satiation - condition.Min) / (condition.Max - condition.Min);
+
     }
 }
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class SatiationCondition : EntityConditionBase<SatiationCondition>
+public sealed partial class SatiationCondition : EntityConditionBase<SatiationCondition>, IConditionWithBoundary
 {
     /// <summary>
     /// The value above which this condition will fail. If <see cref="MaxInclusive"/> is false, the condition will fail
@@ -70,4 +75,14 @@ public sealed partial class SatiationCondition : EntityConditionBase<SatiationCo
             ("min", Min),
             ("type", prototype.Index(SatiationType).Name));
     }
+
+    public float LowerBound => 0;
+
+    public bool IncludeLowerBound => MinInclusive;
+
+    public float UpperBound => 1;
+
+    public bool IncludeUpperBound => MaxInclusive;
+
+     bool IConditionWithBoundary.Inverted => false;
 }

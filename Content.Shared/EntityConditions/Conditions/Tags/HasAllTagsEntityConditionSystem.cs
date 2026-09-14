@@ -1,25 +1,30 @@
-﻿using Content.Shared.Localizations;
+﻿using Content.Shared.Conditions;
+using Content.Shared.Localizations;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Shared.EntityConditions.Conditions.Tags;
 
 /// <summary>
 /// Returns true if this entity has all the listed tags.
 /// </summary>
-/// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
-public sealed partial class HasAllTagsEntityConditionSystem : EntityConditionSystem<TagComponent, AllTagsCondition>
+public sealed partial class HasAllTagsEntityConditionSystem : EntitySystem
 {
     [Dependency] private TagSystem _tag = default!;
 
-    protected override void Condition(Entity<TagComponent> entity, ref EntityConditionEvent<AllTagsCondition> args)
+    [SubscribeLocalEvent]
+    private void Condition(Entity<TagComponent> entity, ref ConditionEvaluationEvent args)
     {
-        args.Result = _tag.HasAllTags(entity.Comp, args.Condition.Tags);
+        if (args.Handled || args.Condition is not AllTagsCondition condition)
+            return;
+        args.Handled = true;
+        args.Value = condition.Tags.Count(tag=>_tag.HasTag(entity.Comp, tag));
     }
 }
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class AllTagsCondition : EntityConditionBase<AllTagsCondition>
+public sealed partial class AllTagsCondition : EntityConditionBase<AllTagsCondition>, IConditionWithThreshold
 {
     /// <summary>
     /// Tags which all need to be possessed to fulfill the condition.
@@ -43,4 +48,8 @@ public sealed partial class AllTagsCondition : EntityConditionBase<AllTagsCondit
 
         return Loc.GetString("entity-condition-guidebook-has-tag", ("tag", names), ("invert", Inverted));
     }
+
+    IConditionWithThreshold.Comparator IConditionWithThreshold.Comparison => IConditionWithThreshold.Comparator.Equal;
+
+    float IConditionWithThreshold.Threshold => Tags.Length;
 }

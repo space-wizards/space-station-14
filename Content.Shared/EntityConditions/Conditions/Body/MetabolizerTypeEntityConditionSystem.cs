@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Content.Shared.Conditions;
 using Content.Shared.Localizations;
 using Content.Shared.Metabolism;
 using Robust.Shared.Prototypes;
@@ -37,14 +38,17 @@ public sealed partial class MetabolizerTypeCondition : EntityConditionBase<Metab
 /// <summary>
 /// Returns true if this entity has any of the listed metabolizer types.
 /// </summary>
-/// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
-public sealed partial class MetabolizerTypeEntityConditionSystem : EntityConditionSystem<MetabolizerComponent, MetabolizerTypeCondition>
+public sealed partial class MetabolizerTypeEntityConditionSystem : EntitySystem
 {
-    protected override void Condition(Entity<MetabolizerComponent> entity, ref EntityConditionEvent<MetabolizerTypeCondition> args)
+    [SubscribeLocalEvent]
+    private void Condition(Entity<MetabolizerComponent> entity, ref ConditionEvaluationEvent args)
     {
+        if (args.Handled || args.Condition is not MetabolizerTypeCondition condition)
+            return;
+        args.Handled = true;
         if (entity.Comp.MetabolizerTypes == null)
             return;
 
-        args.Result = entity.Comp.MetabolizerTypes.Overlaps(args.Condition.Type);
+        args.Value = (float)entity.Comp.MetabolizerTypes.Intersect(condition.Type).Count()/(float)condition.Type.Length;
     }
 }

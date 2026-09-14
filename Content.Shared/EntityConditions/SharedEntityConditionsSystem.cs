@@ -1,3 +1,4 @@
+using Content.Shared.Conditions;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions;
@@ -7,8 +8,11 @@ namespace Content.Shared.EntityConditions;
 /// Specifically it handles the receiving of events for causing entity effects, and provides
 /// public API for other systems to take advantage of entity effects.
 /// </summary>
-public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntityConditionRaiser
+public sealed partial class SharedEntityConditionsSystem : EntitySystem
 {
+
+    [Dependency] private SharedConditionEvaluationSystem _conditionSystem=default!;
+
     /// <summary>
     /// Checks a list of conditions to verify that they all return true.
     /// </summary>
@@ -25,7 +29,7 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
 
         foreach (var condition in conditions)
         {
-            if (!TryCondition(target, condition, sourceEnt))
+            if (!_conditionSystem.IsConditionSatisfied(condition, target, sourceEnt))
                 return false;
         }
 
@@ -65,69 +69,17 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
     /// <returns>Returns true if we meet the condition and false otherwise</returns>
     public bool TryCondition<T>(EntityUid target, T condition, EntityUid? sourceEnt = null) where T : EntityCondition
     {
-        return condition.Inverted != condition.RaiseEvent(target, this, sourceEnt);
+        return condition.Inverted != _conditionSystem.IsConditionSatisfied(condition,target, sourceEnt);
     }
 
-    /// <summary>
-    /// Raises a condition to an entity. You should not be calling this unless you know what you're doing.
-    /// </summary>
-    public bool RaiseConditionEvent<T>(EntityUid target, T effect, EntityUid? sourceEnt) where T : EntityConditionBase<T>
-    {
-        var effectEv = new EntityConditionEvent<T>(effect, sourceEnt);
-        RaiseLocalEvent(target, ref effectEv);
-        return effectEv.Result;
-    }
-}
-
-/// <summary>
-/// This is a basic abstract entity effect containing all the data an entity effect needs to affect entities with effects...
-/// </summary>
-/// <typeparam name="T">The Component that is required for the effect</typeparam>
-/// <typeparam name="TCon">The Condition we're testing</typeparam>
-public abstract partial class EntityConditionSystem<T, TCon> : EntitySystem where T : Component where TCon : EntityConditionBase<TCon>
-{
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<T, EntityConditionEvent<TCon>>(Condition);
-    }
-    protected abstract void Condition(Entity<T> entity, ref EntityConditionEvent<TCon> args);
-}
-
-/// <summary>
-/// Used to raise an EntityCondition without losing the type of condition.
-/// </summary>
-public interface IEntityConditionRaiser
-{
-    bool RaiseConditionEvent<T>(EntityUid target, T effect, EntityUid? sourceEnt) where T : EntityConditionBase<T>;
-}
-
-/// <summary>
-/// Used to store an <see cref="EntityCondition"/> so it can be raised without losing the type of the condition.
-/// </summary>
-/// <typeparam name="T">The Condition wer are raising.</typeparam>
-public abstract partial class EntityConditionBase<T> : EntityCondition where T : EntityConditionBase<T>
-{
-    public override bool RaiseEvent(EntityUid target, IEntityConditionRaiser raiser, EntityUid? sourceEnt)
-    {
-        if (this is not T type)
-            return false;
-
-        // If the result of the event matches the result we're looking for then we pass.
-        return raiser.RaiseConditionEvent(target, type, sourceEnt);
-    }
 }
 
 /// <summary>
 /// A basic condition which can be checked for on an entity via events.
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
-public abstract partial class EntityCondition
+public abstract partial class EntityCondition : ICondition
 {
-    /// <summary>
-    /// Check this condition on a target.
-    /// </summary>
-    public abstract bool RaiseEvent(EntityUid target, IEntityConditionRaiser raiser, EntityUid? sourceEnt);
 
     /// <summary>
     /// If true, invert the result. So false returns true and true returns false!
@@ -139,30 +91,12 @@ public abstract partial class EntityCondition
     /// A basic description of this condition, which displays in the guidebook.
     /// </summary>
     public abstract string EntityConditionGuidebookText(IPrototypeManager prototype);
+
+
+    public abstract Type ConditionType { get; }
 }
 
-/// <summary>
-/// An Event carrying an entity effect.
-/// </summary>
-/// <param name="Condition">The Condition we're checking</param>
-[ByRefEvent]
-[DataRecord]
-public partial record struct EntityConditionEvent<T>(T Condition, EntityUid? SourceEnt) where T : EntityConditionBase<T>
+public abstract partial class EntityConditionBase<TCondition> : EntityCondition, ICondition<TCondition>
 {
-    /// <summary>
-    /// The result of our check, defaults to false if nothing handles it.
-    /// </summary>
-    [DataField]
-    public bool Result;
-
-    /// <summary>
-    /// The Condition being raised in this event
-    /// </summary>
-    public readonly T Condition = Condition;
-
-    /// <summary>
-    /// An optional "source entity" which is checking the condition on the entity this is being raised to.
-    /// Sometimes needed for additional context with conditions.
-    /// </summary>
-    public readonly EntityUid? SourceEnt = SourceEnt;
+    public override Type ConditionType => typeof(TCondition);
 }

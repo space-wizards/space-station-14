@@ -1,37 +1,50 @@
 ﻿using Content.Shared.Chemistry.Components;
+using Content.Shared.Conditions;
 using Content.Shared.Temperature.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions;
 
 /// <summary>
-/// Returns true if this entity has an amount of reagent in it within a specified minimum and maximum.
+/// Evaluates <see cref="TemperatureCondition"/>
 /// </summary>
-/// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
-public sealed partial class TemperatureEntityConditionSystem : EntityConditionSystem<TemperatureComponent, TemperatureCondition>
+public sealed partial class TemperatureEntityConditionSystem : EntitySystem
 {
-    protected override void Condition(Entity<TemperatureComponent> entity, ref EntityConditionEvent<TemperatureCondition> args)
+    /// <summary>
+    /// Returns the proportional value of components temperature to the conditions bound.
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="args"></param>
+    [SubscribeLocalEvent]
+    private void Condition(Entity<TemperatureComponent> entity, ref ConditionEvaluationEvent args)
     {
-        if (entity.Comp.Temperature >= args.Condition.Min && entity.Comp.Temperature <= args.Condition.Max)
-            args.Result = true;
-    }
-}
+        if (args.Handled || args.Condition is not TemperatureCondition condition)
+            return;
 
-/// <summary>
-/// Returns true if this solution entity has an amount of reagent in it within a specified minimum and maximum.
-/// </summary>
-/// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
-public sealed partial class SolutionTemperatureEntityConditionSystem : EntityConditionSystem<SolutionComponent, TemperatureCondition>
-{
-    protected override void Condition(Entity<SolutionComponent> entity, ref EntityConditionEvent<TemperatureCondition> args)
+        args.Value = (entity.Comp.Temperature - condition.Min) / (condition.Max - condition.Min);
+
+        args.Handled = true;
+    }
+
+    /// <summary>
+    /// Returns the proportional value of components solutions temperature to the conditions bound.
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="args"></param>
+    [SubscribeLocalEvent]
+    private void Condition(Entity<SolutionComponent> entity, ref ConditionEvaluationEvent args)
     {
-        if (entity.Comp.Solution.Temperature >= args.Condition.Min && entity.Comp.Solution.Temperature <= args.Condition.Max)
-            args.Result = true;
+        if (args.Condition is not TemperatureCondition condition)
+            return;
+
+        args.Value = (entity.Comp.Solution.Temperature - condition.Min) / (condition.Max - condition.Min);
+
+        args.Handled = true;
     }
 }
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class TemperatureCondition : EntityConditionBase<TemperatureCondition>
+public sealed partial class TemperatureCondition : EntityConditionBase<TemperatureCondition>, IConditionWithBoundary
 {
     /// <summary>
     /// Minimum allowed temperature
@@ -47,6 +60,18 @@ public sealed partial class TemperatureCondition : EntityConditionBase<Temperatu
 
     public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>
         Loc.GetString("entity-condition-guidebook-body-temperature",
-            ("max", float.IsPositiveInfinity(Max) ? (float) int.MaxValue : Max),
+            ("max", float.IsPositiveInfinity(Max) ? (float)int.MaxValue : Max),
             ("min", Min));
+
+    float IConditionWithBoundary.LowerBound => 0;
+
+    bool IConditionWithBoundary.IncludeLowerBound => true;
+
+    float IConditionWithBoundary.UpperBound => 1;
+
+    bool IConditionWithBoundary.IncludeUpperBound => true;
+    /// <summary>
+    /// Inverted is done by EntityConditionBase and <see cref="Shared"/>
+    /// </summary>
+    bool IConditionWithBoundary.Inverted => false;
 }

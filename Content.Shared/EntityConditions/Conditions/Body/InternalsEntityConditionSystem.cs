@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Body.Components;
+using Content.Shared.Conditions;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Body;
@@ -6,12 +7,16 @@ namespace Content.Shared.EntityConditions.Conditions.Body;
 /// <summary>
 /// Returns true if this entity is using internals. False if they are not or cannot use internals.
 /// </summary>
-/// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
-public sealed partial class InternalsOnEntityConditionSystem : EntityConditionSystem<InternalsComponent, InternalsCondition>
+public sealed partial class InternalsOnEntityConditionSystem : EntitySystem
 {
-    protected override void Condition(Entity<InternalsComponent> entity, ref EntityConditionEvent<InternalsCondition> args)
+    [SubscribeLocalEvent]
+    private void Condition(Entity<InternalsComponent> entity, ref ConditionEvaluationEvent args)
     {
-        args.Result = entity.Comp.GasTankEntity != null;
+        if (args.Handled || args.Condition is not InternalsCondition condition)
+            return;
+        args.Handled = true;
+
+        args.Value= entity.Comp.GasTankEntity != null?1:0;
     }
 }
 

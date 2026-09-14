@@ -10,6 +10,9 @@ namespace Content.Shared.Conditions;
 public sealed partial class SharedConditionEvaluationSystem : EntitySystem
 {
 
+
+    [Dependency] private ILogHandler _logging = default!;
+
     /// <summary>
     /// Evaluates a condition against an entity given an optional source entity.
     /// </summary>
@@ -27,7 +30,7 @@ public sealed partial class SharedConditionEvaluationSystem : EntitySystem
         // Verity that the event was actually handled
         if (!evt.Handled)
         {
-            throw new NotImplementedException($"Condition of type {condition.ConditionType.Name} has no evaluator.");
+            //Add logging here?
         }
         //return response.
         return evt.Value;

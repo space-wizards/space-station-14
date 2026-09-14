@@ -1,3 +1,4 @@
+using Content.Shared.Conditions;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions;
@@ -20,12 +21,16 @@ public sealed partial class NestedCondition : EntityConditionBase<NestedConditio
 /// <summary>
 /// Handles <see cref="NestedCondition"/>.
 /// </summary>
-public sealed partial class NestedConditionSystem : EntityConditionSystem<TransformComponent, NestedCondition>
+public sealed partial class NestedConditionSystem : EntitySystem
 {
     [Dependency] private SharedEntityConditionsSystem _conditions = default!;
 
-    protected override void Condition(Entity<TransformComponent> ent, ref EntityConditionEvent<NestedCondition> args)
+    [SubscribeLocalEvent]
+    private void Condition(Entity<TransformComponent> ent, ref ConditionEvaluationEvent args)
     {
-        args.Result = _conditions.TryCondition(ent, args.Condition.Proto);
+        if (args.Handled || args.Condition is not NestedCondition condition)
+            return;
+        args.Handled = true;
+        args.Value = _conditions.TryCondition(ent, condition.Proto)&&!condition.Inverted?1:0;
     }
 }

@@ -1,24 +1,30 @@
+using System.Linq;
+using Content.Shared.Conditions;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Mind;
 
-public sealed partial class AntagonistTagEntityConditionSystem : EntityConditionSystem<MindComponent, AntagonistTagCondition>
+public sealed partial class AntagonistTagEntityConditionSystem : EntitySystem
 {
     [Dependency] private SharedRoleSystem _roleSystem = default!;
 
-    protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<AntagonistTagCondition> args)
+    [SubscribeLocalEvent]
+    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent args)
     {
-        var conditionTags = args.Condition.Tags;
+        if (args.Handled || args.Condition is not AntagonistTagCondition condition)
+            return;
+        args.Handled = true;
+        var conditionTags = condition.Tags;
 
         if (!_roleSystem.TryGetAllAntagTags(entity.AsNullable(), out var antagTags))
         {
-            args.Result = args.Condition is { AllowNonAntags: true, Inverted: false };
+            args.Value = condition is { AllowNonAntags: true, Inverted: false } ? 1 : 0;
             return;
         }
 
-        args.Result = antagTags.Overlaps(conditionTags);
+        args.Value = (float)antagTags.Intersect(conditionTags).Count() / (float)condition.Tags.Count;
     }
 }
 
@@ -46,4 +52,3 @@ public sealed partial class AntagonistTagCondition : EntityConditionBase<Antagon
         return String.Empty;
     }
 }
-

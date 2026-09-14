@@ -1,4 +1,5 @@
 ﻿using Content.Server.Objectives.Components;
+using Content.Shared.Conditions;
 using Content.Shared.EntityConditions;
 using Content.Shared.EntityConditions.Conditions.Mind;
 using Content.Shared.Mind;
@@ -11,14 +12,19 @@ namespace Content.Server.EntityConditions.Conditions;
 /// Then filters by a whitelist, if any objectives pass the whitelist and target entity is a target, the condition passes.
 /// Fails if the passed argument is null or not a mind.
 /// </summary>
-public sealed partial class ObjectiveTargetEntityConditionSystem : EntityConditionSystem<MindComponent, ObjectiveTargetCondition>
+public sealed partial class ObjectiveTargetEntityConditionSystem : EntitySystem
 {
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private EntityQuery<TargetObjectiveComponent> _targetQuery;
 
-    protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<ObjectiveTargetCondition> args)
+    [SubscribeLocalEvent]
+    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent args)
     {
-        if (!TryComp<MindComponent>(args.SourceEnt, out var mind))
+        if (args.Handled || args.Condition is not ObjectiveTargetCondition condition)
+            return;
+        args.Handled = true;
+
+        if (!TryComp<MindComponent>(args.SourceEntity, out var mind))
             return;
 
         foreach (var objective in mind.Objectives)
@@ -28,11 +34,12 @@ public sealed partial class ObjectiveTargetEntityConditionSystem : EntityConditi
                 continue;
 
             // remove the mind if this objective is blacklisted
-            if (!_whitelist.IsWhitelistPassOrNull(args.Condition.Whitelist, objective))
+            if (!_whitelist.IsWhitelistPassOrNull(condition.Whitelist, objective))
                 continue;
 
-            args.Result = true;
-            return;
+            args.Value++;
         }
+
+        args.Value /= mind.Objectives.Count;
     }
 }

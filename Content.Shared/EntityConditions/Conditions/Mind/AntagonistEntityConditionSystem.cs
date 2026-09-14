@@ -1,16 +1,22 @@
-﻿using Content.Shared.Mind;
+﻿using Content.Shared.Conditions;
+using Content.Shared.Mind;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Mind;
 
-public sealed partial class AntagonistEntityConditionSystem : EntityConditionSystem<MindComponent, AntagonistCondition>
+public sealed partial class AntagonistEntityConditionSystem : EntitySystem
 {
     [Dependency] private SharedRoleSystem _roleSystem = default!;
 
-    protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<AntagonistCondition> args)
+    [SubscribeLocalEvent]
+    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent args)
     {
-        args.Result = _roleSystem.MindIsAntagonist(entity);
+        if (args.Handled || args.Condition is not AntagonistCondition)
+            return;
+        args.Handled = true;
+
+        args.Value = _roleSystem.MindIsAntagonist(entity) ? 1 : 0;
     }
 }
 
@@ -24,4 +30,3 @@ public sealed partial class AntagonistCondition : EntityConditionBase<Antagonist
         return String.Empty;
     }
 }
-
