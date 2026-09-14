@@ -1,6 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Content.Client.Resources;
-using Content.Client.Stylesheets;
 using Content.Client.Stylesheets.Fonts;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
@@ -10,7 +8,6 @@ using Robust.Shared.Input;
 using Robust.Shared.Utility;
 using Content.Client.UserInterface.ControlExtensions;
 using Content.Client.UserInterface.Controls;
-using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 
 namespace Content.Client.UserInterface.RichText;
