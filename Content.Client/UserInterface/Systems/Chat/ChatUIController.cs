@@ -241,6 +241,7 @@ public sealed partial class ChatUIController : UIController
         _config.OnValueChanged(CCVars.ChatWindowOpacity, OnChatWindowOpacityChanged);
 
         InitializeHighlights();
+        InitializeFilters();
     }
 
     public void OnScreenLoad()
@@ -832,6 +833,12 @@ public sealed partial class ChatUIController : UIController
         foreach (var highlight in _highlights)
         {
             msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, highlight, "color", _highlightsColor);
+        }
+
+        var filterSymbol = !string.IsNullOrEmpty(_filterSymbol) ? _filterSymbol[0] : '*';
+        foreach (var filter in _filters)
+        {
+            msg.WrappedMessage = filter.Replace(msg.WrappedMessage, match => new string(filterSymbol, match.Length));
         }
 
         // Color any codewords for minds that have roles that use them
