@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Fonts;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -35,7 +36,6 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
     private const string LinkAttributeName = "link";
     private const string ColorOverrideAttributeName = "color"; // DefaultLinkColor override
     private const string UseEntityNameColorAttributeName = "entitynamecolor"; // entity links only: opt into per-entity name coloring
-
 
     private delegate bool TryResolveLink(MarkupNode node, out LinkData data);
     private readonly (string AttributeName, TryResolveLink Resolver)[] _resolvers; // for parsing link to correct resolver
@@ -91,11 +91,13 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
         var linkLabel = new TextLinkLabel() { Text = text, LinkString = linkData.LinkString, LinkEntity = linkData.LinkEntity };
         linkLabel.FontColorOverride = linkColor;
 
-        // this is probably very cursed
-        var BoldFont = _cache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 12);
+        // eat my ass about where this magic number comes from
+        // our UI stack is awful. Finding this magic number was awful.
+        // The entire system is full of TODOs and unhelpful obsoletes that just say to go to another system which is using the EXACT SAME OBSOLETED OBJECTS
+        var boldFont = new NotoFontFamilyStack(_cache).GetFont(FontTag.DefaultSize, FontKind.Bold);
         if (linkData.LinkEntity is not null)
         {
-            linkLabel.FontOverride = BoldFont;
+            linkLabel.FontOverride = boldFont;
         }
 
         if (linkData.Clickable)
