@@ -59,7 +59,10 @@
     - state: "devour_on"
       map: ["enum.ActionVisuals.IconToggled"]
       visible: false
-  - type: ActionRequireMouthUncovered
+  - type: ActionRequirements
+    conditions:
+      Performer:
+      - !type:MouthUncoveredCondition
   - type: TargetAction
   - type: EntityTargetAction
     event: !type:ChangelingDevourActionEvent
