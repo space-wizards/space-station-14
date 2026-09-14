@@ -177,7 +177,7 @@ namespace Content.Server.Ghost
             }
 
             _eye.RefreshVisibilityMask(uid);
-            var time = _gameTiming.RealTime;
+            var time = GameTiming.RealTime;
             component.TimeOfDeath = time;
 
             Dirty(uid, component);

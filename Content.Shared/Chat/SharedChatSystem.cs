@@ -2,14 +2,11 @@ using System.Collections.Frozen;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Administration.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Chat.Prototypes;
-using Content.Shared.Follower;
 using Content.Shared.Popups;
 using Content.Shared.Radio;
 using Content.Shared.Speech;
-using Content.Shared.Tag;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -55,13 +52,10 @@ public abstract partial class SharedChatSystem : EntitySystem
     [Dependency] private INetManager _net = default!;
     [Dependency] protected IRobustRandom Random = default!;
     [Dependency] private ISharedPlayerManager _player = default!;
-    [Dependency] private ISharedAdminManager _admin = default!;
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private FollowerSystem _follower = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private TagSystem _tag = default!;
 
     /// <summary>
     /// Cache of the keycodes for faster lookup.
@@ -370,10 +364,6 @@ public abstract partial class SharedChatSystem : EntitySystem
     private bool CanClick(EntityUid target, EntityUid ent)
     {
         if (!ChatNameLinks)
-            return false;
-
-        // TODO: Move this to Ghost System!
-        if (_tag.HasTag(target, FollowerSystem.PreventGhostnadoWarpTag) && !_admin.IsAdmin(ent)) //tag is used on any ghost that shouldn't be teleported to
             return false;
 
         if (ent == target)

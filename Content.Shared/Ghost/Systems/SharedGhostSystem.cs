@@ -1,3 +1,4 @@
+using Content.Shared.Administration.Managers;
 using Content.Shared.Chat;
 using Content.Shared.Emoting;
 using Content.Shared.Examine;
@@ -19,9 +20,10 @@ namespace Content.Shared.Ghost.Systems;
 /// </summary>
 public abstract partial class SharedGhostSystem : EntitySystem
 {
-    [Dependency] protected SharedPopupSystem Popup = default!;
-    [Dependency] protected IGameTiming _gameTiming = default!;
+    [Dependency] protected IGameTiming GameTiming = default!;
+    [Dependency] private ISharedAdminManager _admin = default!;
     [Dependency] private FollowerSystem _follower = default!;
+    [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] private TagSystem _tag = default!;
 
     public override void Initialize()
@@ -37,7 +39,7 @@ public abstract partial class SharedGhostSystem : EntitySystem
 
     private void OnGhostExamine(EntityUid uid, GhostComponent component, ExaminedEvent args)
     {
-        var timeSinceDeath = _gameTiming.RealTime.Subtract(component.TimeOfDeath);
+        var timeSinceDeath = GameTiming.RealTime.Subtract(component.TimeOfDeath);
         var deathTimeInfo = timeSinceDeath.Minutes > 0
             ? Loc.GetString("comp-ghost-examine-time-minutes", ("minutes", timeSinceDeath.Minutes))
             : Loc.GetString("comp-ghost-examine-time-seconds", ("seconds", timeSinceDeath.Seconds));
@@ -127,7 +129,8 @@ public abstract partial class SharedGhostSystem : EntitySystem
         if (args.Handled)
             return;
 
-        args.Handled = true;
+        if (_admin.IsAdmin(ent) || !_tag.HasTag(args.Target, FollowerSystem.PreventGhostnadoWarpTag)) //tag is used on any ghost that shouldn't be teleported to
+            args.Handled = true;
 
         if (!args.Pure)
             _follower.StartFollowingEntity(ent, args.Target);
