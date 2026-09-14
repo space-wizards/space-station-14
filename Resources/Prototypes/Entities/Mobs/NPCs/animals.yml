@@ -1290,7 +1290,7 @@
     interactDelay: 1
     interactSuccessString: petting-success-sheep
     interactFailureString: petting-failure-sheep
-    interactSuccessSpawn: EffectHearts #рџҐ°
+    interactSuccessSpawn: EffectHearts #🥰
     interactSuccessSound:
       collection: Sheep
       params:
