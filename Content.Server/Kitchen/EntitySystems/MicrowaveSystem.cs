@@ -99,6 +99,7 @@ namespace Content.Server.Kitchen.EntitySystems
             SubscribeLocalEvent<ActiveMicrowaveComponent, EntRemovedFromContainerMessage>(OnActiveMicrowaveRemove);
 
             SubscribeLocalEvent<ActivelyMicrowavedComponent, OnConstructionTemperatureEvent>(OnConstructionTemp);
+            SubscribeLocalEvent<ActivelyMicrowavedComponent, SolutionRelayEvent<ReactionAttemptEvent>>(OnReactionAttemptRelay);
             SubscribeLocalEvent<ActivelyMicrowavedComponent, ReactionAttemptEvent>(OnReactionAttempt);
 
             SubscribeLocalEvent<FoodRecipeProviderComponent, GetSecretRecipesEvent>(OnGetSecretRecipes);
@@ -142,6 +143,11 @@ namespace Content.Server.Kitchen.EntitySystems
         private void OnConstructionTemp(Entity<ActivelyMicrowavedComponent> ent, ref OnConstructionTemperatureEvent args)
         {
             args.Result = HandleResult.False;
+        }
+
+        private void OnReactionAttemptRelay(Entity<ActivelyMicrowavedComponent> ent, ref SolutionRelayEvent<ReactionAttemptEvent> args)
+        {
+            OnReactionAttempt(ent, ref args.Event);
         }
 
         // Stop reagents from reacting if they are currently reserved for a microwave recipe.
