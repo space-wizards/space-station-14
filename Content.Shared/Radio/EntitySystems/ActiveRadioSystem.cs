@@ -10,7 +10,7 @@ public sealed partial class ActiveRadioSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnRadioSendAttempt(Entity<ActiveRadioComponent> ent, ref RadioSendAttemptEvent args)
     {
-        if (!ent.Comp.CanSendInReceiveOnlyChannels)
+        if (!args.Channel.AllowHeadsetSend && !ent.Comp.CanSendInReceiveOnlyChannels)
         {
             _popup.PopupEntity(Loc.GetString("chat-manager-radio-channel-forbidden-for-headset"), ent, ent);
             args.Cancelled = true;
