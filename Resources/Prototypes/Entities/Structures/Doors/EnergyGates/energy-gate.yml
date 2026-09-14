@@ -1,6 +1,7 @@
 - type: entity
-  parent: [ BaseStructure, StructureHealthDoor ]
-  id: EnergyGate
+  abstract: true
+  parent: BaseStructure
+  id: EnergyGateBase
   name: energy gate
   description: An advanced gate that permits one-way access and prevents tailgating.
   components:
@@ -56,15 +57,6 @@
       - Pullable # no dragging things in
   - type: Damageable
     damageModifierSet: SteelStaticMod
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
   - type: AccessReader
   - type: Construction
     graph: EnergyGate
@@ -75,23 +67,37 @@
     mode: NoSprite
   - type: PointLight
     energy: 2.2
-    color: "#cc3a41"
+    color: "#cc3a41" # Red
     radius: 2.2
   - type: PlacementReplacement
     key: walls
 
+- type: entity
+  parent: [EnergyGateBase, StructureHealthDoor]
+  id: EnergyGate
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+
 # Genpop
 - type: entity
-  id: EnergyGateGenpopEnter
   parent: EnergyGate
+  id: EnergyGateGenpopEnter
   suffix: Genpop Enter
   components:
   - type: AccessReader
     access: [["GenpopEnter"], ["Security"]]
 
 - type: entity
-  id: EnergyGateGenpopLeave
   parent: EnergyGate
+  id: EnergyGateGenpopLeave
   suffix: Genpop Leave
   components:
   - type: AccessReader
@@ -99,15 +105,20 @@
 
 # Airtight
 - type: entity
-  parent: EnergyGate
+  parent: EnergyGateBase
   id: EnergyGateAirtight
-  name: airtight energy gate
-  suffix: Airtight
+  name: arrivals energy gate
+  description: An advanced gate that permits only departure from arrival shuttle. It looks indestructible.
+  suffix: "Airtight entrance, Indestructible"
   components:
+  #- type: Damageable
+  #  damageModifierSet: Indestructible # TODO: add Indestructible damage modifier
   - type: Airtight
-  - type: RadiationBlocker
-    resistance: 4
+    noAirWhenFullyAirBlocked: false
+    airBlockedDirection:
+    - North
   - type: Sprite
+    drawdepth: OverMobs # this goes under arrivals docks, higher depth will cause sprite z-fighting
     layers:
     - state: regular
     - state: idle
@@ -123,6 +134,4 @@
           Spin: { state: operate }
           Deny: { state: deny }
   - type: PointLight
-    energy: 2.2
-    color: "#50abff"
-    radius: 2.2
+    color: "#50abff" # Blue
