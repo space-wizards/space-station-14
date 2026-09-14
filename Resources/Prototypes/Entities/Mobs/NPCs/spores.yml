@@ -57,7 +57,7 @@
         acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 5
+        damage: 10
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:

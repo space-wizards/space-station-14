@@ -24,3 +24,6 @@ reagent-desc-diethylamine = A very potent fertilizer, treats plants with nutrien
 
 reagent-name-sedin = sedin
 reagent-desc-sedin = A modified version of diethylamine that can restore seeds on plants at the cost of potency.
+
+reagent-name-fungalin = fungalin
+reagent-desc-fungalin = A high concentration of spores capable of reproducing inside respiratory systems and increase the yield of plants while poisoning and draining their nutrients.
