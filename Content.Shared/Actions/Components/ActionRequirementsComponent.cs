@@ -59,5 +59,5 @@ public enum ActionRequirementTarget : byte
     /// <summary>
     /// The target is both the performer and the target.
     /// </summary>
-    Both = 1 << 1,
+    Both = Performer | Target,
 }
