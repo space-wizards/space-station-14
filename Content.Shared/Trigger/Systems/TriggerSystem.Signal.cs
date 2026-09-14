@@ -35,7 +35,7 @@ public sealed partial class SignalOnTriggerSystem : XOnTriggerSystem<SignalOnTri
 
     protected override void OnTrigger(Entity<SignalOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
-        _deviceLink.InvokePort(ent.Owner, ent.Comp.Port);
+        _deviceLink.InvokePort(target, ent.Comp.Port);
         args.Handled = true;
     }
 }
