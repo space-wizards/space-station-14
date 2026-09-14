@@ -84,6 +84,8 @@
   parent: PlastitaniumWindowSquareBase
   suffix: indestructible
   components:
+  - type: Damageable
+    damageModifierSet: Indestructible
   - type: ExaminableDamage
     messages: null
 
@@ -169,6 +171,8 @@
   parent: PlastitaniumWindowDiagonalBase
   suffix: diagonal, indestructible
   components:
+  - type: Damageable
+    damageModifierSet: Indestructible
   - type: ExaminableDamage
     messages: null
 
