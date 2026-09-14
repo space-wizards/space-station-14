@@ -1,6 +1,8 @@
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Temperature.Components;
+using Robust.Shared.Containers;
 
 namespace Content.Client.Chemistry.EntitySystems;
 
@@ -8,6 +10,7 @@ namespace Content.Client.Chemistry.EntitySystems;
 public sealed partial class ThermobathSystem : SharedThermobathSystem
 {
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
 
     [Dependency] private EntityQuery<ThermobathComponent> _thermobathQuery;
 
@@ -16,6 +19,17 @@ public sealed partial class ThermobathSystem : SharedThermobathSystem
     {
         if (_thermobathQuery.TryComp(ent, out var thermobath))
             UpdateUi((ent, thermobath));
+    }
+
+    [SubscribeLocalEvent]
+    private void OnSolutionChanged(Entity<ContainedSolutionComponent> ent, ref SolutionChangedEvent args)
+    {
+        if (!_container.TryGetContainingContainer(ent.Comp.Container, out var container) ||
+            container.ID != ThermobathComponent.BeakerSlotId ||
+            !_thermobathQuery.TryComp(container.Owner, out var thermobath))
+            return;
+
+        UpdateUi((container.Owner, thermobath));
     }
 
     protected override void UpdateUi(Entity<ThermobathComponent> ent)

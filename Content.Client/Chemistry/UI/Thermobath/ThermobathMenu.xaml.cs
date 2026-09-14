@@ -136,9 +136,11 @@ public sealed partial class ThermobathMenu : FancyWindow
 
     public void SetBeakerPresent(bool hasBeaker) => BeakerStatusLabel.Visible = !hasBeaker;
 
-    private void AdjustSetpoint(float adjustment)
+    private void AdjustSetpoint(float adjustment) => SetLocalSetpoint(_setpoint + adjustment);
+
+    private void SetLocalSetpoint(float value)
     {
-        var setpoint = Math.Clamp(_setpoint + adjustment, _minTemperature, _maxTemperature);
+        var setpoint = Math.Clamp(value, _minTemperature, _maxTemperature);
         if (MathHelper.CloseTo(_setpoint, setpoint))
             return;
 
@@ -156,23 +158,15 @@ public sealed partial class ThermobathMenu : FancyWindow
             UpdateSetpointInput();
     }
 
-    private void UpdateSetpointInput()
-    {
-        SetpointInput.Text = _setpoint.ToString("F1", CultureInfo.CurrentCulture);
-    }
+    private void UpdateSetpointInput() => SetpointInput.Text = _setpoint.ToString("F1", CultureInfo.CurrentCulture);
 
     private void CommitSetpointInput()
     {
         if (float.TryParse(SetpointInput.Text, NumberStyles.Float, CultureInfo.CurrentCulture, out var value)
             && float.IsFinite(value))
         {
-            value = MathF.Round(Math.Clamp(value, _minTemperature, _maxTemperature) * 10) / 10;
-            if (!MathHelper.CloseTo(_setpoint, value))
-            {
-                _setpoint = value;
-                _setpointDirty = true;
-                CommitSetpoint();
-            }
+            SetLocalSetpoint(value);
+            CommitSetpoint();
         }
 
         UpdateSetpointInput();
@@ -269,9 +263,6 @@ public sealed partial class ThermobathMenu : FancyWindow
 
     public override void Close()
     {
-        if (SetpointInput.HasKeyboardFocus())
-            CommitSetpointInput();
-
         _adjustmentDirection = 0;
         CommitSetpoint();
         base.Close();
