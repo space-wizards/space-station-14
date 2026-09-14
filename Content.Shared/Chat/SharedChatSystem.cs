@@ -43,7 +43,7 @@ public abstract partial class SharedChatSystem : EntitySystem
         = new SoundPathSpecifier("/Audio/Announcements/announce.ogg");
 
     public static readonly ProtoId<RadioChannelPrototype> CommonChannel = "Common";
-    public static bool ChatNameLinks { get; private set; }
+    public bool ChatNameLinks { get; private set; }
 
     public static readonly string DefaultChannelPrefix = $"{RadioChannelPrefix}{DefaultChannelKey}";
     public static readonly ProtoId<SpeechVerbPrototype> DefaultSpeechVerb = "Default";
