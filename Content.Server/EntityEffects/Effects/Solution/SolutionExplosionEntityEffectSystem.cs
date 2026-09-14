@@ -1,6 +1,7 @@
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Effects.Solution;
 using Content.Shared.Explosion.Components;
 using Content.Shared.Explosion.EntitySystems;
 
@@ -22,11 +23,11 @@ public sealed partial class SolutionExplosionEntityEffectSystem : EntityEffectSy
         if (!_solutionContainer.TryGetSolution(entity.Owner, args.Effect.Solution, out _, out var explodingSolution))
             return;
 
-        // Don't explode if there's no solution
+        // Don't explode if there's no solution.
         if (explodingSolution.Volume == 0)
             return;
 
-        // Scale the explosion intensity based on the remaining volume of solution
+        // Scale the explosion intensity based on the remaining volume of solution.
         var explosionScaleFactor = explodingSolution.FillFraction;
 
         // TODO: Perhaps some of the liquid should be discarded as if it's being consumed by the explosion
@@ -38,18 +39,8 @@ public sealed partial class SolutionExplosionEntityEffectSystem : EntityEffectSy
 
         // Explode
         // Don't delete the object here - let other processes like physical damage from the
-        // explosion clean up the exploding object(s)
+        // explosion clean up the exploding object(s).
         var explosiveTotalIntensity = entity.Comp.TotalIntensity * explosionScaleFactor;
         _explosion.TriggerExplosive(entity, entity.Comp, false, explosiveTotalIntensity, user: args.User);
     }
-}
-
-/// <inheritdoc cref="EntityEffect"/>
-public sealed partial class SolutionExplosion : EntityEffectBase<SolutionExplosion>
-{
-    /// <summary>
-    /// The name of the solution to spill and scale the explosion by.
-    /// </summary>
-    [DataField(required: true)]
-    public string Solution = string.Empty;
 }

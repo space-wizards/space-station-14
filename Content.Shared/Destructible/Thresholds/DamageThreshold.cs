@@ -40,7 +40,7 @@ public sealed partial class DamageThreshold : IComparable<DamageThreshold>
     /// <summary>
     /// Behaviors to activate once this threshold is triggered.
     /// </summary>
-    [DataField(serverOnly: true)]
+    [DataField]
     public List<EntityEffect> Behaviors = [];
 
     public int CompareTo(DamageThreshold? other)

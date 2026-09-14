@@ -1,7 +1,7 @@
 using Content.Shared.Trigger.Components;
 using Content.Shared.Trigger.Systems;
 
-namespace Content.Shared.EntityEffects.Effects.Transform;
+namespace Content.Shared.EntityEffects.Effects;
 
 /// <summary>
 /// Starts the entity's trigger timer, if it has one.

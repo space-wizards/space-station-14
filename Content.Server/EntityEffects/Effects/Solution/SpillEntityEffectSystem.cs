@@ -1,6 +1,7 @@
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Effects.Solution;
 using Content.Shared.Fluids.Components;
 
 namespace Content.Server.EntityEffects.Effects.Solution;
@@ -20,7 +21,7 @@ public sealed partial class SpillEntityEffectSystem : EntityEffectSystem<Spillab
     {
         var coordinates = Transform(entity).Coordinates;
 
-        // Spill the solution that was drained/split
+        // Spill the solution that was drained/split.
         if (args.Effect.Solution != null &&
             _solutionContainer.TryGetSolution(entity.Owner, args.Effect.Solution, out _, out var solution))
         {
@@ -31,14 +32,4 @@ public sealed partial class SpillEntityEffectSystem : EntityEffectSystem<Spillab
             _puddle.TrySplashSpillAt(entity.Owner, coordinates, out _, out _, false, args.User);
         }
     }
-}
-
-/// <inheritdoc cref="EntityEffect"/>
-public sealed partial class Spill : EntityEffectBase<Spill>
-{
-    /// <summary>
-    /// Optional fallback solution name if <see cref="SpillableComponent"/> is not present.
-    /// </summary>
-    [DataField]
-    public string? Solution;
 }

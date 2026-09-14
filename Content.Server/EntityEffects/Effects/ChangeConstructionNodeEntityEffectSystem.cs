@@ -1,8 +1,9 @@
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Effects;
 
-namespace Content.Server.EntityEffects.Effects.Transform;
+namespace Content.Server.EntityEffects.Effects;
 
 /// <summary>
 /// Changes the construction node of the entity.
@@ -19,14 +20,4 @@ public sealed partial class ChangeConstructionNodeEntityEffectSystem : EntityEff
 
         _construction.ChangeNode(entity, null, args.Effect.Node, true, entity.Comp);
     }
-}
-
-/// <inheritdoc cref="EntityEffect"/>
-public sealed partial class ChangeConstructionNode : EntityEffectBase<ChangeConstructionNode>
-{
-    /// <summary>
-    /// The construction node to change to.
-    /// </summary>
-    [DataField(required: true)]
-    public string Node { get; set; } = string.Empty;
 }

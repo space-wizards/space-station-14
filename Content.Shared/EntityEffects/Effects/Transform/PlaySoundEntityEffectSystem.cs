@@ -17,22 +17,21 @@ public sealed partial class PlaySoundEntityEffectSystem : EntityEffectSystem<Tra
 
     protected override void Effect(Entity<TransformComponent> entity, ref EntityEffectEvent<PlaySound> args)
     {
-        var effect = args.Effect;
-
-        switch (effect.Type)
+        switch (args.Effect.Type)
         {
             case PlaySoundRecipients.Broadcast:
                 if (_net.IsServer)
-                    _audio.PlayGlobal(effect.Sound, Filter.Broadcast(), false);
+                    _audio.PlayGlobal(args.Effect.Sound, Filter.Broadcast(), false);
                 break;
             case PlaySoundRecipients.Local:
-                _audio.PlayLocal(effect.Sound, entity.Owner, args.User);
+                if (args.User != null)
+                    _audio.PlayEntity(args.Effect.Sound, entity.Owner, args.User.Value);
                 break;
-            case PlaySoundRecipients.Pvs when effect.Method == PlaySoundMethod.PlayEntity:
-                _audio.PlayPredicted(effect.Sound, entity.Owner, args.User);
+            case PlaySoundRecipients.Pvs when args.Effect.Method == PlaySoundMethod.PlayEntity:
+                _audio.PlayPredicted(args.Effect.Sound, entity.Owner, args.User);
                 break;
             case PlaySoundRecipients.Pvs:
-                _audio.PlayPredicted(effect.Sound, Transform(entity).Coordinates, args.User);
+                _audio.PlayPredicted(args.Effect.Sound, Transform(entity).Coordinates, args.User);
                 break;
         }
     }

@@ -11,6 +11,7 @@ using Content.Shared.EntityEffects.Effects.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
 using JetBrains.Annotations;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Destructible;
 
@@ -21,6 +22,7 @@ public sealed partial class DestructibleSystem : EntitySystem
     [Dependency] public DamageableSystem Damageable = default!;
 
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
 
     /// <summary>
@@ -50,6 +52,10 @@ public sealed partial class DestructibleSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnDamageChanged(Entity<DestructibleComponent> entity, ref DamageChangedEvent args)
     {
+        // TODO: DamageChangedEvent is not predicted, needs to replace with DamageDealtEvent
+        if (_timing.ApplyingState)
+            return;
+
         var (uid, comp) = entity;
 
         comp.IsBroken = false;
