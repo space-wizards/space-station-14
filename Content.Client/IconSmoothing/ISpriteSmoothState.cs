@@ -49,5 +49,13 @@ public partial interface ISpriteSmoothState
             entity.Comp.LayerSetShader(LayerKey, Shader);
     }
 
-    IEnumerable<(string key, string state)> EnumerateStates(HashSet<string>?[] layers, Entity<SpriteComponent> entity, SpriteSystem sprite);
+    IEnumerable<SpriteLayer> EnumerateStates(HashSet<string>?[] layers, Entity<SpriteComponent> entity, SpriteSystem sprite);
 }
+
+/// <summary>
+/// A simple tuple that indicates a key and a state for a sprite layer.
+/// TODO: Move this to engine, and allow for enums for keys instead of just strings! :)
+/// </summary>
+/// <param name="Key">Layer key</param>
+/// <param name="State">Layer state</param>
+public record struct SpriteLayer(string Key, string State);

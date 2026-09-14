@@ -30,7 +30,7 @@ public sealed partial class DirectionSpriteSmoothing : ISpriteSmoothState
         sprite.LayerMapSet(entity.AsNullable(), LayerKey, sprite.AddRsiLayer(entity.AsNullable(), Base + 0, index: Index));
     }
 
-    public IEnumerable<(string key, string state)> EnumerateStates(HashSet<string>?[] layers, Entity<SpriteComponent> entity, SpriteSystem sprite)
+    public IEnumerable<SpriteLayer> EnumerateStates(HashSet<string>?[] layers, Entity<SpriteComponent> entity, SpriteSystem sprite)
     {
         var match = DirectionFlag.None;
         for (byte i = 0; 2 * i < IconSmoothSystem.Directions; i++)
@@ -39,6 +39,6 @@ public sealed partial class DirectionSpriteSmoothing : ISpriteSmoothState
                 match |= (DirectionFlag)(1 << i);
         }
 
-        yield return (LayerKey, Base + (byte)match);
+        yield return new SpriteLayer(LayerKey, Base + (byte)match);
     }
 }

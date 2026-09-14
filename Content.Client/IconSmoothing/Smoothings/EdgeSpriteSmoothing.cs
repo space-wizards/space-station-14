@@ -33,7 +33,7 @@ public sealed partial class EdgeSpriteSmoothing : ISpriteSmoothState
         }
     }
 
-    public IEnumerable<(string key, string state)> EnumerateStates(HashSet<string>?[] layers, Entity<SpriteComponent> entity, SpriteSystem sprite)
+    public IEnumerable<SpriteLayer> EnumerateStates(HashSet<string>?[] layers, Entity<SpriteComponent> entity, SpriteSystem sprite)
     {
         for (byte i = 0; i < 8; i+= 2)
         {

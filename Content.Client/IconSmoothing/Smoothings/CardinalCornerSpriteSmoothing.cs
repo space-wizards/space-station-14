@@ -13,7 +13,7 @@ public sealed partial class CardinalCornerSpriteSmoothing : CornerSpriteSmoothin
     [DataField(required:true)]
     public HashSet<string> AltMask { get; set; }
 
-    public override IEnumerable<(string key, string state)> EnumerateStates(HashSet<string>?[] layers, Entity<SpriteComponent> entity, SpriteSystem sprite)
+    public override IEnumerable<SpriteLayer> EnumerateStates(HashSet<string>?[] layers, Entity<SpriteComponent> entity, SpriteSystem sprite)
     {
         var match = Direction8Flag.None;
         var altMatch = Direction8Flag.None;
@@ -33,7 +33,7 @@ public sealed partial class CardinalCornerSpriteSmoothing : CornerSpriteSmoothin
             if (!GetCorners(i, out mask))
                 continue;
 
-            yield return (GetCornerLayerKey(i), GetCornerState((byte)(match & mask), (byte)(altMatch & mask), seen));
+            yield return new SpriteLayer(GetCornerLayerKey(i), GetCornerState((byte)(match & mask), (byte)(altMatch & mask), seen));
             seen += 2;
         }
     }

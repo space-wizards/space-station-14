@@ -44,7 +44,7 @@ public partial class CornerSpriteSmoothing : ISpriteSmoothState
         sprite.LayerSetDirOffset(entity.AsNullable(), key, offset);
     }
 
-    public virtual IEnumerable<(string key, string state)> EnumerateStates(HashSet<string>?[] layers, Entity<SpriteComponent> entity, SpriteSystem sprite)
+    public virtual IEnumerable<SpriteLayer> EnumerateStates(HashSet<string>?[] layers, Entity<SpriteComponent> entity, SpriteSystem sprite)
     {
         var match = Direction8Flag.None;
         byte seen = 0;
@@ -56,7 +56,7 @@ public partial class CornerSpriteSmoothing : ISpriteSmoothState
             if (!GetCorners(i, out var mask))
                 continue;
 
-            yield return (GetCornerLayerKey(i), GetState((byte)(match & mask), seen));
+            yield return new SpriteLayer(GetCornerLayerKey(i), GetState((byte)(match & mask), seen));
             seen += 2;
         }
     }

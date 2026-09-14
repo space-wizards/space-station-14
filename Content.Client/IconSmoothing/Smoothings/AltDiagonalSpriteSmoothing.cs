@@ -20,7 +20,7 @@ public sealed partial class AltDiagonalSpriteSmoothing : CornerSpriteSmoothing
         sprite.LayerMapSet(entity.AsNullable(), LayerKey, sprite.AddRsiLayer(entity.AsNullable(), Base + 0, index: Index));
     }
 
-    public override IEnumerable<(string key, string state)> EnumerateStates(HashSet<string>?[] layers, Entity<SpriteComponent> entity, SpriteSystem sprite)
+    public override IEnumerable<SpriteLayer> EnumerateStates(HashSet<string>?[] layers, Entity<SpriteComponent> entity, SpriteSystem sprite)
     {
         if (!GetCorners(2, out var mask))
         {
@@ -42,7 +42,7 @@ public sealed partial class AltDiagonalSpriteSmoothing : CornerSpriteSmoothing
                 altmatch |= (Direction8Flag)(1 << i);
         }
 
-        yield return (LayerKey, GetState((match & mask) == mask, (altmatch & mask) == mask));
+        yield return new SpriteLayer(LayerKey, GetState((match & mask) == mask, (altmatch & mask) == mask));
     }
 
     private string GetState(bool match, bool altMatch)
