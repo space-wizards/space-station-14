@@ -148,7 +148,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnIconSmoothGridShutdown(Entity<IconSmoothGridComponent> entity, ref ComponentShutdown args)
+    private void OnIconSmoothGridShutdown(Entity<IconSmoothGridComponent> entity, ref ComponentRemove args)
     {
         foreach (var (_, chunkData) in entity.Comp.Chunks)
         {
@@ -367,10 +367,10 @@ public sealed partial class IconSmoothSystem : EntitySystem
         if (!TryGetCache((grid, cacheComp), (chunk, relative), out var chunkData, out var tileEntry))
         {
             /*
-             * This is a warning and not an error because PVS will sometimes apply the Anchoring event twice to an entity in some circumstances.
+             * This is info and not a warning or error because PVS will sometimes apply the Anchoring event twice to an entity in some circumstances.
              * This exists before we DecrementRefCount so we should be fine, if DecrementRefCount ever doesn't represent the actual count, then we'll get real test fails!
              */
-            Log.Warning($"{tile} on grid {ToPrettyString(grid)} was not cached despite an entity {ToPrettyString(removed)} with {nameof(IconSmoothComponent)} existing there.");
+            Log.Info($"{tile} on grid {ToPrettyString(grid)} was not cached despite an entity {ToPrettyString(removed)} with {nameof(IconSmoothComponent)} existing there.");
             return;
         }
 
@@ -509,6 +509,23 @@ public sealed partial class IconSmoothSystem : EntitySystem
             _keyCaches[i].RefCount = _freeListHead;
             _freeListHead = (byte)i;
         }
+    }
+
+    /// <summary>
+    /// Debug method, counts the total number of tracked entities in the cache.
+    /// </summary>
+    public int CountTracked()
+    {
+        var count = 0;
+        foreach (var cache in _keyCaches)
+        {
+            if (cache.Keys == null)
+                continue;
+
+            count += cache.RefCount;
+        }
+
+        return count;
     }
 
     private string DumpCache()
