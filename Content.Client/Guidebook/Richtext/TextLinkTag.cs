@@ -16,6 +16,8 @@ public sealed class TextLinkTag : IMarkupTagHandler
 
     public string Name => "textlink";
 
+    private ISawmill _log = IoCManager.Resolve<ILogManager>().GetSawmill("textlinktag");
+
     /// <inheritdoc/>
     public bool TryCreateControl(MarkupNode node, [NotNullWhen(true)] out Control? control)
     {
@@ -53,7 +55,7 @@ public sealed class TextLinkTag : IMarkupTagHandler
         if (control.TryGetParentHandler<ILinkClickHandler>(out var handler))
             handler.HandleClick(link);
         else
-            Logger.Warning("Warning! No valid ILinkClickHandler found.");
+            _log.Warning("Warning! No valid ILinkClickHandler found.");
     }
 }
 
