@@ -42,7 +42,7 @@ public sealed partial class NearbyComponentsConditionSystem : EntitySystem
 }
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class NearbyComponentsCondition : EntityConditionBase<NearbyComponentsCondition>, IConditionWithThreshold
+public sealed partial class NearbyComponentsCondition : EntityConditionBase<NearbyComponentsCondition>, IWithThreshold
 {
     /// <summary>
     /// Does the entity need to be anchored.
@@ -61,7 +61,7 @@ public sealed partial class NearbyComponentsCondition : EntityConditionBase<Near
 
     public override string EntityConditionGuidebookText(IPrototypeManager prototype) => String.Empty;
 
-    public IConditionWithThreshold.Comparator Comparison => IConditionWithThreshold.Comparator.GreaterEqual;
+    public IWithThreshold.Comparator Comparison => IWithThreshold.Comparator.GreaterEqual;
 
     public float Threshold => 1;
 }

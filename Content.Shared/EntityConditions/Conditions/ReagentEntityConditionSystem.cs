@@ -28,7 +28,7 @@ public sealed partial class ReagentEntityConditionSystem : EntitySystem
 }
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class ReagentCondition : EntityConditionBase<ReagentCondition>, IConditionWithBoundary
+public sealed partial class ReagentCondition : EntityConditionBase<ReagentCondition>, IWithBoundary
 {
     [DataField]
     public FixedPoint2 Min = FixedPoint2.Zero;
@@ -50,15 +50,12 @@ public sealed partial class ReagentCondition : EntityConditionBase<ReagentCondit
             ("min", Min.Float()));
     }
 
-    float IConditionWithBoundary.LowerBound => 0;
+    float IWithBoundary.LowerBound => 0;
 
-    bool IConditionWithBoundary.IncludeLowerBound => true;
+    bool IWithBoundary.IncludeLowerBound => true;
 
-    float IConditionWithBoundary.UpperBound => 1;
+    float IWithBoundary.UpperBound => 1;
 
-    bool IConditionWithBoundary.IncludeUpperBound => true;
-/// <summary>
-/// Inverted is done by EntityConditionBase and <see cref="Shared"/>
-/// </summary>
-    bool IConditionWithBoundary.Inverted => false;
+    bool IWithBoundary.IncludeUpperBound => true;
+
 }

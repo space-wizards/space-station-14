@@ -27,7 +27,7 @@ public interface ICondition<TCondition> : ICondition
 /// <summary>
 /// Flag a condition as satisfied based on comparison to a threshold.
 /// </summary>
-public interface IConditionWithThreshold
+public interface IWithThreshold
 {
     /// <summary>
     /// Standard mathematically comparators
@@ -43,7 +43,7 @@ public interface IConditionWithThreshold
 
     /// <summary>
     /// Which comparison is to be used?
-    /// Hint: [Value of Condition] [<see cref="IConditionWithThreshold.Comparison"/>] [<see cref="IConditionWithThreshold.Threshold"/>]
+    /// Hint: [Value of Condition] [<see cref="IWithThreshold.Comparison"/>] [<see cref="IWithThreshold.Threshold"/>]
     /// </summary>
     Comparator Comparison { get; }
 
@@ -57,7 +57,7 @@ public interface IConditionWithThreshold
 /// <summary>
 /// Flag a condition to be satisfied based on a boundary window.
 /// </summary>
-public interface IConditionWithBoundary
+public interface IWithBoundary
 {
     /// <summary>
     /// The lower value of the boundary
@@ -79,8 +79,9 @@ public interface IConditionWithBoundary
     /// </summary>
     bool IncludeUpperBound { get; }
 
-    /// <summary>
-    /// If true -> Value must be outside our defined boundary.
-    /// </summary>
+}
+
+public interface IWithInverted
+{
     bool Inverted { get; }
 }

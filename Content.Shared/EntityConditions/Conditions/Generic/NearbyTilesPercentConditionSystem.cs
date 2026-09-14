@@ -73,7 +73,7 @@ public sealed partial class NearbyTilesPercentConditionSystem :EntitySystem
 
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class NearbyTilesPercentCondition : EntityConditionBase<NearbyTilesPercentCondition>, IConditionWithThreshold
+public sealed partial class NearbyTilesPercentCondition : EntityConditionBase<NearbyTilesPercentCondition>, IWithThreshold
 {
     [DataField]
     public bool IgnoreAnchored;
@@ -89,7 +89,7 @@ public sealed partial class NearbyTilesPercentCondition : EntityConditionBase<Ne
 
     public override string EntityConditionGuidebookText(IPrototypeManager prototype) => String.Empty;
 
-    public IConditionWithThreshold.Comparator Comparison => IConditionWithThreshold.Comparator.GreaterEqual;
+    public IWithThreshold.Comparator Comparison => IWithThreshold.Comparator.GreaterEqual;
 
     public float Threshold => Percent;
 }

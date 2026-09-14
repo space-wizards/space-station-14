@@ -69,7 +69,7 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem
     /// <returns>Returns true if we meet the condition and false otherwise</returns>
     public bool TryCondition<T>(EntityUid target, T condition, EntityUid? sourceEnt = null) where T : EntityCondition
     {
-        return condition.Inverted != _conditionSystem.IsConditionSatisfied(condition,target, sourceEnt);
+        return _conditionSystem.IsConditionSatisfied(condition,target, sourceEnt);
     }
 
 }
@@ -78,14 +78,14 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem
 /// A basic condition which can be checked for on an entity via events.
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
-public abstract partial class EntityCondition : ICondition
+public abstract partial class EntityCondition : ICondition, IWithInverted
 {
 
     /// <summary>
     /// If true, invert the result. So false returns true and true returns false!
     /// </summary>
     [DataField]
-    public bool Inverted;
+    public bool Inverted { get; set; }
 
     /// <summary>
     /// A basic description of this condition, which displays in the guidebook.

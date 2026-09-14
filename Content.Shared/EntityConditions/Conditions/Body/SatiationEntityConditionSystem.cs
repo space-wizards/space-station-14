@@ -33,7 +33,7 @@ public sealed partial class SatiationEntityConditionSystem : EntitySystem
 }
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class SatiationCondition : EntityConditionBase<SatiationCondition>, IConditionWithBoundary
+public sealed partial class SatiationCondition : EntityConditionBase<SatiationCondition>, IWithBoundary
 {
     /// <summary>
     /// The value above which this condition will fail. If <see cref="MaxInclusive"/> is false, the condition will fail
@@ -84,5 +84,4 @@ public sealed partial class SatiationCondition : EntityConditionBase<SatiationCo
 
     public bool IncludeUpperBound => MaxInclusive;
 
-     bool IConditionWithBoundary.Inverted => false;
 }

@@ -24,7 +24,7 @@ public sealed partial class HasAllTagsEntityConditionSystem : EntitySystem
 }
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class AllTagsCondition : EntityConditionBase<AllTagsCondition>, IConditionWithThreshold
+public sealed partial class AllTagsCondition : EntityConditionBase<AllTagsCondition>, IWithThreshold
 {
     /// <summary>
     /// Tags which all need to be possessed to fulfill the condition.
@@ -49,7 +49,7 @@ public sealed partial class AllTagsCondition : EntityConditionBase<AllTagsCondit
         return Loc.GetString("entity-condition-guidebook-has-tag", ("tag", names), ("invert", Inverted));
     }
 
-    IConditionWithThreshold.Comparator IConditionWithThreshold.Comparison => IConditionWithThreshold.Comparator.Equal;
+    IWithThreshold.Comparator IWithThreshold.Comparison => IWithThreshold.Comparator.Equal;
 
-    float IConditionWithThreshold.Threshold => Tags.Length;
+    float IWithThreshold.Threshold => Tags.Length;
 }

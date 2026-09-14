@@ -42,7 +42,7 @@ public sealed partial class NearbyAccessConditionSystem : EntitySystem
 
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class NearbyAccessCondition : EntityConditionBase<NearbyAccessCondition> , IConditionWithThreshold
+public sealed partial class NearbyAccessCondition : EntityConditionBase<NearbyAccessCondition> , IWithThreshold
 {
     // This exists because of door electronics contained inside doors.
     /// <summary>
@@ -65,7 +65,7 @@ public sealed partial class NearbyAccessCondition : EntityConditionBase<NearbyAc
 
     public override string EntityConditionGuidebookText(IPrototypeManager prototype) => String.Empty;
 
-    public IConditionWithThreshold.Comparator Comparison => IConditionWithThreshold.Comparator.GreaterEqual;
+    public IWithThreshold.Comparator Comparison => IWithThreshold.Comparator.GreaterEqual;
 
     public float Threshold => 1;
 }

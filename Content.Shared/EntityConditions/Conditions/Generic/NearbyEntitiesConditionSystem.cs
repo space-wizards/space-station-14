@@ -42,7 +42,7 @@ public sealed partial class NearbyEntitiesConditionSystem : EntitySystem
 
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class NearbyEntitiesCondition : EntityConditionBase<NearbyEntitiesCondition>, IConditionWithThreshold
+public sealed partial class NearbyEntitiesCondition : EntityConditionBase<NearbyEntitiesCondition>, IWithThreshold
 {
     /// <summary>
     /// How many of the entity need to be nearby.
@@ -58,7 +58,7 @@ public sealed partial class NearbyEntitiesCondition : EntityConditionBase<Nearby
 
     public override string EntityConditionGuidebookText(IPrototypeManager prototype) => String.Empty;
 
-    public IConditionWithThreshold.Comparator Comparison => IConditionWithThreshold.Comparator.GreaterEqual;
+    public IWithThreshold.Comparator Comparison => IWithThreshold.Comparator.GreaterEqual;
 
     public float Threshold => 1;
 }
