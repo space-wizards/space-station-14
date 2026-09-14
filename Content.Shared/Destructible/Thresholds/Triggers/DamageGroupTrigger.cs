@@ -18,15 +18,15 @@ public sealed partial class DamageGroupTrigger : IThresholdTrigger
     /// The damage group to check for.
     /// </summary>
     [DataField(required: true)]
-    public ProtoId<DamageGroupPrototype> DamageGroup = default!;
+    public ProtoId<DamageGroupPrototype> DamageGroup;
 
     /// <summary>
     /// The amount of damage at which this threshold will trigger.
     /// </summary>
     [DataField(required: true)]
-    public FixedPoint2 Damage = default!;
+    public FixedPoint2 Damage;
 
-    public bool Reached(Entity<DamageableComponent> damageable, SharedDestructibleSystem system)
+    public bool Reached(Entity<DamageableComponent> damageable, DestructibleSystem system)
     {
         return system.Damageable.GetDamagePerGroup(damageable.Owner).GetValueOrDefault(DamageGroup) >= Damage;
     }

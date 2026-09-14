@@ -2,7 +2,6 @@
 using Content.Shared.CCVar;
 using Content.Shared.Destructible;
 using Content.Shared.Explosion.EntitySystems;
-using Content.Shared.Jittering;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
@@ -21,7 +20,7 @@ public abstract partial class GasMaxPressureSystem<T> : EntitySystem where T : I
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] protected SharedAppearanceSystem Appearance = default!;
     [Dependency] protected SharedAtmosphereSystem Atmos = default!;
-    [Dependency] private SharedDestructibleSystem _destructible = default!;
+    [Dependency] private DestructibleSystem _destructible = default!;
     [Dependency] private SharedExplosionSystem _explosions = default!;
     [Dependency] protected SharedAudioSystem Audio = default!;
 

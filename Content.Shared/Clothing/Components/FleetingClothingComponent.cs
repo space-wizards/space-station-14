@@ -1,3 +1,4 @@
+using Content.Shared.Destructible;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
@@ -55,7 +56,7 @@ public sealed partial class FleetingClothingComponent : Component
     public LocId? ExamineOthers = "fleeting-clothing-component-default-examine";
 
     /// <summary>
-    /// If true this entity will use <see cref="SharedDestructibleSystem.DestroyEntity"/> rather than simply be deleted.
+    /// If true this entity will use <see cref="DestructibleSystem.DestroyEntity"/> rather than simply be deleted.
     /// Use this if you need to do stuff before deleting it, for example emptying storage containers so that the contents don't get deleted with with.
     /// If false the clothing item will just be deleted instead.
     /// </summary>

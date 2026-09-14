@@ -19,7 +19,7 @@ public sealed partial class HandheldGrinderSystem : EntitySystem
     [Dependency] private SharedReagentGrinderSystem _reagentGrinder = default!;
     [Dependency] private SharedSolutionContainerSystem _solution = default!;
     [Dependency] private SharedStackSystem _stackSystem = default!;
-    [Dependency] private SharedDestructibleSystem _destructibleSystem = default!;
+    [Dependency] private DestructibleSystem _destructibleSystem = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedPuddleSystem _puddle = default!;

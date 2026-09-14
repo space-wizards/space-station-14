@@ -12,7 +12,7 @@ public sealed partial class GibbingSystem : EntitySystem
     [Dependency] private INetManager _net = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedDestructibleSystem _destructible = default!;
+    [Dependency] private DestructibleSystem _destructible = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
@@ -22,7 +22,7 @@ public sealed partial class GibbingSystem : EntitySystem
     /// Attempts to gib an entity.
     /// </summary>
     /// <remarks>
-    /// <see cref="SharedDestructibleSystem.DestroyEntity" /> gets the final say on if an entity ends up deleted.
+    /// <see cref="DestructibleSystem.DestroyEntity" /> gets the final say on if an entity ends up deleted.
     /// If you want to intercept gibbing, intercept <see cref="DestructionAttemptEvent" />
     /// </remarks>
     /// <param name="ent">The entity to gib.</param>

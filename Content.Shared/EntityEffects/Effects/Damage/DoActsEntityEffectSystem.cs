@@ -8,7 +8,7 @@ namespace Content.Shared.EntityEffects.Effects.Damage;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class DoActsEntityEffectSystem : EntityEffectSystem<TransformComponent, DoActs>
 {
-    [Dependency] private SharedDestructibleSystem _destructible = default!;
+    [Dependency] private DestructibleSystem _destructible = default!;
 
     protected override void Effect(Entity<TransformComponent> entity, ref EntityEffectEvent<DoActs> args)
     {

@@ -1,7 +1,7 @@
-using Content.Server.Destructible;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat.Ranged;
+using Content.Shared.Destructible;
 using Content.Shared.Destructible;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;

@@ -1,10 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
-using Content.Shared.Destructible;
 using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Destructible.Thresholds.Triggers;
 using Content.Shared.EntityEffects;
@@ -13,12 +12,15 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
 using JetBrains.Annotations;
 
-namespace Content.Server.Destructible;
+namespace Content.Shared.Destructible;
 
 [UsedImplicitly]
-public sealed partial class DestructibleSystem : SharedDestructibleSystem
+public sealed partial class DestructibleSystem : EntitySystem
 {
-    [Dependency] private IAdminLogManager _adminLogger = default!;
+    // TODO: I don't really like this but this is out of scope to re-do destructible triggers while refactoring damageable
+    [Dependency] public DamageableSystem Damageable = default!;
+
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
 
     /// <summary>
@@ -51,6 +53,7 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
         var (uid, comp) = entity;
 
         comp.IsBroken = false;
+        Dirty(entity);
 
         foreach (var threshold in comp.Thresholds)
         {
@@ -62,15 +65,16 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
                 // Convert behaviors into string for logs
                 var triggeredBehaviors = string.Join(", ",
                     threshold.Behaviors.Select(behavior =>
-                {
-                    if (behavior.Impact is { } impact && logImpact <= impact)
-                        logImpact = impact;
-                    if (behavior is DoActs doActs)
                     {
-                        return $"{behavior.GetType().Name}:{doActs.Acts.ToString()}";
-                    }
-                    return behavior.GetType().Name;
-                }));
+                        if (behavior.Impact is { } impact && logImpact <= impact)
+                            logImpact = impact;
+                        if (behavior is DoActs doActs)
+                        {
+                            return $"{behavior.GetType().Name}:{doActs.Acts.ToString()}";
+                        }
+
+                        return behavior.GetType().Name;
+                    }));
 
                 // If it doesn't have a humanoid component, it's probably not particularly notable?
                 if (logImpact > LogImpact.Medium && !HasComp<HumanoidProfileComponent>(uid))
@@ -95,7 +99,9 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
             if (threshold.OldTriggered)
             {
                 comp.IsBroken |= threshold.Behaviors.Any(b => b is DoActs doActs &&
-                    (doActs.HasAct(ThresholdActs.Breakage) || doActs.HasAct(ThresholdActs.Destruction)));
+                                                              (doActs.HasAct(ThresholdActs.Breakage) ||
+                                                               doActs.HasAct(ThresholdActs.Destruction)));
+                Dirty(entity);
             }
 
             // if destruction behavior (or some other deletion effect) occurred, don't run other triggers.
@@ -109,7 +115,7 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
     /// </summary>
     public bool Triggered(DamageThreshold threshold, Entity<DamageableComponent> owner)
     {
-        if (threshold.Triggered && threshold.TriggersOnce)
+        if (threshold is { Triggered: true, TriggersOnce: true })
             return false;
 
         if (threshold.OldTriggered)
@@ -264,6 +270,70 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
                 }
             }
         }
+
         return damageNeeded;
     }
+
+    /// <summary>
+    /// Force entity to be destroyed and deleted.
+    /// </summary>
+    public bool DestroyEntity(EntityUid owner)
+    {
+        if (!CanDestroy(owner))
+            return false;
+
+        var eventArgs = new DestructionEventArgs();
+        RaiseLocalEvent(owner, eventArgs);
+
+        PredictedQueueDel(owner);
+        return true;
+    }
+
+    /// <param name="owner">Entity that your checking.</param>
+    /// <returns>If it can be destroyed</returns>
+    public bool CanDestroy(EntityUid owner)
+    {
+        var ev = new DestructionAttemptEvent();
+        RaiseLocalEvent(owner, ev);
+        if (ev.Cancelled)
+            return false;
+
+        return true;
+    }
+
+    /// <summary>
+    /// Force entity to break.
+    /// </summary>
+    public void BreakEntity(EntityUid owner)
+    {
+        var eventArgs = new BreakageEventArgs();
+        RaiseLocalEvent(owner, eventArgs);
+    }
+
+    // Currently only used for destructible integration tests. Unless other uses are found for this, maybe this should just be removed and the tests redone.
+    /// <summary>
+    /// Event raised when a <see cref="DamageThreshold"/> is reached.
+    /// </summary>
+    public sealed class DamageThresholdReached(DestructibleComponent parent, DamageThreshold threshold)
+        : EntityEventArgs
+    {
+        public readonly DestructibleComponent Parent = parent;
+
+        public readonly DamageThreshold Threshold = threshold;
+    }
 }
+
+/// <summary>
+/// Raised before an entity is about to be destroyed and deleted
+/// </summary>
+public sealed class DestructionAttemptEvent : CancellableEntityEventArgs;
+
+/// <summary>
+/// Raised when entity is destroyed and about to be deleted.
+/// </summary>
+public sealed class DestructionEventArgs : EntityEventArgs;
+
+/// <summary>
+/// Raised when entity was heavy damage and about to break.
+/// </summary>
+public sealed class BreakageEventArgs : EntityEventArgs;

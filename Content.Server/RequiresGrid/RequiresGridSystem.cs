@@ -1,4 +1,4 @@
-﻿using Content.Server.Destructible;
+﻿using Content.Shared.Destructible;
 
 namespace Content.Server.RequiresGrid;
 

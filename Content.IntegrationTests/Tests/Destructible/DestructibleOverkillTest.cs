@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
-using Content.Server.Destructible;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
@@ -13,7 +12,7 @@ using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototy
 namespace Content.IntegrationTests.Tests.Destructible;
 
 /// <summary>
-/// Tests ensuring the correct operation of <see cref="SharedDestructibleSystem"/>.
+/// Tests ensuring the correct operation of <see cref="DestructibleSystem"/>.
 /// </summary>
 public sealed class DestructibleOverkillTest : GameTest
 {

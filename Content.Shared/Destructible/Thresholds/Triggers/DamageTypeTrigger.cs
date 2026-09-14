@@ -18,15 +18,15 @@ public sealed partial class DamageTypeTrigger : IThresholdTrigger
     /// The damage type to check for.
     /// </summary>
     [DataField(required: true)]
-    public ProtoId<DamageTypePrototype> DamageType = default!;
+    public ProtoId<DamageTypePrototype> DamageType;
 
     /// <summary>
     /// The amount of damage at which this threshold will trigger.
     /// </summary>
     [DataField(required: true)]
-    public FixedPoint2 Damage = default!;
+    public FixedPoint2 Damage;
 
-    public bool Reached(Entity<DamageableComponent> damageable, SharedDestructibleSystem system)
+    public bool Reached(Entity<DamageableComponent> damageable, DestructibleSystem system)
     {
         return system.Damageable.GetAllDamage(damageable.AsNullable()).DamageDict.TryGetValue(DamageType, out var damageReceived) &&
                damageReceived >= Damage;

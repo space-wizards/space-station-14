@@ -1,7 +1,7 @@
 ﻿using Content.Server.Damage.Components;
-using Content.Server.Destructible;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Destructible;
 using Content.Shared.Examine;
 using Content.Shared.Rounding;
 

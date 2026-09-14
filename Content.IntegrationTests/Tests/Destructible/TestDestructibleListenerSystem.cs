@@ -13,16 +13,16 @@ namespace Content.IntegrationTests.Tests.Destructible
     [Reflect(false)]
     public sealed partial class TestDestructibleListenerSystem : EntitySystem
     {
-        public readonly List<SharedDestructibleSystem.DamageThresholdReached> ThresholdsReached = new();
+        public readonly List<DestructibleSystem.DamageThresholdReached> ThresholdsReached = new();
 
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<DestructibleComponent, SharedDestructibleSystem.DamageThresholdReached>(AddThresholdsToList);
+            SubscribeLocalEvent<DestructibleComponent, DestructibleSystem.DamageThresholdReached>(AddThresholdsToList);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         }
 
-        public void AddThresholdsToList(EntityUid _, DestructibleComponent comp, SharedDestructibleSystem.DamageThresholdReached args)
+        public void AddThresholdsToList(EntityUid _, DestructibleComponent comp, DestructibleSystem.DamageThresholdReached args)
         {
             ThresholdsReached.Add(args);
         }

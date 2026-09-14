@@ -1,4 +1,5 @@
 using Content.Shared.Destructible.Thresholds;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Destructible;
 
@@ -6,21 +7,21 @@ namespace Content.Shared.Destructible;
 /// When attached to an <see cref="Robust.Shared.GameObjects.EntityUid"/>, allows it to take damage
 /// and triggers thresholds when reached.
 /// </summary>
-[RegisterComponent, Access(typeof(SharedDestructibleSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(DestructibleSystem))]
 public sealed partial class DestructibleComponent : Component
 {
     /// <summary>
     /// A list of damage thresholds for the entity;
     /// includes their triggers and resultant behaviors.
     /// </summary>
-    [DataField(serverOnly: true, customTypeSerializer: typeof(DamageThresholdsSerializer))]
+    [DataField(customTypeSerializer: typeof(DamageThresholdsSerializer))]
     [AlwaysPushInheritance]
     public List<DamageThreshold> Thresholds = [];
 
     /// <summary>
     /// Specifies whether the entity has passed a damage threshold that causes it to break.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool IsBroken;
 
     /// <summary>
