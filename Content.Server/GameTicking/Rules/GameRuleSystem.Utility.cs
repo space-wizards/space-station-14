@@ -71,7 +71,7 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
         return GetEntitiesWithComponentOnStation<TComponent>(onlyAnchored, out _);
     }
 
-    /// <param name="station">Optional station to search. If null, a random eligible station is used.</param>
+    /// <param name="station">The station picked to search for the entities.</param>
     /// <inheritdoc cref="GetEntitiesWithComponentOnStation{TComponent}(bool)" />
     protected HashSet<Entity<TComponent>> GetEntitiesWithComponentOnStation<TComponent>(bool onlyAnchored,
         out EntityUid? station)
