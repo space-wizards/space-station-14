@@ -32,7 +32,6 @@ namespace Content.Client.GameTicking.Managers
         [ViewVariables] public ResolvedSoundSpecifier? RestartSound { get; private set; }
         [ViewVariables] public ProtoId<LobbyBackgroundPrototype>? LobbyBackground { get; private set; }
         [ViewVariables] public bool DisallowedLateJoin { get; private set; }
-        [ViewVariables] public string? ServerInfoBlob { get; private set; }
         [ViewVariables] public new int RoundId { get; private set; }
         [ViewVariables] public int PlayerCount { get; private set; }
         [ViewVariables] public int ReadyCount { get; private set; }
@@ -147,7 +146,6 @@ namespace Content.Client.GameTicking.Managers
 
         private void LobbyInfo(TickerLobbyInfoEvent message)
         {
-            ServerInfoBlob = message.TextBlob;
             RoundId = message.RoundId;
             PlayerCount = message.PlayerCount;
             ReadyCount = message.ReadyCount;

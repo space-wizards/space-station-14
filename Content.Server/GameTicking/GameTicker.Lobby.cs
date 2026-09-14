@@ -74,18 +74,8 @@ namespace Content.Server.GameTicking
 
             var gmTitle = Decoy == null ? Loc.GetString(preset.ModeTitle) : Loc.GetString(Decoy.ModeTitle);
             var desc = Decoy == null ? Loc.GetString(preset.Description) : Loc.GetString(Decoy.Description);
-            var textBlob = Loc.GetString(
-                RunLevel == GameRunLevel.PreRoundLobby
-                    ? "game-ticker-get-info-preround-text"
-                    : "game-ticker-get-info-text",
-                ("roundId", RoundId),
-                ("playerCount", playerCount),
-                ("readyCount", readyCount),
-                ("mapName", stationNames.ToString()),
-                ("gmTitle", gmTitle),
-                ("desc", desc));
 
-            return new TickerLobbyInfoEvent(textBlob, RoundId, playerCount, readyCount, stationNames.ToString(), gmTitle, desc);
+            return new TickerLobbyInfoEvent(RoundId, playerCount, readyCount, stationNames.ToString(), gmTitle, desc);
         }
 
         private TickerConnectionStatusEvent GetConnectionStatusMsg()

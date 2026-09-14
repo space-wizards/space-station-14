@@ -119,7 +119,6 @@ namespace Content.Shared.GameTicking
     /// </summary>
     [Serializable, NetSerializable]
     public sealed class TickerLobbyInfoEvent(
-        string textBlob,
         int roundId,
         int playerCount,
         int readyCount,
@@ -127,11 +126,6 @@ namespace Content.Shared.GameTicking
         string gamemodeTitle,
         string desc) : EntityEventArgs
     {
-        /// <summary>
-        /// The full localized lobby information text.
-        /// </summary>
-        public string TextBlob { get; } = textBlob;
-
         /// <summary>
         /// The current round number.
         /// </summary>
