@@ -158,6 +158,7 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
 
         for (var i = 0; i < numAttempts; i++)
         {
+            // Find random tile within list.
             var nextTileIndex = RobustRandom.Next(totalTiles);
             var tileRef = gridTiles[nextTileIndex];
             gridTiles.RemoveSwap(nextTileIndex);
@@ -168,6 +169,7 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
                 break;
             }
 
+            // Invalid tile, try again.
             if (_atmosphere.IsTileSpace(targetGrid, Transform(targetGrid).MapUid, tileRef.GridIndices)
                 || _atmosphere.IsTileAirBlockedCached(targetGrid, tileRef.GridIndices))
             {
