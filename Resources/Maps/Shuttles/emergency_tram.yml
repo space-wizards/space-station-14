@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 289.0.0
+  engineVersion: 289.0.3
   forkId: ""
   forkVersion: ""
-  time: 09/13/2026 13:03:42
-  entityCount: 1195
+  time: 09/14/2026 14:31:20
+  entityCount: 1192
 maps: []
 grids:
 - 2
@@ -4782,23 +4782,23 @@ entities:
       pos: 14.5,-0.5
     - type: AtmosPipeColor
       color: '#0335FCFF'
-- proto: GeneratorRTG
+- proto: GeneratorBasic15kW
   entities:
-  - uid: 1843
-    components:
-    - type: Transform
-      parent: 2
-      pos: 3.5,-20.5
-  - uid: 1845
-    components:
-    - type: Transform
-      parent: 2
-      pos: 3.5,-18.5
-  - uid: 1916
+  - uid: 387
     components:
     - type: Transform
       parent: 2
       pos: 4.5,-18.5
+  - uid: 388
+    components:
+    - type: Transform
+      parent: 2
+      pos: 3.5,-18.5
+  - uid: 389
+    components:
+    - type: Transform
+      parent: 2
+      pos: 3.5,-20.5
 - proto: GeneratorWallmountAPU
   entities:
   - uid: 2373
@@ -6159,25 +6159,6 @@ entities:
       parent: 2
       rot: -1.5707963267948966 rad
       pos: 19.5,-7.5
-- proto: SpawnMobMonkey
-  entities:
-  - uid: 2352
-    components:
-    - type: Transform
-      parent: 2
-      pos: 9.5,-20.5
-  - uid: 2417
-    components:
-    - type: Transform
-      parent: 2
-      pos: 9.5,-23.5
-- proto: SpawnPointObserver
-  entities:
-  - uid: 2555
-    components:
-    - type: Transform
-      parent: 2
-      pos: 11.5,-4.5
 - proto: SpiderWeb
   entities:
   - uid: 2321
