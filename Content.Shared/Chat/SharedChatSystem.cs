@@ -96,26 +96,13 @@ public abstract partial class SharedChatSystem : EntitySystem
         if (!ChatNameLinks)
             return;
 
-        if (args.SenderSession.AttachedEntity is not { Valid: true } ent || !CanClickMessageSender(ent))
-        {
-            return;
-        }
-
         if (GetEntity(msg.Target) is not { Valid: true } target || !Exists(target))
-        {
-            return;
-        }
-
-        if (ent == target)
             return;
 
-        // TODO: Move this to Ghost System!
-        if (_tag.HasTag(target, FollowerSystem.PreventGhostnadoWarpTag) || !_admin.IsAdmin(ent)) //tag is used on any ghost that shouldn't be teleported to
-        {
+        if (args.SenderSession.AttachedEntity is not { Valid: true } ent)
             return;
-        }
 
-        _follower.StartFollowingEntity(ent, target);
+        ClickMessageSender(target, ent);
     }
 
     private void CacheRadios()
@@ -354,23 +341,64 @@ public abstract partial class SharedChatSystem : EntitySystem
         return rawmsg;
     }
 
+    /// <inheritdoc cref="CanClickMessageSender(EntityUid,EntityUid?)"/>
+    public bool CanClickMessageSender(NetEntity target, EntityUid? ent = null)
+    {
+        return CanClickMessageSender(GetEntity(target), ent);
+    }
+
     /// <summary>
     /// Checks whether an entity can click a chat message link.
     /// </summary>
+    /// <param name="target">Target of the message link</param>
     /// <param name="ent">Entity that is attempting to click the chat message, defaults to attached player entity if null.</param>
     /// <returns>True if the entity is able to click the link</returns>
-    public bool CanClickMessageSender(EntityUid? ent = null)
+    public bool CanClickMessageSender(EntityUid target, EntityUid? ent = null)
     {
-        if (!ChatNameLinks)
-            return false;
-
         ent ??= _player.LocalEntity;
         if (ent == null)
             return false;
 
-        var ev = new CanClickEntityLinkEvent();
+        if (!CanClick(target, ent.Value))
+            return false;
+
+        var ev = new ClickEntityLinkEvent(target, true);
         RaiseLocalEvent(ent.Value, ref ev);
         return ev.Handled;
+    }
+
+    private bool CanClick(EntityUid target, EntityUid ent)
+    {
+        if (!ChatNameLinks)
+            return false;
+
+        // TODO: Move this to Ghost System!
+        if (_tag.HasTag(target, FollowerSystem.PreventGhostnadoWarpTag) && !_admin.IsAdmin(ent)) //tag is used on any ghost that shouldn't be teleported to
+            return false;
+
+        if (ent == target)
+            return false;
+
+        return true;
+    }
+
+    /// <summary>
+    /// Teleports an entity to a target via <see cref="ClickEntityLinkEvent"/>
+    /// </summary>
+    /// <param name="target">Target we are attempted to teleport to</param>
+    /// <param name="ent">Entity that is attempting to warp</param>
+    /// <returns>True if warp was successful.</returns>
+    public void ClickMessageSender(EntityUid target, EntityUid? ent = null)
+    {
+        ent ??= _player.LocalEntity;
+        if (ent == null)
+            return;
+
+        if (!CanClick(target, ent.Value))
+            return;
+
+        var ev = new ClickEntityLinkEvent(target, false);
+        RaiseLocalEvent(ent.Value, ref ev);
     }
 
     public static string GetStringInsideTag(ChatMessage message, string tag)

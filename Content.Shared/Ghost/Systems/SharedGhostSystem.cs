@@ -122,9 +122,15 @@ public abstract partial class SharedGhostSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnGhostClickMessageSenderAttempt(Entity<GhostComponent> ent, ref CanClickEntityLinkEvent args)
+    private void OnGhostClickMessageSenderAttempt(Entity<GhostComponent> ent, ref ClickEntityLinkEvent args)
     {
+        if (args.Handled)
+            return;
+
         args.Handled = true;
+
+        if (!args.Pure)
+            _follower.StartFollowingEntity(ent, args.Target);
     }
 }
 

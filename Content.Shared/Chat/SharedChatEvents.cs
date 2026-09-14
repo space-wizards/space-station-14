@@ -77,8 +77,13 @@ public sealed class EntitySpokeEvent : EntityEventArgs
     }
 }
 
+/// <summary>
+/// Checks if an entity link can be clicked on or not, so that it may be teleported to.
+/// </summary>
+/// <param name="Target">Target we are attempting to teleport to.</param>
+/// <param name="Pure">If pure is true, will only act as an attempt event. If pure is false, will teleport to the entity.</param>
 [ByRefEvent]
-public record struct CanClickEntityLinkEvent
+public record struct ClickEntityLinkEvent(EntityUid Target, bool Pure)
 {
     public bool Handled;
 }
