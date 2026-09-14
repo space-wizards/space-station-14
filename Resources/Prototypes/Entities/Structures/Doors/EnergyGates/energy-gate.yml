@@ -57,7 +57,6 @@
       - Pullable # no dragging things in
   - type: Damageable
     damageModifierSet: SteelStaticMod
-  - type: AccessReader
   - type: Construction
     graph: EnergyGate
     node: energyGate
@@ -76,6 +75,7 @@
   parent: [EnergyGateBase, StructureHealthDoor]
   id: EnergyGate
   components:
+  - type: AccessReader
   - type: Destructible
     thresholds:
     - trigger:
