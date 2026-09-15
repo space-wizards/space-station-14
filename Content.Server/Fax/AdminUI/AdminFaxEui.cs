@@ -55,9 +55,11 @@ public sealed partial class AdminFaxEui : BaseEui
             }
             case AdminFaxEuiMsg.Send sendData:
             {
-                var printout = new FaxPrintout(sendData.Content, sendData.Title, null, null, sendData.StampState,
+                // TODO: FIX THIS!!!
+                var printout = _faxSystem.GetPrintout(sendData.Content, sendData.Title);
+                /*var printout = new FaxPrintout(sendData.Content, sendData.Title, null, null, sendData.StampState,
                         new() { new StampDisplayInfo { StampedName = sendData.From, StampedColor = sendData.StampColor } },
-                        locked: sendData.Locked);
+                        locked: sendData.Locked);*/
                 _faxSystem.Receive(_entityManager.GetEntity(sendData.Target), printout);
                 break;
             }

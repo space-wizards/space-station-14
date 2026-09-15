@@ -4,10 +4,8 @@ using Content.Shared.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
-using Robust.Shared.Player;
 using Robust.Shared.Audio.Systems;
 using static Content.Shared.Paper.PaperComponent;
 using Robust.Shared.Prototypes;
@@ -53,7 +51,7 @@ public sealed partial class PaperSystem : EntitySystem
     {
         if (!string.IsNullOrEmpty(entity.Comp.Content))
         {
-            SetContent(entity, Loc.GetString(entity.Comp.Content));
+            SetContent(entity.AsNullable(), Loc.GetString(entity.Comp.Content));
         }
     }
 
@@ -188,7 +186,7 @@ public sealed partial class PaperSystem : EntitySystem
 
         if (args.Text.Length <= entity.Comp.ContentSize)
         {
-            SetContent(entity, args.Text);
+            SetContent(entity.AsNullable(), args.Text);
 
             var paperStatus = string.IsNullOrWhiteSpace(args.Text) ? PaperStatus.Blank : PaperStatus.Written;
 
@@ -277,27 +275,48 @@ public sealed partial class PaperSystem : EntitySystem
         }
     }
 
-    public void SetContent(EntityUid entity, string content)
+    /// <summary>
+    /// Sets the content of a piece of paper.
+    /// </summary>
+    /// <param name="paper">Paper we are setting the content of</param>
+    /// <param name="content">Content for the paper</param>
+    public void SetContent(Entity<PaperComponent?> paper, string content)
     {
-        if (!TryComp<PaperComponent>(entity, out var paper))
-            return;
-        SetContent((entity, paper), content);
+        TrySetContent(paper, content);
     }
 
-    public void SetContent(Entity<PaperComponent> entity, string content)
+    /// <summary>
+    /// Sets the content of a piece of paper.
+    /// </summary>
+    /// <param name="paper">Paper we are setting the content of</param>
+    /// <param name="content">Content for the paper</param>
+    /// <returns>Returns false if it could not update the contents of the paper, or if the entity wasn't paper at all!</returns>
+    public bool TrySetContent(Entity<PaperComponent?> paper, string content)
     {
-        entity.Comp.Content = content;
-        Dirty(entity);
-        UpdateUserInterface(entity);
+        if (!_paperQuery.Resolve(paper, ref paper.Comp))
+            return false;
 
-        if (!TryComp<AppearanceComponent>(entity, out var appearance))
-            return;
+        paper.Comp.Content = content;
+        Dirty(paper);
+        UpdateUserInterface((paper, paper.Comp));
+
+        if (!TryComp<AppearanceComponent>(paper, out var appearance))
+            return true;
 
         var status = string.IsNullOrWhiteSpace(content)
             ? PaperStatus.Blank
             : PaperStatus.Written;
 
-        _appearance.SetData(entity, PaperVisuals.Status, status, appearance);
+        _appearance.SetData(paper, PaperVisuals.Status, status, appearance);
+        return true;
+    }
+
+    public string GetContent(Entity<PaperComponent?> paper)
+    {
+        if (!_paperQuery.Resolve(paper, ref paper.Comp))
+            return "";
+
+        return paper.Comp.Content;
     }
 
     private void UpdateUserInterface(Entity<PaperComponent> entity)

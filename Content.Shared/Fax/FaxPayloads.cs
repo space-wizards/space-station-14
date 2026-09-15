@@ -21,12 +21,3 @@ public partial record struct FaxPongPayload : INetworkPayload
     [DataField]
     public string FaxName;
 }
-
-/// <summary>
-/// Payload to print a paper on the receiver fax.
-/// </summary>
-public partial record struct FaxPrintPayload : INetworkPayload
-{
-    [DataField]
-    public FaxPrintout Data;
-}

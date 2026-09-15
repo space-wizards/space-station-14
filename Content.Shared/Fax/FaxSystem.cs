@@ -1,4 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Cloning;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
@@ -9,25 +11,33 @@ using Content.Shared.Popups;
 using Content.Shared.Fax.Components;
 using Content.Shared.Labels.Components;
 using Content.Shared.Labels.EntitySystems;
-using Content.Shared.Mobs.Components;
-using Content.Shared.NameModifier.Components;
 using Content.Shared.Paper;
 using Content.Shared.Power;
 using Content.Shared.UserInterface;
+using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Fax;
 /// <summary>
-/// System for handling execution of a mob within fax when copy or send attempt is made.
+/// System for handling the sending of entities through fax machines.
+/// TODO: DIRTYFIELDS
+/// TODO: ON FAX SHUTDOWN DELETE EVERYTHING IN QUEUE
+/// TODO: FIX UI BUGS
+/// TODO: POWER STATE HANDLING!!!
+/// TODO: STAMP DATA
+/// TODO: FIX NUKECODEPAPERSYSTEM AND ADMINFAXEUI
 /// </summary>
 public abstract partial class FaxSystem : EntitySystem
 {
     [Dependency] protected ISharedAdminLogManager AdminLogger = default!;
-    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private SharedCloningSystem _cloningSystem = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] protected EmagSystem Emag = default!;
     [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;
@@ -38,9 +48,74 @@ public abstract partial class FaxSystem : EntitySystem
     [Dependency] protected SharedAudioSystem AudioSystem = default!;
     [Dependency] private SharedDeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] protected SharedPopupSystem PopupSystem = default!;
-    [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
+    [Dependency] private SharedTransformSystem _xFormSystem = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+
+    [Dependency] protected EntityQuery<FaxableObjectComponent> FaxableQuery;
+    [Dependency] private EntityQuery<FaxecuteComponent> _faxecuteQuery;
+    [Dependency] protected EntityQuery<FaxMachineComponent> FaxQuery;
 
     private const string PaperSlotId = "Paper";
+    public const string PaperId = "Paper";
+    public const string OfficePaperId = "PaperOffice";
+
+    // We can't predict power shutting off, so we just let the animation continue if power gets cut out.
+    // If that ever changes, have this animation pause cause it would be pretty funny.
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<FaxMachineComponent>();
+        while (query.MoveNext(out var uid, out var fax))
+        {
+            // Fax is doing nothing. Do nothing in return.
+            if (fax.Functions == FaxFunctions.Idle)
+                continue;
+
+            ProcessPrint((uid, fax));
+            if (Timing.CurTime >= fax.NextInteractTime)
+            {
+                ProcessInsertion((uid, fax));
+                ProcessSendingTimeout((uid, fax));
+            }
+
+            UpdateAppearance((uid, fax));
+        }
+    }
+
+    private void ProcessPrint(Entity<FaxMachineComponent> entity)
+    {
+        if ((entity.Comp.Functions & FaxFunctions.Printing) == 0 || Timing.CurTime < entity.Comp.PrintTimeEnd)
+            return;
+
+        PrintFromQueue(entity);
+        if (entity.Comp.PrintingQueue.Count == 0)
+        {
+            entity.Comp.Functions &= ~FaxFunctions.Printing;
+            return;
+        }
+
+        StartPrint(entity);
+    }
+
+    private void ProcessInsertion(Entity<FaxMachineComponent> entity)
+    {
+        if ((entity.Comp.Functions & FaxFunctions.Inserting) == 0 || Timing.CurTime < entity.Comp.InsertionEnd)
+            return;
+
+        FinishInsert(entity);
+        UpdateUserInterface(entity);
+    }
+
+    private void ProcessSendingTimeout(Entity<FaxMachineComponent> entity)
+    {
+        if ((entity.Comp.Functions & FaxFunctions.Sending) == 0)
+            return;
+
+        entity.Comp.Functions &= ~FaxFunctions.Sending;
+        UpdateUserInterface(entity);
+    }
 
     [SubscribeLocalEvent]
     private void OnComponentInit(Entity<FaxMachineComponent> entity, ref ComponentInit args)
@@ -63,47 +138,65 @@ public abstract partial class FaxSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnItemSlotChanged(Entity<FaxMachineComponent> entity, ref ContainerModifiedMessage args)
+    private void OnItemInserted(Entity<FaxMachineComponent> fax, ref EntInsertedIntoContainerMessage args)
     {
-        if (!entity.Comp.Initialized)
+        if (Timing.ApplyingState || !fax.Comp.Initialized || args.Container.ID != fax.Comp.PaperSlot.ID)
             return;
 
-        if (args.Container.ID != entity.Comp.PaperSlot.ID)
-            return;
-
-        var isPaperInserted = entity.Comp.PaperSlot.Item.HasValue;
-        if (isPaperInserted)
-        {
-            entity.Comp.InsertionEnd = entity.Comp.InsertionTime;
-            _itemSlotsSystem.SetLock(entity.Owner, entity.Comp.PaperSlot, true);
-        }
-
-        UpdateUserInterface(entity);
+        Insert(fax);
+        UpdateUserInterface(fax);
     }
 
     [SubscribeLocalEvent]
-    private void OnPowerChanged(Entity<FaxMachineComponent> entity, ref PowerChangedEvent args)
+    private void OnItemRemoved(Entity<FaxMachineComponent> fax, ref EntRemovedFromContainerMessage args)
     {
-        var isInsertInterrupted = !args.Powered && entity.Comp.InsertionEnd > TimeSpan.Zero;
-        if (isInsertInterrupted)
-        {
-            entity.Comp.InsertionEnd = TimeSpan.Zero; // Reset animation
+        if (Timing.ApplyingState || !fax.Comp.Initialized || args.Container.ID != fax.Comp.PaperSlot.ID)
+            return;
 
-            // Drop from slot because animation did not play completely
-            _itemSlotsSystem.SetLock(entity.Owner, entity.Comp.PaperSlot, false);
-            _itemSlotsSystem.TryEject(entity, entity.Comp.PaperSlot, null, out _, true);
+        UpdateAppearance(fax);
+        UpdateUserInterface(fax);
+    }
+
+    private void Insert(Entity<FaxMachineComponent> fax)
+    {
+        fax.Comp.InsertionEnd = fax.Comp.InsertionTime + Timing.CurTime;
+        fax.Comp.Functions |= FaxFunctions.Inserting;
+        _itemSlotsSystem.SetLock(fax.Owner, fax.Comp.PaperSlot, true);
+        UpdateAppearance(fax);
+    }
+
+    private void FinishInsert(Entity<FaxMachineComponent> fax)
+    {
+        fax.Comp.InsertionEnd = TimeSpan.Zero;
+        fax.Comp.Functions &= ~FaxFunctions.Inserting;
+        _itemSlotsSystem.SetLock(fax.Owner, fax.Comp.PaperSlot, false);
+    }
+
+    private void Eject(Entity<FaxMachineComponent> fax)
+    {
+        FinishInsert(fax);
+        _itemSlotsSystem.TryEject(fax, fax.Comp.PaperSlot, null, out _, true);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnPowerChanged(Entity<FaxMachineComponent> fax, ref PowerChangedEvent args)
+    {
+        if (args.Powered)
+        {
+            _itemSlotsSystem.SetLock(fax.Owner, fax.Comp.PaperSlot, false);
+            return;
         }
 
-        var isPrintInterrupted = !args.Powered && entity.Comp.PrintTimeEnd > TimeSpan.Zero;
-        if (isPrintInterrupted)
-        {
-            entity.Comp.PrintTimeEnd = TimeSpan.Zero; // Reset animation
-        }
+        if ((fax.Comp.Functions & FaxFunctions.Inserting) != 0)
+            Eject(fax);
 
-        if (isInsertInterrupted || isPrintInterrupted)
-            UpdateAppearance(entity);
+        if ((fax.Comp.Functions & FaxFunctions.Printing) != 0)
+            fax.Comp.PrintTimeEnd = TimeSpan.Zero; // TODO: CancelPrint method!
 
-        _itemSlotsSystem.SetLock(entity.Owner, entity.Comp.PaperSlot, !args.Powered); // Lock slot when power is off
+        if ((fax.Comp.Functions & (FaxFunctions.Printing | FaxFunctions.Inserting)) != 0)
+            UpdateAppearance(fax);
+
+        _itemSlotsSystem.SetLock(fax.Owner, fax.Comp.PaperSlot, true); // Lock slot when power is off
     }
 
     [SubscribeLocalEvent]
@@ -125,13 +218,13 @@ public abstract partial class FaxSystem : EntitySystem
     private void OnPongPayload(Entity<FaxMachineComponent> ent, ref DeviceNetworkPacketEvent<FaxPongPayload> args)
     {
         ent.Comp.KnownFaxes[args.SenderAddress] = args.Data.FaxName;
-        UpdateUserInterface(ent.Owner, ent.Comp);
+        UpdateUserInterface(ent);
     }
 
     [SubscribeLocalEvent]
-    private void OnPrintPayload(Entity<FaxMachineComponent> ent, ref DeviceNetworkPacketEvent<FaxPrintPayload> args)
+    private void OnPrintPayload(Entity<FaxMachineComponent> ent, ref DeviceNetworkPacketEvent<FaxPrintout> args)
     {
-        Receive((ent, ent), args.Data.Data);
+        Receive((ent, ent), args.Data);
     }
 
     [SubscribeLocalEvent]
@@ -149,21 +242,15 @@ public abstract partial class FaxSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnCopyButtonPressed(Entity<FaxMachineComponent> entity, ref FaxCopyMessage args)
+    private void OnCopyButtonPressed(Entity<FaxMachineComponent> fax, ref FaxCopyMessage args)
     {
-        if (HasComp<MobStateComponent>(entity.Comp.PaperSlot.Item))
-            Faxecute(entity); // when button pressed it will hurt the mob.
-        else
-            Copy(entity, ref args);
+        Copy(fax, args.Actor);
     }
 
     [SubscribeLocalEvent]
     private void OnSendButtonPressed(Entity<FaxMachineComponent> entity, ref FaxSendMessage args)
     {
-        if (HasComp<MobStateComponent>(entity.Comp.PaperSlot.Item))
-            Faxecute(entity); // when button pressed it will hurt the mob.
-        else
-            Send(entity, args.Actor);
+        Send(entity, args.Actor);
     }
 
     [SubscribeLocalEvent]
@@ -178,108 +265,31 @@ public abstract partial class FaxSystem : EntitySystem
         SetDestination(entity, args.Address);
     }
 
-    // We can't predict power shutting off, so we just let the animation continue if power gets cut out.
-    // If that ever changes, have this animation pause cause it would be pretty funny.
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<FaxMachineComponent>();
-        while (query.MoveNext(out var uid, out var fax))
-        {
-            // TODO: Bitmask to know what we're currently doing if anything...
-            ProcessPrint((uid, fax));
-            ProcessInsertion((uid, fax));
-            //ProcessSendingTimeout((uid, fax));
-        }
-    }
-
     protected void UpdateAppearance(Entity<FaxMachineComponent> entity)
     {
-        if (TryComp<FaxableObjectComponent>(entity.Comp.PaperSlot.Item, out var faxable))
+        if (FaxableQuery.TryComp(entity.Comp.PaperSlot.Item, out var faxable))
             entity.Comp.InsertingState = faxable.InsertingState;
 
-        if (entity.Comp.InsertionEnd > TimeSpan.Zero)
-        {
-            _appearanceSystem.SetData(entity, FaxMachineVisuals.VisualState, FaxMachineVisualState.Inserting);
-            Dirty(entity);
-        }
-        else if (entity.Comp.PrintTimeEnd > TimeSpan.Zero)
-            _appearanceSystem.SetData(entity, FaxMachineVisuals.VisualState, FaxMachineVisualState.Printing);
-        else
-            _appearanceSystem.SetData(entity, FaxMachineVisuals.VisualState, FaxMachineVisualState.Normal);
+        _appearanceSystem.SetData(entity, FaxMachineVisuals.VisualState, entity.Comp.Functions);
     }
 
-    protected void UpdateUserInterface(EntityUid uid, FaxMachineComponent? component = null)
+    // TODO: Delet this
+    protected void UpdateUserInterface(Entity<FaxMachineComponent> fax)
     {
-        if (!Resolve(uid, ref component))
-            return;
-
-        var isPaperInserted = component.PaperSlot.Item != null;
-        var canSend = isPaperInserted &&
-                      component.DestinationFaxAddress != null &&
-                      component.SendTimeoutRemaining <= TimeSpan.Zero &&
-                      component.InsertionEnd <= TimeSpan.Zero;
-        var canCopy = isPaperInserted &&
-                      component.SendTimeoutRemaining <= TimeSpan.Zero &&
-                      component.InsertionEnd <= TimeSpan.Zero;
-        var state = new FaxUiState(component.FaxName, component.KnownFaxes, canSend, canCopy, isPaperInserted, component.DestinationFaxAddress);
-        _userInterface.SetUiState(uid, FaxUiKey.Key, state);
+        if (_ui.TryGetOpenUi(fax.Owner, FaxUiKey.Key, out var ui))
+            ui.Update();
     }
 
-
-    private void ProcessPrint(Entity<FaxMachineComponent> entity)
+    protected void Faxecute(Entity<FaxMachineComponent> fax, EntityUid? target = null)
     {
-        if (_timing.CurTime < entity.Comp.PrintTimeEnd)
-            return;
+        target ??= fax.Comp.PaperSlot.Item;
 
-        SpawnPaperFromQueue(entity.AsNullable());
-        UpdateUserInterface(entity);
-        if (entity.Comp.PrintingQueue.Count == 0)
-            return;
-
-        // TODO: Call Print
-        entity.Comp.PrintTimeEnd = entity.Comp.PrintingTime + _timing.CurTime;
-    }
-
-    private void ProcessInsertion(Entity<FaxMachineComponent> entity)
-    {
-        if (_timing.CurTime < entity.Comp.InsertionEnd)
-            return;
-
-        UpdateAppearance(entity);
-
-        var isAnimationEnd = entity.Comp.InsertionEnd <= TimeSpan.Zero;
-        if (isAnimationEnd)
-        {
-            _itemSlotsSystem.SetLock(entity.Owner, entity.Comp.PaperSlot, false);
-            UpdateUserInterface(entity);
-        }
-    }
-
-    private void ProcessSendingTimeout(Entity<FaxMachineComponent> entity, float frameTime)
-    {
-        if (entity.Comp.SendTimeoutRemaining > TimeSpan.Zero)
-        {
-            entity.Comp.SendTimeoutRemaining -= TimeSpan.FromSeconds(frameTime);
-
-            if (entity.Comp.SendTimeoutRemaining <= TimeSpan.Zero)
-                UpdateUserInterface(entity);
-        }
-    }
-
-    protected void Faxecute(Entity<FaxMachineComponent> entity)
-    {
-        var sendEntity = entity.Comp.PaperSlot.Item;
-        if (sendEntity == null)
-            return;
-
-        if (!TryComp<FaxecuteComponent>(entity, out var faxecute))
+        if (target == null || !_faxecuteQuery.TryComp(fax, out var faxecute))
             return;
 
         var damageSpec = faxecute.Damage;
-        _damageable.ChangeDamage(sendEntity.Value, damageSpec);
-        PopupSystem.PopupEntity(Loc.GetString("fax-machine-popup-error", ("target", entity)), entity, PopupType.LargeCaution);
+        _damageable.ChangeDamage(target.Value, damageSpec);
+        PopupSystem.PopupEntity(Loc.GetString("fax-machine-popup-error", ("target", fax)), fax, PopupType.LargeCaution);
     }
 
     /// <summary>
@@ -320,191 +330,207 @@ public abstract partial class FaxSystem : EntitySystem
     ///     which is shared by the send button.
     /// </summary>
     [PublicAPI]
-    public void PrintFile(Entity<FaxMachineComponent> entity, string content, bool officePaper, string? label = null, EntityUid? actor = null)
+    public void PrintFile(Entity<FaxMachineComponent> fax, string content, bool officePaper, string? label = null, EntityUid? actor = null)
     {
-        var prototype = officePaper ? entity.Comp.PrintOfficePaperId : entity.Comp.PrintPaperId;
+        var prototype = officePaper ? fax.Comp.PrintOfficePaperId : fax.Comp.PrintPaperId;
 
-        var name = Loc.GetString("fax-machine-printed-paper-name");
-
-        var printout = new FaxPrintout(content, name, label, prototype);
-        entity.Comp.PrintingQueue.Enqueue(printout);
-        entity.Comp.SendTimeoutRemaining += entity.Comp.SendTimeout;
-
-        UpdateUserInterface(entity);
+        var printout = GetPrintout(content, label, prototype: prototype);
+        EnqueuePrint(fax, printout);
+        Timeout(fax);
+        UpdateUserInterface(fax);
 
         // Unfortunately, since a paper entity does not yet exist, we have to emulate what LabelSystem will do.
         AdminLogger.Add(LogType.Action,
             LogImpact.Low,
             $"{ToPrettyString(actor):actor} " +
-            $"added print job to \"{entity.Comp.FaxName}\" {ToPrettyString(entity):tool} " +
-            $"of {_labelSystem.Label(name, label)}: {content}");
+            $"added print job to \"{fax.Comp.FaxName}\" {ToPrettyString(fax):tool} " +
+            $"of {ToPrettyString(printout.Printout)}: {content}");
+    }
 
-        AudioSystem.PlayPredicted(entity.Comp.PrintSound, entity, actor);
+    public FaxPrintout GetPrintout(string content, string? label = null, string? sender = null, string prototype = PaperId)
+    {
+        var name = Loc.GetString("fax-machine-printed-paper-name");
+
+        var paper = Spawn(prototype);
+        var meta = MetaData(paper);
+        FlagPredicted((paper, meta));
+        _paperSystem.SetContent(paper, content);
+        _metaData.SetEntityName(paper, name, meta);
+        _labelSystem.Label(paper, label);
+
+        return new FaxPrintout(GetNetEntity(paper), sender);
+    }
+
+    /// <summary>
+    /// Checks if the entity inserted into this fax can be copied or sent.
+    /// </summary>
+    /// <param name="fax">Fax machine we're checking.</param>
+    /// <param name="paper">Resolved entity we can send</param>
+    /// <returns>Returns true if there is an entity inserted, and this machine can send it!</returns>
+    [PublicAPI]
+    public bool CanFax(Entity<FaxMachineComponent> fax, [NotNullWhen(true)] out EntityUid? paper)
+    {
+        return CanInteract(fax, out paper) && _whitelist.IsWhitelistPassOrNull(fax.Comp.Whitelist, paper.Value);
+    }
+
+    /// <summary>
+    /// Checks if the fax machine buttons are currently interactable.
+    /// </summary>
+    /// <param name="fax">Fax machine</param>
+    /// <param name="paper">Inserted entity if it exists</param>
+    /// <returns>True if the fax is not subject to an interaction cooldown, and it has an item inserted, and that the item is fully inserted!</returns>
+    [PublicAPI]
+    public bool CanInteract(Entity<FaxMachineComponent> fax, [NotNullWhen(true)] out EntityUid? paper)
+    {
+        paper = null;
+        if (fax.Comp.NextInteractTime > Timing.CurTime)
+            return false;
+
+        if ((fax.Comp.Functions & FaxFunctions.Inserting) != 0)
+            return false;
+
+        paper = fax.Comp.PaperSlot.Item;
+        return paper != null;
     }
 
     /// <summary>
     ///     Copies the paper in the fax. A timeout is set after copying,
     ///     which is shared by the send button.
     /// </summary>
-    private void Copy(Entity<FaxMachineComponent> entity, ref FaxCopyMessage args)
+    private void Copy(Entity<FaxMachineComponent> fax, EntityUid? actor)
     {
-        if (entity.Comp.SendTimeoutRemaining > TimeSpan.Zero)
+        if (!CanFax(fax, out var paper))
+        {
+            Faxecute(fax);
+            return;
+        }
+
+        Timeout(fax);
+
+        if (!_cloningSystem.TryClone(paper.Value, null, fax.Comp.Settings, out var copied))
             return;
 
-        var sendEntity = entity.Comp.PaperSlot.Item;
-        if (sendEntity == null)
-            return;
-
-        if (!TryComp(sendEntity, out MetaDataComponent? metadata) ||
-            !TryComp<PaperComponent>(sendEntity, out var paper))
-            return;
-
-        TryComp<LabelComponent>(sendEntity, out var labelComponent);
-        TryComp<NameModifierComponent>(sendEntity, out var nameMod);
-
-        // Comment does not exist >:(
-        // TODO: See comment in 'Send()' about not being able to copy whole entities
-        var printout = new FaxPrintout(paper.Content,
-                                       nameMod?.BaseName ?? metadata.EntityName,
-                                       labelComponent?.CurrentLabel,
-                                       metadata.EntityPrototype?.ID ?? entity.Comp.PrintPaperId,
-                                       paper.StampState,
-                                       paper.StampedBy,
-                                       paper.EditingDisabled);
-
-        entity.Comp.PrintingQueue.Enqueue(printout);
-        entity.Comp.SendTimeoutRemaining += entity.Comp.SendTimeout;
-
-        // Don't play component.SendSound - it clashes with the printing sound, which
-        // will start immediately.
-
-        UpdateUserInterface(entity);
+        EnqueuePrint(fax, copied.Value);
+        UpdateUserInterface(fax);
 
         AdminLogger.Add(LogType.Action,
             LogImpact.Low,
-            $"{ToPrettyString(args.Actor):actor} " +
-            $"added copy job to \"{entity.Comp.FaxName}\" {ToPrettyString(entity):tool} " +
-            $"of {ToPrettyString(sendEntity):subject}: {printout.Content}");
+            $"{ToPrettyString(actor):actor} " +
+            $"added copy job to \"{fax.Comp.FaxName}\" {ToPrettyString(fax):tool} " +
+            $"of {ToPrettyString(fax):subject}: {_paperSystem.GetContent(copied.Value)}");
     }
 
     /// <summary>
     ///     Sends message to addressee if paper is set and a known fax is selected
     ///     A timeout is set after sending, which is shared by the copy button.
     /// </summary>
-    public void Send(Entity<FaxMachineComponent> entity, EntityUid? user)
+    public void Send(Entity<FaxMachineComponent> fax, EntityUid? user)
     {
-        if (entity.Comp.SendTimeoutRemaining > TimeSpan.Zero)
-            return;
-
-        var sendEntity = entity.Comp.PaperSlot.Item;
-        if (sendEntity == null)
-            return;
-
-        if (entity.Comp.DestinationFaxAddress == null)
-            return;
-
-        if (!entity.Comp.KnownFaxes.TryGetValue(entity.Comp.DestinationFaxAddress, out var faxName))
-            return;
-
-        if (!TryComp(sendEntity, out MetaDataComponent? metadata) ||
-           !TryComp<PaperComponent>(sendEntity, out var paper))
-            return;
-
-        if (metadata.EntityPrototype == null)
-            return;
-
-        TryComp<NameModifierComponent>(sendEntity, out var nameMod);
-
-        TryComp<LabelComponent>(sendEntity, out var labelComponent);
-
-        var payload = new FaxPrintPayload
+        if (!CanFax(fax, out var sendEntity))
         {
-            Data = new FaxPrintout(
-                    paper.Content,
-                    nameMod?.BaseName ?? metadata.EntityName,
-                    labelComponent?.CurrentLabel,
-                    metadata.EntityPrototype.ID,
-                    paper.StampState,
-                    paper.StampedBy,
-                    paper.EditingDisabled),
-        };
+            Faxecute(fax);
+            return;
+        }
 
-        _deviceNetworkSystem.SendPacket(entity.Owner, entity.Comp.DestinationFaxAddress, ref payload);
+        if (fax.Comp.DestinationFaxAddress == null)
+            return;
+
+        if (!fax.Comp.KnownFaxes.TryGetValue(fax.Comp.DestinationFaxAddress, out var faxName))
+            return;
+
+        if (!_cloningSystem.TryClone(sendEntity.Value, null, fax.Comp.Settings, out var sent))
+            return;
+
+        var payload = new FaxPrintout(GetNetEntity(sendEntity.Value));
+
+        _deviceNetworkSystem.SendPacket(fax.Owner, fax.Comp.DestinationFaxAddress, ref payload);
 
         AdminLogger.Add(LogType.Action,
             LogImpact.Low,
             $"{ToPrettyString(user):actor} " +
-            $"sent fax from \"{entity.Comp.FaxName}\" {ToPrettyString(entity):tool} " +
-            $"to \"{faxName}\" ({entity.Comp.DestinationFaxAddress}) " +
-            $"of {ToPrettyString(sendEntity):subject}: {paper.Content}");
+            $"sent fax from \"{fax.Comp.FaxName}\" {ToPrettyString(fax):tool} " +
+            $"to \"{faxName}\" ({fax.Comp.DestinationFaxAddress}) " +
+            $"of {ToPrettyString(sendEntity):subject}: {_paperSystem.GetContent(sent.Value)}");
 
-        entity.Comp.SendTimeoutRemaining += entity.Comp.SendTimeout;
-
-        AudioSystem.PlayPredicted(entity.Comp.SendSound, entity, user);
-        UpdateUserInterface(entity);
+        Timeout(fax);
+        fax.Comp.Functions |= FaxFunctions.Sending;
+        AudioSystem.PlayPredicted(fax.Comp.SendSound, fax, user);
+        Dirty(fax);
+        UpdateUserInterface(fax);
     }
 
     /// <summary>
     ///     Accepts a new message and adds it to the queue to print
     ///     If has parameter "notifyAdmins" also output a special message to admin chat.
     /// </summary>
-    public void Receive(Entity<FaxMachineComponent?> entity, FaxPrintout printout)
+    public void Receive(Entity<FaxMachineComponent?> fax, FaxPrintout printout)
     {
-        if (!Resolve(entity, ref entity.Comp))
+        if (!FaxQuery.Resolve(fax, ref fax.Comp))
             return;
 
-        var faxName = printout.SenderFaxName ?? Loc.GetString("fax-machine-popup-source-unknown");
+        var faxName = printout.SenderName ?? Loc.GetString("fax-machine-popup-source-unknown");
 
-        PopupSystem.PopupEntity(Loc.GetString("fax-machine-popup-received", ("from", faxName)), entity);
-        _appearanceSystem.SetData(entity, FaxMachineVisuals.VisualState, FaxMachineVisualState.Printing);
+        PopupSystem.PopupEntity(Loc.GetString("fax-machine-popup-received", ("from", faxName)), fax);
 
-        if (entity.Comp.NotifyAdmins)
+        if (fax.Comp.NotifyAdmins)
             NotifyAdmins(faxName);
 
         // Can't predict this atm...
-        AudioSystem.PlayPvs(entity.Comp.PrintSound, entity);
-        entity.Comp.PrintingQueue.Enqueue(printout);
+        EnqueuePrint((fax, fax.Comp), printout);
     }
 
-    private void StartPrint()
+    private void PauseFax(Entity<FaxMachineComponent> fax)
     {
-        // TODO: Play sound, queue print!
+        // TODO: LOGIC!!!
+        // Pause the timers on the fax mascheen!!!
+        Dirty(fax);
     }
 
-    private void SpawnPaperFromQueue(Entity<FaxMachineComponent?> entity)
+    private void Timeout(Entity<FaxMachineComponent> fax)
     {
-        if (!Resolve(entity, ref entity.Comp) || entity.Comp.PrintingQueue.Count == 0)
-            return;
+        fax.Comp.NextInteractTime = Timing.CurTime + fax.Comp.InteractionTimeout;
+        Dirty(fax);
+        // TODO: DIRTYFIELD!!!
+    }
 
-        var printout = entity.Comp.PrintingQueue.Dequeue();
+    private void EnqueuePrint(Entity<FaxMachineComponent> fax, EntityUid printout, string? sender = null)
+    {
+        EnqueuePrint(fax, new FaxPrintout(GetNetEntity(printout), sender));
+    }
 
-        var entityToSpawn = ProtoMan.HasIndex(printout.PrototypeId) ? printout.PrototypeId : entity.Comp.PrintPaperId;
-        var printed = Spawn(entityToSpawn, Transform(entity).Coordinates);
+    private void EnqueuePrint(Entity<FaxMachineComponent> fax, FaxPrintout print)
+    {
+        fax.Comp.PrintingQueue.Enqueue(print);
+        StartPrint(fax);
+    }
 
-        if (TryComp<PaperComponent>(printed, out var paper))
+    private void StartPrint(Entity<FaxMachineComponent> fax)
+    {
+        fax.Comp.PrintTimeEnd = Timing.CurTime + fax.Comp.PrintingTime;
+        fax.Comp.Functions |= FaxFunctions.Printing;
+        UpdateAppearance(fax);
+        Dirty(fax);
+
+        // Can't predict audio because cloning isn't predicted B);
+        if (_net.IsServer)
+            AudioSystem.PlayPvs(fax.Comp.PrintSound, fax);
+    }
+
+    private void PrintFromQueue(Entity<FaxMachineComponent> entity)
+    {
+        EntityUid printout;
+        do // Clear out any bad predicted entities!
         {
-            _paperSystem.SetContent((printed, paper), printout.Content);
+            if (entity.Comp.PrintingQueue.Count == 0)
+                return;
 
-            // Apply stamps
-            if (printout.StampState != null)
-            {
-                foreach (var stamp in printout.StampedBy)
-                {
-                    _paperSystem.TryStamp((printed, paper), stamp, printout.StampState);
-                }
-            }
+            printout = GetEntity(entity.Comp.PrintingQueue.Dequeue().Printout);
+        } while (printout == EntityUid.Invalid);
 
-            paper.EditingDisabled = printout.Locked;
-        }
+        _xFormSystem.SetCoordinates(printout, Transform(entity).Coordinates);
 
-        _metaData.SetEntityName(printed, printout.Name);
-
-        if (printout.Label is { } label)
-        {
-            _labelSystem.Label(printed, label);
-        }
-
-        AdminLogger.Add(LogType.Action, LogImpact.Low, $"\"{entity.Comp.FaxName}\" {ToPrettyString(entity):tool} printed {ToPrettyString(printed):subject}: {printout.Content}");
+        AdminLogger.Add(LogType.Action, LogImpact.Low, $"\"{entity.Comp.FaxName}\" {ToPrettyString(entity):tool} printed {ToPrettyString(printout):subject}: {_paperSystem.GetContent(printout)}");
+        UpdateUserInterface(entity);
     }
 
     protected abstract void NotifyAdmins(string faxName);
@@ -517,29 +543,9 @@ public enum FaxUiKey : byte
 }
 
 [Serializable, NetSerializable]
-public sealed class FaxUiState : BoundUserInterfaceState
+public enum FaxMachineVisuals : byte
 {
-    public string DeviceName { get; }
-    public Dictionary<string, string> AvailablePeers { get; }
-    public string? DestinationAddress { get; }
-    public bool IsPaperInserted { get; }
-    public bool CanSend { get; }
-    public bool CanCopy { get; }
-
-    public FaxUiState(string deviceName,
-        Dictionary<string, string> peers,
-        bool canSend,
-        bool canCopy,
-        bool isPaperInserted,
-        string? destAddress)
-    {
-        DeviceName = deviceName;
-        AvailablePeers = peers;
-        IsPaperInserted = isPaperInserted;
-        CanSend = canSend;
-        CanCopy = canCopy;
-        DestinationAddress = destAddress;
-    }
+    VisualState,
 }
 
 [Serializable, NetSerializable]

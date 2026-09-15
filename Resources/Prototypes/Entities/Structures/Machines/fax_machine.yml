@@ -74,10 +74,10 @@
       enum.FaxMachineVisuals.VisualState:
         printing:
           Printing: { visible: true }
-          Normal: { visible: false }
+          Idle: { visible: false }
         enum.FaxMachineVisuals.VisualState:
           Inserting: { visible: true }
-          Normal: { visible: false }
+          Idle: { visible: false }
   - type: ItemSlots
   - type: ContainerContainer
     containers:

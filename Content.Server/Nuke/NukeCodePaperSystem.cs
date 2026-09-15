@@ -62,7 +62,8 @@ namespace Content.Server.Nuke
                     continue;
                 }
 
-                var printout = new FaxPrintout(
+                // TODO: FIX THIS!!!!
+                /*var printout = new FaxPrintout(
                     paperContent,
                     Loc.GetString("nuke-codes-fax-paper-name"),
                     null,
@@ -73,7 +74,7 @@ namespace Content.Server.Nuke
                         new StampDisplayInfo { StampedName = Loc.GetString("stamp-component-stamped-name-centcom"), StampedColor = Color.FromHex("#BB3232") },
                     }
                 );
-                _faxSystem.Receive((faxEnt, fax), printout);
+                _faxSystem.Receive((faxEnt, fax), printout);*/
 
                 wasSent = true;
             }

@@ -18,14 +18,14 @@ public sealed partial class ClientFaxSystem : FaxSystem
     [SubscribeLocalEvent]
     private void OnAppearanceChanged(Entity<FaxMachineComponent> entity, ref AppearanceChangeEvent args)
     {
-        if (args.Sprite == null)
+        if (args.Sprite == null || !Timing.IsFirstTimePredicted)
             return;
 
         if (_player.HasRunningAnimation(entity, FaxKey))
             return;
 
-        if (_appearance.TryGetData(entity, FaxMachineVisuals.VisualState, out FaxMachineVisualState visuals) &&
-            visuals == FaxMachineVisualState.Inserting)
+        if (_appearance.TryGetData(entity, FaxMachineVisuals.VisualState, out FaxFunctions visuals) &&
+            (visuals & FaxFunctions.Inserting) == FaxFunctions.Inserting)
         {
             _player.Play(entity,
                 new Animation()

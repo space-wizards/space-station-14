@@ -25,7 +25,7 @@ public sealed partial class ServerFaxSystem : FaxSystem
 
     private static readonly SoundSpecifier AdminAlert = new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg");
 
-    // I'm not gonna refactor this till it can be moved to shared and it can't be moved to shared until Quick dialogue is kill.
+    // I'm not gonna refactor this till it can be moved to shared, and it can't be moved to shared until Quick dialogue is kill.
     [SubscribeLocalEvent]
     private void OnInteractUsing(Entity<FaxMachineComponent> entity, ref InteractUsingEvent args)
     {
