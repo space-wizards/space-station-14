@@ -272,7 +272,19 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnExamine<T>(Entity<T> ent, ref DamageExamineEvent args)  where T : StaminaDamageComponent
+    private void OnExamine(Entity<StaminaDamageOnCollideComponent> ent, ref DamageExamineEvent args)
+    {
+        args.Message.AddMarkupOrThrow(Loc.GetString("damage-examine-type", ("$amount", ent.Comp.Damage)));
+    }
+
+    [SubscribeLocalEvent]
+    private void OnExamine(Entity<StaminaDamageOnEmbedComponent> ent, ref DamageExamineEvent args)
+    {
+        args.Message.AddMarkupOrThrow(Loc.GetString("damage-examine-type", ("$amount", ent.Comp.Damage)));
+    }
+
+    [SubscribeLocalEvent]
+    private void OnExamine(Entity<StaminaDamageOnHitComponent> ent, ref DamageExamineEvent args)
     {
         args.Message.AddMarkupOrThrow(Loc.GetString("damage-examine-type", ("$amount", ent.Comp.Damage)));
     }

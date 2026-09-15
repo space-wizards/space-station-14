@@ -6,8 +6,11 @@ namespace Content.Shared.Damage.Components;
 /// Applies stamina damage when colliding with an entity.
 /// </summary>
 [RegisterComponent]
-public sealed partial class StaminaDamageOnCollideComponent : StaminaDamageComponent
+public sealed partial class StaminaDamageOnCollideComponent : Component
 {
-    [DataField]
+    [ViewVariables(VVAccess.ReadWrite), DataField("damage")]
+    public float Damage = 55f;
+
+    [DataField("sound")]
     public SoundSpecifier? Sound;
 }
