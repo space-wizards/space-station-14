@@ -60,8 +60,9 @@ public sealed partial class DamageExamineSystem : EntitySystem
         }
         else
         {
-            if (damageSpecifier.Empty && !damageSpecifier.AnyPositive()
-                && stamina is null)
+            if (damageSpecifier.Empty &&
+                !damageSpecifier.AnyPositive() &&
+                stamina is null)
             {
                 msg.AddMarkupOrThrow(Loc.GetString("damage-none"));
                 return msg;
