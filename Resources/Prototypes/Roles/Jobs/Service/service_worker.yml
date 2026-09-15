@@ -13,6 +13,7 @@
   access:
   - Service
   - Maintenance
+  - Cafeteria
   - Bar
   - Kitchen
   extendedAccess:
