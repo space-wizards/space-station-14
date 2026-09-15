@@ -52,12 +52,12 @@ public sealed partial class ThermoregulatorComponent : Component, IHeatContainer
     public bool Powered;
 
     /// <summary>
-    /// Cached minimum energy change in joules per update for the active mode.
+    /// Cached minimum energy change in joules per update for the selected mode and power state.
     /// </summary>
     public float MinEnergy;
 
     /// <summary>
-    /// Cached maximum energy change in joules per update for the active mode.
+    /// Cached maximum energy change in joules per update for the selected mode and power state.
     /// </summary>
     public float MaxEnergy;
 

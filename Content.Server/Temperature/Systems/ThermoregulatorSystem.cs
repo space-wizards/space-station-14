@@ -44,19 +44,22 @@ public sealed partial class ThermoregulatorSystem : SharedThermoregulatorSystem
     private void OnPowerChanged(Entity<ThermoregulatorComponent> ent, ref PowerChangedEvent args)
     {
         ent.Comp.Powered = args.Powered;
+        UpdateEnergyLimits(ent.Comp);
         if (!args.Powered)
             SetActiveMode(ent, ThermoregulatorActiveMode.Idle);
     }
 
     private void UpdateThermoregulator(Entity<ThermoregulatorComponent> ent)
     {
-        var energyToSetpoint = HeatContainerHelpers.ConductHeatToTempQuery(ref ent.Comp, ent.Comp.Setpoint);
         var newState = ent.Comp.Powered ? GetActiveMode(ent.Comp) : ThermoregulatorActiveMode.Idle;
-        SetActiveMode(ent, newState);
+        var energyToSetpoint = newState == ThermoregulatorActiveMode.Idle
+            ? 0f
+            : HeatContainerHelpers.ConductHeatToTempQuery(ref ent.Comp, ent.Comp.Setpoint);
         var energy = Math.Clamp(energyToSetpoint, ent.Comp.MinEnergy, ent.Comp.MaxEnergy);
 
         var originalTemperature = ent.Comp.Temperature;
         HeatContainerHelpers.AddHeat(ref ent.Comp, energy);
+        SetActiveMode(ent, newState);
 
         ent.Comp.NextUpdate += ent.Comp.UpdateInterval;
 
@@ -94,19 +97,23 @@ public sealed partial class ThermoregulatorSystem : SharedThermoregulatorSystem
             return;
 
         ent.Comp.ActiveMode = mode;
-        UpdateEnergyLimits(ent.Comp);
         DirtyField(ent.AsNullable(), nameof(ThermoregulatorComponent.ActiveMode));
+    }
+
+    protected override void OnModeChanged(Entity<ThermoregulatorComponent> ent)
+    {
+        UpdateEnergyLimits(ent.Comp);
     }
 
     private static void UpdateEnergyLimits(ThermoregulatorComponent comp)
     {
         var dt = (float) comp.UpdateInterval.TotalSeconds;
-        (comp.MinEnergy, comp.MaxEnergy) = comp.ActiveMode switch
-        {
-            ThermoregulatorActiveMode.Heating => (0f, comp.HeatingPower * dt),
-            ThermoregulatorActiveMode.Cooling => (-comp.CoolingPower * dt, 0f),
-            _ => (0f, 0f)
-        };
+        comp.MinEnergy = comp.Powered && comp.Mode != ThermoregulatorMode.Heating
+            ? -Math.Max(0f, comp.CoolingPower) * dt
+            : 0f;
+        comp.MaxEnergy = comp.Powered && comp.Mode != ThermoregulatorMode.Cooling
+            ? Math.Max(0f, comp.HeatingPower) * dt
+            : 0f;
     }
 
     /// <summary>

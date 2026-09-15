@@ -38,5 +38,8 @@ public abstract partial class SharedThermoregulatorSystem : EntitySystem
 
         ent.Comp.Mode = mode;
         DirtyField(ent, nameof(ThermoregulatorComponent.Mode));
+        OnModeChanged((ent.Owner, ent.Comp));
     }
+
+    protected virtual void OnModeChanged(Entity<ThermoregulatorComponent> ent) { }
 }
