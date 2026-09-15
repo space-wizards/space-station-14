@@ -22,9 +22,7 @@ public sealed partial class PopupMessageEntityEffectSystem : EntityEffectSystem<
         if (_net.IsClient)
             return;
 
-        var msg = Loc.GetString(_random.Pick(args.Effect.Messages),
-            ("name", entity.Owner),
-            ("entity", entity.Owner));
+        var msg = Loc.GetString(_random.Pick(args.Effect.Messages), ("entity", entity.Owner));
 
         switch ((args.Effect.Method, args.Effect.Type))
         {
