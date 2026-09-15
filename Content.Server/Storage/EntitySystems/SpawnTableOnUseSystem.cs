@@ -20,7 +20,7 @@ public sealed partial class SpawnTableOnUseSystem : EntitySystem
     [Dependency] private SharedTransformSystem _transform = default!;
 
     // TODO: This would probably be better off doing GetEstimatedPrice on the spawns rather than spawning every single entity.
-    [SubscribeLocalEvent(before: new[] { typeof(PricingSystem) })]
+    [SubscribeLocalEvent]
     private void CalculatePrice(Entity<SpawnTableOnUseComponent> ent, ref PriceCalculationEvent args)
     {
         var spawns = _entityTable.AverageSpawns(ent.Comp.Table);
