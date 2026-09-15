@@ -160,7 +160,7 @@
         targetComponent: Plant
         targetDataField: Yield
         applyRange:
-          min: 3
+          min: 4
           max: 10
         up: !type:PlantAdjustYield
           amount: 1
