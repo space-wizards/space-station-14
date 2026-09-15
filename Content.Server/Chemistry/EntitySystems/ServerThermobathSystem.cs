@@ -19,7 +19,9 @@ public sealed partial class ServerThermobathSystem : ThermobathSystem
     private void OnThermoregulatorUpdated(Entity<ThermobathComponent> ent, ref ThermoregulatorUpdatedEvent args)
     {
         var thermoregulator = args.Thermoregulator;
-        if (!TryGetSolutionFromContainer(ent, out var soln, out var solution) || solution.Volume <= 0) return;
+        if (!TryGetSolutionFromContainer(ent, out var soln, out var solution) || solution.Volume <= 0)
+            return;
+
         // TODO: Replace this with HeatContainerQuerySystem once #45554 is merged.
         var solutionHeatContainer = new HeatContainer(solution.GetHeatCapacity(_proto), solution.Temperature);
         _thermoregulator.ConductHeatWith((ent, thermoregulator), ref solutionHeatContainer);
