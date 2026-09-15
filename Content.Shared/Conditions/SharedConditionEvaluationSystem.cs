@@ -24,7 +24,7 @@ public sealed partial class SharedConditionEvaluationSystem : EntitySystem
         if (evt == null)
             return 0f;
         // Use event to evaluate condition on entity.
-        RaiseLocalEvent(entityUid, evt);
+        RaiseLocalEvent(entityUid, (object) evt);
         // Verity that the event was actually handled
         if (!evt.Handled)
         {
