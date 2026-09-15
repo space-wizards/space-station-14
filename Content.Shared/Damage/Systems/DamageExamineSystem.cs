@@ -82,7 +82,7 @@ public sealed partial class DamageExamineSystem : EntitySystem
         if (stamina is not null)
         {
             msg.PushNewline();
-            msg.AddMarkupOrThrow(Loc.GetString("damage-value-stun", ("amount", stamina)));
+            msg.AddMarkupOrThrow(Loc.GetString("damage-value-stamina", ("amount", stamina)));
         }
 
         return msg;

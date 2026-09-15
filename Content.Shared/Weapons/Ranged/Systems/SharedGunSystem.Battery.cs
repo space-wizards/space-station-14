@@ -57,11 +57,13 @@ public abstract partial class SharedGunSystem
                 damageSpec = hitscanComp.Damage * Damageable.UniversalHitscanDamageModifier;
             }
         }
+
         float? stamina = null;
         if (proto.TryComp<StaminaDamageOnCollideComponent>(out var comp, Factory))
         {
             stamina = comp.Damage;
         }
+
         if (damageSpec == null)
             return;
 
