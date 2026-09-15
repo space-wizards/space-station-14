@@ -278,7 +278,6 @@
     - type: MovementIgnoreGravity
       weightless: true
     - type: GravityAffected
-      weightless: true
 
 # BROKEN: Setting an input mover's body type to Dynamic causes a movement assertion.
 #- type: adminVerb
