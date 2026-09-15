@@ -23,13 +23,14 @@ public sealed partial class ThermoregulatorSystem : SharedThermoregulatorSystem
             if (curTime < comp.NextUpdate)
                 continue;
 
-            UpdateThermoregulator((uid, comp), _power.IsPowered(uid));
+            UpdateThermoregulator((uid, comp));
         }
     }
 
     [SubscribeLocalEvent]
     private void OnInit(Entity<ThermoregulatorComponent> ent, ref ComponentInit args)
     {
+        ent.Comp.Powered = _power.IsPowered(ent.Owner);
         UpdateEnergyLimits(ent.Comp);
     }
 
@@ -42,14 +43,15 @@ public sealed partial class ThermoregulatorSystem : SharedThermoregulatorSystem
     [SubscribeLocalEvent]
     private void OnPowerChanged(Entity<ThermoregulatorComponent> ent, ref PowerChangedEvent args)
     {
+        ent.Comp.Powered = args.Powered;
         if (!args.Powered)
             SetActiveMode(ent, ThermoregulatorActiveMode.Idle);
     }
 
-    private void UpdateThermoregulator(Entity<ThermoregulatorComponent> ent, bool powered)
+    private void UpdateThermoregulator(Entity<ThermoregulatorComponent> ent)
     {
         var energyToSetpoint = HeatContainerHelpers.ConductHeatToTempQuery(ref ent.Comp, ent.Comp.Setpoint);
-        var newState = powered ? GetActiveMode(ent.Comp) : ThermoregulatorActiveMode.Idle;
+        var newState = ent.Comp.Powered ? GetActiveMode(ent.Comp) : ThermoregulatorActiveMode.Idle;
         SetActiveMode(ent, newState);
         var energy = Math.Clamp(energyToSetpoint, ent.Comp.MinEnergy, ent.Comp.MaxEnergy);
 

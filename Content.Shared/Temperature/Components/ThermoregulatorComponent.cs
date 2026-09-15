@@ -47,6 +47,11 @@ public sealed partial class ThermoregulatorComponent : Component, IHeatContainer
     public ThermoregulatorActiveMode ActiveMode = ThermoregulatorActiveMode.Idle;
 
     /// <summary>
+    /// Cached power state, updated when the power supply changes.
+    /// </summary>
+    public bool Powered;
+
+    /// <summary>
     /// Cached minimum energy change in joules per update for the active mode.
     /// </summary>
     public float MinEnergy;
