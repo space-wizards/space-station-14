@@ -1,4 +1,3 @@
-using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Tools.Systems;
 
@@ -18,12 +17,9 @@ public sealed partial class StuffIntoLockerEntityEffectSystem : EntityEffectSyst
     {
         var locker = EntityManager.PredictedSpawn(args.Effect.Prototype, _transform.GetMapCoordinates(entity));
 
-        if (TryComp<EntityStorageComponent>(locker, out var storage))
-        {
-            _entityStorage.ToggleOpen(entity.Owner, locker, storage);
-            _entityStorage.Insert(entity.Owner, locker, storage);
-            _entityStorage.ToggleOpen(entity.Owner, locker, storage);
-        }
+        _entityStorage.ToggleOpen(entity.Owner, locker);
+        _entityStorage.Insert(entity.Owner, locker);
+        _entityStorage.ToggleOpen(entity.Owner, locker);
 
         _weldable.SetWeldedState(locker, true);
     }
