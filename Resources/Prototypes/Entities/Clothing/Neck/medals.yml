@@ -26,7 +26,7 @@
   parent: ClothingNeckMedalBase
   id: ClothingNeckGoldmedal
   name: gold medal of crewmanship
-  description: Given to crewmates who display excellent crewmanship.
+  description: Given to crewmates who display exceptional crewmanship.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Medals/gold.rsi
@@ -39,7 +39,7 @@
   parent: ClothingNeckMedalBase
   id: ClothingNeckCargomedal
   name: cargo medal
-  description: Given for the best work in the cargo department.
+  description: Given to crewmates who perform exceptional work in the Cargo department.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Medals/cargomedal.rsi
@@ -50,7 +50,7 @@
   parent: ClothingNeckMedalBase
   id: ClothingNeckEngineermedal
   name: engineer medal
-  description: Given for the best work in the engineering department.
+  description: Given to crewmates who perform exceptional work in the Engineering department.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Medals/engineermedal.rsi
@@ -61,7 +61,7 @@
   parent: ClothingNeckMedalBase
   id: ClothingNeckMedicalmedal
   name: medical medal
-  description: Given for the best work in the medical department.
+  description: Given to crewmates who perform exceptional work in the Medical department.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Medals/medicalmedal.rsi
@@ -72,7 +72,7 @@
   parent: ClothingNeckMedalBase
   id: ClothingNeckSciencemedal
   name: science medal
-  description: Given for the best work in the science department.
+  description: Given to crewmates who perform exceptional work in the Science department.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Medals/sciencemedal.rsi
@@ -83,7 +83,7 @@
   parent: ClothingNeckMedalBase
   id: ClothingNeckSecuritymedal
   name: security medal
-  description: Given for the best work in the security department.
+  description: Given to crewmates who perform exceptional work in the Security department.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Medals/securitymedal.rsi
@@ -92,9 +92,20 @@
 
 - type: entity
   parent: ClothingNeckMedalBase
+  id: ClothingNeckServicemedal
+  name: service medal
+  description: Given to crewmates who perform exceptional work in the Service department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Medals/servicemedal.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Medals/servicemedal.rsi
+
+- type: entity
+  parent: ClothingNeckMedalBase
   id: ClothingNeckClownmedal
   name: clown medal
-  description: Given for the best joke in the universe. HONK!
+  description: Given to crewmates who perform the best joke in the universe. HONK!
   components:
   - type: Sprite
     sprite: Clothing/Neck/Medals/clownmedal.rsi
