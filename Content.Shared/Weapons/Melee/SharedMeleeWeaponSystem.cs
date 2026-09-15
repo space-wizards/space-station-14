@@ -146,10 +146,16 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
 
         var damageSpec = GetDamage(uid, args.User, component);
 
+        float? stamina = null;
+        if (TryComp<StaminaDamageOnHitComponent>(uid, out var comp))
+        {
+            stamina = comp.Damage;
+        }
+
         if (damageSpec.Empty)
             return;
 
-        _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), Loc.GetString("damage-melee"));
+        _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), Loc.GetString("damage-melee"), stamina);
     }
     private void OnMeleeSelected(EntityUid uid, MeleeWeaponComponent component, HandSelectedEvent args)
     {

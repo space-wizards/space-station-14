@@ -1,4 +1,5 @@
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
@@ -30,10 +31,16 @@ public abstract partial class SharedGunSystem
     {
         var damageSpec = GetProjectileDamage(ent.Comp.Prototype);
 
+        float? stamina = null;
+        if (TryComp<StaminaDamageOnCollideComponent>(ent, out var comp))
+        {
+            stamina = comp.Damage;
+        }
+
         if (damageSpec == null)
             return;
 
-        _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), Loc.GetString("damage-projectile"));
+        _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), Loc.GetString("damage-projectile"), stamina);
     }
 
     private DamageSpecifier? GetProjectileDamage(EntProtoId proto)

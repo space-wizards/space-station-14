@@ -1,4 +1,5 @@
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
 using Content.Shared.Projectiles;
@@ -56,10 +57,15 @@ public abstract partial class SharedGunSystem
                 damageSpec = hitscanComp.Damage * Damageable.UniversalHitscanDamageModifier;
             }
         }
+        float? stamina = null;
+        if (proto.TryComp<StaminaDamageOnCollideComponent>(out var comp, Factory))
+        {
+            stamina = comp.Damage;
+        }
         if (damageSpec == null)
             return;
 
-        _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), damageType);
+        _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), damageType, stamina);
     }
 
     private void OnBatteryTakeAmmo(Entity<BatteryAmmoProviderComponent> ent, ref TakeAmmoEvent args)
