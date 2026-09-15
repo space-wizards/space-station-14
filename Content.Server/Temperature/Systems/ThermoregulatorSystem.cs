@@ -51,7 +51,7 @@ public sealed partial class ThermoregulatorSystem : SharedThermoregulatorSystem
 
     private void UpdateThermoregulator(Entity<ThermoregulatorComponent> ent)
     {
-        var newState = ent.Comp.Powered ? GetActiveMode(ent.Comp) : ThermoregulatorActiveMode.Idle;
+        var newState = ent.Comp.Powered ? GetActiveMode(ent.Comp, ent.Comp.ActiveMode) : ThermoregulatorActiveMode.Idle;
         var energyToSetpoint = newState == ThermoregulatorActiveMode.Idle
             ? 0f
             : HeatContainerHelpers.ConductHeatToTempQuery(ref ent.Comp, ent.Comp.Setpoint);
@@ -59,27 +59,28 @@ public sealed partial class ThermoregulatorSystem : SharedThermoregulatorSystem
 
         var originalTemperature = ent.Comp.Temperature;
         HeatContainerHelpers.AddHeat(ref ent.Comp, energy);
-        SetActiveMode(ent, newState);
 
         ent.Comp.NextUpdate += ent.Comp.UpdateInterval;
 
         var ev = new ThermoregulatorUpdatedEvent(ent.Comp);
         RaiseLocalEvent(ent, ref ev);
 
+        SetActiveMode(ent, ent.Comp.Powered ? GetActiveMode(ent.Comp, newState) : ThermoregulatorActiveMode.Idle);
+
         if (!MathHelper.CloseTo(originalTemperature, ent.Comp.Temperature))
             DirtyField(ent.AsNullable(), nameof(ThermoregulatorComponent.Temperature));
     }
 
-    private static ThermoregulatorActiveMode GetActiveMode(ThermoregulatorComponent comp)
+    private static ThermoregulatorActiveMode GetActiveMode(ThermoregulatorComponent comp, ThermoregulatorActiveMode previousMode)
     {
         var difference = comp.Setpoint - comp.Temperature;
         var canHeat = comp.Mode != ThermoregulatorMode.Cooling && comp.HeatingPower > 0f;
         var canCool = comp.Mode != ThermoregulatorMode.Heating && comp.CoolingPower > 0f;
 
-        if (comp.ActiveMode == ThermoregulatorActiveMode.Heating && canHeat && difference > 0f)
+        if (previousMode == ThermoregulatorActiveMode.Heating && canHeat && difference > 0f)
             return ThermoregulatorActiveMode.Heating;
 
-        if (comp.ActiveMode == ThermoregulatorActiveMode.Cooling && canCool && difference < 0f)
+        if (previousMode == ThermoregulatorActiveMode.Cooling && canCool && difference < 0f)
             return ThermoregulatorActiveMode.Cooling;
 
         if (canHeat && difference > comp.TemperatureTolerance)
@@ -98,6 +99,9 @@ public sealed partial class ThermoregulatorSystem : SharedThermoregulatorSystem
 
         ent.Comp.ActiveMode = mode;
         DirtyField(ent.AsNullable(), nameof(ThermoregulatorComponent.ActiveMode));
+
+        var ev = new ThermoregulatorActiveModeChangedEvent(ent.Comp);
+        RaiseLocalEvent(ent, ref ev);
     }
 
     protected override void OnModeChanged(Entity<ThermoregulatorComponent> ent)
@@ -136,3 +140,6 @@ public sealed partial class ThermoregulatorSystem : SharedThermoregulatorSystem
 
 [ByRefEvent]
 public readonly record struct ThermoregulatorUpdatedEvent(ThermoregulatorComponent Thermoregulator);
+
+[ByRefEvent]
+public readonly record struct ThermoregulatorActiveModeChangedEvent(ThermoregulatorComponent Thermoregulator);

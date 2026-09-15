@@ -26,8 +26,12 @@ public sealed partial class ThermobathSystem : SharedThermobathSystem
             _thermoregulator.ConductHeatWith((ent, thermoregulator), ref solutionHeatContainer);
             _solutionContainer.SetTemperature(soln.Value, solutionHeatContainer.Temperature);
         }
+    }
 
-        UpdateAppearance(ent, thermoregulator);
+    [SubscribeLocalEvent]
+    private void OnThermoregulatorActiveModeChanged(Entity<ThermobathComponent> ent, ref ThermoregulatorActiveModeChangedEvent args)
+    {
+        UpdateAppearance(ent, args.Thermoregulator);
     }
 
     private bool TryGetSolutionFromContainer(
