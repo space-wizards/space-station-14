@@ -78,7 +78,8 @@ public sealed partial class InstrumentMenu : FancyWindow
     /// </summary>
     /// <param name="name">The string to display on the tab header for this configuration.</param>
     /// <param name="ctrl">The control used for this configuration.</param>
-    public void AddConfigurationControl(string name, Control ctrl)
+    /// <param name="verticalExpand">Whether or not the panel should expand to fit <paramref name="ctrl"/>.</param>
+    public void AddConfigurationControl(string name, Control ctrl, bool verticalExpand = false)
     {
         var formatted = new FormattedMessage();
         var styleBox = new StyleBoxFlat
@@ -106,6 +107,7 @@ public sealed partial class InstrumentMenu : FancyWindow
         header.SetMessage(formatted, Color.FromHex("#A88B5E"));
 
         panel.AddChild(ctrl);
+        panel.VerticalExpand = verticalExpand;
 
         ConfigurationItemsContainer.AddChild(header);
         ConfigurationItemsContainer.AddChild(panel);

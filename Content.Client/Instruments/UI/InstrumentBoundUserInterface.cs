@@ -87,7 +87,8 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         // Append any additional configuration controls here.
         _instrumentMenu.AddConfigurationControl(
             _loc.GetString("instruments-component-menu-channels-label"),
-            _channelsControl);
+            _channelsControl,
+            verticalExpand: true);
         _instrumentMenu.AddConfigurationControl(
             _loc.GetString("instruments-component-midi-file-collection-label"),
             _midiCollectionUtilsControl);
