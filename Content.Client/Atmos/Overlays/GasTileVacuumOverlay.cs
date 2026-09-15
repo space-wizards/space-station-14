@@ -105,16 +105,6 @@ public sealed partial class GasTileVacuumOverlay : Overlay
                     if (!Matrix3x2.Invert(gridEntToViewportLocal, out var viewportLocalToGridEnt))
                         continue;
 
-                    var uvToUi = Matrix3Helpers.CreateScale(res.VacuumTarget.Size.X, -res.VacuumTarget.Size.Y);
-                    var uvToGridEnt = uvToUi * viewportLocalToGridEnt;
-
-                    // Because we want the actual distortion to be calculated based on the grid coordinates*, we need
-                    // to pass a matrix transformation to go from the viewport coordinates to grid coordinates.
-                    //   * (why? because otherwise the effect would shimmer like crazy as you moved around, think
-                    //      moving a piece of warped glass above a picture instead of placing the warped glass on the
-                    //      paper and moving them together)
-                    _shader.SetParameter("grid_ent_from_viewport_local", uvToGridEnt);
-
                     // Draw commands (like DrawRect) will be using grid coordinates from here
                     worldHandle.SetTransform(gridEntToViewportLocal);
 
