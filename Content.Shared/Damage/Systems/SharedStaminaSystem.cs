@@ -271,6 +271,24 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         args.Cost += ent.Comp.RequiredCharge;
     }
 
+    [SubscribeLocalEvent]
+    private void OnExamine(Entity<StaminaDamageOnCollideComponent> ent, ref DamageExamineEvent args)
+    {
+        args.Message.AddMarkupOrThrow(Loc.GetString("damage-examine-type", ("$amount", ent.Comp.Damage)));
+    }
+
+    [SubscribeLocalEvent]
+    private void OnExamine(Entity<StaminaDamageOnEmbedComponent> ent, ref DamageExamineEvent args)
+    {
+        args.Message.AddMarkupOrThrow(Loc.GetString("damage-examine-type", ("$amount", ent.Comp.Damage)));
+    }
+
+    [SubscribeLocalEvent]
+    private void OnExamine(Entity<StaminaDamageOnHitComponent> ent, ref DamageExamineEvent args)
+    {
+        args.Message.AddMarkupOrThrow(Loc.GetString("damage-examine-type", ("$amount", ent.Comp.Damage)));
+    }
+
     private void OnCollide(EntityUid uid, StaminaDamageOnCollideComponent component, EntityUid target)
     {
         // you can't inflict stamina damage on things with no stamina component

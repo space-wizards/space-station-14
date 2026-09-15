@@ -37,7 +37,7 @@ public sealed partial class DamageExamineSystem : EntitySystem
         }
     }
 
-    public void AddDamageExamine(FormattedMessage message, DamageSpecifier damageSpecifier, string? type = null, StaminaDamageComponent? stamina = null)
+    public void AddDamageExamine(FormattedMessage message, DamageSpecifier damageSpecifier, string? type = null)
     {
         var markup = GetDamageExamine(damageSpecifier, type);
         if (!message.IsEmpty)
