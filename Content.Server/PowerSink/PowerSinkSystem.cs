@@ -58,15 +58,13 @@ namespace Content.Server.PowerSink
         public override void Update(float frameTime)
         {
             var toRemove = new RemQueue<(EntityUid Entity, PowerSinkComponent Sink)>();
-            var query = EntityQueryEnumerator<PowerSinkComponent, PowerConsumerComponent, BatteryComponent, TransformComponent>();
+            var query = EntityQueryEnumerator<PowerSinkComponent, BatteryComponent, TransformComponent>();
 
             // Realistically it's gonna be like <5 per station.
-            while (query.MoveNext(out var entity, out var component, out var networkLoad, out var battery, out var transform))
+            while (query.MoveNext(out var entity, out var component, out var battery, out var transform))
             {
                 if (!transform.Anchored)
                     continue;
-
-                _battery.ChangeCharge((entity, battery), networkLoad.NetworkLoad.ReceivingPower * frameTime);
 
                 var currentBatteryThreshold = _battery.GetChargeLevel((entity, battery));
 

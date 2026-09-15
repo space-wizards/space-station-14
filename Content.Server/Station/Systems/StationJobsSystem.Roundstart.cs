@@ -284,10 +284,11 @@ public sealed partial class StationJobsSystem
 
             _random.Shuffle(givenStations);
 
+            var bannedRoles = _banManager.GetRoleBans(player)?.Select(role => role.RoleId).ToHashSet();
             foreach (var station in givenStations)
             {
-                // Pick a random overflow job from that station.
-                var overflows = GetOverflowJobs(station).ToList();
+                // Pick a random overflow job from that station and remove banned roles
+                var overflows = GetOverflowJobs(station).Where(job => bannedRoles == null || !bannedRoles.Contains(job.Id)).ToList();
                 _random.Shuffle(overflows);
 
                 // Stations with no overflow slots should simply get skipped over.
@@ -411,7 +412,7 @@ public sealed partial class StationJobsSystem
         IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> profiles,
         out NetUserId player)
     {
-        if (!_jobs.TryGetPrimaryDepartment(job.Id, out var department))
+        if (!_jobs.TryGetPrimaryDepartment(job.Id, out var department) || department.IgnoreForDepartmentFallback)
         {
             player = default;
             return false;

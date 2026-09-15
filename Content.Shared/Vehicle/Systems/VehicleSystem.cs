@@ -3,6 +3,7 @@ using Content.Shared.Access.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
+using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
@@ -11,6 +12,7 @@ using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Popups;
 using Content.Shared.Vehicle.Components;
 using Content.Shared.Whitelist;
 using JetBrains.Annotations;
@@ -28,9 +30,11 @@ public sealed partial class VehicleSystem : EntitySystem
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedMoverController _mover = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedVirtualItemSystem _virtualItem = default!;
     [Dependency] private IGameTiming _timing = default!;
 
@@ -145,7 +149,8 @@ public sealed partial class VehicleSystem : EntitySystem
         if (entity.Comp.Operator is not null)
             return false;
 
-        if (_operatorQuery.TryComp(operatorUid, out var eOperator) && eOperator.Vehicle is not null)
+        _operatorQuery.TryComp(operatorUid, out var vehicleOperator);
+        if (vehicleOperator?.Vehicle is not null)
             return false;
 
         if (!CanOperate(entity.AsNullable(), operatorUid))
@@ -156,18 +161,9 @@ public sealed partial class VehicleSystem : EntitySystem
 
         entity.Comp.Operator = operatorUid;
 
-        if (_operatorQuery.HasComp(operatorUid))
-        {
-            var vehicleOperator = Comp<VehicleOperatorComponent>(operatorUid);
-            vehicleOperator.Vehicle = entity.Owner;
-            Dirty(operatorUid, vehicleOperator);
-        }
-        else
-        {
-            var vehicleOperator = AddComp<VehicleOperatorComponent>(operatorUid);
-            vehicleOperator.Vehicle = entity.Owner;
-            Dirty(operatorUid, vehicleOperator);
-        }
+        vehicleOperator ??= AddComp<VehicleOperatorComponent>(operatorUid);
+        vehicleOperator.Vehicle = entity.Owner;
+        Dirty(operatorUid, vehicleOperator);
 
         _mover.SetRelay(operatorUid, entity);
 

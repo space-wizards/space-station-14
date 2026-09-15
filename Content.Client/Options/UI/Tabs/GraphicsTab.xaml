@@ -6,8 +6,17 @@
             <BoxContainer Orientation="Vertical" Margin="8 8 8 8">
                 <!-- Display -->
                 <Label Text="{Loc 'ui-options-display-label'}" StyleClasses="LabelKeyText"/>
-                <CheckBox Name="VSyncCheckBox" Text="{Loc 'ui-options-vsync'}" />
                 <CheckBox Name="FullscreenCheckBox" Text="{Loc 'ui-options-fullscreen'}" />
+                <CheckBox Name="VSyncCheckBox" Text="{Loc 'ui-options-vsync'}" />
+                <BoxContainer Name="MaxFpsContainer"
+                              Orientation="Horizontal"
+                              ToolTip="{Loc 'ui-options-max-fps-tooltip'}">
+                    <Label Text="{Loc 'ui-options-max-fps'}" MinWidth="400" />
+                    <ui:OptionIntInput Name="MaxFpsInput" HorizontalExpand="True" />
+                    <Button Name="MaxFpsDisplayRateButton"
+                            Text="{Loc 'ui-options-max-fps-display-rate'}"
+                            Margin="8 0 0 0" />
+                </BoxContainer>
 
                 <!-- Quality -->
                 <Label Text="{Loc 'ui-options-quality-label'}" StyleClasses="LabelKeyText"/>
