@@ -453,13 +453,10 @@
     type: Pvs
     method: PopupEntity
     visualType: LargeCaution
-  - !type:AddComponents
-    replaceExisting: true
-    components:
-    - type: SpawnOnDespawn
-      prototype: Ash
-    - type: TimedDespawn
-      lifetime: 0
+  - !type:SpawnEntity
+    entity: Ash
+    predicted: false
+  - !type:DeleteEntity
 
 - type: adminVerb
   id: AdminSmiteGhostKick
