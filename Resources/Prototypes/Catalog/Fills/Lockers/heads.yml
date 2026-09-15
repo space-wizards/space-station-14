@@ -130,7 +130,7 @@
     - id: ClothingBackpackIan
       prob: 0.5
     - id: ClothingHeadsetCommand
-    - id: ClothingNeckGoldmedal # TODO: replace this with a Service-specific medal
+    - id: ClothingNeckServicemedal
     - id: DoorRemoteService
     - id: HoPIDCard
     - id: WeaponDisabler
