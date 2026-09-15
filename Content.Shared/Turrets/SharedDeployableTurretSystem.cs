@@ -4,7 +4,8 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Timing;
+using Content.Shared.Timing.Components;
+using Content.Shared.Timing.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Wires;
@@ -61,12 +62,12 @@ public abstract partial class SharedDeployableTurretSystem : EntitySystem
 
     private void OnActivate(Entity<DeployableTurretComponent> ent, ref ActivateInWorldEvent args)
     {
-        if (TryComp(ent, out UseDelayComponent? useDelay) && !_useDelay.TryResetDelay((ent, useDelay), true))
+        if (!_useDelay.TryResetDelay(ent.Owner, true))
             return;
 
         if (!_accessReader.IsAllowed(args.User, ent))
         {
-            _popup.PopupClient(Loc.GetString("deployable-turret-component-access-denied"), ent, args.User);
+            _popup.PopupEntity(Loc.GetString("deployable-turret-component-access-denied"), ent, args.User);
             _audio.PlayPredicted(ent.Comp.AccessDeniedSound, ent, args.User);
 
             return;
@@ -80,7 +81,7 @@ public abstract partial class SharedDeployableTurretSystem : EntitySystem
         if (!ent.Comp.Enabled || args.Cancelled)
             return;
 
-        _popup.PopupClient(Loc.GetString("deployable-turret-component-cannot-access-wires"), ent, args.User);
+        _popup.PopupEntity(Loc.GetString("deployable-turret-component-cannot-access-wires"), ent, args.User);
 
         args.Cancelled = true;
     }
@@ -95,7 +96,7 @@ public abstract partial class SharedDeployableTurretSystem : EntitySystem
         if (enabled && ent.Comp.CurrentState == DeployableTurretState.Broken)
         {
             if (user != null)
-                _popup.PopupClient(Loc.GetString("deployable-turret-component-is-broken"), ent, user.Value);
+                _popup.PopupEntity(Loc.GetString("deployable-turret-component-is-broken"), ent, user.Value);
 
             return false;
         }
@@ -103,7 +104,7 @@ public abstract partial class SharedDeployableTurretSystem : EntitySystem
         if (enabled && !HasAmmo(ent))
         {
             if (user != null)
-                _popup.PopupClient(Loc.GetString("deployable-turret-component-no-ammo"), ent, user.Value);
+                _popup.PopupEntity(Loc.GetString("deployable-turret-component-no-ammo"), ent, user.Value);
 
             return false;
         }
@@ -150,7 +151,7 @@ public abstract partial class SharedDeployableTurretSystem : EntitySystem
 
         // Play pop up message
         var msg = enabled ? "deployable-turret-component-activating" : "deployable-turret-component-deactivating";
-        _popup.PopupClient(Loc.GetString(msg), ent, user);
+        _popup.PopupEntity(Loc.GetString(msg), ent, user);
 
         // Update enabled state
         ent.Comp.Enabled = enabled;

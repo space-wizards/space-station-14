@@ -2,16 +2,13 @@ using System.Numerics;
 using Content.Shared.Access.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Clothing;
-using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DoAfter;
 using Content.Shared.Emp;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
-using Content.Shared.Medical.SuitSensor;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -20,7 +17,6 @@ using Content.Shared.Station;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -36,7 +32,6 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
     [Dependency] private SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SharedIdCardSystem _idCardSystem = default!;
     [Dependency] private IRobustRandom _random = default!;
@@ -156,31 +151,28 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
         ent.Comp.ControlsLocked = ent.Comp.PreviousControlsLocked;
     }
 
+    /// <summary>
+    /// Localize the SuitSensor status and push to the examination tooltip.
+    /// </summary>
+    /// <param name="ent">Entity with a <see cref="SuitSensorComponent"/> under examination.</param>
+    /// <param name="args"><see cref="ExaminedEvent"/> arguments,
+    /// used to determine range and retrieve the active mode.</param>
+    /// <exception cref="InvalidOperationException">Invalid mode was provided.</exception>
     private void OnExamine(Entity<SuitSensorComponent> ent, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
             return;
 
-        string msg;
-        switch (ent.Comp.Mode)
+        var locId = ent.Comp.Mode switch
         {
-            case SuitSensorMode.SensorOff:
-                msg = "suit-sensor-examine-off";
-                break;
-            case SuitSensorMode.SensorBinary:
-                msg = "suit-sensor-examine-binary";
-                break;
-            case SuitSensorMode.SensorVitals:
-                msg = "suit-sensor-examine-vitals";
-                break;
-            case SuitSensorMode.SensorCords:
-                msg = "suit-sensor-examine-cords";
-                break;
-            default:
-                return;
-        }
+            SuitSensorMode.SensorOff => "suit-sensor-examine-off",
+            SuitSensorMode.SensorBinary => "suit-sensor-examine-binary",
+            SuitSensorMode.SensorVitals => "suit-sensor-examine-vitals",
+            SuitSensorMode.SensorCords => "suit-sensor-examine-cords",
+            _ => throw new InvalidOperationException($"Unknown {nameof(SuitSensorMode)}: {ent.Comp.Mode}"),
+        };
 
-        args.PushMarkup(Loc.GetString(msg));
+        args.PushMarkup(Loc.GetString(locId));
     }
 
     private void OnVerb(Entity<SuitSensorComponent> ent, ref GetVerbsEvent<Verb> args)
@@ -227,11 +219,19 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
         Dirty(ent);
     }
 
+    /// <summary>
+    /// Create a verb for viewing and changing suit sensor behavior.
+    /// </summary>
+    /// <param name="ent">Entity with a <see cref="SuitSensorComponent"/> to be verbed.</param>
+    /// <param name="userUid">Actor requesting the verb, used to identify if a foreign actor is requesting a verb.</param>
+    /// <param name="mode">Current mode of the suit sensor.</param>
+    /// <returns>A created <see cref="Verb"/> that will attempt to change to a specific mode.</returns>
     private Verb CreateVerb(Entity<SuitSensorComponent> ent, EntityUid userUid, SuitSensorMode mode)
     {
         return new Verb()
         {
             Text = GetModeName(mode),
+            Message = GetModeDescription(mode),
             Disabled = ent.Comp.Mode == mode,
             Priority = -(int)mode, // sort them in descending order
             Category = VerbCategory.SetSensor,
@@ -239,28 +239,42 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
         };
     }
 
+    /// <summary>
+    /// Gets the localized name of a suit sensor mode.
+    /// </summary>
+    /// <param name="mode">The <see cref="SuitSensorMode"/> requiring a name string.</param>
+    /// <returns>A localized string containing the name of the suit sensor mode.</returns>
+    /// <exception cref="InvalidOperationException">Invalid mode was provided.</exception>
     public string GetModeName(SuitSensorMode mode)
     {
-        string name;
-        switch (mode)
+        var locId = mode switch
         {
-            case SuitSensorMode.SensorOff:
-                name = "suit-sensor-mode-off";
-                break;
-            case SuitSensorMode.SensorBinary:
-                name = "suit-sensor-mode-binary";
-                break;
-            case SuitSensorMode.SensorVitals:
-                name = "suit-sensor-mode-vitals";
-                break;
-            case SuitSensorMode.SensorCords:
-                name = "suit-sensor-mode-cords";
-                break;
-            default:
-                return "";
-        }
+            SuitSensorMode.SensorOff => "suit-sensor-mode-off",
+            SuitSensorMode.SensorBinary => "suit-sensor-mode-binary",
+            SuitSensorMode.SensorVitals => "suit-sensor-mode-vitals",
+            SuitSensorMode.SensorCords => "suit-sensor-mode-cords",
+            _ => throw new InvalidOperationException($"Unknown {nameof(SuitSensorMode)}: {mode}"),
+        };
+        return Loc.GetString(locId);
+    }
 
-        return Loc.GetString(name);
+    /// <summary>
+    /// Gets the localized description of a suit sensor mode.
+    /// </summary>
+    /// <param name="mode">The <see cref="SuitSensorMode"/> requiring a description.</param>
+    /// <returns>A localized string containing the description of the suit sensor mode.</returns>
+    /// <exception cref="InvalidOperationException">Invalid mode was provided.</exception>
+    public string GetModeDescription(SuitSensorMode mode)
+    {
+        var locId = mode switch
+        {
+            SuitSensorMode.SensorOff => "suit-sensor-description-off",
+            SuitSensorMode.SensorBinary => "suit-sensor-description-binary",
+            SuitSensorMode.SensorVitals => "suit-sensor-description-vitals",
+            SuitSensorMode.SensorCords => "suit-sensor-description-cords",
+            _ => throw new InvalidOperationException($"Unknown {nameof(SuitSensorMode)}: {mode}"),
+        };
+        return Loc.GetString(locId);
     }
 
     /// <summary>
@@ -317,7 +331,7 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
         if (userUid != null)
         {
             var msg = Loc.GetString("suit-sensor-mode-state", ("mode", GetModeName(mode)));
-            _popupSystem.PopupClient(msg, sensors, userUid.Value);
+            _popupSystem.PopupEntity(msg, sensors, userUid.Value);
         }
     }
 
@@ -367,7 +381,7 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
             userJobIcon = card.Comp.JobIcon;
 
             foreach (var department in card.Comp.JobDepartments)
-                userJobDepartments.Add(Loc.GetString(_proto.Index(department).Name));
+                userJobDepartments.Add(Loc.GetString(ProtoMan.Index(department).Name));
         }
 
         // get health mob state
@@ -421,68 +435,6 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
                 break;
         }
 
-        return status;
-    }
-
-    /// <summary>
-    /// Create a device network package from the suit sensors status.
-    /// </summary>
-    public NetworkPayload SuitSensorToPacket(SuitSensorStatus status)
-    {
-        var payload = new NetworkPayload()
-        {
-            [DeviceNetworkConstants.Command] = DeviceNetworkConstants.CmdUpdatedState,
-            [SuitSensorConstants.NET_NAME] = status.Name,
-            [SuitSensorConstants.NET_JOB] = status.Job,
-            [SuitSensorConstants.NET_JOB_ICON] = status.JobIcon,
-            [SuitSensorConstants.NET_JOB_DEPARTMENTS] = status.JobDepartments,
-            [SuitSensorConstants.NET_IS_ALIVE] = status.IsAlive,
-            [SuitSensorConstants.NET_SUIT_SENSOR_UID] = status.SuitSensorUid,
-            [SuitSensorConstants.NET_OWNER_UID] = status.OwnerUid,
-        };
-
-        if (status.TotalDamage != null)
-            payload.Add(SuitSensorConstants.NET_TOTAL_DAMAGE, status.TotalDamage);
-        if (status.TotalDamageThreshold != null)
-            payload.Add(SuitSensorConstants.NET_TOTAL_DAMAGE_THRESHOLD, status.TotalDamageThreshold);
-        if (status.Coordinates != null)
-            payload.Add(SuitSensorConstants.NET_COORDINATES, status.Coordinates);
-
-        return payload;
-    }
-
-    /// <summary>
-    /// Try to create the suit sensors status from the device network message.
-    /// </summary>
-    public SuitSensorStatus? PacketToSuitSensor(NetworkPayload payload)
-    {
-        // check command
-        if (!payload.TryGetValue(DeviceNetworkConstants.Command, out string? command))
-            return null;
-        if (command != DeviceNetworkConstants.CmdUpdatedState)
-            return null;
-
-        // check name, job and alive
-        if (!payload.TryGetValue(SuitSensorConstants.NET_NAME, out string? name)) return null;
-        if (!payload.TryGetValue(SuitSensorConstants.NET_JOB, out string? job)) return null;
-        if (!payload.TryGetValue(SuitSensorConstants.NET_JOB_ICON, out string? jobIcon)) return null;
-        if (!payload.TryGetValue(SuitSensorConstants.NET_JOB_DEPARTMENTS, out List<string>? jobDepartments)) return null;
-        if (!payload.TryGetValue(SuitSensorConstants.NET_IS_ALIVE, out bool? isAlive)) return null;
-        if (!payload.TryGetValue(SuitSensorConstants.NET_SUIT_SENSOR_UID, out NetEntity suitSensorUid)) return null;
-        if (!payload.TryGetValue(SuitSensorConstants.NET_OWNER_UID, out NetEntity ownerUid)) return null;
-
-        // try get total damage and cords (optionals)
-        payload.TryGetValue(SuitSensorConstants.NET_TOTAL_DAMAGE, out int? totalDamage);
-        payload.TryGetValue(SuitSensorConstants.NET_TOTAL_DAMAGE_THRESHOLD, out int? totalDamageThreshold);
-        payload.TryGetValue(SuitSensorConstants.NET_COORDINATES, out NetCoordinates? coords);
-
-        var status = new SuitSensorStatus(ownerUid, suitSensorUid, name, job, jobIcon, jobDepartments)
-        {
-            IsAlive = isAlive.Value,
-            TotalDamage = totalDamage,
-            TotalDamageThreshold = totalDamageThreshold,
-            Coordinates = coords,
-        };
         return status;
     }
 }

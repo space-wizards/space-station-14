@@ -10,7 +10,6 @@ using Content.Shared.Power;
 using Content.Shared.Station.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Cargo.Systems;
 
@@ -40,15 +39,11 @@ public sealed partial class CargoSystem
             if (_station.GetOwningStation(uid, xform) != args.Station)
                 continue;
 
-            // todo cannot be fucking asked to figure out device linking rn but this shouldn't just default to the first port.
-            if (!TryGetLinkedConsole((uid, tele), out var console) ||
-                console.Value.Owner != args.OrderConsole.Owner)
+            if (!IsLinkedToConsole(uid, GetEntity(args.Order.ApprovingConsole)))
                 continue;
 
-            for (var i = 0; i < args.Order.OrderQuantity; i++)
-            {
-                tele.CurrentOrders.Add(args.Order);
-            }
+            tele.CurrentOrders.Add(args.Order);
+
             tele.Accumulator = tele.Delay;
             args.Handled = true;
             args.FulfillmentEntity = uid;
@@ -56,21 +51,19 @@ public sealed partial class CargoSystem
         }
     }
 
-    private bool TryGetLinkedConsole(Entity<CargoTelepadComponent> ent,
-        [NotNullWhen(true)] out Entity<CargoOrderConsoleComponent>? console)
+    private bool IsLinkedToConsole(
+        EntityUid uid,
+        EntityUid? approvingConsole
+    )
     {
-        console = null;
-        if (!TryComp<DeviceLinkSinkComponent>(ent, out var sinkComponent) ||
-            sinkComponent.LinkedSources.FirstOrNull() is not { } linked)
+        if (approvingConsole is null)
             return false;
 
-        if (!TryComp<CargoOrderConsoleComponent>(linked, out var consoleComp))
+        if (!TryComp<DeviceLinkSinkComponent>(uid, out var sinkComponent))
             return false;
 
-        console = (linked, consoleComp);
-        return true;
+        return sinkComponent.LinkedSources.Any(ent => ent == approvingConsole.Value);
     }
-
 
     private void UpdateTelepad(float frameTime)
     {
@@ -82,8 +75,6 @@ public sealed partial class CargoSystem
 
             if (comp.CurrentState == CargoTelepadState.Unpowered)
             {
-                comp.CurrentState = CargoTelepadState.Idle;
-                _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Idle, appearance);
                 comp.Accumulator = comp.Delay;
                 continue;
             }
@@ -98,21 +89,31 @@ public sealed partial class CargoSystem
                 continue;
             }
 
-            if (comp.CurrentOrders.Count == 0 || !TryGetLinkedConsole((uid, comp), out var console))
+            if (comp.CurrentOrders.Count == 0)
             {
                 comp.Accumulator += comp.Delay;
                 continue;
             }
 
             var currentOrder = comp.CurrentOrders.First();
-            if (FulfillOrder(currentOrder, currentOrder.Account, xform.Coordinates, comp.PrinterOutput))
+            if (currentOrder.NumDispatched >= currentOrder.OrderQuantity)
             {
-                _audio.PlayPvs(_audio.ResolveSound(comp.TeleportSound), uid, AudioParams.Default.WithVolume(-8f));
+                comp.CurrentOrders.Remove(currentOrder);
+            }
+            else if (FulfillOrder(currentOrder, currentOrder.Account, xform.Coordinates, comp.PrinterOutput))
+            {
+                currentOrder.NumDispatched++;
+                if (currentOrder.NumDispatched >= currentOrder.OrderQuantity)
+                    comp.CurrentOrders.Remove(currentOrder);
+
+                var teleportSound = comp.TeleportSound;
+                var audioParams = teleportSound?.Params ?? AudioParams.Default;
+                audioParams = audioParams.AddVolume(-8f);
+                _audio.PlayPvs(_audio.ResolveSound(comp.TeleportSound), uid, audioParams);
 
                 if (_station.GetOwningStation(uid) is { } station)
                     UpdateOrders(station);
 
-                comp.CurrentOrders.Remove(currentOrder);
                 comp.CurrentState = CargoTelepadState.Teleporting;
                 _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Teleporting, appearance);
             }
@@ -143,12 +144,9 @@ public sealed partial class CargoSystem
             !TryComp<StationDataComponent>(station, out var data))
             return;
 
-        if (!TryGetLinkedConsole(ent, out var console))
-            return;
-
         foreach (var order in ent.Comp.CurrentOrders)
         {
-            TryFulfillOrder((station, data), console.Value.Comp.Account, order, db);
+            TryFulfillOrder((station, data), order.Account, order, db);
         }
     }
 
@@ -161,13 +159,15 @@ public sealed partial class CargoSystem
 
         var disabled = !receiver.Powered || !xform.Anchored;
 
-        // Setting idle state should be handled by Update();
+        // Turn off if disabled
+        // Only change to Idle if off
+        // don't overwrite teleporting state
         if (disabled)
-            return;
+            component.CurrentState = CargoTelepadState.Unpowered;
+        else if (component.CurrentState == CargoTelepadState.Unpowered)
+            component.CurrentState = CargoTelepadState.Idle;
 
-        TryComp<AppearanceComponent>(uid, out var appearance);
-        component.CurrentState = CargoTelepadState.Unpowered;
-        _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Unpowered, appearance);
+        _appearance.SetData(uid, CargoTelepadVisuals.State, component.CurrentState);
     }
 
     private void OnTelepadPowerChange(EntityUid uid, CargoTelepadComponent component, ref PowerChangedEvent args)

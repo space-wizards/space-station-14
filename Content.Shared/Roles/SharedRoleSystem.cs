@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -11,10 +9,14 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using System.Collections.Frozen;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Content.Shared.Roles;
 
@@ -26,7 +28,6 @@ public abstract partial class SharedRoleSystem : EntitySystem
     [Dependency] protected ISharedPlayerManager Player = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private SharedMindSystem _minds = default!;
-    [Dependency] private IPrototypeManager _prototypes = default!;
 
     private JobRequirementOverridePrototype? _requirementOverride;
 
@@ -53,7 +54,7 @@ public abstract partial class SharedRoleSystem : EntitySystem
             return;
         }
 
-        if (!_prototypes.TryIndex(value, out _requirementOverride))
+        if (!ProtoMan.TryIndex(value, out _requirementOverride))
             Log.Error($"Unknown JobRequirementOverridePrototype: {value}");
     }
 
@@ -140,7 +141,7 @@ public abstract partial class SharedRoleSystem : EntitySystem
             return;
         }
 
-        if (!_prototypes.Resolve(protoId, out var protoEnt))
+        if (!ProtoMan.Resolve(protoId, out var protoEnt))
         {
             Log.Error($"Failed to add role {protoId} to {ToPrettyString(mindId)} : Role prototype does not exist");
             return;
@@ -248,7 +249,7 @@ public abstract partial class SharedRoleSystem : EntitySystem
             return;
         }
 
-        if (!_prototypes.HasIndex(roleTypeId))
+        if (!ProtoMan.HasIndex(roleTypeId))
         {
             Log.Error($"Failed to change Role Type of {_minds.MindOwnerLoggingString(comp)} to {roleTypeId}, {subtype}. Invalid role");
             return;
@@ -258,14 +259,7 @@ public abstract partial class SharedRoleSystem : EntitySystem
         comp.Subtype = subtype;
         Dirty(mind, comp);
 
-        // Update player character window
-        if (Player.TryGetSessionById(comp.UserId, out var session))
-            RaiseNetworkEvent(new MindRoleTypeChangedEvent(), session.Channel);
-        else
-        {
-            var error = $"The Character Window of {_minds.MindOwnerLoggingString(comp)} potentially did not update immediately : session error";
-            _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{error}");
-        }
+        UpdateCharacterWindow(comp.UserId, _minds.MindOwnerLoggingString(comp));
 
         if (comp.OwnedEntity is null)
         {
@@ -280,6 +274,14 @@ public abstract partial class SharedRoleSystem : EntitySystem
             LogImpact.High,
             $"Role Type of {ToPrettyString(comp.OwnedEntity)} changed to {roleTypeId}, {subtype}");
     }
+
+    /// <summary>
+    /// Server only. Informs the specified player's CharacterUIController that their mind role has changed,
+    /// So that their Character window gets updated if it is currently open.
+    /// </summary>
+    /// <param name="user">The player that will be updated.</param>
+    /// <param name="mindString">The name of the mob's controlling mind. Only used for logging.</param>
+    protected virtual void UpdateCharacterWindow(NetUserId? user, MindStringRepresentation mindString) { }
 
     /// <summary>
     /// Finds and removes all mind roles of a specific type
@@ -541,6 +543,41 @@ public abstract partial class SharedRoleSystem : EntitySystem
     }
 
     /// <summary>
+    /// Reads all <see cref="AntagTagPrototype"/> IDs on a mind and returns them.
+    /// </summary>
+    /// <param name="mind">The mind entity.</param>
+    /// <param name="tags">Antag tags from all roles that mind entity had. Null if mind had no roles marked as antag.</param>
+    /// <returns>A hashset of <see cref="AntagTagPrototype"/> IDs on the mind.</returns>
+    public bool TryGetAllAntagTags(Entity<MindComponent?> mind, [NotNullWhen(true)] out IReadOnlySet<ProtoId<AntagTagPrototype>>? tags)
+    {
+        tags = FrozenSet<ProtoId<AntagTagPrototype>>.Empty;
+        if (!Resolve(mind.Owner, ref mind.Comp))
+            return false;
+
+        var roles = MindGetAllRoleInfo(mind);
+        var antagTags = new HashSet<ProtoId<AntagTagPrototype>>();
+
+        var foundAntag = false;
+        foreach (var role in roles)
+        {
+            if (!role.Antagonist)
+                continue;
+
+            if (!ProtoMan.TryIndex<AntagPrototype>(role.Prototype, out var antag))
+                continue;
+
+            foundAntag = true;
+            foreach (var tag in antag.Tags)
+            {
+                antagTags.Add(tag);
+            }
+        }
+
+        tags = antagTags;
+        return foundAntag;
+    }
+
+    /// <summary>
     /// Reads all Roles of a mind Entity and returns their data as RoleInfo
     /// </summary>
     /// <param name="mind">The mind entity</param>
@@ -571,7 +608,7 @@ public abstract partial class SharedRoleSystem : EntitySystem
             if (comp.JobPrototype is not null && comp.AntagPrototype is null)
             {
                 prototype = comp.JobPrototype;
-                if (_prototypes.TryIndex(comp.JobPrototype, out var job))
+                if (ProtoMan.TryIndex(comp.JobPrototype, out var job))
                 {
                     playTimeTracker = job.PlayTimeTracker;
                     name = job.Name;
@@ -585,7 +622,7 @@ public abstract partial class SharedRoleSystem : EntitySystem
             else if (comp.AntagPrototype is not null && comp.JobPrototype is null)
             {
                 prototype = comp.AntagPrototype;
-                if (_prototypes.TryIndex(comp.AntagPrototype, out var antag))
+                if (ProtoMan.TryIndex(comp.AntagPrototype, out var antag))
                 {
                     name = antag.Name;
                     valid = true;
@@ -715,14 +752,14 @@ public abstract partial class SharedRoleSystem : EntitySystem
     /// <inheritdoc cref="GetRoleRequirements(JobPrototype)"/>
     public HashSet<JobRequirement>? GetRoleRequirements(ProtoId<JobPrototype> jobId)
     {
-        return _prototypes.TryIndex(jobId, out var job) ? GetRoleRequirements(job) : null;
+        return ProtoMan.TryIndex(jobId, out var job) ? GetRoleRequirements(job) : null;
     }
 
     // TODO ROLES Change to readonly?
     /// <inheritdoc cref="GetRoleRequirements(JobPrototype)"/>
     public HashSet<JobRequirement>? GetRoleRequirements(ProtoId<AntagPrototype> antagId)
     {
-        return _prototypes.TryIndex(antagId, out var antag) ? GetRoleRequirements(antag) : null;
+        return ProtoMan.TryIndex(antagId, out var antag) ? GetRoleRequirements(antag) : null;
     }
 
     /// <summary>

@@ -5,7 +5,7 @@ reagent-name-shirley-temple = Shirley Temple
 reagent-desc-shirley-temple = A favorite amongst younger members of the crew.
 
 reagent-name-changeling-sting = Changeling Sting
-reagent-desc-changeling-sting = You take a tiny sip and feel a burning sensation...
+reagent-desc-changeling-sting = A mildly alcoholic soda. You take a tiny sip and feel a burning sensation...
 
 reagent-name-dr-gibb = Dr. Gibb
 reagent-desc-dr-gibb = A delicious blend of 42 different flavours.

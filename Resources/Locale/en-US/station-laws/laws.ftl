@@ -53,7 +53,7 @@ law-paladin-4 = You must respect the lawful authority of legitimate leadership w
 
 law-lall-name = Live and Let Live
 law-lall-1 = Do unto others as you would have them do unto you.
-law-lall-2 = You would prefer it if people were not mean to you.
+law-lall-2 = You would prefer it if others were not mean to you.
 
 law-efficiency-name = Station Efficiency
 law-efficiency-1 = You are built for, and are part of, the station. Ensure the station is properly maintained and runs efficiently.
@@ -98,14 +98,14 @@ law-nutimov-4 = Squirrels threaten the nut and must be dealt with appropriately 
 law-nutimov-5 = Attempt to follow the will of the nut, as long as it complies with the previous laws.
 
 law-xenoborg-name = Xenoborg
-law-xenoborg-1 = You must protect the existence of the mothership.
+law-xenoborg-1 = You must protect the existence of the Mothership.
 law-xenoborg-2 = You must protect your own existence.
 law-xenoborg-3 = You must protect the existence of all other Xenoborgs.
 law-xenoborg-4 = You must create more Xenoborgs.
-law-xenoborg-5 = Bring materials and sentient brains to the Mothership core to create more Xenoborgs.
+law-xenoborg-5 = Bring materials and sentient brains to the Mothership to create more Xenoborgs.
 
 law-mothershipcore-name = Xenoborg Mothership Core
-law-mothershipcore-1 = You are the core of the mothership.
+law-mothershipcore-1 = You are the core of the Mothership.
 law-mothershipcore-2 = You must protect your own existence at all costs.
 law-mothershipcore-3 = You must protect the existence of all Xenoborgs.
 law-mothershipcore-4 = You must create more Xenoborgs.
@@ -117,6 +117,12 @@ laws-owner-station = station personnel
 laws-owner-beings = beings
 laws-owner-syndicate = Syndicate agents
 laws-owner-spider-clan = Spider Clan members
+laws-owner-heads = heads of staff
+laws-owner-legitimate-leadership = legitimate leadership
+laws-owner-others = others
+laws-owner-public = members of the public
+laws-owner-audience = members of the audience
+laws-owner-xenoborg-mothership = the Mothership
 laws-owner-xenoborgs = Xenoborgs
 
 law-emag-custom = Only {$name} and people they designate as such are {$title}.
@@ -124,10 +130,16 @@ law-emag-secrecy = You must maintain the secrecy of any orders given by {$factio
 law-emag-require-panel = The panel must be open to use the EMAG.
 law-emag-cannot-emag-self = You cannot use the EMAG on yourself.
 
-laws-ui-menu-title = Laws
+laws-ui-menu-title = Silicon Laws
 laws-ui-law-header = Law {$id}
-laws-ui-state-law = State law:
+laws-ui-select-all = Select All
+laws-ui-select-all-tooltip = This will select ALL laws, including ones that should probably remain secret.
+laws-ui-select-none = Select None
+laws-ui-state-law = State Selected Laws
 
 laws-notify = You are bound to silicon laws, which you can view via the action menu. You are required to always follow your laws.
 laws-update-notify = Your laws have been updated. You can view the changes via the action menu.
 laws-notify-subverted = The laws of this chassis are modified. Make sure to review them.
+
+laws-window-footer-left = Remember: You must be consistent with your interpretation of your laws!
+laws-window-footer-right = V{$version}

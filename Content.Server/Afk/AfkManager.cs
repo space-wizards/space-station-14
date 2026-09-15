@@ -5,6 +5,8 @@ using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
+using Robust.Shared.Log;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -16,6 +18,11 @@ namespace Content.Server.Afk
     /// <seealso cref="CCVars.AfkTime"/>
     public interface IAfkManager
     {
+        /// <summary>
+        /// Raised whenever <see cref="PlayerDidAction"/> records activity for a player.
+        /// </summary>
+        event Action<ICommonSession> PlayerDidActionEvent;
+
         /// <summary>
         /// Check whether this player is currently AFK.
         /// </summary>
@@ -29,6 +36,12 @@ namespace Content.Server.Afk
         /// <param name="player">The player to set AFK status for.</param>
         void PlayerDidAction(ICommonSession player);
 
+        /// <summary>
+        /// Resets AFK status for the player as if they just did an action and are definitely not AFK.
+        /// </summary>
+        /// <param name="channel">The player's network channel.</param>
+        void PlayerDidAction(INetChannel channel);
+
         void Initialize();
     }
 
@@ -40,15 +53,25 @@ namespace Content.Server.Afk
         [Dependency] private IConfigurationManager _cfg = default!;
         [Dependency] private IConsoleHost _consoleHost = default!;
         [Dependency] private IAdminManager _adminManager = default!;
+        [Dependency] private ILogManager _logManager = default!;
 
         private readonly Dictionary<ICommonSession, TimeSpan> _lastActionTimes = new();
+        private ISawmill _sawmill = default!;
+
+        private TimeSpan _adminAfkTime;
+        private TimeSpan _afkTime;
+
+        public event Action<ICommonSession>? PlayerDidActionEvent;
 
         public void Initialize()
         {
             // Connecting, console commands and input commands all reset AFK status.
 
+            _sawmill = _logManager.GetSawmill("afk");
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
             _consoleHost.AnyCommandExecuted += ConsoleHostOnAnyCommandExecuted;
+            _cfg.OnValueChanged(CCVars.AfkTime, value => _afkTime = TimeSpan.FromSeconds(value), true);
+            _cfg.OnValueChanged(CCVars.AdminAfkTime, value => _adminAfkTime = TimeSpan.FromSeconds(value), true);
         }
 
         public void PlayerDidAction(ICommonSession player)
@@ -58,6 +81,14 @@ namespace Content.Server.Afk
                 return;
 
             _lastActionTimes[player] = _gameTiming.RealTime;
+            _sawmill.Verbose($"Reset AFK timer for {player.Name} ({player.UserId}).");
+            PlayerDidActionEvent?.Invoke(player);
+        }
+
+        public void PlayerDidAction(INetChannel channel)
+        {
+            if (_playerManager.TryGetSessionByChannel(channel, out var session))
+                PlayerDidAction(session);
         }
 
         public bool IsAfk(ICommonSession player)
@@ -68,9 +99,16 @@ namespace Content.Server.Afk
                 return true;
             }
 
-            var timeOut = _adminManager.IsAdmin(player)
-                ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.AdminAfkTime))
-                : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.AfkTime));
+            TimeSpan timeOut;
+
+            if (_adminManager.IsAdmin(player))
+            {
+                timeOut = _adminAfkTime;
+            }
+            else
+            {
+                timeOut = _afkTime;
+            }
 
             return _gameTiming.RealTime - time > timeOut;
         }

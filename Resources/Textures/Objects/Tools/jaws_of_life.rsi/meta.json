@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "modified from tgstation at commit https://github.com/tgstation/tgstation/commit/f07f847706d85b7cfa4b398e5175732212b69a63 by KingFroozy (Github), inhand for syn made by icekot8",
+  "copyright": "modified from tgstation at commit https://github.com/tgstation/tgstation/commit/f07f847706d85b7cfa4b398e5175732212b69a63 by KingFroozy (Github), inhand for syn made by icekot8, xorg jaws by ThatGuyUSA (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -20,6 +20,12 @@
       "name": "syn_jaws_pry"
     },
     {
+      "name": "xorg_jaws_cutter"
+    },
+    {
+      "name": "xorg_jaws_pry"
+    },
+    {
       "name": "inhand-left",
       "directions": 4
     },
@@ -33,6 +39,14 @@
     },
     {
       "name": "syn_inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "xorg_inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "xorg_inhand-right",
       "directions": 4
     },
     {

@@ -4,7 +4,7 @@ using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item.ItemToggle;
-using Content.Shared.Timing;
+using Content.Shared.Timing.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -70,7 +70,7 @@ public abstract partial class SharedTrayScannerSystem : EntitySystem
             return;
 
         // Prevents ping spam
-        if (!_delay.TryResetDelay(scanner, checkDelayed: true))
+        if (!_delay.TryResetDelay(scanner.Owner, checkDelayed: true))
             return;
 
         scanner.Comp.Mode = Next(scanner.Comp.Mode);

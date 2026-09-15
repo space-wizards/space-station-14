@@ -60,6 +60,8 @@
     sprite: Clothing/OuterClothing/Armor/scrap_armor.rsi
   - type: Item
     size: Ginormous
+    shape:
+    - 0,0,4,5
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/scrap_armor.rsi
     equipSound: /Audio/Effects/metal_scrape2.ogg

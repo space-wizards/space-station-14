@@ -124,6 +124,14 @@
   - type: Contraband
     allowedDepartments: [ Cargo ]
 
+- type: entity
+  id: BaseServiceContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Service ]
+
 # multiple departments restricted contraband
 - type: entity
   id: BaseCentcommCommandContraband

@@ -46,7 +46,7 @@ public abstract partial class SharedStoreSystem
     public HashSet<ListingDataWithCostModifiers> GetAllListings()
     {
         var clones = new HashSet<ListingDataWithCostModifiers>();
-        foreach (var prototype in Proto.EnumeratePrototypes<ListingPrototype>())
+        foreach (var prototype in ProtoMan.EnumeratePrototypes<ListingPrototype>())
         {
             clones.Add(new ListingDataWithCostModifiers(prototype));
         }
@@ -62,7 +62,7 @@ public abstract partial class SharedStoreSystem
     /// <returns>Whether or not the listing was added successfully</returns>
     public bool TryAddListing(StoreComponent component, string listingId)
     {
-        if (!Proto.TryIndex<ListingPrototype>(listingId, out var proto))
+        if (!ProtoMan.TryIndex<ListingPrototype>(listingId, out var proto))
         {
             Log.Error("Attempted to add invalid listing.");
             return false;
@@ -119,18 +119,25 @@ public abstract partial class SharedStoreSystem
             if (listing.Conditions != null)
             {
                 var args = new ListingConditionArgs(GetBuyerMind(buyer), storeEntity, listing, EntityManager);
-                var conditionsMet = true;
+                var locked = false;
+                var failed = false;
 
                 foreach (var condition in listing.Conditions)
                 {
                     if (!condition.Condition(args))
                     {
-                        conditionsMet = false;
+                        if (condition.Lock)
+                            locked = true;
+                        else
+                            failed = true;
+
                         break;
                     }
                 }
 
-                if (!conditionsMet)
+                listing.Locked = locked && !failed;
+
+                if (failed)
                     continue;
             }
 
