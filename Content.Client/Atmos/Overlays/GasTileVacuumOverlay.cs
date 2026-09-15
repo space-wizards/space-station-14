@@ -52,7 +52,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
     private void SetVacuumOverlayIntensity(float intensity)
     {
         _instensity = MathHelper.Clamp(intensity, 0f, 1f);
-        _shader.SetParameter("instensit", _instensity);
+        _shader.SetParameter("instensity", _instensity);
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
