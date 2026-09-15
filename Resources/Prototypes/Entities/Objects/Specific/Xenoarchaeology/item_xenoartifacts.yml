@@ -52,6 +52,8 @@
     graph: Artifact
     node: done
   - type: XenoArtifact
+    triggersTable: !type:NestedSelector
+      tableId: XenoArtifactHandheldOnlyTriggerTable
     effectsTable: !type:GroupSelector
       children:
       - !type:NestedSelector
