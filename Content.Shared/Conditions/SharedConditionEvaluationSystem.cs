@@ -20,7 +20,7 @@ public sealed partial class SharedConditionEvaluationSystem : EntitySystem
     public float EvaluateCondition(ICondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
         //make the event using our cached building function.
-        var evt = new ConditionEvaluationEvent(condition, entityUid, sourceEntity);
+        var evt = condition.WrapInEvent(entityUid,sourceEntity);
         // Use event to evaluate condition on entity.
         RaiseLocalEvent(entityUid, ref evt);
         // Verity that the event was actually handled

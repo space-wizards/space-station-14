@@ -1,15 +1,12 @@
 namespace Content.Shared.Conditions;
 
 /// <summary>
-/// Event to connect <see cref="SharedConditionEvaluationSystem"/> to evaluator systems.
+/// Weakly Typed Event To Evaluate a Condition.
 /// </summary>
 /// <param name="condition">The condition to be used.</param>
 /// <param name="entityUid">The entity for which we check the condition</param>
 /// <param name="sourceEntity">An optional entity, which triggered this evaluation</param>
-[ByRefEvent]
-public sealed class ConditionEvaluationEvent(ICondition condition, EntityUid entityUid, EntityUid? sourceEntity)
-{
-
+public abstract class ConditionEvaluationEvent(ICondition condition, EntityUid entityUid, EntityUid? sourceEntity){
     /// <summary>
     /// The entity for which we check the condition
     /// </summary>
@@ -31,8 +28,24 @@ public sealed class ConditionEvaluationEvent(ICondition condition, EntityUid ent
     public bool Handled { get; set; }
 
     /// <summary>
-    /// The condition to be used. The handler will have to check for correct condition.
+    /// The condition to be used. A Handler using this, must do its own check for match.
     /// </summary>
-    public ICondition Condition { get; } = condition;
+    public ICondition ConditionWeak { get; } = condition;
+
+}
+
+/// <summary>
+/// Strongly Typed event to connect <see cref="SharedConditionEvaluationSystem"/> to specific evaluator systems.
+/// </summary>
+/// <param name="condition">The condition to be used.</param>
+/// <param name="entityUid">The entity for which we check the condition</param>
+/// <param name="sourceEntity">An optional entity, which triggered this evaluation</param>
+[ByRefEvent]
+public sealed class ConditionEvaluationEvent<TCondition>(TCondition condition, EntityUid entityUid, EntityUid? sourceEntity) : ConditionEvaluationEvent(condition,entityUid,sourceEntity) where TCondition : ICondition
+{
+     /// <summary>
+    /// The strongly typed condition to be used. A handler using this has certainty.
+    /// </summary>
+    public TCondition Condition { get; } = condition;
 
 }

@@ -7,10 +7,9 @@ namespace Content.Shared.Conditions;
 public interface ICondition
 {
     /// <summary>
-    /// The Type under which this condition should be evaluated at.
-    /// At time of inceptions this is not used, but a future pipeline might need this.
+    /// Used to help the evaluation system to raise an event to evaluate this condition.
     /// </summary>
-    Type ConditionType { get; }
+    ConditionEvaluationEvent WrapInEvent(EntityUid entity, EntityUid? sourceEntity);
 }
 
 /// <summary>
@@ -18,10 +17,12 @@ public interface ICondition
 /// Assign directly to condition classes or interfaces for the case of shared legacy conditions.
 /// </summary>
 /// <typeparam name="TCondition">The strong type of the condition, which at time of inception, all evaluating systems will look for.</typeparam>
-public interface ICondition<TCondition> : ICondition
+public interface ICondition<TCondition> : ICondition where TCondition : ICondition
 {
-    /// <inheritdoc/>
-    Type ICondition.ConditionType => typeof(TCondition);
+    /// <summary>
+    /// Creates a strongly typed evaluation event, avoiding the need for reflection to create a matching event for listeners to use.
+    /// </summary>
+    ConditionEvaluationEvent ICondition.WrapInEvent(EntityUid entity, EntityUid? sourceEntity) => new ConditionEvaluationEvent<TCondition>(this,entity,sourceEntity);
 }
 
 

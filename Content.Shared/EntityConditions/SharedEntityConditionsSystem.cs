@@ -98,5 +98,5 @@ public abstract partial class EntityCondition : ICondition, IWithInverted
 
 public abstract partial class EntityConditionBase<TCondition> : EntityCondition, ICondition<TCondition>
 {
-    public override Type ConditionType => typeof(TCondition);
+    public override ConditionEvaluationEvent WrapInEvent(EntityUid entity, EntityUid? sourceEntity) => new ConditionEvaluationEvent<TCondition>(this,entity,sourceEntity);
 }
