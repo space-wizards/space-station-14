@@ -92,8 +92,7 @@ public abstract partial class EntityCondition : ICondition, IWithInverted
     /// </summary>
     public abstract string EntityConditionGuidebookText(IPrototypeManager prototype);
 
-
-    public abstract Type ConditionType { get; }
+    public abstract ConditionEvaluationEvent WrapInEvent(EntityUid entity, EntityUid? sourceEntity);
 }
 
 public abstract partial class EntityConditionBase<TCondition> : EntityCondition, ICondition<TCondition>
