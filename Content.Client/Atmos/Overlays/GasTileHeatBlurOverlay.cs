@@ -36,7 +36,6 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
     private readonly SharedMapSystem _maps;
     private readonly SharedTransformSystem _xformSys;
     private readonly ShaderInstance _shader;
-    private readonly ShaderInstance _unshader;
 
     private readonly Texture _noiseTexture;
     private readonly Texture _heatGradientTexture;
@@ -71,7 +70,6 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
         _heatGradientTexture = _resourceCache.GetTexture("/Textures/Effects/HeatBlur/soft_circle.png");
 
         _shader = _proto.Index(HeatOverlayShader).InstanceUnique();
-        _unshader = _proto.Index(UnshadedShader).Instance();
         _configManager.OnValueChanged(CCVars.DisableHeatDistortion, SetReducedMotion, invokeImmediately: true);
     }
 
@@ -103,7 +101,7 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
 
         var overlayQuery = _entManager.GetEntityQuery<GasTileOverlayComponent>();
 
-        args.WorldHandle.UseShader(_unshader);
+        args.WorldHandle.UseShader(_proto.Index(UnshadedShader).Instance());
 
         var mapId = args.MapId;
         var worldAABB = args.WorldAABB;
