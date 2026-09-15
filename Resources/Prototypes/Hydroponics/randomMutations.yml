@@ -402,8 +402,6 @@
       appliesToPlant: false
       effect: !type:Slipify
 
-
-
 - type: randomPlantMutationList
   id: EvilPlantMutations
   ignoreMutationMod: true
