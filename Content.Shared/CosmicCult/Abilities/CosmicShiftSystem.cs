@@ -1,4 +1,5 @@
 using Content.Shared.CosmicCult.Components;
+using Content.Shared.CosmicCult.Components.Actions;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands;
 using Content.Shared.Interaction.Components;
@@ -13,51 +14,63 @@ namespace Content.Shared.CosmicCult.Abilities;
 
 public abstract partial class CosmicShiftSystem : EntitySystem
 {
-    [Dependency] protected SharedAudioSystem Audio = default!;
     [Dependency] protected SharedContainerSystem Container = default!;
+    [Dependency] protected SharedDoAfterSystem DoAfter = default!;
     [Dependency] protected SharedTransformSystem TransformSystem = default!;
 
     [Dependency] private IGameTiming _timing = default!;
-    // [Dependency] private  ESEntityTimerSystem _entityTimer = default!;
-    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
 
-    protected static readonly SoundSpecifier ShiftInSfx = new SoundPathSpecifier("/Audio/_ST/CosmicCult/Abilities/ability-shift-in.ogg");
-    private static readonly SoundSpecifier ShiftOutSfx = new SoundPathSpecifier("/Audio/_ST/CosmicCult/Abilities/ability-shift-out.ogg");
+    private static readonly SoundSpecifier ShiftInSfx = new SoundPathSpecifier("/Audio/Cosmic/Abilities/ability-shift-in.ogg");
+    private static readonly SoundSpecifier ShiftOutSfx = new SoundPathSpecifier("/Audio/Cosmic/Abilities/ability-shift-out.ogg");
     private static readonly TimeSpan ShiftDuration = TimeSpan.FromSeconds(35);
 
-    [SubscribeLocalEvent]
-    private void OnReturnAbility(Entity<CosmicShiftedComponent> ent, ref EventCosmicReturn args)
+
+    public override void Update(float frameTime)
     {
-        ent.Comp.ReadyToReturn = true;
-        _doAfter.Cancel(ent.Comp.ReturnDoAfter);
-    }
+        base.Update(frameTime);
 
-    [SubscribeLocalEvent]
-    private void OnShiftAbility(Entity<CosmicCultistComponent> ent, ref EventCosmicShift args)
-    {
-        if (args.Handled || HasComp<CosmicShiftedComponent>(ent) || HasComp<BlockMovementComponent>(ent) || _timing.ApplyingState || Container.IsEntityInContainer(ent.Owner))
-            return;
-
-        if (HasComp<BlockGridConstructionComponent>(Transform(ent).GridUid))
-            return;
-
-        var doargs = new DoAfterArgs(EntityManager, ent, ent.Comp.CosmicShiftWindup, new CosmicShiftStartDoAfter(), ent, ent)
+        var shiftingQuery = EntityQueryEnumerator<CosmicShiftingComponent>();
+        while (shiftingQuery.MoveNext(out var uid, out var comp))
         {
-            DistanceThreshold = 1f, Hidden = false, BreakOnDamage = true, BreakOnMove = true, BreakOnDropItem = true,
-        };
-        args.Handled = _doAfter.TryStartDoAfter(doargs);
+            if (comp.ShiftMoveTimer is { } moveTimer && _timing.CurTime >= moveTimer)
+            {
+                comp.ShiftMoveTimer = null;
+                EnsureComp<CosmicShiftingComponent>(uid, out var shiftComp);
+                OnShiftMove(uid, shiftComp.DestinationCoordinates);
+                Dirty(uid, comp);
+            }
+
+            if (comp.ShiftEndTimer is { } endTimer && _timing.CurTime >= endTimer)
+            {
+                comp.ShiftEndTimer = null;
+                RemComp<CosmicShiftingComponent>(uid);
+                OnShiftEnd(uid);
+                Dirty(uid, comp);
+            }
+        }
     }
 
     [SubscribeLocalEvent]
-    protected virtual void OnShiftStartDoAfter(Entity<CosmicCultistComponent> ent, ref CosmicShiftStartDoAfter args)
+    private void OnReturnAbility(Entity<CosmicActionReturnComponent> ent, ref EventCosmicReturn args)
     {
-        if (args.Cancelled || args.Handled || Container.IsEntityInContainer(ent.Owner))
+        if (TryComp<CosmicShiftedComponent>(args.Performer, out var shiftedComp))
+        {
+            shiftedComp.ReadyToReturn = true;
+            DoAfter.Cancel(shiftedComp.ReturnDoAfter);
+        }
+    }
+
+    [SubscribeLocalEvent]
+    protected virtual void OnShiftAbility(Entity<CosmicActionShiftComponent> ent, ref EventCosmicShift args)
+    {
+        if (args.Handled || HasComp<CosmicShiftedComponent>(args.Performer) || Container.IsEntityInContainer(args.Performer))
             return;
 
-        TransformSystem.AnchorEntity(ent);
-        EnsureComp<BlockMovementComponent>(ent);
-        EnsureComp<CosmicShiftedComponent>(ent, out var shiftedComp);
-        shiftedComp.DepartureCoordinates = TransformSystem.GetMapCoordinates(ent);
+        if (HasComp<BlockGridConstructionComponent>(Transform(args.Performer).GridUid))
+            return;
+
+        EnsureComp<CosmicShiftedComponent>(args.Performer, out var shiftedComp);
         shiftedComp.ReadyToReturn = false;
         args.Handled = true;
     }
@@ -71,9 +84,11 @@ public abstract partial class CosmicShiftSystem : EntitySystem
     public void ShiftToDestination(EntityUid ent, MapCoordinates destination)
     {
         OnShiftStart(ent);
-        Audio.PlayPvs(ShiftInSfx, Transform(ent).Coordinates);
-        // _entityTimer.SpawnMethodTimer(TimeSpan.FromSeconds(2.5), () => OnShiftMove(ent, destination)); // TODO: COSMIC CULT - ENTITY TIMERS
-        // _entityTimer.SpawnMethodTimer(TimeSpan.FromSeconds(4.6), () => OnShiftEnd(ent)); // TODO: COSMIC CULT - ENTITY TIMERS
+        _audio.PlayPvs(ShiftInSfx, Transform(ent).Coordinates);
+        EnsureComp<CosmicShiftingComponent>(ent, out var shiftComp);
+        shiftComp.DestinationCoordinates = destination;
+        shiftComp.ShiftMoveTimer = _timing.CurTime + TimeSpan.FromSeconds(2.5f);
+        shiftComp.ShiftEndTimer = _timing.CurTime + TimeSpan.FromSeconds(4.6f);
     }
 
     private void OnShiftStart(EntityUid ent)
@@ -83,23 +98,21 @@ public abstract partial class CosmicShiftSystem : EntitySystem
 
     protected virtual void OnShiftMove(EntityUid ent, MapCoordinates destination)
     {
-        Audio.PlayPvs(ShiftOutSfx, Transform(ent).Coordinates);
+        _audio.PlayPvs(ShiftOutSfx, Transform(ent).Coordinates);
         RaiseNetworkEvent(new CosmicShiftAnimEvent(GetNetEntity(ent), CosmicShiftState.Out));
     }
 
     protected virtual void OnShiftEnd(EntityUid ent)
     {
-        RemComp<BlockMovementComponent>(ent);
         RaiseNetworkEvent(new CosmicShiftAnimEvent(GetNetEntity(ent), CosmicShiftState.Cancel));
-        TransformSystem.Unanchor(ent);
 
         if (TryComp<CosmicShiftedComponent>(ent, out var shiftComp))
         {
             var doargs = new DoAfterArgs(EntityManager, ent, ShiftDuration, new CosmicShiftEndDoAfter(), ent, ent)
             {
-                Hidden = true, BreakOnDamage = false, BreakOnMove = false, BreakOnDropItem = false, BreakOnHandChange = false,
+                Hidden = true, BreakOnDamage = false, BreakOnMove = false, BreakOnDropItem = false, BreakOnHandChange = false, RequireCanInteract = false,
             };
-            _doAfter.TryStartDoAfter(doargs, out var doAfterId);
+            DoAfter.TryStartDoAfter(doargs, out var doAfterId);
             shiftComp.ReturnDoAfter = doAfterId;
             Dirty(ent, shiftComp);
         }

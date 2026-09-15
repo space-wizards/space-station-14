@@ -23,14 +23,11 @@ public sealed partial class CosmicStigmaComponent : Component
     public bool Harvested;
 
     /// <summary>
-    /// Visual effect & sound effects.
+    /// Sound effects.
     /// </summary>
     [DataField]
-    public EntProtoId GenericVfx = "CosmicGenericVfx";
+    public SoundSpecifier HarvestSfx = new SoundPathSpecifier("/Audio/Cosmic/stigma-harvest.ogg");
 
     [DataField]
-    public SoundSpecifier HarvestSfx = new SoundPathSpecifier("/Audio/_ST/CosmicCult/stigma-harvest.ogg");
-
-    [DataField]
-    public SoundSpecifier DestroySfx = new SoundPathSpecifier("/Audio/_ST/CosmicCult/stigma-destroyed.ogg");
+    public SoundSpecifier DestroySfx = new SoundPathSpecifier("/Audio/Cosmic/stigma-destroyed.ogg");
 }

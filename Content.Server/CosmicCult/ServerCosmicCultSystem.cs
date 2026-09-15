@@ -8,6 +8,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Random.Helpers;
 using Content.Shared.StatusEffectNew;
+using Content.Shared.Stunnable;
 
 namespace Content.Server.CosmicCult;
 
@@ -16,7 +17,7 @@ public sealed partial class ServerCosmicCultSystem : CosmicCultSystem
     [Dependency] private AntagSelectionSystem _antag = default!;
     [Dependency] private IComponentFactory _componentFactory = default!;
     [Dependency] private DamageableSystem _damage = default!;
-    [Dependency] private MovementSpeedModifierSystem _movementSpeed = default!;
+    [Dependency] private MovementModStatusSystem _movementMod = default!;
     // [Dependency] private ESEntityTimerSystem _entityTimer = default!;
     [Dependency] private StatusEffectsSystem _status = default!;
 
@@ -89,7 +90,7 @@ public sealed partial class ServerCosmicCultSystem : CosmicCultSystem
     {
         var target = args.User;
 
-        if (args.Handled || !TryComp<CosmicCultistComponent>(target, out var cultComp) || _status.HasStatusEffect(target, StunId))
+        if (args.Handled || !TryComp<CosmicCultistComponent>(target, out var cultComp) || _status.HasStatusEffect(target, SharedStunSystem.StunId))
             return;
 
         if (cultComp.MonumentVisits <= 0 || cultComp.UnlockedInfluences.Count <= 0)
@@ -108,16 +109,14 @@ public sealed partial class ServerCosmicCultSystem : CosmicCultSystem
         if (TryComp<CosmicShiftedComponent>(target, out var shiftComp))
         {
             shiftComp.Occupied = true;
-            // _entityTimer.SpawnMethodTimer(TimeSpan.FromSeconds(2.5f), () => shiftComp.Occupied = false); // TODO: COSMIC CULT - ENTITY TIMERS
+            shiftComp.AutoReturnTimer = Timing.CurTime + TimeSpan.FromSeconds(2.5f);
         }
 
         RaiseNetworkEvent(new InfluenceVisualsEvent(GetNetEntity(target), GetNetEntity(ent.Owner), proto.Icon, cultComp.MonumentGachaSfx));
-        _status.TryAddStatusEffectDuration(target, StunId, TimeSpan.FromSeconds(2.5f));
-
-        // _entityTimer.SpawnMethodTimer(TimeSpan.FromSeconds(1.5f), () => GiveInfluence((target, cultComp), proto)); // TODO: COSMIC CULT - ENTITY TIMERS
-        GiveInfluence((target, cultComp), proto); // TODO: COSMIC CULT - ENTITY TIMERS
+        _status.TryAddStatusEffectDuration(target, SharedStunSystem.StunId, TimeSpan.FromSeconds(2.5f));
 
         args.Handled = true;
+        GiveInfluence((target, cultComp), proto);
         Dirty(target, cultComp);
     }
 
@@ -134,42 +133,9 @@ public sealed partial class ServerCosmicCultSystem : CosmicCultSystem
         Dirty(ent);
     }
 
-    #region Movespeed
     [SubscribeLocalEvent]
-    private void OnStartInfluenceStride(Entity<InfluenceStrideComponent> uid, ref ComponentInit args) // i wish movespeed was easier to work with
+    private void OnStartInfluenceStride(Entity<InfluenceStrideComponent> ent, ref ComponentInit args) // i wish movespeed was easier to work with
     {
-        // _movementSpeed.RefreshMovementSpeedModifiers(uid);
+        _movementMod.TryUpdateMovementSpeedModDuration(ent, MovementModStatusSystem.StrideSpeedup, null, 1.1f, 1.1f);
     }
-
-    [SubscribeLocalEvent]
-    private void OnEndInfluenceStride(Entity<InfluenceStrideComponent> uid, ref ComponentRemove args) // these functions just make sure
-    {
-        // _movementSpeed.RefreshMovementSpeedModifiers(uid);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnStartImposition(Entity<CosmicImpositionInvulnerableComponent> uid, ref ComponentInit args) // that movespeed applies more-or-less correctly
-    {
-        // _movementSpeed.RefreshMovementSpeedModifiers(uid);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnEndImposition(Entity<CosmicImpositionInvulnerableComponent> uid, ref ComponentRemove args) // as various cosmic cult effects get added and removed
-    {
-        // _movementSpeed.RefreshMovementSpeedModifiers(uid);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnRefreshMoveSpeed(EntityUid uid, InfluenceStrideComponent comp, RefreshMovementSpeedModifiersEvent args)
-    {
-        args.ModifySpeed(1.1f, 1.1f);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnImpositionMoveSpeed(EntityUid uid, CosmicImpositionInvulnerableComponent comp, RefreshMovementSpeedModifiersEvent args)
-    {
-        args.ModifySpeed(0.65f, 0.65f);
-    }
-    #endregion
-
 }

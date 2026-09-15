@@ -28,7 +28,6 @@
     event: !type:EventCosmicSiphon
   - type: CosmicActionSiphon
   - type: CosmicCultAction
-    vfx: EffectCosmicActionSiphon
     sfx:
       path: "/Audio/Cosmic/Abilities/ability-siphon.ogg"
 
@@ -40,6 +39,7 @@
   components:
   - type: DoAfterArgs
     delay: 0.566
+    breakOnMove: True
   - type: Action
     raiseOnAction: true
     useDelay: 120
@@ -61,6 +61,12 @@
       - ActiveNPC
     event: !type:EventCosmicShunt
   - type: CosmicActionShunt
+    conversionBlacklist: # Entities with these components can be shunted, but cannot be converted.
+      components:
+      - ChangelingDevour
+      - SpaceNinja
+      - NukeOperative
+      - Revolutionary
   - type: CosmicCultAction
     vfx: EffectCosmicActionShunt
     sfx:
@@ -69,7 +75,7 @@
 - type: entity
   parent: BaseMentalAction
   id: ActionCosmicLapse
-  name: Abberant Lapse
+  name: Astral Lapse
   description: Lapse your target's corporeal form, temporarily rendering it immutable, impassible, and frozen in place.
   components:
   - type: Action
@@ -99,7 +105,7 @@
 - type: entity
   parent: BaseMentalAction
   id: ActionCosmicGlare
-  name: Null Glare
+  name: Malign Glare
   description: Emit a horrid pulse of cosmic light, slowing and disorienting everyone around you. Its effects are amplified against silicon-based entities.
   components:
   - type: ConfirmableAction
@@ -108,7 +114,7 @@
     primeTime: 3
   - type: Action
     raiseOnAction: true
-    useDelay: 60
+    useDelay: 40
     checkCanInteract: false
     itemIconStyle: BigAction
   - type: Sprite
@@ -154,7 +160,7 @@
   components:
   - type: Action
     raiseOnAction: true
-    useDelay: 120
+    useDelay: 100
     checkCanInteract: false
     itemIconStyle: BigAction
   - type: Sprite
@@ -165,7 +171,7 @@
     event: !type:EventCosmicImposition
   - type: CosmicActionImposition
   - type: CosmicCultAction
-    vfx: EffectCosmicActionImposition
+    vfx: EffectCosmicBigWindup
     sfx:
       path: "/Audio/Cosmic/Abilities/ability-imposition.ogg"
 
@@ -176,7 +182,7 @@
   description: Hurl a large and disruptive blast of astral energy.
   components:
   - type: Action
-    useDelay: 30
+    useDelay: 25
     raiseOnAction: true
     itemIconStyle: BigAction
   - type: Sprite
@@ -197,7 +203,7 @@
 - type: entity
   parent: BaseAction
   id: ActionCosmicFragmentation
-  name: Null Fragmentation
+  name: Malign Fragmentation
   description: Transfer your malign empowerment into a digital system, such as an AI Upload Console or Cyborg, corrupting it in the process. Doing so will expend your empowerment.
   components:
   - type: LimitedCharges
@@ -215,7 +221,7 @@
     whitelist:
       components:
       - BorgChassis
-      - SiliconLawUpdater
+      - StationAiCore
     blacklist:
       components:
       - CosmicCultist
@@ -230,15 +236,13 @@
   name: Astral Shift
   description: Slip out of phase with realspace in order to temporarily access the cosmic dark. You'll automatically return to where you left from after a period of time.
   components:
-  - type: ConfirmableAction
-    popup: cosmicability-shift-confirm
-    confirmDelay: 0.075
-    primeTime: 2
+  - type: DoAfterArgs
+    breakOnMove: True
   - type: Action
     raiseOnAction: true
     checkCanInteract: false
     itemIconStyle: BigAction
-    useDelay: 45
+    useDelay: 55
   - type: Sprite
     sprite: Interface/Actions/cosmic-actions.rsi
     layers:

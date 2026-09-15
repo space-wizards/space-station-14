@@ -8,28 +8,28 @@
     },
     "states": [
         {
-            "name": "human"
+            "name": "vfx-human"
         },
         {
-            "name": "slime"
+            "name": "vfx-slime"
         },
         {
-            "name": "spider"
+            "name": "vfx-arachnid"
         },
         {
-            "name": "diona"
+            "name": "vfx-diona"
         },
         {
-            "name": "moth"
+            "name": "vfx-moth"
         },
         {
-            "name": "vox"
+            "name": "vfx-vox"
         },
         {
-            "name": "lizard"
+            "name": "vfx-lizard"
         },
         {
-            "name": "vulp"
+            "name": "vfx-vulpkanin"
         }
     ]
 }

@@ -71,9 +71,18 @@
   icon:
     sprite: Interface/Actions/cosmic-actions.rsi
     state: metabolism
-  remove:
-  - type: Hunger
-  - type: Thirst
+  add:
+  - type: SatiationModify
+    removeOnShutdown: false
+    satiationRemove:
+      DionaHunger:
+        prototype: DionaHunger
+      DionaThirst:
+        prototype: DionaThirst
+      Hunger:
+        prototype: NormalSatiationHunger
+      Thirst:
+        prototype: NormalSatiationThirst
   tier: 1
 
 - type: influence
@@ -118,7 +127,7 @@
 - type: influence
   id: InfluenceAstralAegis
   name: influence-name-aegis
-  influenceType: influence-type-aegis
+  influenceType: influence-type-consumable
   weight: 5
   description: influence-description-aegis
   icon:

@@ -9,7 +9,9 @@ using Content.Shared.DoAfter;
 using Content.Shared.Mind;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
+using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -24,6 +26,7 @@ public sealed partial class CosmicChantrySystem : EntitySystem
     [Dependency] private ServerGlobalSoundSystem _sound = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private SharedRoleSystem _role = default!;
@@ -71,7 +74,7 @@ public sealed partial class CosmicChantrySystem : EntitySystem
         var tgtpos = Transform(ent).Coordinates;
         var colossus = Spawn(ent.Comp.Colossus, tgtpos);
         _mind.TransferTo(mindEnt, colossus);
-        _mind.TryAddObjective(mindEnt, mind, "CosmicFinalityObjective");
+        // _mind.TryAddObjective(mindEnt, mind, "CosmicFinalityObjective"); // TODO: COSMIC CULT - OBJECTIVES
         _role.MindAddRole(mindEnt, MindRole, mind, true);
         _antag.SendBriefing(colossus, Loc.GetString("cosmiccult-silicon-colossus-briefing"), Color.FromHex("#4cabb3"), null);
         Spawn(ent.Comp.SpawnVfx, tgtpos);
@@ -102,22 +105,10 @@ public sealed partial class CosmicChantrySystem : EntitySystem
     private void OnChantryDestroyed(Entity<CosmicChantryComponent> ent, ref ComponentShutdown args)
     {
         var comp = ent.Comp;
-        if (!_mind.TryGetMind(comp.InternalVictim, out var mindId, out var mind))
-            return;
-        if (TerminatingOrDeleted(comp.VictimBody))
-        {
-            var tgtpos = Transform(comp.InternalVictim).Coordinates;
-            var fallbackEnt = Spawn(comp.FallbackBrain, tgtpos);
-            Spawn(comp.FallbackVfx, tgtpos);
+        if (_mind.TryGetMind(comp.InternalVictim, out _, out var mind))
             mind.PreventGhosting = false;
-            _mind.TransferTo(mindId, fallbackEnt);
-            QueueDel(comp.InternalVictim);
-        }
-        else
-        {
-            mind.PreventGhosting = false;
-            _mind.TransferTo(mindId, comp.VictimBody);
-            QueueDel(comp.InternalVictim);
-        }
+
+        if (_container.TryGetContainer(ent, SharedEntityStorageSystem.ContainerName, out var container))
+            _container.EmptyContainer(container, true);
     }
 }

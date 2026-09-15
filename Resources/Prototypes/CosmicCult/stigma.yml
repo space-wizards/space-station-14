@@ -1,0 +1,96 @@
+- type: entity
+  abstract: true
+  id: CosmicEntropicStigmaBase
+  name: entropic stigma
+  description: A blight wrought of indescribable material. A light gleams within...
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/cosmic-stigma.rsi
+    drawdepth: Mobs
+    snapCardinals: true
+    offset: 0,0.27
+    layers:
+    - state: base
+      map: [ "base" ]
+    - state: unshaded
+      shader: unshaded
+      visible: true
+      map: [ "glow" ]
+  - type: AnimationPlayer
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.CosmicFontVisualLayers.Base:
+        base:
+          True: { state: harvested }
+        glow:
+          True: { visible: false }
+
+- type: entity
+  parent: CosmicEntropicStigmaBase
+  id: CosmicEntropicStigmaSpawn
+  categories: [ ForkFiltered ]
+  components:
+  - type: Sprite
+    layers:
+    - state: base-in
+  - type: TimedDespawn
+    lifetime: 1.125
+  - type: SpawnOnDespawn
+    prototype: CosmicEntropicStigma
+
+- type: entity
+  parent: CosmicEntropicStigmaBase
+  id: CosmicEntropicStigma
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+  - type: Transform
+    noRot: true
+#  - type: Fixtures
+#    fixtures:
+#      fix1:
+#        shape:
+#          !type:PhysShapeAabb
+#          bounds: "0.30,0.40,-0.30,-0.1"
+#        density: 190
+#        mask:
+#        - MachineMask
+#        layer:
+#        - MidImpassable
+#        - LowImpassable
+#        - BulletImpassable
+  - type: Clickable
+  - type: CosmicStigma
+  - type: CosmicExamine
+    cultistText: cosmic-examine-text-stigma
+    othersText: cosmic-examine-text-crew-stigma
+  - type: TileConversion
+    conversionTiles:
+    - FloorCosmicRough
+    conversionMaxTicks: 2
+    conversionTime: 1
+    conversionChance: 0.5
+    chanceReduction: 0.23
+  - type: PointLight
+    color: "#42a4ae"
+    radius: 2.5
+    energy: 6
+    castShadows: false
+    netsync: false
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      interpolate: Linear
+      minDuration: 4
+      maxDuration: 4
+      startValue: 3
+      endValue: 9
+      property: Energy
+      enabled: true
+      isLooped: true
+      reverseWhenFinished: true

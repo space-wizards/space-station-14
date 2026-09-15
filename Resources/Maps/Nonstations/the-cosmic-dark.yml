@@ -51,7 +51,7 @@ entities:
       pos: 288.38983,429.73245
       parent: 1
     - type: BlockGridConstruction
-    - type: ChameleonBlockedGridComponent
+    - type: ChameleonBlockedGrid
     - type: MapGrid
       chunks:
         0,0:

@@ -1,4 +1,5 @@
 using Content.Server.Actions;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.CosmicCult.Abilities;
 using Content.Server.CosmicCult.Components;
 using Content.Server.Popups;
@@ -8,6 +9,9 @@ using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Station.Components;
+using Content.Shared.StatusEffectNew;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.CosmicCult;
 
@@ -15,7 +19,11 @@ public sealed partial class CosmicRiftSystem : EntitySystem
 {
     [Dependency] private ActionsSystem _actions = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
     [Dependency] private PopupSystem _popup = default!;
+
+    public static readonly EntProtoId PressureImmunityEffect = "StatusEffectPressureImmunity";
+    public static readonly EntProtoId MalignRiftEntity = "CosmicMalignRift";
 
     [SubscribeLocalEvent]
     private void OnInteract(Entity<CosmicRiftComponent> uid, ref ActivateInWorldEvent args)
@@ -29,7 +37,7 @@ public sealed partial class CosmicRiftSystem : EntitySystem
             return;
         }
 
-        if (cultist.CosmicEmpowered || cultist.WasEmpowered)
+        if (cultist.WasEmpowered)
         {
             _popup.PopupEntity(Loc.GetString("cosmiccult-rift-cannotabsorb"), args.User, args.User);
             return;
@@ -63,13 +71,17 @@ public sealed partial class CosmicRiftSystem : EntitySystem
         var ev = new CosmicCultistEmpowerChangedEvent(uid, true);
         RaiseLocalEvent(uid, ref ev);
 
-        // TODO: Move to action specific components.
         comp.WasEmpowered = true;
-        comp.CosmicEmpowered = true;
-        comp.CosmicShiftWindup = TimeSpan.FromSeconds(1);
-        comp.Respiration = false;
-        // TODO: COSMIC CULT - CULTISTS MUST BE PRESSURE IMMUNE
+        _statusEffects.TrySetStatusEffectDuration(uid, PressureImmunityEffect);
         _popup.PopupCoordinates(Loc.GetString("cosmiccult-rift-absorb", ("NAME", Identity.Entity(args.Args.User, EntityManager))), Transform(args.Args.User).Coordinates, PopupType.MediumCaution);
         QueueDel(target);
+    }
+
+    public void SpawnRift(Entity<StationDataComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return;
+        // TODO: COSMIC CULT - SPAWNING A RIFT REQUIRES TryFindRandomTileOnStation TO BE EXPOSED OUTSIDE OF THE GAMERULESYSTEM.
+        // if (TryFindRandomTileOnStation( out var _, out var _, out var _, out var coords)) { Spawn("CosmicMalignRift", coords); }
     }
 }

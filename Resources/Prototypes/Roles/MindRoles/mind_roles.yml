@@ -368,8 +368,6 @@
     roleType: TeamAntagonist
     subtype: role-subtype-cosmic-cultist
   - type: CosmicCultRole
-  - type: RoleBriefing
-    briefing: cosmic-cultist-briefing
 
 # Cosmic - Entropic Colossus
 - type: entity
@@ -381,6 +379,5 @@
     antagPrototype: CosmicColossus
     exclusiveAntag: true
     roleType: TeamAntagonist
+    subtype: role-subtype-cosmic-colossus
   - type: CosmicColossusRole
-  - type: RoleBriefing
-    briefing: cosmic-colossus-briefing

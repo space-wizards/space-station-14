@@ -3,16 +3,16 @@ influence-type-passive = Passive
 influence-type-consumable = Consumable
 
 ## ACTIVE INFLUENCES
-influence-name-lapse = Aberrant Lapse
+influence-name-lapse = Astral Lapse
 influence-description-lapse = Lapse an individual's form, rendering them temporarily unable to move or act. Lapsed units are invulnerable tile obstructions.
 
-influence-name-glare = Null Glare
+influence-name-glare = Malign Glare
 influence-description-glare = Emit a horrific pulse of cosmic light, slowing and disorienting everyone around you. Its effects are amplified against silicon-based entities.
 
 influence-name-shunt = Shunt Subjectivity
 influence-description-shunt = Shunt your target's mind out of their body and unto the cosmic dark, temporarily rendering their body mindless.
 
-influence-name-ingress = Force ingress
+influence-name-ingress = Force Ingress
 influence-description-ingress = Use a concentrated effort of power to wrench an airlock - secure door - open.
 
 influence-name-nova = Astral Nova

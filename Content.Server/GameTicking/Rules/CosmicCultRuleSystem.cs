@@ -32,6 +32,7 @@ using Content.Server.CosmicCult.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Pinpointer;
 using Content.Shared.Audio;
+using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using Content.Shared.CosmicCult;
 using Content.Shared.CosmicCult.Abilities;
@@ -41,6 +42,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Pinpointer;
+using Content.Shared.Station.Components;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -56,10 +58,9 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private IConfigurationManager _config = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private  IPlayerManager _playerMan = default!;
+    [Dependency] private IPlayerManager _playerMan = default!;
     [Dependency] private IPrototypeManager _protoMan = default!;
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private MapLoaderSystem _mapLoader = default!;
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private NavMapSystem _navMap = default!;
     [Dependency] private RoundEndSystem _roundEnd = default!;
@@ -71,7 +72,6 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private SharedRoleSystem _role = default!;
-    [Dependency] private SharedWeatherSystem _weather = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private StationSystem _station = default!;
     // [Dependency] private StellarGoalsSystem _goals = default!;
@@ -87,14 +87,15 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
     private HashSet<Entity<CosmicBreachComponent, TransformComponent>> _breachSet = new();
 
     private ISawmill _sawmill = default!;
-    private TimeSpan _finaleTimeMax;
+    private TimeSpan _finaleTimeMax = TimeSpan.FromMinutes(5); // DEBUG. Set to five minutes for debug testing. Remove the hardcoded timespan when not debugging.
 
     public override void Initialize()
     {
         base.Initialize();
         _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("cosmiccult");
 
-        // Subs.CVar(_config, STCCVars.CosmicCultFinaleTargetTime, value => _finaleTimeMax = TimeSpan.FromMinutes(value), true);
+        // Subs.CVar(_config, CCVars.EmergencyShuttleAutoCallTime, value => _finaleTimeMax = TimeSpan.FromMinutes(value), true); // Round length scaling is derived from the CVAR for ShuttleAutoCallTime.
+        // Commented out for debugging.
     }
 
     #region Starting Events
@@ -108,6 +109,7 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         if (_station.GetLargestGrid(station) is not { } grid)
             return;
 
+        component.Station = station;
         component.StationGrid = grid;
         base.Added(uid, component, gameRule, args);
     }
@@ -141,14 +143,20 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
     }
     #endregion
 
-    private void SpawnRift()
+    private void SpawnRift(Entity<StationDataComponent?> ent)
     {
-        if (TryFindRandomTile(out var _, out var _, out var _, out var coords)) { Spawn("CosmicMalignRift", coords); }
+        if (!Resolve(ent, ref ent.Comp, false))
+            return;
+
+        if (TryFindRandomTileOnStation((ent, ent.Comp), out var _, out var _, out var coords)) { Spawn("CosmicMalignRift", coords); }
     }
 
-    private void SpawnStigma()
+    private void SpawnStigma(Entity<StationDataComponent?> ent)
     {
-        if (TryFindRandomTile(out var _, out var _, out var _, out var coords)) { Spawn("CosmicEntropicStigmaSpawn", coords); }
+        if (!Resolve(ent, ref ent.Comp, false))
+            return;
+
+        if (TryFindRandomTileOnStation((ent, ent.Comp), out var _, out var _, out var coords)) { Spawn("CosmicEntropicStigmaSpawn", coords); }
     }
 
     public void UpdateCultData(Entity<CosmicCultRuleComponent> cult) // Runs every time Entropy is siphoned and whenever a crewmember is Converted.
@@ -183,33 +191,33 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         if (component.RiftTimer is { } riftTimer && _timing.CurTime >= riftTimer)
         {
             component.RiftTimer = _timing.CurTime + _random.Next(TimeSpan.FromSeconds(230), TimeSpan.FromSeconds(360)); // 3min50 to 6min between new rifts.
-            SpawnRift();
+            SpawnRift(component.Station);
         }
 
         if (component.StigmaTimer is { } stigmaTimer && _timing.CurTime >= stigmaTimer)
         {
             component.StigmaTimer = _timing.CurTime + _random.Next(TimeSpan.FromSeconds(120), TimeSpan.FromSeconds(200)); // 2min to 3min 20sec between new stigma.
-            SpawnStigma();
+            SpawnStigma(component.Station);
         }
 
-        // if (component.BreachTimer is { } breachTimer && _timing.CurTime >= breachTimer)
-        //     DoBreach(uid, component);
-        //
-        // if (component.CultWinTimer is { } winTimer && _timing.CurTime >= winTimer)
-        //     CultWin(uid, component);
-        //
-        // if (component.FinaleTimer is { } finaleTimer && _timing.CurTime >= finaleTimer)
-        //     StartFinale(uid, component);
-        //
-        // // Just to make sure nobody gets stuck station-side, 5 seconds before the finale, we cancel all doAfters on cultists and strip their ability to Shift.
-        // if (component.FinaleTimer is { } finaleSetup && !component.FinaleSetup && _timing.CurTime >= (finaleSetup - TimeSpan.FromSeconds(5)))
-        //     FinaleSetup(uid, component);
-        //
-        // if (component.Tier3Timer is { } tier3Timer && _timing.CurTime >= tier3Timer)
-        //     StartTier3(uid, component);
-        //
-        // if (component.Tier2Timer is { } tier2Timer && _timing.CurTime >= tier2Timer)
-        //     StartTier2(uid, component);
+        if (component.BreachTimer is { } breachTimer && _timing.CurTime >= breachTimer)
+            DoBreach(uid, component);
+
+        if (component.CultWinTimer is { } winTimer && _timing.CurTime >= winTimer)
+            CultWin(uid, component);
+
+        if (component.FinaleTimer is { } finaleTimer && _timing.CurTime >= finaleTimer)
+            StartFinale(uid, component);
+
+        // Just to make sure nobody gets stuck station-side, 5 seconds before the finale, we cancel all doAfters on cultists and strip their ability to Shift.
+        if (component.FinaleTimer is { } finaleSetup && !component.FinaleSetup && _timing.CurTime >= (finaleSetup - TimeSpan.FromSeconds(5)))
+            FinaleSetup(uid, component);
+
+        if (component.Tier3Timer is { } tier3Timer && _timing.CurTime >= tier3Timer)
+            StartTier3(uid, component);
+
+        if (component.Tier2Timer is { } tier2Timer && _timing.CurTime >= tier2Timer)
+            StartTier2(uid, component);
     }
 
     private void DoBreach(EntityUid uid, CosmicCultRuleComponent component)
@@ -261,7 +269,7 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         _audio.PlayGlobal(_finaleSound, Filter.Broadcast(), false, AudioParams.Default);
 
         EnsureComp<ParallaxComponent>(mapData, out var parallax);
-        parallax.Parallax = "StellarParallaxMalignAlt2";
+        parallax.Parallax = "ParallaxMalignAlt2";
         Dirty(mapData, parallax);
 
         var shuntQuery = EntityQueryEnumerator<CosmicShuntedEntityComponent>();
@@ -308,14 +316,12 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
 
             if (TryComp<CosmicShiftedComponent>(cultist, out var shiftComp))
             {
-                _transform.Unanchor(cultist);
                 _actions.RemoveAction(cultist, shiftComp.CosmicReturnActionActionEntity);
                 RemComp<CosmicShiftedComponent>(cultist);
             }
             if (_mobState.IsAlive(cultist))
             {
                 var destination = _transform.GetMapCoordinates(_random.Pick(spawnPoints).Uid);
-                EnsureComp<BlockMovementComponent>(cultist);
                 _cultShift.ShiftToDestination(cultist, destination);
             }
         }
@@ -339,27 +345,27 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         }
     }
 
-    private void StartTier3(EntityUid uid, CosmicCultRuleComponent component)
+    private void StartTier3(EntityUid uid, CosmicCultRuleComponent comp)
     {
-        component.Tier = 3;
-        component.Tier3Timer = null;
-        component.StigmaTimer = _timing.CurTime + _random.Next(TimeSpan.FromSeconds(120), TimeSpan.FromSeconds(200));
+        comp.Tier = 3;
+        comp.Tier3Timer = null;
+        comp.StigmaTimer = _timing.CurTime + _random.Next(TimeSpan.FromSeconds(120), TimeSpan.FromSeconds(200));
 
         AdjustCultObjectiveFinality(1);
 
         var sender = Loc.GetString("cosmiccult-announcement-sender");
-        var mapData = _map.GetMap(_transform.GetMapId(component.StationGrid.ToCoordinates()));
-        _chatSystem.DispatchStationAnnouncement(component.StationGrid, Loc.GetString("cosmiccult-announce-tier3-progress"), sender, false, null, Color.FromHex("#4cabb3"));
-        _chatSystem.DispatchStationAnnouncement(component.StationGrid, Loc.GetString("cosmiccult-announce-tier3-warning"), null, false, null, Color.FromHex("#cae8e8"));
+        var mapData = _map.GetMap(_transform.GetMapId(comp.StationGrid.ToCoordinates()));
+        _chatSystem.DispatchStationAnnouncement(comp.StationGrid, Loc.GetString("cosmiccult-announce-tier3-progress"), sender, false, null, Color.FromHex("#4cabb3"));
+        _chatSystem.DispatchStationAnnouncement(comp.StationGrid, Loc.GetString("cosmiccult-announce-tier3-warning"), null, false, null, Color.FromHex("#cae8e8"));
         _audio.PlayGlobal(_tier3Sound, Filter.Broadcast(), false, AudioParams.Default);
 
         EnsureComp<ParallaxComponent>(mapData, out var parallax);
-        parallax.Parallax = "StellarParallaxMalignAlt";
+        parallax.Parallax = "ParallaxMalignAlt";
         Dirty(mapData, parallax);
 
-        for (var i = 0; i < Convert.ToInt16(component.TotalCrew / 3); i++) // spawn # stigma rifts equal to 33.37% of the playercount
+        for (var i = 0; i < Convert.ToInt16(comp.TotalCrew / 3); i++) // spawn # stigma rifts equal to 33.37% of the playercount
         {
-            SpawnStigma();
+            SpawnStigma(comp.Station);
         }
 
         var query = EntityQueryEnumerator<CosmicCultistComponent>();
@@ -377,22 +383,22 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         }
     }
 
-    private void StartTier2(EntityUid uid, CosmicCultRuleComponent component)
+    private void StartTier2(EntityUid uid, CosmicCultRuleComponent comp)
     {
-        component.Tier = 2;
-        component.Tier2Timer = null;
-        component.RiftTimer = _timing.CurTime + _random.Next(TimeSpan.FromSeconds(230), TimeSpan.FromSeconds(360));
+        comp.Tier = 2;
+        comp.Tier2Timer = null;
+        comp.RiftTimer = _timing.CurTime + _random.Next(TimeSpan.FromSeconds(230), TimeSpan.FromSeconds(360));
 
         AdjustCultObjectiveFinality(1);
 
         var sender = Loc.GetString("cosmiccult-announcement-sender");
-        _chatSystem.DispatchStationAnnouncement(component.StationGrid, Loc.GetString("cosmiccult-announce-tier2-progress"), sender, false, null, Color.FromHex("#4cabb3"));
-        _chatSystem.DispatchStationAnnouncement(component.StationGrid, Loc.GetString("cosmiccult-announce-tier2-warning"), null, false, null, Color.FromHex("#cae8e8"));
+        _chatSystem.DispatchStationAnnouncement(comp.StationGrid, Loc.GetString("cosmiccult-announce-tier2-progress"), sender, false, null, Color.FromHex("#4cabb3"));
+        _chatSystem.DispatchStationAnnouncement(comp.StationGrid, Loc.GetString("cosmiccult-announce-tier2-warning"), null, false, null, Color.FromHex("#cae8e8"));
         _audio.PlayGlobal(_tier2Sound, Filter.Broadcast(), false, AudioParams.Default);
 
-        for (var i = 0; i < Convert.ToInt16(component.TotalCrew / 6); i++) // spawn # malign rifts equal to 16.67% of the playercount
+        for (var i = 0; i < Convert.ToInt16(comp.TotalCrew / 6); i++) // spawn # malign rifts equal to 16.67% of the playercount
         {
-            SpawnRift();
+            SpawnRift(comp.Station);
         }
 
         var query = EntityQueryEnumerator<CosmicCultistComponent>();
@@ -485,11 +491,18 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
     private void IncrementCultistProgress(Entity<CosmicCultistComponent> ent, ref CosmicCultistProgressEvent args)
     {
         var toIncrement = args.Progress > 0 ? args.Progress : 1;
+        var progressTarget = ent.Comp.ProgressGoal;
         ent.Comp.PersonalProgress += toIncrement;
+        ent.Comp.TotalPersonalProgress += toIncrement;
 
-        if (ent.Comp.PersonalProgress >= 13 && _playerMan.TryGetSessionByEntity(ent, out var session))
+        foreach (var influence in ent.Comp.OwnedInfluences)
         {
-            ent.Comp.PersonalProgress -= 13;
+            progressTarget++;
+        }
+
+        if (ent.Comp.PersonalProgress >= progressTarget && _playerMan.TryGetSessionByEntity(ent, out var session))
+        {
+            ent.Comp.PersonalProgress -= progressTarget;
             ent.Comp.MonumentVisits++;
             _euiMan.OpenEui(new CosmicInfluenceEui(), session);
             _audio.PlayEntity(ent.Comp.AbilityGainSfx, ent, ent);

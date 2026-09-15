@@ -16,72 +16,78 @@ public sealed partial class CosmicCultistComponent : Component
     /// <summary>
     /// The status icon prototype displayed for cosmic cultists.
     /// </summary>
-    [DataField] public ProtoId<FactionIconPrototype> StatusIcon = "CosmicCultFaction";
+    [DataField]
+    public ProtoId<FactionIconPrototype> StatusIcon = "CosmicCultFaction";
 
-    public int ProgressGoal = 10;
+    /// <summary>
+    /// The required amount of personal progress a cultist needs to gain their next Influence.
+    /// </summary>
+    [DataField(serverOnly: true)] // Should this be server-only?
+    public int ProgressGoal = 12;
 
     /// <summary>
     /// How much progress this cultist personally has towards gaining their next Influence.
     /// </summary>
-    [DataField, AutoNetworkedField] public int PersonalProgress;
+    [DataField, AutoNetworkedField]
+    public int PersonalProgress;
+
+    /// <summary>
+    /// How much progress this cultist has globally accumulated.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int TotalPersonalProgress;
 
     /// <summary>
     /// How many times this cultist is allowed to visit The Monument to gain a new Influence.
     /// </summary>
-    [DataField, AutoNetworkedField] public int MonumentVisits;
+    [DataField, AutoNetworkedField]
+    public int MonumentVisits;
 
     /// <summary>
     /// Owned and unlocked influences.
     /// </summary>
-    [DataField, AutoNetworkedField] public List<ProtoId<InfluencePrototype>> OwnedInfluences = [];
+    [DataField, AutoNetworkedField]
+    public List<ProtoId<InfluencePrototype>> OwnedInfluences = [];
 
-    [DataField, AutoNetworkedField] public Dictionary<ProtoId<InfluencePrototype>, float> UnlockedInfluences = [];
+    [DataField, AutoNetworkedField]
+    public Dictionary<ProtoId<InfluencePrototype>, float> UnlockedInfluences = [];
 
-    #region Ability Data
-    [DataField] public EntProtoId CosmicFragmentationAction = "ActionCosmicFragmentation";
+    [DataField]
+    public EntProtoId CosmicFragmentationAction = "ActionCosmicFragmentation";
 
-    /// <summary>
-    /// The duration of the doAfters and time away for Astral Shift.
-    /// </summary>
-    [DataField] public TimeSpan CosmicShiftInOut = TimeSpan.FromSeconds(2);
-    [DataField] public TimeSpan CosmicShiftWindup = TimeSpan.FromSeconds(3);
-    public static readonly TimeSpan DefaultCosmicShiftWindup = TimeSpan.FromSeconds(3);
-
-    #endregion
-
-    #region Misc Data
     /// <summary>
     /// How many stacks of Astral Aegis this cultist has.
     /// </summary>
-    [DataField, AutoNetworkedField] public int AstralAegisStacks;
+    [DataField, AutoNetworkedField]
+    public int AstralAegisStacks;
 
-    /// <summary>
-    /// Wether or not this cultist has been empowered by a Malign Rift.
-    /// </summary>
-    [DataField, AutoNetworkedField] public bool CosmicEmpowered;
     /// <summary>
     /// Wether or not this cultist was previously empowered by a Malign Rift.
     /// </summary>
-    [DataField, AutoNetworkedField] public bool WasEmpowered;
+    [DataField, AutoNetworkedField]
+    public bool WasEmpowered;
 
     /// <summary>
     /// Wether or not this cultist needs to respirate.
     /// </summary>
-    [DataField, AutoNetworkedField] public bool Respiration = true;
-    #endregion
+    [DataField, AutoNetworkedField]
+    public bool Respiration = true;
 
     /// <summary>
     ///     The gamerule that this cultist is associated with
     /// </summary>
     [DataField(serverOnly: true)]
-    public EntityUid CultGamerule;
+    public EntityUid CultGameRule;
 
-    #region VFX & SFX
-    [DataField] public EntProtoId ShuntVfx = "CosmicShuntAbilityVfx";
+    /// <summary>
+    /// Miscelanneous sound effects.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier MonumentGachaSfx = new SoundPathSpecifier("/Audio/Cosmic/monument-gacha.ogg");
 
-    [DataField] public SoundSpecifier MonumentGachaSfx = new SoundPathSpecifier("/Audio/Cosmic/monument-gacha.ogg");
-    [DataField] public SoundSpecifier AegisDeflectSfx = new SoundPathSpecifier("/Audio/Cosmic/cosmicsword-glance.ogg");
-    [DataField] public SoundSpecifier AbilityGainSfx = new SoundPathSpecifier("/Audio/Cosmic/Abilities/ability-gained.ogg");
-    [DataField] public SoundSpecifier ShuntSfx = new SoundPathSpecifier("/Audio/Cosmic/Abilities/ability-shunt.ogg");
-    #endregion
+    [DataField]
+    public SoundSpecifier AbilityGainSfx = new SoundPathSpecifier("/Audio/Cosmic/Abilities/ability-gained.ogg");
+
+    [DataField]
+    public SoundSpecifier AegisDeflectSfx = new SoundPathSpecifier("/Audio/Cosmic/cosmic-sword-glance.ogg");
 }

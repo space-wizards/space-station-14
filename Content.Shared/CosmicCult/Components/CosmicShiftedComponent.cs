@@ -2,15 +2,19 @@ using Content.Shared.DoAfter;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.CosmicCult.Components;
 
 /// <summary>
 /// Marker component for entities under the effect of Astral Shift.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class CosmicShiftedComponent : Component
 {
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))] [AutoPausedField]
+    public TimeSpan? AutoReturnTimer;
+
     public DoAfterId? ReturnDoAfter;
 
     public MapCoordinates DepartureCoordinates;

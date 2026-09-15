@@ -2,6 +2,7 @@ using Content.Shared.CosmicCult;
 using Content.Shared.CosmicCult.Components;
 using Content.Shared.CosmicCult.Components.Actions;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Movement.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Spawners;
@@ -13,6 +14,7 @@ public sealed partial class CosmicImpositionSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private MovementModStatusSystem _movementMod = default!;
 
     public override void Update(float frameTime)
     {
@@ -36,6 +38,7 @@ public sealed partial class CosmicImpositionSystem : EntitySystem
 
         args.Handled = true;
         var duration = action.Empowered ? ent.Comp.DurationEmpowered : ent.Comp.DurationDefault;
+        var slowDown = action.Empowered ? ent.Comp.MovePenaltyEmpowered : ent.Comp.MovePenaltyDefault;
         var overlayEffect = SpawnAttachedTo(ent.Comp.ImpositionOverlay, Transform(ent).Coordinates);
 
         SpawnAttachedTo(action.Vfx, Transform(ent).Coordinates);
@@ -49,6 +52,7 @@ public sealed partial class CosmicImpositionSystem : EntitySystem
 
         Dirty(overlayEffect, fade);
         _audio.PlayPvs(action.Sfx, ent, AudioParams.Default.WithVariation(0.05f));
+        _movementMod.TryAddMovementSpeedModDuration(args.Performer, MovementModStatusSystem.ImpositionSlowdown, duration, slowDown);
     }
 
     [SubscribeLocalEvent]

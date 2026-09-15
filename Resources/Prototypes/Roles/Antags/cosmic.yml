@@ -1,9 +1,9 @@
 ﻿- type: antag
   id: CosmicCultist
-  name: roles-antag-changeling-name
+  name: roles-antag-cosmiccult-name
   antagonist: true
-  setPreference: false # TODO: set this to true once Changeling exits WIP status
-  objective: roles-antag-changeling-objective
+  setPreference: false # TODO: COSMIC CULT - set this to true once Cosmic Cult exits WIP status
+  objective: roles-antag-cosmiccult-objective
 
 - type: antag
   id: CosmicColossus
@@ -21,6 +21,7 @@
     sound: /Audio/Cosmic/cosmic-start.ogg
   components:
   - type: CosmicCultist
+  - type: CosmicFriendlyFireBlocker
   - type: RevolutionaryImmune
   - type: ZombieImmune
   - type: ActionGrant

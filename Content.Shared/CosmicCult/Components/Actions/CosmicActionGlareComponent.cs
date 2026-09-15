@@ -1,11 +1,8 @@
-using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.CosmicCult.Components.Actions;
 
 [NetworkedComponent, RegisterComponent]
-// [AutoGenerateComponentPause]
 public sealed partial class CosmicActionGlareComponent : Component
 {
     /// <summary>
@@ -23,8 +20,8 @@ public sealed partial class CosmicActionGlareComponent : Component
     /// <summary>
     /// The movement speed penalty inflicted by Null Glare.
     /// </summary>
-    [DataField] public float MovePenaltyDefault = 0.25f;
-    [DataField] public float MovePenaltyEmpowered = 0.4f;
+    [DataField] public float MovePenaltyDefault = 0.4f;
+    [DataField] public float MovePenaltyEmpowered = 0.25f;
 
     /// <summary>
     /// The stun duration inflicted by Null Glare.

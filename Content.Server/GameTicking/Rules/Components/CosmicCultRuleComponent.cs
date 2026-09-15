@@ -43,6 +43,11 @@ public sealed partial class CosmicCultRuleComponent : Component
     [DataField] public HashSet<EntityUid> Cultists = [];
 
     /// <summary>
+    /// The station EntityUid of the station Cosmic Cult is active on.
+    /// </summary>
+    [DataField] public EntityUid Station;
+
+    /// <summary>
     /// The grid EntityUid of the station Cosmic Cult is active on.
     /// </summary>
     [DataField] public EntityUid StationGrid;
@@ -108,11 +113,11 @@ public sealed partial class CosmicCultRuleComponent : Component
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan? BreachTimer;
 
-    [DataField] public EntityUid? GoalsContainer;
+    // [DataField] public EntityUid? GoalsContainer;
 
-    [DataField] public ProtoId<EntityTablePrototype> Goals = "CosmicCultGoals";
+    // [DataField] public ProtoId<EntityTablePrototype> Goals = "CosmicCultGoals";
 
     [DataField] public bool CultWin = false;
 
-    [DataField] public SoundSpecifier FinaleMusic = new SoundPathSpecifier("/Audio/Cosmic/finale.ogg");
+    [DataField] public SoundSpecifier FinaleMusic = new SoundPathSpecifier("/Audio/Cosmic/music-cosmic-finale.ogg");
 }

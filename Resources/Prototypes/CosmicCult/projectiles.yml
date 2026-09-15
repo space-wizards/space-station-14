@@ -39,31 +39,36 @@
 
 - type: entity
   id: ProjectileCosmic
-  name: Malign Bolt
+  name: malign bolt
   parent: BaseBullet
   categories: [ HideSpawnMenu ]
   description: Ouch.
   components:
-  - type: Reflective
-    reflective:
-    - Energy
   - type: Sprite
     noRot: false
     sprite: Effects/Cosmic/base-projectile.rsi
-    state: vfx
-    shader: unshaded
+    layers:
+    - state: vfx
+      shader: unshaded
   - type: Projectile
     impactEffect: BulletImpactEffectCosmic
     damage:
       types:
-        Cold: 12
+        Cold: 8
     soundHit:
-      path: "/Audio/Cosmic/Abilities/cosmic-projectile-hit.ogg"
+      path: "/Audio/Cosmic/cosmic-projectile-hit.ogg"
       params:
         variation: 0.08
   - type: Ammo
     muzzleFlash: null
-  # Short lifespan
+  - type: DamageMarkerOnCollide
+    whitelist:
+      components:
+      - MobState
+    damage:
+      types:
+        Cold: 8
+        Asphyxiation: 8
   - type: TimedDespawn
     lifetime: 0.6
   - type: PointLight
@@ -84,26 +89,30 @@
         reverseWhenFinished: true
 
 - type: entity
-  id: ProjectileCosmicRazor
-  name: Astral Bolt
-  parent: ProjectileCosmic
+  id: HitscanCosmicRazor
+  name: entropic blast
   categories: [ HideSpawnMenu ]
-  description: Ouch.
   components:
-  - type: DamageMarkerOnCollide
-    whitelist:
-      components:
-      - MobState
+  - type: HitscanBasicDamage
     damage:
       types:
-        Cold: 15
-        Asphyxiation: 10
-  - type: Projectile
-    impactEffect: BulletImpactEffectCosmic
-    damage:
-      types:
-        Cold: 10
+        Cold: 5
         Asphyxiation: 5
+  - type: HitscanAmmo
+  - type: HitscanBasicRaycast
+    maxDistance: 8
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: Effects/Cosmic/cosmic-hitscan.rsi
+      state: start
+    travelFlash:
+      sprite: Effects/Cosmic/cosmic-hitscan.rsi
+      state: middle
+    impactFlash:
+      sprite: Effects/Cosmic/cosmic-hitscan.rsi
+      state: end
+#  - type: HitscanReflect - You can't reflect Cosmic Cult Hitscans. This is here just so you know it wasn't overlooked.
+  - type: HitscanBasicEffects
 
 - type: entity
   id: BulletImpactEffectCosmic

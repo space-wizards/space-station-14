@@ -6,6 +6,7 @@
     snap:
     - Wall
   components:
+  - type: CosmicCollider
   - type: TileEmission
     color: "#42356c"
   - type: Physics

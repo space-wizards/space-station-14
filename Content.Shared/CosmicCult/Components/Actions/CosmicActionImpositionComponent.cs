@@ -17,6 +17,15 @@ public sealed partial class CosmicActionImpositionComponent : Component
     [DataField]
     public TimeSpan DurationEmpowered = TimeSpan.FromSeconds(8);
 
+    /// <summary>
+    /// The movement speed penalty inflicted Vacuous Imposition.
+    /// </summary>
+    [DataField]
+    public float MovePenaltyDefault = 0.6f;
+
+    [DataField]
+    public float MovePenaltyEmpowered = 0.7f;
+
     [DataField]
     public EntProtoId ImpositionOverlay = "EffectCosmicActionImpositionOverlay";
 }

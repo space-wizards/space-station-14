@@ -17,3 +17,5 @@ public sealed partial class CosmicShuntDoAfter : SimpleDoAfterEvent;
 [Serializable, NetSerializable]
 public sealed partial class CosmicChantryDoAfter : SimpleDoAfterEvent;
 
+[Serializable, NetSerializable]
+public sealed partial class CosmicLapseDoAfter : SimpleDoAfterEvent;

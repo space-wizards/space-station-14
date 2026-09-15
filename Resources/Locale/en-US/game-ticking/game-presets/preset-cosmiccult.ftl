@@ -135,6 +135,7 @@ cosmiccult-influences-maxed = You possess all influences available at this time.
 cosmiccult-influence-gained = You've gained:
 
 cosmiccult-gear-pickup = Somehow, you can't pick up the {$ITEM}.
+cosmiccult-breach-notravel = You know better than to travel to wherever these lead.
 
 cosmiccult-silicon-subverted-briefing =
     Malign light courses through your circuitry.

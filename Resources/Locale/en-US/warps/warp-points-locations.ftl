@@ -13,3 +13,4 @@ location-powersink = powersink
 location-immovable-rod = immovable rod
 location-nuke-disk = nuke disk
 location-nuclear-bomb = nuclear bomb
+location-monument = The Monument

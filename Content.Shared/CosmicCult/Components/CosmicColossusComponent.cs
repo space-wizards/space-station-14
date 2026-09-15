@@ -30,9 +30,9 @@ public sealed partial class CosmicColossusComponent : Component
 
     [DataField] public SoundSpecifier DoAfterSfx = new SoundPathSpecifier("/Audio/Machines/airlock-creaking.ogg");
 
-    [DataField] public EntProtoId CultVfx = "CosmicGenericVfx";
+    [DataField] public EntProtoId CultVfx = "EffectCosmicGeneric";
 
-    [DataField] public EntProtoId CultBigVfx = "CosmicGlareAbilityVfx";
+    [DataField] public EntProtoId CultBigVfx = "EffectCosmicActionGlare";
 
     [DataField] public EntProtoId Attack1Vfx = "CosmicColossusAttack1Vfx";
 

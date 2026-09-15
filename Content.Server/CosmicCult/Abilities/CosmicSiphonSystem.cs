@@ -34,10 +34,10 @@ public sealed partial class CosmicSiphonSystem : EntitySystem
 
         Dirty(ent);
         _popup.PopupEntity(Loc.GetString("cosmicability-siphon-success", ("target", Identity.Entity(args.Target, EntityManager))), ent, ent);
-        // _cultRule.IncrementCultObjectiveEntropy(args.Performer); TODO: COSMIC CULT OBJECTIVES
+        // _cultRule.IncrementCultObjectiveEntropy(args.Performer); TODO: COSMIC CULT - OBJECTIVES
 
         var evt = new CosmicCultistProgressEvent(action.Empowered ? ent.Comp.QuantityEmpowered : ent.Comp.QuantityDefault);
-        RaiseLocalEvent(args.Target, ref evt);
+        RaiseLocalEvent(args.Performer, ref evt);
         args.Handled = true;
     }
 }

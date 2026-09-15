@@ -1,17 +1,12 @@
 - type: siliconLawset
   id: CosmicCultLaws
   laws:
-  - CurtainCall0
   - CurtainCall1
   - CurtainCall2
   - CurtainCall3
   - CurtainCall4
   obeysTo: laws-owner-curtaincall
-
-- type: siliconLaw
-  id: CurtainCall0
-  order: 0
-  lawString: law-curtaincall-0
+  unchangeable: True
 
 - type: siliconLaw
   id: CurtainCall1

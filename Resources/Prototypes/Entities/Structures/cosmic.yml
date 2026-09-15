@@ -75,7 +75,7 @@
 #    guides:
 #    - CosmicCult
   - type: WarpPoint
-    location: The Monument
+    location: location-monument
 
 ###################### FONT
 - type: entity
@@ -204,7 +204,6 @@
   description: A mysterious-yet-inert sturcture. Unsettling.
   components:
   - type: Transform
-#    noRot: true
   - type: Sprite
     sprite: Structures/Specific/cosmic-pillar.rsi
     offset: 0, 0.5
@@ -225,17 +224,6 @@
         - LargeMobMask
         layer:
         - WallLayer
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 150
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
 
 ##################### LAMP
 - type: entity

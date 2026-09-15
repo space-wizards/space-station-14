@@ -2,17 +2,21 @@ using System.Collections.Immutable;
 using Content.Server.CosmicCult.Components;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Popups;
+using Content.Shared.Changeling.Components;
 using Content.Shared.CosmicCult;
 using Content.Shared.CosmicCult.Components;
 using Content.Shared.CosmicCult.Components.Actions;
-using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mindshield.Components;
+using Content.Shared.Ninja.Components;
+using Content.Shared.NukeOps;
 using Content.Shared.Popups;
+using Content.Shared.Revolutionary.Components;
 using Content.Shared.Stunnable;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
@@ -28,9 +32,9 @@ public sealed partial class CosmicShuntSystem : EntitySystem
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private CosmicCultSystem _cult = default!;
-    [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private SharedStunSystem _stun = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     public override void Update(float frameTime)
     {
@@ -48,13 +52,19 @@ public sealed partial class CosmicShuntSystem : EntitySystem
                 _mind.TransferTo(mindEnt, comp.OriginalBody);
                 _popup.PopupEntity(Loc.GetString("cosmicability-shunt-return"), comp.OriginalBody, comp.OriginalBody);
 
+                if (_whitelist.IsWhitelistPass(comp.Blacklist, comp.OriginalBody))
+                {
+                    comp.ConvertOnReturn = false;
+                    _popup.PopupCoordinates(Loc.GetString("cosmicability-shunt-conversion-fail-misc-body", ("target", Identity.Entity(comp.OriginalBody, EntityManager))), Transform(comp.OriginalBody).Coordinates, PopupType.Large);
+                    _popup.PopupCoordinates(Loc.GetString("cosmicability-shunt-conversion-fail-misc-wisp"), Transform(uid).Coordinates, PopupType.LargeCaution);
+                }
+
                 if (HasComp<MindShieldComponent>(comp.OriginalBody) && cultRule.Comp.Tier != 3)
                 {
                     comp.ConvertOnReturn = false;
-                    _popup.PopupCoordinates(Loc.GetString("cosmicability-shunt-conversion-fail-body", ("target", Identity.Entity(comp.OriginalBody, EntityManager))), Transform(comp.OriginalBody).Coordinates, PopupType.Large);
-                    _popup.PopupCoordinates(Loc.GetString("cosmicability-shunt-conversion-fail-wisp"), Transform(uid).Coordinates, PopupType.LargeCaution);
+                    _popup.PopupCoordinates(Loc.GetString("cosmicability-shunt-conversion-fail-mindshield-body", ("target", Identity.Entity(comp.OriginalBody, EntityManager))), Transform(comp.OriginalBody).Coordinates, PopupType.Large);
+                    _popup.PopupCoordinates(Loc.GetString("cosmicability-shunt-conversion-fail-mindshield-wisp"), Transform(uid).Coordinates, PopupType.LargeCaution);
                 }
-                // This is where whitelisting would go if you want to prevent other things from being converted.
 
                 if (comp.ConvertOnReturn)
                 {
@@ -102,7 +112,7 @@ public sealed partial class CosmicShuntSystem : EntitySystem
             return;
 
         var target = args.Target;
-        if (!TryComp<MindContainerComponent>(target, out var mindContainer) || mindContainer.Mind is not { } mindEnt)
+        if (!_mind.TryGetMind(target, out var mindEnt, out var mind))
             return;
 
         var spawnPoints = EntityManager.GetAllComponents(typeof(CosmicVoidSpawnComponent)).ToImmutableList();
@@ -115,7 +125,6 @@ public sealed partial class CosmicShuntSystem : EntitySystem
 
         _popup.PopupEntity(Loc.GetString("cosmicability-shunt-success", ("target", Identity.Entity(target, EntityManager))), ent, ent);
         var tgtpos = Transform(target).Coordinates;
-        var mind = Comp<MindComponent>(mindEnt);
         mind.PreventGhosting = true;
 
         _audio.PlayPvs(action.Sfx, ent, AudioParams.Default.WithVolume(6f));
@@ -126,8 +135,9 @@ public sealed partial class CosmicShuntSystem : EntitySystem
         var duration = action.Empowered ? ent.Comp.DurationEmpowered : ent.Comp.DurationDefault;
 
         EnsureComp<CosmicShuntedEntityComponent>(wisp, out var shuntComp);
-        shuntComp.ShuntCaster = args.Performer;
         shuntComp.OriginalBody = target;
+        shuntComp.ShuntCaster = args.Performer;
+        shuntComp.Blacklist = ent.Comp.ConversionBlacklist;
         shuntComp.ExitVoidTime = _timing.CurTime + duration;
 
         _mind.TransferTo(mindEnt, wisp);

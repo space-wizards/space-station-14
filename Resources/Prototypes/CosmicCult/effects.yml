@@ -80,6 +80,26 @@
     - sprite: Effects/Cosmic/ability-lapse.rsi
       state: vfx
       shader: unshaded
+  - type: TimedDespawn
+    lifetime: 1.15
+  - type: PointLight
+    color: "#42a4ae"
+    radius: 2.5
+    energy: 6
+    castShadows: false
+    netSync: false
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      interpolate: Linear
+      minDuration: 1.15
+      maxDuration: 1.15
+      startValue: 0.1
+      endValue: 6
+      property: Energy
+      enabled: true
+      isLooped: true
+      reverseWhenFinished: true
 
 - type: entity
   categories: [ HideSpawnMenu ]
@@ -181,6 +201,7 @@
   - type: TimedDespawn
     lifetime: 1.1
   - type: Sprite
+    noRot: true
     layers:
     - sprite: Effects/Cosmic/ability-glare.rsi
       state: vfx
@@ -206,7 +227,7 @@
 - type: entity
   categories: [ HideSpawnMenu ]
   parent: EffectCosmicBase
-  id: EffectCosmicActionImposition
+  id: EffectCosmicBigWindup
   components:
   - type: EffectVisuals
   - type: TimedDespawn
@@ -256,6 +277,7 @@
   - type: TimedDespawn
     lifetime: 1.1
   - type: Sprite
+    noRot: true
     drawdepth: Effects
     layers:
     - shader: unshaded

@@ -29,17 +29,11 @@ public sealed partial class CosmicChantryComponent : Component
 
     [DataField] public EntityUid InternalVictim;
 
-    [DataField] public EntityUid VictimBody;
-
-    [DataField] public SoundSpecifier ChantryAlarm = new SoundPathSpecifier("/Audio/_ST/CosmicCult/chantry_alarm.ogg");
+    [DataField] public SoundSpecifier ChantryAlarm = new SoundPathSpecifier("/Audio/Cosmic/chantry-alarm.ogg");
 
     [DataField] public EntProtoId Colossus = "MobCosmicColossus";
 
-    [DataField] public EntProtoId FallbackBrain = "PositronicBrain";
-
-    [DataField] public EntProtoId SpawnVfx = "CosmicGlareAbilityVfx";
-
-    [DataField] public EntProtoId FallbackVfx = "CosmicGenericVfx";
+    [DataField] public EntProtoId SpawnVfx = "EffectCosmicActionGlare";
 }
 
 [Serializable, NetSerializable]

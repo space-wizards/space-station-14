@@ -35,7 +35,7 @@ public sealed partial class CosmicFontComponent : Component
 
     [DataField, AutoNetworkedField] public HashSet<EntProtoId> Armors =
     [
-        "HardsuitCosmicCult",
+        "ClothingOuterHardsuitCosmicCult",
     ];
 
     [DataField, AutoNetworkedField] public HashSet<EntProtoId> Weapons =
@@ -48,7 +48,7 @@ public sealed partial class CosmicFontComponent : Component
     /// <summary>
     /// Visual and sound effects.
     /// </summary>
-    [DataField] public EntProtoId GenericVfx = "CosmicGenericVfx";
+    [DataField] public EntProtoId GenericVfx = "EffectCosmicGeneric";
     [DataField] public SoundSpecifier InsertSfx = new SoundPathSpecifier("/Audio/Cosmic/stigma-inserted.ogg");
 }
 

@@ -1,3 +1,4 @@
+using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -18,4 +19,10 @@ public sealed partial class CosmicActionShuntComponent : Component
 
     [DataField]
     public EntProtoId SpawnWisp = "MobCosmicWisp";
+
+    /// <summary>
+    /// Blacklist of the components that prevent a victim from being converted. This blacklist is copied into the blacklist on CosmicShuntedEntityComponent.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? ConversionBlacklist;
 }

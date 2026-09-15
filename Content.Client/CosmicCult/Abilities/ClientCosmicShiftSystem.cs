@@ -18,8 +18,8 @@ public sealed partial class ClientCosmicShiftSystem : CosmicShiftSystem
 
     [Dependency] private EntityQuery<SpriteComponent> _spriteQuery;
 
-    private static readonly ProtoId<ShaderPrototype> HorizontalCut = "StellarSpriteCutAnimated";
-    private static readonly EntProtoId VfxEntity = "CosmicShiftAbilityVfx";
+    private static readonly ProtoId<ShaderPrototype> HorizontalCut = "HorizontalCutAnimated";
+    private static readonly EntProtoId VfxEntity = "EffectCosmicActionShift";
 
     [EventSubscription]
     private void OnShiftAnim(CosmicShiftAnimEvent args)

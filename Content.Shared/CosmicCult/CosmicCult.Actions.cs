@@ -35,5 +35,4 @@ public sealed partial class EventCosmicShift : InstantActionEvent;
 
 // COLOSSUS ACTIONS
 public sealed partial class EventCosmicColossusSunder : WorldTargetActionEvent;
-public sealed partial class EventCosmicColossusIngress : EntityTargetActionEvent;
 public sealed partial class EventCosmicColossusHibernate : InstantActionEvent;

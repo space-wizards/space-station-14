@@ -2,37 +2,42 @@ using System.Collections.Immutable;
 using Content.Server.Atmos.Components;
 using Content.Server.CosmicCult.Components;
 using Content.Shared.Actions;
+using Content.Shared.CosmicCult;
 using Content.Shared.CosmicCult.Abilities;
 using Content.Shared.CosmicCult.Components;
+using Content.Shared.CosmicCult.Components.Actions;
 using Content.Shared.Doors.Components;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Interaction.Components;
 using Content.Shared.Popups;
+using Content.Shared.StatusEffectNew;
+using Content.Shared.Stunnable;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.CosmicCult.Abilities;
 
 public sealed partial class ServerCosmicShiftSystem : CosmicShiftSystem
 {
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private StatusEffectsSystem _status = default!;
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var shuntQuery = EntityQueryEnumerator<CosmicShiftedComponent>();
-        while (shuntQuery.MoveNext(out var uid, out var comp))
+        var shiftedQuery = EntityQueryEnumerator<CosmicShiftedComponent>();
+        while (shiftedQuery.MoveNext(out var uid, out var comp))
         {
             if (comp.ReadyToReturn && !comp.Occupied)
             {
                 _actions.RemoveAction(uid, comp.CosmicReturnActionActionEntity);
-                EnsureComp<BlockMovementComponent>(uid);
+                _status.TryAddStatusEffectDuration(uid, SharedStunSystem.StunId, TimeSpan.FromSeconds(5f));
                 RemComp<CosmicShiftedComponent>(uid);
-                TransformSystem.AnchorEntity(uid);
 
                 ShiftToDestination(uid, comp.DepartureCoordinates);
                 foreach (var entity in _lookup.GetEntitiesIntersecting(comp.DepartureCoordinates, LookupFlags.Static))
@@ -41,12 +46,20 @@ public sealed partial class ServerCosmicShiftSystem : CosmicShiftSystem
                         QueueDel(entity);
                 }
             }
+
+            if (comp.AutoReturnTimer is { } returnTimer && _timing.CurTime >= returnTimer)
+            {
+                DoAfter.Cancel(comp.ReturnDoAfter);
+                comp.AutoReturnTimer = null;
+                comp.ReadyToReturn = true;
+                comp.Occupied = false;
+            }
         }
     }
 
-    protected override void OnShiftStartDoAfter(Entity<CosmicCultistComponent> ent, ref CosmicShiftStartDoAfter args)
+    protected override void OnShiftAbility(Entity<CosmicActionShiftComponent> ent, ref EventCosmicShift args)
     {
-        if (args.Cancelled || args.Handled || Container.IsEntityInContainer(ent.Owner))
+        if (Container.IsEntityInContainer(args.Performer))
             return;
 
         var spawnPoints = EntityManager.GetAllComponents(typeof(CosmicVoidSpawnComponent)).ToImmutableList();
@@ -54,19 +67,21 @@ public sealed partial class ServerCosmicShiftSystem : CosmicShiftSystem
             return;
 
         var destination = TransformSystem.GetMapCoordinates(_random.Pick(spawnPoints).Uid);
-        _popup.PopupCoordinates(Loc.GetString("cosmicability-shift-start", ("target", Identity.Entity(ent, EntityManager))), Transform(ent).Coordinates, PopupType.MediumCaution);
+        _popup.PopupCoordinates(Loc.GetString("cosmicability-shift-start", ("target", Identity.Entity(args.Performer, EntityManager))), Transform(args.Performer).Coordinates, PopupType.MediumCaution);
+        _status.TryAddStatusEffectDuration(args.Performer, SharedStunSystem.StunId, TimeSpan.FromSeconds(5f));
 
-        EnsureComp<CosmicShiftedComponent>(ent, out var shiftedComp);
-        ShiftToDestination(ent, destination);
-        shiftedComp.DepartureCoordinates = TransformSystem.GetMapCoordinates(ent);
+        EnsureComp<CosmicShiftedComponent>(args.Performer, out var shiftedComp);
+        EnsureComp<CosmicShiftingComponent>(args.Performer, out var shiftingComp);
+        ShiftToDestination(args.Performer, destination);
+        shiftedComp.DepartureCoordinates = TransformSystem.GetMapCoordinates(args.Performer);
+        shiftingComp.DestinationCoordinates = destination;
         shiftedComp.ReadyToReturn = false;
-        base.OnShiftStartDoAfter(ent, ref args);
+        base.OnShiftAbility(ent, ref args);
     }
 
     protected override void OnShiftMove(EntityUid ent, MapCoordinates destination)
     {
         TransformSystem.SetMapCoordinates(ent, destination);
-        TransformSystem.AnchorEntity(ent);
         base.OnShiftMove(ent, destination);
     }
 

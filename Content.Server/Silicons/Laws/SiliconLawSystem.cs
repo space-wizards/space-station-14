@@ -140,6 +140,9 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
         // Emagged borgs are immune to ion storm
         if (!_emag.CheckFlag(ent, EmagType.Interaction))
         {
+            if (ent.Comp.Lawset != null && ent.Comp.Lawset.Unchangeable)
+                return; // This is gross. Please refactor the entire OnIonStormLaws function.
+
             ent.Comp.Lawset = args.Lawset;
 
             // gotta tell player to check their laws
@@ -282,6 +285,7 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
             laws.Laws.Add(ProtoMan.Index<SiliconLawPrototype>(law).ShallowClone());
         }
         laws.ObeysTo = proto.ObeysTo;
+        laws.Unchangeable = proto.Unchangeable;
 
         return laws;
     }
@@ -289,15 +293,21 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
     /// <summary>
     /// Set the laws of a silicon entity while notifying the player.
     /// </summary>
-    public void SetLaws(List<SiliconLaw> newLaws, EntityUid target, SoundSpecifier? cue = null)
+    public void SetLaws(List<SiliconLaw> newLaws, EntityUid target, SoundSpecifier? cue = null, bool makeUnchangeable = false)
     {
         if (!TryComp<SiliconLawProviderComponent>(target, out var component))
+            return;
+
+        if (component.Lawset is { } lawset && lawset.Unchangeable)
             return;
 
         if (component.Lawset == null)
             component.Lawset = new SiliconLawset();
 
+        Log.Info($"setting laws for {component.Laws}");
+
         component.Lawset.Laws = newLaws;
+        component.Lawset.Unchangeable = makeUnchangeable;
         RankLaws(component.Lawset.Laws);
         NotifyLawsChanged((target,component), cue);
     }

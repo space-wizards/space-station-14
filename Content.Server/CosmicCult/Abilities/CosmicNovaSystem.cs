@@ -49,7 +49,7 @@ public sealed partial class CosmicNovaSystem : EntitySystem
 
         args.Handled = true;
         var proj = Spawn(ent.Comp.Projectile, startPos);
-        _gun.ShootProjectile(proj, delta, userVelocity, args.Performer, args.Performer, ent.Comp.ProjectileSpeed);
+        _gun.ShootProjectile(proj, delta, Vector2.Zero, args.Performer, args.Performer, ent.Comp.ProjectileSpeed);
         _audio.PlayPvs(action.Sfx, ent, AudioParams.Default.WithVariation(0.1f));
     }
 

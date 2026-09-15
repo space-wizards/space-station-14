@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Antag;
+using Content.Shared.Changeling.Components;
 using Content.Shared.CosmicCult.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
@@ -15,9 +16,11 @@ using Content.Shared.Interaction;
 using Content.Shared.Mind;
 using Content.Shared.Movement.Components;
 using Content.Shared.NameModifier.EntitySystems;
+using Content.Shared.Ninja.Components;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
+using Content.Shared.StatusEffectNew;
 using Content.Shared.Stealth.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -34,7 +37,6 @@ namespace Content.Shared.CosmicCult;
 public abstract partial class CosmicCultSystem : EntitySystem
 {
     [Dependency] protected IGameTiming Timing = default!;
-    [Dependency] protected IPrototypeManager Prototype = default!;
     [Dependency] protected IRobustRandom Random = default!;
     [Dependency] protected ISharedPlayerManager PlayerManager = default!;
     [Dependency] protected SharedActionsSystem Actions = default!;
@@ -51,9 +53,10 @@ public abstract partial class CosmicCultSystem : EntitySystem
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private SharedPointLightSystem _light = default!;
     [Dependency] private SharedRoleSystem _role = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
-    public static readonly EntProtoId StunId = "StatusEffectStunned";
     public static readonly EntProtoId GenericVfx = "EffectCosmicGeneric";
+    private static readonly EntProtoId PressureImmunityEffect = "StatusEffectPressureImmunity";
     public static SoundSpecifier GenericSfx = new SoundPathSpecifier("/Audio/Cosmic/trigger-sound.ogg");
 
     public override void Initialize()
@@ -87,7 +90,7 @@ public abstract partial class CosmicCultSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        if (HasComp<CosmicCultistComponent>(args.Origin))
+        if (HasComp<CosmicFriendlyFireBlockerComponent>(args.Origin))
             args.Cancelled = true;
     }
 
@@ -138,6 +141,8 @@ public abstract partial class CosmicCultSystem : EntitySystem
             var stigmaCrystal = PredictedSpawnAtPosition("CosmicCultStigmaCrystal", Transform(ent).Coordinates);
             var farFilter = Filter.Empty().AddInRange(TransformSystem.GetMapCoordinates(ent), 25f);
             ent.Comp.Harvested = true;
+
+            _statusEffects.TrySetStatusEffectDuration(args.User, PressureImmunityEffect);
             _hands.TryPickupAnyHand(args.User, stigmaCrystal);
             if (_net.IsServer)
             {
@@ -153,6 +158,7 @@ public abstract partial class CosmicCultSystem : EntitySystem
             var evt = new CosmicCultistProgressEvent(3);
             RaiseLocalEvent(args.User, ref evt);
         }
+
         else if (!EntityIsCultist(args.User))
         {
             var destroyTime = ent.Comp.Harvested ? ent.Comp.DestroyTime / 4 : ent.Comp.DestroyTime;
@@ -180,6 +186,13 @@ public abstract partial class CosmicCultSystem : EntitySystem
     {
         if (args.Handled || EntityIsCultist(args.User) || !HasComp<HumanoidProfileComponent>(args.User) || ent.Comp.LinkedBreach is null)
             return;
+
+        if (HasComp<ChangelingDevourComponent>(args.User) || HasComp<SpaceNinjaComponent>(args.User))
+        {
+            if (_net.IsClient && Timing.IsFirstTimePredicted)
+                PopUp.PopupEntity(Loc.GetString("cosmiccult-breach-notravel"), args.User, args.User, PopupType.MediumCaution);
+            return;
+        }
 
         if (Timing.IsFirstTimePredicted)
         {
