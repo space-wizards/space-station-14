@@ -1,4 +1,3 @@
-using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.EntityEffects;
 using Content.Shared.Whitelist;
@@ -6,7 +5,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Administration.Verbs.Prototypes;
+namespace Content.Shared.Administration.Verbs.Prototypes;
 
 /// <summary>
 /// Defines a target-filtered admin verb.

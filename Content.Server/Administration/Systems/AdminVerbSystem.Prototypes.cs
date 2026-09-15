@@ -1,4 +1,4 @@
-using Content.Server.Administration.Verbs.Prototypes;
+using Content.Shared.Administration.Verbs.Prototypes;
 using Content.Shared.EntityEffects;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;

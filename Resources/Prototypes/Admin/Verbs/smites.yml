@@ -471,7 +471,7 @@
     components:
     - Actor
   effects:
-  - !type:GhostKick
+  - !type:GhostKickEffect
     reason: admin-smite-ghostkick-reason
 
 - type: adminVerb

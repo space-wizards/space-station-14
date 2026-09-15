@@ -1,8 +1,8 @@
 using System.Numerics;
 using Content.Server.Physics.Components;
 using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Effects.Smite;
 using Content.Shared.Movement.Components;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Spawners;
 
@@ -40,23 +40,4 @@ public sealed partial class HomingRodEntityEffectSystem : EntityEffectSystem<Met
         if (TryComp<TimedDespawnComponent>(rod, out var despawn))
             despawn.Lifetime = offset.Length() / speed * 3;
     }
-}
-
-/// <inheritdoc cref="EntityEffect"/>
-public sealed partial class HomingRod : EntityEffectBase<HomingRod>
-{
-    [DataField(required: true)]
-    public EntProtoId Prototype;
-
-    [DataField(required: true)]
-    public float Distance;
-
-    [DataField(required: true)]
-    public float Speed;
-
-    /// <summary>
-    /// Use the target's current sprint speed plus a small offset, falling back to Speed if unavailable.
-    /// </summary>
-    [DataField]
-    public bool MatchTargetSprintSpeed;
 }

@@ -1,5 +1,6 @@
 using Content.Server.Silicons.Laws;
 using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Effects.Smite;
 using Content.Shared.Silicons.Laws.Components;
 
 namespace Content.Server.EntityEffects.Effects.Smite;
@@ -19,6 +20,3 @@ public sealed partial class SiliconLawBoundEntityEffectSystem : EntityEffectSyst
         _siliconLaws.NotifyLawsChanged(entity);
     }
 }
-
-/// <inheritdoc cref="EntityEffect"/>
-public sealed partial class SiliconLawBound : EntityEffectBase<SiliconLawBound>;

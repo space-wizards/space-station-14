@@ -1,4 +1,5 @@
 using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Effects.Smite;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
@@ -40,6 +41,3 @@ public sealed partial class PinballEntityEffectSystem : EntityEffectSystem<Physi
         _physics.SetAngularDamping(entity, entity.Comp, 0f);
     }
 }
-
-/// <inheritdoc cref="EntityEffect"/>
-public sealed partial class Pinball : EntityEffectBase<Pinball>;

@@ -1,4 +1,5 @@
 using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Effects;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.EntityEffects.Effects;
@@ -20,11 +21,4 @@ public sealed partial class AddUserInterfacesEntityEffectSystem : EntityEffectSy
             _ui.SetUi((entity.Owner, userInterface), key, data);
         }
     }
-}
-
-/// <inheritdoc cref="EntityEffect"/>
-public sealed partial class AddUserInterfaces : EntityEffectBase<AddUserInterfaces>
-{
-    [DataField(required: true)]
-    public Dictionary<Enum, InterfaceData> Interfaces = new();
 }

@@ -1,7 +1,7 @@
 using Content.Server.Mind;
 using Content.Server.Roles;
 using Content.Shared.EntityEffects;
-using Robust.Shared.Prototypes;
+using Content.Shared.EntityEffects.Effects;
 
 namespace Content.Server.EntityEffects.Effects;
 
@@ -28,11 +28,4 @@ public sealed partial class AddMindRoleEntityEffectSystem : EntityEffectSystem<M
 
         _role.MindAddRole(mindId, rolePrototype, mind);
     }
-}
-
-/// <inheritdoc cref="EntityEffect"/>
-public sealed partial class AddMindRole : EntityEffectBase<AddMindRole>
-{
-    [DataField(required: true)]
-    public EntProtoId Role;
 }

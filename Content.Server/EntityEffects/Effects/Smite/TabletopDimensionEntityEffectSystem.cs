@@ -1,7 +1,7 @@
 using Content.Server.Tabletop;
 using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Effects.Smite;
 using Content.Shared.Tabletop.Components;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.EntityEffects.Effects.Smite;
 
@@ -23,11 +23,4 @@ public sealed partial class TabletopDimensionEntityEffectSystem : EntityEffectSy
         _transform.SetMapCoordinates(entity, session.Position);
         _transform.SetWorldRotationNoLerp((entity.Owner, xform), Angle.Zero);
     }
-}
-
-/// <inheritdoc cref="EntityEffect"/>
-public sealed partial class TabletopDimension : EntityEffectBase<TabletopDimension>
-{
-    [DataField(required: true)]
-    public EntProtoId<TabletopGameComponent> Prototype;
 }
