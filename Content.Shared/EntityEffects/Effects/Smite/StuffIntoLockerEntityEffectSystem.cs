@@ -1,10 +1,8 @@
-using Content.Server.Storage.EntitySystems;
-using Content.Shared.EntityEffects;
-using Content.Shared.EntityEffects.Effects.Smite;
 using Content.Shared.Storage.Components;
+using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Tools.Systems;
 
-namespace Content.Server.EntityEffects.Effects.Smite;
+namespace Content.Shared.EntityEffects.Effects.Smite;
 
 /// <summary>
 /// Spawns a locker, attempts to insert this entity, and welds it shut.
@@ -12,12 +10,13 @@ namespace Content.Server.EntityEffects.Effects.Smite;
 /// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
 public sealed partial class StuffIntoLockerEntityEffectSystem : EntityEffectSystem<MetaDataComponent, StuffIntoLocker>
 {
-    [Dependency] private EntityStorageSystem _entityStorage = default!;
+    [Dependency] private SharedEntityStorageSystem _entityStorage = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private WeldableSystem _weldable = default!;
 
     protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<StuffIntoLocker> args)
     {
-        var locker = Spawn(args.Effect.Prototype, Transform(entity).Coordinates);
+        var locker = EntityManager.PredictedSpawn(args.Effect.Prototype, _transform.GetMapCoordinates(entity));
 
         if (TryComp<EntityStorageComponent>(locker, out var storage))
         {

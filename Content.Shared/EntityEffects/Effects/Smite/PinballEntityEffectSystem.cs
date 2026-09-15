@@ -1,11 +1,10 @@
-using Content.Shared.EntityEffects;
-using Content.Shared.EntityEffects.Effects.Smite;
+using Content.Shared.Random.Helpers;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
-namespace Content.Server.EntityEffects.Effects.Smite;
+namespace Content.Shared.EntityEffects.Effects.Smite;
 
 /// <summary>
 /// Turns this entity into a spinning, bouncing dynamic physics body.
@@ -15,7 +14,7 @@ public sealed partial class PinballEntityEffectSystem : EntityEffectSystem<Physi
 {
     [Dependency] private FixtureSystem _fixtures = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
-    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
     protected override void Effect(Entity<PhysicsComponent> entity, ref EntityEffectEvent<Pinball> args)
@@ -35,7 +34,8 @@ public sealed partial class PinballEntityEffectSystem : EntityEffectSystem<Physi
         }
 
         _fixtures.FixtureUpdate(entity, manager: fixtures, body: entity.Comp);
-        _physics.SetLinearVelocity(entity, _random.NextVector2(1.5f, 1.5f), manager: fixtures, body: entity.Comp);
+        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(entity));
+        _physics.SetLinearVelocity(entity, random.NextVector2(1.5f, 1.5f), manager: fixtures, body: entity.Comp);
         _physics.SetAngularVelocity(entity, MathF.PI * 12, manager: fixtures, body: entity.Comp);
         _physics.SetLinearDamping(entity, entity.Comp, 0f);
         _physics.SetAngularDamping(entity, entity.Comp, 0f);

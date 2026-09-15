@@ -1,9 +1,7 @@
-using Content.Server.Movement.Systems;
-using Content.Shared.EntityEffects;
-using Content.Shared.EntityEffects.Effects;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
 
-namespace Content.Server.EntityEffects.Effects;
+namespace Content.Shared.EntityEffects.Effects;
 
 /// <summary>
 /// Multiplies this entity's target eye zoom, ignoring normal zoom limits.
@@ -11,7 +9,7 @@ namespace Content.Server.EntityEffects.Effects;
 /// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
 public sealed partial class ScaleEyeZoomEntityEffectSystem : EntityEffectSystem<MetaDataComponent, ScaleEyeZoom>
 {
-    [Dependency] private ContentEyeSystem _contentEye = default!;
+    [Dependency] private SharedContentEyeSystem _contentEye = default!;
 
     protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<ScaleEyeZoom> args)
     {
