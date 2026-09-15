@@ -8,6 +8,7 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Database;
 using Content.Shared.Effects;
+using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Movement.Components;
@@ -51,6 +52,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     [Dependency] private ItemToggleSystem _itemToggle = default!;
     [Dependency] protected SharedStunSystem StunSystem = default!;
     [Dependency] private MeleeBatteryHitsLeftSystem _meleeBattery = default!;
+    [Dependency] private DamageExamineSystem _damageExamine = default!;
 
     [Dependency] private EntityQuery<StaminaComponent> _stamQuery = default!;
 
@@ -267,6 +269,12 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     private static void OnGetPowerCost(Entity<StaminaDamageOnHitRequiresChargeComponent> ent, ref ModifyHitPowerCostEvent args)
     {
         args.Cost += ent.Comp.RequiredCharge;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnExamine<T>(Entity<T> ent, ref DamageExamineEvent args)  where T : StaminaDamageComponent
+    {
+        args.Message.AddMarkupOrThrow(Loc.GetString("damage-examine-type", ("$amount", ent.Comp.Damage)));
     }
 
     private void OnCollide(EntityUid uid, StaminaDamageOnCollideComponent component, EntityUid target)
