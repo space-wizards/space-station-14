@@ -4,6 +4,7 @@ using Content.Server.Storage.Components;
 using Content.Shared.Cargo;
 using Content.Shared.Database;
 using Content.Shared.EntityTable;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
 using Robust.Shared.Audio.Systems;
@@ -60,11 +61,12 @@ public sealed partial class SpawnTableOnUseSystem : EntitySystem
             QueueDel(ent);
         }
 
+        HandsComponent? hands = null;
         foreach (var id in spawns)
         {
             var spawned = SpawnNextToOrDrop(id, args.User); // Entity may be in nullspace, so base it off the user.
             _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(args.User):user} used {ToPrettyString(ent):spawner} which spawned {ToPrettyString(spawned)}");
-            _hands.TryPickupAnyHand(args.User, spawned);
+            _hands.TryPickupAnyHand(args.User, spawned, handsComp: hands);
         }
 
         args.Handled = true;
