@@ -88,6 +88,10 @@ public record struct ClickEntityLinkEvent(EntityUid Target, bool Pure)
     public bool Handled;
 }
 
+/// <summary>
+/// Net Message that is sent when a client clicks a link in the chat box.
+/// </summary>
+/// <param name="target">Target entity of the text link</param>
 [Serializable, NetSerializable]
 public sealed class ChatLinkClickedRequestEvent(NetEntity target) : EntityEventArgs
 {

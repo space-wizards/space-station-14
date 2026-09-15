@@ -12,7 +12,6 @@ using Robust.Client.ResourceManagement;
 
 namespace Content.Client.UserInterface.RichText;
 
-
 /// <summary>
 /// Markup tag handler for <c>[textlink="LinkText"]</c> nodes. Renders a link
 /// <see cref="Label"/> in rich text, covering two types:
