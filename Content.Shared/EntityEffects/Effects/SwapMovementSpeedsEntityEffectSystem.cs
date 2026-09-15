@@ -6,15 +6,14 @@ namespace Content.Shared.EntityEffects.Effects;
 /// Swaps this entity's base walk and sprint speeds, preserving their modifiers.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
-public sealed partial class SwapMovementSpeedsEntityEffectSystem : EntityEffectSystem<MetaDataComponent, SwapMovementSpeeds>
+public sealed partial class SwapMovementSpeedsEntityEffectSystem : EntityEffectSystem<MovementSpeedModifierComponent, SwapMovementSpeeds>
 {
-    protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<SwapMovementSpeeds> args)
+    protected override void Effect(Entity<MovementSpeedModifierComponent> entity, ref EntityEffectEvent<SwapMovementSpeeds> args)
     {
-        var movementSpeed = EnsureComp<MovementSpeedModifierComponent>(entity);
-        (movementSpeed.BaseSprintSpeed, movementSpeed.BaseWalkSpeed) =
-            (movementSpeed.BaseWalkSpeed, movementSpeed.BaseSprintSpeed);
+        (entity.Comp.BaseSprintSpeed, entity.Comp.BaseWalkSpeed) =
+            (entity.Comp.BaseWalkSpeed, entity.Comp.BaseSprintSpeed);
 
-        Dirty(entity, movementSpeed);
+        Dirty(entity);
     }
 }
 
