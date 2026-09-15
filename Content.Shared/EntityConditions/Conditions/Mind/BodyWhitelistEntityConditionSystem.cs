@@ -10,15 +10,14 @@ public sealed partial class BodyWhitelistEntityConditionSystem : EntitySystem
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     [SubscribeLocalEvent]
-    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<BodyWhitelistCondition> args)
     {
-        if (args.Handled || args.Condition is not BodyWhitelistCondition condition)
-            return;
         args.Handled = true;
+
         if (entity.Comp.OwnedEntity is not { } body)
             return;
 
-        args.Value = _whitelist.CheckBoth(body, condition.Blacklist, condition.Whitelist) ? 1 : 0;
+        args.Value = _whitelist.CheckBoth(body, args.Condition.Blacklist, args.Condition.Whitelist) ? 1 : 0;
     }
 }
 

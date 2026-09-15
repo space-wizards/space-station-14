@@ -10,13 +10,11 @@ namespace Content.Shared.EntityConditions.Conditions.Body;
 public sealed partial class InternalsOnEntityConditionSystem : EntitySystem
 {
     [SubscribeLocalEvent]
-    private void Condition(Entity<InternalsComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<InternalsComponent> entity, ref ConditionEvaluationEvent<InternalsCondition> args)
     {
-        if (args.Handled || args.Condition is not InternalsCondition condition)
-            return;
         args.Handled = true;
 
-        args.Value= entity.Comp.GasTankEntity != null?1:0;
+        args.Value = entity.Comp.GasTankEntity != null ? 1 : 0;
     }
 }
 

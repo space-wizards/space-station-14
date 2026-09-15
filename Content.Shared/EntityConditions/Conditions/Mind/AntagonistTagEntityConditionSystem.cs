@@ -11,20 +11,18 @@ public sealed partial class AntagonistTagEntityConditionSystem : EntitySystem
     [Dependency] private SharedRoleSystem _roleSystem = default!;
 
     [SubscribeLocalEvent]
-    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<AntagonistTagCondition> args)
     {
-        if (args.Handled || args.Condition is not AntagonistTagCondition condition)
-            return;
         args.Handled = true;
-        var conditionTags = condition.Tags;
+        var conditionTags = args.Condition.Tags;
 
         if (!_roleSystem.TryGetAllAntagTags(entity.AsNullable(), out var antagTags))
         {
-            args.Value = condition is { AllowNonAntags: true, Inverted: false } ? 1 : 0;
+            args.Value = args.Condition is { AllowNonAntags: true, Inverted: false } ? 1 : 0;
             return;
         }
 
-        args.Value = (float)antagTags.Intersect(conditionTags).Count() / (float)condition.Tags.Count;
+        args.Value = (float)antagTags.Intersect(conditionTags).Count() / (float)args.Condition.Tags.Count;
     }
 }
 

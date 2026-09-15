@@ -19,10 +19,8 @@ public sealed partial class NearbyTilesPercentConditionSystem :EntitySystem
     [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
     [SubscribeLocalEvent]
-    private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent<NearbyTilesPercentCondition> args)
     {
-        if (args.Handled || args.Condition is not NearbyTilesPercentCondition condition)
-            return;
         args.Handled = true;
 
         if (!TryComp<MapGridComponent>(entity.Comp.GridUid, out var grid))
@@ -35,12 +33,12 @@ public sealed partial class NearbyTilesPercentConditionSystem :EntitySystem
 
         var tiles = _map.GetTilesIntersecting(entity.Comp.GridUid.Value,
             grid,
-            new Circle(_transform.GetWorldPosition(entity.Comp), condition.Range));
+            new Circle(_transform.GetWorldPosition(entity.Comp), args.Condition.Range));
 
         foreach (var tile in tiles)
         {
             // Only consider collidable anchored (for reasons some subfloor stuff has physics but non-collidable)
-            if (condition.IgnoreAnchored)
+            if (args.Condition.IgnoreAnchored)
             {
                 var gridEnum = _map.GetAnchoredEntities(entity.Comp.GridUid.Value, grid, tile.GridIndices);
                 var found = false;
@@ -61,7 +59,7 @@ public sealed partial class NearbyTilesPercentConditionSystem :EntitySystem
 
             tileCount++;
 
-            if (!condition.Tiles.Contains(_tileDef[tile.Tile.TypeId].ID))
+            if (!args.Condition.Tiles.Contains(_tileDef[tile.Tile.TypeId].ID))
                 continue;
 
             matchingTileCount++;

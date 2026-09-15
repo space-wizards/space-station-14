@@ -14,10 +14,8 @@ public sealed partial class DifferentDepartmentConditionSystem : EntitySystem
     [Dependency] private SharedJobSystem _jobSystem = default!;
 
     [SubscribeLocalEvent]
-    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<DifferentDepartmentCondition> args)
     {
-        if (args.Handled || args.Condition is not DifferentDepartmentCondition condition)
-            return;
         args.Handled = true;
         args.Value = !IsInvalid(entity, args.SourceEntity) ? 1 : 0;
     }

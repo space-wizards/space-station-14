@@ -9,10 +9,8 @@ namespace Content.Shared.EntityConditions.Conditions.Generic;
 public sealed partial class OnMapGridConditionSystem : EntitySystem
 {
     [SubscribeLocalEvent]
-    private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent<OnMapGridCondition> args)
     {
-        if (args.Handled || args.Condition is not OnMapGridCondition condition)
-            return;
         args.Handled = true;
         args.Value = (entity.Comp.GridUid == entity.Comp.MapUid && entity.Comp.MapUid != null) ? 1 : 0;
     }

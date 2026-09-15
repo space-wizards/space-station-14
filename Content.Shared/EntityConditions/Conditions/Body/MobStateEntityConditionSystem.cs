@@ -11,13 +11,11 @@ namespace Content.Shared.EntityConditions.Conditions.Body;
 public sealed partial class MobStateEntityConditionSystem : EntitySystem
 {
     [SubscribeLocalEvent]
-    private void Condition(Entity<MobStateComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<MobStateComponent> entity, ref ConditionEvaluationEvent<MobStateCondition> args)
     {
-        if (args.Handled || args.Condition is not MobStateCondition condition)
-            return;
         args.Handled = true;
 
-        args.Value = entity.Comp.CurrentState == condition.Mobstate ? 1 : 0;
+        args.Value = entity.Comp.CurrentState == args.Condition.Mobstate ? 1 : 0;
     }
 }
 

@@ -15,34 +15,32 @@ public sealed partial class NearbyAccessConditionSystem : EntitySystem
     [Dependency] private AccessReaderSystem _reader = default!;
 
     [SubscribeLocalEvent]
-   private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent args)
-   {
-       if (args.Handled || args.Condition is not NearbyAccessCondition condition)
-           return;
-
-       args.Handled = true;
+    private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent<NearbyAccessCondition> args)
+    {
+        args.Handled = true;
 
         if (entity.Comp.MapUid == null)
         {
             return;
         }
+
         var count = 0f;
 
-        foreach (var (ent, comp) in _lookup.GetEntitiesInRange<AccessReaderComponent>(entity.Comp.Coordinates, condition.Range))
+        foreach (var (ent, comp) in _lookup.GetEntitiesInRange<AccessReaderComponent>(entity.Comp.Coordinates,
+                     args.Condition.Range))
         {
-            if (!_reader.AreAccessTagsAllowed(condition.Access, comp) ||
-                condition.Anchored && !Transform(ent).Anchored)
+            if (!_reader.AreAccessTagsAllowed(args.Condition.Access, comp) ||
+                args.Condition.Anchored && !Transform(ent).Anchored)
                 continue;
             count++;
         }
 
-        args.Value = count/condition.Count;
+        args.Value = count / args.Condition.Count;
     }
 }
 
-
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class NearbyAccessCondition : EntityConditionBase<NearbyAccessCondition> , IWithThreshold
+public sealed partial class NearbyAccessCondition : EntityConditionBase<NearbyAccessCondition>, IWithThreshold
 {
     // This exists because of door electronics contained inside doors.
     /// <summary>

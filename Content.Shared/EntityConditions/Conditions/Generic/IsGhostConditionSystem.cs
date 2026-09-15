@@ -10,10 +10,8 @@ namespace Content.Shared.EntityConditions.Conditions.Generic;
 public sealed partial class IsGhostConditionSystem : EntitySystem
 {
     [SubscribeLocalEvent]
-    private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent<IsGhostCondition> args)
     {
-        if (args.Handled || args.Condition is not IsGhostCondition)
-            return;
         args.Handled = true;
 
         args.Value = HasComp<GhostComponent>(entity) ? 1 : 0;

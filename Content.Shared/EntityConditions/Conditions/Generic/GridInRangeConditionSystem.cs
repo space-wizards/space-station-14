@@ -15,11 +15,8 @@ public sealed partial class GridInRangeConditionSystem : EntitySystem
     [Dependency] private SharedMapSystem _map = default!;
 
     [SubscribeLocalEvent]
-    private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent<GridInRangeCondition> args)
     {
-        if (args.Handled || args.Condition is not GridInRangeCondition condition)
-            return;
-
         args.Handled = true;
 
         if (entity.Comp.GridUid != null)
@@ -29,7 +26,7 @@ public sealed partial class GridInRangeConditionSystem : EntitySystem
         }
 
         var worldPos = _transform.GetWorldPosition(entity.Comp);
-        var gridRange = new Vector2(condition.Range, condition.Range);
+        var gridRange = new Vector2(args.Condition.Range, args.Condition.Range);
 
         List<Entity<MapGridComponent>> grids = [];
 

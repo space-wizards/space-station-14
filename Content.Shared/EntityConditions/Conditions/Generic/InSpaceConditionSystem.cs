@@ -9,10 +9,8 @@ namespace Content.Shared.EntityConditions.Conditions.Generic;
 public sealed partial class InSpaceConditionSystem : EntitySystem
 {
     [SubscribeLocalEvent]
-    private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent<InSpaceCondition> args)
     {
-        if (args.Handled || args.Condition is not InSpaceCondition)
-            return;
         args.Handled = true;
         args.Value = entity.Comp.GridUid == null ? 1 : 0;
     }

@@ -16,12 +16,9 @@ public sealed partial class TemperatureEntityConditionSystem : EntitySystem
     /// <param name="entity"></param>
     /// <param name="args"></param>
     [SubscribeLocalEvent]
-    private void Condition(Entity<TemperatureComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<TemperatureComponent> entity, ref ConditionEvaluationEvent<TemperatureCondition> args)
     {
-        if (args.Handled || args.Condition is not TemperatureCondition condition)
-            return;
-
-        args.Value = (entity.Comp.Temperature - condition.Min) / (condition.Max - condition.Min);
+        args.Value = (entity.Comp.Temperature - args.Condition.Min) / (args.Condition.Max - args.Condition.Min);
 
         args.Handled = true;
     }
@@ -32,12 +29,9 @@ public sealed partial class TemperatureEntityConditionSystem : EntitySystem
     /// <param name="entity"></param>
     /// <param name="args"></param>
     [SubscribeLocalEvent]
-    private void Condition(Entity<SolutionComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<SolutionComponent> entity, ref ConditionEvaluationEvent<TemperatureCondition> args)
     {
-        if (args.Condition is not TemperatureCondition condition)
-            return;
-
-        args.Value = (entity.Comp.Solution.Temperature - condition.Min) / (condition.Max - condition.Min);
+        args.Value = (entity.Comp.Solution.Temperature - args.Condition.Min) / (args.Condition.Max - args.Condition.Min);
 
         args.Handled = true;
     }

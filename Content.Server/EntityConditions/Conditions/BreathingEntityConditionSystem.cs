@@ -13,10 +13,8 @@ public sealed partial class IsBreathingEntityConditionSystem : EntitySystem
 {
     [Dependency] private RespiratorSystem _respirator = default!;
 
-    private void Condition(Entity<RespiratorComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<RespiratorComponent> entity, ref ConditionEvaluationEvent<BreathingCondition> args)
     {
-        if (args.Handled || args.Condition is not BreathingCondition condition)
-            return;
         args.Handled = true;
         args.Value = _respirator.IsBreathing(entity.AsNullable()) ? 1 : 0;
     }

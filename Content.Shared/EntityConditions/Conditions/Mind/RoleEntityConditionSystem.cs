@@ -19,27 +19,21 @@ public sealed partial class MindContainerRoleEntityConditionSystem : EntitySyste
     [Dependency] private SharedRoleSystem _role = default!;
 
     [SubscribeLocalEvent]
-    private void Condition(Entity<MindContainerComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<MindContainerComponent> entity, ref ConditionEvaluationEvent<RoleCondition> args)
     {
-        if (args.Condition is not RoleCondition condition)
-            return;
-
         args.Handled = true;
 
         if (!TryComp<MindComponent>(entity.Comp.Mind, out var mind))
             return;
 
-        args.Value = _role.MindHasRole((entity.Comp.Mind.Value, mind), condition.Whitelist) ? 1 : 0;
+        args.Value = _role.MindHasRole((entity.Comp.Mind.Value, mind), args.Condition.Whitelist) ? 1 : 0;
     }
 
     [SubscribeLocalEvent]
-    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<RoleCondition> args)
     {
-        if (args.Handled || args.Condition is not RoleCondition condition)
-            return;
         args.Handled = true;
-
-        args.Value = _role.MindHasRole(entity, condition.Whitelist)?1:0;
+        args.Value = _role.MindHasRole(entity, args.Condition.Whitelist)?1:0;
     }
 
 }

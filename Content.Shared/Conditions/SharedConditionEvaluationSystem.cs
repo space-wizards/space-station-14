@@ -21,14 +21,15 @@ public sealed partial class SharedConditionEvaluationSystem : EntitySystem
     {
         //make the event using our cached building function.
         var evt = condition.WrapInEvent(entityUid,sourceEntity);
+        if (evt == null)
+            return 0f;
         // Use event to evaluate condition on entity.
-        RaiseLocalEvent(entityUid, ref evt);
+        RaiseLocalEvent(entityUid, evt);
         // Verity that the event was actually handled
         if (!evt.Handled)
         {
             //Add logging here?
         }
-
         //return response.
         return evt.Value;
     }

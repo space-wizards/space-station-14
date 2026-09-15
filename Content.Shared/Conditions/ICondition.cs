@@ -9,7 +9,7 @@ public interface ICondition
     /// <summary>
     /// Used to help the evaluation system to raise an event to evaluate this condition.
     /// </summary>
-    ConditionEvaluationEvent WrapInEvent(EntityUid entity, EntityUid? sourceEntity);
+    ConditionEvaluationEvent? WrapInEvent(EntityUid entity, EntityUid? sourceEntity);
 }
 
 /// <summary>
@@ -22,7 +22,10 @@ public interface ICondition<TCondition> : ICondition where TCondition : IConditi
     /// <summary>
     /// Creates a strongly typed evaluation event, avoiding the need for reflection to create a matching event for listeners to use.
     /// </summary>
-    ConditionEvaluationEvent ICondition.WrapInEvent(EntityUid entity, EntityUid? sourceEntity) => new ConditionEvaluationEvent<TCondition>(this,entity,sourceEntity);
+    ConditionEvaluationEvent? ICondition.WrapInEvent(EntityUid entity, EntityUid? sourceEntity)
+    {
+        if (this is TCondition condition)
+            return new ConditionEvaluationEvent<TCondition>(condition, entity, sourceEntity);
+        return null;
+    }
 }
-
-

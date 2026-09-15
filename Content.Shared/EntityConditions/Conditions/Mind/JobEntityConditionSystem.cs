@@ -17,23 +17,19 @@ public sealed partial class MindContainerJobEntityConditionSystem : EntitySystem
     [Dependency] private SharedJobSystem _job = default!;
 
     [SubscribeLocalEvent]
-    private void Condition(Entity<MindContainerComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<MindContainerComponent> entity, ref ConditionEvaluationEvent<JobCondition> args)
     {
-        if (args.Handled || args.Condition is not JobCondition condition)
-            return;
         args.Handled = true;
 
-        args.Value = condition.Jobs.Count(job=>_job.MindHasJobWithId(entity.Comp.Mind,job));
+        args.Value = args.Condition.Jobs.Count(job=>_job.MindHasJobWithId(entity.Comp.Mind,job));
     }
 
     [SubscribeLocalEvent]
-    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<JobCondition> args)
     {
-        if (args.Handled || args.Condition is not JobCondition condition)
-            return;
         args.Handled = true;
 
-        args.Value = (float)condition.Jobs.Count(job=>_job.MindHasJobWithId(entity,job)) / (float)condition.Jobs.Length;
+        args.Value = (float)args.Condition.Jobs.Count(job=>_job.MindHasJobWithId(entity,job)) / (float)args.Condition.Jobs.Length;
     }
 }
 

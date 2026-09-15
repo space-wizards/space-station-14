@@ -14,12 +14,10 @@ public sealed partial class HasAllTagsEntityConditionSystem : EntitySystem
     [Dependency] private TagSystem _tag = default!;
 
     [SubscribeLocalEvent]
-    private void Condition(Entity<TagComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<TagComponent> entity, ref ConditionEvaluationEvent<AllTagsCondition> args)
     {
-        if (args.Handled || args.Condition is not AllTagsCondition condition)
-            return;
         args.Handled = true;
-        args.Value = condition.Tags.Count(tag=>_tag.HasTag(entity.Comp, tag));
+        args.Value = args.Condition.Tags.Count(tag=>_tag.HasTag(entity.Comp, tag));
     }
 }
 

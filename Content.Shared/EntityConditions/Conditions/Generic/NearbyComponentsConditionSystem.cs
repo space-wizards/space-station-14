@@ -13,23 +13,21 @@ public sealed partial class NearbyComponentsConditionSystem : EntitySystem
     [Dependency] private EntityLookupSystem _lookup = default!;
 
     [SubscribeLocalEvent]
-   private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent args)
+   private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent<NearbyComponentsCondition> args)
    {
-       if (args.Handled || args.Condition is not NearbyComponentsCondition condition)
-           return;
        args.Handled = true;
 
         var worldPos = _transform.GetWorldPosition(entity.Comp);
         var count = 0.0f;
 
-        var box = Box2.CenteredAround(worldPos, new Vector2(condition.Range));
+        var box = Box2.CenteredAround(worldPos, new Vector2(args.Condition.Range));
 
         foreach (var ent in _lookup.GetEntitiesIntersecting(entity.Comp.MapID, box))
         {
-            if (condition.Anchored && !Transform(ent).Anchored)
+            if (args.Condition.Anchored && !Transform(ent).Anchored)
                 continue;
 
-            foreach (var compType in condition.Components.Values)
+            foreach (var compType in args.Condition.Components.Values)
             {
                 if (!HasComp(ent, compType.Component.GetType()))
                     continue;
@@ -37,7 +35,7 @@ public sealed partial class NearbyComponentsConditionSystem : EntitySystem
             }
         }
 
-        args.Value = count / condition.Count;
+        args.Value = count / args.Condition.Count;
    }
 }
 

@@ -17,17 +17,14 @@ public sealed partial class SatiationEntityConditionSystem : EntitySystem
 
     [SubscribeLocalEvent]
    private void Condition(Entity<SatiationComponent> entity,
-        ref ConditionEvaluationEvent args)
+        ref ConditionEvaluationEvent<SatiationCondition> args)
    {
-       if (args.Handled || args.Condition is not SatiationCondition condition)
-           return;
-
        args.Handled = true;
 
-        if (_satiation.GetValueOrNull(entity, condition.SatiationType) is not { } satiation)
+        if (_satiation.GetValueOrNull(entity, args.Condition.SatiationType) is not { } satiation)
             return;
 
-        args.Value = (satiation - condition.Min) / (condition.Max - condition.Min);
+        args.Value = (satiation - args.Condition.Min) / (args.Condition.Max - args.Condition.Min);
 
     }
 }

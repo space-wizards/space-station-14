@@ -41,14 +41,12 @@ public sealed partial class MetabolizerTypeCondition : EntityConditionBase<Metab
 public sealed partial class MetabolizerTypeEntityConditionSystem : EntitySystem
 {
     [SubscribeLocalEvent]
-    private void Condition(Entity<MetabolizerComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<MetabolizerComponent> entity, ref ConditionEvaluationEvent<MetabolizerTypeCondition> args)
     {
-        if (args.Handled || args.Condition is not MetabolizerTypeCondition condition)
-            return;
         args.Handled = true;
         if (entity.Comp.MetabolizerTypes == null)
             return;
 
-        args.Value = (float)entity.Comp.MetabolizerTypes.Intersect(condition.Type).Count()/(float)condition.Type.Length;
+        args.Value = (float)entity.Comp.MetabolizerTypes.Intersect(args.Condition.Type).Count()/(float)args.Condition.Type.Length;
     }
 }

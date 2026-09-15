@@ -10,10 +10,8 @@ public sealed partial class AntagonistEntityConditionSystem : EntitySystem
     [Dependency] private SharedRoleSystem _roleSystem = default!;
 
     [SubscribeLocalEvent]
-    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<AntagonistCondition> args)
     {
-        if (args.Handled || args.Condition is not AntagonistCondition)
-            return;
         args.Handled = true;
 
         args.Value = _roleSystem.MindIsAntagonist(entity) ? 1 : 0;

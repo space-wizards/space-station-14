@@ -26,11 +26,9 @@ public sealed partial class NestedConditionSystem : EntitySystem
     [Dependency] private SharedEntityConditionsSystem _conditions = default!;
 
     [SubscribeLocalEvent]
-    private void Condition(Entity<TransformComponent> ent, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<TransformComponent> ent, ref ConditionEvaluationEvent<NestedCondition> args)
     {
-        if (args.Handled || args.Condition is not NestedCondition condition)
-            return;
         args.Handled = true;
-        args.Value = _conditions.TryCondition(ent, condition.Proto)&&!condition.Inverted?1:0;
+        args.Value = _conditions.TryCondition(ent, args.Condition.Proto)!=!args.Condition.Inverted?1:0;
     }
 }

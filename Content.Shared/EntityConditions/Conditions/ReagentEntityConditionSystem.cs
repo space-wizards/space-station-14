@@ -12,16 +12,13 @@ namespace Content.Shared.EntityConditions.Conditions;
 public sealed partial class ReagentEntityConditionSystem : EntitySystem
 {
     [SubscribeLocalEvent]
-    private void Condition(Entity<SolutionComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<SolutionComponent> entity, ref ConditionEvaluationEvent<ReagentCondition> args)
     {
-        if (args.Handled || args.Condition is not ReagentCondition condition)
-            return;
-
         var soln = entity.Comp.Solution;
 
-        var quant = soln.GetTotalPrototypeQuantity(condition.Reagent);
+        var quant = soln.GetTotalPrototypeQuantity(args.Condition.Reagent);
 
-        args.Value = ((quant - condition.Min) / (condition.Max - condition.Min)).Float();
+        args.Value = ((quant - args.Condition.Min) / (args.Condition.Max - args.Condition.Min)).Float();
 
         args.Handled = true;
     }

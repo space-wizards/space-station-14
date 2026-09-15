@@ -92,10 +92,15 @@ public abstract partial class EntityCondition : ICondition, IWithInverted
     /// </summary>
     public abstract string EntityConditionGuidebookText(IPrototypeManager prototype);
 
-    public abstract ConditionEvaluationEvent WrapInEvent(EntityUid entity, EntityUid? sourceEntity);
+    public abstract ConditionEvaluationEvent? WrapInEvent(EntityUid entity, EntityUid? sourceEntity);
 }
 
-public abstract partial class EntityConditionBase<TCondition> : EntityCondition, ICondition<TCondition>
+public abstract partial class EntityConditionBase<TCondition> : EntityCondition where TCondition: EntityCondition
 {
-    public override ConditionEvaluationEvent WrapInEvent(EntityUid entity, EntityUid? sourceEntity) => new ConditionEvaluationEvent<TCondition>(this,entity,sourceEntity);
+    public override ConditionEvaluationEvent? WrapInEvent(EntityUid entity, EntityUid? sourceEntity)
+    {
+        if (this is not TCondition condition)
+            return null;
+        return new ConditionEvaluationEvent<TCondition>(condition, entity, sourceEntity);
+    }
 }

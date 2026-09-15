@@ -13,13 +13,12 @@ public sealed partial class HasAnyTagEntityConditionSystem : EntitySystem
 {
     [Dependency] private TagSystem _tag = default!;
 
-    private void Condition(Entity<TagComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<TagComponent> entity, ref ConditionEvaluationEvent<AnyTagCondition> args)
     {
-        if (args.Handled || args.Condition is not AnyTagCondition condition)
-            return;
         args.Handled = true;
         //count matches to scale, as default condition if value != 0 -> satisfy == true.
-        args.Value = condition.Tags.Count(tag=>_tag.HasTag(entity.Comp, tag));
+        args.Value = args.Condition.Tags.Count(tag => _tag.HasTag(entity.Comp, tag)) /
+                     (float)args.Condition.Tags.Length;
     }
 }
 

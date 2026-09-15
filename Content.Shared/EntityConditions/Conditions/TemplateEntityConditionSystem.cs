@@ -9,10 +9,8 @@ namespace Content.Shared.EntityConditions.Conditions;
 public sealed partial class TemplateEntityConditionSystem : EntitySystem
 {
     [SubscribeLocalEvent]
-    private void Condition(Entity<MetaDataComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<MetaDataComponent> entity, ref ConditionEvaluationEvent<TemplateCondition> args)
     {
-        if (args.Handled || args.Condition is not TemplateCondition)
-            return;
         // Condition goes here.
         args.Handled = true;
     }

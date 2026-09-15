@@ -18,10 +18,8 @@ public sealed partial class ObjectiveTargetEntityConditionSystem : EntitySystem
     [Dependency] private EntityQuery<TargetObjectiveComponent> _targetQuery;
 
     [SubscribeLocalEvent]
-    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<ObjectiveTargetCondition> args)
     {
-        if (args.Handled || args.Condition is not ObjectiveTargetCondition condition)
-            return;
         args.Handled = true;
 
         if (!TryComp<MindComponent>(args.SourceEntity, out var mind))
@@ -34,7 +32,7 @@ public sealed partial class ObjectiveTargetEntityConditionSystem : EntitySystem
                 continue;
 
             // remove the mind if this objective is blacklisted
-            if (!_whitelist.IsWhitelistPassOrNull(condition.Whitelist, objective))
+            if (!_whitelist.IsWhitelistPassOrNull(args.Condition.Whitelist, objective))
                 continue;
 
             args.Value++;

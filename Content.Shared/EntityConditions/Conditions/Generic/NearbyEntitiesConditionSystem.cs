@@ -14,10 +14,8 @@ public sealed partial class NearbyEntitiesConditionSystem : EntitySystem
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     [SubscribeLocalEvent]
-    private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent<NearbyEntitiesCondition> args)
     {
-        if (args.Handled || args.Condition is not NearbyEntitiesCondition condition)
-            return;
         args.Handled = true;
 
         if (entity.Comp.MapUid == null)
@@ -27,15 +25,15 @@ public sealed partial class NearbyEntitiesConditionSystem : EntitySystem
 
         var worldPos = _transform.GetWorldPosition(entity.Comp);
 
-        foreach (var ent in _lookup.GetEntitiesInRange(entity.Comp.MapID, worldPos, condition.Range))
+        foreach (var ent in _lookup.GetEntitiesInRange(entity.Comp.MapID, worldPos, args.Condition.Range))
         {
-            if (_whitelist.IsWhitelistFail(condition.Whitelist, ent))
+            if (_whitelist.IsWhitelistFail(args.Condition.Whitelist, ent))
                 continue;
 
             args.Value++;
         }
 
-        args.Value /= condition.Count;
+        args.Value /= args.Condition.Count;
 
     }
 }

@@ -12,17 +12,15 @@ public sealed partial class ObjectiveEntityConditionSystem : EntitySystem
 {
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
-    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent args)
+    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<ObjectiveCondition> args)
     {
-        if (args.Handled || args.Condition is not ObjectiveCondition condition)
-            return;
 
         args.Handled = true;
 
         foreach (var obj in entity.Comp.Objectives)
         {
             // mind has a blacklisted objective, remove it from the pool
-            if (!_whitelist.CheckBoth(obj, condition.Blacklist, condition.Whitelist))
+            if (!_whitelist.CheckBoth(obj, args.Condition.Blacklist, args.Condition.Whitelist))
                 continue;
             //count hits, as to get a scale.
             args.Value++;
