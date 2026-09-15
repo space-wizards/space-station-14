@@ -49,7 +49,7 @@
 - type: entity
   parent: ClothingNeckMedalBase
   id: ClothingNeckEngineermedal
-  name: engineer medal
+  name: engineering medal
   description: Given to crewmates who perform exceptional work in the Engineering department.
   components:
   - type: Sprite
