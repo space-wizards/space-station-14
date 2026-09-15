@@ -1,6 +1,6 @@
 - type: accessLevel
   id: Cafeteria # intended for roles that do food-service work; e.g Bartender, Botanist, Chef
-  name: id-card-access-level-bar
+  name: id-card-access-level-cafeteria
 
 - type: accessLevel
   id: Bar
