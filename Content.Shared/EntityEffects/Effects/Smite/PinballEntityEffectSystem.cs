@@ -41,3 +41,6 @@ public sealed partial class PinballEntityEffectSystem : EntityEffectSystem<Physi
         _physics.SetAngularDamping(entity, entity.Comp, 0f);
     }
 }
+
+/// <inheritdoc cref="EntityEffect"/>
+public sealed partial class Pinball : EntityEffectBase<Pinball>;

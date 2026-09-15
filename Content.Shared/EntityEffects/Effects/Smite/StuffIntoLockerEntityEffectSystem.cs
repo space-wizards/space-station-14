@@ -1,5 +1,6 @@
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Tools.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Smite;
 
@@ -23,4 +24,11 @@ public sealed partial class StuffIntoLockerEntityEffectSystem : EntityEffectSyst
 
         _weldable.SetWeldedState(locker, true);
     }
+}
+
+/// <inheritdoc cref="EntityEffect"/>
+public sealed partial class StuffIntoLocker : EntityEffectBase<StuffIntoLocker>
+{
+    [DataField(required: true)]
+    public EntProtoId Prototype;
 }
