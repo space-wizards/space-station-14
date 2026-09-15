@@ -51,10 +51,7 @@ public sealed partial class ThermoregulatorSystem : SharedThermoregulatorSystem
 
     private void UpdateThermoregulator(Entity<ThermoregulatorComponent> ent)
     {
-        var newState = ent.Comp.Powered ? GetActiveMode(ent.Comp, ent.Comp.ActiveMode) : ThermoregulatorActiveMode.Idle;
-        var energyToSetpoint = newState == ThermoregulatorActiveMode.Idle
-            ? 0f
-            : HeatContainerHelpers.ConductHeatToTempQuery(ref ent.Comp, ent.Comp.Setpoint);
+        var energyToSetpoint = HeatContainerHelpers.ConductHeatToTempQuery(ref ent.Comp, ent.Comp.Setpoint);
         var energy = Math.Clamp(energyToSetpoint, ent.Comp.MinEnergy, ent.Comp.MaxEnergy);
 
         var originalTemperature = ent.Comp.Temperature;
@@ -65,7 +62,9 @@ public sealed partial class ThermoregulatorSystem : SharedThermoregulatorSystem
         var ev = new ThermoregulatorUpdatedEvent(ent.Comp);
         RaiseLocalEvent(ent, ref ev);
 
-        SetActiveMode(ent, ent.Comp.Powered ? GetActiveMode(ent.Comp, newState) : ThermoregulatorActiveMode.Idle);
+        SetActiveMode(ent, ent.Comp.Powered
+            ? GetActiveMode(ent.Comp, ent.Comp.ActiveMode)
+            : ThermoregulatorActiveMode.Idle);
 
         if (!MathHelper.CloseTo(originalTemperature, ent.Comp.Temperature))
             DirtyField(ent.AsNullable(), nameof(ThermoregulatorComponent.Temperature));
