@@ -45,7 +45,7 @@ public sealed partial class RemoveOrgansEntityEffectSystem : EntityEffectSystem<
         foreach (var organ in selected)
         {
             if (delete)
-                QueueDel(organ);
+                PredictedQueueDel(organ);
             else
                 _transform.AttachToGridOrMap(organ);
         }
