@@ -36,6 +36,7 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
     private readonly SharedMapSystem _maps;
     private readonly SharedTransformSystem _xformSys;
     private readonly ShaderInstance _shader;
+    private readonly ShaderInstance _unshader;
 
     private readonly Texture _noiseTexture;
     private readonly Texture _heatGradientTexture;
@@ -70,6 +71,7 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
         _heatGradientTexture = _resourceCache.GetTexture("/Textures/Effects/HeatBlur/soft_circle.png");
 
         _shader = _proto.Index(HeatOverlayShader).InstanceUnique();
+        _unshader = _proto.Index(UnshadedShader).Instance();
         _configManager.OnValueChanged(CCVars.DisableHeatDistortion, SetReducedMotion, invokeImmediately: true);
     }
 
@@ -99,18 +101,9 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
                 name: nameof(GasTileHeatBlurOverlaySystem));
         }
 
-        if (res.HeatBlurTarget?.Texture.Size != target.Size)
-        {
-            res.HeatBlurTarget?.Dispose();
-            res.HeatBlurTarget = _clyde.CreateRenderTarget(
-                target.Size,
-                new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb),
-                name: $"{nameof(GasTileHeatBlurOverlaySystem)}-blur");
-        }
-
         var overlayQuery = _entManager.GetEntityQuery<GasTileOverlayComponent>();
 
-        args.WorldHandle.UseShader(_proto.Index(UnshadedShader).Instance());
+        args.WorldHandle.UseShader(_unshader);
 
         var mapId = args.MapId;
         var worldAABB = args.WorldAABB;
@@ -138,16 +131,6 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
 
                     if (!Matrix3x2.Invert(gridEntToViewportLocal, out var viewportLocalToGridEnt))
                         continue;
-
-                    var uvToUi = Matrix3Helpers.CreateScale(res.HeatTarget.Size.X, -res.HeatTarget.Size.Y);
-                    var uvToGridEnt = uvToUi * viewportLocalToGridEnt;
-
-                    // Because we want the actual distortion to be calculated based on the grid coordinates*, we need
-                    // to pass a matrix transformation to go from the viewport coordinates to grid coordinates.
-                    //   * (why? because otherwise the effect would shimmer like crazy as you moved around, think
-                    //      moving a piece of warped glass above a picture instead of placing the warped glass on the
-                    //      paper and moving them together)
-                    _shader.SetParameter("grid_ent_from_viewport_local", uvToGridEnt);
 
                     // Draw commands (like DrawRect) will be using grid coordinates from here
                     worldHandle.SetTransform(gridEntToViewportLocal);
@@ -210,7 +193,7 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
     {
         var res = _resources.GetForViewport(args.Viewport, static _ => new CachedResources());
 
-        if (ScreenTexture is null || res.HeatTarget is null || res.HeatBlurTarget is null)
+        if (ScreenTexture is null || res.HeatTarget is null)
             return;
 
         _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
@@ -253,12 +236,10 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
     internal sealed class CachedResources : IDisposable
     {
         public IRenderTexture? HeatTarget;
-        public IRenderTexture? HeatBlurTarget;
 
         public void Dispose()
         {
             HeatTarget?.Dispose();
-            HeatBlurTarget?.Dispose();
         }
     }
 }
