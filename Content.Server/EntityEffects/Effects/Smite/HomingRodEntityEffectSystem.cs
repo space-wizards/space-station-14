@@ -14,6 +14,7 @@ namespace Content.Server.EntityEffects.Effects.Smite;
 /// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
 public sealed partial class HomingRodEntityEffectSystem : EntityEffectSystem<MetaDataComponent, HomingRod>
 {
+    [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
     protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<HomingRod> args)
@@ -23,9 +24,10 @@ public sealed partial class HomingRodEntityEffectSystem : EntityEffectSystem<Met
             TryComp<MovementSpeedModifierComponent>(entity, out var movement))
             speed = movement.CurrentSprintSpeed + 0.001f;
 
-        IRobustRandom random = new RobustRandom();
-        random.SetSeed(entity.Owner.Id);
-        var offset = random.NextAngle().RotateVec(new Vector2(args.Effect.Distance, 0));
+        if (speed <= 0)
+            return;
+
+        var offset = _random.NextAngle().RotateVec(new Vector2(args.Effect.Distance, 0));
         var spawnCoords = _transform.GetMapCoordinates(entity).Offset(offset);
         var rod = Spawn(args.Effect.Prototype, spawnCoords);
 
