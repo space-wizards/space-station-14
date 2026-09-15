@@ -89,8 +89,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
         // If there is no Vacuum after checking all visible tiles, we can bail early
         var anyVacuum = false;
 
-        // We're rendering in the context of the vacuum target texture, which will encode data as to where and how strong
-        // the vacuum effect will be
+        // We're rendering in the context of the vacuum target texture, which will encode data as to where vacuum effect will be
         args.WorldHandle.RenderInRenderTarget(res.VacuumTarget,
             () =>
             {

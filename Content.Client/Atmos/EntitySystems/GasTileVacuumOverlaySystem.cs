@@ -1,6 +1,8 @@
 using Content.Client.Atmos.Overlays;
+using Content.Shared.CCVar;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
+using Robust.Shared.Configuration;
 
 namespace Content.Client.Atmos.EntitySystems;
 
@@ -11,12 +13,15 @@ namespace Content.Client.Atmos.EntitySystems;
 public sealed partial class GasTileVacuumOverlaySystem : EntitySystem
 {
     [Dependency] private IOverlayManager _overlayMan = default!;
+    [Dependency] private IConfigurationManager _cfgManager = default!;
 
     private GasTileVacuumOverlay _gasTileVacuumOverlay = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+        if (!_cfgManager.GetCVar(CCVars.VacuumOverlay))
+            return;
 
         _gasTileVacuumOverlay = new GasTileVacuumOverlay();
         _overlayMan.AddOverlay(_gasTileVacuumOverlay);
