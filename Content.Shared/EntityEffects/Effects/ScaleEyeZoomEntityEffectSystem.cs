@@ -7,14 +7,13 @@ namespace Content.Shared.EntityEffects.Effects;
 /// Multiplies this entity's target eye zoom, ignoring normal zoom limits.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
-public sealed partial class ScaleEyeZoomEntityEffectSystem : EntityEffectSystem<MetaDataComponent, ScaleEyeZoom>
+public sealed partial class ScaleEyeZoomEntityEffectSystem : EntityEffectSystem<ContentEyeComponent, ScaleEyeZoom>
 {
     [Dependency] private SharedContentEyeSystem _contentEye = default!;
 
-    protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<ScaleEyeZoom> args)
+    protected override void Effect(Entity<ContentEyeComponent> entity, ref EntityEffectEvent<ScaleEyeZoom> args)
     {
-        var eye = EnsureComp<ContentEyeComponent>(entity);
-        _contentEye.SetZoom(entity, eye.TargetZoom * args.Effect.Factor, true, eye);
+        _contentEye.SetZoom(entity, entity.Comp.TargetZoom * args.Effect.Factor, true, entity.Comp);
     }
 }
 
