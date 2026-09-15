@@ -45,8 +45,7 @@ public sealed partial class ServerThermoregulatorSystem : ThermoRegulatorSystem
     {
         ent.Comp.Powered = args.Powered;
         UpdateEnergyLimits(ent.Comp);
-        if (!args.Powered)
-            SetActiveMode(ent, ThermoregulatorActiveMode.Idle);
+        UpdateActiveMode(ent);
     }
 
     private void UpdateThermoregulator(Entity<ThermoregulatorComponent> ent)
@@ -62,9 +61,7 @@ public sealed partial class ServerThermoregulatorSystem : ThermoRegulatorSystem
         var ev = new ThermoregulatorUpdatedEvent(ent.Comp);
         RaiseLocalEvent(ent, ref ev);
 
-        SetActiveMode(ent, ent.Comp.Powered
-            ? GetActiveMode(ent.Comp, ent.Comp.ActiveMode)
-            : ThermoregulatorActiveMode.Idle);
+        UpdateActiveMode(ent);
 
         if (!MathHelper.CloseTo(originalTemperature, ent.Comp.Temperature))
             DirtyField(ent.AsNullable(), nameof(ThermoregulatorComponent.Temperature));
@@ -103,9 +100,22 @@ public sealed partial class ServerThermoregulatorSystem : ThermoRegulatorSystem
         RaiseLocalEvent(ent, ref ev);
     }
 
+    protected override void OnSetpointChanged(Entity<ThermoregulatorComponent> ent)
+    {
+        UpdateActiveMode(ent);
+    }
+
     protected override void OnModeChanged(Entity<ThermoregulatorComponent> ent)
     {
         UpdateEnergyLimits(ent.Comp);
+        UpdateActiveMode(ent);
+    }
+
+    private void UpdateActiveMode(Entity<ThermoregulatorComponent> ent)
+    {
+        SetActiveMode(ent, ent.Comp.Powered
+            ? GetActiveMode(ent.Comp, ent.Comp.ActiveMode)
+            : ThermoregulatorActiveMode.Idle);
     }
 
     private static void UpdateEnergyLimits(ThermoregulatorComponent comp)
