@@ -85,10 +85,12 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
 
         // Initialize controls used to configure various system parameters.
         // Append any additional configuration controls here.
-        _instrumentMenu.AddConfigurationControl(
+        var channels = _instrumentMenu.AddConfigurationControl(
             _loc.GetString("instruments-component-menu-channels-label"),
-            _channelsControl,
-            verticalExpand: true);
+            _channelsControl);
+        channels.Panel.VerticalExpand = true;
+        channels.VerticalExpand = true;
+
         _instrumentMenu.AddConfigurationControl(
             _loc.GetString("instruments-component-midi-file-collection-label"),
             _midiCollectionUtilsControl);
