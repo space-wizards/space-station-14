@@ -355,7 +355,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
-    access: [["Service"]]
+    access: [["Cafeteria"]]
   - type: PointLight
     radius: 1.5
     energy: 3.0

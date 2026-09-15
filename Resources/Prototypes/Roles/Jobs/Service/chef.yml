@@ -13,6 +13,7 @@
   access:
   - Service
   - Maintenance
+  - Cafeteria
   - Kitchen
   extendedAccess:
   - Hydroponics

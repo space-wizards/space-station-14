@@ -1,4 +1,8 @@
 - type: accessLevel
+  id: Cafeteria # intended for roles that do food-service work; e.g Bartender, Botanist, Chef
+  name: id-card-access-level-bar
+
+- type: accessLevel
   id: Bar
   name: id-card-access-level-bar
 
@@ -34,6 +38,7 @@
   id: Service
   tags:
   - HeadOfPersonnel
+  - Cafeteria
   - Bar
   - Kitchen
   - Hydroponics

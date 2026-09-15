@@ -42,21 +42,21 @@
 
 - type: entity
   parent: WindoorServiceLocked
+  id: WindoorCafeteriaLocked
+  suffix: Cafeteria, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCafeteria ]
+
+- type: entity
+  parent: WindoorServiceLocked
   id: WindoorBarLocked
   suffix: Bar, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsBar ]
-
-- type: entity
-  parent: WindoorServiceLocked
-  id: WindoorBarKitchenLocked
-  suffix: Bar&Kitchen, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsBarKitchen ]
 
 - type: entity
   parent: WindoorSecurityLocked

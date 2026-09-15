@@ -47,6 +47,7 @@ public sealed partial class IdCardConsoleComponent : Component
         "Bar",
         "Brig",
         "Detective",
+        "Cafeteria",
         "Captain",
         "Cargo",
         "Chapel",

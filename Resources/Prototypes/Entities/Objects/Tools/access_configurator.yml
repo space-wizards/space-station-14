@@ -23,7 +23,7 @@
       - Atmospherics
       - Bar
       - Brig
-      - Detective
+      - Cafeteria
       - Captain
       - Cargo
       - Chapel
@@ -31,6 +31,7 @@
       - ChiefEngineer
       - ChiefMedicalOfficer
       - Command
+      - Detective
       - Engineering
       - External
       - HeadOfPersonnel
@@ -95,7 +96,7 @@
     - BasicSilicon
     - Borg
     - Brig
-    - Detective
+    - Cafeteria
     - Captain
     - Cargo
     - Chapel
@@ -104,6 +105,7 @@
     - ChiefMedicalOfficer
     - Command
     - Cryogenics
+    - Detective
     - EmergencyShuttleRepealAll
     - Engineering
     - External

@@ -25,6 +25,7 @@
   access:
   - Command
   - HeadOfPersonnel
+  - Cafeteria
   - Bar
   - Service
   - Maintenance

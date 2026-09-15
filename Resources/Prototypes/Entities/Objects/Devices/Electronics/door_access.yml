@@ -26,19 +26,19 @@
 # Service
 - type: entity
   parent: DoorElectronics
+  id: DoorElectronicsCafeteria
+  suffix: Cafeteria, Locked
+  components:
+  - type: AccessReader
+    access: [["Cafeteria"]]
+
+- type: entity
+  parent: DoorElectronics
   id: DoorElectronicsBar
   suffix: Bar, Locked
   components:
   - type: AccessReader
     access: [["Bar"]]
-
-- type: entity
-  parent: DoorElectronics
-  id: DoorElectronicsBarKitchen
-  suffix: Bar, Locked
-  components:
-  - type: AccessReader
-    access: [["Bar"], ["Kitchen"]]
 
 - type: entity
   parent: DoorElectronics

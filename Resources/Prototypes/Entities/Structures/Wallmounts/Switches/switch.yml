@@ -417,6 +417,14 @@
 
 - type: entity
   parent: LockableButton
+  id: LockableButtonCafeteria
+  suffix: Cafeteria
+  components:
+  - type: AccessReader
+    access: [["Cafeteria"]]
+
+- type: entity
+  parent: LockableButton
   id: LockableButtonBar
   suffix: Bar
   components:

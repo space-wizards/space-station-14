@@ -1135,3 +1135,10 @@ DrinkWaterJug: JugWater
 
 #2026-09-05
 AsimovCircuitBoard: CrewsimovCircuitBoard
+
+# 2026-09-15
+AirlockBarKitchenGlassLocked: AirlockCafeteriaGlassLocked
+AirlockBarKitchenLocked: AirlockCafeteriaLocked
+AirlockMaintBarKitchenLocked: AirlockMaintCafeteriaLocked
+DoorElectronicsBarKitchen: DoorElectronicsCafeteria
+WindoorBarKitchenLocked: WindoorCafeteriaLocked

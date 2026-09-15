@@ -29,6 +29,7 @@ id-card-access-level-cargo = Cargo
 id-card-access-level-salvage = Salvage
 
 id-card-access-level-bar = Bar
+id-card-access-level-cafeteria = Cafeteria
 id-card-access-level-kitchen = Kitchen
 id-card-access-level-hydroponics = Hydroponics
 id-card-access-level-service = Service

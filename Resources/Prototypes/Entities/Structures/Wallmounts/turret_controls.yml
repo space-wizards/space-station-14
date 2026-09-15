@@ -112,7 +112,7 @@
     - BasicSilicon
     - Borg
     - Brig
-    - Detective
+    - Cafeteria
     - Captain
     - Cargo
     - Chapel
@@ -121,6 +121,7 @@
     - ChiefMedicalOfficer
     - Command
     - Cryogenics
+    - Detective
     - Engineering
     - External
     - HeadOfPersonnel

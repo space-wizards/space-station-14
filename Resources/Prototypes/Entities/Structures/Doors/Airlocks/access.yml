@@ -59,6 +59,15 @@
 
 - type: entity
   parent: AirlockServiceLocked
+  id: AirlockCafeteriaLocked
+  suffix: Cafeteria, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCafeteria ]
+
+- type: entity
+  parent: AirlockServiceLocked
   id: AirlockKitchenLocked
   suffix: Kitchen, Locked
   components:
@@ -74,15 +83,6 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsBar ]
-
-- type: entity
-  parent: AirlockServiceLocked
-  id: AirlockBarKitchenLocked
-  suffix: Bar&Kitchen, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsBarKitchen ]
 
 - type: entity
   parent: AirlockHydroponics
@@ -492,22 +492,21 @@
 
 - type: entity
   parent: AirlockServiceGlassLocked
+  id: AirlockCafeteriaGlassLocked
+  suffix: Cafeteria, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCafeteria ]
+
+- type: entity
+  parent: AirlockServiceGlassLocked
   id: AirlockBarGlassLocked
   suffix: Bar, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsBar ]
-
-- type: entity
-  parent: AirlockServiceGlassLocked
-  id: AirlockBarKitchenGlassLocked
-  suffix: Bar&Kitchen, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsBarKitchen ]
-
 
 - type: entity
   parent: AirlockExternalGlass
@@ -936,15 +935,15 @@
     sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
-  parent: AirlockBarLocked
-  id: AirlockMaintBarLocked
+  parent: AirlockCafeteriaLocked
+  id: AirlockMaintCafeteriaLocked
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
-  parent: AirlockBarKitchenLocked
-  id: AirlockMaintBarKitchenLocked
+  parent: AirlockBarLocked
+  id: AirlockMaintBarLocked
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
