@@ -1,9 +1,7 @@
-using Content.Server.Mind;
-using Content.Server.Roles;
-using Content.Shared.EntityEffects;
-using Content.Shared.EntityEffects.Effects;
+using Content.Shared.Mind;
+using Content.Shared.Roles;
 
-namespace Content.Server.EntityEffects.Effects;
+namespace Content.Shared.EntityEffects.Effects;
 
 /// <summary>
 /// Adds a role to this entity's mind unless that role prototype is already present.
@@ -11,8 +9,8 @@ namespace Content.Server.EntityEffects.Effects;
 /// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
 public sealed partial class AddMindRoleEntityEffectSystem : EntityEffectSystem<MetaDataComponent, AddMindRole>
 {
-    [Dependency] private MindSystem _mind = default!;
-    [Dependency] private RoleSystem _role = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private SharedRoleSystem _role = default!;
 
     protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<AddMindRole> args)
     {

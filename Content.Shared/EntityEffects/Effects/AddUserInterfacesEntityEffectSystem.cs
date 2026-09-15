@@ -1,8 +1,4 @@
-using Content.Shared.EntityEffects;
-using Content.Shared.EntityEffects.Effects;
-using Robust.Server.GameObjects;
-
-namespace Content.Server.EntityEffects.Effects;
+namespace Content.Shared.EntityEffects.Effects;
 
 /// <summary>
 /// Adds or replaces the specified user interfaces without removing other interfaces.
@@ -10,7 +6,7 @@ namespace Content.Server.EntityEffects.Effects;
 /// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
 public sealed partial class AddUserInterfacesEntityEffectSystem : EntityEffectSystem<MetaDataComponent, AddUserInterfaces>
 {
-    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
 
     protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<AddUserInterfaces> args)
     {
