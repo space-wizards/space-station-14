@@ -29,6 +29,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
 
     private readonly SharedMapSystem _maps;
     private readonly SharedTransformSystem _xformSys;
+    private readonly ShaderInstance _unshader;
     private readonly ShaderInstance _shader;
 
     private List<Entity<MapGridComponent>> _intersectingGrids = new();
@@ -45,6 +46,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
         _maps = _entManager.System<SharedMapSystem>();
         _xformSys = _entManager.System<SharedTransformSystem>();
 
+        _unshader = _proto.Index(UnshadedShader).Instance();
         _shader = _proto.Index(VacuumOverlayShader).InstanceUnique();
         _configManager.OnValueChanged(CCVars.VacuumOverlayIntensity, SetVacuumOverlayIntensity, invokeImmediately: true);
     }
@@ -76,7 +78,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
 
         var overlayQuery = _entManager.GetEntityQuery<GasTileOverlayComponent>();
 
-        args.WorldHandle.UseShader(_proto.Index(UnshadedShader).Instance());
+        args.WorldHandle.UseShader(_unshader);
 
         var mapId = args.MapId;
         var worldAABB = args.WorldAABB;
