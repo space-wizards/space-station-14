@@ -1,0 +1,15 @@
+uniform sampler2D SCREEN_TEXTURE;
+uniform highp float instensit;
+
+void fragment()
+{
+    highp bool isOn = texture2D(TEXTURE, UV).r > 0.1;
+
+    if (isOn) {
+        highp vec4 screen_pixel = texture2D(SCREEN_TEXTURE, UV);
+        highp float gray = dot(screen_pixel.rgb, vec3(0.299, 0.587, 0.114));
+        screen_pixel.rgb = mix(screen_pixel.rgb, vec3(gray), instensit);
+        COLOR = screen_pixel;
+    }
+
+}

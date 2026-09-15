@@ -44,6 +44,12 @@ public sealed partial class CCVars
         CVarDef.Create("accessibility.disable_flash_effect", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
+    ///     Decreases the intensity of the vacuum overlay 1.0f is maximum.
+    /// </summary>
+    public static readonly CVarDef<float> VacuumOverlayIntensity =
+        CVarDef.Create("accessibility.vacuum_overlay_intensity", 1.0f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
     ///     Decreases motion on the heat distortion shader.
     /// </summary>
     public static readonly CVarDef<bool> DisableHeatDistortion =
