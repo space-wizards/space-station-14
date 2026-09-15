@@ -3,7 +3,6 @@ using Content.Server.Temperature.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature.HeatContainer;
 using Robust.Shared.Prototypes;
 
@@ -19,7 +18,7 @@ public sealed partial class ThermobathSystem : SharedThermobathSystem
     [SubscribeLocalEvent]
     private void OnThermoregulatorUpdated(Entity<ThermobathComponent> ent, ref ThermoregulatorUpdatedEvent args)
     {
-        var thermoregulator = Comp<ThermoregulatorComponent>(ent);
+        var thermoregulator = args.Thermoregulator;
         if (TryGetSolutionFromContainer(ent, out var soln, out var solution) && solution.Volume > 0)
         {
             // TODO: Replace this with HeatContainerQuerySystem once #45554 is merged.

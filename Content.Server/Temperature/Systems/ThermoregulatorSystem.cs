@@ -58,7 +58,7 @@ public sealed partial class ThermoregulatorSystem : SharedThermoregulatorSystem
 
         ent.Comp.NextUpdate += ent.Comp.UpdateInterval;
 
-        var ev = new ThermoregulatorUpdatedEvent();
+        var ev = new ThermoregulatorUpdatedEvent(ent.Comp);
         RaiseLocalEvent(ent, ref ev);
 
         if (!MathHelper.CloseTo(originalTemperature, ent.Comp.Temperature))
@@ -126,4 +126,4 @@ public sealed partial class ThermoregulatorSystem : SharedThermoregulatorSystem
 }
 
 [ByRefEvent]
-public readonly record struct ThermoregulatorUpdatedEvent;
+public readonly record struct ThermoregulatorUpdatedEvent(ThermoregulatorComponent Thermoregulator);
