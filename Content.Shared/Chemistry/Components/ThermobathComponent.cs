@@ -8,7 +8,7 @@ namespace Content.Shared.Chemistry.Components;
 /// <summary>
 /// Marks a device that heats or cools solutions in an inserted container.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedThermobathSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(ThermobathSystem))]
 public sealed partial class ThermobathComponent : Component
 {
     public const string BeakerSlotId = "beakerSlot";

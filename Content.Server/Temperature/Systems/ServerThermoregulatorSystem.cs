@@ -7,7 +7,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Temperature.Systems;
 
-public sealed partial class ThermoregulatorSystem : SharedThermoregulatorSystem
+public sealed partial class ServerThermoregulatorSystem : ThermoRegulatorSystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;

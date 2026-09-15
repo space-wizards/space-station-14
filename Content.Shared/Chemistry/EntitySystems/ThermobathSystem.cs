@@ -13,13 +13,13 @@ namespace Content.Shared.Chemistry.EntitySystems;
 /// <summary>
 /// Handles thermobath UI messages and appearance data.
 /// </summary>
-public abstract partial class SharedThermobathSystem : EntitySystem
+public abstract partial class ThermobathSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;
-    [Dependency] private SharedThermoregulatorSystem _thermoregulator = default!;
+    [Dependency] private ThermoRegulatorSystem _thermoregulator = default!;
 
     [SubscribeLocalEvent]
     private void OnStartup(Entity<ThermobathComponent> ent, ref ComponentStartup args)

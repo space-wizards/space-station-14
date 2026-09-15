@@ -5,7 +5,7 @@ using Content.Shared.Temperature.Components;
 namespace Content.Client.Chemistry.EntitySystems;
 
 /// <inheritdoc/>
-public sealed partial class ThermobathSystem : SharedThermobathSystem
+public sealed partial class ClientThermobathSystem : ThermobathSystem
 {
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
 

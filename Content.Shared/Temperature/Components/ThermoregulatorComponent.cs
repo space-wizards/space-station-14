@@ -10,7 +10,7 @@ namespace Content.Shared.Temperature.Components;
 /// <summary>
 /// Generic temperature controller with a configurable setpoint.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedThermoregulatorSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(ThermoRegulatorSystem))]
 [AutoGenerateComponentState(true, fieldDeltas: true), AutoGenerateComponentPause]
 public sealed partial class ThermoregulatorComponent : Component, IHeatContainer
 {

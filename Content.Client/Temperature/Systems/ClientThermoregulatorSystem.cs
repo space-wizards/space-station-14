@@ -2,4 +2,4 @@ using Content.Shared.Temperature.Systems;
 
 namespace Content.Client.Temperature.Systems;
 
-public sealed partial class ThermoregulatorSystem : SharedThermoregulatorSystem;
+public sealed partial class ClientThermoregulatorSystem : ThermoRegulatorSystem;

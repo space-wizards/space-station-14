@@ -8,24 +8,22 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
-public sealed partial class ThermobathSystem : SharedThermobathSystem
+public sealed partial class ServerThermobathSystem : ThermobathSystem
 {
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private ThermoregulatorSystem _thermoregulator = default!;
+    [Dependency] private ServerThermoregulatorSystem _thermoregulator = default!;
 
     [SubscribeLocalEvent]
     private void OnThermoregulatorUpdated(Entity<ThermobathComponent> ent, ref ThermoregulatorUpdatedEvent args)
     {
         var thermoregulator = args.Thermoregulator;
-        if (TryGetSolutionFromContainer(ent, out var soln, out var solution) && solution.Volume > 0)
-        {
-            // TODO: Replace this with HeatContainerQuerySystem once #45554 is merged.
-            var solutionHeatContainer = new HeatContainer(solution.GetHeatCapacity(_proto), solution.Temperature);
-            _thermoregulator.ConductHeatWith((ent, thermoregulator), ref solutionHeatContainer);
-            _solutionContainer.SetTemperature(soln.Value, solutionHeatContainer.Temperature);
-        }
+        if (!TryGetSolutionFromContainer(ent, out var soln, out var solution) || solution.Volume <= 0) return;
+        // TODO: Replace this with HeatContainerQuerySystem once #45554 is merged.
+        var solutionHeatContainer = new HeatContainer(solution.GetHeatCapacity(_proto), solution.Temperature);
+        _thermoregulator.ConductHeatWith((ent, thermoregulator), ref solutionHeatContainer);
+        _solutionContainer.SetTemperature(soln.Value, solutionHeatContainer.Temperature);
     }
 
     [SubscribeLocalEvent]

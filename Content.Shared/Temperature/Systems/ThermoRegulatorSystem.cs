@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 namespace Content.Shared.Temperature.Systems;
 
 /// <inheritdoc cref="ThermoregulatorComponent"/>
-public abstract partial class SharedThermoregulatorSystem : EntitySystem
+public abstract partial class ThermoRegulatorSystem : EntitySystem
 {
     [PublicAPI]
     public void SetSetpoint(Entity<ThermoregulatorComponent?> ent, float setpoint)
