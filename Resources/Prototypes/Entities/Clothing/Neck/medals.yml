@@ -15,7 +15,7 @@
   parent: ClothingNeckMedalBase
   id: ClothingNeckBronzeheart
   name: bronzeheart medal
-  description: Given to crewmates for exemplary bravery in the face of danger.
+  description: Given to crewmates who show exemplary bravery in the face of danger.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Medals/bronzeheart.rsi
