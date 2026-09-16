@@ -163,6 +163,8 @@
   - type: BlindnessStatusEffect
   - type: ExaminableStatusEffect
     messageId: status-effect-examine-temporary-blindness
+  - type: StatusEffectAlert
+    alert: BlindAlert
 
 # Obstructs the target's vision with the flash overlay.
 - type: entity

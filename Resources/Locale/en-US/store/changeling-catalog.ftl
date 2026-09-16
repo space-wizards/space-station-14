@@ -14,7 +14,7 @@ changeling-catalog-sting-dna-name = Extract DNA
 changeling-catalog-sting-dna-desc = Learn to utilize your stinger to absorb the identity of unsuspecting victims. Does not grant DNA to your store or count as devouring.
 
 changeling-catalog-blind-sting-name = Blind Sting
-changeling-catalog-blind-sting-desc = Causes temporary blindness in the target. Good to escape or initiate a fight. Can be used on self.
+changeling-catalog-blind-sting-desc = Causes eye damage and temporary blindness in the target. Good to escape or initiate a fight. Can be used on self.
 
 changeling-catalog-cryogenic-sting-name = Cryogenic Sting
 changeling-catalog-cryogenic-sting-desc = Causes movement slowdown in the target. Perfect for keeping prey from running away. Can be used on self.
