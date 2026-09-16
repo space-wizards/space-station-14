@@ -204,7 +204,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
                 continue;
 
             ent.Comp.MarkingsDisplacement.TryGetValue(proto.BodyPart, out var displacement);
-            ApplyMarkingLayers(target, proto, marking, index, displacement);
+            ApplyMarkingLayers(target, proto, marking, index, bodypartLayer, displacement);
             applied.Add(marking);
         }
 
@@ -218,11 +218,13 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
     /// <param name="proto">The marking prototype to add.</param>
     /// <param name="marking">The marking's colors and configuration data.</param>
     /// <param name="index">The index of the body part layer on the entity's sprite stack.</param>
+    /// <param name="bodypartLayer">The sprite layer of the base body part.</param>
     /// <param name="displacement">Optional displacement data associated with this entity.</param>
     private void ApplyMarkingLayers(Entity<SpriteComponent?> target,
         MarkingPrototype proto,
         Marking marking,
         int index,
+        SpriteComponent.Layer bodypartLayer,
         DisplacementData? displacement)
     {
         if (!Resolve(target, ref target.Comp))
@@ -237,7 +239,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
             var layerIndex = index + i + 1;
 
             // Add the marking layer to the target entity, if the target doesn't have it yet
-            if (!_sprite.LayerMapTryGet(target, layerId, out _, false))
+            if (!_sprite.LayerMapTryGet(target, layerId, out var spriteLayer, false))
             {
                 // Having three separate indices and a magic +1 is cursed, but:
                 // - index refers to the index of the organ the marking is applied to
@@ -246,9 +248,10 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
                 //   an additional offset to ensure that the order of the base sprites is correct
                 //   after inserting a displacement layer
                 // - The +1 ensures that markings render on top of the base organ
-                var spriteLayer = _sprite.AddLayer(target, sprite, layerIndex + numDisplacements);
+                spriteLayer = _sprite.AddLayer(target, sprite, layerIndex + numDisplacements);
                 _sprite.LayerMapSet(target, layerId, spriteLayer);
                 _sprite.LayerSetSprite(target, layerId, sprite);
+                _sprite.LayerSetVisible(target, spriteLayer, bodypartLayer.Visible);
             }
 
             // Set layer color
@@ -256,7 +259,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
                 ? marking.MarkingColors[i]
                 : Color.White;
 
-            _sprite.LayerSetColor(target, layerId, layerColor);
+            _sprite.LayerSetColor(target, spriteLayer, layerColor);
 
             // Apply displacements
             if (displacement != null && proto.CanBeDisplaced)
@@ -371,7 +374,8 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
         {
             var layerId = layer.GetLayerID(proto.ID);
 
-            if (_sprite.LayerMapTryGet(body, layerId, out var index, logMissing: true))
+            // Not logging, can be called on initialization before the body's sprites are setup!
+            if (_sprite.LayerMapTryGet(body, layerId, out var index, logMissing: false))
                 _sprite.LayerSetVisible(body, index, visible);
         }
     }
