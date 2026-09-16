@@ -46,7 +46,7 @@ public sealed partial class CatchableSystem : EntitySystem
         if (!_whitelist.IsWhitelistPassOrNull(ent.Comp.CatcherWhitelist, args.Target))
             return;
 
-        var attemptEv = new CatchAttemptEvent(ent.Owner, ent.Comp.CatchChance);
+        var attemptEv = new CatchAttemptEvent(args.Target, ent.Owner, ent.Comp.CatchChance);
         RaiseLocalEvent(args.Target, ref attemptEv);
 
         if (attemptEv.Cancelled)

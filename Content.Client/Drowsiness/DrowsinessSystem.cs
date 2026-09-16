@@ -18,21 +18,17 @@ public sealed partial class DrowsinessSystem : SharedDrowsinessSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DrowsinessStatusEffectComponent, StatusEffectAppliedEvent>(OnDrowsinessApply);
-        SubscribeLocalEvent<DrowsinessStatusEffectComponent, StatusEffectRemovedEvent>(OnDrowsinessShutdown);
-
-        SubscribeLocalEvent<DrowsinessStatusEffectComponent, StatusEffectRelayedEvent<LocalPlayerAttachedEvent>>(OnStatusEffectPlayerAttached);
-        SubscribeLocalEvent<DrowsinessStatusEffectComponent, StatusEffectRelayedEvent<LocalPlayerDetachedEvent>>(OnStatusEffectPlayerDetached);
-
         _overlay = new();
     }
 
+    [SubscribeLocalEvent]
     private void OnDrowsinessApply(Entity<DrowsinessStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
         if (_player.LocalEntity == args.Target)
             _overlayMan.AddOverlay(_overlay);
     }
 
+    [SubscribeLocalEvent]
     private void OnDrowsinessShutdown(Entity<DrowsinessStatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
     {
         if (_player.LocalEntity != args.Target)
@@ -45,12 +41,14 @@ public sealed partial class DrowsinessSystem : SharedDrowsinessSystem
         }
     }
 
-    private void OnStatusEffectPlayerAttached(Entity<DrowsinessStatusEffectComponent> ent, ref StatusEffectRelayedEvent<LocalPlayerAttachedEvent> args)
+    [SubscribeLocalEvent]
+    private void OnStatusEffectPlayerAttached(Entity<DrowsinessStatusEffectComponent> ent, ref LocalPlayerAttachedEvent args)
     {
         _overlayMan.AddOverlay(_overlay);
     }
 
-    private void OnStatusEffectPlayerDetached(Entity<DrowsinessStatusEffectComponent> ent, ref StatusEffectRelayedEvent<LocalPlayerDetachedEvent> args)
+    [SubscribeLocalEvent]
+    private void OnStatusEffectPlayerDetached(Entity<DrowsinessStatusEffectComponent> ent, ref LocalPlayerDetachedEvent args)
     {
         if (_player.LocalEntity is null)
             return;

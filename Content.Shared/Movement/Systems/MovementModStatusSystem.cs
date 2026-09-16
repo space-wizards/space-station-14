@@ -28,58 +28,47 @@ public sealed partial class MovementModStatusSystem : EntitySystem
     [Dependency] private MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private StatusEffectsSystem _status = default!;
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<MovementModStatusEffectComponent, StatusEffectAppliedEvent>(OnMovementModApplied);
-        SubscribeLocalEvent<MovementModStatusEffectComponent, StatusEffectRemovedEvent>(OnMovementModRemoved);
-        SubscribeLocalEvent<MovementModStatusEffectComponent, StatusEffectRelayedEvent<RefreshMovementSpeedModifiersEvent>>(OnRefreshRelay);
-        SubscribeLocalEvent<FrictionStatusEffectComponent, StatusEffectAppliedEvent>(OnFrictionStatusEffectApplied);
-        SubscribeLocalEvent<FrictionStatusEffectComponent, StatusEffectRemovedEvent>(OnFrictionStatusEffectRemoved);
-        SubscribeLocalEvent<FrictionStatusEffectComponent, StatusEffectRelayedEvent<RefreshFrictionModifiersEvent>>(OnRefreshFrictionStatus);
-        SubscribeLocalEvent<FrictionStatusEffectComponent, StatusEffectRelayedEvent<TileFrictionEvent>>(OnRefreshTileFrictionStatus);
-    }
-
+    [SubscribeLocalEvent]
     private void OnMovementModApplied(Entity<MovementModStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
         _movementSpeedModifier.RefreshMovementSpeedModifiers(args.Target);
     }
 
+    [SubscribeLocalEvent]
     private void OnMovementModRemoved(Entity<MovementModStatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
     {
         TryUpdateMovementStatus(args.Target, (ent, ent), 1f);
     }
 
+    [SubscribeLocalEvent]
     private void OnFrictionStatusEffectApplied(Entity<FrictionStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
         _movementSpeedModifier.RefreshFrictionModifiers(args.Target);
     }
 
+    [SubscribeLocalEvent]
     private void OnFrictionStatusEffectRemoved(Entity<FrictionStatusEffectComponent> entity, ref StatusEffectRemovedEvent args)
     {
         TrySetFrictionStatus(entity!, 1f, args.Target);
     }
 
-    private void OnRefreshRelay(
-        Entity<MovementModStatusEffectComponent> entity,
-        ref StatusEffectRelayedEvent<RefreshMovementSpeedModifiersEvent> args
-    )
+    [SubscribeLocalEvent]
+    private void OnRefreshSpeed(Entity<MovementModStatusEffectComponent> entity, ref RefreshMovementSpeedModifiersEvent args)
     {
-        args.Args.ModifySpeed(entity.Comp.WalkSpeedModifier, entity.Comp.SprintSpeedModifier);
+        args.ModifySpeed(entity.Comp.WalkSpeedModifier, entity.Comp.SprintSpeedModifier);
     }
 
-    private void OnRefreshFrictionStatus(Entity<FrictionStatusEffectComponent> ent, ref StatusEffectRelayedEvent<RefreshFrictionModifiersEvent> args)
+    [SubscribeLocalEvent]
+    private void OnRefreshFrictionStatus(Entity<FrictionStatusEffectComponent> ent, ref RefreshFrictionModifiersEvent args)
     {
-        var ev = args.Args;
-        ev.ModifyFriction(ent.Comp.FrictionModifier);
-        ev.ModifyAcceleration(ent.Comp.AccelerationModifier);
-        args.Args = ev;
+        args.ModifyFriction(ent.Comp.FrictionModifier);
+        args.ModifyAcceleration(ent.Comp.AccelerationModifier);
     }
 
-    private void OnRefreshTileFrictionStatus(Entity<FrictionStatusEffectComponent> ent, ref StatusEffectRelayedEvent<TileFrictionEvent> args)
+    [SubscribeLocalEvent]
+    private void OnRefreshTileFrictionStatus(Entity<FrictionStatusEffectComponent> ent, ref TileFrictionEvent args)
     {
-        var ev = args.Args;
-        ev.Modifier *= ent.Comp.FrictionModifier;
-        args.Args = ev;
+        args.Modifier *= ent.Comp.FrictionModifier;
     }
 
     /// <summary>

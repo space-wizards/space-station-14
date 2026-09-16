@@ -1,19 +1,13 @@
-﻿using Content.Shared.Damage.Components;
-using Content.Shared.StatusEffectNew;
+using Content.Shared.Damage.Components;
 
 namespace Content.Shared.Damage.Systems;
 
+// TODO: can probably kill this, ArmorComponent exists
 public sealed partial class DamageModifierStatusEffectSystem : EntitySystem
 {
-    public override void Initialize()
+    [SubscribeLocalEvent]
+    private void OnDamageModifyStatus(Entity<DamageModifierStatusEffectComponent> status, ref DamageModifyEvent args)
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<DamageModifierStatusEffectComponent, StatusEffectRelayedEvent<DamageModifyEvent>>(OnDamageModifyStatus);
-    }
-
-    private void OnDamageModifyStatus(Entity<DamageModifierStatusEffectComponent> status, ref StatusEffectRelayedEvent<DamageModifyEvent> args)
-    {
-        args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, status.Comp.Modifiers);
+        args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, status.Comp.Modifiers);
     }
 }

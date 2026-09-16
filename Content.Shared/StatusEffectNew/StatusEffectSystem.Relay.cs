@@ -88,20 +88,15 @@ public sealed partial class StatusEffectsSystem
 
     public void RelayEvent<T>(Entity<StatusEffectContainerComponent> statusEffect, ref T args) where T : struct
     {
-        if(statusEffect.Comp.ActiveStatusEffects?.ContainedEntities is not {} originalCollection || originalCollection.Count == 0)
+        if (statusEffect.Comp.ActiveStatusEffects?.ContainedEntities is not {} originalCollection || originalCollection.Count == 0)
             return;
-
-        // this copies the by-ref event if it is a struct
-        var ev = new StatusEffectRelayedEvent<T>(args, statusEffect);
 
         // Prevent a collection modified enumeration error by copying the list in case a status adds another status
         var list = new ValueList<EntityUid>(originalCollection);
         foreach (var activeEffect in list)
         {
-            RaiseLocalEvent(activeEffect, ref ev);
+            RaiseLocalEvent(activeEffect, ref args);
         }
-        // and now we copy it back
-        args = ev.Args;
     }
 
     public void RelayEvent<T>(Entity<StatusEffectContainerComponent> statusEffect, T args) where T : class
@@ -109,20 +104,11 @@ public sealed partial class StatusEffectsSystem
         if (statusEffect.Comp.ActiveStatusEffects?.ContainedEntities is not { } originalCollection || originalCollection.Count == 0)
             return;
 
-        // this copies the by-ref event if it is a struct
-        var ev = new StatusEffectRelayedEvent<T>(args, statusEffect);
-
         // Prevent a collection modified enumeration error by copying the list in case a status adds another status
         var list = new ValueList<EntityUid>(originalCollection);
         foreach (var activeEffect in list)
         {
-            RaiseLocalEvent(activeEffect, ref ev);
+            RaiseLocalEvent(activeEffect, args);
         }
     }
 }
-
-/// <summary>
-/// Event wrapper for relayed events.
-/// </summary>
-[ByRefEvent]
-public record struct StatusEffectRelayedEvent<TEvent>(TEvent Args, EntityUid AppliedTo);

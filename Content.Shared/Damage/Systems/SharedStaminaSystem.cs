@@ -65,7 +65,6 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     {
         base.Initialize();
 
-        InitializeModifier();
         InitializeResistance();
 
         Subs.CVar(_config, CCVars.PlaytestStaminaDamageModifier, value => UniversalStaminaDamageModifier = value, true);

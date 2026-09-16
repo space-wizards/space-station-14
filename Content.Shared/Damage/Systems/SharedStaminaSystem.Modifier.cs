@@ -6,28 +6,22 @@ namespace Content.Shared.Damage.Systems;
 
 public partial class SharedStaminaSystem
 {
-    private void InitializeModifier()
-    {
-        SubscribeLocalEvent<StaminaModifierStatusEffectComponent, StatusEffectAppliedEvent>(OnEffectApplied);
-        SubscribeLocalEvent<StaminaModifierStatusEffectComponent, StatusEffectRemovedEvent>(OnEffectRemoved);
-        SubscribeLocalEvent<StaminaModifierStatusEffectComponent, StatusEffectRelayedEvent<RefreshStaminaCritThresholdEvent>>(OnRefreshCritThreshold);
-    }
-
+    [SubscribeLocalEvent]
     private void OnEffectApplied(Entity<StaminaModifierStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
         RefreshStaminaCritThreshold(args.Target);
     }
 
+    [SubscribeLocalEvent]
     private void OnEffectRemoved(Entity<StaminaModifierStatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
     {
         RefreshStaminaCritThreshold(args.Target);
     }
 
-    private void OnRefreshCritThreshold(Entity<StaminaModifierStatusEffectComponent> ent, ref StatusEffectRelayedEvent<RefreshStaminaCritThresholdEvent> args)
+    [SubscribeLocalEvent]
+    private void OnRefreshCritThreshold(Entity<StaminaModifierStatusEffectComponent> ent, ref RefreshStaminaCritThresholdEvent args)
     {
-        var evArgs = args.Args;
-        evArgs.Modifier = Math.Max(ent.Comp.Modifier, evArgs.Modifier); // We only pick the highest value, to avoid stacking different status effects.
-        args.Args = evArgs;
+        args.Modifier = Math.Max(ent.Comp.Modifier, args.Modifier); // We only pick the highest value, to avoid stacking different status effects.
     }
 
     public void RefreshStaminaCritThreshold(Entity<StaminaComponent?> entity)

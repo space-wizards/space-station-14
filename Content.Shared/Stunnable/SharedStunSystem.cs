@@ -60,14 +60,6 @@ public abstract partial class SharedStunSystem : EntitySystem
         SubscribeLocalEvent<StunnedComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
         SubscribeLocalEvent<MobStateComponent, MobStateChangedEvent>(OnMobStateChanged);
 
-        // New Status Effect subscriptions
-        SubscribeLocalEvent<StunnedStatusEffectComponent, StatusEffectAppliedEvent>(OnStunStatusApplied);
-        SubscribeLocalEvent<StunnedStatusEffectComponent, StatusEffectRemovedEvent>(OnStunStatusRemoved);
-        SubscribeLocalEvent<StunnedStatusEffectComponent, StatusEffectRelayedEvent<StunEndAttemptEvent>>(OnStunEndAttempt);
-
-        SubscribeLocalEvent<KnockdownStatusEffectComponent, StatusEffectAppliedEvent>(OnKnockdownStatusApplied);
-        SubscribeLocalEvent<KnockdownStatusEffectComponent, StatusEffectRelayedEvent<StandUpAttemptEvent>>(OnStandUpAttempt);
-
         // Stun Appearance Data
         InitializeKnockdown();
         InitializeAppearance();
@@ -333,6 +325,7 @@ public abstract partial class SharedStunSystem : EntitySystem
         return !ev.Cancelled && RemComp<StunnedComponent>(entity);
     }
 
+    [SubscribeLocalEvent]
     private void OnStunStatusApplied(Entity<StunnedStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
     {
         if (GameTiming.ApplyingState)
@@ -341,21 +334,19 @@ public abstract partial class SharedStunSystem : EntitySystem
         EnsureComp<StunnedComponent>(args.Target);
     }
 
+    [SubscribeLocalEvent]
     private void OnStunStatusRemoved(Entity<StunnedStatusEffectComponent> entity, ref StatusEffectRemovedEvent args)
     {
         TryUnstun(args.Target);
     }
 
-    private void OnStunEndAttempt(Entity<StunnedStatusEffectComponent> entity, ref StatusEffectRelayedEvent<StunEndAttemptEvent> args)
+    [SubscribeLocalEvent]
+    private void OnStunEndAttempt(Entity<StunnedStatusEffectComponent> entity, ref StunEndAttemptEvent args)
     {
-        if (args.Args.Cancelled)
-            return;
-
-        var ev = args.Args;
-        ev.Cancelled = true;
-        args.Args = ev;
+        args.Cancelled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnKnockdownStatusApplied(Entity<KnockdownStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
     {
         if (GameTiming.ApplyingState)
@@ -368,14 +359,10 @@ public abstract partial class SharedStunSystem : EntitySystem
             Knockdown(args.Target, null, true, true, drop: entity.Comp.Drop);
     }
 
-    private void OnStandUpAttempt(Entity<KnockdownStatusEffectComponent> entity, ref StatusEffectRelayedEvent<StandUpAttemptEvent> args)
+    [SubscribeLocalEvent]
+    private void OnStandUpAttempt(Entity<KnockdownStatusEffectComponent> entity, ref StandUpAttemptEvent args)
     {
-        if (args.Args.Cancelled)
-            return;
-
-        var ev = args.Args;
-        ev.Cancelled = true;
-        args.Args = ev;
+        args.Cancelled = true;
     }
 
     #region Attempt Event Handling

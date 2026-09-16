@@ -129,7 +129,7 @@ public sealed partial class ForcedItemStatusEffectSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnGotHandcuffed(Entity<ForcedItemStatusEffectComponent> entity, ref StatusEffectRelayedEvent<TargetHandcuffedEvent> args)
+    private void OnGotHandcuffed(Entity<ForcedItemStatusEffectComponent> entity, ref TargetHandcuffedEvent args)
     {
         if (!entity.Comp.RemoveWhenCuffed)
             return;
@@ -137,7 +137,7 @@ public sealed partial class ForcedItemStatusEffectSystem : EntitySystem
         if (!TryComp<StatusEffectComponent>(entity, out var status) || status.AppliedTo == null)
             return;
 
-        if (MetaData(entity).EntityPrototype?.ID is not { } entProto)
+        if (Prototype(entity)?.ID is not { } entProto)
             return;
 
         _status.TryRemoveStatusEffect(status.AppliedTo.Value, entProto);

@@ -10,11 +10,11 @@ namespace Content.Shared.StatusEffectNew;
 public sealed partial class ExaminableStatusEffectSystem : EntitySystem
 {
     [SubscribeLocalEvent]
-    private void OnExaminedEvent(Entity<ExaminableStatusEffectComponent> ent, ref StatusEffectRelayedEvent<ExaminedEvent> args)
+    private void OnExaminedEvent(Entity<ExaminableStatusEffectComponent> ent, ref ExaminedEvent args)
     {
-        using (args.Args.PushGroup(nameof(ExaminableStatusEffectSystem)))
+        using (args.PushGroup(nameof(ExaminableStatusEffectSystem)))
         {
-            args.Args.PushMarkup(Loc.GetString(ent.Comp.MessageId, ("target", Identity.Entity(args.AppliedTo, EntityManager))));
+            args.PushMarkup(Loc.GetString(ent.Comp.MessageId, ("target", Identity.Entity(args.Examined, EntityManager))));
         }
     }
 }
