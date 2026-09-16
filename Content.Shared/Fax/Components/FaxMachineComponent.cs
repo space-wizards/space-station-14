@@ -1,7 +1,6 @@
 using Content.Shared.Cloning;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DeviceNetwork;
-using Content.Shared.Paper;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -11,8 +10,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Fax.Components;
 
-// TODO: DELTA STATES
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true, true), AutoGenerateComponentPause]
 public sealed partial class FaxMachineComponent : Component
 {
     /// <summary>
@@ -57,14 +55,8 @@ public sealed partial class FaxMachineComponent : Component
     /// <summary>
     /// Device address of fax in network to which data will be send
     /// </summary>
-    [DataField("destinationAddress")]
+    [DataField("destinationAddress"), AutoNetworkedField]
     public string? DestinationFaxAddress { get; set; }
-
-    /// <summary>
-    /// Name of fax in network to which data will be send
-    /// </summary>
-    [DataField("destinationName")]
-    public string? DestinationFaxName { get; set; }
 
     /// <summary>
     /// Contains the item to be sent, assumes it's paper...
@@ -105,6 +97,7 @@ public sealed partial class FaxMachineComponent : Component
 
     /// <summary>
     /// Known faxes in network by address with fax names
+    /// Key is the fax address, Value is the fax name.
     /// </summary>
     [ViewVariables]
     [DataField, AutoNetworkedField]
@@ -115,7 +108,7 @@ public sealed partial class FaxMachineComponent : Component
     /// </summary>
     [ViewVariables]
     [DataField, AutoNetworkedField]
-    public Queue<FaxPrintout> PrintingQueue { get; set; } = new();
+    public Queue<FaxPayload> PrintingQueue { get; set; } = new();
 
     /// <summary>
     /// Message sending timeout
@@ -211,7 +204,7 @@ public enum FaxFunctions : byte
 /// </summary>
 [DataDefinition]
 [Serializable, NetSerializable]
-public readonly partial record struct FaxPrintout(NetEntity Printout, string? Sender = null) : INetworkPayload
+public readonly partial record struct FaxPayload(NetEntity Printout, string? Sender = null) : INetworkPayload
 {
     /// <summary>
     /// Entity being faxed.

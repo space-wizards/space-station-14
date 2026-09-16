@@ -44,9 +44,9 @@ public sealed partial class FaxWindow : DefaultWindow
         if (!_entityManager.TryGetComponent<FaxMachineComponent>(_owner, out var fax))
             return;
 
-        var interactive = _fax.CanInteract((_owner, fax), out var paper);
-        CopyButton.Disabled = !interactive;
-        SendButton.Disabled = !interactive || fax.DestinationFaxAddress == null;
+        var inserted = _fax.PaperInserted((_owner, fax), out var paper);
+        CopyButton.Disabled = !inserted;
+        SendButton.Disabled = !inserted || fax.DestinationFaxAddress == null || !_fax.CanInteract((_owner, fax));
         FromLabel.Text = fax.FaxName;
 
         if (paper == null)
@@ -60,20 +60,16 @@ public sealed partial class FaxWindow : DefaultWindow
             PaperStatusLabel.Text = Loc.GetString("fax-machine-ui-paper-inserted");
         }
 
+        PeerSelector.Clear();
         if (fax.KnownFaxes.Count == 0)
         {
             PeerSelector.AddItem(Loc.GetString("fax-machine-ui-no-peers"));
+            PeerSelector.Select(0);
             PeerSelector.Disabled = true;
-        }
-        else if (PeerSelector.Disabled)
-        {
-            PeerSelector.Clear();
-            PeerSelector.Disabled = false;
         }
         else
         {
-            PeerSelector.Clear();
-
+            PeerSelector.Disabled = false;
             foreach (var (address, name) in fax.KnownFaxes)
             {
                 var id = AddPeerSelect(name, address);

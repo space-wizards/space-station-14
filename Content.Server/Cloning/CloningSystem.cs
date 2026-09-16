@@ -18,6 +18,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 
 namespace Content.Server.Cloning;
 
@@ -32,6 +34,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedStorageSystem _storage = default!;
     [Dependency] private SharedSubdermalImplantSystem _subdermalImplant = default!;
     [Dependency] private SharedVisualBodySystem _visualBody = default!;
@@ -64,8 +67,6 @@ public sealed partial class CloningSystem : SharedCloningSystem
         }
 
         clone = coords == null ? Spawn(speciesPrototype.Prototype) : Spawn(speciesPrototype.Prototype, coords.Value);
-        _visualBody.CopyAppearanceFrom(original, clone.Value);
-
         Clone(original, clone.Value, settings);
 
         _adminLogger.Add(LogType.Chat, LogImpact.Medium, $"The body of {original:player} was cloned as {clone.Value:player}");
@@ -105,6 +106,9 @@ public sealed partial class CloningSystem : SharedCloningSystem
         // Add equipment first so that SetEntityName also renames the ID card.
         if (settings.CopyEquipment != null)
             CopyEquipment(original, clone, settings.CopyEquipment.Value, settings.EquipmentWhitelist, settings.EquipmentBlacklist);
+
+        if (settings.CopyHands)
+            CopyHands(original, clone, settings.EquipmentWhitelist, settings.EquipmentBlacklist);
 
         // Copy storage on the mob itself as well.
         // This is needed for slime storage.
@@ -207,6 +211,28 @@ public sealed partial class CloningSystem : SharedCloningSystem
 
             if (cloneItem != null && !_inventory.TryEquip(clone, cloneItem.Value, slot.Name, silent: true, inventory: clone.Comp))
                 Del(cloneItem); // delete it again if the clone cannot equip it
+        }
+    }
+
+    public override void CopyHands(Entity<HandsComponent?> original,
+        Entity<HandsComponent?> clone,
+        EntityWhitelist? whitelist = null,
+        EntityWhitelist? blacklist = null)
+    {
+        if (!Resolve(original, ref original.Comp) || !Resolve(clone, ref clone.Comp))
+            return;
+
+        var coords = Transform(clone).Coordinates;
+
+        foreach (var hand in _hands.EnumerateHands(original))
+        {
+            if (!_hands.TryGetHeldItem(original, hand, out var item))
+                continue;
+
+            if (CopyItem(item.Value, coords, whitelist, blacklist) is not { } cloned)
+                continue;
+
+            _hands.DoPickup(clone, hand, cloned, clone.Comp);
         }
     }
 

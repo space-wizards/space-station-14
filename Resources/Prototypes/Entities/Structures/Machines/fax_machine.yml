@@ -109,6 +109,8 @@
       map: [ "enum.FaxMachineVisuals.VisualState" ]
   - type: FaxMachine
     name: "Central Command"
+    whitelist: null
+    settings: Centcomm
     notifyAdmins: true
 
 - type: entity

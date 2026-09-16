@@ -16,21 +16,23 @@ public sealed partial class ClientFaxSystem : FaxSystem
     private static readonly string FaxKey = "faxecute";
 
     [SubscribeLocalEvent]
-    private void OnAppearanceChanged(Entity<FaxMachineComponent> entity, ref AppearanceChangeEvent args)
+    private void OnAppearanceChanged(Entity<FaxMachineComponent> fax, ref AppearanceChangeEvent args)
     {
-        if (args.Sprite == null || !Timing.IsFirstTimePredicted)
+        if (args.Sprite == null)
             return;
 
-        if (_player.HasRunningAnimation(entity, FaxKey))
+        if (_player.HasRunningAnimation(fax, FaxKey))
             return;
 
-        if (_appearance.TryGetData(entity, FaxMachineVisuals.VisualState, out FaxFunctions visuals) &&
-            (visuals & FaxFunctions.Inserting) == FaxFunctions.Inserting)
+        if (!_appearance.TryGetData(fax, FaxMachineVisuals.VisualState, out FaxFunctions visuals))
+            return;
+
+        if ((visuals & FaxFunctions.Inserting) == FaxFunctions.Inserting)
         {
-            _player.Play(entity,
+            _player.Play(fax,
                 new Animation()
                 {
-                    Length = TimeSpan.FromSeconds(2.4),
+                    Length = fax.Comp.InsertionTime,
                     AnimationTracks =
                     {
                         new AnimationTrackSpriteFlick()
@@ -38,7 +40,7 @@ public sealed partial class ClientFaxSystem : FaxSystem
                             LayerKey = FaxMachineVisuals.VisualState,
                             KeyFrames =
                             {
-                                new AnimationTrackSpriteFlick.KeyFrame(entity.Comp.InsertingState, 0f)
+                                new AnimationTrackSpriteFlick.KeyFrame(fax.Comp.InsertingState, 0f)
                             },
                         },
                     },

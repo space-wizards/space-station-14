@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Hands.Components;
 using Content.Shared.Implants.Components;
 using Content.Shared.Inventory;
 using Content.Shared.StatusEffectNew.Components;
@@ -100,6 +101,17 @@ public abstract partial class SharedCloningSystem : EntitySystem
         EntityWhitelist? whitelist = null,
         EntityWhitelist? blacklist = null)
     {
+    }
+
+    /// <summary>
+    /// Copies any items held by an entity with hands from the original to the clone.
+    /// </summary>
+    public virtual void CopyHands(Entity<HandsComponent?> original,
+        Entity<HandsComponent?> clone,
+        EntityWhitelist? whitelist = null,
+        EntityWhitelist? blacklist = null)
+    {
+
     }
 
     /// <summary>
