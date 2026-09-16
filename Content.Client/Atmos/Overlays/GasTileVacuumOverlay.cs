@@ -36,7 +36,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
     private readonly OverlayResourceCache<CachedResources> _resources = new();
 
     // Overlay settings
-    private float _instensity = 0f; // overlay intensity. 0.0f = turned off, 1.0f = full grayscale
+    private float _intensity = 0f; // overlay intensity. 0.0f = turned off, 1.0f = full grayscale
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
@@ -53,13 +53,13 @@ public sealed partial class GasTileVacuumOverlay : Overlay
 
     private void SetVacuumOverlayIntensity(float intensity)
     {
-        _instensity = MathHelper.Clamp(intensity, 0f, 1f);
-        _shader.SetParameter("instensity", _instensity);
+        _intensity = MathHelper.Clamp(intensity, 0f, 1f);
+        _shader.SetParameter("intensity", _intensity);
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
-        if (args.MapId == MapId.Nullspace || _instensity < 0.1f)
+        if (args.MapId == MapId.Nullspace || _intensity < 0.1f)
             return false;
 
         var res = _resources.GetForViewport(args.Viewport, static _ => new CachedResources());

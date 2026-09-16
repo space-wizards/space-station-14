@@ -1,5 +1,5 @@
 uniform sampler2D SCREEN_TEXTURE;
-uniform highp float instensity;
+uniform highp float intensity;
 
 void fragment()
 {
@@ -7,6 +7,6 @@ void fragment()
 
     highp vec4 screen_pixel = texture2D(SCREEN_TEXTURE, UV);
     highp float gray = dot(screen_pixel.rgb, vec3(0.299, 0.587, 0.114));
-    screen_pixel.rgb = mix(screen_pixel.rgb, vec3(gray), instensity);
+    screen_pixel.rgb = mix(screen_pixel.rgb, vec3(gray), intensity);
     COLOR = screen_pixel;
 }
