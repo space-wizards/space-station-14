@@ -213,12 +213,12 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
     /// </summary>
     /// <param name="target">The entity to apply the marking.</param>
     /// <param name="markingProto">The marking prototype to add.</param>
-    /// <param name="marking">The marking's preference data.</param>
+    /// <param name="markingConfig">The marking's configuration data.</param>
     /// <param name="organIndex">The index of the body part layer on the entity's sprite stack.</param>
     /// <param name="displacement">Optional displacement data associated with this entity.</param>
     private void AddMarkingLayers(Entity<SpriteComponent?> target,
         MarkingPrototype markingProto,
-        Marking marking,
+        Marking markingConfig,
         int organIndex,
         DisplacementData? displacement)
     {
@@ -241,7 +241,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
                 newLayerIndex: spriteLayerIndex + numDisplacements,
                 visible: bodypartLayer.Visible);
 
-            UpdateLayerColor(target, marking, markingLayer, spriteLayer);
+            UpdateLayerColor(target, markingConfig, markingLayer, spriteLayer);
 
             // Apply displacements
             if (displacement != null && markingProto.CanBeDisplaced)
@@ -305,16 +305,16 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
     ///     Sets the color of a layer according to marking preference data.
     /// </summary>
     /// <param name="target">The target entity.</param>
-    /// <param name="marking">The marking's preference data.</param>
+    /// <param name="markingConfig">The marking's configuration data.</param>
     /// <param name="markingLayer">The index of the layer in the marking prototype.</param>
     /// <param name="spriteLayer">The index of the sprite layer associated with this marking layer.</param>
     private void UpdateLayerColor(Entity<SpriteComponent?> target,
-        Marking marking,
+        Marking markingConfig,
         int markingLayer,
         int spriteLayer)
     {
-        var layerColor = markingLayer < marking.MarkingColors?.Count
-            ? marking.MarkingColors[markingLayer]
+        var layerColor = markingLayer < markingConfig.MarkingColors?.Count
+            ? markingConfig.MarkingColors[markingLayer]
             : Color.White;
 
         _sprite.LayerSetColor(target, spriteLayer, layerColor);
