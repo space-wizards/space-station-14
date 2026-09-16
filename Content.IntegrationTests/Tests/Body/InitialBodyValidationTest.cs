@@ -63,7 +63,9 @@ public sealed class InitialBodyValidationTest : GameTest
                 foreach (var child in children)
                 {
                     Assert.That(parentOf.TryGetValue(child, out var existingParent),
-                        $"{proto.ID}'s organ category {child} is claimed as a child by both {existingParent} and {parent}");
+                        Is.False,
+                        $"{proto.ID}'s organ category {child} is claimed as a child by both {existingParent} and {parent}"
+                    );
 
                     parentOf[child] = parent;
                 }
