@@ -10,6 +10,10 @@ objective-issuer-unknown = [color=white]Unknown[/color]
 
 traitor-title = Traitor
 traitor-description = There are traitors among us...
+
+traitor-title = Traitor [Dynamic]
+traitor-description = There are traitors among us... (and a bunch of other stuff too!)
+
 traitor-not-enough-ready-players = Not enough players readied up for the game! There were {$readyPlayersCount} players readied up out of {$minimumPlayers} needed. Can't start Traitor.
 traitor-no-one-ready = No players readied up! Can't start Traitor.
 
