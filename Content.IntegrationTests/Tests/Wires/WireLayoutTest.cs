@@ -27,16 +27,16 @@ public sealed class WireLayoutTest : GameTest
 
         - type: wireLayout
           id: {WireLayoutTest2}
-          parent: WireLayoutTest
+          parent: {WireLayoutTest1}
           wires:
           - !type:PowerWireAction
 
         - type: wireLayout
           id: {WireLayoutTest3}
-          parent: WireLayoutTest
+          parent: {WireLayoutTest1}
 
         - type: entity
-          id: WireLayoutTest
+          id: {WireLayoutTest1}
           components:
           - type: Wires
             layoutId: {WireLayoutTest1}
