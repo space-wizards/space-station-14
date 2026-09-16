@@ -1,7 +1,9 @@
-﻿using Content.Client.Chemistry.Components;
+using Content.Client.Chemistry.Components;
 using Content.Client.Chemistry.UI;
 using Content.Client.Items;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Item;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Chemistry.EntitySystems;
 
@@ -13,10 +15,13 @@ public sealed partial class SolutionItemStatusSystem : EntitySystem
 {
     [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
+    public static readonly ProtoId<ItemStatusPrototype> SolutionItemStatus = "Solution";
+
     public override void Initialize()
     {
         base.Initialize();
         Subs.ItemStatus<SolutionItemStatusComponent>(
-            entity => new SolutionStatusControl(entity, EntityManager, _solutionContainerSystem));
+            entity => new SolutionStatusControl(entity, EntityManager, _solutionContainerSystem),
+            SolutionItemStatus);
     }
 }
