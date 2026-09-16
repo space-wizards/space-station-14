@@ -131,13 +131,16 @@
       children:
       - !type:NestedSelector
         tableId: SalvageTreasureCommon
-        weight: 60
+        weight: 55
       - !type:NestedSelector
         tableId: SalvageTreasureUncommon
         weight: 30
       - !type:NestedSelector
         tableId: SalvageTreasureRare
         weight: 9
+      - !type:NestedSelector
+        tableId: LootboxSalvageSpawnTable
+        weight: 5
       - !type:NestedSelector
         tableId: SalvageTreasureLegendary
         weight: 1
@@ -196,12 +199,15 @@
       children:
       - !type:NestedSelector
         tableId: SalvageTreasureCommon
-        weight: 45
-      - !type:NestedSelector
-        tableId: SalvageTreasureUncommon
         weight: 35
       - !type:NestedSelector
+        tableId: SalvageTreasureUncommon
+        weight: 30
+      - !type:NestedSelector
         tableId: SalvageTreasureRare
+        weight: 15
+      - !type:NestedSelector
+        tableId: LootboxSalvageSpawnTable
         weight: 15
       - !type:NestedSelector
         tableId: SalvageTreasureLegendary

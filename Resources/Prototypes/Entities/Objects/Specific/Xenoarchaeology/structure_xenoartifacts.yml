@@ -1,5 +1,5 @@
 - type: entity
-  parent: [BaseStructureDynamic, BaseXenoArtifact]
+  parent: [BaseXenoArtifact, BaseStructureDynamic]
   id: BaseXenoArtifactStructure
   name: artifact
   abstract: true

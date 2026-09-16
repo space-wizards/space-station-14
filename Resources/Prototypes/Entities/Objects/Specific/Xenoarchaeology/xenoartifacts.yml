@@ -1,6 +1,5 @@
 - type: entity
-  id: BaseXenoArtifact
-  parent: BaseMob # we use this since it can technically get inhabited
+  id: BaseArtifact
   name: artifact
   description: A strange artifact from time unknown. Looks like a good time.
   abstract: true
@@ -18,9 +17,6 @@
         type: InstrumentBoundUserInterface
       enum.IntercomUiKey.Key:
         type: IntercomBoundUserInterface
-  - type: GuideHelp
-    guides:
-    - Xenoarchaeology
   # gameplay interactions
   - type: XenoArtifact
     effectsTable: !type:NestedSelector
@@ -28,14 +24,6 @@
   - type: Damageable
   - type: Injurable
   - type: Actions
-  - type: Physics
-    bodyType: KinematicController
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 0.25
-    baseSprintSpeed: 0.5
-  - type: UseDelay
-  - type: StealTarget
-    stealGroup: XenoArtifact
   - type: ContainerContainer
     containers:
       node-container: !type:Container
@@ -53,9 +41,33 @@
     priority: 2
     lightningExplode: false
   - type: Stamina
+    animationThreshold: 999
     baseCritThreshold: 1000
     decay: 1000
     cooldown: 0.1
+
+- type: entity
+  id: BaseXenoArtifact
+  parent: [ BaseArtifact, BaseMob ]
+  name: artifact
+  description: A strange artifact from time unknown. Looks like a good time.
+  abstract: true
+  noSpawn: true
+  components:
+  - type: UseDelay
+  - type: StealTarget
+    stealGroup: XenoArtifact
+  - type: GuideHelp
+    guides:
+    - Xenoarchaeology
+  - type: Physics
+    bodyType: KinematicController
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 0.25
+    baseSprintSpeed: 0.5
+  - type: Tag
+    tags:
+    - XenoArtifact
 
 - type: entity
   parent: BaseAction

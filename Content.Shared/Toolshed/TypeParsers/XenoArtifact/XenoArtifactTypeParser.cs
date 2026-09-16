@@ -14,6 +14,7 @@ public sealed partial class XenoArtifactTypeParser : CustomCompletionParser<Prot
 {
     private static readonly EntProtoId ArtifactDummyItem = "DummyArtifactItem";
     private static readonly EntProtoId ArtifactDummyStructure = "DummyArtifactStructure";
+    private static readonly EntProtoId LootboxDummy = "LootboxDebug";
 
     public override CompletionResult TryAutocomplete(ParserContext ctx, CommandArgument? arg)
     {
@@ -21,6 +22,7 @@ public sealed partial class XenoArtifactTypeParser : CustomCompletionParser<Prot
             [
                 new CompletionOption(ArtifactDummyItem, Loc.GetString("command-spawnartifactwithnode-spawn-artifact-item-hint")),
                 new CompletionOption(ArtifactDummyStructure, Loc.GetString("command-spawnartifactwithnode-spawn-artifact-structure-hint")),
+                new CompletionOption(LootboxDummy, Loc.GetString("command-spawnartifactwithnode-spawn-lootbox-hint")),
             ],
             Loc.GetString("command-spawnartifactwithnode-spawn-artifact-type-hint")
         );

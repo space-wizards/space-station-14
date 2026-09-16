@@ -1594,6 +1594,8 @@
   id: WriteIgnoreStamps # Used by PaperSystem to allow tagged entity to bypass stamps.
 
 ## X ##
+- type: Tag
+  id: XenoArtifact # reagent TagCondition for artifexium
 
 - type: Tag
   id: XenoborgCrystal # MaterialStorage whitelist: Mothership core

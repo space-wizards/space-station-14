@@ -1,0 +1,350 @@
+- type: entityTable
+  id: LootboxTriggersBasic #lootbox triggers should require the player to DO something to it. Avoid accidental openings.
+  table: !type:GroupSelector
+    conditionsForChildren:
+      - !type:ExcludeEntitiesFromContextCondition
+    children:
+    - id: TriggerScrewing #these ones already have a description so can just use them as is
+    - id: TriggerPrying
+    - id: TriggerWrenching
+    - id: TriggerPulsing
+    - id: LootboxTriggerWater
+    - id: LootboxTriggerBlood
+    - id: LootboxTriggerBruteDamageMinor
+    - id: LootboxTriggerInteractStamp
+    - id: LootboxTriggerDeath #exception as the lootbox demanding a sacrifice is funny
+      weight: 0.2
+
+- type: entityTable
+  id: LootboxTriggersEngineering
+  table: !type:GroupSelector
+    conditionsForChildren:
+      - !type:ExcludeEntitiesFromContextCondition
+    children:
+    #- id: LootboxTriggerAccessCE
+    - id: LootboxTriggerHeat
+    - id: LootboxTriggerPressureHigh
+    - id: LootboxTriggerPlasma
+    - id: LootboxTriggerTritium
+      weight: 0.1
+    - id: LootboxTriggerInteractShock
+    - id: LootboxTriggerAttackParticleEngine
+
+- type: entityTable
+  id: LootboxTriggersSecurity
+  table: !type:GroupSelector
+    conditionsForChildren:
+      - !type:ExcludeEntitiesFromContextCondition
+    children:
+    #- id: LootboxTriggerAccessHOS
+    - id: LootboxTriggerInteractCuffs
+    - id: LootboxTriggerAttackStaminaDamage
+    - id: LootboxTriggerAttackLaser
+
+- type: entityTable
+  id: LootboxTriggersMedical
+  table: !type:GroupSelector
+    conditionsForChildren:
+      - !type:ExcludeEntitiesFromContextCondition
+    children:
+    #- id: LootboxTriggerAccessCMO
+    - id: LootboxTriggerBlood
+    - id: LootboxTriggerInteractShock
+    - id: LootboxTriggerToob
+    #- id: TriggerReactiveReagentEasy # reagent triggers have their own description. (requires reagent trigger PR)
+    #- id: TriggerReactiveReagentHard
+    #- id: TriggerReagentSpecificObscure
+
+- type: entityTable
+  id: LootboxTriggersScience
+  table: !type:GroupSelector  #science are already good at artifact triggers so they get some of the rest too
+    conditionsForChildren:
+      - !type:ExcludeEntitiesFromContextCondition
+    children:
+    #- id: LootboxTriggerAccessRD
+    - id: LootboxTriggerBlood
+    - id: LootboxTriggerPlasma
+    - id: LootboxTriggerHeat
+    - id: LootboxTriggerPressureHigh
+    - id: LootboxTriggerInteractScan
+    - id: LootboxTriggerConsumeKnowledge
+    - id: LootboxTriggerConsumeCarbs
+    - id: LootboxTriggerAttackParticleAnomaly
+    - id: LootboxTriggerAttackLaser
+    #- id: TriggerReagentSpecificObscure # reagent triggers have their own description.
+
+- type: entityTable
+  id: LootboxTriggersService
+  table: !type:GroupSelector
+    conditionsForChildren:
+      - !type:ExcludeEntitiesFromContextCondition
+    children:
+    #LootboxTriggerAccessHOP
+    - id: LootboxTriggerConsumeCarbs
+    - id: LootboxTriggerConsumeFruit
+    - id: LootboxTriggerConsumeMushroom
+    - id: LootboxTriggerConsumeMeat
+    - id: LootboxTriggerAttackPie
+    #- id: TriggerReactiveDrinkEasy # reagent triggers have their own description.
+    #- id: TriggerReactiveDrinkHard
+
+# A lot of duplicated triggers that add examinable text
+# examinable text is needed for lootbox triggers as you can't and shouldn't scan the lootbox at an artifact analyzer.
+# examinable text on the base arti triggers themselves doesn't add anything useful as it'll just stack them all for each activateble node. Just ends up being confusing.
+
+- type: entity
+  id: LootboxTriggerBruteDamageMinor
+  parent: BaseXenoArtifactTrigger
+  tip: xenoarch-trigger-tip-brute-damage #uses metallic structure damage set so stuff like crowbars will do nothing, hit it with something that does structure damage.
+  components:
+  - type: XATDamageThresholdReached
+    groupsNeeded:
+      Brute: 5
+  - type: XATExaminableText
+    examineText: lootbox-trigger-examine-brute-damage
+
+- type: entity
+  id: LootboxTriggerWater
+  parent: TriggerWater
+  tip: xenoarch-trigger-tip-water
+  components:
+  - type: XATExaminableText
+    examineText: lootbox-trigger-examine-water
+
+- type: entity
+  id: LootboxTriggerBlood
+  parent: TriggerBlood
+  tip: xenoarch-trigger-tip-blood
+  components:
+  - type: XATExaminableText
+    examineText: lootbox-trigger-examine-blood
+
+- type: entity
+  id: LootboxTriggerDeath
+  parent: TriggerDeath
+  tip: xenoarch-trigger-tip-death
+  components:
+  - type: XATExaminableText
+    examineText: lootbox-trigger-examine-death
+
+- type: entity
+  id: LootboxTriggerHeat
+  parent: TriggerHeat
+  components:
+  - type: XATExaminableText
+    examineText: lootbox-trigger-examine-heat
+
+- type: entity
+  id: LootboxTriggerPressureHigh
+  parent: TriggerPressureHigh
+  components:
+  - type: XATExaminableText
+    examineText: lootbox-trigger-examine-pressure-high
+
+- type: entity
+  id: LootboxTriggerPlasma
+  parent: TriggerPlasma
+  components:
+  - type: XATExaminableText
+    examineText: lootbox-trigger-examine-plasma
+
+- type: entity
+  id: LootboxTriggerTritium
+  parent: TriggerTritium
+  components:
+  - type: XATExaminableText
+    examineText: lootbox-trigger-examine-tritium
+
+- type: entity
+  id: LootboxTriggerInteractShock
+  parent: TriggerInteractShock
+  components:
+  - type: XATExaminableText
+    examineText: lootbox-trigger-examine-shock
+
+- type: entity
+  id: LootboxTriggerToob
+  parent: BaseXenoArtifactTrigger
+  components:
+  - type: XATCompNearby
+    requireComponentWithName: InsideCryoPod
+    radius: 2
+  - type: XATExaminableText
+    examineText: lootbox-trigger-examine-toob
+
+- type: entity
+  id: LootboxTriggerInteractCuffs
+  parent: BaseXenoArtifactTrigger
+  components:
+  - type: XATInteractWith
+    interactionTime: 2
+    startTriggerSound:
+      path: /Audio/Items/Handcuffs/cuff_start.ogg
+    successTriggerSound:
+      path: /Audio/Items/Handcuffs/cuff_end.ogg
+    whitelist:
+      tags:
+      - Handcuffs
+  - type: XATExaminableText
+    examineText: lootbox-trigger-examine-cuffs
+
+- type: entity
+  id: LootboxTriggerInteractScan
+  parent: BaseXenoArtifactTrigger
+  components:
+  - type: XATInteractWith
+    interactionTime: 5
+    successTriggerSound:
+      path: /Audio/Items/beep.ogg
+    whitelist:
+      components:
+      - AnomalyScanner
+  - type: XATExaminableText
+    examineText: lootbox-trigger-examine-topical
+
+- type: entity
+  id: LootboxTriggerInteractStamp
+  parent: TriggerInteractStamp
+  components:
+  - type: XATExaminableText
+    examineText: lootbox-trigger-examine-stamp
+
+- type: entity
+  id: LootboxTriggerConsumeKnowledge
+  parent: TriggerConsumeKnowledge
+  components:
+  - type: XATExaminableText
+    examineText: lootbox-trigger-examine-knowledge
+
+- type: entity
+  id: LootboxTriggerConsumeCarbs
+  parent: TriggerConsumeCarbs
+  components:
+  - type: XATExaminableText
+    examineText: lootbox-trigger-examine-carbs
+
+- type: entity
+  id: LootboxTriggerConsumeMeat
+  parent: TriggerConsumeMeat
+  components:
+  - type: XATExaminableText
+    examineText: lootbox-trigger-examine-meat
+
+- type: entity
+  id: LootboxTriggerConsumeFruit
+  parent: TriggerConsumeProduce
+  components:
+  - type: XATInteractWith
+    whitelist:
+      tags:
+      - Fruit
+  - type: XATExaminableText
+    examineText: lootbox-trigger-examine-fruit
+
+- type: entity
+  id: LootboxTriggerConsumeMushroom
+  parent: TriggerConsumeProduce
+  components:
+  - type: XATInteractWith
+    whitelist:
+      tags:
+      - Mushroom
+  - type: XATExaminableText
+    examineText: lootbox-trigger-examine-mushroom
+
+- type: entity
+  id: LootboxTriggerAttackParticleEngine
+  parent: TriggerAttackParticleEngine
+  components:
+  - type: XATExaminableText
+    examineText: lootbox-trigger-examine-particle-engine
+
+- type: entity
+  id: LootboxTriggerAttackParticleAnomaly
+  parent: TriggerAttackParticleAnomaly
+  components:
+  - type: XATExaminableText
+    examineText: lootbox-trigger-examine-particle-anomaly
+
+- type: entity
+  id: LootboxTriggerAttackStaminaDamage
+  parent: TriggerAttackStaminaDamage
+  components:
+  - type: XATExaminableText
+    examineText: lootbox-trigger-examine-stamina-damage
+
+- type: entity
+  id: LootboxTriggerAttackLaser
+  parent: TriggerAttackLaser
+  components:
+  - type: XATExaminableText
+    examineText: lootbox-trigger-examine-laser
+
+- type: entity
+  id: LootboxTriggerAttackPie
+  parent: BaseXenoArtifactTrigger
+  components:
+  - type: XATInteractAttack
+    whitelist:
+      components:
+      - CreamPie
+  - type: XATExaminableText
+    examineText: lootbox-trigger-examine-pie
+
+#- type: entity  # requires access trigger PR
+#  id: LootboxTriggerAccessCE # description not needed as it shows access requirements
+#  components:
+#  - type: AccessReader
+#    loggingDisabled: true
+#  - type: XATAccess
+#    deniedSound:
+#      path: /Audio/Machines/airlock_deny.ogg
+#    potentialAccess:
+#    - ChiefEngineer
+#    - Atmospherics
+#    - Engineering
+#
+#- type: entity
+#  id: LootboxTriggerAccessHOS
+#  parent: LootboxTriggerAccessCE
+#  components:
+#  - type: XATAccess
+#    potentialAccess:
+#    - HeadOfSecurity
+#    - Armory
+#    - Lawyer
+#    - Security
+#
+#- type: entity
+#  id: LootboxTriggerAccessRD
+#  parent: LootboxTriggerAccessCE
+#  components:
+#  - type: XATAccess
+#    potentialAccess: # can't "give out" cyborg access so would be impossible to open if there was no cyborg on the station
+#    - ResearchDirector
+#    - Research
+#
+#- type: entity
+#  id: LootboxTriggerAccessCMO
+#  parent: LootboxTriggerAccessCE
+#  components:
+#  - type: XATAccess
+#    potentialAccess:
+#    - ChiefMedicalOfficer
+#    - Medical
+#    - Chemistry
+#
+#- type: entity
+#  id: LootboxTriggerAccessHOP
+#  parent: LootboxTriggerAccessCE
+#  components:
+#  - type: XATAccess
+#    potentialAccess:
+#    - HeadOfPersonnel
+#    - Hydroponics
+#    - Kitchen
+#    - Bar
+#    - Theatre
+#    - Service
+#    - Chapel
+

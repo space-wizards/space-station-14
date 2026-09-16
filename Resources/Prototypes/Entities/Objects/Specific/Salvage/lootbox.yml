@@ -1,0 +1,412 @@
+#Anomalous Objects function like one-time artifacts, with randomly generated triggers leading to a loot producing effect
+- type: entity
+  id: BaseAnomalousObject
+  parent: [BaseArtifact]
+  name: anomalous object
+  abstract: true
+  components:
+  - type: Transform
+    noRot: true
+  - type: XenoArtifact
+    nodeCount:
+      min: 1
+      max: 1
+    segmentSize:
+      min: 1
+      max: 1
+    nodesPerSegmentLayer:
+      min: 1
+      max: 1
+    scatterPerLayer:
+      min: 0
+      max: 0
+    unlockStateDuration: 0 #we don't need to wait for multiple triggers as there won't be any
+    unlockStateRefactory: 10
+    unlockBeginMsg: null
+    unlockSuccessMsg: null
+    unlockFailureMsg: artifact-activation-fail
+    forceActivationSoundSpecifier: null
+
+#Like regular crates, but parenting off of artifacts, unlike them crates, the items inside are only generated once the trigger is met, if destroyed prior, you get nothing!
+- type: entity
+  parent: MarkerBase
+  id: LootboxRandomSpawner
+  name: maintenance lootbox spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Structures/Storage/Crates/lockbox.rsi
+      state: base
+    - sprite: Structures/Storage/Crates/lockbox.rsi
+      state: dirt
+    - sprite: Structures/Storage/Crates/lockbox.rsi
+      state: closed
+    - sprite: Structures/Storage/Crates/lockbox.rsi
+      state: dirt-closed
+  - type: EntityTableSpawner
+    offset: 0
+    table: !type:NestedSelector
+      tableId: LootboxMaintsSpawnTable
+
+- type: entityTable
+  id: LootboxMaintsSpawnTable
+  table: !type:GroupSelector
+    children:
+    - id: CrateLootboxBasic
+      weight: 5
+    - id: CrateLootboxService
+    - id: CrateLootboxEngineering
+    - id: CrateLootboxMedical
+    - id: CrateLootboxScience
+    - id: CrateLootboxSecurity
+      weight: 0.5
+
+- type: entityTable
+  id: LootboxSalvageSpawnTable
+  table: !type:GroupSelector
+    children:
+    - id: CrateLootboxService
+    - id: CrateLootboxEngineering
+    - id: CrateLootboxMedical
+    - id: CrateLootboxScience
+    - id: CrateLootboxSecurity
+      weight: 0.5
+
+- type: entity
+  id: LootboxDebug
+  parent: CrateLootboxBasic
+  name: old lock box
+  suffix: DEBUG
+  components:
+  - type: XenoArtifact
+    isGenerationRequired: false
+
+- type: entity
+  id: CrateLootboxBasic # One-time artifacts, that stop being artifacts once you've triggered them
+  parent: [BaseAnomalousObject, BaseStructureDynamic, BasePaperLabelableVisualized]
+  name: old lock box
+  suffix: Lootbox
+  description: "An old secure lock box with an obtuse opening method. Anything could be inside, if you open it properly that is."
+  components:
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: Structures/Storage/Crates/lockbox.rsi
+    layers:
+    - state: base
+    - state: dirt
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: dirt-closed
+      map: [ lid_dirt ]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      offset: "-0.46875,0.03125"
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: GenericVisualizer
+    visuals:
+      enum.PaperLabelVisuals.HasLabel:
+        enum.PaperLabelVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PaperLabelVisuals.LabelType:
+        enum.PaperLabelVisuals.Layer:
+          Paper: { state: paper }
+          Bounty: { state: bounty }
+          CaptainsPaper: { state: captains_paper }
+          Invoice: { state: invoice }
+      enum.StorageVisuals.Open:
+        lid_overlay:
+          True: { visible: false }
+          False: { visible: true }
+        lid_dirt:
+          True: { visible: false }
+          False: { visible: true }
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.4,0.3,0.19"
+        density: 50
+        mask:
+        - CrateMask #this is so they can go under plastic flaps
+        layer:
+        - MachineLayer
+  - type: Damageable
+    damageModifierSet: StructuralMetallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ExplodeBehavior
+  - type: ResistLocker
+  - type: PlaceableSurface
+    isPlaceable: false
+  - type: LockVisuals
+  - type: AccessReader
+  - type: EntityStorageVisuals
+    stateDoorOpen: open
+    stateDoorClosed: closed
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+      paper_label: !type:ContainerSlot
+      node-container: !type:Container
+        showEnts: False
+        occludes: True
+        ents: []
+  - type: Reflect
+    reflects:
+    - Energy
+    reflectProb: 0.2
+    spread: 90
+  - type: XenoArtifact
+    unlockActivationSuccessfulSound: /Audio/Machines/door_lock_off.ogg
+    unlockActivationFailedSound: /Audio/Machines/airlock_deny.ogg
+    unlockSuccessMsg: lootbox-unlock-end-success
+    unlockFailureMsg: lootbox-activation-fail
+    allowArtifexium: false
+    effectsTable: !type:GroupSelector
+      children:
+      - !type:NestedSelector
+        tableId: LootboxEffectTableBasic
+    triggersTable: !type:GroupSelector
+      children:
+      - !type:NestedSelector
+        tableId: LootboxTriggersBasic
+  - type: Explosive
+    explosionType: Default #does about 50-60 damage with 1 tile radius if you're standing right on top of it
+    maxIntensity: 5
+    intensitySlope: 2
+    totalIntensity: 7.5
+    canCreateVacuum: false
+
+- type: entity
+  id: CrateLootboxEngineering # One-time artifacts, that stop being artifacts once you've triggered them
+  parent: CrateLootboxBasic
+  name: old engineering lock box
+  components:
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: Structures/Storage/Crates/lockbox.rsi
+    layers:
+    - state: base
+    - state: overlay
+      color: "#ad8c27"
+    - state: dirt
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: overlay-closed
+      color: "#ad8c27"
+      map: [ lid_overlay ]
+    - state: dirt-closed
+      map: [ lid_dirt ]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      offset: "-0.46875,0.03125"
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: OverrideSell
+    overrideAccount: Engineering
+  - type: AccessReader
+    access: [["Engineering"]]
+  - type: XenoArtifact
+    effectsTable: !type:GroupSelector
+      children:
+      - !type:NestedSelector
+        tableId: LootboxEffectTableEngineering
+    triggersTable: !type:GroupSelector
+      children:
+      - !type:NestedSelector
+        tableId: LootboxTriggersEngineering
+
+- type: entity
+  id: CrateLootboxSecurity # One-time artifacts, that stop being artifacts once you've triggered them
+  parent: CrateLootboxBasic
+  name: old security lock box
+  components:
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: Structures/Storage/Crates/lockbox.rsi
+    layers:
+    - state: base
+    - state: overlay
+      color: "#c12d30"
+    - state: dirt
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: overlay-closed
+      color: "#c12d30"
+      map: [ lid_overlay ]
+    - state: dirt-closed
+      map: [ lid_dirt ]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      offset: "-0.46875,0.03125"
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: OverrideSell
+    overrideAccount: Security
+  - type: AccessReader
+    access: [["Security"]]
+  - type: XenoArtifact
+    effectsTable: !type:GroupSelector
+      children:
+      - !type:NestedSelector
+        tableId: LootboxEffectTableSecurity
+    triggersTable: !type:GroupSelector
+      children:
+      - !type:NestedSelector
+        tableId: LootboxTriggersSecurity
+
+- type: entity
+  id: CrateLootboxMedical # One-time artifacts, that stop being artifacts once you've triggered them
+  parent: CrateLootboxBasic
+  name: old medical lock box
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay
+      color: "#92c7e8"
+    - state: dirt
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: overlay-closed
+      color: "#92c7e8"
+      map: [ lid_overlay ]
+    - state: dirt-closed
+      map: [ lid_dirt ]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      offset: "-0.46875,0.03125"
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: OverrideSell
+    overrideAccount: Medical
+  - type: AccessReader
+    access: [["Medical"]]
+  - type: XenoArtifact
+    effectsTable: !type:GroupSelector
+      children:
+      - !type:NestedSelector
+        tableId: LootboxEffectTableMedical
+    triggersTable: !type:GroupSelector
+      children:
+      - !type:NestedSelector
+        tableId: LootboxTriggersMedical
+
+- type: entity
+  id: CrateLootboxScience # One-time artifacts, that stop being artifacts once you've triggered them
+  parent: CrateLootboxBasic
+  name: old science lock box
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay
+      color: "#ba4bf0"
+    - state: dirt
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: overlay-closed
+      color: "#ba4bf0"
+      map: [ lid_overlay ]
+    - state: dirt-closed
+      map: [ lid_dirt ]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      offset: "-0.46875,0.03125"
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: OverrideSell
+    overrideAccount: Science
+  - type: AccessReader
+    access: [["Research"]]
+  - type: XenoArtifact
+    effectsTable: !type:GroupSelector
+      children:
+      - !type:NestedSelector
+        tableId: LootboxEffectTableScience
+    triggersTable: !type:GroupSelector
+      children:
+      - !type:NestedSelector
+        tableId: LootboxTriggersScience
+
+- type: entity
+  id: CrateLootboxService # One-time artifacts, that stop being artifacts once you've triggered them
+  parent: CrateLootboxBasic
+  name: old service lock box
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay
+      color: "#53b723"
+    - state: dirt
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: overlay-closed
+      color: "#53b723"
+      map: [ lid_overlay ]
+    - state: dirt-closed
+      map: [ lid_dirt ]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      offset: "-0.46875,0.03125"
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: OverrideSell
+    overrideAccount: Service
+  - type: AccessReader
+    access: [["Service"]]
+  - type: XenoArtifact
+    effectsTable: !type:GroupSelector
+      children:
+      - !type:NestedSelector
+        tableId: LootboxEffectTableService
+    triggersTable: !type:GroupSelector
+      children:
+      - !type:NestedSelector
+        tableId: LootboxTriggersService
