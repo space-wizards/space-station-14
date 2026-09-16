@@ -56,7 +56,7 @@ public sealed class ResearchTest : GameTest
         var protoManager = server.ResolveDependency<IPrototypeManager>();
         var compFact = server.ResolveDependency<IComponentFactory>();
 
-        var latheSys = entMan.System<SharedLatheSystem>();
+        var latheSys = entMan.System<LatheSystem>();
 
         await server.WaitAssertion(() =>
         {

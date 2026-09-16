@@ -33,10 +33,9 @@ namespace Content.Shared.Lathe;
 /// <summary>
 /// This handles...
 /// </summary>
-public abstract partial class SharedLatheSystem : EntitySystem
+public abstract partial class LatheSystem : EntitySystem
 {
     [Dependency] protected IGameTiming Timing = default!;
-    [Dependency] protected IPrototypeManager Proto = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private EmagSystem _emag = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;
@@ -184,7 +183,7 @@ public abstract partial class SharedLatheSystem : EntitySystem
         var recipes = GetAvailableRecipes(entity, true);
         foreach (var id in recipes)
         {
-            if (!Proto.Resolve(id, out var proto))
+            if (!ProtoMan.Resolve(id, out var proto))
                 continue;
             foreach (var (mat, _) in proto.Materials)
             {
@@ -216,7 +215,7 @@ public abstract partial class SharedLatheSystem : EntitySystem
     [PublicAPI]
     public bool CanProduce(Entity<LatheComponent?> entity, string recipe, int amount = 1)
     {
-        return Proto.Resolve<LatheRecipePrototype>(recipe, out var proto) && CanProduce(entity, proto, amount);
+        return ProtoMan.Resolve<LatheRecipePrototype>(recipe, out var proto) && CanProduce(entity, proto, amount);
     }
 
     public bool CanProduce(Entity<LatheComponent?> entity, LatheRecipePrototype recipe, int amount = 1)
@@ -300,7 +299,7 @@ public abstract partial class SharedLatheSystem : EntitySystem
         if (batch.ItemsPrinted >= batch.ItemsRequested || batch.ItemsPrinted < 0) // Rollover sanity check
             entity.Comp.Queue.RemoveFirst();
 
-        var recipe = Proto.Index(batch.Recipe);
+        var recipe = ProtoMan.Index(batch.Recipe);
 
         var time = _reagentSpeed.ApplySpeed(entity.Owner, recipe.CompleteTime) * entity.Comp.TimeMultiplier;
 
@@ -360,7 +359,7 @@ public abstract partial class SharedLatheSystem : EntitySystem
     /// </summary>
     private void RefundCurrentRecipe(Entity<LatheComponent> lathe, ProtoId<LatheRecipePrototype> currentRecipe)
     {
-        var recipe = Proto.Index(currentRecipe);
+        var recipe = ProtoMan.Index(currentRecipe);
 
         foreach (var (mat, amount) in GetAdjustedAmount(lathe, recipe))
         {
@@ -376,7 +375,7 @@ public abstract partial class SharedLatheSystem : EntitySystem
     {
         var delta = batch.ItemsRequested - batch.ItemsPrinted;
 
-        var recipe = Proto.Index(batch.Recipe);
+        var recipe = ProtoMan.Index(batch.Recipe);
 
         foreach (var (mat, amount) in GetAdjustedAmount(lathe, recipe))
         {
@@ -386,7 +385,7 @@ public abstract partial class SharedLatheSystem : EntitySystem
 
     protected void FinishProducing(Entity<LatheComponent> entity)
     {
-        if (!Proto.Resolve(entity.Comp.CurrentRecipe, out var currentRecipe))
+        if (!ProtoMan.Resolve(entity.Comp.CurrentRecipe, out var currentRecipe))
             return;
 
         if (currentRecipe.Result is { } resultProto)
@@ -436,12 +435,12 @@ public abstract partial class SharedLatheSystem : EntitySystem
         var recipes = new HashSet<ProtoId<LatheRecipePrototype>>();
         foreach (var pack in component.StaticPacks)
         {
-            recipes.UnionWith(Proto.Index(pack).Recipes);
+            recipes.UnionWith(ProtoMan.Index(pack).Recipes);
         }
 
         foreach (var pack in component.DynamicPacks)
         {
-            recipes.UnionWith(Proto.Index(pack).Recipes);
+            recipes.UnionWith(ProtoMan.Index(pack).Recipes);
         }
 
         return recipes;
@@ -497,7 +496,7 @@ public abstract partial class SharedLatheSystem : EntitySystem
     {
         foreach (var id in packs)
         {
-            var pack = Proto.Index(id);
+            var pack = ProtoMan.Index(id);
             foreach (var recipe in pack.Recipes)
             {
                 if (args.GetUnavailable || database.UnlockedRecipes.Contains(recipe))
@@ -541,7 +540,7 @@ public abstract partial class SharedLatheSystem : EntitySystem
     private void BuildInverseRecipeDictionary()
     {
         InverseRecipes.Clear();
-        foreach (var latheRecipe in Proto.EnumeratePrototypes<LatheRecipePrototype>())
+        foreach (var latheRecipe in ProtoMan.EnumeratePrototypes<LatheRecipePrototype>())
         {
             if (latheRecipe.Result is not { } result)
                 continue;
@@ -560,7 +559,7 @@ public abstract partial class SharedLatheSystem : EntitySystem
 
     public string GetRecipeName(ProtoId<LatheRecipePrototype> proto)
     {
-        return GetRecipeName(Proto.Index(proto));
+        return GetRecipeName(ProtoMan.Index(proto));
     }
 
     public string GetRecipeName(LatheRecipePrototype proto)
@@ -570,14 +569,14 @@ public abstract partial class SharedLatheSystem : EntitySystem
 
         if (proto.Result is { } result)
         {
-            return Proto.Index(result).Name;
+            return ProtoMan.Index(result).Name;
         }
 
         if (proto.ResultReagents is { } resultReagents)
         {
             return ContentLocalizationManager.FormatList(resultReagents
                 .Select(p => Loc.GetString("lathe-menu-result-reagent-display",
-                    ("reagent", Proto.Index(p.Key).LocalizedName),
+                    ("reagent", ProtoMan.Index(p.Key).LocalizedName),
                     ("amount", p.Value)))
                 .ToList());
         }
@@ -588,7 +587,7 @@ public abstract partial class SharedLatheSystem : EntitySystem
     [PublicAPI]
     public string GetRecipeDescription(ProtoId<LatheRecipePrototype> proto)
     {
-        return GetRecipeDescription(Proto.Index(proto));
+        return GetRecipeDescription(ProtoMan.Index(proto));
     }
 
     public string GetRecipeDescription(LatheRecipePrototype proto)
@@ -598,14 +597,14 @@ public abstract partial class SharedLatheSystem : EntitySystem
 
         if (proto.Result is { } result)
         {
-            return Proto.Index(result).Description;
+            return ProtoMan.Index(result).Description;
         }
 
         if (proto.ResultReagents is { } resultReagents)
         {
             // We only use the first one for the description since these descriptions don't combine very well.
             var reagent = resultReagents.First().Key;
-            return Proto.Index(reagent).LocalizedDescription;
+            return ProtoMan.Index(reagent).LocalizedDescription;
         }
 
         return string.Empty;
@@ -619,7 +618,7 @@ public abstract partial class SharedLatheSystem : EntitySystem
 
     private void OnLatheQueueRecipeMessage(Entity<LatheComponent> entity, ref LatheQueueRecipeMessage args)
     {
-        if (Proto.Resolve(args.ID, out LatheRecipePrototype? recipe))
+        if (ProtoMan.Resolve(args.ID, out LatheRecipePrototype? recipe))
         {
             if (TryAddToQueue(entity.AsNullable(), recipe, args.Quantity))
             {

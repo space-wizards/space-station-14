@@ -188,7 +188,7 @@ public sealed partial class LatheMenu : FancyWindow
             if (!_prototypeManager.Resolve(id, out var proto))
                 continue;
 
-            var adjustedAmount = SharedLatheSystem.AdjustMaterial(amount, prototype.ApplyMaterialDiscount, multiplier);
+            var adjustedAmount = Shared.Lathe.LatheSystem.AdjustMaterial(amount, prototype.ApplyMaterialDiscount, multiplier);
             var sheetVolume = _materialStorage.GetSheetVolume(proto);
 
             var unit = Loc.GetString(proto.Unit);

@@ -13,7 +13,7 @@ using Robust.Server.GameObjects;
 namespace Content.Server.Lathe;
 
 [UsedImplicitly]
-public sealed partial class LatheSystem : SharedLatheSystem
+public sealed partial class ServerLatheSystem : LatheSystem
 {
     [Dependency] private AtmosphereSystem _atmosphere = default!;
     [Dependency] private TransformSystem _transform = default!;
@@ -87,7 +87,7 @@ public sealed partial class LatheSystem : SharedLatheSystem
             if (!potentialRecipes.Contains(new(recipeId)))
                 continue;
 
-            if (!Proto.TryIndex(recipeId, out LatheRecipePrototype? recipe))
+            if (!ProtoMan.TryIndex(recipeId, out LatheRecipePrototype? recipe))
                 continue;
 
             var itemName = GetRecipeName(recipe);

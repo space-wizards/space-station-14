@@ -1,13 +1,13 @@
-using Robust.Client.GameObjects;
-using Content.Shared.Lathe;
-using Content.Shared.Power;
 using Content.Client.Power;
+using Content.Shared.Lathe;
 using Content.Shared.Lathe.Components;
+using Content.Shared.Power;
+using Robust.Client.GameObjects;
 using Robust.Shared.GameStates;
 
 namespace Content.Client.Lathe;
 
-public sealed partial class LatheSystem : SharedLatheSystem
+public sealed partial class ClientLatheSystem : LatheSystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SpriteSystem _sprite = default!;
