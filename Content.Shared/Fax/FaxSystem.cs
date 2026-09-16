@@ -394,8 +394,7 @@ public abstract partial class FaxSystem : EntitySystem
     ///     Makes fax print from a file from the computer. A timeout is set after copying,
     ///     which is shared by the send button.
     /// </summary>
-    [PublicAPI]
-    public void PrintFile(Entity<FaxMachineComponent> fax, string content, bool officePaper, string? label = null, EntityUid? actor = null)
+    private void PrintFile(Entity<FaxMachineComponent> fax, string content, bool officePaper, string? label = null, EntityUid? actor = null)
     {
         var prototype = officePaper ? fax.Comp.PrintOfficePaperId : fax.Comp.PrintPaperId;
 
@@ -412,6 +411,15 @@ public abstract partial class FaxSystem : EntitySystem
             $"of {ToPrettyString(printout.Printout)}: {content}");
     }
 
+    /// <summary>
+    /// Returns a FaxPayload which can be sent through the fax network based on a specific FaxPrintout
+    /// This WILL spawn an entity in nullspace so if you don't send it to a fax machine, it WILL leak.
+    /// Simply write perfect code or perish.
+    /// </summary>
+    /// <param name="printout">Fax Printout we are sending</param>
+    /// <param name="prototype">Prototype of the entity being created</param>
+    /// <returns>The Payload we will be sending to a fax machine.</returns>
+    [PublicAPI]
     public FaxPayload GetPayload(FaxPrintout printout, string prototype = PaperId)
     {
         var paper = Spawn(prototype);
@@ -469,6 +477,7 @@ public abstract partial class FaxSystem : EntitySystem
     /// <summary>
     /// Checks if a fax machine is subject to an interaction cooldown.
     /// </summary>
+    [PublicAPI]
     public bool CanInteract(Entity<FaxMachineComponent> fax)
     {
         return Timing.CurTime >= fax.Comp.NextInteractTime;
@@ -522,7 +531,7 @@ public abstract partial class FaxSystem : EntitySystem
     ///     Sends message to addressee if paper is set and a known fax is selected
     ///     A timeout is set after sending, which is shared by the copy button.
     /// </summary>
-    public void Send(Entity<FaxMachineComponent> fax, EntityUid? user)
+    private void Send(Entity<FaxMachineComponent> fax, EntityUid? user)
     {
         if (!CanFax(fax, out var sendEntity))
         {
@@ -561,6 +570,7 @@ public abstract partial class FaxSystem : EntitySystem
     ///     Accepts a new message and adds it to the queue to print
     ///     If has parameter "notifyAdmins" also output a special message to admin chat.
     /// </summary>
+    [PublicAPI]
     public void Receive(Entity<FaxMachineComponent?> fax, FaxPayload payload)
     {
         if (!_faxQuery.Resolve(fax, ref fax.Comp))
