@@ -35,6 +35,7 @@ namespace Content.Client.GameTicking.Managers
         [ViewVariables] public string? ServerInfoBlob { get; private set; }
         [ViewVariables] public TimeSpan StartTime { get; private set; }
         [ViewVariables] public new bool Paused { get; private set; }
+        [ViewVariables] public RoundEndMessageInfo? LastRoundInfo { get; private set; }
 
         public override IReadOnlyList<(TimeSpan, string)> AllPreviousGameRules => new List<(TimeSpan, string)>();
 
@@ -46,6 +47,7 @@ namespace Content.Client.GameTicking.Managers
         public event Action? LobbyStatusUpdated;
         public event Action? LobbyLateJoinStatusUpdated;
         public event Action<IReadOnlyDictionary<NetEntity, Dictionary<ProtoId<JobPrototype>, int?>>>? LobbyJobsAvailableUpdated;
+        public event Action? PreviousRoundInfoUpdated;
 
         public override void Initialize()
         {
@@ -58,6 +60,7 @@ namespace Content.Client.GameTicking.Managers
             SubscribeNetworkEvent<TickerLobbyInfoEvent>(LobbyInfo);
             SubscribeNetworkEvent<TickerLobbyCountdownEvent>(LobbyCountdown);
             SubscribeNetworkEvent<RoundEndMessageEvent>(RoundEnd);
+            SubscribeNetworkEvent<PreviousRoundInfoMessageEvent>(OnPreviousRoundInfoEvent);
             SubscribeNetworkEvent<RequestWindowAttentionEvent>(OnAttentionRequest);
             SubscribeNetworkEvent<TickerLateJoinStatusEvent>(LateJoinStatus);
             SubscribeNetworkEvent<TickerJobsAvailableEvent>(UpdateJobsAvailable);
@@ -161,8 +164,17 @@ namespace Content.Client.GameTicking.Managers
         {
             // Force an update in the event of this song being the same as the last.
             RestartSound = message.RestartSound;
+            LastRoundInfo = message.RoundInfo;
 
-            _userInterfaceManager.GetUIController<RoundEndSummaryUIController>().OpenRoundEndSummaryWindow(message);
+            var controller = _userInterfaceManager.GetUIController<RoundEndSummaryUIController>();
+            controller.OpenRoundEndSummaryWindow(message.RoundInfo);
+            PreviousRoundInfoUpdated?.Invoke();
+        }
+
+        private void OnPreviousRoundInfoEvent(PreviousRoundInfoMessageEvent message)
+        {
+            LastRoundInfo = message.RoundInfo;
+            PreviousRoundInfoUpdated?.Invoke();
         }
     }
 }

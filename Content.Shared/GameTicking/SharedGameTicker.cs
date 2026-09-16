@@ -163,68 +163,74 @@ namespace Content.Shared.GameTicking
     }
 
     [Serializable, NetSerializable, DataDefinition]
-    public sealed partial class RoundEndMessageEvent : EntityEventArgs
+    public partial struct RoundEndPlayerInfo
     {
-        [Serializable, NetSerializable, DataDefinition]
-        public partial struct RoundEndPlayerInfo
-        {
-            [DataField]
-            public string PlayerOOCName;
+        [DataField]
+        public string PlayerOOCName;
 
-            [DataField]
-            public string? PlayerICName;
+        [DataField]
+        public string? PlayerICName;
 
-            [DataField, NonSerialized]
-            public NetUserId? PlayerGuid;
+        [DataField, NonSerialized]
+        public NetUserId? PlayerGuid;
 
-            public string Role;
+        public string Role;
 
-            [DataField, NonSerialized]
-            public string[] JobPrototypes;
+        [DataField, NonSerialized]
+        public string[] JobPrototypes;
 
-            [DataField, NonSerialized]
-            public string[] AntagPrototypes;
+        [DataField, NonSerialized]
+        public string[] AntagPrototypes;
 
-            public NetEntity? PlayerNetEntity;
+        public NetEntity? PlayerNetEntity;
 
-            [DataField]
-            public bool Antag;
+        [DataField]
+        public bool Antag;
 
-            [DataField]
-            public bool Observer;
+        [DataField]
+        public bool Observer;
 
-            public bool Connected;
-        }
+        public bool Connected;
+    }
 
-        public string GamemodeTitle { get; }
-        public string RoundEndText { get; }
-        public TimeSpan RoundDuration { get; }
-        public int RoundId { get; }
-        public int PlayerCount { get; }
-        public RoundEndPlayerInfo[] AllPlayersEndInfo { get; }
+    [Serializable, NetSerializable, DataDefinition]
+    public sealed partial class RoundEndMessageInfo(
+        string gamemodeTitle,
+        string roundEndText,
+        TimeSpan roundDuration,
+        int roundId,
+        int playerCount,
+        RoundEndPlayerInfo[] allPlayersEndInfo)
+    {
+        public string GamemodeTitle { get; } = gamemodeTitle;
+        public string RoundEndText { get; } = roundEndText;
+        public TimeSpan RoundDuration { get; } = roundDuration;
+        public int RoundId { get; } = roundId;
+        public int PlayerCount { get; } = playerCount;
+        public RoundEndPlayerInfo[] AllPlayersEndInfo { get; } = allPlayersEndInfo;
+    }
+
+    [Serializable, NetSerializable, DataDefinition]
+    public sealed partial class RoundEndMessageEvent(RoundEndMessageInfo roundInfo, ResolvedSoundSpecifier? restartSound) : EntityEventArgs
+    {
+        /// <summary>
+        /// Information describing the round
+        /// </summary>
+        public RoundEndMessageInfo RoundInfo { get; private set; } = roundInfo;
 
         /// <summary>
         /// Sound gets networked due to how entity lifecycle works between client / server and to avoid clipping.
         /// </summary>
-        public ResolvedSoundSpecifier? RestartSound;
+        public ResolvedSoundSpecifier? RestartSound = restartSound;
+    }
 
-        public RoundEndMessageEvent(
-            string gamemodeTitle,
-            string roundEndText,
-            TimeSpan roundDuration,
-            int roundId,
-            int playerCount,
-            RoundEndPlayerInfo[] allPlayersEndInfo,
-            ResolvedSoundSpecifier? restartSound)
-        {
-            GamemodeTitle = gamemodeTitle;
-            RoundEndText = roundEndText;
-            RoundDuration = roundDuration;
-            RoundId = roundId;
-            PlayerCount = playerCount;
-            AllPlayersEndInfo = allPlayersEndInfo;
-            RestartSound = restartSound;
-        }
+    [Serializable, NetSerializable, DataDefinition]
+    public sealed partial class PreviousRoundInfoMessageEvent(RoundEndMessageInfo info) : EntityEventArgs
+    {
+        /// <summary>
+        /// Information describing the previous round
+        /// </summary>
+        public RoundEndMessageInfo RoundInfo { get; private set; } = info;
     }
 
     [Serializable, NetSerializable]

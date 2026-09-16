@@ -48,10 +48,6 @@ public sealed partial class GameTicker
             var tempDir = _cfg.GetCVar(CCVars.ReplayAutoRecordTempDir);
             ResPath? moveToPath = null;
 
-            // Set the round end player and text back to null to prevent it from writing the previous round's data.
-            _replayRoundPlayerInfo = null;
-            _replayRoundText = null;
-
             if (!string.IsNullOrEmpty(tempDir))
             {
                 var baseReplayPath = new ResPath(_cfg.GetCVar(CVars.ReplayDirectory)).ToRootedPath();
@@ -121,12 +117,21 @@ public sealed partial class GameTicker
 
     private void ReplaysOnRecordingStopped(MappingDataNode metadata)
     {
-        // Write round info like map and round end summery into the replay_final.yml file. Useful for external parsers.
+        // Write round info like map and round end summary into the replay_final.yml file. Useful for external parsers.
 
         metadata["map"] = new ValueDataNode(_gameMapManager.GetSelectedMap()?.MapName);
         metadata["gamemode"] = new ValueDataNode(CurrentPreset != null ? Loc.GetString(CurrentPreset.ModeTitle) : string.Empty);
-        metadata["roundEndPlayers"] = _serialman.WriteValue(_replayRoundPlayerInfo);
-        metadata["roundEndText"] = new ValueDataNode(_replayRoundText);
+        if (_lastRoundInfo != null && _lastRoundInfo.RoundId == RoundId)
+        {
+            metadata["roundEndPlayers"] = _serialman.WriteValue(_lastRoundInfo?.AllPlayersEndInfo);
+            metadata["roundEndText"] = new ValueDataNode(_lastRoundInfo?.RoundEndText);
+        }
+        else
+        {
+            metadata["roundEndPlayers"] = new ValueDataNode((string?)null);
+            metadata["roundEndText"] = new ValueDataNode((string?)null);
+        }
+
         metadata["server_id"] = new ValueDataNode(_cfg.GetCVar(CCVars.ServerId));
         metadata["server_name"] = new ValueDataNode(_cfg.GetCVar(CCVars.AdminLogsServerName));
         metadata["roundId"] = new ValueDataNode(RoundId.ToString());
