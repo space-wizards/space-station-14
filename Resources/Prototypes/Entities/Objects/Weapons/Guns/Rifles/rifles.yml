@@ -204,8 +204,6 @@
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/estocshot.ogg
-    angleIncrease: 1
-    angleDecay: 9.5
     shotsPerBurst: 3
     selectedMode: Burst
     availableModes:
@@ -213,8 +211,8 @@
     - SemiAuto
     burstFireRate: 14
   - type: GunWieldBonus
-    minAngle: -19
-    maxAngle: -22
+    minAngle: -20
+    maxAngle: -30
   - type: ItemSlots
     slots:
       gun_magazine:
