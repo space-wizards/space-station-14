@@ -234,18 +234,19 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
             var layer = proto.Sprites[i];
             var layerId = layer.GetLayerID(markingId: proto.ID);
             var sprite = layer.Sprite;
+
+            // Having three separate indices and a magic +1 is cursed, but:
+            // - index refers to the index of the organ the marking is applied to
+            // - i is the current sprite of the marking that is being applied
+            // - numDisplacements tracks how many displacements have been applied, and is
+            //   an additional offset to ensure that the order of the base sprites is correct
+            //   after inserting a displacement layer
+            // - The +1 ensures that markings render on top of the base organ
             var layerIndex = index + i + 1;
 
             // Add the marking layer to the target entity, if the target doesn't have it yet
             if (!_sprite.LayerMapTryGet(target, layerId, out var spriteLayer, false))
             {
-                // Having three separate indices and a magic +1 is cursed, but:
-                // - index refers to the index of the organ the marking is applied to
-                // - i is the current sprite of the marking that is being applied
-                // - numDisplacements tracks how many displacements have been applied, and is
-                //   an additional offset to ensure that the order of the base sprites is correct
-                //   after inserting a displacement layer
-                // - The +1 ensures that markings render on top of the base organ
                 spriteLayer = _sprite.AddLayer(target, sprite, layerIndex + numDisplacements);
                 _sprite.LayerMapSet(target, layerId, spriteLayer);
                 _sprite.LayerSetSprite(target, layerId, sprite);
