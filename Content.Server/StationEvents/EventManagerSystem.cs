@@ -19,7 +19,7 @@ public sealed partial class EventManagerSystem : EntitySystem
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private EntityTableSystem _entityTable = default!;
-    [Dependency] public ServerGameTicker GameTicker = default!;
+    [Dependency] private ServerGameTicker _gameTicker = default!;
     [Dependency] private RoundEndSystem _roundEnd = default!;
 
     public bool EventsEnabled { get; private set; }
@@ -68,7 +68,7 @@ public sealed partial class EventManagerSystem : EntitySystem
             return;
         }
 
-        GameTicker.AddGameRule(randomLimitedEvent);
+        _gameTicker.AddGameRule(randomLimitedEvent);
     }
 
     /// <summary>
@@ -106,7 +106,7 @@ public sealed partial class EventManagerSystem : EntitySystem
         playerCount ??= _playerManager.PlayerCount;
 
         // playerCount does a lock so we'll just keep the variable here
-        currentTime ??= GameTicker.RoundDuration();
+        currentTime ??= _gameTicker.RoundDuration();
 
         var totalWeight = 0f;
 
@@ -159,11 +159,11 @@ public sealed partial class EventManagerSystem : EntitySystem
         playerCount ??= _playerManager.PlayerCount;
 
         // playerCount does a lock so we'll just keep the variable here
-        currentTime ??= GameTicker.RoundDuration();
+        currentTime ??= _gameTicker.RoundDuration();
 
         foreach (var eventid in selectedEvents)
         {
-            if (GameTicker.IsIgnored(eventid))
+            if (_gameTicker.IsIgnored(eventid))
                 continue;
 
             if (!ProtoMan.Resolve(eventid, out var eventproto))
@@ -251,7 +251,7 @@ public sealed partial class EventManagerSystem : EntitySystem
         var playerCount = playerCountOverride ?? _playerManager.PlayerCount;
 
         // playerCount does a lock so we'll just keep the variable here
-        var currentTime = currentTimeOverride ?? GameTicker.RoundDuration();
+        var currentTime = currentTimeOverride ?? _gameTicker.RoundDuration();
 
         var result = new Dictionary<EntityPrototype, StationEventComponent>();
 

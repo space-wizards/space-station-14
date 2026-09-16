@@ -43,7 +43,7 @@ public sealed partial class XenoborgSystem : EntitySystem
         var mothershipCoreQuery = AllEntityQuery<MothershipCoreComponent>(); // paused mothership cores still count
         var mothershipCoreAlive = mothershipCoreQuery.MoveNext(out _, out _);
 
-        var xenoborgsRuleQuery = EntityQueryEnumerator<Shared.GameTicking.Rules.Components.XenoborgsRuleComponent>();
+        var xenoborgsRuleQuery = EntityQueryEnumerator<XenoborgsRuleComponent>();
         if (xenoborgsRuleQuery.MoveNext(out var xenoborgsRuleEnt, out var xenoborgsRuleComp))
             _xenoborgsRule.SendXenoborgDeathAnnouncement((xenoborgsRuleEnt, xenoborgsRuleComp), mothershipCoreAlive);
     }
