@@ -1,3 +1,4 @@
+using Content.Shared.Conditions;
 using Content.Shared.Inventory;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
@@ -8,14 +9,14 @@ namespace Content.Shared.EntityConditions.Conditions.Body;
 /// <summary>
 /// A condition which passes if the specified entity has their mouth uncovered, generally meaning they're able to eat or drink.
 /// </summary>
-public sealed partial class MouthUncoveredEntityConditionSystem : EntityConditionSystem<InventoryComponent, MouthUncoveredCondition>
+public sealed partial class MouthUncoveredEntityConditionSystem : EntitySystem
 {
     [Dependency] private IngestionSystem _ingestion = default!;
 
-    /// <inheritdoc/>
-    protected override void Condition(Entity<InventoryComponent> entity, ref EntityConditionEvent<MouthUncoveredCondition> args)
+    [SubscribeLocalEvent]
+    private void Condition(Entity<InventoryComponent> entity, ref ConditionEvaluationEvent<MouthUncoveredCondition> args)
     {
-        args.Result = _ingestion.HasMouthAvailable(entity, args.Condition.Slots);
+        args.Value = _ingestion.HasMouthAvailable(entity, args.Condition.Slots)?1:0;
     }
 }
 
