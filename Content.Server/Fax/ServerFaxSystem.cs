@@ -45,13 +45,13 @@ public sealed partial class ServerFaxSystem : FaxSystem
 
                 if (newName.Length > 20)
                 {
-                    PopupSystem.PopupEntity(Loc.GetString("fax-machine-popup-name-long"), entity);
+                    Popup.PopupEntity(Loc.GetString("fax-machine-popup-name-long"), entity);
                     return;
                 }
 
                 if (entity.Comp.KnownFaxes.ContainsValue(newName) && !Emag.CheckFlag(entity, EmagType.Interaction)) // Allow existing names if emagged for fun
                 {
-                    PopupSystem.PopupEntity(Loc.GetString("fax-machine-popup-name-exist"), entity);
+                    Popup.PopupEntity(Loc.GetString("fax-machine-popup-name-exist"), entity);
                     return;
                 }
 
@@ -59,7 +59,7 @@ public sealed partial class ServerFaxSystem : FaxSystem
                     LogImpact.Low,
                     $"{ToPrettyString(user):user} renamed {ToPrettyString(entity):tool} from \"{entity.Comp.FaxName}\" to \"{newName}\"");
                 entity.Comp.FaxName = newName;
-                PopupSystem.PopupEntity(Loc.GetString("fax-machine-popup-name-set"), entity);
+                Popup.PopupEntity(Loc.GetString("fax-machine-popup-name-set"), entity);
                 UpdateUserInterface(entity);
             });
 

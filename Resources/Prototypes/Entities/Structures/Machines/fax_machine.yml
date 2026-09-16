@@ -11,11 +11,10 @@
     - state: icon
     - state: idle
       map: [ "faxEyes" ]
-    - state: printing
-      map: [ "printing" ]
-      visible: false
     - state:
-      map: [ "enum.FaxMachineVisuals.VisualState" ]
+      map: [ "enum.FaxFunctions.Printing" ]
+    - state:
+      map: [ "enum.FaxFunctions.Inserting" ]
   - type: Icon
     sprite: Structures/Machines/fax_machine.rsi
     state: icon
@@ -65,19 +64,13 @@
       blacklist:
         components:
           - CargoSlip
+  - type: FaxVisuals
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
         faxEyes:
           True: { visible: true }
           False: { visible: false }
-      enum.FaxMachineVisuals.VisualState:
-        printing:
-          Printing: { visible: true }
-          Idle: { visible: false }
-        enum.FaxMachineVisuals.VisualState:
-          Inserting: { visible: true }
-          Idle: { visible: false }
   - type: ItemSlots
   - type: ContainerContainer
     containers:
@@ -102,13 +95,15 @@
       color: "#bfe3ff"
     - state: idle
       map: [ "faxEyes" ]
-    - state: printing
-      map: [ "printing" ]
-      visible: false
     - state:
-      map: [ "enum.FaxMachineVisuals.VisualState" ]
+      map: [ "enum.FaxFunctions.Printing" ]
+    - state:
+      map: [ "enum.FaxFunctions.Inserting" ]
   - type: FaxMachine
     name: "Central Command"
+    paperSlot: # You can insert anything.
+      insertSound: /Audio/Machines/scanning.ogg
+      ejectSound: /Audio/Machines/tray_eject.ogg
     whitelist: null
     settings: Centcomm
     notifyAdmins: true
@@ -125,11 +120,10 @@
       color: "#a3a3a3"
     - state: idle
       map: [ "faxEyes" ]
-    - state: printing
-      map: [ "printing" ]
-      visible: false
     - state:
-      map: [ "enum.FaxMachineVisuals.VisualState" ]
+      map: [ "enum.FaxFunctions.Printing" ]
+    - state:
+      map: [ "enum.FaxFunctions.Inserting" ]
   - type: FaxMachine
     name: "ERR*?*%!"
     responsePings: false

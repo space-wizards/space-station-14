@@ -33,24 +33,24 @@ public abstract partial class FaxSystem : EntitySystem
     [Dependency] protected ISharedAdminLogManager AdminLogger = default!;
     [Dependency] protected IGameTiming Timing = default!;
     [Dependency] private INetManager _net = default!;
-    [Dependency] private SharedCloningSystem _cloningSystem = default!;
+    [Dependency] private SharedCloningSystem _cloning = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] protected EmagSystem Emag = default!;
-    [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;
+    [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private LabelSystem _labelSystem = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
     [Dependency] private PaperSystem _paperSystem = default!;
-    [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] protected SharedAudioSystem AudioSystem = default!;
-    [Dependency] private SharedDeviceNetworkSystem _deviceNetworkSystem = default!;
-    [Dependency] protected SharedPopupSystem PopupSystem = default!;
-    [Dependency] private SharedTransformSystem _xFormSystem = default!;
+    [Dependency] private SharedDeviceNetworkSystem _deviceNetwork = default!;
+    [Dependency] protected SharedPopupSystem Popup = default!;
+    [Dependency] private SharedTransformSystem _xForm = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     [Dependency] private EntityQuery<FaxableObjectComponent> _faxableQuery;
     [Dependency] private EntityQuery<FaxecuteComponent> _faxecuteQuery;
-    [Dependency] private EntityQuery<FaxMachineComponent> _faxQuery;
+    [Dependency] protected EntityQuery<FaxMachineComponent> FaxQuery;
 
     private const string PaperSlotId = "Paper";
     public const string PaperId = "Paper";
@@ -122,17 +122,17 @@ public abstract partial class FaxSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnComponentInit(Entity<FaxMachineComponent> entity, ref ComponentInit args)
     {
-        _itemSlotsSystem.AddItemSlot(entity.Owner, PaperSlotId, entity.Comp.PaperSlot);
+        _itemSlots.AddItemSlot(entity.Owner, PaperSlotId, entity.Comp.PaperSlot);
         UpdateAppearance(entity);
     }
 
     [SubscribeLocalEvent]
     private void OnComponentRemove(Entity<FaxMachineComponent> fax, ref ComponentRemove args)
     {
-        _itemSlotsSystem.RemoveItemSlot(fax.Owner, fax.Comp.PaperSlot);
+        _itemSlots.RemoveItemSlot(fax.Owner, fax.Comp.PaperSlot);
         // TODO: Send this when power goes out!
         var payload = new FaxShutdownPayload();
-        _deviceNetworkSystem.SendPacket(fax.Owner, null, ref payload);
+        _deviceNetwork.SendPacket(fax.Owner, null, ref payload);
 
         // Don't leave hanging entities in nullspace!
         while (fax.Comp.PrintingQueue.TryDequeue(out var queue))
@@ -156,7 +156,7 @@ public abstract partial class FaxSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnCanDragDrop(Entity<FaxMachineComponent> fax, ref CanDropTargetEvent args)
     {
-        if (args.Handled || !_faxableQuery.HasComp(args.Dragged))
+        if (args.Handled || !_itemSlots.CanInsert(fax.Owner, fax.Comp.PaperSlot, args.Dragged, args.User))
             return;
 
         args.CanDrop = true;
@@ -166,10 +166,7 @@ public abstract partial class FaxSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnDragDropped(Entity<FaxMachineComponent> fax, ref DragDropTargetEvent args)
     {
-        if (!_faxableQuery.HasComp(args.Dragged))
-            return;
-
-        _itemSlotsSystem.TryInsert(fax.Owner, fax.Comp.PaperSlot, args.Dragged, args.User);
+        _itemSlots.TryInsert(fax.Owner, fax.Comp.PaperSlot, args.Dragged, args.User);
     }
 
     [SubscribeLocalEvent]
@@ -197,13 +194,16 @@ public abstract partial class FaxSystem : EntitySystem
         fax.Comp.InsertionEnd = fax.Comp.InsertionTime + Timing.CurTime;
         fax.Comp.Functions |= FaxFunctions.Inserting;
 
-        if (_faxableQuery.TryComp(fax.Comp.PaperSlot.Item, out var faxable) && fax.Comp.InsertingState != faxable.InsertingState)
+        if (_faxableQuery.TryComp(fax.Comp.PaperSlot.Item, out var faxable) && faxable.InsertingState != null)
         {
-            fax.Comp.InsertingState = faxable.InsertingState;
-            DirtyField(fax.AsNullable(), nameof(FaxMachineComponent.InsertingState));
+            _appearance.SetData(fax, FaxMachineVisuals.Inserting, faxable.InsertingState);
+        }
+        else
+        {
+            _appearance.RemoveData(fax, FaxMachineVisuals.Inserting);
         }
 
-        _itemSlotsSystem.SetLock(fax.Owner, fax.Comp.PaperSlot, true);
+        _itemSlots.SetLock(fax.Owner, fax.Comp.PaperSlot, true);
         DirtyField(fax.AsNullable(), nameof(FaxMachineComponent.Functions));
         UpdateAppearance(fax);
     }
@@ -213,13 +213,13 @@ public abstract partial class FaxSystem : EntitySystem
         fax.Comp.InsertionEnd = TimeSpan.Zero;
         fax.Comp.Functions &= ~FaxFunctions.Inserting;
         DirtyField(fax.AsNullable(), nameof(FaxMachineComponent.Functions));
-        _itemSlotsSystem.SetLock(fax.Owner, fax.Comp.PaperSlot, false);
+        _itemSlots.SetLock(fax.Owner, fax.Comp.PaperSlot, false);
     }
 
     private void Eject(Entity<FaxMachineComponent> fax)
     {
         FinishInsert(fax);
-        _itemSlotsSystem.TryEject(fax, fax.Comp.PaperSlot, null, out _, true);
+        _itemSlots.TryEject(fax, fax.Comp.PaperSlot, null, out _, true);
     }
 
     // TODO: One day this should pause the print, but at the moment it's not worth the extra complexity :P
@@ -228,7 +228,7 @@ public abstract partial class FaxSystem : EntitySystem
     {
         if (args.Powered)
         {
-            _itemSlotsSystem.SetLock(fax.Owner, fax.Comp.PaperSlot, false);
+            _itemSlots.SetLock(fax.Owner, fax.Comp.PaperSlot, false);
             // Update devices now that we can send pings again.
             Refresh(fax);
             UpdateAppearance(fax);
@@ -243,8 +243,8 @@ public abstract partial class FaxSystem : EntitySystem
 
          // Lock slot when power is off
          var payload = new FaxShutdownPayload();
-         _deviceNetworkSystem.SendPacket(fax.Owner, null, ref payload);
-         _itemSlotsSystem.SetLock(fax.Owner, fax.Comp.PaperSlot, true);
+         _deviceNetwork.SendPacket(fax.Owner, null, ref payload);
+         _itemSlots.SetLock(fax.Owner, fax.Comp.PaperSlot, true);
     }
 
     [SubscribeLocalEvent]
@@ -258,7 +258,7 @@ public abstract partial class FaxSystem : EntitySystem
 
         var pong = new FaxPongPayload(fax.Comp.FaxName);
 
-        _deviceNetworkSystem.SendPacket(fax.Owner, args.SenderAddress, ref pong);
+        _deviceNetwork.SendPacket(fax.Owner, args.SenderAddress, ref pong);
     }
 
     [SubscribeLocalEvent]
@@ -326,7 +326,7 @@ public abstract partial class FaxSystem : EntitySystem
 
     private void UpdateAppearance(Entity<FaxMachineComponent> fax)
     {
-        _appearanceSystem.SetData(fax, FaxMachineVisuals.VisualState, fax.Comp.Functions);
+        _appearance.SetData(fax, FaxMachineVisuals.VisualState, fax.Comp.Functions);
     }
 
     protected void UpdateUserInterface(Entity<FaxMachineComponent> fax)
@@ -344,7 +344,7 @@ public abstract partial class FaxSystem : EntitySystem
 
         var damageSpec = faxecute.Damage;
         _damageable.ChangeDamage(target.Value, damageSpec);
-        PopupSystem.PopupEntity(Loc.GetString("fax-machine-popup-error", ("target", fax)), fax, PopupType.LargeCaution);
+        Popup.PopupEntity(Loc.GetString("fax-machine-popup-error", ("target", fax)), fax, PopupType.LargeCaution);
     }
 
     private void AddDestination(Entity<FaxMachineComponent> fax, string address, string name)
@@ -381,7 +381,7 @@ public abstract partial class FaxSystem : EntitySystem
 
         var payload = new FaxPingPayload(fax.Comp.FaxName, Emag.CheckFlag(fax, EmagType.Interaction));
 
-        _deviceNetworkSystem.SendPacket(fax.Owner, null, ref payload);
+        _deviceNetwork.SendPacket(fax.Owner, null, ref payload);
         DirtyField(fax.AsNullable(), nameof(FaxMachineComponent.KnownFaxes));
     }
 
@@ -514,7 +514,7 @@ public abstract partial class FaxSystem : EntitySystem
 
         Timeout(fax);
 
-        if (!_cloningSystem.TryClone(paper.Value, null, fax.Comp.Settings, out var copied))
+        if (!_cloning.TryClone(paper.Value, null, fax.Comp.Settings, out var copied))
             return;
 
         EnqueuePrint(fax, copied.Value);
@@ -545,12 +545,12 @@ public abstract partial class FaxSystem : EntitySystem
         if (!fax.Comp.KnownFaxes.TryGetValue(fax.Comp.DestinationFaxAddress, out var faxName))
             return;
 
-        if (!_cloningSystem.TryClone(sendEntity.Value, null, fax.Comp.Settings, out var sent))
+        if (!_cloning.TryClone(sendEntity.Value, null, fax.Comp.Settings, out var sent))
             return;
 
         var payload = new FaxPayload(GetNetEntity(sent.Value));
 
-        _deviceNetworkSystem.SendPacket(fax.Owner, fax.Comp.DestinationFaxAddress, ref payload);
+        _deviceNetwork.SendPacket(fax.Owner, fax.Comp.DestinationFaxAddress, ref payload);
 
         AdminLogger.Add(LogType.Action,
             LogImpact.Low,
@@ -573,12 +573,12 @@ public abstract partial class FaxSystem : EntitySystem
     [PublicAPI]
     public void Receive(Entity<FaxMachineComponent?> fax, FaxPayload payload)
     {
-        if (!_faxQuery.Resolve(fax, ref fax.Comp))
+        if (!FaxQuery.Resolve(fax, ref fax.Comp))
             return;
 
         var faxName = payload.SenderName ?? Loc.GetString("fax-machine-popup-source-unknown");
 
-        PopupSystem.PopupEntity(Loc.GetString("fax-machine-popup-received", ("from", faxName)), fax);
+        Popup.PopupEntity(Loc.GetString("fax-machine-popup-received", ("from", faxName)), fax);
 
         if (fax.Comp.NotifyAdmins)
             NotifyAdmins(faxName);
@@ -628,7 +628,7 @@ public abstract partial class FaxSystem : EntitySystem
             printout = GetEntity(queued.Printout);
         } while (printout == EntityUid.Invalid); // Error handling for badly predicted or deleted entities!
 
-        _xFormSystem.SetCoordinates(printout, Transform(fax).Coordinates);
+        _xForm.SetCoordinates(printout, Transform(fax).Coordinates);
 
         AdminLogger.Add(LogType.Action, LogImpact.Low, $"\"{fax.Comp.FaxName}\" {ToPrettyString(fax):tool} printed {ToPrettyString(printout):subject}: {_paperSystem.GetContent(printout)}");
         DirtyField(fax.AsNullable(), nameof(FaxMachineComponent.PrintingQueue));
@@ -642,12 +642,6 @@ public abstract partial class FaxSystem : EntitySystem
 public enum FaxUiKey : byte
 {
     Key
-}
-
-[Serializable, NetSerializable]
-public enum FaxMachineVisuals : byte
-{
-    VisualState,
 }
 
 [DataDefinition]

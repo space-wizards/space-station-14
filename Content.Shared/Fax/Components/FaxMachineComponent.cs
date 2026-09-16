@@ -47,12 +47,6 @@ public sealed partial class FaxMachineComponent : Component
     public string FaxName { get; set; } = "Unknown";
 
     /// <summary>
-    /// Sprite to use when inserting an object.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public string InsertingState = "inserting";
-
-    /// <summary>
     /// Device address of fax in network to which data will be send
     /// </summary>
     [DataField("destinationAddress"), AutoNetworkedField]
@@ -133,7 +127,7 @@ public sealed partial class FaxMachineComponent : Component
     /// How long the inserting animation will play
     /// </summary>
     [ViewVariables]
-    public TimeSpan InsertionTime = TimeSpan.FromSeconds(1.88f); // 0.02 off for correct animation
+    public TimeSpan InsertionTime = TimeSpan.FromSeconds(2.4f);
 
     /// <summary>
     /// Remaining time of printing animation
@@ -145,7 +139,7 @@ public sealed partial class FaxMachineComponent : Component
     /// How long the printing animation will play
     /// </summary>
     [ViewVariables]
-    public TimeSpan PrintingTime = TimeSpan.FromSeconds(2.3f);
+    public TimeSpan PrintingTime = TimeSpan.FromSeconds(2.8f);
 
     /// <summary>
     ///     The prototype ID to use for faxed or copied entities if we can't get one from

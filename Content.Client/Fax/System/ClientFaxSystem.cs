@@ -11,41 +11,72 @@ namespace Content.Client.Fax.System;
 public sealed partial class ClientFaxSystem : FaxSystem
 {
     [Dependency] private AnimationPlayerSystem _player = default!;
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
-
-    private const string FaxKey = "faxecute";
+    [Dependency] private SpriteSystem _sprite = default!;
 
     [SubscribeLocalEvent]
-    private void OnAppearanceChanged(Entity<FaxMachineComponent> fax, ref AppearanceChangeEvent args)
+    private void OnAppearanceChanged(Entity<FaxVisualsComponent> fax, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
-            return;
-
-        if (_player.HasRunningAnimation(fax, FaxKey))
             return;
 
         if (!args.TryGetData(FaxMachineVisuals.VisualState, out FaxFunctions visuals))
             return;
 
-        if ((visuals & FaxFunctions.Inserting) == FaxFunctions.Inserting)
+        if (!FaxQuery.TryComp(fax, out var faxComp))
+            return;
+
+        foreach (var function in Enum.GetValues<FaxFunctions>())
         {
+            if (!_sprite.LayerMapTryGet((fax.Owner, args.Sprite), function, out var index, false))
+                continue;
+
+            _sprite.LayerSetVisible((fax, args.Sprite), index, (visuals & function) == function);
+        }
+
+        // Next do animations
+        if ((visuals & FaxFunctions.Inserting) == FaxFunctions.Inserting && !_player.HasRunningAnimation(fax, nameof(FaxFunctions.Inserting)))
+        {
+            if (!args.TryGetData(FaxMachineVisuals.Inserting, out string? state))
+                state = fax.Comp.InsertingState;
+
             _player.Play(fax,
-                new Animation()
+                new Animation
                 {
-                    Length = fax.Comp.InsertionTime,
+                    Length = faxComp.InsertionTime,
                     AnimationTracks =
                     {
-                        new AnimationTrackSpriteFlick()
+                        new AnimationTrackSpriteFlick
                         {
-                            LayerKey = FaxMachineVisuals.VisualState,
+                            LayerKey = FaxFunctions.Inserting,
                             KeyFrames =
                             {
-                                new AnimationTrackSpriteFlick.KeyFrame(fax.Comp.InsertingState, 0f)
+                                new AnimationTrackSpriteFlick.KeyFrame(state, 0f)
                             },
                         },
                     },
                 },
-                FaxKey);
+                nameof(FaxFunctions.Inserting));
+        }
+
+        if ((visuals & FaxFunctions.Printing) == FaxFunctions.Printing && !_player.HasRunningAnimation(fax, nameof(FaxFunctions.Printing)))
+        {
+            _player.Play(fax,
+                new Animation
+                {
+                    Length = faxComp.PrintingTime,
+                    AnimationTracks =
+                    {
+                        new AnimationTrackSpriteFlick
+                        {
+                            LayerKey = FaxFunctions.Printing,
+                            KeyFrames =
+                            {
+                                new AnimationTrackSpriteFlick.KeyFrame(fax.Comp.PrintingState, 0f)
+                            },
+                        },
+                    },
+                },
+                nameof(FaxFunctions.Printing));
         }
     }
 
