@@ -45,7 +45,7 @@ public abstract partial class FaxSystem : EntitySystem
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] protected SharedAudioSystem AudioSystem = default!;
     [Dependency] private SharedDeviceNetworkSystem _deviceNetwork = default!;
-    [Dependency] private SharedGameTicker _gameTicker = default!;
+    [Dependency] private GameTicker _gameTicker = default!;
     [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] private SharedTransformSystem _xForm = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
