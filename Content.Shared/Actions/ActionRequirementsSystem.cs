@@ -18,6 +18,9 @@ public sealed partial class ActionRequirementsSystem : EntitySystem
         var performerConditions = GetConditions(ent, ActionRequirementTarget.Performer);
 
         var user = args.User;
+
+        // We always need to pass in some target to the Loc, it is probably safe to assume if there is no target we can just pass in the user.
+        // Its just popup stuff anyway.
         var target = args.Target ?? args.User;
 
         if (!_conditions.TryConditions(args.User, performerConditions))
@@ -52,9 +55,12 @@ public sealed partial class ActionRequirementsSystem : EntitySystem
 
         _effects.TryApplyEffects(user, performerEffects, user: user);
 
+        if (target == null)
+            return;
+
         var targetEffects =  GetEffects(ent, ActionRequirementTarget.Target);
 
-        _effects.TryApplyEffects(target, targetEffects, user: user);
+        _effects.TryApplyEffects(target.Value, targetEffects, user: user);
     }
 
     private EntityCondition[] GetConditions(Entity<ActionRequirementsComponent> ent, ActionRequirementTarget target)

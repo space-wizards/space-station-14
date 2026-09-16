@@ -31,7 +31,7 @@ public sealed partial class ActionRequirementsComponent : Component
     /// Gets "Performer", "Target" and "Action" passed into it as identities.
     /// </summary>
     [DataField]
-    public LocId? FailPopup; // Conditions could return their own fail reason text maybe? Eventually?
+    public LocId? FailPopup; // TODO: Conditions should return their own text for why they failed to use in popups. Then this can be optional and be made to ignore that text instead.
 
     /// <summary>
     /// The type the popup for the performer should be.
@@ -60,4 +60,6 @@ public enum ActionRequirementTarget : byte
     /// The target is both the performer and the target.
     /// </summary>
     Both = Performer | Target,
+
+    // World - Maybe once conditions and effects support tile/world targeting properly.
 }

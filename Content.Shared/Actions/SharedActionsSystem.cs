@@ -612,7 +612,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
         UpdateAction(action);
 
-        var actionTarget = ev.Performer;
+        EntityUid? actionTarget = null;
         if (actionEvent is EntityTargetActionEvent targetEv)
             actionTarget = targetEv.Target;
 
