@@ -17,7 +17,7 @@ public sealed class EuiManagerTest : GameTest
     };
 
     [SidedDependency(Side.Server)] private IPlayerManager _sPlayerManager = null!;
-    [SidedDependency(Side.Server)] private EuiManager _euiManager = null!;
+    [SidedDependency(Side.Server)] private EuiManager _sEuiManager = null!;
 
     [Test]
     [Retry(2)]
@@ -28,7 +28,7 @@ public sealed class EuiManagerTest : GameTest
         {
             var clientSession = _sPlayerManager.Sessions.Single();
             var ui = new AdminAnnounceEui();
-            _euiManager.OpenEui(ui, clientSession);
+            _sEuiManager.OpenEui(ui, clientSession);
         });
 
         await RunUntilSynced();

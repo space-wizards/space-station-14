@@ -74,19 +74,20 @@ public sealed class HandTests : GameTest
     public async Task TestPickUpThenDropInContainer()
     {
         await Pair.CreateTestMap();
-        Assert.That(TestMap, Is.Not.Null);
+        Assume.That(TestMap, Is.Not.Null);
 
         EntityUid item = default;
         EntityUid box = default;
         EntityUid player = default;
         HandsComponent hands = default!;
 
-        // spawn the elusive box and crowbar at the coordinates
-        await Server.WaitPost(() => box = SSpawnAtPosition(TestPickUpThenDropInContainerTestBox, TestMap.GridCoords));
-        await Server.WaitPost(() => item = SSpawnAtPosition(Crowbar, TestMap.GridCoords));
-        // place the player at the exact same coordinates and have them grab the crowbar
         await Server.WaitPost(() =>
         {
+            // spawn the elusive box and crowbar at the coordinates
+            box = SSpawnAtPosition(TestPickUpThenDropInContainerTestBox, TestMap.GridCoords);
+            item = SSpawnAtPosition(Crowbar, TestMap.GridCoords);
+
+            // place the player at the exact same coordinates and have them grab the crowbar
             player = ServerSession!.AttachedEntity!.Value;
             _sTransformSystem.PlaceNextTo(player, item);
             hands = SComp<HandsComponent>(player);

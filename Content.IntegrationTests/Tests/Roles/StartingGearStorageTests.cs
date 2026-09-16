@@ -47,8 +47,8 @@ public sealed class StartingGearPrototypeStorageTest : GameTest
 
             foreach (var ent in ents)
             {
-                if (!_sStorageSystem.CanInsert(bag, ent, out var reason))
-                    Assert.Fail($"{nameof(StartingGearPrototype)} {gearProto.ID} could not successfully put item {SToPrettyString(ent)} into storage {bag.Id}. Reason: {reason ?? ""}");
+                Assert.That(_sStorageSystem.CanInsert(bag, ent, out var reason),
+                    $"{nameof(StartingGearPrototype)} {gearProto.ID} could not successfully put item {SToPrettyString(ent)} into storage {bag.Id}. Reason: {reason ?? "Unknown"}");
 
                 SDeleteNow(ent);
             }

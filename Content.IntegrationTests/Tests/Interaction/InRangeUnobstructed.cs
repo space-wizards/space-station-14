@@ -34,7 +34,7 @@ public sealed class InRangeUnobstructed : GameTest
         MapCoordinates mapCoordinates = default;
 
         await Pair.CreateTestMap();
-        Assert.That(TestMap, Is.Not.Null);
+        Assume.That(TestMap, Is.Not.Null);
 
         await Server.WaitAssertion(() =>
         {

@@ -57,24 +57,27 @@ public sealed class LatheTest : GameTest
             _sLatheSystem.AddRecipesFromPacks(recipes, emagRecipesComp.EmagDynamicPacks);
         }
 
-        // Check each recipe assigned to this lathe
-        foreach (var recipeId in recipes)
+        using (Assert.EnterMultipleScope())
         {
-            var recipeProto = SProtoMan.Index(recipeId);
-
-            // Track the total material volume of the recipe
-            var totalQuantity = 0;
-            // Check each material called for by the recipe
-            foreach (var (materialId, quantity) in recipeProto.Materials)
+            // Check each recipe assigned to this lathe
+            foreach (var recipeId in recipes)
             {
-                Assert.That(SProtoMan.HasIndex(materialId), $"Material '{materialId}' does not exist");
-                // Make sure the material is accepted by the lathe
-                Assert.That(acceptedMaterials, Does.Contain(materialId), $"Lathe {latheProto.ID} has recipe {recipeId} but does not accept any materials containing {materialId}");
-                totalQuantity += quantity;
+                var recipeProto = SProtoMan.Index(recipeId);
+
+                // Track the total material volume of the recipe
+                var totalQuantity = 0;
+                // Check each material called for by the recipe
+                foreach (var (materialId, quantity) in recipeProto.Materials)
+                {
+                    Assert.That(SProtoMan.HasIndex(materialId), $"Material '{materialId}' does not exist");
+                    // Make sure the material is accepted by the lathe
+                    Assert.That(acceptedMaterials, Does.Contain(materialId), $"Lathe {latheProto.ID} has recipe {recipeId} but does not accept any materials containing {materialId}");
+                    totalQuantity += quantity;
+                }
+                // Make sure the recipe doesn't call for more material than the lathe can hold
+                if (storageComp!.StorageLimit != null)
+                    Assert.That(totalQuantity, Is.LessThanOrEqualTo(storageComp.StorageLimit), $"Lathe {latheProto.ID} has recipe {recipeId} which calls for {totalQuantity} units of materials but can only hold {storageComp.StorageLimit}");
             }
-            // Make sure the recipe doesn't call for more material than the lathe can hold
-            if (storageComp!.StorageLimit != null)
-                Assert.That(totalQuantity, Is.LessThanOrEqualTo(storageComp.StorageLimit), $"Lathe {latheProto.ID} has recipe {recipeId} which calls for {totalQuantity} units of materials but can only hold {storageComp.StorageLimit}");
         }
     }
 

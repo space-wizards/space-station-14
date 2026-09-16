@@ -25,10 +25,10 @@ public sealed class CharacterCreationTest : GameTest
     [Test]
     public async Task CreateDeleteCreateTest()
     {
-        Assert.That(Client.User, Is.Not.Null);
+        Assume.That(Client.User, Is.Not.Null);
         var user = Client.User.Value;
 
-        Assert.That(_cStateManager.CurrentState, Is.TypeOf<LobbyState>());
+        Assume.That(_cStateManager.CurrentState, Is.TypeOf<LobbyState>());
         await Client.WaitPost(() => _cPrefManager.SelectCharacter(0));
 
         await RunTicksSync(5);

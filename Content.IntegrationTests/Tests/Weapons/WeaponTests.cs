@@ -28,7 +28,7 @@ public sealed class WeaponTests : InteractionTest
         await AddAtmosphere(); // prevent the Urist from suffocating
 
         var uristNet = await SpawnTarget(MobHuman);
-        Entity<DamageableComponent> uristEnt = (ToServer(uristNet), Comp<DamageableComponent>(uristNet));
+        Entity<DamageableComponent> sUrist = (ToServer(uristNet), Comp<DamageableComponent>(uristNet));
 
         var mosinNet = await PlaceInHands(SniperMosin);
         var mosinEnt = ToServer(mosinNet);
@@ -36,7 +36,7 @@ public sealed class WeaponTests : InteractionTest
         await Pair.RunSeconds(2f); // Guns have a cooldown when picking them up.
 
         Assert.That(HasComp<GunRequiresWieldComponent>(mosinNet),
-            "Looks like you've removed the 'GunRequiresWield' component from the mosin sniper." +
+            $"Looks like you've removed the '{nameof(GunRequiresWieldComponent)}' from the mosin sniper." +
             "If this was intentional, please update WeaponTests.cs to reflect this change!");
 
         var startAmmo = _sGun.GetAmmoCount(mosinEnt);
@@ -51,7 +51,7 @@ public sealed class WeaponTests : InteractionTest
         Assert.That(updatedAmmo,
             Is.EqualTo(startAmmo),
             "Mosin discharged ammo when the weapon should not have fired!");
-        Assert.That(_sDamageable.GetPositiveDamage(uristEnt).GetTotal(),
+        Assert.That(_sDamageable.GetPositiveDamage(sUrist).GetTotal(),
             Is.EqualTo(FixedPoint2.Zero),
             "Urist took damage when the weapon should not have fired!");
 
@@ -63,7 +63,7 @@ public sealed class WeaponTests : InteractionTest
         updatedAmmo = _sGun.GetAmmoCount(mosinEnt);
 
         Assert.That(updatedAmmo, Is.EqualTo(startAmmo - 1), "Mosin failed to discharge appropriate amount of ammo!");
-        Assert.That(_sDamageable.GetPositiveDamage(uristEnt).GetTotal(),
+        Assert.That(_sDamageable.GetPositiveDamage(sUrist).GetTotal(),
             Is.GreaterThan(FixedPoint2.Zero),
             "Mosin was fired but urist sustained no damage!");
     }

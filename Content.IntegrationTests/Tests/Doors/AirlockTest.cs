@@ -57,7 +57,7 @@ public sealed class AirlockTest : GameTest
 ";
 
     [SidedDependency(Side.Server)] private DoorSystem _sDoorSystem = null!;
-    [SidedDependency(Side.Server)] private SharedPhysicsSystem _sharedPhysics = null!;
+    [SidedDependency(Side.Server)] private SharedPhysicsSystem _sPhysicsSystem = null!;
     [SidedDependency(Side.Server)] private SharedTransformSystem _sXformSystem = null!;
 
     [Test]
@@ -125,7 +125,7 @@ public sealed class AirlockTest : GameTest
         await Server.WaitAssertion(() => Assert.That(physBody, Is.Not.Null));
         await Server.WaitPost(() =>
         {
-            _sharedPhysics.SetLinearVelocity(airlockPhysicsDummy, new Vector2(0.5f, 0f), body: physBody);
+            _sPhysicsSystem.SetLinearVelocity(airlockPhysicsDummy, new Vector2(0.5f, 0f), body: physBody);
         });
 
         for (var i = 0; i < 240; i += 10)
@@ -133,7 +133,7 @@ public sealed class AirlockTest : GameTest
             // Keep the airlock awake so they collide
             await Server.WaitPost(() =>
             {
-                _sharedPhysics.WakeBody(airlock);
+                _sPhysicsSystem.WakeBody(airlock);
             });
             AssertDoorState(airlock, DoorState.Closed);
 

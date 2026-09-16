@@ -116,7 +116,7 @@ public sealed class SuicideCommandTests : GameTest
 
         await Server.WaitPost(() =>
         {
-            _sDamageableSystem.TryChangeDamage(player, new DamageSpecifier(slashProto, FixedPoint2.New(46.5)));
+            Assume.That(_sDamageableSystem.TryChangeDamage(player, new DamageSpecifier(slashProto, FixedPoint2.New(46.5))));
         });
 
         // Check that running the suicide command kills the player

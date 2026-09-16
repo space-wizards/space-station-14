@@ -15,12 +15,14 @@ namespace Content.IntegrationTests.Tests.Sprite;
 /// </summary>
 /// <remarks>
 /// If a prototype fails this test, its probably either because it:
-/// - Should be marked abstract
-/// - inherits from BaseItem despite not being an item
-/// - Shouldn't have an item component
-/// - Is missing the required sprite information.
-/// If none of the abveo are true, it might need to be added to the list of ignored components, see
-/// <see cref="Ignored"/>
+/// <list type="bullet">
+///     <item>Should be marked abstract.</item>
+///     <item>Inherits from BaseItem despite not being an item.</item>
+///     <item>Shouldn't have an item component.</item>
+///     <item>Is missing the required sprite information.</item>
+/// </list>
+/// If none of the above are true, it might need to be added to the list of ignored components, see
+/// <see cref="Ignored"/>.
 /// </remarks>
 public sealed class ItemSpriteTest : GameTest
 {
@@ -42,15 +44,18 @@ public sealed class ItemSpriteTest : GameTest
     [Description("Checks that all items have a visible sprite.")]
     public async Task AllItemsHaveSpritesTest()
     {
-        foreach (var (proto, _) in Pair.GetPrototypesWithComponent<ItemComponent>(ignored: Ignored))
+        using (Assert.EnterMultipleScope())
         {
-            var dummy = CSpawn(proto.ID);
-            CEntMan.RunMapInit(dummy, Client.MetaData(dummy));
-            var spriteComponent = CEntMan.GetComponentOrNull<SpriteComponent>(dummy);
+            foreach (var (proto, _) in Pair.GetPrototypesWithComponent<ItemComponent>(ignored: Ignored))
+            {
+                var dummy = CSpawn(proto.ID);
+                CEntMan.RunMapInit(dummy, Client.MetaData(dummy));
+                var spriteComponent = CEntMan.GetComponentOrNull<SpriteComponent>(dummy);
 
-            Assert.That(spriteComponent?.Icon, Is.Not.Null, $"Item prototype \"{proto.ID}\" has no sprite. It should probably either be marked as abstract, not be an item, or have a valid sprite");
+                Assert.That(spriteComponent?.Icon, Is.Not.Null, $"Item prototype \"{proto.ID}\" has no sprite. It should probably either be marked as abstract, not be an item, or have a valid sprite");
 
-            CDeleteNow(dummy);
+                CDeleteNow(dummy);
+            }
         }
     }
 }

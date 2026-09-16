@@ -51,7 +51,7 @@ public sealed class WeightlessStatusTests : GameTest
         EntityUid human = default;
 
         await Pair.CreateTestMap();
-        Assert.That(TestMap, Is.Not.Null);
+        Assume.That(TestMap, Is.Not.Null);
 
         await Server.WaitAssertion(() =>
         {

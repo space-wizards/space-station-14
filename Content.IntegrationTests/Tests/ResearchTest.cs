@@ -20,20 +20,19 @@ public sealed class ResearchTest : GameTest
         var allTechs = SProtoMan.EnumeratePrototypes<TechnologyPrototype>().ToList();
         var disciplines = SProtoMan.EnumeratePrototypes<TechDisciplinePrototype>().ToDictionary(p => p.ID, p => p);
 
-        using (Assert.EnterMultipleScope())
+        using var scope = Assert.EnterMultipleScope();
+
+        foreach (var tech in allTechs)
         {
-            foreach (var tech in allTechs)
-            {
-                var discipline = disciplines[tech.Discipline];
+            var discipline = disciplines[tech.Discipline];
 
-                // Tier 1 techs don't have prerequisites
-                if (tech.Tier == 1)
-                    continue;
+            // Tier 1 techs don't have prerequisites
+            if (tech.Tier == 1)
+                continue;
 
-                Assert.That(tech.Tier, Is.GreaterThan(0), $"Technology {tech} has invalid tier {tech.Tier}.");
-                Assert.That(discipline.TierPrerequisites.ContainsKey(tech.Tier),
-                    $"Discipline {discipline.ID} does not have a {nameof(TechDisciplinePrototype.TierPrerequisites)} definition for tier {tech.Tier}");
-            }
+            Assert.That(tech.Tier, Is.GreaterThan(0), $"Technology {tech} has invalid tier {tech.Tier}.");
+            Assert.That(discipline.TierPrerequisites.ContainsKey(tech.Tier),
+                $"Discipline {discipline.ID} does not have a {nameof(TechDisciplinePrototype.TierPrerequisites)} definition for tier {tech.Tier}");
         }
     }
 

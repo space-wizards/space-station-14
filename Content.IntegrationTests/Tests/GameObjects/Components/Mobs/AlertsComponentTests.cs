@@ -38,11 +38,11 @@ public sealed class AlertsComponentTests : GameTest
         {
             playerUid = _sPlayerManager.Sessions.Single().AttachedEntity.GetValueOrDefault();
             Assume.That(playerUid, Is.Not.Default);
-// Making sure it exists
+            // Making sure it exists
             Assume.That(playerUid, Has.Comp<AlertsComponent>(Server));
 
             var alerts = _sAlertsSystem.GetActiveAlerts(playerUid);
-            Assert.That(alerts, Is.Not.Null);
+            Assume.That(alerts, Is.Not.Null);
             var alertCount = alerts.Count;
 
             _sAlertsSystem.ShowAlert(playerUid, Debug1);

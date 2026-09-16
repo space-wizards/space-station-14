@@ -1,3 +1,4 @@
+#nullable enable
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Robust.Shared.GameObjects;
@@ -19,13 +20,13 @@ public sealed class AnchorPrototypeTest : GameTest
     {
         using (Assert.EnterMultipleScope())
         {
-            var xformCompName = SEntMan.ComponentFactory.GetComponentName<TransformComponent>();
-            var physicsCompName = SEntMan.ComponentFactory.GetComponentName<PhysicsComponent>();
+            var xformCompName = SEntMan.ComponentFactory.CompName<TransformComponent>();
+            var physicsCompName = SEntMan.ComponentFactory.CompName<PhysicsComponent>();
 
             foreach (var ent in SProtoMan.EnumeratePrototypes<EntityPrototype>())
             {
-                if (!ent.TryGetComponent(xformCompName, out TransformComponent xform)
-                    || !ent.TryGetComponent(physicsCompName, out PhysicsComponent physics))
+                if (!ent.TryComp(xformCompName, out TransformComponent? xform)
+                    || !ent.TryComp(physicsCompName, out PhysicsComponent? physics))
                 {
                     continue;
                 }

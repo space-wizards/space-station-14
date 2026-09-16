@@ -1,3 +1,4 @@
+#nullable enable
 using System.Linq;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map.Components;
