@@ -212,12 +212,12 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
     ///     Apply marking layers to an entity from a prototype.
     /// </summary>
     /// <param name="target">The entity to apply the marking.</param>
-    /// <param name="proto">The marking prototype to add.</param>
+    /// <param name="markingProto">The marking prototype to add.</param>
     /// <param name="marking">The marking's preference data.</param>
     /// <param name="organIndex">The index of the body part layer on the entity's sprite stack.</param>
     /// <param name="displacement">Optional displacement data associated with this entity.</param>
     private void ApplyMarkingLayers(Entity<SpriteComponent?> target,
-        MarkingPrototype proto,
+        MarkingPrototype markingProto,
         Marking marking,
         int organIndex,
         DisplacementData? displacement)
@@ -227,38 +227,32 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
             return;
 
         var numDisplacements = 0;
-        for (var i = 0; i < proto.Sprites.Count; i++)
+        for (var markingLayer = 0; markingLayer < markingProto.Sprites.Count; markingLayer++)
         {
-            var layer = proto.Sprites[i];
-            var layerId = layer.GetLayerID(markingId: proto.ID);
+            var layer = markingProto.Sprites[markingLayer];
+            var layerId = layer.GetLayerID(markingId: markingProto.ID);
 
-            // Having three separate indices and a magic +1 is cursed, but:
-            // - organIndex refers to the layer index of the organ the marking is applied to
-            // - i is the current sprite of the marking that is being applied
-            // - numDisplacements tracks how many displacements have been applied, and is
-            //   an additional offset to ensure that the order of the base sprites is correct
-            //   after inserting a displacement layer
-            // - The +1 ensures that markings render on top of the base organ
-            var layerIndex = organIndex + i + 1;
+            // - The +1 ensures that markings render on top of the base organ.
+            var spriteLayerIndex = organIndex + markingLayer + 1;
 
             // Add the marking layer to the target entity, if the target doesn't have it yet
             var spriteLayer = EnsureTargetLayer(target,
-                proto,
+                markingProto,
                 layer,
-                newLayerIndex: layerIndex + numDisplacements,
+                newLayerIndex: spriteLayerIndex + numDisplacements,
                 visible: bodypartLayer.Visible);
 
-            UpdateLayerColor(target, marking, i, spriteLayer);
+            UpdateLayerColor(target, marking, markingLayer, spriteLayer);
 
             // Apply displacements
-            if (displacement != null && proto.CanBeDisplaced)
+            if (displacement != null && markingProto.CanBeDisplaced)
             {
                 _displacement.TryAddDisplacement(
                     displacement,
                     (target, target.Comp),
                     // Similar logic as above, but this makes the displacement layer go below the
                     // original sprite. So it should be all the displacements, then all the sprite layers on top
-                    layerIndex,
+                    spriteLayerIndex,
                     layerId,
                     out _
                 );
@@ -269,7 +263,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
             if (layer.Shader != null)
             {
                 // TODO: fix this when LayerSetShader is moved out of component
-                target.Comp.LayerSetShader(layerIndex + numDisplacements, layer.Shader);
+                target.Comp.LayerSetShader(spriteLayerIndex + numDisplacements, layer.Shader);
             }
         }
     }
@@ -279,18 +273,18 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
     ///     to the target entity, if the target doesn't have it yet
     /// </summary>
     /// <param name="target">The target entity.</param>
-    /// <param name="proto">The marking prototype.</param>
+    /// <param name="markingProto">The marking prototype.</param>
     /// <param name="layer">The data associated with this layer.</param>
     /// <param name="newLayerIndex">The index that this layer should be found in.</param>
     /// <param name="visible">Whether or not this layer should be visible.</param>
     /// <returns>The index of the sprite layer associated with this marking layer.</returns>
     private int EnsureTargetLayer(Entity<SpriteComponent?> target,
-        MarkingPrototype proto,
+        MarkingPrototype markingProto,
         MarkingLayerData layer,
         int newLayerIndex,
         bool visible)
     {
-        var layerId = layer.GetLayerID(markingId: proto.ID);
+        var layerId = layer.GetLayerID(markingId: markingProto.ID);
         var sprite = layer.Sprite;
 
         if (!_sprite.LayerMapTryGet(target, layerId, out var spriteLayer, false))
