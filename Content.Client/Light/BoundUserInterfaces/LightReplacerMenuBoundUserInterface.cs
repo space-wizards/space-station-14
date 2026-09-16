@@ -100,7 +100,7 @@ public sealed partial class LightReplacerMenuBoundUserInterface(EntityUid owner,
         return new RadialMenuActionOption<EntProtoId>(EjectLights, protoToUseInAction)
         {
             IconSpecifier = RadialMenuIconSpecifier.With(protoForIcon),
-            ToolTip = Loc.GetString("comp-light-replacer-eject-specified-lights", ("light", lightTypeName)),
+            ToolTip = Loc.GetString("comp-entity-provider-eject-all-specified-entities", ("entity", lightTypeName)),
         };
     }
 
@@ -109,7 +109,7 @@ public sealed partial class LightReplacerMenuBoundUserInterface(EntityUid owner,
         return new RadialMenuActionOption<(EntProtoId, LightBulbType)>(SwitchActiveLight, (protoId, lightType))
         {
             IconSpecifier = RadialMenuIconSpecifier.With(protoId),
-            ToolTip = Loc.GetString("comp-light-replacer-select-lights", ("light", lightTypeName)),
+            ToolTip = Loc.GetString("comp-entity-provider-select-entity", ("entity", lightTypeName)),
         };
     }
 
