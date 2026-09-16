@@ -1,0 +1,23 @@
+- type: construction
+  parent: BaseShelf
+  id: DefibrillatorCabinet
+  graph: DefibrillatorCabinet
+  targetNode: done
+
+- type: construction
+  parent: BaseShelf
+  id: ExtinguisherCabinet
+  graph: ExtinguisherCabinet
+  targetNode: done
+
+- type: construction
+  parent: BaseShelf
+  id: FireAxeCabinet
+  graph: FireAxeCabinet
+  targetNode: done
+
+- type: construction
+  parent: BaseShelf
+  id: ShotGunCabinet
+  graph: ShotGunCabinet
+  targetNode: done

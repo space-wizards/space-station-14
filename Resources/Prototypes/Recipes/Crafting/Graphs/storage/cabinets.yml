@@ -1,0 +1,111 @@
+- type: constructionGraph
+  id: DefibrillatorCabinet
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: done
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 5
+  - node: done
+    entity: DefibrillatorCabinet
+    edges:
+    - to: start
+      steps:
+      - tool: Screwing
+        doAfter: 5
+      conditions:
+      - !type:ContainerEmpty
+        container: "ItemCabinet"
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:EmptyAllContainers
+      - !type:DeleteEntity
+
+- type: constructionGraph
+  id: ExtinguisherCabinet
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: done
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 5
+  - node: done
+    entity: ExtinguisherCabinet
+    edges:
+    - to: start
+      steps:
+      - tool: Screwing
+        doAfter: 5
+      conditions:
+      - !type:ContainerEmpty
+        container: "ItemCabinet"
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:EmptyAllContainers
+      - !type:DeleteEntity
+
+- type: constructionGraph
+  id: FireAxeCabinet
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: done
+      steps:
+      - material: Steel
+        amount: 5
+        doAfter: 10
+  - node: done
+    entity: FireAxeCabinet
+    edges:
+    - to: start
+      steps:
+      - tool: Screwing
+        doAfter: 10
+      conditions:
+      - !type:ContainerEmpty
+        container: "ItemCabinet"
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 5
+      - !type:EmptyAllContainers
+      - !type:DeleteEntity
+
+- type: constructionGraph
+  id: ShotGunCabinet
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: done
+      steps:
+      - material: Steel
+        amount: 5
+        doAfter: 10
+  - node: done
+    entity: ShotGunCabinet
+    edges:
+    - to: start
+      steps:
+      - tool: Screwing
+        doAfter: 10
+      conditions:
+      - !type:ContainerEmpty
+        container: "ItemCabinet"
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 5
+      - !type:EmptyAllContainers
+      - !type:DeleteEntity
