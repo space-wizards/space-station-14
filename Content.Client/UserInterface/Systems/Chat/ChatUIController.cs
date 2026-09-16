@@ -942,7 +942,7 @@ public sealed partial class ChatUIController : UIController
         }
     }
 
-    public void UpdateLinkLabels()
+    private void UpdateLinkLabels()
     {
         foreach (var chat in _chats)
         {

@@ -30,6 +30,10 @@ public sealed class TextLinkLabel : Label
         }
     }
 
+    /// <summary>
+    /// Checks if link is clickable by player and updates properties to reflect that.
+    /// </summary>
+    /// <param name="visible"> - optional: use to set the visibility of the label</param>
     public void UpdateEntityTextLinkLabelProperties(bool? visible = null)
     {
         _chat ??= _entity.System<SharedChatSystem>();

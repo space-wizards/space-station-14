@@ -92,6 +92,9 @@ public partial class ChatBox : UIWidget, IEntityLinkClickHandler
         }
     }
 
+    /// <summary>
+    /// Calls update function on every child textlinklabel in the ChatBox OutPanel "Contents"
+    /// </summary>
     public void UpdateEntityTextLinkLabelProperties()
     {
         foreach (var contentsChild in Contents.Children)
