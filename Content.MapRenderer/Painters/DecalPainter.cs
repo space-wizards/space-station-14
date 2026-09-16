@@ -111,21 +111,18 @@ public sealed class DecalPainter
     {
         var zComp = x.Decal.ZIndex.CompareTo(y.Decal.ZIndex);
 
-        if (zComp != 0) {
+        if (zComp != 0)
             return zComp;
-        }
 
         var chunkXComp = x.Index.Chunk.X.CompareTo(y.Index.Chunk.X);
 
-        if (chunkXComp != 0) {
+        if (chunkXComp != 0)
             return chunkXComp;
-        }
 
         var chunkYComp = x.Index.Chunk.Y.CompareTo(y.Index.Chunk.Y);
 
-        if (chunkYComp != 0) {
+        if (chunkYComp != 0)
             return chunkYComp;
-        }
 
         return x.Index.Id.CompareTo(y.Index.Id);
     }
