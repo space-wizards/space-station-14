@@ -114,15 +114,47 @@ namespace Content.Shared.GameTicking
         }
     }
 
+    /// <summary>
+    /// Contains the lobby information required by the lobby UI and compact round displays.
+    /// </summary>
     [Serializable, NetSerializable]
-    public sealed class TickerLobbyInfoEvent : EntityEventArgs
+    public sealed class TickerLobbyInfoEvent(
+        int roundId,
+        int playerCount,
+        int readyCount,
+        string mapName,
+        string gamemodeTitle,
+        string desc) : EntityEventArgs
     {
-        public string TextBlob { get; }
+        /// <summary>
+        /// The current round number.
+        /// </summary>
+        public int RoundId { get; } = roundId;
 
-        public TickerLobbyInfoEvent(string textBlob)
-        {
-            TextBlob = textBlob;
-        }
+        /// <summary>
+        /// The number of connected players.
+        /// </summary>
+        public int PlayerCount { get; } = playerCount;
+
+        /// <summary>
+        /// The number of players ready to start the round.
+        /// </summary>
+        public int ReadyCount { get; } = readyCount;
+
+        /// <summary>
+        /// The current map or station name.
+        /// </summary>
+        public string MapName { get; } = mapName;
+
+        /// <summary>
+        /// The localized current game mode title.
+        /// </summary>
+        public string GamemodeTitle { get; } = gamemodeTitle;
+
+        /// <summary>
+        /// The localized current game mode description.
+        /// </summary>
+        public string Desc { get; } = desc;
     }
 
     [Serializable, NetSerializable]

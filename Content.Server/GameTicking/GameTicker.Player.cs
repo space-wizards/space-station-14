@@ -215,8 +215,11 @@ namespace Content.Server.GameTicking
             var client = session.Channel;
             RaiseNetworkEvent(new TickerJoinLobbyEvent(), client);
             RaiseNetworkEvent(GetStatusMsg(session), client);
-            RaiseNetworkEvent(GetInfoMsg(), client);
             RaiseLocalEvent(new PlayerJoinedLobbyEvent(session));
+
+            var infoMsg = GetInfoMsg();
+            if (infoMsg != null)
+                RaiseNetworkEvent(infoMsg, client);
         }
 
         private void ReqWindowAttentionAll()

@@ -37,18 +37,18 @@ namespace Content.Server.GameTicking
 
         public void UpdateInfoText()
         {
-            RaiseNetworkEvent(GetInfoMsg(), Filter.Empty().AddPlayers(_playerManager.NetworkedSessions));
+            var infoMsg = GetInfoMsg();
+            if (infoMsg != null)
+                RaiseNetworkEvent(infoMsg, Filter.Empty().AddPlayers(_playerManager.NetworkedSessions));
         }
 
-        private string GetInfoText()
+        private TickerLobbyInfoEvent? GetInfoMsg()
         {
             var preset = CurrentPreset ?? Preset;
             if (preset == null)
-            {
-                return string.Empty;
-            }
+                return null;
 
-            var playerCount = $"{_playerManager.PlayerCount}";
+            var playerCount = _playerManager.PlayerCount;
             var readyCount = _playerGameStatuses.Values.Count(x => x == PlayerGameStatus.ReadyToPlay);
 
             var stationNames = new StringBuilder();
@@ -72,18 +72,10 @@ namespace Content.Server.GameTicking
                                     Loc.GetString("game-ticker-no-map-selected"));
             }
 
-            var gmTitle = (Decoy == null) ? Loc.GetString(preset.ModeTitle) : Loc.GetString(Decoy.ModeTitle);
-            var desc = (Decoy == null) ? Loc.GetString(preset.Description) : Loc.GetString(Decoy.Description);
-            return Loc.GetString(
-                RunLevel == GameRunLevel.PreRoundLobby
-                    ? "game-ticker-get-info-preround-text"
-                    : "game-ticker-get-info-text",
-                ("roundId", RoundId),
-                ("playerCount", playerCount),
-                ("readyCount", readyCount),
-                ("mapName", stationNames.ToString()),
-                ("gmTitle", gmTitle),
-                ("desc", desc));
+            var gmTitle = Decoy == null ? Loc.GetString(preset.ModeTitle) : Loc.GetString(Decoy.ModeTitle);
+            var desc = Decoy == null ? Loc.GetString(preset.Description) : Loc.GetString(Decoy.Description);
+
+            return new TickerLobbyInfoEvent(RoundId, playerCount, readyCount, stationNames.ToString(), gmTitle, desc);
         }
 
         private TickerConnectionStatusEvent GetConnectionStatusMsg()
@@ -103,11 +95,6 @@ namespace Content.Server.GameTicking
             {
                 RaiseNetworkEvent(GetStatusMsg(player), player.Channel);
             }
-        }
-
-        private TickerLobbyInfoEvent GetInfoMsg()
-        {
-            return new(GetInfoText());
         }
 
         private void UpdateLateJoinStatus()
