@@ -23,6 +23,12 @@ public sealed partial class AdminVerbPrototype : IPrototype, IInheritingPrototyp
     public bool Abstract { get; private set; }
 
     /// <summary>
+    /// Category containing this verb.
+    /// </summary>
+    [DataField]
+    public ProtoId<AdminVerbCategoryPrototype>? CategoryPrototype { get; private set; }
+
+    /// <summary>
     /// Localization key of the verb name shown in the admin verb menu.
     /// </summary>
     [DataField(required: true)]
