@@ -2,8 +2,10 @@ using Content.Shared.Alert;
 using Content.Shared.CCVar;
 using Content.Shared.Friction;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Systems;
+using Robust.Client.GameObjects;
 using Robust.Client.Physics;
 using Robust.Client.Player;
 using Robust.Shared.Configuration;
@@ -18,6 +20,7 @@ public sealed partial class MoverController : SharedMoverController
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private AlertsSystem _alerts = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private TransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -26,10 +29,12 @@ public sealed partial class MoverController : SharedMoverController
         SubscribeLocalEvent<RelayInputMoverComponent, LocalPlayerDetachedEvent>(OnRelayPlayerDetached);
         SubscribeLocalEvent<InputMoverComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<InputMoverComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<InputMoverComponent, MoveInputEvent>(OnMoverMoveInput);
 
         SubscribeLocalEvent<InputMoverComponent, UpdateIsPredictedEvent>(OnUpdatePredicted);
         SubscribeLocalEvent<MovementRelayTargetComponent, UpdateIsPredictedEvent>(OnUpdateRelayTargetPredicted);
         SubscribeLocalEvent<PullableComponent, UpdateIsPredictedEvent>(OnUpdatePullablePredicted);
+        SubscribeLocalEvent<RelayInputMoverComponent, GetPredictionReconciliationTargetEvent>(OnGetReconciliationTarget);
     }
 
     private void OnUpdatePredicted(Entity<InputMoverComponent> entity, ref UpdateIsPredictedEvent args)
@@ -59,6 +64,13 @@ public sealed partial class MoverController : SharedMoverController
         // What if the entity is being pulled by a vehicle controlled by the player?
     }
 
+    private void OnGetReconciliationTarget(
+        Entity<RelayInputMoverComponent> entity,
+        ref GetPredictionReconciliationTargetEvent args)
+    {
+        args.Target = GetEffectiveMover((entity.Owner, entity.Comp));
+    }
+
     private void OnRelayPlayerAttached(Entity<RelayInputMoverComponent> entity, ref LocalPlayerAttachedEvent args)
     {
         PhysicsSystem.UpdateIsPredicted(entity.Owner);
@@ -83,6 +95,11 @@ public sealed partial class MoverController : SharedMoverController
     private void OnPlayerDetached(Entity<InputMoverComponent> entity, ref LocalPlayerDetachedEvent args)
     {
         SetMoveInput(entity, MoveButtons.None);
+    }
+
+    private void OnMoverMoveInput(Entity<InputMoverComponent> entity, ref MoveInputEvent args)
+    {
+        _transform.SnapRenderRotation(entity);
     }
 
     public override void UpdateBeforeSolve(bool prediction, float frameTime)
