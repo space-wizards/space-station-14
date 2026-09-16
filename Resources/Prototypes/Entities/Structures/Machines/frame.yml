@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: StructureHealthMachineWeak
   id: UnfinishedMachineFrame
   name: machine frame
@@ -45,10 +45,10 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:ChangeConstructionNodeBehavior
+      - !type:ChangeConstructionNode
         node: start
   - type: Sprite
     sprite: Structures/Machines/parts.rsi
@@ -98,12 +98,12 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:ChangeConstructionNodeBehavior
+      - !type:ChangeConstructionNode
         node: start
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           CableApcStack1:
             min: 0
@@ -150,7 +150,7 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetSteel1:
             min: 1

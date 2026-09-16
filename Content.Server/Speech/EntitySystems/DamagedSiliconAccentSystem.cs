@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using Content.Server.Destructible;
+using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;
 using Content.Shared.Speech.Components;
 using Content.Shared.Speech.EntitySystems;

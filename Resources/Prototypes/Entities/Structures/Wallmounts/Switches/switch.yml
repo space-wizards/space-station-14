@@ -56,7 +56,7 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
-      - &SoundMetalBreak !type:PlaySoundBehavior
+      - &SoundMetalBreak !type:PlaySound
         sound:
           collection: MetalBreak
           params:

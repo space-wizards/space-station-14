@@ -188,7 +188,7 @@
         damageType: Heat
         damage: 1500
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawnInContainer: true
         spawn:
           FoodMeatChickenFriedVox:

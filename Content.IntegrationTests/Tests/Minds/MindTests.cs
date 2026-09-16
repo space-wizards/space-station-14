@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.Server.Ghost.Roles;
@@ -52,7 +52,7 @@ public sealed partial class MindTests : GameTest
         damageType: Blunt
         damage: 400
         behaviors:
-        - !type:GibBehavior { }
+        - !type:Gib { }
 ";
 
     [Test]

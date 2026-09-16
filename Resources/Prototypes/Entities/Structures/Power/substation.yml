@@ -102,11 +102,11 @@
         !type:DamageTrigger
         damage: 175
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalGlassBreak
-      - !type:ExplodeBehavior
-      - !type:SpawnGasBehavior
+      - !type:Explode
+      - !type:SpawnGas
         gasMixture:
           volume: 1000
           moles:
@@ -184,8 +184,8 @@
         !type:DamageTrigger
         damage: 175
       behaviors:
-      - !type:ExplodeBehavior
-      - !type:PlaySoundBehavior
+      - !type:Explode
+      - !type:PlaySound
         sound:
           collection: MetalGlassBreak
   - type: Construction

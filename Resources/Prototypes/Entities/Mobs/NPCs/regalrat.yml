@@ -232,8 +232,8 @@
         damageType: Blunt
         damage: 60
       behaviors:
-      - !type:GibBehavior
-        recursive: false
+      - !type:Gib
+        dropGiblets: false
   - type: Stamina
     baseCritThreshold: 60
   - type: MeleeWeapon

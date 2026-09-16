@@ -24,12 +24,12 @@
         !type:DamageTrigger
         damage: 20
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
           params:
             volume: -8
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: DamageOnLand
     damage:

@@ -28,7 +28,7 @@
         !type:DamageTrigger
         damage: 40
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           path: /Audio/Effects/poster_broken.ogg
 
@@ -45,6 +45,6 @@
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           path: /Audio/Effects/poster_broken.ogg

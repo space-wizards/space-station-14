@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: [ BaseStructureDynamic, StructureHealthDoorWeak ]
   id: FirelockFrame
   name: firelock frame
@@ -25,7 +25,7 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
           params:

@@ -104,8 +104,8 @@
         !type:DamageTrigger
         damage: 10
       behaviors:
-      - !type:TriggerBehavior
-      - !type:DoActsBehavior
+      - !type:Trigger
+      - !type:DoActs
         acts: ["Destruction"]
   - type: Tag
     tags:

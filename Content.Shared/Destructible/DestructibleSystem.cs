@@ -1,0 +1,345 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
+using Content.Shared.Database;
+using Content.Shared.Destructible.Thresholds;
+using Content.Shared.Destructible.Thresholds.Triggers;
+using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Effects.Damage;
+using Content.Shared.FixedPoint;
+using Content.Shared.Humanoid;
+using JetBrains.Annotations;
+using Robust.Shared.Timing;
+
+namespace Content.Shared.Destructible;
+
+[UsedImplicitly]
+public sealed partial class DestructibleSystem : EntitySystem
+{
+    // TODO: I don't really like this but this is out of scope to re-do destructible triggers while refactoring damageable
+    [Dependency] public DamageableSystem Damageable = default!;
+
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
+
+    /// <summary>
+    /// Minimum damage to invoke overkill behavior.
+    /// </summary>
+    private const int MinimumOverkill = 100;
+
+    /// <summary>
+    /// Multiplier over normal damage to invoke overkill.
+    /// </summary>
+    private const double OverkillMultiplier = 2.0;
+
+    /// <summary>
+    /// Map Initialization function for <see cref="DestructibleComponent"/>, adding automatic overkill threshold.
+    /// </summary>
+    /// <param name="entity">The uid, component tuple.</param>
+    /// <param name="args">The event arguments.</param>
+    [SubscribeLocalEvent]
+    private void OnMapInit(Entity<DestructibleComponent> entity, ref MapInitEvent args)
+    {
+        AddOverkillThreshold(entity);
+    }
+
+    /// <summary>
+    /// Check if any thresholds were reached. if they were, execute them.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnDamageChanged(Entity<DestructibleComponent> entity, ref DamageChangedEvent args)
+    {
+        // TODO: DamageChangedEvent is not predicted, needs to replace with DamageDealtEvent
+        if (_timing.ApplyingState)
+            return;
+
+        var (uid, comp) = entity;
+
+        comp.IsBroken = false;
+        Dirty(entity);
+
+        foreach (var threshold in comp.Thresholds)
+        {
+            if (Triggered(threshold, (uid, args.Damageable)))
+            {
+                RaiseLocalEvent(uid, new DamageThresholdReached(comp, threshold), true);
+
+                var logImpact = LogImpact.Low;
+                // Convert behaviors into string for logs
+                var triggeredBehaviors = string.Join(", ",
+                    threshold.Behaviors.Select(behavior =>
+                    {
+                        if (behavior.Impact is { } impact && logImpact <= impact)
+                            logImpact = impact;
+                        if (behavior is DoActs doActs)
+                        {
+                            return $"{behavior.GetType().Name}:{doActs.Acts.ToString()}";
+                        }
+
+                        return behavior.GetType().Name;
+                    }));
+
+                // If it doesn't have a humanoid component, it's probably not particularly notable?
+                if (logImpact > LogImpact.Medium && !HasComp<HumanoidProfileComponent>(uid))
+                    logImpact = LogImpact.Medium;
+
+                if (args.Origin != null)
+                {
+                    _adminLogger.Add(LogType.Damaged,
+                        logImpact,
+                        $"{ToPrettyString(args.Origin.Value):actor} caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviors}]");
+                }
+                else
+                {
+                    _adminLogger.Add(LogType.Damaged,
+                        logImpact,
+                        $"Unknown damage source caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviors}]");
+                }
+
+                Execute(threshold, uid, args.Origin);
+            }
+
+            if (threshold.OldTriggered)
+            {
+                comp.IsBroken |= threshold.Behaviors.Any(b => b is DoActs doActs &&
+                                                              (doActs.HasAct(ThresholdActs.Breakage) ||
+                                                               doActs.HasAct(ThresholdActs.Destruction)));
+                Dirty(entity);
+            }
+
+            // if destruction behavior (or some other deletion effect) occurred, don't run other triggers.
+            if (EntityManager.IsQueuedForDeletion(uid) || Deleted(uid))
+                return;
+        }
+    }
+
+    /// <summary>
+    /// Check if the given threshold should trigger.
+    /// </summary>
+    public bool Triggered(DamageThreshold threshold, Entity<DamageableComponent> owner)
+    {
+        if (threshold is { Triggered: true, TriggersOnce: true })
+            return false;
+
+        if (threshold.OldTriggered)
+        {
+            threshold.OldTriggered = threshold.Trigger.Reached(owner, this);
+            return false;
+        }
+
+        if (!threshold.Trigger.Reached(owner, this))
+            return false;
+
+        threshold.OldTriggered = true;
+        return true;
+    }
+
+    /// <summary>
+    /// Check if the conditions for the given threshold are currently true.
+    /// </summary>
+    public bool Reached(DamageThreshold threshold, Entity<DamageableComponent> owner)
+    {
+        return threshold.Trigger.Reached(owner, this);
+    }
+
+    /// <summary>
+    /// Triggers this threshold.
+    /// </summary>
+    /// <param name="threshold">The threshold to execute.</param>
+    /// <param name="owner">The entity that owns this threshold.</param>
+    /// <param name="cause">The entity that caused this threshold to trigger.</param>
+    public void Execute(DamageThreshold threshold, EntityUid owner, EntityUid? cause = null)
+    {
+        threshold.Triggered = true;
+
+        foreach (var behavior in threshold.Behaviors)
+        {
+            // The owner has been deleted. We stop execution of behaviors here.
+            if (!Exists(owner))
+                return;
+
+            _entityEffects.ApplyEffect(owner, behavior, 1f, cause);
+        }
+    }
+
+    /// <summary>
+    /// Adds a threshold to the threshold list. If the entity does not have a destructible component, one will be added.
+    /// </summary>
+    /// <param name="entity">The entity, component tuple to target.</param>
+    /// <param name="threshold">The threshold to add.</param>
+    /// <param name="index">The index at which to insert the threshold.</param>
+    public void AddThreshold(Entity<DestructibleComponent?> entity, DamageThreshold threshold, Index? index)
+    {
+        if (!Resolve(entity.Owner, ref entity.Comp, false))
+            entity.Comp = AddComp<DestructibleComponent>(entity.Owner);
+
+        if (index is not null)
+        {
+            var threshIndex = index.Value.GetOffset(entity.Comp.Thresholds.Count);
+            entity.Comp.Thresholds.Insert(threshIndex, threshold);
+        }
+        else
+        {
+            entity.Comp.Thresholds.Add(threshold);
+        }
+    }
+
+    /// <summary>
+    /// Adds an overkill threshold if one does not exist.
+    /// </summary>
+    /// <remarks>
+    /// An overkill threshold is a top priority threshold that will destroy the entity without triggering any other
+    /// behaviors applied to the entity.
+    /// </remarks>
+    /// <param name="entity">The entity, component tuple to target.</param>
+    private void AddOverkillThreshold(Entity<DestructibleComponent> entity)
+    {
+        if (!entity.Comp.GenerateOverkillThreshold)
+            return;
+
+        var maxTrigger = FixedPoint2.Zero;
+
+        foreach (var threshold in entity.Comp.Thresholds)
+        {
+            if (threshold.Trigger is not DamageTrigger trigger)
+                continue;
+
+            foreach (var behavior in threshold.Behaviors)
+            {
+                // Not a destruction behavior
+                if (behavior is not DoActs actBehavior || !actBehavior.HasAct(ThresholdActs.Destruction))
+                    continue;
+
+                // Already has a pure destruction behavior
+                if (threshold.Behaviors.Count == 1)
+                    return;
+
+                maxTrigger = FixedPoint2.Max(maxTrigger, trigger.Damage);
+            }
+        }
+
+        // No destruction behavior
+        if (FixedPoint2.Zero == maxTrigger)
+            return;
+
+        var autoThreshold = new DamageThreshold
+        {
+            Trigger = new DamageTrigger { Damage = FixedPoint2.Max(MinimumOverkill, OverkillMultiplier * maxTrigger) },
+            Behaviors = { new DoActs { Acts = ThresholdActs.Destruction } },
+        };
+
+        // Thresholds are evaluated in order, so overkill must be first to avoid triggering effects
+        AddThreshold(entity.AsNullable(), autoThreshold, 0);
+    }
+
+    public bool TryGetDestroyedAt(Entity<DestructibleComponent?> ent, [NotNullWhen(true)] out FixedPoint2? destroyedAt)
+    {
+        destroyedAt = null;
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        destroyedAt = DestroyedAt(ent, ent.Comp);
+        return true;
+    }
+
+    // FFS this shouldn't be this hard. Maybe this should just be a field of the destructible component. Its not
+    // like there is currently any entity that is NOT just destroyed upon reaching a total-damage value.
+    /// <summary>
+    ///     Figure out how much damage an entity needs to have in order to be destroyed.
+    /// </summary>
+    /// <remarks>
+    ///     This assumes that this entity has some sort of destruction or breakage behavior triggered by a
+    ///     total-damage threshold.
+    /// </remarks>
+    public FixedPoint2 DestroyedAt(EntityUid uid, DestructibleComponent? destructible = null)
+    {
+        if (!Resolve(uid, ref destructible, logMissing: false))
+            return FixedPoint2.MaxValue;
+
+        // We have nested for loops here, but the vast majority of components only have one threshold with 1-3 behaviors.
+        // Really, this should probably just be a property of the damageable component.
+        var damageNeeded = FixedPoint2.MaxValue;
+        foreach (var threshold in destructible.Thresholds)
+        {
+            if (threshold.Trigger is not DamageTrigger trigger)
+                continue;
+
+            foreach (var behavior in threshold.Behaviors)
+            {
+                if (behavior is DoActs actBehavior &&
+                    actBehavior.HasAct(ThresholdActs.Destruction | ThresholdActs.Breakage))
+                {
+                    damageNeeded = FixedPoint2.Min(damageNeeded, trigger.Damage);
+                }
+            }
+        }
+
+        return damageNeeded;
+    }
+
+    /// <summary>
+    /// Force entity to be destroyed and deleted.
+    /// </summary>
+    public bool DestroyEntity(EntityUid owner)
+    {
+        if (!CanDestroy(owner))
+            return false;
+
+        var eventArgs = new DestructionEventArgs();
+        RaiseLocalEvent(owner, eventArgs);
+
+        PredictedQueueDel(owner);
+        return true;
+    }
+
+    /// <param name="owner">Entity that your checking.</param>
+    /// <returns>If it can be destroyed</returns>
+    public bool CanDestroy(EntityUid owner)
+    {
+        var ev = new DestructionAttemptEvent();
+        RaiseLocalEvent(owner, ev);
+        if (ev.Cancelled)
+            return false;
+
+        return true;
+    }
+
+    /// <summary>
+    /// Force entity to break.
+    /// </summary>
+    public void BreakEntity(EntityUid owner)
+    {
+        var eventArgs = new BreakageEventArgs();
+        RaiseLocalEvent(owner, eventArgs);
+    }
+
+    // Currently only used for destructible integration tests. Unless other uses are found for this, maybe this should just be removed and the tests redone.
+    /// <summary>
+    /// Event raised when a <see cref="DamageThreshold"/> is reached.
+    /// </summary>
+    public sealed class DamageThresholdReached(DestructibleComponent parent, DamageThreshold threshold)
+        : EntityEventArgs
+    {
+        public readonly DestructibleComponent Parent = parent;
+
+        public readonly DamageThreshold Threshold = threshold;
+    }
+}
+
+/// <summary>
+/// Raised before an entity is about to be destroyed and deleted
+/// </summary>
+public sealed class DestructionAttemptEvent : CancellableEntityEventArgs;
+
+/// <summary>
+/// Raised when entity is destroyed and about to be deleted.
+/// </summary>
+public sealed class DestructionEventArgs : EntityEventArgs;
+
+/// <summary>
+/// Raised when entity was heavy damage and about to break.
+/// </summary>
+public sealed class BreakageEventArgs : EntityEventArgs;

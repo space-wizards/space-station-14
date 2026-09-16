@@ -79,15 +79,15 @@ namespace Content.IntegrationTests.Tests.Destructible
         damage: 50
         triggersOnce: false
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
             collection: WoodDestroy
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           {SpawnedEntityId}:
             min: 1
             max: 1
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [""Breakage""]
 
 - type: entity
@@ -102,15 +102,15 @@ namespace Content.IntegrationTests.Tests.Destructible
         !type:DamageTrigger
         damage: 50
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
             collection: WoodDestroyHeavy
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           {SpawnedEntityId}:
             min: 1
             max: 1
-      - !type:DoActsBehavior # This must come last as it destroys the entity.
+      - !type:DoActs # This must come last as it destroys the entity.
         acts: [""Destruction""]
 
 - type: entity

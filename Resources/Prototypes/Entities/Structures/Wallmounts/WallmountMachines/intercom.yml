@@ -83,12 +83,12 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalGlassBreak
           params:
             volume: -4
-      - !type:EmptyContainersBehaviour
+      - !type:EmptyContainers
         containers:
         - key_slots
   - type: GenericVisualizer
@@ -131,7 +131,7 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalGlassBreak
           params:

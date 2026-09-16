@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: StructureHealthMachineWeak
   id: DisposalMachineFrame
   name: high pressure machine frame
@@ -37,10 +37,10 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:ChangeConstructionNodeBehavior
+      - !type:ChangeConstructionNode
         node: start
   - type: Sprite
     sprite: Structures/Piping/high_pressure_machine_frame.rsi

@@ -119,19 +119,19 @@
         !type:DamageTrigger
         damage: 500
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 250
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: ["Destruction"]
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalGlassBreak
-      - !type:ExplodeBehavior
-      #- !type:SpawnEntitiesBehavior # in future should also emit a cloud of hot gas
+      - !type:Explode
+      #- !type:SpawnEntities # in future should also emit a cloud of hot gas
       #  spawn:
       #    VehicleJanicartDestroyed:
       #      min: 1

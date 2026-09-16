@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   parent: StructureHealthContainerFlimsy
   id: BaseBigBox
@@ -45,10 +45,10 @@
           !type:DamageTrigger
           damage: 20
         behaviors:
-        - !type:PlaySoundBehavior
+        - !type:PlaySound
           sound:
             path: /Audio/Effects/poster_broken.ogg
-        - !type:SpawnEntitiesBehavior
+        - !type:SpawnEntities
           spawn:
             MaterialCardboard1:
               min: 1

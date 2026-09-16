@@ -41,7 +41,7 @@
         !type:DamageTrigger
         damage: 300
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: EmitSoundOnSpawn
     sound:

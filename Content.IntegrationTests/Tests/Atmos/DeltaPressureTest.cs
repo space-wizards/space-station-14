@@ -58,12 +58,12 @@ public sealed class DeltaPressureTest : AtmosTest
         !type:DamageTrigger
         damage: 300
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           Girder:
             min: 1
             max: 1
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ ""Destruction"" ]
 
 - type: entity

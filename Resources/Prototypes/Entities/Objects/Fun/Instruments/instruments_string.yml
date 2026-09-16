@@ -132,15 +132,15 @@
         !type:DamageTrigger
         damage: 20
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           path: /Audio/Weapons/guitarsmash.ogg
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           MaterialWoodPlank:
             min: 2
             max: 4
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: DamageOnHit # This makes it destroy after one hit.
     damage:

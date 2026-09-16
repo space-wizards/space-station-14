@@ -33,7 +33,7 @@
         damage: 200
       behaviors:
       # TODO this should go to the broken node first
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalSlam
   - type: Sprite

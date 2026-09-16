@@ -1,4 +1,4 @@
-﻿# base
+# base
 
 - type: entity
   abstract: true
@@ -43,7 +43,7 @@
     - trigger: !type:DamageTrigger
         damage: 175
       behaviors: &BehaviorVendorDestroy
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalGlassBreak
     - trigger: !type:DamageTrigger

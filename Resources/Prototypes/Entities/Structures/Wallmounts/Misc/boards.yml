@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   parent: [ BaseWallmount, StructureHealthFurniture ]
   id: BaseWallmountBoard
@@ -12,10 +12,10 @@
         !type:DamageTrigger
         damage: 40
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: WoodDestroy
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           MaterialWoodPlank:
             min: 1

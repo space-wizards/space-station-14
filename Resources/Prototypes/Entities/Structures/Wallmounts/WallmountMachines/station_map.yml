@@ -17,10 +17,10 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
-      - &SoundMetalGlassBreak !type:PlaySoundBehavior
+      - &SoundMetalGlassBreak !type:PlaySound
         sound:
           collection: MetalGlassBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           StationMapCircuitboard: &Min0Max1
             min: 0
@@ -84,7 +84,7 @@
         damage: 100
       behaviors:
       - *SoundMetalGlassBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         offset: 0
         spawn:
           StationMapBroken:
@@ -135,6 +135,6 @@
     - trigger: *DamageMachineFlimsy
       behaviors:
       - *SoundMetalGlassBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetSteel1: *Min0Max1

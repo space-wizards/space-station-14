@@ -31,12 +31,12 @@
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: GlassBreak
           params:
             volume: -8
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: Tag
     tags:
@@ -65,7 +65,7 @@
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           FoodPlateTrash:
             min: 1
@@ -116,7 +116,7 @@
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           FoodPlateSmallTrash:
             min: 1

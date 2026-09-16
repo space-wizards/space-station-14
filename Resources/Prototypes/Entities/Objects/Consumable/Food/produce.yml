@@ -315,12 +315,12 @@
         !type:DamageTrigger
         damage: 25
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           path: /Audio/Voice/Diona/diona_salute.ogg
           params:
             volume: -5
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: DamageOnHit
     damage:
@@ -933,12 +933,12 @@
         !type:DamageTrigger
         damage: 1
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: desecration
-      - !type:SpillBehavior
+      - !type:Spill
         solution: food
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: Tag
     tags:
@@ -983,12 +983,12 @@
         !type:DamageTrigger
         damage: 1
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: desecration
-      - !type:SpillBehavior
+      - !type:Spill
         solution: food
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: Tag
     tags:
@@ -1030,12 +1030,12 @@
         !type:DamageTrigger
         damage: 1
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: desecration
-      - !type:SpillBehavior
+      - !type:Spill
         solution: food
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: Tag
     tags:
@@ -1775,17 +1775,17 @@
         !type:DamageTrigger
         damage: 10
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: GlassBreak
           params:
             volume: -4
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           ShardGlass:
             min: 1
             max: 1
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: DamageOnHit
     damage:
@@ -2090,12 +2090,12 @@
         !type:DamageTrigger
         damage: 1
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: desecration
-      - !type:SpillBehavior
+      - !type:Spill
         solution: food
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: ToolRefinable
     refineResult:
@@ -2195,12 +2195,12 @@
         !type:DamageTrigger
         damage: 1
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: desecration
-      - !type:SpillBehavior
+      - !type:Spill
         solution: food
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: ToolRefinable
     refineResult:
@@ -2484,12 +2484,12 @@
         !type:DamageTrigger
         damage: 16
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: desecration
-      - !type:SpillBehavior
+      - !type:Spill
         solution: food
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: ToolRefinable
     refineResult:
@@ -2543,12 +2543,12 @@
         !type:DamageTrigger
         damage: 16
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: desecration
-      - !type:SpillBehavior
+      - !type:Spill
         solution: food
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: Tag
     tags:
@@ -2791,10 +2791,10 @@
         !type:DamageTrigger
         damage: 1
       behaviors:
-      - !type:SpillBehavior
+      - !type:Spill
         solution: food
-      - !type:TriggerBehavior
-      - !type:DoActsBehavior
+      - !type:Trigger
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: InteractionOutline
   - type: Fixtures

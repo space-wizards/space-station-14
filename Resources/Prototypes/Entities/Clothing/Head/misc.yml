@@ -361,12 +361,12 @@
         !type:DamageTrigger
         damage: 1
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: desecration
-      - !type:SpillBehavior
+      - !type:Spill
         solution: drink
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: Tag
     tags:

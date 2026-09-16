@@ -23,7 +23,7 @@
         !type:DamageTrigger
         damage: 175
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalGlassBreak
           params:
@@ -83,15 +83,15 @@
     thresholds:
     - trigger: *DamageMachineNormal
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           ShardGlass:
             min: 0
             max: 1
-      - !type:EmptyContainersBehaviour
+      - !type:EmptyContainers
         containers:
         - board
-      - !type:ChangeConstructionNodeBehavior
+      - !type:ChangeConstructionNode
         node: frame
   - type: StationAiWhitelist
   - type: DeployableTurretController

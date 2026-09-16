@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: [ BaseShutter, StructureHealthDoorStrong ]
   id: BlastDoor
   name: blast door
@@ -41,7 +41,7 @@
         !type:DamageTrigger
         damage: 350
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
   - type: ContainerFill
@@ -99,7 +99,7 @@
         !type:DamageTrigger
         damage: 200
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
   - type: Physics

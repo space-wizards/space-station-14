@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   id: CablePhysBase
   placement:
@@ -39,7 +39,7 @@
         !type:DamageTrigger
         damage: 60
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           path: /Audio/Effects/cig_snuff.ogg # Temporary but fits weirdly well
   - type: SubFloorHide
@@ -83,7 +83,7 @@
     thresholds:
     - trigger: *DamageContainerWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           CableHVStack1:
             min: 1
@@ -133,7 +133,7 @@
     thresholds:
     - trigger: *DamageContainerWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           CableMVStack1:
             min: 1
@@ -178,7 +178,7 @@
     thresholds:
     - trigger: *DamageContainerWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           CableApcStack1:
             min: 1
@@ -221,25 +221,25 @@
         damageType: Structural #this is as close as we can get to only letting explosives set it off.
         damage: 120
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: ["Destruction"]
-      - !type:ExplodeBehavior
+      - !type:Explode
     - trigger:
         !type:DamageTrigger #A fallback that deletes it but doesnt explode in case something somehow gets here without exploding violently enough.
         damage: 50
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 35
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           CableDetStack1:
             min: 1
             max: 1
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: CableVis
     node: cordage

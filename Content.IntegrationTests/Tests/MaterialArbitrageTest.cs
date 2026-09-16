@@ -4,13 +4,13 @@ using Content.IntegrationTests.Fixtures;
 using Content.Server.Cargo.Systems;
 using Content.Server.Construction.Completions;
 using Content.Server.Construction.Components;
-using Content.Server.Destructible;
-using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Server.Lathe;
 using Content.Server.Stack;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
+using Content.Shared.Destructible;
+using Content.Shared.EntityEffects.Effects.EntitySpawning;
 using Content.Shared.FixedPoint;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
@@ -210,7 +210,7 @@ public sealed class MaterialArbitrageTest : GameTest
             {
                 foreach (var behaviour in threshold.Behaviors)
                 {
-                    if (behaviour is not SpawnEntitiesBehavior spawn)
+                    if (behaviour is not SpawnEntities spawn)
                         continue;
 
                     foreach (var (key, value) in spawn.Spawn)

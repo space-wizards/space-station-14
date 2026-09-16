@@ -12,8 +12,8 @@
         !type:DamageTrigger
         damage: 140
       behaviors:
-      - !type:EmptyAllContainersBehaviour
-      - !type:PlaySoundBehavior
+      - !type:EmptyAllContainers
+      - !type:PlaySound
         sound:
           collection: MetalGlassBreak
   - type: Sprite
