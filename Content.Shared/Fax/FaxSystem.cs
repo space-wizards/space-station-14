@@ -253,7 +253,7 @@ public abstract partial class FaxSystem : EntitySystem
         else if (!fax.Comp.ResponsePings)
             return;
 
-        var pong = new FaxPongPayload(fax.Comp.FaxName);
+        var pong = new FaxPongPayload(fax.Comp.Name);
 
         _deviceNetwork.SendPacket(fax.Owner, args.SenderAddress, ref pong);
     }
@@ -270,11 +270,11 @@ public abstract partial class FaxSystem : EntitySystem
         fax.Comp.KnownFaxes.Remove(args.SenderAddress);
         DirtyField(fax.AsNullable(), nameof(FaxMachineComponent.KnownFaxes));
 
-        if (fax.Comp.DestinationFaxAddress != args.SenderAddress)
+        if (fax.Comp.DestinationAddress != args.SenderAddress)
             return;
 
-        fax.Comp.DestinationFaxAddress = fax.Comp.KnownFaxes.FirstOrNull()?.Key;
-        DirtyField(fax.AsNullable(), nameof(FaxMachineComponent.DestinationFaxAddress));
+        fax.Comp.DestinationAddress = fax.Comp.KnownFaxes.FirstOrNull()?.Key;
+        DirtyField(fax.AsNullable(), nameof(FaxMachineComponent.DestinationAddress));
     }
 
     [SubscribeLocalEvent]
@@ -349,7 +349,7 @@ public abstract partial class FaxSystem : EntitySystem
         fax.Comp.KnownFaxes[address] = name;
         DirtyField(fax.AsNullable(), nameof(FaxMachineComponent.KnownFaxes));
 
-        if (fax.Comp.DestinationFaxAddress == null)
+        if (fax.Comp.DestinationAddress == null)
             SetDestination(fax, address);
     }
 
@@ -358,8 +358,8 @@ public abstract partial class FaxSystem : EntitySystem
     /// </summary>
     private void SetDestination(Entity<FaxMachineComponent> fax, string destAddress)
     {
-        fax.Comp.DestinationFaxAddress = destAddress;
-        DirtyField(fax.AsNullable(), nameof(FaxMachineComponent.DestinationFaxAddress));
+        fax.Comp.DestinationAddress = destAddress;
+        DirtyField(fax.AsNullable(), nameof(FaxMachineComponent.DestinationAddress));
         UpdateUserInterface(fax);
     }
 
@@ -373,10 +373,10 @@ public abstract partial class FaxSystem : EntitySystem
         if (_net.IsClient)
             return;
 
-        fax.Comp.DestinationFaxAddress = null;
+        fax.Comp.DestinationAddress = null;
         fax.Comp.KnownFaxes.Clear();
 
-        var payload = new FaxPingPayload(fax.Comp.FaxName, Emag.CheckFlag(fax, EmagType.Interaction));
+        var payload = new FaxPingPayload(fax.Comp.Name, Emag.CheckFlag(fax, EmagType.Interaction));
 
         _deviceNetwork.SendPacket(fax.Owner, null, ref payload);
         DirtyField(fax.AsNullable(), nameof(FaxMachineComponent.KnownFaxes));
@@ -407,7 +407,7 @@ public abstract partial class FaxSystem : EntitySystem
         AdminLogger.Add(LogType.Action,
             LogImpact.Low,
             $"{ToPrettyString(actor):actor} " +
-            $"added print job to \"{fax.Comp.FaxName}\" {ToPrettyString(fax):tool} " +
+            $"added print job to \"{fax.Comp.Name}\" {ToPrettyString(fax):tool} " +
             $"of {ToPrettyString(printout.Printout)}: {content}");
     }
 
@@ -513,7 +513,7 @@ public abstract partial class FaxSystem : EntitySystem
     [PublicAPI]
     public bool SendDisabled(Entity<FaxMachineComponent> fax)
     {
-        return fax.Comp.DestinationFaxAddress == null || PrintCooldown(fax);
+        return fax.Comp.DestinationAddress == null || PrintCooldown(fax);
     }
 
     /// <summary>
@@ -541,7 +541,7 @@ public abstract partial class FaxSystem : EntitySystem
         AdminLogger.Add(LogType.Action,
             LogImpact.Low,
             $"{ToPrettyString(actor):actor} " +
-            $"added copy job to \"{fax.Comp.FaxName}\" {ToPrettyString(fax):tool} " +
+            $"added copy job to \"{fax.Comp.Name}\" {ToPrettyString(fax):tool} " +
             $"of {ToPrettyString(fax):subject}: {_paperSystem.GetContent(copied.Value)}");
     }
 
@@ -560,10 +560,10 @@ public abstract partial class FaxSystem : EntitySystem
             return;
         }
 
-        if (fax.Comp.DestinationFaxAddress == null)
+        if (fax.Comp.DestinationAddress == null)
             return;
 
-        if (!fax.Comp.KnownFaxes.TryGetValue(fax.Comp.DestinationFaxAddress, out var faxName))
+        if (!fax.Comp.KnownFaxes.TryGetValue(fax.Comp.DestinationAddress, out var faxName))
             return;
 
         PrintTimeout(fax);
@@ -581,10 +581,10 @@ public abstract partial class FaxSystem : EntitySystem
 
             var content = "\n";
             content += Loc.GetString(fax.Comp.SenderInfo,
-                ("sender_name", fax.Comp.FaxName),
+                ("sender_name", fax.Comp.Name),
                 ("sender_addr", faxMachineAddress),
                 ("recipient_name", faxName),
-                ("recipient_addr", fax.Comp.DestinationFaxAddress),
+                ("recipient_addr", fax.Comp.DestinationAddress),
                 ("time", timeString)
             );
             _paperSystem.AddContent(sent.Value, content);
@@ -592,13 +592,13 @@ public abstract partial class FaxSystem : EntitySystem
 
         var payload = new FaxPayload(GetNetEntity(sent.Value));
 
-        _deviceNetwork.SendPacket(fax.Owner, fax.Comp.DestinationFaxAddress, ref payload);
+        _deviceNetwork.SendPacket(fax.Owner, fax.Comp.DestinationAddress, ref payload);
 
         AdminLogger.Add(LogType.Action,
             LogImpact.Low,
             $"{ToPrettyString(user):actor} " +
-            $"sent fax from \"{fax.Comp.FaxName}\" {ToPrettyString(fax):tool} " +
-            $"to \"{faxName}\" ({fax.Comp.DestinationFaxAddress}) " +
+            $"sent fax from \"{fax.Comp.Name}\" {ToPrettyString(fax):tool} " +
+            $"to \"{faxName}\" ({fax.Comp.DestinationAddress}) " +
             $"of {ToPrettyString(sent):subject}: {_paperSystem.GetContent(sent.Value)}");
 
         AudioSystem.PlayPredicted(fax.Comp.SendSound, fax, user);
@@ -673,7 +673,7 @@ public abstract partial class FaxSystem : EntitySystem
 
         _xForm.SetCoordinates(printout, Transform(fax).Coordinates);
 
-        AdminLogger.Add(LogType.Action, LogImpact.Low, $"\"{fax.Comp.FaxName}\" {ToPrettyString(fax):tool} printed {ToPrettyString(printout):subject}: {_paperSystem.GetContent(printout)}");
+        AdminLogger.Add(LogType.Action, LogImpact.Low, $"\"{fax.Comp.Name}\" {ToPrettyString(fax):tool} printed {ToPrettyString(printout):subject}: {_paperSystem.GetContent(printout)}");
         DirtyField(fax.AsNullable(), nameof(FaxMachineComponent.PrintingQueue));
         UpdateUserInterface(fax);
     }

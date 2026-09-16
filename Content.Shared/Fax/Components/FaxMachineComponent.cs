@@ -43,14 +43,14 @@ public sealed partial class FaxMachineComponent : Component
     /// <summary>
     /// Name with which the fax will be visible to others on the network
     /// </summary>
-    [DataField("name")]
-    public string FaxName { get; set; } = "Unknown";
+    [DataField, AutoNetworkedField]
+    public string Name { get; set; } = "Unknown";
 
     /// <summary>
-    /// Device address of fax in network to which data will be send
+    /// Device address of fax in network to which data will be sent
     /// </summary>
-    [DataField("destinationAddress"), AutoNetworkedField]
-    public string? DestinationFaxAddress { get; set; }
+    [DataField, AutoNetworkedField]
+    public string? DestinationAddress { get; set; }
 
     /// <summary>
     /// Contains the item to be sent, assumes it's paper...

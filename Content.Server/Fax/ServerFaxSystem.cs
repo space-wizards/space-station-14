@@ -40,7 +40,7 @@ public sealed partial class ServerFaxSystem : FaxSystem
             Loc.GetString("fax-machine-dialog-field-name"),
             (string newName) =>
             {
-                if (entity.Comp.FaxName == newName)
+                if (entity.Comp.Name == newName)
                     return;
 
                 if (newName.Length > 20)
@@ -57,8 +57,9 @@ public sealed partial class ServerFaxSystem : FaxSystem
 
                 AdminLogger.Add(LogType.Action,
                     LogImpact.Low,
-                    $"{ToPrettyString(user):user} renamed {ToPrettyString(entity):tool} from \"{entity.Comp.FaxName}\" to \"{newName}\"");
-                entity.Comp.FaxName = newName;
+                    $"{ToPrettyString(user):user} renamed {ToPrettyString(entity):tool} from \"{entity.Comp.Name}\" to \"{newName}\"");
+                entity.Comp.Name = newName;
+                DirtyField(entity.AsNullable(), nameof(FaxMachineComponent.Name));
                 Popup.PopupEntity(Loc.GetString("fax-machine-popup-name-set"), entity);
                 UpdateUserInterface(entity);
             });

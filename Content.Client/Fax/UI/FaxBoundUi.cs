@@ -107,10 +107,10 @@ public sealed partial class FaxBoundUi : BoundUserInterface
         var cooldown = _fax.PrintCooldown((Owner, fax));
 
         _window.Update(cooldown,
-            cooldown || fax.DestinationFaxAddress == null,
-            fax.FaxName,
+            cooldown || fax.DestinationAddress == null,
+            fax.Name,
             _entityManager.GetComponentOrNull<MetaDataComponent>(paper)?.EntityName,
             fax.KnownFaxes,
-            fax.DestinationFaxAddress);
+            fax.DestinationAddress);
     }
 }
