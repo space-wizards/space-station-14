@@ -27,8 +27,6 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Fax;
 /// <summary>
 /// System for handling the sending of entities through fax machines.
-/// TODO: FIX SYNDIE FAX MACHINE DOX BUG!!!
-/// TODO: FIX FAXES NOT POPULATING ON INIT!!!
 /// </summary>
 public abstract partial class FaxSystem : EntitySystem
 {
@@ -231,6 +229,8 @@ public abstract partial class FaxSystem : EntitySystem
         if (args.Powered)
         {
             _itemSlotsSystem.SetLock(fax.Owner, fax.Comp.PaperSlot, false);
+            // Update devices now that we can send pings again.
+            Refresh(fax);
             UpdateAppearance(fax);
             return;
         }
@@ -242,19 +242,22 @@ public abstract partial class FaxSystem : EntitySystem
         }
 
          // Lock slot when power is off
+         var payload = new FaxShutdownPayload();
+         _deviceNetworkSystem.SendPacket(fax.Owner, null, ref payload);
          _itemSlotsSystem.SetLock(fax.Owner, fax.Comp.PaperSlot, true);
     }
 
     [SubscribeLocalEvent]
     private void OnPingPayload(Entity<FaxMachineComponent> fax, ref DeviceNetworkPacketEvent<FaxPingPayload> args)
     {
-        var isForSyndie = Emag.CheckFlag(fax.Owner, EmagType.Interaction) && args.Data.IsSyndicate;
-        if (!isForSyndie && !fax.Comp.ResponsePings)
+        var opposingForce = Emag.CheckFlag(fax.Owner, EmagType.Interaction) ^ args.Data.IsSyndicate;
+        if (!opposingForce)
+            AddDestination(fax, args.SenderAddress, args.Data.FaxName);
+        else if (!fax.Comp.ResponsePings)
             return;
 
         var pong = new FaxPongPayload(fax.Comp.FaxName);
 
-        AddDestination(fax, args.SenderAddress, args.Data.FaxName);
         _deviceNetworkSystem.SendPacket(fax.Owner, args.SenderAddress, ref pong);
     }
 
@@ -367,7 +370,7 @@ public abstract partial class FaxSystem : EntitySystem
     ///     Clears current known fax info and make network scan ping
     ///     Adds special data to  payload if it was emagged to identify itself as a Syndicate
     /// </summary>
-    private void Refresh(Entity<FaxMachineComponent> fax)
+    protected void Refresh(Entity<FaxMachineComponent> fax)
     {
         // Device network not predicted...
         if (_net.IsClient)
