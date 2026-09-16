@@ -41,6 +41,38 @@
     state: dirtheavy-mono
 
 - type: decal
+  id: DirtLightVerticalSlats
+  tags: ["station", "dirty"]
+  defaultCleanable: true
+  sprite:
+    sprite: Decals/dirty.rsi
+    state: dirtlight-vertical-slats
+
+- type: decal
+  id: DirtHeavyVerticalSlats
+  tags: ["station", "dirty"]
+  defaultCleanable: true
+  sprite:
+    sprite: Decals/dirty.rsi
+    state: dirtheavy-vertical-slats
+
+- type: decal
+  id: DirtLightHorizontalSlats
+  tags: ["station", "dirty"]
+  defaultCleanable: true
+  sprite:
+    sprite: Decals/dirty.rsi
+    state: dirtlight-horizontal-slats
+
+- type: decal
+  id: DirtHeavyHorizontalSlats
+  tags: ["station", "dirty"]
+  defaultCleanable: true
+  sprite:
+    sprite: Decals/dirty.rsi
+    state: dirtheavy-horizontal-slats
+
+- type: decal
   id: Damaged
   tags: ["station", "dirty"]
   defaultCleanable: true

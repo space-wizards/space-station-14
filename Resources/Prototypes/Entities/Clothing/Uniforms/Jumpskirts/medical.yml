@@ -1,0 +1,87 @@
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtChemistry
+  name: chemistry jumpskirt
+  description: There's some odd stains on this jumpskirt. Hm.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirts/Medical/chemistry.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirts/Medical/chemistry.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtVirology
+  name: virology jumpskirt
+  description: It's made of a special fiber that gives special protection against biohazards. It has a virologist rank stripe on it.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirts/Medical/virology.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirts/Medical/virology.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtGenetics
+  name: genetics jumpskirt
+  description: It's made of a special fiber that gives special protection against biohazards. It has a geneticist rank stripe on it.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirts/Medical/genetics.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirts/Medical/genetics.rsi
+
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtCMO
+  name: chief medical officer's jumpskirt
+  description: It's a jumpskirt worn by those with the experience to be Chief Medical Officer. It provides minor biological protection.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirts/Medical/cmo.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirts/Medical/cmo.rsi
+
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtCMOTurtle
+  name: chief medical officer's turtleneck jumpskirt
+  description: It's a turtleneck worn by those with the experience to be Chief Medical Officer. It provides minor biological protection.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirts/Medical/cmo_turtle.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirts/Medical/cmo_turtle.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtMedicalDoctor
+  name: medical doctor jumpskirt
+  description: It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirts/Medical/medical.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirts/Medical/medical.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtParamedic
+  name: paramedic jumpskirt
+  description: It's got a plus on it, that's a good thing right?
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirts/Medical/paramedic.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirts/Medical/paramedic.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtSeniorPhysician
+  name: senior physician jumpskirt
+  description: A sign of skill and prestige within the medical department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirts/Medical/senior_physician.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirts/Medical/senior_physician.rsi

@@ -6,7 +6,7 @@
   - type: Objective
     # difficulty isn't used at all since objective are fixed
     difficulty: 1.5
-    issuer: objective-issuer-dragon
+    issuer: SpaceDragon
   - type: RoleRequirement
     roles:
     - DragonRole

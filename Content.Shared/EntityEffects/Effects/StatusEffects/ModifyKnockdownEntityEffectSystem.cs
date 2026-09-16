@@ -11,7 +11,7 @@ namespace Content.Shared.EntityEffects.Effects.StatusEffects;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class ModifyKnockdownEntityEffectSystem : EntityEffectSystem<StandingStateComponent, ModifyKnockdown>
 {
-    [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private SharedStunSystem _stun = default!;
 
     protected override void Effect(Entity<StandingStateComponent> entity, ref EntityEffectEvent<ModifyKnockdown> args)
     {

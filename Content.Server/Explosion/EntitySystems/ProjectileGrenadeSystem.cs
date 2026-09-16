@@ -1,4 +1,5 @@
-﻿using Content.Server.Explosion.Components;
+﻿using System.Numerics;
+using Content.Server.Explosion.Components;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Trigger;
 using Robust.Server.GameObjects;
@@ -8,12 +9,12 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Explosion.EntitySystems;
 
-public sealed class ProjectileGrenadeSystem : EntitySystem
+public sealed partial class ProjectileGrenadeSystem : EntitySystem
 {
-    [Dependency] private readonly GunSystem _gun = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly TransformSystem _transformSystem = default!;
+    [Dependency] private GunSystem _gun = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private TransformSystem _transformSystem = default!;
 
 
     public override void Initialize()
@@ -85,8 +86,8 @@ public sealed class ProjectileGrenadeSystem : EntitySystem
             // velocity is randomized to make the projectiles look
             // slightly uneven, doesn't really change much, but it looks better
             var direction = angle.ToVec().Normalized();
-            var velocity = _random.NextVector2(component.MinVelocity, component.MaxVelocity);
-            _gun.ShootProjectile(contentUid, direction, velocity, null);
+            var velocity = _random.NextFloat(component.MinVelocity, component.MaxVelocity);
+            _gun.ShootProjectile(contentUid, direction, Vector2.Zero, null, speed: velocity);
         }
     }
 

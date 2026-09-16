@@ -15,11 +15,11 @@ namespace Content.Server.Administration.Commands;
 /// Possible todo for future, store default values for cvars, and allow resetting to default.
 /// </remarks>
 [AnyCommand]
-public sealed class ChangeCvarCommand : IConsoleCommand
+public sealed partial class ChangeCvarCommand : IConsoleCommand
 {
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
-    [Dependency] private readonly CVarControlManager _cVarControlManager = default!;
+    [Dependency] private IConfigurationManager _configurationManager = default!;
+    [Dependency] private IAdminLogManager _adminLogManager = default!;
+    [Dependency] private CVarControlManager _cVarControlManager = default!;
 
     /// <summary>
     /// Searches the list of cvars for a cvar that matches the search string.

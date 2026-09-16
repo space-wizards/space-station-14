@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Client.Commands;
 
 [AnyCommand]
-public sealed class ToggleOutlineCommand : LocalizedCommands
+public sealed partial class ToggleOutlineCommand : LocalizedCommands
 {
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+    [Dependency] private IConfigurationManager _configurationManager = default!;
 
     public override string Command => "toggleoutline";
 

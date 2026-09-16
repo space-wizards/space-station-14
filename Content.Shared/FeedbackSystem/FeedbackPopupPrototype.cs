@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Prototypes;
+﻿using Content.Shared.Whitelist;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.FeedbackSystem;
 
@@ -45,12 +46,32 @@ public sealed partial class FeedbackPopupPrototype : IPrototype
     public string? ResponseLink;
 
     /// <summary>
+    /// Should this feedback always be shown upon opening the feedback window?
+    /// Ignores <see cref="ShowRoundEnd"/> and <see cref="RuleWhitelist"/>.
+    /// </summary>
+    /// <remarks>
+    /// Still requires a valid origin to display.
+    /// </remarks>
+    [DataField]
+    public bool AlwaysShow = false;
+
+    /// <summary>
     /// Should this feedback be shown when the round ends.
     /// </summary>
     /// <remarks>
-    /// If this is false popups have to be shown to players by running the <pre>feedback:add</pre> command.<br />
+    /// If this and <see cref="AlwaysShow"/> are false, popups have to be shown to players by running the <pre>feedback:add</pre> command.<br />
     /// This allows admins to show popups to only specific people.
     /// </remarks>
     [DataField]
     public bool ShowRoundEnd = true;
+
+    /// <summary>
+    /// Will only show this feedback at round end if there is a rule that fits in the whitelist
+    /// </summary>
+    /// <remarks>
+    /// This will only work if <see cref="ShowRoundEnd"/> is true.
+    /// If this is null it will show the feedback at round end regardless of the rules present
+    /// </remarks>
+    [DataField]
+    public EntityWhitelist? RuleWhitelist;
 }

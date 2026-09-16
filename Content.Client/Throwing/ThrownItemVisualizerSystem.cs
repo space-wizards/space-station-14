@@ -8,10 +8,10 @@ namespace Content.Client.Throwing;
 /// <summary>
 ///     Handles animating thrown items.
 /// </summary>
-public sealed class ThrownItemVisualizerSystem : EntitySystem
+public sealed partial class ThrownItemVisualizerSystem : EntitySystem
 {
-    [Dependency] private readonly AnimationPlayerSystem _anim = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private AnimationPlayerSystem _anim = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     private const string AnimationKey = "thrown-item";
 

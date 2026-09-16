@@ -82,6 +82,8 @@
     angleDecay: 20
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+  - type: Gun
+    selectedMode: FullAuto # Override of BaseWeaponPistol to default to full-auto
   - type: ItemSlots
     slots:
       gun_magazine:

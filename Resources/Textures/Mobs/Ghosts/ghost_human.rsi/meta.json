@@ -1,26 +1,188 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/tgstation/tgstation/blob/f80e7ba62d27c77cfeac709dd71033744d0015c4/icons/mob/mob.dmi, inhand sprites by TiniestShark (github)",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-      {
-          "name": "animated",
-          "directions": 4
-      },
-      {
-          "name": "icon"
-      },
-      {
-          "name": "inhand-left",
-          "directions": 4
-      },
-      {
-          "name": "inhand-right",
-          "directions": 4
-      }
-  ]
-}
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://github.com/tgstation/tgstation/blob/f80e7ba62d27c77cfeac709dd71033744d0015c4/icons/mob/mob.dmi, inhand sprites by TiniestShark (github), damage sprites by Thinbug (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "animated",
+            "directions": 4
+        },
+        {
+            "name": "icon"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "ghost_Blunt0",
+            "directions": 4
+        },
+        {
+            "name": "ghost_Blunt1",
+            "directions": 4
+        },
+        {
+            "name": "ghost_Blunt2",
+            "directions": 4
+        },
+        {
+            "name": "ghost_Slash0",
+            "directions": 4
+        },
+        {
+            "name": "ghost_Slash1",
+            "directions": 4
+        },
+        {
+            "name": "ghost_Slash2",
+            "directions": 4
+        },
+        {
+            "name": "ghost_Piercing0",
+            "directions": 4
+        },
+        {
+            "name": "ghost_Piercing1",
+            "directions": 4
+        },
+        {
+            "name": "ghost_Piercing2",
+            "directions": 4
+        },
+        {
+            "name": "ghost_Heat0",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "ghost_Cold0",
+            "directions": 4
+        },
+        {
+            "name": "ghost_Shock0",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "ghost_Radiation0",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "ghost_Cellular0",
+            "directions": 4
+        },
+        {
+            "name": "ghost_Poison0",
+            "directions": 4
+        },
+        {
+            "name": "ghost_Asphyxiation0",
+            "directions": 4
+        },
+        {
+            "name": "ghost_Explosion0",
+            "directions": 4
+        },
+        {
+            "name": "ghost_Explosion1",
+            "directions": 4
+        },
+        {
+            "name": "ghost_Explosion2",
+            "directions": 4
+        }
+      ]
+    }

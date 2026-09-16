@@ -1,7 +1,6 @@
 ﻿using Content.Client.UserInterface.Fragments;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.CartridgeLoader.Cartridges;
@@ -34,6 +33,6 @@ public sealed partial class NotekeeperUi : UIFragment
     {
         var notekeeperMessage = new NotekeeperUiMessageEvent(action, note);
         var message = new CartridgeUiMessage(notekeeperMessage);
-        userInterface.SendMessage(message);
+        userInterface.SendPredictedMessage(message);
     }
 }

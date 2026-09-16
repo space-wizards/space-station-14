@@ -1,7 +1,5 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
-                      xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                      xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
                       xmlns:ui="clr-namespace:Content.Client.Chemistry.UI"
                       Title="{Loc 'reagent-dispenser-bound-user-interface-title'}"
                       MinSize="600 300"
@@ -15,7 +13,7 @@
                 Columns="3"
                 HorizontalAlignment="Center"
                 Margin="5"
-                ButtonList="1,5,10,15,20,25,30,50,100"
+                ButtonList="1,5,10,15,20,30,40,60,120"
                 RadioGroup="True">
             </ui:ButtonGrid>
             <Control VerticalExpand="True" />
@@ -44,7 +42,8 @@
         </BoxContainer>
         <SplitContainer Orientation="Vertical"
                         HorizontalExpand="True"
-                        VerticalExpand="True">
+                        VerticalExpand="True"
+                        MouseFilter="Ignore">
             <ScrollContainer HScrollEnabled="False"
                              HorizontalExpand="True"
                              VerticalExpand="True"
@@ -60,10 +59,7 @@
                              HorizontalExpand="True"
                              VerticalExpand="True"
                              MinHeight="50">
-                <PanelContainer VerticalExpand="True">
-                    <PanelContainer.PanelOverride>
-                        <gfx:StyleBoxFlat BackgroundColor="#1b1b1e" />
-                    </PanelContainer.PanelOverride>
+                <PanelContainer VerticalExpand="True" StyleClasses="PanelDeep">
                     <BoxContainer Name="ContainerInfo"
                                   Orientation="Vertical"
                                   HorizontalExpand="True"

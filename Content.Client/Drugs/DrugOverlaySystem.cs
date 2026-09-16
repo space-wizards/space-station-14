@@ -10,11 +10,11 @@ namespace Content.Client.Drugs;
 /// <summary>
 ///     System to handle drug related overlays.
 /// </summary>
-public sealed class DrugOverlaySystem : EntitySystem
+public sealed partial class DrugOverlaySystem : EntitySystem
 {
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IOverlayManager _overlayMan = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IOverlayManager _overlayMan = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     private RainbowOverlay _overlay = default!;
 

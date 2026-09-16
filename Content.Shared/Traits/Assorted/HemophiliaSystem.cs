@@ -3,7 +3,7 @@ using Content.Shared.StatusEffectNew;
 
 namespace Content.Shared.Traits.Assorted;
 
-public sealed class HemophiliaSystem : EntitySystem
+public sealed partial class HemophiliaSystem : EntitySystem
 {
     public override void Initialize()
     {

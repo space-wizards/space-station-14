@@ -11,7 +11,7 @@ namespace Content.Client.Anomaly.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class AnomalyGeneratorWindow : FancyWindow
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     private TimeSpan _cooldownEnd = TimeSpan.Zero;
     private bool _hasEnoughFuel;

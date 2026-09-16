@@ -11,13 +11,7 @@ public sealed partial class MindTests
     [Test]
     public async Task DeleteAllThenGhost()
     {
-        var settings = new PoolSettings
-        {
-            Dirty = true,
-            DummyTicker = false,
-            Connected = true
-        };
-        await using var pair = await PoolManager.GetServerClient(settings);
+        var pair = Pair;
 
         // Client is connected with a valid entity & mind
         Assert.That(pair.Client.EntMan.EntityExists(pair.Client.AttachedEntity));
@@ -56,7 +50,5 @@ public sealed partial class MindTests
         Assert.That(pair.Server.EntMan.EntityExists(pair.PlayerData?.Mind));
         var xform = pair.Client.Transform(pair.Client.AttachedEntity!.Value);
         Assert.That(xform.MapID, Is.EqualTo(mapId));
-
-        await pair.CleanReturnAsync();
     }
 }

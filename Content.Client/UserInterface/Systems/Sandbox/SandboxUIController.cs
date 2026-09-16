@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Client.Administration.Managers;
 using Content.Client.Gameplay;
 using Content.Client.Sandbox;
@@ -23,12 +23,12 @@ namespace Content.Client.UserInterface.Systems.Sandbox;
 
 // TODO hud refactor should part of this be in engine?
 [UsedImplicitly]
-public sealed class SandboxUIController : UIController, IOnStateChanged<GameplayState>, IOnSystemChanged<SandboxSystem>
+public sealed partial class SandboxUIController : UIController, IOnStateChanged<GameplayState>, IOnSystemChanged<SandboxSystem>
 {
-    [Dependency] private readonly IConsoleHost _console = default!;
-    [Dependency] private readonly IInputManager _input = default!;
-    [Dependency] private readonly IClientAdminManager _admin = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private IConsoleHost _console = default!;
+    [Dependency] private IInputManager _input = default!;
+    [Dependency] private IClientAdminManager _admin = default!;
+    [Dependency] private IPlayerManager _player = default!;
 
     [UISystemDependency] private readonly SandboxSystem _sandbox = default!;
 
@@ -137,6 +137,7 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
         _window.ToggleSubfloorButton.OnPressed += _ => _sandbox.ToggleSubFloor();
         _window.ShowMarkersButton.OnPressed += _ => _sandbox.ShowMarkers();
         _window.ShowBbButton.OnPressed += _ => _sandbox.ShowBb();
+        _window.ToggleThermalVisionButton.OnToggled += _ => _sandbox.ToggleThermalVision();
     }
 
     private void CheckSandboxVisibility()

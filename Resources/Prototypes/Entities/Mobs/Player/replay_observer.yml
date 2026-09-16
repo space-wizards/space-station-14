@@ -7,3 +7,8 @@
   - type: MovementSpeedModifier
     baseSprintSpeed: 24
     baseWalkSpeed: 16
+  - type: Tag
+    tags:
+    - AllowPortalTraversal
+    - BypassInteractionRangeChecks
+    - PreventPortalCollision

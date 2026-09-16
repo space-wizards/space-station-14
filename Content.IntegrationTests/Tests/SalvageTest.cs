@@ -1,4 +1,6 @@
-﻿using Content.Shared.CCVar;
+﻿using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
+using Content.Shared.CCVar;
 using Content.Shared.Salvage;
 using Robust.Shared.Configuration;
 using Robust.Shared.EntitySerialization.Systems;
@@ -8,15 +10,16 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests;
 
 [TestFixture]
-public sealed class SalvageTest
+public sealed class SalvageTest : GameTest
 {
     /// <summary>
     /// Asserts that all salvage maps have been saved as grids and are loadable.
     /// </summary>
     [Test]
+    [EnsureCVar(Side.Server, typeof(CCVars), nameof(CCVars.GridFill), false)]
     public async Task AllSalvageMapsLoadableTest()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
         var entManager = server.ResolveDependency<IEntityManager>();
@@ -24,7 +27,6 @@ public sealed class SalvageTest
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
         var cfg = server.ResolveDependency<IConfigurationManager>();
         var mapSystem = entManager.System<SharedMapSystem>();
-        Assert.That(cfg.GetCVar(CCVars.GridFill), Is.False);
 
         await server.WaitPost(() =>
         {
@@ -50,8 +52,6 @@ public sealed class SalvageTest
                 }
             }
         });
-        await server.WaitRunTicks(1);
-
-        await pair.CleanReturnAsync();
+        await RunUntilSynced();
     }
 }

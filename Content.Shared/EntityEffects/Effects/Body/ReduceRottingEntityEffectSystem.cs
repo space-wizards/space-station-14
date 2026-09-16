@@ -10,7 +10,7 @@ namespace Content.Shared.EntityEffects.Effects.Body;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class ReduceRottingEntityEffectSystem : EntityEffectSystem<PerishableComponent, ReduceRotting>
 {
-    [Dependency] private readonly SharedRottingSystem _rotting = default!;
+    [Dependency] private SharedRottingSystem _rotting = default!;
 
     protected override void Effect(Entity<PerishableComponent> entity, ref EntityEffectEvent<ReduceRotting> args)
     {

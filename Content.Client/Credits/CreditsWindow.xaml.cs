@@ -25,11 +25,11 @@ namespace Content.Client.Credits;
 [GenerateTypedNameReferences]
 public sealed partial class CreditsWindow : DefaultWindow
 {
-    [Dependency] private readonly IResourceManager _resourceManager = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly ISerializationManager _serialization = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    [Dependency] private readonly ILocalizationManager _loc = default!;
+    [Dependency] private IResourceManager _resourceManager = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private ISerializationManager _serialization = default!;
+    [Dependency] private IPrototypeManager _protoManager = default!;
+    [Dependency] private ILocalizationManager _loc = default!;
 
     private static readonly Dictionary<string, int> PatronTierPriority = new()
     {

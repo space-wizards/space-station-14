@@ -14,21 +14,22 @@ public sealed partial class ExpireIdCardComponent : Component
 {
     /// <summary>
     /// Whether this ID has expired yet and had its accesses replaced.
+    /// This is runtime state only. Do not make this a DataField.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadOnly)]
     public bool Expired;
 
     /// <summary>
     /// Whether this card will expire at all.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool Permanent;
+    [ViewVariables]
+    public bool Permanent => ExpireTime == null;
 
     /// <summary>
     /// The time at which this card will expire and the access will be removed.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, AutoNetworkedField]
-    public TimeSpan ExpireTime = TimeSpan.Zero;
+    public TimeSpan? ExpireTime;
 
     /// <summary>
     /// Access the replaces current access once this card expires.

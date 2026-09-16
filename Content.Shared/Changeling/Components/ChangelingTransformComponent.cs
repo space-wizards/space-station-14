@@ -30,7 +30,7 @@ public sealed partial class ChangelingTransformComponent : Component
     /// Time it takes to Transform
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan TransformWindup = TimeSpan.FromSeconds(5);
+    public TimeSpan TransformWindup = TimeSpan.FromSeconds(4f);
 
     /// <summary>
     /// The noise used when attempting to transform
@@ -51,5 +51,11 @@ public sealed partial class ChangelingTransformComponent : Component
     public ProtoId<CloningSettingsPrototype> TransformCloningSettings = "ChangelingCloningSettings";
 
     public override bool SendOnlyToOwner => true;
+
+    /// <summary>
+    /// If true, then the changeling can manually drop identities. If false, then whenever they transform, the changeling will drop their former identity.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ManualDrop = true;
 }
 

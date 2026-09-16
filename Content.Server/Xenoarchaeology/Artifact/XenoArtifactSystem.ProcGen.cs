@@ -1,65 +1,38 @@
-using System.Linq;
-using Content.Shared.Random.Helpers;
-using Content.Shared.Whitelist;
+using Content.Shared.EntityTable;
+using Content.Shared.EntityTable.Conditions;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
-using Content.Shared.Xenoarchaeology.Artifact.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using System.Linq;
 
 namespace Content.Server.Xenoarchaeology.Artifact;
 
 public sealed partial class XenoArtifactSystem
 {
-    [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
+    [Dependency] private EntityTableSystem _entityTable = default!;
+
+    /// <summary>
+    /// Trigger for fallback scenario, when artifact acquired no trigger when generating artifact.
+    /// </summary>
+    private static readonly EntProtoId DummyTrigger = "TriggerExamine";
 
     private void GenerateArtifactStructure(Entity<XenoArtifactComponent> ent)
     {
         var nodeCount = ent.Comp.NodeCount.Next(RobustRandom);
-        var triggerPool = CreateTriggerPool(ent, nodeCount);
+
         // trigger pool could be smaller, then requested node count
-        nodeCount = triggerPool.Count;
+        var totalTriggers = _entityTable.ListSpawns(ent.Comp.TriggersTable)
+                                        .Count();
+        nodeCount = int.Min(nodeCount, totalTriggers);
+        var triggerPoolData = new TriggerPoolData(nodeCount);
+
         ResizeNodeGraph(ent, nodeCount);
         while (nodeCount > 0)
         {
-            GenerateArtifactSegment(ent, triggerPool, ref nodeCount);
+            GenerateArtifactSegment(ent, triggerPoolData, ref nodeCount);
         }
 
         RebuildXenoArtifactMetaData((ent, ent));
-    }
-
-    /// <summary>
-    /// Creates pool from all node triggers that current artifact can support.
-    /// As artifact cannot re-use triggers, pool will be growing smaller
-    /// and smaller with each node generated.
-    /// </summary>
-    /// <param name="ent">Artifact for which pool should be created.</param>
-    /// <param name="size">
-    /// Max size of pool. Resulting pool is not guaranteed to be exactly as large, but it will 100% won't be bigger.
-    /// </param>
-    private List<XenoArchTriggerPrototype> CreateTriggerPool(Entity<XenoArtifactComponent> ent, int size)
-    {
-        var triggerPool = new List<XenoArchTriggerPrototype>(size);
-        var weightsProto = PrototypeManager.Index(ent.Comp.TriggerWeights);
-        var weightsByTriggersLeft = new Dictionary<string, float>(weightsProto.Weights);
-
-        while (triggerPool.Count < size)
-        {
-            // OOPS! We ran out of triggers.
-            if (weightsByTriggersLeft.Count == 0)
-            {
-                Log.Error($"Insufficient triggers for generating {ToPrettyString(ent)}! Needed {size} but had {triggerPool.Count}");
-                return triggerPool;
-            }
-
-            var triggerId = RobustRandom.Pick(weightsByTriggersLeft);
-            weightsByTriggersLeft.Remove(triggerId);
-            var trigger = PrototypeManager.Index<XenoArchTriggerPrototype>(triggerId);
-            if (_entityWhitelist.IsWhitelistFail(trigger.Whitelist, ent))
-                continue;
-
-            triggerPool.Add(trigger);
-        }
-
-        return triggerPool;
     }
 
     /// <summary>
@@ -68,13 +41,13 @@ public sealed partial class XenoArtifactSystem
     /// </summary>
     private void GenerateArtifactSegment(
         Entity<XenoArtifactComponent> ent,
-        List<XenoArchTriggerPrototype> triggerPool,
+        TriggerPoolData triggerPoolData,
         ref int nodeCount
     )
     {
         var segmentSize = GetArtifactSegmentSize(ent, nodeCount);
         nodeCount -= segmentSize;
-        var populatedNodes = PopulateArtifactSegmentRecursive(ent, triggerPool, ref segmentSize);
+        var populatedNodes = PopulateArtifactSegmentRecursive(ent, triggerPoolData, ref segmentSize);
 
         var segments = GetSegmentsFromNodes(ent, populatedNodes).ToList();
 
@@ -139,7 +112,7 @@ public sealed partial class XenoArtifactSystem
     /// </summary>
     private List<Entity<XenoArtifactNodeComponent>> PopulateArtifactSegmentRecursive(
         Entity<XenoArtifactComponent> ent,
-        List<XenoArchTriggerPrototype> triggerPool,
+        TriggerPoolData triggerPoolData,
         ref int segmentSize,
         int iteration = 0
     )
@@ -148,7 +121,7 @@ public sealed partial class XenoArtifactSystem
             return new();
 
         // Try and get larger as we create more layers. Prevents excessive layers.
-        var mod = RobustRandom.Next((int) (iteration / 1.5f), iteration + 1);
+        var mod = RobustRandom.Next((int)(iteration / 1.5f), iteration + 1);
 
         var layerMin = Math.Min(ent.Comp.NodesPerSegmentLayer.Min + mod, segmentSize);
         var layerMax = Math.Min(ent.Comp.NodesPerSegmentLayer.Max + mod, segmentSize);
@@ -156,19 +129,31 @@ public sealed partial class XenoArtifactSystem
         // Default to one node if we had shenanigans and ended up with weird layer counts.
         var nodeCount = 1;
         if (layerMax >= layerMin)
-            nodeCount = RobustRandom.Next(layerMin, layerMax + 1); // account for non-inclusive max
+            nodeCount = RobustRandom.Next((int)layerMin, (int)layerMax + 1); // account for non-inclusive max
 
         segmentSize -= nodeCount;
         var nodes = new List<Entity<XenoArtifactNodeComponent>>();
         for (var i = 0; i < nodeCount; i++)
         {
-            var trigger = RobustRandom.PickAndTake(triggerPool);
-            nodes.Add(CreateNode(ent, trigger, iteration));
+            var trigger = _entityTable.GetFirstOrDefault(ent.Comp.TriggersTable, ctx: triggerPoolData.Context);
+            if (trigger == null)
+            {
+                trigger = DummyTrigger;
+                Log.Error(
+                    "Failed to generate proper artifact - selector {selector} with excepted entities {excepted} "
+                    + "provided zero triggers upon requesting new one",
+                    ent.Comp.TriggersTable,
+                    string.Join(", ", triggerPoolData.UsedTriggers.Select(x => x.Id))
+                );
+            }
+
+            triggerPoolData.AddTriggerAsUsed(trigger.Value);
+            nodes.Add(CreateNode(ent, trigger.Value, iteration));
         }
 
         var successors = PopulateArtifactSegmentRecursive(
             ent,
-            triggerPool,
+            triggerPoolData,
             ref segmentSize,
             iteration: iteration + 1
         );
@@ -204,7 +189,7 @@ public sealed partial class XenoArtifactSystem
         var segmentMin = ent.Comp.SegmentSize.Min;
         var segmentMax = Math.Min(ent.Comp.SegmentSize.Max, Math.Max(nodeCount / 2, segmentMin));
 
-        var segmentSize = RobustRandom.Next(segmentMin, segmentMax + 1); // account for non-inclusive max
+        var segmentSize = RobustRandom.Next((int)segmentMin, (int)segmentMax + 1); // account for non-inclusive max
         var remainder = nodeCount - segmentSize;
 
         // If our next segment is going to be undersized, then we just absorb it into this segment.
@@ -215,5 +200,32 @@ public sealed partial class XenoArtifactSystem
         segmentSize = Math.Min(nodeCount, segmentSize);
 
         return segmentSize;
+    }
+
+    /// <summary>
+    /// Container that represents pool of XenoArtifact triggers.
+    /// </summary>
+    private sealed class TriggerPoolData
+    {
+        private readonly HashSet<EntProtoId> _usedTriggers;
+
+        public TriggerPoolData(int requestedSize)
+        {
+            _usedTriggers = new(requestedSize);
+            Context = new EntityTableContext(new Dictionary<string, object>
+            {
+                [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = _usedTriggers
+            });
+        }
+
+        public readonly EntityTableContext Context;
+
+        public void AddTriggerAsUsed(EntProtoId trigger)
+        {
+            if (!_usedTriggers.Add(trigger))
+                throw new ArgumentException();
+        }
+
+        public IReadOnlyCollection<EntProtoId> UsedTriggers => _usedTriggers;
     }
 }
