@@ -13,7 +13,7 @@ namespace Content.Shared.Actions.Components;
 public sealed partial class ActionRequirementsComponent : Component
 {
     /// <summary>
-    /// What entity conditions the related entities need to meet for the action to cound as valid.
+    /// What entity conditions the related entities need to meet for the action to count as valid.
     /// Can be used, for example, to check if the performer has enough satiation.
     /// </summary>
     [DataField]

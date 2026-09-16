@@ -7,6 +7,7 @@ using Content.Shared.IdentityManagement;
 
 namespace Content.Shared.Actions;
 
+/// <summary> <see cref="ActionRequirementsComponent"/> </summary>
 public sealed partial class ActionRequirementsSystem : EntitySystem
 {
     [Dependency] private SharedEntityConditionsSystem _conditions = default!;
@@ -25,11 +26,7 @@ public sealed partial class ActionRequirementsSystem : EntitySystem
 
         if (!_conditions.TryConditions(args.User, performerConditions))
         {
-            if (ent.Comp.FailPopup != null)
-                args.Reason = Loc.GetString(ent.Comp.FailPopup, ("target", Identity.Name(target, EntityManager)), ("performer", Identity.Name(user, EntityManager)), ("action", ent));
-
-            args.Type = ent.Comp.FailPopupType;
-            args.Cancelled = true;
+            DoCancel(ent, target, user, ref args);
             return;
         }
 
@@ -37,11 +34,7 @@ public sealed partial class ActionRequirementsSystem : EntitySystem
 
         if (args.Target != null && !_conditions.TryConditions(args.Target.Value, targetConditions))
         {
-            if (ent.Comp.FailPopup != null)
-                args.Reason = Loc.GetString(ent.Comp.FailPopup, ("target", Identity.Name(target, EntityManager)), ("performer", Identity.Name(user, EntityManager)), ("action", ent));
-
-            args.Type = ent.Comp.FailPopupType;
-            args.Cancelled = true;
+            DoCancel(ent, target, user, ref args);
         }
     }
 
@@ -58,7 +51,7 @@ public sealed partial class ActionRequirementsSystem : EntitySystem
         if (target == null)
             return;
 
-        var targetEffects =  GetEffects(ent, ActionRequirementTarget.Target);
+        var targetEffects = GetEffects(ent, ActionRequirementTarget.Target);
 
         _effects.TryApplyEffects(target.Value, targetEffects, user: user);
     }
@@ -81,5 +74,21 @@ public sealed partial class ActionRequirementsSystem : EntitySystem
             .SelectMany(x => x.Value);
 
         return conditions.ToArray();
+    }
+
+    private void DoCancel(Entity<ActionRequirementsComponent> ent, EntityUid target, EntityUid user, ref ActionAttemptEvent args)
+    {
+        if (ent.Comp.FailPopup != null)
+        {
+            args.Reason = Loc.GetString(
+                ent.Comp.FailPopup,
+                ("target", Identity.Name(target, EntityManager)),
+                ("performer", Identity.Name(user, EntityManager)),
+                ("action", ent)
+            );
+        }
+
+        args.Type = ent.Comp.FailPopupType;
+        args.Cancelled = true;
     }
 }
