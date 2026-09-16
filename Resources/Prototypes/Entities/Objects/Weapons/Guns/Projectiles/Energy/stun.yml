@@ -130,6 +130,8 @@
     soundHit:
       collection: WeakHit
     forceSound: true
+  - type: StaminaDamageOnCollide
+    damage: 8
 
 - type: entity
   parent: BaseBullet
@@ -221,8 +223,10 @@
   components:
   - type: StunOnCollide
     slowdownAmount: 2.2
-    walkSpeedModifier: 0.65
-    sprintSpeedModifier: 0.65
+    walkSpeedModifier: 0.7
+    sprintSpeedModifier: 0.7
+  - type: StaminaDamageOnCollide
+    damage: 4
 
 - type: entity
   parent: BulletDisablerSmgBase

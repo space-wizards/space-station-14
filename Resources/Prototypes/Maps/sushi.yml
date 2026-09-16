@@ -16,6 +16,7 @@
           emergencyShuttlePath: /Maps/Shuttles/emergency_sushi.yml
         - type: StationJobs
           availableJobs:
+            # TOTAL: 66 job slots + 0 late-join only
             # Command (7)
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -24,7 +25,7 @@
             ChiefEngineer: [ 1, 1 ]
             ResearchDirector: [ 1, 1 ]
             Quartermaster: [ 1, 1 ]
-            # Service (11-13)
+            # Service (10)
             Bartender: [ 1, 1 ]
             Botanist: [ 2, 2 ]
             Chef: [ 2, 2 ]
@@ -33,20 +34,20 @@
             Librarian: [ 1, 1 ]
             Reporter: [ 1, 1 ]
             ServiceWorker: [ 1, 2 ]
-            # Engineering (7-9)
+            # Engineering (8)
             AtmosphericTechnician: [ 2, 2 ]
             StationEngineer: [ 4, 4 ]
             TechnicalAssistant: [ 2, 2 ]
-            # Medical (8-10)
+            # Medical (10)
             Chemist: [ 2, 2 ]
             MedicalDoctor: [ 4, 4 ]
             Paramedic: [ 1, 1 ]
             MedicalIntern: [ 2, 2 ]
             Psychologist: [ 1, 1 ]
-            # Science (4-6)
+            # Science (6)
             Scientist: [ 4, 4 ]
             ResearchAssistant: [ 2, 2 ]
-            # Security (9-11)
+            # Security (12)
             Warden: [ 1, 1 ]
             SecurityOfficer: [ 6, 6 ]
             Detective: [ 1, 1 ]
@@ -55,8 +56,8 @@
             # Supply (6)
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 3, 3 ]
-            # Civilian (3+)
-            Passenger: [ -1, -1 ]
+            # Civilian (3 + overflow)
+            Passenger: [ -1, -1 ] # infinite, not counted
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
