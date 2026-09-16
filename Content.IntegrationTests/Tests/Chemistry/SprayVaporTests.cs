@@ -69,7 +69,7 @@ public sealed class SprayVaporTests : GameTest
             Assume.That(vaporEnum.MoveNext(out _));
         });
 
-        await PoolManager.WaitUntil(Server, () => !SEntMan.EntityQueryEnumerator<VaporComponent>().MoveNext(out _));
+        await PoolManager.WaitUntil(Server, () => SEntMan.Count<VaporComponent>() == 0);
 
         await Server.WaitAssertion(() =>
         {
