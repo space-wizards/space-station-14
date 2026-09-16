@@ -2,6 +2,7 @@
 
 using Content.Shared.Administration;
 using Content.Shared.CCVar.CVarAccess;
+using Content.Shared.Mapping;
 
 namespace Content.Shared.CCVar;
 
@@ -31,11 +32,18 @@ public sealed partial class CCVars
         CVarDef.Create("anomaly.generation_grid_bounds_scale", 0.6f, CVar.SERVERONLY);
 
     /// <summary>
+    ///     If enabled, the server automatically triggers an AFK check popup when a player's inactivity exceeds afk.time (or admin.afk_time for admins)
+    /// </summary>
+    public static readonly CVarDef<bool> AfkAutomaticChecks =
+        CVarDef.Create("afk.automatic_checks", true, CVar.SERVERONLY);
+
+    /// <summary>
     ///     How long a client can go without any input before being considered AFK.
     /// </summary>
     [CVarControl(AdminFlags.VarEdit, min: 0f, max: float.MaxValue)]
     public static readonly CVarDef<float> AfkTime =
-        CVarDef.Create("afk.time", 300f, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("afk.time", 600f, CVar.SERVER | CVar.REPLICATED);
+        // If afk players become an issue again, implement using a more aggressive time limit when server pop is near full
 
     /// <summary>
     ///     How long a player has to confirm they are not AFK before being disconnected.
@@ -101,9 +109,6 @@ public sealed partial class CCVars
     public static readonly CVarDef<int> GCMaximumTimeMs =
         CVarDef.Create("entgc.maximum_time_ms", 5, CVar.SERVERONLY);
 
-    public static readonly CVarDef<bool> GatewayGeneratorEnabled =
-        CVarDef.Create("gateway.generator_enabled", true);
-
     public static readonly CVarDef<string> TippyEntity =
         CVarDef.Create("tippy.entity", "Tippy", CVar.SERVER | CVar.REPLICATED);
 
@@ -127,4 +132,14 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<float> PlaytimeMinutesToday =
         CVarDef.Create("playtime.minutes_today", 0f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    ///     If the cvar is enabled, every <see cref="StructureAlignerComponent"/> will be Aligned when the map initializes.
+    /// </summary>
+    /// <remarks>
+    ///     May be considered a stopgap measure when unupgraded maps are in rotation?
+    /// </remarks>
+    public static readonly CVarDef<bool> MapInitAlign =
+        CVarDef.Create("align.map_init", false, CVar.SERVER | CVar.REPLICATED);
+
 }

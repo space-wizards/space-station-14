@@ -8,9 +8,9 @@ using Robust.Shared.GameObjects;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public sealed class RoundEndTest : GameTest
+    public sealed partial class RoundEndTest : GameTest
     {
-        private sealed class RoundEndTestSystem : EntitySystem
+        private sealed partial class RoundEndTestSystem : EntitySystem
         {
             public int RoundCount;
 

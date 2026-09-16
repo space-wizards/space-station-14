@@ -7,16 +7,10 @@ namespace Content.Server.Temperature.Components;
 public sealed partial class TemperatureProtectionComponent : Component
 {
     /// <summary>
-    ///     Multiplier for the transferred heat when heating up
+    ///     Multiplier for the transferred heat when heating up or cooling down.
     /// </summary>
     [DataField]
-    public float HeatingCoefficient = 1.0f;
-
-    /// <summary>
-    ///     Multiplier for the transferred heat when cooling down
-    /// </summary>
-    [DataField]
-    public float CoolingCoefficient = 1.0f;
+    public float Coefficient = 1.0f;
 }
 
 /// <summary>

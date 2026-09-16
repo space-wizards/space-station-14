@@ -1,29 +1,36 @@
 - type: entity
-  parent: BaseWallmountMetallic
+  parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
   id: StationMapBroken
   name: station map
   description: A virtual map of the surrounding station.
   suffix: Wall broken
   components:
   - type: Sprite
-    sprite: Structures/Machines/station_map.rsi
+    sprite: Structures/Wallmounts/station-map.rsi
+    offset: 0, -0.25
     drawdepth: WallMountedItems
     layers:
-    - state: station_map_broken
+    - state: broken
   - type: Destructible
     thresholds:
-    - trigger:
+    - trigger: &DamageMachineFlimsy
         !type:DamageTrigger
-        damage: 100
+        damage: 50
       behaviors:
-      - !type:PlaySoundBehavior
+      - &SoundMetalGlassBreak !type:PlaySoundBehavior
         sound:
-          collection: GlassBreak
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+          collection: MetalGlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          StationMapCircuitboard: &Min0Max1
+            min: 0
+            max: 1
+          SheetSteel1: *Min0Max1
+          CableApcStack1: *Min0Max1
+
 
 - type: entity
-  parent: BaseWallmountMachine
+  parent: [ BaseWallmountMachine, StructureHealthMachineWeak ]
   id: StationMap
   name: station map
   description: A virtual map of the surrounding station.
@@ -34,15 +41,16 @@
   - type: Appearance
   - type: StationMap
   - type: Sprite
-    sprite: Structures/Machines/station_map.rsi
+    sprite: Structures/Wallmounts/station-map.rsi
+    offset: 0, -0.25
     layers:
-    - state: station_map0
+    - state: base
     - state: unshaded
       shader: unshaded
       map: [ "enum.PowerDeviceVisualLayers.Powered" ]
   - type: Icon
-    sprite: Structures/Machines/station_map.rsi
-    state: station_map0
+    sprite: Structures/Wallmounts/station-map.rsi
+    state: base
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
@@ -67,22 +75,21 @@
   - type: ActivatableUIRequiresPower
   - type: ActivatableUI
     key: enum.StationMapUiKey.Key
+  - type: Damageable
+    damageModifierSet: GlassReinforcedMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
+      - *SoundMetalGlassBreak
       - !type:SpawnEntitiesBehavior
+        offset: 0
         spawn:
           StationMapBroken:
             min: 1
             max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: UserInterface
     interfaces:
       enum.StationMapUiKey.Key:
@@ -99,7 +106,7 @@
       - NoConsoleSound
 
 - type: entity
-  parent: BaseWallmountMetallic
+  parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
   id: StationMapAssembly
   name: station map assembly
   description: A station map assembly.
@@ -107,18 +114,27 @@
   - type: WallMount
     arc: 360
   - type: Sprite
-    sprite: Structures/Machines/station_map.rsi
+    sprite: Structures/Wallmounts/station-map.rsi
+    offset: 0, -0.25
     layers:
-    - state: station_map_frame1
+    - state: frame0
       map: [ "enum.ConstructionVisuals.Layer" ]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.ConstructionVisuals.Key:
         enum.ConstructionVisuals.Layer:
-          assembly: { state: station_map_frame0 }
-          wired: { state: station_map_frame1 }
-          electronics: { state: station_map_frame2 }
+          assembly: { state: frame0 }
+          wired: { state: frame1 }
+          electronics: { state: frame2 }
   - type: Construction
     graph: StationMap
     node: assembly
+  - type: Destructible
+    thresholds:
+    - trigger: *DamageMachineFlimsy
+      behaviors:
+      - *SoundMetalGlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1: *Min0Max1

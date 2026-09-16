@@ -122,6 +122,10 @@ public sealed partial class ObjectivesSystem : SharedObjectivesSystem
         }
     }
 
+    /// <summary>
+    /// Generates a summary for a list of antag minds based on their agent.
+    /// Contains the objective issuer, objectives and completion rate.
+    /// </summary>
     private void AddSummary(StringBuilder result, string agent, List<(EntityUid, string)> minds)
     {
         var agentSummaries = new List<(string summary, float successRate, int completedObjectives)>();
