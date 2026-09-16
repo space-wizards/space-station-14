@@ -29,8 +29,11 @@ public sealed class ActionPvsDetachTest : GameTest
 
         // Verify that both the client & server agree on the number of actions
         var initActionsCount = _sActionsSys.GetActions(ent).Count();
-        Assert.That(initActionsCount, Is.GreaterThan(0));
-        Assert.That(initActionsCount, Is.EqualTo(_cActionsSys.GetActions(cEnt).Count()));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(initActionsCount, Is.GreaterThan(0));
+            Assert.That(initActionsCount, Is.EqualTo(_cActionsSys.GetActions(cEnt).Count()));
+        }
 
         // PVS-detach action entities
         // We do this by just giving them the ghost layer
@@ -43,9 +46,12 @@ public sealed class ActionPvsDetachTest : GameTest
             }
         });
 
-        // Client's actions have left been detached / are out of view, but action comp state has not changed
-        Assert.That(_sActionsSys.GetActions(ent).Count(), Is.EqualTo(initActionsCount));
-        Assert.That(_cActionsSys.GetActions(cEnt).Count(), Is.EqualTo(initActionsCount));
+        using (Assert.EnterMultipleScope())
+        {
+            // Client's actions have left been detached / are out of view, but action comp state has not changed
+            Assert.That(_sActionsSys.GetActions(ent).Count(), Is.EqualTo(initActionsCount));
+            Assert.That(_cActionsSys.GetActions(cEnt).Count(), Is.EqualTo(initActionsCount));
+        }
 
         // Re-enter PVS view
         await Server.WaitPost(() =>
@@ -57,7 +63,10 @@ public sealed class ActionPvsDetachTest : GameTest
             }
         });
 
-        Assert.That(_sActionsSys.GetActions(ent).Count(), Is.EqualTo(initActionsCount));
-        Assert.That(_cActionsSys.GetActions(cEnt).Count(), Is.EqualTo(initActionsCount));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(_sActionsSys.GetActions(ent).Count(), Is.EqualTo(initActionsCount));
+            Assert.That(_cActionsSys.GetActions(cEnt).Count(), Is.EqualTo(initActionsCount));
+        }
     }
 }
