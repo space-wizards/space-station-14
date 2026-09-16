@@ -71,10 +71,12 @@
     - to: start
       steps:
       - tool: Screwing
-        doAfter: 10
+        doAfter: 5
       conditions:
       - !type:ContainerEmpty
         container: "ItemCabinet"
+      - !type:Locked
+        locked: false
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
@@ -99,10 +101,12 @@
     - to: start
       steps:
       - tool: Screwing
-        doAfter: 10
+        doAfter: 5
       conditions:
       - !type:ContainerEmpty
         container: "ItemCabinet"
+      - !type:Locked
+        locked: false
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
