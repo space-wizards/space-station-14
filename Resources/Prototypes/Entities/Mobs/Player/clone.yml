@@ -216,7 +216,6 @@
   parent: [ParadoxCloningSettings, Paper]
   id: Centcomm
   components:
-  - TimerTrigger
   - GhostRole
   - GhostTakeoverAvailable
   - Solution # Not in a parent because this should be a setting TODO solutions refactor.

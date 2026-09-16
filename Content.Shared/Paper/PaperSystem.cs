@@ -6,6 +6,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
+using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using static Content.Shared.Paper.PaperComponent;
 using Robust.Shared.Prototypes;
@@ -336,9 +337,15 @@ public sealed partial class PaperSystem : EntitySystem
         _appearance.SetData(paper, PaperVisuals.Status, status, appearance);
     }
 
+    /// <summary>
+    /// Attempts to get the content on a piece of paper.
+    /// </summary>
+    /// <param name="paper">Paper we want the content of.</param>
+    /// <returns>Returns paper content or an empty string if this isn't paper.</returns>
+    [PublicAPI]
     public string GetContent(Entity<PaperComponent?> paper)
     {
-        if (!_paperQuery.Resolve(paper, ref paper.Comp))
+        if (!_paperQuery.Resolve(paper, ref paper.Comp, false))
             return "";
 
         return paper.Comp.Content;

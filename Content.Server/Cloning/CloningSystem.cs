@@ -198,7 +198,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
         EntityWhitelist? whitelist = null,
         EntityWhitelist? blacklist = null)
     {
-        if (!Resolve(original, ref original.Comp) || !Resolve(clone, ref clone.Comp))
+        if (!Resolve(original, ref original.Comp, false) || !Resolve(clone, ref clone.Comp))
             return;
 
         var coords = Transform(clone).Coordinates;
@@ -219,7 +219,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
         EntityWhitelist? whitelist = null,
         EntityWhitelist? blacklist = null)
     {
-        if (!Resolve(original, ref original.Comp) || !Resolve(clone, ref clone.Comp))
+        if (!Resolve(original, ref original.Comp, false) || !Resolve(clone, ref clone.Comp))
             return;
 
         var coords = Transform(clone).Coordinates;
