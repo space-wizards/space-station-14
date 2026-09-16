@@ -13,6 +13,11 @@ public abstract partial class SharedEmergencyShuttleSystem : EntitySystem
 
     private bool _emergencyEarlyLaunchAllowed;
 
+    /// <summary>
+    /// Has the emergency shuttle arrived?
+    /// </summary>
+    public bool EmergencyShuttleArrived { get; protected set; }
+
     public override void Initialize()
     {
         base.Initialize();
@@ -32,5 +37,14 @@ public abstract partial class SharedEmergencyShuttleSystem : EntitySystem
 
         if (!args.Silent)
             Popup.PopupEntity(Loc.GetString("emergency-shuttle-console-no-early-launches"), ent, args.User);
+    }
+
+    /// <summary>
+    ///     Attempts to get the EntityUid of the emergency shuttle
+    /// </summary>
+    public EntityUid? GetShuttle()
+    {
+        AllEntityQuery<EmergencyShuttleComponent>().MoveNext(out var shuttle, out _);
+        return shuttle;
     }
 }
