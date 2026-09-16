@@ -1,5 +1,6 @@
 using System.IO;
 using Content.Shared.Fax;
+using Content.Shared.Fax.Components;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 
@@ -8,7 +9,9 @@ namespace Content.Client.Fax.UI;
 [UsedImplicitly]
 public sealed partial class FaxBoundUi : BoundUserInterface
 {
+    [Dependency] private IEntityManager _entityManager = default!;
     [Dependency] private IFileDialogManager _fileDialogManager = default!;
+    [Dependency] private FaxSystem _fax = default!;
 
     [ViewVariables]
     private FaxWindow? _window;
@@ -24,7 +27,6 @@ public sealed partial class FaxBoundUi : BoundUserInterface
         base.Open();
 
         _window = this.CreateWindow<FaxWindow>();
-        _window.SetOwner(Owner);
         _window.FileButtonPressed += OnFileButtonPressed;
         _window.CopyButtonPressed += OnCopyButtonPressed;
         _window.SendButtonPressed += OnSendButtonPressed;
@@ -98,6 +100,16 @@ public sealed partial class FaxBoundUi : BoundUserInterface
         if (_window == null)
             return;
 
-        _window.Update();
+        if (!_entityManager.TryGetComponent<FaxMachineComponent>(Owner, out var fax))
+            return;
+
+        var inserted = _fax.PaperInserted((Owner, fax), out var paper);
+
+        _window.Update(!inserted,
+            !inserted || fax.DestinationFaxAddress == null || !_fax.CanInteract((Owner, fax)),
+            fax.FaxName,
+            _entityManager.GetComponentOrNull<MetaDataComponent>(paper)?.EntityName,
+            fax.KnownFaxes,
+            fax.DestinationFaxAddress);
     }
 }

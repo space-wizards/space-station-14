@@ -13,7 +13,7 @@ public sealed partial class ClientFaxSystem : FaxSystem
     [Dependency] private AnimationPlayerSystem _player = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
 
-    private static readonly string FaxKey = "faxecute";
+    private const string FaxKey = "faxecute";
 
     [SubscribeLocalEvent]
     private void OnAppearanceChanged(Entity<FaxMachineComponent> fax, ref AppearanceChangeEvent args)
@@ -24,7 +24,7 @@ public sealed partial class ClientFaxSystem : FaxSystem
         if (_player.HasRunningAnimation(fax, FaxKey))
             return;
 
-        if (!_appearance.TryGetData(fax, FaxMachineVisuals.VisualState, out FaxFunctions visuals))
+        if (!args.TryGetData(FaxMachineVisuals.VisualState, out FaxFunctions visuals))
             return;
 
         if ((visuals & FaxFunctions.Inserting) == FaxFunctions.Inserting)
@@ -49,8 +49,5 @@ public sealed partial class ClientFaxSystem : FaxSystem
         }
     }
 
-    protected override void NotifyAdmins(string faxName)
-    {
-
-    }
+    protected override void NotifyAdmins(string faxName) { }
 }

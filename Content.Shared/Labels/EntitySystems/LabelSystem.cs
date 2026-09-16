@@ -90,7 +90,7 @@ public sealed partial class LabelSystem : EntitySystem
     /// Returns the text of the label from an entity, or <see langword="null"/> if it doesn't have a label.
     /// </summary>
     /// <param name="ent">The entity from which to get the label text.</param>
-    [System.Diagnostics.Contracts.Pure]
+    [Pure]
     public string? GetLabelText(Entity<LabelComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, logMissing: false))
@@ -103,7 +103,7 @@ public sealed partial class LabelSystem : EntitySystem
     /// Returns true if an entity has a visible label.
     /// </summary>
     /// <param name="ent">The entity to check for a label.</param>
-    [System.Diagnostics.Contracts.Pure]
+    [Pure]
     public bool HasLabel(EntityUid ent)
     {
         return HasComp<LabelComponent>(ent);

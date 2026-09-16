@@ -11,11 +11,10 @@ public sealed partial class HandLabelerComponent : Component
 {
     public const int MaxLabelLength = 50;
 
-    [ViewVariables(VVAccess.ReadWrite), Access(Other = AccessPermissions.ReadWriteExecute)]
+    [Access(Other = AccessPermissions.ReadWriteExecute)]
     [DataField]
     public string AssignedLabel = string.Empty;
 
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public int MaxLabelChars = MaxLabelLength;
 
