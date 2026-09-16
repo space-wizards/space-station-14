@@ -36,7 +36,8 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
     {
         base.Started(uid, component, gameRule, args);
 
-        if (!Station.TryGetRandomStation(out var chosenStation))
+        Station.TryGetRandomStation<StationEventEligibleComponent>(out var chosenEnt);
+        if (chosenEnt is not { } chosenStation)
             return;
 
         var stationApcs = new List<(Entity<ApcComponent> apc, EntityUid grid)>(Count<ApcComponent>());
