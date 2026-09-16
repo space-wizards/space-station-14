@@ -14,10 +14,16 @@ namespace Content.Client.UserInterface.RichText;
 
 /// <summary>
 /// Markup tag handler for <c>[textlink="LinkText"]</c> nodes. Renders a link
-/// <see cref="Label"/> in rich text, covering two types:
-/// plain links (<c>link=</c>) and entity links (<c>entity=</c>).
-/// optional <c>color=</c> and <c>entitynamecolor=</c> parameters
-/// allow setting a color override and opting into using entity name colors for entity links
+/// <see cref="Label"/> in rich text, covering two link types:
+/// <list type="bullet">
+/// <item><description>link="GuideEntryPrototypeID" — a plain link.</description></item>
+/// <item><description>entity="NetEntity" — an entity link.</description></item>
+/// </list>
+/// Optional parameters:
+/// <list type="bullet">
+/// <item><description>color="HexColor" — color override.</description></item>
+/// <item><description>entitynamecolor="Bool" — entity links only; opt into using the entity's name color.</description></item>
+/// </list>
 /// </summary>
 [UsedImplicitly]
 public sealed partial class TextLinkTag : IMarkupTagHandler
@@ -134,7 +140,7 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
 
         if (control.LinkEntity is { } entity && control.TryGetParentHandler<IEntityLinkClickHandler>(out var entityLinkClickHandler))
         {
-                entityLinkClickHandler.HandleClick(entity);
+            entityLinkClickHandler.HandleClick(entity);
         }
         else if (control.LinkString != null && control.TryGetParentHandler<ILinkClickHandler>(out var linkClickHandler))
         {
