@@ -1,9 +1,8 @@
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents.Components;
-using Content.Server.StationRecords;
-using Content.Server.StationRecords.Systems;
 using Content.Shared.StationRecords;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.StationRecords.Components;
+using Content.Shared.StationRecords.Systems;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
@@ -16,7 +15,7 @@ public sealed partial class ClericalErrorRule : StationEventSystem<ClericalError
     {
         base.Started(uid, component, gameRule, args);
 
-        if (!TryGetRandomStation(out var chosenStation))
+        if (!Station.TryGetRandomStation(out var chosenStation))
             return;
 
         if (!TryComp<StationRecordsComponent>(chosenStation, out var stationRecords))

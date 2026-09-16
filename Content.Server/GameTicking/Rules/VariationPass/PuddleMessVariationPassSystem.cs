@@ -2,7 +2,6 @@
 using Content.Server.GameTicking.Rules.VariationPass.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Random.Helpers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules.VariationPass;
@@ -11,13 +10,12 @@ namespace Content.Server.GameTicking.Rules.VariationPass;
 public sealed partial class PuddleMessVariationPassSystem : VariationPassSystem<PuddleMessVariationPassComponent>
 {
     [Dependency] private PuddleSystem _puddle = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
 
     protected override void ApplyVariation(Entity<PuddleMessVariationPassComponent> ent, ref StationVariationPassEvent args)
     {
         var totalTiles = Stations.GetTileCount(args.Station.AsNullable());
 
-        if (!_proto.Resolve(ent.Comp.RandomPuddleSolutionFill, out var proto))
+        if (!ProtoMan.Resolve(ent.Comp.RandomPuddleSolutionFill, out var proto))
             return;
 
         var puddleMod = Random.NextGaussian(ent.Comp.TilesPerSpillAverage, ent.Comp.TilesPerSpillStdDev);
@@ -25,7 +23,7 @@ public sealed partial class PuddleMessVariationPassSystem : VariationPassSystem<
 
         for (var i = 0; i < puddleTiles; i++)
         {
-            if (!TryFindRandomTileOnStation(args.Station, out _, out _, out var coords))
+            if (!Stations.TryFindRandomTileOnStation(args.Station, out _, out _, out var coords))
                 continue;
 
             var sol = proto.Pick(Random);

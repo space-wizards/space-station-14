@@ -147,7 +147,7 @@ public abstract partial class SharedCrematoriumSystem : EntitySystem
             PredictedTrySpawnInContainer(ent.Comp1.LeftOverProtoId, ent.Owner, ent.Comp2.Contents.ID, out _);
         }
 
-        EntityStorage.OpenStorage(ent.Owner, ent.Comp2);
+        EntityStorage.OpenStorage((ent.Owner, ent.Comp2));
 
         if (_net.IsServer) // can't predict without the user
             _audio.PlayPvs(ent.Comp1.CremateFinishSound, ent.Owner);

@@ -1,24 +1,32 @@
+using Content.Shared.Climbing.Systems;
+using Content.Shared.Clumsy.Components;
 using Content.Shared.Damage;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Climbing.Components;
 
 /// <summary>
-///     Makes entity do damage and stun entities with ClumsyComponent
-///     upon DragDrop or Climb interactions.
+/// Damages and stuns entities afflicted with <see cref="ClumsyVaultStatusEffectComponent"/>  upon climb interactions.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(ClimbSystem))]
 public sealed partial class BonkableComponent : Component
 {
     /// <summary>
-    ///     How long to stun players on bonk, in seconds.
+    /// How long to stun players on bonk, in seconds.
     /// </summary>
     [DataField]
     public TimeSpan BonkTime = TimeSpan.FromSeconds(2);
 
     /// <summary>
-    ///     How much damage to apply on bonk.
+    /// How much damage to apply on bonk.
     /// </summary>
     [DataField]
     public DamageSpecifier? BonkDamage;
+
+    /// <summary>
+    /// The sound of the bonk.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier BonkSound = new SoundCollectionSpecifier("TrayHit");
 }

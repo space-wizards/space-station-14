@@ -2,6 +2,7 @@ using System.Linq;
 using System.Numerics;
 using System.Threading;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.Body.Systems;
 using Content.Server.Electrocution;
 using Content.Server.Explosion.EntitySystems;
@@ -12,22 +13,21 @@ using Content.Server.Pointing.Components;
 using Content.Server.Polymorph.Systems;
 using Content.Server.Popups;
 using Content.Server.Roles;
-using Content.Server.Speech.Components;
 using Content.Shared.Speech.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Tabletop;
-using Content.Server.Tabletop.Components;
 using Content.Shared.Actions;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Components;
-using Content.Shared.Administration.Systems;
+using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Body;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
 using Content.Shared.Clothing.Components;
-using Content.Shared.Clumsy;
 using Content.Shared.Cluwne;
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Electrocution;
@@ -47,7 +47,10 @@ using Content.Shared.Popups;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Slippery;
+using Content.Shared.StatusEffectNew;
+using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Storage.Components;
+using Content.Shared.Suicide;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
@@ -66,8 +69,11 @@ namespace Content.Server.Administration.Systems;
 
 public sealed partial class AdminVerbSystem
 {
+    private static readonly EntProtoId<StatusEffectComponent> MaidStatus = "StatusEffectClumsyMaid";
+
     private readonly ProtoId<PolymorphPrototype> LizardSmite = "AdminLizardSmite";
     private readonly ProtoId<PolymorphPrototype> VulpkaninSmite = "AdminVulpSmite";
+    private readonly ProtoId<DamageTypePrototype> _asphyxiationDamageType = "Asphyxiation";
 
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private IRobustRandom _random = default!;
@@ -97,6 +103,9 @@ public sealed partial class AdminVerbSystem
     [Dependency] private SlipperySystem _slipperySystem = default!;
     [Dependency] private GibbingSystem _gibbing = default!;
     [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private AtmosDeviceSystem _atmosDevice = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private SharedSuicideSystem _suicide = default!;
 
     private readonly EntProtoId _actionViewLawsProtoId = "ActionViewLaws";
     private readonly ProtoId<SiliconLawsetPrototype> _crewsimovLawset = "Crewsimov";
@@ -268,6 +277,22 @@ public sealed partial class AdminVerbSystem
                 Message = string.Join(": ", hardElectrocuteName, Loc.GetString("admin-smite-electrocute-description"))
             };
             args.Verbs.Add(hardElectrocute);
+
+            var heartAttackName = Loc.GetString("admin-smite-heartattack-name").ToLowerInvariant();
+            Verb heartAttack = new()
+            {
+                Text = heartAttackName,
+                Category = VerbCategory.Smite,
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/Interface/Alerts/human_crew_monitoring.rsi"), "dead"),
+                Act = () =>
+                {
+                    // If God would had wanted Me to Live he would not have created A Heart Attack!
+                    _suicide.ApplyLethalDamage((args.Target, damageable), _asphyxiationDamageType);
+                },
+                Impact = LogImpact.Extreme,
+                Message = string.Join(": ", heartAttackName, Loc.GetString("admin-smite-heartattack-description"))
+            };
+            args.Verbs.Add(heartAttack);
         }
 
         if (TryComp<CreamPiedComponent>(args.Target, out var creamPied))
@@ -632,14 +657,14 @@ public sealed partial class AdminVerbSystem
             {
                 Text = maidenName,
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Rsi(new("/Textures/Clothing/Uniforms/Jumpskirt/janimaid.rsi"), "icon"),
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/Clothing/Uniforms/Jumpskirts/Service/janimaid.rsi"), "icon"),
                 Act = () =>
                 {
                     _outfit.SetOutfit(args.Target, "JanitorMaidGear", (_, clothing) =>
                     {
                         if (HasComp<ClothingComponent>(clothing))
                             EnsureComp<UnremoveableComponent>(clothing);
-                        EnsureComp<ClumsyComponent>(args.Target);
+                        _statusEffects.TrySetStatusEffectDuration(args.Target, MaidStatus);
                     });
                 },
                 Impact = LogImpact.Extreme,
@@ -1073,6 +1098,31 @@ public sealed partial class AdminVerbSystem
             Message = string.Join(": ", homingRodSlowName, Loc.GetString("admin-smite-homing-rod-slow-description"))
         };
         args.Verbs.Add(homingRodSlow);
+
+        var makeStinkyName = Loc.GetString("admin-smite-make-stinky-name").ToLowerInvariant();
+        Verb makeStinky = new()
+        {
+            Text = makeStinkyName,
+            Category = VerbCategory.Smite,
+            Icon = new SpriteSpecifier.Rsi(new("Clothing/Mask/gas.rsi"), "icon"),
+            Act = () =>
+            {
+                var gasMiner = EnsureComp<GasMinerComponent>(args.Target);
+                gasMiner.SpawnGas = Gas.Ammonia;
+                gasMiner.SpawnAmount = 20;
+                gasMiner.ShowExamineText = false;
+
+                // Atmos device is not networked, no dirty.
+                var atmosDevice = EnsureComp<AtmosDeviceComponent>(args.Target);
+                atmosDevice.RequireAnchored = false;
+
+                _atmosDevice.JoinAtmosphere((args.Target, atmosDevice));
+                Dirty(args.Target, gasMiner);
+            },
+            Impact = LogImpact.Extreme,
+            Message = string.Join(": ", makeStinkyName, Loc.GetString("admin-smite-make-stinky-description"))
+        };
+        args.Verbs.Add(makeStinky);
     }
 
     public void HomingLaunchSequence(EntityUid target, EntProtoId proto, float distance, float speed)
@@ -1081,7 +1131,9 @@ public sealed partial class AdminVerbSystem
         // I would do it now but theres a massive rod rewrite, and I don't wanna poke it for this.
         // find reasonable spawn location (use gamerule and find rod?) but respect map not on grid etc etc
 
-        var offset = new Random(target.Id).NextAngle().RotateVec(new Vector2(distance, 0));
+        var random = new RobustRandom() as IRobustRandom;
+        random.SetSeed(target.Id);
+        var offset = random.NextAngle().RotateVec(new Vector2(distance, 0));
         var spawnCoords = _transformSystem.GetMapCoordinates(target).Offset(offset);
         var rod = Spawn(proto, spawnCoords);
         // Here we abuse the ChasingWalkComp by making it skip targetting logic and dialling its frequency up

@@ -58,12 +58,20 @@ public sealed partial class GrinderMenu : FancyWindow
         OnEjectChamber?.Invoke(_chamberVisualContents[args.ItemIndex]);
     }
 
+    /// <summary>
+    ///     Set the reagent grinder entity associated with this menu.
+    /// </summary>
+    /// <param name="owner">The reagent grinder.</param>
     public void SetEntity(EntityUid owner)
     {
         _owner = owner;
         UpdateUi();
     }
 
+    /// <summary>
+    ///     Update the UI state of this reagent grinder, including its contents,
+    ///     current grinding/juicing status, and button toggle states.
+    /// </summary>
     public void UpdateUi()
     {
         if (!_entityManager.TryGetComponent<ReagentGrinderComponent>(_owner, out var grinderComp))

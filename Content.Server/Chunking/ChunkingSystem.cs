@@ -1,10 +1,7 @@
-using System.Linq;
-using Content.Shared.Decals;
 using Microsoft.Extensions.ObjectPool;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -19,17 +16,14 @@ namespace Content.Shared.Chunking;
 public sealed partial class ChunkingSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _configurationManager = default!;
-    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private SharedMapSystem _maps = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
-
-    private EntityQuery<TransformComponent> _xformQuery;
 
     private Box2 _baseViewBounds;
 
     public override void Initialize()
     {
         base.Initialize();
-        _xformQuery = GetEntityQuery<TransformComponent>();
         Subs.CVar(_configurationManager, CVars.NetMaxUpdateRange, OnPvsRangeChanged, true);
     }
 
@@ -67,14 +61,14 @@ public sealed partial class ChunkingSystem : EntitySystem
         int chunkSize,
         float viewEnlargement)
     {
-        if (!_xformQuery.TryGetComponent(viewer, out var xform))
+        if (!TryComp(viewer, out TransformComponent? xform))
             return;
 
         var pos = _transform.GetWorldPosition(xform);
         var bounds = _baseViewBounds.Translated(pos).Enlarged(viewEnlargement);
 
         var state = new QueryState(chunks, indexPool, chunkSize, bounds, _transform, EntityManager);
-        _mapManager.FindGridsIntersecting(xform.MapID, bounds, ref state, AddGridChunks, true);
+        _maps.FindGridsIntersecting(xform.MapID, bounds, ref state, AddGridChunks, true);
     }
 
     private static bool AddGridChunks(

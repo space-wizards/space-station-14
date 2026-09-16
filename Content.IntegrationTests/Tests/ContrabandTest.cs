@@ -25,7 +25,7 @@ public sealed class ContrabandTest : GameTest
                     if (proto.Abstract || pair.IsTestPrototype(proto))
                         continue;
 
-                    if (!proto.TryGetComponent<ContrabandComponent>(out var contraband, componentFactory))
+                    if (!proto.TryComp<ContrabandComponent>(out var contraband, componentFactory))
                         continue;
 
                     if (!protoMan.TryIndex(contraband.Severity, out var severity))

@@ -60,7 +60,7 @@ public sealed partial class BlueprintSystem : EntitySystem
                 ("user", userId),
                 ("blueprint", bpId),
                 ("receiver", machineId));
-            _popup.PopupPredicted(msg, ent, user);
+            _popup.PopupEntity(msg, ent);
         }
 
         _container.Insert(blueprint.Owner, _container.GetContainer(ent, ent.Comp.ContainerId));
@@ -87,7 +87,7 @@ public sealed partial class BlueprintSystem : EntitySystem
         var currentRecipes = GetBlueprintRecipes(ent);
         if (currentRecipes.Count != 0 && currentRecipes.IsSupersetOf(blueprint.Comp.ProvidedRecipes))
         {
-            _popup.PopupPredicted(Loc.GetString("blueprint-receiver-popup-recipe-exists"), ent, user);
+            _popup.PopupEntity(Loc.GetString("blueprint-receiver-popup-recipe-exists"), ent, user);
             return false;
         }
 

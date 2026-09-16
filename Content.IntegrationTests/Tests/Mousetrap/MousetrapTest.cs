@@ -1,6 +1,8 @@
+#nullable enable
+using Content.IntegrationTests.Fixtures.Attributes;
+using Content.IntegrationTests.NUnit.Constraints;
 using Content.IntegrationTests.Tests.Movement;
 using Content.Server.NPC.HTN;
-using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
@@ -26,7 +28,11 @@ public sealed class MousetrapMouseMoveOverTest : MovementTest
     private static readonly EntProtoId MouseProtoId = "MobMouse";
     protected override string PlayerPrototype => MouseProtoId.Id; // use a mouse as the player entity
 
+    [SidedDependency(Side.Server)] private DamageableSystem _sDamageableSystem = default!;
+    [SidedDependency(Side.Server)] private ItemToggleSystem _sItemToggleSystem = default!;
+
     [Test]
+    [Description("Checks that a mouse moving over an active mousetrap triggers it and kills the mouse.")]
     public async Task MouseMoveOverTest()
     {
         // Make sure the mouse doesn't have any AI active
@@ -34,23 +40,22 @@ public sealed class MousetrapMouseMoveOverTest : MovementTest
 
         // Spawn a mouse trap
         await SpawnTarget(MousetrapProtoId);
-        Assert.That(Delta(), Is.GreaterThan(0.5), "Mouse and mousetrap not in expected positions.");
+        Assume.That(Delta(), Is.GreaterThan(0.5), "Mouse and mousetrap not in expected positions.");
 
-        Assert.That(HasComp<MousetrapComponent>(),
-            $"{MousetrapProtoId} does not have a MousetrapComponent. If you're refactoring, please update this test!");
+        Assume.That(STarget, Has.Comp<MousetrapComponent>(Server),
+            $"{MousetrapProtoId} does not have a {nameof(MousetrapComponent)}. If you're refactoring, please update this test!");
 
-        Assert.That(TryComp<ItemToggleComponent>(out var itemToggleComp),
-            $"{MousetrapProtoId} does not have a ItemToggleComponent. If you're refactoring, please update this test!");
-        Assert.That(itemToggleComp.Activated, Is.False, "Mousetrap started active.");
+        Assume.That(TryComp<ItemToggleComponent>(out var itemToggleComp),
+            $"{MousetrapProtoId} does not have an {nameof(ItemToggleComponent)}. If you're refactoring, please update this test!");
+        Assume.That(itemToggleComp!.Activated, Is.False, "Mousetrap started active.");
 
         // The mouse is spawned by the test before the atmosphere is added, so it has some barotrauma damage already
         // TODO: fix this since it can have an impact on integration tests
-        var damageSystem = Server.System<DamageableSystem>();
-        var startingDamage = damageSystem.GetTotalDamage(SPlayer);
+        var startingDamage = _sDamageableSystem.GetTotalDamage(SPlayer);
 
-        Assert.That(SEntMan.TryGetComponent<MobStateComponent>(SPlayer, out var mouseMobStateComp),
-            $"{MouseProtoId} does not have a MobStateComponent.");
-        Assert.That(mouseMobStateComp.CurrentState, Is.EqualTo(MobState.Alive), "Mouse was not alive when spawned.");
+        Assume.That(SEntMan.TryGetComponent<MobStateComponent>(SPlayer, out var mouseMobStateComp),
+            $"{MouseProtoId} does not have a {nameof(MobStateComponent)}.");
+        Assume.That(mouseMobStateComp!.CurrentState, Is.EqualTo(MobState.Alive), "Mouse was not alive when spawned.");
 
         // Move mouse over the trap
         await Move(DirectionFlag.East, 1f);
@@ -58,21 +63,20 @@ public sealed class MousetrapMouseMoveOverTest : MovementTest
         Assert.That(Delta(), Is.LessThan(0.5), "Mouse did not move over mousetrap.");
 
         // Walking over an inactive trap does not trigger it
-        Assert.That(damageSystem.GetTotalDamage(SPlayer), Is.LessThanOrEqualTo(startingDamage), "Mouse took damage from inactive trap!");
+        Assert.That(_sDamageableSystem.GetTotalDamage(SPlayer), Is.LessThanOrEqualTo(startingDamage), "Mouse took damage from inactive trap!");
         Assert.That(itemToggleComp.Activated, Is.False, "Mousetrap was activated.");
 
         // Activate the trap
-        var itemToggleSystem = Server.System<ItemToggleSystem>();
         await Server.WaitAssertion(() =>
         {
-            Assert.That(itemToggleSystem.TrySetActive(STarget.Value, true), "Could not activate the mouse trap.");
+            Assert.That(_sItemToggleSystem.TrySetActive(STarget.Value, true), "Could not activate the mouse trap.");
         });
 
         await Move(DirectionFlag.West, 1f);
         Assert.That(Delta(), Is.LessThan(0.1), "Mouse moved past active mousetrap.");
 
         // Walking over an active trap triggers it
-        Assert.That(damageSystem.GetTotalDamage(SPlayer), Is.GreaterThan(startingDamage), "Mouse did not take damage from active trap!");
+        Assert.That(_sDamageableSystem.GetTotalDamage(SPlayer), Is.GreaterThan(startingDamage), "Mouse did not take damage from active trap!");
         Assert.That(itemToggleComp.Activated, Is.False, "Mousetrap was not deactivated after triggering.");
         Assert.That(mouseMobStateComp.CurrentState, Is.EqualTo(MobState.Dead), "Mouse was not killed by trap.");
     }
@@ -97,28 +101,30 @@ public sealed class MousetrapHumanMoveOverTest : MovementTest
         sprite: Clothing/Shoes/Boots/workboots.rsi
     ";
 
+    [SidedDependency(Side.Server)] private DamageableSystem _sDamageableSystem = default!;
+    [SidedDependency(Side.Server)] private ItemToggleSystem _sItemToggleSystem = default!;
+
     [Test]
+    [Description("Checks that a human walking over an active mousetrap triggers it, and that wearing shoes prevents this.")]
     public async Task HumanMoveOverTest()
     {
         await SpawnTarget(MousetrapProtoId);
 
-        Assert.That(Delta(), Is.GreaterThan(0.5), "Player and mousetrap not in expected positions.");
+        Assume.That(Delta(), Is.GreaterThan(0.5), "Player and mousetrap not in expected positions.");
 
-        Assert.That(HasComp<MousetrapComponent>(),
-            $"{MousetrapProtoId} does not have a MousetrapComponent. If you're refactoring, please update this test!");
+        Assume.That(STarget, Has.Comp<MousetrapComponent>(Server),
+            $"{MousetrapProtoId} does not have a {nameof(MousetrapComponent)}. If you're refactoring, please update this test!");
 
-        Assert.That(TryComp<ItemToggleComponent>(out var itemToggleComp),
-            $"{MousetrapProtoId} does not have a ItemToggleComponent. If you're refactoring, please update this test!");
+        Assume.That(TryComp<ItemToggleComponent>(out var itemToggleComp),
+            $"{MousetrapProtoId} does not have a {nameof(ItemToggleComponent)}. If you're refactoring, please update this test!");
 
         // Activate the trap
-        var itemToggleSystem = Server.System<ItemToggleSystem>();
         await Server.WaitAssertion(() =>
         {
-            Assert.That(itemToggleSystem.TrySetActive(STarget.Value, true), "Could not activate the mouse trap.");
+            Assert.That(_sItemToggleSystem.TrySetActive(STarget.Value, true), "Could not activate the mouse trap.");
         });
 
-        var damageSystem = Server.System<DamageableSystem>();
-        var startingDamage = damageSystem.GetTotalDamage(SPlayer);
+        var startingDamage = _sDamageableSystem.GetTotalDamage(SPlayer);
 
         // Move player over the trap
         await Move(DirectionFlag.East, 0.5f);
@@ -126,15 +132,15 @@ public sealed class MousetrapHumanMoveOverTest : MovementTest
         Assert.That(Delta(), Is.LessThan(0.5), "Player did not move over mousetrap.");
 
         // Walking over the trap without shoes activates it
-        Assert.That(damageSystem.GetTotalDamage(SPlayer), Is.GreaterThan(startingDamage), "Player did not take damage.");
-        Assert.That(itemToggleComp.Activated, Is.False, "Mousetrap was not deactivated after triggering.");
+        Assert.That(_sDamageableSystem.GetTotalDamage(SPlayer), Is.GreaterThan(startingDamage), "Player did not take damage.");
+        Assert.That(itemToggleComp!.Activated, Is.False, "Mousetrap was not deactivated after triggering.");
 
         // Reactivate the trap
         await Server.WaitAssertion(() =>
         {
-            Assert.That(itemToggleSystem.TrySetActive(STarget.Value, true), "Could not activate the mouse trap.");
+            Assert.That(_sItemToggleSystem.TrySetActive(STarget.Value, true), "Could not activate the mouse trap.");
         });
-        var afterStepDamage = damageSystem.GetTotalDamage(SPlayer);
+        var afterStepDamage = _sDamageableSystem.GetTotalDamage(SPlayer);
 
         // Give the player some shoes
         await PlaceInHands(ShoesProtoId);
@@ -146,7 +152,7 @@ public sealed class MousetrapHumanMoveOverTest : MovementTest
         Assert.That(Delta(), Is.GreaterThan(0.5), "Player did not move back over mousetrap.");
 
         // Walking over the trap with shoes on does not activate it
-        Assert.That(damageSystem.GetTotalDamage(SPlayer), Is.LessThanOrEqualTo(afterStepDamage), "Player took damage from trap!");
+        Assert.That(_sDamageableSystem.GetTotalDamage(SPlayer), Is.LessThanOrEqualTo(afterStepDamage), "Player took damage from trap!");
         Assert.That(itemToggleComp.Activated, "Mousetrap was deactivated despite the player being protected by shoes.");
     }
 }

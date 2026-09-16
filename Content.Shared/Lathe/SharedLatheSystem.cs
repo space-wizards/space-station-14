@@ -461,7 +461,7 @@ public abstract partial class SharedLatheSystem : EntitySystem
     {
         foreach (var id in packs)
         {
-            var pack = Proto.Index(id);
+            var pack = ProtoMan.Index(id);
             recipes.UnionWith(pack.Recipes);
         }
     }

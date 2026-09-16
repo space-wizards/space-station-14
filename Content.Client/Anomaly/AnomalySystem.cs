@@ -1,5 +1,7 @@
-﻿using System.Numerics;
+using System.Numerics;
+using Content.Client.Anomaly.UI;
 using Content.Client.Gravity;
+using Content.Client.Items;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 using Robust.Client.GameObjects;
@@ -23,6 +25,8 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         SubscribeLocalEvent<AnomalyComponent, AnimationCompletedEvent>(OnAnimationComplete);
 
         SubscribeLocalEvent<AnomalySupercriticalComponent, ComponentShutdown>(OnShutdown);
+
+        Subs.ItemStatus<CorePoweredThrowerComponent>(entity => new AnomalyStatusControl(entity));
     }
 
     private void OnStartup(EntityUid uid, AnomalyComponent component, ComponentStartup args)

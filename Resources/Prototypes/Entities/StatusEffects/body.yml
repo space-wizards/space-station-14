@@ -58,6 +58,18 @@
   id: StatusEffectPainNumbness
   name: pain numbness
 
+# Ignore movement slowdown from damage thresholds.
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectAdrenaline
+  name: adrenaline
+  components:
+  - type: IgnoreSlowOnDamage
+  - type: StatusEffectAlert
+    alert: Adrenaline
+  - type: ExaminableStatusEffect
+    messageId: status-effect-examine-adrenaline
+
 - type: entity
   parent: MobStatusEffectBase
   id: StaminaModifierStatusEffect
@@ -80,3 +92,11 @@
   components:
   - type: StaminaModifierStatusEffect
     modifier: 1.5
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectNightVision
+  name: Night Vision
+  components:
+    - type: NightVision
+      relayOverlay: True
