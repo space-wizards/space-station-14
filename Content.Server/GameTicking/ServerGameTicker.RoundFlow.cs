@@ -390,6 +390,7 @@ public sealed partial class ServerGameTicker
         if (!StartPreset(origReadyPlayers, force))
         {
             _startingRound = false;
+            ClearGameRules();
             return;
         }
 
