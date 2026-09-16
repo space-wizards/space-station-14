@@ -14,7 +14,7 @@ namespace Content.Server.DeviceNetwork.Systems;
 public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
 {
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
-    [Dependency] private StationSystem _stationSystem = default!;
+    [Dependency] private ServerStationSystem _stationSystem = default!;
 
     public override void Initialize()
     {
@@ -103,10 +103,10 @@ public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
         var connectedEvent = new DeviceNetServerConnectedEvent();
         RaiseLocalEvent(uid, ref connectedEvent);
 
-        if (_deviceNetworkSystem.IsDeviceConnected(uid, device))
+        if (_deviceNetworkSystem.IsDeviceConnected((uid, device)))
             return;
 
-        _deviceNetworkSystem.ConnectDevice(uid, device);
+        _deviceNetworkSystem.ConnectDevice((uid, device));
     }
 
     /// <summary>
@@ -122,7 +122,7 @@ public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
         var disconnectedEvent = new DeviceNetServerDisconnectedEvent();
         RaiseLocalEvent(uid, ref disconnectedEvent);
 
-        _deviceNetworkSystem.DisconnectDevice(uid, device, false);
+        _deviceNetworkSystem.DisconnectDevice((uid, device), false);
     }
 }
 

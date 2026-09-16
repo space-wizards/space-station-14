@@ -23,7 +23,7 @@ public sealed partial class ChannelItem : Control
         set
         {
             field = value;
-            ChannelNumberLabel.Text = value.ToString();
+            ChannelNumberLabel.Text = (value + 1).ToString();
         }
     }
 

@@ -174,7 +174,7 @@ namespace Content.Client.Actions
             LinkAllActions(component);
         }
 
-        private void OnPlayerDetached(EntityUid uid, ActionsComponent component, LocalPlayerDetachedEvent? args = null)
+        private void OnPlayerDetached(EntityUid uid, ActionsComponent component, LocalPlayerDetachedEvent args)
         {
             UnlinkAllActions();
         }

@@ -30,8 +30,10 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
 
     private readonly ChannelsControl _channelsControl = new();
     private readonly MidiCollectionUtilsControl _midiCollectionUtilsControl = new();
+    private readonly MinVolumeControl _minVolumeControl = new();
 
     private InstrumentMenu? _instrumentMenu;
+    private string _percussionLabel = "";
 
     public InstrumentBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
@@ -41,6 +43,8 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
+
+        _percussionLabel = _loc.GetString("instruments-component-channels-percussion-channel-name");
 
         var instrument = EntMan.GetComponent<InstrumentComponent>(Owner);
 
@@ -63,6 +67,9 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         _channelsControl.ChannelsUpdateRequest += OnChannelsUpdateRequest;
         _channelsControl.SwitchFilteredChannel += OnSwitchFilteredChannel;
 
+        _minVolumeControl.MinVolumeChanged += OnMinVolumeChanged;
+        _minVolumeControl.MinVolume = instrument.MinVolume;
+
         _instrumentMenu = this.CreateWindow<InstrumentMenu>();
 
         if (EntMan.TryGetComponent<MetaDataComponent>(Owner, out var metaData))
@@ -84,6 +91,9 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         _instrumentMenu.AddConfigurationControl(
             _loc.GetString("instruments-component-midi-file-collection-label"),
             _midiCollectionUtilsControl);
+        _instrumentMenu.AddConfigurationControl(
+            _loc.GetString("instruments-component-menu-midi-min-volume-slider-label"),
+            _minVolumeControl);
     }
 
     protected override void ReceiveMessage(BoundUserInterfaceMessage message)
@@ -137,6 +147,11 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
     private void OnChannelsUpdated()
     {
         UpdateChannels();
+    }
+
+    private void OnMinVolumeChanged(int volume)
+    {
+        _instruments.SetMinVolume(Owner, volume);
     }
 
     private void OnMidiPlaybackEnded()
@@ -289,19 +304,34 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
 
         for (var i = 0; i < RobustMidiEvent.MaxChannels; i++)
         {
+            bool channelFound = false;
             var trackName = "";
             var instrumentName = "";
             var programName = "";
-            if (activeInstrument != null
+            var state = !instrument?.FilteredChannels[i] ?? false;
+            // Always show percussion channel if the instrument allows it, resolved or not.
+            if (i == RobustMidiEvent.PercussionChannel && instrument!.AllowPercussion)
+            {
+                channelFound = true;
+                programName = _percussionLabel;
+            }
+            else if (instrument!.IsInputOpen)
+            {
+                channelFound = true;
+            }
+            else if (i != RobustMidiEvent.PercussionChannel
+                && activeInstrument != null
                 && activeInstrument.Tracks.TryGetValue(i, out var resolvedMidiChannel)
                 && resolvedMidiChannel != null)
             {
+                channelFound = true;
                 trackName = resolvedMidiChannel.TrackName ?? "";
                 instrumentName = resolvedMidiChannel.InstrumentName ?? "";
                 programName = resolvedMidiChannel.ProgramName ?? "";
-                var state = !instrument?.FilteredChannels[i] ?? false;
-                channelSettings.Add(new MidiChannelInfo(i, trackName, instrumentName, programName, state));
             }
+
+            if (channelFound)
+                channelSettings.Add(new MidiChannelInfo(i, trackName, instrumentName, programName, state));
         }
 
         _channelsControl.SetChannels(channelSettings.ToArray());
@@ -319,6 +349,6 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
 public readonly record struct MidiChannelInfo(
     int Id,
     string TrackName,
-    string ProgramName,
     string InstrumentName,
+    string ProgramName,
     bool FilterState);

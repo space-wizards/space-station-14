@@ -1,10 +1,7 @@
 ﻿- type: entity
+  abstract: true
   parent: BaseMachinePowered
-  id: GravityGenerator
-  name: gravity generator
-  description: It's what keeps you to the floor.
-  placement:
-    mode: AlignTileAny
+  id: BaseGravityGenerator
   components:
   - type: StationAiWhitelist
   - type: AmbientSound
@@ -13,15 +10,6 @@
     range: 7
     sound:
       path: /Audio/Ambience/Objects/gravity_gen_hum.ogg
-  - type: Sprite
-    sprite: Structures/Machines/gravity_generator.rsi
-    layers:
-      - state: on
-        map: ["enum.GravityGeneratorVisualLayers.Base"]
-      - sprite: Structures/Machines/gravity_generator_core.rsi
-        state: activated
-        shader: unshaded
-        map: ["enum.GravityGeneratorVisualLayers.Core"]
   - type: Transform
     anchored: true
   - type: ApcPowerReceiver
@@ -29,28 +17,6 @@
   - type: ExtensionCableReceiver
   - type: Physics
     bodyType: Static
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-1.5,-1.5,1.5,1.5"
-        density: 50
-        mask:
-        - LargeMobMask
-        layer:
-        - WallLayer
-  - type: Repairable
-    fuelCost: 10
-    doAfterDelay: 5
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 150
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Breakage"]
   - type: PowerCharge
     windowTitle: gravity-generator-window-title
     idlePower: 50
@@ -81,25 +47,60 @@
     price: 5000
 
 - type: entity
-  parent: [ GravityGenerator, ConstructibleMachine, BaseConstructibleMachineDestructible ]
+  parent: BaseGravityGenerator # StructureHealthMachineMassive
+  id: GravityGenerator
+  name: gravity generator
+  description: It's what keeps you to the floor.
+  placement:
+    mode: AlignTileAny
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/gravity_generator.rsi
+    layers:
+    - state: on
+      map: ["enum.GravityGeneratorVisualLayers.Base"]
+    - sprite: Structures/Machines/gravity_generator_core.rsi
+      state: activated
+      shader: unshaded
+      map: ["enum.GravityGeneratorVisualLayers.Core"]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.5,-1.5,1.5,1.5"
+        density: 50
+        mask:
+        - LargeMobMask
+        layer:
+        - WallLayer
+  - type: Repairable
+    fuelCost: 10
+    doAfterDelay: 5
+#  - type: Injurable                          Indestructible because
+#    damageContainer: StructuralInorganic
+#  - type: Damageable
+#    damageModifierSet: PlastitaniumMod
+
+- type: entity
+  parent: [ BaseGravityGenerator, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   id: GravityGeneratorMini
   name: mini gravity generator
   suffix: Charged
   description: It's what keeps you to the floor, now in fun size.
   components:
-  - type: StationAiWhitelist
   - type: Sprite
     sprite: Structures/Machines/gravity_generator_mini.rsi
     snapCardinals: true
     layers:
-      - state: on
-        map: ["enum.GravityGeneratorVisualLayers.Base"]
-      - sprite: Structures/Machines/gravity_generator_core.rsi
-        state: activated
-        shader: unshaded
-        map: ["enum.GravityGeneratorVisualLayers.Core"]
-        scale: "0.4,0.4"
-        offset: "0,0.2"
+    - state: on
+      map: ["enum.GravityGeneratorVisualLayers.Base"]
+    - sprite: Structures/Machines/gravity_generator_core.rsi
+      state: activated
+      shader: unshaded
+      map: ["enum.GravityGeneratorVisualLayers.Core"]
+      scale: "0.4,0.4"
+      offset: "0,0.2"
   - type: Fixtures
     fixtures:
       fix1:
@@ -128,9 +129,6 @@
   - type: PowerCharge
     idlePower: 15
     activePower: 500
-  - type: GravityGenerator
-    lightRadiusMin: 0.75
-    lightRadiusMax: 2.5
   - type: StaticPrice
     price: 2000
 
