@@ -229,16 +229,15 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
         var numDisplacements = 0;
         for (var markingLayer = 0; markingLayer < markingProto.Sprites.Count; markingLayer++)
         {
-            var layer = markingProto.Sprites[markingLayer];
-            var layerId = layer.GetLayerID(markingId: markingProto.ID);
+            var layerData = markingProto.Sprites[markingLayer];
 
-            // - The +1 ensures that markings render on top of the base organ.
+            // - The +1 ensures that marking layers are added on top of the base organ.
             var spriteLayerIndex = organIndex + markingLayer + 1;
 
             // Add the marking layer to the target entity, if the target doesn't have it yet
             var spriteLayer = EnsureTargetLayer(target,
                 markingProto,
-                layer,
+                layerData,
                 newLayerIndex: spriteLayerIndex + numDisplacements,
                 visible: bodypartLayer.Visible);
 
@@ -247,23 +246,27 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
             // Apply displacements
             if (displacement != null && markingProto.CanBeDisplaced)
             {
+                var layerId = layerData.GetLayerID(markingId: markingProto.ID);
+                var spriteTarget = (target.Owner, target.Comp);
+
                 _displacement.TryAddDisplacement(
                     displacement,
-                    (target, target.Comp),
+                    spriteTarget,
                     // Similar logic as above, but this makes the displacement layer go below the
                     // original sprite. So it should be all the displacements, then all the sprite layers on top
                     spriteLayerIndex,
                     layerId,
                     out _
                 );
+
                 numDisplacements++;
             }
 
             // Apply shaders
-            if (layer.Shader != null)
+            if (layerData.Shader != null)
             {
                 // TODO: fix this when LayerSetShader is moved out of component
-                target.Comp.LayerSetShader(spriteLayerIndex + numDisplacements, layer.Shader);
+                target.Comp.LayerSetShader(spriteLayerIndex + numDisplacements, layerData.Shader);
             }
         }
     }
@@ -274,18 +277,18 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
     /// </summary>
     /// <param name="target">The target entity.</param>
     /// <param name="markingProto">The marking prototype.</param>
-    /// <param name="layer">The data associated with this layer.</param>
+    /// <param name="layerData">The data associated with this layer.</param>
     /// <param name="newLayerIndex">The index that this layer should be found in.</param>
     /// <param name="visible">Whether or not this layer should be visible.</param>
     /// <returns>The index of the sprite layer associated with this marking layer.</returns>
     private int EnsureTargetLayer(Entity<SpriteComponent?> target,
         MarkingPrototype markingProto,
-        MarkingLayerData layer,
+        MarkingLayerData layerData,
         int newLayerIndex,
         bool visible)
     {
-        var layerId = layer.GetLayerID(markingId: markingProto.ID);
-        var sprite = layer.Sprite;
+        var layerId = layerData.GetLayerID(markingId: markingProto.ID);
+        var sprite = layerData.Sprite;
 
         if (!_sprite.LayerMapTryGet(target, layerId, out var spriteLayer, false))
         {
