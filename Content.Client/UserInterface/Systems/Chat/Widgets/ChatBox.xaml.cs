@@ -93,7 +93,7 @@ public partial class ChatBox : UIWidget, IEntityLinkClickHandler
     }
 
     /// <summary>
-    /// Calls update function on every child textlinklabel in the ChatBox OutPanel "Contents"
+    /// Calls update function on every child textlinklabel in the ChatBox's OutputPanel "Contents"
     /// </summary>
     public void UpdateEntityTextLinkLabelProperties()
     {
