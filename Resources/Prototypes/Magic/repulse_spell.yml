@@ -15,9 +15,13 @@
     useDelay: 40
     raiseOnAction: true
     itemIconStyle: BigAction
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/repulse.ogg
   - type: Sprite
     sprite: Objects/Magic/magicactions.rsi
     layers:
     - state: repulse
   - type: InstantAction
     event: !type:RepulseAttractActionEvent
+  - type: SpeakOnAction
+    sentence: action-speech-spell-repulse
