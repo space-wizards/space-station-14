@@ -1,4 +1,5 @@
 using Content.Shared.Conditions;
+using Content.Shared.Conditions.Interfaces;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;

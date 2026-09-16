@@ -1,4 +1,5 @@
 using Content.Shared.Conditions;
+using Content.Shared.Conditions.Interfaces;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions;
@@ -10,8 +11,7 @@ namespace Content.Shared.EntityConditions;
 /// </summary>
 public sealed partial class SharedEntityConditionsSystem : EntitySystem
 {
-
-    [Dependency] private SharedConditionEvaluationSystem _conditionSystem=default!;
+    [Dependency] private SharedConditionEvaluationSystem _conditionSystem = default!;
 
     /// <summary>
     /// Checks a list of conditions to verify that they all return true.
@@ -21,7 +21,8 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem
     /// <param name="sourceEnt">An optional "source entity" which is checking the condition on the entity this is being raised to.
     /// Sometimes needed for additional context with conditions.</param>
     /// <returns>Returns true if all conditions return true, false if any fail</returns>
-    public bool TryConditions<T>(EntityUid target, T[]? conditions, EntityUid? sourceEnt = null) where T : EntityCondition
+    public bool TryConditions<T>(EntityUid target, T[]? conditions, EntityUid? sourceEnt = null)
+        where T : EntityCondition
     {
         // If there's no conditions we can't fail any of them...
         if (conditions == null)
@@ -44,7 +45,8 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem
     /// <param name="sourceEnt">An optional "source entity" which is checking the condition on the entity this is being raised to.
     /// Sometimes needed for additional context with conditions.</param>
     /// <returns>Returns true if any conditions return true</returns>
-    public bool TryAnyCondition<T>(EntityUid target, T[]? conditions, EntityUid? sourceEnt = null) where T : EntityCondition
+    public bool TryAnyCondition<T>(EntityUid target, T[]? conditions, EntityUid? sourceEnt = null)
+        where T : EntityCondition
     {
         // If there's no conditions we can't meet any of them...
         if (conditions == null)
@@ -69,18 +71,17 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem
     /// <returns>Returns true if we meet the condition and false otherwise</returns>
     public bool TryCondition<T>(EntityUid target, T condition, EntityUid? sourceEnt = null) where T : EntityCondition
     {
-        return _conditionSystem.IsConditionSatisfied(condition,target, sourceEnt);
+        return _conditionSystem.IsConditionSatisfied(condition, target, sourceEnt);
     }
-
 }
 
 /// <summary>
 /// A basic condition which can be checked for on an entity via events.
+/// Use in data structures for storage.
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
 public abstract partial class EntityCondition : ICondition, IWithInverted
 {
-
     /// <summary>
     /// If true, invert the result. So false returns true and true returns false!
     /// </summary>
@@ -92,11 +93,17 @@ public abstract partial class EntityCondition : ICondition, IWithInverted
     /// </summary>
     public abstract string EntityConditionGuidebookText(IPrototypeManager prototype);
 
+    /// <inheritdoc/>
     public abstract ConditionEvaluationEvent? WrapInEvent(EntityUid entity, EntityUid? sourceEntity);
 }
 
-public abstract partial class EntityConditionBase<TCondition> : EntityCondition where TCondition: EntityCondition
+/// <summary>
+/// The concrete condition for strongly typing.
+/// </summary>
+/// <typeparam name="TCondition"></typeparam>
+public abstract partial class EntityConditionBase<TCondition> : EntityCondition where TCondition : EntityCondition
 {
+    /// <inheritdoc/>
     public override ConditionEvaluationEvent? WrapInEvent(EntityUid entity, EntityUid? sourceEntity)
     {
         if (this is not TCondition condition)

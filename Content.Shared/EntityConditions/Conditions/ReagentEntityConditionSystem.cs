@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Conditions;
+using Content.Shared.Conditions.Interfaces;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 

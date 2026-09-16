@@ -3,6 +3,7 @@ using Content.Shared.Localizations;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Content.Shared.Conditions.Interfaces;
 
 namespace Content.Shared.EntityConditions.Conditions.Tags;
 
