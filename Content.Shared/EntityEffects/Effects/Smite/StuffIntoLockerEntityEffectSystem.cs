@@ -29,6 +29,9 @@ public sealed partial class StuffIntoLockerEntityEffectSystem : EntityEffectSyst
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class StuffIntoLocker : EntityEffectBase<StuffIntoLocker>
 {
+    /// <summary>
+    /// Locker entity prototype to spawn and stuff this entity into.
+    /// </summary>
     [DataField(required: true)]
     public EntProtoId Prototype;
 }

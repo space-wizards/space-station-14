@@ -20,6 +20,9 @@ public sealed partial class SetCreamPiedEntityEffectSystem : EntityEffectSystem<
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class SetCreamPied : EntityEffectBase<SetCreamPied>
 {
-    [DataField(required: true)]
+    /// <summary>
+    /// Whether to cover this entity in cream pie or clean it off.
+    /// </summary>
+    [DataField]
     public bool Enabled;
 }

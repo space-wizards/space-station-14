@@ -22,6 +22,9 @@ public sealed partial class AddUserInterfacesEntityEffectSystem : EntityEffectSy
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class AddUserInterfaces : EntityEffectBase<AddUserInterfaces>
 {
+    /// <summary>
+    /// Interfaces to add or replace, keyed by their UI enum key.
+    /// </summary>
     [DataField(required: true)]
     public Dictionary<Enum, InterfaceData> Interfaces = new();
 }

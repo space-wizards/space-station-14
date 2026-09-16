@@ -5,13 +5,22 @@ namespace Content.Shared.EntityEffects.Effects.Smite;
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class HomingRod : EntityEffectBase<HomingRod>
 {
+    /// <summary>
+    /// Entity prototype of the rod to spawn.
+    /// </summary>
     [DataField(required: true)]
     public EntProtoId Prototype;
 
-    [DataField(required: true)]
+    /// <summary>
+    /// Distance from the target at which the rod spawns.
+    /// </summary>
+    [DataField]
     public float Distance;
 
-    [DataField(required: true)]
+    /// <summary>
+    /// Speed at which the rod chases the target.
+    /// </summary>
+    [DataField]
     public float Speed;
 
     /// <summary>

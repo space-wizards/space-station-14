@@ -23,6 +23,9 @@ public sealed partial class LethalDamageEntityEffectSystem : EntityEffectSystem<
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class LethalDamage : EntityEffectBase<LethalDamage>
 {
+    /// <summary>
+    /// Damage type used to deal the lethal damage.
+    /// </summary>
     [DataField(required: true)]
     public ProtoId<DamageTypePrototype> DamageType;
 }

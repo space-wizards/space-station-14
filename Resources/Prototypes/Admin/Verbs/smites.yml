@@ -279,37 +279,40 @@
       weightless: true
     - type: GravityAffected
 
-# BROKEN: Setting an input mover's body type to Dynamic causes a movement assertion.
-#- type: adminVerb
-#  id: AdminSmitePinball
-#  parent: BaseAdminSmite
-#  name: admin-smite-pinball-name
-#  description: admin-smite-pinball-description
-#  icon:
-#    sprite: Objects/Fun/Balls/basketball.rsi
-#    state: icon
-#  whitelist:
-#    requireAll: true
-#    components:
-#    - Physics
-#    - Fixtures
-#  effects:
-#  - !type:Pinball
+- type: adminVerb
+  id: AdminSmitePinball
+  parent: BaseAdminSmite
+  name: admin-smite-pinball-name
+  description: admin-smite-pinball-description
+  icon:
+    sprite: Objects/Fun/Balls/basketball.rsi
+    state: icon
+  whitelist:
+    requireAll: true
+    components:
+    - Physics
+    - Fixtures
+  effects:
+  - !type:Fling
+    speed: 1.5
+    restitution: 1.1
 
-# BROKEN: Setting an input mover's body type to Dynamic causes a movement assertion.
-#- type: adminVerb
-#  id: AdminSmiteYeet
-#  parent: BaseAdminSmite
-#  name: admin-smite-yeet-name
-#  description: admin-smite-yeet-description
-#  icon: Interface/VerbIcons/eject.svg.192dpi.png
-#  whitelist:
-#    requireAll: true
-#    components:
-#    - Physics
-#    - Fixtures
-#  effects:
-#  - !type:Yeet
+- type: adminVerb
+  id: AdminSmiteYeet
+  parent: BaseAdminSmite
+  name: admin-smite-yeet-name
+  description: admin-smite-yeet-description
+  icon: Interface/VerbIcons/eject.svg.192dpi.png
+  whitelist:
+    requireAll: true
+    components:
+    - Physics
+    - Fixtures
+  effects:
+  - !type:Fling
+    speed: 8
+    restitution: 0
+    nonSolid: true
 
 - type: adminVerb
   id: AdminSmiteSuperSlip

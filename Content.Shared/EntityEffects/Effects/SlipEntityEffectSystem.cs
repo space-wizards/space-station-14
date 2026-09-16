@@ -25,6 +25,9 @@ public sealed partial class SlipEntityEffectSystem : EntityEffectSystem<MetaData
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class Slip : EntityEffectBase<Slip>
 {
+    /// <summary>
+    /// Slip settings to use when this entity has no existing slippery component.
+    /// </summary>
     [DataField]
     public SlipperyEffectEntry Slippery = new();
 }

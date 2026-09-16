@@ -17,6 +17,9 @@ public sealed partial class AddComponentsEntityEffectSystem : EntityEffectSystem
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class AddComponents : EntityEffectBase<AddComponents>
 {
+    /// <summary>
+    /// Components to add to this entity.
+    /// </summary>
     [DataField(required: true)]
     public ComponentRegistry Components = new();
 

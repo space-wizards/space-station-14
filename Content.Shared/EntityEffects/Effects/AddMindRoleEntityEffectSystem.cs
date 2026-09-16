@@ -32,6 +32,9 @@ public sealed partial class AddMindRoleEntityEffectSystem : EntityEffectSystem<M
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class AddMindRole : EntityEffectBase<AddMindRole>
 {
+    /// <summary>
+    /// Mind role entity prototype to grant to this entity's mind.
+    /// </summary>
     [DataField(required: true)]
     public EntProtoId Role;
 }

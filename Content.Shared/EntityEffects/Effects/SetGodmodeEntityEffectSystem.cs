@@ -26,6 +26,9 @@ public sealed partial class SetGodmodeEntityEffectSystem : EntityEffectSystem<Me
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class SetGodmode : EntityEffectBase<SetGodmode>
 {
-    [DataField(required: true)]
+    /// <summary>
+    /// Whether to enable or disable godmode.
+    /// </summary>
+    [DataField]
     public bool Enabled;
 }

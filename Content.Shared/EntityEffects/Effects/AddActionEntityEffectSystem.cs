@@ -27,6 +27,9 @@ public sealed partial class AddActionEntityEffectSystem : EntityEffectSystem<Met
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class AddAction : EntityEffectBase<AddAction>
 {
+    /// <summary>
+    /// Action entity prototype to grant to this entity.
+    /// </summary>
     [DataField(required: true)]
     public EntProtoId Action;
 }

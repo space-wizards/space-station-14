@@ -22,12 +22,21 @@ public sealed partial class AdminVerbPrototype : IPrototype, IInheritingPrototyp
     [AbstractDataField, NeverPushInheritance]
     public bool Abstract { get; private set; }
 
+    /// <summary>
+    /// Localization key of the verb name shown in the admin verb menu.
+    /// </summary>
     [DataField(required: true)]
     public LocId Name { get; private set; }
 
+    /// <summary>
+    /// Localization key of the verb description shown in the verb menu.
+    /// </summary>
     [DataField]
     public LocId? Description { get; private set; }
 
+    /// <summary>
+    /// Icon shown next to the verb in the admin verb menu.
+    /// </summary>
     [DataField]
     public SpriteSpecifier? Icon { get; private set; }
 
@@ -67,12 +76,21 @@ public sealed partial class AdminVerbPrototype : IPrototype, IInheritingPrototyp
     [DataField]
     public int CategoryColumns { get; private set; } = 1;
 
+    /// <summary>
+    /// Required components for the verb.
+    /// </summary>
     [DataField]
     public EntityWhitelist? Whitelist { get; private set; }
 
+    /// <summary>
+    /// Components that prevent the verb.
+    /// </summary>
     [DataField]
     public EntityWhitelist? Blacklist { get; private set; }
 
+    /// <summary>
+    /// Effects applied to the target when the verb is used.
+    /// </summary>
     [DataField]
     public EntityEffect[] Effects { get; private set; } = [];
 }
