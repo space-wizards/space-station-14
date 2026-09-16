@@ -9,6 +9,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Body;
 
@@ -186,6 +187,11 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
         }
     }
 
+    /// <summary>
+    ///     Adds the markings associated with a specific organ to the sprite layers of a body.
+    /// </summary>
+    /// <param name="ent">An organ with markings applied to it.</param>
+    /// <param name="target">The visual body entity containing this organ.</param>
     private void ApplyMarkings(Entity<VisualOrganMarkingsComponent> ent, Entity<SpriteComponent?> target)
     {
         if (!Resolve(target, ref target.Comp))
@@ -204,7 +210,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
             ent.Comp.MarkingsDisplacement.TryGetValue(proto.BodyPart, out var displacement);
 
             // Add the marking's layers to the target's sprite
-            AddMarkingLayers(target, proto, marking, organIndex, displacement);
+            ApplyMarkingLayers(target, organIndex, marking, proto, displacement);
             applied.Add(marking);
         }
 
@@ -212,65 +218,96 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
     }
 
     /// <summary>
-    ///     Apply marking layers to an entity from a prototype.
+    ///     Add sprite layers over a sprite layer of the target entity from a marking prototype.
     /// </summary>
     /// <param name="target">The entity to apply the marking.</param>
-    /// <param name="markingProto">The marking prototype to add.</param>
+    /// <param name="baseLayerIndex">The index of the base layer on the entity's sprite stack.</param>
     /// <param name="markingConfig">The marking's configuration data.</param>
-    /// <param name="organIndex">The index of the body part layer on the entity's sprite stack.</param>
-    /// <param name="displacement">Optional displacement data associated with this entity.</param>
-    private void AddMarkingLayers(Entity<SpriteComponent?> target,
-        MarkingPrototype markingProto,
+    /// <param name="markingProto">The marking prototype to add.</param>
+    /// <param name="displacement">Optional displacement data associated with this marking.</param>
+    private void ApplyMarkingLayers(Entity<SpriteComponent?> target,
+        int baseLayerIndex,
         Marking markingConfig,
-        int organIndex,
-        DisplacementData? displacement)
+        MarkingPrototype markingProto,
+        DisplacementData? displacement = null)
     {
-        if (!Resolve(target, ref target.Comp)
-            || !_sprite.TryGetLayer(target, organIndex, out var bodypartLayer, true))
+        if (!Resolve(target, ref target.Comp) || !_sprite.LayerExists(target, baseLayerIndex))
             return;
 
         var numDisplacements = 0;
         for (var markingLayer = 0; markingLayer < markingProto.Sprites.Count; markingLayer++)
         {
-            var layerData = markingProto.Sprites[markingLayer];
-
-            // - The +1 ensures that marking layers are added on top of the base organ.
-            var spriteLayerIndex = organIndex + markingLayer + 1;
-
-            // Add the marking layer to the target entity, if the target doesn't have it yet
-            var spriteLayer = EnsureTargetLayer(target,
+            ApplyMarkingLayer(
+                target,
+                markingLayer,
+                baseLayerIndex,
+                markingConfig,
                 markingProto,
-                layerData,
-                newLayerIndex: spriteLayerIndex + numDisplacements,
-                visible: bodypartLayer.Visible);
+                ref numDisplacements,
+                displacement);
+        }
+    }
 
-            UpdateLayerColor(target, markingConfig, markingLayer, spriteLayer);
+    /// <summary>
+    ///     Applies a single layer of a marking prototype on a target's sprite layer stack, adding the layer if needed.
+    /// </summary>
+    /// <param name="target">The target entity.</param>
+    /// <param name="markingLayer">The index of the marking layer to add.</param>
+    /// <param name="baseLayerIndex">The sprite layer index of the base layer to apply the marking to.</param>
+    /// <param name="markingConfig">The marking's configuration data.</param>
+    /// <param name="markingProto">The marking prototype.</param>
+    /// <param name="numDisplacements">How many displacements have been applied so far.</param>
+    /// <param name="displacement">Displacement data associated with this marking.</param>
+    private void ApplyMarkingLayer(Entity<SpriteComponent?> target,
+        int markingLayer,
+        int baseLayerIndex,
+        Marking markingConfig,
+        MarkingPrototype markingProto,
+        ref int numDisplacements,
+        DisplacementData? displacement = null)
+    {
+        if (!Resolve(target, ref target.Comp)
+            || !markingProto.Sprites.TryGetValue(markingLayer, out var layerData)
+            || !_sprite.TryGetLayer(target, baseLayerIndex, out var baseLayer, true))
+            return;
 
-            // Apply displacements
-            if (displacement != null && markingProto.CanBeDisplaced)
-            {
-                var layerId = layerData.GetLayerID(markingId: markingProto.ID);
-                var spriteTarget = (target.Owner, target.Comp);
+        // - The +1 ensures that marking layers are added on top of the base organ.
+        var spriteLayerIndex = baseLayerIndex + markingLayer + 1;
 
-                _displacement.TryAddDisplacement(
-                    displacement,
-                    spriteTarget,
-                    // Similar logic as above, but this makes the displacement layer go below the
-                    // original sprite. So it should be all the displacements, then all the sprite layers on top
-                    spriteLayerIndex,
-                    layerId,
-                    out _
-                );
+        // Add the marking layer to the target entity, if the target doesn't have it yet
+        var spriteLayer = EnsureTargetLayer(
+            target,
+            markingProto,
+            layerData,
+            newLayerIndex: spriteLayerIndex + numDisplacements,
+            visible: baseLayer.Visible);
 
-                numDisplacements++;
-            }
+        UpdateLayerColor(target, markingConfig, markingLayer, spriteLayer);
 
-            // Apply shaders
-            if (layerData.Shader != null)
-            {
-                // TODO: fix this when LayerSetShader is moved out of component
-                target.Comp.LayerSetShader(spriteLayerIndex + numDisplacements, layerData.Shader);
-            }
+        // Apply displacements
+        if (displacement != null && markingProto.CanBeDisplaced)
+        {
+            var layerId = layerData.GetLayerID(markingProto.ID);
+            var spriteTarget = (target.Owner, target.Comp);
+
+            _displacement.TryAddDisplacement(
+                displacement,
+                spriteTarget,
+                // Similar logic as above, but this makes the displacement layer go below the
+                // original sprite. So it should be all the displacements, then all the sprite layers on top
+                spriteLayerIndex,
+                layerId,
+                out _
+            );
+
+            numDisplacements++;
+        }
+
+        // Apply shaders
+        if (layerData.Shader != null)
+        {
+            // TODO: fix this when LayerSetShader is moved out of component
+            target.Comp.LayerSetShader(spriteLayerIndex + numDisplacements, layerData.Shader);
         }
     }
 
@@ -290,7 +327,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
         int newLayerIndex,
         bool visible)
     {
-        var layerId = layerData.GetLayerID(markingId: markingProto.ID);
+        var layerId = layerData.GetLayerID(markingProto.ID);
         var sprite = layerData.Sprite;
 
         if (!_sprite.LayerMapTryGet(target, layerId, out var spriteLayer, false))
@@ -323,6 +360,11 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
         _sprite.LayerSetColor(target, spriteLayer, layerColor);
     }
 
+    /// <summary>
+    ///     Removes the sprite layers for every marking applied to an organ.
+    /// </summary>
+    /// <param name="ent">An organ with markings applied to it.</param>
+    /// <param name="target">The visual body of the entity.</param>
     private void RemoveMarkings(Entity<VisualOrganMarkingsComponent> ent, Entity<SpriteComponent?> target)
     {
         if (!Resolve(target, ref target.Comp))
@@ -333,16 +375,16 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
             if (!_marking.TryGetMarking(marking, out var proto))
                 continue;
 
-            RemoveMarkingLayers(target, proto);
+            RemoveMarkingSpriteLayers(target, proto);
         }
     }
 
     /// <summary>
-    ///     Removes sprites from a target entity associated with a marking prototype.
+    ///     Removes all sprite layers associated with a certain marking prototype from an entity.
     /// </summary>
-    /// <param name="target">The entity to remove a marking from.</param>
-    /// <param name="proto">The marking prototype to remove.</param>
-    private void RemoveMarkingLayers(Entity<SpriteComponent?> target, MarkingPrototype proto)
+    /// <param name="target">The target entity.</param>
+    /// <param name="proto">The marking prototype.</param>
+    private void RemoveMarkingSpriteLayers(Entity<SpriteComponent?> target, MarkingPrototype proto)
     {
         if (!Resolve(target, ref target.Comp))
             return;
@@ -354,6 +396,12 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
         }
     }
 
+    /// <summary>
+    ///     Removes a single layer associated with a marking prototype from an entity.
+    /// </summary>
+    /// <param name="target">The target entity.</param>
+    /// <param name="layerId">The ID of the layer to remove.</param>
+    /// <param name="proto">THe marking prototype.</param>
     private void RemoveMarkingSprite(Entity<SpriteComponent?> target, string layerId, MarkingPrototype proto)
     {
         if (!Resolve(target, ref target.Comp))
