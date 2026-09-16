@@ -1,4 +1,5 @@
-﻿- type: entity
+# TODO: over-ear headsets should protect from deafening when implemented
+- type: entity
   abstract: true
   parent: ClothingHeadset
   id: ClothingHeadsetAlt
@@ -9,11 +10,14 @@
     state: icon_alt
   - type: Clothing
     equippedPrefix: alt
+  - type: EncryptionKeyHolder
+    keySlots: 5
 
 - type: entity
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltCargo
   name: quartermaster's over-ear headset
+  description: A headset used by the quartermaster.
   components:
   - type: ContainerFill
     containers:
@@ -59,6 +63,7 @@
   parent: [ClothingHeadsetAlt, BaseCommandContraband]
   id: ClothingHeadsetAltEngineering
   name: chief engineer's over-ear headset
+  description: A headset for the chief engineer to ignore all emergency calls on.
   components:
   - type: ContainerFill
     containers:
@@ -75,6 +80,7 @@
   parent: [ClothingHeadsetAlt, BaseCommandContraband]
   id: ClothingHeadsetAltMedical
   name: chief medical officer's over-ear headset
+  description: A headset used by the CMO.
   components:
   - type: ContainerFill
     containers:
@@ -109,6 +115,7 @@
   parent: [ClothingHeadsetAlt, BaseCommandContraband]
   id: ClothingHeadsetAltScience
   name: research director's over-ear headset
+  description: Lamarr used to love chewing on this...
   components:
   - type: ContainerFill
     containers:
@@ -128,8 +135,6 @@
   description: An updated, modular syndicate intercom that fits over the head and takes encryption keys (there are 5 key slots.).
   components:
   - type: Headset
-  - type: EncryptionKeyHolder
-    keySlots: 5
   - type: ContainerFill
     containers:
       key_slots:
@@ -144,31 +149,27 @@
   id: ClothingHeadsetAltFreelancer
   name: freelancer's over-ear headset
   components:
-    - type: Headset
-    - type: EncryptionKeyHolder
-      keySlots: 5
-    - type: ContainerFill
-      containers:
-        key_slots:
-          - EncryptionKeyFreelance
-    - type: Sprite
-      sprite: Clothing/Ears/Headsets/freelance.rsi
-    - type: Clothing
-      sprite: Clothing/Ears/Headsets/freelance.rsi
+  - type: Headset
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyFreelance
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/freelance.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/freelance.rsi
 
 - type: entity
   parent: [ClothingHeadsetAlt, BaseMagicalContraband]
   id: ClothingHeadsetAltWizard
   name: wizard's over-ear headset
   components:
-    - type: Headset
-    - type: EncryptionKeyHolder
-      keySlots: 5
-    - type: ContainerFill
-      containers:
-        key_slots:
-        - EncryptionKeyStationMaster
-    - type: Sprite
-      sprite: Clothing/Ears/Headsets/wizard.rsi
-    - type: Clothing
-      sprite: Clothing/Ears/Headsets/wizard.rsi
+  - type: Headset
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyStationMaster
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/wizard.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/wizard.rsi
