@@ -197,12 +197,11 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
             if (!_marking.TryGetMarking(marking, out var proto))
                 continue;
 
-            if (!_sprite.LayerMapTryGet(target, proto.BodyPart, out var index, true)
-                || !_sprite.TryGetLayer(target, index, out var bodypartLayer, true))
+            if (!_sprite.LayerMapTryGet(target, proto.BodyPart, out var organIndex, true))
                 continue;
 
             ent.Comp.MarkingsDisplacement.TryGetValue(proto.BodyPart, out var displacement);
-            ApplyMarkingLayers(target, proto, marking, index, bodypartLayer, displacement);
+            ApplyMarkingLayers(target, proto, marking, organIndex, displacement);
             applied.Add(marking);
         }
 
@@ -214,18 +213,17 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
     /// </summary>
     /// <param name="target">The entity to apply the marking.</param>
     /// <param name="proto">The marking prototype to add.</param>
-    /// <param name="marking">The marking's colors and configuration data.</param>
-    /// <param name="index">The index of the body part layer on the entity's sprite stack.</param>
-    /// <param name="bodypartLayer">The sprite layer of the base body part.</param>
+    /// <param name="marking">The marking's preference data.</param>
+    /// <param name="organIndex">The index of the body part layer on the entity's sprite stack.</param>
     /// <param name="displacement">Optional displacement data associated with this entity.</param>
     private void ApplyMarkingLayers(Entity<SpriteComponent?> target,
         MarkingPrototype proto,
         Marking marking,
-        int index,
-        SpriteComponent.Layer bodypartLayer,
+        int organIndex,
         DisplacementData? displacement)
     {
-        if (!Resolve(target, ref target.Comp))
+        if (!Resolve(target, ref target.Comp)
+            || !_sprite.TryGetLayer(target, organIndex, out var bodypartLayer, true))
             return;
 
         var numDisplacements = 0;
@@ -233,32 +231,24 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
         {
             var layer = proto.Sprites[i];
             var layerId = layer.GetLayerID(markingId: proto.ID);
-            var sprite = layer.Sprite;
 
             // Having three separate indices and a magic +1 is cursed, but:
-            // - index refers to the index of the organ the marking is applied to
+            // - organIndex refers to the layer index of the organ the marking is applied to
             // - i is the current sprite of the marking that is being applied
             // - numDisplacements tracks how many displacements have been applied, and is
             //   an additional offset to ensure that the order of the base sprites is correct
             //   after inserting a displacement layer
             // - The +1 ensures that markings render on top of the base organ
-            var layerIndex = index + i + 1;
+            var layerIndex = organIndex + i + 1;
 
             // Add the marking layer to the target entity, if the target doesn't have it yet
-            if (!_sprite.LayerMapTryGet(target, layerId, out var spriteLayer, false))
-            {
-                spriteLayer = _sprite.AddLayer(target, sprite, layerIndex + numDisplacements);
-                _sprite.LayerMapSet(target, layerId, spriteLayer);
-                _sprite.LayerSetSprite(target, layerId, sprite);
-                _sprite.LayerSetVisible(target, spriteLayer, bodypartLayer.Visible);
-            }
+            var spriteLayer = EnsureTargetLayer(target,
+                proto,
+                layer,
+                newLayerIndex: layerIndex + numDisplacements,
+                visible: bodypartLayer.Visible);
 
-            // Set layer color
-            var layerColor = i < marking.MarkingColors?.Count
-                ? marking.MarkingColors[i]
-                : Color.White;
-
-            _sprite.LayerSetColor(target, spriteLayer, layerColor);
+            UpdateLayerColor(target, marking, i, spriteLayer);
 
             // Apply displacements
             if (displacement != null && proto.CanBeDisplaced)
@@ -282,6 +272,55 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
                 target.Comp.LayerSetShader(layerIndex + numDisplacements, layer.Shader);
             }
         }
+    }
+
+    /// <summary>
+    ///     Gets the target layer off of an entity, otherwise adds the marking layer
+    ///     to the target entity, if the target doesn't have it yet
+    /// </summary>
+    /// <param name="target">The target entity.</param>
+    /// <param name="proto">The marking prototype.</param>
+    /// <param name="layer">The data associated with this layer.</param>
+    /// <param name="newLayerIndex">The index that this layer should be found in.</param>
+    /// <param name="visible">Whether or not this layer should be visible.</param>
+    /// <returns>The index of the sprite layer associated with this marking layer.</returns>
+    private int EnsureTargetLayer(Entity<SpriteComponent?> target,
+        MarkingPrototype proto,
+        MarkingLayerData layer,
+        int newLayerIndex,
+        bool visible)
+    {
+        var layerId = layer.GetLayerID(markingId: proto.ID);
+        var sprite = layer.Sprite;
+
+        if (!_sprite.LayerMapTryGet(target, layerId, out var spriteLayer, false))
+        {
+            spriteLayer = _sprite.AddLayer(target, sprite, newLayerIndex);
+            _sprite.LayerMapSet(target, layerId, spriteLayer);
+            _sprite.LayerSetSprite(target, layerId, sprite);
+            _sprite.LayerSetVisible(target, spriteLayer, visible);
+        }
+
+        return spriteLayer;
+    }
+
+    /// <summary>
+    ///     Sets the color of a layer according to marking preference data.
+    /// </summary>
+    /// <param name="target">The target entity.</param>
+    /// <param name="marking">The marking's preference data.</param>
+    /// <param name="markingLayer">The index of the layer in the marking prototype.</param>
+    /// <param name="spriteLayer">The index of the sprite layer associated with this marking layer.</param>
+    private void UpdateLayerColor(Entity<SpriteComponent?> target,
+        Marking marking,
+        int markingLayer,
+        int spriteLayer)
+    {
+        var layerColor = markingLayer < marking.MarkingColors?.Count
+            ? marking.MarkingColors[markingLayer]
+            : Color.White;
+
+        _sprite.LayerSetColor(target, spriteLayer, layerColor);
     }
 
     private void RemoveMarkings(Entity<VisualOrganMarkingsComponent> ent, Entity<SpriteComponent?> target)
