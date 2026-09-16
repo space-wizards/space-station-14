@@ -260,6 +260,7 @@ public sealed partial class IonLawSystem : EntitySystem
                 }
                 _sawmill.Error("Selected DataSet (" + selector + ") was empty or not found");
                 return Loc.GetString("ion-law-error-dataset-empty-or-not-found");
+
             case RandomManifestFill randomManifestFill:
                 var stations = _stationSystem.GetStations();
                 if (stations.Count > 0)
@@ -280,11 +281,50 @@ public sealed partial class IonLawSystem : EntitySystem
                 }
                 _sawmill.Error("Fallback DataSet (" + selector + ") was empty or not found");
                 return Loc.GetString("ion-law-error-fallback-dataset-empty-or-not-found");
+
             case ConstantFill constantFill:
                 if (constantFill.BoolValue.HasValue)
                     return constantFill.BoolValue.Value;
                 _sawmill.Error("The selected Constant Fill did not have a value: " + constantFill);
                 return Loc.GetString("ion-law-error-no-bool-value");
+
+            case JoinedDatasetFill joinedDatasetFill:
+                switch (joinedDatasetFill.Selectors.Count)
+                {
+                    case 0:
+                        _sawmill.Error(selector.ToString() + " had no datasets to join together");
+                        return Loc.GetString("ion-law-error-dataset-empty-or-not-found");
+
+                    case 1:
+                        return GetSelectorValue(joinedDatasetFill.Selectors[0]);
+
+                    default:
+                        var s = string.Empty;
+                        foreach (var val in joinedDatasetFill.Selectors)
+                        {
+                            s += GetSelectorValue(val).ToString() + joinedDatasetFill.Separator;
+                        }
+                        return s[..(s.Length - joinedDatasetFill.Separator.Length - 1)];
+                }
+
+            case TranslateFill translateFill:
+                if (translateFill.Key == string.Empty)
+                    return Loc.GetString("ion-law-error-was-null");
+
+                if (translateFill.Args.Count == 0)
+                    return Loc.GetString(translateFill.Key);
+
+                var args = new (string, object)[translateFill.Args.Count];
+                var idx = 0;
+
+                foreach (var val in translateFill.Args)
+                {
+                    args[idx] = (val.Key, GetSelectorValue(val.Value));
+                    idx += 1;
+                }
+
+                return Loc.GetString(translateFill.Key, args);
+
             default:
                 _sawmill.Error("Selected DataSet (" + selector + ") was not selected");
                 return Loc.GetString("ion-law-error-no-selector-selected");
