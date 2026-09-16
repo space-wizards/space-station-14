@@ -1,11 +1,12 @@
 ﻿using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Payloads;
-using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Generation.Teg;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
+using Content.Shared.DeviceConfigurator;
+using Content.Shared.DeviceConfigurator.Components;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
@@ -84,7 +85,7 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
     private void DeviceListUpdated(
         EntityUid uid,
         SensorMonitoringConsoleComponent component,
-        DeviceListUpdateEvent args)
+        ref DeviceListUpdateEvent args)
     {
         UpdateDevices(uid, component, args.Devices, args.OldDevices);
     }

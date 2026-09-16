@@ -15,4 +15,10 @@ public sealed partial class StationTrackerComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? Station;
+
+    /// <summary>
+    /// If true, will show the name of the currently linked station on examine.
+    /// </summary>
+    [DataField]
+    public bool Examinable;
 }

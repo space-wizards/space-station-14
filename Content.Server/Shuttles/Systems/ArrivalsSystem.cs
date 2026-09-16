@@ -3,7 +3,7 @@ using System.Numerics;
 using Content.Server.Administration;
 using Content.Server.Antag;
 using Content.Server.Chat.Managers;
-using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
 using Content.Server.Parallax;

@@ -2,8 +2,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Payloads;
-using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Atmos.Monitor;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power;
 using Content.Shared.Tag;
@@ -144,7 +145,7 @@ public sealed partial class AtmosAlarmableSystem : EntitySystem
         RaiseLocalEvent(uid, new AtmosAlarmEvent(type), true);
     }
 
-    public void SyncAlertsToNetwork(EntityUid uid, string? address = null, AtmosAlarmableComponent? alarmable = null, TagComponent? tags = null)
+    public void SyncAlertsToNetwork(EntityUid uid, DeviceAddress? address = null, AtmosAlarmableComponent? alarmable = null, TagComponent? tags = null)
     {
         if (!Resolve(uid, ref alarmable, ref tags) || alarmable.ReceiveOnly)
         {

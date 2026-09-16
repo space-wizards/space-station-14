@@ -7,11 +7,11 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Content.Server.Cloning.Components;
-using Content.Server.DeviceLinking.Systems;
 using Content.Shared.DeviceLinking.Events;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Body;
 using Content.Shared.Climbing.Systems;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Server.Containers;
@@ -140,7 +140,7 @@ namespace Content.Server.Medical
             InsertBody(uid, args.Dragged, scannerComponent);
         }
 
-        private void OnPortDisconnected(EntityUid uid, MedicalScannerComponent component, PortDisconnectedEvent args)
+        private void OnPortDisconnected(EntityUid uid, MedicalScannerComponent component, ref PortDisconnectedEvent args)
         {
             component.ConnectedConsole = null;
         }

@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.Placeable;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
@@ -15,7 +16,7 @@ namespace Content.Shared.Xenoarchaeology.Equipment;
 public abstract partial class SharedArtifactAnalyzerSystem : EntitySystem
 {
     [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
-    [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private DeviceLinkSystem _deviceLink = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -90,13 +91,13 @@ public abstract partial class SharedArtifactAnalyzerSystem : EntitySystem
     private void OnLinkAttemptConsole(Entity<AnalysisConsoleComponent> ent, ref LinkAttemptEvent args)
     {
         if (ent.Comp.AnalyzerEntity != null)
-            args.Cancel(); // can only link to one device at a time
+            args.Cancelled = true; // can only link to one device at a time
     }
 
     private void OnLinkAttemptAnalyzer(Entity<ArtifactAnalyzerComponent> ent, ref LinkAttemptEvent args)
     {
         if (ent.Comp.Console != null)
-            args.Cancel(); // can only link to one device at a time
+            args.Cancelled = true; // can only link to one device at a time
     }
 
     private void OnPortDisconnectedConsole(Entity<AnalysisConsoleComponent> ent, ref PortDisconnectedEvent args)

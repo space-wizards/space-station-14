@@ -1,10 +1,10 @@
 using System.Numerics;
 using Content.IntegrationTests.Fixtures;
-using Content.Server.DeviceNetwork.Components;
-using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Systems;
 
 namespace Content.IntegrationTests.Tests.DeviceNetwork
 {
@@ -32,7 +32,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
       deviceNetId: Wired
       transmitFrequency: 0
       receiveFrequency: 0
-    - type: WiredNetworkConnection
+    - type: WiredNetwork
     - type: ApcPowerReceiver
 
 - type: entity
@@ -43,7 +43,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
       transmitFrequency: 100
       receiveFrequency: 100
       deviceNetId: Wireless
-    - type: WirelessNetworkConnection
+    - type: WirelessNetwork
       range: 100
         ";
 
@@ -77,7 +77,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 Assert.Multiple(() =>
                 {
                     Assert.That(networkComponent1.ReceiveFrequency, Is.Not.Null);
-                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(string.Empty));
+                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
                 });
 
                 device2 = entityManager.SpawnEntity("DummyNetworkDevice", MapCoordinates.Nullspace);
@@ -86,7 +86,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 Assert.Multiple(() =>
                 {
                     Assert.That(networkComponent1.ReceiveFrequency, Is.Not.Null);
-                    Assert.That(networkComponent2.Address, Is.Not.EqualTo(string.Empty));
+                    Assert.That(networkComponent2.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
 
                     Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
                 });
@@ -126,7 +126,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 Assert.Multiple(() =>
                 {
                     Assert.That(networkComponent1.ReceiveFrequency, Is.Not.Null);
-                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(string.Empty));
+                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
                 });
 
                 device2 = entityManager.SpawnEntity("WirelessNetworkDeviceDummy", new MapCoordinates(new Vector2(0, 50), testMap.MapId));
@@ -135,7 +135,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 Assert.Multiple(() =>
                 {
                     Assert.That(networkComponent2.ReceiveFrequency, Is.Not.Null);
-                    Assert.That(networkComponent2.Address, Is.Not.EqualTo(string.Empty));
+                    Assert.That(networkComponent2.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
 
                     Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
                 });
@@ -198,7 +198,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 Assert.Multiple(() =>
                 {
                     Assert.That(networkComponent1.ReceiveFrequency, Is.Not.Null);
-                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(string.Empty));
+                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
                 });
 
                 device2 = entityManager.SpawnEntity("DummyWiredNetworkDevice", coordinates);
@@ -207,7 +207,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 Assert.Multiple(() =>
                 {
                     Assert.That(networkComponent2.ReceiveFrequency, Is.Not.Null);
-                    Assert.That(networkComponent2.Address, Is.Not.EqualTo(string.Empty));
+                    Assert.That(networkComponent2.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
 
                     Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
                 });
