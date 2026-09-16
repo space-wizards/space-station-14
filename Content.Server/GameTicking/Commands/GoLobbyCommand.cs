@@ -1,7 +1,7 @@
 ﻿using Content.Server.Administration;
-using Content.Server.GameTicking.Presets;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
+using Content.Shared.GameTicking.Prototypes;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 
@@ -11,7 +11,7 @@ namespace Content.Server.GameTicking.Commands
     public sealed partial class GoLobbyCommand : LocalizedEntityCommands
     {
         [Dependency] private IConfigurationManager _configManager = default!;
-        [Dependency] private GameTicker _gameTicker = default!;
+        [Dependency] private ServerGameTicker _gameTicker = default!;
 
         public override string Command => "golobby";
 
