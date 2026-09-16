@@ -200,7 +200,10 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
             if (!_sprite.LayerMapTryGet(target, proto.BodyPart, out var organIndex, true))
                 continue;
 
+            // Get displacement data for this marking, if there is any
             ent.Comp.MarkingsDisplacement.TryGetValue(proto.BodyPart, out var displacement);
+
+            // Add the marking's layers to the target's sprite
             AddMarkingLayers(target, proto, marking, organIndex, displacement);
             applied.Add(marking);
         }
