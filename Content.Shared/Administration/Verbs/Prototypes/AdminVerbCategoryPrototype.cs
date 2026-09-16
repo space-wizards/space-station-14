@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Administration.Verbs.Prototypes;
 
 /// <summary>
-/// Defines a category containing related administrative entity verbs.
+/// Defines a category containing related admin-verbs.
 /// </summary>
 [Prototype]
 public sealed partial class AdminVerbCategoryPrototype : IPrototype

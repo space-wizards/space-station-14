@@ -21,28 +21,25 @@ public sealed partial class AdminVerbSystem
 
         foreach (var prototype in ProtoMan.EnumeratePrototypes<AdminVerbPrototype>())
         {
-            if (prototype.Abstract)
+            var category = ProtoMan.Index(prototype.CategoryPrototype);
+            if (!_adminManager.HasAdminFlag(player, category.RequiredFlags))
                 continue;
 
-            if (!_adminManager.HasAdminFlag(player, prototype.RequiredFlags))
-                continue;
-
-            if (!_whitelistSystem.CheckBoth(args.Target, prototype.Blacklist, prototype.Whitelist))
+            if (!_whitelistSystem.CheckBoth(args.Target, category.Blacklist, category.Whitelist) ||
+                !_whitelistSystem.CheckBoth(args.Target, prototype.Blacklist, prototype.Whitelist))
                 continue;
 
             var name = Loc.GetString(prototype.Name).ToLowerInvariant();
             var verb = new Verb
             {
                 Text = name,
-                Category = prototype.Category is { } category
-                    ? new VerbCategory(category, prototype.CategoryIcon, prototype.CategoryIconsOnly)
-                    {
-                        Columns = prototype.CategoryColumns
-                    }
-                    : null,
+                Category = new VerbCategory(category.Name, category.Icon, category.IconsOnly)
+                {
+                    Columns = category.Columns
+                },
                 Icon = prototype.Icon,
                 Act = () => _entityEffects.ApplyEffects(args.Target, prototype.Effects, user: args.User),
-                Impact = prototype.Impact,
+                Impact = category.Impact,
                 Message = prototype.Description is { } description
                     ? string.Join(": ", name, Loc.GetString(description))
                     : null
