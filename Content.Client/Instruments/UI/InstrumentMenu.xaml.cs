@@ -26,7 +26,8 @@ public sealed partial class InstrumentMenu : FancyWindow
 
         MainTabContainer.PanelStyleBoxOverride = styleBox;
         MainTabContainer.SetTabTitle(0, Loc.GetString("instruments-component-menu-play-tab-title"));
-        MainTabContainer.SetTabTitle(1, Loc.GetString("instruments-component-menu-config-tab-title"));
+        MainTabContainer.SetTabTitle(1, Loc.GetString("instruments-component-menu-channels-tab-title"));
+        MainTabContainer.SetTabTitle(2, Loc.GetString("instruments-component-menu-config-tab-title"));
     }
 
     protected override void ExitedTree()
@@ -140,5 +141,11 @@ public sealed partial class InstrumentMenu : FancyWindow
     public void SetInstrument(Entity<InstrumentComponent> entity)
     {
         InstrumentSpriteView.SetEntity(entity);
+    }
+
+    public ChannelsControl GetChannelsControl()
+    {
+        // Exposing channels control so we can interact with it directly outside the menu.
+        return ChannelsControl;
     }
 }

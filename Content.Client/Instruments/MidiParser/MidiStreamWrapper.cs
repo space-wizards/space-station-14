@@ -67,6 +67,17 @@ public sealed class MidiStreamWrapper
     }
 
     /// <summary>
+    /// Reads a 3 byte big-endian uint.
+    /// </summary>
+    public uint ReadUInt24()
+    {
+        var bytes = ReadBytes(3);
+        return (uint)((bytes[0] << 16) |
+                      (bytes[1] << 8)  |
+                      (bytes[2]));
+    }
+
+    /// <summary>
     /// Reads a 2 byte big-endian ushort.
     /// </summary>
     public ushort ReadUInt16()
