@@ -201,7 +201,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
                 continue;
 
             ent.Comp.MarkingsDisplacement.TryGetValue(proto.BodyPart, out var displacement);
-            ApplyMarkingLayers(target, proto, marking, organIndex, displacement);
+            AddMarkingLayers(target, proto, marking, organIndex, displacement);
             applied.Add(marking);
         }
 
@@ -216,7 +216,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
     /// <param name="marking">The marking's preference data.</param>
     /// <param name="organIndex">The index of the body part layer on the entity's sprite stack.</param>
     /// <param name="displacement">Optional displacement data associated with this entity.</param>
-    private void ApplyMarkingLayers(Entity<SpriteComponent?> target,
+    private void AddMarkingLayers(Entity<SpriteComponent?> target,
         MarkingPrototype markingProto,
         Marking marking,
         int organIndex,
