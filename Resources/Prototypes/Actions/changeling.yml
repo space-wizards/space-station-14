@@ -495,10 +495,22 @@
     - state: blind_sting
   - type: TargetAction
     interactOnMiss: false
-  - type: ActionRequireSatiation
-    satiation: Chemicals
-    amount: 50
-    failReason: changeling-not-enough-chemicals
+  - type: ActionRequirements
+    failPopup: changeling-action-fail-generic
+    failPopupType: SmallCaution
+    conditions:
+      Performer:
+      - !type:SatiationCondition
+        satiationType: Chemicals
+        min: 50
+      Target:
+      - !type:MobStateCondition
+        mobstate: Dead
+    effects:
+      Performer:
+      - !type:Satiate
+        satiationType: Chemicals
+        factor: -50
   - type: PopupOnAction
     popupType: MediumCaution
     selfMessage: changeling-cocoon-success
