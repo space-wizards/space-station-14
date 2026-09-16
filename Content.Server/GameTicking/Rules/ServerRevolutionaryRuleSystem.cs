@@ -8,7 +8,6 @@ using Content.Server.Revolutionary.Components;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Systems;
-using Content.Server.Station.Systems;
 using Content.Shared.Antag;
 using Content.Shared.Cuffs;
 using Content.Shared.Database;
@@ -30,12 +29,10 @@ using Content.Shared.Revolutionary;
 using Content.Shared.Revolutionary.Components;
 using Content.Shared.Roles.Components;
 using Content.Shared.RoundEnd;
+using Content.Shared.Station.Systems;
 using Content.Shared.Stunnable;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
-using Robust.Shared.Player;
-using Content.Shared.Mindshield;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -44,6 +41,7 @@ public sealed partial class ServerRevolutionaryRuleSystem : RevolutionaryRuleSys
     [Dependency] private IAdminLogManager _adminLogManager = default!;
     [Dependency] private ISharedPlayerManager _player = default!;
     [Dependency] private AntagSelectionSystem _antag = default!;
+    [Dependency] private CuffableSystem _cuffable = default!;
     [Dependency] private EmergencyShuttleSystem _emergencyShuttle = default!;
     [Dependency] private EuiManager _euiMan = default!;
     [Dependency] private MindSystem _mind = default!;
@@ -52,9 +50,8 @@ public sealed partial class ServerRevolutionaryRuleSystem : RevolutionaryRuleSys
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private RoleSystem _role = default!;
     [Dependency] private RoundEndSystem _roundEnd = default!;
-    [Dependency] private CuffableSystem _cuffable = default!;
     [Dependency] private SharedStunSystem _stun = default!;
-    [Dependency] private ServerStationSystem _stationSystem = default!;
+    [Dependency] private StationSystem _stationSystem = default!;
     [Dependency] private MindShieldSystem _mindShield = default!;
 
     //Used in OnPostFlash, no reference to the rule component is available
