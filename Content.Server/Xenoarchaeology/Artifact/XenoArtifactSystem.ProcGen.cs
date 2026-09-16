@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Shared.Destructible.Thresholds;
 using Content.Shared.EntityTable;
 using Content.Shared.EntityTable.Conditions;
-using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
@@ -17,15 +16,13 @@ public sealed partial class XenoArtifactSystem
     private void GenerateArtifactStructure(Entity<XenoArtifactComponent> ent)
     {
         var desiredNodeCount = ent.Comp.NodeCount.Next(RobustRandom);
-        var triggers = ent.Comp.TriggersTable;
-        var effects = ent.Comp.EffectsTable;
         var totalGenerated = 0;
 
         var triggerPool = new TriggerPoolData(desiredNodeCount);
 
         while (desiredNodeCount > 0)
         {
-            var generatedInSegment = GenerateArtifactSegment(ent, triggers, effects, triggerPool, desiredNodeCount);
+            var generatedInSegment = GenerateArtifactSegment(ent, triggerPool, desiredNodeCount);
 
             desiredNodeCount -= generatedInSegment;
             totalGenerated += generatedInSegment;
@@ -40,10 +37,18 @@ public sealed partial class XenoArtifactSystem
         RebuildXenoArtifactMetaData((ent, ent));
     }
 
+    /// <summary>
+    /// Generates segment of nodes inside artifact, layer by layer.
+    /// Segment is interconnected graph of nodes.
+    /// </summary>
+    /// <param name="ent">Artifact entity, in which we need to generate segment.</param>
+    /// <param name="triggerPool">
+    /// Entity table context container that holds information about triggers that already was used.
+    /// </param>
+    /// <param name="maxNodeCount">Max number of nodes to be constructed in this layer.</param>
+    /// <returns>Count of generated nodes.</returns>
     private int GenerateArtifactSegment(
         Entity<XenoArtifactComponent> ent,
-        EntityTableSelector triggers,
-        EntityTableSelector effects,
         TriggerPoolData triggerPool,
         int maxNodeCount
     )
@@ -54,7 +59,7 @@ public sealed partial class XenoArtifactSystem
         List<Entity<XenoArtifactNodeComponent>> totalGenerated = new();
         while (nodesForSegmentToGenerate != 0)
         {
-            generatedNodes = PopulateLayer(ent, triggers, effects, generatedNodes, triggerPool, nodesForSegmentToGenerate, depth);
+            generatedNodes = PopulateLayer(ent, generatedNodes, triggerPool, nodesForSegmentToGenerate, depth);
             if (generatedNodes.Count == 0) // failed to generate nodes - time to finish up
                 break;
 
@@ -79,8 +84,6 @@ public sealed partial class XenoArtifactSystem
     /// </summary>
     private IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> PopulateLayer(
         Entity<XenoArtifactComponent> ent,
-        EntityTableSelector triggers,
-        EntityTableSelector effects,
         IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> predecessors,
         TriggerPoolData triggerPool,
         int maxNodes,
@@ -108,12 +111,12 @@ public sealed partial class XenoArtifactSystem
             var directPredecessors = SelectDirectPredecessors(predecessors, scatterCount);
             scatterCount -= (directPredecessors.Count - 1);
 
-            var trigger = _entityTable.GetFirstOrDefault(triggers, RobustRandom, triggerPool.Context);
+            var trigger = _entityTable.GetFirstOrDefault(ent.Comp.TriggersTable, RobustRandom, triggerPool.Context);
 
             if (trigger == null)
                 continue;
 
-            var nodeEntity = CreateNode(ent, trigger.Value, effects, iteration);
+            var nodeEntity = CreateNode(ent, trigger.Value, ent.Comp.EffectsTable, iteration);
             if (!nodeEntity.HasValue)
                 continue;
 
