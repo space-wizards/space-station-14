@@ -510,6 +510,22 @@ entity-effect-guidebook-plant-seeds-remove =
         *[other] remove the
     } seeds of the plant
 
+entity-effect-guidebook-plant-change-trait =
+    { $chance ->
+        [1] { $change ->
+            [Add] adds {$trait} to
+            [Remove] removes {$trait} from
+            [Toggle] toggles {$trait} on
+            *[other] changes {$trait} on
+        }
+        *[other] { $change ->
+            [Add] add {$trait} to
+            [Remove] remove {$trait} from
+            [Toggle] toggle {$trait} on
+            *[other] change {$trait} on
+        }
+    } the plant
+
 entity-effect-guidebook-plant-mutate-exude-gasses =
     { $chance ->
         [1] Mutates

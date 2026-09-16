@@ -305,8 +305,10 @@ public abstract partial class SharedActionsSystem : EntitySystem
         if (IsCooldownActive(action, curTime))
             return false;
 
+        var target = GetEntity(ev.EntityTarget);
+
         // check for action use prevention
-        var attemptEv = new ActionAttemptEvent(user);
+        var attemptEv = new ActionAttemptEvent(user, target);
         RaiseLocalEvent(action, ref attemptEv);
         if (attemptEv.Cancelled)
         {
@@ -371,13 +373,23 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
         var target = GetEntity(netTarget);
 
+        // Already checked in validation, but GetWorldPosition causes errors if the entity doesn't exist.
+        if (TerminatingOrDeleted(target))
+        {
+            args.Invalid = true;
+            return;
+        }
+
         var targetWorldPos = _transform.GetWorldPosition(target);
 
         if (ent.Comp.RotateOnUse)
             _rotateToFace.TryFaceCoordinates(user, targetWorldPos);
 
         if (!ValidateEntityTarget(user, target, ent))
+        {
+            args.Invalid = true;
             return;
+        }
 
         _adminLogger.Add(LogType.Action,
             $"{ToPrettyString(user):user} is performing the {Name(ent):action} action (provided by {ToPrettyString(args.Provider):provider}) targeted at {ToPrettyString(target):target}.");
@@ -400,7 +412,10 @@ public abstract partial class SharedActionsSystem : EntitySystem
             _rotateToFace.TryFaceCoordinates(user, _transform.ToMapCoordinates(target).Position);
 
         if (!ValidateWorldTarget(user, target, ent))
+        {
+            args.Invalid = true;
             return;
+        }
 
         // if the client specified an entity it needs to be valid
         var targetEntity = GetEntity(args.Input.EntityTarget);
@@ -598,7 +613,11 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
         UpdateAction(action);
 
-        var performed = new ActionPerformedEvent(performer);
+        EntityUid? actionTarget = null;
+        if (actionEvent is EntityTargetActionEvent targetEv)
+            actionTarget = targetEv.Target;
+
+        var performed = new ActionPerformedEvent(performer, actionTarget);
         RaiseLocalEvent(action, ref performed);
     }
     #endregion

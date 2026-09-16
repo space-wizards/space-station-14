@@ -7,7 +7,7 @@ using Robust.Shared.Network;
 
 namespace Content.Shared.Changeling.Systems;
 
-public abstract partial class SharedChangelingLastResortSystem : EntitySystem
+public abstract partial class ChangelingLastResortSystem : EntitySystem
 {
     [Dependency] private INetManager _net = default!;
     [Dependency] private GibbingSystem _gibbing = default!;
