@@ -97,6 +97,7 @@ public abstract partial class GameTicker
     protected virtual Entity<GameRuleComponent> SpawnGameRule(EntProtoId ruleId)
     {
         var rule = Spawn(ruleId, MapCoordinates.Nullspace);
+        FlagPredicted(rule);
         var meta = MetaData(rule);
         Log.Info($"Added game rule {ToPrettyString((rule, meta))}");
         Admin.Add(LogType.EventStarted, $"Added game rule {ToPrettyString((rule, meta))}");

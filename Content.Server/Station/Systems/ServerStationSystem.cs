@@ -311,6 +311,7 @@ public sealed partial class ServerStationSystem : Shared.Station.Systems.Station
         QueueDel(station);
     }
 
+    /// <inheritdoc/>
     public override bool TryFindRandomTileOnStation(Entity<StationDataComponent> station,
         out Vector2i tile,
         [NotNullWhen(true)] out Entity<MapGridComponent>? targetGrid,

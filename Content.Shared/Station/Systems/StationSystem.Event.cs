@@ -14,7 +14,7 @@ public abstract partial class StationSystem
     ///     TODO: Make calls of this use the below method with T = StationEventEligibleComponent and make this a lookup for NO T versions of stations!!!
     /// </summary>
     [PublicAPI]
-    [Obsolete]
+    [Obsolete($"Use TryGetRandomStation<T> instead using {nameof(StationEventEligibleComponent)}!")]
     public bool TryGetRandomStation([NotNullWhen(true)] out Entity<StationDataComponent>? station, Func<EntityUid, bool>? filter = null)
     {
         var stations = new ValueList<Entity<StationDataComponent>>(Count<StationEventEligibleComponent>());
