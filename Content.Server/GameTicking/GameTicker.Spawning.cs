@@ -256,6 +256,11 @@ namespace Content.Server.GameTicking
                 return;
             }
 
+            if (_adminManager.IsAdmin(player) && _cfg.GetCVar(CCVars.AdminDeadminOnJoin))
+            {
+                _adminManager.DeAdmin(player);
+            }
+
             DoSpawn(player, character, station, jobId, silent, out var mob, out var jobPrototype, out var jobName);
 
             if (lateJoin && !silent)
@@ -393,21 +398,25 @@ namespace Content.Server.GameTicking
         /// <summary>
         /// Causes the given player to join the current game as observer ghost. See also <see cref="SpawnObserver"/>
         /// </summary>
-        public void JoinAsObserver(ICommonSession player)
+        /// <param name="admin">
+        /// Whether to spawn an admin observer instead of a regular one.
+        /// Caller is responsible for verifying player admin status.
+        /// </param>
+        public void JoinAsObserver(ICommonSession player, bool admin = false)
         {
             // Can't spawn players with a dummy ticker!
             if (DummyTicker)
                 return;
 
             PlayerJoinGame(player);
-            SpawnObserver(player);
+            SpawnObserver(player, admin);
         }
 
         /// <summary>
         /// Spawns an observer ghost and attaches the given player to it. If the player does not yet have a mind, the
         /// player is given a new mind with the observer role. Otherwise, the current mind is transferred to the ghost.
         /// </summary>
-        public void SpawnObserver(ICommonSession player)
+        public void SpawnObserver(ICommonSession player, bool admin = false)
         {
             if (DummyTicker)
                 return;
@@ -423,13 +432,25 @@ namespace Content.Server.GameTicking
                 makeObserver = true;
             }
 
-            var ghost = _ghost.SpawnGhost(mind.Value);
+            EntityUid? ghost;
+            if (admin)
+            {
+                var adminGhost = Spawn(AdminObserverPrototypeName, GetObserverSpawnPoint());
+                _metaData.SetEntityName(adminGhost, player.Name);
+                _mind.TransferTo(mind.Value, adminGhost, mind: mind.Value.Comp);
+                ghost = adminGhost;
+            }
+            else
+            {
+                ghost = _ghost.SpawnGhost(mind.Value);
+            }
+
             if (makeObserver)
                 _roles.MindAddRole(mind.Value, "MindRoleObserver");
 
             _adminLogger.Add(LogType.LateJoin,
                 LogImpact.Low,
-                $"{player.Name} late joined the round as an Observer with {ToPrettyString(ghost):entity}.");
+                $"{player.Name} late joined the round as an {(admin ? "Admin Observer" : "Observer")} with {ToPrettyString(ghost):entity}.");
         }
 
         #region Spawn Points
