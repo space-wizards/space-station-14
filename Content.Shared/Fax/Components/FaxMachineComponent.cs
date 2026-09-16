@@ -188,9 +188,9 @@ public enum FaxFunctions : byte
     Inserting = 1 << 1,
 
     /// <summary>
-    /// Fax is sending paper
+    /// Fax is in an interaction cooldown
     /// </summary>
-    Sending = 1 << 2
+    Processing = 1 << 2
 }
 
 /// <summary>

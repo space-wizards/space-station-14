@@ -29,17 +29,17 @@ namespace Content.Server.Cloning;
 /// </summary>
 public sealed partial class CloningSystem : SharedCloningSystem
 {
-    [Dependency] private InventorySystem _inventory = default!;
-    [Dependency] private MetaDataSystem _metaData = default!;
-    [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private IdentitySystem _identity = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private NameModifierSystem _nameMod = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedStorageSystem _storage = default!;
     [Dependency] private SharedSubdermalImplantSystem _subdermalImplant = default!;
     [Dependency] private SharedVisualBodySystem _visualBody = default!;
-    [Dependency] private NameModifierSystem _nameMod = default!;
-    [Dependency] private IdentitySystem _identity = default!;
 
     public override bool TryCloneHumanoid(
         EntityUid original,

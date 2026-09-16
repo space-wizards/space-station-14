@@ -104,10 +104,10 @@ public abstract partial class FaxSystem : EntitySystem
 
     private void ProcessSendingTimeout(Entity<FaxMachineComponent> fax)
     {
-        if ((fax.Comp.Functions & FaxFunctions.Sending) == 0 || !CanInteract(fax))
+        if ((fax.Comp.Functions & FaxFunctions.Processing) == 0 || !CanInteract(fax))
             return;
 
-        fax.Comp.Functions &= ~FaxFunctions.Sending;
+        fax.Comp.Functions &= ~FaxFunctions.Processing;
         DirtyField(fax.AsNullable(), nameof(FaxMachineComponent.Functions));
         UpdateUserInterface(fax);
     }
@@ -172,7 +172,7 @@ public abstract partial class FaxSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnItemInserted(Entity<FaxMachineComponent> fax, ref EntInsertedIntoContainerMessage args)
     {
-        if (!fax.Comp.Initialized || args.Container.ID != fax.Comp.PaperSlot.ID)
+        if (Timing.ApplyingState || !fax.Comp.Initialized || args.Container.ID != fax.Comp.PaperSlot.ID)
             return;
 
         Insert(fax);
@@ -182,7 +182,7 @@ public abstract partial class FaxSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnItemRemoved(Entity<FaxMachineComponent> fax, ref EntRemovedFromContainerMessage args)
     {
-        if (!fax.Comp.Initialized || args.Container.ID != fax.Comp.PaperSlot.ID)
+        if (Timing.ApplyingState || !fax.Comp.Initialized || args.Container.ID != fax.Comp.PaperSlot.ID)
             return;
 
         UpdateAppearance(fax);
@@ -493,7 +493,7 @@ public abstract partial class FaxSystem : EntitySystem
     public bool PaperInserted(Entity<FaxMachineComponent> fax, [NotNullWhen(true)] out EntityUid? paper)
     {
         paper = null;
-        if ((fax.Comp.Functions & FaxFunctions.Inserting) != 0)
+        if ((fax.Comp.Functions & FaxFunctions.Inserting) == FaxFunctions.Inserting)
             return false;
 
         paper = fax.Comp.PaperSlot.Item;
@@ -560,9 +560,7 @@ public abstract partial class FaxSystem : EntitySystem
             $"of {ToPrettyString(sent):subject}: {_paperSystem.GetContent(sent.Value)}");
 
         Timeout(fax);
-        fax.Comp.Functions |= FaxFunctions.Sending;
         AudioSystem.PlayPredicted(fax.Comp.SendSound, fax, user);
-        DirtyField(fax.AsNullable(), nameof(FaxMachineComponent.Functions));
         UpdateUserInterface(fax);
     }
 
@@ -590,7 +588,8 @@ public abstract partial class FaxSystem : EntitySystem
     private void Timeout(Entity<FaxMachineComponent> fax)
     {
         fax.Comp.NextInteractTime = Timing.CurTime + fax.Comp.InteractionTimeout;
-        DirtyField(fax.AsNullable(), nameof(FaxMachineComponent.NextInteractTime));
+        fax.Comp.Functions |= FaxFunctions.Processing;
+        DirtyFields(fax.AsNullable(), null, nameof(FaxMachineComponent.NextInteractTime), nameof(FaxMachineComponent.Functions));
     }
 
     private void EnqueuePrint(Entity<FaxMachineComponent> fax, EntityUid printout, string? sender = null)

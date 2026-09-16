@@ -219,5 +219,6 @@
   - TimerTrigger
   - GhostRole
   - GhostTakeoverAvailable
+  - Solution # Not in a parent because this should be a setting TODO solutions refactor.
   eventComponents:
   - Nuke

@@ -31,10 +31,10 @@ public sealed partial class FaxWindow : DefaultWindow
             PeerSelected?.Invoke((string)args.Button.GetItemMetadata(args.Id)!);
     }
 
-    public void Update(bool copyEnabled, bool sendEnabled, string faxName, string? paper, Dictionary<string,string> knownFaxes, string? destination)
+    public void Update(bool copyDisabled, bool sendDisabled, string faxName, string? paper, Dictionary<string,string> knownFaxes, string? destination)
     {
-        CopyButton.Disabled = copyEnabled;
-        SendButton.Disabled = sendEnabled;
+        CopyButton.Disabled = copyDisabled;
+        SendButton.Disabled = sendDisabled;
         FromLabel.Text = faxName;
 
         if (paper == null)

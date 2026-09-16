@@ -101,6 +101,7 @@
       map: [ "enum.FaxFunctions.Inserting" ]
   - type: FaxMachine
     name: "Central Command"
+    interactionTimeout: 0.5 # The greatest fax machines this side of the galaxy, with a universal latency of only 500ms!
     paperSlot: # You can insert anything.
       insertSound: /Audio/Machines/scanning.ogg
       ejectSound: /Audio/Machines/tray_eject.ogg
