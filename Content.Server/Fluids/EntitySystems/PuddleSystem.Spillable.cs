@@ -23,7 +23,7 @@ public sealed partial class PuddleSystem
         if (args.Handled)
             return;
 
-        TrySpillAt(Transform(entity).Coordinates, args.Overflow, out _);
+        TrySpillAt(Transform(entity).Coordinates, args.Overflow, out _, entity.Comp.PlaySound);
         args.Handled = true;
     }
 
@@ -32,7 +32,7 @@ public sealed partial class PuddleSystem
         if (!entity.Comp.SpillWhenThrown || Openable.IsClosed(entity.Owner))
             return;
 
-        if (TrySplashSpillAt(entity.Owner, Transform(entity).Coordinates, out _, out var solution) && args.User != null)
+        if (TrySplashSpillAt(entity.Owner, Transform(entity).Coordinates, out _, out var solution, entity.Comp.PlaySound, popup: entity.Comp.OnSplashPopup) && args.User != null)
         {
             AdminLogger.Add(LogType.Landed,
                 $"{ToPrettyString(entity.Owner):entity} spilled a solution {SharedSolutionContainerSystem.ToPrettyString(solution):solution} on landing");
@@ -49,7 +49,7 @@ public sealed partial class PuddleSystem
             return;
 
         var puddleSolution = _solutionContainerSystem.SplitSolution(soln.Value, solution.Volume);
-        TrySpillAt(Transform(entity).Coordinates, puddleSolution, out _);
+        TrySpillAt(Transform(entity).Coordinates, puddleSolution, out _, entity.Comp.PlaySound);
         args.Handled = true;
     }
 }
