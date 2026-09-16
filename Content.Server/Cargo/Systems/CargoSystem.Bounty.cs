@@ -111,7 +111,7 @@ public sealed partial class CargoSystem
             return;
 
         label.Id = bounty.Id;
-        label.AssociatedStationId = stationId;
+        SetRelation(uid, ref label.AssociatedStationId, stationId);
         var msg = new FormattedMessage();
         msg.AddMarkupOrThrow(Loc.GetString("bounty-manifest-header", ("id", bounty.Id)));
         msg.PushNewline();
@@ -141,7 +141,7 @@ public sealed partial class CargoSystem
         if (!_container.TryGetContainingContainer((uid, null, null), out var container) || container.ID != LabelSystem.ContainerName)
             return;
 
-        if (component.AssociatedStationId is not { } station || !TryComp<StationCargoBountyDatabaseComponent>(station, out var database))
+        if (component.AssociatedStationId.Entity is not { } station || !TryComp<StationCargoBountyDatabaseComponent>(station, out var database))
             return;
 
         if (database.CheckedBounties.Contains(component.Id))
@@ -169,7 +169,7 @@ public sealed partial class CargoSystem
             if (!TryGetBountyLabel(sold, out _, out var component))
                 continue;
 
-            if (component.AssociatedStationId is not { } station || !TryGetBountyFromId(station, component.Id, out var bounty))
+            if (component.AssociatedStationId.Entity is not { } station || !TryGetBountyFromId(station, component.Id, out var bounty))
             {
                 continue;
             }
@@ -246,7 +246,7 @@ public sealed partial class CargoSystem
             return false;
         }
 
-        var station = component.AssociatedStationId;
+        var station = component.AssociatedStationId.Entity;
         if (station == null)
         {
             bountyEntities = new();

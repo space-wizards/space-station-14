@@ -57,7 +57,7 @@ public sealed class EvacShuttleTest : GameTest
         var data = entMan.GetComponent<StationDataComponent>(station);
         var shuttleData = entMan.GetComponent<StationEmergencyShuttleComponent>(station);
 
-        var saltern = data.Grids.Single();
+        var saltern = data.Grids.Single().Entity!.Value;
         Assert.That(entMan.HasComponent<MapGridComponent>(saltern));
 
         var shuttle = shuttleData.EmergencyShuttle!.Value;

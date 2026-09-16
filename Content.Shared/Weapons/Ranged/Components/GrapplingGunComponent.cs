@@ -5,7 +5,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Weapons.Ranged.Components;
 
 // I have tried to make this as generic as possible but "delete joint on cycle / right-click reels in" is very specific behavior.
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true), AutoGenerateEntityRelations]
 public sealed partial class GrapplingGunComponent : Component
 {
     /// <summary>
@@ -107,6 +107,6 @@ public sealed partial class GrapplingGunComponent : Component
     /// <summary>
     /// Entity UID for the audio stream, which plays <see cref="ReelSound"/>.
     /// </summary>
-    [ViewVariables]
-    public EntityUid? Stream;
+    [DataField, AutoRelationField]
+    public EntityRelation Stream;
 }

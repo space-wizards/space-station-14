@@ -542,8 +542,8 @@ public sealed partial class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleCompon
         if (nukeops.TargetStation != null && TryComp(nukeops.TargetStation, out StationDataComponent? data))
         {
             var grid = data.Grids.FirstOrNull();
-            targetStationMap = grid != null
-                ? Transform(grid.Value).MapID
+            targetStationMap = grid != null && grid.Value.Entity != null
+                ? Transform(grid.Value.Entity.Value).MapID
                 : null;
         }
 

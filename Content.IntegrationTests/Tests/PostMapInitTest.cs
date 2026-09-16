@@ -376,7 +376,7 @@ namespace Content.IntegrationTests.Tests
 
                 // Test shuttle can dock.
                 // This is done inside gamemap test because loading the map takes ages and we already have it.
-                var station = entManager.GetComponent<StationMemberComponent>(targetGrid!.Value).Station;
+                var station = entManager.GetComponent<StationMemberComponent>(targetGrid!.Value).Station.Entity!.Value;
                 if (entManager.TryGetComponent<StationEmergencyShuttleComponent>(station, out var stationEvac))
                 {
                     var shuttlePath = stationEvac.EmergencyShuttlePath;

@@ -99,7 +99,10 @@ public sealed partial class ShuttleSystem
         // Add all grid maps as ftl destinations that anyone can FTL to.
         foreach (var gridUid in ev.Station.Comp.Grids)
         {
-            var gridXform = Transform(gridUid);
+            if (gridUid.Entity == null)
+                continue;
+
+            var gridXform = Transform(gridUid.Entity.Value);
             if (gridXform.MapUid == null)
             {
                 continue;
