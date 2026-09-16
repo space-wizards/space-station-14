@@ -496,7 +496,7 @@
   - type: TargetAction
     interactOnMiss: false
   - type: ActionRequirements
-    failPopup: changeling-action-fail-generic
+    failPopup: changeling-action-fail-generic # Currently no way to tell which condition failed
     failPopupType: SmallCaution
     conditions:
       Performer:
