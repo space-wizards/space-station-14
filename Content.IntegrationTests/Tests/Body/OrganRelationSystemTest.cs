@@ -1,3 +1,4 @@
+#nullable enable
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
@@ -21,7 +22,7 @@ public sealed class OrganRelationSystemTest : GameTest
   - type: ChildOrgan
 ";
 
-    [SidedDependency(Side.Server)] private OrganRelationSystem _organRelation = default!;
+    [SidedDependency(Side.Server)] private OrganRelationSystem _sOrganRelationSystem = default!;
 
     [Test]
     [RunOnSide(Side.Server)]
@@ -30,7 +31,7 @@ public sealed class OrganRelationSystemTest : GameTest
         var parent = SSpawn(OrganRelationTestOrgan);
         var child = SSpawn(OrganRelationTestOrgan);
 
-        _organRelation.Relate(parent, child);
+        _sOrganRelationSystem.Relate(parent, child);
 
         var parentComp = SComp<ParentOrganComponent>(parent);
         var childComp = SComp<ChildOrganComponent>(child);
@@ -38,7 +39,7 @@ public sealed class OrganRelationSystemTest : GameTest
         Assert.That(parentComp.Children, Does.Contain(child));
         Assert.That(childComp.Parent, Is.EqualTo(parent));
 
-        _organRelation.Orphan(child);
+        _sOrganRelationSystem.Orphan(child);
 
         Assert.That(parentComp.Children, Does.Not.Contain(child));
         Assert.That(childComp.Parent, Is.Null);
@@ -53,13 +54,13 @@ public sealed class OrganRelationSystemTest : GameTest
         var parent = SSpawn(OrganRelationTestOrgan);
         var child = SSpawn(OrganRelationTestOrgan);
 
-        _organRelation.Relate(grandParent, parent);
-        _organRelation.Relate(parent, child);
+        _sOrganRelationSystem.Relate(grandParent, parent);
+        _sOrganRelationSystem.Relate(parent, child);
 
-        var allChildren = _organRelation.AllChildren(grandParent).Select(e => e.Owner).ToList();
+        var allChildren = _sOrganRelationSystem.AllChildren(grandParent).Select(e => e.Owner).ToList();
         Assert.That(allChildren, Is.EquivalentTo([parent, child]));
 
-        var allParents = _organRelation.AllParents(child).Select(e => e.Owner).ToList();
+        var allParents = _sOrganRelationSystem.AllParents(child).Select(e => e.Owner).ToList();
         Assert.That(allParents, Is.EquivalentTo([parent, grandParent]));
     }
 
@@ -70,7 +71,7 @@ public sealed class OrganRelationSystemTest : GameTest
         var parent = SSpawn(OrganRelationTestOrgan);
         var child = SSpawn(OrganRelationTestOrgan);
 
-        _organRelation.Relate(parent, child);
+        _sOrganRelationSystem.Relate(parent, child);
 
         SDeleteNow(parent);
 
@@ -85,7 +86,7 @@ public sealed class OrganRelationSystemTest : GameTest
         var parent = SSpawn(OrganRelationTestOrgan);
         var child = SSpawn(OrganRelationTestOrgan);
 
-        _organRelation.Relate(parent, child);
+        _sOrganRelationSystem.Relate(parent, child);
 
         SDeleteNow(child);
 
