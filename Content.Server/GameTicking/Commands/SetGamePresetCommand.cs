@@ -1,7 +1,6 @@
-﻿using System.Linq;
-using Content.Server.Administration;
-using Content.Server.GameTicking.Presets;
+﻿using Content.Server.Administration;
 using Content.Shared.Administration;
+using Content.Shared.GameTicking.Prototypes;
 using Robust.Shared.Console;
 
 namespace Content.Server.GameTicking.Commands
@@ -23,7 +22,7 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            var ticker = _entity.System<GameTicker>();
+            var ticker = _entity.System<ServerGameTicker>();
 
             if (!ticker.TryFindGamePreset(args[0], out var preset))
             {
