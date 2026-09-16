@@ -17,7 +17,6 @@ public sealed partial class CrimeHistoryWindow : FancyWindow
 
     private uint _maxLength;
     private uint? _index;
-    private DialogWindow? _dialog;
 
     public CrimeHistoryWindow(uint maxLength)
     {
@@ -25,15 +24,18 @@ public sealed partial class CrimeHistoryWindow : FancyWindow
 
         _maxLength = maxLength;
 
+        // TODO: Convert to QuickDialog
+
         OnClose += () =>
         {
-            _dialog?.Close();
+            //_dialog?.Close();
             // deselect so when reopening the window it doesnt try to use invalid index
             _index = null;
         };
 
         AddButton.OnPressed += _ =>
         {
+            /*
             if (_dialog != null)
             {
                 _dialog.MoveToFront();
@@ -61,6 +63,7 @@ public sealed partial class CrimeHistoryWindow : FancyWindow
 
             // prevent MoveToFront being called on a closed window and double closing
             _dialog.OnClose += () => { _dialog = null; };
+            */
         };
         DeleteButton.OnPressed += _ =>
         {
