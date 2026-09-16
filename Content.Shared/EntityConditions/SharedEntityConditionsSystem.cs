@@ -101,7 +101,7 @@ public abstract partial class EntityCondition : ICondition, IWithInverted
 /// The concrete condition for strongly typing.
 /// </summary>
 /// <typeparam name="TCondition"></typeparam>
-public abstract partial class EntityConditionBase<TCondition> : EntityCondition where TCondition : EntityCondition
+public abstract partial class EntityConditionBase<TCondition> : EntityCondition where TCondition : ICondition
 {
     /// <inheritdoc/>
     public override ConditionEvaluationEvent? WrapInEvent(EntityUid entity, EntityUid? sourceEntity)
