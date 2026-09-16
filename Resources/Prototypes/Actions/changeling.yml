@@ -304,29 +304,6 @@
 
 - type: entity
   parent: BaseActionChangelingSting
-  id: ActionChangelingStingHallucinogenic
-  name: Hallucinogenic Sting
-  description: "Silently sting a target and inject them with chemicals that slow down their higher brain functions. \n\nRequires 30 Chemicals."
-  components:
-  - type: Action
-    useDelay: 10
-    raiseOnAction: true
-    itemIconStyle: BigAction
-  - type: Sprite
-    sprite: Interface/Actions/changeling2.rsi
-    layers:
-    - state: hallucination_sting
-  - type: EntityEffectAction
-    effects: # TODO: This is completely overshadowed by mute sting. Needs some cool effect or to just be removed.
-    - !type:AddReagentToBloodstream
-      reagent: SpaceDrugs
-      quantity: 5 # About 50s of being high
-    - !type:AddReagentToBloodstream
-      reagent: Cryptobiolin
-      quantity: 10 # About 20s of your speech being scrambled
-
-- type: entity
-  parent: BaseActionChangelingSting
   id: ActionChangelingStingMute
   name: Mute Sting
   description: "Silently sting a target and inject them with chemicals that prevent them from speaking. \n\nRequires 30 Chemicals."
