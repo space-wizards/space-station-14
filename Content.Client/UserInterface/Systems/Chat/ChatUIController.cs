@@ -429,7 +429,7 @@ public sealed partial class ChatUIController : UIController
     {
         UpdateChannelPermissions();
         UpdateAutoFillHighlights();
-        Repopulate();
+        UpdateLinkLabels();
     }
 
     private void AddSpeechBubble(ChatMessage msg, SpeechBubble.SpeechType speechType)
@@ -939,6 +939,14 @@ public sealed partial class ChatUIController : UIController
         foreach (var chat in _chats)
         {
             chat.Repopulate();
+        }
+    }
+
+    public void UpdateLinkLabels()
+    {
+        foreach (var chat in _chats)
+        {
+            chat.UpdateEntityTextLinkLabelProperties();
         }
     }
 

@@ -1,3 +1,4 @@
+using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.RichText;
 using Content.Client.UserInterface.Systems.Chat.Controls;
 using Content.Shared.Chat;
@@ -88,6 +89,17 @@ public partial class ChatBox : UIWidget, IEntityLinkClickHandler
         foreach (var message in _controller.History)
         {
             OnMessageAdded(message.Item2);
+        }
+    }
+
+    public void UpdateEntityTextLinkLabelProperties()
+    {
+        foreach (var contentsChild in Contents.Children)
+        {
+            if (contentsChild is TextLinkLabel textLinkLabel)
+            {
+                textLinkLabel.UpdateEntityTextLinkLabelProperties();
+            }
         }
     }
 
