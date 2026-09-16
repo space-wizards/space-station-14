@@ -1,9 +1,7 @@
-using Content.Shared.Wires;
-
-namespace Content.Server.Wires;
+namespace Content.Shared.Wires;
 
 /// <summary>
-///     convenience class for wires that depend on the existence of some component to function. Slightly reduces boilerplate.
+///     Convenience class for wires that depend on the existence of some component to function. Slightly reduces boilerplate.
 /// </summary>
 public abstract partial class ComponentWireAction<TComponent> : BaseWireAction where TComponent : Component
 {
@@ -23,13 +21,13 @@ public abstract partial class ComponentWireAction<TComponent> : BaseWireAction w
     {
         base.Cut(user, wire);
         // if the entity doesn't exist, we need to return true otherwise the wire sprite is never updated
-        return EntityManager.TryGetComponent(wire.Owner, out TComponent? component) ? Cut(user, wire, component) : true;
+        return !EntityManager.TryGetComponent(wire.Owner, out TComponent? component) || Cut(user, wire, component);
     }
 
     public override bool Mend(EntityUid user, Wire wire)
     {
         base.Mend(user, wire);
-        return EntityManager.TryGetComponent(wire.Owner, out TComponent? component) ? Mend(user, wire, component) : true;
+        return !EntityManager.TryGetComponent(wire.Owner, out TComponent? component) || Mend(user, wire, component);
     }
 
     public override void Pulse(EntityUid user, Wire wire)
