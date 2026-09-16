@@ -217,5 +217,7 @@
   id: Centcomm
   components:
   - TimerTrigger
+  - GhostRole
+  - GhostTakeoverAvailable
   eventComponents:
   - Nuke
