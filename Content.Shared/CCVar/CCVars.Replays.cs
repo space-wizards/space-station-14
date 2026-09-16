@@ -5,7 +5,7 @@ namespace Content.Shared.CCVar;
 public sealed partial class CCVars
 {
     /// <summary>
-    ///     Whether or not to record admin chat. If replays are being publicly distributes, this should probably be
+    ///     Whether to record admin chat. If replays are being publicly distributes, this should probably be
     ///     false.
     /// </summary>
     public static readonly CVarDef<bool> ReplayRecordAdminChat =
@@ -40,4 +40,10 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<string> ReplayAutoRecordTempDir =
         CVarDef.Create("replay.auto_record_temp_dir", "", CVar.SERVERONLY);
+
+    /// <summary>
+    ///     Whether to include save-game at the end of the replay recording.
+    /// </summary>
+    public static readonly CVarDef<bool> ReplaySaveGame =
+        CVarDef.Create("replay.save_game", true, CVar.SERVERONLY);
 }
