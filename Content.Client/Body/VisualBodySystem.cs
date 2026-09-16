@@ -9,8 +9,6 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
-using Content.Shared.DisplacementMap;
 
 namespace Content.Client.Body;
 
