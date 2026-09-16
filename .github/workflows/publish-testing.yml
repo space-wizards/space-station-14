@@ -17,6 +17,8 @@ jobs:
     - uses: actions/checkout@v7
       with:
         submodules: 'recursive'
+        fetch-depth: 0
+        filter: blob:none
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v5
       with:
@@ -35,7 +37,7 @@ jobs:
 
     - name: Update changelog
       run: |
-        dotnet tool install --global SpaceWizards.ChangelogTool --version 1.0.2
+        dotnet tool install --global SpaceWizards.ChangelogTool --version 1.0.7
         ss14-changelog update -d Resources/Changelog
       env:
         REPO: ${{ github.repository }}

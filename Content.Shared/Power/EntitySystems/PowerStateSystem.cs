@@ -11,7 +11,7 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
 {
     [Dependency] private SharedPowerReceiverSystem _powerReceiverSystem = default!;
 
-    [Dependency] protected EntityQuery<PowerStateComponent> _powerStateQuery = default!;
+    [Dependency] protected EntityQuery<PowerStateComponent> PowerStateQuery = default!;
 
     /// <summary>
     /// Sets the working state of the entity, adjusting its power draw accordingly.
@@ -21,10 +21,13 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
     [PublicAPI]
     public virtual void SetWorkingState(Entity<PowerStateComponent?> ent, bool isWorking)
     {
-        if (!_powerStateQuery.Resolve(ent, ref ent.Comp))
+        if (!PowerStateQuery.Resolve(ent, ref ent.Comp))
             return;
 
         SetPowerLoad((ent, ent.Comp), isWorking);
+
+        if (ent.Comp.IsWorking == isWorking)
+            return;
 
         ent.Comp.IsWorking = isWorking;
 
@@ -44,7 +47,7 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
         // Sometimes systems calling this API handle generic objects that can or can't consume power,
         // so to reduce boilerplate we don't log an error. Any entity that *should* have an ApcPowerRecieverComponent
         // will log an error in tests if someone tries to add an entity that doesn't have one.
-        if (!_powerStateQuery.Resolve(ent, ref ent.Comp, false))
+        if (!PowerStateQuery.Resolve(ent, ref ent.Comp, false))
             return;
 
         SetWorkingState(ent, isWorking);
@@ -57,7 +60,7 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
     [PublicAPI]
     public bool GetWorkingState(Entity<PowerStateComponent?> ent)
     {
-        if (!_powerStateQuery.Resolve(ent, ref ent.Comp))
+        if (!PowerStateQuery.Resolve(ent, ref ent.Comp))
             return false;
 
         return ent.Comp.IsWorking;

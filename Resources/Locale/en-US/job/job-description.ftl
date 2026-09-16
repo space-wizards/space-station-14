@@ -44,10 +44,12 @@ job-description-lawyer = Ensure that criminals receive legal representation and 
 job-description-librarian = Keep the library organized. Provide the crew with educational materials, entertaining stories, and tabletop games.
 job-description-mime = Entertain the crew with silent acts of performance art, and engage in light rivalry with the clown.
 job-description-musician = Entertain the crew with your unique musical talents.
-job-description-passenger = Enjoy your stay aboard the station with no obligations!
 job-description-reporter = Inform and entertain the station's crew with wireless cameras and news bulletins.
 job-description-serviceworker = Assist the bar and kitchen with providing sustenance to the crew.
 job-description-tram-driver = Drive around a tram from stop to stop.
+
+# Civilian
+job-description-passenger = Enjoy your stay aboard the station with no obligations!
 
 # Silicon
 job-description-borg = Use your robotic chassis to perform a wide variety of specialized tasks.
