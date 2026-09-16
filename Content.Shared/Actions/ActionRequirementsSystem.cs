@@ -65,7 +65,6 @@ public sealed partial class ActionRequirementsSystem : EntitySystem
 
     private EntityCondition[] GetConditions(Entity<ActionRequirementsComponent> ent, ActionRequirementTarget target)
     {
-        // Death.
         var conditions = ent.Comp.Conditions
             .Where(x => x.Key.HasFlag(target))
             .SelectMany(x => x.Value);
@@ -75,7 +74,6 @@ public sealed partial class ActionRequirementsSystem : EntitySystem
 
     private EntityEffect[] GetEffects(Entity<ActionRequirementsComponent> ent, ActionRequirementTarget target)
     {
-        // Death.
         var conditions = ent.Comp.Effects
             .Where(x => x.Key.HasFlag(target))
             .SelectMany(x => x.Value);
