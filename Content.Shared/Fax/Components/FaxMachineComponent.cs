@@ -108,7 +108,7 @@ public sealed partial class FaxMachineComponent : Component
     /// Message sending timeout
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
-    public TimeSpan NextInteractTime;
+    public TimeSpan NextPrintTime;
 
     /// <summary>
     /// Message sending timeout
@@ -139,7 +139,7 @@ public sealed partial class FaxMachineComponent : Component
     /// How long the printing animation will play
     /// </summary>
     [ViewVariables]
-    public TimeSpan PrintingTime = TimeSpan.FromSeconds(2.8f);
+    public TimeSpan PrintingTime = TimeSpan.FromSeconds(3.0f);
 
     /// <summary>
     ///     The prototype ID to use for faxed or copied entities if we can't get one from
@@ -188,7 +188,7 @@ public enum FaxFunctions : byte
     Inserting = 1 << 1,
 
     /// <summary>
-    /// Fax is in an interaction cooldown
+    /// Fax is on cooldown from having queued up an entity to send, copy, or print
     /// </summary>
     Processing = 1 << 2
 }

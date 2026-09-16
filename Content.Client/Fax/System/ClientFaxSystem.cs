@@ -33,8 +33,12 @@ public sealed partial class ClientFaxSystem : FaxSystem
             _sprite.LayerSetVisible((fax, args.Sprite), index, (visuals & function) == function);
         }
 
-        // Next do animations
-        if ((visuals & FaxFunctions.Inserting) == FaxFunctions.Inserting && !_player.HasRunningAnimation(fax, nameof(FaxFunctions.Inserting)))
+        // Don't play insert animation if we're not inserting
+        if ((visuals & FaxFunctions.Inserting) == 0)
+        {
+            _player.Stop(fax.Owner, nameof(FaxFunctions.Inserting));
+        } // Start animation if we weren't playing one.
+        else if (!_player.HasRunningAnimation(fax, nameof(FaxFunctions.Inserting)))
         {
             if (!args.TryGetData(FaxMachineVisuals.Inserting, out string? state))
                 state = fax.Comp.InsertingState;
@@ -58,7 +62,12 @@ public sealed partial class ClientFaxSystem : FaxSystem
                 nameof(FaxFunctions.Inserting));
         }
 
-        if ((visuals & FaxFunctions.Printing) == FaxFunctions.Printing && !_player.HasRunningAnimation(fax, nameof(FaxFunctions.Printing)))
+        // Don't play print animation if we're not inserting
+        if ((visuals & FaxFunctions.Printing) == 0)
+        {
+            _player.Stop(fax.Owner, nameof(FaxFunctions.Printing));
+        } // Start animation if we weren't playing one.
+        else if (!_player.HasRunningAnimation(fax, nameof(FaxFunctions.Printing)))
         {
             _player.Play(fax,
                 new Animation

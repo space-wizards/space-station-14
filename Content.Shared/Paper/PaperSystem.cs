@@ -311,6 +311,31 @@ public sealed partial class PaperSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Adds additional content to a piece of paper at the end of the current content.
+    /// </summary>
+    /// <param name="paper">Paper we are adding content to.</param>
+    /// <param name="content">Content being added</param>
+    public void AddContent(Entity<PaperComponent?> paper, string content)
+    {
+        if (!_paperQuery.Resolve(paper, ref paper.Comp))
+            return;
+
+        paper.Comp.Content += content;
+        Dirty(paper);
+
+        UpdateUserInterface((paper, paper.Comp));
+
+        if (!TryComp<AppearanceComponent>(paper, out var appearance))
+            return;
+
+        var status = string.IsNullOrWhiteSpace(content)
+            ? PaperStatus.Blank
+            : PaperStatus.Written;
+
+        _appearance.SetData(paper, PaperVisuals.Status, status, appearance);
+    }
+
     public string GetContent(Entity<PaperComponent?> paper)
     {
         if (!_paperQuery.Resolve(paper, ref paper.Comp))

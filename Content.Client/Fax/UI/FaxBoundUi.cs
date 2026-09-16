@@ -103,10 +103,11 @@ public sealed partial class FaxBoundUi : BoundUserInterface
         if (!_entityManager.TryGetComponent<FaxMachineComponent>(Owner, out var fax))
             return;
 
-        var inserted = _fax.PaperInserted((Owner, fax), out var paper);
+        _fax.TryGetInserted((Owner, fax), out var paper);
+        var cooldown = _fax.PrintCooldown((Owner, fax));
 
-        _window.Update(!inserted,
-            !inserted || fax.DestinationFaxAddress == null || !_fax.CanInteract((Owner, fax)),
+        _window.Update(cooldown,
+            cooldown || fax.DestinationFaxAddress == null,
             fax.FaxName,
             _entityManager.GetComponentOrNull<MetaDataComponent>(paper)?.EntityName,
             fax.KnownFaxes,
