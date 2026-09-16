@@ -62,7 +62,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
-        if (args.MapId == MapId.Nullspace || _intensity < 0.1f)
+        if (args.MapId == MapId.Nullspace)
             return false;
 
         var res = _resources.GetForViewport(args.Viewport, static _ => new CachedResources());
