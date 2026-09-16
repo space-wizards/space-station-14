@@ -103,7 +103,10 @@ public sealed class DecalPainter
         canvas.Mutate(o => o.DrawImage(image, new Point(pointX, pointY), alpha));
     }
 
-    // Compares decals in the same order Client does. See Content.Client/Decals/Overlays/DecalOverlay.cs
+    /// <remarks>
+    /// Compares decals in the same order Client does.
+    /// <see cref="Content.Client.Decals.Overlays.DecalOverlay.CompareDecalIndex"/>
+    /// </remarks>
     private static int CompareDecals(DecalData x, DecalData y)
     {
         var zComp = x.Decal.ZIndex.CompareTo(y.Decal.ZIndex);
