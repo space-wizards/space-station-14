@@ -82,6 +82,13 @@ public sealed partial class XenoArtifactSystem
     /// Each next layer is going to have more chances to have more nodes (so it goes 'from top to bottom' of
     /// the tree, creating its peak nodes first, and then making layers with more and more branches).
     /// </summary>
+    /// <param name="ent">Artifact entity, in which we need to generate segment.</param>
+    /// <param name="predecessors">Collection of nodes which are parts of previous layers for current segment.</param>
+    /// <param name="triggerPool">
+    /// Entity table context container that holds information about triggers that already was used.
+    /// </param>
+    /// <param name="maxNodes">Max number of nodes to be constructed in this layer.</param>
+    /// <param name="iteration">Number of layer.</param>
     private IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> PopulateLayer(
         Entity<XenoArtifactComponent> ent,
         IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> predecessors,
