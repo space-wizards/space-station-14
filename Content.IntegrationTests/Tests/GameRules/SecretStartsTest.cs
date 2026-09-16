@@ -16,7 +16,7 @@ public sealed class SecretStartsTest : GameTest
 
     private static readonly EntProtoId SecretGameRule = "Secret";
 
-    [SidedDependency(Side.Server)] private GameTicker _sGameTicker = null!;
+    [SidedDependency(Side.Server)] private ServerGameTicker _sGameTicker = null!;
 
     /// <summary>
     /// Tests that when secret is started, all of the game rules it successfully adds are also started.

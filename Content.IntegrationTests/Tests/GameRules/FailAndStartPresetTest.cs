@@ -2,10 +2,10 @@
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Presets;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.GameTicking.Prototypes;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.GameRules;
@@ -64,7 +64,7 @@ public sealed class FailAndStartPresetTest : GameTest
         InLobby = true
     };
 
-    [SidedDependency(Side.Server)] private GameTicker _sTicker = default!;
+    [SidedDependency(Side.Server)] private ServerGameTicker _sTicker = default!;
 
     /// <summary>
     /// Test that a nuke ops gamemode can start after failing to start once.

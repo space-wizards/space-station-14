@@ -3,8 +3,8 @@ using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Systems;
-using Content.Server.Station.Systems;
 using Content.Shared.Preferences;
+using Content.Shared.Station.Systems;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Internals;

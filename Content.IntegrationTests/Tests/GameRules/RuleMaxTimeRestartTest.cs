@@ -4,6 +4,7 @@ using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
 using Robust.Shared.Prototypes;
 
@@ -19,7 +20,7 @@ public sealed class RuleMaxTimeRestartTest : GameTest
 
     private static readonly EntProtoId MaxTimeRestartGameRule = "MaxTimeRestart";
 
-    [SidedDependency(Side.Server)] private GameTicker _sGameTicker = default!;
+    [SidedDependency(Side.Server)] private ServerGameTicker _sGameTicker = default!;
 
     [Test]
     public async Task RestartTest()

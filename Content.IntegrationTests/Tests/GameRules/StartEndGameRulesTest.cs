@@ -16,7 +16,7 @@ public sealed class StartEndGameRulesTest : GameTest
         Map = PoolManager.TestStation
     };
 
-    [SidedDependency(Side.Server)] private GameTicker _sGameTicker = null!;
+    [SidedDependency(Side.Server)] private ServerGameTicker _sGameTicker = null!;
 
     /// <summary>
     /// Tests that all game rules can be added/started/ended at the same time without exceptions.

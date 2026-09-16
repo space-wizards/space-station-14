@@ -4,6 +4,7 @@ using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Commands;
 using Content.Shared.CCVar;
+using Content.Shared.GameTicking;
 using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.Commands;

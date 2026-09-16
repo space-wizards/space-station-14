@@ -6,7 +6,6 @@ using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.NUnit.Constraints;
 using Content.Server.Body.Components;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Presets;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.Roles;
@@ -16,6 +15,8 @@ using Content.Shared.CCVar;
 using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.GameTicking;
+using Content.Shared.GameTicking.Prototypes;
+using Content.Shared.GameTicking.Rules.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.NPC.Prototypes;
@@ -50,7 +51,7 @@ public sealed class NukeOpsTest : GameTest
     };
 
     [SidedDependency(Side.Server)] private MapSystem _sMapSystem = default!;
-    [SidedDependency(Side.Server)] private GameTicker _sTicker = default!;
+    [SidedDependency(Side.Server)] private ServerGameTicker _sTicker = default!;
     [SidedDependency(Side.Server)] private MindSystem _sMindSystem = default!;
     [SidedDependency(Side.Server)] private RoleSystem _sRoleSystem = default!;
     [SidedDependency(Side.Server)] private InventorySystem _sInventorySystem = default!;

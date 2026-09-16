@@ -4,11 +4,11 @@ using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Antag.Components;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.Roles;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.GameTicking.Rules.Components;
 using Content.Shared.Mind;
 using Content.Shared.NPC.Prototypes;
 using Content.Shared.NPC.Systems;
@@ -34,7 +34,7 @@ public sealed class TraitorRuleTest : GameTest
         InLobby = true,
     };
 
-    [SidedDependency(Side.Server)] private GameTicker _sTicker = null!;
+    [SidedDependency(Side.Server)] private ServerGameTicker _sTicker = null!;
     [SidedDependency(Side.Server)] private MindSystem _sMindSystem = null!;
     [SidedDependency(Side.Server)] private RoleSystem _sRoleSystem = null!;
     [SidedDependency(Side.Server)] private NpcFactionSystem _sFactionSystem = null!;
@@ -83,6 +83,7 @@ public sealed class TraitorRuleTest : GameTest
         await Server.WaitAssertion(() =>
         {
             var gameRuleEnt = _sTicker.AddGameRule(TraitorGameRuleProtoId);
+            Assert.That(gameRuleEnt, Is.Not.Null);
             Assert.That(STryComp(gameRuleEnt, out traitorRule));
 
             // Ready up
@@ -92,7 +93,7 @@ public sealed class TraitorRuleTest : GameTest
             // Start the round
             _sTicker.StartRound();
             // Force traitor mode to start (skip the delay)
-            _sTicker.StartGameRule(gameRuleEnt);
+            _sTicker.StartGameRule(gameRuleEnt.Value!);
         });
 
         await RunTicksSync(10);

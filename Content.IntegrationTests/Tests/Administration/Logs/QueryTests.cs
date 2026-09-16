@@ -22,7 +22,7 @@ public sealed class QueryTests : GameTest
 
     [SidedDependency(Side.Server)] private IAdminLogManager _sLogManager = default!;
     [SidedDependency(Side.Server)] private IPlayerManager _sPlayerManager = default!;
-    [SidedDependency(Side.Server)] private GameTicker _sTicker = default!;
+    [SidedDependency(Side.Server)] private ServerGameTicker _sTicker = default!;
 
     [Test]
     [Description("Creates and queries a single admin log with a filter by user ID.")]
