@@ -22,6 +22,8 @@ public sealed partial class GasTileVacuumOverlay : Overlay
     public override bool RequestScreenTexture { get; set; } = true;
     private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
     private static readonly ProtoId<ShaderPrototype> VacuumOverlayShader = "VacuumDesaturation";
+    private static readonly Color EmptyColor = new Color(0, 0, 0, 0);
+    private static readonly Color MarkerColor = new Color(255f, 0, 0);
     [Dependency] private IEntityManager _entManager = default!;
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private IClyde _clyde = default!;
@@ -137,8 +139,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
                                 // alpha set to 1 as tile is active
                                 worldHandle.DrawRect(
                                     Box2.CenteredAround(tilePosition + grid.Comp.TileSizeHalfVector,
-                                        grid.Comp.TileSizeVector),
-                                    new Color(255f, 0f, 0f));
+                                        grid.Comp.TileSizeVector), MarkerColor);
                                 anyVacuum = true;
                             }
                         }
@@ -146,7 +147,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
                 }
             },
             // This clears the buffer to all zero first...
-            new Color(0, 0, 0, 0));
+            EmptyColor);
 
         // no distortion, no need to render
         if (!anyVacuum)
