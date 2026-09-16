@@ -112,7 +112,6 @@ public sealed partial class XenoArtifactSystem
             scatterCount -= (directPredecessors.Count - 1);
 
             var trigger = _entityTable.GetFirstOrDefault(ent.Comp.TriggersTable, RobustRandom, triggerPool.Context);
-
             if (trigger == null)
                 continue;
 
@@ -143,24 +142,22 @@ public sealed partial class XenoArtifactSystem
             return [];
 
         List<Entity<XenoArtifactNodeComponent>> directPredecessors = new();
-        var predecessor = RobustRandom.Pick(predecessorsToUse);
-        directPredecessors.Add(predecessor);
-        predecessorsToUse.Remove(predecessor);
-
-        // randomly add in some extra edges for variance.
-        while (scatterCount > 0 && predecessorsToUse.Count != 0)
+        // Select predecessors to build an edge to
+        do
         {
-            scatterCount--;
-            var predecessorFromScatter = RobustRandom.Pick(predecessorsToUse);
-            directPredecessors.Add(predecessorFromScatter);
+            var predecessor = RobustRandom.Pick(predecessorsToUse);
+            directPredecessors.Add(predecessor);
             predecessorsToUse.Remove(predecessor);
+
+            // Randomly add extra edges
             if (RobustRandom.Prob(0.5f))
                 break;
-        }
+
+            scatterCount--;
+        } while (scatterCount >= 0 && predecessorsToUse.Count != 0);
 
         return directPredecessors;
     }
-
 
     /// <summary>
     /// Rolls segment size, based on amount of nodes left and XenoArtifactComponent settings.
