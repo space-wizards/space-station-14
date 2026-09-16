@@ -47,14 +47,19 @@ public sealed partial class ActionRequirementsComponent : Component
 public enum ActionRequirementTarget : byte
 {
     /// <summary>
+    /// Literally nothing. The condition and effect will target nothing, and as such, cannot happen.
+    /// </summary>
+    None = 0,
+
+    /// <summary>
     /// The target is the action performer.
     /// </summary>
-    Performer = 0,
+    Performer = 1 << 0,
 
     /// <summary>
     /// The target is the action target (if any)
     /// </summary>
-    Target = 1 << 0,
+    Target = 1 << 1,
 
     /// <summary>
     /// The target is both the performer and the target.

@@ -20,7 +20,7 @@ public sealed partial class AdminEventLogEui : BaseEui
     [Dependency] private EventWebhook _eventWebhook = default!;
     [Dependency] private IEntityManager _e = default!;
 
-    private int CurrentRoundId => _e.System<GameTicker>().RoundId;
+    private int CurrentRoundId => _e.System<ServerGameTicker>().RoundId;
 
     public AdminEventLogEui()
     {
