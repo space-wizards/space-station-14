@@ -1,10 +1,12 @@
 ﻿using Robust.Shared.Random;
+using Robust.Shared.Serialization;
 
-namespace Content.Server.Antag.Selectors;
+namespace Content.Shared.Antag.Selectors;
 
 /// <summary>
 /// Always spawns this many antags.
 /// </summary>
+[Serializable, NetSerializable]
 public sealed partial class FixedAntagCount : AntagCountSelector
 {
     [DataField]

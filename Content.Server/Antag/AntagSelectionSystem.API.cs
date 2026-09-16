@@ -1,7 +1,7 @@
 using System.Linq;
-using Content.Server.Antag.Components;
-using Content.Server.Antag.Selectors;
 using Content.Shared.Antag;
+using Content.Shared.Antag.Components;
+using Content.Shared.Antag.Selectors;
 using Content.Shared.Chat;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Ghost.Components;

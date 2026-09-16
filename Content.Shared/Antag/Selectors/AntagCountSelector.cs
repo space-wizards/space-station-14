@@ -2,13 +2,15 @@
 using Content.Shared.Destructible.Thresholds;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization;
 
-namespace Content.Server.Antag.Selectors;
+namespace Content.Shared.Antag.Selectors;
 
 /// <summary>
 /// An abstract class meant to return the amount of antags to spawn.
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
+[Serializable, NetSerializable]
 public abstract partial class AntagCountSelector
 {
     /// <summary>
@@ -32,6 +34,7 @@ public abstract partial class AntagCountSelector
 /// <summary>
 /// An abstract version of <see cref="AntagCountSelector"/> which constrains the amount of antags spawned to a minimum and maximum.
 /// </summary>
+[Serializable, NetSerializable]
 public abstract partial class MinMaxAntagCountSelector : AntagCountSelector
 {
     [DataField(required: true)]

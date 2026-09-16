@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Server.Antag.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Antag;
+using Content.Shared.Antag.Components;
 using Content.Shared.Database;
 using Content.Shared.Ghost.Components;
 using Content.Shared.Humanoid;
@@ -12,7 +13,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using static Content.Server.Antag.Components.AntagSelectionTime;
+using static Content.Shared.Antag.Components.AntagSelectionTime;
 
 namespace Content.Server.Antag;
 
@@ -494,6 +495,7 @@ public sealed partial class AntagSelectionSystem
         RemComp<LoadMapRuleComponent>(ruleEnt);
         var antag = RuleQuery.Comp(ruleEnt);
         antag.AssignmentHandled = true; // don't do normal selection.
+        Dirty(ruleEnt, antag);
         GameTicker.StartGameRule(ruleEnt);
         return (ruleEnt, antag);
     }
