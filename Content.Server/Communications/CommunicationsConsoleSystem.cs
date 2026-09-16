@@ -248,6 +248,12 @@ namespace Content.Server.Communications
 
         private void OnBroadcastMessage(EntityUid uid, CommunicationsConsoleComponent component, CommunicationsConsoleBroadcastMessage message)
         {
+            if (message.Actor is { Valid: true } mob && !CanUse(mob, uid))
+            {
+                _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, mob);
+                return;
+            }
+
             if (!TryComp<DeviceNetworkComponent>(uid, out var net))
                 return;
 
