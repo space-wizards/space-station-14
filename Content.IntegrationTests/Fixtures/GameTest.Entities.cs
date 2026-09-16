@@ -45,7 +45,7 @@ public abstract partial class GameTest
     /// </summary>
     public string? SToPrettyString(EntityUid? uid)
     {
-        return Pair.Server.EntMan.ToPrettyString(uid);
+        return SEntMan.ToPrettyString(uid);
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ public abstract partial class GameTest
     /// </summary>
     public string? CToPrettyString(EntityUid? uid)
     {
-        return Pair.Client.EntMan.ToPrettyString(uid);
+        return CEntMan.ToPrettyString(uid);
     }
 
     /// <summary>

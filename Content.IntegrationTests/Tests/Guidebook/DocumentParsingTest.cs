@@ -65,12 +65,11 @@ whitespace before newlines are ignored.
         {
             Assert.That(richText1, Is.Not.Null);
             Assert.That(richText2, Is.Not.Null);
-        }
 
-        // uhh.. WTF. rich text has no means of getting the contents!?!?
-        // TODO assert text content is correct after fixing that bullshit.
-        // Assert.That(richText1?.Text, Is.EqualTo("multiple lines separated by only single newlines make a single rich text control"));
-        // Assert.That(richText2?.Text, Is.EqualTo("unless there is a double newline. Also whitespace before newlines are ignored."));
+            // Try to get the string contents with markup stripped out.
+            Assert.That(richText1?.GetFormattedMessage()?.ToString(), Is.EqualTo("multiple lines separated by only single newlines make a single rich text control"));
+            Assert.That(richText2?.GetFormattedMessage()?.ToString(), Is.EqualTo("unless there is a double newline. Also whitespace before newlines are ignored."));
+        }
 
         var test1 = ctrl.GetChild(2) as TestControl;
         var test2 = ctrl.GetChild(3) as TestControl;

@@ -12,45 +12,49 @@ namespace Content.IntegrationTests.Tests.Wires;
 [TestOf(typeof(WiresSystem))]
 public sealed class WireLayoutTest : GameTest
 {
+    private const string WireLayoutTest1 = "WireLayoutTest1";
+    private const string WireLayoutTest2 = "WireLayoutTest2";
+    private const string WireLayoutTest3 = "WireLayoutTest3";
+
     [TestPrototypes]
-    public const string Prototypes = """
+    public const string Prototypes = $"""
         - type: wireLayout
-          id: WireLayoutTest
+          id: {WireLayoutTest1}
           dummyWires: 2
           wires:
           - !type:PowerWireAction
           - !type:DoorBoltWireAction
 
         - type: wireLayout
-          id: WireLayoutTest2
+          id: {WireLayoutTest2}
           parent: WireLayoutTest
           wires:
           - !type:PowerWireAction
 
         - type: wireLayout
-          id: WireLayoutTest3
+          id: {WireLayoutTest3}
           parent: WireLayoutTest
 
         - type: entity
           id: WireLayoutTest
           components:
           - type: Wires
-            layoutId: WireLayoutTest
+            layoutId: {WireLayoutTest1}
 
         - type: entity
-          id: WireLayoutTest2
+          id: {WireLayoutTest2}
           components:
           - type: Wires
-            layoutId: WireLayoutTest2
+            layoutId: {WireLayoutTest2}
 
         - type: entity
-          id: WireLayoutTest3
+          id: {WireLayoutTest3}
           components:
           - type: Wires
-            layoutId: WireLayoutTest3
+            layoutId: {WireLayoutTest3}
         """;
 
-    [SidedDependency(Side.Server)] private EntityQuery<WiresComponent> _sQuery = default!;
+    [SidedDependency(Side.Server)] private EntityQuery<WiresComponent> _sQuery;
 
     [Test]
     public async Task TestLayoutInheritance()
@@ -60,9 +64,9 @@ public sealed class WireLayoutTest : GameTest
         await Server.WaitAssertion(() =>
         {
             // Need to spawn these entities to make sure the wire layouts are initialized.
-            var ent1 = SSpawnAtPosition("WireLayoutTest", TestMap!.GridCoords);
-            var ent2 = SSpawnAtPosition("WireLayoutTest2", TestMap!.GridCoords);
-            var ent3 = SSpawnAtPosition("WireLayoutTest3", TestMap!.GridCoords);
+            var ent1 = SSpawnAtPosition(WireLayoutTest1, TestMap!.GridCoords);
+            var ent2 = SSpawnAtPosition(WireLayoutTest2, TestMap!.GridCoords);
+            var ent3 = SSpawnAtPosition(WireLayoutTest3, TestMap!.GridCoords);
 
             using (Assert.EnterMultipleScope())
             {

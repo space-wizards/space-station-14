@@ -22,6 +22,9 @@ public sealed class AllGamePresetsStartTest : AntagTest
     /// A list of blacklisted <see cref="GamePresetPrototype"/> for this test. Some down streams might make changes which nuke upstream game modes they don't use.
     /// This prevents them from being tested. If you use this to silence valid test fails and your game fails to start. Skill issue. Do 100 push-ups.
     /// </summary>
+    /// <remarks>
+    /// Using <see langword="string"/> to prevent the YAML linter from failing if this is empty.
+    /// </remarks>
     private static readonly HashSet<string> IgnoredPresets =
     [
 
