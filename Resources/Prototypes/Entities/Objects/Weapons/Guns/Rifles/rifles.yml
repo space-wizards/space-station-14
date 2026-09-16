@@ -202,6 +202,8 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Rifles/estoc.rsi
   - type: Gun
+    minAngle: 21
+    maxAngle: 32 
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/estocshot.ogg
     shotsPerBurst: 3
@@ -210,9 +212,6 @@
     - Burst
     - SemiAuto
     burstFireRate: 14
-  - type: GunWieldBonus
-    minAngle: -20
-    maxAngle: -30
   - type: ItemSlots
     slots:
       gun_magazine:
