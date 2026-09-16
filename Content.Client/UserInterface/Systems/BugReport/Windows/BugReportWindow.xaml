@@ -1,0 +1,39 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+               xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+               Title="{Loc bug-report-window-name}"
+               MinSize="600 470">
+    <BoxContainer Orientation="Vertical" Margin="10 0 20 0">
+        <RichTextLabel Name="DisabledLabel" HorizontalAlignment="Center" Visible="False" ReservesSpace="False" />
+        <BoxContainer Orientation="Vertical" Name="BugReportContainer" VerticalExpand="True">
+            <RichTextLabel Name="BugReportExplanation" HorizontalAlignment="Center" Margin="0 5 0 5" Text="{Loc bug-report-window-explanation}" />
+
+            <!-- Title -->
+            <BoxContainer VerticalAlignment="Center">
+                <LineEdit Name="BugReportTitle" PlaceHolder="{Loc bug-report-window-title-place-holder}" HorizontalExpand="True" Margin="0 0 0 5" />
+            </BoxContainer>
+
+            <!-- Description -->
+            <PanelContainer>
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#1c1c21" />
+                </PanelContainer.PanelOverride>
+
+                <TextEdit Name="BugReportDescription" MaxHeight="300" MinHeight="300" VerticalExpand="True">
+                    <Label Name="PlaceholderCenter" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Loc bug-report-window-description-place-holder}" StyleClasses="PlaceholderText" />
+                </TextEdit>
+            </PanelContainer>
+
+            <!-- Footer -->
+            <BoxContainer HorizontalAlignment="Center" Orientation="Horizontal" >
+                <Label Name="TitleCharacterCounter" StyleClasses="LabelSmall" VerticalAlignment="Center" />
+                <Label Text=" - " StyleClasses="LabelSmall" VerticalAlignment="Center" />
+                <Label Name="DescriptionCharacterCounter" StyleClasses="LabelSmall"/>
+            </BoxContainer>
+
+            <!-- Submit button and disclaimer -->
+            <controls:ConfirmButton Name="SubmitButton" ConfirmationText="{Loc bug-report-window-submit-button-confirm-text}" Text="{Loc bug-report-window-submit-button-text}" Margin="0 5 0 0" />
+            <Label HorizontalAlignment="Center" Margin="0 5 0 10" Text="{Loc bug-report-window-submit-button-disclaimer}" StyleClasses="LabelSmall" />
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>
