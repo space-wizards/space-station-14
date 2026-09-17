@@ -1,4 +1,4 @@
-﻿using Content.Shared.Arcade;
+using Content.Shared.Arcade;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Arcade.UI;
