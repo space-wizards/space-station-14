@@ -1288,20 +1288,6 @@
 
 - type: entity
   parent: DrinkGlass
-  id: DrinkNeurotoxinGlass
-  suffix: neurotoxin
-  components:
-  - type: Solution
-    solution:
-        reagents:
-        - ReagentId: Neurotoxin
-          Quantity: 30
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/neurotoxinglass.rsi
-    state: icon
-
-- type: entity
-  parent: DrinkGlass
   id: DrinkNothing
   suffix: nothing
   components:
@@ -1967,21 +1953,6 @@
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/vodkatonicglass.rsi
-    state: icon
-
-- type: entity
-  parent: DrinkGlass
-  id: DrinkWaterJug
-  name: water jug
-  description: Stay hydrated.
-  components:
-  - type: Solution
-    solution:
-        reagents:
-        - ReagentId: Water
-          Quantity: 30
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/water.rsi
     state: icon
 
 - type: entity

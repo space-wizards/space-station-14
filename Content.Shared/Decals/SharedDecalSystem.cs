@@ -93,6 +93,11 @@ namespace Content.Shared.Decals
             return true;
         }
 
+        /// <summary>
+        /// Adds a decal.
+        /// </summary>
+        public abstract bool TryAddDecal(Decal decal, EntityCoordinates coordinates, out DecalIndex decalId);
+
         private static void RebuildFreeDecalIds(DecalChunkComponent component)
         {
             component.FreeDecalIds.Clear();

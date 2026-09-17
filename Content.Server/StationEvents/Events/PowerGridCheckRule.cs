@@ -5,11 +5,9 @@ using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;
 using JetBrains.Annotations;
-using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
-using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events
 {
@@ -29,16 +27,29 @@ namespace Content.Server.StationEvents.Events
         {
             base.Started(uid, component, gameRule, args);
 
-            if (!TryGetRandomStation(out var chosenStation))
+            if (!Station.TryGetRandomStation(out var chosenStation))
                 return;
 
             component.AffectedStation = chosenStation.Value;
 
+            var largestGrid = Station.GetLargestGrid(chosenStation.Value.AsNullable());
+
+            if (largestGrid == null)
+                return;
+
             var query = AllEntityQuery<ApcComponent, TransformComponent>();
-            while (query.MoveNext(out var apcUid ,out var apc, out var transform))
+            while (query.MoveNext(out var apcUid, out var apc, out var transform))
             {
-                if (apc.MainBreakerEnabled && CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == chosenStation)
-                    component.Powered.Add(apcUid);
+                if (!apc.MainBreakerEnabled)
+                    continue;
+
+                if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station != chosenStation.Value.Owner)
+                    continue;
+
+                if (transform.GridUid != largestGrid.Value)
+                    continue;
+
+                component.Powered.Add(apcUid);
             }
 
             RobustRandom.Shuffle(component.Powered);
@@ -87,41 +98,51 @@ namespace Content.Server.StationEvents.Events
             }
 
             var activeRules = AllEntityQuery<PowerGridCheckRuleComponent, ActiveGameRuleComponent>();
-            while (activeRules.MoveNext(out var _entity, out var powerGridRule, out var _activeGameRule))
+            while (activeRules.MoveNext(out _, out var powerGridRule, out _))
             {
-                if (stationMemberComp.Station == powerGridRule.AffectedStation)
-                {
-                    return powerGridRule;
-                }
+                if (stationMemberComp.Station != powerGridRule.AffectedStation)
+                    continue;
+
+                var largestGrid = Station.GetLargestGrid(powerGridRule.AffectedStation);
+
+                if (largestGrid == null)
+                    continue;
+
+                if (xform.GridUid != largestGrid.Value)
+                    continue;
+
+                return powerGridRule;
             }
 
             return null;
         }
 
-        protected override void Ended(EntityUid uid, PowerGridCheckRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
+        protected override void Ended(Entity<PowerGridCheckRuleComponent> rule, ref GameRuleEndedEvent args)
         {
-            base.Ended(uid, component, gameRule, args);
+            base.Ended(rule, ref args);
 
-            foreach (var entity in component.Unpowered)
+            foreach (var entity in rule.Comp.Unpowered)
             {
                 if (Deleted(entity))
                     continue;
 
                 if (TryComp(entity, out ApcComponent? apcComponent))
                 {
-                    if(!apcComponent.MainBreakerEnabled)
+                    if (!apcComponent.MainBreakerEnabled)
                         _apcSystem.ApcToggleBreaker(entity, apcComponent);
                 }
             }
 
             // Can't use the default EndAudio
-            component.AnnounceCancelToken?.Cancel();
-            component.AnnounceCancelToken = new CancellationTokenSource();
-            Timer.Spawn(3000, () =>
+            rule.Comp.AnnounceCancelToken?.Cancel();
+            rule.Comp.AnnounceCancelToken = new CancellationTokenSource();
+            Timer.Spawn(3000,
+                () =>
             {
-                Audio.PlayGlobal(component.PowerOnSound, Filter.Broadcast(), true);
-            }, component.AnnounceCancelToken.Token);
-            component.Unpowered.Clear();
+                Audio.PlayGlobal(rule.Comp.PowerOnSound, Filter.Broadcast(), true);
+            },
+                rule.Comp.AnnounceCancelToken.Token);
+            rule.Comp.Unpowered.Clear();
         }
 
         protected override void ActiveTick(EntityUid uid, PowerGridCheckRuleComponent component, GameRuleComponent gameRule, float frameTime)
@@ -132,7 +153,7 @@ namespace Content.Server.StationEvents.Events
             component.FrameTimeAccumulator += frameTime;
             if (component.FrameTimeAccumulator > component.UpdateRate)
             {
-                updates = (int) (component.FrameTimeAccumulator / component.UpdateRate);
+                updates = (int)(component.FrameTimeAccumulator / component.UpdateRate);
                 component.FrameTimeAccumulator -= component.UpdateRate * updates;
             }
 

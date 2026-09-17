@@ -15,7 +15,7 @@ public sealed partial class ForensicPadSystem : EntitySystem
 {
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
-    [Dependency] private SharedForensicsSystem _forensics = default!;
+    [Dependency] private ForensicsSystem _forensics = default!;
     [Dependency] private LabelSystem _label = default!;
 
     [SubscribeLocalEvent]

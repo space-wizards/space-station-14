@@ -9,4 +9,10 @@ namespace Content.Shared.Power
         Powered,
         BatteryPowered
     }
+
+    [Serializable, NetSerializable]
+    public enum PowerConsumerVisuals : byte
+    {
+        Consuming
+    }
 }

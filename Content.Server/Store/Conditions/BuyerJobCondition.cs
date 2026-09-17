@@ -2,7 +2,7 @@ using Content.Shared.Mind;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
 using Content.Shared.Store;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Store.Conditions;
 
@@ -15,14 +15,14 @@ public sealed partial class BuyerJobCondition : ListingCondition
     /// <summary>
     /// A whitelist of jobs prototypes that can purchase this listing. Only one needs to be found.
     /// </summary>
-    [DataField("whitelist", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<JobPrototype>))]
-    public HashSet<string>? Whitelist;
+    [DataField]
+    public HashSet<ProtoId<JobPrototype>>? Whitelist;
 
     /// <summary>
     /// A blacklist of job prototypes that can purchase this listing. Only one needs to be found.
     /// </summary>
-    [DataField("blacklist", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<JobPrototype>))]
-    public HashSet<string>? Blacklist;
+    [DataField]
+    public HashSet<ProtoId<JobPrototype>>? Blacklist;
 
     public override bool Condition(ListingConditionArgs args)
     {

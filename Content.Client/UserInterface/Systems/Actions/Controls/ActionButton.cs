@@ -2,10 +2,7 @@ using System.Numerics;
 using Content.Client.Actions;
 using Content.Client.Actions.UI;
 using Content.Client.Cooldown;
-using Content.Client.Stylesheets;
-using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
-using Content.Shared.Charges.Systems;
 using Content.Shared.Examine;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -291,8 +288,8 @@ public sealed class ActionButton : Control, IEntityControl
     public void UpdateBackground()
     {
         _controller ??= UserInterfaceManager.GetUIController<ActionUIController>();
-        if (Action != null ||
-            _controller.IsDragging && GetPositionInParent() == Parent?.ChildCount - 1)
+        if (Action != null
+            || _controller.IsDragging && (Parent == null || GetPositionInParent() == Parent?.ChildCount - 1))
         {
             Button.Texture = _slotBackground;
         }

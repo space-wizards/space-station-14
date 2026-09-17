@@ -1,4 +1,4 @@
-﻿# region Base
+# region Base
 - type: construction
   abstract: true
   id: BaseMachine
