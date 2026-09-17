@@ -1,7 +1,9 @@
 using System.Threading;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.GameTicking.Rules;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameTicking.Rules;
@@ -21,15 +23,15 @@ public sealed partial class MaxTimeRestartRuleSystem : GameRuleSystem<MaxTimeRes
     {
         base.Started(uid, component, gameRule, args);
 
-        if(GameTicker.RunLevel == GameRunLevel.InRound)
+        if (GameTicker.RunLevel == GameRunLevel.InRound)
             RestartTimer(component);
     }
 
-    protected override void Ended(EntityUid uid, MaxTimeRestartRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
+    protected override void Ended(Entity<MaxTimeRestartRuleComponent> rule, ref GameRuleEndedEvent args)
     {
-        base.Ended(uid, component, gameRule, args);
+        base.Ended(rule, ref args);
 
-        StopTimer(component);
+        StopTimer(rule);
     }
 
     public void RestartTimer(MaxTimeRestartRuleComponent component)
@@ -60,7 +62,7 @@ public sealed partial class MaxTimeRestartRuleSystem : GameRuleSystem<MaxTimeRes
         var query = EntityQueryEnumerator<MaxTimeRestartRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var timer, out var gameRule))
         {
-            if (!GameTicker.IsGameRuleActive(uid, gameRule))
+            if (!GameTicker.IsGameRuleActive((uid, gameRule)))
                 return;
 
             switch (args.New)

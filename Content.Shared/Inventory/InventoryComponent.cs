@@ -1,4 +1,4 @@
-﻿using Content.Shared.Cloning;
+using Content.Shared.Cloning;
 using Content.Shared.DisplacementMap;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;

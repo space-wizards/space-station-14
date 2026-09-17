@@ -1,4 +1,4 @@
-﻿using Content.Shared.Alert;
+using Content.Shared.Alert;
 using Content.Shared.Cloning;
 using Content.Shared.Movement.Pulling.Systems;
 using Robust.Shared.GameStates;
