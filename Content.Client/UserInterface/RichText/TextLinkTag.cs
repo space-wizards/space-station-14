@@ -73,25 +73,27 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
 
         foreach (var (attrname, resolver) in _resolvers)
         {
-            if (node.Attributes.ContainsKey(attrname))
+            if (!node.Attributes.ContainsKey(attrname))
+                continue;
+
+            if(!resolver(node, out linkData))
             {
-                if(!resolver(node, out linkData))
-                {
-                    return false;
-                }
-                linkTypeResolved = true;
-                break;
+                return false;
             }
+
+            linkTypeResolved = true;
+            break;
         }
+
         if (!linkTypeResolved)
         {
             return false;
         }
 
+
         // color= > resolver-supplied color > default
         var linkColor = ResolveColorOverride(node) ?? linkData.Color ?? DefaultLinkColor;
-        var linkLabel = new TextLinkLabel() { Text = text, LinkString = linkData.LinkString, LinkEntity = linkData.LinkEntity };
-        linkLabel.FontColorOverride = linkColor;
+        var linkLabel = new TextLinkLabel() { Text = text, LinkString = linkData.LinkString, LinkEntity = linkData.LinkEntity, LinkColor = linkColor};
 
         // eat my ass about where this magic number comes from
         // our UI stack is awful. Finding this magic number was awful.
@@ -102,14 +104,7 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
             linkLabel.FontOverride = boldFont;
         }
 
-        if (linkData.Clickable)
-        {
-            linkLabel.MouseFilter = Control.MouseFilterMode.Stop;
-            linkLabel.DefaultCursorShape = Control.CursorShape.Hand;
-            linkLabel.OnMouseEntered += _ => linkLabel.FontColorOverride = Color.LightSkyBlue;
-            linkLabel.OnMouseExited += _ => linkLabel.FontColorOverride = linkColor;
-            linkLabel.OnKeyBindDown += args => OnKeybindDown(args, linkLabel);
-        }
+        linkLabel.UpdateLabelProperties();
 
         control = linkLabel;
         return true;
@@ -124,28 +119,6 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
         }
 
         return Color.TryFromHex(colorStr, out var color) ? color : null;
-    }
-
-    /// <summary>
-    /// Delegates to the nearest ancestor ILinkClickHandler or IEntityLinkClickHandler;
-    /// TextLinkTag has no idea what a click actually does.
-    /// </summary>
-    private void OnKeybindDown(GUIBoundKeyEventArgs args, TextLinkLabel? control)
-    {
-        if (args.Function != EngineKeyFunctions.UIClick)
-            return;
-
-        if (control == null)
-            return;
-
-        if (control.LinkEntity is { } entity && control.TryGetParentHandler<IEntityLinkClickHandler>(out var entityLinkClickHandler))
-        {
-            entityLinkClickHandler.HandleClick(entity);
-        }
-        else if (control.LinkString != null && control.TryGetParentHandler<ILinkClickHandler>(out var linkClickHandler))
-        {
-            linkClickHandler.HandleClick(control.LinkString);
-        }
     }
 }
 
