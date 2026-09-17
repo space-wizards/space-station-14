@@ -1,4 +1,4 @@
-﻿using Content.Shared.Anomaly.Effects;
+using Content.Shared.Anomaly.Effects;
 
 namespace Content.Client.Anomaly.Effects;
 
