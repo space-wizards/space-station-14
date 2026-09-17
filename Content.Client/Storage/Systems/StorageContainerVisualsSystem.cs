@@ -1,4 +1,4 @@
-﻿using Content.Client.Items.Systems;
+using Content.Client.Items.Systems;
 using Content.Client.Storage.Components;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;

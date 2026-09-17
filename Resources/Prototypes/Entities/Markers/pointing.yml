@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: pointing arrow
   id: PointingArrow
   save: false

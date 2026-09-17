@@ -18,11 +18,11 @@ public sealed partial class DockingSignalControlSystem : EntitySystem
 
     private void OnDocked(Entity<DockingSignalControlComponent> ent, ref DockEvent args)
     {
-        _deviceLinkSystem.SendSignal(ent, ent.Comp.DockStatusSignalPort, signal: true);
+        _deviceLinkSystem.SendSignal(ent.Owner, ent.Comp.DockStatusSignalPort, signal: true);
     }
 
     private void OnUndocked(Entity<DockingSignalControlComponent> ent, ref UndockEvent args)
     {
-        _deviceLinkSystem.SendSignal(ent, ent.Comp.DockStatusSignalPort, signal: false);
+        _deviceLinkSystem.SendSignal(ent.Owner, ent.Comp.DockStatusSignalPort, signal: false);
     }
 }

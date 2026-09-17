@@ -6,7 +6,7 @@ namespace Content.Shared.Clock;
 
 public abstract partial class SharedClockSystem : EntitySystem
 {
-    [Dependency] private SharedGameTicker _ticker = default!;
+    [Dependency] private GameTicker _ticker = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
