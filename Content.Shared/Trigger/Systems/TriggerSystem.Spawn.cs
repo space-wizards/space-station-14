@@ -72,7 +72,7 @@ public sealed partial class TriggerSystem
         {
             var mapCoords = _transform.GetMapCoordinates(target);
             if (predicted)
-                EntityManager.PredictedSpawn(proto, mapCoords);
+                PredictedSpawn(proto, mapCoords);
             else if (_net.IsServer)
                 Spawn(proto, mapCoords);
         }
