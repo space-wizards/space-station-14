@@ -15,12 +15,12 @@
     - WhitelistChameleon
     - CorgiWearable
 
-#Large EVA Helmet
+#Emergency pressure suit helmet
 - type: entity
   parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetEVALarge
-  name: EVA helmet
-  description: An old-but-gold helmet designed for extravehicular activites.
+  name: emergency helmet
+  description: Hard to believe this cheap-looking thing is airtight, but it is.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/eva_large.rsi
@@ -80,6 +80,12 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/paramedhelm.rsi
+    layers:
+    - state: icon
+    - state: light-overlay
+      visible: false
+      shader: unshaded
+      map: [ "light" ]
   - type: HandheldLight
     addPrefix: false
   - type: ToggleableVisuals
@@ -87,17 +93,11 @@
     clothingVisuals:
       head:
       - state: equipped-head-light
-      head-vox:
-      - state: equipped-head-light-vox
+        shader: unshaded
   - type: Clothing
     clothingVisuals:
       head:
       - state: equipped-head
-      head-vox:
-      - state: equipped-head-vox
-  - type: TemperatureProtection
-    heatingCoefficient: 0.1
-    coolingCoefficient: 0.1
   - type: Armor
     modifiers:
       coefficients:

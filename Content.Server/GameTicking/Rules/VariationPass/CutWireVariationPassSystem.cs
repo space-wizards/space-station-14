@@ -10,9 +10,9 @@ namespace Content.Server.GameTicking.Rules.VariationPass;
 /// This system identifies target devices and adds <see cref="CutWireOnMapInitComponent"/> to them.
 /// The actual wire cutting is handled by <see cref="CutWireOnMapInitSystem"/>.
 /// </summary>
-public sealed class CutWireVariationPassSystem : VariationPassSystem<CutWireVariationPassComponent>
+public sealed partial class CutWireVariationPassSystem : VariationPassSystem<CutWireVariationPassComponent>
 {
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
     protected override void ApplyVariation(Entity<CutWireVariationPassComponent> ent, ref StationVariationPassEvent args)
     {

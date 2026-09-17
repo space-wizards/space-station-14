@@ -1,4 +1,4 @@
-﻿- type: speechVerb
+- type: speechVerb
   id: Default
   name: chat-speech-verb-name-default
   speechVerbStrings:
@@ -117,6 +117,13 @@
   - chat-speech-verb-goat-1
   - chat-speech-verb-goat-2
   - chat-speech-verb-goat-3
+
+- type: speechVerb
+  id: Sheep
+  name: chat-speech-verb-name-sheep
+  speechVerbStrings:
+  - chat-speech-verb-sheep-1
+  - chat-speech-verb-sheep-2
 
 - type: speechVerb
   id: LargeMob

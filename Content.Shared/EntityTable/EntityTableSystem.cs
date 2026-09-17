@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.EntityTable.EntitySelectors;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -6,27 +7,59 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.EntityTable;
 
-public sealed class EntityTableSystem : EntitySystem
+public sealed partial class EntityTableSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
-    public IEnumerable<EntProtoId> GetSpawns(EntityTablePrototype entTableProto, System.Random? rand = null, EntityTableContext? ctx = null)
+    /// <summary>
+    /// Iterates once through Entities that EntitySelector in EntityTableProto provides and picks first one.
+    /// </summary>
+    public EntProtoId? GetFirstOrDefault(
+        EntityTablePrototype entTableProto,
+        IRobustRandom? rand = null,
+        EntityTableContext? ctx = null
+    )
+    {
+        return GetSpawns(entTableProto, rand, ctx).FirstOrDefault();
+    }
+
+    /// <summary>
+    /// Iterates once through Entities that EntitySelector provides and picks first one.
+    /// </summary>
+    public EntProtoId? GetFirstOrDefault(
+        EntityTableSelector? entTableProto,
+        IRobustRandom? rand = null,
+        EntityTableContext? ctx = null
+    )
+    {
+        return GetSpawns(entTableProto, rand, ctx).FirstOrDefault();
+    }
+
+    /// <summary>
+    /// Compiles a random list of entity prototypes using constraints.
+    /// </summary>
+    public IEnumerable<EntProtoId> GetSpawns(EntityTablePrototype entTableProto, IRobustRandom? rand = null, EntityTableContext? ctx = null)
     {
         // convenient
         return GetSpawns(entTableProto.Table, rand, ctx);
     }
 
-    public IEnumerable<EntProtoId> GetSpawns(EntityTableSelector? table, System.Random? rand = null, EntityTableContext? ctx = null)
+    /// <summary>
+    /// Compiles a random list of entity prototypes using constraints.
+    /// </summary>
+    public IEnumerable<EntProtoId> GetSpawns(EntityTableSelector? table, IRobustRandom? rand = null, EntityTableContext? ctx = null)
     {
         if (table == null)
             return new List<EntProtoId>();
 
-        rand ??= _random.GetRandom();
+        rand ??= _random;
         ctx ??= new EntityTableContext();
-        return table.GetSpawns(rand, EntityManager, _prototypeManager, ctx);
+        return table.GetSpawns(rand, EntityManager, ProtoMan, ctx);
     }
 
+    /// <summary>
+    /// Builds a list of all the spawns in an EntityTable as keys, and their modified weights as values.
+    /// </summary>
     public IEnumerable<(EntProtoId spawn, double)> ListSpawns(EntityTablePrototype entTableProto, EntityTableContext? ctx = null)
     {
         return ListSpawns(entTableProto.Table, ctx);
@@ -43,7 +76,7 @@ public sealed class EntityTableSystem : EntitySystem
             return new List<(EntProtoId spawn, double)>();
 
         ctx ??= new EntityTableContext();
-        return table.ListSpawns(EntityManager, _prototypeManager, ctx);
+        return table.ListSpawns(EntityManager, ProtoMan, ctx);
     }
 
     /// <inheritdoc cref="AverageSpawns(EntityTableSelector?,EntityTableContext?)"/>
@@ -64,7 +97,7 @@ public sealed class EntityTableSystem : EntitySystem
             return new List<(EntProtoId spawn, double)>();
 
         ctx ??= new EntityTableContext();
-        return table.AverageSpawns(EntityManager, _prototypeManager, ctx);
+        return table.AverageSpawns(EntityManager, ProtoMan, ctx);
     }
 }
 
@@ -101,5 +134,23 @@ public sealed class EntityTableContext
 
         value = castValueData;
         return true;
+    }
+
+    /// <summary>
+    /// Sets data into context using provided key.
+    /// </summary>
+    [PublicAPI]
+    public void SetData<T>([ForbidLiteral] string key, T data) where T : notnull
+    {
+        _data[key] = data;
+    }
+
+    /// <summary>
+    /// Removes data from the context, if the key exists.
+    /// </summary>
+    [PublicAPI]
+    public void RemoveData([ForbidLiteral] string key)
+    {
+        _data.Remove(key);
     }
 }

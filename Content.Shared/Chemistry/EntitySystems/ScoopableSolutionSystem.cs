@@ -8,12 +8,12 @@ namespace Content.Shared.Chemistry.EntitySystems;
 /// <summary>
 /// Handles solution transfer when a beaker is used on a scoopable entity.
 /// </summary>
-public sealed class ScoopableSolutionSystem : EntitySystem
+public sealed partial class ScoopableSolutionSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _netManager = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
-    [Dependency] private readonly SolutionTransferSystem _solutionTransfer = default!;
+    [Dependency] private INetManager _netManager = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedSolutionContainerSystem _solution = default!;
+    [Dependency] private SolutionTransferSystem _solutionTransfer = default!;
 
     public override void Initialize()
     {
@@ -40,7 +40,7 @@ public sealed class ScoopableSolutionSystem : EntitySystem
         if (scooped == 0)
             return false;
 
-        _popup.PopupClient(Loc.GetString(ent.Comp.Popup, ("scooped", ent.Owner), ("beaker", beaker)), user, user);
+        _popup.PopupEntity(Loc.GetString(ent.Comp.Popup, ("scooped", ent.Owner), ("beaker", beaker)), user, user);
 
         if (srcSolution.Volume == 0 && ent.Comp.Delete)
         {
