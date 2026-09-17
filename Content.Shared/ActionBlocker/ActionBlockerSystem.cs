@@ -45,7 +45,9 @@ namespace Content.Shared.ActionBlocker
                 Dirty(uid, component);
 
             component.CanMove = !ev.Cancelled;
-            return !ev.Cancelled;
+            var updatedEv = new CanMoveUpdatedEvent(component.CanMove);
+            RaiseLocalEvent(uid, ref updatedEv);
+            return component.CanMove;
         }
 
         /// <summary>
@@ -139,6 +141,11 @@ namespace Content.Shared.ActionBlocker
             return !itemEv.Cancelled;
         }
 
+        /// <summary>
+        /// Whether a player is able to speak.
+        /// This only checks if something blocks them from speaking, not if they had the ability to do so in the first place.
+        /// </summary>
+        /// <param name="uid">The mob to check.</param>
         public bool CanSpeak(EntityUid uid)
         {
             // This one is used as broadcast

@@ -1,14 +1,12 @@
-using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Radio;
-using Robust.Shared.Random;
 using Content.Server.Light.EntitySystems;
-using Content.Server.Light.Components;
 using Content.Server.StationEvents.Components;
-using Content.Shared.Radio.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Light.Components;
+using Content.Shared.Radio;
+using Content.Shared.Radio.Components;
+using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -64,7 +62,7 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
         var query = EntityQueryEnumerator<SolarFlareRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var flare, out var gameRule))
         {
-            if (!GameTicker.IsGameRuleActive(uid, gameRule))
+            if (!GameTicker.IsGameRuleActive((uid, gameRule)))
                 continue;
 
             if (!flare.AffectedChannels.Contains(args.Channel.ID))

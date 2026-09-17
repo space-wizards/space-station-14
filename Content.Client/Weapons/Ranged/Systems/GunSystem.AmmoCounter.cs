@@ -158,6 +158,30 @@ public sealed partial class GunSystem
         }
     }
 
+    public sealed class CustomIconStatusControl : Control
+    {
+        private readonly CustomBulletRenderer _customBulletRenderer;
+
+        public CustomIconStatusControl(Texture loadedSprite, Texture spentTexture, int numberOfRows)
+        {
+            MinHeight = 15;
+            HorizontalExpand = true;
+            VerticalAlignment = VAlignment.Center;
+
+            AddChild(_customBulletRenderer = new CustomBulletRenderer(loadedSprite, spentTexture, numberOfRows)
+            {
+                HorizontalAlignment = HAlignment.Right,
+                VerticalAlignment = VAlignment.Bottom,
+            });
+        }
+
+        public void Update(int count, int capacity)
+        {
+            _customBulletRenderer.Capacity = capacity;
+            _customBulletRenderer.Count = count;
+        }
+    }
+
     private sealed class ChamberMagazineStatusControl : Control
     {
         private readonly BulletRender _bulletRender;

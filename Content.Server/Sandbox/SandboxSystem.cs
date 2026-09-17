@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.Popups;
 using Content.Shared.Access;
@@ -5,6 +6,7 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
@@ -21,7 +23,6 @@ using Robust.Shared.Network;
 using Robust.Shared.Network.Messages;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using System.Linq;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Sandbox
@@ -36,7 +37,7 @@ namespace Content.Server.Sandbox
         [Dependency] private SharedAccessSystem _access = default!;
         [Dependency] private InventorySystem _inventory = default!;
         [Dependency] private ItemSlotsSystem _slots = default!;
-        [Dependency] private GameTicker _ticker = default!;
+        [Dependency] private ServerGameTicker _ticker = default!;
         [Dependency] private SharedHandsSystem _handsSystem = default!;
         [Dependency] private IGameTiming _timing = default!;
         [Dependency] private PopupSystem _popupSystem = default!;
@@ -195,7 +196,7 @@ namespace Content.Server.Sandbox
                 return;
             }
 
-            var allAccess = PrototypeManager
+            var allAccess = ProtoMan
                 .EnumeratePrototypes<AccessLevelPrototype>()
                 .Select(p => new ProtoId<AccessLevelPrototype>(p.ID)).ToList();
 
