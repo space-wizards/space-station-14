@@ -1,31 +1,32 @@
-﻿using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork;
+using Content.Shared.Fax.Components;
 
 namespace Content.Shared.Fax;
 
 /// <summary>
 /// Broadcasted from one fax to all other available faxes.
 /// </summary>
-public partial record struct FaxPingPayload(string FaxName, bool IsSyndicate) : INetworkPayload
+public partial record struct FaxPingPayload : INetworkPayload
 {
+    // TODO this should probably be made a more general system in the future
     [DataField]
-    public string FaxName = FaxName;
-
-    // TODO: this should probably be made a more general system in the future
-    // TODO: Bitmask flags?
-    [DataField]
-    public bool IsSyndicate = IsSyndicate;
+    public bool IsSyndicate;
 }
 
 /// <summary>
 /// Sent as a response to <see cref="FaxPingPayload"/>.
 /// </summary>
-public partial record struct FaxPongPayload(string FaxName) : INetworkPayload
+public partial record struct FaxPongPayload : INetworkPayload
 {
     [DataField]
-    public string FaxName = FaxName;
+    public string FaxName;
 }
 
 /// <summary>
-/// Sent when a fax machine shuts down, removes this device from other devices!
+/// Payload to print a paper on the receiver fax.
 /// </summary>
-public partial record struct FaxShutdownPayload : INetworkPayload;
+public partial record struct FaxPrintPayload : INetworkPayload
+{
+    [DataField]
+    public FaxPrintout Data;
+}

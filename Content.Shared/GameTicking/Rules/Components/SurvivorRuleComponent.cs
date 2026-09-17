@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.GameTicking.Rules.Components;
+namespace Content.Shared.GameTicking.Rules.Components;
 
 /// <summary>
 /// Component for the SurvivorRuleSystem. Game rule that turns everyone into a survivor and gives them the objective to escape centcom alive.
