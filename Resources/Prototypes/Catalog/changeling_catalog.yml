@@ -1,18 +1,18 @@
 # Abilities
 
 - type: listing
-  id: ChangelingArmBlade
+  id: ChangelingArmblade
   name: changeling-catalog-arm-blade-name
   description: changeling-catalog-arm-blade-desc
   applyToMob: true
   cost:
-    ChangelingDNA: 30
+    ChangelingDNA: 20
   categories:
   - ChangelingStoreCombat
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
-  productAction: ActionRetractableItemArmBlade
+  productAction: ActionRetractableItemArmblade
 
 - type: listing
   id: ChangelingFleshClothing
@@ -20,7 +20,7 @@
   description: changeling-catalog-flesh-clothing-desc
   icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: flesh_clothing }
   cost:
-    ChangelingDNA: 20
+    ChangelingDNA: 10
   categories:
   - ChangelingStoreStealth
   conditions:
@@ -145,6 +145,21 @@
   - !type:ListingLimitedStockCondition
     stock: 1
   productAction: ActionChangelingStingMute
+
+- type: listing
+  id: ChangelingStingArmblade
+  name: changeling-catalog-armblade-sting-name
+  description: changeling-catalog-armblade-sting-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: armblade_sting }
+  applyToMob: true
+  cost:
+    ChangelingDNA: 10
+  categories:
+  - ChangelingStoreUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productAction: ActionChangelingStingArmblade
 
 - type: listing
   id: ChangelingLastResort

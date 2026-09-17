@@ -1,4 +1,4 @@
-﻿using Content.Shared.StatusEffectNew;
+using Content.Shared.StatusEffectNew;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.StatusEffects;
