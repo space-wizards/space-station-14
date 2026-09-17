@@ -27,6 +27,9 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
     private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
     private static readonly ProtoId<ShaderPrototype> HeatOverlayShader = "HeatBlur";
 
+    private static readonly Color EmptyColor = new Color(0, 0, 0, 0);
+    private static readonly Color MarkerColor = new Color(255f, 0, 0);
+
     [Dependency] private IEntityManager _entManager = default!;
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private IClyde _clyde = default!;
@@ -123,8 +126,7 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
                 {
                     if (!overlayQuery.TryGetComponent(grid.Owner, out var comp))
                         continue;
-
-                    var gridEntToWorld = _xformSys.GetWorldMatrix(grid.Owner);
+                    var (_, _, gridEntToWorld, worldToGridLocal) = _xformSys.GetWorldPositionRotationMatrixWithInv(grid.Owner);
                     var gridEntToViewportLocal = gridEntToWorld * worldToViewportLocal;
 
                     if (!Matrix3x2.Invert(gridEntToViewportLocal, out var viewportLocalToGridEnt))
@@ -134,7 +136,6 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
                     worldHandle.SetTransform(gridEntToViewportLocal);
 
                     // We only care about tiles that fit in these bounds
-                    var worldToGridLocal = _xformSys.GetInvWorldMatrix(grid.Owner);
                     var floatBounds = worldToGridLocal.TransformBox(worldBounds).Enlarged(grid.Comp.TileSize);
 
                     var localBounds = new Box2i(
@@ -167,14 +168,13 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
                             worldHandle.DrawTextureRect(
                                 _heatGradientTexture,
                                 Box2.CenteredAround(tilePosition + grid.Comp.TileSizeHalfVector,
-                                    grid.Comp.TileSizeVector * ShaderSpilling),
-                                new Color(strength, 0f, 0f));
+                                    grid.Comp.TileSizeVector * ShaderSpilling), MarkerColor);
                         }
                     }
                 }
             },
             // This clears the buffer to all zero first...
-            new Color(0, 0, 0, 0));
+            EmptyColor);
 
         // no distortion, no need to render
         if (!anyDistortion)
