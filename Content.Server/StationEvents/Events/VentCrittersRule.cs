@@ -20,7 +20,7 @@ public sealed partial class VentCrittersRule : StationEventSystem<VentCrittersRu
     {
         base.Started(uid, component, gameRule, args);
 
-        var validLocations = GetEntitiesWithComponentOnStation<VentCritterSpawnLocationComponent>(true);
+        var validLocations = Station.GetEntitiesWithComponentOnStation<VentCritterSpawnLocationComponent>(true);
 
         if (component.SpecialEntries.Count == 0 || validLocations.Count == 0)
         {

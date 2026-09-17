@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Configuration;
+using Robust.Shared.Configuration;
 
 namespace Content.Shared.CCVar;
 
@@ -83,4 +83,10 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<string> ChatHighlightsColor =
         CVarDef.Create("chat.highlights_color", "#17FFC1FF", CVar.CLIENTONLY | CVar.ARCHIVE, "The color in which the highlights will be displayed.");
+
+    /// <summary>
+    /// If true will allow TextLinkTags to make interactable chat labels in place of sender names.
+    /// </summary>
+    public static readonly CVarDef<bool> ChatNameLinks =
+        CVarDef.Create("chat.chat_name_links", true, CVar.REPLICATED | CVar.SERVER, "Toggles Chat Name Link functionality.");
 }

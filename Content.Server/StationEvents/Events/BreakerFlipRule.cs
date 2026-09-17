@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
@@ -14,7 +15,6 @@ namespace Content.Server.StationEvents.Events;
 public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRuleComponent>
 {
     [Dependency] private ApcSystem _apcSystem = default!;
-    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     protected override void Added(EntityUid uid, BreakerFlipRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
@@ -31,7 +31,7 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
     {
         base.Started(uid, component, gameRule, args);
 
-        var stationApcs = GetEntitiesWithComponentOnStation<ApcComponent>(true).ToList();
+        var stationApcs = Station.GetEntitiesWithComponentOnStation<ApcComponent>(true).ToList();
 
         var toDisable = Math.Min(RobustRandom.Next(3, 7), stationApcs.Count);
         if (toDisable == 0)

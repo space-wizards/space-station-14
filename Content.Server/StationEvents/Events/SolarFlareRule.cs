@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Light.EntitySystems;
+using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
@@ -34,8 +35,12 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
             comp.AffectedChannels.Add(channel);
         }
 
-        comp.AffectedLights = GetEntitiesWithComponentOnStation<PoweredLightComponent>(true).Select(e => (e.Owner, e.Comp)).ToHashSet();
-        comp.AffectedAirlocks = GetEntitiesWithComponentOnStation<AirlockComponent>(true).Select(e => (e.Owner, e.Comp)).ToHashSet();
+        comp.AffectedLights = Station.GetEntitiesWithComponentOnStation<PoweredLightComponent>(true)
+            .Select(e => (e.Owner, e.Comp))
+            .ToHashSet();
+        comp.AffectedAirlocks = Station.GetEntitiesWithComponentOnStation<AirlockComponent>(true)
+            .Select(e => (e.Owner, e.Comp))
+            .ToHashSet();
     }
 
     protected override void ActiveTick(EntityUid uid, SolarFlareRuleComponent component, GameRuleComponent gameRule, float frameTime)
@@ -65,7 +70,7 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
         var query = EntityQueryEnumerator<SolarFlareRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var flare, out var gameRule))
         {
-            if (!GameTicker.IsGameRuleActive(uid, gameRule))
+            if (!GameTicker.IsGameRuleActive((uid, gameRule)))
                 continue;
 
             if (!flare.AffectedChannels.Contains(args.Channel.ID))

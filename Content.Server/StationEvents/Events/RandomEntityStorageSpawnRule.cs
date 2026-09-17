@@ -1,3 +1,4 @@
+using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.GameTicking.Components;
@@ -18,7 +19,7 @@ public sealed partial class RandomEntityStorageSpawnRule : StationEventSystem<Ra
         var validLockers = new List<Entity<EntityStorageComponent>>();
         var spawn = Spawn(comp.Prototype, MapCoordinates.Nullspace);
 
-        foreach (var ent in GetEntitiesWithComponentOnStation<EntityStorageComponent>(false))
+        foreach (var ent in Station.GetEntitiesWithComponentOnStation<EntityStorageComponent>(false))
         {
             if (!_entityStorage.CanInsert(spawn, ent, ent.Comp))
             {

@@ -1,5 +1,6 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Unary.Components;
+using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Robust.Shared.Audio;
@@ -20,10 +21,10 @@ namespace Content.Server.StationEvents.Events
             if (!TryComp<StationEventComponent>(uid, out var stationEvent))
                 return;
 
-            var stationVents = GetEntitiesWithComponentOnStation<GasVentScrubberComponent>(true);
+            var stationVents = Station.GetEntitiesWithComponentOnStation<GasVentScrubberComponent>(true);
             if (stationVents.Count == 0)
             {
-                ForceEndSelf(uid, gameRule);
+                ForceEndSelf((uid, gameRule));
                 return;
             }
 
@@ -69,28 +70,28 @@ namespace Content.Server.StationEvents.Events
             environment?.AdjustMoles(component.LeakGas, component.LeakCooldown * component.MolesPerSecond);
         }
 
-        protected override void Ended(EntityUid uid, GasLeakRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
+        protected override void Ended(Entity<GasLeakRuleComponent> rule, ref GameRuleEndedEvent args)
         {
-            base.Ended(uid, component, gameRule, args);
-            Spark(uid, component);
+            base.Ended(rule, ref args);
+            Spark(rule);
         }
 
-        private void Spark(EntityUid uid, GasLeakRuleComponent component)
+        private void Spark(Entity<GasLeakRuleComponent> rule)
         {
-            if (RobustRandom.NextFloat() <= component.SparkChance)
+            if (RobustRandom.NextFloat() <= rule.Comp.SparkChance)
             {
-                if (!component.FoundTile ||
-                    component.TargetGrid == default ||
-                    (!Exists(component.TargetGrid) ? EntityLifeStage.Deleted : MetaData(component.TargetGrid).EntityLifeStage) >= EntityLifeStage.Deleted ||
-                    !_atmosphere.IsSimulatedGrid(component.TargetGrid))
+                if (!rule.Comp.FoundTile ||
+                    rule.Comp.TargetGrid == default ||
+                    (!Exists(rule.Comp.TargetGrid) ? EntityLifeStage.Deleted : MetaData(rule.Comp.TargetGrid).EntityLifeStage) >= EntityLifeStage.Deleted ||
+                    !_atmosphere.IsSimulatedGrid(rule.Comp.TargetGrid))
                 {
                     return;
                 }
 
                 // Don't want it to be so obnoxious as to instantly murder anyone in the area but enough that
                 // it COULD start potentially start a bigger fire.
-                _atmosphere.HotspotExpose(component.TargetGrid, (Vector2i)component.TargetCoords.Position, 700f, 50f, null, true);
-                Audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/sparks4.ogg"), component.TargetCoords);
+                _atmosphere.HotspotExpose(rule.Comp.TargetGrid, (Vector2i)rule.Comp.TargetCoords.Position, 700f, 50f, null, true);
+                Audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/sparks4.ogg"), rule.Comp.TargetCoords);
             }
         }
     }
