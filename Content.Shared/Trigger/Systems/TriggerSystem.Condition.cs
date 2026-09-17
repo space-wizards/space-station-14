@@ -1,4 +1,4 @@
-﻿using Content.Shared.Random.Helpers;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Trigger.Components.Conditions;
 using Content.Shared.Verbs;
 using Robust.Shared.Random;

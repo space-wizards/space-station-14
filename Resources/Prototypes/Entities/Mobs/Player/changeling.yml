@@ -66,7 +66,7 @@
       types:
         Slash: 2.5
         Piercing: 2.5
-        Structural: 15 # to destroy lockers in which bodies could be hidden
+        Structural: 6 # to destroy lockers in which bodies could be hidden
   - type: Speech # need these speech comps because it isnt targeted by MakeSentient.
     speechVerb: LargeMob
   - type: Emoting
@@ -161,7 +161,7 @@
       types:
         Slash: 7.5
         Piercing: 7.5
-        Structural: 25 # to destroy lockers in which bodies could be hidden
+        Structural: 6 # to destroy lockers in which bodies could be hidden
   - type: InteractionPopup
     successChance: 0.01
     interactSuccessString: petting-success-elder-headslug
