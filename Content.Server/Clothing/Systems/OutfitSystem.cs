@@ -13,19 +13,18 @@ using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Station;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Station.Systems;
 using Content.Shared.Storage;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Clothing.Systems;
 
 public sealed partial class OutfitSystem : EntitySystem
 {
     [Dependency] private IServerPreferencesManager _preferenceManager = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private HandsSystem _handSystem = default!;
     [Dependency] private InventorySystem _invSystem = default!;
-    [Dependency] private SharedStationSpawningSystem _spawningSystem = default!;
+    [Dependency] private StationSpawningSystem _spawningSystem = default!;
     [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private StorageSystem _storageSystem = default!;
 
@@ -34,7 +33,7 @@ public sealed partial class OutfitSystem : EntitySystem
         if (!TryComp(target, out InventoryComponent? inventoryComponent))
             return false;
 
-        if (!_prototypeManager.TryIndex<StartingGearPrototype>(gear, out var startingGear))
+        if (!ProtoMan.TryIndex<StartingGearPrototype>(gear, out var startingGear))
             return false;
 
         HumanoidCharacterProfile? profile = null;
@@ -45,7 +44,7 @@ public sealed partial class OutfitSystem : EntitySystem
             session = actorComponent.PlayerSession;
             var userId = actorComponent.PlayerSession.UserId;
             var prefs = _preferenceManager.GetPreferences(userId);
-            profile = prefs.SelectedCharacter as HumanoidCharacterProfile;
+            profile = prefs.SelectedCharacter;
         }
 
         if (_invSystem.TryGetSlots(target, out var slots))
@@ -110,14 +109,14 @@ public sealed partial class OutfitSystem : EntitySystem
         }
 
         // See if this starting gear is associated with a job
-        var jobs = _prototypeManager.EnumeratePrototypes<JobPrototype>();
+        var jobs = ProtoMan.EnumeratePrototypes<JobPrototype>();
         foreach (var job in jobs)
         {
             if (job.StartingGear != gear)
                 continue;
 
             var jobProtoId = LoadoutSystem.GetJobPrototype(job.ID);
-            if (!_prototypeManager.TryIndex<RoleLoadoutPrototype>(jobProtoId, out var jobProto))
+            if (!ProtoMan.TryIndex<RoleLoadoutPrototype>(jobProtoId, out var jobProto))
                 break;
 
             // Don't require a player, so this works on Urists
@@ -131,7 +130,7 @@ public sealed partial class OutfitSystem : EntitySystem
             {
                 // If they don't have a loadout for the role, make a default one
                 roleLoadout = new RoleLoadout(jobProtoId);
-                roleLoadout.SetDefault(profile, session, _prototypeManager);
+                roleLoadout.SetDefault(profile, session, ProtoMan);
             }
 
             // Equip the target with the job loadout

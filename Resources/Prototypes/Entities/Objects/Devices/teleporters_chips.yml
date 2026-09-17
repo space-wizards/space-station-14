@@ -1,0 +1,21 @@
+- type: entity
+  id: TeleporterChipBlank
+  parent: BaseItem
+  suffix: Blank
+  name: teleporter chip
+  description: A chip that can store teleporter coordinates. Insert it into the teleporter control console to be able to control the linked portal.
+  components:
+  - type: TeleporterChip
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: Objects/Misc/teleporter_chips.rsi
+    layers:
+    - state: base
+    - state: mark1
+      color: "#D4D4D4"
+  - type: Tag
+    tags:
+    - FitInTeleporterConsole
+  - type: UseDelay #Prevent link spamming
+    delay: 1.5

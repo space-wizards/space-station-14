@@ -1,107 +1,91 @@
-﻿using Content.IntegrationTests.Fixtures;
-using Content.Server.Atmos;
-using Content.Server.Atmos.EntitySystems;
+﻿using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Atmos;
-using Robust.Shared.GameObjects;
 
-namespace Content.IntegrationTests.Tests.Atmos
+namespace Content.IntegrationTests.Tests.Atmos;
+
+[TestFixture]
+[TestOf(typeof(GasMixture))]
+public sealed class GasMixtureTest : AtmosTest
 {
-    [TestFixture]
-    [TestOf(typeof(GasMixture))]
-    public sealed class GasMixtureTest : GameTest
+    [Test]
+    [RunOnSide(Side.Server)]
+    public void TestMerge()
     {
-        [Test]
-        public async Task TestMerge()
+        var a = new GasMixture(10f);
+        var b = new GasMixture(10f);
+
+        a.AdjustMoles(Gas.Oxygen, 50);
+        b.AdjustMoles(Gas.Nitrogen, 50);
+
+        // a now has 50 moles of oxygen
+        using (Assert.EnterMultipleScope())
         {
-            var pair = Pair;
-            var server = pair.Server;
-
-            var atmosphereSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<AtmosphereSystem>();
-
-            await server.WaitAssertion(() =>
-            {
-                var a = new GasMixture(10f);
-                var b = new GasMixture(10f);
-
-                a.AdjustMoles(Gas.Oxygen, 50);
-                b.AdjustMoles(Gas.Nitrogen, 50);
-
-                // a now has 50 moles of oxygen
-                Assert.Multiple(() =>
-                {
-                    Assert.That(a.TotalMoles, Is.EqualTo(50));
-                    Assert.That(a.GetMoles(Gas.Oxygen), Is.EqualTo(50));
-                });
-
-                // b now has 50 moles of nitrogen
-                Assert.Multiple(() =>
-                {
-                    Assert.That(b.TotalMoles, Is.EqualTo(50));
-                    Assert.That(b.GetMoles(Gas.Nitrogen), Is.EqualTo(50));
-                });
-
-                atmosphereSystem.Merge(b, a);
-
-                // b now has its contents and the contents of a
-                Assert.Multiple(() =>
-                {
-                    Assert.That(b.TotalMoles, Is.EqualTo(100));
-                    Assert.That(b.GetMoles(Gas.Oxygen), Is.EqualTo(50));
-                    Assert.That(b.GetMoles(Gas.Nitrogen), Is.EqualTo(50));
-                });
-
-                // a should be the same, however.
-                Assert.Multiple(() =>
-                {
-                    Assert.That(a.TotalMoles, Is.EqualTo(50));
-                    Assert.That(a.GetMoles(Gas.Oxygen), Is.EqualTo(50));
-                });
-            });
+            Assert.That(a.TotalMoles, Is.EqualTo(50));
+            Assert.That(a.GetMoles(Gas.Oxygen), Is.EqualTo(50));
         }
 
-        [Test]
-        [TestCase(0.5f)]
-        [TestCase(0.25f)]
-        [TestCase(0.75f)]
-        [TestCase(1f)]
-        [TestCase(0f)]
-        [TestCase(Atmospherics.BreathPercentage)]
-        public async Task RemoveRatio(float ratio)
+        // b now has 50 moles of nitrogen
+        using (Assert.EnterMultipleScope())
         {
-            var pair = Pair;
-            var server = pair.Server;
+            Assert.That(b.TotalMoles, Is.EqualTo(50));
+            Assert.That(b.GetMoles(Gas.Nitrogen), Is.EqualTo(50));
+        }
 
-            await server.WaitAssertion(() =>
-            {
-                var a = new GasMixture(10f);
+        SAtmos.Merge(b, a);
 
-                a.AdjustMoles(Gas.Oxygen, 100);
-                a.AdjustMoles(Gas.Nitrogen, 100);
+        // b now has its contents and the contents of a
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(b.TotalMoles, Is.EqualTo(100));
+            Assert.That(b.GetMoles(Gas.Oxygen), Is.EqualTo(50));
+            Assert.That(b.GetMoles(Gas.Nitrogen), Is.EqualTo(50));
+        }
 
-                var origTotal = a.TotalMoles;
+        // a should be the same, however.
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(a.TotalMoles, Is.EqualTo(50));
+            Assert.That(a.GetMoles(Gas.Oxygen), Is.EqualTo(50));
+        }
+    }
 
-                // we remove moles from the mixture with a ratio.
-                var b = a.RemoveRatio(ratio);
+    [Test]
+    [TestCase(0.5f)]
+    [TestCase(0.25f)]
+    [TestCase(0.75f)]
+    [TestCase(1f)]
+    [TestCase(0f)]
+    [TestCase(Atmospherics.BreathPercentage)]
+    [RunOnSide(Side.Server)]
+    public void RemoveRatio(float ratio)
+    {
+        var a = new GasMixture(10f);
 
-                // check that the amount of moles in the original and the new mixture are correct.
-                Assert.Multiple(() =>
-                {
-                    Assert.That(b.TotalMoles, Is.EqualTo(origTotal * ratio));
-                    Assert.That(a.TotalMoles, Is.EqualTo(origTotal - b.TotalMoles));
-                });
+        a.AdjustMoles(Gas.Oxygen, 100);
+        a.AdjustMoles(Gas.Nitrogen, 100);
 
-                Assert.Multiple(() =>
-                {
-                    Assert.That(b.GetMoles(Gas.Oxygen), Is.EqualTo(100 * ratio));
-                    Assert.That(b.GetMoles(Gas.Nitrogen), Is.EqualTo(100 * ratio));
-                });
+        var origTotal = a.TotalMoles;
 
-                Assert.Multiple(() =>
-                {
-                    Assert.That(a.GetMoles(Gas.Oxygen), Is.EqualTo(100 - b.GetMoles(Gas.Oxygen)));
-                    Assert.That(a.GetMoles(Gas.Nitrogen), Is.EqualTo(100 - b.GetMoles(Gas.Nitrogen)));
-                });
-            });
+        // we remove moles from the mixture with a ratio.
+        var b = a.RemoveRatio(ratio);
+
+        // check that the amount of moles in the original and the new mixture are correct.
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(b.TotalMoles, Is.EqualTo(origTotal * ratio));
+            Assert.That(a.TotalMoles, Is.EqualTo(origTotal - b.TotalMoles));
+        }
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(b.GetMoles(Gas.Oxygen), Is.EqualTo(100 * ratio));
+            Assert.That(b.GetMoles(Gas.Nitrogen), Is.EqualTo(100 * ratio));
+        }
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(a.GetMoles(Gas.Oxygen), Is.EqualTo(100 - b.GetMoles(Gas.Oxygen)));
+            Assert.That(a.GetMoles(Gas.Nitrogen), Is.EqualTo(100 - b.GetMoles(Gas.Nitrogen)));
         }
     }
 }

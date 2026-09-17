@@ -8,7 +8,7 @@ namespace Content.Server.Station.Systems;
 /// </summary>
 public sealed partial class StationNameSystem : EntitySystem
 {
-    [Dependency] private StationSystem _station = default!;
+    [Dependency] private ServerStationSystem _station = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

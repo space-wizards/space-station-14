@@ -1,38 +1,50 @@
 ﻿using Content.Shared.Body;
-using Content.Shared.Chat.Prototypes;
 using Content.Shared.Humanoid;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Wagging;
 
 /// <summary>
 /// An emoting wag for markings.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
+[Access(typeof(WaggingSystem))]
 public sealed partial class WaggingComponent : Component
 {
-    [DataField]
+    /// <summary>
+    /// The prototype id of the wagging action.
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public EntProtoId Action = "ActionToggleWagging";
 
-    [DataField]
+    /// <summary>
+    /// Reference to the action entity.
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public EntityUid? ActionEntity;
 
-    [DataField]
+    /// <summary>
+    /// The visual layer of the tail marking.
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public HumanoidVisualLayers Layer = HumanoidVisualLayers.Tail;
 
-    [DataField]
+    /// <summary>
+    /// The organ category to which the tail is attached.
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public ProtoId<OrganCategoryPrototype> Organ = "Torso";
 
     /// <summary>
-    /// Suffix to add to get the animated marking.
+    /// The suffix to add to get the animated marking.
     /// </summary>
+    [DataField, AutoNetworkedField]
     public string Suffix = "Animated";
 
     /// <summary>
-    /// Is the entity currently wagging.
+    /// Whether the entity is currently wagging.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Wagging = false;
 }

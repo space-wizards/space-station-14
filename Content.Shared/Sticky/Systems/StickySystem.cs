@@ -87,7 +87,7 @@ public sealed partial class StickySystem : EntitySystem
         if (comp.StickPopupStart != null)
         {
             var msg = Loc.GetString(comp.StickPopupStart);
-            _popup.PopupClient(msg, user, user);
+            _popup.PopupEntity(msg, user, user);
         }
 
         // start sticking object to target
@@ -137,7 +137,7 @@ public sealed partial class StickySystem : EntitySystem
         if (comp.UnstickPopupStart != null)
         {
             var msg = Loc.GetString(comp.UnstickPopupStart);
-            _popup.PopupClient(msg, user, user);
+            _popup.PopupEntity(msg, user, user);
         }
 
         // start unsticking object
@@ -166,7 +166,7 @@ public sealed partial class StickySystem : EntitySystem
         if (comp.StickPopupSuccess != null)
         {
             var msg = Loc.GetString(comp.StickPopupSuccess);
-            _popup.PopupClient(msg, user, user);
+            _popup.PopupEntity(msg, user, user);
         }
 
         // send information to appearance that entity is stuck
@@ -208,7 +208,7 @@ public sealed partial class StickySystem : EntitySystem
         if (comp.UnstickPopupSuccess != null)
         {
             var msg = Loc.GetString(comp.UnstickPopupSuccess);
-            _popup.PopupClient(msg, user, user);
+            _popup.PopupEntity(msg, user, user);
         }
 
         comp.StuckTo = null;

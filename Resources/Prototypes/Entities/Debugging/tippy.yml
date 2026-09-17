@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: Tippy
   categories: [ HideSpawnMenu ]
   components:
@@ -17,7 +17,7 @@
       state: down
       visible: false
       map: [ "speaking" ]
-  # footstep sounds wile waddling onto the screen. 
+  # footstep sounds while waddling onto the screen.
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepClown
@@ -27,4 +27,4 @@
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
     backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
     backgroundModulate: "#ffffcc"
-    fontAccentColor: "#000000"
+    defaultTextColor: "#000000"

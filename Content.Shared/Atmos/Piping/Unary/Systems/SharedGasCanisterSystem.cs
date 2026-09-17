@@ -44,6 +44,7 @@ public abstract partial class SharedGasCanisterSystem : GasMaxPressureSystem<Gas
     {
         // Fixes empty canisters not populating UI elements
         DirtyUI(ent.Owner, ent);
+        UpdateAppearance(ent);
     }
 
     private void OnCanisterStartup(Entity<GasCanisterComponent> ent, ref ComponentStartup args)
@@ -114,7 +115,8 @@ public abstract partial class SharedGasCanisterSystem : GasMaxPressureSystem<Gas
 
         for (var i = 0; i < containedGasArray.Length; i++)
         {
-            containedGasDict.Add((Gas)i, entity.Comp.Air[i]);
+            if (entity.Comp.Air.GetMoles(i) > 0f)
+                containedGasDict.Add((Gas)i, entity.Comp.Air[i]);
         }
 
         AdminLogger.Add(LogType.CanisterValve, impact, $"{ToPrettyString(args.Actor):player} set the valve on {ToPrettyString(entity):canister} to {args.Valve:valveState} while it contained [{string.Join(", ", containedGasDict)}]");
@@ -148,4 +150,27 @@ public abstract partial class SharedGasCanisterSystem : GasMaxPressureSystem<Gas
     }
 
     protected abstract void DirtyUI(EntityUid uid, GasCanisterComponent? component = null, NodeContainerComponent? nodes = null);
+
+    protected void UpdateAppearance(Entity<GasCanisterComponent> entity)
+    {
+        if (!TryComp<AppearanceComponent>(entity, out var appearance))
+            return;
+
+        if (entity.Comp.Air.Pressure < 10)
+        {
+            _appearance.SetData(entity, GasCanisterVisuals.PressureState, 0, appearance);
+        }
+        else if (entity.Comp.Air.Pressure < Atmospherics.OneAtmosphere)
+        {
+            _appearance.SetData(entity, GasCanisterVisuals.PressureState, 1, appearance);
+        }
+        else if (entity.Comp.Air.Pressure < (15 * Atmospherics.OneAtmosphere))
+        {
+            _appearance.SetData(entity, GasCanisterVisuals.PressureState, 2, appearance);
+        }
+        else
+        {
+            _appearance.SetData(entity, GasCanisterVisuals.PressureState, 3, appearance);
+        }
+    }
 }

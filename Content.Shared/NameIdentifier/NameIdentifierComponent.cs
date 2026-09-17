@@ -9,6 +9,9 @@ namespace Content.Shared.NameIdentifier;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class NameIdentifierComponent : Component
 {
+    /// <summary>
+    /// The group prototype that defines the behavior of the identifier.
+    /// </summary>
     [DataField]
     public ProtoId<NameIdentifierGroupPrototype>? Group;
 

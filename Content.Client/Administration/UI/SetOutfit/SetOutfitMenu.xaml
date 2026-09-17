@@ -4,7 +4,7 @@
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.45">
             <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True"
                                     SizeFlagsStretchRatio="0.1">
-                <LineEdit Name="SearchBar" PlaceHolder="Search" HorizontalExpand="True"
+                <LineEdit Name="SearchBar" PlaceHolder="{Loc 'window-search-bar-placeholder'}" HorizontalExpand="True"
                                    SizeFlagsStretchRatio="0.6" />
             </BoxContainer>
             <ItemList Name="OutfitList" SelectMode="Single" VerticalExpand="True"

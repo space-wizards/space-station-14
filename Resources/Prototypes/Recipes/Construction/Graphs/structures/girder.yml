@@ -75,16 +75,17 @@
             - tool: Welding
               doAfter: 20
 
-        - to: plasticWall
+        - to: brassWall
           completed:
             - !type:SnapToGrid
               southRotation: true
           conditions:
             - !type:EntityAnchored {}
           steps:
-            - material: Plastic
+            - material: Brass
               amount: 2
-              doAfter: 2
+            - tool: Welding
+              doAfter: 20
 
         - to: plasmaWall
           completed:
@@ -107,19 +108,6 @@
           steps:
             - material: Gold
               amount: 2
-            - tool: Welding
-              doAfter: 20
-
-        - to: bananiumWall
-          completed:
-            - !type:SnapToGrid
-              southRotation: true
-          conditions:
-            - !type:EntityAnchored {}
-          steps:
-            - material: Bananium
-              amount: 2
-              doAfter: 2
             - tool: Welding
               doAfter: 20
 
@@ -186,17 +174,19 @@
             - tool: Prying
               doAfter: 10
 
-    - node: plasticWall
-      entity: WallPlastic
+    - node: brassWall
+      entity: WallBrass
       edges:
-        - to: girder
-          completed:
-            - !type:GivePrototype
-              prototype: SheetPlastic1
-              amount: 2
-          steps:
-            - tool: Prying
-              doAfter: 10
+      - to: girder
+        completed:
+        - !type:GivePrototype
+          prototype: SheetBrass1
+          amount: 2
+        steps:
+          - tool: Welding
+            doAfter: 20
+          - tool: Prying
+            doAfter: 10
 
     - node: plasmaWall
       entity: WallPlasma
@@ -219,20 +209,6 @@
           completed:
             - !type:GivePrototype
               prototype: IngotGold1
-              amount: 2
-          steps:
-            - tool: Welding
-              doAfter: 20
-            - tool: Prying
-              doAfter: 10
-
-    - node: bananiumWall
-      entity: WallClown
-      edges:
-        - to: girder
-          completed:
-            - !type:GivePrototype
-              prototype: MaterialBananium1
               amount: 2
           steps:
             - tool: Welding

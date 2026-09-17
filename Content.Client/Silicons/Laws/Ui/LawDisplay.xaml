@@ -1,19 +1,27 @@
-<Control xmlns="https://spacestation14.io"
-         xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
-         Margin="0 0 0 10">
-    <PanelContainer VerticalExpand="True" StyleClasses="BackgroundDark">
-        <BoxContainer Orientation="Vertical"
-                      HorizontalExpand="True"
-                      VerticalExpand="True"
-                      Margin="5 5 5 5">
-            <RichTextLabel Name="LawNumberLabel" StyleClasses="LabelKeyText"/>
-            <customControls:HSeparator Margin="0 5 0 5"/>
-            <RichTextLabel Name="LawLabel"/>
-            <BoxContainer Name="LawAnnouncementButtons" Orientation="Horizontal" HorizontalExpand="True" Margin="0 5 0 0">
-                <Label Text="{Loc laws-ui-state-law}" StyleClasses="highlight"/>
-                <Control Margin="5 0 0 0" />
-                <!-- Buttons are added via C# code-->
+<Button
+    xmlns="https://spacestation14.io"
+    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    Margin="0 0 0 5"
+    StyleClasses="ButtonSquare">
+    <PanelContainer
+        VerticalExpand="True"
+        Margin="0 5"
+        StyleClasses="BackgroundDark">
+        <BoxContainer
+            Orientation="Vertical"
+            HorizontalExpand="True"
+            VerticalExpand="True"
+            Margin="5 5 5 5">
+            <BoxContainer Orientation="Horizontal">
+                <RichTextLabel Name="LawNumberLabel" StyleClasses="LabelKeyText" />
+                <BoxContainer
+                    HorizontalExpand="True"> <!--> This is here just to seperate the two elements on the UI. I hate this. <!-->
+                </BoxContainer>
+                <TextureRect Name="LawSelectedIcon" TexturePath="/Textures/Interface/Alerts/Abilities/silenced.png" />
             </BoxContainer>
+            <customControls:HSeparator Margin="0 5 0 5" />
+            <RichTextLabel Name="LawLabel" />
         </BoxContainer>
     </PanelContainer>
-</Control>
+</Button>
+

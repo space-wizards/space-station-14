@@ -3,6 +3,7 @@ using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Dataset;
+using Content.Shared.GameTicking;
 using Content.Shared.Tips;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
@@ -15,11 +16,10 @@ namespace Content.Server.Tips;
 public sealed partial class TipsSystem : SharedTipsSystem
 {
     [Dependency] private IChatManager _chat = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private GameTicker _ticker = default!;
+    [Dependency] private ServerGameTicker _ticker = default!;
 
     private bool _tipsEnabled;
     private float _tipTimeOutOfRound;
@@ -113,7 +113,7 @@ public sealed partial class TipsSystem : SharedTipsSystem
 
     public override void AnnounceRandomTip()
     {
-        if (!_prototype.TryIndex<LocalizedDatasetPrototype>(_tipsDataset, out var tips))
+        if (!ProtoMan.TryIndex<LocalizedDatasetPrototype>(_tipsDataset, out var tips))
             return;
 
         var tip = _random.Pick(tips.Values);
