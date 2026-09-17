@@ -1,4 +1,4 @@
-﻿using Content.Shared.EntityTable.EntitySelectors;
+using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.FixedPoint;
 using Content.Shared.Roles;
 using Robust.Shared.Network;
