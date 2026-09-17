@@ -71,6 +71,8 @@
     containers:
       storage: !type:Container
   - type: StoreCurrencyGenerator
+    collectSound:
+      collection: gib
     storeExaminable: true
     currency: ChangelingDNA
   - type: StaticPrice

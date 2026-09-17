@@ -215,6 +215,7 @@ public abstract partial class SharedStoreSystem : EntitySystem
                 store.Balance[type.Key] += type.Value;
         }
 
+        DirtyField(uid, store, nameof(StoreComponent.Balance));
         UpdateUserInterface(null, uid, store);
         return true;
     }

@@ -4,6 +4,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Store.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -16,6 +17,7 @@ public abstract partial class SharedStoreSystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
 
     [SubscribeLocalEvent]
     private void OnGeneratorInitialize(Entity<StoreCurrencyGeneratorComponent> entity, ref MapInitEvent args)
@@ -39,15 +41,7 @@ public abstract partial class SharedStoreSystem
         if (!ProtoMan.TryIndex(entity.Comp.Currency, out var proto))
             return;
 
-        Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> currency = new();
-        currency.Add(entity.Comp.Currency, entity.Comp.Amount);
-
-        if (TryAddCurrency(currency, args.Used, storeComp))
-        {
-            Popup.PopupEntity(Loc.GetString(entity.Comp.CollectPopup, ("amount", entity.Comp.Amount), ("currency", Loc.GetString(proto.DisplayName)), ("entity", entity)), entity, args.User);
-            entity.Comp.Amount = 0;
-            DirtyField(entity, entity.Comp, nameof(StoreCurrencyGeneratorComponent.Amount));
-        }
+        CollectGenerator(entity, (args.Used, storeComp), args.User, proto);
 
     }
 
@@ -64,23 +58,18 @@ public abstract partial class SharedStoreSystem
             return;
 
         var user = args.User;
-        var amount = entity.Comp.Amount;
         args.Verbs.Add(new AlternativeVerb
         {
             Text = Loc.GetString(entity.Comp.Verb),
-            Message = Loc.GetString(entity.Comp.VerbDescription, ("amount", entity.Comp.Amount), ("currency", Loc.GetString(proto.DisplayName)), ("entity", entity)),
+            Message = entity.Comp.Amount == 0 ? Loc.GetString(entity.Comp.VerbDescriptionEmpty) : Loc.GetString(entity.Comp.VerbDescription, ("amount", entity.Comp.Amount), ("currency", Loc.GetString(proto.DisplayName)), ("entity", entity)),
             Disabled = entity.Comp.Amount == 0, // Dont allow collection when empty
+            DoContactInteraction = true,
             Act = () =>
             {
-                Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> currency = new();
-                currency.Add(entity.Comp.Currency, entity.Comp.Amount);
+                if (entity.Comp.Amount == 0)
+                    return;
 
-                if (TryAddCurrency(currency, user, storeComp))
-                {
-                    Popup.PopupEntity(Loc.GetString(entity.Comp.CollectPopup, ("amount", entity.Comp.Amount), ("currency", Loc.GetString(proto.DisplayName)), ("entity", entity)), entity, user);
-                    entity.Comp.Amount = 0;
-                    DirtyField(entity, entity.Comp, nameof(StoreCurrencyGeneratorComponent.Amount));
-                }
+                CollectGenerator(entity, (user, storeComp), user, proto);
             },
         });
     }
@@ -129,6 +118,20 @@ public abstract partial class SharedStoreSystem
 
             generator.Amount += generator.GeneratedAmount;
             DirtyField(uid, generator, nameof(StoreCurrencyGeneratorComponent.Amount));
+        }
+    }
+
+    private void CollectGenerator(Entity<StoreCurrencyGeneratorComponent> generator, Entity<StoreComponent> collector, EntityUid user, CurrencyPrototype proto)
+    {
+        Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> currency = new();
+        currency.Add(proto.ID, generator.Comp.Amount);
+
+        if (TryAddCurrency(currency, collector, collector.Comp))
+        {
+            Popup.PopupEntity(Loc.GetString(generator.Comp.CollectPopup, ("amount", generator.Comp.Amount), ("currency", Loc.GetString(proto.DisplayName)), ("entity", generator)), generator, user);
+            generator.Comp.Amount = 0;
+            DirtyField(generator, generator.Comp, nameof(StoreCurrencyGeneratorComponent.Amount));
+            _audio.PlayPredicted(generator.Comp.CollectSound, generator, user);
         }
     }
 }
