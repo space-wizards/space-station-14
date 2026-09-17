@@ -27,7 +27,7 @@ public sealed partial class PlantTraitKudzuSystem : EntitySystem
         // Handle kudzu transformation.
         if (trayComp.WeedLevel >= ent.Comp.WeedLevelThreshold)
         {
-            EntityManager.PredictedSpawn(ent.Comp.KudzuPrototype, _transform.GetMapCoordinates(ent.Owner));
+            PredictedSpawn(ent.Comp.KudzuPrototype, _transform.GetMapCoordinates(ent.Owner));
             RemComp<PlantTraitKudzuComponent>(ent.Owner);
             _plantHolder.KillPlant(ent.Owner);
         }

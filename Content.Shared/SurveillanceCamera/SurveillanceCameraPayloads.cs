@@ -1,4 +1,4 @@
-﻿using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Payloads;
 using Robust.Shared.Prototypes;
 

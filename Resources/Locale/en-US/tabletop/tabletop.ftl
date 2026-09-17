@@ -1,4 +1,4 @@
-﻿## TabletopGameComponent
+## TabletopGameComponent
 tabletop-verb-play-game = Play Game
 tabletop-verb-play-game-message = Bring up the board.
 tabletop-verb-play-game-message-disabled = The board must be on a nearby surface to play!

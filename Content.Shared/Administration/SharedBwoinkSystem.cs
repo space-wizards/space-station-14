@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 

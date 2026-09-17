@@ -1,6 +1,5 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Shared.Tabletop.Components;
-using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Tabletop.Events;

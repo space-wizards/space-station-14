@@ -1,4 +1,4 @@
-﻿# When adding a new battlemap, also add it to id: AllBattlemapsTable
+# When adding a new battlemap, also add it to id: AllBattlemapsTable
 
 # region Boards
 - type: entity
