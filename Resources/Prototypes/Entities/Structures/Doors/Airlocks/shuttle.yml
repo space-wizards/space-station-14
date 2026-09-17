@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: AirlockRCDResistant
   id: AirlockShuttle
   suffix: Docking

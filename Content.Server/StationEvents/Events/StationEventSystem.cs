@@ -1,11 +1,10 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
-using Content.Server.GameTicking;
-using Content.Server.GameTicking.Rules;
 using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.GameTicking.Rules;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
@@ -19,7 +18,7 @@ public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T 
     [Dependency] protected IAdminLogManager AdminLogManager = default!;
     [Dependency] protected ChatSystem ChatSystem = default!;
     [Dependency] protected SharedAudioSystem Audio = default!;
-    [Dependency] protected StationSystem StationSystem = default!;
+    [Dependency] protected ServerStationSystem Station = default!;
 
     protected ISawmill Sawmill = default!;
 
@@ -70,14 +69,14 @@ public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T 
     }
 
     /// <inheritdoc/>
-    protected override void Ended(EntityUid uid, T component, GameRuleComponent gameRule, GameRuleEndedEvent args)
+    protected override void Ended(Entity<T> rule, ref GameRuleEndedEvent args)
     {
-        base.Ended(uid, component, gameRule, args);
+        base.Ended(rule, ref args);
 
-        if (!TryComp<StationEventComponent>(uid, out var stationEvent))
+        if (!TryComp<StationEventComponent>(rule, out var stationEvent))
             return;
 
-        AdminLogManager.Add(LogType.EventStopped, $"Event ended: {ToPrettyString(uid)}");
+        AdminLogManager.Add(LogType.EventStopped, $"Event ended: {ToPrettyString(rule)}");
 
         // we don't want to send to players who aren't in game (i.e. in the lobby)
         Filter allPlayersInGame = Filter.Empty().AddWhere(GameTicker.UserHasJoinedGame);
@@ -100,16 +99,16 @@ public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T 
         var query = EntityQueryEnumerator<StationEventComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var stationEvent, out var ruleData))
         {
-            if (!GameTicker.IsGameRuleAdded(uid, ruleData))
+            if (!GameTicker.IsGameRuleAdded((uid, ruleData)))
                 continue;
 
-            if (!GameTicker.IsGameRuleActive(uid, ruleData) && !HasComp<DelayedStartRuleComponent>(uid))
+            if (!GameTicker.IsGameRuleActive((uid, ruleData)) && !HasComp<DelayedStartRuleComponent>(uid))
             {
-                GameTicker.StartGameRule(uid, ruleData);
+                GameTicker.StartGameRule((uid, ruleData));
             }
-            else if (stationEvent.EndTime != null && Timing.CurTime >= stationEvent.EndTime && GameTicker.IsGameRuleActive(uid, ruleData))
+            else if (stationEvent.EndTime != null && Timing.CurTime >= stationEvent.EndTime && GameTicker.IsGameRuleActive((uid, ruleData)))
             {
-                GameTicker.EndGameRule(uid, ruleData);
+                GameTicker.EndGameRule((uid, ruleData));
             }
         }
     }

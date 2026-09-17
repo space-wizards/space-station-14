@@ -35,10 +35,19 @@
     sprite: Interface/Actions/changeling2.rsi
     layers:
     - state: biodegrade
-  - type: ActionRequireSatiation
-    satiation: Chemicals
-    amount: 20
-    failReason: changeling-not-enough-chemicals
+  - type: ActionRequirements
+    failPopup: changeling-not-enough-chemicals
+    failPopupType: SmallCaution
+    conditions:
+      Performer:
+      - !type:SatiationCondition
+        satiationType: Chemicals
+        min: 20
+    effects:
+      Performer:
+      - !type:Satiate
+        satiationType: Chemicals
+        factor: -20
   - type: InstantAction
     event: !type:ChangelingBiodegradeActionEvent
   - type: ChangelingBiodegradeAbility
@@ -59,7 +68,10 @@
     - state: "devour_on"
       map: ["enum.ActionVisuals.IconToggled"]
       visible: false
-  - type: ActionRequireMouthUncovered
+  - type: ActionRequirements
+    conditions:
+      Performer:
+      - !type:MouthUncoveredCondition
   - type: TargetAction
   - type: EntityTargetAction
     event: !type:ChangelingDevourActionEvent
@@ -161,10 +173,17 @@
     - state: "extract_dna_on"
       map: ["enum.ActionVisuals.IconToggled"]
       visible: false
-  - type: ActionRequireSatiation
-    satiation: Chemicals
-    amount: 50
-    failReason: changeling-not-enough-chemicals
+  - type: ActionRequirements
+    conditions:
+      Performer:
+      - !type:SatiationCondition
+        satiationType: Chemicals
+        min: 50
+    effects:
+      Performer:
+      - !type:Satiate
+        satiationType: Chemicals
+        factor: -50
   - type: TargetAction
   - type: EntityTargetAction
     canTargetSelf: false
@@ -188,10 +207,19 @@
       components:
       - Bloodstream
     event: !type:EntityEffectActionEvent
-  - type: ActionRequireSatiation
-    satiation: Chemicals
-    amount: 30
-    failReason: changeling-not-enough-chemicals
+  - type: ActionRequirements
+    failPopup: changeling-not-enough-chemicals
+    failPopupType: SmallCaution
+    conditions:
+      Performer:
+      - !type:SatiationCondition
+        satiationType: Chemicals
+        min: 30
+    effects:
+      Performer:
+      - !type:Satiate
+        satiationType: Chemicals
+        factor: -30
   - type: PopupOnAction
     popupType: Medium
     selfMessage: changeling-sting-success
@@ -250,8 +278,17 @@
     sprite: Interface/Actions/changeling2.rsi
     layers:
     - state: lethal_sting
-  - type: ActionRequireSatiation
-    amount: 50
+  - type: ActionRequirements
+    conditions:
+      Performer:
+      - !type:SatiationCondition
+        satiationType: Chemicals
+        min: 50
+    effects:
+      Performer:
+      - !type:Satiate
+        satiationType: Chemicals
+        factor: -50
   - type: EntityEffectAction
     effects:
     - !type:AddReagentToBloodstream
@@ -315,8 +352,17 @@
     sprite: Interface/Actions/changeling2.rsi
     layers:
     - state: armblade_sting
-  - type: ActionRequireSatiation
-    amount: 50
+  - type: ActionRequirements
+    conditions:
+      Performer:
+      - !type:SatiationCondition
+        satiationType: Chemicals
+        min: 50
+    effects:
+      Performer:
+      - !type:Satiate
+        satiationType: Chemicals
+        factor: -50
   - type: EntityEffectAction
     effects:
     - !type:ModifyStatusEffect

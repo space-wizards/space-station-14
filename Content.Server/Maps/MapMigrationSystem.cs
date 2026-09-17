@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Linq;
 using Robust.Shared.ContentPack;
 using Robust.Shared.EntitySerialization.Systems;

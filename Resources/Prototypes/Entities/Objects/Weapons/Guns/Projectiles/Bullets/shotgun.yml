@@ -28,7 +28,7 @@
       types:
         Blunt: 10
   - type: StaminaDamageOnCollide
-    damage: 40 # 3 hits to stun
+    damage: 27 # 4 hits to stun
 
 - type: entity
   parent: BaseBullet
