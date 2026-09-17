@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Client.Stylesheets.Fonts;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;

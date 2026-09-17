@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Engineering.Systems;
 

@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Reflection;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization.Manager.Attributes;

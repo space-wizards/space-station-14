@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Administration.Systems;

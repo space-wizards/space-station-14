@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Interaction;
