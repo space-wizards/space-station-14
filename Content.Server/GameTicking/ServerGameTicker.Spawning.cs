@@ -450,8 +450,7 @@ namespace Content.Server.GameTicking
                 var query = EntityQueryEnumerator<MapGridComponent>();
                 while (query.MoveNext(out var uid, out _))
                 {
-                    // Band-aid fix cause I can't figure out why it's not marked as terminating when it should be.
-                    // Shrug.
+                    // Band-aid fix cause we aren't queueing observer re-attach.
                     if (!TerminatingOrDeleted(uid))
                         _possiblePositions.Add(new EntityCoordinates(uid, Vector2.Zero));
                 }
