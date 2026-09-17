@@ -432,10 +432,9 @@ namespace Content.Server.GameTicking
         {
             _possiblePositions.Clear();
             var spawnPointQuery = EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
-            while (spawnPointQuery.MoveNext(out var uid, out var point, out var transform))
+            while (spawnPointQuery.MoveNext(out var point, out var transform))
             {
                 if (point.SpawnType != SpawnPointType.Observer
-                   || TerminatingOrDeleted(uid)
                    || transform.MapUid == null
                    || TerminatingOrDeleted(transform.MapUid.Value))
                 {
@@ -451,7 +450,10 @@ namespace Content.Server.GameTicking
                 var query = EntityQueryEnumerator<MapGridComponent>();
                 while (query.MoveNext(out var uid, out _))
                 {
-                    _possiblePositions.Add(new EntityCoordinates(uid, Vector2.Zero));
+                    // Band-aid fix cause I can't figure out why it's not marked as terminating when it should be.
+                    // Shrug.
+                    if (!TerminatingOrDeleted(uid))
+                        _possiblePositions.Add(new EntityCoordinates(uid, Vector2.Zero));
                 }
             }
 
@@ -463,13 +465,14 @@ namespace Content.Server.GameTicking
                 var spawn = Random.Pick(_possiblePositions);
                 var toMap = XForm.ToMapCoordinates(spawn);
 
-                if (Map.TryFindGridAt(toMap, out var gridUid, out _))
+                if (Map.TryFindGridAt(toMap, out var gridUid, out _) && !TerminatingOrDeleted(gridUid))
                 {
                     var gridXform = Transform(gridUid);
-
+                    Log.Info($"Selected random grid spawn position {spawn}");
                     return new EntityCoordinates(gridUid, Vector2.Transform(toMap.Position, XForm.GetInvWorldMatrix(gridXform)));
                 }
 
+                Log.Info($"Selected random spawn position {spawn}");
                 return spawn;
             }
 
@@ -477,7 +480,10 @@ namespace Content.Server.GameTicking
             {
                 var mapUid = Map.GetMapOrInvalid(DefaultMap);
                 if (!TerminatingOrDeleted(mapUid))
+                {
+                    Log.Info($"Selected default spawn position {mapUid}");
                     return new EntityCoordinates(mapUid, Vector2.Zero);
+                }
             }
 
             // Just pick a point at this point I guess.
@@ -489,6 +495,7 @@ namespace Content.Server.GameTicking
                 if (meta.EntityPaused || TerminatingOrDeleted(mapUid, meta))
                     continue;
 
+                Log.Info($"Selected first valid map spawn position {mapUid}");
                 return new EntityCoordinates(mapUid, Vector2.Zero);
             }
 
