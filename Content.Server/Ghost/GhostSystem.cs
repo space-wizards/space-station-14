@@ -489,7 +489,7 @@ namespace Content.Server.Ghost
                 // Make sure the new point is valid too
                 if (!IsValidSpawnPosition(spawnPosition))
                 {
-                    Log.Error($"Spawn position: {spawnPosition} provided for {mind.Comp.CharacterName} {ToPrettyString(mind)} was not valid.");
+                    Log.Error($"Fallback spawn position: {spawnPosition} provided for {mind.Comp.CharacterName} {ToPrettyString(mind)} was not valid.");
                     _minds.TransferTo(mind.Owner, null, createGhost: false, mind: mind.Comp);
                     return null;
                 }
