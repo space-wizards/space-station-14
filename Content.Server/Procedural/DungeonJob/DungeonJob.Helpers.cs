@@ -12,7 +12,7 @@ public sealed partial class DungeonJob
 
     private bool HasWall(Vector2i tile)
     {
-        var anchored = _maps.GetAnchoredEntitiesEnumerator(_gridUid, _grid, tile);
+        var anchored = _maps.GetAnchoredEntities(_gridUid, _grid, tile);
 
         while (anchored.MoveNext(out var uid))
         {

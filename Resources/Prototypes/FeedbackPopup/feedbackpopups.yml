@@ -1,22 +1,12 @@
 ﻿- type: feedbackPopup
-  id: FeedbackPopup
-  popupOrigin: wizden_master
-  title: "[bold]Feedback on the new feedback popup system[/bold]"
-  description: |-
-    This window you are seeing is a new system to get feedback on features. It will give popups at the end of the round (mostly on our testing server Vulture)!
-    Please share your thoughts through the forums below! Log in with your Space Station 14 account!
-  responseType: "Feedback Thread"
-  responseLink: "https://forum.spacestation14.com/t/feedback-popup-feedback/22858"
-
-- type: feedbackPopup
   id: GeneralFeedback
   popupOrigin: wizden_master
-  title: "[bold]General feedback for the game[/bold]"
+  title: "[bold]General feedback for Space Station 14[/bold]"
   description: >-
-    If you have any feedback on the game, feel free to create a thread in the feedback forum category.
-  responseType: "General Feedback"
+    If you have any feedback on the game, please create a thread in the Feedback forum category. Thank you!
+  responseType: "Forum Link"
   responseLink: "https://forum.spacestation14.com/c/development/feedback/51"
-  showRoundEnd: false
+  alwaysShow: true
 
 - type: feedbackPopup
   id: XenoborgExtractorFeedback
@@ -30,3 +20,13 @@
   ruleWhitelist:
     components:
     - XenoborgsRule
+
+- type: feedbackPopup
+  id: StructureRebalanceFeedback
+  popupOrigin: wizden_master
+  title: "[bold]Feedback for structure health rebalance.[/bold]"
+  description: >-
+    Please share feedback on the changes to damage resistances, health values, and destruction behaviors for structures.
+  responseType: "Feedback Thread"
+  responseLink: "https://forum.spacestation14.com/t/structure-rebalance-discussion-and-feedback/28228"
+  showRoundEnd: true

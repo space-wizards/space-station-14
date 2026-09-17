@@ -118,13 +118,19 @@
 
 #Light Riot Helmet
 - type: entity
-  parent: [ClothingHeadHelmetBase, BaseSecurityContraband]
+  parent: [ClothingHeadHelmetBase, BaseFoldable, BaseSecurityContraband]
   id: ClothingHeadHelmetRiot
   name: light riot helmet
-  description: It's a helmet specifically designed to protect against close range attacks.
+  description: It's a helmet specifically designed to protect against close range attacks, it has a foldable visor.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/light_riot.rsi
+    layers:
+    - state: icon
+      map: [ "unfoldedLayer" ]
+    - state: visor-icon
+      map: [ "foldedLayer" ]
+      visible: false
   - type: Clothing
     sprite: Clothing/Head/Helmets/light_riot.rsi
   - type: IngestionBlocker
@@ -134,6 +140,17 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.95
+  - type: Foldable
+    canFoldInsideContainer: true
+    unfoldVerbText: fold-lower-visor-verb
+    foldVerbText: fold-raise-visor-verb
+  - type: FoldableClothing
+    foldedEquippedPrefix: visor
+    foldedHeldPrefix: visor
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - SecurityHelmet
   - type: HideLayerClothing
     layers:
       Hair: HEAD

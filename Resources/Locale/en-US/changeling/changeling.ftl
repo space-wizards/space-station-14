@@ -55,5 +55,8 @@ changeling-sting-success = We silently sting {THE($target)}!
 changeling-fake-mindshield-enabled = We emit fake mindshield waves.
 changeling-fake-mindshield-disabled = We stop emitting fake mindshield waves.
 
+# chemicals
+changeling-not-enough-chemicals = We don't have enough Chemicals.
+
 # other
 changeling-paused-map-name = Changeling identity storage map
