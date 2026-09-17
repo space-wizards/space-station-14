@@ -94,6 +94,13 @@ public sealed partial class StoreComponent : Component
     [DataField]
     public EntityUid? StartingMap;
 
+    /// <summary>
+    /// Whether the UI added to the store should require input validation.
+    /// Does nothing if the store UI is added seperately via <see cref="UserInterfaceComponent"/>
+    /// </summary>
+    [DataField]
+    public bool InputValidation = true;
+
     #region audio
     /// <summary>
     /// The sound played to the buyer when a purchase is succesfully made.
