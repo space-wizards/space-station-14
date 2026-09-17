@@ -477,9 +477,7 @@ namespace Content.Server.GameTicking
             {
                 var mapUid = Map.GetMapOrInvalid(DefaultMap);
                 if (!TerminatingOrDeleted(mapUid))
-                {
                     return new EntityCoordinates(mapUid, Vector2.Zero);
-                }
             }
 
             // Just pick a point at this point I guess.
