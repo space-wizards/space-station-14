@@ -1,4 +1,4 @@
-﻿using Content.Server.Station.Systems;
+using Content.Server.Station.Systems;
 using Content.Shared.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -10,7 +10,7 @@ namespace Content.Server.Audio;
 public sealed partial class ServerGlobalSoundSystem : SharedGlobalSoundSystem
 {
     [Dependency] private IConsoleHost _conHost = default!;
-    [Dependency] private StationSystem _stationSystem = default!;
+    [Dependency] private ServerStationSystem _stationSystem = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
 
     public override void Shutdown()

@@ -1,0 +1,38 @@
+- type: entity
+  id: MalignWindow
+  name: malign window
+  description: An odd-looking window. Something about it unnerves you...
+  parent: [BaseDeltaPressureReinforcedGlass, Window]
+  components:
+  - type: Sprite
+    sprite: Structures/Windows/window-malign.rsi
+  - type: Icon
+    sprite: Structures/Windows/window-malign.rsi
+  - type: Damageable
+    damageModifierSet: RGlass
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: RCDDeconstructable
+    cost: 1
+    delay: 2
+    fx: EffectRCDDeconstruct6
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 155
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    base: malign
+  - type: Appearance
+  - type: DamageVisuals
+    thresholds: [5, 10, 20]
+    damageDivisor: 3
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks.rsi

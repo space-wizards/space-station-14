@@ -3,7 +3,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.PowerCell;
 
-public sealed class PowerChargerVisualizerSystem : VisualizerSystem<PowerChargerVisualsComponent>
+public sealed partial class PowerChargerVisualizerSystem : VisualizerSystem<PowerChargerVisualsComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, PowerChargerVisualsComponent comp, ref AppearanceChangeEvent args)
     {

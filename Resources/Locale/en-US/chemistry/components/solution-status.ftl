@@ -1,4 +1,4 @@
-﻿solution-status-transfer = Transfer: [color=white]{$volume}u[/color]
+solution-status-transfer = Transfer: [color=white]{$volume}u[/color]
 
 solution-status-volume = { $fillLevel ->
     [exact] Volume: [color=white]{$current}/{$max}u[/color]

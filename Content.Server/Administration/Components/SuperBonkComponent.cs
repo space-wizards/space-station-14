@@ -29,12 +29,6 @@ public sealed partial class SuperBonkComponent : Component
     public TimeSpan NextBonk = TimeSpan.Zero;
 
     /// <summary>
-    /// Whether to remove the clumsy component from the target after SuperBonk is done.
-    /// </summary>
-    [DataField]
-    public bool RemoveClumsy = true;
-
-    /// <summary>
     /// Whether to stop Super Bonk on the target once he dies. Otherwise it will continue until no other tables are left
     /// or the target is gibbed.
     /// </summary>

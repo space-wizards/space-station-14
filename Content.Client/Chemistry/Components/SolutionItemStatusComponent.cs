@@ -1,4 +1,4 @@
-﻿using Content.Client.Chemistry.EntitySystems;
+using Content.Client.Chemistry.EntitySystems;
 using Content.Client.Chemistry.UI;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
