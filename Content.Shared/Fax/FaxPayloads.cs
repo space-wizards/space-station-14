@@ -1,4 +1,4 @@
-﻿using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Fax.Components;
 
 namespace Content.Shared.Fax;

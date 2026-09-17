@@ -8,7 +8,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
-using Content.Shared.Station;
+using Content.Shared.Station.Systems;
 using Content.Shared.Timing.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -18,7 +18,7 @@ namespace Content.Server.Implants;
 public sealed partial class ChameleonControllerSystem : SharedChameleonControllerSystem
 {
     [Dependency] private InventorySystem _inventory = default!;
-    [Dependency] private SharedStationSpawningSystem _stationSpawningSystem = default!;
+    [Dependency] private StationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private ChameleonClothingSystem _chameleonClothingSystem = default!;
     [Dependency] private IServerPreferencesManager _preferences = default!;
     [Dependency] private UseDelaySystem _delay = default!;
