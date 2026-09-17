@@ -1,4 +1,4 @@
-﻿using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.GameTicking;
 using Content.Server.Mind;
