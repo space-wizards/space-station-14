@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration.Logs;
+using Content.Server.Administration.Logs;
 using Content.Server.Power.Components;
 using Content.Server.Power.Events;
 using Content.Shared.Database;
