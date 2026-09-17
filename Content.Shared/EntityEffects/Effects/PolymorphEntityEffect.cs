@@ -1,4 +1,4 @@
-﻿using Content.Shared.Polymorph;
+using Content.Shared.Polymorph;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;
