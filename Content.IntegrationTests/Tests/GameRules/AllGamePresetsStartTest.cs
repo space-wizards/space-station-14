@@ -27,7 +27,7 @@ public sealed class AllGamePresetsStartTest : AntagTest
     private static readonly HashSet<string> IgnoredPresets =
     [
 
-    ]; // Is a string to prevent YAML Linter from freaking if this is empty.
+    ];
 
     private static readonly string[] GamePresets = GameDataScrounger.PrototypesOfKind<GamePresetPrototype>().Where(p => !IgnoredPresets.Contains(p)).ToArray();
 
