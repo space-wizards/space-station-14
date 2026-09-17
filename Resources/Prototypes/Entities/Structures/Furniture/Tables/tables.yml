@@ -28,7 +28,7 @@
     key: state
     base: state_
   - type: Damageable
-    damageModifierSet: SteelMod
+    damageModifierSet: RodMetalMod
   - type: Destructible
     thresholds:
     - trigger: &DamageFurnitureWeak
@@ -119,7 +119,7 @@
         layer:
         - TableLayer
   - type: Damageable
-    damageModifierSet: SteelMod
+    damageModifierSet: RodMetalMod
   - type: IconSmooth
     key: state
     base: state_
