@@ -6,7 +6,7 @@ namespace Content.Shared.EntityConditions.Conditions.Generic;
 /// <summary>
 /// Returns true if the entity is a ghost.
 /// </summary>
-public sealed class IsGhostConditionSystem : EntityConditionSystem<TransformComponent, IsGhostCondition>
+public sealed partial class IsGhostConditionSystem : EntityConditionSystem<TransformComponent, IsGhostCondition>
 {
     protected override void Condition(Entity<TransformComponent> entity, ref EntityConditionEvent<IsGhostCondition> args)
     {

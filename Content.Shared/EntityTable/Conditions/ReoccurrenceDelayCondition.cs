@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.GameTicking;
@@ -41,9 +41,7 @@ public sealed partial class ReoccurrenceDelayCondition : EntityTableCondition
         if (rule == string.Empty)
             return false;
 
-        var gameTicker = entMan.System<SharedGameTicker>();
-
-        return gameTicker.AllPreviousGameRules.Any(
-            p => p.Item2 == rule && p.Item1 + Delay <= gameTicker.RoundDuration());
+        var gameTicker = entMan.System<GameTicker>();
+        return gameTicker.GetLastRuleTime(rule) + Delay <= gameTicker.RoundDuration();
     }
 }

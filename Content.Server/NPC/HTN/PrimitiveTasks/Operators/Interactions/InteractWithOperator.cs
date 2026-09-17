@@ -1,7 +1,7 @@
 using Content.Server.Interaction;
 using Content.Shared.CombatMode;
 using Content.Shared.DoAfter;
-using Content.Shared.Timing;
+using Content.Shared.Timing.Systems;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Interactions;
 
@@ -69,7 +69,7 @@ public sealed partial class InteractWithOperator : HTNOperator
         }
 
 
-        if (_entManager.TryGetComponent<UseDelayComponent>(owner, out var useDelay) && _entManager.System<UseDelaySystem>().IsDelayed((owner, useDelay)) ||
+        if (_entManager.System<UseDelaySystem>().IsDelayed(owner) ||
             !blackboard.TryGetValue<EntityUid>(TargetKey, out var moveTarget, _entManager) ||
             !_entManager.TryGetComponent<TransformComponent>(moveTarget, out var targetXform))
         {

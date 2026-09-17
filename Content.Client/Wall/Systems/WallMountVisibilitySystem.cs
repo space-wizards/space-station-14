@@ -17,6 +17,9 @@ public sealed partial class WallMountVisibilitySystem : EntitySystem
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
+    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery;
+    [Dependency] private EntityQuery<WallComponent> _wallQuery;
+
     private WallMountVisibilityOverlay _overlayInstance = default!;
 
     /// <summary>
@@ -73,7 +76,7 @@ public sealed partial class WallMountVisibilitySystem : EntitySystem
         if (TerminatingOrDeleted(ent))
             return;
 
-        if (!TryComp<SpriteComponent>(ent, out var sprite))
+        if (!_spriteQuery.TryComp(ent, out var sprite))
             return;
 
         _sprite.SetVisible((ent, sprite), true);
@@ -88,7 +91,7 @@ public sealed partial class WallMountVisibilitySystem : EntitySystem
         if (ent.Comp.DirectionalVisibility)
             return;
 
-        if (!TryComp<SpriteComponent>(ent, out var sprite))
+        if (!_spriteQuery.TryComp(ent, out var sprite))
             return;
 
         _sprite.SetVisible((ent, sprite), true);
@@ -99,10 +102,10 @@ public sealed partial class WallMountVisibilitySystem : EntitySystem
     /// </summary>
     public bool IsTileBlocked(Entity<MapGridComponent> grid, Vector2i tile)
     {
-        var enumerator = _map.GetAnchoredEntitiesEnumerator(grid.Owner, grid, tile);
+        var enumerator = _map.GetAnchoredEntities(grid.Owner, grid, tile);
         while (enumerator.MoveNext(out var anchored))
         {
-            if (!HasComp<WallComponent>(anchored.Value))
+            if (!_wallQuery.HasComp(anchored.Value))
                 continue;
 
             return true;
