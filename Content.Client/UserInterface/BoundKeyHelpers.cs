@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Robust.Client.Input;
 using Robust.Shared.Input;
 using Robust.Shared.Utility;

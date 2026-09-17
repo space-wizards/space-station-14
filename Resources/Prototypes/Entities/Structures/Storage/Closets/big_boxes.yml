@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: StructureHealthContainerFlimsy
   id: BigBox
   name: cardboard box #it's still just a box
