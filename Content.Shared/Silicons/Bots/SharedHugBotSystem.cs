@@ -1,4 +1,4 @@
-﻿using Content.Shared.Emag.Systems;
+using Content.Shared.Emag.Systems;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Silicons.Bots;

@@ -1,4 +1,4 @@
-﻿- type: localizedDataset
+- type: localizedDataset
   id: NamesHologram
   values:
     prefix: names-hologram-dataset-
