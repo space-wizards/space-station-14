@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Network;
+using Robust.Shared.Network;
 
 namespace Content.Shared.EntityEffects.Effects.EntitySpawning;
 
