@@ -415,6 +415,10 @@
     access: [["Command"]]
   - type: Lock
     unlockOnClick: false
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - storagebase
+
 
 - type: entity
   parent: ComputerStationTeleportersControl
@@ -785,7 +789,7 @@
   - type: DeviceLinkSource
     range: 200
     ports:
-      - OrderSender
+    - OrderSender
   - type: GuideHelp
     guides:
     - Cargo

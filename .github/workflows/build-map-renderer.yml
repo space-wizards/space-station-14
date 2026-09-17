@@ -1,4 +1,4 @@
-﻿name: Build & Test Map Renderer
+name: Build & Test Map Renderer
 
 on:
   push:
