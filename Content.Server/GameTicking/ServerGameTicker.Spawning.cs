@@ -468,11 +468,9 @@ namespace Content.Server.GameTicking
                 if (Map.TryFindGridAt(toMap, out var gridUid, out _) && !TerminatingOrDeleted(gridUid))
                 {
                     var gridXform = Transform(gridUid);
-                    Log.Info($"Selected random grid spawn position {spawn}");
                     return new EntityCoordinates(gridUid, Vector2.Transform(toMap.Position, XForm.GetInvWorldMatrix(gridXform)));
                 }
 
-                Log.Info($"Selected random spawn position {spawn}");
                 return spawn;
             }
 
@@ -481,7 +479,6 @@ namespace Content.Server.GameTicking
                 var mapUid = Map.GetMapOrInvalid(DefaultMap);
                 if (!TerminatingOrDeleted(mapUid))
                 {
-                    Log.Info($"Selected default spawn position {mapUid}");
                     return new EntityCoordinates(mapUid, Vector2.Zero);
                 }
             }
@@ -495,7 +492,6 @@ namespace Content.Server.GameTicking
                 if (meta.EntityPaused || TerminatingOrDeleted(mapUid, meta))
                     continue;
 
-                Log.Info($"Selected first valid map spawn position {mapUid}");
                 return new EntityCoordinates(mapUid, Vector2.Zero);
             }
 
