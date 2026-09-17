@@ -1,4 +1,4 @@
-﻿using Content.Shared.EntityTable;
+using Content.Shared.EntityTable;
 using Content.Shared.GameTicking;
 using Content.Shared.Trigger.Components.Effects;
 using Content.Shared.Trigger.Components.Triggers;
@@ -33,7 +33,7 @@ public sealed partial class TriggerSystem
         {
             var mapCoords = _transform.GetMapCoordinates(target);
             if (predicted)
-                EntityManager.PredictedSpawn(proto, mapCoords);
+                PredictedSpawn(proto, mapCoords);
             else if (_net.IsServer)
                 Spawn(proto, mapCoords);
         }
