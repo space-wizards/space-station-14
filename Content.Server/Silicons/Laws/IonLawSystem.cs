@@ -23,6 +23,10 @@ public sealed partial class IonLawSystem : EntitySystem
     private readonly Dictionary<string, List<IonLawSelector>> _selectors = new();
     private IonLawPrototype? _ionLaw;
 
+    /// <summary>
+    /// Used to limit recursive selector lookup in GetSelectorValue
+    /// </summary>
+    private const int MaxDepth = 2;
     public override void Initialize()
     {
         base.Initialize();
@@ -196,7 +200,7 @@ public sealed partial class IonLawSystem : EntitySystem
             if (selector == null)
                 break;
 
-            var newValue = GetSelectorValue(selector);
+            var newValue = GetSelectorValue(selector, 0);
             if (newValue is string s && string.IsNullOrWhiteSpace(s))
             {
                 availableSelectors.Remove(selector);
@@ -249,8 +253,11 @@ public sealed partial class IonLawSystem : EntitySystem
         return weightedSelectors.Last().Item1;
     }
 
-    private object GetSelectorValue(IonLawSelector selector)
+    private object GetSelectorValue(IonLawSelector selector, int depth)
     {
+        if (depth > MaxDepth)
+            return Loc.GetString("ion-law-error-max-recursion");
+
         switch (selector)
         {
             case DatasetFill datasetFill:
@@ -285,31 +292,32 @@ public sealed partial class IonLawSystem : EntitySystem
             case ConstantFill constantFill:
                 if (constantFill.BoolValue.HasValue)
                     return constantFill.BoolValue.Value;
+
+                if (constantFill.Value != string.Empty)
+                    return constantFill.Value;
+
                 _sawmill.Error("The selected Constant Fill did not have a value: " + constantFill);
                 return Loc.GetString("ion-law-error-no-bool-value");
 
             case JoinedDatasetFill joinedDatasetFill:
-                switch (joinedDatasetFill.Selectors.Count)
+                if (joinedDatasetFill.Selectors.Count == 0)
                 {
-                    case 0:
-                        _sawmill.Error(selector.ToString() + " had no datasets to join together");
-                        return Loc.GetString("ion-law-error-dataset-empty-or-not-found");
-
-                    case 1:
-                        return GetSelectorValue(joinedDatasetFill.Selectors[0]);
-
-                    default:
-                        var s = string.Empty;
-                        foreach (var val in joinedDatasetFill.Selectors)
-                        {
-                            s += GetSelectorValue(val).ToString() + joinedDatasetFill.Separator;
-                        }
-                        return s[..(s.Length - joinedDatasetFill.Separator.Length - 1)];
+                    _sawmill.Error(selector.ToString() + " had no datasets to join together");
+                    return Loc.GetString("ion-law-error-dataset-empty-or-not-found");
                 }
+
+                var s = string.Empty;
+
+                foreach (var val in joinedDatasetFill.Selectors)
+                {
+                    s += GetSelectorValue(val, depth + 1).ToString() + joinedDatasetFill.Separator;
+                }
+
+                return s[..(s.Length - joinedDatasetFill.Separator.Length - 1)];
 
             case TranslateFill translateFill:
                 if (translateFill.Key == string.Empty)
-                    return Loc.GetString("ion-law-error-was-null");
+                    return Loc.GetString("ion-law-error-no-protos");
 
                 if (translateFill.Args.Count == 0)
                     return Loc.GetString(translateFill.Key);
@@ -319,7 +327,7 @@ public sealed partial class IonLawSystem : EntitySystem
 
                 foreach (var val in translateFill.Args)
                 {
-                    args[idx] = (val.Key, GetSelectorValue(val.Value));
+                    args[idx] = (val.Key, GetSelectorValue(val.Value, depth + 1));
                     idx += 1;
                 }
 
