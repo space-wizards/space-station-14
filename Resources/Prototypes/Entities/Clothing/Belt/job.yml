@@ -280,7 +280,6 @@
       tags:
       - Wrench
       - Bottle
-      - Spray
       - Brutepack
       - Bloodpack
       - Gauze
@@ -296,6 +295,7 @@
       - Injector
       - Pill
       - Prying
+      - SpraySafety
 
 - type: entity
   parent: ClothingBeltStorageBase
