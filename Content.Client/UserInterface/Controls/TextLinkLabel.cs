@@ -32,15 +32,12 @@ public sealed partial class TextLinkLabel : Label
     }
 
     /// <summary>
-    /// Refreshes this label's clickability, cursor/mouse behavior, visibility, and rendered
-    /// color based on the current link target and the viewer's permission to follow it.
-    /// Call after construction, and again whenever that permission could have changed
-    /// (e.g. the viewer's attached entity changes).
+    /// Refreshes the label's properties based on the current link target
+    /// and the viewer's permission to follow it. <br />Call after construction,
+    /// and whenever that permission could have changed.
     /// </summary>
     /// <param name="visible">Whether the label should be shown at all. Defaults to true.</param>
-    /// <param name="clickable">Additional override on top of the underlying permission check —
-    /// pass false to force the label non-clickable even when the link would otherwise be
-    /// clickable. Defaults to true.</param>
+    /// <param name="clickable">Additional override to force the label non-clickable. Defaults to true.</param>
     public void UpdateLabelProperties(bool? visible = null, bool? clickable = null)
     {
         visible ??= true;
