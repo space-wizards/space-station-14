@@ -1,4 +1,4 @@
-﻿using Content.Shared.Anomaly.Effects;
+using Content.Shared.Anomaly.Effects;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.StatusEffectNew.Components;
 using Robust.Shared.Audio;

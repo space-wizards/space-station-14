@@ -1,4 +1,4 @@
-﻿using Content.Shared.Preferences;
+using Content.Shared.Preferences;
 
 namespace Content.Shared.StationRecords.Events;
 

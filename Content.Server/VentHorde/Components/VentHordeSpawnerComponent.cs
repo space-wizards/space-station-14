@@ -1,4 +1,4 @@
-﻿using Content.Server.VentHorde.Systems;
+using Content.Server.VentHorde.Systems;
 using Content.Shared.StatusEffectNew.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
