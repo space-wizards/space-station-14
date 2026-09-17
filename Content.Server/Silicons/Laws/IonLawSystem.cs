@@ -313,7 +313,7 @@ public sealed partial class IonLawSystem : EntitySystem
                     s += GetSelectorValue(val, depth + 1).ToString() + joinedDatasetFill.Separator;
                 }
 
-                return s[..(s.Length - joinedDatasetFill.Separator.Length - 1)];
+                return s[..(s.Length - joinedDatasetFill.Separator.Length)];
 
             case TranslateFill translateFill:
                 if (translateFill.Key == string.Empty)
