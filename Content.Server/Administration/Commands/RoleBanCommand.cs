@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration.Managers;
+using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Database;

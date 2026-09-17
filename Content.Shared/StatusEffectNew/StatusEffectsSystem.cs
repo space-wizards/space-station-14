@@ -93,9 +93,6 @@ public sealed partial class StatusEffectsSystem : EntitySystem
 
     private void OnEntityRemoved(Entity<StatusEffectContainerComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-        if (_timing.ApplyingState)
-            return;
-
         if (args.Container.ID != StatusEffectContainerComponent.ContainerId)
             return;
 
