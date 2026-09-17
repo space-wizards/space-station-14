@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Actions.Events;
 using Content.Shared.DoAfter;
+using Content.Shared.IdentityManagement;
 
 namespace Content.Shared.Actions;
 
@@ -38,7 +39,8 @@ public abstract partial class SharedActionsSystem
             DistanceThreshold = ent.Comp.DistanceThreshold,
             BreakOnDamage = ent.Comp.BreakOnDamage,
             DamageThreshold = ent.Comp.DamageThreshold,
-            RequireCanInteract = ent.Comp.RequireCanInteract
+            RequireCanInteract = ent.Comp.RequireCanInteract,
+            ExamineText = ent.Comp.ExamineText == null ? null : Loc.GetString(ent.Comp.ExamineText, ("user", Identity.Entity(performer, EntityManager)), ("target", Identity.Entity(target, EntityManager)), ("action", ent)),
         };
 
         return _doAfter.TryStartDoAfter(doAfterArgs, performer);

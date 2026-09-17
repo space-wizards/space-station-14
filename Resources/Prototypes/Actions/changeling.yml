@@ -515,6 +515,7 @@
     popupType: MediumCaution
     selfMessage: changeling-cocoon-success
   - type: DoAfterArgs
+    examineText: changeling-cocoon-doafter
     delay: 10
     breakOnMove: true
     breakOnDamage: true

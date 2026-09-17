@@ -62,3 +62,4 @@ changeling-not-enough-chemicals = We don't have enough Chemicals.
 changeling-action-fail-generic = We cannot do this right now.
 changeling-paused-map-name = Changeling identity storage map
 changeling-cocoon-success = We encase {THE($target)} in a fleshy tomb.
+changeling-cocoon-doafter = [color=red]{ CAPITALIZE(SUBJECT($user)) } { CONJUGATE-BE($user) } covering { THE($target) } in a fleshy mass![/color]
