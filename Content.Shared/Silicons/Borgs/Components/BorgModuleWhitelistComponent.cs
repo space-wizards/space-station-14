@@ -15,7 +15,7 @@ public sealed partial class BorgModuleWhitelistComponent : Component
     /// as well as which modules are incompatible or required
     /// </summary>
     [DataField]
-    public LocId WhitelistInfo;
+    public LocId? WhitelistInfo;
 
     /// <summary>
     /// List of module tags this module is incompatible with

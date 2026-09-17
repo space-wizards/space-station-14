@@ -21,19 +21,17 @@
   - type: Anchorable
     flags:
     - Anchorable
-  - type: Rotatable
   - type: Sprite
     drawdepth: Walls
-    sprite: Structures/Walls/grille-new.rsi
+    sprite: Structures/Walls/grille.rsi
     layers:
-    - state: full
     - state: electrified
       sprite: Effects/electricity.rsi
       map: ["enum.ElectrifiedLayers.Sparks"]
       shader: unshaded
       visible: false
   - type: Icon
-    sprite: Structures/Walls/grille-new.rsi
+    sprite: Structures/Walls/grille.rsi
     state: full
   - type: PlacementReplacement
     key: grilles
@@ -79,7 +77,7 @@
           False: { visible: False }
   - type: AnimationPlayer
   - type: Damageable
-    damageModifierSet: SteelMod
+    damageModifierSet: RodMetalMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -149,10 +147,10 @@
   components:
   - type: Sprite
     drawdepth: Walls
-    sprite: Structures/Walls/grille-new.rsi
+    sprite: Structures/Walls/grille.rsi
     state: broken
   - type: Icon
-    sprite: Structures/Walls/grille-new.rsi
+    sprite: Structures/Walls/grille.rsi
     state: broken
   - type: RCDDeconstructable
     cost: 6
@@ -170,7 +168,7 @@
     tags:
     - ForceNoFixRotations
   - type: Damageable
-    damageModifierSet: SteelMod
+    damageModifierSet: RodMetalMod
   - type: Destructible
     thresholds:
     - trigger:

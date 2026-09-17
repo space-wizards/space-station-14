@@ -6,9 +6,7 @@ using Content.Shared.Explosion;
 using Content.Shared.Foldable;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Item;
 using Content.Shared.Lock;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
@@ -327,13 +325,16 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
         if (!Resolve(container, ref component))
             return false;
 
-        var toRemoveTransform = Transform(toRemove);
-        if (toRemoveTransform.MapUid is not { } toRemoveMap)
+        // Get our new parent: either the grid the entity is on, or the
+        var newParent = xform.GridUid ?? xform.MapUid;
+        if (!TryComp(newParent, out TransformComponent? parentXform))
             return false;
 
+        // Reparent the removed entity to our grid, or the map!
         var (pos, rot) = TransformSystem.GetWorldPositionRotation(xform);
         pos += rot.RotateVec(component.EnteringOffset);
-        if (!_container.Remove(toRemove, component.Contents, destination: new(toRemoveMap, pos)))
+        pos = Vector2.Transform(pos, TransformSystem.GetInvWorldMatrix(parentXform));
+        if (!_container.Remove(toRemove, component.Contents, destination: new(newParent.Value, pos)))
             return false;
 
         if (_container.IsEntityInContainer(container)

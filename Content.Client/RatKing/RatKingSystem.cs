@@ -1,4 +1,4 @@
-﻿using Content.Shared.RatKing.Systems;
+using Content.Shared.RatKing.Systems;
 
 namespace Content.Client.RatKing;
 

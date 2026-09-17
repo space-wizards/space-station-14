@@ -1,4 +1,4 @@
-﻿using Content.Shared.Actions;
+using Content.Shared.Actions;
 using Content.Shared.RatKing.Components;
 
 namespace Content.Shared.RatKing.Events;
