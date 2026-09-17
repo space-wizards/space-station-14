@@ -1,10 +1,11 @@
-﻿using Content.Client.UserInterface.ControlExtensions;
+using Content.Client.UserInterface.ControlExtensions;
 using Content.Client.UserInterface.RichText;
 using Content.Shared.Chat;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Utility;
+
 
 namespace Content.Client.UserInterface.Controls;
 

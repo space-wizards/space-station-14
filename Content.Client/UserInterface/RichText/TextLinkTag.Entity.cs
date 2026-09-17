@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chat;
+using Content.Shared.Chat;
 using Content.Client.UserInterface.Systems.Chat;
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Utility;
