@@ -451,6 +451,10 @@ namespace Content.Server.GameTicking
                 var query = EntityQueryEnumerator<MapGridComponent>();
                 while (query.MoveNext(out var uid, out _))
                 {
+                    // Don't include terminating grids.
+                    if (TerminatingOrDeleted(uid))
+                        continue;
+
                     _possiblePositions.Add(new EntityCoordinates(uid, Vector2.Zero));
                 }
             }
