@@ -1,6 +1,7 @@
 using Content.Shared.Cloning;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -10,6 +11,10 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Fax.Components;
 
+/// <summary>
+/// A machine that can copy entities (usually paper) to other machines with FaxMachineComponent.
+/// </summary>
+/// <seealso cref="DeviceNetworkComponent"/>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true, true), AutoGenerateComponentPause]
 public sealed partial class FaxMachineComponent : Component
 {
@@ -18,7 +23,7 @@ public sealed partial class FaxMachineComponent : Component
     /// </summary>
     [DataField]
     [AutoNetworkedField]
-    public FaxFunctions Functions;
+    public FaxState State;
 
     /// <summary>
     /// The cloning settings for this fax machine.
@@ -168,9 +173,13 @@ public sealed partial class FaxMachineComponent : Component
     public LocId SenderInfo = "fax-machine-sender-info";
 }
 
+/// <summary>
+/// A bitmask for the current active functions of a fax machine
+/// Also double as keys for SpriteMaps.
+/// </summary>
 [Flags]
 [Serializable, NetSerializable]
-public enum FaxFunctions : byte
+public enum FaxState : byte
 {
     /// <summary>
     /// Fax doing nothing
@@ -194,7 +203,7 @@ public enum FaxFunctions : byte
 }
 
 /// <summary>
-/// Data for a fax printout
+/// DeviceNetwork data for a fax printout.
 /// </summary>
 [DataDefinition]
 [Serializable, NetSerializable]

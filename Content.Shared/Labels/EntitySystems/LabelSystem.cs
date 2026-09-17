@@ -16,7 +16,7 @@ public sealed partial class LabelSystem : EntitySystem
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
 
-    private const string LabelFormat = "comp-label-format";
+    private static readonly LocId LabelFormat = "comp-label-format";
     public const string ContainerName = "paper_label";
 
     public override void Initialize()

@@ -19,13 +19,13 @@ public sealed partial class ClientFaxSystem : FaxSystem
         if (args.Sprite == null)
             return;
 
-        if (!args.TryGetData(FaxMachineVisuals.VisualState, out FaxFunctions visuals))
+        if (!args.TryGetData(FaxMachineVisuals.VisualState, out FaxState visuals))
             return;
 
         if (!FaxQuery.TryComp(fax, out var faxComp))
             return;
 
-        foreach (var function in Enum.GetValues<FaxFunctions>())
+        foreach (var function in Enum.GetValues<FaxState>())
         {
             if (!_sprite.LayerMapTryGet((fax.Owner, args.Sprite), function, out var index, false))
                 continue;
@@ -34,11 +34,11 @@ public sealed partial class ClientFaxSystem : FaxSystem
         }
 
         // Don't play insert animation if we're not inserting
-        if ((visuals & FaxFunctions.Inserting) == 0)
+        if ((visuals & FaxState.Inserting) == 0)
         {
-            _player.Stop(fax.Owner, nameof(FaxFunctions.Inserting));
+            _player.Stop(fax.Owner, nameof(FaxState.Inserting));
         } // Start animation if we weren't playing one.
-        else if (!_player.HasRunningAnimation(fax, nameof(FaxFunctions.Inserting)))
+        else if (!_player.HasRunningAnimation(fax, nameof(FaxState.Inserting)))
         {
             if (!args.TryGetData(FaxMachineVisuals.Inserting, out string? state))
                 state = fax.Comp.InsertingState;
@@ -51,7 +51,7 @@ public sealed partial class ClientFaxSystem : FaxSystem
                     {
                         new AnimationTrackSpriteFlick
                         {
-                            LayerKey = FaxFunctions.Inserting,
+                            LayerKey = FaxState.Inserting,
                             KeyFrames =
                             {
                                 new AnimationTrackSpriteFlick.KeyFrame(state, 0f)
@@ -59,15 +59,15 @@ public sealed partial class ClientFaxSystem : FaxSystem
                         },
                     },
                 },
-                nameof(FaxFunctions.Inserting));
+                nameof(FaxState.Inserting));
         }
 
         // Don't play print animation if we're not inserting
-        if ((visuals & FaxFunctions.Printing) == 0)
+        if ((visuals & FaxState.Printing) == 0)
         {
-            _player.Stop(fax.Owner, nameof(FaxFunctions.Printing));
+            _player.Stop(fax.Owner, nameof(FaxState.Printing));
         } // Start animation if we weren't playing one.
-        else if (!_player.HasRunningAnimation(fax, nameof(FaxFunctions.Printing)))
+        else if (!_player.HasRunningAnimation(fax, nameof(FaxState.Printing)))
         {
             _player.Play(fax,
                 new Animation
@@ -77,7 +77,7 @@ public sealed partial class ClientFaxSystem : FaxSystem
                     {
                         new AnimationTrackSpriteFlick
                         {
-                            LayerKey = FaxFunctions.Printing,
+                            LayerKey = FaxState.Printing,
                             KeyFrames =
                             {
                                 new AnimationTrackSpriteFlick.KeyFrame(fax.Comp.PrintingState, 0f)
@@ -85,7 +85,7 @@ public sealed partial class ClientFaxSystem : FaxSystem
                         },
                     },
                 },
-                nameof(FaxFunctions.Printing));
+                nameof(FaxState.Printing));
         }
     }
 

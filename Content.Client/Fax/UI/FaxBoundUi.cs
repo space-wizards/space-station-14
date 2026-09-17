@@ -9,7 +9,6 @@ namespace Content.Client.Fax.UI;
 [UsedImplicitly]
 public sealed partial class FaxBoundUi : BoundUserInterface
 {
-    [Dependency] private IEntityManager _entityManager = default!;
     [Dependency] private IFileDialogManager _fileDialogManager = default!;
     [Dependency] private FaxSystem _fax = default!;
 
@@ -100,7 +99,7 @@ public sealed partial class FaxBoundUi : BoundUserInterface
         if (_window == null)
             return;
 
-        if (!_entityManager.TryGetComponent<FaxMachineComponent>(Owner, out var fax))
+        if (!EntMan.TryGetComponent<FaxMachineComponent>(Owner, out var fax))
             return;
 
         _fax.TryGetInserted((Owner, fax), out var paper);
@@ -109,7 +108,7 @@ public sealed partial class FaxBoundUi : BoundUserInterface
         _window.Update(cooldown,
             cooldown || fax.DestinationAddress == null,
             fax.Name,
-            _entityManager.GetComponentOrNull<MetaDataComponent>(paper)?.EntityName,
+            EntMan.GetComponentOrNull<MetaDataComponent>(paper)?.EntityName,
             fax.KnownFaxes,
             fax.DestinationAddress);
     }

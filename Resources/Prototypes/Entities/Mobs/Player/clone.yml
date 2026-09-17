@@ -214,7 +214,7 @@
 # For very important beauracracy
 - type: cloningSettings
   parent: [ParadoxCloningSettings, Paper]
-  id: Centcomm
+  id: FaxCentcomm
   components:
   - GhostRole
   - GhostTakeoverAvailable

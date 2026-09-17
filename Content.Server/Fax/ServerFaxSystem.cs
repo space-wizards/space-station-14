@@ -69,7 +69,7 @@ public sealed partial class ServerFaxSystem : FaxSystem
 
     protected override void NotifyAdmins(string faxName)
     {
-        // Because why would a Shared system EVER NEED TO SEND AN ADMIN ANNOUNCEMENT???????????????????????????
+        // Because why would a Shared system EVER NEED TO SEND AN ADMIN ANNOUNCEMENT?????
         _chat.SendAdminAnnouncement(Loc.GetString("fax-machine-chat-notify", ("fax", faxName)));
         AudioSystem.PlayGlobal(AdminAlert, Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioParams.Default.AddVolume(-8f));
     }

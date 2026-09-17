@@ -281,35 +281,15 @@ public sealed partial class PaperSystem : EntitySystem
     /// </summary>
     /// <param name="paper">Paper we are setting the content of</param>
     /// <param name="content">Content for the paper</param>
-    public void SetContent(Entity<PaperComponent?> paper, string content)
+    /// <param name="logMissing">Should we assert if the <see cref="PaperComponent"/> is missing?</param>
+    public void SetContent(Entity<PaperComponent?> paper, string content, bool logMissing = false)
     {
-        TrySetContent(paper, content);
-    }
-
-    /// <summary>
-    /// Sets the content of a piece of paper.
-    /// </summary>
-    /// <param name="paper">Paper we are setting the content of</param>
-    /// <param name="content">Content for the paper</param>
-    /// <returns>Returns false if it could not update the contents of the paper, or if the entity wasn't paper at all!</returns>
-    public bool TrySetContent(Entity<PaperComponent?> paper, string content)
-    {
-        if (!_paperQuery.Resolve(paper, ref paper.Comp))
-            return false;
+        if (!_paperQuery.Resolve(paper, ref paper.Comp, logMissing))
+            return;
 
         paper.Comp.Content = content;
         Dirty(paper);
-        UpdateUserInterface((paper, paper.Comp));
-
-        if (!TryComp<AppearanceComponent>(paper, out var appearance))
-            return true;
-
-        var status = string.IsNullOrWhiteSpace(content)
-            ? PaperStatus.Blank
-            : PaperStatus.Written;
-
-        _appearance.SetData(paper, PaperVisuals.Status, status, appearance);
-        return true;
+        UpdatePaper((paper, paper.Comp));
     }
 
     /// <summary>
@@ -324,17 +304,17 @@ public sealed partial class PaperSystem : EntitySystem
 
         paper.Comp.Content += content;
         Dirty(paper);
+        UpdatePaper((paper, paper.Comp));
+    }
 
+    private void UpdatePaper(Entity<PaperComponent> paper)
+    {
         UpdateUserInterface((paper, paper.Comp));
-
-        if (!TryComp<AppearanceComponent>(paper, out var appearance))
-            return;
-
-        var status = string.IsNullOrWhiteSpace(content)
+        var status = string.IsNullOrWhiteSpace(paper.Comp.Content)
             ? PaperStatus.Blank
             : PaperStatus.Written;
 
-        _appearance.SetData(paper, PaperVisuals.Status, status, appearance);
+        _appearance.SetData(paper, PaperVisuals.Status, status);
     }
 
     /// <summary>

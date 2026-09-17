@@ -31,6 +31,15 @@ public sealed partial class FaxWindow : DefaultWindow
             PeerSelected?.Invoke((string)args.Button.GetItemMetadata(args.Id)!);
     }
 
+    /// <summary>
+    /// Updates the window with new state.
+    /// </summary>
+    /// <param name="printDisabled">Whether the print buttons are disabled, this includes all buttons which can print for this fax</param>
+    /// <param name="sendDisabled">Whether the send button is disabled.</param>
+    /// <param name="faxName">The name of the fax machine.</param>
+    /// <param name="paper">Readable name of the paper enity inside the fax machine, or null if there is none.</param>
+    /// <param name="knownFaxes">Dictionary of known fax machine names by their address.</param>
+    /// <param name="destination">Currently selected fax address to send to.</param>
     public void Update(bool printDisabled, bool sendDisabled, string faxName, string? paper, Dictionary<string,string> knownFaxes, string? destination)
     {
         CopyButton.Disabled = printDisabled;

@@ -11,10 +11,8 @@
     - state: icon
     - state: idle
       map: [ "faxEyes" ]
-    - state:
-      map: [ "enum.FaxFunctions.Printing" ]
-    - state:
-      map: [ "enum.FaxFunctions.Inserting" ]
+    - map: [ "enum.FaxState.Printing" ]
+    - map: [ "enum.FaxState.Inserting" ]
   - type: Icon
     sprite: Structures/Machines/fax_machine.rsi
     state: icon
@@ -95,10 +93,8 @@
       color: "#bfe3ff"
     - state: idle
       map: [ "faxEyes" ]
-    - state:
-      map: [ "enum.FaxFunctions.Printing" ]
-    - state:
-      map: [ "enum.FaxFunctions.Inserting" ]
+    - map: [ "enum.FaxState.Printing" ]
+    - map: [ "enum.FaxState.Inserting" ]
   - type: FaxMachine
     name: "Central Command"
     interactionTimeout: 0.5 # The greatest fax machines this side of the galaxy, with a universal latency of only 500ms!
@@ -106,7 +102,7 @@
       insertSound: /Audio/Machines/scanning.ogg
       ejectSound: /Audio/Machines/tray_eject.ogg
     whitelist: null
-    settings: Centcomm
+    settings: FaxCentcomm
     notifyAdmins: true
 
 - type: entity
@@ -121,10 +117,8 @@
       color: "#a3a3a3"
     - state: idle
       map: [ "faxEyes" ]
-    - state:
-      map: [ "enum.FaxFunctions.Printing" ]
-    - state:
-      map: [ "enum.FaxFunctions.Inserting" ]
+    - map: [ "enum.FaxState.Printing" ]
+    - map: [ "enum.FaxState.Inserting" ]
   - type: FaxMachine
     name: "ERR*?*%!"
     responsePings: false
