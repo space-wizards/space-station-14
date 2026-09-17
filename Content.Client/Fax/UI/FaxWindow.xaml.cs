@@ -44,7 +44,6 @@ public sealed partial class FaxWindow : DefaultWindow
     {
         CopyButton.Disabled = printDisabled;
         FileButton.Disabled = printDisabled;
-        PaperButton.Disabled = printDisabled;
         SendButton.Disabled = sendDisabled;
         FromLabel.Text = faxName;
 
