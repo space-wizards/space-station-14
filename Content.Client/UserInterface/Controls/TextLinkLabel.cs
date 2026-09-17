@@ -62,10 +62,14 @@ public sealed partial class TextLinkLabel : Label
         FontColorOverride = (canClickLink, hovering) switch
         {
             (true, true) => Color.LightSkyBlue, // clickable and currently hovered
-            _ => LinkColor,                                         // not clickable, or not hovered
+            _ => LinkColor, // not clickable, or not hovered
         };
     }
 
+    /// <summary>
+    /// Delegates click to the nearest ancestor ILinkClickHandler or IEntityLinkClickHandler;
+    /// TextLinkLabel has no idea what a click actually does.
+    /// </summary>
     private void OnKeybindDown(GUIBoundKeyEventArgs args)
     {
         if (args.Function != EngineKeyFunctions.UIClick)

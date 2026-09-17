@@ -4,9 +4,7 @@ using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.RichText;
-using Robust.Shared.Input;
 using Robust.Shared.Utility;
-using Content.Client.UserInterface.ControlExtensions;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.ResourceManagement;
 
