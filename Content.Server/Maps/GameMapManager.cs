@@ -29,9 +29,11 @@ public sealed partial class GameMapManager : IGameMapManager
     [ViewVariables(VVAccess.ReadOnly)]
     private GameMapPrototype? _selectedMap; // Don't change this value during a round!
     [ViewVariables(VVAccess.ReadOnly)]
-    private bool _mapRotationEnabled;
+    private MapRollingConfig _mapRollingConfig;
     [ViewVariables(VVAccess.ReadOnly)]
     private int _mapQueueDepth = 1;
+    [ViewVariables(VVAccess.ReadOnly)]
+    private bool _allowDuplicates;
 
     private ISawmill _log = default!;
 
@@ -73,7 +75,7 @@ public sealed partial class GameMapManager : IGameMapManager
 
             _log.Error($"Unknown map prototype {value} was selected!");
         }, true);
-        _configurationManager.OnValueChanged(CCVars.GameMapRotation, value => _mapRotationEnabled = value, true);
+        _configurationManager.OnValueChanged(CCVars.GameMapRotation, value => _mapRollingConfig = value, true);
         _configurationManager.OnValueChanged(CCVars.GameMapMemoryDepth, value =>
         {
             _mapQueueDepth = value;
@@ -154,12 +156,19 @@ public sealed partial class GameMapManager : IGameMapManager
         _selectedMap = map;
     }
 
-    public void SelectMapRandom()
+    public void SelectMapWeightedRandom()
     {
-        _log.Info("Selecting a random map...");
+        _log.Debug("Selecting a random map by weights...");
         var maps = CurrentlyEligibleMaps().ToList();
         if (maps.Count == 0)
             return;
+
+        var lastMap = _previousMaps.LastOrDefault((string?)null);
+        if (lastMap != null && _mapRollingConfig.HasFlag(MapRollingConfig.NoDuplicateFlag))
+        {
+            var newMaps = maps.Where(map => map.ID != lastMap).ToList();
+            if (newMaps.Count != 0) maps = newMaps;
+        }
 
         var totalWeight = maps.Sum(map => map.Weight);
         if (totalWeight == 0)
@@ -176,7 +185,7 @@ public sealed partial class GameMapManager : IGameMapManager
             rand -= weight;
             if (rand <= 0)
             {
-                _log.Info($"Selected: {maps[index].MapName}");
+                _log.Debug($"Selected: {maps[index].MapName}");
                 _selectedMap = maps[index];
                 return;
             }
@@ -185,28 +194,53 @@ public sealed partial class GameMapManager : IGameMapManager
         _selectedMap = maps.Last();
     }
 
-    public void SelectMapFromRotationQueue(bool markAsPlayed = false)
+    public void SelectMapRandom()
+    {
+        var maps = CurrentlyEligibleMaps().ToList();
+
+        var lastMap = _previousMaps.LastOrDefault((string?)null);
+        if (lastMap != null && _mapRollingConfig.HasFlag(MapRollingConfig.NoDuplicateFlag))
+        {
+            var newMaps = maps.Where(map => map.ID != lastMap).ToList();
+            if (newMaps.Count != 0) maps = newMaps;
+        }
+
+        _selectedMap = _random.Pick(maps);
+    }
+
+    public void SelectMapFromRotationQueue()
     {
         var map = GetFirstInRotationQueue();
 
         _selectedMap = map;
 
-        if (markAsPlayed)
-            EnqueueMap(map.ID);
     }
 
     public void SelectMapByConfigRules()
     {
-        if (_mapRotationEnabled)
+        switch (_mapRollingConfig & MapRollingConfig.TypeFlag)
         {
-            _log.Info("selecting the next map from the rotation queue");
-            SelectMapFromRotationQueue(true);
+            case MapRollingConfig.Random:
+                {
+                    _log.Debug("Selecting a random map");
+                    SelectMapRandom();
+                }
+                break;
+            case MapRollingConfig.WeighedRandom:
+                {
+                    _log.Debug("Selecting a random map using weights");
+                    SelectMapWeightedRandom();
+                }
+                break;
+            case MapRollingConfig.Rotation:
+                {
+                    _log.Debug("Selecting the next map from the rotation queue");
+                    SelectMapFromRotationQueue();
+                }
+                break;
         }
-        else
-        {
-            _log.Info("selecting a random map");
-            SelectMapRandom();
-        }
+        if (_selectedMap != null)
+            EnqueueMap(_selectedMap.ID);
     }
 
     public bool CheckMapExists(string gameMap)

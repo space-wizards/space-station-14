@@ -25,6 +25,33 @@ public enum MinimumJobFallback : int // needs int backing because cvar
     None = 3,
 }
 
+/// <summary>
+/// Configures how maps are picked.
+/// </summary>
+public enum MapRollingConfig : int
+{
+    /// <summary>
+    /// Maps are randomly chosen.
+    /// </summary>
+    Random = 0x00,
+
+    RandomNoDuplicate = 0x01,
+
+    /// <summary>
+    /// Maps are chosen with a bias according to their weight.
+    /// </summary>
+    WeighedRandom = 0x10,
+
+    WeightedRandomNoDuplicate = 0x11,
+
+    /// <summary>
+    /// Maps are in-rotation, cycling without repetition
+    /// </summary>
+    Rotation = 0x20,
+    TypeFlag = 0xF0,
+    NoDuplicateFlag = 0x0F
+}
+
 public sealed partial class CCVars
 {
     /// <summary>
@@ -126,10 +153,10 @@ public sealed partial class CCVars
         GameMapMemoryDepth = CVarDef.Create("game.map_memory_depth", 16, CVar.SERVERONLY);
 
     /// <summary>
-    ///     Is map rotation enabled?
+    ///     How are maps rolled?
     /// </summary>
-    public static readonly CVarDef<bool>
-        GameMapRotation = CVarDef.Create("game.map_rotation", false, CVar.SERVERONLY);
+    public static readonly CVarDef<MapRollingConfig>
+        GameMapRotation = CVarDef.Create("game.map_rotation", MapRollingConfig.WeighedRandom, CVar.SERVERONLY);
 
     /// <summary>
     ///     If roles should be restricted based on time.
