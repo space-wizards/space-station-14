@@ -27,17 +27,17 @@ public sealed partial class DelayWireAction : ComponentWireAction<DefusableCompo
 
     public override object StatusKey { get; } = DefusableWireStatus.DelayIndicator;
 
-    public override bool Cut(EntityUid user, Wire wire, DefusableComponent comp)
+    public override bool Cut(EntityUid? user, Wire wire, DefusableComponent comp)
     {
         return true;
     }
 
-    public override bool Mend(EntityUid user, Wire wire, DefusableComponent comp)
+    public override bool Mend(EntityUid? user, Wire wire, DefusableComponent comp)
     {
         return true;
     }
 
-    public override void Pulse(EntityUid user, Wire wire, DefusableComponent comp)
+    public override void Pulse(EntityUid? user, Wire wire, DefusableComponent comp)
     {
         EntityManager.System<DefusableSystem>().DelayWirePulse(user, wire, comp);
     }

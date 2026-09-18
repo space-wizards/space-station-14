@@ -20,19 +20,19 @@ public sealed partial class AiVisionWireAction : ComponentWireAction<StationAiVi
         return component.Enabled ? StatusLightState.On : StatusLightState.Off;
     }
 
-    public override bool Cut(EntityUid user, Wire wire, StationAiVisionComponent component)
+    public override bool Cut(EntityUid? user, Wire wire, StationAiVisionComponent component)
     {
         return EntityManager.System<SharedStationAiSystem>()
             .SetVisionEnabled((wire.Owner, component), false, announce: true);
     }
 
-    public override bool Mend(EntityUid user, Wire wire, StationAiVisionComponent component)
+    public override bool Mend(EntityUid? user, Wire wire, StationAiVisionComponent component)
     {
         return EntityManager.System<SharedStationAiSystem>()
             .SetVisionEnabled((wire.Owner, component), true);
     }
 
-    public override void Pulse(EntityUid user, Wire wire, StationAiVisionComponent component)
+    public override void Pulse(EntityUid? user, Wire wire, StationAiVisionComponent component)
     {
         // TODO: This should turn it off for a bit
         // Need timer cleanup first out of scope.

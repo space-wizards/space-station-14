@@ -7,6 +7,7 @@ using Content.Server.Hands.Systems;
 using Content.Server.Stack;
 using Content.Server.Station.Systems;
 using Content.Server.Weapons.Ranged.Systems;
+using Content.Server.Wires;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -27,6 +28,7 @@ using Content.Shared.Stacks;
 using Content.Shared.Station.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Wires;
 using Robust.Server.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -52,6 +54,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private SharedBatterySystem _batterySystem = default!;
     [Dependency] private MetaDataSystem _metaSystem = default!;
     [Dependency] private GunSystem _gun = default!;
+    [Dependency] private WiresSystem _wiresSystem = default!;
 
     private void AddTricksVerbs(GetVerbsEvent<Verb> args)
     {
@@ -208,6 +211,45 @@ public sealed partial class AdminVerbSystem
                 Priority = (int)TricksVerbPriorities.InfiniteBattery,
             };
             args.Verbs.Add(infiniteBattery);
+        }
+
+        if (TryComp<WiresComponent>(args.Target, out var wires))
+        {
+            Verb cutWires = new()
+            {
+                Text = Loc.GetString("admin-verbs-cut-wires"),
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/WireHacking/wire_1_cut.svg.96dpi.png")),
+                Act = () =>
+                {
+                    foreach (var wire in wires.WiresList)
+                    {
+                        _wiresSystem.TryForceWireAction(args.Target, wire, WiresAction.Cut, wires);
+                    }
+                },
+                Impact = LogImpact.Medium,
+                Message = Loc.GetString("admin-trick-cut-wires-description"),
+                Priority = (int)TricksVerbPriorities.CutWires,
+            };
+            args.Verbs.Add(cutWires);
+            
+            Verb mendWires = new()
+            {
+                Text = Loc.GetString("admin-verbs-mend-wires"),
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/WireHacking/wire_1.svg.96dpi.png")),
+                Act = () =>
+                {
+                    foreach (var wire in wires.WiresList)
+                    {
+                        _wiresSystem.TryForceWireAction(args.Target, wire, WiresAction.Mend, wires);
+                    }
+                },
+                Impact = LogImpact.Medium,
+                Message = Loc.GetString("admin-trick-mend-wires-description"),
+                Priority = (int)TricksVerbPriorities.CutWires,
+            };
+            args.Verbs.Add(mendWires);
         }
 
         if (TryComp<AnchorableComponent>(args.Target, out var anchor))
@@ -854,26 +896,28 @@ public sealed partial class AdminVerbSystem
         BlockUnanchoring = -6,
         RefillBattery = -7,
         DrainBattery = -8,
-        RefillOxygen = -9,
-        RefillNitrogen = -10,
-        RefillPlasma = -11,
-        SendToTestArena = -12,
-        GrantAllAccess = -13,
-        RevokeAllAccess = -14,
-        Rejuvenate = -15,
-        AdjustStack = -16,
-        FillStack = -17,
-        Rename = -18,
-        Redescribe = -19,
-        RenameAndRedescribe = -20,
-        BarJobSlots = -21,
-        LocateCargoShuttle = -22,
-        InfiniteBattery = -23,
-        HaltMovement = -24,
-        Unpause = -25,
-        Pause = -26,
-        SnapJoints = -27,
-        MakeMinigun = -28,
-        SetBulletAmount = -29,
+        CutWires = -9,
+        MendWires = -10,
+        RefillOxygen = -11,
+        RefillNitrogen = -12,
+        RefillPlasma = -13,
+        SendToTestArena = -14,
+        GrantAllAccess = -15,
+        RevokeAllAccess = -16,
+        Rejuvenate = -17,
+        AdjustStack = -18,
+        FillStack = -19,
+        Rename = -20,
+        Redescribe = -21,
+        RenameAndRedescribe = -22,
+        BarJobSlots = -23,
+        LocateCargoShuttle = -24,
+        InfiniteBattery = -25,
+        HaltMovement = -26,
+        Unpause = -27,
+        Pause = -28,
+        SnapJoints = -29,
+        MakeMinigun = -30,
+        SetBulletAmount = -31,
     }
 }
