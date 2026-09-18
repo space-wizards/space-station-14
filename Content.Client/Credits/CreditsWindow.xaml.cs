@@ -98,7 +98,7 @@ public sealed partial class CreditsWindow : DefaultWindow
             _attributions.AddRange(rga);
 
             // A page can't be entered that we can't go to
-            PageJumpLineEdit.MaxValue = _attributions.Count / AttributionsSourcesPerPage + 1;
+            PageJumpLineEdit.SetMax(_attributions.Count / AttributionsSourcesPerPage + 1);
         }
 
         // Pick the attributions for this page
