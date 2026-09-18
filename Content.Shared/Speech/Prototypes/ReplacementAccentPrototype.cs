@@ -17,7 +17,7 @@ public sealed partial class ReplacementAccentPrototype : IPrototype
     public string[]? FullReplacements;
 
     /// <summary>
-    /// Default to use with FullReplacements if the text doesn't end with special punctuation
+    /// Default to use with <see cref="FullReplacements"/> if the text doesn't end with special punctuation.
     /// </summary>
     [DataField]
     public string DefaultPunctuation = ".";

@@ -20,9 +20,9 @@ public sealed partial class ReplacementAccentSystem : RelayAccentSystem<Replacem
     [Dependency] private IRobustRandom _random = default!;
 
     /// <summary>
-    /// Matches between 1 and 3 .?! punctuation marks at the end of a string
+    /// Matches between 1 and 3 .?! punctuation marks at the end of a string.
     /// </summary>
-    private static readonly Regex PunctuationRegex = new(@"[!\?\.]{1,3}$", RegexOptions.Compiled);
+    private static readonly Regex PunctuationRegex = new("[!?.]{1,3}$", RegexOptions.Compiled);
 
     private readonly Dictionary<ProtoId<ReplacementAccentPrototype>, (Regex regex, string replacement)[]>
         _cachedReplacements = new();
@@ -83,7 +83,7 @@ public sealed partial class ReplacementAccentSystem : RelayAccentSystem<Replacem
                 return "";
 
             var replacement = Loc.GetString(random.Pick(prototype.FullReplacements));
-            var punctuation = PunctuationRegex.Match(message).ToString();
+            var punctuation = PunctuationRegex.Match(message).Value;
 
             // no special punctuation
             if (string.IsNullOrEmpty(punctuation) || punctuation == ".")
