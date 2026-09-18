@@ -12,7 +12,6 @@ namespace Content.Shared.Botany.Traits.Systems;
 public sealed partial class PlantTraitLigneousSystem : EntitySystem
 {
     [Dependency] private PlantHarvestSystem _plantHarvest = default!;
-    [Dependency] private PlantHolderSystem _plantHolder = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedToolSystem _tool = default!;
 
@@ -30,24 +29,23 @@ public sealed partial class PlantTraitLigneousSystem : EntitySystem
         if (!holder.ReadyForHarvest)
             return;
 
-        if (_plantHolder.IsDead(ent.Owner))
-        {
-            _popup.PopupCursor(Loc.GetString("plant-component-dead-plant-message"), args.User);
-            return;
-        }
-
         // Ligneous requires sharp tool.
         var harvestToolQuality = ent.Comp.HarvestToolQuality;
         if (harvestToolQuality.HasValue && !_tool.HasQuality(args.Used, harvestToolQuality.Value))
             return;
 
-        _plantHarvest.TryHandleHarvest(ent.Owner, args.User);
+        _plantHarvest.TryHandleHarvest(ent.Owner, args.User, args.Used);
         args.Handled = true;
     }
 
     [SubscribeLocalEvent(before: [typeof(PlantHarvestSystem)])]
     private void OnHarvestAttempt(Entity<PlantTraitLigneousComponent> ent, ref PlantHarvestAttemptEvent args)
     {
+        if (ent.Comp.HarvestToolQuality is { } quality
+            && args.Used is { } used
+            && _tool.HasQuality(used, quality))
+            return;
+
         _popup.PopupCursor(Loc.GetString("plant-component-ligneous-cant-harvest-message"), args.User);
         args.Cancelled = true;
     }
