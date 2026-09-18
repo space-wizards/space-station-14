@@ -138,7 +138,7 @@ public sealed partial class RotatableSystem : EntitySystem
         if (!rotatableComp.RotateWhileAnchored && TryComp<PhysicsComponent>(entity, out var physics) &&
             physics.BodyType == BodyType.Static)
         {
-            _popup.PopupClient(Loc.GetString("rotatable-component-try-rotate-stuck"), entity, player);
+            _popup.PopupEntity(Loc.GetString("rotatable-component-try-rotate-stuck"), entity, player);
             return false;
         }
 
@@ -163,7 +163,7 @@ public sealed partial class RotatableSystem : EntitySystem
         if (!rotatableComp.RotateWhileAnchored && TryComp<PhysicsComponent>(entity, out var physics) &&
             physics.BodyType == BodyType.Static)
         {
-            _popup.PopupClient(Loc.GetString("rotatable-component-try-rotate-stuck"), entity, player);
+            _popup.PopupEntity(Loc.GetString("rotatable-component-try-rotate-stuck"), entity, player);
             return false;
         }
 
@@ -187,7 +187,7 @@ public sealed partial class RotatableSystem : EntitySystem
         // Check if the object is anchored.
         if (TryComp<PhysicsComponent>(entity, out var physics) && physics.BodyType == BodyType.Static)
         {
-            _popup.PopupClient(Loc.GetString("flippable-component-try-flip-is-stuck"), entity, player);
+            _popup.PopupEntity(Loc.GetString("flippable-component-try-flip-is-stuck"), entity, player);
             return false;
         }
 

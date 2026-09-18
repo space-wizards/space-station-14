@@ -176,7 +176,7 @@
     sprite: Clothing/Shoes/Boots/winterbootssyndicate.rsi
 
 - type: entity
-  parent: ClothingShoesBaseWinterBoots
+  parent: [ClothingShoesBaseWinterBoots, BaseSlicingRefinable]
   id: ClothingShoesBootsWinterWeb
   name: web winter boots
   description: Boots made out of dense webbing to help survive even the coldest of winters.
@@ -195,8 +195,8 @@
       reagents:
       - ReagentId: Fiber
         Quantity: 20
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: MaterialWebSilk1
       amount: 2
   - type: Construction

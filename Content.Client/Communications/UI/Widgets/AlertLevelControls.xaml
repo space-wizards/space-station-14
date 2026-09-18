@@ -1,0 +1,22 @@
+<BoxContainer xmlns="https://spacestation14.io"
+    Orientation="Vertical">
+    <!-- Info about the current alert level -->
+    <BoxContainer HorizontalAlignment="Center">
+        <Label StyleClasses="StatusFieldTitle" Margin="0 0 9 0"
+            Text="{Loc 'comms-console-alert-current-level-header'}" />
+        <Label Name="CurrentAlertLevelLabel" Margin="9 0 0 0"/>
+    </BoxContainer>
+
+    <Label Name="CurrentAlertLevelFlavorLabel" Align="Center" />
+
+    <!-- Controls for changing the alert level -->
+    <BoxContainer Margin="9 12 9 6">
+        <OptionButton Name="AlertLevelSelector" StyleClasses="OpenRight"
+            ToolTip="{Loc 'comms-console-menu-alert-level-button-tooltip'}"
+            HorizontalExpand="True" SizeFlagsStretchRatio="4" />
+        <Button Name="ConfirmAlertLevelButton" StyleClasses="OpenLeft"
+            HorizontalExpand="True" SizeFlagsStretchRatio="1"
+            Text="{Loc 'comms-console-confirm-alert-level-button'}"
+            Disabled="True" />
+    </BoxContainer>
+</BoxContainer>

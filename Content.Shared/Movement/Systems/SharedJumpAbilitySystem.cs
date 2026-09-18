@@ -72,7 +72,7 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
         if (_gravity.IsWeightless(args.Performer) || _standing.IsDown(args.Performer))
         {
             if (entity.Comp.JumpFailedPopup != null)
-                _popup.PopupClient(Loc.GetString(entity.Comp.JumpFailedPopup.Value), args.Performer, args.Performer);
+                _popup.PopupEntity(Loc.GetString(entity.Comp.JumpFailedPopup.Value), args.Performer, args.Performer);
             return;
         }
 

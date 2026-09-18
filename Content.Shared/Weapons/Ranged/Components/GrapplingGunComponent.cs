@@ -19,7 +19,7 @@ public sealed partial class GrapplingGunComponent : Component
     /// Don't be afraid to use large numbers, but do beware that this becomes fast as fuck in frictionless conditions such as space
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float ReelForce = 4000f;
+    public float ReelForce = 10000f;
 
     /// <summary>
     /// Highest mass that can be reeled in without resistance

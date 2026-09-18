@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
@@ -11,7 +11,9 @@ public sealed class AdminLogLabel : RichTextLabel
         Log = log;
         Separator = separator;
 
-        SetMessage($"{log.Date:HH:mm:ss}: {log.Message}");
+        var localTime = log.Date.ToLocalTime();
+
+        SetMessage($"{localTime:HH:mm:ss}: {log.Message}");
         OnVisibilityChanged += VisibilityChanged;
     }
 

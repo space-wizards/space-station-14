@@ -1,4 +1,4 @@
-﻿using Content.Shared.Random.Helpers;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Trigger.Components.Conditions;
 using Content.Shared.Verbs;
 using Robust.Shared.Random;
@@ -59,7 +59,7 @@ public sealed partial class TriggerSystem
     private void Toggle(Entity<ToggleTriggerConditionComponent> ent, EntityUid user)
     {
         var msg = ent.Comp.Enabled ? ent.Comp.ToggleOff : ent.Comp.ToggleOn;
-        _popup.PopupPredicted(Loc.GetString(msg), ent.Owner, user);
+        _popup.PopupEntity(Loc.GetString(msg), ent.Owner, user);
         ent.Comp.Enabled = !ent.Comp.Enabled;
         Dirty(ent);
     }

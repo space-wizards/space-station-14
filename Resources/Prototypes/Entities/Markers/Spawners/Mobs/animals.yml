@@ -277,6 +277,80 @@
 
 - type: entity
   parent: MarkerBase
+  id: SpawnMobSheep
+  name: Sheep Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: sheep_bare
+      sprite: Mobs/Animals/sheep.rsi
+    - state: sheep_wool
+      sprite: Mobs/Animals/sheep.rsi
+  - type: EntityTableSpawner
+    table:
+      id: MobSheep
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobSheepRainbow
+  name: Rainbow Sheep Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: sheep_bare
+      sprite: Mobs/Animals/sheep.rsi
+    - state: sheep_wool
+      sprite: Mobs/Animals/sheep.rsi
+  - type: EntityTableSpawner
+    table:
+      id: MobSheepRainbow
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobSheepSpace
+  name: Space Sheep Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: space_sheep_bare
+      sprite: Mobs/Animals/sheep.rsi
+    - state: space_sheep_wool_glowmask
+      sprite: Mobs/Animals/sheep.rsi
+  - type: EntityTableSpawner
+    table:
+      id: MobSheepSpace
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnWoolyAnimalGeneric
+  name: Wooly Animal Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: sheep_bare
+      sprite: Mobs/Animals/sheep.rsi
+    - state: sheep_wool
+      sprite: Mobs/Animals/sheep.rsi
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - !type:GroupSelector
+        weight: 80
+        children:
+        - id: SpawnMobSheep
+        - id: SpawnMobGoat
+      - !type:GroupSelector
+        weight: 20
+        children:
+        - id: SpawnMobSheepRainbow
+        - id: SpawnMobSheepSpace
+
+- type: entity
+  parent: MarkerBase
   id: SpawnMobSlug
   name: Slug Spawner
   components:
