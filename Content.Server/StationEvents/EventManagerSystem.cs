@@ -296,7 +296,6 @@ public sealed partial class EventManagerSystem : EntitySystem
         return allEvents;
     }
 
-    // TODO: WRITE A TEST TO ENSURE THAT IF A EVENT HAS MAX OCCURRENCES, THAT IT WILL PROPERLY CANCEL ONLY WHEN THEY'RE HIT
     private bool CanRun(EntityPrototype prototype, StationEventComponent stationEvent, int playerCount, TimeSpan currentTime)
     {
         // Do the really simple comparisons BEFORE we create an IEnumerable for GameRules :V
