@@ -166,9 +166,6 @@ public sealed partial class EventManagerSystem : EntitySystem
 
         foreach (var eventid in selectedEvents)
         {
-            if (_gameTicker.IsIgnored(eventid))
-                continue;
-
             if (!ProtoMan.Resolve(eventid, out var eventproto))
             {
                 Log.Warning("An event ID has no prototype index!");
@@ -303,6 +300,9 @@ public sealed partial class EventManagerSystem : EntitySystem
             return false;
 
         if (currentTime < TimeSpan.FromMinutes(stationEvent.EarliestStart))
+            return false;
+
+        if (_gameTicker.IsIgnored(prototype))
             return false;
 
         // Slightly slower if we don't care about MaxOccurrences, but that's not a huge issue in the context of the event scheduler.
