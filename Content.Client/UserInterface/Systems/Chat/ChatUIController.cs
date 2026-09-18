@@ -950,15 +950,6 @@ public sealed partial class ChatUIController : UIController
         }
     }
 
-    public void ResetChat()
-    {
-        History.Clear();
-        foreach (var chat in _chats)
-        {
-            chat.Repopulate();
-        }
-    }
-
     /// <summary>
     /// Returns the chat name color for a mob
     /// </summary>
