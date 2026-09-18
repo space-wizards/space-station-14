@@ -289,7 +289,6 @@ binds:
   type: State
   key: c
   mod1: Alt
-  canFocus: true
 - function: RotateObjectClockwise
   type: State
   key: R
