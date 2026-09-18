@@ -1,6 +1,7 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Xenoarchaeology.Artifact.XAE.Components;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Artifact.XAE;
 using Robust.Shared.Random;
@@ -23,15 +24,29 @@ public sealed partial class XAEIgniteSystem : BaseXAESystem<XAEIgniteComponent>
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEIgniteComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
-        var component = ent.Comp;
+        var range = ent.Comp.Range;
+
+        if (args.Modifications.TryGetValue(XenoArtifactEffectModifier.Range, out var rangeModifier))
+        {
+            range = Math.Max(2f, rangeModifier.Modify(range));
+        }
+
+        var stacks = ent.Comp.FireStack;
+        if (args.Modifications.TryGetValue(XenoArtifactEffectModifier.Power, out var effectivenessModifier))
+        {
+            var stacksMin = Math.Max(1, (int)effectivenessModifier.Modify(stacks.Min));
+            var stacksMax = Math.Max(stacksMin, (int)effectivenessModifier.Modify(stacks.Max));
+            stacks = new MinMax(stacksMin, stacksMax);
+        }
+
         _entities.Clear();
-        _lookup.GetEntitiesInRange(ent.Owner, component.Range, _entities);
+        _lookup.GetEntitiesInRange(ent.Owner, range, _entities);
         foreach (var target in _entities)
         {
             if (!_flammables.TryGetComponent(target, out var fl))
                 continue;
 
-            fl.FireStacks += component.FireStack.Next(_random);
+            fl.FireStacks += stacks.Next(_random);
             _flammable.Ignite(target, ent.Owner, fl);
         }
     }

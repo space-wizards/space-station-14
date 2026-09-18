@@ -1,14 +1,28 @@
-using System.Linq;
 using Content.Shared.EntityTable;
+using Content.Shared.EntityTable.Conditions;
+using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.NameIdentifier;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
+using Content.Shared.Xenoarchaeology.Artifact.Modifiers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Shared.Xenoarchaeology.Artifact;
 
 public abstract partial class SharedXenoArtifactSystem
 {
+    private static readonly Enum[] OnInitEffectModifiers = [XenoArtifactEffectModifier.Durability];
+    private static readonly PlacementBudgetDistributionStrategyBase[] BudgetDistributionStrategies =
+    [
+        new AllInOnePlacementBudgetDistributionStrategy(),
+        new NormalPlacementBudgetDistributionStrategy(),
+        new OffsettingPlacementBudgetDistributionStrategy()
+    ];
+
     [Dependency] private EntityTableSystem _entityTable =  default!;
 
     [Dependency] private EntityQuery<XenoArtifactComponent> _xenoArtifactQuery = default!;
@@ -25,8 +39,17 @@ public abstract partial class SharedXenoArtifactSystem
     private void OnNodeMapInit(Entity<XenoArtifactNodeComponent> ent, ref MapInitEvent args)
     {
         XenoArtifactNodeComponent nodeComponent = ent;
-        nodeComponent.MaxDurability -= nodeComponent.MaxDurabilityCanDecreaseBy.Next(RobustRandom);
         SetNodeDurability((ent, ent), nodeComponent.MaxDurability);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnAmplify(Entity<XenoArtifactNodeComponent> ent, ref XenoArtifactCollectEffectModificationsOnInitEvent args)
+    {
+        if (args.Modifications.TryGetValue(XenoArtifactEffectModifier.Durability, out var durabilityChange))
+        {
+            ent.Comp.Durability = Math.Max(1, (int)durabilityChange.Modify(ent.Comp.Durability));
+            Dirty(ent);
+        }
     }
 
     public void SetNodeUnlocked(Entity<XenoArtifactNodeComponent?> ent)
@@ -80,20 +103,20 @@ public abstract partial class SharedXenoArtifactSystem
     /// <summary>
     /// Creates artifact node entity, attaching trigger and marking depth level for future use.
     /// </summary>
-    public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, EntProtoId trigger, int depth = 0)
+    public Entity<XenoArtifactNodeComponent>? CreateNode(
+        Entity<XenoArtifactComponent> ent,
+        EntProtoId triggerProtoId,
+        EntityTableSelector effects,
+        int depth = 0
+    )
     {
-        var triggerProto = ProtoMan.Index(trigger);
-        return CreateNode(ent, triggerProto, depth);
-    }
+        EntProtoId? effect = _entityTable.GetSpawns(effects)
+                                         .FirstOrDefault();
+        if (effect == null)
+            return null;
 
-    /// <summary>
-    /// Creates artifact node entity, attaching trigger and marking depth level for future use.
-    /// </summary>
-    public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, EntityPrototype trigger, int depth = 0)
-    {
-        var entProtoId = _entityTable.GetSpawns(ent.Comp.EffectsTable)
-                                     .First();
-        return CreateNode(ent, entProtoId, trigger, depth);
+        var trigger = ProtoMan.Index(triggerProtoId);
+        return CreateNode(ent, effect.Value, trigger, depth);
     }
 
     /// <summary>
@@ -109,6 +132,93 @@ public abstract partial class SharedXenoArtifactSystem
         nodeComponent.TriggerTip = trigger.Name;
 
         EntityManager.AddComponents(nodeEnt.Value, trigger.Components);
+
+        Dirty(nodeEnt.Value);
+        return nodeEnt.Value;
+    }
+
+    protected Entity<XenoArtifactNodeComponent>? CreateNode(
+        Entity<XenoArtifactComponent> ent,
+        IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> directPredecessors,
+        EntityTableSelector triggers,
+        TriggerPoolData triggerPool,
+        EntityTableSelector effects,
+        int depth = 0
+    )
+    {
+        // step 1 - pick trigger by budget
+        float predecessorBudgetSum = 0;
+        if (directPredecessors.Count > 0)
+            predecessorBudgetSum = directPredecessors.Sum(x => x.Comp.Budget);
+
+        const int perDepthAdditionalBudget = 2000;
+        var virtualNodeAdditionalBudget = perDepthAdditionalBudget * depth;
+        var virtualNodeBudget = predecessorBudgetSum + virtualNodeAdditionalBudget;
+
+        var pr = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
+
+        EntProtoId? triggerProtoId;
+        using (var _ = new TemporarilyAddToContext<float>(triggerPool.Context, HasBudgetInRangeCondition.BudgetContextKey, virtualNodeBudget))
+        {
+            triggerProtoId = _entityTable.GetFirstOrDefault(triggers, pr, triggerPool.Context);
+        }
+
+        if (triggerProtoId == null)
+            return null;
+
+        var trigger = ProtoMan.Index(triggerProtoId.Value);
+        if (!trigger.Components.TryGetComponent<XenoArtifactTriggerBudgetComponent>(Factory, out var triggerBudget))
+        {
+            Log.Warning(
+                "Attempted to create artifact node but found no XenoArtifactTriggerBudgetComponent "
+                + "on selected trigger entity prototype - {entProtoId}!",
+                triggerProtoId
+            );
+            return null;
+        }
+
+        var actualBudget = predecessorBudgetSum + triggerBudget.ActualBudget;
+
+        // pick effect based on effect ranges and actual node budget.
+        EntProtoId? effect;
+        using (var _ = new TemporarilyAddToContext<float>(triggerPool.Context, HasBudgetInRangeCondition.BudgetContextKey, actualBudget))
+        {
+            effect = _entityTable.GetFirstOrDefault(effects, pr, triggerPool.Context); // todo:add context
+        }
+
+        if (effect == null)
+            return null;
+
+        triggerPool.AddTriggerAsUsed(triggerProtoId.Value);
+
+        AddNode((ent, ent), effect.Value, out var nodeEnt, dirty: false);
+        DebugTools.Assert(nodeEnt.HasValue, "Failed to create node on artifact.");
+
+        var nodeComponent = nodeEnt.Value.Comp;
+        nodeComponent.Depth = depth;
+        nodeComponent.Budget = actualBudget;
+
+        var budget = EnsureComp<XenoArtifactNodeBudgetComponent>(nodeEnt.Value);
+
+        ApplyActualBudgetPlacement((nodeEnt.Value, budget), actualBudget);
+
+        XenoArtifactEffectsModifications onInitAmplifications = new();
+        foreach (var onInitEffectModifier in OnInitEffectModifiers)
+        {
+            if (budget.ModifyBy.Dictionary.TryGetValue(onInitEffectModifier, out var value))
+            {
+                onInitAmplifications.Dictionary.Add(onInitEffectModifier, value);
+            }
+        }
+
+        nodeComponent.TriggerTip = trigger.Name;
+        EntityManager.AddComponents(nodeEnt.Value, trigger.Components);
+
+        if (!onInitAmplifications.IsEmpty)
+        {
+            var ev = new XenoArtifactCollectEffectModificationsOnInitEvent(onInitAmplifications);
+            RaiseLocalEvent(nodeEnt.Value, ref ev);
+        }
 
         Dirty(nodeEnt.Value);
         return nodeEnt.Value;
@@ -324,7 +434,7 @@ public abstract partial class SharedXenoArtifactSystem
     /// <summary>
     /// Gets two-dimensional array (as lists inside enumeration) that contains artifact nodes, grouped by segment.
     /// </summary>
-    public IEnumerable<List<Entity<XenoArtifactNodeComponent>>> GetSegmentsFromNodes(Entity<XenoArtifactComponent> ent, List<Entity<XenoArtifactNodeComponent>> nodes)
+    public List<List<Entity<XenoArtifactNodeComponent>>> GetSegmentsFromNodes(Entity<XenoArtifactComponent> ent, IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> nodes)
     {
         var outSegments = new List<List<Entity<XenoArtifactNodeComponent>>>();
         foreach (var node in nodes)
@@ -332,10 +442,8 @@ public abstract partial class SharedXenoArtifactSystem
             var segment = new List<Entity<XenoArtifactNodeComponent>>();
             GetSegmentNodesRecursive(ent, node, segment, outSegments);
 
-            if (segment.Count == 0)
-                continue;
-
-            outSegments.Add(segment);
+            if (segment.Count != 0)
+                outSegments.Add(segment);
         }
 
         return outSegments;
@@ -396,4 +504,130 @@ public abstract partial class SharedXenoArtifactSystem
         var predecessorNodes = GetPredecessorNodes((artifact, artifact), node);
         nodeComponent.ResearchValue = (int)(Math.Pow(1.25, Math.Pow(predecessorNodes.Count, 1.5f)) * nodeComponent.BasePointValue * durabilityMultiplier);
     }
+
+    private void ApplyActualBudgetPlacement(Entity<XenoArtifactNodeBudgetComponent> budgetEnt, float actualBudget)
+    {
+        // Calculate where node is placed inside budget range.
+        // For example for range  1000 - 2000 node with 2000 actual budget will be at '1'=100%,
+        // node with 1500 will be at '0.5'=50%, with 500 at '-0.5'=-50%
+        // placement in budget range affects how node modifier affects power of effect.
+        // Negative means lowering power, positive improved power
+        XenoArtifactNodeBudgetComponent budget = budgetEnt;
+        var halfRange = (float)(budget.BudgetRange.Max + budget.BudgetRange.Min) / 2;
+        var placementInBudgetRange = (actualBudget - halfRange) / halfRange;
+
+        var pickedStrategy = RobustRandom.Pick(BudgetDistributionStrategies);
+        var keys = budget.ModifyBy.Dictionary.Keys;
+        var distribution = pickedStrategy.Distribute(placementInBudgetRange, keys, RobustRandom);
+
+        foreach (var (key, provider) in budget.ModifyBy.Dictionary)
+        {
+            if (provider is IBudgetPlacementAwareModifier budgetPlacementAware && distribution.TryGetValue(key, out var share))
+            {
+                budgetPlacementAware.PlacementInBudget = share;
+            }
+        }
+
+        Dirty(budgetEnt, budget);
+    }
+
+    private XenoArtifactEffectsModifications GetBudgetNodeEffectModifications(Entity<XenoArtifactNodeComponent> node)
+    {
+        var currentAmplification = new XenoArtifactEffectsModifications();
+        if (TryComp<XenoArtifactNodeBudgetComponent>(node, out var budget))
+            return budget.ModifyBy;
+
+        return currentAmplification;
+    }
+
+
+    /// <summary>
+    /// Container that represents pool of XenoArtifact triggers.
+    /// </summary>
+    protected sealed class TriggerPoolData
+    {
+        private readonly HashSet<EntProtoId> _usedTriggers;
+
+        public TriggerPoolData(int requestedSize)
+        {
+            _usedTriggers = new(requestedSize);
+            Context = new EntityTableContext(new Dictionary<string, object>
+            {
+                [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = _usedTriggers
+            });
+        }
+
+        public readonly EntityTableContext Context;
+
+        public void AddTriggerAsUsed(EntProtoId trigger)
+        {
+            if (!_usedTriggers.Add(trigger))
+                throw new ArgumentException();
+        }
+
+        public IReadOnlyCollection<EntProtoId> UsedTriggers => _usedTriggers;
+    }
+
+    private readonly struct TemporarilyAddToContext<T> : IDisposable where T : notnull
+    {
+        private readonly EntityTableContext _context;
+        private readonly string _key;
+
+        public TemporarilyAddToContext(EntityTableContext context, string key, T value)
+        {
+            _context = context;
+            _key = key;
+            _context.SetData(_key, value);
+        }
+
+        public void Dispose()
+        {
+            _context.RemoveData(_key);
+        }
+    }
 }
+
+/// <summary>
+/// XenoArtifact effect modifiers, can be used to affect aspects of effects, increasing or decreasing its power.
+/// </summary>
+[Serializable, NetSerializable]
+public enum XenoArtifactEffectModifier
+{
+    /// <summary>
+    /// Increase or decrease node durability.
+    /// </summary>
+    Durability,
+    /// <summary>
+    /// Increase or decrease range in which effect will work. Specific result depends on effect.
+    /// </summary>
+    Range,
+    /// <summary>
+    /// Increase or decrease duration of effect.
+    /// </summary>
+    Duration,
+    /// <summary>
+    /// Increase effect power - actual effect depends on exact artifact effect.
+    /// </summary>
+    Power,
+}
+/// <summary>
+/// Event for collecting artifact node effects modifications on node init.
+/// Can be used to modify static data, such as durability, which should not be re-evaluated on each activation.
+/// </summary>
+/// <param name="Modifications">
+/// Collection of effect modification keys (aspects of artifact effect behaviour), with respective modification value.
+/// </param>
+[ByRefEvent]
+public record struct XenoArtifactCollectEffectModificationsOnInitEvent(XenoArtifactEffectsModifications Modifications);
+
+/// <summary>
+/// Event of collecting artifact node effects modifications on node activation.
+/// Can be used to modify node effect from node budget (deeper and more inter-connected nodes should be more powerful)
+/// or from other nodes (meta-nodes that are affecting other nodes effects, changing range, amount of produced items, etc).
+/// Is called on both all active nodes and on artifact itself.
+/// </summary>
+/// <param name="Modifications">
+/// Collection of effect modification keys (aspects of artifact effect behaviour), with respective modification value.
+/// </param>
+[ByRefEvent]
+public record struct XenoArtifactCollectEffectModificationsOnActivationEvent(XenoArtifactEffectsModifications Modifications);

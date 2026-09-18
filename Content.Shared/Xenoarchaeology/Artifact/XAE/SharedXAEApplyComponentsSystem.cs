@@ -5,7 +5,7 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAE;
 /// <summary>
 /// System for applying component-registry when artifact effect is activated.
 /// </summary>
-public sealed partial class XAEApplyComponentsSystem : BaseXAESystem<XAEApplyComponentsComponent>
+public abstract partial class SharedXAEApplyComponentsSystem : BaseXAESystem<XAEApplyComponentsComponent>
 {
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEApplyComponentsComponent> ent, ref XenoArtifactNodeActivatedEvent args)
@@ -25,6 +25,7 @@ public sealed partial class XAEApplyComponentsSystem : BaseXAESystem<XAEApplyCom
             }
 
             var clone = EntityManager.ComponentFactory.GetComponent(registry.Value);
+            TryApplyModifiers(clone, args.Modifications, args.Artifact);
             AddComp(artifact, clone);
         }
     }

@@ -261,6 +261,11 @@ public abstract partial class SharedToolSystem : EntitySystem
         return Resolve(uid, ref tool, false) && tool.Qualities.IsSupersetOf(qualities);
     }
 
+    public void ChangeSpeedModifier(ToolComponent tool, float toolSpeedModifier)
+    {
+        tool.SpeedModifier = toolSpeedModifier;
+    }
+
     private bool CanStartToolUse(EntityUid tool, EntityUid user, EntityUid? target, float fuel, IEnumerable<ProtoId<ToolQualityPrototype>> toolQualitiesNeeded, ToolComponent? toolComponent = null)
     {
         if (!Resolve(tool, ref toolComponent))

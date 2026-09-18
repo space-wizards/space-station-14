@@ -1,11 +1,12 @@
 using Content.Shared.Radiation.Systems;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Radiation.Components;
 
 /// <summary>
 ///     Irradiate all objects in range.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedRadiationSystem))]
 public sealed partial class RadiationSourceComponent : Component
 {
@@ -14,8 +15,7 @@ public sealed partial class RadiationSourceComponent : Component
     ///     From there radiation rays will travel over distance and loose intensity
     ///     when hit radiation blocker.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("intensity")]
+    [DataField, AutoNetworkedField]
     public float Intensity = 1;
 
     /// <summary>
@@ -23,10 +23,9 @@ public sealed partial class RadiationSourceComponent : Component
     ///     over distance. The bigger the value, the shorter range
     ///     of radiation source will be.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("slope")]
+    [DataField]
     public float Slope = 0.5f;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool Enabled = true;
 }
