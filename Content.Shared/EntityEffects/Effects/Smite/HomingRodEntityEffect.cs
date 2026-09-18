@@ -8,20 +8,20 @@ public sealed partial class HomingRod : EntityEffectBase<HomingRod>
     /// <summary>
     /// Entity prototype of the rod to spawn.
     /// </summary>
-    [DataField(required: true)]
-    public EntProtoId Prototype;
+    [DataField]
+    public EntProtoId Prototype = "ImmovableRodKeepTilesStill";
 
     /// <summary>
     /// Distance from the target at which the rod spawns.
     /// </summary>
     [DataField]
-    public float Distance;
+    public float Distance = 200;
 
     /// <summary>
     /// Speed at which the rod chases the target.
     /// </summary>
     [DataField]
-    public float Speed;
+    public float Speed = 20;
 
     /// <summary>
     /// Use the target's current sprint speed plus a small offset, falling back to Speed if unavailable.

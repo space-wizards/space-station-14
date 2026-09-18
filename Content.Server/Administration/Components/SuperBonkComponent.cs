@@ -13,6 +13,7 @@ public sealed partial class SuperBonkComponent : Component
     /// <summary>
     /// All of the tables the target will be bonked on.
     /// </summary>
+    // TODO: Probably needs to be split into two fields
     public List<EntityUid>.Enumerator Tables;
 
     /// <summary>

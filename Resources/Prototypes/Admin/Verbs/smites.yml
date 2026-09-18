@@ -394,7 +394,6 @@
     state: generic
   effects:
   - !type:StuffIntoLocker
-    prototype: ClosetMaintenance
 
 - type: adminVerb
   id: AdminSmiteHomingRod
@@ -406,7 +405,6 @@
     state: target_s
   effects:
   - !type:HomingRod
-    prototype: ImmovableRodKeepTilesStill
     distance: 350
     speed: 25
 
@@ -420,7 +418,6 @@
     state: target_c
   effects:
   - !type:HomingRod
-    prototype: ImmovableRodKeepTilesStill
     distance: 200
     speed: 5
     matchTargetSprintSpeed: true
