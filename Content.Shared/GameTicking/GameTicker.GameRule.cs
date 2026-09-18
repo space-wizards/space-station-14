@@ -40,6 +40,7 @@ public abstract partial class GameTicker
     private void OnGameRuleStarted(Entity<ActiveGameRuleComponent> rule, ref MapInitEvent args)
     {
         var ruleComp = RuleQuery.Comp(rule);
+        ruleComp.ActivatedAt = Timing.CurTime;
         Log.Info($"Started game rule {ToPrettyString(rule)}");
         Admin.Add(LogType.EventStarted, $"Started game rule {ToPrettyString(rule)}");
 
@@ -152,7 +153,6 @@ public abstract partial class GameTicker
         if (rule.Comp.Delay == null || RemComp<DelayedStartRuleComponent>(rule))
         {
             AddComp<ActiveGameRuleComponent>(rule);
-            rule.Comp.ActivatedAt = Timing.CurTime;
             return true;
         }
 
