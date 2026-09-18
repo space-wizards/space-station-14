@@ -1,7 +1,4 @@
-﻿using Content.Shared.Conditions;
-using Content.Shared.Conditions.UnifiedConditions;
-using Content.Shared.Mind;
-using Content.Shared.Roles;
+﻿using Content.Shared.Conditions.UnifiedConditions;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Mind;
