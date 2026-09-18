@@ -309,13 +309,18 @@ public sealed partial class EventManagerSystem : EntitySystem
         var count = 0;
         var lastRun = TimeSpan.Zero;
         var ruleQuery = EntityQueryEnumerator<GameRuleComponent, MetaDataComponent>();
-        while (ruleQuery.MoveNext(out var rule, out var meta))
+        while (ruleQuery.MoveNext(out var uid, out var rule, out var meta))
         {
             if (meta.EntityPrototype?.ID != prototype.ID)
                 continue;
 
             count++;
-            if (lastRun < rule.ActivatedAt)
+            if (!_gameTicker.IsGameRuleAdded((uid, rule)))
+            {
+                // Rule hasn't started yet so run as if it starts right now!
+                lastRun = currentTime;
+            }
+            else if (lastRun < rule.ActivatedAt)
                 lastRun = rule.ActivatedAt;
         }
 
