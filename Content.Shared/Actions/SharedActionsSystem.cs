@@ -310,7 +310,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
         if (IsCooldownActive(action, curTime))
             return false;
 
-        var target = GetEntity(ev.EntityTarget);
+        var target = GetEntity(args.NetTarget);
 
         // check for action use prevention
         var attemptEv = new ActionAttemptEvent(user, target);
