@@ -153,6 +153,7 @@
   icons: [ /Textures/Interface/Alerts/Handcuffed/Handcuffed.png ]
   name: alerts-handcuffed-name
   description: alerts-handcuffed-desc
+  checkCanInteract: false
 
 - type: alert
   id: Ensnared
