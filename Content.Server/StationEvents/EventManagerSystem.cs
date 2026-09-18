@@ -302,7 +302,7 @@ public sealed partial class EventManagerSystem : EntitySystem
         if (playerCount < stationEvent.MinimumPlayers)
             return false;
 
-        if (currentTime != TimeSpan.Zero && currentTime < TimeSpan.FromMinutes(stationEvent.EarliestStart))
+        if (currentTime < TimeSpan.FromMinutes(stationEvent.EarliestStart))
             return false;
 
         // Slightly slower if we don't care about MaxOccurrences, but that's not a huge issue in the context of the event scheduler.
