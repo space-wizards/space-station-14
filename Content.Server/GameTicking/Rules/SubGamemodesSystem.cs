@@ -1,10 +1,11 @@
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.GameTicking.Rules;
 using Content.Shared.Storage;
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed class SubGamemodesSystem : GameRuleSystem<SubGamemodesComponent>
+public sealed partial class SubGamemodesSystem : GameRuleSystem<SubGamemodesComponent>
 {
     protected override void Added(EntityUid uid, SubGamemodesComponent comp, GameRuleComponent rule, GameRuleAddedEvent args)
     {

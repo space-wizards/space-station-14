@@ -24,7 +24,10 @@
     - ForceFixRotations
     - Window
   - type: Sprite
-    drawdepth: WallTops
+    sprite: Structures/Windows/window-base.rsi
+  - type: Icon
+    sprite: Structures/Windows/window-base.rsi
+    state: full
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -45,8 +48,10 @@
     fx: EffectRCDDeconstruct4
   - type: Airtight
   - type: IconSmooth
-    key: windows
+    key: walls
     base: window
+  - type: PlacementReplacement
+    key: walls
   - type: InteractionPopup
     interactSuccessString: comp-window-knock
     messagePerceivedByOthers: comp-window-knock
@@ -65,25 +70,27 @@
   - type: StaticPrice
     price: 100
   - type: BlockWeather
+  - type: StructureAlignerPylon
+    pylons:
+    - Door
+    - Firelock
 
 - type: entity
-  parent: BaseWindowStructure
+  parent: [ BaseWindowStructure, StructureHealthBarrier ]
   id: Window
   components:
   - type: Sprite
-    sprite: Structures/Windows/window.rsi
+    sprite: Structures/Windows/window-base.rsi
   - type: Icon
-    sprite: Structures/Windows/window.rsi
+    sprite: Structures/Windows/window-base.rsi
     state: full
   - type: Damageable
-    damageModifierSet: Glass
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
-    - trigger:
+    - trigger: &DamageBarrierNormal
         !type:DamageTrigger
-        damage: 50
+        damage: 80
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -93,8 +100,6 @@
           ShardGlass:
             min: 1
             max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   parent: Window
@@ -102,10 +107,9 @@
   name: tinted window
   components:
   - type: Sprite
-    drawdepth: WallTops
-    sprite: Structures/Windows/tinted_window.rsi
+    sprite: Structures/Windows/window-tinted.rsi
   - type: Icon
-    sprite: Structures/Windows/tinted_window.rsi
+    sprite: Structures/Windows/window-tinted.rsi
   - type: IconSmooth
     base: twindow
   - type: Construction
@@ -190,7 +194,7 @@
     node: windowDirectional
 
 - type: entity
-  parent: BaseWindowStructureDirectional
+  parent: [ BaseWindowStructureDirectional, StructureHealthBarrierWeak ]
   id: WindowDirectional
   components:
   - type: Sprite
@@ -200,14 +204,12 @@
     sprite: Structures/Windows/directional.rsi
     state: window
   - type: Damageable
-    damageModifierSet: Glass
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 25
+        damage: 30
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -217,8 +219,37 @@
           ShardGlass:
             min: 1
             max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+
+- type: entity
+  parent: WindowDirectional
+  id: WindowDirectionalCorner
+  suffix: Corner
+  components:
+  - type: Sprite
+    sprite: Structures/Windows/directional.rsi
+    state: window_corner
+  - type: Icon
+    sprite: Structures/Windows/directional.rsi
+    state: window_corner
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,-0.28125,-0.28125"
+        density: 1500
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
+  - type: Construction
+    graph: WindowDirectionalCorner
+    node: windowDirectionalCorner
+  - type: DamageVisuals
+    thresholds: [5, 10, 20]
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks_directional_corner.rsi
 
 - type: entity
   abstract: true
@@ -245,6 +276,34 @@
     price: 35
 
 - type: entity
+  parent: WindowFrostedDirectional
+  id: WindowFrostedDirectionalCorner
+  suffix: Corner
+  components:
+  - type: Sprite
+    sprite: Structures/Windows/directional.rsi
+    state: frosted_window_corner
+  - type: Icon
+    sprite: Structures/Windows/directional.rsi
+    state: frosted_window_corner
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,-0.28125,-0.28125"
+        density: 1500
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
+  - type: DamageVisuals
+    thresholds: [5, 10, 20]
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks_directional_corner.rsi
+
+- type: entity
   parent: Window
   id: WindowDiagonal
   suffix: diagonal
@@ -254,8 +313,7 @@
     - Window
   components:
   - type: Sprite
-    drawdepth: WallTops
-    sprite: Structures/Windows/window_diagonal.rsi
+    sprite: Structures/Windows/window-base-diagonal.rsi
     state: state0
   - type: Tag
     tags:
@@ -263,10 +321,10 @@
     - Window
   - type: IconSmooth
     mode: Diagonal
-    key: windows
+    key: walls
     base: state
   - type: Icon
-    sprite: Structures/Windows/window_diagonal.rsi
+    sprite: Structures/Windows/window-base-diagonal.rsi
     state: state0
   - type: Fixtures
     fixtures:
@@ -288,7 +346,7 @@
     - East
   - type: DamageVisuals
     damageOverlay:
-      sprite: Structures/Windows/cracks_diagonal.rsi
+      sprite: Structures/Windows/cracks-diagonal.rsi
   - type: Construction
     graph: WindowDiagonal
     node: windowDiagonal

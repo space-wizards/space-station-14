@@ -54,6 +54,11 @@
         Quantity: 1.25
   - type: Item
     size: Tiny
+    inhandVisuals:
+      left:
+      - state: paper-inhand-left
+      right:
+      - state: paper-inhand-right
   - type: PhysicalComposition
 
 - type: entity
@@ -166,6 +171,14 @@
     backgroundModulate: "#e6e6fa"
     backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
     contentMargin: 32.0, 0.0, 32.0, 16.0
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: paper-inhand-left
+        color: "#e6e6fa"
+      right:
+      - state: paper-inhand-right
+        color: "#e6e6fa"
 
 - type: entity
   name: cargo invoice
@@ -200,6 +213,14 @@
     contentMargin: 16.0, 16.0, 16.0, 16.0
     headerImagePath: "/Textures/Interface/Paper/paper_heading_cargo_invoice.svg.96dpi.png"
     headerMargin: 0.0, 0.0, 0.0, 12.0
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: paper-inhand-left
+        color: "#9ef5ff"
+      right:
+      - state: paper-inhand-right
+        color: "#9ef5ff"
 
 - type: entity
   id: PaperNanoTaskItem
@@ -275,6 +296,14 @@
     guides:
     - CargoBounties
     - Cargo
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: paper-inhand-left
+        color: "#f7e574"
+      right:
+      - state: paper-inhand-right
+        color: "#f7e574"
 
 - type: entity
   id: PaperSalvageJobLabel
@@ -310,6 +339,14 @@
   - type: JobBoardLabel
   - type: StaticPrice #infinitely printable
     price: 0
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: paper-inhand-left
+        color: "#f7e574"
+      right:
+      - state: paper-inhand-right
+        color: "#f7e574"
 
 - type: entity
   name: character sheet
@@ -338,6 +375,14 @@
     contentImageModulate: "#cccccc"
     backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
     contentMargin: 16.0, 16.0, 16.0, 16.0
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: paper-inhand-left
+        color: "#cccccc"
+      right:
+      - state: paper-inhand-right
+        color: "#cccccc"
 
 - type: entity
   parent: Paper
@@ -436,6 +481,11 @@
         type: PaperBoundUserInterface
   - type: Item
     size: Tiny
+    inhandVisuals:
+      left:
+      - state: envelope-inhand-left
+      right:
+      - state: envelope-inhand-right
   - type: Tag
     tags:
     - Trash

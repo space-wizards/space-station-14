@@ -1,4 +1,4 @@
-﻿using Content.Server.Shuttles.Systems;
+using Content.Server.Shuttles.Systems;
 using Content.Shared.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;

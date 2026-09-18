@@ -1,4 +1,3 @@
-using Content.Shared.StatusEffectNew;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
@@ -9,11 +8,14 @@ namespace Content.Shared.Toolshed.TypeParsers;
 
 public sealed partial class StatusEffectCompletionParser : CustomCompletionParser<EntProtoId>
 {
-    [Dependency] private IEntityManager _entityManager = default!;
+    private static readonly ProtoId<EntityCategoryPrototype> StatusEffectCategoryId = "StatusEffects";
+
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     public override CompletionResult? TryAutocomplete(ParserContext ctx, CommandArgument? arg)
     {
-        var statusEffects = _entityManager.System<StatusEffectsSystem>();
-        return CompletionResult.FromHintOptions(statusEffects.StatusEffectPrototypes, GetArgHint(arg));
+        var hint = ToolshedCommand.GetArgHint(arg, typeof(ProtoId<EntityPrototype>));
+        var completionOptions = CompletionHelper.EntityPrototypes(ctx.GetWord(), StatusEffectCategoryId, _prototype);
+        return CompletionResult.FromHintOptions(completionOptions, hint);
     }
 }

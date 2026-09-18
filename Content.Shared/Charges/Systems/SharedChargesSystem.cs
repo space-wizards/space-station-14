@@ -1,6 +1,7 @@
 using Content.Shared.Actions.Events;
 using Content.Shared.Charges.Components;
 using Content.Shared.Examine;
+using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
@@ -11,6 +12,7 @@ public abstract partial class SharedChargesSystem : EntitySystem
 {
     [Dependency] protected IGameTiming _timing = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     /*
      * Despite what a bunch of systems do you don't need to continuously tick linear number updates and can just derive it easily.
@@ -60,11 +62,16 @@ public abstract partial class SharedChargesSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        var charges = GetCurrentCharges((ent.Owner, ent.Comp, null));
+        // Only block the action when it has no charges remaining.
+        if (HasCharges((ent.Owner, ent.Comp), 1))
+            return;
 
-        if (charges <= 0)
+        args.Cancelled = true;
+
+        if (ent.Comp.OnFailPopup is { } popup)
         {
-            args.Cancelled = true;
+            args.Reason = Loc.GetString(popup);
+            args.Type = ent.Comp.OnFailPopupType;
         }
     }
 

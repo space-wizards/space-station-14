@@ -4,11 +4,11 @@
 #Base barricade
 #A lot of components here are intentionally ommitted in case someone wants to make barricades that are made out of things other than wood.
 - type: entity
-  id: BaseBarricade
-  description: A barricade made out of wood planks. It looks like it can take a few solid hits.
-  parent: BaseStructure
-  name: wooden barricade
   abstract: true
+  parent: BaseStructure
+  id: BaseBarricade
+  name: wooden barricade
+  description: A barricade made out of wood planks. It looks like it can take a few solid hits.
   components:
   - type: InteractionOutline
   - type: Sprite
@@ -26,29 +26,12 @@
         - FullTileMask
         layer:
         - WallLayer
-  - type: Damageable
-    damageModifierSet: Wood
-  - type: Injurable
-    damageContainer: StructuralInorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 60
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          MaterialWoodPlank1:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: AtmosExposed
 
 #Regular Barricade
 - type: entity
+  parent: [ BaseBarricade, StructureHealthBarrier ]
   id: Barricade
-  parent: BaseBarricade
   components:
   - type: Construction
     graph: Barricade
@@ -65,6 +48,19 @@
   - type: FireVisuals
     sprite: Effects/fire.rsi
     normalState: 1
+  - type: Damageable
+    damageModifierSet: WoodMod
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 80
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 1
+            max: 2
 
 #Structure-Mounted Barricade
 - type: entity
@@ -80,8 +76,8 @@
 
 #Directional Barricade
 - type: entity
+  parent: [ BaseBarricade, StructureHealthBarrierWeak ]
   id: BarricadeDirectional
-  parent: BaseBarricade
   placement:
     mode: SnapgridCenter
 #A bunch of this is taken straight from dirwindows and there is a chance that I may have fucked something up. Probably not though
@@ -116,3 +112,16 @@
   - type: FireVisuals
     sprite: Effects/fire.rsi
     normalState: 1
+  - type: Damageable
+    damageModifierSet: WoodMod
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 0
+            max: 1

@@ -3,7 +3,6 @@
   mapName: 'Exo'
   mapPath: /Maps/exo.yml
   minPlayers: 45
-  maxPlayers: 65
   stations:
     Exo:
       stationProto: StandardNanotrasenStation
@@ -19,7 +18,8 @@
           path: /Maps/Shuttles/cargo_exo.yml
         - type: StationJobs
           availableJobs:
-            #command (7)
+            # TOTAL: 66 job slots + 0 late-join only
+            # Command (7)
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             HeadOfSecurity: [ 1, 1 ]
@@ -27,41 +27,42 @@
             ChiefEngineer: [ 1, 1 ]
             ResearchDirector: [ 1, 1 ]
             Quartermaster: [ 1, 1 ]
-            #service (8-10)
+            # Service (12)
             Bartender: [ 1, 1 ]
             Botanist: [ 2, 2 ]
-            Chef: [ 1, 1 ]
+            Chef: [ 2, 2 ]
             Janitor: [ 2, 2 ]
             Chaplain: [ 1, 1 ]
-            Librarian: [ 0, 1 ]
-            ServiceWorker: [ 1, 2 ]
+            Librarian: [ 1, 1 ]
+            ServiceWorker: [ 2, 2 ]
             Reporter: [ 1, 1 ]
-            #engineering (6-8)
+            # Engineering (8)
             AtmosphericTechnician: [ 2, 2 ]
             StationEngineer: [ 4, 4 ]
             TechnicalAssistant: [ 2, 2 ]
-            #medical (8-8)
+            # Medical (9)
             Chemist: [ 2, 2 ]
             MedicalDoctor: [ 3, 3 ]
             Paramedic: [ 1, 1 ]
             MedicalIntern: [ 2, 2 ]
-            #science (6-6)
+            Psychologist: [ 1, 1 ]
+            # Science (6)
             Scientist: [ 4, 4 ]
             ResearchAssistant: [ 2, 2 ]
-            #security (10-11)
+            # Security (11)
             Warden: [ 1, 1 ]
-            SecurityOfficer: [ 5, 6 ]
+            SecurityOfficer: [ 6, 6 ]
             Detective: [ 1, 1 ]
             SecurityCadet: [ 2, 2 ]
             Lawyer: [ 1, 1 ]
-            #supply (6)
+            # Supply (6)
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 3, 3 ]
-            #civilian (2-3 + overflow)
-            Passenger: [ -1, -1 ] #infinite, not counted
+            # Civilian (3 + overflow)
+            Passenger: [ -1, -1 ] # infinite, not counted
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
-            Musician: [ 0, 1 ]
-            #silicon (3)
+            Musician: [ 1, 1 ]
+            # Silicon (4)
             StationAi: [ 1, 1 ]
-            Borg: [ 2, 2 ]
+            Borg: [ 3, 3 ]
