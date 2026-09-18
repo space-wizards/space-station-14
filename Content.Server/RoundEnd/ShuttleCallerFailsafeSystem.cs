@@ -1,4 +1,4 @@
-﻿using Content.Server.Shuttles.Systems;
+using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Events;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
@@ -24,22 +24,18 @@ public sealed partial class ShuttleCallerFailsafeSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<StationPostInitEvent>(OnStationPostInit);
-        SubscribeLocalEvent<ShuttleCallerComponent, EntityTerminatingEvent>(OnShuttleCallerTerminating);
-        SubscribeLocalEvent<ShuttleCallerComponent, MapInitEvent>(OnShuttleCallerInit);
-        SubscribeLocalEvent<ShuttleCallerComponent, GridUidChangedEvent>(OnShuttleCallerGridChange);
-        SubscribeLocalEvent<ShuttleCallerComponent, MapUidChangedEvent>(OnShuttleCallerMapChange);
-
         Subs.CVar(_configMan, CCVars.EmergencyShuttleEnabled, value => _shuttleEnabled = value, true);
         Subs.CVar(_configMan, CCVars.EmergencyShuttleCallerFailsafeEnabled, value => _failsafeEnabled = value, true);
     }
 
+    [SubscribeLocalEvent]
     private void OnShuttleCallerTerminating(Entity<ShuttleCallerComponent> uid, ref EntityTerminatingEvent args)
     {
         GridChanging(uid, _transformSystem.GetGrid(uid.Owner), null);
         MapChanging(uid, _transformSystem.GetMap(uid.Owner), null);
     }
 
+    [SubscribeLocalEvent]
     private void OnStationPostInit(ref StationPostInitEvent args)
     {
         foreach (var uid in args.Station.Comp.Grids)
@@ -48,6 +44,7 @@ public sealed partial class ShuttleCallerFailsafeSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnShuttleCallerInit(Entity<ShuttleCallerComponent> uid, ref MapInitEvent args)
     {
         var thisGrid = _transformSystem.GetGrid(uid.Owner);
@@ -61,11 +58,13 @@ public sealed partial class ShuttleCallerFailsafeSystem : EntitySystem
         MapChanging(uid, null, thisMap);
     }
 
+    [SubscribeLocalEvent]
     private void OnShuttleCallerGridChange(Entity<ShuttleCallerComponent> uid, ref GridUidChangedEvent args)
     {
         GridChanging(uid, _transformSystem.GetGrid(uid.Owner), args.NewGrid);
     }
 
+    [SubscribeLocalEvent]
     private void OnShuttleCallerMapChange(Entity<ShuttleCallerComponent> uid, ref MapUidChangedEvent args)
     {
         MapChanging(uid, _transformSystem.GetMap(uid.Owner), args.NewMap);
@@ -122,8 +121,8 @@ public sealed partial class ShuttleCallerFailsafeSystem : EntitySystem
             return;
         }
 
-        // We check _failsafeEnabled here, because it could be updated midround.
-        if (!_shuttleEnabled || !_failsafeEnabled)
+        // We check _failsafeEnabled here, because it could be updated midround. You know. Just in case.
+        if (!_failsafeEnabled)
         {
             return;
         }
