@@ -35,21 +35,22 @@ public enum MapRollingConfig : int
     /// </summary>
     Random = 0x00,
 
-    RandomNoDuplicate = 0x01,
-
     /// <summary>
     /// Maps are chosen with a bias according to their weight.
     /// </summary>
     WeighedRandom = 0x10,
 
-    WeightedRandomNoDuplicate = 0x11,
-
     /// <summary>
     /// Maps are in-rotation, cycling without repetition
     /// </summary>
     Rotation = 0x20,
-    TypeFlag = 0xF0,
-    NoDuplicateFlag = 0x0F
+
+    /// <summary>
+    /// Controls if a duplicate map can be rolled
+    /// </summary>
+    NoDuplicateFlag = 0x0F,
+
+    TypeFlag = 0xF0
 }
 
 public sealed partial class CCVars
