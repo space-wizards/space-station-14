@@ -43,7 +43,8 @@
                               Margin="8 0"/>
                     <!-- Page buttons are generated here so that their invokes can be reset -->
             </BoxContainer>
-            <ScrollContainer HScrollEnabled="False"
+            <ScrollContainer Name="AttributionsScroll"
+                             HScrollEnabled="False"
                              VerticalExpand="True">
                 <BoxContainer Name="AttributionsContainer"
                               Orientation="Vertical"

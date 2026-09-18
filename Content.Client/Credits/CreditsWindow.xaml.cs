@@ -87,6 +87,7 @@ public sealed partial class CreditsWindow : DefaultWindow
         buttonsContainer.RemoveAllChildren();
 
         PageJumpLineEdit.Text = (count / AttributionsSourcesPerPage + 1).ToString();
+        AttributionsScroll.VScroll = 0;
 
         // Assemble attributions
         if (_attributions.Count == 0)
