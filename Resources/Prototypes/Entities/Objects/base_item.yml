@@ -224,8 +224,10 @@
     blacklist:
       components:
       - SecretStash # Prevents being able to insert plushies inside each other (infinite plush)!
+      - NukeDisk # Because a core mechanic of nukies should not be "where in this bag is the fucking disk"
       tags:
       - QuantumSpinInverter # It will cause issues with the grinder...
+      - FakeNukeDisk # For parity with NukeDisk
   - type: ToolOpenable
     openToolQualityNeeded: Slicing
     closeToolQualityNeeded: Slicing # Should probably be stitching or something if that gets added
