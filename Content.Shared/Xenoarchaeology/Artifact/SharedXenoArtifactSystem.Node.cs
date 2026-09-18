@@ -88,7 +88,7 @@ public abstract partial class SharedXenoArtifactSystem
         int depth = 0
     )
     {
-        var effect = _entityTable.GetFirstOrDefault(effects);
+        var effect = _entityTable.GetFirstOrNull(effects);
         if (effect == null)
             return null;
 

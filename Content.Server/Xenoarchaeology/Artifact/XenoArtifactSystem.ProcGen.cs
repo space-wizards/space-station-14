@@ -118,7 +118,8 @@ public sealed partial class XenoArtifactSystem
             var directPredecessors = SelectDirectPredecessors(predecessors, scatterCount);
             scatterCount -= (directPredecessors.Count - 1);
 
-            var trigger = _entityTable.GetFirstOrDefault(ent.Comp.TriggersTable, RobustRandom, triggerPool.Context);
+            var trigger = _entityTable.GetFirstOrNull(ent.Comp.TriggersTable, RobustRandom, triggerPool.Context);
+            // should log error but in next PRs we will get cases of no nodes fitting into budget so it will be usual case, not error
             if (trigger == null)
                 continue;
 
