@@ -24,12 +24,9 @@ public sealed partial class TextLinkTag
         if (!NetEntity.TryParse(entStr, out var netEntity))
             return false;
 
-        var chat = _entity.System<SharedChatSystem>();
-        var clickable = chat.CanClickMessageSender(netEntity);
-
         var color = GetLinkColor(node, netEntity);
 
-        data = new LinkData(LinkString: null, LinkEntity: netEntity, Color: color, Clickable: clickable);
+        data = new LinkData(LinkString: null, LinkEntity: netEntity, Color: color);
         return true;
     }
 
@@ -57,7 +54,7 @@ public sealed partial class TextLinkTag
         if (!_entity.TryGetComponent<GrammarComponent>(uid, out var grammar) || grammar.ProperNoun != true)
             return null;
 
-        var name = _entity.GetComponent<MetaDataComponent>(uid.Value).EntityName;
+        var name = _entity.GetComponent<MetaDataComponent>(uid.GetValueOrDefault()).EntityName;
         return Color.FromHex(chatUi.GetNameColor(name));
     }
 }

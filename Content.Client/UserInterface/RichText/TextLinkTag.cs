@@ -42,7 +42,7 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
     /// <summary>
     /// Resolved Link Data, LinkString and LinkEntity should not be populated at the same time
     /// </summary>
-    private readonly record struct LinkData(string? LinkString, NetEntity? LinkEntity, Color? Color, bool Clickable);
+    private readonly record struct LinkData(string? LinkString, NetEntity? LinkEntity, Color? Color);
 
     public TextLinkTag()
     {
