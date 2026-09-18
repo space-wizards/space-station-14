@@ -30,6 +30,10 @@ public enum PaperLabelVisuals : byte
 /// <summary>
 /// The type of paper label a given sprite is.
 /// </summary>
+/// <remarks>
+/// If adding new values, consider extending the default label states in <see cref="PaperLabelVisualsComponent.LabelStates"/>,
+/// and adding this states to labelable RSIs.
+/// </remarks>
 [Serializable, NetSerializable]
 public enum PaperLabelType : byte
 {
