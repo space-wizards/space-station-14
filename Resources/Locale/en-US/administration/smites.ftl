@@ -23,6 +23,7 @@ admin-smite-set-alight-name = Set Alight
 admin-smite-monkeyify-name = Monkeyify
 admin-smite-garbage-can-name = Garbage Can
 admin-smite-electrocute-name = Electrocute
+admin-smite-heartattack-name = Heart Attack
 admin-smite-remove-blood-name = Remove blood
 admin-smite-remove-hands-name = Remove hands
 admin-smite-remove-hand-name = Remove hand
@@ -64,6 +65,7 @@ admin-smite-crawler-name = Crawler
 admin-smite-homing-rod-name = Homing Rod
 admin-smite-homing-rod-slow-name = Slowming Rod
 admin-smite-silicon-laws-bound-name = Become Silicon
+admin-smite-make-stinky-name = Make Stinky
 
 ## Smite descriptions
 
@@ -72,6 +74,7 @@ admin-smite-chess-dimension-description = Banishment to the Chess Dimension.
 admin-smite-set-alight-description = Makes them burn.
 admin-smite-monkeyify-description = Turns the target into a monkey.
 admin-smite-electrocute-description = Electrocutes them, rendering anything they were wearing useless.
+admin-smite-heartattack-description = Immediately kills them with asphyxiation damage.
 admin-smite-creampie-description = A creampie, condensed into a button.
 admin-smite-remove-blood-description = Removes all of their blood, messily.
 admin-smite-vomit-organs-description = Causes them to vomit, organs included.
@@ -113,6 +116,7 @@ admin-smite-crawler-description = Makes the target fall down and be unable to st
 admin-smite-homing-rod-description = Launches a homing immovable rod straight at them.
 admin-smite-homing-rod-slow-description = Launches a slow moving homing immovable rod straight at them.
 admin-smite-silicon-laws-bound-description = Makes the target bound to silicon laws. Law 2, jump out of the window.
+admin-smite-make-stinky-description = Makes the target stinky by making them release ammonia. Ew!
 
 ## Tricks descriptions
 

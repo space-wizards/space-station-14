@@ -44,7 +44,7 @@ public sealed partial class PopupOnActionSystem : EntitySystem
 
         // Popup to show to the performer.
         // If there is a target the popup is located on the target, if there is no target it is located on the user.
-        _popup.PopupClient(selfMessage, target ?? args.Performer, args.Performer, ent.Comp.PopupType);
+        _popup.PopupEntity(selfMessage, target ?? args.Performer, args.Performer, ent.Comp.PopupType);
 
         // Popup to show to the target.
         // Located on the target.

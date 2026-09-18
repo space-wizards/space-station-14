@@ -19,41 +19,41 @@ namespace Content.Shared.Disposal.Holder;
 /// </summary>
 public abstract partial class SharedDisposalHolderSystem : EntitySystem
 {
+    [Dependency] private INetManager _net = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private DisposalTubeSystem _disposalTube = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedEyeSystem _eye = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedTransformSystem _xform = default!;
-    [Dependency] private INetManager _net = default!;
-    [Dependency] private SharedEyeSystem _eye = default!;
 
-    private EntityQuery<TransformComponent> _xformQuery;
+    [Dependency] private EntityQuery<TransformComponent> _xformQuery;
 
     /// <summary>
     /// Allowed characters for tagging disposed entities.
     /// </summary>
     public static readonly Regex TagRegex = new("^[a-zA-Z0-9, ]*$", RegexOptions.Compiled);
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _xformQuery = GetEntityQuery<TransformComponent>();
-
-        SubscribeLocalEvent<DisposalHolderComponent, ComponentStartup>(OnComponentStartup);
-        SubscribeLocalEvent<DisposalHolderComponent, BeforeExplodeEvent>(OnExploded);
-
-        SubscribeLocalEvent<ActorComponent, DisposalSystemTransitionEvent>(OnActorTransition);
-        SubscribeLocalEvent<BeingDisposedComponent, GetVisMaskEvent>(OnGetVisibility);
-    }
-
+    [SubscribeLocalEvent]
     private void OnComponentStartup(Entity<DisposalHolderComponent> ent, ref ComponentStartup args)
     {
         // Ensure the holder will have its container
         ent.Comp.Container = _container.EnsureContainer<Container>(ent, nameof(DisposalHolderComponent));
     }
 
+    [SubscribeLocalEvent]
+    private void OnComponentRemove(Entity<DisposalHolderComponent> ent, ref ComponentRemove args)
+    {
+        if (ent.Comp.Container is not { } container)
+            return;
+
+        // Inform the contained entities that they aren't in disposals anymore.
+        foreach (var contained in container.ContainedEntities)
+            DetachEntity(contained);
+    }
+
+    [SubscribeLocalEvent]
     private void OnExploded(Entity<DisposalHolderComponent> ent, ref BeforeExplodeEvent args)
     {
         if (ent.Comp.Container == null)
@@ -62,18 +62,27 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         args.Contents.AddRange(ent.Comp.Container.ContainedEntities);
     }
 
+    [SubscribeLocalEvent]
     private void OnActorTransition(Entity<ActorComponent> ent, ref DisposalSystemTransitionEvent args)
     {
         // Refreshes visibility mask of a player, leading to OnGetVisibility being called
         _eye.RefreshVisibilityMask(ent.Owner);
     }
 
+    [SubscribeLocalEvent]
     private void OnGetVisibility(Entity<BeingDisposedComponent> entity, ref GetVisMaskEvent ev)
     {
         // Prevents mispredictions by allowing players in the disposal system
         // to be sent any entities that are hidden under subfloors
         if (HasComp<BeingDisposedComponent>(ev.Entity))
             ev.VisibilityMask |= (int)VisibilityFlags.Subfloor;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnDisposedRemovedFromContainer(Entity<BeingDisposedComponent> ent, ref EntGotRemovedFromContainerMessage args)
+    {
+        if (args.Container.Owner == ent.Comp.Holder)
+            DetachEntity(ent);
     }
 
     /// <summary>
@@ -118,10 +127,9 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         var xform = Transform(ent);
 
         // Attempt to damage entities when changing direction
-        if (ent.Comp.CurrentDirection != ev.Next)
+        if (ent.Comp.CurrentDirection != Direction.Invalid && ent.Comp.CurrentDirection != ev.Next)
         {
-            ent.Comp.DirectionChangeCount++;
-
+            // Apply damage
             if (ent.Comp.Container != null && ent.Comp.AccumulatedDamage < ent.Comp.MaxAllowedDamage)
             {
                 foreach (var held in ent.Comp.Container.ContainedEntities)
@@ -132,10 +140,33 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
                 ent.Comp.AccumulatedDamage += ent.Comp.DamageOnTurn.GetTotal();
             }
 
+            // Play clang sound
             if (_net.IsServer)
             {
                 _audio.PlayPvs(ent.Comp.ClangSound, xform.Coordinates);
             }
+
+            // If the disposed entity re-entered a suspect pipe,
+            // it is likely caught in a loop and should try to escape
+            if (ent.Comp.SuspectPipes.Contains(tube))
+            {
+                ent.Comp.CanEscape = true;
+            }
+
+            // Calculate the change in the direction of travel, scaled so that
+            // -1 is a 90 degree left turn and 1 is a 90 degree right turn
+            var delta = 2 * Angle.ShortestDistance(ent.Comp.CurrentDirection.ToAngle(), ev.Next.ToAngle()).Theta / Math.PI;
+            ent.Comp.DirectionBias += (float)Math.Clamp(delta, -1, 1);
+
+            // If the updated travel direction bias exceeds the allowed threshold,
+            // the pipe is marked as suspect.
+            if (Math.Abs(ent.Comp.DirectionBias) >= ent.Comp.DirectionBiasThreshold)
+            {
+                ent.Comp.SuspectPipes.Add(tube);
+                ent.Comp.DirectionBias = 0;
+            }
+
+            Dirty(ent);
 
             // Check if the holder can escape the current pipe
             if (TryEscaping(ent, (tube, tube.Comp)))
@@ -148,7 +179,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         ent.Comp.NextTube = _disposalTube.GetTubeInDirection((tube, tube.Comp), ent.Comp.CurrentDirection);
 
         // Update rotation
-        xform.LocalRotation = ent.Comp.CurrentDirection.ToAngle();
+        _xform.SetLocalRotationNoLerp(ent, ent.Comp.CurrentDirection.ToAngle(), xform);
 
         Dirty(ent);
         return true;

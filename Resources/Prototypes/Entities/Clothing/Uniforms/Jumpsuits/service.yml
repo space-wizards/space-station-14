@@ -1,0 +1,326 @@
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  id: ClothingUniformJumpsuitBartender
+  name: bartender's uniform
+  description: A nice and tidy uniform. Shame about the bar though.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/bartender.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitJacketMonkey
+  name: bartender's monkey jacket
+  description: A decent jacket, for a decent monkey.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/punpun.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/punpun.rsi
+  - type: SuitSensor
+    controlsLocked: false
+    randomMode: false
+    mode: SensorCords
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBartenderPurple
+  name: purple bartender's uniform
+  description: A special purple outfit to serve drinks.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/bartender_purple.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/bartender_purple.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitChaplain
+  name: chaplain's jumpsuit
+  description: It's a black jumpsuit, often worn by religious folk.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/chaplain.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/chaplain.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitChef
+  name: chef uniform
+  description: Can't cook without this.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/chef.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/chef.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitClown
+  name: clown suit
+  description: HONK!
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/clown.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/clown.rsi
+  - type: Tag
+    tags:
+    - ClownSuit
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingUniformJumpsuitClown
+  id: ClothingUniformJumpsuitClownBanana
+  name: banana clown suit
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/clown_banana.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/clown_banana.rsi
+  - type: Construction
+    graph: BananaClownJumpsuit
+    node: jumpsuit
+  - type: Armor
+    modifiers:
+      coefficients:
+        Radiation: 0.8
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitJester
+  name: jester suit
+  description: A jolly dress, well suited to entertain your master, nuncle.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/jester.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/jester.rsi
+
+- type: entity
+  parent: ClothingUniformJumpsuitJester
+  id: ClothingUniformJumpsuitJesterAlt
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/jester2.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/jester2.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  id: ClothingUniformJumpsuitHydroponics
+  name: hydroponics jumpsuit
+  description: Has a strong earthy smell to it. Hopefully it's merely dirty as opposed to soiled.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/hydro.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  id: ClothingUniformJumpsuitJanitor
+  name: janitor jumpsuit
+  description: The jumpsuit for the poor sop with a mop.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/janitor.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitMime
+  name: mime suit
+  description: ...
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/mime.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/mime.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitLibrarian
+  name: librarian jumpsuit
+  description: A cosy green jumper fit for a curator of books.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/librarian.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/librarian.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCurator
+  name: sensible suit
+  description: It's sensible. Too sensible...
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/curator.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/curator.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitPsychologist
+  name: psychologist suit
+  description: I don't lose things. I place things in locations which later elude me.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/psychologist.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/psychologist.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitTramDriver
+  name: tram driver jumpsuit
+  description: Perfectly ironed, for well-prepared professionals.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/tramdriver.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/tramdriver.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitReporter
+  name: reporter suit
+  description: A good reporter remains a skeptic all their life.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/reporter.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/reporter.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSafari
+  name: safari suit
+  description: Perfect for a jungle excursion.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/safari.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/safari.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitJournalist
+  name: journalist suit
+  description: If journalism is good, it is controversial, by nature.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/journalist.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/journalist.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitMonasticRobeDark
+  name: dark monastic robe
+  description: It's a dark robe, often worn by religious folk.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/monastic_robe_dark.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/monastic_robe_dark.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitMonasticRobeLight
+  name: light monastic robe
+  description: It's a light robe, often worn by religious folk.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/monastic_robe_light.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/monastic_robe_light.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitMusician
+  name: musician's tuxedo
+  description: A fancy tuxedo for the musically inclined.  Perfect for any lounge act!
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/musician.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/musician.rsi
+
+- type: entity
+  parent: ClothingUniformJumpsuitClown
+  id: ClothingUniformJumpsuitCluwne
+  name: cluwne suit
+  suffix: Unremoveable
+  description: Cursed cluwne suit.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/cluwne.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/cluwne.rsi
+  - type: Unremoveable
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitLawyerRed
+  name: red lawyer suit
+  description: A flashy red suit worn by lawyers and show-offs.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/lawyerred.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/lawyerred.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitLawyerBlue
+  name: blue lawyer suit
+  description: A flashy blue suit worn by lawyers and show-offs.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/lawyerblue.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/lawyerblue.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitLawyerBlack
+  name: black lawyer suit
+  description: A subtle black suit worn by lawyers and gangsters.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/lawyerblack.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/lawyerblack.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitLawyerPurple
+  name: purple lawyer suit
+  description: A stylish purple piece worn by lawyers and show people.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/lawyerpurple.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/lawyerpurple.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitLawyerGood
+  name: good lawyer's suit
+  description: A tacky suit perfect for a CRIMINAL lawyer!
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/lawyergood.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/lawyergood.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformOveralls
+  name: overalls
+  description: Great for working outdoors.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Service/overalls.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Service/overalls.rsi

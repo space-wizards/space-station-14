@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
@@ -52,7 +52,7 @@ public sealed partial class AdminLogsEui : BaseEui
         };
     }
 
-    private int CurrentRoundId => _e.System<GameTicker>().RoundId;
+    private int CurrentRoundId => _e.System<ServerGameTicker>().RoundId;
 
     public override async void Opened()
     {
@@ -142,10 +142,11 @@ public sealed partial class AdminLogsEui : BaseEui
         }
     }
 
-    public void SetLogFilter(string? search = null, bool invertTypes = false, HashSet<LogType>? types = null)
+    public void SetLogFilter(string? search = null, List<Guid>? players = null, bool invertTypes = false, HashSet<LogType>? types = null)
     {
         var message = new SetLogFilter(
             search,
+            players,
             invertTypes,
             types);
 

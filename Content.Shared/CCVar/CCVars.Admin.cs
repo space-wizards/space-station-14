@@ -1,4 +1,7 @@
-﻿using Robust.Shared.Configuration;
+using Robust.Shared.Configuration;
+
+using Content.Shared.Administration;
+using Content.Shared.CCVar.CVarAccess;
 
 namespace Content.Shared.CCVar;
 
@@ -145,8 +148,9 @@ public sealed partial class CCVars
     /// <summary>
     ///     How long an admin client can go without any input before being considered AFK.
     /// </summary>
+    [CVarControl(AdminFlags.VarEdit, min: 0f, max: float.MaxValue)]
     public static readonly CVarDef<float> AdminAfkTime =
-        CVarDef.Create("admin.afk_time", 600f, CVar.SERVERONLY);
+        CVarDef.Create("admin.afk_time",10800f, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     ///     If true, admins are able to connect even if

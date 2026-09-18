@@ -292,6 +292,8 @@
   components:
   - type: Item
     size: Ginormous
+    shape:
+    - 0,0,4,3
     inhandVisuals:
       left:
         - sprite: Objects/Storage/Briefcases/briefcase_brown.rsi

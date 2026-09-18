@@ -16,7 +16,6 @@
   id: ClothingHeadEyeBaseFlippable
   abstract: true
   components:
-  - type: Appearance
   - type: FlippableClothingVisuals
   - type: Foldable
     canFoldInsideContainer: true

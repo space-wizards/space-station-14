@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Localizations;
 using Content.Shared.Metabolism;
 using Robust.Shared.Prototypes;
@@ -8,6 +8,9 @@ namespace Content.Shared.EntityConditions.Conditions.Body;
 /// <inheritdoc cref="EntityCondition"/>
 public sealed partial class MetabolizerTypeCondition : EntityConditionBase<MetabolizerTypeCondition>
 {
+    /// <summary>
+    /// Which metabolizer types would fulfill this condition. Need only one match.
+    /// </summary>
     [DataField(required: true)]
     public ProtoId<MetabolizerTypePrototype>[] Type = default!;
 

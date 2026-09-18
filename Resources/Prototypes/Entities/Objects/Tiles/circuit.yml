@@ -1,0 +1,48 @@
+# Circuits
+- type: entity
+  name: green circuit floor
+  parent: FloorTileItemBase
+  id: FloorTileItemGCircuit
+  components:
+  - type: Sprite
+    state: gcircuit
+  - type: Item
+    heldPrefix: gcircuit
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorGreenCircuit
+  - type: Stack
+    stackType: FloorTileGCircuit
+
+- type: entity
+  name: blue circuit floor
+  parent: FloorTileItemBase
+  id: FloorTileItemBCircuit
+  components:
+  - type: Sprite
+    state: bcircuit
+  - type: Item
+    heldPrefix: bcircuit
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorBlueCircuit
+  - type: Stack
+    stackType: FloorTileBCircuit
+
+- type: entity
+  name: red circuit floor
+  parent: FloorTileItemBase
+  id: FloorTileItemRCircuit
+  components:
+  - type: Sprite
+    state: rcircuit
+  - type: Item
+    heldPrefix: rcircuit
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorRedCircuit
+  - type: Stack
+    stackType: FloorTileRCircuit

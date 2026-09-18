@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Physics;
 using Content.Shared.Slippery;
 using Content.Shared.StepTrigger.Components;
@@ -39,6 +39,9 @@ public sealed partial class SlipifyEntityEffectSystem : EntityEffectSystem<Fixtu
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class Slipify : EntityEffectBase<Slipify>
 {
+    /// <summary>
+    /// The slippery properties to apply upon the target.
+    /// </summary>
     [DataField]
     public SlipperyEffectEntry Slippery = new();
 }
