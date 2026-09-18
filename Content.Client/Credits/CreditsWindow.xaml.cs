@@ -1,6 +1,5 @@
 using System.Linq;
 using System.Numerics;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Content.Client.Stylesheets;
 using Content.Shared.CCVar;
