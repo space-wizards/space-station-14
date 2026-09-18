@@ -327,6 +327,8 @@
     range: 200
   - type: Appearance
   - type: PoweredLightVisuals
+    blinkingSound:
+      path: "/Audio/Machines/light_tube_on.ogg"
     spriteStateMap:
       empty: empty
       off: base
