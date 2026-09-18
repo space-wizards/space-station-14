@@ -1,7 +1,6 @@
 #nullable enable
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
@@ -98,7 +97,7 @@ public sealed partial class StereoTest : GameTest
         {
             var fields = GetRelevantFields(type);
             if (fields is not null)
-                dict.Add(type, fields.ToList());
+                dict.Add(type, [.. fields]);
         }
 
         return dict;
