@@ -80,7 +80,7 @@
     maxAngle: 25
     angleIncrease: 2
     angleDecay: 20
-        selectedMode: FullAuto # Override of BaseWeaponPistol to default to full-auto
+    selectedMode: FullAuto # Override of BaseWeaponPistol to default to full-auto
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
   - type: ItemSlots
