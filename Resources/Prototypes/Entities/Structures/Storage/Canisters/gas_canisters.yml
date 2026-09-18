@@ -14,9 +14,7 @@
     noRot: true
     layers:
     - state: grey
-    - state: paper
-      visible: false
-      map: [ "enum.PaperLabelVisuals.Layer" ]
+    - map: [ "enum.PaperLabelVisuals.Layer" ]
     - state: integrity-unshaded-0
       map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
       shader: unshaded
@@ -136,9 +134,7 @@
     - type: Sprite
       layers:
       - state: yellow
-      - state: paper
-        visible: false
-        map: [ "enum.PaperLabelVisuals.Layer" ]
+      - map: [ "enum.PaperLabelVisuals.Layer" ]
       - state: integrity-unshaded-0
         map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
         shader: unshaded
@@ -174,9 +170,7 @@
     sprite: Structures/Storage/canister.rsi
     layers:
     - state: grey
-    - state: paper
-      visible: false
-      map: [ "enum.PaperLabelVisuals.Layer" ]
+    - map: [ "enum.PaperLabelVisuals.Layer" ]
     - state: integrity-unshaded-0
       map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
       shader: unshaded
@@ -212,9 +206,7 @@
   - type: Sprite
     layers:
     - state: blue
-    - state: paper
-      visible: false
-      map: [ "enum.PaperLabelVisuals.Layer" ]
+    - map: [ "enum.PaperLabelVisuals.Layer" ]
     - state: integrity-unshaded-0
       map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
       shader: unshaded
@@ -264,9 +256,7 @@
     - type: Sprite
       layers:
       - state: red
-      - state: paper
-        visible: false
-        map: [ "enum.PaperLabelVisuals.Layer" ]
+      - map: [ "enum.PaperLabelVisuals.Layer" ]
       - state: integrity-unshaded-0
         map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
         shader: unshaded
@@ -316,9 +306,7 @@
     - type: Sprite
       layers:
       - state: black
-      - state: paper
-        visible: false
-        map: [ "enum.PaperLabelVisuals.Layer" ]
+      - map: [ "enum.PaperLabelVisuals.Layer" ]
       - state: integrity-unshaded-0
         map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
         shader: unshaded
@@ -370,9 +358,7 @@
     - type: Sprite
       layers:
       - state: orange
-      - state: paper
-        visible: false
-        map: [ "enum.PaperLabelVisuals.Layer" ]
+      - map: [ "enum.PaperLabelVisuals.Layer" ]
       - state: integrity-unshaded-0
         map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
         shader: unshaded
@@ -409,9 +395,7 @@
     - type: Sprite
       layers:
       - state: green
-      - state: paper
-        visible: false
-        map: [ "enum.PaperLabelVisuals.Layer" ]
+      - map: [ "enum.PaperLabelVisuals.Layer" ]
       - state: integrity-unshaded-0
         map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
         shader: unshaded
@@ -448,9 +432,7 @@
     - type: Sprite
       layers:
       - state: water_vapor
-      - state: paper
-        visible: false
-        map: [ "enum.PaperLabelVisuals.Layer" ]
+      - map: [ "enum.PaperLabelVisuals.Layer" ]
       - state: integrity-unshaded-0
         map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
         shader: unshaded
@@ -485,9 +467,7 @@
     - type: Sprite
       layers:
       - state: greenys
-      - state: paper
-        visible: false
-        map: [ "enum.PaperLabelVisuals.Layer" ]
+      - map: [ "enum.PaperLabelVisuals.Layer" ]
       - state: integrity-unshaded-0
         map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
         shader: unshaded
@@ -524,9 +504,7 @@
     - type: Sprite
       layers:
       - state: redws
-      - state: paper
-        visible: false
-        map: [ "enum.PaperLabelVisuals.Layer" ]
+      - map: [ "enum.PaperLabelVisuals.Layer" ]
       - state: integrity-unshaded-0
         map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
         shader: unshaded
@@ -563,9 +541,7 @@
   - type: Sprite
     layers:
     - state: frezon
-    - state: paper
-      visible: false
-      map: [ "enum.PaperLabelVisuals.Layer" ]
+    - map: [ "enum.PaperLabelVisuals.Layer" ]
     - state: integrity-unshaded-0
       map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
       shader: unshaded

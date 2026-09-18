@@ -7,9 +7,7 @@
       sprite: Objects/Specific/Hydroponics/seeds.rsi
       layers:
       - state: seed
-      - state: paper
-        visible: false
-        map: ["enum.PaperLabelVisuals.Layer"]
+      - map: ["enum.PaperLabelVisuals.Layer"]
         sprite: Objects/Specific/Hydroponics/seeds.rsi
     - type: PaperLabelVisuals # Overriding the base visuals, only supports one sprite.
       labelStates: {}

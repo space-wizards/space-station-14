@@ -24,8 +24,7 @@
       - state: locked
         map: ["enum.LockVisualLayers.Lock"]
         shader: unshaded
-      - state: paper
-        map: ["enum.PaperLabelVisuals.Layer"]
+      - map: ["enum.PaperLabelVisuals.Layer"]
     - type: InteractionOutline
     - type: Physics
     - type: Fixtures
@@ -97,8 +96,7 @@
     - state: locked
       map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
-    - state: paper
-      map: ["enum.PaperLabelVisuals.Layer"]
+    - map: ["enum.PaperLabelVisuals.Layer"]
   - type: Storage
     maxItemSize: Normal
     grid:

@@ -117,9 +117,7 @@
     layers:
     - state: parcel-medium
       map: [ "enum.WrappedParcelVisuals.Layer" ]
-    - state: paper
-      visible: false
-      sprite: Objects/Misc/ParcelWrap/paper_labels.rsi
+    - sprite: Objects/Misc/ParcelWrap/paper_labels.rsi
       map: ["enum.PaperLabelVisuals.Layer"]
 
 - type: entity
