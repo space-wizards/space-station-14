@@ -19,6 +19,7 @@ namespace Content.Client.Lathe.UI;
 [GenerateTypedNameReferences]
 public sealed partial class LatheMenu : FancyWindow
 {
+    // TODO: Move these systems and dependencies into the BUI.
     [Dependency] private IEntityManager _entityManager = default!;
     [Dependency] private IPrototypeManager _prototypeManager = default!;
 
@@ -94,6 +95,7 @@ public sealed partial class LatheMenu : FancyWindow
     /// <summary>
     /// Populates the list of all the recipes
     /// </summary>
+    // TODO: OPTIMIZE THE FUCK OUT OF THIS!!! THIS IS SUPER GC CHURN HELL!!!
     public void PopulateRecipes()
     {
         var recipesToShow = new List<LatheRecipePrototype>();

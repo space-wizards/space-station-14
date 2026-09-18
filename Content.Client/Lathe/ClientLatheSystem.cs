@@ -1,3 +1,4 @@
+using Content.Client.Lathe.UI;
 using Content.Client.Power;
 using Content.Shared.Lathe;
 using Content.Shared.Lathe.Components;
@@ -12,61 +13,76 @@ public sealed partial class ClientLatheSystem : LatheSystem
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<LatheComponent, ComponentHandleState>(OnHandleState);
-        SubscribeLocalEvent<LatheComponent, AppearanceChangeEvent>(OnAppearanceChange);
-    }
-
-    private void OnAppearanceChange(EntityUid uid, LatheComponent component, ref AppearanceChangeEvent args)
+    [SubscribeLocalEvent]
+    private void OnAppearanceChange(Entity<LatheVisualsComponent> lathe, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
         // Lathe specific stuff
-        if (_appearance.TryGetData<bool>(uid, LatheVisuals.IsRunning, out var isRunning, args.Component))
+        if (_appearance.TryGetData<bool>(lathe, LatheVisuals.IsRunning, out var isRunning, args.Component))
         {
-            if (_sprite.LayerMapTryGet((uid, args.Sprite), LatheVisualLayers.IsRunning, out var runningLayer, false) &&
-                component.RunningState != null &&
-                component.IdleState != null)
+            if (_sprite.LayerMapTryGet((lathe, args.Sprite), LatheVisualLayers.IsRunning, out var runningLayer, false) &&
+                lathe.Comp.RunningState != null &&
+                lathe.Comp.IdleState != null)
             {
-                var state = isRunning ? component.RunningState : component.IdleState;
-                _sprite.LayerSetRsiState((uid, args.Sprite), runningLayer, state);
+                var state = isRunning ? lathe.Comp.RunningState : lathe.Comp.IdleState;
+                _sprite.LayerSetRsiState((lathe, args.Sprite), runningLayer, state);
             }
         }
 
-        if (_appearance.TryGetData<bool>(uid, PowerDeviceVisuals.Powered, out var powered, args.Component) &&
-            _sprite.LayerMapTryGet((uid, args.Sprite), PowerDeviceVisualLayers.Powered, out var powerLayer, false))
+        if (_appearance.TryGetData<bool>(lathe, PowerDeviceVisuals.Powered, out var powered, args.Component) &&
+            _sprite.LayerMapTryGet((lathe, args.Sprite), PowerDeviceVisualLayers.Powered, out var powerLayer, false))
         {
-            _sprite.LayerSetVisible((uid, args.Sprite), powerLayer, powered);
+            _sprite.LayerSetVisible((lathe, args.Sprite), powerLayer, powered);
 
-            if (component.UnlitIdleState != null &&
-                component.UnlitRunningState != null)
+            if (lathe.Comp.UnlitIdleState != null &&
+                lathe.Comp.UnlitRunningState != null)
             {
-                var state = isRunning ? component.UnlitRunningState : component.UnlitIdleState;
-                _sprite.LayerSetRsiState((uid, args.Sprite), powerLayer, state);
+                var state = isRunning ? lathe.Comp.UnlitRunningState : lathe.Comp.UnlitIdleState;
+                _sprite.LayerSetRsiState((lathe, args.Sprite), powerLayer, state);
             }
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnHandleState(Entity<LatheComponent> entity, ref ComponentHandleState args)
     {
-        if (args.Current is not LatheComponentState state)
+        if (args.Current == null)
             return;
 
-        entity.Comp.Recipes = state.Recipes;
-        entity.Comp.Queue = state.Queue;
-        entity.Comp.CurrentRecipe = state.Recipe;
-        UpdateUI(entity);
+        // TODO: EXPLICITLY CALL UPDATE METHODS WHICH AlSO CALL THEIR RESPECTIVE UI UPDATES!!!
+        if (args.Current is LatheComponentDeltaState deltaState)
+        {
+            var changed = deltaState.ChangedFields;
+            if ((changed & (1UL << LatheComponentDeltaState.QueueIndex)) != 0)
+                entity.Comp.Queue = deltaState.Queue;
+
+            if ((changed & (1UL << LatheComponentDeltaState.CurrentRecipeIndex)) != 0)
+                entity.Comp.CurrentRecipe = deltaState.CurrentRecipe;
+
+            if ((changed & (1UL << LatheComponentDeltaState.RecipesIndex)) != 0)
+                entity.Comp.Recipes = deltaState.Recipes;
+
+            return;
+        }
+
+        // If we're getting a full state then update everything.
+        if (args.Current is LatheComponentState state)
+        {
+            entity.Comp.Recipes = state.Recipes;
+            entity.Comp.Queue = state.Queue;
+            entity.Comp.CurrentRecipe = state.CurrentRecipe;
+            UpdateUI(entity);
+        }
     }
 
     protected override void UpdateUI(Entity<LatheComponent> entity)
     {
-        // TODO: This is an extremely CPU intensive process and isn't predicting properly. Debug WHY.
+        // TODO: Ensure that this is only called when ABSOLUTELY NECESSARY CAUSE IT'S EXPENSIVE AS FUCK ATM
+        // TODO: Optimize the fuck out of this.
         Log.Debug($"UI updated at {Timing.CurTime}");
-        if (UISys.TryGetOpenUi(entity.Owner, LatheUiKey.Key, out var bui))
+        if (UISys.TryGetOpenUi<LatheBoundUserInterface>(entity.Owner, LatheUiKey.Key, out var bui))
         {
             bui.Update();
         }

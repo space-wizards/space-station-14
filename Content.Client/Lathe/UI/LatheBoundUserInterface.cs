@@ -48,7 +48,7 @@ public sealed class LatheBoundUserInterface : BoundUserInterface
             return;
 
         _menu.Recipes = lathe.Recipes;
-        _menu.PopulateRecipes();
+        //_menu.PopulateRecipes();
         _menu.UpdateCategories();
         _menu.PopulateQueueList(lathe.Queue);
         _menu.SetQueueInfo(lathe.CurrentRecipe);
