@@ -134,8 +134,10 @@
       - Toggle
   - type: Appearance
   - type: PoweredLightVisuals
-    blinkingSound:
+    blinkingSound: &blinkingSound # Values from default PoweredLightComponent.TurnOnSound
       path: "/Audio/Machines/light_tube_on.ogg"
+      params:
+        volume: -4
     spriteStateMap:
       empty: empty
       off: base
@@ -327,8 +329,7 @@
     range: 200
   - type: Appearance
   - type: PoweredLightVisuals
-    blinkingSound:
-      path: "/Audio/Machines/light_tube_on.ogg"
+    blinkingSound: *blinkingSound
     spriteStateMap:
       empty: empty
       off: base
