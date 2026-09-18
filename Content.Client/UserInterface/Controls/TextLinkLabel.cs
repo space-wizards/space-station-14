@@ -20,8 +20,6 @@ public sealed partial class TextLinkLabel : Label
     public Color LinkColor { get; set; }
 
     [Dependency] private IEntityManager _entity = default!;
-
-    private SharedChatSystem? _chat;
     private bool canClickLink;
 
     public TextLinkLabel()
