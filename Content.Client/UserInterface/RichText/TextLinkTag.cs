@@ -6,6 +6,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.RichText;
 using Robust.Shared.Utility;
 using Content.Client.UserInterface.Controls;
+using Content.Shared.Chat;
 using Robust.Client.ResourceManagement;
 
 namespace Content.Client.UserInterface.RichText;
@@ -29,6 +30,7 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
     [Dependency] private IEntityManager _entity = default!;
     [Dependency] private IUserInterfaceManager _ui = default!;
     [Dependency] private IResourceCache _cache = default!;
+    private SharedChatSystem? _chat;
 
     public string Name => "textlink";
     public static Color DefaultLinkColor => Color.CornflowerBlue;
@@ -102,7 +104,8 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
             linkLabel.FontOverride = boldFont;
         }
 
-        linkLabel.UpdateLabelProperties();
+        _chat ??= _entity.System<SharedChatSystem>();
+        linkLabel.UpdateLabelProperties(_chat);
 
         control = linkLabel;
         return true;

@@ -39,15 +39,13 @@ public sealed partial class TextLinkLabel : Label
     /// </summary>
     /// <param name="visible">Whether the label should be shown at all. Defaults to true.</param>
     /// <param name="clickable">Additional override to force the label non-clickable. Defaults to true.</param>
-    public void UpdateLabelProperties(bool? visible = null, bool? clickable = null)
+    public void UpdateLabelProperties(SharedChatSystem chatSystem, bool? visible = null, bool? clickable = null)
     {
         visible ??= true;
         Visible = visible.Value;
         clickable ??= true;
 
-        _chat ??= _entity.System<SharedChatSystem>();
-
-        canClickLink = (LinkString != null || (LinkEntity is { } netEntity && _chat.CanClickMessageSender(netEntity))) && (bool)clickable;
+        canClickLink = (LinkString != null || (LinkEntity is { } netEntity && chatSystem.CanClickMessageSender(netEntity))) && (bool)clickable;
 
         MouseFilter = canClickLink ? MouseFilterMode.Stop : MouseFilterMode.Ignore;
         DefaultCursorShape = canClickLink ? CursorShape.Hand : CursorShape.Arrow;
