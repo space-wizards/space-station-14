@@ -16,7 +16,7 @@ public sealed partial class StuffIntoLockerEntityEffectSystem : EntityEffectSyst
 
     protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<StuffIntoLocker> args)
     {
-        var locker = EntityManager.PredictedSpawn(args.Effect.Prototype, _transform.GetMapCoordinates(entity));
+        var locker = PredictedSpawn(args.Effect.Prototype, _transform.GetMapCoordinates(entity));
 
         _entityStorage.ToggleOpen(entity.Owner, locker);
         _entityStorage.Insert(entity.Owner, locker);

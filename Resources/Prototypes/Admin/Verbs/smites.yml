@@ -368,7 +368,6 @@
     state: chessboard
   effects:
   - !type:SetGodmode
-    enabled: true
   - !type:AddComponents
     components:
     - type: TabletopDraggable
@@ -439,7 +438,6 @@
     - CreamPied
   effects:
   - !type:SetCreamPied
-    enabled: true
 
 - type: adminVerb
   id: AdminSmiteDust
@@ -450,6 +448,7 @@
     sprite: Objects/Materials/materials.rsi
     state: ash
   effects:
+  # TODO: Popup doesn't appear because the entity is deleted first. Add a way to apply effects sequentially
   - !type:PopupMessage
     messages: [ admin-smite-turned-ash-other ]
     type: Pvs

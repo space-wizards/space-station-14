@@ -24,5 +24,5 @@ public sealed partial class SetCreamPied : EntityEffectBase<SetCreamPied>
     /// Whether to cover this entity in cream pie or clean it off.
     /// </summary>
     [DataField]
-    public bool Enabled;
+    public bool Enabled = true;
 }

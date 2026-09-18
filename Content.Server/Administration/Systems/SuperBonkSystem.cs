@@ -2,7 +2,7 @@ using Content.Server.Administration.Components;
 using Content.Shared.Climbing.Components;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Administration.Systems;
@@ -11,6 +11,7 @@ public sealed partial class SuperBonkSystem : EntitySystem
 {
     [Dependency] private SharedTransformSystem _transformSystem = default!;
     [Dependency] private ClimbSystem _climbSystem = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private IGameTiming _timing = default!;
 
     [Dependency] private EntityQuery<TransformComponent> _transformQuery;
@@ -20,9 +21,7 @@ public sealed partial class SuperBonkSystem : EntitySystem
     {
         var (uid, component) = ent;
 
-        if (component.StopWhenDead &&
-            TryComp<MobStateComponent>(uid, out var mobState) &&
-            mobState.CurrentState == MobState.Dead)
+        if (component.StopWhenDead && _mobState.IsDead(uid))
         {
             RemCompDeferred<SuperBonkComponent>(uid);
             return;
@@ -38,7 +37,8 @@ public sealed partial class SuperBonkSystem : EntitySystem
         }
 
         component.Tables = bonks.GetEnumerator();
-        component.Tables.MoveNext();
+        if (!component.Tables.MoveNext())
+            RemCompDeferred<SuperBonkComponent>(uid);
     }
 
     [SubscribeLocalEvent]

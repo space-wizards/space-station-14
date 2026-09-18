@@ -30,5 +30,5 @@ public sealed partial class SetGodmode : EntityEffectBase<SetGodmode>
     /// Whether to enable or disable godmode.
     /// </summary>
     [DataField]
-    public bool Enabled;
+    public bool Enabled = true;
 }
