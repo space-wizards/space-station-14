@@ -100,8 +100,8 @@ public sealed class DeviceNetworkTest : GameTest
     [Test]
     public async Task WirelessNetworkDeviceSendAndReceive()
     {
-        await Pair.CreateTestMap();
-        var coordinates = TestMap!.GridCoords;
+        await CreateTestMap();
+        var coordinates = TestMap.GridCoords;
 
         EntityUid device1 = default;
         EntityUid device2 = default;
@@ -160,8 +160,8 @@ public sealed class DeviceNetworkTest : GameTest
     [Test]
     public async Task WiredNetworkDeviceSendAndReceive()
     {
-        await Pair.CreateTestMap();
-        var coordinates = TestMap!.GridCoords;
+        await CreateTestMap();
+        var coordinates = TestMap.GridCoords;
 
         EntityUid device1 = default;
         EntityUid device2 = default;

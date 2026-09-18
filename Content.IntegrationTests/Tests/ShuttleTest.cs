@@ -20,9 +20,7 @@ public sealed class ShuttleTest : GameTest
     [Description($"Tests that grids have the {nameof(ShuttleComponent)} and move when pushed.")]
     public async Task Test()
     {
-        await Pair.CreateTestMap();
-
-        Assume.That(TestMap, Is.Not.Null);
+        await CreateTestMap();
 
         await Server.WaitAssertion(() =>
         {

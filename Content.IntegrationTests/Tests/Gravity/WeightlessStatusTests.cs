@@ -50,8 +50,7 @@ public sealed class WeightlessStatusTests : GameTest
         var weightlessAlert = SharedGravitySystem.WeightlessAlert;
         EntityUid human = default;
 
-        await Pair.CreateTestMap();
-        Assume.That(TestMap, Is.Not.Null);
+        await CreateTestMap();
 
         await Server.WaitAssertion(() =>
         {

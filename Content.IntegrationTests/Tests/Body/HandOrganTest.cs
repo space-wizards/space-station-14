@@ -54,11 +54,11 @@ public sealed class HandOrganTest : GameTest
     [Test]
     public async Task HandInsertionAndRemovalTest()
     {
-        await Pair.CreateTestMap();
+        await CreateTestMap();
 
         await Server.WaitAssertion(() =>
         {
-            var body = SSpawnAtPosition(TheBody, TestMap!.GridCoords);
+            var body = SSpawnAtPosition(TheBody, TestMap.GridCoords);
             var hands = SComp<HandsComponent>(body);
 
             Assert.That(hands, Has.Count.EqualTo(2));

@@ -76,14 +76,14 @@ public sealed class SolutionRoundingTest : GameTest
     [Test]
     public async Task Test()
     {
-        await Pair.CreateTestMap();
+        await CreateTestMap();
 
         Solution solution = default!;
         Entity<SolutionComponent> solutionEnt = default;
 
         await Server.WaitPost(() =>
         {
-            var beaker = SSpawnAtPosition(SolutionRoundingTestContainer, TestMap!.GridCoords);
+            var beaker = SSpawnAtPosition(SolutionRoundingTestContainer, TestMap.GridCoords);
 
             _sSolutionContainer.TryGetSolution(beaker, "beaker", out var newSolutionEnt, out var newSolution);
 

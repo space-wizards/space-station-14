@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Content.IntegrationTests.Fixtures;
 
 public abstract partial class GameTest
@@ -32,5 +34,21 @@ public abstract partial class GameTest
     public Task RunSeconds(float seconds)
     {
         return Pair.RunSeconds(seconds);
+    }
+
+    /// <summary>
+    ///     Creates a test map for use during the test.
+    /// </summary>
+    /// <remarks>
+    ///     The map will be deleted automatically during test cleanup.
+    ///     Data about the map can be referenced using <see cref="TestMap"/>.
+    /// </remarks>
+    /// <returns>Data about the test map. Can also be accessed via <see cref="TestMap"/>.</returns>
+    [MemberNotNull(nameof(TestMap))]
+    public async Task<TestMapData> CreateTestMap()
+    {
+        var data = await Pair.CreateTestMap();
+        Assume.That(TestMap, Is.Not.Null);
+        return data;
     }
 }

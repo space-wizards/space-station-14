@@ -35,8 +35,8 @@ public sealed class TryAllReactionsTest : GameTest
     [Description("Tries an individual reaction to see if it succeeds.")]
     public async Task TryReaction()
     {
-        var testMap = await Pair.CreateTestMap();
-        var coordinates = testMap.GridCoords;
+        await CreateTestMap();
+        var coordinates = TestMap.GridCoords;
 
         // they call me a bird the way i be nesting
         try
@@ -144,7 +144,7 @@ public sealed class TryAllReactionsTest : GameTest
         }
         finally
         {
-            await Server.WaitPost(() => SDeleteNow(testMap.MapUid));
+            await Server.WaitPost(() => SDeleteNow(TestMap.MapUid));
         }
     }
 }

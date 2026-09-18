@@ -210,9 +210,7 @@ public sealed class VendingMachineRestockTest : GameTest
         VendingMachineRestockComponent restockWrongComponent = default!;
         WiresPanelComponent machineWiresPanel = default!;
 
-        await Pair.CreateTestMap();
-
-        Assume.That(TestMap, Is.Not.Null);
+        await CreateTestMap();
 
         await Server.WaitAssertion(() =>
         {
@@ -277,9 +275,7 @@ public sealed class VendingMachineRestockTest : GameTest
     [Description("Tests that a restock box can be broken open, spilling its contents.")]
     public async Task TestRestockBreaksOpen()
     {
-        await Pair.CreateTestMap();
-
-        Assume.That(TestMap, Is.Not.Null);
+        await CreateTestMap();
 
         EntityUid restock = default;
 
@@ -331,9 +327,7 @@ public sealed class VendingMachineRestockTest : GameTest
     [Description("Tests that vending machines have a limit to their inventory when restocked multiple times.")]
     public async Task TestRestockInventoryBounds()
     {
-        await Pair.CreateTestMap();
-
-        Assume.That(TestMap, Is.Not.Null);
+        await CreateTestMap();
 
         await Server.WaitAssertion(() =>
         {

@@ -48,17 +48,17 @@ public sealed class SprayVaporTests : GameTest
     [Test]
     public async Task TestSprayingSpaceCleaner()
     {
-        var testMap = await Pair.CreateTestMap();
+        await CreateTestMap();
 
         Entity<SolutionComponent> puddle = default!;
 
         await Server.WaitAssertion(() =>
         {
-            var sprayCleaner = SSpawnAtPosition(SprayBottleSpaceCleaner, testMap.GridCoords);
+            var sprayCleaner = SSpawnAtPosition(SprayBottleSpaceCleaner, TestMap.GridCoords);
             Assume.That(sprayCleaner, Has.Comp<SprayComponent>(Server));
             _sTransformSystem.SetLocalPositionNoLerp(sprayCleaner, SComp<TransformComponent>(sprayCleaner).LocalPosition + new Vector2(1, 1));
 
-            var puddleUid = SSpawnAtPosition(BloodPuddle, testMap.GridCoords);
+            var puddleUid = SSpawnAtPosition(BloodPuddle, TestMap.GridCoords);
             Assume.That(puddleUid, Has.Comp<PuddleComponent>(Server));
             Assume.That(_sSolutionContainerSystem.TryGetSolution(puddleUid, SolutionId, out var puddleSolution, out _));
             puddle = puddleSolution!.Value;

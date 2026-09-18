@@ -145,7 +145,7 @@ public sealed partial class DisposalUnitTest : GameTest
     [Test]
     public async Task Test()
     {
-        var testMap = await Pair.CreateTestMap();
+        await CreateTestMap();
 
         EntityUid human = default!;
         EntityUid wrench = default!;
@@ -158,7 +158,7 @@ public sealed partial class DisposalUnitTest : GameTest
         await Server.WaitAssertion(() =>
         {
             // Spawn the entities
-            var coordinates = testMap.GridCoords;
+            var coordinates = TestMap.GridCoords;
             human = SSpawnAtPosition(HumanDisposalDummy, coordinates);
             wrench = SSpawnAtPosition(WrenchDummy, coordinates);
             disposalUnit = SSpawnAtPosition(DisposalUnitDummy, coordinates);

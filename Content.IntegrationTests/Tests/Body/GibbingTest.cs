@@ -40,11 +40,11 @@ public sealed class GibletTest : GameTest
     [Description("Checks that gibbing a body produces the expected giblets.")]
     public async Task GibletCountTest()
     {
-        await Pair.CreateTestMap();
+        await CreateTestMap();
 
         await Server.WaitAssertion(() =>
         {
-            var body = SSpawnAtPosition(GibbingBody, TestMap!.GridCoords);
+            var body = SSpawnAtPosition(GibbingBody, TestMap.GridCoords);
             var giblets = _sGibbing.Gib(body);
 
             Assert.That(giblets, Has.Count.EqualTo(3));

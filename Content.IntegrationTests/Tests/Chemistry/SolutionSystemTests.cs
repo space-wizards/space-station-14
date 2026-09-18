@@ -79,8 +79,8 @@ public sealed class SolutionSystemTests : GameTest
     [Description("Tests that two non-reactive reagents can be added to a solution without effect.")]
     public async Task TryAddTwoNonReactiveReagent()
     {
-        await Pair.CreateTestMap();
-        var coordinates = TestMap!.GridCoords;
+        await CreateTestMap();
+        var coordinates = TestMap.GridCoords;
 
         EntityUid beaker;
 
@@ -122,8 +122,8 @@ public sealed class SolutionSystemTests : GameTest
     [Description("Tests that TryAddSolution will fail if adding too much of a second, unreactive reagent to a container.")]
     public async Task TryAddTooMuchNonReactiveReagent()
     {
-        await Pair.CreateTestMap();
-        var coordinates = TestMap!.GridCoords;
+        await CreateTestMap();
+        var coordinates = TestMap.GridCoords;
 
         EntityUid beaker;
 
@@ -160,14 +160,14 @@ public sealed class SolutionSystemTests : GameTest
     [Test]
     public async Task TryOverflowReaction()
     {
-        await Pair.CreateTestMap();
+        await CreateTestMap();
 
         await Server.WaitAssertion(() =>
         {
             var reagentC = new Solution(TestReagentC, 5);
             var reagentD = new Solution(TestReagentD, 5);
 
-            var beaker = SSpawnAtPosition(SolutionTarget, TestMap!.GridCoords);
+            var beaker = SSpawnAtPosition(SolutionTarget, TestMap.GridCoords);
 
             Assert.That(_solutionContainer.TryGetSolution(beaker, "beaker", out var solutionEnt, out var solution));
             using (Assert.EnterMultipleScope())
@@ -190,8 +190,8 @@ public sealed class SolutionSystemTests : GameTest
     [Description("Tests the proportions of TryMixAndOverflow with two quantities of reagents.")]
     public async Task TryMixAndOverflowTooMuchReagent()
     {
-        await Pair.CreateTestMap();
-        var coordinates = TestMap!.GridCoords;
+        await CreateTestMap();
+        var coordinates = TestMap.GridCoords;
 
         EntityUid beaker;
 
@@ -242,8 +242,8 @@ public sealed class SolutionSystemTests : GameTest
     [Description("Tests that TryMixAndOverflow will fail if the given threshold is larger than the maximum volume of the solution.")]
     public async Task TryMixAndOverflowTooBigOverflow()
     {
-        await Pair.CreateTestMap();
-        var coordinates = TestMap!.GridCoords;
+        await CreateTestMap();
+        var coordinates = TestMap.GridCoords;
 
         EntityUid beaker;
 

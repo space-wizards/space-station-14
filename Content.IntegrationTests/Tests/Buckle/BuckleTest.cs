@@ -60,8 +60,8 @@ public sealed partial class BuckleTest : GameTest
     [Test]
     public async Task BuckleUnbuckleCooldownRangeTest()
     {
-        await Pair.CreateTestMap();
-        var coordinates = TestMap!.GridCoords;
+        await CreateTestMap();
+        var coordinates = TestMap.GridCoords;
 
         EntityUid human = default;
         EntityUid chair = default;
@@ -235,8 +235,8 @@ public sealed partial class BuckleTest : GameTest
     [Test]
     public async Task BuckledDyingDropItemsTest()
     {
-        await Pair.CreateTestMap();
-        var coordinates = TestMap!.GridCoords;
+        await CreateTestMap();
+        var coordinates = TestMap.GridCoords;
 
         EntityUid human = default;
         BuckleComponent? buckle = null;
@@ -295,8 +295,8 @@ public sealed partial class BuckleTest : GameTest
     [Test]
     public async Task ForceUnbuckleBuckleTest()
     {
-        await Pair.CreateTestMap();
-        var coordinates = TestMap!.GridCoords;
+        await CreateTestMap();
+        var coordinates = TestMap.GridCoords;
 
         EntityUid human = default;
         EntityUid chair = default;

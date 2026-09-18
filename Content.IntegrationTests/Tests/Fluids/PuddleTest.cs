@@ -26,8 +26,7 @@ public sealed class PuddleTest : GameTest
     [Test]
     public async Task TilePuddleTest()
     {
-        await Pair.CreateTestMap();
-        Assume.That(TestMap, Is.Not.Null);
+        await CreateTestMap();
 
         await Server.WaitAssertion(() =>
         {
@@ -44,8 +43,7 @@ public sealed class PuddleTest : GameTest
     [Test]
     public async Task SpaceNoPuddleTest()
     {
-        await Pair.CreateTestMap();
-        Assume.That(TestMap, Is.Not.Null);
+        await CreateTestMap();
         var grid = TestMap.Grid;
 
         // Remove all tiles

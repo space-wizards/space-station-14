@@ -22,8 +22,8 @@ public sealed class ActionPvsDetachTest : GameTest
     public async Task TestActionDetach()
     {
         // Spawn mob that has some actions
-        await Pair.CreateTestMap();
-        var ent = await SpawnAtPosition(TestMob, TestMap!.GridCoords);
+        await CreateTestMap();
+        var ent = await SpawnAtPosition(TestMob, TestMap.GridCoords);
         await RunTicksSync(5);
         var cEnt = ToClientUid(ent);
 

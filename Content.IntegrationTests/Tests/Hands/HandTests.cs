@@ -43,7 +43,7 @@ public sealed class HandTests : GameTest
     [Test]
     public async Task TestPickupDrop()
     {
-        await Pair.CreateTestMap();
+        await CreateTestMap();
 
         EntityUid item = default;
         EntityUid player = default;
@@ -73,8 +73,7 @@ public sealed class HandTests : GameTest
     [Test]
     public async Task TestPickUpThenDropInContainer()
     {
-        await Pair.CreateTestMap();
-        Assume.That(TestMap, Is.Not.Null);
+        await CreateTestMap();
 
         EntityUid item = default;
         EntityUid box = default;

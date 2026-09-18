@@ -59,14 +59,14 @@ public sealed class WireLayoutTest : GameTest
     [Test]
     public async Task TestLayoutInheritance()
     {
-        await Pair.CreateTestMap();
+        await CreateTestMap();
 
         await Server.WaitAssertion(() =>
         {
             // Need to spawn these entities to make sure the wire layouts are initialized.
-            var ent1 = SSpawnAtPosition(WireLayoutTest1, TestMap!.GridCoords);
-            var ent2 = SSpawnAtPosition(WireLayoutTest2, TestMap!.GridCoords);
-            var ent3 = SSpawnAtPosition(WireLayoutTest3, TestMap!.GridCoords);
+            var ent1 = SSpawnAtPosition(WireLayoutTest1, TestMap.GridCoords);
+            var ent2 = SSpawnAtPosition(WireLayoutTest2, TestMap.GridCoords);
+            var ent3 = SSpawnAtPosition(WireLayoutTest3, TestMap.GridCoords);
 
             using (Assert.EnterMultipleScope())
             {

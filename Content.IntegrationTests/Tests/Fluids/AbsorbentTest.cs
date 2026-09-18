@@ -78,8 +78,8 @@ public sealed class AbsorbentTest : GameTest
     [TestCaseSource(nameof(TestCasesToRun))]
     public async Task AbsorbentOnRefillableTest(TestSolutionCase testCase)
     {
-        await Pair.CreateTestMap();
-        var coordinates = TestMap!.GridCoords;
+        await CreateTestMap();
+        var coordinates = TestMap.GridCoords;
 
         await Server.WaitAssertion(() =>
         {
@@ -129,8 +129,8 @@ public sealed class AbsorbentTest : GameTest
     [TestCaseSource(nameof(TestCasesToRunOnSmallRefillable))]
     public async Task AbsorbentOnSmallRefillableTest(TestSolutionCase testCase)
     {
-        await Pair.CreateTestMap();
-        var coordinates = TestMap!.GridCoords;
+        await CreateTestMap();
+        var coordinates = TestMap.GridCoords;
 
         await Server.WaitAssertion(() =>
         {

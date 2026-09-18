@@ -28,8 +28,8 @@ public sealed class FilterTests : GameTest
         var commonGuid = Guid.NewGuid();
         var firstGuid = Guid.NewGuid();
         var secondGuid = Guid.NewGuid();
-        await Pair.CreateTestMap();
-        var coordinates = TestMap!.GridCoords;
+        await CreateTestMap();
+        var coordinates = TestMap.GridCoords;
 
         await Server.WaitPost(() =>
         {

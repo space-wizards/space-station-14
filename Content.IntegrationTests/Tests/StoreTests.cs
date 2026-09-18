@@ -35,9 +35,7 @@ public sealed class StoreTests : GameTest
     [Description("Tests that a traitor PDA works as a store, that it can purchase, discount and refund items.")]
     public async Task StoreDiscountAndRefund()
     {
-        await Pair.CreateTestMap();
-
-        Assume.That(TestMap, Is.Not.Null);
+        await CreateTestMap();
 
         var serverRandom = Server.ResolveDependency<IRobustRandom>();
         serverRandom.SetSeed(534);

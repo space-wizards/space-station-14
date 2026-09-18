@@ -91,7 +91,7 @@ public sealed class EntityTest : GameTest
     public async Task SpawnAndDeleteAllEntitiesInTheSameSpot()
     {
         Assume.That(Client.Session, Is.Null);
-        var map = await Pair.CreateTestMap();
+        await CreateTestMap();
 
         await Server.WaitPost(() =>
         {
@@ -112,7 +112,7 @@ public sealed class EntityTest : GameTest
                 if (proto.Components.ContainsKey("RoomFill"))
                     continue;
 
-                SSpawnAtPosition(proto.ID, map.GridCoords);
+                SSpawnAtPosition(proto.ID, TestMap.GridCoords);
             }
 
             Server.RunTicks(450); // 15 seconds, enough to trigger most update loops
@@ -439,7 +439,7 @@ public sealed class EntityTest : GameTest
         var componentFactory = SEntMan.ComponentFactory;
         var logmill = Server.ResolveDependency<ILogManager>().GetSawmill("EntityTest");
 
-        await Pair.CreateTestMap();
+        await CreateTestMap();
         await Server.WaitRunTicks(5);
         var testLocation = TestMap!.GridCoords;
 

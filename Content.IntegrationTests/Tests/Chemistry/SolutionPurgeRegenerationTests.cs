@@ -24,13 +24,13 @@ public sealed class SolutionPurgeRegenerationTests : GameTest
     [Description("Tests that an advanced mop can absorb reagents, purge them automatically, and refill with water.")]
     public async Task TestMop()
     {
-        await Pair.CreateTestMap();
+        await CreateTestMap();
 
         EntityUid mop = default!;
         Entity<SolutionComponent> solution = default!;
         await Server.WaitPost(() =>
         {
-            mop = SSpawnAtPosition(AdvancedMop, TestMap!.GridCoords);
+            mop = SSpawnAtPosition(AdvancedMop, TestMap.GridCoords);
 
             var generated = SComp<SolutionRegenerationComponent>(mop).Generated;
             var purge = SComp<SolutionPurgeComponent>(mop);

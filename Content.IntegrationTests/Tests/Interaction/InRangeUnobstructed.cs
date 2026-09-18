@@ -33,8 +33,7 @@ public sealed class InRangeUnobstructed : GameTest
         EntityUid other = default;
         MapCoordinates mapCoordinates = default;
 
-        await Pair.CreateTestMap();
-        Assume.That(TestMap, Is.Not.Null);
+        await CreateTestMap();
 
         await Server.WaitAssertion(() =>
         {

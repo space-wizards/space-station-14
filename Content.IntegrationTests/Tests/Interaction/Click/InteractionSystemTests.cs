@@ -46,8 +46,7 @@ public sealed partial class InteractionSystemTests : GameTest
     [Test]
     public async Task InteractionTest()
     {
-        await Pair.CreateTestMap();
-        Assume.That(TestMap, Is.Not.Null);
+        await CreateTestMap();
         var mapId = TestMap.MapId;
         var coords = TestMap.GridCoords;
 
@@ -94,8 +93,7 @@ public sealed partial class InteractionSystemTests : GameTest
     [Test]
     public async Task InteractionObstructionTest()
     {
-        await Pair.CreateTestMap();
-        Assume.That(TestMap, Is.Not.Null);
+        await CreateTestMap();
         var coords = TestMap.GridCoords;
 
         EntityUid user = default;
@@ -142,8 +140,7 @@ public sealed partial class InteractionSystemTests : GameTest
     [Test]
     public async Task InteractionInRangeTest()
     {
-        await Pair.CreateTestMap();
-        Assume.That(TestMap, Is.Not.Null);
+        await CreateTestMap();
         var coords = TestMap.GridCoords;
 
         EntityUid user = default;
@@ -190,8 +187,7 @@ public sealed partial class InteractionSystemTests : GameTest
     [Test]
     public async Task InteractionOutOfRangeTest()
     {
-        await Pair.CreateTestMap();
-        Assume.That(TestMap, Is.Not.Null);
+        await CreateTestMap();
         var coords = TestMap.GridCoords;
 
         EntityUid user = default;
@@ -236,8 +232,7 @@ public sealed partial class InteractionSystemTests : GameTest
     [Test]
     public async Task InsideContainerInteractionBlockTest()
     {
-        await Pair.CreateTestMap();
-        Assume.That(TestMap, Is.Not.Null);
+        await CreateTestMap();
         var coords = TestMap.GridCoords;
 
         EntityUid user = default;

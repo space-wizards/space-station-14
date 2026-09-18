@@ -105,11 +105,11 @@ public sealed class AirlockTest : GameTest
 
         const int airlockPhysicsDummyStartingX = -1;
 
-        await Pair.CreateTestMap();
+        await CreateTestMap();
 
         await Server.WaitAssertion(() =>
         {
-            var dummyCoordinates = new EntityCoordinates(TestMap!.Grid, new Vector2(airlockPhysicsDummyStartingX, 0));
+            var dummyCoordinates = new EntityCoordinates(TestMap.Grid, new Vector2(airlockPhysicsDummyStartingX, 0));
             airlockPhysicsDummy = SSpawnAtPosition(AirlockPhysicsDummy, dummyCoordinates);
 
             var uid = SSpawnAtPosition(AirlockDummy, TestMap.GridCoords);

@@ -32,8 +32,8 @@ public sealed class AddTests : GameTest
     {
         var guid = Guid.NewGuid();
 
-        await Pair.CreateTestMap();
-        var coordinates = Pair.TestMap!.GridCoords;
+        await CreateTestMap();
+        var coordinates = TestMap.GridCoords;
         await Server.WaitPost(() =>
         {
             var entity = SSpawnAtPosition(null, coordinates);
@@ -69,8 +69,8 @@ public sealed class AddTests : GameTest
     {
         var guid = Guid.NewGuid();
 
-        var testMap = await Pair.CreateTestMap();
-        var coordinates = testMap.GridCoords;
+        await CreateTestMap();
+        var coordinates = TestMap.GridCoords;
         await Server.WaitPost(() =>
         {
             var entity = SSpawnAtPosition(null, coordinates);
@@ -121,8 +121,8 @@ public sealed class AddTests : GameTest
     [TestCase(500)]
     public async Task BulkAddLogs(int amount)
     {
-        var testMap = await Pair.CreateTestMap();
-        var coordinates = testMap.GridCoords;
+        await CreateTestMap();
+        var coordinates = TestMap.GridCoords;
         await Server.WaitPost(() =>
         {
             var entity = SSpawnAtPosition(null, coordinates);
