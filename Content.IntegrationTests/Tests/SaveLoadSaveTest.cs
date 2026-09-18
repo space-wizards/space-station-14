@@ -84,9 +84,12 @@ public sealed partial class SaveLoadSaveTest : GameTest
             }
         }
         _sTest.Enabled = false;
-
         _sMap.DeleteMap(mapId0);
         _sMap.DeleteMap(mapId1);
+        foreach (var ent in SEntMan.GetEntities())
+        {
+            Console.WriteLine(SToPrettyString(ent));
+        }
         Assert.That(SEntMan.EntityCount, Is.Zero, $"Lingering entities at the end of {nameof(CreateSaveLoadSaveGrid)}");
     }
 
@@ -157,6 +160,10 @@ public sealed partial class SaveLoadSaveTest : GameTest
 
         _sTest.Enabled = false;
         _sMap.DeleteMap(mapId);
+        foreach (var ent in SEntMan.GetEntities())
+        {
+            Console.WriteLine(SToPrettyString(ent));
+        }
         Assert.That(SEntMan.EntityCount, Is.Zero, $"Lingering entities at the end of {nameof(LoadSaveTicksSaveBagel)}");
     }
 
@@ -216,6 +223,10 @@ public sealed partial class SaveLoadSaveTest : GameTest
         _sTest.Enabled = false;
         _sMap.DeleteMap(mapId1);
         _sMap.DeleteMap(mapId2);
+        foreach (var ent in SEntMan.GetEntities())
+        {
+            Console.WriteLine(SToPrettyString(ent));
+        }
         Assert.That(SEntMan.EntityCount, Is.Zero, $"Lingering entities at the end of {nameof(LoadTickLoadBagel)}");
     }
 
