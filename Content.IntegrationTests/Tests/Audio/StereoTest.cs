@@ -7,7 +7,6 @@ using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Audio;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -18,7 +17,6 @@ namespace Content.IntegrationTests.Tests.Audio;
 public sealed partial class StereoTest : GameTest
 {
     [SidedDependency(Side.Server)] private IReflectionManager _sReflectionMan = null!;
-    [SidedDependency(Side.Server)] private IComponentFactory _sCompFactory = null!;
     [SidedDependency(Side.Client)] private IResourceCache _cResourceCache = null!;
 
     /// <summary>
@@ -61,7 +59,7 @@ public sealed partial class StereoTest : GameTest
             }
 
             // Scan all component types for SoundSpecifiers and DataDefinition fields
-            var componentFields = GetRelevantFields(_sCompFactory.AllRegisteredTypes);
+            var componentFields = GetRelevantFields(SEntMan.ComponentFactory.AllRegisteredTypes);
             // Inspect all EntityPrototypes
             foreach (var proto in SProtoMan.EnumeratePrototypes<EntityPrototype>())
             {
@@ -69,7 +67,7 @@ public sealed partial class StereoTest : GameTest
                 foreach (var (comp, fields) in componentFields)
                 {
                     // Get the registered name of the component type
-                    var compName = _sCompFactory.GetComponentName(comp);
+                    var compName = SEntMan.ComponentFactory.GetComponentName(comp);
                     // Get the component data from the prototype, if it has it
                     if (!proto.Components.TryGetComponent(compName, out var component))
                         continue;
@@ -164,7 +162,7 @@ public sealed partial class StereoTest : GameTest
                 return;
 
             // Validate all possible files
-            var collectionPrototype = protoMan.Index<SoundCollectionPrototype>(collection);
+            var collectionPrototype = protoMan.Index(collection);
             foreach (var path in collectionPrototype.PickFiles)
             {
                 ValidateFromPath(path, datafieldName, resCache);
