@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Made by ketufaispikinut (Github), inhands by whatston3",
+    "copyright": "Made by ketufaispikinut (Github). Inhands by whatston3 (Github)",
     "size": {
         "x": 32,
         "y": 32
@@ -29,12 +29,12 @@
             "name": "rainbow"
         },
         {
-            "directions": 4,
-            "name": "paper-inhand-left"
+            "name": "paper-inhand-left",
+            "directions": 4
         },
         {
-            "directions": 4,
-            "name": "paper-inhand-right"
+            "name": "paper-inhand-right",
+            "directions": 4
         }
     ]
 }
