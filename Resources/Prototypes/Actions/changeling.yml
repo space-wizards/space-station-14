@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseAction
-  id: ActionRetractableItemArmBlade
-  name: Arm Blade
-  description: Shed your flesh and reform it into a fleshy blade.
+  id: ActionRetractableItemArmblade
+  name: Armblade
+  description: Shed your flesh and reform it into a fleshy blade. Can be toggled when unconscious.
   components:
   - type: Action
     useDelay: 2
@@ -15,7 +15,7 @@
   - type: InstantAction
     event: !type:OnRetractableItemActionEvent
   - type: RetractableItemAction
-    spawnedPrototype: ArmBlade
+    spawnedPrototype: Armblade
     summonSounds:
       collection: gib # Placeholder
     retractSounds:
@@ -35,10 +35,19 @@
     sprite: Interface/Actions/changeling2.rsi
     layers:
     - state: biodegrade
-  - type: ActionRequireSatiation
-    satiation: Chemicals
-    amount: 20
-    failReason: changeling-not-enough-chemicals
+  - type: ActionRequirements
+    failPopup: changeling-not-enough-chemicals
+    failPopupType: SmallCaution
+    conditions:
+      Performer:
+      - !type:SatiationCondition
+        satiationType: Chemicals
+        min: 20
+    effects:
+      Performer:
+      - !type:Satiate
+        satiationType: Chemicals
+        factor: -20
   - type: InstantAction
     event: !type:ChangelingBiodegradeActionEvent
   - type: ChangelingBiodegradeAbility
@@ -59,7 +68,10 @@
     - state: "devour_on"
       map: ["enum.ActionVisuals.IconToggled"]
       visible: false
-  - type: ActionRequireMouthUncovered
+  - type: ActionRequirements
+    conditions:
+      Performer:
+      - !type:MouthUncoveredCondition
   - type: TargetAction
   - type: EntityTargetAction
     event: !type:ChangelingDevourActionEvent
@@ -161,10 +173,17 @@
     - state: "extract_dna_on"
       map: ["enum.ActionVisuals.IconToggled"]
       visible: false
-  - type: ActionRequireSatiation
-    satiation: Chemicals
-    amount: 50
-    failReason: changeling-not-enough-chemicals
+  - type: ActionRequirements
+    conditions:
+      Performer:
+      - !type:SatiationCondition
+        satiationType: Chemicals
+        min: 50
+    effects:
+      Performer:
+      - !type:Satiate
+        satiationType: Chemicals
+        factor: -50
   - type: TargetAction
   - type: EntityTargetAction
     canTargetSelf: false
@@ -188,10 +207,19 @@
       components:
       - Bloodstream
     event: !type:EntityEffectActionEvent
-  - type: ActionRequireSatiation
-    satiation: Chemicals
-    amount: 30
-    failReason: changeling-not-enough-chemicals
+  - type: ActionRequirements
+    failPopup: changeling-not-enough-chemicals
+    failPopupType: SmallCaution
+    conditions:
+      Performer:
+      - !type:SatiationCondition
+        satiationType: Chemicals
+        min: 30
+    effects:
+      Performer:
+      - !type:Satiate
+        satiationType: Chemicals
+        factor: -30
   - type: PopupOnAction
     popupType: Medium
     selfMessage: changeling-sting-success
@@ -250,8 +278,17 @@
     sprite: Interface/Actions/changeling2.rsi
     layers:
     - state: lethal_sting
-  - type: ActionRequireSatiation
-    amount: 50
+  - type: ActionRequirements
+    conditions:
+      Performer:
+      - !type:SatiationCondition
+        satiationType: Chemicals
+        min: 50
+    effects:
+      Performer:
+      - !type:Satiate
+        satiationType: Chemicals
+        factor: -50
   - type: EntityEffectAction
     effects:
     - !type:AddReagentToBloodstream
@@ -300,6 +337,50 @@
     - !type:AddReagentToBloodstream
       reagent: TaciticAcid
       quantity: 5 # 50s of imperceptible mute
+
+- type: entity
+  parent: BaseActionChangelingSting
+  id: ActionChangelingStingArmblade
+  name: Armblade Sting
+  description: "Silently sting a target and cause them to grow a dull armblade after a lengthy delay. \n\nRequires 50 Chemicals."
+  components:
+  - type: Action
+    useDelay: 30
+    raiseOnAction: true
+    itemIconStyle: BigAction
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: armblade_sting
+  - type: ActionRequirements
+    conditions:
+      Performer:
+      - !type:SatiationCondition
+        satiationType: Chemicals
+        min: 50
+    effects:
+      Performer:
+      - !type:Satiate
+        satiationType: Chemicals
+        factor: -50
+  - type: EntityEffectAction
+    effects:
+    - !type:ModifyStatusEffect
+      conditions:
+      - !type:MobStateCondition # Only do the delay on living targets
+        mobstate: Alive
+      effectProto: StatusEffectForcedItemArmblade
+      type: Update
+      time: 90 # Takes 100s to regain the chemicals, so spam-use is a nat negative.
+      delay: 30 # No using it for easy combat!
+    - !type:ModifyStatusEffect
+      conditions:
+      - !type:MobStateCondition
+        mobstate: Alive
+        inverted: true # Not alive!
+      effectProto: StatusEffectForcedItemArmblade
+      type: Update
+      time: 120 # On dead/crit, transfer the 30s to the duration instead. Means you can also maintain it "permanently" on corpses as long as youre around + want to spend fuck ton of chemicals.
 
 - type: entity
   parent: BaseAction
