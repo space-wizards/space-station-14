@@ -1,4 +1,4 @@
-﻿### Portal verb text
+### Portal verb text
 
 portal-component-ghost-traverse = Traverse
 
