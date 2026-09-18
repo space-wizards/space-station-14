@@ -300,7 +300,7 @@ public sealed partial class EventManagerSystem : EntitySystem
     private bool CanRun(EntityPrototype prototype, StationEventComponent stationEvent, int playerCount, TimeSpan currentTime)
     {
         // Do the really simple comparisons BEFORE we create an IEnumerable for GameRules :V
-         if (playerCount < stationEvent.MinimumPlayers)
+        if (playerCount < stationEvent.MinimumPlayers)
             return false;
 
         if (currentTime != TimeSpan.Zero && currentTime < TimeSpan.FromMinutes(stationEvent.EarliestStart))
