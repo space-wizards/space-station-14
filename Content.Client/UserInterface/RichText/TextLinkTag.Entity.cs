@@ -54,7 +54,7 @@ public sealed partial class TextLinkTag
         if (!_entity.TryGetComponent<GrammarComponent>(uid, out var grammar) || grammar.ProperNoun != true)
             return null;
 
-        var name = _entity.GetComponent<MetaDataComponent>(uid.GetValueOrDefault()).EntityName;
+        var name = _entity.GetComponent<MetaDataComponent>(uid.Value).EntityName;
         return Color.FromHex(chatUi.GetNameColor(name));
     }
 }
