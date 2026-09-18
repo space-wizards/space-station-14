@@ -308,8 +308,8 @@ public sealed partial class EventManagerSystem : EntitySystem
         // Slightly slower if we don't care about MaxOccurrences, but that's not a huge issue in the context of the event scheduler.
         var count = 0;
         var lastRun = TimeSpan.Zero;
-        var ruleQuery = EntityQueryEnumerator<ActiveGameRuleComponent, GameRuleComponent, MetaDataComponent>();
-        while (ruleQuery.MoveNext(out _, out var rule, out var meta))
+        var ruleQuery = EntityQueryEnumerator<GameRuleComponent, MetaDataComponent>();
+        while (ruleQuery.MoveNext(out var rule, out var meta))
         {
             if (meta.EntityPrototype?.ID != prototype.ID)
                 continue;
