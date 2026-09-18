@@ -5,10 +5,16 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Icon by ThatGuyUSA (github)",
+    "copyright": "Icons by ThatGuyUSA (github)",
     "states": [
         {
+            "name": "icon-dinnerware"
+        },
+        {
             "name": "icon-raw-ingredients"
+        },
+        {
+            "name": "icon-food-platter"
         }
     ]
 }

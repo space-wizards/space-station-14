@@ -1180,7 +1180,7 @@
     hands:
     - hand:
         emptyLabel: borg-slot-dining-ware-empty
-        emptyRepresentative: FoodPlate
+        emptyRepresentative: BorgModuleFoodPlatterPlaceholder
         whitelist:
           tags:
           - Bread
@@ -1208,14 +1208,15 @@
           - Raw
     - item: KitchenKnife
     - item: RollingPin
-    - item: BorgDropper
     - item: Beaker
       hand:
         emptyLabel: borg-slot-small-containers-empty
-        emptyRepresentative: Beaker
+        emptyRepresentative: BorgModuleDinnerwarePlaceholder
         whitelist:
           components:
           - FitsInDispenser
+          tags:
+          - Dinnerware
     - hand:
         emptyLabel: borg-slot-ingredients-empty
         emptyRepresentative: BorgModuleRawIngredientPlaceholder
@@ -1256,6 +1257,22 @@
 
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: cooking-module }
+
+- type: entity
+  id: BorgModuleFoodPlatterPlaceholder
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Kitchen/placeholder.rsi
+    state: icon-food-platter
+
+- type: entity
+  id: BorgModuleDinnerwarePlaceholder
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Kitchen/placeholder.rsi
+    state: icon-dinnerware
 
 - type: entity
   id: BorgModuleRawIngredientPlaceholder
