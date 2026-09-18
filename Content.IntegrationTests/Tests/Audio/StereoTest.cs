@@ -1,6 +1,7 @@
 #nullable enable
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
@@ -86,31 +87,54 @@ public sealed partial class StereoTest : GameTest
         }
     }
 
+    /// <summary>
+    /// Given a collection of Types, builds a dictionary mapping each type to a list of all of its
+    /// fields which may contain <see cref="SoundSpecifier"/>s that need to be checked for mono-compliance.
+    /// </summary>
     private static Dictionary<Type, List<FieldInfo>> GetRelevantFields(IEnumerable<Type> types)
     {
         Dictionary<Type, List<FieldInfo>> dict = [];
         foreach (var type in types)
         {
-            // Inspect all fields
-            foreach (var field in type.GetFields())
-            {
-                // Ignore the field if it has AllowStereo
-                if (field.HasCustomAttribute<AllowStereoAttribute>())
-                    continue;
-
-                // No infinite recursion
-                if (field.FieldType == type)
-                    continue;
-
-                // Flag the field if it might be relevant
-                if (IsRelevantType(field.FieldType))
-                    dict.GetOrNew(type).Add(field);
-            }
+            var fields = GetRelevantFields(type);
+            if (fields is not null)
+                dict.Add(type, fields.ToList());
         }
 
         return dict;
     }
 
+    /// <summary>
+    /// Given a Type, returns a collection of all fields within that type that may contain one or more
+    /// <see cref="SoundSpecifier"/>s that need to be checked for mono-compliance.
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    private static IEnumerable<FieldInfo> GetRelevantFields(Type type)
+    {
+        // Inspect all fields
+        foreach (var field in type.GetFields())
+        {
+            // Ignore the field if it has AllowStereo
+            if (field.HasCustomAttribute<AllowStereoAttribute>())
+                continue;
+
+            // No infinite recursion
+            if (field.FieldType == type)
+                continue;
+
+            // Flag the field if it is of a Type that might be relevant
+            if (IsRelevantType(field.FieldType))
+                yield return field;
+        }
+    }
+
+    /// <summary>
+    /// Examines a given field value to make sure that any contained <see cref="SoundSpecifier"/>s are mono-compliant.
+    /// </summary>
+    /// <param name="value">The extracted field value to examine.</param>
+    /// <param name="path">The virtual "path" to this field. Used in error messages to help locate the source.</param>
+    /// <param name="dataDefs">A map of DataDefinition types to their relevant fields.</param>
     private static void CheckValue(object value, string path, Dictionary<Type, List<FieldInfo>> dataDefs, IResourceCache resCache, IPrototypeManager protoMan)
     {
         if (value is SoundSpecifier soundSpecifier)
@@ -149,6 +173,12 @@ public sealed partial class StereoTest : GameTest
         }
     }
 
+    /// <summary>
+    /// Inspects a <see cref="SoundSpecifier"/> value for mono-compliance.
+    /// </summary>
+    /// <remarks>
+    /// This method handles the logic for inspecting different <see cref="SoundSpecifier"/> implementations (i.e. paths vs collections).
+    /// </remarks>
     private static void CheckSpecifier(SoundSpecifier specifier, string datafieldName, IResourceCache resCache, IPrototypeManager protoMan)
     {
         if (specifier is SoundPathSpecifier pathSpecifier)
@@ -170,6 +200,12 @@ public sealed partial class StereoTest : GameTest
         }
     }
 
+    /// <summary>
+    /// Given the <see cref="ResPath"/> of an audio resource, checks that the resource is in mono format.
+    /// This will trigger a failed assertion if the audio is stereo.
+    /// </summary>
+    /// <param name="path">The <see cref="ResPath"/> of the audio resource.</param>
+    /// <param name="datafieldName">The virtual "path" of the datafield that references this audio resource. Used in error messages to help locate the source.</param>
     private static void ValidateFromPath(ResPath path, string datafieldName, IResourceCache resCache)
     {
         var audio = resCache.GetResource<AudioResource>(path);
@@ -177,6 +213,15 @@ public sealed partial class StereoTest : GameTest
             $"{path} has multiple channels, but {datafieldName} only allows mono audio. Stereo audio cannot be played positionally and should be converted to mono. If this audio is only played globally (without positional info; like music), add [AllowStereo] to the SoundSpecifer to remove this error.");
     }
 
+    /// <summary>
+    /// Determines whether <paramref name="type"/> potentially contains one or more <see cref="SoundSpecifier"/>s.
+    /// Used by <see cref="GetRelevantFields"/> to determine if a field should be tracked.
+    /// </summary>
+    /// <remarks>
+    /// For simplicity, DataDefinitions are always flagged as potentially relevant.
+    /// This is quicker and easier than trying to recursively inspect their fields.
+    /// </remarks>
+    /// <returns><see langword="true"/> if <paramref name="type"/> potentially contains <see cref="SoundSpecifier"/>s.</returns>
     private static bool IsRelevantType(Type type)
     {
         // Primitive types obviously are not and do not contain SoundSpecifiers
