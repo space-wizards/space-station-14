@@ -7,26 +7,26 @@
     - type: Transform
       noRot: true
     - type: Sprite
-      sprite: Structures/Storage/closet.rsi
+      sprite: Effects/misc.rsi
       drawdepth: Effects
       noRot: true
       layers:
-      - state: "cardboard_special"
+      - state: exclamation-mark
     - type: TimedDespawn
       lifetime: 1
     - type: Tag
       tags:
         - HideContextMenu
-        
-        
+
+
 - type: entity
   id: WhistleExclamation
   name: exclamation
   categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
-      sprite: Structures/Storage/closet.rsi
-      state: cardboard_special
+      sprite: Effects/misc.rsi
+      state: exclamation-mark
       drawdepth: Effects
       offset: 0, 1
       noRot: true
