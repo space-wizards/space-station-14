@@ -7,18 +7,16 @@ using Robust.Server.GameObjects;
 using Robust.Shared.EntitySerialization;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed class LoadMapRuleSystem : StationEventSystem<LoadMapRuleComponent>
+public sealed partial class LoadMapRuleSystem : StationEventSystem<LoadMapRuleComponent>
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly MapSystem _map = default!;
-    [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly GridPreloaderSystem _gridPreloader = default!;
+    [Dependency] private MapSystem _map = default!;
+    [Dependency] private MapLoaderSystem _mapLoader = default!;
+    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private GridPreloaderSystem _gridPreloader = default!;
 
     protected override void Added(EntityUid uid, LoadMapRuleComponent comp, GameRuleComponent rule, GameRuleAddedEvent args)
     {
@@ -39,7 +37,7 @@ public sealed class LoadMapRuleSystem : StationEventSystem<LoadMapRuleComponent>
             DebugTools.AssertNull(comp.GridPath);
             DebugTools.AssertNull(comp.PreloadedGrid);
 
-            var gameMap = _prototypeManager.Index(comp.GameMap.Value);
+            var gameMap = ProtoMan.Index(comp.GameMap.Value);
             grids = GameTicker.LoadGameMap(gameMap, out mapId, null);
             Log.Info($"Created map {mapId} for {ToPrettyString(uid):rule}");
         }

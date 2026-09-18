@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   parent: [ BaseItem, BaseMagicalContraband ]
   id: BaseSpellbook
@@ -70,6 +70,7 @@
       ownerOnly: false # For ease of debugging.
       balance:
         WizCoin: 99999
+      expectedFaction: #nulls out the expected faction
 
 - type: entity
   parent: BaseSpellbook

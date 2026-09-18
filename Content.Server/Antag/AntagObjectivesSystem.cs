@@ -1,16 +1,15 @@
 using Content.Server.Antag.Components;
-using Content.Server.Objectives;
+using Content.Shared.Antag;
 using Content.Shared.Mind;
-using Content.Shared.Objectives.Systems;
 
 namespace Content.Server.Antag;
 
 /// <summary>
 /// Adds fixed objectives to an antag made with <c>AntagObjectivesComponent</c>.
 /// </summary>
-public sealed class AntagObjectivesSystem : EntitySystem
+public sealed partial class AntagObjectivesSystem : EntitySystem
 {
-    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
 
     public override void Initialize()
     {

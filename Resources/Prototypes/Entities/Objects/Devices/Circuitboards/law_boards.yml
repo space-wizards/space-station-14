@@ -23,7 +23,7 @@
     laws: NTDefault
 
 - type: entity
-  id: AsimovCircuitBoard
+  id: CrewsimovCircuitBoard
   parent: BaseSiliconLawboard
   name: law board (Crewsimov)
   description: An electronics board containing the Crewsimov lawset.
@@ -123,6 +123,18 @@
     lawUploadSound: /Audio/Ambience/Antag/silicon_lawboard_antimov.ogg
   - type: StaticPrice
     price: 10000
+
+- type: entity
+  id: SyndimovCircuitBoard
+  parent: [BaseSiliconLawboard, BaseSyndicateContraband]
+  name: law board (Syndimov)
+  description: An electronics board containing the Syndimov lawset.
+  components:
+  - type: SiliconLawProvider
+    laws: SyndicateStatic
+    lawUploadSound: /Audio/Ambience/Antag/emagged_borg.ogg # This should probably have its own sound but it's fine for now.
+  - type: StaticPrice
+    price: 5000
 
 - type: entity
   id: NutimovCircuitBoard

@@ -2,15 +2,16 @@ using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.GameTicking.Rules;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents;
 
-public sealed class RampingStationEventSchedulerSystem : GameRuleSystem<RampingStationEventSchedulerComponent>
+public sealed partial class RampingStationEventSchedulerSystem : GameRuleSystem<RampingStationEventSchedulerComponent>
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly EventManagerSystem _event = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private EventManagerSystem _event = default!;
+    [Dependency] private ServerGameTicker _gameTicker = default!;
 
     /// <summary>
     /// Returns the ChaosModifier which increases as round time increases to a point.
@@ -38,28 +39,20 @@ public sealed class RampingStationEventSchedulerSystem : GameRuleSystem<RampingS
         PickNextEventTime(uid, component);
     }
 
-    public override void Update(float frameTime)
+    // TODO: GO THROUGH EVERY SINGLE GAME RULE AND JUST CLEAN THIS STUFF UP!!!
+    protected override void ActiveTick(EntityUid entityUid, RampingStationEventSchedulerComponent component, GameRuleComponent gameRuleComponent, float frameTime)
     {
-        base.Update(frameTime);
-
         if (!_event.EventsEnabled)
             return;
 
-        var query = EntityQueryEnumerator<RampingStationEventSchedulerComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var scheduler, out var gameRule))
+        if (component.TimeUntilNextEvent > 0f)
         {
-            if (!GameTicker.IsGameRuleActive(uid, gameRule))
-                continue;
-
-            if (scheduler.TimeUntilNextEvent > 0f)
-            {
-                scheduler.TimeUntilNextEvent -= frameTime;
-                continue;
-            }
-
-            PickNextEventTime(uid, scheduler);
-            _event.RunRandomEvent(scheduler.ScheduledGameRules);
+            component.TimeUntilNextEvent -= frameTime;
+            return;
         }
+
+        PickNextEventTime(entityUid, component);
+        _event.RunRandomEvent(component.ScheduledGameRules);
     }
 
     /// <summary>

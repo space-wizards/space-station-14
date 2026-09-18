@@ -8,11 +8,11 @@ using Robust.Shared.Random;
 
 namespace Content.Client.Weapons.Ranged.Systems;
 
-public sealed class FlyBySoundSystem : SharedFlyBySoundSystem
+public sealed partial class FlyBySoundSystem : SharedFlyBySoundSystem
 {
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {

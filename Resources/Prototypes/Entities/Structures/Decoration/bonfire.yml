@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: BaseStructure
+  parent: [ BaseStructure, StructureHealthFurniture ]
   id: BaseBonfire
   components:
   - type: Fixtures
@@ -22,19 +22,16 @@
     energy: 3
     color: "#FFC90C"
   - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: Wood
+    damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 50
-        behaviors:
-        - !type:PlaySoundBehavior
-          sound:
-            collection: WoodDestroy
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
   - type: AmbientSound
     volume: -5
     range: 5
@@ -44,6 +41,7 @@
   - type: IgnitionSource
     temperature: 700
     ignited: true
+  - type: RequireProjectileTarget
 
 - type: entity
   parent: BaseBonfire
@@ -71,7 +69,7 @@
     offset: "0, 0.5"
   - type: Strap
     position: Stand
-    buckleOffset: "0, 0.5"
+    buckleOffset: "0, 0.4"
     buckleDoafterTime: 5
   - type: IgniteOnBuckle
   - type: Construction

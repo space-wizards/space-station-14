@@ -1,6 +1,6 @@
 # Top level timer for master medical players
 - type: loadoutEffectGroup
-  id: MedicalExpertTimer
+  id: SeniorPhysician
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
@@ -30,7 +30,7 @@
 
 # Mid-level timer for CMO
 - type: loadoutEffectGroup
-  id: CMOJourneymanTimer
+  id: MasterCMO
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:

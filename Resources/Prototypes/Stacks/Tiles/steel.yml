@@ -8,24 +8,6 @@
 
 - type: stack
   parent: BaseTileStack
-  id: FloorTileSteelOffset
-  name: stack-offset-steel-tile
-  spawn: FloorTileItemSteelOffset
-
-- type: stack
-  parent: BaseTileStack
-  id: FloorTileSteelDiagonalMini
-  name: stack-steel-diagonal-mini-tile
-  spawn: FloorTileItemSteelDiagonalMini
-
-- type: stack
-  parent: BaseTileStack
-  id: FloorTileSteelDiagonal
-  name: stack-steel-diagonal-tile
-  spawn: FloorTileItemSteelDiagonal
-
-- type: stack
-  parent: BaseTileStack
   id: FloorTileSteelHerringbone
   name: stack-steel-herringbone
   spawn: FloorTileItemSteelHerringbone
@@ -38,18 +20,30 @@
 
 - type: stack
   parent: BaseTileStack
-  id: FloorTileSteelMono
-  name: stack-steel-mono-tile
-  spawn: FloorTileItemSteelMono
-
-- type: stack
-  parent: BaseTileStack
   id: FloorTileSteelPavement
   name: stack-steel-pavement
   spawn: FloorTileItemSteelPavement
 
 - type: stack
   parent: BaseTileStack
+  id: FloorTileSteelMono
+  name: stack-steel-mono-tile
+  spawn: FloorTileItemSteelMono
+
+- type: stack
+  parent: BaseTileStack
   id: FloorTileSteelPavementVertical
   name: stack-steel-vertical-pavement
   spawn: FloorTileItemSteelPavementVertical
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileSteelVerticalSlatsBordered
+  name: stack-steel-vertical-slats-tile-bordered
+  spawn: FloorTileItemSteelVerticalSlatsBordered
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileSteelHorizontalSlatsBordered
+  name: stack-steel-horizontal-slats-tile-bordered
+  spawn: FloorTileItemSteelHorizontalSlatsBordered

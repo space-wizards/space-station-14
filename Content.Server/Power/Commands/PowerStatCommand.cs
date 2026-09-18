@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Power.Commands;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class PowerStatCommand : LocalizedEntityCommands
+public sealed partial class PowerStatCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly PowerNetSystem _powerNet = default!;
+    [Dependency] private PowerNetSystem _powerNet = default!;
 
     public override string Command => "powerstat";
 

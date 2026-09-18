@@ -13,10 +13,10 @@ namespace Content.Server.Chat.V2.Repository;
 /// Stores <see cref="IChatEvent"/>, gives them UIDs, and issues <see cref="MessageCreatedEvent"/>.
 /// Allows for deletion of messages.
 /// </summary>
-public sealed class ChatRepositorySystem : EntitySystem
+public sealed partial class ChatRepositorySystem : EntitySystem
 {
-    [Dependency] private readonly IReplayRecordingManager _replay = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private IReplayRecordingManager _replay = default!;
+    [Dependency] private IPlayerManager _player = default!;
 
     // Clocks should start at 1, as 0 indicates "clock not set" or "clock forgotten to be set by bad programmer".
     private uint _nextMessageId = 1;

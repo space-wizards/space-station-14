@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Shared.Atmos;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
@@ -30,6 +31,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
     private readonly SpriteSystem _spriteSystem;
     private readonly IPrototypeManager _prototypes;
     private readonly IResourceCache _cache;
+    private readonly DamageableSystem _damageable;
 
     public HealthAnalyzerControl()
     {
@@ -40,6 +42,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
         _spriteSystem = _entityManager.System<SpriteSystem>();
         _prototypes = dependencies.Resolve<IPrototypeManager>();
         _cache = dependencies.Resolve<IResourceCache>();
+        _damageable = _entityManager.System<DamageableSystem>();
     }
 
     public void Populate(HealthAnalyzerUiState state)
@@ -79,9 +82,9 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
         NameLabel.SetMessage(name);
 
         SpeciesLabel.Text =
-            _entityManager.TryGetComponent<HumanoidAppearanceComponent>(target.Value,
-                out var humanoidAppearanceComponent)
-                ? Loc.GetString(_prototypes.Index<SpeciesPrototype>(humanoidAppearanceComponent.Species).Name)
+            _entityManager.TryGetComponent<HumanoidProfileComponent>(target.Value,
+                out var humanoidComponent)
+                ? Loc.GetString(_prototypes.Index(humanoidComponent.Species).Name)
                 : Loc.GetString("health-analyzer-window-entity-unknown-species-text");
 
         // Basic Diagnostic
@@ -101,7 +104,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
 
         // Total Damage
 
-        DamageLabel.Text = damageable.TotalDamage.ToString();
+        DamageLabel.Text = _damageable.GetTotalDamage(target.Value).ToString();
 
         // Alerts
 
@@ -132,10 +135,11 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
         // Damage Groups
 
         var damageSortedGroups =
-            damageable.DamagePerGroup.OrderByDescending(damage => damage.Value)
+            _damageable.GetDamagePerGroup(target.Value)
+                .OrderByDescending(damage => damage.Value)
                 .ToDictionary(x => x.Key, x => x.Value);
 
-        IReadOnlyDictionary<string, FixedPoint2> damagePerType = damageable.Damage.DamageDict;
+        var damagePerType = _damageable.GetAllDamage(target.Value).DamageDict;
 
         DrawDiagnosticGroups(damageSortedGroups, damagePerType);
     }
@@ -152,8 +156,8 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
     }
 
     private void DrawDiagnosticGroups(
-        Dictionary<string, FixedPoint2> groups,
-        IReadOnlyDictionary<string, FixedPoint2> damageDict)
+        Dictionary<ProtoId<DamageGroupPrototype>, FixedPoint2> groups,
+        IReadOnlyDictionary<ProtoId<DamageTypePrototype>, FixedPoint2> damageDict)
     {
         GroupsContainer.RemoveAllChildren();
 

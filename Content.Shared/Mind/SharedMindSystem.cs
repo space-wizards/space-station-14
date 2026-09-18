@@ -1,15 +1,16 @@
+using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Emoting;
+using Content.Shared.EntityConditions;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Movement.Components;
 using Content.Shared.Mind.Components;
-using Content.Shared.Mind.Filters;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Objectives.Systems;
@@ -19,6 +20,9 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -28,19 +32,22 @@ namespace Content.Shared.Mind;
 
 public abstract partial class SharedMindSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
-    [Dependency] private readonly SharedPlayerSystem _player = default!;
-    [Dependency] private readonly MetaDataSystem _metadata = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private IDependencyCollection _dependency = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private MetaDataSystem _metadata = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedEntityConditionsSystem _conditions = default!;
+    [Dependency] private SharedObjectivesSystem _objectives = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedPlayerSystem _player = default!;
 
     [ViewVariables]
     protected readonly Dictionary<NetUserId, EntityUid> UserMinds = new();
 
-    private HashSet<Entity<MindComponent>> _pickingMinds = new();
+    private readonly HashSet<Entity<MindComponent>> _pickingMinds = new();
 
     private readonly EntProtoId _mindProto = "MindBase";
 
@@ -468,6 +475,37 @@ public abstract partial class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
+    /// Returns an enumerator of the input minds objectives
+    /// </summary>
+    public IEnumerable<EntityUid> EnumerateObjectives(Entity<MindComponent?> mind)
+    {
+        if (!Resolve(mind, ref mind.Comp))
+            yield break;
+
+        foreach (var obj in mind.Comp.Objectives)
+        {
+            yield return obj;
+        }
+    }
+
+    /// <summary>
+    /// Returns an enumerator of objectives with the specified component.
+    /// </summary>
+    public IEnumerable<EntityUid> EnumerateObjectives<T>(Entity<MindComponent?> mind)  where T : IComponent
+    {
+        if (!Resolve(mind, ref mind.Comp))
+            yield break;
+
+        foreach (var obj in mind.Comp.Objectives)
+        {
+            if (!HasComp<T>(obj))
+                continue;
+
+            yield return obj;
+        }
+    }
+
+    /// <summary>
     /// Gets a mind from uid and/or MindContainerComponent. Used for null checks.
     /// </summary>
     /// <param name="uid">Entity UID that owns the mind.</param>
@@ -523,6 +561,58 @@ public abstract partial class SharedMindSystem : EntitySystem
 
         mindId = default;
         return false;
+    }
+
+    /// <summary>
+    /// Try to get the last mind that was associated with the given entity. This is distinct from TryGetMind as it does
+    /// not require an active mind to be associated with an entity (e.g. dead players after ghosting or taking a ghost
+    /// role)
+    /// </summary>
+    /// <param name="entity">Entity to find the last mind for</param>
+    /// <param name="lastMind">Output mind entity with <see cref="MindComponent"/>. null if function returns false</param>
+    /// <returns>true if a last mind was found, false if not</returns>
+    public bool TryGetLastMind(
+        Entity<MindContainerComponent?> entity,
+        [NotNullWhen(true)] out Entity<MindComponent>? lastMind)
+    {
+        lastMind = null;
+
+        if (!Resolve(entity.Owner, ref entity.Comp, logMissing: false))
+            return false;
+
+        if (entity.Comp.LastMind == null)
+            return false;
+
+        if (!TryComp<MindComponent>(entity.Comp.LastMind.Value, out var lastMindComp))
+            return false;
+
+        lastMind = new Entity<MindComponent>(entity.Comp.LastMind.Value, lastMindComp);
+
+        return true;
+    }
+
+    /// <summary>
+    /// Try to get the original owner <see cref="NetUserId"/> of the last mind associated with a given entity
+    /// </summary>
+    /// <param name="entity"><see cref="EntityUid"/> to get the last mind owner from</param>
+    /// <param name="lastOwner"><see cref="NetUserId"/> of the last mind owner. null if function returns false</param>
+    /// <returns>true if a mind was found and the last owner is not null, false if not</returns>
+    public bool TryGetLastMindOwner(
+        Entity<MindContainerComponent?> entity,
+        [NotNullWhen(true)] out NetUserId? lastOwner
+    )
+    {
+        lastOwner = null;
+
+        if (!TryGetLastMind(entity, out var lastMind))
+            return false;
+
+        if (lastMind.Value.Comp.OriginalOwnerUserId == null)
+            return false;
+
+        lastOwner = lastMind.Value.Comp.OriginalOwnerUserId;
+
+        return true;
     }
 
     /// <summary>
@@ -607,8 +697,8 @@ public abstract partial class SharedMindSystem : EntitySystem
     /// </summary>
     public void AddAliveHumans(HashSet<Entity<MindComponent>> allHumans, EntityUid? exclude = null)
     {
-        // HumanoidAppearanceComponent is used to prevent mice, pAIs, etc from being chosen
-        var query = EntityQueryEnumerator<HumanoidAppearanceComponent, MobStateComponent>();
+        // HumanoidProfileComponent is used to prevent mice, pAIs, etc from being chosen
+        var query = EntityQueryEnumerator<HumanoidProfileComponent, MobStateComponent>();
         while (query.MoveNext(out var uid, out _, out var mobState))
         {
             // the player needs to have a mind and not be the excluded one +
@@ -624,11 +714,10 @@ public abstract partial class SharedMindSystem : EntitySystem
     /// Picks a random mind from a pool after applying a list of filters.
     /// Returns null if no valid mind could be found.
     /// </summary>
-    public Entity<MindComponent>? PickFromPool(IMindPool pool, List<MindFilter> filters, EntityUid? exclude = null)
+    public Entity<MindComponent>? PickFromPool(IMindPool pool, EntityUid? exclude = null, params EntityCondition[] conditions)
     {
         _pickingMinds.Clear();
-        pool.FindMinds(_pickingMinds, exclude, EntityManager, this);
-        FilterMinds(_pickingMinds, filters, exclude);
+        pool.FindMinds(_pickingMinds, _dependency, exclude, conditions);
 
         if (_pickingMinds.Count == 0)
             return null;
@@ -637,26 +726,19 @@ public abstract partial class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
-    /// Filters minds from a hashset using a single <see cref="MindFilter"/>.
+    /// Filters minds from a hashset using a single <see cref="EntityCondition"/>.
     /// </summary>
-    public void FilterMinds(HashSet<Entity<MindComponent>> minds, MindFilter filter, EntityUid? exclude = null)
+    public void FilterMinds(HashSet<Entity<MindComponent>> minds, EntityCondition condition)
     {
-        minds.RemoveWhere(mind => filter.Filter(mind, exclude, EntityManager, this));
+        minds.RemoveWhere(mind => !_conditions.TryCondition(mind, condition));
     }
 
     /// <summary>
-    /// Filters minds from a hashset using a list of <see cref="MindFilter"/>s to apply sequentially.
+    /// Filters minds from a hashset using a list of <see cref="EntityCondition"/>s to apply sequentially.
     /// </summary>
-    public void FilterMinds(HashSet<Entity<MindComponent>> minds, List<MindFilter> filters, EntityUid? exclude = null)
+    public void FilterMinds(HashSet<Entity<MindComponent>> minds, EntityCondition[] conditions)
     {
-        foreach (var filter in filters)
-        {
-            // no point calling it if there are none left
-            if (minds.Count == 0)
-                break;
-
-            FilterMinds(minds, filter, exclude);
-        }
+        minds.RemoveWhere(mind => !_conditions.TryConditions(mind, conditions));
     }
 
     /// <summary>
@@ -670,6 +752,11 @@ public abstract partial class SharedMindSystem : EntitySystem
         EnsureComp<MindContainerComponent>(uid);
         if (allowMovement)
         {
+            EnsureComp<PhysicsComponent>(uid, out var physics);
+            // A debug assert will trip if the entity's BodyType is still "Dynamic" when it gets InputMover
+            _physics.SetBodyType(uid, BodyType.KinematicController);
+            Dirty(uid, physics);
+
             EnsureComp<InputMoverComponent>(uid);
             EnsureComp<MobMoverComponent>(uid);
             EnsureComp<MovementSpeedModifierComponent>(uid);

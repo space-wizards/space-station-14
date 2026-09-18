@@ -3,15 +3,13 @@ using Content.Server.Hands.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Hands.Components;
 using Robust.Shared.Console;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Body.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    sealed class AddHandCommand : IConsoleCommand
+    sealed partial class AddHandCommand : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
-        [Dependency] private readonly IPrototypeManager _protoManager = default!;
+        [Dependency] private IEntityManager _entManager = default!;
 
         private static int _handIdAccumulator;
 

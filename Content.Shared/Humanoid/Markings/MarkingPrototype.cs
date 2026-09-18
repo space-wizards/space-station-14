@@ -14,17 +14,11 @@ namespace Content.Shared.Humanoid.Markings
         [DataField("bodyPart", required: true)]
         public HumanoidVisualLayers BodyPart { get; private set; } = default!;
 
-        [DataField("markingCategory", required: true)]
-        public MarkingCategories MarkingCategory { get; private set; } = default!;
-
-        [DataField("speciesRestriction")]
-        public List<string>? SpeciesRestrictions { get; private set; }
+        [DataField]
+        public List<ProtoId<MarkingsGroupPrototype>>? GroupWhitelist;
 
         [DataField("sexRestriction")]
         public Sex? SexRestriction { get; private set; }
-
-        [DataField("followSkinColor")]
-        public bool FollowSkinColor { get; private set; } = false;
 
         [DataField("forcedColoring")]
         public bool ForcedColoring { get; private set; } = false;
@@ -42,9 +36,25 @@ namespace Content.Shared.Humanoid.Markings
         [DataField("sprites", required: true)]
         public List<SpriteSpecifier> Sprites { get; private set; } = default!;
 
+        /// <summary>
+        ///     Optional dictionary allowing assignment of shaders to sprite layers in a marking.
+        ///     This implementation is very messy but unfortunately Robust doesn't like shaders in SpriteSpecifiers.
+        /// </summary>
+        [DataField]
+        public Dictionary<string, string>? Shaders { get; private set; }
+
         public Marking AsMarking()
         {
             return new Marking(ID, Sprites.Count);
         }
+
+        /// <summary>
+        /// Chance this marking will be added by appearance randomizer.
+        /// </summary>
+        /// <remarks>
+        /// Default value is 1.
+        /// </remarks>
+        [DataField]
+        public float RandomWeight = 1f;
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Content.Server.NPC.HTN.Preconditions.Math;
+namespace Content.Server.NPC.HTN.Preconditions.Math;
 
 /// <summary>
 /// Checks if there is a bool value for the specified <see cref="KeyBoolEqualsPrecondition.Key"/>
@@ -6,7 +6,7 @@
 /// </summary>
 public sealed partial class KeyBoolEqualsPrecondition : HTNPrecondition
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
 
     [DataField(required: true), ViewVariables]
     public string Key = string.Empty;
