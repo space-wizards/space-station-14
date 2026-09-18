@@ -32,7 +32,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private ShuttleSystem _shuttle = default!;
-    [Dependency] private StationSystem _station = default!;
+    [Dependency] private ServerStationSystem _station = default!;
     [Dependency] private TagSystem _tags = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
     [Dependency] private SharedContentEyeSystem _eyeSystem = default!;
