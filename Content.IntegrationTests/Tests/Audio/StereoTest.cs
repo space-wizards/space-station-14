@@ -31,7 +31,8 @@ public sealed partial class StereoTest : GameTest
     public async Task TestSoundSpecifiers()
     {
         // Find all data definition types that may contain SoundSpecifiers.
-        // We get some false positives, but it's not a big deal.
+        // We get some false positives with types that contain other data definitions,
+        // but the cost of examining them is minor compared to being pickier about filtering.
         var dataDefinitionTypes = _sReflectionMan.FindTypesWithAttribute<DataDefinitionAttribute>();
         var dataDefinitions = GetRelevantFields(dataDefinitionTypes);
 
