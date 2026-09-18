@@ -162,7 +162,7 @@
   - type: Sprite
     state: bun-meat
   - type: Tag
-    tags: [ Meat ]
+    tags: [ FinishedMeal, Meat ]
 
 # Cookies
 
@@ -219,9 +219,7 @@
   description: A "chicken" nugget vaguely shaped into an object. # Should change depending on name.
   components:
   - type: Tag
-    tags:
-      - Nugget
-      - Meat
+    tags: [ Nugget, Meat ]
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/nuggets.rsi
     layers:
@@ -291,8 +289,7 @@
       visible: false
   - type: Appearance
   - type: Tag
-    tags:
-    - Pancake
+    tags: [ Pancake ]
 
 - type: entity
   name: blueberry pancake
@@ -343,9 +340,7 @@
       map: ["pancakesbb9"]
       visible: false
   - type: Tag
-    tags:
-    - Pancake
-    - Fruit
+    tags: [ Fruit, Pancake ]
 
 - type: entity
   name: chocolate chip pancake
@@ -414,8 +409,7 @@
       - state: tray
       - state: waffles
   - type: Tag
-    tags:
-    - Bread
+    tags: [ Bread ]
 
 - type: entity
   name: soy waffles
@@ -461,8 +455,7 @@
   - type: Sprite
     state: pretzel
   - type: Tag
-    tags:
-    - Bread
+    tags: [ Bread ]
 
 - type: entity
   name: cannoli
@@ -522,6 +515,8 @@
         Quantity: 0.05
       - ReagentId: Blackpepper
         Quantity: 0.05
+  - type: Tag
+    tags: [ FinishedMeal ]
 
 - type: entity
   name: cotton chèvre chaud
@@ -586,7 +581,7 @@
     - id: FoodBakedBrownie
       amount: 8
   - type: Tag
-    tags: [ FinishedMeal ]
+    tags: [ Dessert, FinishedMeal ]
 
 - type: entity
   name: brownie
@@ -647,7 +642,7 @@
     - id: FoodBakedCannabisBrownie
       amount: 8
   - type: Tag
-    tags: [ FinishedMeal ]
+    tags: [ Dessert, FinishedMeal ]
 
 - type: entity
   parent: FoodBakedBase
@@ -675,7 +670,7 @@
       - ReagentId: THC
         Quantity: 2
   - type: Tag
-    tags: [ FinishedMeal, Slice ]
+    tags: [ Dessert, FinishedMeal, Slice ]
 
 - type: entity
   name: onion rings
@@ -698,6 +693,8 @@
           Quantity: 1
         - ReagentId: Vitamin
           Quantity: 1
+    - type: Tag
+      tags: [ FinishedMeal ]
 
 - type: entity
   parent: [SolutionSmall, FoodBakedBase]
@@ -746,8 +743,7 @@
   - type: Edible
     requiresSpecialDigestion: true
   - type: Tag
-    tags:
-    - ClothMade
+    tags: [ ClothMade, FinishedMeal]
   - type: Solution
     solution:
       reagents:
@@ -782,6 +778,8 @@
         Quantity: 37.5
       - ReagentId: Butter
         Quantity: 2.5
+  - type: Tag
+    tags: [ FinishedMeal ]
 
 - type: entity
   parent: FoodBakedGrilledCheeseSandwich
@@ -800,8 +798,7 @@
   - type: Edible
     requiresSpecialDigestion: true
   - type: Tag
-    tags:
-    - ClothMade
+    tags: [ ClothMade, FinishedMeal ]
   - type: Solution
     solution:
       reagents:

@@ -328,7 +328,7 @@
   id: CleanerGrenade # Storage whitelist: ClothingBeltJanitor. ItemMapper: ClothingBeltJanitor
 
 - type: Tag
-  id: ClothMade # SpecialDigestible: OrganMothStomach. Storage whitelist: FoodBoxCloth
+  id: ClothMade # SpecialDigestible: OrganMothStomach. Storage whitelist: FoodBoxCloth, BorgModuleCooking
 
 - type: Tag
   id: ClownMask # ConstructionGraph: Honker, BananaClownMask
@@ -641,7 +641,7 @@
   id: FrozenTreat # Storage whitelist: BorgModuleCooking
 
 - type: Tag
-  id: Fruit # SpecialDigestible: OrganReptilianStomach. CargoBounty: BountyFruit
+  id: Fruit # SpecialDigestible: OrganReptilianStomach. CargoBounty: BountyFruit. StorageWhitelist: BorgModuleCooking
 
 ## G ##
 

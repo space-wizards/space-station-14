@@ -989,8 +989,7 @@
     storedOffset: -1,0
     heldPrefix: batard
   - type: Tag
-    tags:
-    - ReptilianFood
+    tags: [ ReptilianFood, FinishedMeal ]
   - type: FlavorProfile
     flavors:
     - nutribrick
@@ -1015,8 +1014,7 @@
     - salty
     - bread
   - type: Tag
-    tags:
-    - ClothMade
+    tags: [ ClothMade, FinishedMeal ]
   - type: Item
     size: Small
     storedOffset: -1,0

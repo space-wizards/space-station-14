@@ -64,8 +64,7 @@
       types:
         Blunt: 0
   - type: Tag
-    tags:
-    - Ingredient
+    tags: [ Ingredient ]
 
 - type: entity
   abstract: true
@@ -272,8 +271,7 @@
   - type: Edible
     edible: Drink # slurping sounds!
   - type: Tag
-    tags:
-    - Condiment
+    tags: [ Condiment ]
 
 - type: entity
   parent: ReagentPacketBase # TODO Move to condiments.yml and parent off of BaseFoodCondimentBottle
@@ -299,9 +297,7 @@
       - ReagentId: Mayo
         Quantity: 50
   - type: Tag
-    tags:
-      - Condiment
-      - Mayo
+    tags: [ Condiment, Mayo ]
 
 # Baking
 
@@ -362,8 +358,7 @@
   - type: Sprite
     state: dough-slice
   - type: Tag
-    tags:
-    - Slice
+    tags: [ Ingredient ]
   - type: Solution
     solution:
       reagents:
@@ -379,7 +374,7 @@
     size: Small
     storedRotation: -45
   - type: Tag
-    tags: []
+    tags: [ Ingredient ]
 
 - type: entity
   parent: [FoodDoughBase, BaseSlicingRefinableFood]
@@ -505,8 +500,7 @@
     graph: CottonPizza
     node: start
   - type: Tag
-    tags:
-    - ClothMade
+    tags: [ ClothMade, Ingredient ]
   - type: Solution
     solution:
       reagents:
@@ -528,10 +522,7 @@
   - type: Sprite
     state: cotton-dough-slice
   - type: Tag
-    tags:
-    - Ingredient
-    - Slice
-    - ClothMade
+    tags: [ ClothMade, Ingredient, Slice ]
   - type: Construction
     graph: DoughRopeCotton
     node: start
@@ -566,8 +557,7 @@
       - ReagentId: Fiber
         Quantity: 5
   - type: Tag
-    tags:
-     - ClothMade
+    tags: [ ClothMade, Ingredient ]
 
 - type: entity
   name: raw pastry base
@@ -723,9 +713,7 @@
       - ReagentId: Butter
         Quantity: 2.5
   - type: Tag
-    tags:
-    - Ingredient
-    - Slice
+    tags: [ Ingredient, Slice ]
 
 - type: entity
   name: stick of cannabis butter
@@ -786,9 +774,7 @@
       - ReagentId: Nutriment
         Quantity: 15
   - type: Tag
-    tags:
-    - Ingredient
-    - Slice
+    tags: [ Ingredient, Slice ]
   - type: FoodSequenceElement
     entries:
       Taco: CheeseTaco
@@ -853,9 +839,7 @@
       - ReagentId: Vitamin
         Quantity: 1
   - type: Tag
-    tags:
-    - Ingredient
-    - Slice
+    tags: [ Ingredient, Slice ]
 
 - type: entity
   parent: [SolutionNormal, FoodBakingBase, BaseSlicingRefinableFood]
@@ -903,9 +887,7 @@
       - ReagentId: Nutriment
         Quantity: 6
   - type: Tag
-    tags:
-    - Ingredient
-    - Slice
+    tags: [ Ingredient, Slice ]
 
 - type: entity
   name: burned mess
@@ -928,8 +910,7 @@
       - ReagentId: Carbon
         Quantity: 10
   - type: Tag
-    tags:
-    - Trash
+    tags: [ Trash ]
 
 - type: entity
   name: cocoa beans

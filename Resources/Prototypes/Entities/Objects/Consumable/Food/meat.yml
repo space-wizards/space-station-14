@@ -48,6 +48,8 @@
   - type: PhysicalComposition
     materialComposition:
       Meaterial: 300
+  - type: Tag
+    tags: [ Meat ]
 
 - type: entity
   parent: FoodMeatBase
@@ -55,9 +57,7 @@
   abstract: true
   components:
   - type: Tag
-    tags:
-    - Raw
-    - Meat
+    tags: [ Meat, Raw ]
   - type: Perishable
     # raw meat rots in 5 minutes, get it into the freezer fast
     rotAfter: 300
@@ -554,6 +554,8 @@
       right:
       - state: generic-pink-inhand-right
         color: "#934C64"
+  - type: Tag
+    tags: [ Meat, Raw ]
 
 - type: entity
   parent: [SolutionTiny, FoodMeatBase]
@@ -562,9 +564,7 @@
   description: A long piece of snake meat, hopefully not poisonous.
   components:
   - type: Tag
-    tags:
-    - Raw
-    - Meat
+    tags: [ Meat, Raw ]
   - type: Sprite
     state: snake
   - type: Solution
@@ -596,9 +596,7 @@
       - meaty
       - acid
   - type: Tag
-    tags:
-    - Raw
-    - Meat
+    tags: [ Meat, Raw ]
   - type: Sprite
     state: xeno
   - type: Solution
@@ -633,9 +631,7 @@
     - acid
     - lostfriendship
   - type: Tag
-    tags:
-    - Raw
-    - Meat
+    tags: [ Meat, Raw ]
   - type: Sprite
     state: rouny
   - type: Solution
@@ -675,6 +671,8 @@
       - state: tomato-inhand-left
       right:
       - state: tomato-inhand-right
+  - type: Tag
+    tags: [ Ingredient, Meat, Raw ]
 
 - type: entity
   parent: [FoodMeatBase, BaseSlicingRefinableFood]
@@ -685,9 +683,7 @@
   - type: Item
     storedOffset: 0,1
   - type: Tag
-    tags:
-    - Raw
-    - Meat
+    tags: [ Meat, Raw ]
   - type: Sprite
     sprite: Objects/Consumable/Food/salami.rsi
     state: salami
@@ -718,9 +714,7 @@
       - meaty
       - funny
   - type: Tag
-    tags:
-    - Raw
-    - Meat
+    tags: [ Meat, Raw ]
   - type: Sprite
     state: clown
   - type: ToolRefinable
@@ -747,9 +741,7 @@
       - ReagentId: Fat
         Quantity: 3
   - type: Tag
-    tags:
-    - Raw
-    - Meat
+    tags: [ Meat, Raw ]
   - type: Sprite
     state: meatball
   - type: Construction
@@ -765,9 +757,7 @@
   description: A flat slab of ground meat. Ready for grillin'.
   components:
   - type: Tag
-    tags:
-    - Raw
-    - Meat
+    tags: [ Meat, Raw ]
   - type: Sprite
     state: raw_patty
   - type: Construction
@@ -798,9 +788,7 @@
     flavors:
       - slimy
   - type: Tag
-    tags:
-    - Raw
-    - Meat
+    tags: [ Meat, Raw ]
   - type: Extractable
     juiceSolution:
       reagents:
@@ -843,8 +831,7 @@
     node: start
     defaultTarget: anomaly steak
   - type: Tag
-    tags:
-    - Meat
+    tags: [ Meat, Raw ]
   - type: Item
     size: Normal
     shape:
@@ -883,10 +870,9 @@
       - ReagentId: Iron
         Quantity: 10
   - type: StaticPrice
-    price: 3000 #It has so much Omnizin in it
+    price: 3000 #It has so much Omnizine in it
   - type: Tag
-    tags:
-    - Meat
+    tags: [ Meat, Raw ]
 
 - type: entity
   abstract: true
@@ -894,9 +880,7 @@
   id: FoodMeatCookedBase
   components:
   - type: Tag
-    tags:
-    - Cooked
-    - Meat
+    tags: [ Cooked, Meat ]
   - type: Solution
     solution:
       reagents:
@@ -912,10 +896,7 @@
   description: A cooked slab of meat. Smells primal.
   components:
   - type: Tag
-    tags:
-    - Cooked
-    - Meat
-    - Steak
+    tags: [ Cooked, Meat, Steak ]
   - type: Sprite
     layers:
     - state: plain-cooked
@@ -984,10 +965,7 @@
   description: A well-cooked slab of bear meat. Tough, but tasty with the right sides.
   components:
   - type: Tag
-    tags:
-    - Cooked
-    - Meat
-    - Steak
+    tags: [ Cooked, Meat, Steak ]
   - type: Sprite
     layers:
     - state: product-cooked

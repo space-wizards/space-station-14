@@ -1186,11 +1186,14 @@
           - Bread
           - Cake
           - ChiliBowl
+          - ClothMade
           - Cooked
           - Cookie
+          - Dessert
           - Dinnerware
           - DonkPocket
           - Donut
+          - Nugget
           - Muffin
           - Pancake
           - Pie
@@ -1215,16 +1218,18 @@
           - FitsInDispenser
     - hand:
         emptyLabel: borg-slot-ingredients-empty
-        emptyRepresentative: FoodTomato
+        emptyRepresentative: BorgModuleRawIngredientPlaceholder
         whitelist:
           tags:
           - Condiment
+          - FoodSnack
+          - Fruit
           - Ingredient
           - Meat
           - Packet
           - Raw
+          - Vegetable
           - WrappedCube
-          - FoodSnack
           components:
           - Produce
           - Rehydratable # For butchering
@@ -1235,9 +1240,11 @@
           - ChiliBowl
           - Cooked
           - Cookie
+          - Dessert
           - Dinnerware
           - Donut
           - DonkPocket
+          - Nugget
           - Muffin
           - Pancake
           - Pie
@@ -1251,12 +1258,12 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: cooking-module }
 
 - type: entity
-  id: BorgModuleSeedProducePlaceholder
+  id: BorgModuleRawIngredientPlaceholder
   parent: BaseItem
   components:
   - type: Sprite
-    sprite: Objects/Specific/Hydroponics/seeds.rsi
-    state: seed-produce-icon
+    sprite: Objects/Specific/Kitchen/placeholder.rsi
+    state: icon-raw-ingredients
 
 - type: entity
   id: BorgModuleBotany
@@ -1293,6 +1300,14 @@
           - Seed
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: botany-module }
+
+- type: entity
+  id: BorgModuleSeedProducePlaceholder
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/seeds.rsi
+    state: seed-produce-icon
 
 - type: entity
   id: BorgModuleClowning
