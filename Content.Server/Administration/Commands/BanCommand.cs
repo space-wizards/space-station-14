@@ -1,10 +1,7 @@
 using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
-using Content.Shared.CCVar;
-using Content.Shared.Database;
 using Robust.Server.Player;
-using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 
 
@@ -13,12 +10,9 @@ namespace Content.Server.Administration.Commands;
 [AdminCommand(AdminFlags.Ban)]
 public sealed partial class BanCommand : LocalizedCommands
 {
-
     [Dependency] private IPlayerLocator _locator = default!;
     [Dependency] private IBanManager _bans = default!;
-    [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
-    [Dependency] private ILogManager _logManager = default!;
 
     public override string Command => "ban";
 
@@ -27,12 +21,7 @@ public sealed partial class BanCommand : LocalizedCommands
         string target;
         string reason;
         uint minutes;
-        if (!Enum.TryParse(_cfg.GetCVar(CCVars.ServerBanDefaultSeverity), out NoteSeverity severity))
-        {
-            _logManager.GetSawmill("admin.server_ban")
-                .Warning("Server ban severity could not be parsed from config! Defaulting to high.");
-            severity = NoteSeverity.High;
-        }
+        var severity = _bans.GetServerBanSeverity();
 
         switch (args.Length)
         {
@@ -87,16 +76,13 @@ public sealed partial class BanCommand : LocalizedCommands
             return;
         }
 
-        var targetUid = located.UserId;
-        var targetHWid = located.LastHWId;
-
         var banInfo = new CreateServerBanInfo(reason);
-        banInfo.WithBanningAdmin(player?.UserId);
-        banInfo.AddUser(targetUid, target);
-        banInfo.AddHWId(targetHWid);
+        banInfo.WithBanningAdmin(player?.UserId)
+               .AddUser(located.UserId, target)
+               .AddHWId(located.LastHWId)
+               .WithSeverity(severity);
         if (minutes > 0)
             banInfo.WithMinutes(minutes);
-        banInfo.WithSeverity(severity);
 
         _bans.CreateServerBan(banInfo);
     }
@@ -114,15 +100,7 @@ public sealed partial class BanCommand : LocalizedCommands
 
         if (args.Length == 3)
         {
-            var durations = new CompletionOption[]
-            {
-                new("0", LocalizationManager.GetString("cmd-ban-hint-duration-1")),
-                new("1440", LocalizationManager.GetString("cmd-ban-hint-duration-2")),
-                new("4320", LocalizationManager.GetString("cmd-ban-hint-duration-3")),
-                new("10080", LocalizationManager.GetString("cmd-ban-hint-duration-4")),
-                new("20160", LocalizationManager.GetString("cmd-ban-hint-duration-5")),
-                new("43800", LocalizationManager.GetString("cmd-ban-hint-duration-6")),
-            };
+            var durations = _bans.BanDurations;
 
             return CompletionResult.FromHintOptions(durations, LocalizationManager.GetString("cmd-ban-hint-duration"));
         }
