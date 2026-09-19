@@ -1,12 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -62,6 +64,43 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
         if (dirty)
             Dirty(uid, comp);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnStunned(Entity<DoAfterComponent> ent, ref StunnedEvent args)
+    {
+        var dirty = false;
+        foreach (var doAfter in ent.Comp.DoAfters.Values)
+        {
+            if (!doAfter.Args.BreakOnStun)
+                continue;
+
+            InternalCancel(doAfter, ent);
+            dirty = true;
+        }
+
+        if (dirty)
+            Dirty(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnFellAsleep(Entity<DoAfterComponent> ent, ref SleepStateChangedEvent args)
+    {
+        if (!args.FellAsleep)
+            return;
+
+        var dirty = false;
+        foreach (var doAfter in ent.Comp.DoAfters.Values)
+        {
+            if (!doAfter.Args.BreakOnLostConsciousness)
+                continue;
+
+            InternalCancel(doAfter, ent);
+            dirty = true;
+        }
+
+        if (dirty)
+            Dirty(ent);
     }
 
     private void OnUnpaused(EntityUid uid, DoAfterComponent component, ref EntityUnpausedEvent args)
