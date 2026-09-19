@@ -1,7 +1,6 @@
-using Content.Shared.Roles;
-using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
+using Content.Shared.Audio;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Silicons.Laws.Components;
 
@@ -34,6 +33,7 @@ public sealed partial class EmagSiliconLawComponent : Component
     /// to let them know they've been emagged
     /// </summary>
     [DataField]
+    [AllowStereo]
     public SoundSpecifier EmaggedSound = new SoundPathSpecifier("/Audio/Ambience/Antag/emagged_borg.ogg");
 
 }
