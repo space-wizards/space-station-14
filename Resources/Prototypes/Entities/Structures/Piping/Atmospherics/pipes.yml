@@ -138,6 +138,8 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: Longitudinal
+        maxPressure: 12000
+        airBlockedMaxPressureIncreaseFactor: 5
   - type: Sprite
     layers:
     - sprite: !type:CreateVariants
@@ -185,6 +187,8 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: SWBend
+        maxPressure: 12000
+        airBlockedMaxPressureIncreaseFactor: 5
   - type: Sprite
     layers:
     - sprite: !type:CreateVariants
@@ -239,6 +243,8 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: TSouth
+        maxPressure: 12000
+        airBlockedMaxPressureIncreaseFactor: 5
   - type: Sprite
     layers:
     - sprite: !type:CreateVariants
@@ -288,6 +294,8 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: Fourway
+        maxPressure: 12000
+        airBlockedMaxPressureIncreaseFactor: 5
   - type: Sprite
     layers:
     - sprite: !type:CreateVariants
