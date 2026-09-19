@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Server.Administration.Logs;
 using Content.Server.Pointing.Components;
 using Content.Shared.CCVar;
@@ -89,7 +90,7 @@ namespace Content.Server.Pointing.EntitySystems
 
             foreach (var viewer in viewers)
             {
-                if (viewer.AttachedEntity is not {Valid: true} viewerEntity)
+                if (viewer.AttachedEntity is not { Valid: true } viewerEntity)
                 {
                     continue;
                 }
@@ -109,16 +110,25 @@ namespace Content.Server.Pointing.EntitySystems
             _replay.RecordServerMessage(new PopupEntityEvent(viewerMessage, PopupType.Small, _gameTiming.CurTick, netSource));
         }
 
-        public bool InRange(EntityUid pointer, EntityCoordinates coordinates)
+        /// <summary>
+        /// Checks if <paramref name="coordinates"/> are within range of <paramref name="pointer"/>.
+        /// </summary>
+        /// <param name="target">If not null, raises an <see cref="InRangeOverrideEvent"/> at the pointer.</param>
+        public bool InRange(EntityUid pointer, EntityCoordinates coordinates, EntityUid? target = null)
         {
+            if (target != null)
+            {
+                var ev = new InRangeOverrideEvent(pointer, target.Value);
+                RaiseLocalEvent(pointer, ref ev);
+
+                if (ev.Handled)
+                    return ev.InRange;
+            }
+
             if (HasComp<GhostComponent>(pointer))
-            {
-                return _transform.InRange(Transform(pointer).Coordinates, coordinates, 15);
-            }
-            else
-            {
-                return _examine.InRangeUnOccluded(pointer, coordinates, 15, predicate: e => e == pointer);
-            }
+                return _transform.InRange(Transform(pointer).Coordinates, coordinates, PointingRange);
+
+            return _examine.InRangeUnOccluded(pointer, coordinates, PointingRange, predicate: e => e == pointer);
         }
 
         public bool TryPoint(ICommonSession? session, EntityCoordinates coordsPointed, EntityUid pointed)
@@ -152,7 +162,7 @@ namespace Content.Server.Pointing.EntitySystems
                 return false;
             }
 
-            if (!InRange(player, coordsPointed))
+            if (!InRange(player, coordsPointed, pointed))
             {
                 _popup.PopupEntity(Loc.GetString("pointing-system-try-point-cannot-reach"), player, player);
                 return false;
@@ -164,7 +174,12 @@ namespace Content.Server.Pointing.EntitySystems
 
             if (TryComp<PointingArrowComponent>(arrow, out var pointing))
             {
-                pointing.StartPosition = _transform.ToCoordinates((arrow, Transform(arrow)), _transform.ToMapCoordinates(Transform(player).Coordinates)).Position;
+                var playerTransform = Transform(player);
+                if (playerTransform.MapID == mapCoordsPointed.MapId)
+                    pointing.StartPosition = _transform.ToCoordinates((arrow, Transform(arrow)), _transform.ToMapCoordinates(playerTransform.Coordinates)).Position;
+                else
+                    pointing.StartPosition = Vector2.Zero;
+
                 pointing.EndTime = _gameTiming.CurTime + PointDuration;
 
                 Dirty(arrow, pointing);
@@ -178,12 +193,12 @@ namespace Content.Server.Pointing.EntitySystems
                 }
             }
 
-            var layer = (int) VisibilityFlags.Normal;
+            var layer = (int)VisibilityFlags.Normal;
             if (TryComp(player, out VisibilityComponent? playerVisibility))
             {
                 var arrowVisibility = EnsureComp<VisibilityComponent>(arrow);
                 layer = playerVisibility.Layer;
-                _visibilitySystem.SetLayer((arrow, arrowVisibility), (ushort) layer);
+                _visibilitySystem.SetLayer((arrow, arrowVisibility), (ushort)layer);
             }
 
             // Get players that are in range and whose visibility layer matches the arrow's.
