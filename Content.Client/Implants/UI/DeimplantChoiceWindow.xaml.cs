@@ -10,9 +10,14 @@ public sealed partial class DeimplantChoiceWindow : FancyWindow
 {
     public Action<string?>? OnImplantChange;
 
+    public Action<EntityUid?, EntityUid?>? OnStartDeimplant;
+
     private Dictionary<string, string> _implants = new();
 
     private string? _chosenImplant;
+
+    private EntityUid? _chosenTarget;
+    private EntityUid? _userTrigger;
 
     public DeimplantChoiceWindow()
     {
@@ -23,6 +28,12 @@ public sealed partial class DeimplantChoiceWindow : FancyWindow
             OnImplantChange?.Invoke(_implants.ElementAt(args.Id).Key);
             ImplantSelector.SelectId(args.Id);
         };
+
+        DeimplantStartButton.OnButtonDown += args =>
+        {
+            OnStartDeimplant?.Invoke(_chosenTarget, _userTrigger);
+        };
+
     }
 
     public void UpdateImplantList(Dictionary<string, string> implants)
@@ -37,9 +48,11 @@ public sealed partial class DeimplantChoiceWindow : FancyWindow
         }
     }
 
-    public void UpdateState(string? implant)
+    public void UpdateState(string? implant, EntityUid? target, EntityUid? user)
     {
         _chosenImplant = implant;
+        _chosenTarget = target;
+        _userTrigger = user;
 
         for (int id = 0; id < ImplantSelector.ItemCount; id++)
         {
