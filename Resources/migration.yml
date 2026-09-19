@@ -1135,3 +1135,7 @@ DrinkWaterJug: JugWater
 
 #2026-09-05
 AsimovCircuitBoard: CrewsimovCircuitBoard
+
+# 2026-09-08
+ChemistryHotplate: MachineThermobath
+HotplateMachineCircuitboard: ThermobathMachineCircuitboard
