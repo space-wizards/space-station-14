@@ -13,7 +13,7 @@ public sealed partial class FlyBySoundComponent : Component
     /// Probability that the sound plays
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("prob")]
-    public float Prob = 0.10f;
+    public float Prob = 0.25f;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("sound")]
     [AutoNetworkedField]
