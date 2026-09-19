@@ -114,8 +114,8 @@
       - FoodSnack
   - type: SpawnItemsOnUse
     items:
-      - id: FoodPacketChocolateTrash
       - id: FoodSnackChocolateBar
+      - id: FoodPacketChocolateTrash
     sound:
       path: /Audio/Effects/unwrap.ogg
 
@@ -160,8 +160,8 @@
     storedOffset: 0,-1
   - type: SpawnItemsOnUse
     items:
-      - id: FoodPacketEnergyTrash
       - id: FoodSnackEnergyBar
+      - id: FoodPacketEnergyTrash
     sound:
       path: /Audio/Effects/unwrap.ogg
 
@@ -440,8 +440,8 @@
     state: nutribrick
   - type: SpawnItemsOnUse
     items:
-      - id: FoodPacketMRETrash
       - id: FoodSnackNutribrickOpen
+      - id: FoodPacketMRETrash
     sound:
       path: /Audio/Effects/unwrap.ogg
 
@@ -482,8 +482,8 @@
       - FoodSnack
   - type: SpawnItemsOnUse
     items:
-      - id: FoodPacketMRETrash
       - id: FoodSnackMREBrownieOpen
+      - id: FoodPacketMRETrash
     sound:
       path: /Audio/Effects/unwrap.ogg
 
