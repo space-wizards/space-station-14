@@ -8,38 +8,15 @@ using Content.Client.Silicons.Laws.SiliconLawEditUi;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Controls.FancyTree;
 using Content.Client.Verbs.UI;
-using Content.Shared.Verbs;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Graphics;
 using static Robust.Client.UserInterface.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets
 {
-    public static class ResCacheExtension
-    {
-        public static Font NotoStack(this IResourceCache resCache, string variation = "Regular", int size = 10, bool display = false)
-        {
-            var ds = display ? "Display" : "";
-            var sv = variation.StartsWith("Bold", StringComparison.Ordinal) ? "Bold" : "Regular";
-            return resCache.GetFont
-            (
-                // Ew, but ok
-                new[]
-                {
-                    $"/Fonts/NotoSans{ds}/NotoSans{ds}-{variation}.ttf",
-                    $"/Fonts/NotoSans/NotoSansSymbols-{sv}.ttf",
-                    "/Fonts/NotoSans/NotoSansSymbols2-Regular.ttf"
-                },
-                size
-            );
-
-        }
-
-    }
     // STLYE SHEETS WERE A MISTAKE. KILL ALL OF THIS WITH FIRE
     [Obsolete("Please use the new sheetlet system to define styles, and remove all references to this class as it may be deleted in the future")]
     // i did :)
@@ -169,29 +146,10 @@ namespace Content.Client.Stylesheets
         public const string ClassLowDivider = "LowDivider";
         public const string ClassAngleRect = "AngleRect";
 
-
         public override Stylesheet Stylesheet { get; }
 
         public StyleNano(IResourceCache resCache) : base(resCache)
         {
-            var notoSans8 = resCache.NotoStack(size: 8);
-            var notoSans10 = resCache.NotoStack(size: 10);
-            var notoSansItalic10 = resCache.NotoStack(variation: "Italic", size: 10);
-            var notoSans12 = resCache.NotoStack(size: 12);
-            var notoSansItalic12 = resCache.NotoStack(variation: "Italic", size: 12);
-            var notoSansBold12 = resCache.NotoStack(variation: "Bold", size: 12);
-            var notoSansBoldItalic12 = resCache.NotoStack(variation: "BoldItalic", size: 12);
-            var notoSansBoldItalic14 = resCache.NotoStack(variation: "BoldItalic", size: 14);
-            var notoSansBoldItalic16 = resCache.NotoStack(variation: "BoldItalic", size: 16);
-            var notoSansDisplayBold14 = resCache.NotoStack(variation: "Bold", display: true, size: 14);
-            var notoSansDisplayBold16 = resCache.NotoStack(variation: "Bold", display: true, size: 16);
-            var notoSans15 = resCache.NotoStack(variation: "Regular", size: 15);
-            var notoSans16 = resCache.NotoStack(variation: "Regular", size: 16);
-            var notoSansBold16 = resCache.NotoStack(variation: "Bold", size: 16);
-            var notoSansBold18 = resCache.NotoStack(variation: "Bold", size: 18);
-            var notoSansBold20 = resCache.NotoStack(variation: "Bold", size: 20);
-            var notoSansMono = resCache.GetFont("/EngineFonts/NotoSans/NotoSansMono-Regular.ttf", size: 12);
-
             var windowHeaderTex = resCache.GetTexture("/Textures/Interface/Nano/window_header.png");
             var windowHeader = new StyleBoxTexture
             {
@@ -526,8 +484,6 @@ namespace Content.Client.Stylesheets
             var sliderFillBlue = new StyleBoxTexture(sliderFillBox) { Modulate = Color.Blue };
             var sliderFillWhite = new StyleBoxTexture(sliderFillBox) { Modulate = Color.White };
 
-            var boxFont13 = resCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
-
             // Default paper background:
             var paperBackground = new StyleBoxTexture
             {
@@ -546,15 +502,12 @@ namespace Content.Client.Stylesheets
 
             Stylesheet = new Stylesheet(BaseRules.Concat(new[]
             {
-                Element().Class("monospace")
-                    .Prop("font", notoSansMono),
                 // Window title.
                 new StyleRule(
                     new SelectorElement(typeof(Label), new[] {DefaultWindow.StyleClassWindowTitle}, null, null),
                     new[]
                     {
                         new StyleProperty(Label.StylePropertyFontColor, NanoGold),
-                        new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
                     }),
                 // Alert (white) window title.
                 new StyleRule(
@@ -562,7 +515,6 @@ namespace Content.Client.Stylesheets
                     new[]
                     {
                         new StyleProperty(Label.StylePropertyFontColor, Color.White),
-                        new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
                     }),
                 // Window background.
                 new StyleRule(
@@ -683,7 +635,6 @@ namespace Content.Client.Stylesheets
                 // ItemStatus for hands
                 Element()
                     .Class(StyleClassItemStatusNotHeld)
-                    .Prop("font", notoSansItalic10)
                     .Prop("font-color", ItemStatusNotHeldColor)
                     .Prop(nameof(Control.Margin), new Thickness(4, 0, 0, 2)),
 
@@ -715,19 +666,6 @@ namespace Content.Client.Stylesheets
                 Element<ContextMenuElement>().Class(ContextMenuElement.StyleClassContextMenuButton)
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorContextDisabled),
-
-                // Context Menu Labels
-                Element<RichTextLabel>().Class(InteractionVerb.DefaultTextStyleClass)
-                    .Prop(Label.StylePropertyFont, notoSansBoldItalic12),
-
-                Element<RichTextLabel>().Class(ActivationVerb.DefaultTextStyleClass)
-                    .Prop(Label.StylePropertyFont, notoSansBold12),
-
-                Element<RichTextLabel>().Class(AlternativeVerb.DefaultTextStyleClass)
-                    .Prop(Label.StylePropertyFont, notoSansItalic12),
-
-                Element<RichTextLabel>().Class(Verb.DefaultTextStyleClass)
-                    .Prop(Label.StylePropertyFont, notoSans12),
 
                 Element<TextureRect>().Class(ContextMenuElement.StyleClassContextMenuExpansionTexture)
                     .Prop(TextureRect.StylePropertyTexture, contextMenuExpansionTexture),
@@ -823,15 +761,6 @@ namespace Content.Client.Stylesheets
                 Element<ContainerButton>().Class(ListContainer.StyleClassListContainerButton)
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
                     .Prop(Control.StylePropertyModulateSelf, new Color(10, 10, 12)),
-
-                // Main menu: Make those buttons bigger.
-                new StyleRule(new SelectorChild(
-                    new SelectorElement(typeof(Button), null, "mainMenu", null),
-                    new SelectorElement(typeof(Label), null, null, null)),
-                    new[]
-                    {
-                        new StyleProperty("font", notoSansBold16),
-                    }),
 
                 // Main menu: also make those buttons slightly more separated.
                 new StyleRule(new SelectorElement(typeof(BoxContainer), null, "mainMenuVBox", null),
@@ -940,75 +869,9 @@ namespace Content.Client.Stylesheets
                     new StyleProperty(PanelContainer.StylePropertyPanel, whisperBox)
                 }),
 
-                new StyleRule(new SelectorChild(
-                    new SelectorElement(typeof(PanelContainer), new[] {"speechBox", "whisperBox"}, null, null),
-                    new SelectorElement(typeof(RichTextLabel), new[] {"bubbleContent"}, null, null)),
-                    new[]
-                {
-                    new StyleProperty("font", notoSansItalic12),
-                }),
-
-                new StyleRule(new SelectorChild(
-                    new SelectorElement(typeof(PanelContainer), new[] {"speechBox", "emoteBox"}, null, null),
-                    new SelectorElement(typeof(RichTextLabel), null, null, null)),
-                    new[]
-                {
-                    new StyleProperty("font", notoSansItalic12),
-                }),
-
                 new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassLabelKeyText}, null, null), new[]
                 {
-                    new StyleProperty(Label.StylePropertyFont, notoSansBold12),
                     new StyleProperty( Control.StylePropertyModulateSelf, NanoGold)
-                }),
-
-                // alert tooltip
-                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipAlertTitle}, null, null), new[]
-                {
-                    new StyleProperty("font", notoSansBold18)
-                }),
-                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipAlertDescription}, null, null), new[]
-                {
-                    new StyleProperty("font", notoSans16)
-                }),
-                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipAlertCooldown}, null, null), new[]
-                {
-                    new StyleProperty("font", notoSans16)
-                }),
-
-                // action tooltip
-                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipActionTitle}, null, null), new[]
-                {
-                    new StyleProperty("font", notoSansBold16)
-                }),
-                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipActionDescription}, null, null), new[]
-                {
-                    new StyleProperty("font", notoSans15)
-                }),
-                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipActionCooldown}, null, null), new[]
-                {
-                    new StyleProperty("font", notoSans15)
-                }),
-                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipActionRequirements}, null, null), new[]
-                {
-                    new StyleProperty("font", notoSans15)
-                }),
-                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipActionCharges}, null, null), new[]
-                {
-                    new StyleProperty("font", notoSans15)
-                }),
-
-                // small number for the entity counter in the entity menu
-                // new StyleRule(new SelectorElement(typeof(Label), new[] {ContextMenuElement.StyleClassEntityMenuIconLabel}, null, null), new[]
-                // {
-                //     new StyleProperty("font", notoSans10),
-                //     new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Right),
-                // }),
-
-                // hotbar slot
-                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassHotbarSlotNumber}, null, null), new[]
-                {
-                    new StyleProperty("font", notoSansDisplayBold16)
                 }),
 
                 // Entity tooltip
@@ -1077,14 +940,12 @@ namespace Content.Client.Stylesheets
                 new StyleRule(
                     new SelectorElement(typeof(Label), new[] {Placeholder.StyleClassPlaceholderText}, null, null), new[]
                     {
-                        new StyleProperty(Label.StylePropertyFont, notoSans16),
                         new StyleProperty(Label.StylePropertyFontColor, new Color(103, 103, 103, 128)),
                     }),
 
                 // Big Label
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelHeading}, null, null), new[]
                 {
-                    new StyleProperty(Label.StylePropertyFont, notoSansBold16),
                     new StyleProperty(Label.StylePropertyFontColor, NanoGold),
                 }),
 
@@ -1092,38 +953,25 @@ namespace Content.Client.Stylesheets
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelHeadingBigger}, null, null),
                     new[]
                     {
-                        new StyleProperty(Label.StylePropertyFont, notoSansBold20),
                         new StyleProperty(Label.StylePropertyFontColor, NanoGold),
                     }),
 
                 // Small Label
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelSubText}, null, null), new[]
                 {
-                    new StyleProperty(Label.StylePropertyFont, notoSans10),
                     new StyleProperty(Label.StylePropertyFontColor, Color.DarkGray),
                 }),
 
                 // Label Key
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelKeyText}, null, null), new[]
                 {
-                    new StyleProperty(Label.StylePropertyFont, notoSansBold12),
                     new StyleProperty(Label.StylePropertyFontColor, NanoGold)
                 }),
 
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelSecondaryColor}, null, null),
                     new[]
                     {
-                        new StyleProperty(Label.StylePropertyFont, notoSans12),
                         new StyleProperty(Label.StylePropertyFontColor, Color.DarkGray),
-                    }),
-
-                // Big Button
-                new StyleRule(new SelectorChild(
-                    new SelectorElement(typeof(Button), new[] {StyleClassButtonBig}, null, null),
-                    new SelectorElement(typeof(Label), null, null, null)),
-                    new[]
-                    {
-                        new StyleProperty("font", notoSans16)
                     }),
 
                 //APC and SMES power state label colors
@@ -1214,15 +1062,8 @@ namespace Content.Client.Stylesheets
                         new StyleProperty(StripeBack.StylePropertyBackground, stripeBack),
                     }),
 
-                // StyleClassItemStatus
-                new StyleRule(SelectorElement.Class(StyleClassItemStatus), new[]
-                {
-                    new StyleProperty("font", notoSans10),
-                }),
-
                 Element()
                     .Class(StyleClassItemStatusNotHeld)
-                    .Prop("font", notoSansItalic10)
                     .Prop("font-color", ItemStatusNotHeldColor),
 
                 Element<RichTextLabel>()
@@ -1339,13 +1180,6 @@ namespace Content.Client.Stylesheets
                     new StyleProperty(PanelContainer.StylePropertyPanel, new StyleBoxFlat { BackgroundColor = NanoGold, ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2}),
                 }),
 
-                // Labels ---
-                Element<Label>().Class(StyleClassLabelBig)
-                    .Prop(Label.StylePropertyFont, notoSans16),
-
-                Element<Label>().Class(StyleClassLabelSmall)
-                 .Prop(Label.StylePropertyFont, notoSans10),
-
                 // Different Background shapes ---
                 Element<PanelContainer>().Class(ClassAngleRect)
                     .Prop(PanelContainer.StylePropertyPanel, BaseAngleRect)
@@ -1371,7 +1205,6 @@ namespace Content.Client.Stylesheets
 
                 // Window Headers
                 Element<Label>().Class("FancyWindowTitle")
-                    .Prop("font", boxFont13)
                     .Prop("font-color", NanoGold),
 
                 Element<PanelContainer>().Class("WindowHeadingBackground")
@@ -1407,7 +1240,6 @@ namespace Content.Client.Stylesheets
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#757575")),
 
                 Element<Label>().Class("WindowFooterText")
-                    .Prop(Label.StylePropertyFont, notoSans8)
                     .Prop(Label.StylePropertyFontColor, Color.FromHex("#757575")),
 
                 // X Texture button ---
@@ -1435,11 +1267,9 @@ namespace Content.Client.Stylesheets
                 Element<PanelContainer>().Class("PaperDefaultBorder")
                     .Prop(PanelContainer.StylePropertyPanel, paperBackground),
                 Element<RichTextLabel>().Class("PaperWrittenText")
-                    .Prop(Label.StylePropertyFont, notoSans12)
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#111111")),
 
                 Element<RichTextLabel>().Class("LabelSubText")
-                    .Prop(Label.StylePropertyFont, notoSans10)
                     .Prop(Label.StylePropertyFontColor, Color.DarkGray),
 
                 Element<LineEdit>().Class("PaperLineEdit")
@@ -1485,9 +1315,6 @@ namespace Content.Client.Stylesheets
                 Element<Button>().Class("ButtonSmall")
                     .Prop(ContainerButton.StylePropertyStyleBox, smallButtonBase),
 
-                Child().Parent(Element<Button>().Class("ButtonSmall"))
-                    .Child(Element<Label>())
-                    .Prop(Label.StylePropertyFont, notoSans8),
                 // ---
 
                 Element<Label>().Class("StatusFieldTitle")
@@ -1571,11 +1398,9 @@ namespace Content.Client.Stylesheets
 
                 //PDA - Text
                 Element<Label>().Class("PdaContentFooterText")
-                    .Prop(Label.StylePropertyFont, notoSans10)
                     .Prop(Label.StylePropertyFontColor, Color.FromHex("#757575")),
 
                 Element<Label>().Class("PdaWindowFooterText")
-                    .Prop(Label.StylePropertyFont, notoSans10)
                     .Prop(Label.StylePropertyFontColor, Color.FromHex("#333d3b")),
 
                 // Fancy Tree
@@ -1621,7 +1446,6 @@ namespace Content.Client.Stylesheets
                         BorderColor= Color.FromHex("#3B3E56"),
                         BorderThickness= new Thickness(0, 0, 0, 1),
                     }),
-
 
                 Element<PanelContainer>().Class("DefaultBorderTop")
                     .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat
