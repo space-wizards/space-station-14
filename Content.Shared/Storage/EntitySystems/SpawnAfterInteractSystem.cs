@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Storage.Components;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
@@ -31,13 +30,13 @@ public sealed partial class SpawnAfterInteractSystem : EntitySystem
         var gridUid = _transform.GetGrid(args.ClickLocation);
 
         if (gridUid is null ||
-            CanSpawn(gridUid.Value, args.ClickLocation, out var grid))
+            !CanSpawn(gridUid.Value, args.ClickLocation))
             return;
 
         var doAfterArgs = new DoAfterArgs(EntityManager,
             args.User,
             ent.Comp.DoAfterTime,
-            new SpawnAfterInteractEvent(GetNetCoordinates(args.ClickLocation.SnapToGrid(grid)), GetNetEntity(gridUid.Value)),
+            new SpawnAfterInteractEvent(GetNetCoordinates(args.ClickLocation.SnapToGrid()), GetNetEntity(gridUid.Value)),
             ent,
             used: ent)
         {
@@ -54,7 +53,7 @@ public sealed partial class SpawnAfterInteractSystem : EntitySystem
         var coords = GetCoordinates(args.Coordinates);
 
         if (args.Cancelled ||
-            CanSpawn(gridUid, coords, out _) ||
+            !CanSpawn(gridUid, coords) ||
             ent.Comp.RemoveOnInteract && !_stackSystem.TryUse(ent.Owner, 1))
         {
             return;
@@ -67,14 +66,10 @@ public sealed partial class SpawnAfterInteractSystem : EntitySystem
             PredictedQueueDel(ent);
     }
 
-    private bool CanSpawn(EntityUid gridUid, EntityCoordinates coords, out MapGridComponent? grid)
+    private bool CanSpawn(EntityUid gridUid, EntityCoordinates coords)
     {
-        grid = null;
-
         if (!TryComp<MapGridComponent>(gridUid, out var gridComp))
             return false;
-
-        grid = gridComp;
 
         return _maps.TryGetTileRef(gridUid, gridComp, coords, out var tileRef) &&
                !tileRef.Tile.IsEmpty &&
