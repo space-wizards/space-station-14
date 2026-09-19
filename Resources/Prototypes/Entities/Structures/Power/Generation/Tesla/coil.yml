@@ -1,15 +1,9 @@
 - type: entity
-  parent: BaseStructureHealth
+  parent: [BaseStructure, BaseStructureHealth]
   id: TeslaCoil
   name: tesla coil
   description: A machine that converts lightning strikes into an electric current.
-  placement:
-    mode: SnapgridCenter
   components:
-  - type: Transform
-    anchored: true
-  - type: Physics
-    bodyType: Static
   - type: Fixtures
     fixtures:
       fix1:
@@ -23,14 +17,13 @@
         - MachineLayer
   - type: Sprite
     sprite: Structures/Power/Generation/Tesla/coil.rsi
-    snapCardinals: true
     noRot: true
     layers:
-      - state: coil
-        map: ["enabled"]
-      - state: coilhit
-        visible: false
-        map: ["hit"]
+    - state: coil
+      map: ["enabled"]
+    - state: coilhit
+      visible: false
+      map: ["hit"]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -82,9 +75,6 @@
     usesApcPower: false
     highVoltageNode: input
   - type: Anchorable
-  - type: Rotatable
-  - type: Pullable
-  - type: Clickable
   - type: InteractionOutline
   - type: ExaminableDamage
     messages: WindowMessages
@@ -117,17 +107,11 @@
     - SingularityTeslaEngine
 
 - type: entity
-  parent: BaseStructureHealth
+  parent: [BaseStructure, BaseStructureHealth]
   id: TeslaGroundingRod
   name: grounding rod
   description: A machine that keeps lightning from striking too far away.
-  placement:
-    mode: SnapgridCenter
   components:
-  - type: Transform
-    anchored: true
-  - type: Physics
-    bodyType: Static
   - type: Fixtures
     fixtures:
       fix1:
@@ -142,13 +126,12 @@
   - type: Sprite
     sprite: Structures/Power/Generation/Tesla/coil.rsi
     noRot: true
-    snapCardinals: true
     layers:
-      - state: grounding_rod
-        map: ["power"]
-      - state: grounding_rodhit
-        visible: false
-        map: ["hit"]
+    - state: grounding_rod
+      map: ["power"]
+    - state: grounding_rodhit
+      visible: false
+      map: ["hit"]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -167,9 +150,6 @@
     lightningExplode: false
     damageFromLightning: 0
   - type: Anchorable
-  - type: Rotatable
-  - type: Pullable
-  - type: Clickable
   - type: InteractionOutline
   - type: ExaminableDamage
     messages: WindowMessages
