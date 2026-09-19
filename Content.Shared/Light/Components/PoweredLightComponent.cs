@@ -22,7 +22,7 @@ namespace Content.Shared.Light.Components
         public SoundSpecifier BurnHandSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
 
         [DataField]
-        public SoundSpecifier TurnOnSound = new SoundPathSpecifier("/Audio/Machines/light_tube_on.ogg", AudioParams.Default.WithVolume(-4));
+        public SoundSpecifier TurnOnSound = new SoundPathSpecifier("/Audio/Machines/light_tube_on.ogg");
 
         // Should be using containerfill?
         [DataField]
