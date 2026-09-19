@@ -2953,6 +2953,11 @@
         - MobMask
         layer:
         - MobLayer
+  - type: ZombieImmune # zombie immune because they have changeling stasis
+  - type: PlayDead
+  - type: ActionGrant
+    actions:
+    - ActionPossumStasis
   - type: Inventory
     speciesId: possum
     templateId: pet
