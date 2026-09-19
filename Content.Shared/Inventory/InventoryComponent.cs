@@ -1,3 +1,4 @@
+using Content.Shared.Cloning;
 using Content.Shared.DisplacementMap;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -6,7 +7,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Inventory;
 
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(InventorySystem))]
+[Access(typeof(InventorySystem), typeof(CloningContext))]
 [AutoGenerateComponentState(true)]
 public sealed partial class InventoryComponent : Component
 {

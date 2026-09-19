@@ -1,3 +1,4 @@
+using Content.Shared.Cloning;
 using Content.Shared.DisplacementMap;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.GameStates;
@@ -11,7 +12,7 @@ namespace Content.Shared.Nutrition.Components;
 /// Allows this entity to be hit by banana cream pies.
 /// See <see cref="CreamPieComponent"/>.
 /// </summary>
-[Access(typeof(SharedCreamPieSystem))]
+[Access(typeof(SharedCreamPieSystem), typeof(CloningContext))]
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true)]
 public sealed partial class CreamPiedComponent : Component
 {
