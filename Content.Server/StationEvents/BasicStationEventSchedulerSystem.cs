@@ -137,7 +137,7 @@ namespace Content.Server.StationEvents
                         continue; // doesnt break because maybe the time is preventing events being available.
                     }
 
-                    if (_stationEvent.FindEvent(selectedEvents) is not { } ev)
+                    if (_stationEvent.FindEvent(selectedEvents.Value) is not { } ev)
                         continue;
 
                     occurrences[ev] += 1;
