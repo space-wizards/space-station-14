@@ -1,6 +1,8 @@
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Conditions;
+using Content.Shared.Conditions.Interfaces;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Generic;
@@ -8,44 +10,38 @@ namespace Content.Shared.EntityConditions.Conditions.Generic;
 /// <summary>
 /// Checks for a number of entities nearby with the specified accesses.
 /// </summary>
-public sealed partial class NearbyAccessConditionSystem : EntityConditionSystem<TransformComponent, NearbyAccessCondition>
+public sealed partial class NearbyAccessConditionSystem : EntitySystem
 {
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private AccessReaderSystem _reader = default!;
 
-    protected override void Condition(Entity<TransformComponent> entity, ref EntityConditionEvent<NearbyAccessCondition> args)
+    [SubscribeLocalEvent]
+    private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent<NearbyAccessCondition> args)
     {
+        args.Handled = true;
+
         if (entity.Comp.MapUid == null)
         {
-            args.Result = false;
             return;
         }
 
-        var found = false;
-        var count = 0;
+        var count = 0f;
 
-        foreach (var (ent, comp) in _lookup.GetEntitiesInRange<AccessReaderComponent>(entity.Comp.Coordinates, args.Condition.Range))
+        foreach (var (ent, comp) in _lookup.GetEntitiesInRange<AccessReaderComponent>(entity.Comp.Coordinates,
+                     args.Condition.Range))
         {
             if (!_reader.AreAccessTagsAllowed(args.Condition.Access, comp) ||
                 args.Condition.Anchored && !Transform(ent).Anchored)
                 continue;
-
             count++;
-
-            if (count >= args.Condition.Count)
-            {
-                found = true;
-                break;
-            }
         }
 
-        args.Result = found;
+        args.Value = count / args.Condition.Count;
     }
 }
 
-
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class NearbyAccessCondition : EntityConditionBase<NearbyAccessCondition>
+public sealed partial class NearbyAccessCondition : EntityConditionBase<NearbyAccessCondition>, IWithThreshold
 {
     // This exists because of door electronics contained inside doors.
     /// <summary>
@@ -67,4 +63,8 @@ public sealed partial class NearbyAccessCondition : EntityConditionBase<NearbyAc
     public float Range = 10f;
 
     public override string EntityConditionGuidebookText(IPrototypeManager prototype) => String.Empty;
+
+    public IWithThreshold.Comparator Comparison => IWithThreshold.Comparator.GreaterEqual;
+
+    public float Threshold => 1;
 }

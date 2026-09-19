@@ -1,20 +1,24 @@
+﻿using Content.Shared.Conditions;
 using Content.Shared.Localizations;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Shared.EntityConditions.Conditions.Tags;
 
 /// <summary>
 /// Returns true if this entity have any of the listed tags.
 /// </summary>
-/// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
-public sealed partial class HasAnyTagEntityConditionSystem : EntityConditionSystem<TagComponent, AnyTagCondition>
+public sealed partial class HasAnyTagEntityConditionSystem : EntitySystem
 {
     [Dependency] private TagSystem _tag = default!;
 
-    protected override void Condition(Entity<TagComponent> entity, ref EntityConditionEvent<AnyTagCondition> args)
+    private void Condition(Entity<TagComponent> entity, ref ConditionEvaluationEvent<AnyTagCondition> args)
     {
-        args.Result = _tag.HasAnyTag(entity.Comp, args.Condition.Tags);
+        args.Handled = true;
+        //count matches to scale, as default condition if value != 0 -> satisfy == true.
+        args.Value = args.Condition.Tags.Count(tag => _tag.HasTag(entity.Comp, tag)) /
+                     (float)args.Condition.Tags.Length;
     }
 }
 

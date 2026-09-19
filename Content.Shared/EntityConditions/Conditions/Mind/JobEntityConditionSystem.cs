@@ -1,4 +1,5 @@
-using System.Linq;
+﻿using System.Linq;
+using Content.Shared.Conditions;
 using Content.Shared.Localizations;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -11,28 +12,24 @@ namespace Content.Shared.EntityConditions.Conditions.Mind;
 /// <summary>
 /// Returns true if this entity has any of the specified jobs. False if the entity has no mind, none of the specified jobs, or is jobless.
 /// </summary>
-/// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
-public sealed partial class MindContainerJobEntityConditionSystem : EntityConditionSystem<MindContainerComponent, JobCondition>
+public sealed partial class MindContainerJobEntityConditionSystem : EntitySystem
 {
     [Dependency] private SharedJobSystem _job = default!;
 
-    protected override void Condition(Entity<MindContainerComponent> entity, ref EntityConditionEvent<JobCondition> args)
+    [SubscribeLocalEvent]
+    private void Condition(Entity<MindContainerComponent> entity, ref ConditionEvaluationEvent<JobCondition> args)
     {
-        args.Result = _job.MindHasJobWithId(entity.Comp.Mind, args.Condition.Jobs);
+        args.Handled = true;
+
+        args.Value = args.Condition.Jobs.Count(job=>_job.MindHasJobWithId(entity.Comp.Mind,job));
     }
-}
 
-/// <summary>
-/// Returns true if this mind has any of the specified jobs. False if the mind has none of the specified jobs, or is jobless.
-/// </summary>
-/// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
-public sealed partial class MindJobEntityConditionSystem : EntityConditionSystem<MindComponent, JobCondition>
-{
-    [Dependency] private SharedJobSystem _job = default!;
-
-    protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<JobCondition> args)
+    [SubscribeLocalEvent]
+    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<JobCondition> args)
     {
-        args.Result = _job.MindHasJobWithId(entity, args.Condition.Jobs);
+        args.Handled = true;
+
+        args.Value = (float)args.Condition.Jobs.Count(job=>_job.MindHasJobWithId(entity,job)) / (float)args.Condition.Jobs.Length;
     }
 }
 

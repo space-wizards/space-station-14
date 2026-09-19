@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Conditions;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
@@ -7,14 +8,16 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Mind;
 
-public sealed partial class DifferentDepartmentConditionSystem : EntityConditionSystem<MindComponent, DifferentDepartmentCondition>
+public sealed partial class DifferentDepartmentConditionSystem : EntitySystem
 {
     [Dependency] private SharedRoleSystem _roleSystem = default!;
     [Dependency] private SharedJobSystem _jobSystem = default!;
 
-    protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<DifferentDepartmentCondition> args)
+    [SubscribeLocalEvent]
+    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<DifferentDepartmentCondition> args)
     {
-        args.Result = !IsInvalid(entity, args.SourceEnt);
+        args.Handled = true;
+        args.Value = !IsInvalid(entity, args.SourceEntity) ? 1 : 0;
     }
 
     private bool IsInvalid(Entity<MindComponent> mind, EntityUid? exclude)
@@ -33,7 +36,8 @@ public sealed partial class DifferentDepartmentConditionSystem : EntityCondition
             throw new Exception("Unreachable statement after getting job proto from mind.");
 
         // get all departments
-        if (!_jobSystem.TryGetAllDepartments(objJob.Value, out var deptsA) || !_jobSystem.TryGetAllDepartments(job.Value, out var deptsB))
+        if (!_jobSystem.TryGetAllDepartments(objJob.Value, out var deptsA) ||
+            !_jobSystem.TryGetAllDepartments(job.Value, out var deptsB))
             throw new Exception("Job didn't have any department assigned.");
 
         // perform the department check
@@ -55,4 +59,3 @@ public sealed partial class DifferentDepartmentCondition : EntityConditionBase<D
         return string.Empty;
     }
 }
-

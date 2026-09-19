@@ -1,3 +1,4 @@
+﻿using Content.Shared.Conditions;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Robust.Shared.Prototypes;
@@ -7,13 +8,14 @@ namespace Content.Shared.EntityConditions.Conditions.Body;
 /// <summary>
 /// Returns true if this entity's current mob state matches the condition's specified mob state.
 /// </summary>
-/// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
-public sealed partial class MobStateEntityConditionSystem : EntityConditionSystem<MobStateComponent, MobStateCondition>
+public sealed partial class MobStateEntityConditionSystem : EntitySystem
 {
-    protected override void Condition(Entity<MobStateComponent> entity, ref EntityConditionEvent<MobStateCondition> args)
+    [SubscribeLocalEvent]
+    private void Condition(Entity<MobStateComponent> entity, ref ConditionEvaluationEvent<MobStateCondition> args)
     {
-        if (entity.Comp.CurrentState == args.Condition.Mobstate)
-            args.Result = true;
+        args.Handled = true;
+
+        args.Value = entity.Comp.CurrentState == args.Condition.Mobstate ? 1 : 0;
     }
 }
 

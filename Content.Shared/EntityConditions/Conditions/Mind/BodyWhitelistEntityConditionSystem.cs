@@ -1,19 +1,23 @@
+﻿using Content.Shared.Conditions;
 using Content.Shared.Mind;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Mind;
 
-public sealed partial class BodyWhitelistEntityConditionSystem : EntityConditionSystem<MindComponent, BodyWhitelistCondition>
+public sealed partial class BodyWhitelistEntityConditionSystem : EntitySystem
 {
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
-    protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<BodyWhitelistCondition> args)
+    [SubscribeLocalEvent]
+    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<BodyWhitelistCondition> args)
     {
+        args.Handled = true;
+
         if (entity.Comp.OwnedEntity is not { } body)
             return;
 
-        args.Result = _whitelist.CheckBoth(body, args.Condition.Blacklist, args.Condition.Whitelist);
+        args.Value = _whitelist.CheckBoth(body, args.Condition.Blacklist, args.Condition.Whitelist) ? 1 : 0;
     }
 }
 
@@ -30,4 +34,3 @@ public sealed partial class BodyWhitelistCondition : EntityConditionBase<BodyWhi
         return String.Empty;
     }
 }
-

@@ -1,5 +1,7 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Conditions;
+using Content.Shared.Conditions.Interfaces;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 
@@ -8,20 +10,23 @@ namespace Content.Shared.EntityConditions.Conditions;
 /// <summary>
 /// Returns true if this solution entity has an amount of reagent in it within a specified minimum and maximum.
 /// </summary>
-/// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
-public sealed partial class ReagentEntityConditionSystem : EntityConditionSystem<SolutionComponent, ReagentCondition>
+public sealed partial class ReagentEntityConditionSystem : EntitySystem
 {
-    protected override void Condition(Entity<SolutionComponent> entity, ref EntityConditionEvent<ReagentCondition> args)
+    [SubscribeLocalEvent]
+    private void Condition(Entity<SolutionComponent> entity, ref ConditionEvaluationEvent<ReagentCondition> args)
     {
         var soln = entity.Comp.Solution;
+
         var quant = soln.GetTotalPrototypeQuantity(args.Condition.Reagent);
 
-        args.Result = quant >= args.Condition.Min && quant <= args.Condition.Max;
+        args.Value = ((quant - args.Condition.Min) / (args.Condition.Max - args.Condition.Min)).Float();
+
+        args.Handled = true;
     }
 }
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class ReagentCondition : EntityConditionBase<ReagentCondition>
+public sealed partial class ReagentCondition : EntityConditionBase<ReagentCondition>, IWithBoundary
 {
     [DataField]
     public FixedPoint2 Min = FixedPoint2.Zero;
@@ -42,4 +47,13 @@ public sealed partial class ReagentCondition : EntityConditionBase<ReagentCondit
             ("max", Max == FixedPoint2.MaxValue ? int.MaxValue : Max.Float()),
             ("min", Min.Float()));
     }
+
+    float IWithBoundary.LowerBound => 0;
+
+    bool IWithBoundary.IncludeLowerBound => true;
+
+    float IWithBoundary.UpperBound => 1;
+
+    bool IWithBoundary.IncludeUpperBound => true;
+
 }

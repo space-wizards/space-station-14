@@ -1,3 +1,4 @@
+﻿using Content.Shared.Conditions;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 
@@ -6,14 +7,15 @@ namespace Content.Shared.EntityConditions.Conditions.Tags;
 /// <summary>
 /// Returns true if this entity has the listed tag.
 /// </summary>
-/// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
-public sealed partial class HasTagEntityConditionSystem : EntityConditionSystem<TagComponent, TagCondition>
+public sealed partial class HasTagEntityConditionSystem : EntitySystem
 {
     [Dependency] private TagSystem _tag = default!;
 
-    protected override void Condition(Entity<TagComponent> entity, ref EntityConditionEvent<TagCondition> args)
+    [SubscribeLocalEvent]
+    private void Condition(Entity<TagComponent> entity, ref ConditionEvaluationEvent<TagCondition> args)
     {
-        args.Result = _tag.HasTag(entity.Comp, args.Condition.Tag);
+        args.Handled = true;
+        args.Value = _tag.HasTag(entity.Comp, args.Condition.Tag) ? 1 : 0;
     }
 }
 

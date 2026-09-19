@@ -1,15 +1,18 @@
+﻿using Content.Shared.Conditions;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions;
+
 ///<summary>
-/// A basic summary of this condition.
+/// Evaluator for <see cref="TemperatureCondition"/>
 /// </summary>
-/// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
-public sealed partial class TemplateEntityConditionSystem : EntityConditionSystem<MetaDataComponent, TemplateCondition>
+public sealed partial class TemplateEntityConditionSystem : EntitySystem
 {
-    protected override void Condition(Entity<MetaDataComponent> entity, ref EntityConditionEvent<TemplateCondition> args)
+    [SubscribeLocalEvent]
+    private void Condition(Entity<MetaDataComponent> entity, ref ConditionEvaluationEvent<TemplateCondition> args)
     {
         // Condition goes here.
+        args.Handled = true;
     }
 }
 
