@@ -31,9 +31,7 @@ namespace Content.Server.StationEvents.Events
             var apcs = Station.GetEntitiesWithComponentOnStation<ApcComponent>(true, out var chosenStation);
 
             if (chosenStation is null)
-            {
                 return;
-            }
 
             component.AffectedStation = chosenStation.Value;
 

@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Atmos.EntitySystems;
@@ -15,7 +14,6 @@ using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Station.Systems;
@@ -333,9 +331,7 @@ public sealed partial class ServerStationSystem : Shared.Station.Systems.Station
         HashSet<Entity<TComponent>> entities = [];
 
         if (!TryGetRandomStation(out station))
-        {
             return entities;
-        }
 
         var grid = GetLargestGrid(station.Value.Owner);
         if (grid is null)
@@ -347,14 +343,10 @@ public sealed partial class ServerStationSystem : Shared.Station.Systems.Station
         while (locations.MoveNext(out var uid, out var component, out var transform))
         {
             if (onlyAnchored && !transform.Anchored)
-            {
                 continue;
-            }
 
             if (transform.GridUid != grid)
-            {
                 continue;
-            }
 
             entities.Add((uid, component));
         }
@@ -399,9 +391,7 @@ public sealed partial class ServerStationSystem : Shared.Station.Systems.Station
             totalTiles--;
 
             if (totalTiles <= 0)
-            {
                 break;
-            }
 
             // Invalid tile, try again.
             if (_atmos.IsTileSpace(grid.Owner, Transform(grid).MapUid, tileRef.GridIndices)
