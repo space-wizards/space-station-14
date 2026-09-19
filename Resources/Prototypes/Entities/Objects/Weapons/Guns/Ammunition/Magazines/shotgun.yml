@@ -151,3 +151,53 @@
       - state: inhand-right-mag
       - state: inhand-right-stripe
         color: "#72382d"
+
+- type: entity
+  parent: BaseMagazineShotgun
+  id: MagazineShotgunUranium
+  name: ammo drum (.50 uranium)
+  description: A large drum magazine used by some military-grade automatic shotguns. Intended to hold long-ranged uranium ammunition.
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunUranium
+  - type: Sprite
+    layers:
+    - state: uranium
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      - state: inhand-left-stripe
+        color: "#d73307"
+      right:
+      - state: inhand-right-mag
+      - state: inhand-right-stripe
+        color: "#d73307"
+
+- type: entity
+  parent: BaseMagazineShotgun
+  id: MagazineShotgunTranquilizer
+  name: ammo drum (.50 tranquilizer)
+  description: A large drum magazine used by some military-grade automatic shotguns. Intended to hold strong sedative ammunition.
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellTranquilizer
+  - type: Sprite
+    layers:
+    - state: tranquilizer
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      - state: inhand-left-stripe
+        color: "#d73307"
+      right:
+      - state: inhand-right-mag
+      - state: inhand-right-stripe
+        color: "#d73307"
