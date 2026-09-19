@@ -53,6 +53,11 @@
   copyright: "Created by simeonradivoev"
   source: "https://freesound.org/people/simeonradivoev/sounds/740218"
 
+- files: ["glob_fire.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "custom_lizard_insomiac_inspired_footstep_06252025 by Artninja. Converted to .OGG and MONO by august-sun"
+  source: "https://freesound.org/people/Artninja/sounds/813351/"
+  
 - files: ["nanite_gun.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Created by sadiefei"
