@@ -198,7 +198,15 @@ public sealed partial class VendingMachineMenu : FancyWindow
         };
 
         if (category == null)
-            button.Text = "*";
+        {
+            button.AddChild(new Label
+            {
+                Text = name,
+                HorizontalAlignment = HAlignment.Center,
+                VerticalAlignment = VAlignment.Center,
+                StyleClasses = { StyleClass.LabelHeading }
+            });
+        }
 
         button.OnPressed += _ =>
         {
