@@ -152,10 +152,6 @@
     duration: 1
     minimumPlayers: 15
   - type: BreakerFlipRule
-    blacklist:
-      components:
-        - ProtectedGrid
-
 
 - type: entity
   id: BureaucraticError

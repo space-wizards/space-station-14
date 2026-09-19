@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Atmos.EntitySystems;
@@ -311,6 +310,50 @@ public sealed partial class ServerStationSystem : Shared.Station.Systems.Station
         QueueDel(station);
     }
 
+    /// <summary>
+    /// Get all entities with <see cref="TComponent"/> that are on the station. Ignore entities outside the station.
+    /// </summary>
+    /// <param name="onlyAnchored">Whether to only get anchored entities.
+    /// Good check for air vents, bad for containers like crates.</param>
+    /// <returns>All matching entities.</returns>
+    public HashSet<Entity<TComponent>> GetEntitiesWithComponentOnStation<TComponent>(bool onlyAnchored)
+        where TComponent : IComponent
+    {
+        return GetEntitiesWithComponentOnStation<TComponent>(onlyAnchored, out _);
+    }
+
+    /// <param name="station">The station picked to search for the entities.</param>
+    /// <inheritdoc cref="GetEntitiesWithComponentOnStation{TComponent}(bool)" />
+    public HashSet<Entity<TComponent>> GetEntitiesWithComponentOnStation<TComponent>(bool onlyAnchored,
+        out Entity<StationDataComponent>? station)
+        where TComponent : IComponent
+    {
+        HashSet<Entity<TComponent>> entities = [];
+
+        if (!TryGetRandomStation(out station))
+            return entities;
+
+        var grid = GetLargestGrid(station.Value.Owner);
+        if (grid is null)
+        {
+            return entities;
+        }
+
+        var locations = EntityQueryEnumerator<TComponent, TransformComponent>();
+        while (locations.MoveNext(out var uid, out var component, out var transform))
+        {
+            if (onlyAnchored && !transform.Anchored)
+                continue;
+
+            if (transform.GridUid != grid)
+                continue;
+
+            entities.Add((uid, component));
+        }
+
+        return entities;
+    }
+
     /// <inheritdoc/>
     public override bool TryFindRandomTileOnStation(Entity<StationDataComponent> station,
         out Vector2i tile,
@@ -319,89 +362,45 @@ public sealed partial class ServerStationSystem : Shared.Station.Systems.Station
         int numAttempts = 10)
     {
         tile = default;
-        targetCoords = EntityCoordinates.Invalid;
         targetGrid = null;
+        targetCoords = EntityCoordinates.Invalid;
 
-        // Weight grid choice by tilecount
-        var totalTiles = 0;
-        var grids = new List<(Entity<MapGridComponent> Entity, int Count, List<TileRef> Tiles)>();
-        foreach (var possibleTarget in station.Comp.Grids)
+        var targetGridMaybe = GetLargestGrid(station.Owner);
+        if (targetGridMaybe is null)
         {
-            if (!GridQuery.TryComp(possibleTarget, out var comp))
-                continue;
-
-            // Get the tile count for the given grid.
-            var tileCount = Map.GetFilledTileCount((possibleTarget, comp));
-
-            // Just to be sure, no empty elements.
-            if (tileCount > 0)
-            {
-                grids.Add(((possibleTarget, comp), tileCount, new()));
-                totalTiles += tileCount;
-            }
+            return false;
         }
 
-        if (grids.Count == 0)
+        if (!TryComp<MapGridComponent>(targetGridMaybe.Value, out var comp))
+        {
             return false;
+        }
+
+        targetGrid = (targetGridMaybe.Value, comp);
+        var grid = targetGrid.Value;
+
+        var gridTiles = Map.GetAllTiles(grid, grid.Comp).ToList();
+        var totalTiles = gridTiles.Count;
 
         for (var i = 0; i < numAttempts; i++)
         {
             // Find random tile within list.
             var nextTileIndex = Random.Next(totalTiles);
-            TileRef? randomTileRef = null;
-            var startIndex = 0;
-            for (int j = 0; j < grids.Count; j++)
-            {
-                var grid = grids[j];
-                // If the index is in this particular grid, find it and remove the tile to prevent selecting it twice.
-                if (nextTileIndex >= startIndex + grid.Count)
-                {
-                    startIndex += grid.Count;
-                    continue;
-                }
+            var tileRef = gridTiles[nextTileIndex];
+            gridTiles.RemoveSwap(nextTileIndex);
+            totalTiles--;
 
-                targetGrid = grid.Entity;
-
-                // Empty list: hasn't been queried yet - get our tiles.
-                if (grid.Tiles.Count <= 0)
-                {
-                    grid.Tiles = Map.GetAllTiles(targetGrid.Value, targetGrid.Value.Comp).ToList();
-
-                    // Actual list count doesn't match expected count (a bug - return failure).
-                    Debug.Assert(grid.Tiles.Count == grid.Count);
-                    if (grid.Tiles.Count != grid.Count)
-                        return false;
-                }
-
-                var ourTileIndex = nextTileIndex - startIndex;
-                randomTileRef = grid.Tiles[ourTileIndex];
-                grid.Tiles.RemoveSwap(ourTileIndex);
-                grid.Count--;
-                totalTiles--;
-
-                // Empty list, remove element
-                if (grid.Tiles.Count <= 0)
-                    grids.RemoveSwap(j);
-
+            if (totalTiles <= 0)
                 break;
-            }
-
-            // Out of valid tiles, return early.
-            if (randomTileRef is not { } tileRef)
-                return false;
-
-            // Could not find a grid...
-            if (targetGrid == null)
-                continue;
 
             // Invalid tile, try again.
-            if (_atmos.IsTileSpace(targetGrid.Value.Owner, Transform(targetGrid.Value).MapUid, tileRef.GridIndices)
-                || _atmos.IsTileAirBlockedCached(targetGrid.Value.Owner, tileRef.GridIndices))
+            if (_atmos.IsTileSpace(grid.Owner, Transform(grid).MapUid, tileRef.GridIndices)
+                || _atmos.IsTileAirBlockedCached(grid.Owner, tileRef.GridIndices))
             {
                 continue;
             }
 
-            targetCoords = Map.GridTileToLocal(targetGrid.Value, targetGrid.Value, tileRef.GridIndices);
+            targetCoords = Map.GridTileToLocal(grid, grid.Comp, tileRef.GridIndices);
             tile = tileRef.GridIndices;
             return true;
         }
@@ -503,4 +502,3 @@ public sealed class StationRenamedEvent : EntityEventArgs
         NewName = newName;
     }
 }
-

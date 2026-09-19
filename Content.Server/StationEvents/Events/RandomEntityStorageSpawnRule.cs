@@ -1,3 +1,4 @@
+using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.GameTicking.Components;
@@ -15,22 +16,15 @@ public sealed partial class RandomEntityStorageSpawnRule : StationEventSystem<Ra
     {
         base.Started(uid, comp, gameRule, args);
 
-        if (!Station.TryGetRandomStation(out var station))
-            return;
-
-        var validLockers = new List<(EntityUid, EntityStorageComponent)>();
+        var validLockers = new List<Entity<EntityStorageComponent>>();
         var spawn = Spawn(comp.Prototype, MapCoordinates.Nullspace);
 
-        var query = EntityQueryEnumerator<EntityStorageComponent, TransformComponent>();
-        while (query.MoveNext(out var ent, out var storage, out var xform))
+        foreach (var ent in Station.GetEntitiesWithComponentOnStation<EntityStorageComponent>(false))
         {
-            if (Station.GetOwningStation(ent, xform) != station.Value.Owner)
+            if (!_entityStorage.CanInsert(spawn, ent, ent.Comp))
                 continue;
 
-            if (!_entityStorage.CanInsert(spawn, ent, storage))
-                continue;
-
-            validLockers.Add((ent, storage));
+            validLockers.Add(ent);
         }
 
         if (validLockers.Count == 0)
@@ -39,10 +33,8 @@ public sealed partial class RandomEntityStorageSpawnRule : StationEventSystem<Ra
             return;
         }
 
-        var (locker, storageComp) = RobustRandom.Pick(validLockers);
-        if (!_entityStorage.Insert(spawn, locker, storageComp))
-        {
+        var locker = RobustRandom.Pick(validLockers);
+        if (!_entityStorage.Insert(spawn, locker, locker.Comp))
             Del(spawn);
-        }
     }
 }

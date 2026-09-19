@@ -1,6 +1,7 @@
 using System.Threading;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;
@@ -27,29 +28,23 @@ namespace Content.Server.StationEvents.Events
         {
             base.Started(uid, component, gameRule, args);
 
-            if (!Station.TryGetRandomStation(out var chosenStation))
+            var apcs = Station.GetEntitiesWithComponentOnStation<ApcComponent>(true, out var chosenStation);
+
+            if (chosenStation is null)
                 return;
 
             component.AffectedStation = chosenStation.Value;
 
-            var largestGrid = Station.GetLargestGrid(chosenStation.Value.AsNullable());
-
-            if (largestGrid == null)
-                return;
-
-            var query = AllEntityQuery<ApcComponent, TransformComponent>();
-            while (query.MoveNext(out var apcUid, out var apc, out var transform))
+            foreach (var apc in apcs)
             {
-                if (!apc.MainBreakerEnabled)
+                if (apc.Comp.MainBreakerEnabled)
                     continue;
 
-                if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station != chosenStation.Value.Owner)
+                var apcTransform = Transform(apc);
+                if (apcTransform.GridUid != component.AffectedStation)
                     continue;
 
-                if (transform.GridUid != largestGrid.Value)
-                    continue;
-
-                component.Powered.Add(apcUid);
+                component.Powered.Add(apc);
             }
 
             RobustRandom.Shuffle(component.Powered);

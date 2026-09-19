@@ -1,10 +1,9 @@
+using System.Linq;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
-using Content.Shared.Station.Components;
-using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 
 namespace Content.Server.StationEvents.Events;
@@ -13,7 +12,6 @@ namespace Content.Server.StationEvents.Events;
 public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRuleComponent>
 {
     [Dependency] private ApcSystem _apcSystem = default!;
-    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     protected override void Added(EntityUid uid, BreakerFlipRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
@@ -30,18 +28,7 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
     {
         base.Started(uid, component, gameRule, args);
 
-        if (!Station.TryGetRandomStation(out var chosenStation, uid => _whitelist.IsWhitelistFailOrNull(component.Blacklist, uid)))
-            return;
-
-        var stationApcs = new List<Entity<ApcComponent>>();
-        var query = EntityQueryEnumerator<ApcComponent, TransformComponent>();
-        while (query.MoveNext(out var apcUid, out var apc, out var xform))
-        {
-            if (apc.MainBreakerEnabled && CompOrNull<StationMemberComponent>(xform.GridUid)?.Station == chosenStation.Value.Owner)
-            {
-                stationApcs.Add((apcUid, apc));
-            }
-        }
+        var stationApcs = Station.GetEntitiesWithComponentOnStation<ApcComponent>(true).ToList();
 
         var toDisable = Math.Min(RobustRandom.Next(3, 7), stationApcs.Count);
         if (toDisable == 0)
