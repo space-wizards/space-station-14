@@ -1,4 +1,4 @@
-﻿# UI
+# UI
 admin-notes-title = Notes for {$player}
 admin-notes-new-note = New note
 admin-notes-show-more = Show more

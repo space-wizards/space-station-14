@@ -177,3 +177,42 @@
       - Blindable
       requireAll: true
   - type: FlashedStatusEffect
+
+# Forces fake items into the hands/slots of the target
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectForcedItemCatEars
+  name: forced cat ears
+  components:
+  - type: ForcedItemStatusEffect
+    inventoryItems:
+      HEAD: ClothingHeadHatCatEars
+    removeWhenCuffed: false
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectForcedItemMaid
+  name: forced maid outfit
+  components:
+  - type: ForcedItemStatusEffect
+    inventoryItems:
+      INNERCLOTHING: ClothingUniformJumpskirtJanimaid
+      IDCARD: JanitorPDA
+      GLOVES: ClothingHandsGlovesJanitor
+      HEAD: ClothingHeadHatCatEars
+      EARS: ClothingHeadsetService
+      BELT: ClothingBeltJanitorFilled
+    removeWhenCuffed: false
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectForcedItemArmblade
+  name: forced armblade
+  components:
+  - type: ForcedItemStatusEffect
+    handItems:
+    - ArmbladeDull
+    spawnSound:
+      collection: gib # Same as ActionRetractableItemArmblade
+    despawnSound:
+      collection: gib # Same as ActionRetractableItemArmblade

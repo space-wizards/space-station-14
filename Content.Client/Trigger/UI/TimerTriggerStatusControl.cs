@@ -31,7 +31,9 @@ public sealed partial class TimerTriggerStatusControl : PollingItemStatusControl
 
     protected override void Update(in Data data)
     {
-        var markup = Loc.GetString("timer-trigger-status-delay", ("delay", data.Delay.TotalSeconds));
+        var markup = _parent.Comp.Examinable
+            ? Loc.GetString("timer-trigger-status-delay", ("delay", data.Delay.TotalSeconds.ToString("F2")))
+            : Loc.GetString("timer-trigger-status-delay-unknown");
         _label.SetMarkup(markup);
     }
 
