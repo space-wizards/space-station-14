@@ -1,4 +1,3 @@
-using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 
@@ -17,11 +16,11 @@ public sealed partial class ItemSlotsSystem
 
         foreach (var slot in ent.Comp.Slots.Values)
         {
-            if (!slot.EjectOnInteract || slot.Item == null || !CanEject(ent, slot, args.User, popup: args.User))
+            if (!slot.EjectOnInteract || slot.Item is not { } item || !CanEject(ent, slot, args.User, popup: args.User))
                 continue;
 
             args.Handled = true;
-            TryEjectToHands(ent, slot, args.User, true);
+            StartEjectToHandsWithDoAfter(ent, slot, item, args.User);
             break;
         }
     }
@@ -37,11 +36,11 @@ public sealed partial class ItemSlotsSystem
 
         foreach (var slot in ent.Comp.Slots.Values)
         {
-            if (!slot.EjectOnUse || slot.Item == null || !CanEject(ent, slot, args.User, popup: args.User))
+            if (!slot.EjectOnUse || slot.Item is not { } item || !CanEject(ent, slot, args.User, popup: args.User))
                 continue;
 
             args.Handled = true;
-            TryEjectToHands(ent, slot, args.User, true);
+            StartEjectToHandsWithDoAfter(ent, slot, item, args.User);
             break;
         }
     }
@@ -59,7 +58,7 @@ public sealed partial class ItemSlotsSystem
         if (args.Handled)
             return;
 
-        if (!TryComp(args.User, out HandsComponent? hands))
+        if (!_handsQuery.TryComp(args.User, out var hands))
             return;
 
         if (ent.Comp.Slots.Count == 0)
@@ -98,21 +97,12 @@ public sealed partial class ItemSlotsSystem
             return;
         }
 
-        if (!_handsSystem.TryDrop(args.User, args.Used))
-            return;
-
         slots.Sort(SortEmpty);
 
         foreach (var slot in slots)
         {
-            if (slot.Item != null)
-                _handsSystem.TryPickupAnyHand(args.User, slot.Item.Value, handsComp: hands);
-
-            if (!Insert(ent, slot, args.Used, args.User, excludeUserAudio: true))
+            if (!StartInsertFromHandWithDoAfter(ent, slot, args.Used, (args.User, hands), slot.Swap))
                 return;
-
-            if (slot.InsertSuccessPopup.HasValue)
-                _popupSystem.PopupEntity(Loc.GetString(slot.InsertSuccessPopup), ent, args.User);
 
             args.Handled = true;
             return;
@@ -126,8 +116,16 @@ public sealed partial class ItemSlotsSystem
             return;
 
         if (args.TryEject && slot.HasItem && !slot.DisableEject)
-            TryEjectToHands(ent, slot, args.Actor, true);
-        else if (args.TryInsert && !slot.HasItem)
-            TryInsertFromHand(ent, slot, args.Actor);
+        {
+            TryEjectToHandsWithDoAfter(ent, slot, args.Actor);
+            return;
+        }
+
+        if (!args.TryInsert || slot.HasItem ||
+            !_handsQuery.TryComp(args.Actor, out var hands) ||
+            !_handsSystem.TryGetActiveItem((args.Actor, hands), out var item))
+            return;
+
+        TryInsertFromHandWithDoAfter(ent, slot, item.Value, (args.Actor, hands));
     }
 }

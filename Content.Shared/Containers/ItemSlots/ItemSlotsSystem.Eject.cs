@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 
 namespace Content.Shared.Containers.ItemSlots;
 
@@ -28,10 +29,7 @@ public sealed partial class ItemSlotsSystem
         var ev = new ItemSlotEjectAttemptEvent(uid, item, user, slot);
         RaiseLocalEvent(uid, ref ev);
         RaiseLocalEvent(item, ref ev);
-        if (ev.Cancelled)
-            return false;
-
-        return _containers.CanRemove(item, slot.ContainerSlot);
+        return !ev.Cancelled && _containers.CanRemove(item, slot.ContainerSlot);
     }
 
     /// <summary>
@@ -93,7 +91,7 @@ public sealed partial class ItemSlotsSystem
     {
         item = null;
 
-        if (!Resolve(ent, ref ent.Comp))
+        if (!_itemSlotsQuery.Resolve(ent, ref ent.Comp))
             return false;
 
         if (!ent.Comp.Slots.TryGetValue(id, out var slot))
@@ -118,6 +116,68 @@ public sealed partial class ItemSlotsSystem
     }
 
     /// <summary>
+    /// Tries to eject an item into the user's hands, respecting the slot's configured ejection delay.
+    /// </summary>
+    private void TryEjectToHandsWithDoAfter(EntityUid uid, ItemSlot slot, EntityUid user)
+    {
+        if (!CanEject(uid, slot, user) ||
+            slot.Item is not { } item)
+            return;
+
+        StartEjectToHandsWithDoAfter(uid, slot, item, user);
+    }
+
+    /// <summary>
+    /// Starts an ejection that has already passed slot validation.
+    /// </summary>
+    private void StartEjectToHandsWithDoAfter(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid user)
+    {
+        if (!_actionBlockerSystem.CanPickup(user, item, showPopup: true))
+            return;
+
+        if (slot.EjectDelay <= TimeSpan.Zero)
+        {
+            if (!Eject(uid, slot, item, user, excludeUserAudio: true))
+                return;
+
+            _handsSystem.PickupOrDrop(user, item);
+            return;
+        }
+
+        if (slot.ID is not { } slotId)
+            return;
+
+        _doAfter.TryStartDoAfter(new DoAfterArgs(
+            EntityManager,
+            user,
+            slot.EjectDelay,
+            new ItemSlotEjectDoAfterEvent(slotId),
+            uid,
+            target: uid,
+            used: item)
+        {
+            BreakOnMove = true,
+            BreakOnDamage = true
+        });
+    }
+
+    /// <summary>
+    /// Finishes a delayed ejection only if the original item is still in the original slot.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnEjectDoAfter(Entity<ItemSlotsComponent> ent, ref ItemSlotEjectDoAfterEvent args)
+    {
+        if (args.Cancelled ||
+            args.Handled ||
+            args.Used is not { } item ||
+            !ent.Comp.Slots.TryGetValue(args.SlotId, out var slot) ||
+            slot.Item != item)
+            return;
+
+        args.Handled = TryEjectToHands(ent, slot, args.User, true);
+    }
+
+    /// <summary>
     /// Unlocks every occupied slot and attempts to eject its item.
     /// </summary>
     public void EjectFromAllSlots(Entity<ItemSlotsComponent> entity)
@@ -132,11 +192,11 @@ public sealed partial class ItemSlotsSystem
     {
         foreach (var slot in entity.Comp.Slots.Values)
         {
-            if (slot.HasItem && shouldEject(slot))
-            {
-                SetLock((entity.Owner, entity.Comp), slot, false);
-                TryEject(entity.Owner, slot, null, out _);
-            }
+            if (!slot.HasItem || !shouldEject(slot))
+                continue;
+
+            SetLock((entity.Owner, entity.Comp), slot, false);
+            TryEject(entity.Owner, slot, null, out _);
         }
     }
 }
