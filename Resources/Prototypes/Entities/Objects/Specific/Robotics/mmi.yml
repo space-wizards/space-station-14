@@ -131,7 +131,7 @@
       visuals:
         enum.ToggleableGhostRoleVisuals.Status:
           light:
-            Off: { state: null }
+            Off: { state: empty } # TODO: fix null states in SpriteComp.LayerSetData, use a null state
             Searching: { state: posibrain-searching }
             On: { state: posibrain-occupied }
     - type: GuideHelp
