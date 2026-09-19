@@ -9,6 +9,7 @@
   - GlassesJensen
 
 - type: loadoutGroup
+  parent: [ TrinketSmokeables, TrinketFolders, TrinketPins, TrinketTowels ]
   id: Trinkets
   name: loadout-group-trinkets
   minLimit: 0
@@ -20,6 +21,11 @@
   - PlushieLizard
   - PlushieSpaceLizard
   - ThreeCandles
+
+- type: loadoutGroup
+  abstract: true
+  id: TrinketSmokeables
+  loadouts:
   - Lighter
   - CigPackGreen
   - CigPackRed
@@ -27,9 +33,19 @@
   - CigPackBlack
   - CigarCase
   - CigarGold
+
+- type: loadoutGroup
+  abstract: true
+  id: TrinketFolders
+  loadouts:
   - BoxFolderBaseThreePapers
   - BoxFolderPlasticClipboardThreePapers
   - BoxFolderClipboardThreePapers
+
+- type: loadoutGroup
+  abstract: true
+  id: TrinketPins
+  loadouts:
   - ClothingNeckLGBTPin
   - ClothingNeckAllyPin
   - ClothingNeckAromanticPin
@@ -48,6 +64,11 @@
   - ClothingNeckTransPin
   - ClothingNeckAutismPin
   - ClothingNeckGoldAutismPin
+
+- type: loadoutGroup
+  abstract: true
+  id: TrinketTowels
+  loadouts:
   - TowelColorWhite
 
 - type: loadoutGroup
