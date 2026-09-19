@@ -12,7 +12,7 @@ import os
 import psycopg2
 from uuid import UUID
 
-LATEST_DB_MIGRATION = "20260120200503_BanRefactor"
+LATEST_DB_MIGRATION = "20260126003838_CustomVoteLog"
 
 def main():
     parser = argparse.ArgumentParser()

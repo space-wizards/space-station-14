@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Moderator)]
-    public sealed class AnnounceUiCommand : LocalizedEntityCommands
+    public sealed partial class AnnounceUiCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly EuiManager _euiManager = default!;
+        [Dependency] private EuiManager _euiManager = default!;
 
         public override string Command => "announceui";
 

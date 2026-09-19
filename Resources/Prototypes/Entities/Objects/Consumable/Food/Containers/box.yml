@@ -1,4 +1,4 @@
-﻿# Donut
+# Donut
 
 # There is a newer, better version of the donutbox from tgstation included in the
 # donut.rsi. The reason it isn't implemented is it requires a StackVisuals offsetting
@@ -192,11 +192,6 @@
       storagebase:
         id: Eggshells
         amount: 12
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
 
 # Pizza
 
@@ -583,7 +578,7 @@
           children:
           - id: FoodSaladValid
             weight: 0.05
-            amount: 4
+            amount: 2
           - id: FoodSnackSyndi
             amount: 4
 

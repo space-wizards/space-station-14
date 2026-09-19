@@ -1,14 +1,26 @@
 using Content.Shared.DragDrop;
+using JetBrains.Annotations;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.Body;
 
+/// <summary>
+/// System responsible for coordinating entities with <see cref="BodyComponent" /> and their entities with <see cref="OrganComponent" />.
+/// This system is primarily responsible for event relaying and the relationships between a body and its organs.
+/// It is not responsible for player-facing body features, e.g. "blood" or "breathing."
+/// Such features should be implemented in systems relying on the various events raised by this class.
+/// </summary>
+/// <seealso cref="OrganGotInsertedEvent" />
+/// <seealso cref="OrganGotRemovedEvent" />
+/// <seealso cref="OrganInsertedIntoEvent" />
+/// <seealso cref="OrganRemovedFromEvent" />
+/// <seealso cref="BodyRelayedEvent{TEvent}" />
 public sealed partial class BodySystem : EntitySystem
 {
-    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
 
-    private EntityQuery<BodyComponent> _bodyQuery;
-    private EntityQuery<OrganComponent> _organQuery;
+    [Dependency] private EntityQuery<BodyComponent> _bodyQuery = default!;
+    [Dependency] private EntityQuery<OrganComponent> _organQuery = default!;
 
     public override void Initialize()
     {
@@ -21,9 +33,6 @@ public sealed partial class BodySystem : EntitySystem
 
         SubscribeLocalEvent<BodyComponent, EntInsertedIntoContainerMessage>(OnBodyEntInserted);
         SubscribeLocalEvent<BodyComponent, EntRemovedFromContainerMessage>(OnBodyEntRemoved);
-
-        _bodyQuery = GetEntityQuery<BodyComponent>();
-        _organQuery = GetEntityQuery<OrganComponent>();
 
         InitializeRelay();
     }
@@ -85,5 +94,44 @@ public sealed partial class BodySystem : EntitySystem
     private void OnCanDrag(Entity<BodyComponent> ent, ref CanDragEvent args)
     {
         args.Handled = true;
+    }
+
+    /// <summary>
+    /// Gets an enumerator of organs with a specific component.
+    /// </summary>
+    /// <param name="body">The entity to enumerate the organs of.</param>
+    /// <typeparam name="T">The component.</typeparam>
+    /// <returns>The enumerator of the entity's organs with the specified component.</returns>
+    [PublicAPI]
+    public IEnumerable<Entity<OrganComponent,T>> EnumerateOrgans<T>(Entity<BodyComponent?> body) where T : IComponent
+    {
+        if (!Resolve(body, ref body.Comp, false))
+            yield break;
+
+        foreach (var organ in body.Comp.Organs?.ContainedEntities ?? [])
+        {
+            if (TryComp<T>(organ, out var comp))
+                yield return (organ, _organQuery.Comp(organ), comp);
+        }
+    }
+
+    /// <summary>
+    /// Gets an enumerator of organs with a specific component using a <see cref="EntityQuery{TComp1}"/>.
+    /// </summary>
+    /// <param name="body">The entity to enumerate the organs of.</param>
+    /// <param name="query">The EntityQuery to use.</param>
+    /// <typeparam name="T">The component.</typeparam>
+    /// <returns>The enumerator of the entity's organs with the specified component.</returns>
+    [PublicAPI]
+    public IEnumerable<Entity<OrganComponent, T>> EnumerateOrgans<T>(Entity<BodyComponent?> body, EntityQuery<T> query) where T : IComponent
+    {
+        if (!Resolve(body, ref body.Comp, false))
+            yield break;
+
+        foreach (var organ in body.Comp.Organs?.ContainedEntities ?? [])
+        {
+            if (query.TryComp(organ, out var comp))
+                yield return (organ, _organQuery.Comp(organ), comp);
+        }
     }
 }

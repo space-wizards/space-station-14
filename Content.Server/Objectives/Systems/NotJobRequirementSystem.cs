@@ -6,9 +6,9 @@ namespace Content.Server.Objectives.Systems;
 /// <summary>
 /// Handles checking the job blacklist for this objective.
 /// </summary>
-public sealed class NotJobRequirementSystem : EntitySystem
+public sealed partial class NotJobRequirementSystem : EntitySystem
 {
-    [Dependency] private readonly SharedJobSystem _jobs = default!;
+    [Dependency] private SharedJobSystem _jobs = default!;
 
     public override void Initialize()
     {

@@ -1,10 +1,10 @@
-﻿using Content.Shared.Gravity;
+using Content.Shared.Gravity;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 
 namespace Content.Shared.Movement.Systems;
 
-public sealed class MovementIgnoreGravitySystem : EntitySystem
+public sealed partial class MovementIgnoreGravitySystem : EntitySystem
 {
     [Dependency] SharedGravitySystem _gravity = default!;
     public override void Initialize()

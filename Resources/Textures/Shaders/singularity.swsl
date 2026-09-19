@@ -8,7 +8,7 @@ uniform lowp int count;
 uniform highp float[5] falloffPower;
 uniform highp float[5] intensity;
 uniform highp vec2[5] position;
-// the `5`s in the array lengths correspond to the upper limit on the simultaneous distortion sources that can be present on screen at a time. 
+// the `5`s in the array lengths correspond to the upper limit on the simultaneous distortion sources that can be present on screen at a time.
 // If you want to change this, make sure to change all of them here, in the for loop, and, in whatever overlay assigns the uniforms
 // (apparently #define is an unknown preprocessor directive)
 
@@ -18,28 +18,28 @@ void fragment() {
     highp vec2 delta;
     highp float distance;
     highp float deformation;
-    
+
     for (int i = 0; i < 5 && i < count; i++) {
-    
+
         delta = FRAGCOORD.xy - position[i];
 	    distance = length(delta / renderScale);
 
         deformation = intensity[i] / pow(distance, falloffPower[i]);
-        
+
         // ensure deformation goes to zero at max distance
         // avoids long-range single-pixel shifts that are noticeable when leaving PVS.
-        
+
         if (distance >= maxDistance) {
             deformation = 0.0;
         } else {
             deformation *= (1.0 - pow(distance/maxDistance, 4.0));
         }
-        
+
         if(deformation > 0.8)
             deformation = pow(deformation, 0.3);
 
         finalCoords -= deformation * delta;
     }
-    
+
     COLOR = zTextureSpec(SCREEN_TEXTURE, finalCoords*SCREEN_PIXEL_SIZE );
 }

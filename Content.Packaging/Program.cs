@@ -1,4 +1,4 @@
-﻿using Content.Packaging;
+using Content.Packaging;
 using Robust.Packaging;
 
 IPackageLogger logger = new PackageLoggerConsole();
@@ -22,11 +22,11 @@ if (!parsed.SkipBuild)
 
 if (parsed.Client)
 {
-    await ClientPackaging.PackageClient(parsed.SkipBuild, parsed.Configuration, logger);
+    await ClientPackaging.PackageClient(parsed.SkipBuild, parsed.LogBuild, parsed.Configuration, logger);
 }
 else
 {
-    await ServerPackaging.PackageServer(parsed.SkipBuild, parsed.HybridAcz, logger, parsed.Configuration, parsed.Platforms);
+    await ServerPackaging.PackageServer(parsed.SkipBuild, parsed.HybridAcz, parsed.LogBuild, logger, parsed.Configuration, parsed.Platforms);
 }
 
 void WipeBin()

@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Content.Server.Administration.Logs;
 using Content.Server.RoundEnd;
 using Content.Shared.Database;
@@ -6,17 +5,18 @@ using Content.Shared.EntityTable;
 using Content.Shared.EntityTable.Conditions;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.GameTicking.Rules;
+using Content.Shared.GameTicking.Rules.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed class DynamicRuleSystem : GameRuleSystem<DynamicRuleComponent>
+public sealed partial class DynamicRuleSystem : GameRuleSystem<DynamicRuleComponent>
 {
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
-    [Dependency] private readonly EntityTableSystem _entityTable = default!;
-    [Dependency] private readonly RoundEndSystem _roundEnd = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IAdminLogManager _adminLog = default!;
+    [Dependency] private EntityTableSystem _entityTable = default!;
+    [Dependency] private RoundEndSystem _roundEnd = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     protected override void Added(EntityUid uid, DynamicRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
@@ -36,13 +36,14 @@ public sealed class DynamicRuleSystem : GameRuleSystem<DynamicRuleComponent>
         Execute((uid, component));
     }
 
-    protected override void Ended(EntityUid uid, DynamicRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
+    // TODO: We may not actually want to do this
+    protected override void Ended(Entity<DynamicRuleComponent> rule, ref GameRuleEndedEvent args)
     {
-        base.Ended(uid, component, gameRule, args);
+        base.Ended(rule, ref args);
 
-        foreach (var rule in component.Rules)
+        foreach (var gameRule in rule.Comp.Rules)
         {
-            GameTicker.EndGameRule(rule);
+            GameTicker.EndGameRule(gameRule);
         }
     }
 
@@ -102,10 +103,10 @@ public sealed class DynamicRuleSystem : GameRuleSystem<DynamicRuleComponent>
 
         foreach (var rule in GetRuleSpawns(entity))
         {
-            var res = GameTicker.StartGameRule(rule, out var ruleUid);
-            Debug.Assert(res);
+            if (!GameTicker.StartGameRule(rule, out var ruleUid))
+                continue;
 
-            executedRules.Add(ruleUid);
+            executedRules.Add(ruleUid.Value);
 
             if (TryComp<DynamicRuleCostComponent>(ruleUid, out var cost))
             {
@@ -130,7 +131,7 @@ public sealed class DynamicRuleSystem : GameRuleSystem<DynamicRuleComponent>
         var query = EntityQueryEnumerator<DynamicRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out _, out var comp))
         {
-            if (!GameTicker.IsGameRuleActive(uid, comp))
+            if (!GameTicker.IsGameRuleActive((uid, comp)))
                 continue;
             rules.Add(uid);
         }

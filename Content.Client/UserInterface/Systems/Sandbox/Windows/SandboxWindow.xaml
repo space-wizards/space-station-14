@@ -1,4 +1,4 @@
-﻿<windows:SandboxWindow
+<windows:SandboxWindow
     xmlns="https://spacestation14.io"
     xmlns:windows="clr-namespace:Content.Client.UserInterface.Systems.Sandbox.Windows"
     Title="{Loc sandbox-window-title}"
@@ -12,6 +12,7 @@
         <Label Text="{Loc sandbox-window-visibility-label}"/>
         <Button Name="ToggleLightButton" Access="Public" Text="{Loc sandbox-window-toggle-lights-button}" ToggleMode="True"/>
         <Button Name="ToggleFovButton" Access="Public" Text="{Loc sandbox-window-toggle-fov-button}" ToggleMode="True"/>
+        <Button Name="ToggleThermalVisionButton" Access="Public" Text="{Loc sandbox-window-toggle-thermal-vision}" ToggleMode="True"/>
         <Button Name="ToggleShadowsButton" Access="Public" Text="{Loc sandbox-window-toggle-shadows-button}" ToggleMode="True"/>
         <Button Name="ToggleSubfloorButton" Access="Public" Text="{Loc sandbox-window-toggle-subfloor-button}" ToggleMode="True"/>
         <Button Name="AiOverlayButton" Access="Public" Text="{Loc sandbox-window-ai-overlay-button}" ToggleMode="True"/>

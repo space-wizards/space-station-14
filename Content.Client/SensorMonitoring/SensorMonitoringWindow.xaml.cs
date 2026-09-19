@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Numerics;
 using Content.Client.Computer;
 using Content.Client.Stylesheets;
@@ -19,8 +19,8 @@ namespace Content.Client.SensorMonitoring;
 [GenerateTypedNameReferences]
 public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindow<ConsoleUIState>
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly ILocalizationManager _loc = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private ILocalizationManager _loc = default!;
 
     private TimeSpan _retentionTime;
     private readonly Dictionary<int, SensorData> _sensorData = new();

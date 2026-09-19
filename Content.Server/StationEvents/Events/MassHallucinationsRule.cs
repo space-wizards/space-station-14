@@ -9,9 +9,9 @@ using Content.Shared.Traits.Assorted;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed class MassHallucinationsRule : StationEventSystem<MassHallucinationsRuleComponent>
+public sealed partial class MassHallucinationsRule : StationEventSystem<MassHallucinationsRuleComponent>
 {
-    [Dependency] private readonly ParacusiaSystem _paracusia = default!;
+    [Dependency] private ParacusiaSystem _paracusia = default!;
 
     protected override void Started(EntityUid uid, MassHallucinationsRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
@@ -31,15 +31,15 @@ public sealed class MassHallucinationsRule : StationEventSystem<MassHallucinatio
         }
     }
 
-    protected override void Ended(EntityUid uid, MassHallucinationsRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
+    protected override void Ended(Entity<MassHallucinationsRuleComponent> rule, ref GameRuleEndedEvent args)
     {
-        base.Ended(uid, component, gameRule, args);
+        base.Ended(rule, ref args);
 
-        foreach (var ent in component.AffectedEntities)
+        foreach (var ent in rule.Comp.AffectedEntities)
         {
             RemComp<ParacusiaComponent>(ent);
         }
 
-        component.AffectedEntities.Clear();
+        rule.Comp.AffectedEntities.Clear();
     }
 }

@@ -18,11 +18,11 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.UserInterface;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class StatValuesCommand : IConsoleCommand
+public sealed partial class StatValuesCommand : IConsoleCommand
 {
-    [Dependency] private readonly EuiManager _eui = default!;
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private EuiManager _eui = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
 
     public string Command => "showvalues";
     public string Description => Loc.GetString("stat-values-desc");

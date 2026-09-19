@@ -6,7 +6,7 @@ namespace Content.Client.Overlays;
 
 public sealed partial class NoirOverlaySystem : EquipmentHudSystem<NoirOverlayComponent>
 {
-    [Dependency] private readonly IOverlayManager _overlayMan = default!;
+    [Dependency] private IOverlayManager _overlayMan = default!;
 
     private NoirOverlay _overlay = default!;
 

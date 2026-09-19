@@ -12,10 +12,10 @@ namespace Content.Shared.Xenoarchaeology.Equipment;
 /// This system is used for managing the artifact analyzer as well as the analysis console.
 /// It also handles scanning and ui updates for both systems.
 /// </summary>
-public abstract class SharedArtifactAnalyzerSystem : EntitySystem
+public abstract partial class SharedArtifactAnalyzerSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
-    [Dependency] private readonly SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

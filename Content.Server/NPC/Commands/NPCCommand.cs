@@ -7,9 +7,9 @@ using Robust.Shared.Console;
 namespace Content.Server.NPC.Commands;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class NpcCommand : LocalizedEntityCommands
+public sealed partial class NpcCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly EuiManager _euiManager = default!;
+    [Dependency] private EuiManager _euiManager = default!;
 
     public override string Command => "npc";
 
