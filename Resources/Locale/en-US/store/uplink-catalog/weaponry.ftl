@@ -30,6 +30,9 @@ uplink-gloves-knuckleduster-desc = A pair of plastitanium knuckle dusters that l
 uplink-eshield-name = Energy Shield
 uplink-eshield-desc = An exotic energy shield that reflects almost all laser beams, and provides protection from bullets and other physical attacks. Cannot be repaired.
 
+uplink-finger-guns-name = Finger Guns
+uplink-finger-guns-desc = Forged in invisible fire by mime-monks who've taken the vow of silence. These seemingly normal gloves are a silent and deadly weapon in the right hands. (.25 caseless)
+
 uplink-rigged-boxing-gloves-name = Rigged Boxing Gloves
 uplink-rigged-boxing-gloves-desc = Float like a butterfly, sting like a bee. Hits harder than you'd expect.
 
