@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
@@ -15,6 +16,8 @@ namespace Content.Shared.Decals
         // Legacy DecalGridComponent data was serialized in 32x32 chunks. Loading code must treat those keys as old
         // storage buckets and re-chunk decals by coordinates before migrating them to chunk entities.
         public const int LegacyChunkSize = 32;
+
+        private List<(DecalIndex Index, Decal Decal)> _tempDecals = new();
 
         public override void Initialize()
         {
@@ -85,6 +88,53 @@ namespace Content.Shared.Decals
             }
 
             return decalIds;
+        }
+
+        public void GetDecalsAt(EntityUid gridUid, string id, Vector2 coordinates, Angle angle, ICollection<(DecalIndex Index, Decal Decal)> matches)
+        {
+            var chunkIndices = ChunkEntitySystem.GetChunkIndices(coordinates);
+
+            if (!ChunkEntities.TryGetChunk(gridUid, chunkIndices, out var chunk) ||
+                !DecalChunkQuery.TryComp(chunk.Value.Owner, out var decals))
+            {
+                return;
+            }
+
+            foreach (var (chunkDecalId, decal) in decals.Decals)
+            {
+                if (decal.Id != id ||
+                    decal.Coordinates != coordinates ||
+                    decal.Angle != angle)
+                {
+                    continue;
+                }
+
+                matches.Add((new DecalIndex(chunk.Value.Comp.Chunk, chunkDecalId), decal));
+            }
+        }
+
+        public bool TryGetDecalAt(
+            EntityUid gridUid,
+            string id,
+            Vector2 coordinates,
+            Angle angle,
+            out DecalIndex decalIndex,
+            [NotNullWhen(true)] out Decal? foundDecal)
+        {
+            decalIndex = default;
+            foundDecal = null;
+            GetDecalsAt(gridUid, id, coordinates, angle, _tempDecals);
+
+            foreach (var (index, decal) in _tempDecals)
+            {
+                decalIndex = index;
+                foundDecal = decal;
+                break;
+            }
+
+            _tempDecals.Clear();
+
+            return foundDecal != null;
         }
 
         public virtual bool RemoveDecal(EntityUid gridId, DecalIndex decal)
