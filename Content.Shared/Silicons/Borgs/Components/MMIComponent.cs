@@ -44,13 +44,13 @@ public sealed partial class MMIComponent : Component
     public string NoBrainState = "mmi_off";
 
     /// <summary>
-    /// The color of the <see cref="MMIVisualLayers.Unshaded"/> layer when the brain inserted has a mind.
+    /// The color of the <see cref="MMIVisualLayers.Unlit"/> layer when the brain inserted has a mind.
     /// </summary>
     [DataField]
     public Color HasMindLightColor = Color.FromHex("#0094ff");
 
     /// <summary>
-    /// The color of the <see cref="MMIVisualLayers.Unshaded"/> layer when the brain inserted doesn't have a mind.
+    /// The color of the <see cref="MMIVisualLayers.Unlit"/> layer when the brain inserted doesn't have a mind.
     /// </summary>
     [DataField]
     public Color NoMindLightColor = Color.FromHex("#ff3033");
