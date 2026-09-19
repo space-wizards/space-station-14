@@ -5,3 +5,4 @@ fulton-not-found = No beacon found
 fulton-invalid = Can't fulton
 fulton-fultoned = Already fultoned
 fulton-remove = Remove fulton
+fulton-verb-text = Fulton
