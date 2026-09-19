@@ -1298,7 +1298,7 @@
         emptyRepresentative: HydroponicsToolMiniHoe
         whitelist:
           tags:
-            - BotanyTool
+          - BotanyTool
     - hand:
         emptyLabel: borg-slot-gardening-tools-empty
         emptyRepresentative: HydroponicsToolClippers

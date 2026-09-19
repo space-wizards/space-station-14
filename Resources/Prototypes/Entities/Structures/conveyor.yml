@@ -32,10 +32,7 @@
           - 0.50,0.50
           - -0.50,0.50
         layer:
-        - Impassable
-        - MidImpassable
-        - LowImpassable
-        - DoorPassable
+        - ConveyorMask
         hard: False
   - type: Conveyor
   - type: DeviceNetwork

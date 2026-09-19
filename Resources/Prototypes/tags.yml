@@ -837,7 +837,7 @@
   id: InnateDontDelete # Basically used as a bool for InnateToolComponent in InnateToolSystem. TODO remove
 
 - type: Tag
-  id: Ingredient # For borg cooking module whitelisted slot
+  id: Ingredient # StorageWhitelist: BorgModuleCooking
 
 - type: Tag
   id: InstantDoAfters # Used by SharedDoAfterSystem for tagged entities to skip DoAfters (aghost). TODO remove
@@ -1022,7 +1022,7 @@
   id: Mouse # CargoBounty: BountyMouse
 
 - type: Tag
-  id: Muffin #  Storage whitelist: BorgModuleCooking
+  id: Muffin #  StorageWhitelist: BorgModuleCooking
 
 - type: Tag
   id: Multitool # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering. ConstructionGraph: LogicGate
@@ -1611,7 +1611,7 @@
                          # MachineBoard construction: DawInstrumentMachineCircuitboard
 
 - type: Tag
-  id: WrappedCube # For borg cooking module whitelisted slot
+  id: WrappedCube # StorageWhitelist: BorgModuleCooking
 
 - type: Tag
   id: Wrench # Storage whitelist: BaseClothingBeltEngineering, ClothingBeltJanitor, ClothingBeltMedical.

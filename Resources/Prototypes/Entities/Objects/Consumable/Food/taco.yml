@@ -197,6 +197,4 @@
   - type: Sprite
     state: softtaco
   - type: Tag
-    tags:
-      - Meat
-      - FinishedMeal
+    tags: [ FinishedMeal, Meat ]

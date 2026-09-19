@@ -206,8 +206,7 @@
   - type: FitsInDispenser
     solution: drink
   - type: Tag
-    tags:
-    - Dinnerware
+    tags: [ Dinnerware, Trash ]
 
 # Weird empty shakes
 

@@ -50,10 +50,7 @@
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
   - type: Tag
-    tags:
-    - Trash
-    - Skewer
-    - Dinnerware
+    tags: [ Dinnerware, Skewer, Trash ]
   - type: Edible
     trash:
     - FoodKebabSkewer

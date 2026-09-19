@@ -89,9 +89,7 @@
   - type: Sprite
     state: fries-carrot
   - type: Tag
-    tags:
-    - CarrotFries
-    - FinishedMeal
+    tags: [ CarrotFries, FinishedMeal ]
   - type: Solution
     solution:
       reagents:
@@ -221,9 +219,7 @@
   - type: Sprite
     state: eggplantparm
   - type: Tag
-    tags:
-    - Fruit
-    - FinishedMeal
+    tags: [ FinishedMeal, Fruit ]
 # Tastes like eggplant, cheese.
 
 - type: entity
