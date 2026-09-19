@@ -55,6 +55,16 @@ public sealed partial class CCVars
             "Toggles displaying a background under the speaking character's name.");
 
     /// <summary>
+    ///     When enabled, shows a speech bubble above the character's head previewing the text
+    ///     they are currently typing.
+    /// </summary>
+    public static readonly CVarDef<bool> ChatTypingPreviewEnabled =
+        CVarDef.Create("chat.typing_preview_enabled",
+            true,
+            CVar.CLIENTONLY | CVar.ARCHIVE,
+            "When enabled, shows a speech bubble above your character's head previewing what you are typing.");
+
+    /// <summary>
     ///     A message broadcast to each player that joins the lobby.
     ///     May be changed by admins ingame through use of the "set-motd" command.
     ///     In this case the new value, if not empty, is broadcast to all connected players and saved between rounds.
