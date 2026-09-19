@@ -54,7 +54,7 @@ public sealed partial class MindExamineSystem : EntitySystem
         // To properly track that, we subscribe to the broadcast version of this event
         // and update the mind status of the original entity accordingly.
         // Otherwise, if you ghost out and THEN disconnect, it would not update your status as it gets raised on your ghost and not your body.
-        if (!_mind.TryGetMind(args.Entity, out _, out var mindComp))
+        if (!_mind.TryGetMind(args.Player.UserId, out _, out var mindComp))
             return;
 
         if (mindComp.OwnedEntity is not { } refreshEnt)
@@ -66,7 +66,7 @@ public sealed partial class MindExamineSystem : EntitySystem
     private void OnPlayerDetached(PlayerDetachedEvent args)
     {
         // Same reason as in the subscription above.
-        if (!_mind.TryGetMind(args.Entity, out _, out var mindComp))
+        if (!_mind.TryGetMind(args.Player.UserId, out _, out var mindComp))
             return;
 
         if (mindComp.OwnedEntity is not { } refreshEnt)
