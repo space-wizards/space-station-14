@@ -40,6 +40,9 @@
     - Inorganic
     - Silicon
   - type: ShowAccessReaderSettings
+  - type: Tag
+    tags:
+    - HudDiagnostic
 
 - type: entity
   parent: [ClothingEyesHudBase, ShowMedicalIcons]

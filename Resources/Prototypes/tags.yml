@@ -546,6 +546,9 @@
   id: EncryptionService # ItemMapper: TelecomServer
 
 - type: Tag
+  id: EngiGoggles # ConstructionGraph: GlassesEngiHUD
+
+- type: Tag
   id: Enzyme # Storage whitelist: ClothingBeltChef. ItemMapper: ClothingBeltChef
 
 - type: Tag
@@ -788,6 +791,9 @@
 
 - type: Tag
   id: Hotsauce # Storage whitelist: ClothingBeltChef and FoodCartHot. ItemMapper: ClothingBeltChef and FoodCartHot
+
+- type: Tag
+  id: HudDiagnostic # ConstructionGraph: GlassesEngiHUD
 
 - type: Tag
   id: HudMedical # ConstructionGraph: HudMedSec
