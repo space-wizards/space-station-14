@@ -10,3 +10,19 @@
   - type: Tag
     tags:
     - HideContextMenu
+
+- type: entity
+  # way bigger and will be given a PVS override
+  id: EffectScreechChangelingHorrorSpawn
+  components:
+  - type: TimedDespawn
+    lifetime: 6.0
+  - type: ScreechShockWave
+    fadeTime: 5.5
+    downScale: 0.8
+    waveStrength: 2
+    waveSpeed: 15
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+    - HideContextMenu

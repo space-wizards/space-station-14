@@ -60,7 +60,9 @@ public sealed partial class RetractableItemActionSystem : EntitySystem
             return;
         }
 
-        if (_hands.IsHolding(args.Performer, ent.Comp.ActionItemUid))
+        var state = _hands.IsHolding(args.Performer, ent.Comp.ActionItemUid);
+
+        if (state)
         {
             RetractRetractableItem(args.Performer, ent.Comp.ActionItemUid.Value, ent.Owner);
         }
@@ -68,6 +70,8 @@ public sealed partial class RetractableItemActionSystem : EntitySystem
         {
             SummonRetractableItem(args.Performer, ent.Comp.ActionItemUid.Value, activeHand, ent.Owner);
         }
+
+        _actions.SetToggled((ent.Owner, null), !state);
 
         args.Handled = true;
     }
