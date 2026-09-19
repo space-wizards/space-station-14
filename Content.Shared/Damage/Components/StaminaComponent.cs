@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.Alert;
 using Content.Shared.FixedPoint;
+using Content.Shared.Jittering;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -106,71 +107,29 @@ public sealed partial class StaminaComponent : Component
     public float AnimationThreshold = 50;
 
     /// <summary>
-    /// Minimum y vector displacement for breathing at AnimationThreshold
+    /// The jitter that occurs at exactly the animation threshold.
     /// </summary>
     [DataField]
-    public float BreathingAmplitudeMin = 0.04f;
+    public JitterParameters JitterBase = new()
+    {
+        Frequency = 0.6f,
+        MinRadius = 0.02f,
+        MaxRadius = 0.025f,
+        MatrixX = new Vector2(0.75f, 0),
+        Type = JitterType.Arch, // 1 Frequency = 1 "breath"
+    };
 
     /// <summary>
-    /// Maximum y vector amount we add to the BreathingAmplitudeMin
+    /// Maximum multiplier to jitter radius (min and max).
     /// </summary>
     [DataField]
-    public float BreathingAmplitudeMod = 0.04f;
+    public float JitterRadiusScalar = 3.5f;
 
     /// <summary>
-    /// Minimum vector displacement for jittering at AnimationThreshold
+    /// Maximum amount added to the Frequency.
     /// </summary>
     [DataField]
-    public float JitterAmplitudeMin;
-
-    /// <summary>
-    /// Maximum vector amount we add to the JitterAmplitudeMin
-    /// </summary>
-    [DataField]
-    public float JitterAmplitudeMod = 0.04f;
-
-    /// <summary>
-    /// Min multipliers for JitterAmplitude in the X and Y directions, animation randomly chooses between these min and max multipliers
-    /// </summary>
-    [DataField]
-    public Vector2 JitterMin = Vector2.Create(0.5f, 0.125f);
-
-    /// <summary>
-    /// Max multipliers for JitterAmplitude in the X and Y directions, animation randomly chooses between these min and max multipliers
-    /// </summary>
-    [DataField]
-    public Vector2 JitterMax = Vector2.Create(1f, 0.25f);
-
-    /// <summary>
-    /// Minimum total animations per second
-    /// </summary>
-    [DataField]
-    public float FrequencyMin = 0.25f;
-
-    /// <summary>
-    /// Maximum amount we add to the Frequency min just before crit
-    /// </summary>
-    [DataField]
-    public float FrequencyMod = 1.75f;
-
-    /// <summary>
-    /// Jitter keyframes per animation
-    /// </summary>
-    [DataField]
-    public int Jitters = 4;
-
-    /// <summary>
-    /// Vector of the last Jitter so we can make sure we don't jitter in the same quadrant twice in a row.
-    /// </summary>
-    [DataField]
-    public Vector2 LastJitter;
-
-    /// <summary>
-    ///     The offset that an entity had before jittering started,
-    ///     so that we can reset it properly.
-    /// </summary>
-    [DataField]
-    public Vector2 StartOffset = Vector2.Zero;
+    public float JitterAddedFrequency = 2f;
 
     #endregion
 }
