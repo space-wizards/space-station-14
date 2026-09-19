@@ -102,6 +102,7 @@
         type: SurveillanceCameraSetupBoundUi
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
+  - type: IgnoreProjectilesAboveAngle
 
 - type: entity
   parent: SurveillanceCameraBase
