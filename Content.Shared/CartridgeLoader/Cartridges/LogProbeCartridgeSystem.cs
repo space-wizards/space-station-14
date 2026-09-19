@@ -20,7 +20,7 @@ public sealed partial class LogProbeCartridgeSystem : EntitySystem
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
-    [Dependency] private LabelSystem _label = default!;
+    [Dependency] private SharedLabelSystem _label = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private PaperSystem _paper = default!;
