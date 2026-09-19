@@ -54,6 +54,7 @@ flavor-base-mindful = mindful
 flavor-base-chewy = chewy
 flavor-base-trashy = trashy
 flavor-base-motivating = motivating
+flavor-base-nostalgic = nostalgic
 
 # Complex flavors. Put a flavor here when you want something that's more
 # specific.
@@ -74,6 +75,8 @@ flavor-complex-mustard = like mustard
 flavor-complex-nutriment = like nutrition
 flavor-complex-vitamin = like vitamins
 flavor-complex-protein = like protein
+flavor-complex-chemicals = like chemicals
+flavor-complex-imitation = like imitation
 
 ## Generic food taste. This should be replaced with an actual flavor profile,
 ## if you have food that looks like this.
