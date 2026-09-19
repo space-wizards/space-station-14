@@ -265,7 +265,7 @@ public abstract partial class SharedMagicSystem : EntitySystem
         var xform = Transform(ev.Performer);
         var fromCoords = xform.Coordinates;
         var toCoords = ev.Target;
-        var userVelocity = _physics.GetMapLinearVelocity(ev.Performer);
+        var userVelocity = ev.InheritVelocity ? _physics.GetMapLinearVelocity(ev.Performer) : Vector2.Zero;
 
         // If applicable, this ensures the projectile is parented to grid on spawn, instead of the map.
         var fromMap = _transform.ToMapCoordinates(fromCoords);
