@@ -284,6 +284,9 @@ namespace Content.Client.IconSmoothing
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            var ev = new IconSmoothUpdatedEvent();
+            RaiseLocalEvent(uid, ref ev);
         }
 
         private void CalculateNewSpriteDiagonal(Entity<MapGridComponent>? gridEntity, IconSmoothComponent smooth,
@@ -531,4 +534,10 @@ namespace Content.Client.IconSmoothing
             SW,
         }
     }
+
+    /// <summary>
+    /// Raised after IconSmooth has recalculated an entity's sprite state.
+    /// </summary>
+    [ByRefEvent]
+    public readonly record struct IconSmoothUpdatedEvent;
 }
