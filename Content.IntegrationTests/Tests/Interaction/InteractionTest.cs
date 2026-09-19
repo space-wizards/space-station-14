@@ -190,7 +190,7 @@ public abstract partial class InteractionTest : GameTest
 
         // Setup map.
         if (TestMapPath == null)
-            await Pair.CreateTestMap();
+            await CreateTestMap();
         else
             await Pair.LoadTestMap(TestMapPath.Value);
 

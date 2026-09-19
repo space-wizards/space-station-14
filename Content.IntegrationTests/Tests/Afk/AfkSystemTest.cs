@@ -128,7 +128,7 @@ public sealed class AfkSystemTest : GameTest
 
             HandleInputCmd.Invoke(_afkSystem, [message, new EntitySessionEventArgs(session)]);
 
-            Assert.That(_afkManager.IsAfk(session), Is.False, inputType);
+            Assert.That(_afkManager.IsAfk(session), Is.False, $"Input of type '{inputType}' did not reset AFK status");
         });
     }
 
@@ -150,11 +150,11 @@ public sealed class AfkSystemTest : GameTest
             var session = GetSession();
             _afkSystem.Update(0);
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(_afkManager.IsAfk(session), Is.True);
                 Assert.That(_afkConfirm.HasConfirmation(session), Is.False);
-            });
+            }
         });
     }
 
@@ -198,11 +198,11 @@ public sealed class AfkSystemTest : GameTest
     {
         var session = _playerManager.Sessions.Single();
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(session.Status, Is.EqualTo(SessionStatus.InGame));
             Assert.That(session.AttachedEntity, Is.Not.Null);
-        });
+        }
 
         return session;
     }
@@ -213,7 +213,7 @@ public sealed class AfkSystemTest : GameTest
             ?? typeof(ContentKeyFunctions).GetField(fieldName, BindingFlags.Public | BindingFlags.Static);
 
         Assert.That(field, Is.Not.Null);
-        return (BoundKeyFunction) field!.GetValue(null)!;
+        return (BoundKeyFunction)field!.GetValue(null)!;
     }
 
     private enum TestUiKey : byte

@@ -1,3 +1,5 @@
+#nullable enable
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory.VirtualItem;
@@ -11,10 +13,6 @@ namespace Content.IntegrationTests.Tests.Hands;
 [TestOf(typeof(WieldableComponent))]
 public abstract class BaseMultiHandedItemTest : InteractionTest
 {
-    protected SharedHandsSystem CHands = default!;
-    protected SharedHandsSystem SHands = default!;
-    protected SharedWieldableSystem SWieldable = default!;
-
     protected const string Dummy1 = "DummyOneHanded";
     protected const string Dummy2 = "DummyTwoHanded";
     protected const string Dummy3 = "DummyThreeHanded";
@@ -141,22 +139,15 @@ public abstract class BaseMultiHandedItemTest : InteractionTest
     freeHandsRequired: 2
 ";
 
-    [SetUp]
-    public override async Task Setup()
-    {
-        await base.Setup();
-
-        CHands = CEntMan.System<SharedHandsSystem>();
-        SHands = SEntMan.System<SharedHandsSystem>();
-        SWieldable = SEntMan.System<SharedWieldableSystem>();
-    }
+    [SidedDependency(Side.Client)] protected SharedHandsSystem CHands = default!;
+    [SidedDependency(Side.Server)] protected SharedHandsSystem SHands = default!;
+    [SidedDependency(Side.Server)] protected SharedWieldableSystem SWieldable = default!;
 
     protected async Task AssertHandItems(int hands, int freeHands, int items, int virtualItems)
     {
         await RunTicks(3);
         await Server.WaitAssertion(() =>
         {
-
             var itemCount = 0;
             var virtualItemCount = 0;
 
@@ -167,13 +158,13 @@ public abstract class BaseMultiHandedItemTest : InteractionTest
                     virtualItemCount++;
             }
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(SHands.GetHandCount(SPlayer), Is.EqualTo(hands));
                 Assert.That(SHands.CountFreeHands(SPlayer), Is.EqualTo(freeHands));
                 Assert.That(itemCount, Is.EqualTo(items));
                 Assert.That(virtualItemCount, Is.EqualTo(virtualItems));
-            });
+            }
         });
         await Client.WaitAssertion(() =>
         {
@@ -187,13 +178,13 @@ public abstract class BaseMultiHandedItemTest : InteractionTest
                     virtualItemCount++;
             }
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(CHands.GetHandCount(CPlayer), Is.EqualTo(hands));
                 Assert.That(CHands.CountFreeHands(CPlayer), Is.EqualTo(freeHands));
                 Assert.That(itemCount, Is.EqualTo(items));
                 Assert.That(virtualItemCount, Is.EqualTo(virtualItems));
-            });
+            }
         });
     }
 }

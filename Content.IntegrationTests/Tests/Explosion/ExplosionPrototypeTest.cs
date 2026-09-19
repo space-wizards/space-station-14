@@ -1,3 +1,4 @@
+#nullable enable
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Utility;
 using Content.Shared.Explosion;
@@ -6,19 +7,15 @@ namespace Content.IntegrationTests.Tests.Explosion;
 
 public sealed class ExplosionPrototypeTest : GameTest
 {
-    private static string[] _explosionKinds = GameDataScrounger.PrototypesOfKind<ExplosionPrototype>();
+    private static readonly string[] ExplosionKinds = GameDataScrounger.PrototypesOfKind<ExplosionPrototype>();
 
     [Test]
     [TestOf(typeof(ExplosionPrototype))]
-    [TestCaseSource(nameof(_explosionKinds))]
-    [Description("Ensures various properties of ExplosionPrototype are correctly configured.")]
+    [TestCaseSource(nameof(ExplosionKinds))]
+    [Description($"Ensures various properties of {nameof(ExplosionPrototype)} are correctly configured.")]
     public async Task Validate(string protoKey)
     {
-        var pair = Pair;
-        var server = pair.Server;
-        var protoMan = server.ProtoMan;
-
-        var proto = protoMan.Index<ExplosionPrototype>(protoKey);
+        var proto = SProtoMan.Index<ExplosionPrototype>(protoKey);
 
         using (Assert.EnterMultipleScope())
         {
