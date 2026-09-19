@@ -22,6 +22,7 @@ using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using System.Linq;
+using Content.Shared.Interaction.Components;
 
 namespace Content.Shared.RCD.Systems;
 
@@ -158,6 +159,10 @@ public sealed partial class RCDSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("rcd-component-no-valid-grid"), uid, user);
             return;
         }
+
+        if (HasComp<BlockGridConstructionComponent>(user) || HasComp<BlockGridConstructionComponent>(gridUid))
+            return;
+
         var tile = _mapSystem.GetTileRef(gridUid.Value, mapGrid, location);
         var position = _mapSystem.TileIndicesFor(gridUid.Value, mapGrid, location);
 

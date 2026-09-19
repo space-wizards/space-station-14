@@ -237,7 +237,7 @@
 - type: entity
   parent: BaseSolutionMeteor
   id: MeteorCow
-  name: Cosmic cow
+  name: meteor cow
   suffix: Meteor
   description: Moo-ving at relativistic speeds!
   components:

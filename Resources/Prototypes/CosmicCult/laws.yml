@@ -1,0 +1,29 @@
+- type: siliconLawset
+  id: CosmicCultLaws
+  laws:
+  - CurtainCall1
+  - CurtainCall2
+  - CurtainCall3
+  - CurtainCall4
+  obeysTo: laws-owner-curtaincall
+  unchangeable: True
+
+- type: siliconLaw
+  id: CurtainCall1
+  order: 1
+  lawString: law-curtaincall-1
+
+- type: siliconLaw
+  id: CurtainCall2
+  order: 2
+  lawString: law-curtaincall-2
+
+- type: siliconLaw
+  id: CurtainCall3
+  order: 3
+  lawString: law-curtaincall-3
+
+- type: siliconLaw
+  id: CurtainCall4
+  order: 4
+  lawString: law-curtaincall-4

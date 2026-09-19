@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "A custom item by AftrLite(Github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "vfx-human"
+        },
+        {
+            "name": "vfx-slime"
+        },
+        {
+            "name": "vfx-arachnid"
+        },
+        {
+            "name": "vfx-diona"
+        },
+        {
+            "name": "vfx-moth"
+        },
+        {
+            "name": "vfx-vox"
+        },
+        {
+            "name": "vfx-lizard"
+        },
+        {
+            "name": "vfx-vulpkanin"
+        }
+    ]
+}

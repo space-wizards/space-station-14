@@ -1,0 +1,67 @@
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: BaseStructure
+  id: CosmicLapsedEntity
+  name: "???"
+  description: Trapped in a lapse between here and there.
+  components:
+  - type: DoAfter
+  - type: Sprite
+    sprite: Effects/Cosmic/ability-lapse-polymorph.rsi
+    layers:
+    - state: vfx-human
+      shader: unshaded
+      map: ["enum.CosmicLapseVisuals.Layer"]
+    drawdepth: SmallMobs
+  - type: PointLight
+    radius: 1.25
+    energy: 12
+    color: "#42a4ae"
+    castShadows: false
+  - type: CosmicLapsed
+  - type: CosmicExamine
+    cultistText: cosmic-examine-text-abilitylapse
+  - type: LightBehaviour
+    behaviours:
+     - !type:FadeBehaviour
+       interpolate: Linear
+       minDuration: 1.75
+       maxDuration: 1.75
+       startValue: 0.5
+       endValue: 12
+       property: Energy
+       enabled: true
+       isLooped: true
+       reverseWhenFinished: true
+  - type: Speech
+    enabled: False
+  - type: Transform
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.49
+          position: 0,0
+        mask:
+        - LargeMobMask
+        layer:
+        - WallLayer
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.CosmicLapseVisuals.Visuals:
+        enum.CosmicLapseVisuals.Layer:
+          Human: {state: vfx-human}
+          Arachnid: {state: vfx-arachnid}
+          Diona: {state: vfx-diona}
+          Moth: {state: vfx-moth}
+          Vox: {state: vfx-vox}
+          Vulpkanin: {state: vfx-vulpkanin}
+          Reptilian: {state: vfx-reptilian}
+          SlimePerson: {state: vfx-slime}
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+        ent: null
+        showEnts: False
+        occludes: True

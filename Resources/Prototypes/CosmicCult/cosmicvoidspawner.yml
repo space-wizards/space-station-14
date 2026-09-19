@@ -1,0 +1,13 @@
+- type: entity
+  id: CosmicVoidspawner
+  parent: MarkerBase
+  name: wisp spawn point
+  categories: [ ForkFiltered ]
+  components:
+    - type: Sprite
+      sprite: Markers/cross.rsi
+      layers:
+        - state: red
+        - sprite: Mobs/Species/Human/parts.rsi
+          state: full
+    - type: CosmicVoidSpawn

@@ -22,6 +22,12 @@ public sealed partial class SiliconLawset
     public string ObeysTo = string.Empty;
 
     /// <summary>
+    /// If True, a silicon cannot have its laws changed once it has this lawset.
+    /// </summary>
+    [DataField]
+    public bool Unchangeable = false;
+
+    /// <summary>
     /// A single line used in logging laws.
     /// </summary>
     public string LoggingString()
@@ -68,7 +74,7 @@ public sealed partial class SiliconLawsetPrototype : IPrototype
 
     /// <summary>
     /// The locstring of the lawset for the guidebook entry, if no name is provided, defaults to the ID
-    /// </summary>    
+    /// </summary>
     [DataField]
     public LocId? Name = null;
 
@@ -83,4 +89,10 @@ public sealed partial class SiliconLawsetPrototype : IPrototype
     /// </summary>
     [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
     public string ObeysTo = string.Empty;
+
+    /// <summary>
+    /// If True, a silicon cannot have its laws changed once it has this lawset.
+    /// </summary>
+    [DataField]
+    public bool Unchangeable = false;
 }

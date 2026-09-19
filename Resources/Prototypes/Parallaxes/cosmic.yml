@@ -1,0 +1,54 @@
+- type: parallax
+  id: ParallaxMalignAlt
+  layers:
+  - texture:
+      !type:ImageParallaxTextureSource
+      path: "/Textures/Parallaxes/Malign/BG-Dark.png"
+    slowness: 1
+
+  - texture:
+      !type:ImageParallaxTextureSource
+      path: "/Textures/Parallaxes/Malign/Void.png"
+    slowness: 0.9995
+    worldAdjustPosition: 0.4, 0.8
+
+  - texture:
+      !type:ImageParallaxTextureSource
+      path: "/Textures/Parallaxes/Malign/Malign-Wisps.png"
+    slowness: 0.9
+    scrolling: -0.01, 0.01
+
+  layersLQ:
+  - texture:
+      !type:GeneratedParallaxTextureSource
+      id: ""
+      configPath: "/Prototypes/Parallaxes/parallax_config.toml"
+  layersLQUseHQ: false
+
+- type: parallax
+  id: ParallaxMalignAlt2
+  layers:
+  - texture:
+      !type:ImageParallaxTextureSource
+      path: "/Textures/Parallaxes/Malign/BG-Dark.png"
+    slowness: 1
+
+  - texture:
+      !type:ImageParallaxTextureSource
+      path: "/Textures/Parallaxes/Malign/Void.png"
+    slowness: 0.9995
+    scale: 2, 2
+    worldAdjustPosition: 0.4, 0.8
+
+  - texture:
+      !type:ImageParallaxTextureSource
+      path: "/Textures/Parallaxes/Malign/Malign-Wisps.png"
+    slowness: 0.9
+    scrolling: -0.01, 0.01
+
+  layersLQ:
+  - texture:
+      !type:GeneratedParallaxTextureSource
+      id: ""
+      configPath: "/Prototypes/Parallaxes/parallax_config.toml"
+  layersLQUseHQ: false

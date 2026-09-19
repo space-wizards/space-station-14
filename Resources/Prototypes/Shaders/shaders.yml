@@ -110,6 +110,11 @@
   kind: source
   path: "/Textures/Shaders/hcut.swsl"
 
+- type: shader
+  id: HorizontalCutAnimated
+  kind: source
+  path: "/Textures/Shaders/hcut-animated.swsl"
+
 # Stylized simulation of blindness
 - type: shader
   id: Cataracts
