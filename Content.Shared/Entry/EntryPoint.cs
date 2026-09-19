@@ -22,6 +22,7 @@ namespace Content.Shared.Entry
 #endif
 
         private readonly ResPath _ignoreFileDirectory = new("/IgnoredPrototypes/");
+        private readonly ResPath _partialFileDirectory = new("/PartialPrototypes/");
 
         public override void PreInit()
         {
@@ -31,6 +32,7 @@ namespace Content.Shared.Entry
         public override void Init()
         {
             IgnorePrototypes();
+            PartialPrototypes();
         }
 
         public override void PostInit()
@@ -48,32 +50,30 @@ namespace Content.Shared.Entry
 
         private void IgnorePrototypes()
         {
-            if (!TryReadFile(out var sequences))
-                return;
-
-            foreach (var sequence in sequences)
+            foreach (var path in TryReadFilesPaths(_ignoreFileDirectory))
             {
-                foreach (var node in sequence.Sequence)
-                {
-                    var path = new ResPath(((ValueDataNode) node).Value);
-
-                    if (string.IsNullOrEmpty(path.Extension))
-                    {
-                        _prototypeManager.AbstractDirectory(path);
-                    }
-                    else
-                    {
-                        _prototypeManager.AbstractFile(path);
-                    }
-                }
+                if (string.IsNullOrEmpty(path.Extension))
+                    _prototypeManager.AbstractDirectory(path);
+                else
+                    _prototypeManager.AbstractFile(path);
             }
         }
 
-        private bool TryReadFile([NotNullWhen(true)] out List<SequenceDataNode>? sequence)
+        private void PartialPrototypes()
         {
-            sequence = new();
+            var i = 0;
+            foreach (var path in TryReadFilesPaths(_partialFileDirectory))
+            {
+                if (string.IsNullOrEmpty(path.Extension))
+                    _prototypeManager.PartialDirectory(path, i++);
+                else
+                    _prototypeManager.PartialFile(path, i++);
+            }
+        }
 
-            foreach (var path in _resMan.ContentFindFiles(_ignoreFileDirectory))
+        private IEnumerable<ResPath> TryReadFilesPaths(ResPath directory)
+        {
+            foreach (var path in _resMan.ContentFindFiles(directory).OrderBy(p => p.CanonPath))
             {
                 if (!_resMan.TryContentFileRead(path, out var stream))
                     continue;
@@ -84,9 +84,12 @@ namespace Content.Shared.Entry
                 if (documents == null)
                     continue;
 
-                sequence.Add((SequenceDataNode) documents.Root);
+                var sequence = (SequenceDataNode) documents.Root;
+                foreach (var node in sequence.Sequence)
+                {
+                    yield return new ResPath(((ValueDataNode) node).Value);
+                }
             }
-            return true;
         }
     }
 }
