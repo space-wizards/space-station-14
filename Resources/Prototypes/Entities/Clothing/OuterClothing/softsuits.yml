@@ -49,7 +49,9 @@
     walkModifier: 0.7
     sprintModifier: 0.7
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetEVALarge
+    clothingPrototypes:
+      head:
+      - ClothingHeadHelmetEVALarge
   - type: Tag
     tags:
     - CorgiWearable
@@ -121,7 +123,9 @@
   - type: StealTarget
     stealGroup: ClothingOuterHardsuitVoidParamed
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetVoidParamed
+    clothingPrototypes: 
+      head:
+      - ClothingHeadHelmetVoidParamed
   - type: ItemToggleExaminableStatus
   - type: ItemToggle
     onUse: false
