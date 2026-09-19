@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Access.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
@@ -192,7 +192,8 @@ public sealed partial class VehicleSystem : EntitySystem
         if (entity.Comp.Operator is not { } currentOperator)
             return false;
 
-        ClearEyeTarget(currentOperator);
+        _eye.SetTarget(currentOperator, null);
+
         if (_operatorQuery.TryComp(currentOperator, out var currentOperatorComponent))
         {
             var exitEvent = new OnVehicleExitedEvent(entity, currentOperator);
@@ -255,18 +256,12 @@ public sealed partial class VehicleSystem : EntitySystem
         if (_vehicleQuery.TryComp(vehicleUid, out var vehicle))
             return TryRemoveOperator((vehicleUid.Value, vehicle));
 
-        ClearEyeTarget(operatorEntity.Owner);
+        _eye.SetTarget(operatorEntity.Owner, null);
         UnblockHands(vehicleUid.Value, operatorEntity.Owner);
         ClearOperatorRelays(operatorEntity.Owner, vehicleUid.Value);
         operatorEntity.Comp.Vehicle = null;
         RemCompDeferred<VehicleOperatorComponent>(operatorEntity.Owner);
         return true;
-    }
-
-    private void ClearEyeTarget(EntityUid operatorUid)
-    {
-        if (TryComp<EyeComponent>(operatorUid, out var eye))
-            _eye.SetTarget(operatorUid, null, eye);
     }
 
     /// <summary>
