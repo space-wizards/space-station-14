@@ -214,6 +214,8 @@
     graph: DisposalMachine
     node: mailing_unit
   - type: DisposalUnit
+    soundExit:
+      collection: MailReceive
     flushingState: mailing-flush
     whitelist:
       components:
