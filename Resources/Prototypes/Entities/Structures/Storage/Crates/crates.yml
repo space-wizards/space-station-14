@@ -152,8 +152,7 @@
       map: ["enum.StorageVisualLayers.Base"]
     - state: closed
       map: ["enum.StorageVisualLayers.Door"]
-    - state: paper
-      sprite: Structures/Storage/Crates/labels.rsi
+    - sprite: Structures/Storage/Crates/labels.rsi
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: Construction
     graph: WebStructures
@@ -351,8 +350,7 @@
     - state: base
     - state: closed
       map: ["enum.StorageVisualLayers.Door"]
-    - state: paper
-      sprite: Structures/Storage/Crates/labels.rsi
+    - sprite: Structures/Storage/Crates/labels.rsi
       offset: "-0.25,0.625"
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: Icon
@@ -408,8 +406,7 @@
     - state: base
     - state: closed
       map: ["enum.StorageVisualLayers.Door"]
-    - state: paper
-      sprite: Structures/Storage/Crates/labels.rsi
+    - sprite: Structures/Storage/Crates/labels.rsi
       offset: "0.0,0.125"
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: Icon
@@ -461,16 +458,6 @@
     sprite: Structures/Storage/Crates/lockbox.rsi
   - type: GenericVisualizer
     visuals:
-      enum.PaperLabelVisuals.HasLabel:
-        enum.PaperLabelVisuals.Layer:
-          True: { visible: true }
-          False: { visible: false }
-      enum.PaperLabelVisuals.LabelType:
-        enum.PaperLabelVisuals.Layer:
-          Paper: { state: paper }
-          Bounty: { state: bounty }
-          CaptainsPaper: { state: captains_paper }
-          Invoice: { state: invoice }
       enum.StorageVisuals.Open:
         lid_overlay:
           True: { visible: false }
@@ -511,8 +498,7 @@
     - state: locked
       map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
-    - state: paper
-      sprite: Structures/Storage/Crates/labels.rsi
+    - sprite: Structures/Storage/Crates/labels.rsi
       offset: "-0.46875,0.03125"
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: OverrideSell
@@ -541,8 +527,7 @@
     - state: locked
       map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
-    - state: paper
-      sprite: Structures/Storage/Crates/labels.rsi
+    - sprite: Structures/Storage/Crates/labels.rsi
       offset: "-0.46875,0.03125"
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: OverrideSell
@@ -571,8 +556,7 @@
     - state: locked
       map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
-    - state: paper
-      sprite: Structures/Storage/Crates/labels.rsi
+    - sprite: Structures/Storage/Crates/labels.rsi
       offset: "-0.46875,0.03125"
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: OverrideSell
@@ -601,8 +585,7 @@
     - state: locked
       map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
-    - state: paper
-      sprite: Structures/Storage/Crates/labels.rsi
+    - sprite: Structures/Storage/Crates/labels.rsi
       offset: "-0.46875,0.03125"
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: OverrideSell
@@ -631,8 +614,7 @@
     - state: locked
       map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
-    - state: paper
-      sprite: Structures/Storage/Crates/labels.rsi
+    - sprite: Structures/Storage/Crates/labels.rsi
       offset: "-0.46875,0.03125"
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: OverrideSell
@@ -656,8 +638,7 @@
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
-    - state: paper
-      sprite: Structures/Storage/Crates/labels.rsi
+    - sprite: Structures/Storage/Crates/labels.rsi
       offset: "0.0,-0.09375"
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: Icon
@@ -685,8 +666,7 @@
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
-    - state: paper
-      map: ["enum.PaperLabelVisuals.Layer"]
+    - map: ["enum.PaperLabelVisuals.Layer"]
   - type: Icon
     sprite: Structures/Storage/Crates/toybox.rsi
     state: crate_icon
@@ -703,8 +683,7 @@
     - state: base
     - state: closed
       map: ["enum.StorageVisualLayers.Door"]
-    - state: paper
-      map: ["enum.PaperLabelVisuals.Layer"]
+    - map: ["enum.PaperLabelVisuals.Layer"]
   - type: Icon
     sprite: Structures/Storage/Crates/coffin.rsi
     state: base
@@ -729,6 +708,12 @@
     node: cratecoffin
     containers:
     - entity_storage
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        enum.PaperLabelVisuals.Layer:
+          True: { visible: false }
+          False: { visible: true }
 
 - type: entity
   parent: [ BaseCrate, StructureHealthContainer ]
@@ -743,8 +728,7 @@
     - state: base
     - state: closed
       map: ["enum.StorageVisualLayers.Door"]
-    - state: paper
-      sprite: Structures/Storage/Crates/labels.rsi
+    - sprite: Structures/Storage/Crates/labels.rsi
       offset: "-0.28125,0.625"
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: Icon
@@ -791,8 +775,7 @@
     - state: base
     - state: closed
       map: ["enum.StorageVisualLayers.Door"]
-    - state: paper
-      sprite: Structures/Storage/Crates/labels.rsi
+    - sprite: Structures/Storage/Crates/labels.rsi
       offset: "-0.3125,0.5625"
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: Icon
@@ -826,8 +809,7 @@
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
-    - state: paper
-      sprite: Structures/Storage/Crates/labels.rsi
+    - sprite: Structures/Storage/Crates/labels.rsi
       offset: "0.0,0.03125"
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: Paintable
@@ -852,8 +834,7 @@
     - state: locked
       map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
-    - state: paper
-      sprite: Structures/Storage/Crates/labels.rsi
+    - sprite: Structures/Storage/Crates/labels.rsi
       offset: "0.0,0.03125"
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: AccessReader
