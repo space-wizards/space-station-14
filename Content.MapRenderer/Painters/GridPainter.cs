@@ -6,6 +6,7 @@ using System.Numerics;
 using System.Runtime.InteropServices;
 using Content.Shared.Decals;
 using Robust.Client.GameObjects;
+using Robust.Server.GameStates;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -24,6 +25,8 @@ namespace Content.MapRenderer.Painters
         private readonly IEntityManager _cEntityManager;
 
         private readonly IEntityManager _sEntityManager;
+        private readonly ServerChunkEntitySystem _chunkEntities;
+        private readonly EntityQuery<DecalChunkComponent> _decalChunkQuery;
 
         private readonly ConcurrentDictionary<EntityUid, List<EntityData>> _entities;
         private readonly Dictionary<EntityUid, List<DecalData>> _decals;
@@ -36,6 +39,8 @@ namespace Content.MapRenderer.Painters
             _cEntityManager = client.ResolveDependency<IEntityManager>();
 
             _sEntityManager = server.ResolveDependency<IEntityManager>();
+            _chunkEntities = server.System<ServerChunkEntitySystem>();
+            _decalChunkQuery = _sEntityManager.GetEntityQuery<DecalChunkComponent>();
 
             _entities = GetEntities();
             _decals = GetDecals();
@@ -113,7 +118,29 @@ namespace Content.MapRenderer.Painters
                 // actually has the correct z-indices for decals for some reason when the server doesn't,
                 // BUT can't do that yet because the client hasn't actually received everything yet
                 // for some reason decal moment i guess.
-                if (_sEntityManager.TryGetComponent<DecalGridComponent>(uid, out var comp))
+                var foundChunkDecals = false;
+
+                foreach (var chunk in _chunkEntities.GetChunks(uid))
+                {
+                    if (!_decalChunkQuery.TryComp(chunk.Owner, out var decalChunk) ||
+                        decalChunk.Decals.Count == 0)
+                    {
+                        continue;
+                    }
+
+                    foundChunkDecals = true;
+
+                    foreach (var decal in decalChunk.Decals.Values)
+                    {
+                        var (x, y) = TransformLocalPosition(decal.Coordinates, grid);
+                        decals.GetOrNew(uid).Add(new DecalData(decal, x, y));
+                    }
+                }
+
+                // Legacy load-only fallback for maps that have not been migrated into chunk entities yet.
+#pragma warning disable CS0618 // DecalGridComponent fallback is intentional for pre-migration data.
+                if (!foundChunkDecals &&
+                    _sEntityManager.TryGetComponent<DecalGridComponent>(uid, out var comp))
                 {
                     foreach (var chunk in comp.ChunkCollection.ChunkCollection.Values)
                     {
@@ -124,6 +151,7 @@ namespace Content.MapRenderer.Painters
                         }
                     }
                 }
+#pragma warning restore CS0618
             }
 
             Console.WriteLine($"Found {decals.Values.Sum(l => l.Count)} decals on {decals.Count} grids in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
