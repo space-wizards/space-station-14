@@ -141,7 +141,7 @@ public sealed partial class NPCSteeringSystem
                     foreach (var ent in obstacleEnts)
                     {
                         if (_climbableQuery.TryGetComponent(ent, out var table) &&
-                            _climb.CanVault(table, uid, uid, out _) &&
+                            _climb.CanVault(table, uid, ent, out _) &&
                             _climb.TryClimb(uid, uid, ent, out id, table, climbing))
                         {
                             component.DoAfterId = id;
