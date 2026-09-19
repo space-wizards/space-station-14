@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.Shared.Lathe;
+using Content.Shared.Lathe.Components;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
@@ -55,7 +56,7 @@ public sealed class ResearchTest : GameTest
         var protoManager = server.ResolveDependency<IPrototypeManager>();
         var compFact = server.ResolveDependency<IComponentFactory>();
 
-        var latheSys = entMan.System<SharedLatheSystem>();
+        var latheSys = entMan.System<LatheSystem>();
 
         await server.WaitAssertion(() =>
         {

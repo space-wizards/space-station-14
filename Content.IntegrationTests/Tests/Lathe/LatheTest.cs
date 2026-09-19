@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.Shared.Lathe;
+using Content.Shared.Lathe.Components;
 using Content.Shared.Materials;
 using Content.Shared.Prototypes;
 using Content.Shared.Research.Prototypes;
@@ -27,7 +28,7 @@ public sealed class LatheTest : GameTest
         var compFactory = server.ResolveDependency<IComponentFactory>();
         var materialStorageSystem = server.System<SharedMaterialStorageSystem>();
         var whitelistSystem = server.System<EntityWhitelistSystem>();
-        var latheSystem = server.System<SharedLatheSystem>();
+        var latheSystem = server.System<LatheSystem>();
 
         await server.WaitAssertion(() =>
         {
