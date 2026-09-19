@@ -34,8 +34,6 @@
     baseWalkSpeed: 0.25
     baseSprintSpeed: 0.5
   - type: UseDelay
-  - type: StealTarget
-    stealGroup: XenoArtifact
   - type: ContainerContainer
     containers:
       node-container: !type:Container
