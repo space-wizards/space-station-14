@@ -106,6 +106,7 @@ public abstract partial class SharedBuckleSystem
         {
             TryBuckle(args.User, args.User, uid, buckle, popup: true);
             args.Handled = true;
+            args.InteractionParticle = false;
             return;
         }
 
@@ -113,6 +114,7 @@ public abstract partial class SharedBuckleSystem
         if (buckle.BuckledTo == uid && TryUnbuckle(args.User, args.User, buckle, popup: true))
         {
             args.Handled = true;
+            args.InteractionParticle = false;
             return;
         }
 
@@ -120,6 +122,7 @@ public abstract partial class SharedBuckleSystem
         if (component.BuckledEntities.TryFirstOrNull(out var buckled) && TryUnbuckle(buckled.Value, args.User))
         {
             args.Handled = true;
+            args.InteractionParticle = false;
             return;
         }
 
@@ -132,7 +135,11 @@ public abstract partial class SharedBuckleSystem
             return;
 
         if (ent.Comp.BuckledTo != null)
+        {
             args.Handled = TryUnbuckle(ent!, args.User, popup: true);
+            if (args.Handled)
+                args.InteractionParticle = false;
+        }
 
         // TODO BUCKLE add out bool for whether a pop-up was generated or not.
     }

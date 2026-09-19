@@ -18,6 +18,11 @@ public sealed class InteractHandEvent : HandledEntityEventArgs
     /// </summary>
     public EntityUid Target { get; }
 
+    /// <summary>
+    ///     Set to false if this interaction shouldn't have an interaction particle
+    /// </summary>
+    public bool InteractionParticle = true;
+
     public InteractHandEvent(EntityUid user, EntityUid target)
     {
         User = user;
