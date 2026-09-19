@@ -80,9 +80,13 @@
     messageSet: SpookySpeakerMessagesGeneric
     speakChance: 0.2
   - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Service
   - type: ActiveRadio
     channels:
     - Common
+    - Service
   - type: DoAfter
   - type: Electrified
     enabled: false
