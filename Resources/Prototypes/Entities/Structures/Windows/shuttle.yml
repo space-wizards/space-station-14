@@ -69,6 +69,9 @@
   - type: Icon
     sprite: Structures/Windows/window-diagonal-shuttle.rsi
     state: state0
+  - type: Construction
+    graph: WindowDiagonal
+    node: shuttleWindowDiagonal
   - type: Fixtures
     fixtures:
       fix1:
