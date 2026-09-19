@@ -478,3 +478,67 @@
   - type: Tag
     tags:
     - FakeMindShieldChangeling # used to distinguish the changeling's toggle mindshield action from the implant's
+
+- type: entity
+  parent: BaseDoAfterAction
+  id: ActionChangelingFleshtomb
+  name: Fleshtomb
+  description: "Preserve a body in a fragile cocoon made of flesh, which slowly harvests their life for DNA. \n\nRequires 50 Chemicals."
+  components:
+  - type: Action
+    useDelay: 50
+    raiseOnAction: true
+    itemIconStyle: BigAction
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: blind_sting
+  - type: TargetAction
+    interactOnMiss: false
+  - type: ActionRequirements
+    failPopup: changeling-action-fail-generic # Currently no way to tell which condition failed
+    failPopupType: SmallCaution
+    conditions:
+      Performer:
+      - !type:SatiationCondition
+        satiationType: Chemicals
+        min: 50
+      Target:
+      - !type:MobStateCondition
+        mobstate: Dead
+    effects:
+      Performer:
+      - !type:Satiate
+        satiationType: Chemicals
+        factor: -50
+  - type: PopupOnAction
+    popupType: MediumCaution
+    selfMessage: changeling-cocoon-success
+  - type: DoAfterArgs
+    examineText: changeling-cocoon-doafter
+    delay: 10
+    breakOnMove: true
+    breakOnDamage: true
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - HumanoidProfile
+      - MobState
+    blacklist:
+      components:
+      - RandomHumanoidAppearance # Hungry... For... Salvage corpses... grrrr...
+    event: !type:EntityEffectActionEvent
+  - type: EntityEffectAction
+    effects:
+    - !type:TrapInContainer
+      conditions:
+      - !type:MobStateCondition
+        mobstate: Dead
+      entity: ChangelingFleshCocoon
+      container: storage
+    - !type:PlaySound
+      conditions:
+      - !type:MobStateCondition
+        mobstate: Dead
+      sound:
+        collection: gib
