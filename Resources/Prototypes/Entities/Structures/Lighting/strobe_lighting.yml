@@ -90,6 +90,7 @@
   - type: PoweredLight
     bulb: Bulb
     on: false
+  - type: AntiFlickerPoweredLight
   - type: SpookyPoweredLight
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
