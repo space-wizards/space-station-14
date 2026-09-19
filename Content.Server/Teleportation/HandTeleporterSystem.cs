@@ -7,6 +7,8 @@ using Content.Shared.Popups;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;
 using Robust.Server.Audio;
+using Robust.Server.GameObjects;
+using Robust.Shared.Map;
 
 namespace Content.Server.Teleportation;
 
@@ -20,6 +22,8 @@ public sealed partial class HandTeleporterSystem : EntitySystem
     [Dependency] private AudioSystem _audio = default!;
     [Dependency] private SharedDoAfterSystem _doafter = default!;
     [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private SharedPortalSystem _portal = default!;
+    [Dependency] private SharedMapSystem _map = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -27,6 +31,36 @@ public sealed partial class HandTeleporterSystem : EntitySystem
         SubscribeLocalEvent<HandTeleporterComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<HandTeleporterComponent, TeleporterDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<GridSplitEvent>(OnGridSplit);
+        // Find supported portals before tile removal clears the grid's anchored entities.
+        SubscribeLocalEvent<TileChangedEvent>(OnTileChanged, before: new[] { typeof(TransformSystem) });
+    }
+
+    private void OnTileChanged(ref TileChangedEvent args)
+    {
+        foreach (var change in args.Changes)
+        {
+            if (change.NewTile != Tile.Empty)
+                continue;
+
+            var anchored = _map.GetAnchoredEntities(args.Entity, args.Entity.Comp, change.GridIndices);
+            while (anchored.MoveNext(out var portal))
+            {
+                if (!TryComp<HandTeleporterPortalComponent>(portal, out var portalComponent))
+                    continue;
+
+                if (EntityManager.IsQueuedForDeletion(portal.Value))
+                    continue;
+
+                if (!TryComp<HandTeleporterComponent>(portalComponent.Teleporter, out var teleporter))
+                {
+                    // LinkedEntitySystem also removes the paired exit, even without the device.
+                    QueueDel(portal.Value);
+                    continue;
+                }
+
+                FizzlePortals((portalComponent.Teleporter, teleporter), null, false);
+            }
+        }
     }
 
     private void OnGridSplit(ref GridSplitEvent args)
@@ -40,7 +74,10 @@ public sealed partial class HandTeleporterSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, HandTeleporterComponent component, DoAfterEvent args)
     {
-        if (args.Cancelled || args.Handled)
+        if (args.Cancelled)
+            return;
+
+        if (args.Handled)
             return;
 
         HandlePortalUpdating(uid, component, args.Args.User);
@@ -65,23 +102,23 @@ public sealed partial class HandTeleporterSystem : EntitySystem
         {
             // handle removing portals immediately as opposed to a doafter
             HandlePortalUpdating(uid, component, args.User);
+            args.Handled = true;
+            return;
         }
-        else
+
+        var xform = Transform(args.User);
+        if (xform.ParentUid != xform.GridUid)
+            return;
+
+        var doafterArgs = new DoAfterArgs(EntityManager, args.User, component.PortalCreationDelay, new TeleporterDoAfterEvent(), uid, used: uid)
         {
-            var xform = Transform(args.User);
-            if (xform.ParentUid != xform.GridUid)
-                return;
+            BreakOnDamage = true,
+            BreakOnMove = true,
+            MovementThreshold = 0.5f,
+            NeedHand = true,
+        };
 
-            var doafterArgs = new DoAfterArgs(EntityManager, args.User, component.PortalCreationDelay, new TeleporterDoAfterEvent(), uid, used: uid)
-            {
-                BreakOnDamage = true,
-                BreakOnMove = true,
-                MovementThreshold = 0.5f,
-            };
-
-            _doafter.TryStartDoAfter(doafterArgs);
-        }
-
+        _doafter.TryStartDoAfter(doafterArgs);
         args.Handled = true;
     }
 
@@ -92,7 +129,10 @@ public sealed partial class HandTeleporterSystem : EntitySystem
     private void CheckPortals(Entity<HandTeleporterComponent> entity)
     {
         // no need to check nothing if there aren't 2 portals
-        if (Deleted(entity.Comp.FirstPortal) || Deleted(entity.Comp.SecondPortal))
+        if (Deleted(entity.Comp.FirstPortal))
+            return;
+
+        if (Deleted(entity.Comp.SecondPortal))
             return;
 
         var portal1Xform = Transform(entity.Comp.FirstPortal!.Value);
@@ -101,7 +141,13 @@ public sealed partial class HandTeleporterSystem : EntitySystem
         var sameGrid = portal1Xform.GridUid == portal2Xform.GridUid;
         var sameMap = portal1Xform.MapID == portal2Xform.MapID;
 
-        if (!sameGrid && !entity.Comp.AllowPortalsOnDifferentGrids || !sameMap && !entity.Comp.AllowPortalsOnDifferentMaps)
+        if (!sameGrid && !entity.Comp.AllowPortalsOnDifferentGrids)
+        {
+            FizzlePortals(entity, null, false);
+            return;
+        }
+
+        if (!sameMap && !entity.Comp.AllowPortalsOnDifferentMaps)
             FizzlePortals(entity, null, false);
     }
 
@@ -115,52 +161,68 @@ public sealed partial class HandTeleporterSystem : EntitySystem
 
         var xform = Transform(user);
 
-        // Create the first portal.
         if (Deleted(component.FirstPortal) && Deleted(component.SecondPortal))
         {
-            // don't portal
-            if (xform.ParentUid != xform.GridUid)
-                return;
-
-            var timeout = EnsureComp<PortalTimeoutComponent>(user);
-            timeout.EnteredPortal = null;
-            component.FirstPortal = Spawn(component.FirstPortalPrototype, Transform(user).Coordinates);
-            Dirty(uid, component);
-
-            if (component.AllowPortalsOnDifferentMaps && TryComp<PortalComponent>(component.FirstPortal, out var portal))
-                portal.CanTeleportToOtherMaps = true;
-
-            _adminLogger.Add(LogType.EntitySpawn, LogImpact.High, $"{ToPrettyString(user):player} opened {ToPrettyString(component.FirstPortal.Value)} at {Transform(component.FirstPortal.Value).Coordinates} using {ToPrettyString(uid)}");
-            _audio.PlayPvs(component.NewPortalSound, uid);
+            CreateFirstPortal(uid, component, user, xform);
+            return;
         }
-        else if (Deleted(component.SecondPortal))
+
+        if (Deleted(component.SecondPortal))
         {
-            if (xform.ParentUid != xform.GridUid) // Still, don't portal.
-                return;
-
-            if (!component.AllowPortalsOnDifferentGrids && xform.ParentUid != Transform(component.FirstPortal!.Value).ParentUid)
-            {
-                // Whoops. Fizzle time. Crime time too because yippee I'm not refactoring this logic right now (I started to, I'm not going to.)
-                FizzlePortals((uid, component), user, true);
-                return;
-            }
-
-            var timeout = EnsureComp<PortalTimeoutComponent>(user);
-            timeout.EnteredPortal = null;
-            component.SecondPortal = Spawn(component.SecondPortalPrototype, Transform(user).Coordinates);
-            Dirty(uid, component);
-
-            if (component.AllowPortalsOnDifferentMaps && TryComp<PortalComponent>(component.SecondPortal, out var portal))
-                portal.CanTeleportToOtherMaps = true;
-
-            _adminLogger.Add(LogType.EntitySpawn, LogImpact.High, $"{ToPrettyString(user):player} opened {ToPrettyString(component.SecondPortal.Value)} at {Transform(component.SecondPortal.Value).Coordinates} linked to {ToPrettyString(component.FirstPortal!.Value)} using {ToPrettyString(uid)}");
-            _link.TryLink(component.FirstPortal!.Value, component.SecondPortal.Value, true);
-            _audio.PlayPvs(component.NewPortalSound, uid);
+            CreateSecondPortal(uid, component, user, xform);
+            return;
         }
-        else
+
+        FizzlePortals((uid, component), user, false);
+    }
+
+    private void CreateFirstPortal(EntityUid uid, HandTeleporterComponent component, EntityUid user, TransformComponent xform)
+    {
+        if (xform.ParentUid != xform.GridUid)
+            return;
+
+        component.FirstPortal = Spawn(component.FirstPortalPrototype, Transform(user).Coordinates);
+        EnsureComp<HandTeleporterPortalComponent>(component.FirstPortal.Value).Teleporter = uid;
+        _portal.SetPortalTimeout(user, component.FirstPortal.Value);
+        Dirty(uid, component);
+        ConfigurePortalMapTravel(component.FirstPortal, component);
+
+        _adminLogger.Add(LogType.EntitySpawn, LogImpact.High, $"{ToPrettyString(user):player} opened {ToPrettyString(component.FirstPortal.Value)} at {Transform(component.FirstPortal.Value).Coordinates} using {ToPrettyString(uid)}");
+        _audio.PlayPvs(component.NewPortalSound, uid);
+    }
+
+    private void CreateSecondPortal(EntityUid uid, HandTeleporterComponent component, EntityUid user, TransformComponent xform)
+    {
+        if (xform.ParentUid != xform.GridUid)
+            return;
+
+        if (!component.AllowPortalsOnDifferentGrids && xform.ParentUid != Transform(component.FirstPortal!.Value).ParentUid)
         {
-            FizzlePortals((uid, component), user, false);
+            // Whoops. Fizzle time. Crime time too because yippee I'm not refactoring this logic right now (I started to, I'm not going to.)
+            FizzlePortals((uid, component), user, true);
+            return;
         }
+
+        component.SecondPortal = Spawn(component.SecondPortalPrototype, Transform(user).Coordinates);
+        EnsureComp<HandTeleporterPortalComponent>(component.SecondPortal.Value).Teleporter = uid;
+        _portal.SetPortalTimeout(user, component.SecondPortal.Value);
+        Dirty(uid, component);
+        ConfigurePortalMapTravel(component.SecondPortal, component);
+
+        _adminLogger.Add(LogType.EntitySpawn, LogImpact.High, $"{ToPrettyString(user):player} opened {ToPrettyString(component.SecondPortal.Value)} at {Transform(component.SecondPortal.Value).Coordinates} linked to {ToPrettyString(component.FirstPortal!.Value)} using {ToPrettyString(uid)}");
+        _link.TryLink(component.FirstPortal!.Value, component.SecondPortal.Value, true);
+        _audio.PlayPvs(component.NewPortalSound, uid);
+    }
+
+    private void ConfigurePortalMapTravel(EntityUid? portal, HandTeleporterComponent component)
+    {
+        if (!component.AllowPortalsOnDifferentMaps)
+            return;
+
+        if (!TryComp<PortalComponent>(portal, out var portalComponent))
+            return;
+
+        portalComponent.CanTeleportToOtherMaps = true;
     }
 
     /// <summary>
@@ -171,19 +233,8 @@ public sealed partial class HandTeleporterSystem : EntitySystem
     /// <param name="instability">if it should send an "instability" popup to the user</param>
     private void FizzlePortals(Entity<HandTeleporterComponent> entity, EntityUid? user, bool instability)
     {
-        // Logging
-        var portalStrings = "";
-        portalStrings += ToPrettyString(entity.Comp.FirstPortal);
-        if (portalStrings != "")
-            portalStrings += " and ";
-        portalStrings += ToPrettyString(entity.Comp.SecondPortal);
-        if (portalStrings != "")
-        {
-            if (user != null)
-                _adminLogger.Add(LogType.EntityDelete, LogImpact.High, $"{ToPrettyString(user):player} closed {portalStrings} with {ToPrettyString(entity)}");
-            else
-                _adminLogger.Add(LogType.EntityDelete, LogImpact.High, $"{portalStrings} were closed");
-        }
+        LogPortalClosure(entity.Comp.FirstPortal, entity, user);
+        LogPortalClosure(entity.Comp.SecondPortal, entity, user);
 
         // Clear both portals
         if (!Deleted(entity.Comp.FirstPortal))
@@ -196,7 +247,26 @@ public sealed partial class HandTeleporterSystem : EntitySystem
         Dirty(entity);
         _audio.PlayPvs(entity.Comp.ClearPortalsSound, entity);
 
-        if (instability && user != null)
-            _popup.PopupEntity(Loc.GetString("handheld-teleporter-instability-fizzle"), entity, user.Value, PopupType.MediumCaution);
+        if (!instability)
+            return;
+
+        if (user == null)
+            return;
+
+        _popup.PopupEntity(Loc.GetString("handheld-teleporter-instability-fizzle"), entity, user.Value, PopupType.MediumCaution);
+    }
+
+    private void LogPortalClosure(EntityUid? portal, EntityUid teleporter, EntityUid? user)
+    {
+        if (Deleted(portal))
+            return;
+
+        if (user != null)
+        {
+            _adminLogger.Add(LogType.EntityDelete, LogImpact.High, $"{ToPrettyString(user):player} closed {ToPrettyString(portal)} with {ToPrettyString(teleporter)}");
+            return;
+        }
+
+        _adminLogger.Add(LogType.EntityDelete, LogImpact.High, $"{ToPrettyString(portal)} was closed by {ToPrettyString(teleporter)}");
     }
 }
