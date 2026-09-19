@@ -123,6 +123,7 @@ public abstract partial class SharedFirelockSystem : EntitySystem
         // only bother to check pressure on doors that are some variation of closed.
         if (door.State != DoorState.Closed
             && door.State != DoorState.Welded
+            && door.State != DoorState.EmaggingWelded
             && door.State != DoorState.Denying)
         {
             _appearance.SetData(uid, DoorVisuals.ClosedLights, false, appearance);
