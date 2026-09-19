@@ -47,7 +47,7 @@ public abstract partial class ArrivalsSystem : EntitySystem
         Cfg.OnValueChanged(CCVars.GodmodeArrivals, b => ArrivalsGodmode = b);
     }
 
-    [SubscribeLocalEvent(before: new []{typeof(SpawnPointSystem), typeof(ContainerSpawnPointSystem)})]
+    [SubscribeLocalEvent(before: new []{typeof(SpawnPointSystem)}, after: new []{typeof(ContainerSpawnPointSystem)})]
     public void HandlePlayerSpawning(PlayerSpawningEvent ev)
     {
         if (ev.SpawnResult != null)
