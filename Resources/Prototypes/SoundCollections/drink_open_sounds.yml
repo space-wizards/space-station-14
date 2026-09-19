@@ -11,6 +11,11 @@
   - /Audio/Items/bottle_open1.ogg
 
 - type: soundCollection
+  id: bottleOpenEmptySounds
+  files:
+  - /Audio/Items/bottle_open_empty.ogg
+
+- type: soundCollection
   id: packetOpenSounds
   files:
   - /Audio/Effects/packetrip.ogg
