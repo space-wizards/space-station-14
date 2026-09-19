@@ -8,6 +8,9 @@
   components:
   - type: WallMount
     arc: 175
+  - type: ParentToWall
+    anchor: false
+    blockDeconstruction: false
   - type: StationAiWhitelist
   - type: Sprite
     offset: 0, -0.25
@@ -33,7 +36,6 @@
   - type: SignalSwitch
   - type: UseDelay
     delay: 0.5 # prevent light-toggling auto-clickers.
-  - type: Rotatable
   - type: Construction
     graph: SignalSwitchGraph
     node: SignalSwitchNode
@@ -70,6 +72,9 @@
   components:
   - type: WallMount
     arc: 175
+  - type: ParentToWall
+    anchor: false
+    blockDeconstruction: false
   - type: StationAiWhitelist
   - type: Sprite
     offset: 0, -0.25
@@ -86,7 +91,6 @@
     onPort: Pressed
     offPort: Pressed
     statusPort: Pressed
-  - type: Rotatable
   - type: Construction
     graph: SignalButtonGraph
     node: SignalButtonNode
@@ -97,8 +101,6 @@
   - type: DeviceLinkSource
     ports:
       - Pressed
-  - type: Transform
-    anchored: false
   - type: Destructible
     thresholds:
     - trigger: *DamageMachineFlimsy
@@ -134,6 +136,9 @@
           False: { state: off-unshaded }
   - type: WallMount
     arc: 175
+  - type: ParentToWall
+    anchor: false
+    blockDeconstruction: false
   - type: Rotatable
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
@@ -141,8 +146,6 @@
     transmitFrequencyId: SmartLight # assuming people want to use it for light switches.
   - type: ApcNetworkConnection
   - type: ApcNetSwitch
-  - type: Transform
-    anchored: false
   - type: Construction
     graph: LightSwitchGraph
     node: LightSwitchNode
@@ -473,6 +476,7 @@
 
 # button frames
 
+# NOTE: do not parent this off of wallmount - it should not have an interaction outline or the structure tag.
 - type: entity
   parent: StructureHealthFurnitureWeak
   id: ButtonFrame
@@ -485,15 +489,14 @@
   - type: Clickable
   - type: WallMount
     arc: 175
-  - type: Physics
-    canCollide: false
+  - type: ParentToWall
+    anchor: false
+    blockDeconstruction: false
   - type: Sprite
     offset: 0, -0.25
     drawdepth: SmallObjects
     sprite: Structures/Wallmounts/switch-frame.rsi
     state: grey
-  - type: Rotatable
-  - type: Fixtures
 
 - type: entity
   id: ButtonFrameGrey

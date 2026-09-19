@@ -1,7 +1,7 @@
 - type: entity
-  parent: [ BaseWallmount, StructureHealthMachineWeak ]
-  categories: [ HideSpawnMenu ]
+  parent: [ BaseWallmountMetallic, StructureHealthMachineWeak ]
   id: BaseAPC
+  categories: [ HideSpawnMenu ]
   name: APC
   description: A control terminal for the area's electrical systems.
   placement:
@@ -89,7 +89,6 @@
     maxChargeRate: 5000
     supplyRampTolerance: 1000
     supplyRampRate: 500
-  - type: WallMount
   - type: WiresPanel
   - type: Wires
     alwaysRandomize: true
@@ -133,8 +132,8 @@
 # APC under construction
 - type: entity
   parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
-  categories: [ HideSpawnMenu ]
   id: APCFrame
+  categories: [ HideSpawnMenu ]
   name: APC frame
   description: A control terminal for the area's electrical systems, lacking the electronics.
   placement:

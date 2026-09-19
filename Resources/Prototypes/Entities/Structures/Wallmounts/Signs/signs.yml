@@ -20,6 +20,9 @@
       # TODO: Combine all the directional guide signs in to some modular prototype so it's easier to map and remove the overlap when rotating the camera
     - type: Transform
       anchored: false
+    - type: ParentToWall
+      anchor: false
+      blockDeconstruction: false
 
 - type: entity
   parent: BaseSignDirectional

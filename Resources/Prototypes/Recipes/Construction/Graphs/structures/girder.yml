@@ -126,6 +126,8 @@
       entity: WallSolid
       edges:
         - to: girder
+          conditions:
+            - !type:NoImportantParentedWallmounts
           completed:
             - !type:GivePrototype
               prototype: SheetSteel1
@@ -138,6 +140,8 @@
       entity: WallSolidChitin
       edges:
         - to: girder
+          conditions:
+            - !type:NoImportantParentedWallmounts
           completed:
             - !type:GivePrototype
               prototype: SheetSteel1
@@ -150,6 +154,8 @@
       entity: WallUranium
       edges:
         - to: girder
+          conditions:
+            - !type:NoImportantParentedWallmounts
           completed:
             - !type:GivePrototype
               prototype: SheetUranium1
@@ -164,6 +170,8 @@
       entity: WallSilver
       edges:
         - to: girder
+          conditions:
+            - !type:NoImportantParentedWallmounts
           completed:
             - !type:GivePrototype
               prototype: IngotSilver1
@@ -178,6 +186,8 @@
       entity: WallBrass
       edges:
       - to: girder
+        conditions:
+          - !type:NoImportantParentedWallmounts
         completed:
         - !type:GivePrototype
           prototype: SheetBrass1
@@ -192,6 +202,8 @@
       entity: WallPlasma
       edges:
         - to: girder
+          conditions:
+            - !type:NoImportantParentedWallmounts
           completed:
             - !type:GivePrototype
               prototype: SheetPlasma1
@@ -206,6 +218,8 @@
       entity: WallGold
       edges:
         - to: girder
+          conditions:
+            - !type:NoImportantParentedWallmounts
           completed:
             - !type:GivePrototype
               prototype: IngotGold1
@@ -220,6 +234,8 @@
       entity: WallMeat
       edges:
         - to: girder
+          conditions:
+            - !type:NoImportantParentedWallmounts
           completed:
             - !type:GivePrototype
               prototype: MaterialSheetMeat1
@@ -288,6 +304,8 @@
       entity: WallReinforced
       edges:
         - to: reinforcedGirder
+          conditions:
+            - !type:NoImportantParentedWallmounts
           completed:
             - !type:SpawnPrototype
               prototype: SheetPlasteel1
@@ -340,6 +358,8 @@
       entity: WallReinforcedChitin
       edges:
         - to: reinforcedGirder
+          conditions:
+            - !type:NoImportantParentedWallmounts
           completed:
             - !type:SpawnPrototype
               prototype: SheetPlasteel1
@@ -392,6 +412,8 @@
       entity: WallShuttle
       edges:
         - to: reinforcedGirder
+          conditions:
+            - !type:NoImportantParentedWallmounts
           completed:
             - !type:SpawnPrototype
               prototype: SheetPlasteel1
@@ -449,6 +471,8 @@
       entity: WallShuttleDiagonal
       edges:
         - to: reinforcedGirder
+          conditions:
+            - !type:NoImportantParentedWallmounts
           completed:
             - !type:SpawnPrototype
               prototype: SheetPlasteel1
