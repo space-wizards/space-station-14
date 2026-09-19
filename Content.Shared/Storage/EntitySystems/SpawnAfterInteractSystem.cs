@@ -44,24 +44,28 @@ public sealed partial class SpawnAfterInteractSystem : EntitySystem
         {
             BreakOnDamage = true,
             BreakOnMove = true,
-            BreakOnWeightlessMove = false,
         };
         _doAfterSystem.TryStartDoAfter(doAfterArgs);
     }
 
     [SubscribeLocalEvent]
-    private void AfterDoafter(Entity<SpawnAfterInteractComponent> ent, ref SpawnAfterInteractEvent args)
+    private void OnDoafter(Entity<SpawnAfterInteractComponent> ent, ref SpawnAfterInteractEvent args)
     {
+        var gridUid = GetEntity(args.Grid);
         if (args.Cancelled ||
-            TryComp<StackComponent>(ent, out var stackComp)
-            && ent.Comp.RemoveOnInteract && !_stackSystem.TryUse((ent, stackComp), 1))
+            ent.Comp.RemoveOnInteract && !_stackSystem.TryUse(ent.Owner, 1) ||
+            !TryComp<MapGridComponent>(gridUid, out var grid) ||
+            !_maps.TryGetTileRef(gridUid, grid, GetCoordinates(args.Coordinates), out var tileRef) ||
+            tileRef.Tile.IsEmpty ||
+            _turfSystem.IsTileBlocked(tileRef, CollisionGroup.MobMask))
         {
             return;
         }
 
         PredictedSpawnAtPosition(ent.Comp.Prototype, GetCoordinates(args.Coordinates));
 
-        if (ent.Comp.RemoveOnInteract && stackComp == null)
+        if (ent.Comp.RemoveOnInteract ||
+            !HasComp<StackComponent>(ent))
             PredictedQueueDel(ent);
     }
 }
@@ -71,6 +75,9 @@ public sealed partial class SpawnAfterInteractEvent : SimpleDoAfterEvent
 {
     [DataField(required:true)]
     public NetCoordinates Coordinates;
+
+    [DataField(required:true)]
+    public NetEntity Grid;
 
     private SpawnAfterInteractEvent()
     {
