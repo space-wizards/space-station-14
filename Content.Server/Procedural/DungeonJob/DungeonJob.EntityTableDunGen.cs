@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.NPC.Systems;
 using Content.Shared.EntityTable;
@@ -20,6 +21,7 @@ public sealed partial class DungeonJob
         IRobustRandom random)
     {
         var count = random.Next(gen.MinCount, gen.MaxCount + 1);
+        var ghostRoleSys = _entManager.System<GhostRoleSystem>();
         var npcs = _entManager.System<NPCSystem>();
 
         foreach (var dungeon in dungeons)
@@ -52,8 +54,7 @@ public sealed partial class DungeonJob
                 foreach (var ent in entities)
                 {
                     var uid = _entManager.SpawnAtPosition(ent, _maps.GridTileToLocal(_gridUid, _grid, tile));
-                    _entManager.RemoveComponent<GhostRoleComponent>(uid);
-                    _entManager.RemoveComponent<GhostTakeoverAvailableComponent>(uid);
+                    ghostRoleSys.DestroyGhostRole(uid);
                     npcs.SleepNPC(uid);
                 }
 

@@ -147,7 +147,6 @@
     name: ghost-role-information-gingerbread-name
     description: ghost-role-information-gingerbread-description
     rules: ghost-role-information-nonantagonist-rules
-  - type: GhostTakeoverAvailable
   - type: NPCRetaliation
   - type: FactionException
   - type: NpcFactionMember

@@ -42,7 +42,6 @@
     - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
-  - type: GhostTakeoverAvailable
   - type: Revenant
     malfunctionWhitelist:
       components:

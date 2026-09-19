@@ -1,7 +1,8 @@
 using System.Linq;
-using Content.Shared.Dataset;
+using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.StationEvents.Components;
+using Content.Shared.Dataset;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
@@ -14,8 +15,8 @@ public sealed partial class RandomSentienceRule : StationEventSystem<RandomSenti
     private static readonly ProtoId<LocalizedDatasetPrototype> DataSourceNames = "RandomSentienceEventData";
     private static readonly ProtoId<LocalizedDatasetPrototype> IntelligenceLevelNames = "RandomSentienceEventStrength";
 
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private GhostRoleSystem _ghostRole = default!;
 
     protected override void Started(EntityUid uid, RandomSentienceRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
@@ -56,11 +57,12 @@ public sealed partial class RandomSentienceRule : StationEventSystem<RandomSenti
             }
             targetList.Remove(target);
 
+            var name = MetaData(target).EntityName;
             RemComp<SentienceTargetComponent>(target);
-            var ghostRole = EnsureComp<GhostRoleComponent>(target);
-            EnsureComp<GhostTakeoverAvailableComponent>(target);
-            ghostRole.RoleName = MetaData(target).EntityName;
-            ghostRole.RoleDescription = Loc.GetString("station-event-random-sentience-role-description", ("name", ghostRole.RoleName));
+            _ghostRole.CreateGhostRole(target.Owner,
+                name: name,
+                description: Loc.GetString("station-event-random-sentience-role-description", ("name", name)),
+                rules: Loc.GetString(GhostRoleComponent.DefaultRules));
             groups.Add(Loc.GetString(target.Comp.FlavorKind));
         }
 
@@ -76,8 +78,8 @@ public sealed partial class RandomSentienceRule : StationEventSystem<RandomSenti
             station.Value,
             Loc.GetString("station-event-random-sentience-announcement",
                 ("kind1", kind1), ("kind2", kind2), ("kind3", kind3), ("amount", groupList.Count),
-                ("data", _random.Pick(_prototype.Index(DataSourceNames))),
-                ("strength", _random.Pick(_prototype.Index(IntelligenceLevelNames)))
+                ("data", _random.Pick(ProtoMan.Index(DataSourceNames))),
+                ("strength", _random.Pick(ProtoMan.Index(IntelligenceLevelNames)))
             ),
             playDefaultSound: false,
             colorOverride: Color.Gold

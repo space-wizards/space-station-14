@@ -102,7 +102,6 @@
     rules: ghost-role-information-xeno-rules
     raffle:
       settings: default
-  - type: GhostTakeoverAvailable
   - type: TypingIndicator
     proto: alien
   - type: TemperatureDamage

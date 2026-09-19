@@ -1,3 +1,4 @@
+using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Popups;
 using Content.Shared.CombatMode;
@@ -16,6 +17,7 @@ public sealed partial class VentriloquistPuppetSystem : SharedVentriloquistPuppe
 {
     public static readonly EntProtoId MutedEffect = "StatusEffectVentriloquistPuppetMuted";
 
+    [Dependency] private GhostRoleSystem _ghostRole = default!;
     [Dependency] private PopupSystem _popupSystem = default!;
     [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
@@ -47,10 +49,10 @@ public sealed partial class VentriloquistPuppetSystem : SharedVentriloquistPuppe
 
         if (!HasComp<GhostTakeoverAvailableComponent>(ent))
         {
-            AddComp<GhostTakeoverAvailableComponent>(ent);
-            var ghostRole = EnsureComp<GhostRoleComponent>(ent);
-            ghostRole.RoleName = Loc.GetString("ventriloquist-puppet-role-name");
-            ghostRole.RoleDescription = Loc.GetString("ventriloquist-puppet-role-description");
+            _ghostRole.CreateGhostRole(ent.Owner,
+                name: Loc.GetString("ventriloquist-puppet-role-name"),
+                description: Loc.GetString("ventriloquist-puppet-role-description"),
+                rules: Loc.GetString(GhostRoleComponent.DefaultRules));
         }
 
         args.Handled = true;
@@ -90,7 +92,10 @@ public sealed partial class VentriloquistPuppetSystem : SharedVentriloquistPuppe
         _popupSystem.PopupEntity(Loc.GetString("ventriloquist-puppet-removed-hand"), ent, ent);
         _statusEffects.TrySetStatusEffectDuration(ent, MutedEffect);
         RemComp<CombatModeComponent>(ent);
-        RemComp<GhostTakeoverAvailableComponent>(ent);
+        if (TryComp<GhostRoleComponent>(ent, out var ghostRole))
+        {
+            _ghostRole.UnregisterGhostRole(ent.Owner);
+        }
     }
 }
 
