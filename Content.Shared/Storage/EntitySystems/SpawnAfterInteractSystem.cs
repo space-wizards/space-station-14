@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Storage.Components;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
@@ -29,10 +30,8 @@ public sealed partial class SpawnAfterInteractSystem : EntitySystem
 
         var gridUid = _transform.GetGrid(args.ClickLocation);
 
-        if (!TryComp<MapGridComponent>(gridUid, out var grid) ||
-            !_maps.TryGetTileRef(gridUid.Value, grid, args.ClickLocation, out var tileRef) ||
-            tileRef.Tile.IsEmpty ||
-            _turfSystem.IsTileBlocked(tileRef, CollisionGroup.MobMask))
+        if (gridUid is null ||
+            CanSpawn(gridUid.Value, args.ClickLocation, out var grid))
             return;
 
         var doAfterArgs = new DoAfterArgs(EntityManager,
@@ -55,10 +54,7 @@ public sealed partial class SpawnAfterInteractSystem : EntitySystem
         var coords = GetCoordinates(args.Coordinates);
 
         if (args.Cancelled ||
-            !TryComp<MapGridComponent>(gridUid, out var grid) ||
-            !_maps.TryGetTileRef(gridUid, grid, coords, out var tileRef) ||
-            tileRef.Tile.IsEmpty ||
-            _turfSystem.IsTileBlocked(tileRef, CollisionGroup.MobMask) ||
+            CanSpawn(gridUid, coords, out _) ||
             ent.Comp.RemoveOnInteract && !_stackSystem.TryUse(ent.Owner, 1))
         {
             return;
@@ -69,6 +65,20 @@ public sealed partial class SpawnAfterInteractSystem : EntitySystem
         if (ent.Comp.RemoveOnInteract &&
             !HasComp<StackComponent>(ent))
             PredictedQueueDel(ent);
+    }
+
+    private bool CanSpawn(EntityUid gridUid, EntityCoordinates coords, out MapGridComponent? grid)
+    {
+        grid = null;
+
+        if (!TryComp<MapGridComponent>(gridUid, out var gridComp))
+            return false;
+
+        grid = gridComp;
+
+        return _maps.TryGetTileRef(gridUid, gridComp, coords, out var tileRef) &&
+               !tileRef.Tile.IsEmpty &&
+               !_turfSystem.IsTileBlocked(tileRef, CollisionGroup.MobMask);
     }
 }
 
