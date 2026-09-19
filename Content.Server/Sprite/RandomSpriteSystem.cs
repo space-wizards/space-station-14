@@ -53,7 +53,7 @@ public sealed partial class RandomSpriteSystem : SharedRandomSpriteSystem
                         color = previousColor;
                     else
                     {
-                        color = _palette.PickRandomColor(selectedState.Value);
+                        color = _random.Pick(_palette.GetPaletteColors(selectedState.Value));
                         previousColor = color;
                     }
                 }

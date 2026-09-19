@@ -85,8 +85,8 @@ public sealed partial class UnpoweredFlashlightSystem : EntitySystem
         if (!_light.TryGetLight(uid, out var light))
             return;
 
-        if (_palette.TryPickRandomColor(component.EmaggedColorsPrototype, out var color))
-            _light.SetColor(uid, color.Value, light);
+        if (_palette.TryGetPaletteColors(component.EmaggedColorsPrototype, out var colors))
+            _light.SetColor(uid, _random.Pick(colors), light);
 
         args.Repeatable = true;
         args.Handled = true;

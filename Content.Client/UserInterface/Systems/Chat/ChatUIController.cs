@@ -232,8 +232,7 @@ public sealed partial class ChatUIController : UIController
         gameplayStateLoad.OnScreenLoad += OnScreenLoad;
         gameplayStateLoad.OnScreenUnload += OnScreenUnload;
 
-        var colorList = new List<Color>();
-        _palette.GetPaletteColors(ChatNamePalette, colorList);
+        var colorList = _palette.GetPaletteColors(ChatNamePalette);
 
         _chatNameColors.Clear();
         foreach (var color in colorList)
