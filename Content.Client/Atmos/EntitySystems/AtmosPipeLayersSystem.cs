@@ -14,30 +14,23 @@ namespace Content.Client.Atmos.EntitySystems;
 /// </summary>
 public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
 {
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private IReflectionManager _reflection = default!;
     [Dependency] private IResourceCache _resourceCache = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<AtmosPipeLayersComponent, AppearanceChangeEvent>(OnAppearanceChange);
-    }
-
-    private void OnAppearanceChange(Entity<AtmosPipeLayersComponent> ent, ref AppearanceChangeEvent ev)
+    [SubscribeLocalEvent]
+    private void OnAppearanceChange(Entity<AtmosPipeLayersComponent> ent, ref AppearanceChangeEvent args)
     {
         if (!TryComp<SpriteComponent>(ent, out var sprite))
             return;
 
-        if (_appearance.TryGetData<string>(ent, AtmosPipeLayerVisuals.Sprite, out var spriteRsi) &&
+        if (args.TryGetData<string>(AtmosPipeLayerVisuals.Sprite, out var spriteRsi) &&
             _resourceCache.TryGetResource(SpriteSpecifierSerializer.TextureRoot / spriteRsi, out RSIResource? resource))
         {
             _sprite.SetBaseRsi((ent, sprite), resource.RSI);
         }
 
-        if (_appearance.TryGetData<Dictionary<string, string>>(ent, AtmosPipeLayerVisuals.SpriteLayers, out var pipeState))
+        if (args.TryGetData<Dictionary<string, string>>(AtmosPipeLayerVisuals.SpriteLayers, out var pipeState))
         {
             foreach (var (layerKey, rsiPath) in pipeState)
             {

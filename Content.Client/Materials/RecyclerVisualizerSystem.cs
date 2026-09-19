@@ -6,14 +6,15 @@ namespace Content.Client.Materials;
 
 public sealed partial class RecyclerVisualizerSystem : VisualizerSystem<RecyclerVisualsComponent>
 {
+    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, RecyclerVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null || !SpriteSystem.LayerMapTryGet((uid, args.Sprite), RecyclerVisualLayers.Main, out var layer, false))
             return;
 
-        AppearanceSystem.TryGetData<ConveyorState>(uid, ConveyorVisuals.State, out var running);
-        AppearanceSystem.TryGetData<bool>(uid, RecyclerVisuals.Bloody, out var bloody);
-        AppearanceSystem.TryGetData<bool>(uid, RecyclerVisuals.Broken, out var broken);
+        args.TryGetData<ConveyorState>(ConveyorVisuals.State, out var running);
+        args.TryGetData<bool>(RecyclerVisuals.Bloody, out var bloody);
+        args.TryGetData<bool>(RecyclerVisuals.Broken, out var broken);
 
         var activityState = running == ConveyorState.Off ? 0 : 1;
         if (broken) //breakage overrides activity

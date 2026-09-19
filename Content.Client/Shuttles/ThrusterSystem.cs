@@ -14,13 +14,13 @@ public sealed partial class ThrusterSystem : VisualizerSystem<ThrusterComponent>
     protected override void OnAppearanceChange(EntityUid uid, ThrusterComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null
-        || !AppearanceSystem.TryGetData<bool>(uid, ThrusterVisualState.State, out var state, args.Component))
+        || !args.TryGetData<bool>(ThrusterVisualState.State, out var state))
             return;
 
         SpriteSystem.LayerSetVisible((uid, args.Sprite), ThrusterVisualLayers.ThrustOn, state);
         SetThrusting(
             uid,
-            state && AppearanceSystem.TryGetData<bool>(uid, ThrusterVisualState.Thrusting, out var thrusting, args.Component) && thrusting,
+            state && args.TryGetData<bool>(ThrusterVisualState.Thrusting, out var thrusting) && thrusting,
             args.Sprite
         );
     }
@@ -31,14 +31,10 @@ public sealed partial class ThrusterSystem : VisualizerSystem<ThrusterComponent>
     private void SetThrusting(EntityUid uid, bool value, SpriteComponent sprite)
     {
         if (SpriteSystem.LayerMapTryGet((uid, sprite), ThrusterVisualLayers.Thrusting, out var thrustingLayer, false))
-        {
             SpriteSystem.LayerSetVisible((uid, sprite), thrustingLayer, value);
-        }
 
         if (SpriteSystem.LayerMapTryGet((uid, sprite), ThrusterVisualLayers.ThrustingUnshaded, out var unshadedLayer, false))
-        {
             SpriteSystem.LayerSetVisible((uid, sprite), unshadedLayer, value);
-        }
     }
 }
 
