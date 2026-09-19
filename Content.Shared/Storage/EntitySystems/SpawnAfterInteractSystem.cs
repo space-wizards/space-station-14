@@ -38,7 +38,7 @@ public sealed partial class SpawnAfterInteractSystem : EntitySystem
         var doAfterArgs = new DoAfterArgs(EntityManager,
             args.User,
             ent.Comp.DoAfterTime,
-            new SpawnAfterInteractEvent(GetNetCoordinates(args.ClickLocation.SnapToGrid(grid))),
+            new SpawnAfterInteractEvent(GetNetCoordinates(args.ClickLocation.SnapToGrid(grid)), GetNetEntity(gridUid.Value)),
             ent,
             used: ent)
         {
@@ -52,19 +52,21 @@ public sealed partial class SpawnAfterInteractSystem : EntitySystem
     private void OnDoafter(Entity<SpawnAfterInteractComponent> ent, ref SpawnAfterInteractEvent args)
     {
         var gridUid = GetEntity(args.Grid);
+        var coords = GetCoordinates(args.Coordinates);
+
         if (args.Cancelled ||
-            ent.Comp.RemoveOnInteract && !_stackSystem.TryUse(ent.Owner, 1) ||
             !TryComp<MapGridComponent>(gridUid, out var grid) ||
-            !_maps.TryGetTileRef(gridUid, grid, GetCoordinates(args.Coordinates), out var tileRef) ||
+            !_maps.TryGetTileRef(gridUid, grid, coords, out var tileRef) ||
             tileRef.Tile.IsEmpty ||
-            _turfSystem.IsTileBlocked(tileRef, CollisionGroup.MobMask))
+            _turfSystem.IsTileBlocked(tileRef, CollisionGroup.MobMask) ||
+            ent.Comp.RemoveOnInteract && !_stackSystem.TryUse(ent.Owner, 1))
         {
             return;
         }
 
-        PredictedSpawnAtPosition(ent.Comp.Prototype, GetCoordinates(args.Coordinates));
+        PredictedSpawnAtPosition(ent.Comp.Prototype, coords);
 
-        if (ent.Comp.RemoveOnInteract ||
+        if (ent.Comp.RemoveOnInteract &&
             !HasComp<StackComponent>(ent))
             PredictedQueueDel(ent);
     }
@@ -83,9 +85,10 @@ public sealed partial class SpawnAfterInteractEvent : SimpleDoAfterEvent
     {
     }
 
-    public SpawnAfterInteractEvent(NetCoordinates coordinates)
+    public SpawnAfterInteractEvent(NetCoordinates coordinates, NetEntity grid)
     {
         Coordinates = coordinates;
+        Grid = grid;
     }
 
     public override DoAfterEvent Clone()
