@@ -188,31 +188,11 @@
     price: 30 # increases in price after decomposed into raw materials
 
 - type: entity
-  parent: ClothingMaskBase
+  parent: [ClothingMaskBase, BaseFoldable]
   id: ClothingMaskClownBase
   abstract: true
   name: clown wig and mask
   description: A true prankster's facial attire. A clown is incomplete without his wig and mask.
-  components:
-  - type: Appearance
-  - type: Sprite
-    sprite: Clothing/Mask/clown.rsi
-  - type: Clothing
-    sprite: Clothing/Mask/clown.rsi
-  - type: BreathMask
-  - type: IdentityBlocker
-  - type: Tag
-    tags:
-    - ClownMask
-    - WhitelistChameleon
-  - type: HideLayerClothing
-    slots:
-    - Snout
-
-- type: entity
-  parent: [ClothingMaskClownBase, BaseFoldable]
-  id: ClothingMaskClown
-  description: A clown mask featuring a foldable wig; a true prankster's attire.
   components:
   - type: Foldable
     canFoldInsideContainer: true
@@ -227,14 +207,26 @@
     - state: icon-opened
       map: [ "foldedLayer" ]
       visible: false
+  - type: Clothing
+    sprite: Clothing/Mask/clown.rsi
+  - type: BreathMask
+  - type: IdentityBlocker
   - type: Tag
     tags:
     - ClownMask
-    - HamsterWearable
     - WhitelistChameleon
+    - HamsterWearable
   - type: HideLayerClothing
     slots:
     - Snout
+
+- type: entity
+  parent: ClothingMaskClownBase
+  id: ClothingMaskClown
+  description: A clown mask featuring a foldable wig; a true prankster's attire.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/clown.rsi
 
 - type: entity
   parent: ClothingMaskClownBase
@@ -248,14 +240,6 @@
   - type: Construction
     graph: BananaClownMask
     node: mask
-  - type: Tag
-    tags:
-    - ClownMask
-    - HamsterWearable
-    - WhitelistChameleon
-  - type: HideLayerClothing
-    slots:
-    - Snout
 
 - type: entity
   parent: [ClothingMaskClownBase, BaseSecurityContraband]
@@ -274,15 +258,6 @@
         Slash: 0.95
         Piercing: 0.95
         Heat: 0.95
-  - type: Tag
-    tags:
-    - ClownMask
-    - HamsterWearable
-    - WhitelistChameleon
-  - type: HideLayerClothing
-    slots:
-    - Snout
-
 - type: entity
   parent: ClothingMaskBase
   id: ClothingMaskJoy
@@ -639,7 +614,7 @@
 - type: entity
   parent: ClothingMaskClownBase
   id: ClothingMaskBlushingClown
-  name: blushing clown mask
+  name: blushing clown wig and mask
   description: A mask for a blushing clown.
   components:
   - type: Sprite
