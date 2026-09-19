@@ -62,7 +62,7 @@
         </BoxContainer>
         <!-- Footer -->
         <BoxContainer Orientation="Vertical">
-            <PanelContainer StyleClasses="LowDivider" Margin="0 5 0 0" />
+            <controls:Separator StyleClasses="LowDivider" Margin="0 5 0 0" />
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0">
                 <Label Text="{Loc 'microwave-menu-footer-flavor-left'}" StyleClasses="WindowFooterText" FontColorOverride="#FF5555" />
                 <Label Text="{Loc 'microwave-menu-footer-flavor-right'}" StyleClasses="WindowFooterText" HorizontalAlignment="Right" HorizontalExpand="True" Margin="0 0 5 0" />
