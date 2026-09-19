@@ -792,6 +792,7 @@ namespace Content.Server.Database
     }
 
     [Table("uploaded_resource_log")]
+    [Index(nameof(Date))]
     public sealed class UploadedResourceLog
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
