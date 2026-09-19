@@ -18,6 +18,9 @@
     bodyType: KinematicController
     bodyStatus: InAir
   - type: CanMoveInAir
+  - type: Alerts
+  - type: AlertTeleport
+  - type: GhostAlerts
   - type: Fixtures
     fixtures:
       fix1:
