@@ -3,21 +3,13 @@ using Robust.Shared.Network;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed partial class SwapLocationOnTriggerSystem : EntitySystem
+public sealed partial class SwapLocationOnTriggerSystem : XOnTriggerSystem<SwapLocationOnTriggerComponent>
 {
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private INetManager _net = default!;
 
-    public override void Initialize()
+    protected override void OnTrigger(Entity<SwapLocationOnTriggerComponent> ent, EntityUid _, ref TriggerEvent args)
     {
-        SubscribeLocalEvent<SwapLocationOnTriggerComponent, TriggerEvent>(OnTrigger);
-    }
-
-    private void OnTrigger(Entity<SwapLocationOnTriggerComponent> ent, ref TriggerEvent args)
-    {
-        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
-            return;
-
         if (args.User == null)
             return;
 

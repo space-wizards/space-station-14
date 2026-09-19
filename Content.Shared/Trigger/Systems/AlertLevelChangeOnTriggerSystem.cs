@@ -4,23 +4,13 @@ using Content.Shared.Trigger.Components.Effects;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed partial class AlertLevelChangeOnTriggerSystem : EntitySystem
+public sealed partial class AlertLevelChangeOnTriggerSystem : XOnTriggerSystem<AlertLevelChangeOnTriggerComponent>
 {
     [Dependency] private AlertLevelSystem _alertLevel = default!;
     [Dependency] private StationSystem _station = default!;
 
-    public override void Initialize()
+    protected override void OnTrigger(Entity<AlertLevelChangeOnTriggerComponent> ent, EntityUid _, ref TriggerEvent args)
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<AlertLevelChangeOnTriggerComponent, TriggerEvent>(OnTrigger);
-    }
-
-    private void OnTrigger(Entity<AlertLevelChangeOnTriggerComponent> ent, ref TriggerEvent args)
-    {
-        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
-            return;
-
         var stationUid = _station.GetOwningStation(ent.Owner);
         if (stationUid == null)
             return;
