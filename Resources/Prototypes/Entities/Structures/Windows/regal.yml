@@ -27,8 +27,6 @@
           collection: WindowShatter
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: IconSmooth
-    base: window
   - type: Appearance
   - type: DamageVisuals
     thresholds: [5, 10, 20]

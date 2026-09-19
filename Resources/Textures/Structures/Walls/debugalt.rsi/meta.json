@@ -1,0 +1,70 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by Princess (https://github.com/Princess-Cheeseballs).",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "full"
+        },
+        {
+            "name": "debug0",
+            "directions": 4
+        },
+        {
+            "name": "debug1",
+            "directions": 4
+        },
+        {
+            "name": "debug2",
+            "directions": 4
+        },
+        {
+            "name": "debug3",
+            "directions": 4
+        },
+        {
+            "name": "debug4",
+            "directions": 4
+        },
+        {
+            "name": "debug5",
+            "directions": 4
+        },
+        {
+            "name": "debug6",
+            "directions": 4
+        },
+        {
+            "name": "debug7",
+            "directions": 4
+        },
+        {
+            "name": "debug8",
+            "directions": 4
+        },
+        {
+            "name": "debug9",
+            "directions": 4
+        },
+        {
+            "name": "debug10",
+            "directions": 4
+        },
+        {
+            "name": "debug11",
+            "directions": 4
+        },
+        {
+            "name": "debug12",
+            "directions": 4
+        },
+        {
+            "name": "debug13",
+            "directions": 4
+        }
+    ]
+}
