@@ -1289,6 +1289,7 @@
     - type: ItemBorgModule
       hands:
       - item: Crowbar
+      - item: Screwdriver
       - item: Emag
       - item: AccessBreaker
       - item: PinpointerSyndicateNuclear
