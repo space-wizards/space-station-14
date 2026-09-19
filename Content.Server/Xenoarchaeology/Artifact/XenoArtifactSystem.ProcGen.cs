@@ -1,210 +1,183 @@
 using System.Linq;
-using Content.Shared.Random.Helpers;
-using Content.Shared.Whitelist;
+using Content.Shared.Destructible.Thresholds;
+using Content.Shared.EntityTable;
+using Content.Shared.EntityTable.Conditions;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
-using Content.Shared.Xenoarchaeology.Artifact.Prototypes;
+using Robust.Shared.Collections;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Xenoarchaeology.Artifact;
 
 public sealed partial class XenoArtifactSystem
 {
-    [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
+    [Dependency] private EntityTableSystem _entityTable = default!;
 
     private void GenerateArtifactStructure(Entity<XenoArtifactComponent> ent)
     {
-        var nodeCount = ent.Comp.NodeCount.Next(RobustRandom);
-        var triggerPool = CreateTriggerPool(ent, nodeCount);
-        // trigger pool could be smaller, then requested node count
-        nodeCount = triggerPool.Count;
-        ResizeNodeGraph(ent, nodeCount);
-        while (nodeCount > 0)
+        var desiredNodeCount = ent.Comp.NodeCount.Next(RobustRandom);
+        var totalGenerated = 0;
+
+        var triggerPool = new TriggerPoolData(desiredNodeCount);
+
+        while (desiredNodeCount > 0)
         {
-            GenerateArtifactSegment(ent, triggerPool, ref nodeCount);
+            var generatedInSegment = GenerateArtifactSegment(ent, triggerPool, desiredNodeCount);
+
+            desiredNodeCount -= generatedInSegment;
+            totalGenerated += generatedInSegment;
+
+            if (generatedInSegment == 0)
+                break;
         }
+
+        // trigger pool could be smaller, then requested node count
+        ResizeNodeGraph(ent, totalGenerated);
 
         RebuildXenoArtifactMetaData((ent, ent));
     }
 
     /// <summary>
-    /// Creates pool from all node triggers that current artifact can support.
-    /// As artifact cannot re-use triggers, pool will be growing smaller
-    /// and smaller with each node generated.
+    /// Generates segment of nodes inside artifact, layer by layer.
+    /// Segment is interconnected graph of nodes.
     /// </summary>
-    /// <param name="ent">Artifact for which pool should be created.</param>
-    /// <param name="size">
-    /// Max size of pool. Resulting pool is not guaranteed to be exactly as large, but it will 100% won't be bigger.
+    /// <param name="ent">Artifact entity, in which we need to generate segment.</param>
+    /// <param name="triggerPool">
+    /// Entity table context container that holds information about triggers that already was used.
     /// </param>
-    private List<XenoArchTriggerPrototype> CreateTriggerPool(Entity<XenoArtifactComponent> ent, int size)
-    {
-        var triggerPool = new List<XenoArchTriggerPrototype>(size);
-        var weightsProto = PrototypeManager.Index(ent.Comp.TriggerWeights);
-        var weightsByTriggersLeft = new Dictionary<string, float>(weightsProto.Weights);
-
-        while (triggerPool.Count < size)
-        {
-            // OOPS! We ran out of triggers.
-            if (weightsByTriggersLeft.Count == 0)
-            {
-                Log.Error($"Insufficient triggers for generating {ToPrettyString(ent)}! Needed {size} but had {triggerPool.Count}");
-                return triggerPool;
-            }
-
-            var triggerId = RobustRandom.Pick(weightsByTriggersLeft);
-            weightsByTriggersLeft.Remove(triggerId);
-            var trigger = PrototypeManager.Index<XenoArchTriggerPrototype>(triggerId);
-            if (_entityWhitelist.IsWhitelistFail(trigger.Whitelist, ent))
-                continue;
-
-            triggerPool.Add(trigger);
-        }
-
-        return triggerPool;
-    }
-
-    /// <summary>
-    /// Generates segment of artifact - isolated graph, nodes inside which are interconnected.
-    /// As size of segment is randomized - it is subtracted from node count.
-    /// </summary>
-    private void GenerateArtifactSegment(
+    /// <param name="maxNodeCount">Max number of nodes to be constructed in this layer.</param>
+    /// <returns>Count of generated nodes.</returns>
+    private int GenerateArtifactSegment(
         Entity<XenoArtifactComponent> ent,
-        List<XenoArchTriggerPrototype> triggerPool,
-        ref int nodeCount
+        TriggerPoolData triggerPool,
+        int maxNodeCount
     )
     {
-        var segmentSize = GetArtifactSegmentSize(ent, nodeCount);
-        nodeCount -= segmentSize;
-        var populatedNodes = PopulateArtifactSegmentRecursive(ent, triggerPool, ref segmentSize);
-
-        var segments = GetSegmentsFromNodes(ent, populatedNodes).ToList();
-
-        // We didn't connect all of our nodes: do extra work to make sure there's a connection.
-        if (segments.Count > 1)
+        var nodesForSegmentToGenerate = GetArtifactSegmentDesiredSize(ent, maxNodeCount);
+        var depth = 0;
+        IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> generatedNodes = [];
+        List<Entity<XenoArtifactNodeComponent>> totalGenerated = new();
+        while (nodesForSegmentToGenerate != 0)
         {
-            var parent = segments.MaxBy(s => s.Count)!;
-            var minP = parent.Min(n => n.Comp.Depth);
-            var maxP = parent.Max(n => n.Comp.Depth);
+            generatedNodes = PopulateLayer(ent, generatedNodes, triggerPool, nodesForSegmentToGenerate, depth);
+            if (generatedNodes.Count == 0) // failed to generate nodes - time to finish up
+                break;
 
-            segments.Remove(parent);
-            foreach (var segment in segments)
-            {
-                // calculate the range of the depth of the nodes in the segment
-                var minS = segment.Min(n => n.Comp.Depth);
-                var maxS = segment.Max(n => n.Comp.Depth);
+            nodesForSegmentToGenerate -= generatedNodes.Count;
 
-                // Figure out the range of depths that allows for a connection between these two.
-                // The range is essentially the lower values + 1 on each side.
-                var min = Math.Max(minS, minP) - 1;
-                var max = Math.Min(maxS, maxP) + 1;
-
-                // how the fuck did you do this? you don't even deserve to get a parent. fuck you.
-                if (min > max || min == max)
-                    continue;
-
-                var node1Options = segment.Where(n => n.Comp.Depth >= min && n.Comp.Depth <= max)
-                                          .ToList();
-                if (node1Options.Count == 0)
-                {
-                    continue;
-                }
-
-                var node1 = RobustRandom.Pick(node1Options);
-                var node1Depth = node1.Comp.Depth;
-
-                var node2Options = parent.Where(n => n.Comp.Depth >= node1Depth - 1 && n.Comp.Depth <= node1Depth + 1 && n.Comp.Depth != node1Depth)
-                                         .ToList();
-                if (node2Options.Count == 0)
-                {
-                    continue;
-                }
-
-                var node2 = RobustRandom.Pick(node2Options);
-
-                if (node1.Comp.Depth < node2.Comp.Depth)
-                {
-                    AddEdge((ent, ent.Comp), node1, node2, false);
-                }
-                else
-                {
-                    AddEdge((ent, ent.Comp), node2, node1, false);
-                }
-            }
+            totalGenerated.AddRange(generatedNodes);
+            depth++;
         }
+
+        if (totalGenerated.Count == 0)
+            return 0;
+
+        AddEdgesToUnderConnectedNodes(ent, totalGenerated);
+
+        return totalGenerated.Count;
     }
 
     /// <summary>
-    /// Recursively populate layers of artifact segment - isolated graph, nodes inside which are interconnected.
-    /// Each next iteration is going to have more chances to have more nodes (so it goes 'from top to bottom' of
+    /// Populates layer of artifact segment and return resulting set of nodes.
+    /// Each next layer is going to have more chances to have more nodes (so it goes 'from top to bottom' of
     /// the tree, creating its peak nodes first, and then making layers with more and more branches).
     /// </summary>
-    private List<Entity<XenoArtifactNodeComponent>> PopulateArtifactSegmentRecursive(
+    /// <param name="ent">Artifact entity, in which we need to generate segment.</param>
+    /// <param name="predecessors">Collection of nodes which are parts of previous layers for current segment.</param>
+    /// <param name="triggerPool">
+    /// Entity table context container that holds information about triggers that already was used.
+    /// </param>
+    /// <param name="maxNodes">Max number of nodes to be constructed in this layer.</param>
+    /// <param name="iteration">Number of layer.</param>
+    private IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> PopulateLayer(
         Entity<XenoArtifactComponent> ent,
-        List<XenoArchTriggerPrototype> triggerPool,
-        ref int segmentSize,
+        IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> predecessors,
+        TriggerPoolData triggerPool,
+        int maxNodes,
         int iteration = 0
     )
     {
-        if (segmentSize == 0)
-            return new();
+        if (maxNodes == 0)
+            return [];
 
         // Try and get larger as we create more layers. Prevents excessive layers.
-        var mod = RobustRandom.Next((int) (iteration / 1.5f), iteration + 1);
+        var mod = RobustRandom.Next((int)(iteration / 1.5f), iteration + 1);
 
-        var layerMin = Math.Min(ent.Comp.NodesPerSegmentLayer.Min + mod, segmentSize);
-        var layerMax = Math.Min(ent.Comp.NodesPerSegmentLayer.Max + mod, segmentSize);
-
+        var minPerLayer = Math.Min(ent.Comp.NodesPerSegmentLayer.Min + mod, maxNodes);
+        var maxPerLayer = Math.Min(ent.Comp.NodesPerSegmentLayer.Max + mod, maxNodes);
         // Default to one node if we had shenanigans and ended up with weird layer counts.
-        var nodeCount = 1;
-        if (layerMax >= layerMin)
-            nodeCount = RobustRandom.Next(layerMin, layerMax + 1); // account for non-inclusive max
+        var desiredNodeCount = 1;
+        if (maxPerLayer >= minPerLayer)
+            desiredNodeCount = new MinMax(minPerLayer, maxPerLayer).Next(RobustRandom);
 
-        segmentSize -= nodeCount;
         var nodes = new List<Entity<XenoArtifactNodeComponent>>();
-        for (var i = 0; i < nodeCount; i++)
-        {
-            var trigger = RobustRandom.PickAndTake(triggerPool);
-            nodes.Add(CreateNode(ent, trigger, iteration));
-        }
-
-        var successors = PopulateArtifactSegmentRecursive(
-            ent,
-            triggerPool,
-            ref segmentSize,
-            iteration: iteration + 1
-        );
-
-        if (successors.Count == 0)
-            return nodes;
-
-        foreach (var successor in successors)
-        {
-            var node = RobustRandom.Pick(nodes);
-            AddEdge((ent, ent), node, successor, dirty: false);
-        }
-
-        // randomly add in some extra edges for variance.
         var scatterCount = ent.Comp.ScatterPerLayer.Next(RobustRandom);
-        for (var i = 0; i < scatterCount; i++)
+
+        for (var i = 0; i < desiredNodeCount; i++)
         {
-            var node = RobustRandom.Pick(nodes);
-            var successor = RobustRandom.Pick(successors);
-            AddEdge((ent, ent), node, successor, dirty: false);
+            var directPredecessors = SelectDirectPredecessors(predecessors, scatterCount);
+            scatterCount -= (directPredecessors.Count - 1);
+
+            var trigger = _entityTable.GetFirstOrNull(ent.Comp.TriggersTable, RobustRandom, triggerPool.Context);
+            // should log error but in next PRs we will get cases of no nodes fitting into budget so it will be usual case, not error
+            if (trigger == null)
+                continue;
+
+            var nodeEntity = CreateNode(ent, trigger.Value, ent.Comp.EffectsTable, iteration);
+            if (!nodeEntity.HasValue)
+                continue;
+
+            triggerPool.AddTriggerAsUsed(trigger.Value);
+
+            nodes.Add(nodeEntity.Value);
+
+            foreach (var predecessorForEdge in directPredecessors)
+            {
+                AddEdge((ent, ent), predecessorForEdge, nodeEntity.Value, dirty: false);
+            }
         }
 
         return nodes;
     }
 
+    private IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> SelectDirectPredecessors(
+        IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> predecessors,
+        int scatterCount
+    )
+    {
+        ValueList<Entity<XenoArtifactNodeComponent>> predecessorsToUse = new(predecessors);
+        if (predecessors.Count <= 0)
+            return [];
+
+        List<Entity<XenoArtifactNodeComponent>> directPredecessors = new();
+        // Select predecessors to build an edge to
+        do
+        {
+            var predecessor = RobustRandom.Pick(predecessorsToUse);
+            directPredecessors.Add(predecessor);
+            predecessorsToUse.Remove(predecessor);
+
+            // Randomly add extra edges
+            if (RobustRandom.Prob(0.5f))
+                break;
+
+            scatterCount--;
+        } while (scatterCount >= 0 && predecessorsToUse.Count != 0);
+
+        return directPredecessors;
+    }
+
     /// <summary>
     /// Rolls segment size, based on amount of nodes left and XenoArtifactComponent settings.
     /// </summary>
-    private int GetArtifactSegmentSize(Entity<XenoArtifactComponent> ent, int nodeCount)
+    private int GetArtifactSegmentDesiredSize(Entity<XenoArtifactComponent> ent, int nodeCount)
     {
         // Make sure we can't generate a single segment artifact.
         // We always want to have at least 2 segments. For variety.
         var segmentMin = ent.Comp.SegmentSize.Min;
-        var segmentMax = Math.Min(ent.Comp.SegmentSize.Max, Math.Max(nodeCount / 2, segmentMin));
+        var segmentMax = Math.Min(ent.Comp.SegmentSize.Max, Math.Max((float)nodeCount / 2, segmentMin));
 
-        var segmentSize = RobustRandom.Next(segmentMin, segmentMax + 1); // account for non-inclusive max
+        var segmentSize = RobustRandom.Next((int)segmentMin, (int)segmentMax + 1); // account for non-inclusive max
         var remainder = nodeCount - segmentSize;
 
         // If our next segment is going to be undersized, then we just absorb it into this segment.
@@ -215,5 +188,82 @@ public sealed partial class XenoArtifactSystem
         segmentSize = Math.Min(nodeCount, segmentSize);
 
         return segmentSize;
+    }
+
+    private void AddEdgesToUnderConnectedNodes(Entity<XenoArtifactComponent> ent, IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> generated)
+    {
+        var segments = GetSegmentsFromNodes(ent, generated);
+
+        // We didn't connect all of our nodes: do extra work to make sure there's a connection.
+        if (segments.Count <= 1)
+            return;
+
+        var parent = segments.MaxBy(s => s.Count)!;
+        var minP = parent.Min(n => n.Comp.Depth);
+        var maxP = parent.Max(n => n.Comp.Depth);
+
+        segments.Remove(parent);
+        foreach (var segment in segments)
+        {
+            // calculate the range of the depth of the nodes in the segment
+            var minS = segment.Min(n => n.Comp.Depth);
+            var maxS = segment.Max(n => n.Comp.Depth);
+
+            // Figure out the range of depths that allows for a connection between these two.
+            // The range is essentially the lower values + 1 on each side.
+            var min = Math.Max(minS, minP) - 1;
+            var max = Math.Min(maxS, maxP) + 1;
+
+            // how the fuck did you do this? you don't even deserve to get a parent. fuck you.
+            if (min > max || min == max)
+                continue;
+
+            var node1Options = segment.Where(n => n.Comp.Depth >= min && n.Comp.Depth <= max)
+                                      .ToList();
+            if (node1Options.Count == 0)
+                continue;
+
+            var node1 = RobustRandom.Pick(node1Options);
+            var node1Depth = node1.Comp.Depth;
+
+            var node2Options = parent.Where(n => n.Comp.Depth >= node1Depth - 1 && n.Comp.Depth <= node1Depth + 1 && n.Comp.Depth != node1Depth)
+                                     .ToList();
+            if (node2Options.Count == 0)
+                continue;
+
+            var node2 = RobustRandom.Pick(node2Options);
+
+            if (node1.Comp.Depth < node2.Comp.Depth)
+                AddEdge((ent, ent.Comp), node1, node2, false);
+            else
+                AddEdge((ent, ent.Comp), node2, node1, false);
+        }
+    }
+
+    /// <summary>
+    /// Container that represents pool of XenoArtifact triggers.
+    /// </summary>
+    private sealed class TriggerPoolData
+    {
+        private readonly HashSet<EntProtoId> _usedTriggers;
+
+        public TriggerPoolData(int requestedSize)
+        {
+            _usedTriggers = new(requestedSize);
+            Context = new EntityTableContext(new Dictionary<string, object>
+            {
+                [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = _usedTriggers
+            });
+        }
+
+        public readonly EntityTableContext Context;
+
+        public void AddTriggerAsUsed(EntProtoId trigger)
+        {
+            if (!_usedTriggers.Add(trigger))
+                throw new ArgumentException();
+        }
+
+        public IReadOnlyCollection<EntProtoId> UsedTriggers => _usedTriggers;
     }
 }

@@ -49,6 +49,12 @@
     - id: HandheldHealthAnalyzer
     - id: ChemistryBottleLaughter # Widely recognized as the best medicine :o)
       prob: 0.01
+    - id: PlushieLizardJobMedicaldoctor
+      prob: 0.02
+    - id: PlushieLizardJobMedicalintern
+      prob: 0.02
+    - id: PlushieLizardJobPsychologist
+      prob: 0.02
 
 - type: entity
   parent: LockerMedical
@@ -94,6 +100,8 @@
         - id: SprayBottle
         - id: Bucket
         - id: DrinkCartonMilk
+    - id: PlushieLizardJobChemist
+      prob: 0.02
 
 - type: entity
   parent: LockerChemistry
@@ -120,6 +128,8 @@
       - id: RollerBedSpawnFolded
       - id: CheapRollerBedSpawnFolded
       - id: EmergencyRollerBedSpawnFolded
+    - id: PlushieLizardJobParamedic
+      prob: 0.02
 
 - type: entity
   parent: LockerParamedic

@@ -69,6 +69,12 @@ public partial class StatusIconData : IComparable<StatusIconData>
     public int Offset = 0;
 
     /// <summary>
+    /// Offset of the status icon, left and right only.
+    /// </summary>
+    [DataField]
+    public int OffsetHorizontal = 0;
+
+    /// <summary>
     /// Sets if the icon should be rendered with or without the effect of lighting.
     /// </summary>
     [DataField]
@@ -82,6 +88,7 @@ public partial class StatusIconData : IComparable<StatusIconData>
 /// <summary>
 /// <see cref="StatusIconData"/> but in new convenient prototype form!
 /// </summary>
+[DataDefinition]
 public abstract partial class StatusIconPrototype : StatusIconData, IPrototype
 {
     /// <inheritdoc/>
@@ -114,10 +121,10 @@ public sealed partial class JobIconPrototype : StatusIconPrototype, IInheritingP
     public string LocalizedJobName => Loc.GetString(JobName);
 
     /// <summary>
-    /// Should the agent ID or ID card console be able to use this job icon?
+    /// Should this job icon be considered a crew job for silicons?
     /// </summary>
     [DataField]
-    public bool AllowSelection = true;
+    public bool IsCrewJob = true;
 }
 
 /// <summary>

@@ -1,9 +1,9 @@
 - type: entity
-  id: ClosetBase
+  abstract: true
   parent: [ BaseStructureDynamic, BasePaperLabelableVisualized ]
+  id: ClosetBase
   name: closet
   description: A standard-issue Nanotrasen storage unit.
-  abstract: true
   components:
   - type: Animateable
   - type: ResistLocker
@@ -53,33 +53,6 @@
   - type: PlaceableSurface
     placeCentered: true
     isPlaceable: false
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StructuralMetallic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-          params:
-            volume: -6
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 1
-            max: 1
   - type: GenericVisualizer
     visuals:
       enum.PaperLabelVisuals.HasLabel:
@@ -105,8 +78,8 @@
 
 # steel closet base (that can be constructed/deconstructed)
 - type: entity
+  parent: [ ClosetBase, StructureHealthContainerWeak ]
   id: ClosetSteelBase
-  parent: ClosetBase
   components:
   - type: Construction
     graph: ClosetSteel
@@ -115,12 +88,30 @@
     - entity_storage
   - type: Paintable
     group: Closet
+  - type: Damageable
+    damageModifierSet: SteelMod
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 60
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -6
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
 
 #Wall Closet
 - type: entity
-  parent: BaseWallmountMetallic
-  id: BaseWallCloset
   abstract: true
+  parent: [ BaseWallmountMetallic, StructureHealthContainerWeak ]
+  id: BaseWallCloset
   name: wall closet
   description: A standard-issue Nanotrasen storage unit, now on walls.
   components:
@@ -156,16 +147,8 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 60
       behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
@@ -217,8 +200,8 @@
 #Base suit storage unit
 #I am terribly sorry for duplicating the closet almost-wholesale, but the game malds at me if I don't so here we are.
 - type: entity
+  parent: [ BaseStructure, StructureHealthContainerStrong ]
   id: SuitStorageBase
-  parent: BaseStructure
   name: suit storage unit
   description: A fancy hi-tech storage unit made for storing space suits.
   components:
@@ -273,22 +256,13 @@
     placeCentered: true
     isPlaceable: false
   - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: Metallic
+    damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 400
+        damage: 140
       behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
@@ -296,9 +270,9 @@
             volume: -6
       - !type:SpawnEntitiesBehavior
         spawn:
-          SheetSteel1:
-            min: 1
-            max: 1
+          SheetPlasteel1:
+            min: 0
+            max: 2
   - type: Appearance
   - type: EntityStorageVisuals
     # stateBase: base  // This field does not exist. this is probably a bug. TODO

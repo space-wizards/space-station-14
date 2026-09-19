@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Client.Guidebook;
 using Content.Client.Guidebook.Richtext;
+using Content.IntegrationTests.Fixtures;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
@@ -13,7 +14,7 @@ namespace Content.IntegrationTests.Tests.Guidebook;
 /// </summary>
 [TestFixture]
 [TestOf(typeof(DocumentParsingManager))]
-public sealed class DocumentParsingTest
+public sealed class DocumentParsingTest : GameTest
 {
 
     public string TestDocument = @"multiple
@@ -45,7 +46,7 @@ whitespace before newlines are ignored.
     [Test]
     public async Task ParseTestDocument()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var client = pair.Client;
         await client.WaitIdleAsync();
         var parser = client.ResolveDependency<DocumentParsingManager>();
@@ -133,8 +134,6 @@ whitespace before newlines are ignored.
 
         subTest2.Params.TryGetValue("k", out val);
         Assert.That(val, Is.EqualTo(@"<>\>=""=<-_?*3.0//"));
-
-        await pair.CleanReturnAsync();
     }
 
     public sealed class TestControl : Control, IDocumentTag

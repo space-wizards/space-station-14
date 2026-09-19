@@ -2,12 +2,10 @@
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       xmlns:disposal="clr-namespace:Content.Client.Disposal"
                       MinSize="300 180"
-            Resizable="False">
+                      Resizable="False">
     <BoxContainer Orientation="Vertical" Margin="10" SeparationOverride="8">
-        <controls:SwitchButton Name="Power"
-                               Access="Public" />
-        <BoxContainer Orientation="Horizontal"
-                      SeparationOverride="4">
+        <controls:SwitchButton Name="Power" Access="Public" />
+        <BoxContainer Orientation="Horizontal" SeparationOverride="4">
             <Label Text="{Loc 'ui-disposal-unit-label-state'}" />
             <Label Name="UnitState" Access="Public"
                    Text="{Loc 'ui-disposal-unit-label-status'}" />
@@ -17,6 +15,8 @@
             <Label Text="{Loc 'ui-disposal-unit-label-pressure'}" />
             <disposal:PressureBar Name="PressureBar"
                          HorizontalExpand="True"
+                         Access="Public"
+                         MinSize="190 20"
                          MinValue="0"
                          MaxValue="1"
                          Page="0"

@@ -1,12 +1,12 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Shared.Medical.Cryogenics;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Medical.Cryogenics;
 
-public sealed class CryoPodSystem : SharedCryoPodSystem
+public sealed partial class CryoPodSystem : SharedCryoPodSystem
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {

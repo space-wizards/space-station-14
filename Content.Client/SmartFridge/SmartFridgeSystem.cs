@@ -2,9 +2,9 @@ using Content.Shared.SmartFridge;
 
 namespace Content.Client.SmartFridge;
 
-public sealed class SmartFridgeSystem : SharedSmartFridgeSystem
+public sealed partial class SmartFridgeSystem : SharedSmartFridgeSystem
 {
-    [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
+    [Dependency] private SharedUserInterfaceSystem _uiSystem = default!;
 
     protected override void UpdateUI(Entity<SmartFridgeComponent> ent)
     {

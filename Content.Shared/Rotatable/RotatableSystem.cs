@@ -15,12 +15,12 @@ namespace Content.Shared.Rotatable;
 /// <summary>
 /// Handles verbs for the <see cref="RotatableComponent"/> and <see cref="FlippableComponent"/> components.
 /// </summary>
-public sealed class RotatableSystem : EntitySystem
+public sealed partial class RotatableSystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -138,7 +138,7 @@ public sealed class RotatableSystem : EntitySystem
         if (!rotatableComp.RotateWhileAnchored && TryComp<PhysicsComponent>(entity, out var physics) &&
             physics.BodyType == BodyType.Static)
         {
-            _popup.PopupClient(Loc.GetString("rotatable-component-try-rotate-stuck"), entity, player);
+            _popup.PopupEntity(Loc.GetString("rotatable-component-try-rotate-stuck"), entity, player);
             return false;
         }
 
@@ -163,7 +163,7 @@ public sealed class RotatableSystem : EntitySystem
         if (!rotatableComp.RotateWhileAnchored && TryComp<PhysicsComponent>(entity, out var physics) &&
             physics.BodyType == BodyType.Static)
         {
-            _popup.PopupClient(Loc.GetString("rotatable-component-try-rotate-stuck"), entity, player);
+            _popup.PopupEntity(Loc.GetString("rotatable-component-try-rotate-stuck"), entity, player);
             return false;
         }
 
@@ -187,7 +187,7 @@ public sealed class RotatableSystem : EntitySystem
         // Check if the object is anchored.
         if (TryComp<PhysicsComponent>(entity, out var physics) && physics.BodyType == BodyType.Static)
         {
-            _popup.PopupClient(Loc.GetString("flippable-component-try-flip-is-stuck"), entity, player);
+            _popup.PopupEntity(Loc.GetString("flippable-component-try-flip-is-stuck"), entity, player);
             return false;
         }
 

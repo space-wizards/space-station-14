@@ -13,10 +13,10 @@ namespace Content.Client.Changelog
 {
     public sealed partial class ChangelogManager : IPostInjectInit
     {
-        [Dependency] private readonly ILogManager _logManager = default!;
-        [Dependency] private readonly IResourceManager _resource = default!;
-        [Dependency] private readonly ISerializationManager _serialization = default!;
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private ILogManager _logManager = default!;
+        [Dependency] private IResourceManager _resource = default!;
+        [Dependency] private ISerializationManager _serialization = default!;
+        [Dependency] private IConfigurationManager _configManager = default!;
 
         private const string SawmillName = "changelog";
         public const string MainChangelogName = "Changelog";
@@ -195,17 +195,23 @@ namespace Content.Client.Changelog
         [DataDefinition]
         public sealed partial class ChangelogEntry
         {
-            [DataField("id")]
+            [DataField]
             public int Id { get; private set; }
 
-            [DataField("author")]
+            [DataField]
             public string Author { get; private set; } = "";
 
             [DataField]
             public DateTime Time { get; private set; }
 
-            [DataField("changes")]
+            [DataField]
             public List<ChangelogChange> Changes { get; private set; } = default!;
+
+            /// <summary>
+            ///     Labels attached to the related PR, passed on via the SS14.Changelog parser.
+            /// </summary>
+            [DataField]
+            public List<string> Labels { get; private set; } = [];
         }
 
         [DataDefinition]

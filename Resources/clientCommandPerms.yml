@@ -97,3 +97,7 @@
 - Flags: ADMINCHAT
   Commands:
     - achatwindow
+
+- Flags: ADMIN
+  Commands:
+    - admin_overlay

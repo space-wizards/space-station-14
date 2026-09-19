@@ -64,3 +64,27 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: MindShield
+
+- type: securityIcon
+  id: CrewBorderIcon
+  priority: 2
+  offset: -4
+  offsetHorizontal: 4
+  locationPreference: Right
+  layer: Mod
+  isShaded: true
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons_borders.rsi
+    state: CrewBorder
+
+- type: securityIcon
+  id: CrewUncertainBorderIcon
+  priority: 2
+  offset: -4
+  offsetHorizontal: 4
+  locationPreference: Right
+  layer: Mod
+  isShaded: true
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons_borders.rsi
+    state: CrewUncertainBorder

@@ -1,5 +1,5 @@
-﻿- type: localizedDataset
+- type: localizedDataset
   id: NamesAI
   values:
     prefix: names-ai-dataset-
-    count: 108
+    count: 103

@@ -26,6 +26,9 @@
       path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
     projectileSpeed: 25
   - type: AmmoCounter
+  - type: CustomSpriteAmmoCounter
+    loadedAmmoSprite: Interface/ItemStatus/PKA/not_spent.png
+    spentAmmoSprite: Interface/ItemStatus/PKA/spent.png
   - type: Appearance
   - type: GenericVisualizer
     visuals:

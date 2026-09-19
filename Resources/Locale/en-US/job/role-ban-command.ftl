@@ -1,4 +1,4 @@
-﻿### Localization for role ban command
+### Localization for role ban command
 
 cmd-roleban-desc = Bans a player from a role
 cmd-roleban-help = Usage: roleban <name or user ID> <job> <reason> [duration in minutes, leave out or 0 for permanent ban]
@@ -44,7 +44,6 @@ cmd-roleban-severity-parse = ${severity} is not a valid severity\n{$help}.
 cmd-roleban-arg-count = Invalid amount of arguments.
 cmd-roleban-job-parse = Job {$job} does not exist.
 cmd-roleban-name-parse = Unable to find a player with that name.
-cmd-roleban-existing = {$target} already has a role ban for {$role}.
 cmd-roleban-success = Role banned {$target} from {$role} with reason {$reason} {$length}.
 
 cmd-roleban-inf = permanently
