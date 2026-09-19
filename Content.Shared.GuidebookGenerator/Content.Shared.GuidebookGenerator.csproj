@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../RobustToolbox/Robust.Roslyn.Shared/Robust.Roslyn.Shared.props" />
+
+  <ItemGroup>
+    <Compile Include="..\RobustToolbox\Robust.Roslyn.Shared\**\*.cs">
+      <Link>Robust.Roslyn.Shared\%(RecursiveDir)%(Filename)%(Extension)</Link>
+    </Compile>
+    <Compile Remove="..\RobustToolbox\Robust.Roslyn.Shared\obj\**\*.cs" />
+  </ItemGroup>
+
+</Project>
