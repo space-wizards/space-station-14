@@ -65,11 +65,6 @@ public sealed partial class BuckleComponent : Component
     /// </summary>
     [DataField]
     public int Size = 100;
-
-    /// <summary>
-    /// Used for client rendering
-    /// </summary>
-    [ViewVariables] public int? OriginalDrawDepth;
 }
 
 public sealed partial class UnbuckleAlertEvent : BaseAlertEvent;

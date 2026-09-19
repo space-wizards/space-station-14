@@ -4,6 +4,7 @@
   components:
   - type: Sprite
     noRot: true
+  - type: Appearance
   - type: InputMover
   - type: Clickable
   - type: InteractionOutline
@@ -64,6 +65,10 @@
   - type: GravityAffected
   - type: Strap
     buckleOffset: "0,-0.05"
+  - type: StrapOverlay
+    layers:
+    - sprite: Objects/Vehicles/wheelchair.rsi
+      state: wheelchair_overlay
   - type: Fixtures
     fixtures:
       fix1:
@@ -87,7 +92,7 @@
   components:
   - type: Sprite
     sprite: Objects/Vehicles/janicart.rsi
-    drawdepth: Mobs # fixes layering like magic.
+    drawdepth: Objects
     layers:
     - state: vehicle
       map: ["movement"]
@@ -138,7 +143,10 @@
       #      max: 1
   - type: Strap
     buckleOffset: "0.01,0.15"
-    modifyBuckleDrawDepth: false
+  - type: StrapOverlay
+    layers:
+    - sprite: Objects/Vehicles/janicart.rsi
+      state: vehicle-overlay
   - type: ItemSlots
     slots:
       key_slot:
