@@ -74,7 +74,7 @@ run PROJECT BUILD="false" WARNINGLEVEL="4" *BUILDFLAGS:
 
 # Build and run the specified project. This always runs with implicit restore enabled.
 [group("Building the game")]
-build-and-run PROJECT CONFIG="Debug" WARNINGLEVEL="4" *BUILDFLAGS: (run PROJECT "true" CONFIG WARNINGLEVEL BUILDFLAGS)
+build-and-run PROJECT CONFIG="Debug" WARNINGLEVEL="4" *BUILDFLAGS: (run PROJECT "true" WARNINGLEVEL BUILDFLAGS)
 
 # Run the client.
 [group("Running the game")]
