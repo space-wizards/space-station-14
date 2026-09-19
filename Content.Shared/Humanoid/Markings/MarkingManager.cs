@@ -149,31 +149,24 @@ public sealed partial class MarkingManager
                 }
 
                 var existingColors = markings[i].MarkingColors;
+                var markingColorCount = marking.GetColorCount();
+
                 // If there are less colors than sprites, fill missing spots with the last existing color,
                 // or white, if there are no existing colors
                 // This will occur if an existing marking is edited to have additional layers
-                if (marking.Sprites.Count > existingColors.Count)
+                if (existingColors.Count < markingColorCount)
                 {
-                    var numMissingColors = marking.Sprites.Count - existingColors.Count;
+                    var numMissingColors = markingColorCount - existingColors.Count;
+                    var lastColor = existingColors.Count > 0
+                        ? existingColors[^1] // Last color in the list
+                        : Color.White; // White, if none
 
-                    IEnumerable<Color> missingColors;
-
-                    if (existingColors.Count == 0)
-                    {
-                        missingColors = Enumerable.Repeat(Color.White, numMissingColors);
-                    }
-                    else
-                    {
-                        missingColors = Enumerable.Repeat(existingColors[^1], numMissingColors);
-                    }
-
+                    var missingColors = Enumerable.Repeat(lastColor, numMissingColors);
                     markings[i] = new Marking(marking.ID, existingColors.Concat(missingColors));
                 }
                 // If there are more colors than sprites, drop the extras
-                else if (marking.Sprites.Count < existingColors.Count)
-                {
-                    markings[i] = new Marking(marking.ID, existingColors.Take(marking.Sprites.Count));
-                }
+                else if (existingColors.Count > markingColorCount)
+                    markings[i] = new Marking(marking.ID, existingColors.Take(markingColorCount));
             }
         }
     }
