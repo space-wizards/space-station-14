@@ -185,8 +185,10 @@
       amount: 1
     Sugar:
       amount: 1
+    Vodka:
+      amount: 1
   products:
-    BananaHonk: 3
+    BananaHonk: 4
 
 - type: reaction
   id: BeepskySmash
