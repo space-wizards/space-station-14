@@ -14,6 +14,9 @@ using System.Numerics;
 
 namespace Content.Client.Access.UI;
 
+/// <summary>
+/// A window for configuring an agent ID card, allows setting name, job title and job icon.
+/// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class AgentIDCardWindow : FancyWindow
 {
@@ -22,9 +25,19 @@ public sealed partial class AgentIDCardWindow : FancyWindow
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     private readonly SpriteSystem _spriteSystem;
 
+    /// <summary>
+    /// An event raised when the name for the ID card changes.
+    /// </summary>
     public event Action<string>? OnNameChanged;
+
+    /// <summary>
+    /// An event raised when the job title for the ID card changes.
+    /// </summary>
     public event Action<string>? OnJobChanged;
 
+    /// <summary>
+    /// An event raised when the job icon for the ID card changes.
+    /// </summary>
     public event Action<ProtoId<JobIconPrototype>>? OnJobIconChanged;
 
     public AgentIDCardWindow()
@@ -51,8 +64,8 @@ public sealed partial class AgentIDCardWindow : FancyWindow
     /// </summary>
     public void SetAllowedIcons(IReadOnlyList<ProtoId<JobIconGroupPrototype>> jobGroups, ProtoId<JobIconPrototype> currentIcon)
     {
-        JobGroupGrid.DisposeAllChildren();
-        IconGrid.DisposeAllChildren();
+        JobGroupGrid.RemoveAllChildren();
+        IconGrid.RemoveAllChildren();
 
         var jobGroupButtonGroup = new ButtonGroup();
         ContainerButton? firstGroupButton = null;
@@ -97,7 +110,7 @@ public sealed partial class AgentIDCardWindow : FancyWindow
     /// </summary>
     private void SetJobIcons(IReadOnlyList<ProtoId<JobIconPrototype>> jobIcons)
     {
-        IconGrid.DisposeAllChildren();
+        IconGrid.RemoveAllChildren();
 
         foreach (var icon in jobIcons)
         {

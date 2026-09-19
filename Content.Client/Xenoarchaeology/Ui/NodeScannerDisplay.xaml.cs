@@ -14,7 +14,7 @@ namespace Content.Client.Xenoarchaeology.Ui;
 public sealed partial class NodeScannerDisplay : FancyWindow
 {
     [Dependency] private IEntityManager _ent = default!;
-    [Dependency] private IGameTiming _timing= default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     private readonly SharedXenoArtifactSystem _artifact;
     private TimeSpan? _nextUpdate;
@@ -52,7 +52,7 @@ public sealed partial class NodeScannerDisplay : FancyWindow
     {
         base.FrameUpdate(args);
 
-        if(_nextUpdate  != null && _timing.CurTime < _nextUpdate)
+        if (_nextUpdate != null && _timing.CurTime < _nextUpdate)
             return;
 
         _nextUpdate = _timing.CurTime + _updateFromAttachedFrequency;
