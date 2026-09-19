@@ -380,6 +380,18 @@ public abstract partial class SharedDoorSystem : EntitySystem
     }
 
     /// <summary>
+    /// Force door opening without animation, skipping every check the normal path enforces. Works also if the entity is paused.
+    /// </summary>
+    public void OpenNow(EntityUid uid, DoorComponent? door = null)
+    {
+        if (!Resolve(uid, ref door))
+            return;
+
+        SetState(uid, DoorState.Open, door);
+        SetCollidable(uid, false, door);
+    }
+
+    /// <summary>
     /// Called when the door is partially opened. The door becomes transparent and stops colliding with entities.
     /// </summary>
     public void OnPartialOpen(EntityUid uid, DoorComponent? door = null)
