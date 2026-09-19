@@ -46,4 +46,14 @@ public sealed partial class VendingMachineComponent : Component
     public EntityUid? RestockStream;
 }
 
-public sealed partial class VendingMachineSelfDispenseEvent : InstantActionEvent;
+/// <summary>
+/// A simple event to signal to the Vending Machine that it should spawn a random item from its inventory.
+/// </summary>
+public sealed partial class VendingMachineSelfDispenseEvent : InstantActionEvent
+{
+    /// <summary>
+    /// Should the spawn item be thrown or just put down?
+    /// </summary>
+    [DataField]
+    public bool ThrowItem { get; set; } = true;
+}
