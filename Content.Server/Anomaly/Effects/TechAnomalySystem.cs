@@ -128,6 +128,6 @@ public sealed partial class TechAnomalySystem : EntitySystem
 
     private void OnPulse(Entity<TechAnomalyComponent> tech, ref AnomalyPulseEvent args)
     {
-        _signal.InvokePort(tech, tech.Comp.PulsePort);
+        _signal.InvokePort(tech.Owner, tech.Comp.PulsePort);
     }
 }
