@@ -108,6 +108,18 @@
 
 - type: construction
   parent: Girder
+  id: WallMining
+  targetNode: wallMining
+
+- type: construction
+  parent: Girder
+  id: WallMiningDiagonal
+  name: construction-recipe-wall-mining-diagonal
+  targetNode: wallMiningDiagonal
+  canRotate: true
+
+- type: construction
+  parent: Girder
   id: MeatWall
   targetNode: meatWall
 
@@ -181,6 +193,12 @@
   parent: BaseWindow
   id: ShuttleWindow
   targetNode: shuttleWindow
+
+- type: construction
+  parent: BaseWindowDiagonal
+  id: ShuttleWindowDiagonal
+  name: construction-recipe-shuttle-window-diagonal
+  targetNode: shuttleWindowDiagonal
 
 - type: construction
   parent: BaseWindowDiagonal
@@ -488,6 +506,19 @@
 - type: construction
   parent: Airlock
   id: AirlockGlass
+  targetNode: glassAirlock
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: AirlockMining
+  name: construction-recipe-mining-airlock
+  graph: MiningAirlock
+  targetNode: airlock
+
+- type: construction
+  parent: AirlockMining
+  id: AirlockGlassMining
+  name: construction-recipe-mining-airlock-glass
   targetNode: glassAirlock
 
 - type: construction
