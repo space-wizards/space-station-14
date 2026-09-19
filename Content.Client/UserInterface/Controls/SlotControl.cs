@@ -20,6 +20,7 @@ namespace Content.Client.UserInterface.Controls
         public SpriteView HoverSpriteView { get; }
         public Control AdminOverlays { get; }
         public TextureButton StorageButton { get; }
+        public BoxContainer BlockersContainer { get; }
         public CooldownGraphic CooldownDisplay { get; }
 
         private SpriteView SpriteView { get; }
@@ -204,6 +205,14 @@ namespace Content.Client.UserInterface.Controls
                 Visible = false
             });
 
+            AddChild(BlockersContainer = new BoxContainer
+            {
+                SetSize = new Vector2(DefaultButtonSize * 0.35F, DefaultButtonSize),
+                HorizontalAlignment = HAlignment.Right,
+                VerticalAlignment = VAlignment.Center,
+                Orientation = BoxContainer.LayoutOrientation.Vertical,
+            });
+
             HighlightTexturePath = "slot_highlight";
             BlockedTexturePath = "blocked";
         }
@@ -259,6 +268,38 @@ namespace Content.Client.UserInterface.Controls
 
             var sprites = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SpriteSystem>();
             sprites.SetColor((ent.Owner, ent.Comp1), Color.DarkGray.WithAlpha(0.65f));
+        }
+
+        /// <summary>
+        /// Updates the blockers for this slot.
+        /// </summary>
+        /// <param name="blockers">The blockers that block this slot.</param>
+        public void UpdateBlockers(List<EntityUid> blockers)
+        {
+            // Delete blockers previews if there's more then needed
+            while (BlockersContainer.ChildCount > blockers.Count)
+            {
+                BlockersContainer.RemoveChild(0);
+            }
+
+            // Add new blockers previews or update existing ones
+            for (var i = 0; i < blockers.Count; i++)
+            {
+                if (i >= BlockersContainer.ChildCount)
+                {
+                    var blockerView = new SpriteView
+                    {
+                        SetSize = new Vector2(DefaultButtonSize * 0.35f),
+                        VerticalAlignment = VAlignment.Top,
+                        OverrideDirection = Direction.South,
+                    };
+
+                    BlockersContainer.AddChild(blockerView);
+                }
+
+                var child = (SpriteView)BlockersContainer.GetChild(i);
+                child.SetEntity(blockers[i]);
+            }
         }
 
         private void UpdateButtonTexture()
