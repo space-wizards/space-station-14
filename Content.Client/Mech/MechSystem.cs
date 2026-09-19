@@ -42,6 +42,6 @@ public sealed partial class MechSystem : SharedMechSystem
         }
 
         _sprite.LayerSetRsiState((uid, args.Sprite), MechVisualLayers.Base, state);
-        _sprite.SetDrawDepth((uid, args.Sprite), (int)drawDepth);
+        _sprite.SetDrawDepth((uid, args.Sprite), (byte)drawDepth);
     }
 }

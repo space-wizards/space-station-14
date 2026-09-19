@@ -225,7 +225,7 @@ namespace Content.Client.Tabletop
 
             if (_appearance.TryGetData<int>(uid, TabletopItemVisuals.DrawDepth, out var drawDepth, args.Component))
             {
-                _sprite.SetDrawDepth((uid, args.Sprite), drawDepth);
+                _sprite.SetDrawDepth((uid, args.Sprite), (byte) drawDepth);
             }
         }
 
