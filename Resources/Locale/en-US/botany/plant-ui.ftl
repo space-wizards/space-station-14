@@ -20,7 +20,7 @@ botany-ui-maturation = Maturation
 botany-ui-production = Production
 botany-ui-potency = Potency
 
-botany-ui-section-tray = Tray resources
+botany-ui-section-resources = Tray resources
 botany-ui-water = Water
 botany-ui-nutrients = Nutrients
 botany-ui-weeds = Weeds

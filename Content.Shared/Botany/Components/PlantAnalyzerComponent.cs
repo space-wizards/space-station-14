@@ -16,7 +16,7 @@ public sealed partial class PlantAnalyzerComponent : Component
     /// The delay before an analyzer finishes scanning a plant.
     /// </summary>
     [DataField]
-    public TimeSpan ScanDelay = TimeSpan.FromSeconds(0.8);
+    public TimeSpan ScanDelay = TimeSpan.FromSeconds(0.5);
 
     /// <summary>
     /// Sound played when scanning finishes.
