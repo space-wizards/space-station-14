@@ -341,3 +341,37 @@
       - minTemperature: 445
   - node: dragon cutlet
     entity: FoodMeatDragonCutletCooked
+
+- type: constructionGraph
+  id: SnakeMeat
+  start: start
+  graph:
+
+  - node: start
+    edges:
+    - to: snake meat
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
+      steps:
+      - minTemperature: 335
+
+  - node: snake meat
+    entity: FoodMeatSnakeCooked
+
+- type: constructionGraph
+  id: SpiderLegs
+  start: start
+  graph:
+
+  - node: start
+    edges:
+    - to: spider legs
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
+      steps:
+      - minTemperature: 335
+
+  - node: spider legs
+    entity: FoodMeatSpiderlegCooked
