@@ -30,6 +30,22 @@
         task: SimpleHumanoidHostileCompound
 
 - type: entity
+  name: Urist McNinja
+  parent: MobSalvager
+  id: MobNinjaDebug
+  suffix: ActionUser
+  components:
+  - type: NPCUseActionOnTarget
+    actions:
+    - actionId: ActionGoliathTentacle
+    - actionId: ActionEnergyKatanaDash
+      ref: true
+  - type: Loadout
+    prototypes:
+    - SpaceNinjaGear
+  - type: SpaceNinja
+
+- type: entity
   name: spirate
   parent: MobHuman
   id: MobSpirate
