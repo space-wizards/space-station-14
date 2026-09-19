@@ -626,6 +626,18 @@ public sealed partial class NukeSystem : EntitySystem
         UpdateUserInterface(uid, component);
     }
 
+    public void CloneNuke(Entity<NukeComponent> original, Entity<NukeComponent?> clone)
+    {
+        clone.Comp ??= EnsureComp<NukeComponent>(clone);
+
+        clone.Comp.Code = original.Comp.Code;
+        clone.Comp.Cooldown = original.Comp.Cooldown;
+        clone.Comp.CooldownTime = original.Comp.CooldownTime;
+        clone.Comp.EnteredCode = original.Comp.EnteredCode;
+        clone.Comp.Status = original.Comp.Status;
+        clone.Comp.RemainingTime = original.Comp.RemainingTime;
+    }
+
     #endregion
 
     private void DisarmBombDoAfter(EntityUid uid, EntityUid user, NukeComponent nuke)
