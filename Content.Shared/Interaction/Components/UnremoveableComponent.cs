@@ -11,4 +11,7 @@ public sealed partial class UnremoveableComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool DeleteOnDrop = true;
+
+    [DataField, AutoNetworkedField]
+    public bool BecomeRemoveableOnDrop = true;
 }
