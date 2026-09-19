@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: StructureHealthMachineWeak
   id: UnfinishedMachineFrame
   name: machine frame
