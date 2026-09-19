@@ -121,9 +121,6 @@ public sealed partial class StatusIconOverlay : Overlay
                 var position = new Vector2(xOffset, yOffset);
                 handle.DrawTexture(texture, position);
             }
-
-            handle.UseShader(null);
-            handle.SetTransform(Matrix3x2.Identity);
         }
     }
 }

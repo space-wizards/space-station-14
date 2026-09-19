@@ -138,10 +138,6 @@ public sealed partial class StationAiOverlay : Overlay
         // Draw the static
         worldHandle.UseShader(_proto.Index(StencilDrawShader).Instance());
         worldHandle.DrawTextureRect(res.StaticTexture!.Texture, worldBounds);
-
-        worldHandle.SetTransform(Matrix3x2.Identity);
-        worldHandle.UseShader(null);
-
     }
 
     protected override void DisposeBehavior()

@@ -52,9 +52,6 @@ public sealed partial class ExplosionOverlay : Overlay
             index = Math.Min(index, visuals.Intensity.Count - 1);
             DrawExplosion(drawHandle, args.WorldBounds, visuals, index, xforms, textures);
         }
-
-        drawHandle.SetTransform(Matrix3x2.Identity);
-        drawHandle.UseShader(null);
     }
 
     private void DrawExplosion(

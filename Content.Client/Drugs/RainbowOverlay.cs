@@ -101,6 +101,5 @@ public sealed partial class RainbowOverlay : Overlay
         _rainbowShader.SetParameter("phase", Phase);
         handle.UseShader(_rainbowShader);
         handle.DrawRect(args.WorldBounds, Color.White);
-        handle.UseShader(null);
     }
 }

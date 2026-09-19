@@ -75,8 +75,6 @@ public sealed partial class PuddleOverlay : Overlay
                 drawHandle.DrawRect(box, ColorMap(debugOverlayData.CurrentVolume));
             }
         }
-
-        drawHandle.SetTransform(Matrix3x2.Identity);
     }
 
     private void DrawScreen(in OverlayDrawArgs args)
