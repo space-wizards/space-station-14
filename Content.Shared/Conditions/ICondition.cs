@@ -19,13 +19,5 @@ public interface ICondition
 /// <typeparam name="TCondition">The strong type of the condition, which at time of inception, all evaluating systems will look for.</typeparam>
 public interface ICondition<TCondition> : ICondition where TCondition : ICondition
 {
-    /// <summary>
-    /// Creates a strongly typed evaluation event, avoiding the need for reflection to create a matching event for listeners to use.
-    /// </summary>
-    ConditionEvaluationEvent? ICondition.WrapInEvent(EntityUid entity, EntityUid? sourceEntity)
-    {
-        if (this is TCondition condition)
-            return new ConditionEvaluationEvent<TCondition>(condition, entity, sourceEntity);
-        return null;
-    }
+
 }

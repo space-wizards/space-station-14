@@ -4,22 +4,15 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Math;
 
-public sealed partial class BoundaryCondition : EntityCondition, IBoundaryWrapper
+public sealed partial class LimiterCondition : EntityConditionBase<ILimiterCondition>, ILimiterCondition
 {
     public override string EntityConditionGuidebookText(IPrototypeManager prototype)
     {
         return "";
     }
 
-    public override ConditionEvaluationEvent? WrapInEvent(EntityUid entity, EntityUid? sourceEntity)
-    {
-        return null;
-    }
-
-    ICondition IBoundaryWrapper.Condition => ConditionEntity;
-
     [DataField]
-    public required EntityCondition ConditionEntity { get; set; }
+    public required ICondition Condition { get; set; }
 
     [DataField]
     public float MinimumOutputValue { get; set; } = float.MinValue;

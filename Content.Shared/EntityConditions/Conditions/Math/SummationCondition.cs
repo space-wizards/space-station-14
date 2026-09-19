@@ -16,7 +16,7 @@ public sealed partial class SummationCondition : EntityCondition, ISummationCond
         return null;
     }
 
-    IEnumerable<ICondition> ISummationCondition.Conditions => Conditions;
+    IEnumerable<ICondition> ISummationCondition.Summands => Conditions;
 
     [DataField]
     public required EntityCondition[] Conditions { get; set; }

@@ -4,16 +4,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Math;
 
-public sealed partial class AlwaysTrueCondition : EntityCondition, IRawValue
+public sealed partial class AbsoluteCondition : EntityConditionBase<IAbsoluteCondition>, IAbsoluteCondition
 {
     public override string EntityConditionGuidebookText(IPrototypeManager prototype)
     {
         return "";
-    }
-
-    public override ConditionEvaluationEvent? WrapInEvent(EntityUid entity, EntityUid? sourceEntity)
-    {
-        return null;
     }
 
     [DataField]

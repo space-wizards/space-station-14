@@ -13,47 +13,6 @@ namespace Content.Shared.Conditions;
 public sealed partial class SharedConditionEvaluationSystem : EntitySystem
 {
     /// <summary>
-    /// Helper function to check for basic arithmetic conditions, that do not need a separate system to evaluate.
-    /// </summary>
-    /// <param name="condition"></param>
-    /// <param name="entityUid"></param>
-    /// <param name="sourceEntity"></param>
-    /// <param name="value"></param>
-    /// <returns></returns>
-    private bool TryEvaluateGenericConditions(ICondition condition,
-        EntityUid entityUid,
-        EntityUid? sourceEntity,
-        out float value)
-    {
-        value = 0;
-        switch (condition)
-        {
-            case IMultiplierCondition multiplierCondition:
-                if (multiplierCondition.Multipliers.Any())
-                {
-                    value = multiplierCondition.Multipliers.Select(e => EvaluateCondition(e, entityUid, sourceEntity))
-                        .Aggregate((e, f) => e * f);
-                }
-                return true;
-            case ISummationCondition summationCondition:
-                if (summationCondition.Conditions.Any())
-                    value = summationCondition.Conditions.Sum(e => EvaluateCondition(e, entityUid, sourceEntity));
-                return true;
-            case IRawValue rawValue:
-                value = rawValue.Value;
-                return true;
-            case IBoundaryWrapper boundaryWrapper:
-                value = EvaluateCondition(boundaryWrapper.Condition, entityUid, sourceEntity);
-                value = MathF.Min(value, boundaryWrapper.MaximumOutputValue);
-                value = MathF.Max(value, boundaryWrapper.MinimumOutputValue);
-                return true;
-        }
-
-        value = 0;
-        return false;
-    }
-
-    /// <summary>
     /// Evaluates a condition against an entity given an optional source entity.
     /// </summary>
     /// <param name="condition"></param>
@@ -63,9 +22,6 @@ public sealed partial class SharedConditionEvaluationSystem : EntitySystem
     /// <exception cref="NotImplementedException">A condition that cannot be evaluated should not exist. Either you using it on an entity missing necessary components or there is no system to evaluate the condition</exception>
     public float EvaluateCondition(ICondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        // preliminary check for generic condition
-        if (TryEvaluateGenericConditions(condition, entityUid, sourceEntity, out var value))
-            return value;
         //make the event using our cached building function.
         var evt = condition.WrapInEvent(entityUid, sourceEntity);
         if (evt == null)
