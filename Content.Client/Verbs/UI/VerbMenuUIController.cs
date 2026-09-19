@@ -1,6 +1,5 @@
 using System.Linq;
 using System.Numerics;
-using Content.Client.CombatMode;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Gameplay;
 using Content.Client.Mapping;
@@ -30,7 +29,6 @@ namespace Content.Client.Verbs.UI
         [Dependency] private IPlayerManager _playerManager = default!;
         [Dependency] private ContextMenuUIController _context = default!;
 
-        [UISystemDependency] private readonly CombatModeSystem _combatMode = default!;
         [UISystemDependency] private readonly VerbSystem _verbSystem = default!;
 
         public NetEntity CurrentTarget;
@@ -101,9 +99,6 @@ namespace Content.Client.Verbs.UI
         {
             DebugTools.Assert(target.IsValid());
             if (_playerManager.LocalEntity is not {Valid: true} user)
-                return;
-
-            if (!force && _combatMode.IsInCombatMode(user))
                 return;
 
             Close();
