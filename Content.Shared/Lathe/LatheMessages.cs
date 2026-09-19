@@ -1,33 +1,13 @@
-using Content.Shared.Research.Prototypes;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Lathe;
 
-[Serializable, NetSerializable]
-public sealed class LatheUpdateState : BoundUserInterfaceState
-{
-    public List<ProtoId<LatheRecipePrototype>> Recipes;
-
-    public LatheRecipeBatch[] Queue;
-
-    public ProtoId<LatheRecipePrototype>? CurrentlyProducing;
-
-    public LatheUpdateState(List<ProtoId<LatheRecipePrototype>> recipes, LatheRecipeBatch[] queue, ProtoId<LatheRecipePrototype>? currentlyProducing = null)
-    {
-        Recipes = recipes;
-        Queue = queue;
-        CurrentlyProducing = currentlyProducing;
-    }
-}
-
 /// <summary>
-///     Sent to the server to sync material storage and the recipe queue.
+/// Sent to clients when the recipes available in the lathe have changed
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class LatheSyncRequestMessage : BoundUserInterfaceMessage
+public sealed class LatheRefreshRecipesMessage : BoundUserInterfaceMessage
 {
-
 }
 
 /// <summary>

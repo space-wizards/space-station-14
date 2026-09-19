@@ -24,6 +24,8 @@ public sealed partial class LatheMenu : FancyWindow
     private readonly SpriteSystem _spriteSystem;
     private readonly LatheSystem _lathe;
     private readonly MaterialStorageSystem _materialStorage;
+    /// Map from RecipeListData to the control for any controls created so far
+    private readonly Dictionary<RecipeListData, RecipeControl> _dataToControls = new();
 
     public event Action<BaseButton.ButtonEventArgs>? OnServerListButtonPressed;
     public event Action<string, int>? RecipeQueueAction;
@@ -63,13 +65,22 @@ public sealed partial class LatheMenu : FancyWindow
                     AmountLineEdit.Text = "0";
             }
 
-            PopulateRecipes();
+            UpdateCanProduce();
         };
 
-        FilterOption.OnItemSelected += OnItemSelected;
+        FilterOption.OnItemSelected += OnFilterSelected;
 
         ServerListButton.OnPressed += a => OnServerListButtonPressed?.Invoke(a);
         DeleteFabricating.OnPressed += _ => DeleteFabricatingAction?.Invoke();
+        RecipeList.GenerateItem = GenerateRecipeItemControl;
+    }
+
+    protected override void Opened()
+    {
+        base.Opened();
+        // Give the search bar keyboard focus, since that's probably
+        // the first thing the user is going to want to do with this UI
+        SearchBar.GrabKeyboardFocus();
     }
 
     public void SetEntity(EntityUid uid)
@@ -91,11 +102,24 @@ public sealed partial class LatheMenu : FancyWindow
     }
 
     /// <summary>
+    /// Re-initialize the set of recipes we can print
+    /// </summary>
+    public void RefreshRecipes()
+    {
+        if (_lathe.TryGetAvailableRecipes(Entity, out var recipes))
+        {
+            Recipes = recipes;
+            PopulateRecipes();
+            UpdateCategories();
+        }
+    }
+
+    /// <summary>
     /// Populates the list of all the recipes
     /// </summary>
     public void PopulateRecipes()
     {
-        var recipesToShow = new List<LatheRecipePrototype>();
+        var recipesToShow = new List<RecipeListData>();
         foreach (var recipe in Recipes)
         {
             if (!_prototypeManager.Resolve(recipe, out var proto))
@@ -116,71 +140,69 @@ public sealed partial class LatheMenu : FancyWindow
             if (SearchBar.Text.Trim().Length != 0)
             {
                 if (_lathe.GetRecipeName(recipe).ToLowerInvariant().Contains(SearchBar.Text.Trim().ToLowerInvariant()))
-                    recipesToShow.Add(proto);
+                    recipesToShow.Add(new RecipeListData(proto));
             }
             else
             {
-                recipesToShow.Add(proto);
+                recipesToShow.Add(new RecipeListData(proto));
             }
         }
-
-        if (!int.TryParse(AmountLineEdit.Text, out var quantity) || quantity <= 0)
-            quantity = 1;
 
         RecipeCount.Text = Loc.GetString("lathe-menu-recipe-count", ("count", recipesToShow.Count));
 
-        var sortedRecipesToShow = recipesToShow.OrderBy(_lathe.GetRecipeName);
+        recipesToShow.Sort((RecipeListData a, RecipeListData b) =>
+        {
+            return _lathe.GetRecipeName(a.Recipe).CompareTo(_lathe.GetRecipeName(b.Recipe));
+        });
+        _dataToControls.Clear();
+        RecipeList.PopulateList(recipesToShow);
+    }
 
-        // Get the existing list of queue controls
-        var oldChildCount = RecipeList.ChildCount;
+    public void UpdateMaterialAmounts()
+    {
+        // MaterialStorageControl handles display of materials (every frame!) so
+        // the only thing we need to do here is enable/disable production buttons.
+        UpdateCanProduce();
+    }
+
+    public void UpdateCanProduce()
+    {
+        if (!_entityManager.TryGetComponent(Entity, out LatheComponent? lathe))
+        {
+            return;
+        }
+
+        var quantity = GetQuantity();
+        foreach (var (data, control) in _dataToControls)
+        {
+            var canProduce = _lathe.CanProduce(Entity, data.Recipe, quantity, component: lathe);
+            control.SetCanProduce(canProduce);
+        }
+    }
+
+    private void GenerateRecipeItemControl(ListData data, ListContainerButton button)
+    {
+        if (data is not RecipeListData recipeData)
+            return;
+
+        var prototype = recipeData.Recipe;
+        var tooltipFunction = () => GenerateTooltipText(prototype);
         _entityManager.TryGetComponent(Entity, out LatheComponent? lathe);
-
-        int idx = 0;
-        foreach (var prototype in sortedRecipesToShow)
+        var canProduce = _lathe.CanProduce(Entity, prototype, GetQuantity(), component: lathe);
+        var control = new RecipeControl(_lathe, prototype, tooltipFunction, canProduce, GetRecipeDisplayControl(prototype));
+        control.OnButtonPressed += s =>
         {
-            var canProduce = _lathe.CanProduce(Entity, prototype, quantity, component: lathe);
-            var tooltipFunction = () => GenerateTooltipText(prototype);
-
-            if (idx >= oldChildCount)
-            {
-                var control = new RecipeControl(_lathe, prototype, tooltipFunction, canProduce, GetRecipeDisplayControl(prototype));
-                control.OnButtonPressed += s =>
-                {
-                    if (!int.TryParse(AmountLineEdit.Text, out var amount) || amount <= 0)
-                        amount = 1;
-                    RecipeQueueAction?.Invoke(s, amount);
-                };
-                RecipeList.AddChild(control);
-            }
-            else
-            {
-                var child = RecipeList.GetChild(idx) as RecipeControl;
-
-                if (child == null)
-                {
-                    DebugTools.Assert($"Lathe menu recipe control at {idx} is not of type RecipeControl"); // Something's gone terribly wrong.
-                    continue;
-                }
-
-                child.SetRecipe(prototype);
-                child.SetTooltipSupplier(tooltipFunction);
-                child.SetCanProduce(canProduce);
-                child.SetDisplayControl(GetRecipeDisplayControl(prototype));
-            }
-            idx++;
-        }
-
-        // Shrink list if new list is shorter than old list.
-        for (var childIdx = oldChildCount - 1; idx <= childIdx; childIdx--)
-        {
-            RecipeList.RemoveChild(childIdx);
-        }
+            RecipeQueueAction?.Invoke(s, GetQuantity());
+        };
+        button.AddChild(control);
+        _dataToControls[recipeData] = control;
     }
 
     private string GenerateTooltipText(LatheRecipePrototype prototype)
     {
         StringBuilder sb = new();
         var multiplier = _entityManager.GetComponent<LatheComponent>(Entity).MaterialUseMultiplier;
+        multiplier *= GetQuantity();
 
         foreach (var (id, amount) in prototype.Materials)
         {
@@ -191,11 +213,11 @@ public sealed partial class LatheMenu : FancyWindow
             var sheetVolume = _materialStorage.GetSheetVolume(proto);
 
             var unit = Loc.GetString(proto.Unit);
-            var sheets = adjustedAmount / (float) sheetVolume;
+            var sheets = adjustedAmount / (float)sheetVolume;
 
             var availableAmount = _materialStorage.GetMaterialAmount(Entity, id);
             var missingAmount = Math.Max(0, adjustedAmount - availableAmount);
-            var missingSheets = missingAmount / (float) sheetVolume;
+            var missingSheets = missingAmount / (float)sheetVolume;
 
             var name = Loc.GetString(proto.Name);
 
@@ -349,7 +371,7 @@ public sealed partial class LatheMenu : FancyWindow
         return new Control();
     }
 
-    private void OnItemSelected(OptionButton.ItemSelectedEventArgs obj)
+    private void OnFilterSelected(OptionButton.ItemSelectedEventArgs obj)
     {
         FilterOption.SelectId(obj.Id);
         if (obj.Id == -1)
@@ -362,4 +384,14 @@ public sealed partial class LatheMenu : FancyWindow
         }
         PopulateRecipes();
     }
+
+    private int GetQuantity()
+    {
+        if (!int.TryParse(AmountLineEdit.Text, out var quantity) || quantity <= 0)
+            quantity = 1;
+
+        return quantity;
+    }
 }
+
+public record RecipeListData(LatheRecipePrototype Recipe) : ListData;
