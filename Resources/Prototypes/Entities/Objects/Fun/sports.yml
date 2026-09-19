@@ -141,6 +141,9 @@
         - ThrownItem
         restitution: 0.5 # very bouncy
         friction: 0.2
+  - type: TriggerOnCollide
+    fixtureID: fix1
+    keyOut: OnCollide
   - type: LaunchOnTrigger
     impulse: 100.0
     keysIn:
