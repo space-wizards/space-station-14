@@ -90,6 +90,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
             BreakOnMove = true,
             CancelDuplicate = true,
             DuplicateCondition = DuplicateConditions.None,
+            ExamineText = ent.Comp.WindupExamine == null ? null : Loc.GetString(ent.Comp.WindupExamine, ("user", Identity.Entity(ent, EntityManager)), ("target", Identity.Entity(target, EntityManager)))
         });
 
         var selfMessage = Loc.GetString("changeling-devour-begin-windup-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
@@ -142,6 +143,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
             BreakOnMove = true,
             CancelDuplicate = true,
             DuplicateCondition = DuplicateConditions.None,
+            ExamineText = ent.Comp.DevourExamine == null ? null : Loc.GetString(ent.Comp.DevourExamine, ("user", Identity.Entity(ent, EntityManager)), ("target", Identity.Entity(target, EntityManager)))
         });
     }
 
