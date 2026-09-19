@@ -49,12 +49,13 @@ public sealed partial class BorgSwitchableTypeSystem : SharedBorgSwitchableTypeS
                 prototype.ExtraModuleCount + prototype.DefaultModules.Length);
 
             _borgSystem.SetModuleWhitelist(chassisEnt, prototype.ModuleWhitelist);
+            _borgSystem.SetModuleRequirements(chassisEnt, prototype.RequiredModules);
 
             foreach (var module in prototype.DefaultModules)
             {
                 var moduleEntity = Spawn(module);
                 var borgModule = Comp<BorgModuleComponent>(moduleEntity);
-                _borgSystem.SetBorgModuleDefault((moduleEntity, borgModule), true);
+                _borgSystem.AddBorgModuleRequirement((moduleEntity, borgModule), reason: null);
                 _borgSystem.InsertModule(chassisEnt, moduleEntity);
             }
         }
