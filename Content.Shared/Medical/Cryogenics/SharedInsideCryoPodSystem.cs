@@ -1,4 +1,4 @@
-﻿using Content.Shared.Standing;
+using Content.Shared.Standing;
 using Content.Shared.Temperature;
 using Robust.Shared.Containers;
 

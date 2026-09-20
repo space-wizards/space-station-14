@@ -91,7 +91,7 @@ public abstract partial class TraitorRuleSystem : GameRuleSystem<TraitorRuleComp
 
         if (rule.Comp.GiveBriefing)
         {
-            _antag.SendBriefing(rule, GenerateBriefing(codewords, code, issuer), null, rule.Comp.GreetSoundNotification);
+            _antag.SendBriefing(traitor, GenerateBriefing(codewords, code, issuer), null, rule.Comp.GreetSoundNotification);
             Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Sent the Briefing");
         }
 
@@ -121,7 +121,7 @@ public abstract partial class TraitorRuleSystem : GameRuleSystem<TraitorRuleComp
         _roleCodewordSystem.SetRoleCodewords((mindId, codewordComp), "traitor", factionCodewords.ToList(), color);
 
         // Change the faction
-        Log.Debug($"MakeTraitor {ToPrettyString(rule)} - Change faction");
+        Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Change faction");
         _npcFaction.RemoveFaction(traitor, rule.Comp.NanoTrasenFaction, false);
         _npcFaction.AddFaction(traitor, rule.Comp.SyndicateFaction);
 

@@ -10,8 +10,9 @@ using JetBrains.Annotations;
 namespace Content.Server.StationEvents.Events;
 
 /// <summary>
-/// The system driving breaker flip events - disables a random number of APCs on a random station.
+/// Handler for events that turn off a handful of APCs on a station.
 /// </summary>
+/// <seealso cref="BreakerFlipRuleComponent"/>
 [UsedImplicitly]
 public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRuleComponent>
 {
@@ -21,7 +22,7 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
     [Dependency] private EntityQuery<StationEventComponent> _stationEventQuery;
     [Dependency] private EntityQuery<StationMemberComponent> _stationMemberQuery;
 
-    protected override void Added(EntityUid uid, BreakerFlipRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
+    protected override void Added(Entity<BreakerFlipRuleComponent, GameRuleComponent> ent, ref GameRuleAddedEvent args)
     {
         if (!_stationEventQuery.TryComp(uid, out var stationEvent))
             return;
@@ -29,12 +30,12 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
         var str = Loc.GetString("station-event-breaker-flip-announcement", ("data", Loc.GetString($"random-sentience-event-data-{RobustRandom.Next(1, 6)}")));
         stationEvent.StartAnnouncement = str;
 
-        base.Added(uid, component, gameRule, args);
+        base.Added(ent, ref args);
     }
 
-    protected override void Started(EntityUid uid, BreakerFlipRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    protected override void Started(Entity<BreakerFlipRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
     {
-        base.Started(uid, component, gameRule, args);
+        base.Started(ent, ref args);
 
         Station.TryGetRandomStation<StationEventEligibleComponent>(out var chosenEnt);
         if (chosenEnt is not { } chosenStation)
@@ -52,7 +53,9 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
             }
         }
 
-        var toDisable = Math.Min(component.ApcCount.Next(RobustRandom), stationApcs.Count);
+        var breakerFlip = ent.Comp1;
+
+        var toDisable = Math.Min(breakerFlip.ApcCount.Next(RobustRandom), stationApcs.Count);
         if (toDisable <= 0)
             return;
 
@@ -62,14 +65,14 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
         foreach (var (apc, grid) in stationApcs)
         {
             // If the APC's grid matches our blacklist, skip to the next one.
-            if (_whitelist.IsWhitelistPass(component.Blacklist, grid))
+            if (_whitelist.IsWhitelistPass(breakerFlip.Blacklist, grid))
                 continue;
 
             _apcSystem.ApcToggleBreaker(apc, apc);
 
             var stateString = apc.Comp.MainBreakerEnabled ? "Enabled" : "Disabled";
             AdminLogManager.Add(LogType.ItemConfigure, LogImpact.Medium,
-                $"Station event {ToPrettyString(uid):user} set the main breaker state of {ToPrettyString(apc):entity} to {stateString:state}");
+                $"Station event {ToPrettyString(ent):user} set the main breaker state of {ToPrettyString(apc):entity} to {stateString:state}");
 
             disabled++;
             if (disabled >= toDisable)
