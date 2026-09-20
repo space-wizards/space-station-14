@@ -24,7 +24,7 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
 
     protected override void Added(Entity<BreakerFlipRuleComponent, GameRuleComponent> ent, ref GameRuleAddedEvent args)
     {
-        if (!_stationEventQuery.TryComp(uid, out var stationEvent))
+        if (!_stationEventQuery.TryComp(ent, out var stationEvent))
             return;
 
         var str = Loc.GetString("station-event-breaker-flip-announcement", ("data", Loc.GetString($"random-sentience-event-data-{RobustRandom.Next(1, 6)}")));
