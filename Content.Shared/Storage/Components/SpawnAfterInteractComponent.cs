@@ -25,7 +25,7 @@ public sealed partial class SpawnAfterInteractComponent : Component
     /// The length of the interact action.
     /// </summary>
     [DataField("doAfter")]
-    public float DoAfterTime = 0;
+    public float DoAfterTime;
 
     /// <summary>
     /// If the entity with this component should be deleted upon a successful spawn.

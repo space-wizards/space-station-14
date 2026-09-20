@@ -1,10 +1,10 @@
-using Content.Shared.Storage.Components;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Stacks;
+using Content.Shared.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -15,11 +15,11 @@ namespace Content.Shared.Storage.EntitySystems;
 [UsedImplicitly]
 public sealed partial class SpawnAfterInteractSystem : EntitySystem
 {
-    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private SharedStackSystem _stackSystem = default!;
-    [Dependency] private TurfSystem _turfSystem = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedMapSystem _maps = default!;
+    [Dependency] private SharedStackSystem _stack = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private TurfSystem _turf = default!;
 
     [SubscribeLocalEvent]
     private void OnInteract(Entity<SpawnAfterInteractComponent> ent, ref AfterInteractEvent args)
@@ -27,73 +27,71 @@ public sealed partial class SpawnAfterInteractSystem : EntitySystem
         if (!args.CanReach && !ent.Comp.IgnoreDistance)
             return;
 
-        var gridUid = _transform.GetGrid(args.ClickLocation);
+        if (!CanSpawn(args.ClickLocation))
+            return;
 
-        if (gridUid is null ||
-            !CanSpawn(gridUid.Value, args.ClickLocation))
+        var gridUid = _transform.GetGrid(args.ClickLocation);
+        if (gridUid == null)
             return;
 
         var doAfterArgs = new DoAfterArgs(EntityManager,
             args.User,
             ent.Comp.DoAfterTime,
-            new SpawnAfterInteractEvent(GetNetCoordinates(args.ClickLocation.SnapToGrid()), GetNetEntity(gridUid.Value)),
+            new SpawnAfterInteractEvent(GetNetCoordinates(args.ClickLocation.SnapToGrid())),
             ent,
             used: ent)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
         };
-        _doAfterSystem.TryStartDoAfter(doAfterArgs);
+        _doAfter.TryStartDoAfter(doAfterArgs);
     }
 
     [SubscribeLocalEvent]
-    private void OnDoafter(Entity<SpawnAfterInteractComponent> ent, ref SpawnAfterInteractEvent args)
+    private void OnDoAfter(Entity<SpawnAfterInteractComponent> ent, ref SpawnAfterInteractEvent args)
     {
-        var gridUid = GetEntity(args.Grid);
-        var coords = GetCoordinates(args.Coordinates);
-
-        if (args.Cancelled ||
-            !CanSpawn(gridUid, coords) ||
-            ent.Comp.RemoveOnInteract && !_stackSystem.TryUse(ent.Owner, 1))
-        {
+        if (args.Cancelled)
             return;
-        }
+
+        var coords = GetCoordinates(args.Coordinates);
+        if (!CanSpawn(coords))
+            return;
+
+        if (ent.Comp.RemoveOnInteract && !_stack.TryUse(ent.Owner, 1))
+            return;
 
         PredictedSpawnAtPosition(ent.Comp.Prototype, coords);
 
-        if (ent.Comp.RemoveOnInteract &&
-            !HasComp<StackComponent>(ent))
+        if (ent.Comp.RemoveOnInteract && !HasComp<StackComponent>(ent))
             PredictedQueueDel(ent);
     }
 
-    private bool CanSpawn(EntityUid gridUid, EntityCoordinates coords)
+    private bool CanSpawn(EntityCoordinates coords)
     {
-        if (!TryComp<MapGridComponent>(gridUid, out var gridComp))
+        var gridUid = _transform.GetGrid(coords);
+        if (!TryComp<MapGridComponent>(gridUid, out var grid))
             return false;
 
-        return _maps.TryGetTileRef(gridUid, gridComp, coords, out var tileRef) &&
-               !tileRef.Tile.IsEmpty &&
-               !_turfSystem.IsTileBlocked(tileRef, CollisionGroup.MobMask);
+        if (!_maps.TryGetTileRef(gridUid.Value, grid, coords, out var tileRef))
+            return false;
+
+        return !tileRef.Tile.IsEmpty && !_turf.IsTileBlocked(tileRef, CollisionGroup.MobMask);
     }
 }
 
 [Serializable, NetSerializable]
-public sealed partial class SpawnAfterInteractEvent : SimpleDoAfterEvent
+public sealed partial class SpawnAfterInteractEvent : DoAfterEvent
 {
-    [DataField(required:true)]
+    [DataField(required: true)]
     public NetCoordinates Coordinates;
-
-    [DataField(required:true)]
-    public NetEntity Grid;
 
     private SpawnAfterInteractEvent()
     {
     }
 
-    public SpawnAfterInteractEvent(NetCoordinates coordinates, NetEntity grid)
+    public SpawnAfterInteractEvent(NetCoordinates coordinates)
     {
         Coordinates = coordinates;
-        Grid = grid;
     }
 
     public override DoAfterEvent Clone()
