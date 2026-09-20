@@ -8,8 +8,8 @@ namespace Content.Shared.UserInterface;
 
 public sealed partial class ActivatableUISystem
 {
-    [Dependency] private readonly ItemToggleSystem _toggle = default!;
-    [Dependency] private readonly PowerCellSystem _cell = default!;
+    [Dependency] private ItemToggleSystem _toggle = default!;
+    [Dependency] private PowerCellSystem _cell = default!;
 
     private void InitializePower()
     {

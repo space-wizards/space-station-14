@@ -30,6 +30,8 @@
   components:
   - type: Contraband
     severity: Syndicate
+    allowedDepartments: [  ]
+    allowedJobs: [  ]
 
 # minor contraband not departmentally restricted -- improvised weapons etc
 - type: entity
@@ -121,6 +123,14 @@
   components:
   - type: Contraband
     allowedDepartments: [ Cargo ]
+
+- type: entity
+  id: BaseServiceContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Service ]
 
 # multiple departments restricted contraband
 - type: entity

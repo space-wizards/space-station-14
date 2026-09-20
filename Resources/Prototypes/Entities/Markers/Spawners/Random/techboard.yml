@@ -8,25 +8,30 @@
     - state: red
     - sprite: Objects/Misc/module.rsi
       state: boris
-  - type: RandomSpawner
-    prototypes:
-    - AirAlarmElectronics
-    - FireAlarmElectronics
-    - DoorElectronics
-    - FirelockElectronics
-    - IntercomElectronics
-    - APCElectronics
-    - SignalTimerElectronics
-    - APECircuitboard
-    - SMESMachineCircuitboard
-    - SubstationMachineCircuitboard
-    - TelecomServerCircuitboard
-    chance: 0.95
-    rarePrototypes:
-    - CommsComputerCircuitboard
-    - ShuttleConsoleCircuitboard
-    - ComputerMassMediaCircuitboard
-    - AutolatheMachineCircuitboard
-    - ProtolatheMachineCircuitboard
-    - SalvageMagnetMachineCircuitboard
-    rareChance: 0.05
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - !type:GroupSelector
+        weight: 95
+        prob: 0.95
+        children:
+        - id: AirAlarmElectronics
+        - id: FireAlarmElectronics
+        - id: DoorElectronics
+        - id: FirelockElectronics
+        - id: IntercomElectronics
+        - id: APCElectronics
+        - id: SignalTimerElectronics
+        - id: APECircuitboard
+        - id: SMESMachineCircuitboard
+        - id: SubstationMachineCircuitboard
+        - id: TelecomServerCircuitboard
+      - !type:GroupSelector
+        weight: 5
+        children:
+        - id: CommsComputerCircuitboard
+        - id: ShuttleConsoleCircuitboard
+        - id: ComputerMassMediaCircuitboard
+        - id: AutolatheMachineCircuitboard
+        - id: ProtolatheMachineCircuitboard
+        - id: SalvageMagnetMachineCircuitboard

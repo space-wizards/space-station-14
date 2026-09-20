@@ -9,13 +9,13 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed class DragonRuleSystem : GameRuleSystem<DragonRuleComponent>
+public sealed partial class DragonRuleSystem : GameRuleSystem<DragonRuleComponent>
 {
-    [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly AntagSelectionSystem _antag = default!;
-    [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly RoleSystem _roleSystem = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private AntagSelectionSystem _antag = default!;
+    [Dependency] private StationSystem _station = default!;
+    [Dependency] private RoleSystem _roleSystem = default!;
+    [Dependency] private MindSystem _mind = default!;
 
     public override void Initialize()
     {

@@ -1,5 +1,4 @@
 ﻿using Content.Shared.FeedbackSystem;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.FeedbackPopup;
@@ -10,7 +9,7 @@ public sealed class ClientFeedbackManager : SharedFeedbackManager
     /// <summary>
     /// A read-only set representing the currently displayed feedback popups.
     /// </summary>
-    public IReadOnlySet<ProtoId<FeedbackPopupPrototype>> DisplayedPopups => _displayedPopups;
+    public override IReadOnlySet<ProtoId<FeedbackPopupPrototype>> DisplayedPopups => _displayedPopups;
 
     private readonly HashSet<ProtoId<FeedbackPopupPrototype>> _displayedPopups = [];
 
@@ -32,20 +31,16 @@ public sealed class ClientFeedbackManager : SharedFeedbackManager
     /// <inheritdoc />
     public override void Display(List<ProtoId<FeedbackPopupPrototype>>? prototypes)
     {
-        if (prototypes == null || !NetManager.IsClient)
+        if (prototypes == null)
             return;
 
-        var count = _displayedPopups.Count;
         _displayedPopups.UnionWith(prototypes);
-        InvokeDisplayedPopupsChanged(_displayedPopups.Count > count);
+        InvokeDisplayedPopupsChanged(false);
     }
 
     /// <inheritdoc />
     public override void Remove(List<ProtoId<FeedbackPopupPrototype>>? prototypes)
     {
-        if (!NetManager.IsClient)
-            return;
-
         if (prototypes == null)
         {
             _displayedPopups.Clear();

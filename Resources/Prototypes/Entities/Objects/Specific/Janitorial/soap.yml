@@ -2,7 +2,7 @@
 
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: [SolutionSoapBase, BaseItem]
   id: BaseSoap
   name: soap
   components:
@@ -42,13 +42,6 @@
         density: 10
         mask:
         - ItemMask
-  - type: SolutionContainerManager
-    solutions:
-      soap:
-        maxVol: 50
-        reagents:
-        - ReagentId: SoapReagent
-          Quantity: 50
   - type: SolutionTransfer
     transferAmount: 10
     minTransferAmount: 1
@@ -70,6 +63,14 @@
     residueAdjective: residue-slippery
 
 - type: entity
+  abstract: true
+  parent: [SolutionFood, SolutionSmall]
+  id: SolutionSoapBase
+  components:
+  - type: Solution
+    id: soap
+
+- type: entity
   parent: BaseSoap
   id: Soap
   description: A cheap bar of soap. Doesn't smell.
@@ -80,9 +81,14 @@
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: Residue
     residueColor: residue-green
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: SoapReagent
+        Quantity: 60
 
 - type: entity
-  parent: BaseSoap
+  parent: Soap
   id: SoapNT
   description: A Nanotrasen brand bar of soap. Smells of plasma.
   components:
@@ -94,18 +100,18 @@
     fillBaseName: nt-
   - type: Item
     heldPrefix: nt
-  - type: SolutionContainerManager
-    solutions:
-      soap:
-        maxVol: 100
-        reagents:
-        - ReagentId: SoapReagent
-          Quantity: 100
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: SoapReagent
+        Quantity: 55
+      - ReagentId: Plasma
+        Quantity: 5
   - type: Residue
     residueColor: residue-grey
 
 - type: entity
-  parent: BaseSoap
+  parent: Soap
   id: SoapDeluxe
   description: A deluxe Waffle Co. brand bar of soap. Smells of strawberries.
   components:
@@ -121,7 +127,7 @@
     residueColor: residue-brown
 
 - type: entity
-  parent: [BaseSoap, BaseSyndicateContraband]
+  parent: [Soap, BaseSyndicateContraband]
   id: SoapSyndie
   description: An untrustworthy bar of soap. Smells of fear.
   components:
@@ -156,13 +162,13 @@
   description: A tiny piece of syndicate soap.
   categories: [ HideSpawnMenu ]
   components:
-  - type: SolutionContainerManager
-    solutions:
-      soap:
-        maxVol: 1.5 # 50 / 30 = 1.666
-        reagents:
-        - ReagentId: SoapReagent
-          Quantity: 1.5
+  - type: Solution
+    id: soap
+    solution:
+      maxVol: 2 # 60 / 30 = 2
+      reagents:
+      - ReagentId: SoapReagent
+        Quantity: 2
   - type: SolutionContainerVisuals
     maxFillLevels: 0
   - type: Sprite
@@ -203,7 +209,7 @@
     residueColor: residue-red
 
 - type: entity
-  parent: BaseSoap
+  parent: Soap
   id: SoapHomemade
   description: A homemade bar of soap. Smells of... well....
   components:
@@ -223,7 +229,7 @@
     residueColor: residue-red
 
 - type: entity
-  parent: BaseSoap
+  parent: [SolutionLarge, BaseSoap]
   id: SoapOmega
   name: omega soap
   description: The most advanced soap known to mankind. Smells of bluespace.
@@ -241,12 +247,11 @@
       launchForwardsMultiplier: 3.0
   - type: Item
     heldPrefix: omega
-  - type: SolutionContainerManager
-    solutions:
-      soap:
-        maxVol: 240 #In the Greek alphabet, Omega is the 24th letter
-        reagents:
-        - ReagentId: SoapReagent
-          Quantity: 240
+  - type: Solution
+    id: soap
+    solution:
+      reagents:
+      - ReagentId: SoapReagent
+        Quantity: 240 #In the Greek alphabet, Omega is the 24th letter
   - type: Residue
     residueColor: residue-blue

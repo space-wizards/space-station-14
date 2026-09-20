@@ -15,7 +15,7 @@
     - mode: OpenClose
       tooltip: &TextOpenClose door-remote-open-close-text
       icon: &IconOpenClose
-        sprite: /Textures/Structures/Doors/Airlocks/Standard/basic.rsi
+        sprite: /Textures/Structures/Doors/Airlocks/Standard/airlock-base.rsi
         state: assembly
     - mode: ToggleBolts
       tooltip: &TextToggleBolt door-remote-toggle-bolt-text
@@ -209,6 +209,7 @@
   parent: [DoorRemoteCanEletrifyDoors, BaseCommandContraband]
   id: DoorRemoteAll
   name: super door remote
+  description: A gadget which can open and bolt doors remotely. This one works even on wooden doors!
   suffix: Admeme
   components:
   - type: Sprite
@@ -220,6 +221,8 @@
       color: "#22871a"
   - type: DoorRemote
     includeUserAccess: true
+    requireInRangeUnoccluded: false
+    requireTagWhitelist: false
   - type: Access
     groups:
     - AllAccess

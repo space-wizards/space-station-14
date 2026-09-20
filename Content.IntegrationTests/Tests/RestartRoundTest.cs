@@ -1,20 +1,23 @@
+using Content.IntegrationTests.Fixtures;
 using Content.Server.GameTicking;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public sealed class RestartRoundTest
+    public sealed class RestartRoundTest : GameTest
     {
+        public override PoolSettings PoolSettings => new PoolSettings
+        {
+            DummyTicker = false,
+            Connected = true,
+            Dirty = true
+        };
+
         [Test]
         public async Task Test()
         {
-            await using var pair = await PoolManager.GetServerClient(new PoolSettings
-            {
-                DummyTicker = false,
-                Connected = true,
-                Dirty = true
-            });
+            var pair = Pair;
             var server = pair.Server;
             var sysManager = server.ResolveDependency<IEntitySystemManager>();
 
@@ -23,8 +26,7 @@ namespace Content.IntegrationTests.Tests
                 sysManager.GetEntitySystem<GameTicker>().RestartRound();
             });
 
-            await pair.RunTicksSync(10);
-            await pair.CleanReturnAsync();
+            await pair.RunUntilSynced();
         }
     }
 }

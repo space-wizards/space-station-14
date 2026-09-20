@@ -10,14 +10,14 @@ namespace Content.Shared.EntityEffects.Effects;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class EmoteEntityEffectSystem : EntityEffectSystem<MetaDataComponent, Emote>
 {
-    [Dependency] private readonly SharedChatSystem _chat = default!;
+    [Dependency] private SharedChatSystem _chat = default!;
 
     protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<Emote> args)
     {
         if (args.Effect.ShowInChat)
             _chat.TryEmoteWithChat(entity, args.Effect.EmoteId, ChatTransmitRange.GhostRangeLimit, forceEmote: args.Effect.Force);
         else
-            _chat.TryEmoteWithoutChat(entity, args.Effect.EmoteId);
+            _chat.TryEmoteWithChat(entity, args.Effect.EmoteId, ChatTransmitRange.HideChat, forceEmote: args.Effect.Force);
     }
 }
 
@@ -34,7 +34,7 @@ public sealed partial class Emote : EntityEffectBase<Emote>
     ///     If the emote should be recorded in chat.
     /// </summary>
     [DataField]
-    public bool ShowInChat;
+    public bool ShowInChat = false;
 
     /// <summary>
     ///     If the forced emote will be listed in the guidebook.

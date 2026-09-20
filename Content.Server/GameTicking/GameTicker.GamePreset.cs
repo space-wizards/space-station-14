@@ -4,9 +4,11 @@ using System.Threading.Tasks;
 using Content.Server.GameTicking.Presets;
 using Content.Server.Maps;
 using Content.Shared.CCVar;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameTicking;
 
@@ -145,10 +147,10 @@ public sealed partial class GameTicker
 
     public GamePresetPrototype? FindGamePreset(string preset)
     {
-        if (_prototypeManager.TryIndex(preset, out GamePresetPrototype? presetProto))
+        if (ProtoMan.TryIndex(preset, out GamePresetPrototype? presetProto))
             return presetProto;
 
-        foreach (var proto in _prototypeManager.EnumeratePrototypes<GamePresetPrototype>())
+        foreach (var proto in ProtoMan.EnumeratePrototypes<GamePresetPrototype>())
         {
             foreach (var alias in proto.Alias)
             {
@@ -172,7 +174,7 @@ public sealed partial class GameTicker
         if (Preset == null)
             return true;
 
-        if (Preset.MapPool == null || !_prototypeManager.TryIndex<GameMapPoolPrototype>(Preset.MapPool, out var pool))
+        if (Preset.MapPool == null || !ProtoMan.TryIndex<GameMapPoolPrototype>(Preset.MapPool, out var pool))
             return true;
 
         return pool.Maps.Contains(map.ID);
@@ -184,7 +186,7 @@ public sealed partial class GameTicker
             return;
 
         if (Preset.MapPool == null ||
-            !_prototypeManager.TryIndex<GameMapPoolPrototype>(Preset.MapPool, out var pool))
+            !ProtoMan.TryIndex<GameMapPoolPrototype>(Preset.MapPool, out var pool))
             return;
 
         if (pool.Maps.Contains(map.ID))
@@ -193,7 +195,6 @@ public sealed partial class GameTicker
         _gameMapManager.SelectMapRandom();
     }
 
-    [PublicAPI]
     private bool AddGamePresetRules()
     {
         if (DummyTicker || Preset == null)
@@ -202,7 +203,7 @@ public sealed partial class GameTicker
         CurrentPreset = Preset;
         foreach (var rule in Preset.Rules)
         {
-            AddGameRule(rule);
+            AddFilteredGameRule(rule);
         }
 
         return true;
@@ -225,6 +226,40 @@ public sealed partial class GameTicker
         {
             StartGameRule(rule);
         }
+    }
+
+    /// <inhereitdoc cref="GetMinimumPlayerCount(GamePresetPrototype)"/>
+    [PublicAPI]
+    public int GetMinimumPlayerCount(ProtoId<GamePresetPrototype> proto)
+    {
+        if (!ProtoMan.Resolve(proto, out var preset))
+            return 0;
+
+        return GetMinimumPlayerCount(preset);
+    }
+
+    /// <summary>
+    /// Gets the minimum number of players required for a game preset to start.
+    /// Checks both the preset itself, and all rules to find the minimum.
+    /// </summary>
+    /// <param name="proto">Game preset prototype we're checking.</param>
+    /// <returns>Minimum number of players required for the rule to start.</returns>
+    [PublicAPI]
+    public int GetMinimumPlayerCount(GamePresetPrototype proto)
+    {
+        var min = proto.MinPlayers ?? 0;
+        foreach (var entProto in proto.Rules)
+        {
+            if (!ProtoMan.Resolve(entProto, out var ent))
+                continue;
+
+            if (!ent.TryComp<GameRuleComponent>(out var rule, Factory))
+                continue;
+
+            min = Math.Max(min, rule.MinPlayers);
+        }
+
+        return min;
     }
 
     private void IncrementRoundNumber()

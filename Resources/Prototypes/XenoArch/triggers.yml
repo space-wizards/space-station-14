@@ -1,44 +1,100 @@
-- type: weightedRandomXenoArchTrigger
-  id: DefaultTriggers
-  weights:
-    TriggerMusic: 1
-    TriggerHeat: 1
-    TriggerCold: 0.5
-    TriggerNoOxygen: 1
-    TriggerWater: 1
-    TriggerCO2: 0.5
-    TriggerPlasma: 0.5
-    TriggerN2O: 0.5
-    TriggerTritium: 0.1
-    TriggerAmmonia: 0.1
-    TriggerFrezon: 0.1
-    TriggerRadiation: 1
-    TriggerPressureHigh: 0.5
-    TriggerPressureLow: 1
-    TriggerExamine: 1
-    TriggerBruteDamage: 1
-    #TriggerInteraction: 1 #this one interferes with activating artifact AND brute dmg!
-    TriggerWrenching: 0.5
-    TriggerPrying: 0.5
-    TriggerScrewing: 0.5
-    TriggerPulsing: 0.5
-    TriggerTimer: 0.25
-    TriggerBlood: 1
-    TriggerThrow: 1
-    TriggerDeath: 1
-    TriggerMagnet: 1
+- type: entityTable
+  id: XenoArtifactTriggerDefaultTable
+  table: !type:GroupSelector
+    conditionsForChildren:
+      - !type:ExcludeEntitiesFromContextCondition
+    children:
+    - id: TriggerMusic
+    - id: TriggerHeat
+    - id: TriggerCold
+      weight: 0.5
+    - id: TriggerNoOxygen
+    - id: TriggerWater
+    - id: TriggerCO2
+      weight: 0.5
+    - id: TriggerPlasma
+      weight: 0.5
+    - id: TriggerN2O
+      weight: 0.5
+    - id: TriggerTritium
+      weight: 0.1
+    - id: TriggerAmmonia
+      weight: 0.1
+    - id: TriggerFrezon
+      weight: 0.1
+    - id: TriggerRadiation
+    - id: TriggerPressureHigh
+      weight: 0.5
+    - id: TriggerPressureLow
+    - id: TriggerExamine
+    - id: TriggerBruteDamage
+    #- id: TriggerInteraction #this one interferes with activating artifact AND brute dmg!
+    - id: TriggerWrenching
+      weight: 0.5
+    - id: TriggerPrying
+      weight: 0.5
+    - id: TriggerScrewing
+      weight: 0.5
+    - id: TriggerPulsing
+      weight: 0.5
+    - id: TriggerTimer
+      weight: 0.25
+    - id: TriggerBlood
+    - id: TriggerDeath
+    - id: TriggerMagnet
+    - id: TriggerConsumeMoney
+    - id: TriggerConsumeKnowledge
+      weight: 0.25
+    - id: TriggerConsumeCarbs
+    - id: TriggerConsumeMeat
+      weight: 0.5
+    - id: TriggerConsumeProduce
+      weight: 0.5
+    - id: TriggerInteractStamp
+    - id: TriggerInteractShock
+    - id: TriggerAttackParticleAnomaly
+    - id: TriggerAttackStaminaDamage
+    - id: TriggerAttackLaser
+      weight: 0.5
+    - id: TriggerAttackParticleEngine
+      weight: 0.1
 
-- type: xenoArchTrigger
+- type: entityTable
+  id: XenoArtifactHandheldOnlyTriggerTable
+  table: !type:GroupSelector
+    conditionsForChildren:
+    - !type:ExcludeEntitiesFromContextCondition
+    children:
+    - !type:NestedSelector
+      tableId: XenoArtifactTriggerDefaultTable
+      weight: 35
+    - !type:GroupSelector # Handheld exclusive
+      weight: 2
+      children:
+      - id: TriggerThrow
+      - id: TriggerMicrowave
+
+- type: entity
+  abstract: true
+  id: BaseXenoArtifactTrigger
+  name: Unknown
+  categories: [XenoArtifactTriggers]
+
+#region Standard triggers
+
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerMusic
-  tip: xenoarch-trigger-tip-music
+  name: Harmonical sound vibrations
   components:
   - type: XATCompNearby
     requireComponentWithName: ActiveInstrument
     radius: 2
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerHeat
-  tip: xenoarch-trigger-tip-heat
+  name: High temperature gas
   components:
   - type: XATTemperature
     targetTemperature: 373
@@ -46,15 +102,16 @@
   - type: XATDamageThresholdReached
     typesNeeded:
       Heat: 20
-# This kinda trivializes the difficulty.
-#  - type: XATToolUse
-#    requiredTool: Welding
-#    delay: 5
-#    fuel: 10
+  # This kinda trivializes the difficulty.
+  #  - type: XATToolUse
+  #    requiredTool: Welding
+  #    delay: 5
+  #    fuel: 10
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerCold
-  tip: xenoarch-trigger-tip-cold
+  name: Low temperature gas
   components:
   - type: XATTemperature
     targetTemperature: 255
@@ -63,18 +120,20 @@
     typesNeeded:
       Cold: 20
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerNoOxygen
-  tip: xenoarch-trigger-tip-no-oxygen
+  name: Oxygen-free environment
   components:
   - type: XATGas
     targetGas: Oxygen
     moles: 10
     shouldBePresent: false
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerWater
-  tip: xenoarch-trigger-tip-water
+  name: Water
   components:
   - type: XATGas
     targetGas: WaterVapor
@@ -82,9 +141,10 @@
     reagents:
     - Water
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerCO2
-  tip: xenoarch-trigger-tip-co2
+  name: Carbon dioxide
   components:
   - type: XATGas
     targetGas: CarbonDioxide
@@ -92,9 +152,10 @@
     reagents:
     - CarbonDioxide
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerPlasma
-  tip: xenoarch-trigger-tip-plasma
+  name: Non-solid plasma
   components:
   - type: XATGas
     targetGas: Plasma
@@ -102,9 +163,10 @@
     reagents:
     - Plasma
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerTritium
-  tip: xenoarch-trigger-tip-tritium
+  name: Tritium
   components:
   - type: XATGas
     targetGas: Tritium
@@ -112,9 +174,10 @@
     reagents:
     - Tritium
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerAmmonia
-  tip: xenoarch-trigger-tip-ammonia
+  name: Ammonia
   components:
   - type: XATGas
     targetGas: Ammonia
@@ -122,9 +185,10 @@
     reagents:
     - Ammonia
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerN2O
-  tip: xenoarch-trigger-tip-n2o
+  name: Nitrous oxide
   components:
   - type: XATGas
     targetGas: NitrousOxide
@@ -132,9 +196,10 @@
     reagents:
     - NitrousOxide
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerFrezon
-  tip: xenoarch-trigger-tip-frezon
+  name: Frezon
   components:
   - type: XATGas
     targetGas: Frezon
@@ -142,97 +207,108 @@
     reagents:
     - Frezon
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerRadiation
-  tip: xenoarch-trigger-tip-radiation
+  name: Heavy-ion radiation
   components:
   - type: XATDamageThresholdReached
     typesNeeded:
       Radiation: 20
-  # TODO: legendary microwave trigger
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerPressureHigh
-  tip: xenoarch-trigger-tip-pressure-high
+  name: High pressure
   components:
   - type: XATPressure
     maxPressureThreshold: 385
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerPressureLow
-  tip: xenoarch-trigger-tip-pressure-low
+  name: Low pressure
   components:
   - type: XATPressure
     minPressureThreshold: 50
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerExamine
-  tip: xenoarch-trigger-tip-examine
+  name: Close inspection
   components:
   - type: XATExamine
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerBruteDamage
-  tip: xenoarch-trigger-tip-brute-damage
+  name: Physical damage
   components:
   - type: XATDamageThresholdReached
     groupsNeeded:
       Brute: 20
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerInteraction
-  tip: xenoarch-trigger-tip-interaction
+  name: Physical interaction
   components:
   - type: XATInteraction
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerWrenching
-  tip: xenoarch-trigger-tip-wrenching
+  name: Tightening
   components:
   - type: XATToolUse
     requiredTool: Anchoring
   - type: XATExaminableText
     examineText: xenoarch-trigger-examine-wrenching
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerPrying
-  tip: xenoarch-trigger-tip-prying
+  name: Prying
   components:
   - type: XATToolUse
     requiredTool: Prying
   - type: XATExaminableText
     examineText: xenoarch-trigger-examine-prying
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerScrewing
-  tip: xenoarch-trigger-tip-screwing
+  name: Screwing
   components:
   - type: XATToolUse
     requiredTool: Screwing
   - type: XATExaminableText
     examineText: xenoarch-trigger-examine-screwing
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerPulsing
-  tip: xenoarch-trigger-tip-pulsing
+  name: Pulsing
   components:
   - type: XATToolUse
     requiredTool: Pulsing
   - type: XATExaminableText
     examineText: xenoarch-trigger-examine-pulsing
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerTimer
-  tip: xenoarch-trigger-tip-timer
+  name: Regular self-activation
   components:
   - type: XATTimer
     possibleDelayInSeconds:
       min: 80
       max: 120
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerBlood
-  tip: xenoarch-trigger-tip-blood
+  name: Blood
   components:
   - type: XATReactive
     reagents:
@@ -243,24 +319,197 @@
     - AmmoniaBlood
     - ZombieBlood
     - Sap
+    - SulfurBlood
 
-- type: xenoArchTrigger
-  id: TriggerThrow
-  tip: xenoarch-trigger-tip-throw
-  whitelist:
-    components:
-    - Item
-  components:
-  - type: XATItemLand
-
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerDeath
-  tip: xenoarch-trigger-tip-death
+  name: Death
   components:
   - type: XATDeath
 
-- type: xenoArchTrigger
+- type: entity
+  parent: BaseXenoArtifactTrigger
   id: TriggerMagnet
-  tip: xenoarch-trigger-tip-magnet
+  name: Magnetic waves
   components:
   - type: XATMagnet
+
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: TriggerConsumeMoney
+  name: Bribery
+  components:
+  - type: XATInteractWith
+    interactionCount:
+      min: 100
+      max: 200
+    destroyAfter: true
+    interactionTime: 1.5
+    successTriggerSound: /Audio/Machines/machine_vend.ogg
+    whitelist:
+      components:
+      - Cash
+
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: TriggerConsumeKnowledge
+  name: Knowledge intake
+  components:
+  - type: XATInteractWith
+    destroyAfter: true
+    interactionTime: 1.5
+    successTriggerSound: /Audio/Machines/machine_vend.ogg
+    whitelist:
+      components:
+      - TechnologyDisk
+      tags:
+      - Book
+
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: TriggerConsumeCarbs
+  name: Carbohydrate intake
+  components:
+  - type: XATInteractWith
+    destroyAfter: true
+    interactionTime: 1.5
+    successTriggerSound:
+      collection: eating
+      params:
+        volume: 5
+    whitelist:
+      tags:
+      - Bread
+      - Cake
+      - DonkPocket
+      - Donut
+      - Pie
+      - Pizza
+
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: TriggerConsumeMeat
+  name: Protein intake
+  components:
+  - type: XATInteractWith
+    destroyAfter: true
+    interactionTime: 1.5
+    successTriggerSound:
+      collection: eating
+      params:
+        volume: 5
+    whitelist:
+      tags:
+      - Meat
+  - type: XATReactive
+    reagents:
+    - Protein
+    - UncookedAnimalProteins
+
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: TriggerConsumeProduce
+  name: Healthy produce intake
+  components:
+  - type: XATInteractWith
+    destroyAfter: true
+    interactionTime: 1.5
+    successTriggerSound:
+      collection: eating
+      params:
+        volume: 5
+    whitelist:
+      tags:
+      - Fruit
+      - Vegetable
+      - CottonBoll
+      - Ambrosia
+      - Mushroom
+
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: TriggerInteractStamp
+  name: Bureaucratic approval
+  components:
+  - type: XATInteractWith
+    interactionTime: 0.5
+    successTriggerSound:
+      path: /Audio/Items/Stamp/thick_stamp_sub.ogg
+      params:
+        volume: -2
+        maxDistance: 5
+    whitelist:
+      components:
+      - Stamp
+
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: TriggerInteractShock
+  name: Electrical shock
+  components:
+  - type: XATShock
+  - type: XATDamageThresholdReached
+    typesNeeded:
+      Shock: 5
+
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: TriggerAttackParticleEngine
+  name: Singularity-Effecting particles
+  components:
+  - type: XATInteractAttack
+    whitelist:
+      components:
+      - ParticleProjectile
+
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: TriggerAttackParticleAnomaly
+  name: Anomaly-Effecting particles
+  components:
+  - type: XATInteractAttack
+    whitelist:
+      components:
+      - AnomalousParticle
+
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: TriggerAttackStaminaDamage
+  name: Organic exhaustion
+  components:
+  - type: XATStaminaDamageThresholdReached
+    damageNeeded: 8 # half a practice disabler capacity
+
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: TriggerAttackLaser
+  name: High-Intensity photon impacts
+  components:
+  - type: XATInteractAttack
+    interactionCount:
+      max: 3
+    whitelist:
+      components:
+      - LaserProjectile
+      tags:
+      - EmitterBolt
+
+#endregion
+#region Handheld triggers
+
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: TriggerMicrowave
+  name: Microwave radiation
+  components:
+  - type: XATMicrowave
+
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: TriggerThrow
+  name: Being thrown
+  components:
+  - type: XATItemLand
+
+#endregion

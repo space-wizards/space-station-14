@@ -1,8 +1,8 @@
+using Content.Client.Graphics;
 using Content.Shared.Chat.TypingIndicator;
 using Content.Shared.Holopad;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using System.Linq;
 using System.Numerics;
@@ -10,11 +10,10 @@ using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Holopad;
 
-public sealed class HolopadSystem : SharedHolopadSystem
+public sealed partial class HolopadSystem : SharedHolopadSystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -32,10 +31,10 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
     private void OnShaderRender(Entity<HolopadHologramComponent> entity, ref BeforePostShaderRenderEvent ev)
     {
-        if (ev.Sprite.PostShader == null)
+        if (ev.Id != ContentPostShaderIds.Holopad)
             return;
 
-        UpdateHologramSprite(entity, entity.Comp.LinkedEntity);
+        UpdateHologramSprite(entity, entity.Comp.LinkedEntity, ev.Shader);
     }
 
     private void OnTypingChanged(TypingChangedEvent ev, EntitySessionEventArgs args)
@@ -52,7 +51,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
         RaiseNetworkEvent(netEv);
     }
 
-    private void UpdateHologramSprite(EntityUid hologram, EntityUid? target)
+    private void UpdateHologramSprite(EntityUid hologram, EntityUid? target, ShaderInstance? shader = null)
     {
         // Get required components
         if (!TryComp<SpriteComponent>(hologram, out var hologramSprite) ||
@@ -112,15 +111,19 @@ public sealed class HolopadSystem : SharedHolopadSystem
                 hologramSprite.LayerSetShader(i, "unshaded");
         }
 
-        UpdateHologramShader(hologram, hologramSprite, holopadhologram);
+        UpdateHologramShader(hologram, hologramSprite, holopadhologram, shader);
     }
 
-    private void UpdateHologramShader(EntityUid uid, SpriteComponent sprite, HolopadHologramComponent holopadHologram)
+    private void UpdateHologramShader(
+        EntityUid uid,
+        SpriteComponent sprite,
+        HolopadHologramComponent holopadHologram,
+        ShaderInstance? shader = null)
     {
         // Find the texture height of the largest layer
         float texHeight = sprite.AllLayers.Max(x => x.PixelSize.Y);
 
-        var instance = _prototypeManager.Index<ShaderPrototype>(holopadHologram.ShaderName).InstanceUnique();
+        var instance = shader ?? ProtoMan.Index<ShaderPrototype>(holopadHologram.ShaderName).InstanceUnique();
         instance.SetParameter("color1", new Vector3(holopadHologram.Color1.R, holopadHologram.Color1.G, holopadHologram.Color1.B));
         instance.SetParameter("color2", new Vector3(holopadHologram.Color2.R, holopadHologram.Color2.G, holopadHologram.Color2.B));
         instance.SetParameter("alpha", holopadHologram.Alpha);
@@ -128,7 +131,10 @@ public sealed class HolopadSystem : SharedHolopadSystem
         instance.SetParameter("texHeight", texHeight);
         instance.SetParameter("t", (float)_timing.CurTime.TotalSeconds * holopadHologram.ScrollRate);
 
-        sprite.PostShader = instance;
-        sprite.RaiseShaderEvent = true;
+        _sprite.SetPostShader((uid, sprite), new SpriteComponent.PostShaderArgs(ContentPostShaderIds.Holopad, instance)
+        {
+            RaiseShaderEvent = true,
+            Before = ContentPostShaderIds.BeforeOutlines,
+        });
     }
 }

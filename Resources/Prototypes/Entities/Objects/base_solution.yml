@@ -1,0 +1,363 @@
+﻿- type: entity
+  id: Solution # Not abstract because it's a fallback for missing solution protos!
+  categories: [ HideSpawnMenu ]
+  name: solution
+  components:
+  - type: Solution
+
+- type: entity
+  id: SolutionCryo
+  categories: [ HideSpawnMenu ]
+  name: solution
+  components:
+  - type: Solution
+    solution:
+      canReact: false
+
+# Solution Types
+
+- type: entity
+  abstract: true
+  parent: Solution
+  id: SolutionBeaker
+  components:
+  - type: Solution
+    id: beaker
+
+- type: entity
+  abstract: true
+  parent: Solution
+  id: SolutionInjector
+  components:
+  - type: Solution
+    id: injector
+
+- type: entity
+  abstract: true
+  parent: Solution
+  id: SolutionHypospray
+  components:
+  - type: Solution
+    id: hypospray
+
+- type: entity
+  abstract: true
+  parent: Solution
+  id: SolutionFood # Generally these should only ever be half full. That way they can be poisoned!
+  components:
+  - type: Solution
+    id: food
+
+- type: entity
+  abstract: true
+  parent: Solution
+  id: SolutionDrink
+  components:
+  - type: Solution
+    id: drink
+
+- type: entity
+  abstract: true
+  parent: Solution
+  id: SolutionSmokable
+  components:
+  - type: Solution
+    id: smokable
+
+- type: entity
+  abstract: true
+  parent: Solution
+  id: SolutionWeapon
+  components:
+  - type: Solution
+    id: melee
+
+- type: entity
+  abstract: true
+  parent: Solution
+  id: SolutionGun
+  components:
+  - type: Solution
+    id: chamber
+
+- type: entity
+  abstract: true
+  parent: Solution
+  id: SolutionAmmo
+  components:
+  - type: Solution
+    id: ammo
+
+- type: entity
+  abstract: true
+  parent: Solution
+  id: SolutionVapor # TODO Check if this compsystem is identical to spray...
+  components:
+  - type: Solution
+    id: vapor
+
+- type: entity
+  abstract: true
+  parent: Solution
+  id: SolutionSpray
+  components:
+  - type: Solution
+    id: spray
+
+- type: entity
+  abstract: true
+  parent: Solution
+  id: SolutionTank
+  components:
+  - type: Solution
+    id: tank
+
+- type: entity
+  abstract: true
+  parent: Solution
+  id: SolutionMop
+  components:
+  - type: Solution
+    id: absorbed
+
+- type: entity
+  abstract: true
+  parent: Solution
+  id: SolutionDrain
+  components:
+  - type: Solution
+    id: drainBuffer
+
+- type: entity
+  abstract: true
+  parent: Solution
+  id: SolutionWelder # TODO Refactor fuel usage to comply with welders becoming 30u-60u
+  components:
+  - type: Solution
+    id: welder
+
+- type: entity
+  abstract: true
+  parent: Solution
+  id: SolutionComposite
+  components:
+  - type: Solution
+    id: composite
+
+- type: entity
+  abstract: true
+  parent: Solution
+  id: SolutionLube
+  components:
+  - type: Solution
+    id: lube # For autolathes to run faster or slower
+
+# Solution Sizes
+
+## Of note, maxVol will be moved out of the Solution class into the SolutionComponent in the future
+## These prototypes are meant to generally correspond to an itemSizePrototype, and be used with containers of the same type
+## So a beaker will use solutions with a parent of SolutionSmall and a large beaker uses SolutionNormal
+## Items with utility or tool functionality should generally inherit from one sizer smaller than their item size.
+## It's fine to fine tune these values for specific applications, but generally you shouldn't go above the value the most relevant parent would have.
+## Lastly, 120u equals about 1 liter. It was random before but that's the conversion now.
+
+## Very Tiny
+
+- type: entity
+  parent: Solution
+  id: SolutionVeryTiny # For things smaller than tiny
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 15
+
+- type: entity
+  parent: Solution
+  id: SolutionToolVeryTiny
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 7.5
+
+## Tiny
+
+- type: entity
+  parent: Solution
+  id: SolutionTiny
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 30
+
+- type: entity
+  abstract: true
+  parent: [SolutionComposite, BaseItem]
+  id: SolutionCompositeTinyStackable
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 2.5
+  - type: Item
+    size: Tiny
+
+- type: entity
+  parent: Solution
+  id: SolutionToolTiny
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 15
+
+## Small
+
+- type: entity
+  parent: Solution
+  id: SolutionSmall
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 60
+
+- type: entity
+  abstract: true
+  parent: [SolutionComposite, BaseItem]
+  id: SolutionCompositeSmallStackable
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 5
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: Solution
+  id: SolutionToolSmall
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 30
+
+## Normal
+
+- type: entity
+  parent: Solution
+  id: SolutionNormal
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 120
+
+- type: entity
+  abstract: true
+  parent: [SolutionComposite, BaseItem]
+  id: SolutionCompositeNormalStackable
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 10
+  - type: Item
+    size: Normal
+
+- type: entity
+  parent: Solution
+  id: SolutionToolNormal
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 60
+
+## Large
+
+- type: entity
+  parent: Solution
+  id: SolutionLarge
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 240
+
+- type: entity
+  parent: Solution
+  id: SolutionToolLarge
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 120
+
+## Huge
+
+- type: entity
+  parent: Solution
+  id: SolutionHuge
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 480
+
+- type: entity
+  parent: [SolutionDrink, SolutionHuge]
+  id: SolutionDrinkHuge
+  categories: [ HideSpawnMenu ]
+
+## Ginormous
+
+- type: entity
+  parent: Solution
+  id: SolutionGinormous
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 960
+
+- type: entity
+  parent: Solution
+  id: SolutionToolGinormous
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 480
+
+## Below sizes are for solutions attached to entities bigger than Ginormous, aka not items or maybe two handed?
+
+# List of sizes neede still
+
+## Huge
+# 400 - GasCondenser
+
+## IDK
+# 3000 - Nuclear Tap
+
+- type: entity
+  parent: Solution
+  id: Solution3840 # I can't think of a better name, fight me
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 3840
+
+- type: entity
+  abstract: true
+  parent: Solution
+  id: SolutionTile # Tile Anchored, Cannot be moved. Anything more than this and you should just not impose a max volume.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 7680

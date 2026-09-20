@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Content.Server.Discord;
 
-public sealed class DiscordWebhook : IPostInjectInit
+public sealed partial class DiscordWebhook : IPostInjectInit
 {
     private static readonly JsonSerializerOptions JsonOptions = new JsonSerializerOptions
         { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
 
-    [Dependency] private readonly ILogManager _log = default!;
+    [Dependency] private ILogManager _log = default!;
 
     private const string BaseUrl = "https://discord.com/api/v10/webhooks";
     private readonly HttpClient _http = new();

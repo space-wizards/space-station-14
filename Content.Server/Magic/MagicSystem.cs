@@ -9,14 +9,15 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Magic;
 
-public sealed class MagicSystem : SharedMagicSystem
+public sealed partial class MagicSystem : SharedMagicSystem
 {
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private GameTicker _gameTicker = default!;
+    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
 
     private static readonly ProtoId<TagPrototype> InvalidForSurvivorAntagTag = "InvalidForSurvivorAntag";
+    private static readonly EntProtoId SurvivorGameRule = "Survivor";
 
     public override void Initialize()
     {
@@ -46,9 +47,7 @@ public sealed class MagicSystem : SharedMagicSystem
         if (_mind.TryGetMind(ev.Performer, out var mind, out _) && !_tag.HasTag(mind, InvalidForSurvivorAntagTag))
             _tag.AddTag(mind, InvalidForSurvivorAntagTag);
 
-        EntProtoId survivorRule = "Survivor";
-
         if (!_gameTicker.IsGameRuleActive<SurvivorRuleComponent>())
-            _gameTicker.StartGameRule(survivorRule);
+            _gameTicker.StartGameRule(SurvivorGameRule);
     }
 }
