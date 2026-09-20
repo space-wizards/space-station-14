@@ -16,7 +16,7 @@
   announcement: terror-revenant
   rule: RevenantSpawn
 
-- type: changelingHackingThreat
+- type: ninjaHackingThreat
   id: Changeling
   announcement: terror-changeling
   rule: SpaceChangelingSpawn
