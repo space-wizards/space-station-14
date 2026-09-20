@@ -10,12 +10,9 @@ public enum CrewMonitoringUIKey
 }
 
 [Serializable, NetSerializable]
-public sealed class CrewMonitoringState : BoundUserInterfaceState
+public sealed class CrewMonitoringState(List<SuitSensorStatus> sensors, NetEntity stationUid) : BoundUserInterfaceState
 {
-    public List<SuitSensorStatus> Sensors;
+    public List<SuitSensorStatus> Sensors = sensors;
 
-    public CrewMonitoringState(List<SuitSensorStatus> sensors)
-    {
-        Sensors = sensors;
-    }
+    public NetEntity StationUid = stationUid;
 }

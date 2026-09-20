@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Station.Systems;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Medical.CrewMonitoring;
 using Content.Shared.Pinpointer;
@@ -11,6 +12,7 @@ public sealed partial class CrewMonitoringConsoleSystem : EntitySystem
 {
     [Dependency] private PowerCellSystem _cell = default!;
     [Dependency] private UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private StationSystem _station = default!;
 
     public override void Initialize()
     {
@@ -31,6 +33,13 @@ public sealed partial class CrewMonitoringConsoleSystem : EntitySystem
         UpdateUserInterface(ent, ent.Comp);
     }
 
+    [SubscribeLocalEvent]
+    private void OnInit(Entity<CrewMonitoringConsoleComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.Station = _station.GetOwningStation(ent);
+
+    }
+
     private void OnUIOpened(EntityUid uid, CrewMonitoringConsoleComponent component, BoundUIOpenedEvent args)
     {
         if (!_cell.TryUseActivatableCharge(uid))
@@ -47,6 +56,9 @@ public sealed partial class CrewMonitoringConsoleSystem : EntitySystem
         if (!_uiSystem.IsUiOpen(uid, CrewMonitoringUIKey.Key))
             return;
 
+        if (component.Station is null)
+            return;
+
         // The grid must have a NavMapComponent to visualize the map in the UI
         var xform = Transform(uid);
 
@@ -55,6 +67,6 @@ public sealed partial class CrewMonitoringConsoleSystem : EntitySystem
 
         // Update all sensors info
         var allSensors = component.ConnectedSensors.Values.ToList();
-        _uiSystem.SetUiState(uid, CrewMonitoringUIKey.Key, new CrewMonitoringState(allSensors));
+        _uiSystem.SetUiState(uid, CrewMonitoringUIKey.Key, new CrewMonitoringState(allSensors, GetNetEntity(component.Station.Value)));
     }
 }

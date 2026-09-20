@@ -68,7 +68,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             TryToScrollToFocus();
     }
 
-    public void ShowSensors(List<SuitSensorStatus> sensors, EntityUid monitor, EntityCoordinates? monitorCoords)
+    public void ShowSensors(List<SuitSensorStatus> sensors, EntityUid monitor, NetEntity stationUid, EntityCoordinates? monitorCoords)
     {
         ClearOutDatedData();
 
@@ -150,7 +150,8 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
 
             SensorsTable.AddChild(deparmentLabel);
 
-            PopulateDepartmentList(departmentSensors);
+            var station = _entManager.GetEntity(stationUid);
+            PopulateDepartmentList(departmentSensors, station);
         }
 
         // Account for any non-station users
@@ -175,7 +176,8 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
 
             SensorsTable.AddChild(deparmentLabel);
 
-            PopulateDepartmentList(remainingSensors);
+            var station = _entManager.GetEntity(stationUid);
+            PopulateDepartmentList(remainingSensors, station);
         }
 
         // Show monitor on nav map
@@ -185,36 +187,34 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         }
     }
 
-    private void PopulateDepartmentList(IEnumerable<SuitSensorStatus> departmentSensors)
+    private void PopulateDepartmentList(IEnumerable<SuitSensorStatus> departmentSensors, EntityUid station)
     {
-        // Sorts sensors by role weight
-        // So... Hear me out: there is no optimized way to get job prototype from entity without mind (that sucks itself)
-        // Right now id component that used for the original SuitSensorStatus has only job name and job id.
-        // job name can be localized and also seems strange (renamed cap with passanger icon over all command roles)
-        // and the job icon works +-fine and causes less sheningans
-        // TODO: change it to tge job prototype when station records will be less centralised
-        // Also double foreach yahooooo
 
-        var sortableSensors = new Dictionary<(JobPrototype, SuitSensorStatus), byte>();
-        var otherSensors = new List<SuitSensorStatus>();
-        foreach (var sensor in departmentSensors)
+        var entriesSort = new List<(JobPrototype? job, SuitSensorStatus entry)>();
+        foreach (var a in departmentSensors)
         {
-            if (_prototypeManager.TryIndex<JobPrototype>(sensor.JobIcon.Replace("JobIcon", string.Empty), out var proto))
-            {
-                JobUIComparer
-
-                var weight = proto.GetWeight(sensor.Job);
-                sortableSensors.Add((proto, sensor), );
-            }
-            else
-                otherSensors.Add(sensor);
+            _prototypeManager.TryIndex(a.Job, out JobPrototype? job);
+            entriesSort.Add((job, a));
         }
-        departmentSensors = [.. sortableSensors.OrderBy(kv => kv.Key, JobUIComparer).Select(kv => kv.Value).ToList(), .. otherSensors];
 
+        var weights = _entManager.GetComponent<StationDataComponent>(station).JobWeights;
+        if (JobUIComparer.TryCreate(_prototypeManager, weights, out var comparer))
+        {
+            entriesSort.Sort((a, b) =>
+            {
+                var cmp = comparer.Compare(a.job, b.job);
+                if (cmp != 0)
+                    return cmp;
+
+                return string.Compare(a.entry.Name, b.entry.Name, StringComparison.CurrentCultureIgnoreCase);
+            });
+        }
+
+        var sensors = entriesSort.Select(x => x.entry).ToArray();
 
         // Populate departments
 
-        foreach (var sensor in departmentSensors)
+        foreach (var sensor in sensors)
         {
             if (!string.IsNullOrEmpty(SearchLineEdit.Text)
                 && !sensor.Name.Contains(SearchLineEdit.Text, StringComparison.CurrentCultureIgnoreCase)
