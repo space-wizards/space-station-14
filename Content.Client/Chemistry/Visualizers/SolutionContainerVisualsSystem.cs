@@ -50,6 +50,9 @@ public sealed partial class SolutionContainerVisualsSystem : VisualizerSystem<So
 
         SpriteSystem.LayerSetAutoAnimated(args.AttachedTo, layerIndex.Value, false);
         layer.AnimationFrame = closestFillFrame;
+
+        if (ent.Comp.ChangeColor && AppearanceSystem.TryGetData(args.AttachedTo, SolutionContainerVisuals.Color, out Color color))
+            SpriteSystem.LayerSetColor(ent.Owner, layerIndex.Value, color);
     }
 
     protected override void OnAppearanceChange(EntityUid uid, SolutionContainerVisualsComponent component, ref AppearanceChangeEvent args)
