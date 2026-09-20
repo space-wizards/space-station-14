@@ -43,10 +43,10 @@ public abstract partial class CosmicColossusAbilitySystem : EntitySystem
             var tile = new Vector2i(entPos.X,entPos.Y);
 
             if (xform.GridUid is not { } gridUid)
-                return;
+                continue;
 
             if (!TryComp<MapGridComponent>(gridUid, out var grid))
-                return;
+                continue;
 
             for (var x = - comp.Size; x <= comp.Size; x++)
             {
@@ -71,6 +71,12 @@ public abstract partial class CosmicColossusAbilitySystem : EntitySystem
         var queryColossus = EntityQueryEnumerator<CosmicColossusComponent>();
         while (queryColossus.MoveNext(out var ent, out var comp))
         {
+            if (_net.IsServer && comp.SunderResetTimer is { } sunderTimer && _timing.CurTime >= sunderTimer)
+            {
+                comp.SunderResetTimer = null;
+                Appearance.SetData(ent, ColossusVisuals.Visuals, ColossusStatus.Alive);
+            }
+
             if (comp.HibernationTimer is {} timer && _timing.CurTime >= timer)
             {
                 comp.HibernationTimer = null;
@@ -125,6 +131,13 @@ public abstract partial class CosmicColossusAbilitySystem : EntitySystem
 
         EnsureComp<CosmicTileDetonatorComponent>(areaEffect, out var areaComp);
         areaComp.DetonationTimer = _timing.CurTime;
+
+        if (TryComp<CosmicColossusComponent>(args.Performer, out var colossus))
+        {
+            var resetDelay = TimeSpan.FromSeconds(Math.Max(ent.Comp.SunderPauseTime.TotalSeconds, 1.4));
+            colossus.SunderResetTimer = _timing.CurTime + resetDelay;
+        }
+
 
         Appearance.SetData(args.Performer, ColossusVisuals.Visuals, ColossusStatus.Sunder);
         _stun.TryUpdateStunDuration(args.Performer, ent.Comp.SunderPauseTime);
