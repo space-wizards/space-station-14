@@ -151,8 +151,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             SensorsTable.AddChild(deparmentLabel);
 
             var station = _entManager.GetEntity(stationUid);
-            if (station is not null)
-                PopulateDepartmentList(departmentSensors, station.Value);
+            PopulateDepartmentList(departmentSensors, station);
         }
 
         // Account for any non-station users
@@ -178,8 +177,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             SensorsTable.AddChild(deparmentLabel);
 
             var station = _entManager.GetEntity(stationUid);
-            if (station is not null)
-                PopulateDepartmentList(remainingSensors, station.Value);
+            PopulateDepartmentList(remainingSensors, station);
         }
 
         // Show monitor on nav map
