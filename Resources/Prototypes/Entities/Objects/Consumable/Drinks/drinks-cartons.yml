@@ -50,7 +50,7 @@
     shape:
     - 0,0,1,3
   - type: Tag
-    tags: [ DrinkBottle, Trash ] # Need this to fit in the soda dispenser, probably needs a better name
+    tags: [ DrinkBottle, Trash ] # Need DrinkBottle to fit in the soda dispenser, probably needs a better name
 
 
 - type: entity

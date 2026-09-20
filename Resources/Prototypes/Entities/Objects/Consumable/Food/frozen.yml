@@ -14,7 +14,7 @@
       - ReagentId: Nutriment
         Quantity: 10
   - type: Tag
-    tags: [ FrozenTreat ]
+    tags: [ FinishedMeal ]
 
 # Ice-cream
 
@@ -96,7 +96,7 @@
     trash:
     - FoodFrozenPopsicleTrash
   - type: Tag
-    tags: [ Creamsicle, FrozenTreat,  Fruit ]
+    tags: [ Creamsicle, FinishedMeal,  Fruit ]
 
 - type: entity
   name: berry creamsicle
@@ -114,7 +114,7 @@
     trash:
     - FoodFrozenPopsicleTrash
   - type: Tag
-    tags: [ Creamsicle, FrozenTreat,  Fruit ]
+    tags: [ Creamsicle, FinishedMeal,  Fruit ]
 
 - type: entity
   name: jumbo ice-cream
@@ -194,7 +194,7 @@
     trash:
     - FoodFrozenSnowconeTrash
   - type: Tag
-    tags: [ FrozenTreat, Fruit ]
+    tags: [ FinishedMeal, Fruit ]
 
 - type: entity
   name: fruit salad snowcone
@@ -210,7 +210,7 @@
     trash:
     - FoodFrozenSnowconeTrash
   - type: Tag
-    tags: [ FrozenTreat, Fruit ]
+    tags: [ FinishedMeal, Fruit ]
 
 - type: entity
   name: clowncone

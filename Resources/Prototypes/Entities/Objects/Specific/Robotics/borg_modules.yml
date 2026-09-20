@@ -1134,12 +1134,12 @@
 
 - type: entity
   id: BorgModuleMusique
-  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
   name: musique cyborg module
   components:
   - type: Sprite
     layers:
-    - state: service
+    - state: generic
     - state: icon-musique
   - type: ItemBorgModule
     hands:
@@ -1185,23 +1185,16 @@
           tags:
           - Bread
           - Cake
-          - ChiliBowl
           - ClothMade
           - Cooked
-          - Cookie
-          - Dessert
           - Dinnerware
           - DonkPocket
           - Donut
-          - Nugget
-          - Muffin
-          - Pancake
           - Pie
           - Pizza
           - Soup
           - FoodSnack
           - FinishedMeal
-          - FrozenTreat
         blacklist:
           tags:
           - Ingredient
@@ -1222,7 +1215,6 @@
         emptyRepresentative: BorgModuleRawIngredientPlaceholder
         whitelist:
           tags:
-          - Condiment
           - FoodSnack
           - Fruit
           - Ingredient
@@ -1236,24 +1228,16 @@
           - Rehydratable # For butchering
         blacklist:
           tags:
-          - Bread
-          - Cake
           - ChiliBowl
           - Cooked
-          - Cookie
-          - Dessert
           - Dinnerware
           - Donut
           - DonkPocket
-          - Nugget
-          - Muffin
-          - Pancake
           - Pie
           - Pizza
           - Soup
           - FoodSnack
           - FinishedMeal
-          - FrozenTreat
 
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: cooking-module }

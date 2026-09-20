@@ -16,7 +16,7 @@
   - type: Item
     size: Tiny
   - type: Tag
-    tags: [ DonkPocket, Meat ]
+    tags: [ DonkPocket, FinishedMeal, Meat ]
 
 # Donkpocket
 
@@ -331,9 +331,7 @@
   - type: Edible
     requiresSpecialDigestion: true
   - type: Tag
-    tags:
-    - ClothMade
-    - DonkPocket
+    tags: [ ClothMade, DonkPocket, FinishedMeal ]
 
 - type: entity
   name: warm moth-pocket

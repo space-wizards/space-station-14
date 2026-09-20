@@ -21,7 +21,7 @@
   - type: StaticPrice
     price: 0
   - type: Tag
-    tags: [ Condiment ]
+    tags: [ Ingredient ]
 
 # Packets
 
@@ -387,7 +387,7 @@
   - type: Icon
     state: bottle-coldsauce
   - type: Tag
-    tags: [ Coldsauce, Condiment ]
+    tags: [ Coldsauce, Ingredient ]
 
 - type: entity
   parent: BaseFoodCondimentBottle
@@ -457,7 +457,7 @@
   - type: Icon
     state: bottle-hotsauce
   - type: Tag
-    tags: [ Condiment, Hotsauce ]
+    tags: [ Hotsauce, Ingredient ]
 
 - type: entity
   parent: BaseFoodCondimentBottle
@@ -481,7 +481,7 @@
   - type: Icon
     state: bottle-ketchup
   - type: Tag
-    tags: [ Condiment, Ketchup ]
+    tags: [ Ingredient, Ketchup ]
 
 - type: entity
   parent: BaseFoodCondimentBottle
@@ -506,7 +506,7 @@
   - type: Icon
     state: bottle-ketchup
   - type: Tag
-    tags: [ BBQsauce, Condiment ]
+    tags: [ BBQsauce, Ingredient]
 
 # Shakers
 
@@ -565,7 +565,7 @@
   - type: Icon
     state: shaker-salt
   - type: Tag
-    tags: [ Condiment, SaltShaker ]
+    tags: [ Ingredient, SaltShaker ]
 
 - type: entity
   parent: BaseFoodShaker
@@ -583,4 +583,4 @@
   - type: Icon
     state: shaker-pepper
   - type: Tag
-    tags: [ Condiment, PepperShaker ]
+    tags: [ Ingredient, PepperShaker ]

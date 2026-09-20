@@ -23,8 +23,7 @@
   - type: Item
     size: Normal
   - type: Tag
-    tags:
-    - Cake
+    tags: [ Cake, FinishedMeal, Ingredient ]
   - type: SecretStash
     maxItemSize: "Normal"
     secretStashName: secret-stash-cake
@@ -61,9 +60,7 @@
   - type: Item
     size: Tiny
   - type: Tag
-    tags:
-    - Cake
-    - Slice
+    tags: [ Cake, Slice]
 
 # Custom Cake Example
 
@@ -83,9 +80,7 @@
     - id: FoodCakeBlueberrySlice
       amount: 8
   - type: Tag
-    tags:
-    - Cake
-    - Fruit
+    tags: [ Cake, FinishedMeal, Fruit ]
   - type: Item
     inhandVisuals:
       left:
@@ -109,10 +104,7 @@
     - state: alpha-slice-filling
       color: blue
   - type: Tag
-    tags:
-    - Cake
-    - Fruit
-    - Slice
+    tags: [ Cake, FinishedMeal, Fruit, Slice ]
   - type: Item
     inhandVisuals:
       left:
@@ -180,9 +172,7 @@
       - ReagentId: Oculine
         Quantity: 6
   - type: Tag
-    tags:
-    - Cake
-    - Vegetable
+    tags: [ Cake, FinishedMeal, Vegetable ]
   - type: Item
     inhandVisuals:
       left:
@@ -218,10 +208,7 @@
       - ReagentId: Oculine
         Quantity: 0.75
   - type: Tag
-    tags:
-    - Cake
-    - Vegetable
-    - Slice
+    tags: [ Cake, FinishedMeal, Slice, Vegetable ]
   - type: Item
     inhandVisuals:
       left:
@@ -250,9 +237,7 @@
     - id: FoodCakeBrainSlice
       amount: 8
   - type: Tag
-    tags:
-    - Cake
-    - Meat
+    tags: [ Cake, FinishedMeal, Meat ]
   - type: Item
     inhandVisuals:
       left:
@@ -275,10 +260,7 @@
   - type: Sprite
     state: brain-slice
   - type: Tag
-    tags:
-    - Cake
-    - Meat
-    - Slice
+    tags: [ Cake, FinishedMeal, Meat, Slice ]
   - type: Item
     inhandVisuals:
       left:
@@ -352,9 +334,7 @@
     - id: FoodCakeOrangeSlice
       amount: 8
   - type: Tag
-    tags:
-    - Cake
-    - Fruit
+    tags: [ Cake, FinishedMeal, Fruit ]
   - type: Item
     inhandVisuals:
       left:
@@ -377,10 +357,7 @@
     - state: alpha-slice-filling
       color: "#ff9900"
   - type: Tag
-    tags:
-    - Cake
-    - Fruit
-    - Slice
+    tags: [ Cake, FinishedMeal, Fruit, Slice ]
   - type: Item
     inhandVisuals:
       left:
@@ -409,9 +386,7 @@
     - id: FoodCakeLimeSlice
       amount: 8
   - type: Tag
-    tags:
-    - Cake
-    - Fruit
+    tags: [ Cake, FinishedMeal, Fruit ]
   - type: Item
     inhandVisuals:
       left:
@@ -434,10 +409,7 @@
     - state: alpha-slice-filling
       color: "#00ff00"
   - type: Tag
-    tags:
-    - Cake
-    - Fruit
-    - Slice
+    tags: [ Cake, FinishedMeal, Fruit, Slice ]
   - type: Item
     inhandVisuals:
       left:
@@ -466,9 +438,7 @@
     - id: FoodCakeLemonSlice
       amount: 8
   - type: Tag
-    tags:
-    - Cake
-    - Fruit
+    tags: [ Cake, FinishedMeal, Fruit ]
   - type: Item
     inhandVisuals:
       left:
@@ -491,10 +461,7 @@
     - state: alpha-slice-filling
       color: "#ffff00"
   - type: Tag
-    tags:
-    - Cake
-    - Fruit
-    - Slice
+    tags: [ Cake, FinishedMeal, Fruit, Slice ]
   - type: Item
     inhandVisuals:
       left:
@@ -537,9 +504,7 @@
       - ReagentId: JuiceBerry
         Quantity: 6
   - type: Tag
-    tags:
-    - Cake
-    - Fruit
+    tags: [ Cake, FinishedMeal, Fruit ]
   - type: Item
     heldPrefix: lemoon
 
@@ -569,10 +534,7 @@
       - ReagentId: JuiceBerry
         Quantity: 0.75
   - type: Tag
-    tags:
-    - Cake
-    - Fruit
-    - Slice
+    tags: [ Cake, FinishedMeal, Fruit, Slice ]
   - type: Item
     inhandVisuals:
       left:
@@ -670,9 +632,7 @@
     - id: FoodCakeAppleSlice
       amount: 8
   - type: Tag
-    tags:
-    - Cake
-    - Fruit
+    tags: [ Cake, FinishedMeal, Fruit ]
   - type: Item
     inhandVisuals:
       left:
@@ -696,10 +656,7 @@
     - state: alpha-slice-filling
       color: "#ff4300"
   - type: Tag
-    tags:
-    - Cake
-    - Fruit
-    - Slice
+    tags: [ Cake, FinishedMeal, Fruit, Slice ]
   - type: Item
     inhandVisuals:
       left:
@@ -726,9 +683,7 @@
     - id: FoodCakeSlimeSlice
       amount: 8
   - type: Tag
-    tags:
-    - Cake
-    - Meat
+    tags: [ Cake, FinishedMeal, Meat ]
   - type: Item
     inhandVisuals:
       left:
@@ -751,10 +706,7 @@
   - type: Sprite
     state: slime-slice
   - type: Tag
-    tags:
-    - Cake
-    - Meat
-    - Slice
+    tags: [ Cake, FinishedMeal, Meat, Slice ]
   - type: Item
     inhandVisuals:
       left:
@@ -791,9 +743,7 @@
       - ReagentId: Sugar
         Quantity: 10
   - type: Tag
-    tags:
-    - Cake
-    - Fruit
+    tags: [ Cake, FinishedMeal, Fruit ]
   - type: Item
     inhandVisuals:
       left:
@@ -823,10 +773,7 @@
       - ReagentId: Sugar
         Quantity: 1.25
   - type: Tag
-    tags:
-    - Cake
-    - Fruit
-    - Slice
+    tags: [ Cake, FinishedMeal, Fruit, Slice ]
   - type: Item
     inhandVisuals:
       left:
@@ -852,9 +799,7 @@
     - id: FoodCakeChristmasSlice
       amount: 8
   - type: Tag
-    tags:
-    - Cake
-    - Fruit
+    tags: [ Cake, FinishedMeal, Fruit ]
   - type: Item
     inhandVisuals:
       left:
@@ -872,10 +817,7 @@
   - type: Sprite
     state: christmas-slice
   - type: Tag
-    tags:
-    - Cake
-    - Fruit
-    - Slice
+    tags: [ Cake, FinishedMeal, Fruit, Slice ]
   - type: Item
     inhandVisuals:
       left:
@@ -1099,10 +1041,7 @@
     baseWalkSpeed : 3
     baseSprintSpeed : 5
   - type: Tag
-    tags:
-    - VimPilot
-    - DoorBumpOpener
-    - Cake
+    tags: [ Cake, DoorBumpOpener, FinishedMeal, VimPilot ]
   - type: CanEscapeInventory
     baseResistTime: 2
   - type: Puller
@@ -1180,8 +1119,7 @@
     radius: 1.4
     energy: 2.5
   - type: Tag
-    tags:
-    - Slice
+    tags: [ Slice ]
   - type: FoodSequenceElement
     entries:
       Taco: Suppermatter
@@ -1202,9 +1140,7 @@
     - id: FoodCakeCottonSlice
       amount: 8
   - type: Tag
-    tags:
-    - Cake
-    - ClothMade
+    tags: [ Cake, ClothMade, FinishedMeal ]
   - type: Solution
     solution:
       reagents:
@@ -1228,10 +1164,7 @@
   - type: Sprite
     state: cotton-slice
   - type: Tag
-    tags:
-    - Cake
-    - ClothMade
-    - Slice
+    tags: [ Cake, ClothMade, Slice ]
   - type: Solution
     solution:
       reagents:
@@ -1279,9 +1212,7 @@
     - id: FoodCakeBerryDelightSlice
       amount: 8
   - type: Tag
-    tags:
-    - Cake
-    - Fruit
+    tags: [ Cake, Fruit ]
   - type: Item
     inhandVisuals:
       left:
@@ -1320,10 +1251,7 @@
       - ReagentId: JuiceBerry
         Quantity: 1.25
   - type: Tag
-    tags:
-    - Cake
-    - Fruit
-    - Slice
+    tags: [ Cake, Fruit, Slice ]
   - type: Item
     inhandVisuals:
       left:

@@ -361,16 +361,10 @@
   id: ComputerTelevisionCircuitboard # ConstructionGraph: WallmountTelevision
 
 - type: Tag
-  id: Condiment #  Storage whitelist: BorgModuleCooking
-
-- type: Tag
   id: ConstructionMaterial # Storage whitelist: BorgModuleConstruction
 
 - type: Tag
   id: Cooked # MetamorphRecipe: FoodBurgerCheese, FoodBurgerChicken, FoodBurgerCrab, FoodBurgerDuck
-
-- type: Tag
-  id: Cookie #  Storage whitelist: BorgModuleCooking
 
 - type: Tag
   id: FinishedMeal # Storage whitelist: BorgModuleCooking
@@ -463,9 +457,6 @@
   id: Cutlet # MetamorphRecipe: FoodBurgerCheese, FoodBurgerChicken, FoodBurgerDuck
 
 ## D ##
-
-- type: Tag
-  id: Dessert # Storage whitelist: BorgModuleCooking
 
 - type: Tag # Exists on diagonal walls and windows
   id: Diagonal # Used by TileWallsCommand and FixRotationsCommand
@@ -636,9 +627,6 @@
 
 - type: Tag
   id: FreezerElectronics # ConstructionGraph: CrateFreezer, ClosetFreezer
-
-- type: Tag
-  id: FrozenTreat # Storage whitelist: BorgModuleCooking
 
 - type: Tag
   id: Fruit # SpecialDigestible: OrganReptilianStomach. CargoBounty: BountyFruit. StorageWhitelist: BorgModuleCooking

@@ -210,7 +210,6 @@
 
   defaultModules:
   - BorgModulePrying
-  - BorgModuleMusique
   - BorgModuleService
   - BorgModuleBotany
   - BorgModuleCooking

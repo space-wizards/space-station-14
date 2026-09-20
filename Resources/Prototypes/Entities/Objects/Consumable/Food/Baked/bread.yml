@@ -14,8 +14,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/bread.rsi
   - type: Tag
-    tags:
-    - Bread
+    tags: [ Bread ]
   - type: Solution
     solution:
       reagents:
@@ -33,9 +32,7 @@
     flavors:
       - bread
   - type: Tag
-    tags:
-    - Bread
-    - Slice
+    tags: [ Bread, Ingredient, Slice ]
   - type: Solution
     solution:
       reagents:
@@ -94,9 +91,7 @@
     - id: FoodBreadBananaSlice
       amount: 8
   - type: Tag
-    tags:
-    - Fruit
-    - Bread
+    tags: [ Bread, FinishedMeal, Fruit ]
 # Tastes like bread, banana, nut.
 
 - type: entity
@@ -113,10 +108,7 @@
     layers:
     - state: banana-slice
   - type: Tag
-    tags:
-    - Fruit
-    - Bread
-    - Slice
+    tags: [ Bread, FinishedMeal, Fruit, Slice ]
 
 - type: entity
   parent: [FoodBreadBase, BaseSlicingRefinableFood]
@@ -138,9 +130,7 @@
     - id: FoodBreadCottonSlice
       amount: 8
   - type: Tag
-    tags:
-    - ClothMade
-    - Bread
+    tags: [ Bread, ClothMade, FinishedMeal ]
   - type: Solution
     solution:
       reagents:
@@ -165,10 +155,7 @@
     layers:
     - state: cotton-slice
   - type: Tag
-    tags:
-    - ClothMade
-    - Bread
-    - Slice
+    tags: [ Bread, ClothMade, Ingredient, Slice ]
   - type: Solution
     solution:
       reagents:
@@ -286,9 +273,7 @@
       - ReagentId: Vitamin
         Quantity: 4
   - type: Tag
-    tags:
-    - Meat
-    - Bread
+    tags: [ Bread, FinishedMeal, Ingredient, Meat ]
 # Tastes like bread, meat.
 
 - type: entity
@@ -314,10 +299,7 @@
       - ReagentId: Vitamin
         Quantity: 0.5
   - type: Tag
-    tags:
-    - Meat
-    - Bread
-    - Slice
+    tags: [ Bread, Meat, Slice ]
 
 - type: entity
   name: mimana bread
@@ -419,9 +401,7 @@
       - ReagentId: Protein
         Quantity: 10
   - type: Tag
-    tags:
-    - Meat
-    - Bread
+    tags: [ Bread, Meat ]
 
 - type: entity
   name: sausage bread slice
@@ -444,10 +424,7 @@
       - ReagentId: Protein
         Quantity: 1.25
   - type: Tag
-    tags:
-    - Meat
-    - Bread
-    - Slice
+    tags: [ Bread, FinishedMeal, Meat, Slice ]
 
 - type: entity
   name: spider meat bread
@@ -476,9 +453,7 @@
       - ReagentId: Vitamin
         Quantity: 4
   - type: Tag
-    tags:
-    - Meat
-    - Bread
+    tags: [ Bread, Meat ]
 # Tastes like bread, cobwebs.
 
 - type: entity
@@ -504,10 +479,7 @@
       - ReagentId: Vitamin
         Quantity: 0.5
   - type: Tag
-    tags:
-    - Meat
-    - Bread
-    - Slice
+    tags: [ Bread, FinishedMeal, Meat, Slice ]
 
 - type: entity
   name: tofu bread
@@ -583,9 +555,7 @@
       - ReagentId: Vitamin
         Quantity: 4
   - type: Tag
-    tags:
-    - Meat
-    - Bread
+    tags: [ Bread, FinishedMeal, Meat ]
 # Tastes like bread, acid.
 
 - type: entity
@@ -611,10 +581,7 @@
       - ReagentId: Vitamin
         Quantity: 0.5
   - type: Tag
-    tags:
-    - Meat
-    - Bread
-    - Slice
+    tags: [ Bread, FinishedMeal, Meat, Slice ]
 
 # Other than bread/slice:
 
@@ -676,9 +643,7 @@
   - type: Edible
     requiresSpecialDigestion: true
   - type: Tag
-    tags:
-    - Bread
-    - ClothMade
+    tags: [ Bread, ClothMade, FinishedMeal ]
   - type: Clothing
     equippedPrefix: baguette-cotton
   - type: Item
@@ -735,10 +700,7 @@
   - type: Edible
     requiresSpecialDigestion: true
   - type: Tag
-    tags:
-    - Bread
-    - Slice
-    - ClothMade
+    tags: [ Bread, ClothMade, Ingredient, Slice ]
   - type: Solution
     solution:
       reagents:
@@ -857,8 +819,7 @@
     layers:
     - state: moldy-slice
   - type: Tag
-    tags:
-    - Trash
+    tags: [ Trash ]
   - type: Solution
     solution:
       reagents:
@@ -955,11 +916,7 @@
     baseWalkSpeed : 5
     baseSprintSpeed : 3
   - type: Tag
-    tags:
-    - VimPilot
-    - DoorBumpOpener
-    - Bread
-    - Meat
+    tags: [ Bread, DoorBumpOpener, FinishedMeal, Meat, VimPilot ]
   - type: CanEscapeInventory
     baseResistTime: 2
   - type: Puller
