@@ -189,11 +189,10 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
 
     private void PopulateDepartmentList(IEnumerable<SuitSensorStatus> departmentSensors, EntityUid station)
     {
-
         var entriesSort = new List<(JobPrototype? job, SuitSensorStatus entry)>();
         foreach (var a in departmentSensors)
         {
-            _prototypeManager.TryIndex(a.Job, out JobPrototype? job);
+            _prototypeManager.TryIndex(a.JobIcon.Replace("JobIcon", string.Empty), out JobPrototype? job);
             entriesSort.Add((job, a));
         }
 

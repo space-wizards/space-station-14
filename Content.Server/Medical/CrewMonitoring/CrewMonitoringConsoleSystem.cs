@@ -4,6 +4,7 @@ using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Medical.CrewMonitoring;
 using Content.Shared.Pinpointer;
 using Content.Shared.PowerCell;
+using Content.Shared.StationRecords.Systems;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Medical.CrewMonitoring;
@@ -13,6 +14,8 @@ public sealed partial class CrewMonitoringConsoleSystem : EntitySystem
     [Dependency] private PowerCellSystem _cell = default!;
     [Dependency] private UserInterfaceSystem _uiSystem = default!;
     [Dependency] private StationSystem _station = default!;
+    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private StationRecordsSystem _records = default!;
 
     public override void Initialize()
     {
@@ -37,7 +40,6 @@ public sealed partial class CrewMonitoringConsoleSystem : EntitySystem
     private void OnInit(Entity<CrewMonitoringConsoleComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.Station = _station.GetOwningStation(ent);
-
     }
 
     private void OnUIOpened(EntityUid uid, CrewMonitoringConsoleComponent component, BoundUIOpenedEvent args)
