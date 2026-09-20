@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.StatusIcon;
+namespace Content.Shared.StatusIcon;
 
 public abstract class SharedStatusIconSystem : EntitySystem
 {

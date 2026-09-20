@@ -26,7 +26,7 @@
   id: BoxBaseSmall
   components:
   - type: Item
-    size: Small
+    size: Normal
     shape:
     - 0,0,1,1
   - type: Storage
@@ -34,6 +34,14 @@
     - 0,0,1,1
   - type: StaticPrice # Half of the "regular" box
     price: 5
+
+- type: entity
+  abstract: true
+  parent: BaseBoxSurvival
+  id: BoxBaseHug
+  components:
+  - type: Item
+    heldPrefix: hug
 
 - type: entity
   parent: BoxBase

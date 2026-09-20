@@ -137,7 +137,7 @@ public sealed partial class FloorTileSystem : EntitySystem
 
                 if (!CanPlaceTile(gridUid, mapGrid, tile.GridIndices, out var reason))
                 {
-                    _popup.PopupClient(reason, args.User, args.User);
+                    _popup.PopupEntity(reason, args.User, args.User);
                     return;
                 }
 

@@ -564,6 +564,58 @@ public abstract partial class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
+    /// Try to get the last mind that was associated with the given entity. This is distinct from TryGetMind as it does
+    /// not require an active mind to be associated with an entity (e.g. dead players after ghosting or taking a ghost
+    /// role)
+    /// </summary>
+    /// <param name="entity">Entity to find the last mind for</param>
+    /// <param name="lastMind">Output mind entity with <see cref="MindComponent"/>. null if function returns false</param>
+    /// <returns>true if a last mind was found, false if not</returns>
+    public bool TryGetLastMind(
+        Entity<MindContainerComponent?> entity,
+        [NotNullWhen(true)] out Entity<MindComponent>? lastMind)
+    {
+        lastMind = null;
+
+        if (!Resolve(entity.Owner, ref entity.Comp, logMissing: false))
+            return false;
+
+        if (entity.Comp.LastMind == null)
+            return false;
+
+        if (!TryComp<MindComponent>(entity.Comp.LastMind.Value, out var lastMindComp))
+            return false;
+
+        lastMind = new Entity<MindComponent>(entity.Comp.LastMind.Value, lastMindComp);
+
+        return true;
+    }
+
+    /// <summary>
+    /// Try to get the original owner <see cref="NetUserId"/> of the last mind associated with a given entity
+    /// </summary>
+    /// <param name="entity"><see cref="EntityUid"/> to get the last mind owner from</param>
+    /// <param name="lastOwner"><see cref="NetUserId"/> of the last mind owner. null if function returns false</param>
+    /// <returns>true if a mind was found and the last owner is not null, false if not</returns>
+    public bool TryGetLastMindOwner(
+        Entity<MindContainerComponent?> entity,
+        [NotNullWhen(true)] out NetUserId? lastOwner
+    )
+    {
+        lastOwner = null;
+
+        if (!TryGetLastMind(entity, out var lastMind))
+            return false;
+
+        if (lastMind.Value.Comp.OriginalOwnerUserId == null)
+            return false;
+
+        lastOwner = lastMind.Value.Comp.OriginalOwnerUserId;
+
+        return true;
+    }
+
+    /// <summary>
     /// Sets the Mind's UserId, Session, and updates the player's PlayerData. This should have no direct effect on the
     /// entity that any mind is connected to, except as a side effect of the fact that it may change a player's
     /// attached entity. E.g., ghosts get deleted.

@@ -26,9 +26,9 @@
   description: A deck of guardian tarot cards, capable of binding a personal guardian to your body.
   components:
   - type: Sprite
-    sprite: Objects/Misc/Lights/lamp.rsi
+    sprite: Objects/Magic/deck.rsi
     layers:
-      - state: lamp
+      - state: deck
   - type: GuardianCreator
     guardianProto: MobIfritGuardian
     emptyPopup: guardian-deck-invalid-creation

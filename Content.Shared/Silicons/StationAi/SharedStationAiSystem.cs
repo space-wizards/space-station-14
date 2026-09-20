@@ -235,7 +235,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
             return;
 
         // Try to insert our thing into them
-        if (_slots.CanEject(ent.Owner, args.User, ent.Comp.Slot))
+        if (_slots.CanEject(ent.Owner, ent.Comp.Slot, args.User))
         {
             if (!_slots.TryInsert(args.Args.Target.Value, targetHolder.Slot, ent.Comp.Slot.Item!.Value, args.User, excludeUserAudio: true))
             {
@@ -247,7 +247,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         }
 
         // Otherwise try to take from them
-        if (_slots.CanEject(args.Args.Target.Value, args.User, targetHolder.Slot))
+        if (_slots.CanEject(args.Args.Target.Value, targetHolder.Slot, args.User))
         {
             if (!_slots.TryInsert(ent.Owner, ent.Comp.Slot, targetHolder.Slot.Item!.Value, args.User, excludeUserAudio: true))
             {
@@ -278,13 +278,13 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
         if (cardHasAi && coreHasAi)
         {
-            _popup.PopupClient(Loc.GetString("intellicard-core-occupied"), args.User, args.User, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("intellicard-core-occupied"), args.User, args.User, PopupType.Medium);
             args.Handled = true;
             return;
         }
         if (!cardHasAi && !coreHasAi)
         {
-            _popup.PopupClient(Loc.GetString("intellicard-core-empty"), args.User, args.User, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("intellicard-core-empty"), args.User, args.User, PopupType.Medium);
             args.Handled = true;
             return;
         }

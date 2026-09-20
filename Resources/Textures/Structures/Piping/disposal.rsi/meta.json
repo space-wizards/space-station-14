@@ -8,76 +8,58 @@
     "copyright": "https://github.com/discordia-space/CEV-Eris/blob/bbe32606902c90f5290b57d905a3f31b84dc6d7d/icons/obj/pipes/disposal.dmi and modified by DrSmugleaf. Signal router sprites based on normal router modified by deltanedas (github). disposal bins by EmoGarbage404 (github). pipe-x pipe-xf, conpipe-x by K-Dynamic (github). Signaler sprites based on tagger modified by Wolfkey. Mailing unit sprites based on Structures/mailbox.rsi from commit 3281f408eb58c91ceb7b72ea556ba29e4760b9a1 and made by ketufaispikinut.",
     "states": [
         {
-            "name": "condisposal",
-            "directions": 1
+            "name": "condisposal"
         },
         {
-            "name": "conmailing",
-            "directions": 1
+            "name": "conmailing"
         },
         {
-            "name": "conpipe-c",
-            "directions": 4
+            "name": "conpipe-c"
         },
         {
-            "name": "conpipe-j1",
-            "directions": 4
+            "name": "conpipe-j1"
         },
         {
-            "name": "conpipe-j1s",
-            "directions": 4
+            "name": "conpipe-j1s"
         },
         {
-            "name": "conpipe-j2",
-            "directions": 4
+            "name": "conpipe-j2"
         },
         {
-            "name": "conpipe-j2s",
-            "directions": 4
+            "name": "conpipe-j2s"
         },
         {
-            "name": "conpipe-x",
-            "directions": 4
+            "name": "conpipe-x"
         },
         {
-            "name": "conpipe-s",
-            "directions": 4
+            "name": "conpipe-s"
         },
         {
-            "name": "conpipe-t",
-            "directions": 4
+            "name": "conpipe-t"
         },
         {
-            "name": "conpipe-tagger",
-            "directions": 4
+            "name": "conpipe-tagger"
         },
         {
-            "name": "conpipe-signaller",
-            "directions": 4
+            "name": "conpipe-signaller"
         },
         {
-            "name": "conpipe-y",
-            "directions": 4
+            "name": "conpipe-y"
         },
         {
-            "name": "disposal",
-            "directions": 1
+            "name": "disposal"
         },
         {
-            "name": "mailing",
-            "directions": 1
+            "name": "mailing"
         },
         {
-            "name": "disposal-charging",
-            "directions": 1
+            "name": "disposal-charging"
         },
         {
-            "name": "mailing-charging",
-            "directions": 1
+            "name": "mailing-charging"
         },
         {
             "name": "disposal-flush",
-            "directions": 1,
             "delays": [
                 [
                     0.066,
@@ -97,7 +79,6 @@
         },
         {
             "name": "mailing-flush",
-            "directions": 1,
             "delays": [
                 [
                     0.15,
@@ -108,12 +89,10 @@
             ]
         },
         {
-            "name": "mailing-full",
-            "directions": 1
+            "name": "mailing-full"
         },
         {
             "name": "dispover-charge",
-            "directions": 1,
             "delays": [
                 [
                     0.4,
@@ -123,7 +102,6 @@
         },
         {
             "name": "dispover-full",
-            "directions": 1,
             "delays": [
                 [
                     0.2,
@@ -132,59 +110,23 @@
             ]
         },
         {
-            "name": "dispover-handle",
-            "directions": 1
+            "name": "dispover-handle"
         },
         {
-            "name": "mailover-handle",
-            "directions": 1
+            "name": "mailover-handle"
         },
 	    {
-	        "name": "mailover-handle-off",
-	        "directions": 1
+	        "name": "mailover-handle-off"
         },
         {
-            "name": "dispover-ready",
-            "directions": 1
+            "name": "dispover-ready"
         },
         {
-            "name": "intake",
-            "directions": 4
+            "name": "intake"
         },
         {
             "name": "intake-closing",
-            "directions": 4,
             "delays": [
-                [
-                    0.5,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1
-                ],
-                [
-                    0.5,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1
-                ],
-                [
-                    0.5,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1
-                ],
                 [
                     0.5,
                     0.1,
@@ -198,43 +140,11 @@
             ]
         },
         {
-            "name": "outlet",
-            "directions": 4
+            "name": "outlet"
         },
         {
             "name": "outlet-open",
-            "directions": 4,
             "delays": [
-                [
-                    0.5,
-                    0.5,
-                    0.5,
-                    0.5,
-                    0.5,
-                    0.1,
-                    1.5,
-                    0.1
-                ],
-                [
-                    0.5,
-                    0.5,
-                    0.5,
-                    0.5,
-                    0.5,
-                    0.1,
-                    1.5,
-                    0.1
-                ],
-                [
-                    0.5,
-                    0.5,
-                    0.5,
-                    0.5,
-                    0.5,
-                    0.1,
-                    1.5,
-                    0.1
-                ],
                 [
                     0.5,
                     0.5,
@@ -248,119 +158,68 @@
             ]
         },
         {
-            "name": "pipe-b",
-            "directions": 4
+            "name": "pipe-b"
         },
         {
-            "name": "pipe-bf",
-            "directions": 4
+            "name": "pipe-bf"
         },
         {
-            "name": "pipe-c",
-            "directions": 4
+            "name": "pipe-c"
         },
         {
-            "name": "pipe-cf",
-            "directions": 4
+            "name": "pipe-cf"
         },
         {
-            "name": "pipe-d",
-            "directions": 4
+            "name": "pipe-d"
         },
         {
-            "name": "pipe-j1",
-            "directions": 4
+            "name": "pipe-j1"
         },
         {
-            "name": "pipe-j1f",
-            "directions": 4
+            "name": "pipe-j1f"
         },
         {
-            "name": "pipe-j1s",
-            "directions": 4
+            "name": "pipe-j1s"
         },
         {
-            "name": "pipe-j1sf",
-            "directions": 4
+            "name": "pipe-j1sf"
         },
         {
-            "name": "pipe-j2",
-            "directions": 4
+            "name": "pipe-j2"
         },
         {
-            "name": "pipe-j2f",
-            "directions": 4
+            "name": "pipe-j2f"
         },
         {
-            "name": "pipe-j2s",
-            "directions": 4
+            "name": "pipe-j2s"
         },
         {
-            "name": "pipe-j2sf",
-            "directions": 4
+            "name": "pipe-j2sf"
         },
         {
-            "name": "pipe-x",
-            "directions": 4
+            "name": "pipe-x"
         },
         {
-            "name": "pipe-xf",
-            "directions": 4
+            "name": "pipe-xf"
         },
         {
-            "name": "pipe-s",
-            "directions": 4
+            "name": "pipe-s"
         },
         {
-            "name": "pipe-sf",
-            "directions": 4
+            "name": "pipe-sf"
         },
         {
-            "name": "pipe-t",
-            "directions": 4
+            "name": "pipe-t"
         },
         {
-            "name": "pipe-tagger",
-            "directions": 4
+            "name": "pipe-tagger"
         },
         {
-            "name": "pipe-tagger-partial",
-            "directions": 4
+            "name": "pipe-tagger-partial"
         },
         {
             "name": "pipe-signaller",
-            "directions": 4,
             "delays": [
-                [
-                    0.1,
-                    0.141,
-                    0.1,
-                    0.141,
-                    0.1,
-                    0.141,
-                    0.1,
-                    0.141
-                ],
-                [
-                    0.1,
-                    0.141,
-                    0.1,
-                    0.141,
-                    0.1,
-                    0.141,
-                    0.1,
-                    0.141
-                ],
-                [
-                    0.1,
-                    0.141,
-                    0.1,
-                    0.141,
-                    0.1,
-                    0.141,
-                    0.1,
-                    0.141
-                ],
                 [
                     0.1,
                     0.141,
@@ -374,32 +233,25 @@
             ]
         },
         {
-            "name": "pipe-tf",
-            "directions": 4
+            "name": "pipe-tf"
         },
         {
-            "name": "pipe-y",
-            "directions": 4
+            "name": "pipe-y"
         },
         {
-            "name": "pipe-yf",
-            "directions": 4
+            "name": "pipe-yf"
         },
         {
-            "name": "signal-router",
-            "directions": 4
+            "name": "signal-router"
         },
         {
-            "name": "signal-router-free",
-            "directions": 4
+            "name": "signal-router-free"
         },
         {
-            "name": "signal-router-flipped",
-            "directions": 4
+            "name": "signal-router-flipped"
         },
         {
-            "name": "signal-router-flipped-free",
-            "directions": 4
+            "name": "signal-router-flipped-free"
         }
     ]
 }

@@ -1,15 +1,11 @@
 - type: construction
+  parent: BaseWeapon
   id: ModularGrenadeRecipe
   graph: ModularGrenadeGraph
-  startNode: start
   targetNode: grenade
-  category: construction-category-weapons
-  objectType: Item
 
 - type: construction
+  parent: BaseWeapon
   id: ModularMineRecipe
   graph: ModularMineGraph
-  startNode: start
   targetNode: mine
-  category: construction-category-weapons
-  objectType: Item
