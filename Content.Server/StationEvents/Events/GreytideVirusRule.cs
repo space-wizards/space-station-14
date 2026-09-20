@@ -13,7 +13,7 @@ using Robust.Shared.Random;
 namespace Content.Server.StationEvents.Events;
 
 /// <summary>
-/// This event will open and bolt airlocks and unlock lockers from randomly selected access groups.
+/// This event will open and bolt airlocks and unlock lockers with access from randomly selected access groups.
 /// </summary>
 /// <seealso cref="GreytideVirusRuleComponent"/>
 public sealed partial class GreytideVirusRule : StationEventSystem<GreytideVirusRuleComponent>
