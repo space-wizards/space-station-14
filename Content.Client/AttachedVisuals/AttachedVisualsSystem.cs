@@ -157,28 +157,24 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
         var results = new List<(EntityUid Origin, string Key, HashSet<string> mapKeys, PrototypeLayerData Data)>();
         GetLayers(ent, ent.Comp.Attachments, "attached", results);
 
-        var addedLayers = new Dictionary<EntityUid, List<int>>();
-
-        var addedLayerMap = new Dictionary<EntityUid, Dictionary<object, int>>();
-
         foreach (var (origin, key, mapKeys, data) in results)
         {
-
             var index = _sprite.LayerMapReserve((ent.Owner, sprite), key);
             _sprite.LayerSetData((ent.Owner, sprite), index, data);
             ent.Comp.RevealedLayers.GetOrNew(origin).Add(key);
 
-            addedLayers.GetOrNew(origin).Add(index);
+            var addedLayerMap = new Dictionary<object, int>();
 
             foreach (var mapkey in mapKeys)
             {
                 var obj = ParseKey(mapkey);
-                addedLayerMap.GetOrNew(origin)[obj] = index;
+                addedLayerMap[obj] = index;
             }
+
+            var ev = new AttachedVisualsUpdatedEvent(ent, addedLayerMap);
+            RaiseLocalEvent(origin, ref ev);
         }
 
-        var ev = new AttachedVisualsUpdatedEvent(addedLayers, addedLayerMap);
-        RaiseLocalEvent(ent, ref ev);
     }
 
     private object ParseKey(string keyString)

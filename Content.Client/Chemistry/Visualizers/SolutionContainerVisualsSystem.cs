@@ -1,4 +1,5 @@
 using Content.Client.Items.Systems;
+using Content.Shared.AttachedVisuals;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -8,6 +9,7 @@ using Content.Shared.Hands;
 using Content.Shared.Item;
 using Content.Shared.Rounding;
 using Robust.Client.GameObjects;
+using Robust.Shared.Graphics.RSI;
 
 namespace Content.Client.Chemistry.Visualizers;
 
@@ -26,6 +28,28 @@ public sealed partial class SolutionContainerVisualsSystem : VisualizerSystem<So
     private void OnMapInit(EntityUid uid, SolutionContainerVisualsComponent component, MapInitEvent args)
     {
         component.InitialDescription = MetaData(uid).EntityDescription;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnAttachedVisuals(Entity<SolutionContainerVisualsComponent> ent, ref AttachedVisualsUpdatedEvent args)
+    {
+        if (!AppearanceSystem.TryGetData(ent, SolutionContainerVisuals.FillFraction, out float fraction))
+            return;
+
+        if (!args.TryGetLayerIndex(ent.Comp.Layer, out var layerIndex))
+            return;
+
+        if (!SpriteSystem.TryGetLayer(args.AttachedTo, layerIndex.Value, out var layer, false))
+            return;
+
+        if (layer.ActualState == null)
+            return;
+
+        var frameCount = layer.ActualState.GetFrames(RsiDirection.South).Length;
+        var closestFillFrame = ContentHelpers.RoundToLevels(fraction, 1, frameCount);
+
+        SpriteSystem.LayerSetAutoAnimated(args.AttachedTo, layerIndex.Value, false);
+        layer.AnimationFrame = closestFillFrame;
     }
 
     protected override void OnAppearanceChange(EntityUid uid, SolutionContainerVisualsComponent component, ref AppearanceChangeEvent args)

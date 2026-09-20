@@ -176,6 +176,17 @@
     fillBaseName: beaker
     inHandsMaxFillLevels: 3
     inHandsFillBaseName: -fill-
+  - type: AttachedVisuals
+    sprite: Objects/Specific/Chemistry/effects.rsi
+    attachedVisuals:
+      inhand-left:
+        layers:
+        - state: weedpuff
+          map: [ "enum.SolutionContainerLayers.Fill" ]
+      inhand-right:
+        layers:
+        - state: weedpuff
+          map: [ "enum.SolutionContainerLayers.Fill" ]
 
 - type: entity
   suffix: cryoxadone

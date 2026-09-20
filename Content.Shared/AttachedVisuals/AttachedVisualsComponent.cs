@@ -61,29 +61,26 @@ public record struct GetAttachedVisualsEvent
 public record struct AttachedVisualsUpdatedEvent
 {
     /// <summary>
-    /// Dictionary of entities that had sprites added, with a list of the layer indexes
+    /// Entity our sprite layers were drawn onto
     /// </summary>
-    public readonly Dictionary<EntityUid, List<int>> Layers;
+    public EntityUid AttachedTo;
 
-    private readonly Dictionary<EntityUid, Dictionary<object, int>> LayerMap;
+    /// <summary>
+    /// List of layer indexes
+    /// </summary>
+    public Dictionary<object, int> LayerMap;
 
-    public AttachedVisualsUpdatedEvent(Dictionary<EntityUid, List<int>> layers, Dictionary<EntityUid, Dictionary<object, int>> layerMap)
+    public AttachedVisualsUpdatedEvent(EntityUid attachedTo, Dictionary<object, int> layerMap)
     {
-        Layers = layers;
+        AttachedTo = attachedTo;
         LayerMap = layerMap;
     }
 
-    public bool TryGetLayerIndex(EntityUid uid, Enum key, [NotNullWhen(true)] out int? index)
+    public bool TryGetLayerIndex(Enum key, [NotNullWhen(true)] out int? index)
     {
         index = null;
 
-        if (!LayerMap.TryGetValue(uid, out var entLayerMap))
-            return false;
-
-        if (!entLayerMap.TryGetValue(key, out var layerIndex))
-            return false;
-
-        if (!Layers.TryGetValue(uid, out var ourLayers) || !ourLayers.Contains(layerIndex))
+        if (!LayerMap.TryGetValue(key, out var layerIndex))
             return false;
 
         index = layerIndex;
