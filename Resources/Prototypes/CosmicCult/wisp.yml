@@ -62,19 +62,3 @@
     baseWeightlessModifier: 0.35
   - type: MovementIgnoreGravity
     weightless: true
-
-- type: entity
-  categories: [ HideSpawnMenu ]
-  id: CosmicChantryWisp
-  name: Trapped Wisp
-  components:
-  - type: Sprite
-    sprite: _ST/CosmicCult/Mobs/wisp.rsi
-    layers:
-      - state: shadow-medium
-        visible: false
-  - type: Speech
-  - type: Transform
-  - type: Physics
-    bodyType: Static
-    canCollide: False

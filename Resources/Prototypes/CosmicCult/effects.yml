@@ -11,8 +11,10 @@
       - sprite: Effects/Cosmic/attack-weapons.rsi
         state: vfx
         shader: unshaded
+    - type: AnimationPlayer
+    - type: EffectVisuals
     - type: TimedDespawn
-      lifetime: 0.66
+      lifetime: 0.6
     - type: PointLight
       color: "#42a4ae"
       radius: 1.5
