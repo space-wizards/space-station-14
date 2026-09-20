@@ -94,4 +94,3 @@ public sealed partial class GasLeakRule : StationEventSystem<GasLeakRuleComponen
         }
     }
 }
-

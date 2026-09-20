@@ -58,7 +58,7 @@ public sealed partial class LoadMapRuleSystem : StationEventSystem<LoadMapRuleCo
             if (!_mapLoader.TryLoadMap(path, out var map, out var gridSet, opts))
             {
                 Log.Error($"Failed to load map from {path}!");
-                ForceEndSelf((ent, ent.Comp2));
+                ForceEndSelf((ent.Owner, ent.Comp2));
                 return;
             }
 
@@ -89,7 +89,7 @@ public sealed partial class LoadMapRuleSystem : StationEventSystem<LoadMapRuleCo
             if (!_gridPreloader.TryGetPreloadedGrid(preloaded, out var loadedShuttle))
             {
                 Log.Error($"Failed to get a preloaded grid with {preloaded}!");
-                ForceEndSelf((ent, ent.Comp2));
+                ForceEndSelf((ent.Owner, ent.Comp2));
                 return;
             }
 
@@ -101,7 +101,7 @@ public sealed partial class LoadMapRuleSystem : StationEventSystem<LoadMapRuleCo
         else
         {
             Log.Error($"No valid map prototype or map path associated with the rule {ToPrettyString(ent.Owner)}");
-            ForceEndSelf((ent, ent.Comp2));
+            ForceEndSelf((ent.Owner, ent.Comp2));
             return;
         }
 
