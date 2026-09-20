@@ -1,5 +1,5 @@
 using Content.Shared.Conditions;
-using Content.Shared.Conditions.Interfaces;
+using Content.Shared.Conditions.HelperConditions;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 

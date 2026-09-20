@@ -1,5 +1,5 @@
 using Content.Shared.Conditions;
-using Content.Shared.Conditions.Interfaces;
+using Content.Shared.Conditions.HelperConditions;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions;
@@ -80,14 +80,8 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem
 /// Use in data structures for storage.
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
-public abstract partial class EntityCondition : ICondition, IWithInverted
+public abstract partial class EntityCondition : ICondition
 {
-    /// <summary>
-    /// If true, invert the result. So false returns true and true returns false!
-    /// </summary>
-    [DataField]
-    public bool Inverted { get; set; }
-
     /// <summary>
     /// A basic description of this condition, which displays in the guidebook.
     /// </summary>
@@ -101,8 +95,16 @@ public abstract partial class EntityCondition : ICondition, IWithInverted
 /// The concrete condition for strongly typing.
 /// </summary>
 /// <typeparam name="TCondition"></typeparam>
-public abstract partial class EntityConditionBase<TCondition> : EntityCondition where TCondition : ICondition
+public abstract partial class EntityConditionBase<TCondition> : EntityCondition, IWithInverted
+    where TCondition : ICondition
 {
+
+    /// <summary>
+    /// If true, invert the result. So false returns true and true returns false!
+    /// </summary>
+    [DataField]
+    public bool Inverted { get; set; }
+
     /// <inheritdoc/>
     public override ConditionEvaluationEvent? WrapInEvent(EntityUid entity, EntityUid? sourceEntity)
     {

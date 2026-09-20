@@ -21,3 +21,8 @@ public interface ICondition<TCondition> : ICondition where TCondition : IConditi
 {
 
 }
+
+public interface IConditionWithSatisfactionRule : ICondition
+{
+    bool IsValueSatisfactory(float value);
+}

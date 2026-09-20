@@ -1,6 +1,6 @@
 using System.Numerics;
 using Content.Shared.Conditions;
-using Content.Shared.Conditions.Interfaces;
+using Content.Shared.Conditions.HelperConditions;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Generic;

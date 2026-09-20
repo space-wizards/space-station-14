@@ -1,6 +1,6 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Conditions;
-using Content.Shared.Conditions.Interfaces;
+using Content.Shared.Conditions.HelperConditions;
 using Content.Shared.Temperature.Components;
 
 namespace Content.Shared.Conditions.UnifiedConditions;

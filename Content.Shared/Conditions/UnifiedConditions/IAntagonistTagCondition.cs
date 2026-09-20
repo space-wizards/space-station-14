@@ -1,5 +1,5 @@
 using System.Linq;
-using Content.Shared.Conditions.Interfaces;
+using Content.Shared.Conditions.HelperConditions;
 using Content.Shared.EntityConditions.Conditions.Mind;
 using Content.Shared.Mind;
 using Content.Shared.Roles;

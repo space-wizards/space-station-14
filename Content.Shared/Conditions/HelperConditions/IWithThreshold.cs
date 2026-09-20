@@ -1,9 +1,9 @@
-namespace Content.Shared.Conditions.Interfaces;
+namespace Content.Shared.Conditions.HelperConditions;
 
 /// <summary>
 /// Flag a condition as satisfied based on comparison to a threshold.
 /// </summary>
-public interface IWithThreshold : ICondition
+public interface IWithThreshold : IConditionWithSatisfactionRule
 {
     /// <summary>
     /// Standard mathematically comparators
@@ -27,4 +27,23 @@ public interface IWithThreshold : ICondition
     /// The Value against to compare
     /// </summary>
     float Threshold { get; }
+
+    bool IConditionWithSatisfactionRule.IsValueSatisfactory(float value)
+    {
+        switch (Comparison)
+        {
+            case IWithThreshold.Comparator.Less:
+                return value < Threshold;
+            case IWithThreshold.Comparator.LessEqual:
+                return value <= Threshold;
+            case IWithThreshold.Comparator.Equal:
+                return value.Equals(Threshold);
+            case IWithThreshold.Comparator.Greater:
+                return value > Threshold;
+            case IWithThreshold.Comparator.GreaterEqual:
+                return value >= Threshold;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
 }

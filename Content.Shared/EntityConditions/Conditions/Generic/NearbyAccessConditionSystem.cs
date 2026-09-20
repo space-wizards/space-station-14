@@ -2,7 +2,7 @@ using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Conditions;
-using Content.Shared.Conditions.Interfaces;
+using Content.Shared.Conditions.HelperConditions;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Generic;

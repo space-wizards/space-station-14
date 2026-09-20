@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Conditions.HelperConditions;
-using Content.Shared.Conditions.Interfaces;
 
 namespace Content.Shared.Conditions;
 
@@ -76,19 +75,18 @@ public sealed partial class SharedConditionEvaluationSystem : EntitySystem
         return EvalConditionWithInverted(condition, IsConditionSatisfied(condition, scale));
     }
 
+    /// <summary>
+    /// helper function to
+    /// </summary>
+    /// <param name="condition"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
     private bool IsConditionSatisfied(ICondition condition, float value)
     {
         //check scale now against the conditions limits.
-        switch (condition)
-        {
-            case IWithThreshold threshold:
-                return EvalConditionWithThreshold(threshold, value);
-            case IWithBoundary boundary:
-                return EvalConditionWithBoundary(boundary, value);
-            //fallback literally just 0==false. most binary conditions won't have any added hints and use this.
-            default:
-                return value != 0;
-        }
+        if (condition is not IConditionWithSatisfactionRule satisfiedCondition)
+            return value != 0;
+        return satisfiedCondition.IsValueSatisfactory(value);
     }
 
     /// <summary>
@@ -102,46 +100,5 @@ public sealed partial class SharedConditionEvaluationSystem : EntitySystem
         if (condition is IWithInverted invertedCondition)
             return invertedCondition.Inverted != value;
         return value;
-    }
-
-    /// <summary>
-    /// Helper for Boundary
-    /// </summary>
-    /// <param name="boundary"></param>
-    /// <param name="scale"></param>
-    /// <returns></returns>
-    private bool EvalConditionWithBoundary(IWithBoundary boundary, float scale)
-    {
-        if ((boundary.IncludeLowerBound && scale < boundary.LowerBound) || scale <= boundary.LowerBound)
-            return false;
-        if ((boundary.IncludeUpperBound && boundary.UpperBound < scale) || boundary.UpperBound <= scale)
-            return false;
-        return true;
-    }
-
-    /// <summary>
-    /// Helper for threshold
-    /// </summary>
-    /// <param name="condition"></param>
-    /// <param name="value"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentOutOfRangeException"></exception>
-    private bool EvalConditionWithThreshold(IWithThreshold condition, float value)
-    {
-        switch (condition.Comparison)
-        {
-            case IWithThreshold.Comparator.Less:
-                return value < condition.Threshold;
-            case IWithThreshold.Comparator.LessEqual:
-                return value <= condition.Threshold;
-            case IWithThreshold.Comparator.Equal:
-                return value.Equals(condition.Threshold);
-            case IWithThreshold.Comparator.Greater:
-                return value > condition.Threshold;
-            case IWithThreshold.Comparator.GreaterEqual:
-                return value >= condition.Threshold;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
     }
 }
