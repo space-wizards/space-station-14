@@ -1,5 +1,6 @@
 using Content.Shared.Conditions;
 using Content.Shared.Conditions.HelperConditions;
+using Content.Shared.Conditions.Satisfier;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions;
@@ -89,6 +90,10 @@ public abstract partial class EntityCondition : ICondition
 
     /// <inheritdoc/>
     public abstract ConditionEvaluationEvent? WrapInEvent(EntityUid entity, EntityUid? sourceEntity);
+
+    /// <inheritdoc/>
+    [DataField]
+    public virtual Satisfier? Satisfier { get; set; }
 }
 
 /// <summary>
@@ -98,7 +103,6 @@ public abstract partial class EntityCondition : ICondition
 public abstract partial class EntityConditionBase<TCondition> : EntityCondition, IWithInverted
     where TCondition : ICondition
 {
-
     /// <summary>
     /// If true, invert the result. So false returns true and true returns false!
     /// </summary>

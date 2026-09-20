@@ -4,32 +4,18 @@ using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 using System.Linq;
 using Content.Shared.Conditions.HelperConditions;
+using Content.Shared.Conditions.UnifiedConditions;
 
 namespace Content.Shared.EntityConditions.Conditions.Tags;
 
-/// <summary>
-/// Returns true if this entity has all the listed tags.
-/// </summary>
-public sealed partial class HasAllTagsEntityConditionSystem : EntitySystem
-{
-    [Dependency] private TagSystem _tag = default!;
-
-    [SubscribeLocalEvent]
-    private void Condition(Entity<TagComponent> entity, ref ConditionEvaluationEvent<AllTagsCondition> args)
-    {
-        args.Handled = true;
-        args.Value = args.Condition.Tags.Count(tag=>_tag.HasTag(entity.Comp, tag));
-    }
-}
-
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class AllTagsCondition : EntityConditionBase<AllTagsCondition>, IWithThreshold
+public sealed partial class AllTagsCondition : EntityConditionBase<IAllTagsCondition>, IAllTagsCondition
 {
     /// <summary>
     /// Tags which all need to be possessed to fulfill the condition.
     /// </summary>
     [DataField(required: true)]
-    public ProtoId<TagPrototype>[] Tags = [];
+    public ProtoId<TagPrototype>[] Tags { get; set; } = [];
 
     public override string EntityConditionGuidebookText(IPrototypeManager prototype)
     {
@@ -48,7 +34,4 @@ public sealed partial class AllTagsCondition : EntityConditionBase<AllTagsCondit
         return Loc.GetString("entity-condition-guidebook-has-tag", ("tag", names), ("invert", Inverted));
     }
 
-    IWithThreshold.Comparator IWithThreshold.Comparison => IWithThreshold.Comparator.Equal;
-
-    float IWithThreshold.Threshold => Tags.Length;
 }

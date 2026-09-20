@@ -84,9 +84,13 @@ public sealed partial class SharedConditionEvaluationSystem : EntitySystem
     private bool IsConditionSatisfied(ICondition condition, float value)
     {
         //check scale now against the conditions limits.
-        if (condition is not IConditionWithSatisfactionRule satisfiedCondition)
+        var satisfier = condition.Satisfier;
+        if (satisfier == null &&
+            condition is IConditionWithDefaultSatisfactionRule conditionWithDefaultSatisfactionRule)
+            satisfier = conditionWithDefaultSatisfactionRule.GetDefaultSatisfier();
+        if (satisfier == null)
             return value != 0;
-        return satisfiedCondition.IsValueSatisfactory(value);
+        return satisfier.Inverted != satisfier.IsSatisfied(value);
     }
 
     /// <summary>

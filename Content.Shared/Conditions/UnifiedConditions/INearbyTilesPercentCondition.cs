@@ -1,12 +1,31 @@
-using Content.Shared.Conditions;
-using Content.Shared.Conditions.HelperConditions;
+using Content.Shared.Conditions.Satisfier;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.EntityConditions.Conditions.Generic;
+namespace Content.Shared.Conditions.UnifiedConditions;
+
+public interface INearbyTilesPercentCondition : ICondition<INearbyTilesPercentCondition>, IConditionWithDefaultSatisfactionRule
+{
+    bool IgnoreAnchored { get; }
+
+    float Percent { get; }
+
+     List<ProtoId<ContentTileDefinition>> Tiles { get; }
+
+     float Range { get; }
+
+    Satisfier.Satisfier IConditionWithDefaultSatisfactionRule.GetDefaultSatisfier()
+    {
+        return new WithThreshold()
+        {
+            Comparison=WithThreshold.Comparator.GreaterEqual,
+                Threshold=Percent,
+        };
+    }
+}
 
 /// <summary>
 /// Checks if a percentage of the tiles we are nearby match
@@ -20,7 +39,7 @@ public sealed partial class NearbyTilesPercentConditionSystem :EntitySystem
     [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
     [SubscribeLocalEvent]
-    private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent<NearbyTilesPercentCondition> args)
+    private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent<INearbyTilesPercentCondition> args)
     {
         args.Handled = true;
 
@@ -68,27 +87,4 @@ public sealed partial class NearbyTilesPercentConditionSystem :EntitySystem
 
         args.Value = tileCount > 0 ? matchingTileCount / (float)tileCount : 0;
     }
-}
-
-
-/// <inheritdoc cref="EntityCondition"/>
-public sealed partial class NearbyTilesPercentCondition : EntityConditionBase<NearbyTilesPercentCondition>, IWithThreshold
-{
-    [DataField]
-    public bool IgnoreAnchored;
-
-    [DataField(required: true)]
-    public float Percent;
-
-    [DataField(required: true)]
-    public List<ProtoId<ContentTileDefinition>> Tiles = new();
-
-    [DataField]
-    public float Range = 10f;
-
-    public override string EntityConditionGuidebookText(IPrototypeManager prototype) => String.Empty;
-
-    public IWithThreshold.Comparator Comparison => IWithThreshold.Comparator.GreaterEqual;
-
-    public float Threshold => Percent;
 }

@@ -1,31 +1,32 @@
-namespace Content.Shared.Conditions.HelperConditions;
+namespace Content.Shared.Conditions.Satisfier;
 
-/// <summary>
-/// Flag a condition to be satisfied based on a boundary window.
-/// </summary>
-public interface IWithBoundary : IConditionWithSatisfactionRule
+public sealed partial class WithBoundary : Satisfier
 {
     /// <summary>
     /// The lower value of the boundary
     /// </summary>
-    float LowerBound { get; }
+   [DataField]
+    public float LowerBound { get; set; }
 
     /// <summary>
     /// If the comparison should include lower bound value
     /// </summary>
-    bool IncludeLowerBound { get; }
+   [DataField]
+    public bool IncludeLowerBound { get; set; }
 
     /// <summary>
     /// the upper value of the boundary
     /// </summary>
-    float UpperBound { get; }
+   [DataField]
+    public float UpperBound { get; set; }
 
     /// <summary>
     /// If the comparison should include higher bound value
     /// </summary>
-    bool IncludeUpperBound { get; }
+   [DataField]
+    public bool IncludeUpperBound { get; set; }
 
-    bool IConditionWithSatisfactionRule.IsValueSatisfactory(float value)
+    protected override bool IsSatisfiedInternal(float value)
     {
         if ((IncludeLowerBound && value < LowerBound) || value <= LowerBound)
             return false;

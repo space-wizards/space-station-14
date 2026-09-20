@@ -10,6 +10,11 @@ public interface ICondition
     /// Used to help the evaluation system to raise an event to evaluate this condition.
     /// </summary>
     ConditionEvaluationEvent? WrapInEvent(EntityUid entity, EntityUid? sourceEntity);
+
+    /// <summary>
+    /// If set, rather than just checkin on value != 0, we use some more intricate logic.
+    /// </summary>
+    Satisfier.Satisfier? Satisfier { get; }
 }
 
 /// <summary>
@@ -22,7 +27,14 @@ public interface ICondition<TCondition> : ICondition where TCondition : IConditi
 
 }
 
-public interface IConditionWithSatisfactionRule : ICondition
+/// <summary>
+/// Tag on conditions with expected Satisfier behavior.
+/// </summary>
+public interface IConditionWithDefaultSatisfactionRule : ICondition
 {
-    bool IsValueSatisfactory(float value);
+    /// <summary>
+    /// Gives a default satisfier, which the evaluation system will use if <see cref="ICondition.Satisfier"/> is not set.
+    /// </summary>
+    /// <returns></returns>
+    Satisfier.Satisfier GetDefaultSatisfier();
 }
