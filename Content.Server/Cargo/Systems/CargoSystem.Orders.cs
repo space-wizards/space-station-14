@@ -273,7 +273,6 @@ namespace Content.Server.Cargo.Systems
             return Transform(stationGrid).MapID == Transform(uid).MapID;
         }
 
-
         private EntityUid? TryFulfillOrder(Entity<StationDataComponent> stationData, ProtoId<CargoAccountPrototype> account, CargoOrderData order, StationCargoOrderDatabaseComponent orderDatabase)
         {
             // No slots at the trade station
