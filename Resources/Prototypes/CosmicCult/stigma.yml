@@ -31,7 +31,6 @@
 - type: entity
   parent: CosmicEntropicStigmaBase
   id: CosmicEntropicStigmaSpawn
-  categories: [ ForkFiltered ]
   components:
   - type: Sprite
     layers:

@@ -308,7 +308,7 @@
 - type: entity
   categories: [ HideSpawnMenu ]
   parent: EffectCosmicBase
-  id: CosmicColossusAttack1Vfx
+  id: EffectCosmicActionSunder
   placement:
     mode: SnapgridCenter
     snap:
@@ -318,12 +318,14 @@
     anchored: true
     noRot: true
   - type: TimedDespawn
-    lifetime: 1.5
+    lifetime: 1.4
   - type: Sprite
+    drawDepth: Effects
+    noRot: true
     snapCardinals: true
     layers:
-    - sprite: Effects/Cosmic/colossus-attack.rsi
-      state: attack1
+    - sprite: Effects/Cosmic/ability-colossus-sunder.rsi
+      state: vfx
       shader: unshaded
   - type: PointLight
     color: "#42a4ae"

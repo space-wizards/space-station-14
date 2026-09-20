@@ -55,6 +55,9 @@ public abstract partial class CosmicCultSystem : EntitySystem
     [Dependency] private SharedRoleSystem _role = default!;
     [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
+    [Dependency] protected EntityQuery<CosmicCultistComponent> CultQuery;
+    [Dependency] public EntityQuery<CosmicCultActionComponent> CultActionQuery;
+
     public static readonly EntProtoId GenericVfx = "EffectCosmicGeneric";
     private static readonly EntProtoId PressureImmunityEffect = "StatusEffectPressureImmunity";
     public static SoundSpecifier GenericSfx = new SoundPathSpecifier("/Audio/Cosmic/trigger-sound.ogg");
@@ -245,7 +248,7 @@ public abstract partial class CosmicCultSystem : EntitySystem
         if (!_mind.TryGetMind(user, out var mind, out _))
             return false;
 
-        return HasComp<CosmicCultistComponent>(user) || _role.MindHasRole<CosmicCultRoleComponent>(mind);
+        return CultQuery.HasComp(user) || _role.MindHasRole<CosmicCultRoleComponent>(mind);
     }
 
     public bool EntitySeesCult(EntityUid user)

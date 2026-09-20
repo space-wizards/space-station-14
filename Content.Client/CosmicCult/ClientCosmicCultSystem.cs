@@ -32,7 +32,7 @@ public sealed partial class ClientCosmicCultSystem : CosmicCultSystem
 
     protected override void OnMonumentInteracted(Entity<CosmicMonumentComponent> ent, ref InteractHandEvent args)
     {
-        if (!TryComp<CosmicCultistComponent>(args.User, out var cultComp))
+        if (!CultQuery.TryComp(args.User, out var cultComp))
             return;
 
         if (Timing.IsFirstTimePredicted && cultComp.MonumentVisits <= 0)

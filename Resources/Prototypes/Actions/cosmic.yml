@@ -271,3 +271,76 @@
     event: !type:EventCosmicReturn
   - type: CosmicActionReturn
   - type: CosmicCultAction
+
+## COLOSSUS ACTIONS
+
+- type: entity
+  parent: BaseAction
+  id: ActionCosmicColossusSunder
+  name: Entropic Sunder
+  description: Warp to the target surface and unleash a cascading detonation of malign energy.
+  components:
+  - type: Action
+    raiseOnAction: true
+    itemIconStyle: BigAction
+    useDelay: 0
+  - type: Sprite
+    sprite: Interface/Actions/cosmic-actions.rsi
+    layers:
+    - state: sunder
+  - type: TargetAction
+    range: 7
+  - type: WorldTargetAction
+    event: !type:EventCosmicColossusSunder
+  - type: CosmicActionSunder
+  - type: CosmicCultAction
+    vfx: EffectCosmicActionSunder
+
+- type: entity
+  parent: BaseAction
+  id: ActionCosmicColossusHibernate
+  name: Slumber Shell
+  description: Slumber your body for a period of time to regenerate integrity. Must be done on stable ground.
+  components:
+#  - type: LimitedCharges
+#    maxCharges: 2 # TODO: UNCOMMENT THIS BEFORE ANY THING GETS MERGED!
+  - type: ConfirmableAction
+    popup: cosmicability-hibernate-confirm
+    confirmDelay: 0.1
+    primeTime: 3
+  - type: Action
+    raiseOnAction: true
+    useDelay: 5 # TODO: SHOULD BE 40.
+    itemIconStyle: BigAction
+  - type: Sprite
+    sprite: Interface/Actions/cosmic-actions.rsi
+    layers:
+    - state: slumber
+  - type: InstantAction
+    event: !type:EventCosmicColossusHibernate
+  - type: CosmicActionHibernate
+  - type: CosmicCultAction
+
+- type: entity
+  parent: ActionCosmicIngress
+  id: ActionCosmicColossusIngress
+  name: Colossal Ingress
+  description: Use a concentrated blast of power to force a secure doorway open.
+  components:
+  - type: Action
+    raiseOnAction: true
+    useDelay: 2
+    itemIconStyle: BigAction
+  - type: Sprite
+    sprite: Interface/Actions/cosmic-actions.rsi
+    layers:
+    - state: ingress
+  - type: TargetAction
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - Door
+    event: !type:EventCosmicIngress
+  - type: CosmicActionIngress
+    alwaysOpen: true
+  - type: CosmicCultAction

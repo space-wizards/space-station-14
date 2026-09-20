@@ -20,7 +20,7 @@ namespace Content.Server.CosmicCult.Abilities;
 
 public sealed partial class CosmicNovaSystem : EntitySystem
 {
-    [Dependency] private CosmicCultSystem _cosmicCult = default!;
+    [Dependency] private CosmicCultSystem _cult = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedColorFlashEffectSystem _color = default!;
@@ -36,7 +36,7 @@ public sealed partial class CosmicNovaSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnCosmicNova(Entity<CosmicActionNovaComponent> ent, ref EventCosmicNova args)
     {
-        if (!TryComp<CosmicCultActionComponent>(ent, out var action))
+        if (!_cult.CultActionQuery.TryComp(ent, out var action))
             return;
 
         var startPos = _transform.GetMapCoordinates(args.Performer);
@@ -56,7 +56,7 @@ public sealed partial class CosmicNovaSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnNovaCollide(Entity<CosmicNovaComponent> uid, ref StartCollideEvent args)
     {
-        if (_cosmicCult.EntityIsCultist(args.OtherEntity) || !HasComp<MobStateComponent>(args.OtherEntity))
+        if (_cult.EntityIsCultist(args.OtherEntity) || !HasComp<MobStateComponent>(args.OtherEntity))
             return;
         if (uid.Comp.DoStun)
             _stun.TryUpdateParalyzeDuration(args.OtherEntity, TimeSpan.FromSeconds(1f));

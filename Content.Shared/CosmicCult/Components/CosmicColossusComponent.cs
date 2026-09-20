@@ -9,56 +9,30 @@ namespace Content.Shared.CosmicCult.Components;
 /// <summary>
 /// Component for Cosmic Cult's entropic colossus.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
 public sealed partial class CosmicColossusComponent : Component
 {
     [AutoPausedField, DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan AttackHoldTimer;
+    public TimeSpan? HibernationTimer;
 
-    [AutoPausedField, DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan HibernationTimer;
-
-    [AutoPausedField, DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan DeathTimer;
+    [DataField]
+    public EntProtoId SunderVfx = "EffectCosmicActionSunder";
 
     [DataField] public SoundSpecifier ReawakenSfx = new SoundPathSpecifier("/Audio/Cosmic/colossus-spawn.ogg");
 
     [DataField] public SoundSpecifier DeathSfx = new SoundPathSpecifier("/Audio/Cosmic/colossus-death.ogg");
 
-    [DataField] public SoundSpecifier IngressSfx = new SoundPathSpecifier("/Audio/Cosmic/Abilities/ability-ingress.ogg");
-
-    [DataField] public SoundSpecifier DoAfterSfx = new SoundPathSpecifier("/Audio/Machines/airlock-creaking.ogg");
-
-    [DataField] public EntProtoId CultVfx = "EffectCosmicGeneric";
+    [DataField] public EntProtoId CultVfx = "EffectCosmicBigWindup";
 
     [DataField] public EntProtoId CultBigVfx = "EffectCosmicActionGlare";
 
-    [DataField] public EntProtoId Attack1Vfx = "CosmicColossusAttack1Vfx";
-
-    [DataField] public EntProtoId TileDetonations = "MobTileDamageZone";
-
-    [DataField] public TimeSpan IngressDoAfter = TimeSpan.FromSeconds(4);
-
-    [DataField] public TimeSpan AttackWait = TimeSpan.FromSeconds(1.5);
-
-    [DataField] public TimeSpan HibernationWait = TimeSpan.FromSeconds(20);
-
-    [DataField] public TimeSpan DeathWait = TimeSpan.FromMinutes(15);
-
-    [DataField] public bool Attacking;
-
-    [DataField] public bool Hibernating;
-
-    [DataField] public bool Timed;
+    [DataField] public bool AnimReady;
 }
 
 [Serializable, NetSerializable]
 public enum ColossusVisuals : byte
 {
-    Status,
-    Hibernation,
-    Sunder,
+    Visuals,
 }
 
 [Serializable, NetSerializable]
@@ -66,12 +40,6 @@ public enum ColossusStatus : byte
 {
     Alive,
     Dead,
-    Action,
-}
-
-[Serializable, NetSerializable]
-public enum ColossusAction : byte
-{
-    Running,
-    Stopped,
+    Sunder,
+    Hibernate,
 }

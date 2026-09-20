@@ -1,6 +1,7 @@
 cosmicability-generic-fail = Your influence fails to take hold..
 
-cosmicability-glare-confirm = Press again to activate Null Glare.
+cosmicability-glare-confirm = Press again to activate Malign Glare.
+cosmicability-hibernate-confirm = Press again to activate Slumber Shell.
 
 cosmicability-siphon-cultist-success = Your attempts to draw entropy chill {CAPITALIZE(THE($target))}
 cosmicability-siphon-success = You silently draw Entropy from {CAPITALIZE(THE($target))}.

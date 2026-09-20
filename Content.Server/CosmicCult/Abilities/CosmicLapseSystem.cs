@@ -17,6 +17,7 @@ namespace Content.Server.CosmicCult.Abilities;
 
 public sealed partial class CosmicLapseSystem : EntitySystem
 {
+    [Dependency] private CosmicCultSystem _cult = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
@@ -25,7 +26,7 @@ public sealed partial class CosmicLapseSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnLapseAbility(Entity<CosmicActionLapseComponent> ent, ref EventCosmicLapse args)
     {
-        if (!TryComp<CosmicCultActionComponent>(ent, out var action))
+        if (!_cult.CultActionQuery.TryComp(ent, out var action))
             return;
 
         args.Handled = true;

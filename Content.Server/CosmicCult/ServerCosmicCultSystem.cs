@@ -90,7 +90,7 @@ public sealed partial class ServerCosmicCultSystem : CosmicCultSystem
     {
         var target = args.User;
 
-        if (args.Handled || !TryComp<CosmicCultistComponent>(target, out var cultComp) || _status.HasStatusEffect(target, SharedStunSystem.StunId))
+        if (args.Handled || !CultQuery.TryComp(target, out var cultComp) || _status.HasStatusEffect(target, SharedStunSystem.StunId))
             return;
 
         if (cultComp.MonumentVisits <= 0 || cultComp.UnlockedInfluences.Count <= 0)

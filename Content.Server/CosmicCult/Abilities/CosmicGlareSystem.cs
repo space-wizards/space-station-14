@@ -24,7 +24,7 @@ public sealed partial class CosmicGlareSystem : EntitySystem
     [Dependency] private StunSystem _stun = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedColorFlashEffectSystem _color = default!;
-    [Dependency] private CosmicCultSystem _cosmicCult = default!;
+    [Dependency] private CosmicCultSystem _cult = default!;
     [Dependency] private SharedInteractionSystem _interact = default!;
 
     private HashSet<Entity<PoweredLightComponent>> _lights = [];
@@ -32,7 +32,7 @@ public sealed partial class CosmicGlareSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnCosmicGlare(Entity<CosmicActionGlareComponent> ent, ref EventCosmicGlare args)
     {
-        if (!TryComp<CosmicCultActionComponent>(ent, out var action))
+        if (!_cult.CultActionQuery.TryComp(ent, out var action))
             return;
 
         _audio.PlayPvs(action.Sfx, ent);
@@ -58,7 +58,7 @@ public sealed partial class CosmicGlareSystem : EntitySystem
                 return true;
 
             var ent = player.AttachedEntity.Value;
-            if (!HasComp<MobStateComponent>(ent) || _cosmicCult.EntityIsCultist(ent))
+            if (!HasComp<MobStateComponent>(ent) || _cult.EntityIsCultist(ent))
                 return true;
 
             return !_interact.InRangeUnobstructed((ent, Transform(ent)), (ent, Transform(ent)), range: 0, collisionMask: CollisionGroup.Impassable);

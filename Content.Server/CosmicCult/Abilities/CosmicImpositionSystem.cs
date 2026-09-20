@@ -12,6 +12,7 @@ namespace Content.Server.CosmicCult.Abilities;
 
 public sealed partial class CosmicImpositionSystem : EntitySystem
 {
+    [Dependency] private CosmicCultSystem _cult = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private MovementModStatusSystem _movementMod = default!;
@@ -33,7 +34,7 @@ public sealed partial class CosmicImpositionSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnCosmicImposition(Entity<CosmicActionImpositionComponent> ent, ref EventCosmicImposition args)
     {
-        if (!TryComp<CosmicCultActionComponent>(ent, out var action))
+        if (!_cult.CultActionQuery.TryComp(ent, out var action))
             return;
 
         args.Handled = true;

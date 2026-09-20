@@ -1,6 +1,5 @@
 using Content.Server.GameTicking.Rules;
 using Content.Shared.CosmicCult;
-using Content.Shared.CosmicCult.Components;
 using Content.Shared.CosmicCult.Components.Actions;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
@@ -13,6 +12,7 @@ namespace Content.Server.CosmicCult.Abilities;
 
 public sealed partial class CosmicSiphonSystem : EntitySystem
 {
+    [Dependency] private CosmicCultSystem _cult = default!;
     [Dependency] private CosmicCultRuleSystem _cultRule = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
@@ -20,7 +20,7 @@ public sealed partial class CosmicSiphonSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnCosmicSiphon(Entity<CosmicActionSiphonComponent> ent, ref EventCosmicSiphon args)
     {
-        if (!TryComp<CosmicCultActionComponent>(ent, out var action))
+        if (!_cult.CultActionQuery.TryComp(ent, out var action))
             return;
 
         if (TryComp<MobStateComponent>(args.Target, out var state) && state.CurrentState != MobState.Alive)

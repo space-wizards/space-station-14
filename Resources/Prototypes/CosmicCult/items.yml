@@ -3,7 +3,6 @@
   parent: BaseItem
   name: harvested entropic stigma
   description: An otherworldly substance, somewhere between resin and crystal.
-  categories: [ ForkFiltered ]
   components:
   - type: Sprite
     sprite: Objects/Cosmic/cosmic-stigma-crystal.rsi

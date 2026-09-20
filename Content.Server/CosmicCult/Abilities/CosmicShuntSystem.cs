@@ -97,7 +97,7 @@ public sealed partial class CosmicShuntSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnShuntInteract(Entity<CosmicShuntedEntityComponent> ent, ref InteractHandEvent args)
     {
-        if (ent.Comp.ConvertOnReturn || args.Handled || !_cult.EntityIsCultist(args.User) || !TryComp<CosmicCultistComponent>(args.User, out var cultComp))
+        if (ent.Comp.ConvertOnReturn || args.Handled || !_cult.EntityIsCultist(args.User))
             return;
 
         ent.Comp.WispGrabber = args.User;
@@ -108,7 +108,7 @@ public sealed partial class CosmicShuntSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnCosmicShunt(Entity<CosmicActionShuntComponent> ent, ref EventCosmicShunt args)
     {
-        if (!TryComp<CosmicCultActionComponent>(ent, out var action))
+        if (!_cult.CultActionQuery.TryComp(ent, out var action))
             return;
 
         var target = args.Target;

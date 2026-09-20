@@ -4,7 +4,6 @@
   id: MobCosmicColossusBase
   name: entropic colossus
   description: A colossal monstrosity wrought of malign plating.
-  categories: [ ForkFiltered ]
   components:
   - type: FTLSmashImmune
   - type: CosmicExamine
@@ -28,46 +27,34 @@
     - state: vfx-fg
       shader: unshaded
       map: ["overlay"]
-    - state: attacking
-      shader: unshaded
-      visible: false
-      map: ["attack"]
     - state: hibernate
       shader: unshaded
       visible: false
-      map: ["hibernating"]
+      map: ["action"]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.ColossusVisuals.Status:
+      enum.ColossusVisuals.Visuals:
         underlay:
           Alive: { visible: true }
           Dead: { visible: false }
-          Action: { visible: false }
+          Hibernate: { visible: false }
         base:
           Alive: { visible: true }
           Dead: { visible: false }
-          Action: { visible: false }
+          Hibernate: { visible: false }
         corpse:
           Alive: { visible: false }
           Dead: { visible: true }
-          Action: { visible: false }
+          Hibernate: { visible: false }
         overlay:
           Alive: { visible: true }
           Dead: { visible: false }
-          Action: { visible: false }
-        attack:
+          Hibernate: { visible: false }
+        action:
           Alive: { visible: false }
           Dead: { visible: false }
-          Action: { visible: true }
-      enum.ColossusVisuals.Hibernation:
-        hibernating:
-          Running: { visible: true }
-          Stopped: { visible: false }
-      enum.ColossusVisuals.Sunder:
-        sunder:
-          Running: { visible: true }
-          Stopped: { visible: false }
+          Hibernate: { visible: true }
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -89,8 +76,8 @@
     speechSounds: ColossusSpeech
     speechVerb: Robotic
     allowedEmotes: []
-  - type: TypingIndicator
-    proto: CosmicTyping
+#  - type: TypingIndicator
+#    proto: CosmicTyping
   - type: Grammar
     attributes:
       proper: true
@@ -159,11 +146,11 @@
   - type: Puller
     needsHands: false
   - type: CombatMode
-#  - type: ActionGrant
-#    actions:
-#    - ActionCosmicColossusSunder
-#    - ActionCosmicColossusIngress
-#    - ActionCosmicColossusHibernate
+  - type: ActionGrant
+    actions:
+    - ActionCosmicColossusSunder
+    - ActionCosmicColossusHibernate
+    - ActionCosmicColossusIngress
   - type: MeleeWeapon
     altDisarm: false
     animation: WeaponArcCosmic
@@ -176,12 +163,12 @@
         Cold: 5
         Structural: 60
     soundHit:
-      path: /Audio/_ST/CosmicCult/cosmic-sword-glance.ogg
+      path: /Audio/Cosmic/cosmic-sword-glance.ogg
       params:
         variation: 0.2
         volume: 1
     soundSwing:
-      path: /Audio/_ST/CosmicCult/cosmic-weapon-swing.ogg
+      path: /Audio/Cosmic/cosmic-weapon-swing.ogg
       params:
         variation: 0.125
         volume: -4
@@ -192,7 +179,7 @@
     reflectProb: .20
     spread: 120
     soundOnReflect:
-      path: /Audio/_ST/CosmicCult/cosmic-sword-glance.ogg
+      path: /Audio/Cosmic/cosmic-sword-glance.ogg
       params:
         variation: 0.2
         volume: -6
@@ -214,7 +201,6 @@
   categories: [ HideSpawnMenu ]
   id: MobCosmicColossusLone
   suffix: MidRoundAntag
-  description: An ancient monstrosity wrought of malign plating.
   components:
   - type: MobThresholds
     thresholds:
@@ -251,35 +237,37 @@
 
 - type: entity
   categories: [ HideSpawnMenu ]
-  id: MobTileDamageZone
+  id: CosmicSunderAreaEffect
   placement:
     mode: SnapgridCenter
     snap:
     - Wall
   components:
+  - type: CosmicTileDetonator
   - type: Transform
     anchored: true
   - type: EmitSoundOnSpawn
     sound:
-      path: /Audio/Cosmic/tile_detonate.ogg
+      path: "/Audio/Cosmic/Abilities/ability-sunder.ogg"
   - type: TimedDespawn
     lifetime: 8
 
 - type: entity
   categories: [ HideSpawnMenu ]
-  id: MobTileDamageArea
+  id: CosmicSunderExplosionWindup
   placement:
     mode: SnapgridCenter
     snap:
     - Wall
   components:
+  - type: EffectVisuals
   - type: TimedDespawn
     lifetime: 0.6
   - type: Transform
     anchored: true
   - type: Sprite
-    snapCardinals: true
-    sprite: _ST/CosmicCult/Effects/tile-attacks.rsi
+    noRot: true
+    sprite: Effects/Cosmic/tile-attacks.rsi
     offset: 0, 0.27
     layers:
     - state: vfx-1
@@ -288,19 +276,20 @@
     tags:
     - HideContextMenu
   - type: SpawnOnDespawn
-    prototype: MobTileDamageIssuer
+    prototype: CosmicSunderExplosion
 
 - type: entity
   categories: [ HideSpawnMenu ]
-  id: MobTileDamageIssuer
+  id: CosmicSunderExplosion
   placement:
     mode: SnapgridCenter
     snap:
     - Wall
   components:
+  - type: EffectVisuals
   - type: Sprite
-    snapCardinals: true
-    sprite: _ST/CosmicCult/Effects/tile-attacks.rsi
+    noRot: true
+    sprite: Effects/Cosmic/tile-attacks.rsi
     offset: 0, 0.27
     layers:
     - state: vfx-2
@@ -336,4 +325,4 @@
     - !type:HealthChange
       damage:
         types:
-          Cold: 12.5
+          Cold: 14.5
