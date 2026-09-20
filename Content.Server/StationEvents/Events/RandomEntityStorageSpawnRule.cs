@@ -1,4 +1,3 @@
-using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.GameTicking.Components;
@@ -8,23 +7,31 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
+/// <summary>
+/// Handler for events that spawn an entity inside of another random entity with <see cref="EntityStorageComponent"/>.
+/// </summary>
+/// <seealso cref="RandomEntityStorageSpawnRuleComponent"/>
 public sealed partial class RandomEntityStorageSpawnRule : StationEventSystem<RandomEntityStorageSpawnRuleComponent>
 {
     [Dependency] private EntityStorageSystem _entityStorage = default!;
 
-    protected override void Started(EntityUid uid, RandomEntityStorageSpawnRuleComponent comp, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    protected override void Started(Entity<RandomEntityStorageSpawnRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
     {
-        base.Started(uid, comp, gameRule, args);
+        base.Started(ent, ref args);
+
+        var spawnRule = ent.Comp1;
 
         var validLockers = new List<Entity<EntityStorageComponent>>();
-        var spawn = Spawn(comp.Prototype, MapCoordinates.Nullspace);
+        var spawn = Spawn(spawnRule.Prototype, MapCoordinates.Nullspace);
 
-        foreach (var ent in Station.GetEntitiesWithComponentOnStation<EntityStorageComponent>(false))
+        foreach (var storageEnt in Station.GetEntitiesWithComponentOnStation<EntityStorageComponent>(false))
         {
-            if (!_entityStorage.CanInsert(spawn, ent, ent.Comp))
+            if (!_entityStorage.CanInsert(spawn, storageEnt, storageEnt.Comp))
+            {
                 continue;
+            }
 
-            validLockers.Add(ent);
+            validLockers.Add(storageEnt);
         }
 
         if (validLockers.Count == 0)

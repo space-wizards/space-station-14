@@ -24,12 +24,9 @@ public sealed partial class TextLinkTag
         if (!NetEntity.TryParse(entStr, out var netEntity))
             return false;
 
-        var chat = _entity.System<SharedChatSystem>();
-        var clickable = chat.CanClickMessageSender(netEntity);
-
         var color = GetLinkColor(node, netEntity);
 
-        data = new LinkData(LinkString: null, LinkEntity: netEntity, Color: color, Clickable: clickable);
+        data = new LinkData(LinkString: null, LinkEntity: netEntity, Color: color);
         return true;
     }
 

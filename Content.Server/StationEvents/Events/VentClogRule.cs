@@ -12,14 +12,19 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
+/// <summary>
+/// Handler for events that spawn random reagent foam around a vent.
+/// </summary>
 [UsedImplicitly]
 public sealed partial class VentClogRule : StationEventSystem<VentClogRuleComponent>
 {
     [Dependency] private SmokeSystem _smoke = default!;
 
-    protected override void Started(EntityUid uid, VentClogRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    protected override void Started(Entity<VentClogRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
     {
-        base.Started(uid, component, gameRule, args);
+        base.Started(ent, ref args);
+
+        var ventClog = ent.Comp1;
 
         // TODO: "safe random" for chems. Right now this includes admin chemicals.
         var allReagents = ProtoMan.EnumeratePrototypes<ReagentPrototype>()
@@ -28,23 +33,23 @@ public sealed partial class VentClogRule : StationEventSystem<VentClogRuleCompon
 
         foreach (var ventPump in Station.GetEntitiesWithComponentOnStation<GasVentPumpComponent>(true))
         {
-            var tragetCoords = Transform(ventPump).Coordinates;
+            var targetCoords = Transform(ventPump).Coordinates;
             var solution = new Solution();
 
             if (!RobustRandom.Prob(0.33f))
                 continue;
 
             var pickAny = RobustRandom.Prob(0.05f);
-            var reagent = RobustRandom.Pick(pickAny ? allReagents : component.SafeishVentChemicals);
+            var reagent = RobustRandom.Pick(pickAny ? allReagents : ventClog.SafeishVentChemicals);
 
-            var weak = component.WeakReagents.Contains(reagent);
-            var quantity = weak ? component.WeakReagentQuantity : component.ReagentQuantity;
+            var weak = ventClog.WeakReagents.Contains(reagent);
+            var quantity = weak ? ventClog.WeakReagentQuantity : ventClog.ReagentQuantity;
             solution.AddReagent(reagent, quantity);
 
-            var foamEnt = Spawn(ChemicalReactionSystem.FoamReaction, tragetCoords);
-            var spreadAmount = weak ? component.WeakSpread : component.Spread;
-            _smoke.StartSmoke(foamEnt, solution, component.Time, spreadAmount);
-            Audio.PlayPvs(component.Sound, tragetCoords);
+            var foamEnt = Spawn(ChemicalReactionSystem.FoamReaction, targetCoords);
+            var spreadAmount = weak ? ventClog.WeakSpread : ventClog.Spread;
+            _smoke.StartSmoke(foamEnt, solution, ventClog.Time, spreadAmount);
+            Audio.PlayPvs(ventClog.Sound, targetCoords);
         }
     }
 }

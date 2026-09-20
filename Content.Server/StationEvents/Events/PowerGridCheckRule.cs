@@ -1,7 +1,6 @@
 using System.Threading;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;
@@ -12,6 +11,10 @@ using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.StationEvents.Events
 {
+    /// <summary>
+    /// Handler for events that force a number of APCs off on a station for a period of time.
+    /// </summary>
+    /// <seealso cref="PowerGridCheckRuleComponent"/>
     [UsedImplicitly]
     public sealed partial class PowerGridCheckRule : StationEventSystem<PowerGridCheckRuleComponent>
     {
@@ -24,33 +27,34 @@ namespace Content.Server.StationEvents.Events
             SubscribeLocalEvent<PowerGridCheckNotifyComponent, ApcToggleMainBreakerAttemptEvent>(OnApcToggleMainBreaker);
         }
 
-        protected override void Started(EntityUid uid, PowerGridCheckRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
+        protected override void Started(Entity<PowerGridCheckRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
         {
-            base.Started(uid, component, gameRule, args);
+            base.Started(ent, ref args);
 
             var apcs = Station.GetEntitiesWithComponentOnStation<ApcComponent>(true, out var chosenStation);
 
             if (chosenStation is null)
                 return;
 
-            component.AffectedStation = chosenStation.Value;
+            var powerGridCheck = ent.Comp1;
 
-            foreach (var apc in apcs)
+            powerGridCheck.AffectedStation = chosenStation.Value;
+
+            foreach (var apcUid in apcs)
             {
-                if (apc.Comp.MainBreakerEnabled)
+                if (apcUid.Comp.MainBreakerEnabled)
                     continue;
 
-                var apcTransform = Transform(apc);
-                if (apcTransform.GridUid != component.AffectedStation)
+                var apcTransform = Transform(apcUid);
+                if (apcTransform.GridUid != powerGridCheck.AffectedStation)
                     continue;
 
-                component.Powered.Add(apc);
+                powerGridCheck.Powered.Add(apcUid);
             }
 
-            RobustRandom.Shuffle(component.Powered);
+            RobustRandom.Shuffle(powerGridCheck.Powered);
 
-            component.NumberPerSecond = Math.Max(1, (int)(component.Powered.Count / component.SecondsUntilOff)); // Number of APCs to turn off every second. At least one.
-
+            powerGridCheck.NumberPerSecond = Math.Max(1, (int)(powerGridCheck.Powered.Count / powerGridCheck.SecondsUntilOff)); // Number of APCs to turn off every second. At least one.
         }
 
         /// <summary>
