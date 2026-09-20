@@ -1,23 +1,28 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Client.Stylesheets.Fonts;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.RichText;
-using Robust.Shared.Input;
 using Robust.Shared.Utility;
-using Content.Client.UserInterface.ControlExtensions;
 using Content.Client.UserInterface.Controls;
+using Content.Shared.Chat;
 using Robust.Client.ResourceManagement;
 
 namespace Content.Client.UserInterface.RichText;
 
 /// <summary>
 /// Markup tag handler for <c>[textlink="LinkText"]</c> nodes. Renders a link
-/// <see cref="Label"/> in rich text, covering two types:
-/// plain links (<c>link=</c>) and entity links (<c>entity=</c>).
-/// optional <c>color=</c> and <c>entitynamecolor=</c> parameters
-/// allow setting a color override and opting into using entity name colors for entity links
+/// <see cref="Label"/> in rich text, covering two link types:
+/// <list type="bullet">
+/// <item><description>link="GuideEntryPrototypeID" — a plain link.</description></item>
+/// <item><description>entity="NetEntity" — an entity link.</description></item>
+/// </list>
+/// Optional parameters:
+/// <list type="bullet">
+/// <item><description>color="HexColor" — color override.</description></item>
+/// <item><description>entitynamecolor="Bool" — entity links only; opt into using the entity's name color.</description></item>
+/// </list>
 /// </summary>
 [UsedImplicitly]
 public sealed partial class TextLinkTag : IMarkupTagHandler
@@ -25,6 +30,7 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
     [Dependency] private IEntityManager _entity = default!;
     [Dependency] private IUserInterfaceManager _ui = default!;
     [Dependency] private IResourceCache _cache = default!;
+    private SharedChatSystem? _chat;
 
     public string Name => "textlink";
     public static Color DefaultLinkColor => Color.CornflowerBlue;
@@ -38,7 +44,7 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
     /// <summary>
     /// Resolved Link Data, LinkString and LinkEntity should not be populated at the same time
     /// </summary>
-    private readonly record struct LinkData(string? LinkString, NetEntity? LinkEntity, Color? Color, bool Clickable);
+    private readonly record struct LinkData(string? LinkString, NetEntity? LinkEntity, Color? Color);
 
     public TextLinkTag()
     {
@@ -67,25 +73,27 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
 
         foreach (var (attrname, resolver) in _resolvers)
         {
-            if (node.Attributes.ContainsKey(attrname))
+            if (!node.Attributes.ContainsKey(attrname))
+                continue;
+
+            if(!resolver(node, out linkData))
             {
-                if(!resolver(node, out linkData))
-                {
-                    return false;
-                }
-                linkTypeResolved = true;
-                break;
+                return false;
             }
+
+            linkTypeResolved = true;
+            break;
         }
+
         if (!linkTypeResolved)
         {
             return false;
         }
 
+
         // color= > resolver-supplied color > default
         var linkColor = ResolveColorOverride(node) ?? linkData.Color ?? DefaultLinkColor;
-        var linkLabel = new TextLinkLabel() { Text = text, LinkString = linkData.LinkString, LinkEntity = linkData.LinkEntity };
-        linkLabel.FontColorOverride = linkColor;
+        var linkLabel = new TextLinkLabel() { Text = text, LinkString = linkData.LinkString, LinkEntity = linkData.LinkEntity, LinkColor = linkColor};
 
         // eat my ass about where this magic number comes from
         // our UI stack is awful. Finding this magic number was awful.
@@ -96,14 +104,8 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
             linkLabel.FontOverride = boldFont;
         }
 
-        if (linkData.Clickable)
-        {
-            linkLabel.MouseFilter = Control.MouseFilterMode.Stop;
-            linkLabel.DefaultCursorShape = Control.CursorShape.Hand;
-            linkLabel.OnMouseEntered += _ => linkLabel.FontColorOverride = Color.LightSkyBlue;
-            linkLabel.OnMouseExited += _ => linkLabel.FontColorOverride = linkColor;
-            linkLabel.OnKeyBindDown += args => OnKeybindDown(args, linkLabel);
-        }
+        _chat ??= _entity.System<SharedChatSystem>();
+        linkLabel.UpdateLabelProperties(_chat);
 
         control = linkLabel;
         return true;
@@ -118,28 +120,6 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
         }
 
         return Color.TryFromHex(colorStr, out var color) ? color : null;
-    }
-
-    /// <summary>
-    /// Delegates to the nearest ancestor ILinkClickHandler or IEntityLinkClickHandler;
-    /// TextLinkTag has no idea what a click actually does.
-    /// </summary>
-    private void OnKeybindDown(GUIBoundKeyEventArgs args, TextLinkLabel? control)
-    {
-        if (args.Function != EngineKeyFunctions.UIClick)
-            return;
-
-        if (control == null)
-            return;
-
-        if (control.LinkEntity is { } entity && control.TryGetParentHandler<IEntityLinkClickHandler>(out var entityLinkClickHandler))
-        {
-                entityLinkClickHandler.HandleClick(entity);
-        }
-        else if (control.LinkString != null && control.TryGetParentHandler<ILinkClickHandler>(out var linkClickHandler))
-        {
-            linkClickHandler.HandleClick(control.LinkString);
-        }
     }
 }
 

@@ -90,11 +90,11 @@ signal-port-description-logic-memory-input = Signal to load into the memory cell
 signal-port-name-logic-enable = Enable
 signal-port-description-logic-enable = Only loads the input signal into the memory cell when HIGH.
 
-signal-port-name-logic-random-input = Input Signal
+signal-port-name-logic-random-input = Input signal
 signal-port-description-logic-random-input = Receives any signal to trigger a random output.
 
 signal-port-name-target-receiver = Target receiver
 signal-port-description-target-receiver = Receives target information from a target finder.
 
-signal-port-name-target-source = Target Finder
+signal-port-name-target-source = Target finder
 signal-port-description-target-source = Sends target information to a target receiver.

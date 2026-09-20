@@ -316,7 +316,7 @@ private ISawmill? _sawmill = default!;
             return;
         }
 
-        var playerName = _chatSystem.ChatNameLinks ? $"[textlink=\"{FormattedMessage.EscapeStringParameter(player.Name)}\" entity=\"{_entityManager.GetNetEntity(player.AttachedEntity)}\" color=\"{ChatChannel.AdminChat.TextColor().ToHex()}\"]" : FormattedMessage.EscapeText(player.Name);
+        var playerName = _chatSystem.ChatNameLinks && player.AttachedEntity is {} attachedEntity ? $"[textlink=\"{FormattedMessage.EscapeStringParameter(player.Name)}\" entity=\"{_entityManager.GetNetEntity(attachedEntity)}\" color=\"{ChatChannel.AdminChat.TextColor().ToHex()}\"]" : FormattedMessage.EscapeText(player.Name);
         var clients = _adminManager.ActiveAdmins.Select(p => p.Channel);
         var wrappedMessage = Loc.GetString("chat-manager-send-admin-chat-wrap-message",
                                         ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),

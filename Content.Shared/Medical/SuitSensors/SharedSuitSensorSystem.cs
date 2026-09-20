@@ -13,10 +13,9 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Station;
 using Content.Shared.StationRecords;
-using Content.Shared.StationRecords.Components;
 using Content.Shared.StationRecords.Systems;
+using Content.Shared.Station.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -27,7 +26,7 @@ namespace Content.Shared.Medical.SuitSensors;
 
 public abstract partial class SharedSuitSensorSystem : EntitySystem
 {
-    [Dependency] private SharedStationSystem _stationSystem = default!;
+    [Dependency] private StationSystem _stationSystem = default!;
     [Dependency] private MobStateSystem _mobStateSystem = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
@@ -319,7 +318,7 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
 
     /// <summary>
     /// Sets mode of the <see cref="SuitSensorComponent"/> of the chosen entity.
-    /// Makes popup when <param name="userUid"> not null
+    /// Makes popup when <param name="userUid"/> not null
     /// </summary>
     /// <param name="sensors">Entity and it's component that should be changed</param>
     /// <param name="mode">Selected mode</param>
@@ -356,7 +355,7 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
     /// <summary>
     /// Attempts to get full <see cref="SuitSensorStatus"/> from the <see cref="SuitSensorComponent"/>
     /// </summary>
-    /// <param name="uid">Entity to get status</param>
+    /// <param name="ent">Entity to get status</param>
     /// <returns>Full <see cref="SuitSensorStatus"/> of the chosen uid</returns>
     public SuitSensorStatus? GetSensorState(Entity<SuitSensorComponent?, TransformComponent?> ent)
     {
