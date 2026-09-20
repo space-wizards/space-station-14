@@ -8,6 +8,10 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
+/// <summary>
+/// Handler for events that alter job slots for a station.
+/// </summary>
+/// <seealso cref="BureaucraticErrorRuleComponent"/>
 [UsedImplicitly]
 public sealed partial class BureaucraticErrorRule : StationEventSystem<BureaucraticErrorRuleComponent>
 {
@@ -43,8 +47,8 @@ public sealed partial class BureaucraticErrorRule : StationEventSystem<Bureaucra
         }
         else
         {
-            var lower = (int) (jobList.Count * 0.20);
-            var upper = (int) (jobList.Count * 0.30);
+            var lower = (int)(jobList.Count * 0.20f);
+            var upper = (int)(jobList.Count * 0.30f);
             // Changing every role is maybe a bit too chaotic so instead change 20-30% of them.
             var num = RobustRandom.Next(lower, upper);
             for (var i = 0; i < num; i++)
