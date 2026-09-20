@@ -29,6 +29,8 @@ public sealed partial class AdminAnnounceEui : BaseEui
 
     public AdminAnnounceEui()
     {
+        IoCManager.InjectDependencies(this);
+
         var sysMan = IoCManager.Resolve<IEntitySystemManager>();
         _chatSystem = sysMan.GetEntitySystem<ChatSystem>();
         _mapSystem = sysMan.GetEntitySystem<SharedMapSystem>();

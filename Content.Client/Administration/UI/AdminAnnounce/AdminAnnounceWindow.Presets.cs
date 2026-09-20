@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration.AdminAnnounce;
+using Content.Shared.Administration.AdminAnnounce;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Administration.UI.AdminAnnounce;
@@ -15,6 +15,7 @@ public sealed partial class AdminAnnounceWindow
             _presetWindow = presets;
         }
 
+        presets.PopulatePresets();
         presets.OpenCentered();
     }
 

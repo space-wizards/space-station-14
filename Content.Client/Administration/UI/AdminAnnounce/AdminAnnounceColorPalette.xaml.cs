@@ -18,7 +18,6 @@ public sealed partial class AdminAnnounceColorPalette : DefaultWindow
 
     private void SetColor(Color color)
     {
-        Picker.Color = color;
         OnColorChanged?.Invoke(color);
     }
 
