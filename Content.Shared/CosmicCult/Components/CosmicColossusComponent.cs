@@ -15,6 +15,12 @@ public sealed partial class CosmicColossusComponent : Component
     [AutoPausedField, DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan? HibernationTimer;
 
+    [AutoPausedField, DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan? SunderResetTimer;
+
+    [ViewVariables]
+    public ColossusStatus LastStatus = ColossusStatus.Alive;
+
     [DataField]
     public EntProtoId SunderVfx = "EffectCosmicActionSunder";
 

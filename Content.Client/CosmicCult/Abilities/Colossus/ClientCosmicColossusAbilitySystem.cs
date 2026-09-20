@@ -15,26 +15,23 @@ public sealed partial class ClientCosmicColossusAbilitySystem : CosmicColossusAb
     private const string KeyHibernate = "colossus-hibernate";
 
     [SubscribeLocalEvent]
-    private void OnColossusAnimate(Entity<CosmicColossusComponent> ent, ref AnimationCompletedEvent args)
-    {
-        if (args.Key == KeySunder || args.Key == KeyHibernate)
-            Appearance.SetData(ent, ColossusVisuals.Visuals, ColossusStatus.Alive);
-    }
-
-    [SubscribeLocalEvent]
     private void OnColossusAppearance(Entity<CosmicColossusComponent> ent, ref AppearanceChangeEvent args)
     {
-        if (args.AppearanceData.TryGetValue(ColossusVisuals.Visuals, out var status))
+        if (!args.AppearanceData.TryGetValue(ColossusVisuals.Visuals, out var obj)
+            || obj is not ColossusStatus status
+            || status == ent.Comp.LastStatus)
+            return;
+
+        ent.Comp.LastStatus = status;
+
+        switch (status)
         {
-            switch (status)
-            {
-                case ColossusStatus.Sunder:
-                    SunderVisuals(ent);
-                    break;
-                case ColossusStatus.Hibernate:
-                    HibernateVisuals(ent);
-                    break;
-            }
+            case ColossusStatus.Sunder:
+                SunderVisuals(ent);
+                break;
+            case ColossusStatus.Hibernate:
+                HibernateVisuals(ent);
+                break;
         }
     }
 
