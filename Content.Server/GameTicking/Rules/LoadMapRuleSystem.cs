@@ -43,7 +43,7 @@ public sealed partial class LoadMapRuleSystem : StationEventSystem<LoadMapRuleCo
             // Component has one of three modes, only one of the three fields should ever be populated.
             DebugTools.AssertNull(loadMap.MapPath);
             DebugTools.AssertNull(loadMap.GridPath);
-            AssertPreloadedGridNotNull(loadMap);
+            AssertPreloadedGridIsNull(loadMap);
 
             var gameMap = ProtoMan.Index(loadMap.GameMap.Value);
             grids = GameTicker.LoadGameMap(gameMap, out mapId, null);
@@ -52,7 +52,7 @@ public sealed partial class LoadMapRuleSystem : StationEventSystem<LoadMapRuleCo
         else if (loadMap.MapPath is { } path)
         {
             DebugTools.AssertNull(loadMap.GridPath);
-            AssertPreloadedGridNotNull(loadMap);
+            AssertPreloadedGridIsNull(loadMap);
 
             var opts = DeserializationOptions.Default with { InitializeMaps = true };
             if (!_mapLoader.TryLoadMap(path, out var map, out var gridSet, opts))
@@ -67,7 +67,7 @@ public sealed partial class LoadMapRuleSystem : StationEventSystem<LoadMapRuleCo
         }
         else if (loadMap.GridPath is { } gPath)
         {
-            AssertPreloadedGridNotNull(loadMap);
+            AssertPreloadedGridIsNull(loadMap);
 
             // I fucking love it when "map paths" choses to ar
             _map.CreateMap(out mapId);
@@ -117,7 +117,7 @@ public sealed partial class LoadMapRuleSystem : StationEventSystem<LoadMapRuleCo
     /// <remarks>
     /// Function to suppress warnings without injecting pragma statements everywhere.
     /// </remarks>
-    private void AssertPreloadedGridNotNull(LoadMapRuleComponent loadMap)
+    private void AssertPreloadedGridIsNull(LoadMapRuleComponent loadMap)
     {
 #pragma warning disable CS0618 // Enabling compatibility behaviour, remove block when PreloadedGrid is removed.
         DebugTools.AssertNull(loadMap.PreloadedGrid);

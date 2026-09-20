@@ -60,7 +60,7 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     /// </summary>
     protected virtual void Added(Entity<T, GameRuleComponent> rule, ref GameRuleAddedEvent args)
     {
-#pragma warning disable CS0618 // maintaining compatibility behaviour, remove with Added fn above
+#pragma warning disable CS0618 // maintaining compatibility behaviour, remove with obsolete Added above
         Added(rule.Owner, rule.Comp1, rule.Comp2, args);
 #pragma warning restore CS0618
     }
@@ -79,7 +79,7 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     /// </summary>
     protected virtual void Started(Entity<T, GameRuleComponent> rule, ref GameRuleStartedEvent args)
     {
-#pragma warning disable CS0618 // maintaining compatibility behaviour, remove with Started fn above
+#pragma warning disable CS0618 // maintaining compatibility behaviour, remove with obsolete Started above
         Started(rule.Owner, rule.Comp1, rule.Comp2, args);
 #pragma warning restore CS0618
     }

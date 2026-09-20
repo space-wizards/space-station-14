@@ -12,7 +12,7 @@ using Robust.Shared.Random;
 namespace Content.Server.GameTicking.Rules;
 
 /// <summary>
-/// Handler for dynamic antag spawning.
+/// Handler for dynamically adding subgamemode rules based on a budget.
 /// </summary>
 /// <seealso cref="DynamicRuleComponent"/>
 public sealed partial class DynamicRuleSystem : GameRuleSystem<DynamicRuleComponent>
