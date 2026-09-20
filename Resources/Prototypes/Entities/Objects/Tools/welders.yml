@@ -61,13 +61,31 @@
       malus: 0.6
   - type: ToggleableVisuals
     spriteLayer: flame
-    inhandVisuals:
-      left:
-      - state: inhand-left-flame
-        shader: unshaded
-      right:
-      - state: inhand-right-flame
-        shader: unshaded
+#    inhandVisuals:
+#      left:
+#      - state: inhand-left-flame
+#        shader: unshaded
+#      right:
+#      - state: inhand-right-flame
+#        shader: unshaded
+  - type: AttachedVisuals
+    sprite: Objects/Tools/welder.rsi
+    attachedVisuals:
+      inhand-left:
+        layers:
+        - state: inhand-left-flame
+          map: [ "enum.ToggleableVisuals.Layer" ]
+          visible: false
+      inhand-right:
+        layers:
+        - state: inhand-right-flame
+          map: [ "enum.ToggleableVisuals.Layer" ]
+          visible: false
+      inside-belt:
+        layers:
+        - state: inhand-right-flame
+          map: [ "enum.ToggleableVisuals.Layer" ]
+          visible: false
   - type: UseDelay
   - type: MeleeWeapon
     wideAnimationRotation: -90

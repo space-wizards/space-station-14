@@ -95,3 +95,8 @@
       ArmRight: [HandRight]
       LegLeft: [FootLeft]
       LegRight: [FootRight]
+  - type: AttachedVisuals
+    attachments:
+        left: inhand-left
+        right: inhand-right
+        belt: equipped-belt

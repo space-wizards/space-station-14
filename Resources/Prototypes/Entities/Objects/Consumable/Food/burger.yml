@@ -387,6 +387,17 @@
   #     - cheese
   #     - cheesealt
 # Tastes like bun, beef patty, cheese.
+  - type: AttachedVisuals
+    attachedVisuals:
+      plate-food:
+        layers:
+        - state: cheese
+      plate-inhand-left:
+        layers:
+        - state: plain-inhand-left
+      plate-inhand-right:
+        layers:
+        - state: plain-inhand-right
 
 - type: entity
   parent: FoodBurgerBase
