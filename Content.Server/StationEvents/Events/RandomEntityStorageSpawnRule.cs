@@ -31,10 +31,10 @@ public sealed partial class RandomEntityStorageSpawnRule : StationEventSystem<Ra
         var query = EntityQueryEnumerator<EntityStorageComponent, TransformComponent>();
         while (query.MoveNext(out var storageUid, out var storage, out var xform))
         {
-            if (Station.GetOwningStation(ent, xform) != station.Value.Owner)
+            if (Station.GetOwningStation(storageUid, xform) != station.Value.Owner)
                 continue;
 
-            if (!_entityStorage.CanInsert(spawn, ent, storage))
+            if (!_entityStorage.CanInsert(spawn, storageUid, storage))
                 continue;
 
             validLockers.Add((storageUid, storage));
