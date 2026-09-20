@@ -375,7 +375,7 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
         var userJob = Loc.GetString("suit-sensor-component-unknown-job");
         var userJobIcon = "JobIconNoId";
         var userJobDepartments = new List<string>();
-        var userJobProto = "";
+        string? userJobProto = null;
 
         if (_idCardSystem.TryFindIdCard(sensor.User.Value, out var card))
         {

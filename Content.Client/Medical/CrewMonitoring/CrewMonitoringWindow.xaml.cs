@@ -68,7 +68,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             TryToScrollToFocus();
     }
 
-    public void ShowSensors(List<SuitSensorStatus> sensors, EntityUid monitor, NetEntity stationUid, EntityCoordinates? monitorCoords)
+    public void ShowSensors(List<SuitSensorStatus> sensors, EntityUid monitor, NetEntity? stationUid, EntityCoordinates? monitorCoords)
     {
         ClearOutDatedData();
 
@@ -151,7 +151,8 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             SensorsTable.AddChild(deparmentLabel);
 
             var station = _entManager.GetEntity(stationUid);
-            PopulateDepartmentList(departmentSensors, station);
+            if (station is not null)
+                PopulateDepartmentList(departmentSensors, station.Value);
         }
 
         // Account for any non-station users
@@ -177,7 +178,8 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             SensorsTable.AddChild(deparmentLabel);
 
             var station = _entManager.GetEntity(stationUid);
-            PopulateDepartmentList(remainingSensors, station);
+            if (station is not null)
+                PopulateDepartmentList(remainingSensors, station.Value);
         }
 
         // Show monitor on nav map
@@ -211,8 +213,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
 
         var sensors = entriesSort.Select(x => x.entry).ToArray();
 
-        // Populate departments
-
+        // Populate roles in departments
         foreach (var sensor in sensors)
         {
             if (!string.IsNullOrEmpty(SearchLineEdit.Text)

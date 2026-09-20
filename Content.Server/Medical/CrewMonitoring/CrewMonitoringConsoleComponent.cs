@@ -12,7 +12,7 @@ public sealed partial class CrewMonitoringConsoleComponent : Component
     public Dictionary<string, SuitSensorStatus> ConnectedSensors = new();
 
     /// <summary>
-    ///     List of all currently connected sensors to this console.
+    ///     EntityUid of the station that console attached to.
     /// </summary>
     [ViewVariables]
     public EntityUid? Station;

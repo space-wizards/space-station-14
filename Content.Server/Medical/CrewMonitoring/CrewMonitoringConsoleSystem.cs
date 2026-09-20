@@ -4,7 +4,6 @@ using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Medical.CrewMonitoring;
 using Content.Shared.Pinpointer;
 using Content.Shared.PowerCell;
-using Content.Shared.StationRecords.Systems;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Medical.CrewMonitoring;
@@ -14,8 +13,6 @@ public sealed partial class CrewMonitoringConsoleSystem : EntitySystem
     [Dependency] private PowerCellSystem _cell = default!;
     [Dependency] private UserInterfaceSystem _uiSystem = default!;
     [Dependency] private StationSystem _station = default!;
-    [Dependency] private TransformSystem _transform = default!;
-    [Dependency] private StationRecordsSystem _records = default!;
 
     public override void Initialize()
     {
@@ -58,9 +55,6 @@ public sealed partial class CrewMonitoringConsoleSystem : EntitySystem
         if (!_uiSystem.IsUiOpen(uid, CrewMonitoringUIKey.Key))
             return;
 
-        if (component.Station is null)
-            return;
-
         // The grid must have a NavMapComponent to visualize the map in the UI
         var xform = Transform(uid);
 
@@ -69,6 +63,6 @@ public sealed partial class CrewMonitoringConsoleSystem : EntitySystem
 
         // Update all sensors info
         var allSensors = component.ConnectedSensors.Values.ToList();
-        _uiSystem.SetUiState(uid, CrewMonitoringUIKey.Key, new CrewMonitoringState(allSensors, GetNetEntity(component.Station.Value)));
+        _uiSystem.SetUiState(uid, CrewMonitoringUIKey.Key, new CrewMonitoringState(allSensors, GetNetEntity(component.Station)));
     }
 }
