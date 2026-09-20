@@ -1,9 +1,9 @@
 using System.Linq;
-using Content.Server.Station.Systems;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Medical.CrewMonitoring;
 using Content.Shared.Pinpointer;
 using Content.Shared.PowerCell;
+using Content.Shared.Station.Systems;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Medical.CrewMonitoring;
