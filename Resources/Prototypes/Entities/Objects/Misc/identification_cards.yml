@@ -675,7 +675,7 @@
   - type: PresetIdCard
     job: Bartender
     name: id-card-preset-pun
-  - type: Tag #  Ignore Chameleon tags
+  - type: Tag # Ignore Chameleon tags
     tags:
     - DoorBumpOpener
 
