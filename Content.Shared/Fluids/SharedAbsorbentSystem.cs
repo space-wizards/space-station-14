@@ -331,8 +331,11 @@ public abstract partial class SharedAbsorbentSystem : EntitySystem
         }
         else
         {
-            // Note: arguably shouldn't this get all solutions?
-            puddleSplit = puddleSolution.SplitSolutionWithout(absorber.PickupAmount, Puddle.GetAbsorbentReagents(puddleSolution));
+            var absorberSolution = absorberSoln.Comp.Solution;
+            var available = absorberSolution.MaxVolume - absorberSolution.Volume;
+            var transferMax = absorber.PickupAmount;
+            var transferAmount = available > transferMax ? transferMax : available;
+            puddleSplit = puddleSolution.SplitSolution(transferAmount);
             // Despawn if we're done
             if (puddleSolution.Volume == FixedPoint2.Zero)
             {
