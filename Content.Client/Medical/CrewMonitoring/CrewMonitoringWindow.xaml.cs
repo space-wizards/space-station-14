@@ -189,25 +189,28 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         }
     }
 
-    private void PopulateDepartmentList(IEnumerable<SuitSensorStatus> departmentSensors, EntityUid station)
+    private void PopulateDepartmentList(IEnumerable<SuitSensorStatus> departmentSensors, EntityUid? station)
     {
         var entriesSort = new List<(JobPrototype? job, SuitSensorStatus entry)>();
         foreach (var a in departmentSensors)
         {
+            if (a.JobProto is null)
+                continue;
+
             _prototypeManager.TryIndex(a.JobProto, out JobPrototype? job);
             entriesSort.Add((job, a));
         }
 
-        var weights = _entManager.GetComponent<StationDataComponent>(station).JobWeights;
+        ProtoId<JobWeightPrototype>? weights = null;
+        if (station is not null)
+            weights = _entManager.GetComponent<StationDataComponent>(station.Value).JobWeights;
+
         if (JobUIComparer.TryCreate(_prototypeManager, weights, out var comparer))
         {
             entriesSort.Sort((a, b) =>
             {
                 var cmp = comparer.Compare(a.job, b.job);
-                if (cmp != 0)
-                    return cmp;
-
-                return string.Compare(a.entry.Name, b.entry.Name, StringComparison.CurrentCultureIgnoreCase);
+                return cmp != 0 ? cmp : string.Compare(a.entry.Name, b.entry.Name, StringComparison.CurrentCultureIgnoreCase);
             });
         }
 
