@@ -55,5 +55,5 @@ public sealed partial class CosmicFontComponent : Component
 [Serializable, NetSerializable]
 public enum CosmicFontVisualLayers : byte
 {
-    Base
+    Base,
 }

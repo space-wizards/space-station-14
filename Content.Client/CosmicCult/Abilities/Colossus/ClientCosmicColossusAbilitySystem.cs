@@ -56,7 +56,7 @@ public sealed partial class ClientCosmicColossusAbilitySystem : CosmicColossusAb
 
     private static Animation AnimSunderEnt()
     {
-        var time = 1.4f;
+        var time = 1.5f;
 
         return new Animation
         {
@@ -72,7 +72,7 @@ public sealed partial class ClientCosmicColossusAbilitySystem : CosmicColossusAb
                     {
                         new AnimationTrackProperty.KeyFrame(Color.White.WithAlpha(0f), 0f),
                         new AnimationTrackProperty.KeyFrame(Color.White.WithAlpha(0f), 1f),
-                        new AnimationTrackProperty.KeyFrame(Color.White.WithAlpha(1f), 0.4f),
+                        new AnimationTrackProperty.KeyFrame(Color.White.WithAlpha(1f), 0.5f),
                     },
                 },
             },

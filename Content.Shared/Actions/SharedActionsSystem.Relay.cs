@@ -12,7 +12,6 @@ public abstract partial class SharedActionsSystem
     {
         SubscribeLocalEvent<ActionsComponent, MobStateChangedEvent>(RefRelayActionEvent);
         SubscribeLocalEvent<ActionsComponent, GhostAttemptEvent>(RefRelayActionEvent);
-
         SubscribeLocalEvent<ActionsComponent, CosmicCultistEmpowerChangedEvent>(RefRelayActionEvent);
     }
 

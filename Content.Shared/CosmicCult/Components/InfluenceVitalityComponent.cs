@@ -17,24 +17,4 @@ public sealed partial class InfluenceVitalityComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan CheckWait = TimeSpan.FromSeconds(5);
-
-    /// <summary>
-    /// Passive healing factor for cultists with this influence.
-    /// </summary>
-    [DataField]
-    public DamageSpecifier Healing = new()
-    {
-        DamageDict = new()
-        {
-            { "Blunt", 2},
-            { "Slash", 2 },
-            { "Piercing", 2 },
-            { "Heat", 2},
-            { "Shock", 2},
-            { "Cold", 2},
-            { "Poison", 2},
-            { "Radiation", 2},
-            { "Asphyxiation", 2 }
-        }
-    };
 }

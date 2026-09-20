@@ -220,6 +220,7 @@ public abstract partial class CosmicCultSystem : EntitySystem
             PredictedSpawnAtPosition(GenericVfx, Transform(ent).Coordinates);
             PredictedQueueDel(ent);
         }
+
         else if (Timing.IsFirstTimePredicted)
         {
             ent.Comp.Activated = true;

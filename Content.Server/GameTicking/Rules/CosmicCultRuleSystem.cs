@@ -492,13 +492,9 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
     {
         var toIncrement = args.Progress > 0 ? args.Progress : 1;
         var progressTarget = ent.Comp.ProgressGoal;
+        progressTarget += ent.Comp.OwnedInfluences.Count;
         ent.Comp.PersonalProgress += toIncrement;
         ent.Comp.TotalPersonalProgress += toIncrement;
-
-        foreach (var influence in ent.Comp.OwnedInfluences)
-        {
-            progressTarget++;
-        }
 
         if (ent.Comp.PersonalProgress >= progressTarget && _playerMan.TryGetSessionByEntity(ent, out var session))
         {

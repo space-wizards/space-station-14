@@ -260,6 +260,7 @@
     snap:
     - Wall
   components:
+  - type: AnimationPlayer
   - type: EffectVisuals
   - type: TimedDespawn
     lifetime: 0.6
@@ -286,6 +287,7 @@
     snap:
     - Wall
   components:
+  - type: AnimationPlayer
   - type: EffectVisuals
   - type: Sprite
     noRot: true
@@ -298,7 +300,7 @@
     noRot: true
     anchored: true
   - type: TimedDespawn
-    lifetime: 1
+    lifetime: 0.85
   - type: Physics
     bodyType: Static
   - type: Fixtures

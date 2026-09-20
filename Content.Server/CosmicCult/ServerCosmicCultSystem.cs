@@ -18,23 +18,7 @@ public sealed partial class ServerCosmicCultSystem : CosmicCultSystem
     [Dependency] private IComponentFactory _componentFactory = default!;
     [Dependency] private DamageableSystem _damage = default!;
     [Dependency] private MovementModStatusSystem _movementMod = default!;
-    // [Dependency] private ESEntityTimerSystem _entityTimer = default!;
     [Dependency] private StatusEffectsSystem _status = default!;
-
-    // public override void Initialize()
-    // {
-    //     base.Initialize();
-    //
-    //     SubscribeLocalEvent<CosmicCultistComponent, ComponentInit>(OnStartCultist);
-    //
-    //     SubscribeLocalEvent<CosmicImposingComponent, ComponentInit>(OnStartImposition);
-    //     SubscribeLocalEvent<CosmicImposingComponent, ComponentRemove>(OnEndImposition);
-    //     SubscribeLocalEvent<InfluenceStrideComponent, ComponentInit>(OnStartInfluenceStride);
-    //     SubscribeLocalEvent<InfluenceStrideComponent, ComponentRemove>(OnEndInfluenceStride);
-    //
-    //     SubscribeLocalEvent<InfluenceStrideComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMoveSpeed);
-    //     SubscribeLocalEvent<CosmicImposingComponent, RefreshMovementSpeedModifiersEvent>(OnImpositionMoveSpeed);
-    // }
 
     public override void Update(float frameTime)
     {
@@ -45,12 +29,12 @@ public sealed partial class ServerCosmicCultSystem : CosmicCultSystem
         {
             if (Timing.CurTime >= comp.CheckTimer)
             {
-
-                _damage.TryChangeDamage(uid, comp.Healing * -1);
+                _damage.HealEvenly(uid, 5f * -1);
                 comp.CheckTimer = Timing.CurTime + comp.CheckWait;
             }
         }
     }
+
     private void GiveInfluence(Entity<CosmicCultistComponent> ent, InfluencePrototype proto)
     {
         if (proto.InfluenceType == "influence-type-active")
@@ -77,10 +61,10 @@ public sealed partial class ServerCosmicCultSystem : CosmicCultSystem
                 }
             }
         }
+
         else if (proto.InfluenceType == "influence-type-consumable")
-        {
             ent.Comp.AstralAegisStacks += 2;
-        }
+
         _antag.SendBriefing(ent, Loc.GetString(proto.Name), Color.FromHex("#cae8e8"), null);
         _antag.SendBriefing(ent, Loc.GetString(proto.Description), Color.FromHex("#4cabb3"), null);
         Dirty(ent);
@@ -134,7 +118,7 @@ public sealed partial class ServerCosmicCultSystem : CosmicCultSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnStartInfluenceStride(Entity<InfluenceStrideComponent> ent, ref ComponentInit args) // i wish movespeed was easier to work with
+    private void OnStartInfluenceStride(Entity<InfluenceStrideComponent> ent, ref ComponentInit args) // I wish movement speed was easier to work with
     {
         _movementMod.TryUpdateMovementSpeedModDuration(ent, MovementModStatusSystem.StrideSpeedup, null, 1.1f, 1.1f);
     }

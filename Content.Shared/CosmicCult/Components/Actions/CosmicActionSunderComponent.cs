@@ -8,7 +8,7 @@ namespace Content.Shared.CosmicCult.Components.Actions;
 public sealed partial class CosmicActionSunderComponent : Component
 {
     [DataField]
-    public TimeSpan SunderPauseTime = TimeSpan.FromSeconds(1.5);
+    public TimeSpan SunderPauseTime = TimeSpan.FromSeconds(1);
 
     [DataField]
     public EntProtoId Vfx = "EffectCosmicActionSunder";
