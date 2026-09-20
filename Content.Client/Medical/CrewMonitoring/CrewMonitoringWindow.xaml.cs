@@ -192,7 +192,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         var entriesSort = new List<(JobPrototype? job, SuitSensorStatus entry)>();
         foreach (var a in departmentSensors)
         {
-            _prototypeManager.TryIndex(a.JobIcon.Replace("JobIcon", string.Empty), out JobPrototype? job);
+            _prototypeManager.TryIndex(a.JobProto, out JobPrototype? job);
             entriesSort.Add((job, a));
         }
 

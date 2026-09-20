@@ -371,6 +371,7 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
         var userJob = Loc.GetString("suit-sensor-component-unknown-job");
         var userJobIcon = "JobIconNoId";
         var userJobDepartments = new List<string>();
+        var userJobProto = "";
 
         if (_idCardSystem.TryFindIdCard(sensor.User.Value, out var card))
         {
@@ -378,6 +379,8 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
                 userName = card.Comp.FullName;
             if (card.Comp.LocalizedJobTitle != null)
                 userJob = card.Comp.LocalizedJobTitle;
+            if (card.Comp.JobPrototype != null)
+                userJobProto = card.Comp.JobPrototype;
             userJobIcon = card.Comp.JobIcon;
 
             foreach (var department in card.Comp.JobDepartments)
@@ -398,7 +401,7 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
             totalDamageThreshold = critThreshold.Value.Int();
 
         // finally, form suit sensor status
-        var status = new SuitSensorStatus(GetNetEntity(sensor.User.Value), GetNetEntity(ent.Owner), userName, userJob, userJobIcon, userJobDepartments);
+        var status = new SuitSensorStatus(GetNetEntity(sensor.User.Value), GetNetEntity(ent.Owner), userName, userJob, userJobIcon, userJobDepartments, userJobProto);
         switch (sensor.Mode)
         {
             case SuitSensorMode.SensorBinary:
