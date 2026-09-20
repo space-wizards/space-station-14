@@ -23,18 +23,16 @@ namespace Content.Server.StationEvents
         [Dependency] private IRobustRandom _random = default!;
         [Dependency] private EventManagerSystem _event = default!;
 
-        protected override void Started(EntityUid uid, BasicStationEventSchedulerComponent component, GameRuleComponent gameRule,
-            GameRuleStartedEvent args)
+        protected override void Started(Entity<BasicStationEventSchedulerComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
         {
             // A little starting variance so schedulers dont all proc at once.
-            component.TimeUntilNextEvent = RobustRandom.NextFloat(component.MinimumTimeUntilFirstEvent, component.MinimumTimeUntilFirstEvent + component.MaximumSpanUntilFirstEvent);
+            ent.Comp1.TimeUntilNextEvent = RobustRandom.NextFloat(ent.Comp1.MinimumTimeUntilFirstEvent, ent.Comp1.MinimumTimeUntilFirstEvent + ent.Comp1.MaximumSpanUntilFirstEvent);
         }
 
         protected override void Ended(Entity<BasicStationEventSchedulerComponent> rule, ref GameRuleEndedEvent args)
         {
             rule.Comp.TimeUntilNextEvent = rule.Comp.MinimumTimeUntilFirstEvent;
         }
-
 
         public override void Update(float frameTime)
         {
