@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ SimpleSpaceMobBase, FlyingMobBase, BaseSlicingRefinable, MobNightVision, BaseMobDestructible ]
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, BaseSlicingRefinable, MobNightVision, BaseMobIrradiated ]
   id: BaseMobDragon
   suffix: ""
   name: space dragon
@@ -93,6 +93,13 @@
       0: Alive
       450: Critical
       500: Dead
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 600
+      behaviors:
+      - !type:GibBehavior
   - type: SlowOnDamage
     speedModifierThresholds:
       250: 0.7

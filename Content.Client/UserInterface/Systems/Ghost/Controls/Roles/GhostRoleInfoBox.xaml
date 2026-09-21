@@ -1,8 +1,9 @@
 <BoxContainer xmlns="https://spacestation14.io"
+              xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
               Orientation="Vertical">
     <Label Name="Title"
            StyleClasses="LabelKeyText"/>
-    <PanelContainer StyleClasses="HighDivider" />
+    <controls:Separator StyleClasses="HighDivider"/>
     <RichTextLabel Name="Description"
                    Margin="0 4"/>
 </BoxContainer>

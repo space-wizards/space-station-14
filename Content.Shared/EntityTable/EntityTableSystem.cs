@@ -1,9 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.EntityTable.EntitySelectors;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.EntityTable;
 
@@ -14,25 +14,25 @@ public sealed partial class EntityTableSystem : EntitySystem
     /// <summary>
     /// Iterates once through Entities that EntitySelector in EntityTableProto provides and picks first one.
     /// </summary>
-    public EntProtoId? GetFirstOrDefault(
+    public EntProtoId? GetFirstOrNull(
         EntityTablePrototype entTableProto,
         IRobustRandom? rand = null,
         EntityTableContext? ctx = null
     )
     {
-        return GetSpawns(entTableProto, rand, ctx).FirstOrDefault();
+        return GetSpawns(entTableProto, rand, ctx).FirstOrNull();
     }
 
     /// <summary>
     /// Iterates once through Entities that EntitySelector provides and picks first one.
     /// </summary>
-    public EntProtoId? GetFirstOrDefault(
+    public EntProtoId? GetFirstOrNull(
         EntityTableSelector? entTableProto,
         IRobustRandom? rand = null,
         EntityTableContext? ctx = null
     )
     {
-        return GetSpawns(entTableProto, rand, ctx).FirstOrDefault();
+        return GetSpawns(entTableProto, rand, ctx).FirstOrNull();
     }
 
     /// <summary>

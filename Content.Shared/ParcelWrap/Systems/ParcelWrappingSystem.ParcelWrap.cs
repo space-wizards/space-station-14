@@ -88,7 +88,7 @@ public sealed partial class ParcelWrappingSystem
     {
         var duration = wrapper.Comp.WrapDelay;
 
-        if (TryComp<ParcelWrapOverrideComponent>(target, out var overrideComp) &&
+        if (_parcelWrapOverrideQuery.TryComp(target, out var overrideComp) &&
             overrideComp.WrapDelay is { } wrapDelayOverride)
             duration = wrapDelayOverride;
 
