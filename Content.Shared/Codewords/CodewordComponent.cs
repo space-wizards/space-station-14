@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Codewords;
+namespace Content.Shared.Codewords;
 
 /// <summary>
 /// Container for generated codewords.
