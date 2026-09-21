@@ -60,10 +60,10 @@
     id: food # I'm not having this inherit from basefood because this shouldn't be edible, nor have a solution until you attach an entity to it.
   - type: FoodSequenceStartPoint
     key: Skewer
-    maxLayers: 4
-    startPosition: -0.27, -0.19
+    maxLayers: 5
+    startPosition: -0.15625, -0.125 # 5 pixels left, 4 pixels down
+    offset: 0.125, 0.0625 # 4 pixels right, 2 pixels up
     inverseLayers: true
-    offset: 0.2, 0.1
     nameGeneration: food-sequence-skewer-gen
     contentSeparator: ", "
     allowHorizontalFlip: false
