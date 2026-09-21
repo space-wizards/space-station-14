@@ -99,11 +99,19 @@
     attachments:
       - attachment: InhandLeft
         container: left
+        order: 10
       - attachment: InhandRight
         container: right
-      - attachment: BeltEquipped
+        order: 10
+      - attachment: EquippedBelt
         container: belt
-
+        order: 6
+      - attachment: EquippedJumpsuit
+        container: jumpsuit
+        order: 3
+      - attachment: EquippedOuterClothing
+        container: outerClothing
+        order: 4
 
 - type: visualAttachment
   id: InhandRight
@@ -112,4 +120,10 @@
   id: InhandLeft
 
 - type: visualAttachment
-  id: BeltEquipped
+  id: EquippedJumpsuit
+
+- type: visualAttachment
+  id: EquippedOuterClothing
+
+- type: visualAttachment
+  id: EquippedBelt

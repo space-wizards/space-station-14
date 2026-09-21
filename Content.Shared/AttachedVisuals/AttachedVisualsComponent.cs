@@ -52,7 +52,7 @@ public sealed partial class AttachedVisualLayers
 /// Defines an attachment
 /// </summary>
 [DataDefinition]
-public sealed partial class AttachmentDefinition
+public sealed partial class AttachmentDefinition: IComparable<AttachmentDefinition>
 {
     /// <summary>
     /// Container ID that this attachment maps to
@@ -77,6 +77,24 @@ public sealed partial class AttachmentDefinition
     /// </summary>
     [DataField]
     public Dictionary<Enum, DisplacementData>? SexedDisplacementData;
+
+    /// <summary>
+    /// Sorting order for sprite layering.
+    /// 0 is the lowest/bottom layer (eg: jumpsuit).
+    /// </summary>
+    [DataField]
+    public int Order = 0;
+
+    public int CompareTo(AttachmentDefinition? other)
+    {
+        if (ReferenceEquals(this, other))
+            return 0;
+
+        if (other is null)
+            return 1;
+
+        return Order.CompareTo(other.Order);
+    }
 }
 
 [Prototype]

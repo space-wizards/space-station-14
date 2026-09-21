@@ -53,15 +53,15 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
         UpdateVisuals(ent);
     }
 
-    private void GetAttachedVisuals(Entity<AttachedVisualsComponent> ent, VisualAttachmentPrototype attachmentName, string prefix, List<(EntityUid, string, HashSet<string> mapKeys, PrototypeLayerData)> layers)
+    private void GetAttachedVisuals(Entity<AttachedVisualsComponent> ent, VisualAttachmentPrototype attachmentPrototype, string prefix, List<(EntityUid, string, HashSet<string> mapKeys, PrototypeLayerData)> layers)
     {
-        if (!ent.Comp.AttachedVisuals.TryGetValue(attachmentName, out var visuals))
+        if (!ent.Comp.AttachedVisuals.TryGetValue(attachmentPrototype, out var visuals))
             return;
 
         _genericVisualizerQuery.TryComp(ent, out var visualizer);
         _appearanceQuery.TryComp(ent, out var appearance);
 
-        var ev = new GetAttachedVisualsEvent(attachmentName, prefix, layers);
+        var ev = new GetAttachedVisualsEvent(attachmentPrototype, prefix, layers);
 
         foreach (var protoLayer in visuals.Layers)
         {
@@ -148,6 +148,7 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
         }
         ent.Comp.RevealedLayers.Clear();
 
+        ent.Comp.Attachments.Sort();
         foreach (var attachment in ent.Comp.Attachments)
         {
             var results = new List<(EntityUid Origin, string Key, HashSet<string> mapKeys, PrototypeLayerData Data)>();
@@ -202,14 +203,15 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
             if (!_attachedVisualsQuery.TryComp(child, out var childComp))
                 continue;
 
-            if (!childComp.AttachedVisuals.TryGetValue(attachmentPrototype, out var def))
+            if (!childComp.AttachedVisuals.TryGetValue(attachmentPrototype, out var childAttachedVisualLayers))
                 continue;
 
-            var childPrefix = $"{keyPrefix}-{attachment.Container}-{child.Id}";
+            childAttachedVisualLayers.Attachments.Sort();
 
+            var childPrefix = $"{keyPrefix}-{attachment.Container}-{child.Id}";
             GetAttachedVisuals((child, childComp), attachmentPrototype, childPrefix, results);
 
-            foreach (var childAttachment in def.Attachments)
+            foreach (var childAttachment in childAttachedVisualLayers.Attachments)
             {
                 GetAttachmentLayers((child, childComp), childAttachment, results, childPrefix);
             }
