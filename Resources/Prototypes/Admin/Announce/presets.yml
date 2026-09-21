@@ -29,14 +29,12 @@
   name: admin-announce-preset-nukeops
   color: "#ff0000"
   announcer: admin-announce-preset-nukeops-announcer
-  signature: admin-announce-preset-nukeops-signature
 
 - type: adminAnnouncementPreset
   id: Wizard
   name: admin-announce-preset-wizard
   color: "#ff00ff"
   announcer: admin-announce-preset-wizard-announcer
-  signature: admin-announce-preset-wizard-signature
 
 - type: adminAnnouncementPreset
   id: WarningAliens

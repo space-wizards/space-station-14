@@ -23,10 +23,8 @@ admin-announce-preset-centcomm-announcer = Central Command
 admin-announce-preset-centcomm-signature = CentComm Operator
 admin-announce-preset-nukeops = Nuclear Operative
 admin-announce-preset-nukeops-announcer = Nuclear Operatives
-admin-announce-preset-nukeops-signature = Commander Sigma
 admin-announce-preset-wizard = Wizard
-admin-announce-preset-wizard-announcer = Wizard
-admin-announce-preset-wizard-signature = Gonedalph the Destroyer
+admin-announce-preset-wizard-announcer = Wizard Federation
 
 admin-announce-preset-warning-aliens = Aliens Warning
 admin-announce-preset-warning-aliens-announcer = Automated Alert
