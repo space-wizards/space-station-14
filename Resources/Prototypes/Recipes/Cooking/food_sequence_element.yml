@@ -617,8 +617,9 @@
   id: CabbageBurger
   name: food-sequence-burger-content-cabbage
   sprites:
-  - sprite: Objects/Specific/Hydroponics/cabbage.rsi
-    state: produce
+  - sprite: Objects/Consumable/Food/burger_sequence_veg.rsi
+    state: leaf
+    # we don't have any other leafy vegetables besides maybe ambrosia so this will have to do
   tags:
   - Vegetable
 
@@ -732,6 +733,16 @@
   - Vegetable
 
 - type: foodSequenceElement
+  id: TomatoBurger
+  name: food-sequence-content-tomato
+  sprites:
+  - sprite: Objects/Consumable/Food/burger_sequence_veg.rsi
+    state: tomato
+  tags:
+  - Fruit
+  - Vegetable
+
+- type: foodSequenceElement
   id: TomatoSkewer
   name: food-sequence-content-tomato
   sprites:
@@ -753,6 +764,16 @@
   - Fruit
   - Vegetable
 
+- type: foodSequenceElement
+  id: BlueTomatoBurger
+  name: food-sequence-content-tomato
+  sprites:
+  - sprite: Objects/Consumable/Food/burger_sequence_veg.rsi
+    state: blue_tomato
+  tags:
+  - Fruit
+  - Vegetable
+
 # Blood Tomato
 
 - type: foodSequenceElement
@@ -761,6 +782,16 @@
   sprites:
   - sprite: Objects/Specific/Hydroponics/blood_tomato.rsi
     state: produce
+  tags:
+  - Fruit
+  - Vegetable
+
+- type: foodSequenceElement
+  id: BloodTomatoBurger
+  name: food-sequence-content-tomato
+  sprites:
+  - sprite: Objects/Consumable/Food/burger_sequence_veg.rsi
+    state: blood_tomato
   tags:
   - Fruit
   - Vegetable
@@ -929,6 +960,15 @@
   - Vegetable
 
 - type: foodSequenceElement
+  id: ChiliPepperBurger
+  name: food-sequence-content-chili
+  sprites:
+  - sprite: Objects/Consumable/Food/burger_sequence_veg.rsi
+    state: chili
+  tags:
+  - Vegetable
+
+- type: foodSequenceElement
   id: ChiliPepperSkewer
   name: food-sequence-content-chili
   sprites:
@@ -945,6 +985,15 @@
   sprites:
   - sprite: Objects/Specific/Hydroponics/chilly.rsi
     state: produce
+  tags:
+  - Vegetable
+
+- type: foodSequenceElement
+  id: ChillyPepper
+  name: food-sequence-content-chilly
+  sprites:
+  - sprite: Objects/Consumable/Food/burger_sequence_veg.rsi
+    state: chilly
   tags:
   - Vegetable
 
@@ -1271,6 +1320,28 @@
     state: produce
   tags:
   - Fruit
+
+# Chanterelle
+
+- type: foodSequenceElement
+  id: Chanterelle
+  name: food-sequence-content-mushroom
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/chanterelle.rsi
+    state: produce
+  tags:
+  - Vegetable
+  - Mushroom
+
+- type: foodSequenceElement
+  id: ChanterelleBurger
+  name: food-sequence-content-mushroom
+  sprites:
+  - sprite: Objects/Consumable/Food/burger_sequence_veg.rsi
+    state: chanterelle
+  tags:
+  - Vegetable
+  - Mushroom
 
 # Suppermatter
 
