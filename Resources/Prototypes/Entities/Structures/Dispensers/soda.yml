@@ -2,7 +2,8 @@
   parent: ReagentDispenserBase
   id: SodaDispenserEmpty
   name: soda dispenser
-  description: A beverage dispenser with a selection of soda and several other common beverages. Has a single fill slot for containers.
+  description: A beverage dispenser with a selection of soda and several other
+    common beverages. Has a single fill slot for containers.
   suffix: Empty
   components:
   - type: Rotatable

@@ -14,8 +14,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
         density: 15
         layer:
@@ -24,8 +23,7 @@
     damageModifierSet: PlasticMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 30
       behaviors:
       - !type:PlaySoundBehavior
@@ -53,14 +51,13 @@
     sprite: Objects/Misc/inflatable_door.rsi
     layers:
     - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
+      map: [ "enum.DoorVisualLayers.Base" ]
   - type: Physics
     bodyType: Static
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
         density: 15
         layer:
@@ -86,8 +83,7 @@
     damageModifierSet: PlasticMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 30
       behaviors:
       - !type:PlaySoundBehavior

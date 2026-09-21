@@ -10,8 +10,7 @@
   - type: TabletopGame
     boardName: tabletop-backgammon-board-name
     size: 550, 410
-    setup:
-      !type:TabletopBackgammonSetup
+    setup: !type:TabletopBackgammonSetup
       boardPrototype: &BackgammonBoard BackgammonBoardTabletop
 
 - type: entity

@@ -2,7 +2,8 @@
   parent: StructureHealthFurnitureStrong
   id: ChurchBell
   name: church bell
-  description: You feel your soul grow ever closer to the realms beyond for every chime this bell tolls...
+  description: You feel your soul grow ever closer to the realms beyond for every
+    chime this bell tolls...
   placement:
     mode: SnapgridCenter
   components:
@@ -31,8 +32,7 @@
     damageModifierSet: BrassMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 80
       behaviors:
       - !type:PlaySoundBehavior

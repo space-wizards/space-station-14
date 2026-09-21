@@ -7,11 +7,11 @@
     Arena:
       stationProto: StandardStationArena
       components:
-        - type: StationNameSetup
-          mapNameTemplate: "Meteor Arena"
-        - type: StationJobs
-          availableJobs:
-            Passenger: [ -1, -1 ]
+      - type: StationNameSetup
+        mapNameTemplate: "Meteor Arena"
+      - type: StationJobs
+        availableJobs:
+          Passenger: [ -1, -1 ]
 - type: gameMap
   id: dm01-entryway
   mapName: DM01 Entryway
@@ -21,8 +21,8 @@
     dm01-entryway:
       stationProto: StandardStationArena
       components:
-        - type: StationNameSetup
-          mapNameTemplate: "DM01 Entryway"
-        - type: StationJobs
-          availableJobs:
-            Passenger: [ -1, -1 ]
+      - type: StationNameSetup
+        mapNameTemplate: "DM01 Entryway"
+      - type: StationJobs
+        availableJobs:
+          Passenger: [ -1, -1 ]

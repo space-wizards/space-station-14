@@ -14,10 +14,10 @@
   - node: snapPop
     entity: SnapPop
     edges:
-      - to: snapPopExplosive
-        steps:
-          - material: Gunpowder
-            doAfter: 1
+    - to: snapPopExplosive
+      steps:
+      - material: Gunpowder
+        doAfter: 1
   - node: snapPopExplosive
     actions:
     - !type:AdminLog

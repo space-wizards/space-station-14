@@ -7,7 +7,7 @@
   components:
   - type: Reactive
     groups:
-      Acidic: [Touch]
+      Acidic: [ Touch ]
   - type: Damageable
   - type: Injurable
     damageContainer: Inorganic
@@ -29,8 +29,8 @@
     - Unimplantable
   - type: MobState
     allowedStates:
-      - Alive
-      - Dead
+    - Alive
+    - Dead
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -80,19 +80,17 @@
   - type: NameIdentifier
     group: Silicon
   - type: MovementSpeedModifier
-    baseWalkSpeed : 3
-    baseSprintSpeed : 4
+    baseWalkSpeed: 3
+    baseSprintSpeed: 4
   - type: Stamina
     baseCritThreshold: 120
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:TriggerBehavior
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 120
       behaviors:
       - !type:DoActsBehavior
@@ -111,7 +109,7 @@
     speechSounds: Pai #couldn't decide if this should be borg or pai sounds so I flipped a coin.
 
 - type: entity
-  parent: [MobSiliconBase, SolutionFireExtinguisherMini]
+  parent: [ MobSiliconBase, SolutionFireExtinguisherMini ]
   id: MobFireBot
   name: firebot
   description: A little fire extinguishing bot. He looks rather anxious.
@@ -128,8 +126,8 @@
   - type: SolutionRegeneration
     generated:
       reagents:
-        - ReagentId: Water
-          Quantity: 10
+      - ReagentId: Water
+        Quantity: 10
   - type: Spray
     transferAmount: 10
     pushbackAmount: 60
@@ -179,15 +177,13 @@
   - type: Fixtures
     fixtures:
       slips:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         hard: false
         layer:
-          - SlipLayer
+        - SlipLayer
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         density: 20
         mask:
@@ -254,7 +250,7 @@
     canCreateVacuum: false
 
 - type: entity
-  parent: [MobSiliconBase, SolutionMopNormal]
+  parent: [ MobSiliconBase, SolutionMopNormal ]
   id: MobCleanBot
   name: cleanbot
   description: The creep of automation now threatening space janitors.
@@ -272,11 +268,11 @@
   - type: SolutionRegeneration
     generated:
       reagents:
-        - ReagentId: Water
-          Quantity: 10
+      - ReagentId: Water
+        Quantity: 10
   - type: SolutionPurge
     preserve:
-      - Water
+    - Water
     quantity: 10
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
@@ -379,7 +375,7 @@
   - type: Sprite
     sprite: Mobs/Silicon/Bots/supplybot.rsi
     layers:
-    - map: ["movement"]
+    - map: [ "movement" ]
       state: supplybot
   - type: SpriteMovement
     movementLayers:

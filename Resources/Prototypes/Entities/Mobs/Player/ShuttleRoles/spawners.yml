@@ -11,9 +11,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorCaptain
@@ -31,9 +31,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorCaptain
@@ -45,9 +45,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_engineering
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_engineering
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorCE
@@ -59,9 +59,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_medical
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_medical
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorCMO
@@ -73,9 +73,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorHOP
@@ -87,9 +87,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_security
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_security
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorHOS
@@ -101,9 +101,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_science
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_science
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorRD
@@ -115,9 +115,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_cargo
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_cargo
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorQM
@@ -131,9 +131,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_security
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_security
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorSecurityOfficer
@@ -151,9 +151,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_security
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_security
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorSecurityCadet
@@ -165,9 +165,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_security
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_security
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorSecurityOfficer
@@ -179,9 +179,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_security
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_security
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorDetective
@@ -193,9 +193,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_security
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_security
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorWarden
@@ -209,9 +209,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_cargo
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_cargo
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorCargoTechnician
@@ -227,9 +227,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_cargo
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_cargo
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorCargoTechnician
@@ -241,9 +241,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_cargo
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_cargo
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorSalvageSpecialist
@@ -257,9 +257,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_engineering
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_engineering
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorAtmosTech
@@ -276,9 +276,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_engineering
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_engineering
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorAtmosTech
@@ -290,9 +290,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_engineering
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_engineering
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorTechnicalAssistant
@@ -304,9 +304,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_engineering
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_engineering
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorEngineer
@@ -320,9 +320,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_medical
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_medical
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorChemist
@@ -344,9 +344,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_medical
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_medical
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorChemist
@@ -358,9 +358,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_medical
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_medical
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorMedicalIntern
@@ -372,9 +372,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_medical
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_medical
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorMedicalDoctor
@@ -386,9 +386,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_medical
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_medical
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorParamedic
@@ -400,9 +400,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_medical
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_medical
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorVirologist
@@ -414,9 +414,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_medical
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_medical
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorGeneticist
@@ -428,9 +428,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_medical
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_medical
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorPsychologist
@@ -442,9 +442,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_medical
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_medical
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorDentist
@@ -458,9 +458,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_science
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_science
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorResearchAssistant
@@ -476,9 +476,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_science
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_science
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorScientist
@@ -490,9 +490,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_science
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_science
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorResearchAssistant
@@ -506,9 +506,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorBartender
@@ -536,9 +536,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorBartender
@@ -550,9 +550,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorBotanist
@@ -564,9 +564,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorBoxer
@@ -578,9 +578,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorChaplain
@@ -592,9 +592,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorChef
@@ -606,9 +606,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorClown
@@ -620,9 +620,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorJanitor
@@ -634,9 +634,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorLawyer
@@ -648,9 +648,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorLawyerCentcom
@@ -662,9 +662,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorLibrarian
@@ -676,9 +676,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorMusician
@@ -690,9 +690,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorMusicianFancy
@@ -704,9 +704,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorMusicianRelaxed
@@ -718,9 +718,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorMime
@@ -732,9 +732,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorReporter
@@ -746,9 +746,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorServiceWorker
@@ -760,9 +760,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorZookeeper
@@ -780,9 +780,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidChallengeVictimCaptain
@@ -808,9 +808,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_cargo
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_cargo
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidChallengeCargoTechnician
@@ -833,9 +833,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorCaptain
@@ -888,9 +888,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner
   - type: ConditionalSpawner
     prototypes:
     - NTVisitorSpawner
@@ -949,9 +949,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_syndicate
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_syndicate
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidSyndieSoldierTeamLeader
@@ -963,9 +963,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_syndicate
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_syndicate
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidSyndieSoldier
@@ -977,9 +977,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_syndicate
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_syndicate
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidSyndieVisitor
@@ -992,9 +992,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner-red
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner-red
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidPirateScooner
@@ -1007,9 +1007,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner-red
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner-red
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidPirateCaptainScooner
@@ -1023,9 +1023,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner-yellow
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner-yellow
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorBlackmarketeer
@@ -1037,9 +1037,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner-yellow
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner-yellow
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidCossack

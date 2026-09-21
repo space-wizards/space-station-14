@@ -1,9 +1,15 @@
 - type: entity
   abstract: true
-  parent: [BaseWeaponEnergyTurretIndestructible, ConstructibleMachine, StructureHealthMachineStrong]
+  parent:
+    [
+      BaseWeaponEnergyTurretIndestructible,
+      ConstructibleMachine,
+      StructureHealthMachineStrong
+    ]
   id: WeaponEnergyTurretStationBase
   name: sentry turret
-  description: A high-tech autonomous weapons system designed to keep unauthorized personnel out of sensitive areas.
+  description: A high-tech autonomous weapons system designed to keep unauthorized
+    personnel out of sensitive areas.
   components:
   - type: Anchorable
     flags:
@@ -12,21 +18,19 @@
   - type: Fixtures
     fixtures:
       body:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.45
         density: 60
         mask:
-          - Impassable
+        - Impassable
       turret:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.45
         density: 60
         mask:
-          - MachineMask
+        - MachineMask
         layer:
-          - MachineLayer
+        - MachineLayer
         hard: false
   - type: Sprite
     sprite: Objects/Weapons/Guns/Turrets/sentry_turret.rsi
@@ -92,15 +96,13 @@
     allowSelfRepair: false
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 175
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 275
       behaviors:
       - !type:PlaySoundBehavior
@@ -139,7 +141,7 @@
   suffix: AI, Silicon
   components:
   - type: AccessReader
-    access: [["StationAi"], ["ResearchDirector"]]
+    access: [ [ "StationAi" ], [ "ResearchDirector" ] ]
   - type: StationAiTurret
   - type: TurretTargetSettings
     exemptAccessLevels:
@@ -157,7 +159,7 @@
   suffix: Security
   components:
   - type: AccessReader
-    access: [["StationAi"], ["Security"]]
+    access: [ [ "StationAi" ], [ "Security" ] ]
   - type: TurretTargetSettings
     exemptAccessLevels:
     - Security
@@ -175,7 +177,7 @@
   suffix: Command
   components:
   - type: AccessReader
-    access: [["StationAi"], ["Command"]]
+    access: [ [ "StationAi" ], [ "Command" ] ]
   - type: TurretTargetSettings
     exemptAccessLevels:
     - Command

@@ -2,7 +2,8 @@
   parent: CratePirate
   id: CrateCargoLuxuryHardsuit
   name: luxury mining hardsuit crate
-  description: Finally, a hardsuit Quartermasters could call their own. Centcomm has heard you, now stop asking.
+  description: Finally, a hardsuit Quartermasters could call their own. Centcomm
+    has heard you, now stop asking.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -17,7 +18,8 @@
   parent: CrateGenericSteel
   id: CrateCargoParcelWrap
   name: parcel wrap crate
-  description: All your parcel wrapping needs in one crate, containing three rolls of parcel wrap.
+  description: All your parcel wrapping needs in one crate, containing three rolls
+    of parcel wrap.
   components:
   - type: EntityTableContainerFill
     containers:

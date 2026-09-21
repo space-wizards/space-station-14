@@ -23,7 +23,7 @@
     id: JanitorPDA
     ears: ClothingHeadsetService
     belt: ClothingBeltJanitorFilled
-  #storage:
+    #storage:
     #back:
     #- Stuff
 

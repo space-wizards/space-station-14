@@ -22,8 +22,7 @@
       fix1:
         hard: false
         density: 7
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
         layer:
         - MidImpassable
@@ -40,8 +39,7 @@
   - type: MeleeSound
     soundGroups:
       Brute:
-        path:
-          "/Audio/Weapons/slash.ogg"
+        path: "/Audio/Weapons/slash.ogg"
   - type: Sprite
     sprite: Objects/Misc/kudzu.rsi
     state: kudzu_11
@@ -53,8 +51,7 @@
   - type: Injurable
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 10
       behaviors:
       - !type:DoActsBehavior
@@ -72,11 +69,11 @@
         Heat: 3
   - type: Reactive
     groups:
-      Flammable: [Touch]
-      Extinguish: [Touch]
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
     reactions:
-    - reagents: [WeedKiller, PlantBGone]
-      methods: [Touch]
+    - reagents: [ WeedKiller, PlantBGone ]
+      methods: [ Touch ]
       effects:
       - !type:HealthChange
         damage:
@@ -127,7 +124,8 @@
   parent: Kudzu
   id: KudzuFlowerFriendly
   name: floral carpet
-  description: A colorful carpet of flowers sprawling in every direction. You're not sure whether to take it down or leave it up.
+  description: A colorful carpet of flowers sprawling in every direction. You're
+    not sure whether to take it down or leave it up.
   suffix: Friendly, Floral Anomaly
   components:
   - type: Sprite
@@ -186,13 +184,13 @@
   parent: [ BaseKudzu, SolutionFood ]
   id: BaseFleshKudzu
   name: tendons
-  description: A rapidly growing cluster of meaty tendons. WHY ARE YOU STOPPING TO LOOK AT IT?!
+  description: A rapidly growing cluster of meaty tendons. WHY ARE YOU STOPPING TO
+    LOOK AT IT?!
   components:
   - type: MeleeSound
     soundGroups:
       Brute:
-        path:
-          "/Audio/Weapons/slash.ogg"
+        path: "/Audio/Weapons/slash.ogg"
   - type: Sprite
     sprite: Objects/Misc/fleshkudzu.rsi
     state: kudzu_11
@@ -203,8 +201,7 @@
   - type: Injurable
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 40
       behaviors:
       - !type:DoActsBehavior
@@ -304,7 +301,7 @@
     layers:
     - state: spookysmoke
       color: "#793a80dd"
-      map: [base]
+      map: [ base ]
   - type: Kudzu
     growthTickChance: 0.2
     spreadChance: 0.99

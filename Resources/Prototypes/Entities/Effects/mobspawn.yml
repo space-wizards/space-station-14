@@ -14,8 +14,7 @@
   - type: Fixtures
     fixtures:
       portalFixture:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.48,0.25,0.48"
         mask:
         - FullTileMask
@@ -109,14 +108,14 @@
     drawdepth: Effects
     noRot: true
     layers:
-      - shader: unshaded
-        map: ["enum.EffectLayers.Unshaded"]
-        sprite: Effects/emp.rsi
-        state: emp_disable
+    - shader: unshaded
+      map: [ "enum.EffectLayers.Unshaded" ]
+      sprite: Effects/emp.rsi
+      state: emp_disable
   - type: EffectVisuals
   - type: Tag
     tags:
-      - HideContextMenu
+    - HideContextMenu
   - type: AnimationPlayer
   - type: EntityTableSpawner
     deleteSpawnerAfterSpawn: false

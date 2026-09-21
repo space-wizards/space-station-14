@@ -1,6 +1,11 @@
 - type: entity
   id: BaseTabletopChemicalMachine
-  parent: [ BaseMachinePowered, SmallConstructibleMachine, BaseSmallConstructibleMachineDestructible ]
+  parent:
+    [
+      BaseMachinePowered,
+      SmallConstructibleMachine,
+      BaseSmallConstructibleMachineDestructible
+    ]
   abstract: true
   components:
   - type: Transform
@@ -15,8 +20,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.17,0,0.20,0.4"
         mask:
         - TabletopMachineMask
@@ -67,17 +71,17 @@
     layers:
     - state: base
     - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false
     - state: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
       shader: unshaded
   - type: GenericVisualizer
     visuals:
       enum.SolutionContainerMixerVisuals.Mixing:
         enum.PowerDeviceVisualLayers.Powered:
-          True: {state: "spinning"}
-          False: {state: "unshaded"}
+          True: { state: "spinning" }
+          False: { state: "unshaded" }
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: True }
@@ -112,19 +116,19 @@
     offset: "0.0,0.4"
     layers:
     - state: base
-      map: ["beyblade"]
+      map: [ "beyblade" ]
     - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false
     - state: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
       shader: unshaded
   - type: GenericVisualizer
     visuals:
       enum.SolutionContainerMixerVisuals.Mixing:
         beyblade:
-          True: {state: "base-spinning"}
-          False: {state: "base"}
+          True: { state: "base-spinning" }
+          False: { state: "base" }
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: True }
@@ -134,7 +138,7 @@
       mixer:
         whitelist:
           tags:
-            - CentrifugeCompatible
+          - CentrifugeCompatible
   - type: Machine
     board: CentrifugeMachineCircuitboard
   - type: ApcPowerReceiver

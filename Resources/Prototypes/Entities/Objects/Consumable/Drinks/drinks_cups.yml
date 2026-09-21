@@ -1,7 +1,7 @@
 # A cup is a small container used to hold liquids for drinking.[1]
 - type: entity
   abstract: true
-  parent: [SolutionTiny, DrinkBase]
+  parent: [ SolutionTiny, DrinkBase ]
   id: DrinkBaseCup
   components:
   - type: Item
@@ -31,7 +31,7 @@
 ## Misc Cups
 
 - type: entity
-  parent: [DrinkBaseMaterialGold, DrinkBaseCup]
+  parent: [ DrinkBaseMaterialGold, DrinkBaseCup ]
   id: DrinkGoldenCup
   name: golden cup
   description: A golden cup.
@@ -59,7 +59,8 @@
   parent: [ DrinkBaseMaterialGlass, DrinkBaseCup, DrinkVisualsFillOverlay ]
   id: DrinkGlassCoupeShaped
   name: coupe glass
-  description: A classic thin neck coupe glass, the icon of fragile labels on crates around the galaxy.
+  description: A classic thin neck coupe glass, the icon of fragile labels on
+    crates around the galaxy.
   components:
   - type: Item
     size: Small
@@ -69,8 +70,7 @@
     inHandsMaxFillLevels: 1
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -81,7 +81,13 @@
         transferForensics: true
 
 - type: entity
-  parent: [DrinkBaseMaterialCardboard, DrinkBaseCup, DrinkBaseEmptyTrash, DrinkVisualsFill]
+  parent:
+    [
+      DrinkBaseMaterialCardboard,
+      DrinkBaseCup,
+      DrinkBaseEmptyTrash,
+      DrinkVisualsFill
+    ]
   id: DrinkWaterCup
   name: water cup
   description: A paper water cup.
@@ -162,7 +168,7 @@
     sprite: Objects/Consumable/Drinks/mug_heart.rsi
 
 - type: entity
-  parent: [DrinkBaseMaterialMetal, DrinkBaseMug]
+  parent: [ DrinkBaseMaterialMetal, DrinkBaseMug ]
   id: DrinkMugMetal
   name: metal mug
   description: A metal mug. You're not sure which metal.
@@ -174,7 +180,8 @@
   parent: DrinkBaseMug
   id: DrinkMugMoebius
   name: moebius mug
-  description: A mug with a Moebius Laboratories logo on it. Not even your morning coffee is safe from corporate advertising.
+  description: A mug with a Moebius Laboratories logo on it. Not even your morning
+    coffee is safe from corporate advertising.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_moebius.rsi
@@ -227,7 +234,7 @@
     layers:
     - state: icon
     - state: fill-3
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: TrashOnSolutionEmpty
     solution: drink
 
@@ -236,7 +243,8 @@
   id: DrinkHotCoffee
   name: coffee
   suffix: Full
-  description: Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant.
+  description: Coffee is a brewed drink prepared from roasted seeds, commonly
+    called coffee beans, of the coffee plant.
   components:
   - type: Solution
     solution:
@@ -250,7 +258,7 @@
     layers:
     - state: icon
     - state: fill-3
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: TrashOnSolutionEmpty
     solution: drink
 
@@ -274,7 +282,7 @@
     layers:
     - state: icon
     - state: fill-1
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     changeColor: false
@@ -315,7 +323,7 @@
 
 # TODO this needs fill levels
 - type: entity
-  parent: [DrinkBaseMaterialPlastic, SolutionSmall, DrinkBaseCup]
+  parent: [ DrinkBaseMaterialPlastic, SolutionSmall, DrinkBaseCup ]
   id: DrinkLean
   name: grape juice
   description: Damn, no fun allowed.

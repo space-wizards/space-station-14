@@ -5,80 +5,78 @@
   name: cardboard box #it's still just a box
   description: Huh? Just a box...
   components:
-    - type: Transform
-      noRot: true
-    - type: Clickable
-    - type: Physics
-      bodyType: KinematicController
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.4,-0.4,0.4,0.4"
-          density: 100
-          mask:
-            - MobMask
-          layer:
-            - MobLayer
-          hard: true
-    - type: Pullable
-    - type: Vehicle
-    - type: ContainerVehicle
-      containerId: entity_storage
-    - type: CardboardBox
-      effectSound: /Audio/Effects/chime.ogg
-    - type: InputMover
-    - type: EntityStorage
-      isCollidableWhenOpen: false
-      openOnMove: false
-      airtight: false
-      capacity: 5 #5 entity capacity to fit all of your friends (or teammates on your nuclear operation without reinforcements).
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-    - type: Damageable
-      damageModifierSet: CardboardMod
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 20
-        behaviors:
-        - !type:PlaySoundBehavior
-          sound:
-            path: /Audio/Effects/poster_broken.ogg
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            MaterialCardboard1:
-              min: 1
-              max: 2
-    - type: Sprite
-      noRot: true
-      sprite: Structures/Storage/closet.rsi
-      layers:
-      - state: cardboard
-        map: ["enum.StorageVisualLayers.Base"]
-      - state: cardboard_open
-        map: ["enum.StorageVisualLayers.Door"]
-    - type: Appearance
-    - type: EntityStorageVisuals
-      stateBaseClosed: cardboard
-      stateDoorOpen: cardboard_open
-    - type: Tag
-      tags:
-        - DoorBumpOpener
-    - type: Construction
-      graph: BaseBigBox
-      node: basebigbox
-      containers:
-        - entity_storage
-    - type: GravityAffected
-    - type: MovementSpeedModifier
-      weightlessModifier: 0
-      acceleration: 2
-      friction: 2
-      frictionNoInput: 6
+  - type: Transform
+    noRot: true
+  - type: Clickable
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 100
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+        hard: true
+  - type: Pullable
+  - type: Vehicle
+  - type: ContainerVehicle
+    containerId: entity_storage
+  - type: CardboardBox
+    effectSound: /Audio/Effects/chime.ogg
+  - type: InputMover
+  - type: EntityStorage
+    isCollidableWhenOpen: false
+    openOnMove: false
+    airtight: false
+    capacity: 5 #5 entity capacity to fit all of your friends (or teammates on your nuclear operation without reinforcements).
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+  - type: Damageable
+    damageModifierSet: CardboardMod
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/poster_broken.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialCardboard1:
+            min: 1
+            max: 2
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Storage/closet.rsi
+    layers:
+    - state: cardboard
+      map: [ "enum.StorageVisualLayers.Base" ]
+    - state: cardboard_open
+      map: [ "enum.StorageVisualLayers.Door" ]
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: cardboard
+    stateDoorOpen: cardboard_open
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+  - type: Construction
+    graph: BaseBigBox
+    node: basebigbox
+    containers:
+    - entity_storage
+  - type: GravityAffected
+  - type: MovementSpeedModifier
+    weightlessModifier: 0
+    acceleration: 2
+    friction: 2
+    frictionNoInput: 6
 
 - type: entity
   id: StealthBox
@@ -86,16 +84,16 @@
   parent: BaseBigBox
   description: Kept ya waiting, huh?
   components:
-    - type: Damageable
-      damageModifierSet: WoodMod #Syndicate boxes should have a bit of protection
-    - type: CardboardBox
-      quiet: true
-    - type: Stealth
-      hadOutline: true
-      shimmerFrequency: 0.05
-    - type: StealthOnMove
-      passiveVisibilityRate: -1 # very useful for going around the station concealed, if you start jitterstrafing you get seen
-      movementVisibilityRate: 0.20
+  - type: Damageable
+    damageModifierSet: WoodMod #Syndicate boxes should have a bit of protection
+  - type: CardboardBox
+    quiet: true
+  - type: Stealth
+    hadOutline: true
+    shimmerFrequency: 0.05
+  - type: StealthOnMove
+    passiveVisibilityRate: -1 # very useful for going around the station concealed, if you start jitterstrafing you get seen
+    movementVisibilityRate: 0.20
 
 - type: entity
   id: BigBox
@@ -111,18 +109,17 @@
   name: ghost box
   description: Beware!
   components:
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.4,-0.4,0.4,0.4"
-          mask:
-            - MobMask
-          layer:
-            - SlipLayer
-          hard: false #It's a ghostly box, it can go through walls
-    - type: EntityStorage
-      isCollidableWhenOpen: false
-      openOnMove: false
-      airtight: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        mask:
+        - MobMask
+        layer:
+        - SlipLayer
+        hard: false #It's a ghostly box, it can go through walls
+  - type: EntityStorage
+    isCollidableWhenOpen: false
+    openOnMove: false
+    airtight: false

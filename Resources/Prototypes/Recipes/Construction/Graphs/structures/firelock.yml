@@ -6,7 +6,7 @@
     edges:
     - to: frame1
       completed:
-      - !type:SnapToGrid { }
+      - !type:SnapToGrid
       steps:
       - material: Plasteel
         amount: 3
@@ -30,7 +30,7 @@
       - !type:SpawnPrototype
         prototype: SheetPlasteel1
         amount: 3
-      - !type:DeleteEntity {}
+      - !type:DeleteEntity
       conditions:
       - !type:EntityAnchored
         anchored: true

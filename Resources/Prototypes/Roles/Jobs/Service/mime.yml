@@ -4,8 +4,8 @@
   description: job-description-mime
   playTimeTracker: JobMime
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 4h
+  - !type:OverallPlaytimeRequirement
+    time: 4h
   startingGear: MimeGear
   icon: "JobIconMime"
   supervisors: job-supervisors-hop
@@ -47,7 +47,6 @@
     - state: full
   - type: InstantAction
     event: !type:InvisibleWallActionEvent
-
 - type: chameleonOutfit
   id: MimeChameleonOutfit
   job: Mime

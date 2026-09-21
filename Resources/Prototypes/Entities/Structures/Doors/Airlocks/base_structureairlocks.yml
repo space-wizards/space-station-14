@@ -17,46 +17,45 @@
   - type: MeleeSound
     soundGroups:
       Brute:
-        path:
-          "/Audio/Weapons/smash.ogg"
+        path: "/Audio/Weapons/smash.ogg"
   - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/airlock-base.rsi
     layers:
     - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
+      map: [ "enum.DoorVisualLayers.Base" ]
     - state: closed_unlit
       shader: unshaded
       sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
-      map: ["enum.DoorVisualLayers.BaseUnlit"]
+      map: [ "enum.DoorVisualLayers.BaseUnlit" ]
       visible: true
     - state: welded
       sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
-      map: ["enum.WeldableLayers.BaseWelded"]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
     - state: bolted_unlit
       shader: unshaded
       sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
-      map: ["enum.DoorVisualLayers.BaseBolted"]
+      map: [ "enum.DoorVisualLayers.BaseBolted" ]
     - state: emergency_unlit
       sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
-      map: ["enum.DoorVisualLayers.BaseEmergencyAccess"]
+      map: [ "enum.DoorVisualLayers.BaseEmergencyAccess" ]
       shader: unshaded
     - state: panel_open
       sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
     - state: electrified_ai
       sprite: Interface/Misc/ai_hud.rsi
       shader: unshaded
       visible: false
-      map: ["enum.ElectrifiedLayers.HUD"]
+      map: [ "enum.ElectrifiedLayers.HUD" ]
     - state: electrified
       sprite: Effects/electricity.rsi
       shader: unshaded
       visible: false
-      map: ["enum.ElectrifiedLayers.Sparks"]
+      map: [ "enum.ElectrifiedLayers.Sparks" ]
     - state: sparks
       sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
-      map: ["enum.DoorVisualLayers.BaseEmagging"]
+      map: [ "enum.DoorVisualLayers.BaseEmagging" ]
       shader: unshaded
       visible: false
   - type: IconSmooth
@@ -67,8 +66,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
         density: 100
         mask:
@@ -199,8 +197,7 @@
     fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 200
       behaviors:
       # TODO this should go to the broken node first
@@ -242,13 +239,13 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
         density: 100
         mask:
         - FullTileMask
-        layer:     #removed opaque from the layer, allowing lasers to pass through glass airlocks
+        layer:
+        #removed opaque from the layer, allowing lasers to pass through glass airlocks
         - GlassAirlockLayer
   - type: LayerChangeOnWeld
     unWeldedLayer: GlassAirlockLayer
@@ -262,7 +259,7 @@
     resistance: 2
   - type: Tag
     tags:
-      - GlassAirlock
-      # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
-      - DoorRemoteWhitelist
-      # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door
+    - GlassAirlock
+    # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
+    - DoorRemoteWhitelist
+    # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door

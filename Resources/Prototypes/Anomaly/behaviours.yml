@@ -1,11 +1,11 @@
 - type: weightedRandom
   id: AnomalyBehaviorList
   weights:
-  #safe
+    #safe
     Slow: 0.5
     Light: 0.5
     FullSafe: 0.1
-  #balanced
+    #balanced
     Balanced: 3
     DelayedForce: 1
     Rapid: 1
@@ -13,7 +13,7 @@
     Reflect: 1
     NonSensivity: 1
     Sensivity: 1
-  #Hard
+    #Hard
     Fast: 0.5
     Strenght: 0.5
     Inconstancy: 0.5
@@ -21,12 +21,11 @@
     FullUnknown: 0.5
     Jumping: 0.3
     Invisibility: 0.5
-  #Complex
+    #Complex
     FastUnknown: 0.2
     JumpingUnknown: 0.1
     InconstancyParticleUnknown: 0.1
     InvisibilityJumping: 0.1
-
 
 # Easy x0.5 point production
 
@@ -62,7 +61,7 @@
   description: anomaly-behavior-delayed-force
   pulseFrequencyModifier: 2
   pulsePowerModifier: 2
-  
+
 - type: anomalyBehavior
   id: Rapid
   earnPointModifier: 1.15
@@ -88,14 +87,14 @@
   - type: Reflect
     reflectProb: 0.5
     reflects:
-      - Energy
+    - Energy
 
 - type: anomalyBehavior
   id: NonSensivity
   earnPointModifier: 0.8
   particleSensivity: 0.5
   description: anomaly-behavior-nonsensivity
-  
+
 - type: anomalyBehavior
   id: Sensivity
   earnPointModifier: 1.2

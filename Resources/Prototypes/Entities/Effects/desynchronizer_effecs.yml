@@ -7,7 +7,7 @@
     noRot: true
     layers:
     - shader: unshaded
-      map: ["enum.EffectLayers.Unshaded"]
+      map: [ "enum.EffectLayers.Unshaded" ]
       sprite: Effects/chronofield.rsi
       state: chronofield
   - type: AnimationPlayer

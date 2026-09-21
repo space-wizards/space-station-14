@@ -29,7 +29,7 @@
 
 - type: entity
   name: cane blade
-  parent: [BaseSword, BaseSyndicateContraband]
+  parent: [ BaseSword, BaseSyndicateContraband ]
   id: CaneBlade
   description: A sharp blade with a cane shaped hilt.
   components:
@@ -42,16 +42,16 @@
       types:
         Slash: 17
     soundHit:
-        path: /Audio/Weapons/bladeslice.ogg
+      path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     sprite: Objects/Weapons/Melee/cane_blade.rsi
   - type: Tag
     tags:
-      - CaneBlade
+    - CaneBlade
   - type: DisarmMalus
 
 - type: entity
-  parent: [Cane, SelectableLock]
+  parent: [ Cane, SelectableLock ]
   id: CaneSheath
   suffix: Empty
   components:

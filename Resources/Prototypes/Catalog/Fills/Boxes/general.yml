@@ -8,7 +8,7 @@
     graph: BoxCardboard
     node: boxcardboard
     containers:
-      - storagebase
+    - storagebase
   - type: PhysicalComposition
     materialComposition:
       Cardboard: 100
@@ -28,7 +28,7 @@
     graph: BoxCardboardSmall # Half the material cost of the "regular" cardboardbox
     node: boxcardboardsmall
     containers:
-      - storagebase
+    - storagebase
   - type: PhysicalComposition # Half of the "regular" cardboard box
     materialComposition:
       Cardboard: 50
@@ -64,8 +64,8 @@
   components:
   - type: Sprite
     layers:
-      - state: box
-      - state: light
+    - state: box
+    - state: light
   - type: Storage
     grid:
     - 0,0,5,3
@@ -96,8 +96,8 @@
   components:
   - type: Sprite
     layers:
-      - state: box
-      - state: lighttube
+    - state: box
+    - state: lighttube
   - type: EntityTableContainerFill
     containers:
       storagebase:
@@ -111,8 +111,8 @@
   components:
   - type: Sprite
     layers:
-      - state: box
-      - state: lightmixed
+    - state: box
+    - state: lightmixed
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
@@ -148,8 +148,8 @@
         amount: 4
   - type: Sprite
     layers:
-      - state: box
-      - state: pda
+    - state: box
+    - state: pda
 
 - type: entity
   name: ID card box
@@ -164,8 +164,8 @@
         amount: 4
   - type: Sprite
     layers:
-      - state: box
-      - state: pda
+    - state: box
+    - state: pda
 
 - type: entity
   name: headset box
@@ -180,19 +180,20 @@
         amount: 4
   - type: Sprite
     layers:
-      - state: box
-      - state: headset
+    - state: box
+    - state: headset
 
 - type: entity
   parent: BoxCardboardSmall
   id: BoxStamps
   name: stamp box
   description: A small box containing stamps.
-  components: # Baking a "default" EntityTableContainerFill into this prototype seems like bad practice, so this is currently an empty box. If you need a new type of prefilled stamp box, create a new child prototype with the appropriate stamps!
+  components:
+  # Baking a "default" EntityTableContainerFill into this prototype seems like bad practice, so this is currently an empty box. If you need a new type of prefilled stamp box, create a new child prototype with the appropriate stamps!
   - type: Sprite
     layers:
-      - state: box
-      - state: stamp
+    - state: box
+    - state: stamp
 
 - type: entity
   name: meson box
@@ -207,8 +208,8 @@
         amount: 4
   - type: Sprite
     layers:
-      - state: box
-      - state: meson
+    - state: box
+    - state: meson
 
 - type: entity
   name: M.R.E.
@@ -226,8 +227,8 @@
         - id: FoodCondimentPacketKetchup
   - type: Sprite
     layers:
-      - state: box
-      - state: writing
+    - state: box
+    - state: writing
 
 - type: entity
   parent: BoxHug
@@ -250,14 +251,14 @@
     containers:
       storagebase: !type:AllSelector
         children:
-          - id: InflatableWallStack
-            amount: 2
-          - id: InflatableDoorStack
-            amount: 2
+        - id: InflatableWallStack
+          amount: 2
+        - id: InflatableDoorStack
+          amount: 2
   - type: Sprite
     layers:
-      - state: box
-      - state: inflatable
+    - state: box
+    - state: inflatable
 
 - type: entity
   name: hatsune miku day bag
@@ -288,8 +289,8 @@
         amount: 6
   - type: Sprite
     layers:
-      - state: box
-      - state: flare
+    - state: box
+    - state: flare
 
 - type: entity
   name: trashbag box
@@ -308,12 +309,12 @@
     maxItemSize: Large
     whitelist:
       tags:
-        - TrashBag
-        - TrashBagHolding
+      - TrashBag
+      - TrashBagHolding
   - type: Sprite
     layers:
-      - state: box
-      - state: trashbag
+    - state: box
+    - state: trashbag
 
 - type: entity
   name: passenger encryption key box
@@ -328,8 +329,8 @@
         amount: 4
   - type: Sprite
     layers:
-      - state: box
-      - state: encryptokey
+    - state: box
+    - state: encryptokey
   - type: Storage
     whitelist:
       components:
@@ -425,9 +426,10 @@
 
 - type: entity
   name: syndicate encryption key box
-  parent: [BoxEncryptionKeyPassenger, BaseSyndicateContraband]
+  parent: [ BoxEncryptionKeyPassenger, BaseSyndicateContraband ]
   id: BoxEncryptionKeySyndie
-  description: Two syndicate encryption keys for the price of one. Miniaturized for ease of use.
+  description: Two syndicate encryption keys for the price of one. Miniaturized
+    for ease of use.
   components:
   - type: Item
     size: Normal
@@ -458,12 +460,13 @@
   components:
   - type: Sprite
     layers:
-      - state: box
-      - state: candle
+    - state: box
+    - state: candle
   - type: Storage
     grid:
     - 0,0,5,3
-    whitelist: # TODO cardboard boxes shouldn't have whitelisting
+    whitelist:
+      # TODO cardboard boxes shouldn't have whitelisting
       tags:
       - Candle
   - type: EntityTableContainerFill
@@ -515,8 +518,8 @@
     maxItemSize: Tiny
   - type: Sprite
     layers:
-      - state: box
-      - state: darts
+    - state: box
+    - state: darts
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
@@ -538,8 +541,8 @@
   components:
   - type: Sprite
     layers:
-      - state: box
-      - state: envelope
+    - state: box
+    - state: envelope
   - type: EntityTableContainerFill
     containers:
       storagebase:
@@ -554,8 +557,8 @@
   components:
   - type: Sprite
     layers:
-      - state: box
-      - state: utensils
+    - state: box
+    - state: utensils
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector

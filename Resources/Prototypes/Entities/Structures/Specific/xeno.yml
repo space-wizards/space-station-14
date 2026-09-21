@@ -10,36 +10,34 @@
   - type: RangedDamageSound
     soundGroups:
       Brute:
-        collection:
-          MeatBulletImpact
+        collection: MeatBulletImpact
     soundTypes:
       Heat:
-        collection:
-          MeatLaserImpact
+        collection: MeatLaserImpact
   - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Specific/xeno_building.rsi
     layers:
-      - state: wardingtower
-      - state: wardingtower-unshaded
-        shader: unshaded
+    - state: wardingtower
+    - state: wardingtower-unshaded
+      shader: unshaded
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
         mask:
-          - FullTileMask
+        - FullTileMask
         layer:
-          - WallLayer
+        - WallLayer
         density: 1000
 
 - type: entity
   parent: XenoWardingTower
   id: CarpStatue
   name: carp statue
-  description: A statue of one of the brave carp that got us where we are today. Made with real teeth!
+  description: A statue of one of the brave carp that got us where we are today.
+    Made with real teeth!
   components:
   - type: Sprite
     noRot: true
@@ -54,8 +52,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
         density: 60
         mask:
@@ -83,7 +80,8 @@
   parent: CarpStatue
   id: CarpStatueEyes
   suffix: Eyes
-  description: A statue of one of the brave carp that got us where we are today. This one needs a dentist...
+  description: A statue of one of the brave carp that got us where we are today.
+    This one needs a dentist...
   components:
   - type: Sprite
     layers:

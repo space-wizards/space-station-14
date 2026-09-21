@@ -13,8 +13,7 @@
     - state: broken
   - type: Destructible
     thresholds:
-    - trigger: &DamageMachineFlimsy
-        !type:DamageTrigger
+    - trigger: &DamageMachineFlimsy !type:DamageTrigger
         damage: 50
       behaviors:
       - &SoundMetalGlassBreak !type:PlaySoundBehavior
@@ -27,7 +26,6 @@
             max: 1
           SheetSteel1: *Min0Max1
           CableApcStack1: *Min0Max1
-
 
 - type: entity
   parent: [ BaseWallmountMachine, StructureHealthMachineWeak ]
@@ -79,8 +77,7 @@
     damageModifierSet: GlassReinforcedMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - *SoundMetalGlassBreak
@@ -100,7 +97,7 @@
       params:
         volume: -1
         variation: 0.10
-        pitch: 1.10  # low pitch keyboard sounds feel kinda weird
+        pitch: 1.10 # low pitch keyboard sounds feel kinda weird
     blacklist:
       tags:
       - NoConsoleSound

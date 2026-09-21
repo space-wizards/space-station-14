@@ -3,8 +3,7 @@
   id: MasterQM
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobQuartermaster
       time: 20h
 

@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [SolutionGun, SolutionSmall, BaseItem] # 12 shots
+  parent: [ SolutionGun, SolutionSmall, BaseItem ] # 12 shots
   id: WeaponWaterGunBase
   components:
   - type: Sprite
@@ -52,7 +52,8 @@
   parent: WeaponWaterGunBase
   id: WeaponWaterPistol
   name: water pistol
-  description: The dinkiest of water-based weaponry. You swear the trigger doesn't do anything.
+  description: The dinkiest of water-based weaponry. You swear the trigger doesn't
+    do anything.
   components:
   - type: Item
     shape:
@@ -67,11 +68,11 @@
       map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: RandomSprite
     available:
-      - enum.DamageStateVisualLayers.Base:
-          icon: Rainbow
+    - enum.DamageStateVisualLayers.Base:
+        icon: Rainbow
 
 - type: entity
-  parent: [SolutionNormal, WeaponWaterGunBase] # 24 shots
+  parent: [ SolutionNormal, WeaponWaterGunBase ] # 24 shots
   id: WeaponWaterBlaster
   name: water blaster
   description: With this bad boy, you'll be the coolest kid at the summer barbecue.
@@ -89,7 +90,7 @@
     layers:
     - state: detail1
     - state: detail2
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
     - state: icon
       map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: Item
@@ -100,13 +101,13 @@
   - type: RandomSprite
     getAllGroups: true
     available:
-      - enum.DamageStateVisualLayers.Base:
-          icon: Rainbow
-      - enum.PowerDeviceVisualLayers.Powered:
-          detail2: Sixteen
+    - enum.DamageStateVisualLayers.Base:
+        icon: Rainbow
+    - enum.PowerDeviceVisualLayers.Powered:
+        detail2: Sixteen
 
 - type: entity
-  parent: [SolutionHuge, WeaponWaterGunBase] # 96 shots
+  parent: [ SolutionHuge, WeaponWaterGunBase ] # 96 shots
   id: WeaponWaterBlasterSuper
   name: super water blaster
   description: No! No! Not in the eyes!
@@ -124,18 +125,19 @@
     layers:
     - state: detail1
     - state: detail2
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
     - state: icon
       map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: Item
     sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
     size: Large
-    shape: # Rifle Size.
+    shape:
+    # Rifle Size.
     - 0,0,2,2
   - type: RandomSprite
     getAllGroups: true
     available:
-      - enum.DamageStateVisualLayers.Base:
-          icon: Rainbow
-      - enum.PowerDeviceVisualLayers.Powered:
-          detail2: Sixteen
+    - enum.DamageStateVisualLayers.Base:
+        icon: Rainbow
+    - enum.PowerDeviceVisualLayers.Powered:
+        detail2: Sixteen

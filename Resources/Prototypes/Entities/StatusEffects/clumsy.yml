@@ -11,7 +11,8 @@
   - type: ClumsyDefibStatusEffect
   - type: ClumsyGunStatusEffect
     failDamage:
-      types: # Arbitrary values from old ClumsyComponent
+      types:
+        # Arbitrary values from old ClumsyComponent
         Blunt: 5
         Piercing: 4
         Heat: 3

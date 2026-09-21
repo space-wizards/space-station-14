@@ -4,7 +4,8 @@
   id: AllToysTable
   table: !type:GroupSelector
     children:
-    - !type:GroupSelector # Boring toys (subjective) :o)
+    # Boring toys (subjective) :o)
+    - !type:GroupSelector
       weight: 0.5 # 1 in 7
       children:
       - !type:NestedSelector
@@ -60,22 +61,26 @@
       - id: PlushieSharkBlue
       - id: PlushieSharkGrey
       - id: PlushieSharkPink
-    - !type:GroupSelector # Toy plushies
+    # Toy plushies
+    - !type:GroupSelector
       children:
       - id: ToyIan
       - id: ToyAmongPequeno
       - id: ToyMouse
-    - !type:GroupSelector # Giant plushies
+    # Giant plushies
+    - !type:GroupSelector
       children:
       - id: PlushieNar
       - id: PlushieRatvar
-    - !type:GroupSelector # Rare plushies
+    # Rare plushies
+    - !type:GroupSelector
       weight: 0.1 # 1 in >210
       children:
       - id: PlushieHuman
       - id: PlushieGhost
       - id: PlushieLamp
-    - !type:GroupSelector # Legendary plushies
+    # Legendary plushies
+    - !type:GroupSelector
       weight: 0.002 # 1 in >10,500
       children:
       - id: PlushieThrongler
@@ -92,7 +97,8 @@
       weight: 1
     - id: PlushieLizardInversed
       weight: 0.1 # 1 in >100
-    - !type:GroupSelector # Lizard gets a job table
+    # Lizard gets a job table
+    - !type:GroupSelector
       children:
       - id: PlushieLizardJobAtmospherictechnician
       - id: PlushieLizardJobBartender
@@ -229,28 +235,33 @@
   id: AllToyWeaponsTable
   table: !type:GroupSelector
     children:
-    - !type:GroupSelector # Swords type group
+    # Swords type group
+    - !type:GroupSelector
       children:
       - id: ToyHammer
       - id: ToySword
       - id: FoamBlade
       - id: FoamCutlass
       - id: CardSword
-    - !type:GroupSelector # Throwing type group
+    # Throwing type group
+    - !type:GroupSelector
       rolls: 2 # Expendables need restocks
       children:
       - id: SnapPopBox
       - id: BoxDarts
       - id: GrenadeFoamDart
-      - !type:GroupSelector # REAL fake grenades
+      # REAL fake grenades
+      - !type:GroupSelector
         weight: 0.05 # 2 in 186. Rare in order to not spoil the surprise
         children:
         - id: GrenadeDummy
         - id: SyndieTrickyBomb
-    - !type:GroupSelector # Guns type group
+    # Guns type group
+    - !type:GroupSelector
       children:
       - id: WeaponStickyHand
-      - !type:GroupSelector # Water subgroup
+      # Water subgroup
+      - !type:GroupSelector
         children:
         - id: WeaponWaterBlaster
         - id: WeaponWaterPistol
@@ -261,7 +272,9 @@
 
 - type: entityTable # price 100
   id: RandomFoamGunTable
-  table: !type:AllSelector # Need to spawn with ammo
+  table:
+    # Need to spawn with ammo
+    !type:AllSelector
     children:
     - !type:GroupSelector
       children:
@@ -273,12 +286,14 @@
   id: RandomCapGunTable
   table: !type:AllSelector
     children:
-    - !type:GroupSelector # real or fake?
+    # real or fake?
+    - !type:GroupSelector
       children:
       - id: RevolverCapGun
       - id: RevolverCapGunFake
         weight: 0.01 # 1 in 101
-    - !type:GroupSelector # ready for reload
+    # ready for reload
+    - !type:GroupSelector
       prob: 0.9
       children:
       - id: SpeedLoaderCap
@@ -304,31 +319,36 @@
     - id: CrazyLube
     - !type:NestedSelector
       tableId: AllBoardGamesTable
-    - !type:GroupSelector # Where there's Chips there's Dips
+    # Where there's Chips there's Dips
+    - !type:GroupSelector
       children:
       - id: MrChips
       - id: MrDips
-    - !type:GroupSelector # Ballons
+    # Ballons
+    - !type:GroupSelector
       children:
       - id: BalloonNT
         weight: 5 # NT bias
       - id: BalloonCorgi
       - id: BalloonSyn
-    - !type:GroupSelector # Sports ball
+    # Sports ball
+    - !type:GroupSelector
       children:
       - id: Basketball
       - id: Football
       - id: BeachBall
       - id: TennisBall
         amount: 2
-    - !type:GroupSelector # PAIs are basically toys
+    # PAIs are basically toys
+    - !type:GroupSelector
       children:
       - id: PersonalAI
         weight: 8
       - id: PotatoAI
       - id: GoldenPersonalAI
         weight: 0.1 # 1 in 1,456. A truly rare item
-    - !type:GroupSelector # Orbs of "power"
+    # Orbs of "power"
+    - !type:GroupSelector
       weight: 0.05 # 1 in 320
       children:
       - id: SingularityToy
@@ -356,7 +376,8 @@
       - id: SecurityWhistle
       - id: SyndicateWhistle
         weight: 0.5 # 1 in 143
-    - !type:NestedSelector # The original
+    # The original
+    - !type:NestedSelector
       tableId: RandomBikeHornTable
 
 - type: entityTable # size 1x2  # price 100
@@ -364,8 +385,9 @@
   table: !type:GroupSelector
     children:
     - id: BikeHorn
-    - !type:GroupSelector # Usually get the normal horn
-      weight: .005 # 1 in 200
+    # Usually get the normal horn
+    - !type:GroupSelector
+      weight: 0.005 # 1 in 200
       children:
       - id: CluwneHorn # you lose, clown >:o)
       - id: BananiumHorn

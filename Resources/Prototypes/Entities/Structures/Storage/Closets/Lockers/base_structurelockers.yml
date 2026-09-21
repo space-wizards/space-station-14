@@ -11,20 +11,20 @@
     noRot: true
     layers:
     - state: generic
-      map: ["enum.StorageVisualLayers.Base"]
+      map: [ "enum.StorageVisualLayers.Base" ]
     - state: generic_door
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: locked
-      map: ["enum.LockVisualLayers.Lock"]
+      map: [ "enum.LockVisualLayers.Lock" ]
       shader: unshaded
     - state: welded
       visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
     - state: paper
       visible: false
       sprite: Structures/Storage/closet_labels.rsi
       offset: "-0.065,0"
-      map: ["enum.PaperLabelVisuals.Layer"]
+      map: [ "enum.PaperLabelVisuals.Layer" ]
   - type: Construction
     graph: ClosetSteelSecure
     node: done
@@ -36,8 +36,7 @@
     damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 60
       behaviors:
       - !type:PlaySoundBehavior

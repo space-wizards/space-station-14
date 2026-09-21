@@ -7,32 +7,32 @@
   - type: Sprite
     layers:
     - state: closed
-      map: ["closeLayer"]
+      map: [ "closeLayer" ]
     - state: open
-      map: ["openLayer"]
+      map: [ "openLayer" ]
       visible: false
     - state: cig1
-      map: ["cig1"]
+      map: [ "cig1" ]
       sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
       visible: false
     - state: cig2
-      map: ["cig2"]
+      map: [ "cig2" ]
       sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
       visible: false
     - state: cig3
-      map: ["cig3"]
+      map: [ "cig3" ]
       sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
       visible: false
     - state: cig4
-      map: ["cig4"]
+      map: [ "cig4" ]
       sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
       visible: false
     - state: cig5
-      map: ["cig5"]
+      map: [ "cig5" ]
       sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
       visible: false
     - state: cig6
-      map: ["cig6"]
+      map: [ "cig6" ]
       sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
       visible: false
   - type: Tag
@@ -45,7 +45,8 @@
   - type: SpaceGarbage
   - type: Item
     size: Tiny
-    shape: # Yes, this is cursed, but it breaks otherwise, dont question it.
+    shape:
+    # Yes, this is cursed, but it breaks otherwise, dont question it.
     - 0,0,0,1
   - type: Storage
     grid:
@@ -57,7 +58,7 @@
         amount: 10
   - type: ItemCounter
     count:
-      tags: [Cigarette]
+      tags: [ Cigarette ]
     composite: true
     layerStates:
     - cig1
@@ -77,32 +78,32 @@
   - type: Sprite
     layers:
     - state: closed
-      map: ["closeLayer"]
+      map: [ "closeLayer" ]
     - state: open
-      map: ["openLayer"]
+      map: [ "openLayer" ]
       visible: false
     - state: cig1
-      map: ["cig1"]
+      map: [ "cig1" ]
       sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
       visible: false
     - state: cig2
-      map: ["cig2"]
+      map: [ "cig2" ]
       sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
       visible: false
     - state: cig3
-      map: ["cig3"]
+      map: [ "cig3" ]
       sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
       visible: false
     - state: cig4
-      map: ["cig4"]
+      map: [ "cig4" ]
       sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
       visible: false
     - state: cig5
-      map: ["cig5"]
+      map: [ "cig5" ]
       sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
       visible: false
     - state: cig6
-      map: ["cig6"]
+      map: [ "cig6" ]
       sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
       visible: false
   - type: Tag
@@ -115,14 +116,15 @@
   - type: SpaceGarbage
   - type: Item
     size: Tiny
-    shape: # Yes, this is cursed, but it breaks otherwise, dont question it.
+    shape:
+    # Yes, this is cursed, but it breaks otherwise, dont question it.
     - 0,0,0,1
   - type: Storage
     grid:
     - 0,0,4,1
   - type: ItemCounter
     count:
-      tags: [Cigarette]
+      tags: [ Cigarette ]
     composite: true
     layerStates:
     - cig1
@@ -159,7 +161,8 @@
   id: CigPackBlue
   parent: CigPackBase
   name: AcmeCo packet
-  description: For those who somehow want to obtain the record for the most amount of cancerous tumors.
+  description: For those who somehow want to obtain the record for the most amount
+    of cancerous tumors.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/blue.rsi
@@ -179,9 +182,10 @@
 
 - type: entity
   id: CigPackSyndicate
-  parent: [CigPackBase, BaseSyndicateContraband]
+  parent: [ CigPackBase, BaseSyndicateContraband ]
   name: Interdyne herbals packet
-  description: Elite cigarettes for elite syndicate agents. Infused with medicine for when you need to do more than calm your nerves.
+  description: Elite cigarettes for elite syndicate agents. Infused with medicine
+    for when you need to do more than calm your nerves.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/syndicate.rsi
@@ -267,4 +271,3 @@
       weight: 7
     - id: CigaretteSaline
       weight: 7
-

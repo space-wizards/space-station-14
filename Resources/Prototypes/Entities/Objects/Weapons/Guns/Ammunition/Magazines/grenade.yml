@@ -11,7 +11,7 @@
     mayTransfer: true
     whitelist:
       tags:
-        - Grenade
+      - Grenade
     capacity: 5
     soundRack:
       path: /Audio/Weapons/Guns/Bolt/lmg_bolt_closed.ogg
@@ -30,9 +30,9 @@
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Grenade/grenade_cartridge.rsi
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]
+      map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-4
-      map: ["enum.GunVisualLayers.Mag"]
+      map: [ "enum.GunVisualLayers.Mag" ]
   - type: MagazineVisuals
     magState: mag
     steps: 5

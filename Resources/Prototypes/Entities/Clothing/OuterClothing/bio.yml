@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothingGasTanks]
+  parent: [ ClothingOuterBaseLarge, AllowSuitStorageClothingGasTanks ]
   id: ClothingOuterBioGeneral
   name: bio suit
   suffix: Generic
@@ -28,7 +28,8 @@
   id: ClothingOuterBioCmo
   name: bio suit
   suffix: CMO
-  description: An advanced suit that protects against biological contamination, in CMO colors.
+  description: An advanced suit that protects against biological contamination, in
+    CMO colors.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Bio/cmo.rsi
@@ -64,11 +65,12 @@
     sprite: Clothing/OuterClothing/Bio/scientist.rsi
 
 - type: entity
-  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseSecurityContraband]
+  parent: [ ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseSecurityContraband ]
   id: ClothingOuterBioSecurity
   name: bio suit
   suffix: Security
-  description: A suit that protects against biological contamination, kitted out with additional armor.
+  description: A suit that protects against biological contamination, kitted out
+    with additional armor.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Bio/security.rsi

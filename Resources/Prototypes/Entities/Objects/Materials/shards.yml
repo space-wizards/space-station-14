@@ -11,15 +11,15 @@
     doAfterDuration: 4.0
   - type: Sprite
     layers:
-      - sprite: Objects/Materials/Shards/shard.rsi
-        state: shard1
-        map: [ "enum.DamageStateVisualLayers.Base" ]
+    - sprite: Objects/Materials/Shards/shard.rsi
+      state: shard1
+      map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: RandomSprite
     available:
-      - enum.DamageStateVisualLayers.Base:
-          shard1: ""
-          shard2: ""
-          shard3: ""
+    - enum.DamageStateVisualLayers.Base:
+        shard1: ""
+        shard2: ""
+        shard3: ""
   - type: MeleeWeapon
     attackRate: 1
     damage:
@@ -33,15 +33,13 @@
   - type: Fixtures
     fixtures:
       slips:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.2,-0.2,0.2,0.2"
         hard: false
         layer:
         - LowImpassable
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.2,-0.2,0.2,0.2"
         density: 30
         mask:
@@ -91,8 +89,8 @@
         Piercing: 4.5
   - type: Tag
     tags:
-      - GlassShard
-      - Trash
+    - GlassShard
+    - Trash
   - type: Solution
     solution:
       maxVol: 5
@@ -125,8 +123,8 @@
         Piercing: 5.5
   - type: Tag
     tags:
-      - ReinforcedGlassShard
-      - Trash
+    - ReinforcedGlassShard
+    - Trash
   - type: Solution
     solution:
       reagents:
@@ -162,8 +160,8 @@
         Piercing: 6.5
   - type: Tag
     tags:
-      - PlasmaGlassShard
-      - Trash
+    - PlasmaGlassShard
+    - Trash
   - type: Solution
     solution:
       reagents:
@@ -199,8 +197,8 @@
         Radiation: 2.5
   - type: Tag
     tags:
-      - UraniumGlassShard
-      - Trash
+    - UraniumGlassShard
+    - Trash
   - type: Solution
     solution:
       reagents:

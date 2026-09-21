@@ -8,6 +8,5 @@
   - type: Fixtures
     fixtures:
       tether:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35

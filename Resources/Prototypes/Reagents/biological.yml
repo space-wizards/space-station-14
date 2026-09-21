@@ -23,9 +23,9 @@
         satiationType: Thirst
         factor: 1.0
         conditions:
-          - !type:MetabolizerTypeCondition
-            type: [ Human ]
-            inverted: true
+        - !type:MetabolizerTypeCondition
+          type: [ Human ]
+          inverted: true
       - !type:EvenHealthChange
         conditions:
         - !type:MetabolizerTypeCondition
@@ -33,15 +33,16 @@
         damage:
           Brute: -3
           Burn: -1.25
-    Bloodstream: # Don't inject someone else's blood into yourself! Your own blood won't actually metabolise.
+    Bloodstream:
+      # Don't inject someone else's blood into yourself! Your own blood won't actually metabolise.
       effects:
       - !type:HealthChange
         damage:
           types:
             Poison: 0.2
   plantMetabolism:
-    - !type:PlantAdjustWater
-      amount: 0.5
+  - !type:PlantAdjustWater
+    amount: 0.5
   footstepSound:
     collection: FootstepBlood
     params:
@@ -70,7 +71,7 @@
   physicalDesc: reagent-physical-desc-viscous
   viscosity: 0.25
   tileReactions:
-    - !type:SpillTileReaction
+  - !type:SpillTileReaction
   metabolisms:
     Digestion:
       # Delicious!
@@ -80,13 +81,13 @@
         factor: 1
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Slime]
+          type: [ Slime ]
           inverted: true
       - !type:ModifyBloodLevel
         amount: 0.5 # drawing 15u removes 5% blood level from a slimeperson, this will add 5% when injecting 15u
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Slime]
+          type: [ Slime ]
   footstepSound:
     collection: FootstepSlime # makes sense
     params:
@@ -103,7 +104,7 @@
   physicalDesc: reagent-physical-desc-sticky
   viscosity: 0.10
   tileReactions:
-    - !type:SpillTileReaction
+  - !type:SpillTileReaction
   metabolisms:
     Digestion:
       # Sweet!
@@ -200,7 +201,6 @@
       - !type:Vomit
         probability: 0.5
 
-
 - type: reagent
   id: Ichor
   name: reagent-name-ichor
@@ -216,7 +216,7 @@
       - !type:Satiate
         satiationType: Thirst
         factor: 1.5
-    # Dragon doesn't require airloss healing, so omnizine is still best for humans.
+      # Dragon doesn't require airloss healing, so omnizine is still best for humans.
       - !type:ModifyBloodLevel
         amount: 3
       - !type:EvenHealthChange

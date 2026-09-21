@@ -16,27 +16,27 @@
     state: box
     layers:
     - state: box
-      map: ["closeLayer"]
+      map: [ "closeLayer" ]
     - state: box-open
-      map: ["openLayer"]
+      map: [ "openLayer" ]
       visible: false
     - state: box1
-      map: ["box1"]
+      map: [ "box1" ]
       visible: false
     - state: pink-box2
-      map: ["pink-box2"]
+      map: [ "pink-box2" ]
       visible: false
     - state: box3
-      map: ["box3"]
+      map: [ "box3" ]
       visible: false
     - state: pink-box4
-      map: ["pink-box4"]
+      map: [ "pink-box4" ]
       visible: false
     - state: box5
-      map: ["box5"]
+      map: [ "box5" ]
       visible: false
     - state: pink-box6
-      map: ["pink-box6"]
+      map: [ "pink-box6" ]
       visible: false
   - type: Storage
     grid:
@@ -60,7 +60,7 @@
           amount: 3
   - type: ItemCounter
     count:
-      tags: [Donut]
+      tags: [ Donut ]
     composite: true
     layerStates:
     - box1
@@ -84,45 +84,45 @@
     state: box-closed
     layers:
     - state: box-closed
-      map: ["closeLayer"]
+      map: [ "closeLayer" ]
     - state: box-open
-      map: ["openLayer"]
+      map: [ "openLayer" ]
       visible: false
     - state: box1
-      map: ["box1"]
+      map: [ "box1" ]
       visible: false
     - state: box2
-      map: ["box2"]
+      map: [ "box2" ]
       visible: false
     - state: box3
-      map: ["box3"]
+      map: [ "box3" ]
       visible: false
     - state: box4
-      map: ["box4"]
+      map: [ "box4" ]
       visible: false
     - state: box5
-      map: ["box5"]
+      map: [ "box5" ]
       visible: false
     - state: box6
-      map: ["box6"]
+      map: [ "box6" ]
       visible: false
     - state: box7
-      map: ["box7"]
+      map: [ "box7" ]
       visible: false
     - state: box8
-      map: ["box8"]
+      map: [ "box8" ]
       visible: false
     - state: box9
-      map: ["box9"]
+      map: [ "box9" ]
       visible: false
     - state: box10
-      map: ["box10"]
+      map: [ "box10" ]
       visible: false
     - state: box11
-      map: ["box11"]
+      map: [ "box11" ]
       visible: false
     - state: box12
-      map: ["box12"]
+      map: [ "box12" ]
       visible: false
   - type: Storage
     grid:
@@ -143,7 +143,7 @@
         amount: 12
   - type: ItemCounter
     count:
-      tags: [Egg]
+      tags: [ Egg ]
     composite: true
     layerStates:
     - box1
@@ -203,16 +203,17 @@
   parent: BoxCardboard
   id: FoodBoxPizza
   name: pizza box
-  description: A box for pizza. It keeps in the heat, the smell, and the memories of the best five minutes of your life.
+  description: A box for pizza. It keeps in the heat, the smell, and the memories
+    of the best five minutes of your life.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     drawdepth: SmallObjects
     layers:
     - state: box
-      map: ["enum.StorageVisualLayers.Base"]
+      map: [ "enum.StorageVisualLayers.Base" ]
     - state: box-open
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
   # TODO make these entitystorage again + placeablesurface after entity storage ECS gets merged.
   - type: Storage
     grid:
@@ -293,27 +294,27 @@
     state: box
     layers:
     - state: box
-      map: ["closeLayer"]
+      map: [ "closeLayer" ]
     - state: box-open
-      map: ["openLayer"]
+      map: [ "openLayer" ]
       visible: false
     - state: box1
-      map: ["box1"]
+      map: [ "box1" ]
       visible: false
     - state: box2
-      map: ["box2"]
+      map: [ "box2" ]
       visible: false
     - state: box3
-      map: ["box3"]
+      map: [ "box3" ]
       visible: false
     - state: box4
-      map: ["box4"]
+      map: [ "box4" ]
       visible: false
     - state: box5
-      map: ["box5"]
+      map: [ "box5" ]
       visible: false
     - state: box6
-      map: ["box6"]
+      map: [ "box6" ]
       visible: false
   - type: Storage
     grid:
@@ -329,7 +330,7 @@
         amount: 6
   - type: ItemCounter
     count:
-      tags: [Nugget]
+      tags: [ Nugget ]
     composite: true
     layerStates:
     - box1
@@ -346,7 +347,8 @@
   parent: BoxCardboard
   id: FoodBoxDonkpocket
   name: box of donk-pockets
-  description: 'Instructions: Heat in microwave. Product will cool if not eaten within seven minutes.'
+  description: 'Instructions: Heat in microwave. Product will cool if not eaten
+    within seven minutes.'
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
@@ -534,7 +536,7 @@
 
 - type: entity
   id: HappyHonkNukie
-  parent: [HappyHonk, BaseSyndicateContraband]
+  parent: [ HappyHonk, BaseSyndicateContraband ]
   name: robust nukie meal
   description: A sus meal with a potentially explosive surprise.
   suffix: Toy Unsafe
@@ -626,7 +628,8 @@
   id: FoodMealHappyHonkBigBite
   parent: HappyHonk
   name: Happy Honk Big Bite Meal
-  description: Someone paid good money to get this fast food meal shipped out this way. It smells fresh, somehow.
+  description: Someone paid good money to get this fast food meal shipped out this
+    way. It smells fresh, somehow.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -643,7 +646,9 @@
   parent: BoxCardboard
   id: FoodBoxCloth
   name: box of FlutterSoft-brand cloth
-  description: Fiber is the most important moth meal of the day! Don't skip it or use bottom-of-the-locker junk, buy high-quality FlutterSoft-brand cloth instead.
+  description: Fiber is the most important moth meal of the day! Don't skip it or
+    use bottom-of-the-locker junk, buy high-quality FlutterSoft-brand cloth
+    instead.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/ingredients.rsi
@@ -652,7 +657,8 @@
     grid:
     - 0,0,1,1
     maxItemSize: Normal
-    whitelist: # TODO BoxCardboard shouldn't have whitelisted storage
+    whitelist:
+      # TODO BoxCardboard shouldn't have whitelisted storage
       tags:
       - ClothMade
   - type: Item
@@ -694,7 +700,8 @@
 - type: entityTable # size: 1x2
   id: HappyHonkToyUnsafeEntityTable
   table: !type:GroupSelector
-    children: # Total Weight 6
+    children:
+    # Total Weight 6
     - id: ClothingHeadHatCatEars
       weight: 0.25
     - id: C4

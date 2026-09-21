@@ -10,8 +10,7 @@
   components:
   - type: TabletopGame
     size: 256, 256
-    setup:
-      !type:TabletopEmptySetup
+    setup: !type:TabletopEmptySetup
       boardPrototype: Crowbar
   - type: Tag
     tags:

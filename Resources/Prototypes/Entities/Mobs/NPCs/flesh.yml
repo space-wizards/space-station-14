@@ -9,10 +9,8 @@
     rootTask:
       task: SimpleHostileCompound
     blackboard:
-      NavClimb: !type:Bool
-        true
-      NavSmash: !type:Bool
-        true
+      NavClimb: !type:Bool "true"
+      NavSmash: !type:Bool "true"
   - type: NPCImprintingOnSpawnBehaviour
     spawnFriendsSearchRadius: 10
     whitelist:
@@ -81,7 +79,7 @@
         Base: dead
   - type: MeleeWeapon
     soundHit:
-        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     angle: 0
     animation: WeaponArcClaw
     damage:
@@ -110,7 +108,7 @@
       50: Dead
   - type: MeleeWeapon
     soundHit:
-        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     angle: 0
     animation: WeaponArcClaw
     damage:
@@ -175,7 +173,7 @@
     drawdepth: Mobs
     sprite: Mobs/Demons/abomination.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: abomination
   - type: DamageStateVisuals
     states:
@@ -196,7 +194,7 @@
     baseSprintSpeed: 2.5
   - type: MeleeWeapon
     soundHit:
-        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     angle: 0
     animation: WeaponArcClaw
     damage:
@@ -215,10 +213,8 @@
     rootTask:
       task: SimpleHostileCompound
     blackboard:
-      NavClimb: !type:Bool
-        true
-      NavSmash: !type:Bool
-        true
+      NavClimb: !type:Bool "true"
+      NavSmash: !type:Bool "true"
   - type: NpcFactionMember
     factions:
     - SimpleHostile
@@ -283,7 +279,7 @@
         Base: dead
   - type: MeleeWeapon
     soundHit:
-        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     angle: 0
     animation: WeaponArcClaw
     damage:
@@ -312,7 +308,7 @@
       50: Dead
   - type: MeleeWeapon
     soundHit:
-        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     angle: 0
     animation: WeaponArcClaw
     damage:

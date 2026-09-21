@@ -2,16 +2,16 @@
   id: Durathread
   start: start
   graph:
-    - node: start
-      edges:
-        - to: MaterialDurathread
-          completed:
-            - !type:SetStackCount
-              amount: 1
-          steps:
-            - material: Cloth
-              amount: 1
-            - material: Plastic
-              amount: 1
-    - node: MaterialDurathread
-      entity: MaterialDurathread
+  - node: start
+    edges:
+    - to: MaterialDurathread
+      completed:
+      - !type:SetStackCount
+        amount: 1
+      steps:
+      - material: Cloth
+        amount: 1
+      - material: Plastic
+        amount: 1
+  - node: MaterialDurathread
+    entity: MaterialDurathread

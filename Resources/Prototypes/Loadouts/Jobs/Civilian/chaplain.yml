@@ -3,8 +3,7 @@
   id: NanoTrasenBibleRequirement
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobCaptain
       time: 7200 #2 hrs
 
@@ -13,8 +12,7 @@
   id: DruidBibleRequirement
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobBotanist
       time: 18000 #5 hrs
 
@@ -23,8 +21,7 @@
   id: ClownBibleRequirement
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobClown
       time: 18000 #5 hrs
 
@@ -132,7 +129,7 @@
   storage:
     back:
     - BibleNanoTrasen
-    
+
 - type: loadout
   id: BibleNarsie
   storage:

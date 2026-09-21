@@ -2,7 +2,9 @@
   parent: ClothingNeckBase
   id: ClothingNeckCloakCentcom
   name: central commander's cloak
-  description: A pompous and elite green cloak with a nice gold trim, tailored specifically to the Central Commander. It's so heavy, the gold trim might be real.
+  description: A pompous and elite green cloak with a nice gold trim, tailored
+    specifically to the Central Commander. It's so heavy, the gold trim might be
+    real.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/centcomcloakformal.rsi
@@ -10,10 +12,11 @@
     stealGroup: HeadCloak # leaving this here because I suppose it might be interesting?
 
 - type: entity
-  parent: [ClothingNeckBase, BaseCommandContraband]
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
   id: ClothingNeckCloakCap
   name: captain's cloak
-  description: A pompous and comfy blue cloak with a nice gold trim, while not particularly valuable as your other possessions, it sure is fancy.
+  description: A pompous and comfy blue cloak with a nice gold trim, while not
+    particularly valuable as your other possessions, it sure is fancy.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/cap.rsi
@@ -21,10 +24,11 @@
     stealGroup: HeadCloak
 
 - type: entity
-  parent: [ClothingNeckBase, BaseCommandContraband]
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
   id: ClothingNeckCloakHos
   name: head of security's cloak
-  description: An exquisite dark and red cloak fitting for those who can assert dominance over wrongdoers. Take a stab at being civil in prosecution!
+  description: An exquisite dark and red cloak fitting for those who can assert
+    dominance over wrongdoers. Take a stab at being civil in prosecution!
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/hos.rsi
@@ -32,10 +36,11 @@
     stealGroup: HeadCloak
 
 - type: entity
-  parent: [ClothingNeckBase, BaseCommandContraband]
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
   id: ClothingNeckCloakCe
   name: chief engineer's cloak
-  description: A dark green cloak with light blue ornaments, given to those who proved themselves to master the precise art of engineering.
+  description: A dark green cloak with light blue ornaments, given to those who
+    proved themselves to master the precise art of engineering.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/ce.rsi
@@ -43,10 +48,11 @@
     stealGroup: HeadCloak
 
 - type: entity
-  parent: [ClothingNeckBase, BaseCommandContraband]
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
   id: ClothingCloakCmo
   name: chief medical officer's cloak
-  description: A sterile blue cloak with a green cross, radiating with a sense of duty and willingness to help others.
+  description: A sterile blue cloak with a green cross, radiating with a sense of
+    duty and willingness to help others.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/cmo.rsi
@@ -54,10 +60,11 @@
     stealGroup: HeadCloak
 
 - type: entity
-  parent: [ClothingNeckBase, BaseCommandContraband]
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
   id: ClothingNeckCloakRd
   name: research director's cloak
-  description: A white cloak with violet stripes, showing your status as the arbiter of cutting-edge technology.
+  description: A white cloak with violet stripes, showing your status as the
+    arbiter of cutting-edge technology.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/rd.rsi
@@ -65,10 +72,11 @@
     stealGroup: HeadCloak
 
 - type: entity
-  parent: [ClothingNeckBase, BaseCommandContraband]
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
   id: ClothingNeckCloakQm
   name: quartermaster's cloak
-  description: A strong brown cloak with a reflective stripe, while not as fancy as others, it does show your managing skills.
+  description: A strong brown cloak with a reflective stripe, while not as fancy
+    as others, it does show your managing skills.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/qm.rsi
@@ -76,10 +84,11 @@
     stealGroup: HeadCloak
 
 - type: entity
-  parent: [ClothingNeckBase, BaseCommandContraband]
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
   id: ClothingNeckCloakHop
   name: head of personnel's cloak
-  description: A blue cloak with red shoulders and gold buttons, proving you are the gatekeeper to any airlock on the station.
+  description: A blue cloak with red shoulders and gold buttons, proving you are
+    the gatekeeper to any airlock on the station.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/hop.rsi
@@ -105,7 +114,7 @@
     sprite: Clothing/Neck/Cloaks/nanotrasen.rsi
 
 - type: entity
-  parent: [ClothingNeckBase, BaseCommandContraband]
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
   id: ClothingNeckCloakCapFormal
   name: captain's formal cloak
   description: A lavish and decorated cloak for special occasions.
@@ -130,7 +139,9 @@
   parent: ClothingNeckBase
   id: ClothingNeckCloakSalvagerSupreme
   name: supereme salvager's cloak
-  description: Worn by the most skilled salvagers, for one who has mastered space and made the mining asteroid his domain. They don't just hand these things out, y'know?
+  description: Worn by the most skilled salvagers, for one who has mastered space
+    and made the mining asteroid his domain. They don't just hand these things
+    out, y'know?
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/miner.rsi
@@ -148,7 +159,8 @@
   parent: ClothingNeckBase
   id: ClothingNeckCloakGoliathCloak
   name: goliath cloak
-  description: A cloak made from the hide of resilient fauna from a distant planet, though its protective value has faded with its age.
+  description: A cloak made from the hide of resilient fauna from a distant
+    planet, though its protective value has faded with its age.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/goliathcloak.rsi
@@ -159,7 +171,7 @@
     slot: head
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:ContainerSlot
 
 - type: entity
   parent: ClothingNeckBase
@@ -174,7 +186,11 @@
   parent: ClothingNeckBase
   id: ClothingNeckCloakMoth
   name: moth cloak
-  description: A cloak in the form of moth wings is an unusual and original element of the wardrobe that can attract the attention of others. It is made of a thin fabric imitating moth wings, with soft and fluffy edges. The raincoat is fastened around the neck with straps, and has a hood in the shape of a moths head.
+  description: A cloak in the form of moth wings is an unusual and original
+    element of the wardrobe that can attract the attention of others. It is made
+    of a thin fabric imitating moth wings, with soft and fluffy edges. The
+    raincoat is fastened around the neck with straps, and has a hood in the
+    shape of a moths head.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/moth.rsi
@@ -185,7 +201,7 @@
     slot: head
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:ContainerSlot
   - type: TypingIndicatorClothing
     proto: moth
 
@@ -204,7 +220,7 @@
     slot: head
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:ContainerSlot
   - type: TypingIndicatorClothing
     proto: alien
 
@@ -230,7 +246,8 @@
   parent: ClothingNeckBase
   id: ClothingNeckCloakAroace
   name: aeropilot's cloak # thank you happyman442 this was the best name idea ever
-  description: Cloak awarded to Nanotrasen's finest pilots on planets with inhabitable atmospheres.
+  description: Cloak awarded to Nanotrasen's finest pilots on planets with
+    inhabitable atmospheres.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/aroace.rsi
@@ -288,4 +305,3 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/pan.rsi
-

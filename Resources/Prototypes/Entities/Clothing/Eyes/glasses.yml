@@ -37,7 +37,8 @@
   parent: ClothingEyesBase
   id: ClothingEyesGlassesGarGiga
   name: giga gar glasses
-  description: We evolve past the person we were a minute before. Little by little we advance with each turn. That's how a drill works!
+  description: We evolve past the person we were a minute before. Little by little
+    we advance with each turn. That's how a drill works!
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/gar.rsi
@@ -53,10 +54,11 @@
         Blunt: 10
 
 - type: entity
-  parent: [ClothingEyesBase, BaseEngineeringContraband]
+  parent: [ ClothingEyesBase, BaseEngineeringContraband ]
   id: ClothingEyesGlassesMeson
   name: engineering goggles #less confusion
-  description: Green-tinted goggles using a proprietary polymer that provides protection from eye damage of all types.
+  description: Green-tinted goggles using a proprietary polymer that provides
+    protection from eye damage of all types.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/meson.rsi
@@ -135,7 +137,8 @@
   parent: ClothingEyesBase
   id: ClothingEyesGlassesCheapSunglasses
   name: cheap sunglasses
-  description: A pair of black sunglasses. Doesn't block light well, more of an accessory than something useful.
+  description: A pair of black sunglasses. Doesn't block light well, more of an
+    accessory than something useful.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/sunglasses.rsi
@@ -166,7 +169,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband]
+  parent: [ ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband ]
   id: ClothingEyesGlassesSecurity
   name: security glasses
   description: Upgraded sunglasses that provide flash immunity and a security HUD.
@@ -194,7 +197,7 @@
     coverage: EYES
 
 - type: entity
-  parent: [ClothingEyesBase, BaseCommandContraband]
+  parent: [ ClothingEyesBase, BaseCommandContraband ]
   id: ClothingEyesGlassesCommand
   name: administration glasses
   description: Upgraded sunglasses that provide flash immunity and show ID card status.
@@ -257,20 +260,20 @@
   name: chemical analysis goggles
   description: Goggles that can scan the chemical composition of a solution.
   components:
-    - type: Sprite
-      sprite: Clothing/Eyes/Glasses/science.rsi
-    - type: Clothing
-      sprite: Clothing/Eyes/Glasses/science.rsi
-    - type: SolutionScanner
-    - type: IdentityBlocker
-      coverage: EYES
-    - type: Tag
-      tags:
-      - PetWearable
-      - WhitelistChameleon
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/science.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/science.rsi
+  - type: SolutionScanner
+  - type: IdentityBlocker
+    coverage: EYES
+  - type: Tag
+    tags:
+    - PetWearable
+    - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingEyesBase, BaseHighlyIllegalContraband]
+  parent: [ ClothingEyesBase, BaseHighlyIllegalContraband ]
   id: ClothingEyesVisorNinja
   name: ninja visor
   description: An advanced visor protecting a ninja's eyes from flashing lights.
@@ -282,10 +285,11 @@
   - type: FlashImmunity
 
 - type: entity
-  parent: [ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband]
+  parent: [ ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband ]
   id: ClothingEyesGlassesNoir
   name: noir-tech glasses
-  description: A pair of glasses that simulate what the world looked like before the invention of color.
+  description: A pair of glasses that simulate what the world looked like before
+    the invention of color.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/noir.rsi

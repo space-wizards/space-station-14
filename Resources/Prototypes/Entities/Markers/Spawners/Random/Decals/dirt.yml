@@ -14,7 +14,8 @@
     prob: 0.8
     color: '#FFFFFF7F'
     cleanable: true
-    tileBlacklist: # Everything here just looks bad if it gets regular dirt on it
+    tileBlacklist:
+    # Everything here just looks bad if it gets regular dirt on it
     - FloorWood
     - FloorWoodLarge
     - FloorWhiteMono

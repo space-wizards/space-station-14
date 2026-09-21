@@ -1,16 +1,17 @@
 - type: entity
-  parent: [BaseItem, BaseXenoborgContraband]
+  parent: [ BaseItem, BaseXenoborgContraband ]
   id: WeaponNaniteGun
   name: nanite gun
-  description: A strange gun that shoots nanites encased in crystal shards that heals borgs but hurts fleshy inferior beings.
+  description: A strange gun that shoots nanites encased in crystal shards that
+    heals borgs but hurts fleshy inferior beings.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/nanite.rsi
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]
+      map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-unshaded-5
-      map: ["enum.GunVisualLayers.Mag"]
+      map: [ "enum.GunVisualLayers.Mag" ]
   - type: AmmoCounter
   - type: Gun
     fireRate: 0.9
@@ -44,4 +45,4 @@
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
-        ents: [ ]
+        ents: []

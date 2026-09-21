@@ -2,7 +2,9 @@
   parent: CratePlastic
   id: CrateJanitorialSupplies
   name: janitorial supplies crate
-  description: Fight back against dirt and grime with Nanotrasen's Janitorial Essentials(tm)! Contains three buckets, caution signs, and cleaner grenades. Also has a single mop, broom, spray cleaner, wire brush, rag, and trash bag.
+  description: Fight back against dirt and grime with Nanotrasen's Janitorial
+    Essentials(tm)! Contains three buckets, caution signs, and cleaner grenades.
+    Also has a single mop, broom, spray cleaner, wire brush, rag, and trash bag.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -41,7 +43,8 @@
   parent: CrateGenericSteel
   id: CrateJanitorialReplacementLights
   name: replacement lights crate
-  description: May the light of Aether shine upon this station! Or at least, the light of twelve fluorescent light tubes and twelve incandescent light bulbs.
+  description: May the light of Aether shine upon this station! Or at least, the
+    light of twelve fluorescent light tubes and twelve incandescent light bulbs.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -54,7 +57,9 @@
   parent: CrateGenericSteel
   id: CrateJanitorialColorfulLights
   name: colorful lights crate
-  description: It's not a party until it's hard to see, a little disorienting, and your ears hurt. Contains twelve light tubes and twelve light bulbs in a variety of colors.
+  description: It's not a party until it's hard to see, a little disorienting, and
+    your ears hurt. Contains twelve light tubes and twelve light bulbs in a
+    variety of colors.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -67,7 +72,8 @@
   parent: CrateGenericSteel
   id: CrateJanitorialHolidayLights
   name: holiday lights crate
-  description: Deck the halls with these festive holiday lights! Contains twelve red light tubes and twelve green light tubes.
+  description: Deck the halls with these festive holiday lights! Contains twelve
+    red light tubes and twelve green light tubes.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -79,7 +85,8 @@
   parent: CrateGenericSteel
   id: CrateJanitorialMousetraps
   name: mousetraps crate
-  description: Mousetraps, for when all of service is being haunted by an entire horde of rats. Use sparingly... or not.
+  description: Mousetraps, for when all of service is being haunted by an entire
+    horde of rats. Use sparingly... or not.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -90,7 +97,8 @@
   parent: CratePlastic
   id: CrateJanitorBiosuit
   name: janitor bio suit crate
-  description: Contains 2 biohazard suits to ensure that no disease will distract you from cleaning.
+  description: Contains 2 biohazard suits to ensure that no disease will distract
+    you from cleaning.
   components:
   - type: EntityTableContainerFill
     containers:

@@ -2,7 +2,8 @@
   parent: [ BaseControllable, BaseStructure, StructureHealthMachineStrong ]
   id: MothershipCore
   name: mothership core
-  description: A sentient machine that can produce Xenoborgs. Without this the Xenoborgs are doomed.
+  description: A sentient machine that can produce Xenoborgs. Without this the
+    Xenoborgs are doomed.
   components:
   - type: InputMover # needs this to pilot the mothership
   - type: BlockMovement # They should never be moving!
@@ -13,8 +14,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.4"
         density: 190
         mask:
@@ -25,13 +25,13 @@
     sprite: Mobs/Silicon/mothership_core.rsi
     layers:
     - state: core-idle
-      map: ["enum.LatheVisualLayers.IsRunning"]
+      map: [ "enum.LatheVisualLayers.IsRunning" ]
     - state: core-load
-      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+      map: [ "enum.MaterialStorageVisualLayers.Inserting" ]
     - state: core-o
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
     - state: core-e
-      map: ["enum.BorgVisualLayers.Light"]
+      map: [ "enum.BorgVisualLayers.Light" ]
       shader: unshaded
   - type: Machine
     board: null
@@ -59,8 +59,7 @@
     damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 275
       behaviors:
       - !type:PlaySoundBehavior
@@ -182,8 +181,8 @@
       - MothershipModule
   - type: ContainerContainer
     containers:
-      cell_slot: !type:ContainerSlot { }
-      borg_module: !type:Container { }
+      cell_slot: !type:ContainerSlot
+      borg_module: !type:Container
   - type: PowerCellSlot
     cellSlotId: cell_slot
   - type: ItemSlots
@@ -245,7 +244,8 @@
     layers:
     - state: xenoborg-control-computer
   - type: InstantAction
-    event: !type:ToggleIntrinsicUIEvent { key: enum.RoboticsConsoleUiKey.Key }
+    event: !type:ToggleIntrinsicUIEvent
+      key: enum.RoboticsConsoleUiKey.Key
 
 - type: entity
   parent: BaseAGhostAction
@@ -261,4 +261,5 @@
     layers:
     - state: xenoborg-camera-computer
   - type: InstantAction
-    event: !type:ToggleIntrinsicUIEvent { key: enum.SurveillanceCameraMonitorUiKey.Key }
+    event: !type:ToggleIntrinsicUIEvent
+      key: enum.SurveillanceCameraMonitorUiKey.Key

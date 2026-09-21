@@ -3,18 +3,15 @@
   id: SeniorCargo
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobCargoTechnician
       time: 21600 #6 hrs
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobSalvageSpecialist
       time: 21600 #6 hrs
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
+    requirement: !type:DepartmentTimeRequirement
       department: Cargo
       time: 216000 # 60 hrs
 

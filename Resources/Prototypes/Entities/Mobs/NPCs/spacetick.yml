@@ -1,8 +1,9 @@
 - type: entity
   name: space tick
   id: MobTick
-  parent: [SimpleSpaceMobBase, BaseSlicingRefinable]
-  description: It's a space tick, watch out for its nasty bite. CentComm reports that 90 percent of cargo leg amputations are due to space tick bites.
+  parent: [ SimpleSpaceMobBase, BaseSlicingRefinable ]
+  description: It's a space tick, watch out for its nasty bite. CentComm reports
+    that 90 percent of cargo leg amputations are due to space tick bites.
   components:
   - type: InputMover
   - type: MobMover
@@ -15,19 +16,18 @@
   - type: Sprite
     drawdepth: Mobs
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: alive
       sprite: Mobs/Aliens/Xenos/spacetick.rsi
       scale: 0.8, 0.8
   - type: Physics
   - type: MovementSpeedModifier
-    baseWalkSpeed : 4
-    baseSprintSpeed : 6
+    baseWalkSpeed: 4
+    baseSprintSpeed: 6
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.20
         density: 20
         mask:
@@ -36,16 +36,15 @@
         - SmallMobLayer
   - type: MobState
     allowedStates:
-      - Alive
-      - Dead
+    - Alive
+    - Dead
   - type: MobThresholds
     thresholds:
       0: Alive
       5: Dead
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
+    - trigger: !type:DamageTypeTrigger
         damageType: Blunt
         damage: 30
       behaviors:
@@ -72,7 +71,7 @@
   - type: CombatMode
   - type: MeleeWeapon
     soundHit:
-        path: /Audio/Effects/bite.ogg
+      path: /Audio/Effects/bite.ogg
     angle: 0
     animation: WeaponArcBite
     damage:
@@ -107,4 +106,3 @@
   suffix: "Salvage Ruleset"
   components:
   - type: SalvageMobRestrictions
-

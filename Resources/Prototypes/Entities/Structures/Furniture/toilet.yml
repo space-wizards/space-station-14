@@ -1,9 +1,17 @@
 - type: entity
   abstract: true
-  parent: [ SolutionTank, SolutionHuge, DisposalUnitBase, SeatBase, StructureHealthFurnitureStrong ]
+  parent:
+    [
+      SolutionTank,
+      SolutionHuge,
+      DisposalUnitBase,
+      SeatBase,
+      StructureHealthFurnitureStrong
+    ]
   id: BaseToilet
   name: toilet
-  description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
+  description: The HT-451, a torque rotation-based, waste disposal unit for small
+    matter. This one seems remarkably clean.
   components:
   - type: Sprite
     sprite: Structures/Furniture/toilet.rsi
@@ -65,7 +73,7 @@
   - type: Toilet
   - type: ContainerContainer
     containers:
-      stash: !type:ContainerSlot {}
+      stash: !type:ContainerSlot
       DisposalUnitComponent: !type:Container
       solutions: !type:Container
   - type: Physics
@@ -73,8 +81,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.4
         density: 190
         mask:
@@ -121,8 +128,7 @@
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 80
       behaviors:
       - !type:PlaySoundBehavior
@@ -134,7 +140,8 @@
   parent: BaseToilet
   id: ConstructedToilet
   name: toilet
-  description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
+  description: The HT-451, a torque rotation-based, waste disposal unit for small
+    matter. This one seems remarkably clean.
   suffix: Constructed, Unplungable
   components:
   - type: Construction
@@ -145,7 +152,8 @@
   parent: BaseToilet
   id: ToiletEmpty
   name: toilet
-  description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
+  description: The HT-451, a torque rotation-based, waste disposal unit for small
+    matter. This one seems remarkably clean.
   suffix: Empty
   components:
   - type: PlungerUse
@@ -162,11 +170,11 @@
   components:
   - type: Solution
     solution:
-        reagents:
-        - ReagentId: Water
-          Quantity: 180
-        - ReagentId: GastroToxin
-          Quantity: 20
+      reagents:
+      - ReagentId: Water
+        Quantity: 180
+      - ReagentId: GastroToxin
+        Quantity: 20
 
 - type: entity
   parent: ToiletEmpty
@@ -196,7 +204,8 @@
   parent: BaseToilet
   id: ToiletGoldenEmpty
   name: golden toilet
-  description: The HT-451G is the gold version of the device. It says on the side that it is made of the purest Mercurian gold and a real leather seat.
+  description: The HT-451G is the gold version of the device. It says on the side
+    that it is made of the purest Mercurian gold and a real leather seat.
   suffix: Empty
   components:
   - type: Sprite
@@ -207,8 +216,7 @@
     damageModifierSet: PreciousMetalMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 80
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -230,10 +238,10 @@
     stealGroup: ToiletGoldenDirtyWater
   - type: Solution
     solution:
-        reagents:
-        - ReagentId: Water
-          Quantity: 160
-        - ReagentId: Gold
-          Quantity: 20
-        - ReagentId: GastroToxin
-          Quantity: 20
+      reagents:
+      - ReagentId: Water
+        Quantity: 160
+      - ReagentId: Gold
+        Quantity: 20
+      - ReagentId: GastroToxin
+        Quantity: 20

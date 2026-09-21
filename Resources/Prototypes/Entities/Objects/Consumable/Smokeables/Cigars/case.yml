@@ -8,32 +8,32 @@
     sprite: Objects/Consumable/Smokeables/Cigars/case.rsi
     layers:
     - state: closed
-      map: ["closeLayer"]
+      map: [ "closeLayer" ]
     - state: open
-      map: ["openLayer"]
+      map: [ "openLayer" ]
     - state: cigar1
-      map: ["cigar1"]
+      map: [ "cigar1" ]
       visible: false
     - state: cigar2
-      map: ["cigar2"]
+      map: [ "cigar2" ]
       visible: false
     - state: cigar3
-      map: ["cigar3"]
+      map: [ "cigar3" ]
       visible: false
     - state: cigar4
-      map: ["cigar4"]
+      map: [ "cigar4" ]
       visible: false
     - state: cigar5
-      map: ["cigar5"]
+      map: [ "cigar5" ]
       visible: false
     - state: cigar6
-      map: ["cigar6"]
+      map: [ "cigar6" ]
       visible: false
     - state: cigar7
-      map: ["cigar7"]
+      map: [ "cigar7" ]
       visible: false
     - state: cigar8
-      map: ["cigar8"]
+      map: [ "cigar8" ]
       visible: false
   - type: Storage
     grid:
@@ -51,7 +51,7 @@
         amount: 8
   - type: ItemCounter
     count:
-      tags: [Cigar]
+      tags: [ Cigar ]
     composite: true
     layerStates:
     - cigar1

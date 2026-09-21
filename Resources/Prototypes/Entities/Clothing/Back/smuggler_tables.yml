@@ -27,7 +27,6 @@
       tableId: RandomSatchelTable5
     - !type:NestedSelector
       tableId: RandomSatchelTable6
-
   #number after each group indicates potential max inventory fill. If all combined fills are too high, it could result in an over-filled bag/error.
 - type: entityTable
   id: RandomSatchelTable1

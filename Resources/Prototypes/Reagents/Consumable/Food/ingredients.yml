@@ -131,9 +131,9 @@
       - !type:Vomit
         probability: 0.1
         conditions:
-          - !type:ReagentCondition
-            reagent: Vinegar
-            min: 6
+        - !type:ReagentCondition
+          reagent: Vinegar
+          min: 6
 
 - type: reagent
   id: Rice
@@ -178,7 +178,7 @@
   boilingPoint: 300.0
   meltingPoint: -16.0
   tileReactions:
-  - !type:FlammableTileReaction {}
+  - !type:FlammableTileReaction
 
 - type: reagent
   id: CapsaicinOil
@@ -201,9 +201,9 @@
         amount: 250 # thermal energy, not temp
       - !type:HealthChange
         conditions:
-          - !type:ReagentCondition
-            reagent: CapsaicinOil
-            min: 5
+        - !type:ReagentCondition
+          reagent: CapsaicinOil
+          min: 5
         damage:
           types:
             Caustic: 1
@@ -227,7 +227,8 @@
       - !type:Satiate
         satiationType: Hunger
         conditions:
-        - !type:ReagentCondition #Only satiates when eaten with nutriment
+        #Only satiates when eaten with nutriment
+        - !type:ReagentCondition
           reagent: Nutriment
           min: 0.1
         factor: 1

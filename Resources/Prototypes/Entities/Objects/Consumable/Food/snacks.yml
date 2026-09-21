@@ -2,13 +2,13 @@
 # Base
 
 - type: entity
-  parent: [SolutionTiny, FoodBaseTrash]
+  parent: [ SolutionTiny, FoodBaseTrash ]
   id: FoodSnackBase
   abstract: true
   components:
   - type: Tag
     tags:
-      - FoodSnack
+    - FoodSnack
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
   - type: Solution
@@ -33,7 +33,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - boritos
+    - boritos
   - type: Sprite
     state: boritos
   - type: Item
@@ -50,7 +50,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - chocolate
+    - chocolate
   - type: Sprite
     state: cnds
   - type: Item
@@ -67,8 +67,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - cheesy
-      - funny
+    - cheesy
+    - funny
   - type: Sprite
     state: cheesiehonkers
   - type: Item
@@ -85,9 +85,9 @@
   components:
   - type: FlavorProfile
     flavors:
-      - oily
-      - salty
-      - potatoes
+    - oily
+    - salty
+    - potatoes
   - type: Sprite
     state: chips
   - type: Item
@@ -111,11 +111,11 @@
     storedOffset: 1,-1
   - type: Tag
     tags:
-      - FoodSnack
+    - FoodSnack
   - type: SpawnItemsOnUse
     items:
-      - id: FoodPacketChocolateTrash
-      - id: FoodSnackChocolateBar
+    - id: FoodPacketChocolateTrash
+    - id: FoodSnackChocolateBar
     sound:
       path: /Audio/Effects/unwrap.ogg
 
@@ -127,7 +127,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - chocolate
+    - chocolate
   - type: Sprite
     state: chocolatebar-open
   - type: Item
@@ -135,8 +135,8 @@
     storedOffset: 1,-2
   - type: Tag
     tags:
-      - FoodSnack
-      - ReptilianFood
+    - FoodSnack
+    - ReptilianFood
   - type: Solution
     solution:
       reagents:
@@ -160,8 +160,8 @@
     storedOffset: 0,-1
   - type: SpawnItemsOnUse
     items:
-      - id: FoodPacketEnergyTrash
-      - id: FoodSnackEnergyBar
+    - id: FoodPacketEnergyTrash
+    - id: FoodSnackEnergyBar
     sound:
       path: /Audio/Effects/unwrap.ogg
 
@@ -173,10 +173,10 @@
   components:
   - type: FlavorProfile
     flavors:
-      - nutty
-      - oats
-      - fiber
-      - sweet
+    - nutty
+    - oats
+    - fiber
+    - sweet
   - type: Sprite
     state: energybar-open
   - type: Item
@@ -191,8 +191,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - salty
-      - nutty
+    - salty
+    - nutty
   - type: Sprite
     state: pistachio
   - type: Item
@@ -210,13 +210,14 @@
   name: popcorn
   parent: FoodSnackBase
   id: FoodSnackPopcorn
-  description: Grown on an unknown planet, by an unknown farmer, popped by some jerk on a space station.
+  description: Grown on an unknown planet, by an unknown farmer, popped by some
+    jerk on a space station.
   components:
   - type: FlavorProfile
     flavors:
-      - corn
-      - salty
-      - butter
+    - corn
+    - salty
+    - butter
   - type: Sprite
     state: popcorn
   - type: Item
@@ -233,7 +234,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - raisins
+    - raisins
   - type: Sprite
     state: raisins
   - type: Item
@@ -249,11 +250,12 @@
   parent: FoodSnackBase
   id: FoodSnackSemki
   name: bob's semki sunflower seeds
-  description: Proudly produced by the Bob Bobson nutritional corporation. Perfect for spitting at people.
+  description: Proudly produced by the Bob Bobson nutritional corporation. Perfect
+    for spitting at people.
   components:
   - type: FlavorProfile
     flavors:
-      - nutty
+    - nutty
   - type: Sprite
     state: semki
   - type: Item
@@ -267,11 +269,12 @@
   name: sus jerky
   parent: FoodSnackBase
   id: FoodSnackSus
-  description: Something about this packet makes you feel incredibly uneasy. Jerky's good though.
+  description: Something about this packet makes you feel incredibly uneasy.
+    Jerky's good though.
   components:
   - type: FlavorProfile
     flavors:
-      - susjerky
+    - susjerky
   - type: Sprite
     state: susjerky
   - type: Item
@@ -291,7 +294,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - syndicakes
+    - syndicakes
   - type: Sprite
     state: syndicakes
   - type: Item
@@ -348,9 +351,9 @@
   components:
   - type: FlavorProfile
     flavors:
-      - cheapnoodles
-      - salty
-      - oily
+    - cheapnoodles
+    - salty
+    - oily
   - type: Sprite
     state: chinese1
   - type: Item
@@ -375,9 +378,9 @@
   components:
   - type: FlavorProfile
     flavors:
-      - cheapnoodles
-      - oily
-      - spicy
+    - cheapnoodles
+    - oily
+    - spicy
   - type: Sprite
     state: chinese2
   - type: Item
@@ -400,11 +403,12 @@
   parent: FoodSnackBase
   id: FoodSnackCookieFortune
   name: fortune cookie
-  description: A boring cardboard tasting snack with a fortune inside. Surprise! You're boring too.
+  description: A boring cardboard tasting snack with a fortune inside. Surprise!
+    You're boring too.
   components:
   - type: FlavorProfile
     flavors:
-      - fortunecookie
+    - fortunecookie
   - type: Sprite
     state: cookie_fortune
   - type: Solution
@@ -426,7 +430,8 @@
   parent: BaseItem
   id: FoodSnackNutribrick
   name: nutribrick
-  description: A carefully synthesized brick designed to contain the highest ratio of nutriment to volume. Tastes like shit.
+  description: A carefully synthesized brick designed to contain the highest ratio
+    of nutriment to volume. Tastes like shit.
   components:
   - type: Item
     size: Small
@@ -434,14 +439,14 @@
     heldPrefix: nutribrick
   - type: Tag
     tags:
-      - FoodSnack
+    - FoodSnack
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
     state: nutribrick
   - type: SpawnItemsOnUse
     items:
-      - id: FoodPacketMRETrash
-      - id: FoodSnackNutribrickOpen
+    - id: FoodPacketMRETrash
+    - id: FoodSnackNutribrickOpen
     sound:
       path: /Audio/Effects/unwrap.ogg
 
@@ -449,18 +454,19 @@
   parent: FoodSnackBase
   id: FoodSnackNutribrickOpen
   name: nutribrick
-  description: A carefully synthesized brick designed to contain the highest ratio of nutriment to volume. Tastes like shit.
+  description: A carefully synthesized brick designed to contain the highest ratio
+    of nutriment to volume. Tastes like shit.
   components:
   - type: FlavorProfile
     flavors:
-      - nutribrick
+    - nutribrick
   - type: Item
     size: Small
     storedOffset: -1,0
     heldPrefix: nutribrick-open
   - type: Tag
     tags:
-      - ReptilianFood
+    - ReptilianFood
   - type: Sprite
     state: nutribrick-open
 
@@ -468,7 +474,8 @@
   parent: BaseItem
   id: FoodSnackMREBrownie
   name: brownie
-  description: A precisely mixed brownie, made to withstand blunt trauma and harsh conditions. Tastes like shit.
+  description: A precisely mixed brownie, made to withstand blunt trauma and harsh
+    conditions. Tastes like shit.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
@@ -479,24 +486,25 @@
     storedOffset: -1,-1
   - type: Tag
     tags:
-      - FoodSnack
+    - FoodSnack
   - type: SpawnItemsOnUse
     items:
-      - id: FoodPacketMRETrash
-      - id: FoodSnackMREBrownieOpen
+    - id: FoodPacketMRETrash
+    - id: FoodSnackMREBrownieOpen
     sound:
       path: /Audio/Effects/unwrap.ogg
 
 - type: entity
-  parent: [SolutionVeryTiny, FoodSnackBase]
+  parent: [ SolutionVeryTiny, FoodSnackBase ]
   id: FoodSnackMREBrownieOpen
   name: brownie
   suffix: MRE
-  description: A precisely mixed brownie, made to withstand blunt trauma and harsh conditions. Tastes like shit.
+  description: A precisely mixed brownie, made to withstand blunt trauma and harsh
+    conditions. Tastes like shit.
   components:
   - type: FlavorProfile
     flavors:
-      - mrebrownie
+    - mrebrownie
   - type: Sprite
     state: mre-brownie-open
   - type: Item
@@ -514,7 +522,8 @@
   parent: FoodSnackBase
   id: FoodSnackSwirlLollipop
   name: swirl lollipop
-  description: A swirly circle of pure concentrated sugar. Who's the biggest kid on the playground now?
+  description: A swirly circle of pure concentrated sugar. Who's the biggest kid
+    on the playground now?
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/candy.rsi
@@ -549,7 +558,7 @@
 
 - type: entity
   categories: [ HideSpawnMenu ]
-  parent: [SolutionFood, SolutionVeryTiny, BaseItem]
+  parent: [ SolutionFood, SolutionVeryTiny, BaseItem ]
   id: FoodPacketTrash
   description: This is rubbish.
   abstract: true
@@ -825,7 +834,7 @@
     state: fortune
   - type: Item
   - type: RandomMetadata
-    descriptionSegments: [DescriptionsCookieFortune]
+    descriptionSegments: [ DescriptionsCookieFortune ]
 
 - type: entity
   categories: [ HideSpawnMenu ]

@@ -21,10 +21,9 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
-        layer: [MobMask, Opaque]
+        layer: [ MobMask, Opaque ]
   - type: Transform
     anchored: true
   - type: Sprite
@@ -32,8 +31,7 @@
     state: wiredmachine
   - type: NodeContainer
     nodes:
-      input:
-        !type:CableDeviceNode
+      input: !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: PowerConsumer
     drawRate: 50
@@ -43,12 +41,11 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:DoActsBehavior
-        acts: ["Breakage"]
+        acts: [ "Breakage" ]
   - type: Anchorable
 
 - type: entity
@@ -64,10 +61,9 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
-        layer: [MobMask, Opaque]
+        layer: [ MobMask, Opaque ]
   - type: Transform
     anchored: true
   - type: Sprite
@@ -81,8 +77,7 @@
     netsync: false
   - type: NodeContainer
     nodes:
-      input:
-        !type:CableDeviceNode
+      input: !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: Anchorable
 
@@ -100,10 +95,9 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
-        layer: [MobMask, Opaque]
+        layer: [ MobMask, Opaque ]
   - type: Transform
     anchored: true
   - type: Sprite
@@ -117,8 +111,7 @@
     netsync: false
   - type: NodeContainer
     nodes:
-      input:
-        !type:CableDeviceNode
+      input: !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: BatteryDischarger
   - type: Anchorable
@@ -168,10 +161,9 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
-        layer: [MobMask, Opaque]
+        layer: [ MobMask, Opaque ]
   - type: Transform
     anchored: true
   - type: Sprite

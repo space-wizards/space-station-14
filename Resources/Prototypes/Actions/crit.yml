@@ -22,7 +22,6 @@
     - state: icon
   - type: InstantAction
     event: !type:CritSuccumbEvent
-
 - type: entity
   parent: BaseCritAction
   id: ActionCritFakeDeath
@@ -37,12 +36,12 @@
     - state: fakedeath
   - type: InstantAction
     event: !type:CritFakeDeathEvent
-
 - type: entity
   parent: ActionCritSuccumb # for use delay
   id: ActionCritLastWords
   name: Say Last Words
-  description: Whisper your last words to anyone nearby, and then succumb to your fate. You only have 30 characters to work with.
+  description: Whisper your last words to anyone nearby, and then succumb to your
+    fate. You only have 30 characters to work with.
   components:
   - type: Action
   - type: Sprite

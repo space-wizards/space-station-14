@@ -8,7 +8,6 @@
   - type: AutoLinkReceiver
     channel: Ext1
 
-
 - type: entity
   id: BlastDoorExterior1Open
   parent: BlastDoorOpen
@@ -24,7 +23,6 @@
   components:
   - type: AutoLinkReceiver
     channel: Ext2
-
 
 - type: entity
   id: BlastDoorExterior2Open
@@ -42,7 +40,6 @@
   - type: AutoLinkReceiver
     channel: Ext3
 
-
 - type: entity
   id: BlastDoorExterior3Open
   parent: BlastDoorOpen
@@ -57,7 +54,7 @@
   suffix: Autolink, Bridge
   components:
   - type: AccessReader
-    access: [["Command"]]
+    access: [ [ "Command" ] ]
   - type: AutoLinkReceiver
     channel: Bridge
 
@@ -67,7 +64,7 @@
   suffix: Open, Autolink, Bridge
   components:
   - type: AccessReader
-    access: [["Command"]]
+    access: [ [ "Command" ] ]
   - type: AutoLinkReceiver
     channel: Bridge
 
@@ -77,7 +74,7 @@
   suffix: Autolink, Engineering
   components:
   - type: AccessReader
-    access: [["Command"], ["Engineering"]]
+    access: [ [ "Command" ], [ "Engineering" ] ]
   - type: AutoLinkReceiver
     channel: Engineering
 
@@ -87,7 +84,7 @@
   suffix: Open, Autolink, Engineering
   components:
   - type: AccessReader
-    access: [["Command"], ["Engineering"]]
+    access: [ [ "Command" ], [ "Engineering" ] ]
   - type: AutoLinkReceiver
     channel: Engineering
 
@@ -97,7 +94,7 @@
   suffix: Autolink, Science
   components:
   - type: AccessReader
-    access: [["Command"], ["Research"]]
+    access: [ [ "Command" ], [ "Research" ] ]
   - type: AutoLinkReceiver
     channel: Research
 
@@ -107,7 +104,7 @@
   suffix: Open, Autolink, Science
   components:
   - type: AccessReader
-    access: [["Command"], ["Research"]]
+    access: [ [ "Command" ], [ "Research" ] ]
   - type: AutoLinkReceiver
     channel: Research
 
@@ -126,4 +123,3 @@
   components:
   - type: AutoLinkReceiver
     channel: Windows
-

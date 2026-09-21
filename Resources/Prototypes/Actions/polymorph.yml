@@ -6,7 +6,6 @@
   components:
   - type: InstantAction
     event: !type:RevertPolymorphActionEvent
-
 - type: entity
   parent: ActionRevertPolymorph
   id: ActionRevertPolymorphConfirm
@@ -24,7 +23,6 @@
     useDelay: 60
   - type: InstantAction
     event: !type:PolymorphActionEvent
-
 - type: entity
   parent: BaseActionPolymorph
   id: ActionPolymorphWizardSpider

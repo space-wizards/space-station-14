@@ -1,6 +1,11 @@
 - type: entity
   id: BiomassReclaimer
-  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
+  parent:
+    [
+      BaseMachinePowered,
+      ConstructibleMachine,
+      BaseConstructibleMachineDestructible
+    ]
   name: biomass reclaimer
   description: Reclaims biomass from corpses. Gruesome.
   placement:

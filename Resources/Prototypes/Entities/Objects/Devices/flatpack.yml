@@ -14,7 +14,7 @@
     - state: base
     - state: overlay
       color: "#cec8ac"
-      map: ["enum.FlatpackVisualLayers.Overlay"]
+      map: [ "enum.FlatpackVisualLayers.Overlay" ]
     - state: icon-default
   - type: Appearance
   - type: Flatpack
@@ -54,7 +54,8 @@
   parent: BaseFlatpack
   id: AmeControllerFlatpack
   name: AME controller flatpack
-  description: A flatpack used for constructing the terminal that controls the antimatter engine.
+  description: A flatpack used for constructing the terminal that controls the
+    antimatter engine.
   components:
   - type: Sprite
     layers:
@@ -291,7 +292,8 @@
   parent: [ BaseFlatpack, BaseSyndicateContraband ]
   id: SyndicateMicrowaveFlatpack
   name: donk co. microwave flatpack
-  description: A flatpack used for constructing a microwave too hot for Nanotrasen to handle.
+  description: A flatpack used for constructing a microwave too hot for Nanotrasen
+    to handle.
   components:
   - type: Item
     size: Normal

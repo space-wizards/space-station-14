@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ClothingUniformBase, BaseCommandContraband]
+  parent: [ ClothingUniformBase, BaseCommandContraband ]
   id: ClothingUniformJumpsuitCaptain
   name: captain's jumpsuit
   description: It's a blue jumpsuit with some gold markings denoting the rank of "Captain".
@@ -10,10 +10,11 @@
     sprite: Clothing/Uniforms/Jumpsuits/Command/captain.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseCommandContraband, ClothingUniformFoldableBase]
+  parent: [ ClothingUniformBase, BaseCommandContraband, ClothingUniformFoldableBase ]
   id: ClothingUniformJumpsuitHoP
   name: head of personnel's jumpsuit
-  description: Rather bland and inoffensive. Perfect for vanishing off the face of the universe.
+  description: Rather bland and inoffensive. Perfect for vanishing off the face of
+    the universe.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuits/Command/hop.rsi
@@ -22,7 +23,8 @@
   parent: [ ClothingUniformBase, BaseCommandContraband ]
   id: ClothingUniformJumpsuitCommandGeneric
   name: command jumpsuit
-  description: A generic Command-colored jumpsuit not associated with any particular department.
+  description: A generic Command-colored jumpsuit not associated with any
+    particular department.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuits/Command/commandgeneric.rsi
@@ -41,7 +43,7 @@
     sprite: Clothing/Uniforms/Jumpsuits/Command/nanotrasen.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseCommandContraband]
+  parent: [ ClothingUniformBase, BaseCommandContraband ]
   id: ClothingUniformJumpsuitCapFormal
   name: captain's formal suit
   description: A suit for special occasions.

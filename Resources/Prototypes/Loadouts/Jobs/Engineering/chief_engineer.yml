@@ -3,8 +3,7 @@
   id: MasterCE
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobChiefEngineer
       time: 20h
 

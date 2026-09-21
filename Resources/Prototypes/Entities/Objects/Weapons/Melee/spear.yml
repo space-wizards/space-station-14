@@ -1,6 +1,6 @@
 - type: entity
   name: spear
-  parent: [BaseItem, SolutionDart, BaseMinorContraband]
+  parent: [ BaseItem, SolutionDart, BaseMinorContraband ]
   id: Spear
   description: Definition of a Classic. Keeping murder affordable since 200,000 BCE.
   components:
@@ -21,10 +21,10 @@
       fix1:
         shape: !type:PolygonShape
           vertices:
-            - -0.40,-0.30
-            - -0.30,-0.40
-            - 0.40,0.30
-            - 0.30,0.40
+          - -0.40,-0.30
+          - -0.30,-0.40
+          - 0.40,0.30
+          - 0.30,0.40
         density: 20
         mask:
         - ItemMask
@@ -35,7 +35,7 @@
     layers:
     - state: spear
     - state: spear1
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
   - type: MeleeWeapon
     wideAnimationRotation: -135
@@ -84,8 +84,7 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 20
       behaviors:
       - !type:PlaySoundBehavior
@@ -188,8 +187,7 @@
     graph: SpearBone
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 20
       behaviors:
       - !type:SpawnEntitiesBehavior

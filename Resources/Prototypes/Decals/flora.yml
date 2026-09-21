@@ -1,6 +1,6 @@
 - type: decal
   id: Grassa1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -9,7 +9,7 @@
 
 - type: decal
   id: Grassa2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -18,7 +18,7 @@
 
 - type: decal
   id: Grassa3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -27,7 +27,7 @@
 
 - type: decal
   id: Grassa4
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -36,7 +36,7 @@
 
 - type: decal
   id: Grassa5
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -45,7 +45,7 @@
 
 - type: decal
   id: Grassb1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -54,7 +54,7 @@
 
 - type: decal
   id: Grassb2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -63,7 +63,7 @@
 
 - type: decal
   id: Grassb3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -72,7 +72,7 @@
 
 - type: decal
   id: Grassb4
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -81,7 +81,7 @@
 
 - type: decal
   id: Grassb5
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -90,7 +90,7 @@
 
 - type: decal
   id: Grassc1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -99,7 +99,7 @@
 
 - type: decal
   id: Grassc2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -108,7 +108,7 @@
 
 - type: decal
   id: Grassc3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -117,7 +117,7 @@
 
 - type: decal
   id: Grassc4
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -126,7 +126,7 @@
 
 - type: decal
   id: Grassd1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -135,7 +135,7 @@
 
 - type: decal
   id: Grassd2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -144,7 +144,7 @@
 
 - type: decal
   id: Grassd3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -153,7 +153,7 @@
 
 - type: decal
   id: Grasse1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -162,7 +162,7 @@
 
 - type: decal
   id: Grasse2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -171,7 +171,7 @@
 
 - type: decal
   id: Grasse3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -180,7 +180,7 @@
 
 - type: decal
   id: grasssnow
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -189,7 +189,7 @@
 
 - type: decal
   id: grasssnow01
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -198,7 +198,7 @@
 
 - type: decal
   id: grasssnow02
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -207,7 +207,7 @@
 
 - type: decal
   id: grasssnow03
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -216,7 +216,7 @@
 
 - type: decal
   id: grasssnow04
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -225,7 +225,7 @@
 
 - type: decal
   id: grasssnow05
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -234,7 +234,7 @@
 
 - type: decal
   id: grasssnow06
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -243,7 +243,7 @@
 
 - type: decal
   id: grasssnow07
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -252,7 +252,7 @@
 
 - type: decal
   id: grasssnow08
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -261,7 +261,7 @@
 
 - type: decal
   id: grasssnow09
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -270,7 +270,7 @@
 
 - type: decal
   id: grasssnow10
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -279,7 +279,7 @@
 
 - type: decal
   id: grasssnow11
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -288,7 +288,7 @@
 
 - type: decal
   id: grasssnow12
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -297,7 +297,7 @@
 
 - type: decal
   id: grasssnow13
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -306,7 +306,7 @@
 
 - type: decal
   id: grasssnowa1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -315,7 +315,7 @@
 
 - type: decal
   id: grasssnowa2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -324,7 +324,7 @@
 
 - type: decal
   id: grasssnowa3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -333,7 +333,7 @@
 
 - type: decal
   id: grasssnowb1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -342,7 +342,7 @@
 
 - type: decal
   id: grasssnowb2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -351,7 +351,7 @@
 
 - type: decal
   id: grasssnowb3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -360,7 +360,7 @@
 
 - type: decal
   id: grasssnowc1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -369,7 +369,7 @@
 
 - type: decal
   id: grasssnowc2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -378,7 +378,7 @@
 
 - type: decal
   id: grasssnowc3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -387,7 +387,7 @@
 
 - type: decal
   id: Busha1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -396,7 +396,7 @@
 
 - type: decal
   id: Busha2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -405,7 +405,7 @@
 
 - type: decal
   id: Busha3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -414,7 +414,7 @@
 
 - type: decal
   id: Bushb1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -423,7 +423,7 @@
 
 - type: decal
   id: Bushb2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -432,7 +432,7 @@
 
 - type: decal
   id: Bushb3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -441,7 +441,7 @@
 
 - type: decal
   id: Bushc1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -450,7 +450,7 @@
 
 - type: decal
   id: Bushc2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -459,7 +459,7 @@
 
 - type: decal
   id: Bushc3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -468,7 +468,7 @@
 
 - type: decal
   id: Bushd1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -477,7 +477,7 @@
 
 - type: decal
   id: Bushd2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -486,7 +486,7 @@
 
 - type: decal
   id: Bushd3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -495,7 +495,7 @@
 
 - type: decal
   id: Bushd4
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -504,7 +504,7 @@
 
 - type: decal
   id: Bushe1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -513,7 +513,7 @@
 
 - type: decal
   id: Bushe2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -522,7 +522,7 @@
 
 - type: decal
   id: Bushe3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -531,7 +531,7 @@
 
 - type: decal
   id: Bushe4
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -540,7 +540,7 @@
 
 - type: decal
   id: Bushf1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -549,7 +549,7 @@
 
 - type: decal
   id: Bushf2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -558,7 +558,7 @@
 
 - type: decal
   id: Bushf3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -567,7 +567,7 @@
 
 - type: decal
   id: Bushg1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -576,7 +576,7 @@
 
 - type: decal
   id: Bushg2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -585,7 +585,7 @@
 
 - type: decal
   id: Bushg3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -594,7 +594,7 @@
 
 - type: decal
   id: Bushg4
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -603,7 +603,7 @@
 
 - type: decal
   id: Bushh1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -612,7 +612,7 @@
 
 - type: decal
   id: Bushh2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -621,7 +621,7 @@
 
 - type: decal
   id: Bushh3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -630,7 +630,7 @@
 
 - type: decal
   id: Bushi1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -639,7 +639,7 @@
 
 - type: decal
   id: Bushi2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -648,7 +648,7 @@
 
 - type: decal
   id: Bushi3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -657,7 +657,7 @@
 
 - type: decal
   id: Bushi4
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -666,7 +666,7 @@
 
 - type: decal
   id: Bushj1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -675,7 +675,7 @@
 
 - type: decal
   id: Bushj2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -684,7 +684,7 @@
 
 - type: decal
   id: Bushj3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -693,7 +693,7 @@
 
 - type: decal
   id: Bushk1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -702,7 +702,7 @@
 
 - type: decal
   id: Bushk2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -711,7 +711,7 @@
 
 - type: decal
   id: Bushk3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -720,7 +720,7 @@
 
 - type: decal
   id: Bushl1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -729,7 +729,7 @@
 
 - type: decal
   id: Bushl2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -738,7 +738,7 @@
 
 - type: decal
   id: Bushl3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -747,7 +747,7 @@
 
 - type: decal
   id: Bushl4
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -756,7 +756,7 @@
 
 - type: decal
   id: Bushm1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -765,7 +765,7 @@
 
 - type: decal
   id: Bushm2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -774,7 +774,7 @@
 
 - type: decal
   id: Bushm3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -783,7 +783,7 @@
 
 - type: decal
   id: Bushm4
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -792,7 +792,7 @@
 
 - type: decal
   id: Bushn1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -801,7 +801,7 @@
 
 - type: decal
   id: bushsnowa1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -810,7 +810,7 @@
 
 - type: decal
   id: bushsnowa2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -819,7 +819,7 @@
 
 - type: decal
   id: bushsnowa3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -828,7 +828,7 @@
 
 - type: decal
   id: bushsnowb1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -837,7 +837,7 @@
 
 - type: decal
   id: bushsnowb2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -846,7 +846,7 @@
 
 - type: decal
   id: bushsnowb3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -855,7 +855,7 @@
 
 - type: decal
   id: Rock01
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -864,7 +864,7 @@
 
 - type: decal
   id: Rock02
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -873,7 +873,7 @@
 
 - type: decal
   id: Rock03
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -882,7 +882,7 @@
 
 - type: decal
   id: Rock04
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -891,7 +891,7 @@
 
 - type: decal
   id: Rock05
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -900,7 +900,7 @@
 
 - type: decal
   id: Rock06
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -909,7 +909,7 @@
 
 - type: decal
   id: Rock07
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -918,7 +918,7 @@
 
 - type: decal
   id: Flowersbr1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -927,7 +927,7 @@
 
 - type: decal
   id: Flowersbr2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -936,7 +936,7 @@
 
 - type: decal
   id: Flowersbr3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -945,7 +945,7 @@
 
 - type: decal
   id: Flowerspv1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -954,7 +954,7 @@
 
 - type: decal
   id: Flowerspv2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -963,7 +963,7 @@
 
 - type: decal
   id: Flowerspv3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -972,7 +972,7 @@
 
 - type: decal
   id: Flowersy1
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -981,7 +981,7 @@
 
 - type: decal
   id: Flowersy2
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -990,7 +990,7 @@
 
 - type: decal
   id: Flowersy3
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -999,10 +999,9 @@
 
 - type: decal
   id: Flowersy4
-  tags: ["flora"]
+  tags: [ "flora" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
     sprite: Decals/Flora/flora_flowers.rsi
     state: flowersy4
-

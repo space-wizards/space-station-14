@@ -688,7 +688,7 @@
     shoes: ClothingShoesColorBlue
     gloves: ClothingHandsGlovesLatex
     head: ClothingHeadHatSurgcapBlue
-#    mask: ClothingMaskBreathMedical # right now this is broken for vox, but maybe some day.
+    #    mask: ClothingMaskBreathMedical # right now this is broken for vox, but maybe some day.
     id: VisitorPDA
     belt: ClothingBeltStorageWaistbag
     back: NitrousOxideTankFilled
@@ -966,7 +966,6 @@
   inhand:
   - HydroponicsToolScythe
 
-
 - type: startingGear
   id: VisitorBotanistAlt
   equipment:
@@ -1037,7 +1036,7 @@
     jumpsuit: ClothingUniformJumpsuitChef
     shoes: ClothingShoesChef
     head: ClothingHeadHatChef
-#    mask: ClothingMaskItalianMoustache # right now this is broken for vox, so its inhand.
+    #    mask: ClothingMaskItalianMoustache # right now this is broken for vox, so its inhand.
     id: VisitorPDA
     back: ClothingBackpackSatchel
     belt: ClothingBeltChefFilled
@@ -1055,7 +1054,7 @@
     jumpsuit: ClothingUniformJumpsuitChef
     shoes: ClothingShoesColorBlack
     head: ClothingHeadHatChef
-#    mask: ClothingMaskItalianMoustache # right now this is broken for vox, so its inhand.
+    #    mask: ClothingMaskItalianMoustache # right now this is broken for vox, so its inhand.
     id: VisitorPDA
     back: ClothingBackpack
     belt: ClothingBeltChefFilled
@@ -1843,7 +1842,7 @@
     pocket1: WeaponPistolFlintlock
     pocket2: HandheldGPSBasic
   inhand:
-    - Cutlass
+  - Cutlass
 
 - type: startingGear
   id: PirateScoonerAltB
@@ -1858,7 +1857,7 @@
   equipment:
     head: ClothingHeadBandBlack
   inhand:
-    - WeaponShotgunBlunderbuss
+  - WeaponShotgunBlunderbuss
 
 - type: startingGear
   id: PirateScoonerAltD

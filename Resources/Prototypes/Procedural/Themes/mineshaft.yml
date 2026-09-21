@@ -7,7 +7,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 0,0
   tags:
-    - Mineshaft
+  - Mineshaft
 
 - type: dungeonRoom
   id: Mineshaft17x5b
@@ -15,7 +15,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 18,0
   tags:
-    - Mineshaft
+  - Mineshaft
 
 - type: dungeonRoom
   id: Mineshaft17x5c
@@ -23,7 +23,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 36,0
   tags:
-    - Mineshaft
+  - Mineshaft
 
 # = 11x5
 
@@ -33,7 +33,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 0,6
   tags:
-    - Mineshaft
+  - Mineshaft
 
 - type: dungeonRoom
   id: Mineshaft11x5b
@@ -41,7 +41,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 12,6
   tags:
-    - Mineshaft
+  - Mineshaft
 
 - type: dungeonRoom
   id: Mineshaft11x5c
@@ -49,7 +49,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 24,6
   tags:
-    - Mineshaft
+  - Mineshaft
 
 - type: dungeonRoom
   id: Mineshaft11x5d
@@ -57,7 +57,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 36,6
   tags:
-    - Mineshaft
+  - Mineshaft
 
 # - 7x5
 
@@ -67,7 +67,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 0,12
   tags:
-    - Mineshaft
+  - Mineshaft
 
 - type: dungeonRoom
   id: Mineshaft7x5b
@@ -75,7 +75,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 8,12
   tags:
-    - Mineshaft
+  - Mineshaft
 
 - type: dungeonRoom
   id: Mineshaft7x5c
@@ -83,7 +83,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 16,12
   tags:
-    - Mineshaft
+  - Mineshaft
 
 - type: dungeonRoom
   id: Mineshaft7x5d
@@ -91,7 +91,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 24,12
   tags:
-    - Mineshaft
+  - Mineshaft
 
 - type: dungeonRoom
   id: Mineshaft7x5e
@@ -99,7 +99,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 32,12
   tags:
-    - Mineshaft
+  - Mineshaft
 
 - type: dungeonRoom
   id: Mineshaft7x5f
@@ -107,7 +107,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 40,12
   tags:
-    - Mineshaft
+  - Mineshaft
 
 # - 5x5
 
@@ -117,7 +117,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 0,18
   tags:
-    - Mineshaft
+  - Mineshaft
 
 - type: dungeonRoom
   id: Mineshaft5x5b
@@ -125,7 +125,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 6,18
   tags:
-    - Mineshaft
+  - Mineshaft
 
 - type: dungeonRoom
   id: Mineshaft5x5c
@@ -133,7 +133,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 12,18
   tags:
-    - Mineshaft
+  - Mineshaft
 
 #  -7x7
 
@@ -143,7 +143,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 18,18
   tags:
-    - Mineshaft
+  - Mineshaft
 
 - type: dungeonRoom
   id: Mineshaft7x7b
@@ -151,7 +151,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 26,18
   tags:
-    - Mineshaft
+  - Mineshaft
 
 - type: dungeonRoom
   id: Mineshaft7x7c
@@ -159,7 +159,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 34,18
   tags:
-    - Mineshaft
+  - Mineshaft
 
 - type: dungeonRoom
   id: Mineshaft7x7e
@@ -167,7 +167,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 42,18
   tags:
-    - Mineshaft
+  - Mineshaft
 
 #  -3x7
 
@@ -177,7 +177,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 0,24
   tags:
-    - Mineshaft
+  - Mineshaft
 
 - type: dungeonRoom
   id: Mineshaft3x7b
@@ -185,7 +185,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 4,24
   tags:
-    - Mineshaft
+  - Mineshaft
 
 - type: dungeonRoom
   id: Mineshaft3x7c
@@ -193,7 +193,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 8,24
   tags:
-    - Mineshaft
+  - Mineshaft
 
 - type: dungeonRoom
   id: Mineshaft3x7d
@@ -201,7 +201,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 12,24
   tags:
-    - Mineshaft
+  - Mineshaft
 
 #  -3x5
 
@@ -211,7 +211,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 16,26
   tags:
-    - Mineshaft
+  - Mineshaft
 
 - type: dungeonRoom
   id: Mineshaft3x5b
@@ -219,7 +219,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 20,26
   tags:
-    - Mineshaft
+  - Mineshaft
 
 - type: dungeonRoom
   id: Mineshaft3x5c
@@ -227,7 +227,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 24,26
   tags:
-    - Mineshaft
+  - Mineshaft
 
 - type: dungeonRoom
   id: Mineshaft3x5e
@@ -235,7 +235,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 32,26
   tags:
-    - Mineshaft
+  - Mineshaft
 
 - type: dungeonRoom
   id: Mineshaft3x5f
@@ -243,7 +243,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 36,26
   tags:
-    - Mineshaft
+  - Mineshaft
 
 #  -13x3
 
@@ -253,7 +253,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 0,32
   tags:
-    - Mineshaft
+  - Mineshaft
 
 - type: dungeonRoom
   id: Mineshaft13x3b
@@ -261,7 +261,7 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 14,32
   tags:
-    - Mineshaft
+  - Mineshaft
 
 - type: dungeonRoom
   id: Mineshaft13x3c
@@ -269,4 +269,4 @@
   atlas: /Maps/Dungeon/mineshaft.yml
   offset: 28,32
   tags:
-    - Mineshaft
+  - Mineshaft

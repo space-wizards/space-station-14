@@ -26,16 +26,16 @@
   parent: Plating
   name: tiles-rcd-plating
   baseWhitelist:
-    - Space
-    - FloorPlanetDirt
-    - FloorDesert
-    - FloorPlanetGrass
-    - FloorSnow
-    - FloorDirt
-    - FloorAsteroidIronsand
-    - FloorAsteroidSand
-    - FloorAsteroidSandBorderless
-    - FloorAsteroidIronsandBorderless
+  - Space
+  - FloorPlanetDirt
+  - FloorDesert
+  - FloorPlanetGrass
+  - FloorSnow
+  - FloorDirt
+  - FloorAsteroidIronsand
+  - FloorAsteroidSand
+  - FloorAsteroidSandBorderless
+  - FloorAsteroidIronsandBorderless
 
 - type: tile
   id: FloorHullReinforced

@@ -11,7 +11,7 @@
     snapCardinals: true
     layers:
     - state: icon
-    - map: ["enum.EntityHeaterVisuals.Setting"]
+    - map: [ "enum.EntityHeaterVisuals.Setting" ]
       shader: unshaded
       visible: false
   - type: ApcPowerReceiver

@@ -1,6 +1,7 @@
 - type: entity
   name: spider clan charge
-  description: A modified C-4 charge supplied to you by the Spider Clan. Its explosive power has been juiced up, but only works in one specific area.
+  description: A modified C-4 charge supplied to you by the Spider Clan. Its
+    explosive power has been juiced up, but only works in one specific area.
   # not actually modified C-4! oh the horror!
   parent: [ BaseItem, BaseHighlyIllegalContraband ]
   id: SpiderCharge
@@ -15,7 +16,7 @@
   - type: TriggerOnStuck
   - type: TimerTrigger
     delay: 10
-    delayOptions: [5, 10, 30, 60]
+    delayOptions: [ 5, 10, 30, 60 ]
     initialBeepDelay: 0
     beepSound: /Audio/Machines/Nuke/general_beep.ogg
   - type: Sticky

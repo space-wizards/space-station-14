@@ -114,7 +114,7 @@
 
 - type: entity
   id: AntimovCircuitBoard
-  parent: [BaseSiliconLawboard, BaseSyndicateContraband]
+  parent: [ BaseSiliconLawboard, BaseSyndicateContraband ]
   name: law board (Antimov)
   description: An electronics board containing the Antimov lawset.
   components:
@@ -126,7 +126,7 @@
 
 - type: entity
   id: SyndimovCircuitBoard
-  parent: [BaseSiliconLawboard, BaseSyndicateContraband]
+  parent: [ BaseSiliconLawboard, BaseSyndicateContraband ]
   name: law board (Syndimov)
   description: An electronics board containing the Syndimov lawset.
   components:

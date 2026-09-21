@@ -17,7 +17,9 @@
   parent: [ CrateWeaponSecure, BaseSecurityContraband ]
   id: CrateArmoryShotgun
   name: shotgun crate
-  description: For when the enemy absolutely needs to be replaced with lead. Contains two Enforcer Combat Shotguns, and some standard shotgun shells. Requires Armory access to open.
+  description: For when the enemy absolutely needs to be replaced with lead.
+    Contains two Enforcer Combat Shotguns, and some standard shotgun shells.
+    Requires Armory access to open.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -32,7 +34,8 @@
   parent: [ CrateWeaponSecure, BaseSecurityContraband ]
   id: CrateArmoryMosin
   name: mosin crate
-  description: Reliable, dirt cheap, and loud as hell. Contains three mosin rifles and 12 speedloaders of .30 rifle ammunition. Requires Armory access to open.
+  description: Reliable, dirt cheap, and loud as hell. Contains three mosin rifles
+    and 12 speedloaders of .30 rifle ammunition. Requires Armory access to open.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -47,7 +50,8 @@
   parent: [ CrateWeaponSecure, BaseSecurityContraband ]
   id: CrateTrackingImplants
   name: tracking implants
-  description: Contains a handful of tracking implanters. Good for prisoners you'd like to release but still keep track of.
+  description: Contains a handful of tracking implanters. Good for prisoners you'd
+    like to release but still keep track of.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -59,7 +63,9 @@
   parent: [ CrateWeaponSecure, BaseSecurityContraband ]
   id: CrateTrainingBombs
   name: training bombs
-  description: Contains three low-yield training bombs for security to learn defusal and safe ordnance disposal, EOD suit not included. Requires Armory access to open.
+  description: Contains three low-yield training bombs for security to learn
+    defusal and safe ordnance disposal, EOD suit not included. Requires Armory
+    access to open.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -83,7 +89,8 @@
   parent: [ CrateWeaponSecure, BaseSecurityContraband ]
   id: CrateArmoryPistols
   name: pistols crate
-  description: Contains two standard NT pistols with four mags. Requires Armory access to open.
+  description: Contains two standard NT pistols with four mags. Requires Armory
+    access to open.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -98,7 +105,9 @@
   parent: [ CrateWeaponSecure, BaseSecurityContraband ]
   id: CrateSecurityRiot
   name: swat crate
-  description: Contains two sets of riot armor, helmets, shields, and enforcers loaded with beanbags. Extra ammo is included. Requires Armory access to open.
+  description: Contains two sets of riot armor, helmets, shields, and enforcers
+    loaded with beanbags. Extra ammo is included. Requires Armory access to
+    open.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -119,7 +128,8 @@
   parent: [ CrateWeaponSecure, BaseSecurityContraband ]
   id: CrateArmoryRifle
   name: rifle crate
-  description: Contains two high-powered assault rifles with four mags. Requires Armory access to open.
+  description: Contains two high-powered assault rifles with four mags. Requires
+    Armory access to open.
   components:
   - type: EntityTableContainerFill
     containers:

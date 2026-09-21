@@ -1,5 +1,5 @@
 - type: entity
-  parent: [SolutionMopLarge, BaseItem]
+  parent: [ SolutionMopLarge, BaseItem ]
   name: mop
   id: MopItem
   description: A mop that can't be stopped, viscera cleanup detail awaits.
@@ -7,10 +7,10 @@
   - type: Sprite
     sprite: Objects/Specific/Janitorial/mop.rsi
     layers:
-      - state: mop
-      - map: ["enum.SolutionContainerLayers.Fill"]
-        state: fill-3
-        visible: false
+    - state: mop
+    - map: [ "enum.SolutionContainerLayers.Fill" ]
+      state: fill-3
+      visible: false
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 3
@@ -46,8 +46,8 @@
       Plastic: 50
   - type: Tag
     tags:
-      - Mop
-      - MopBasic
+    - Mop
+    - MopBasic
   - type: GuideHelp
     guides:
     - Janitorial
@@ -55,17 +55,17 @@
 
 # There's a surprising amount of non-mop mops so we need to define these.
 - type: entity
-  parent: [SolutionMop, SolutionToolSmall]
+  parent: [ SolutionMop, SolutionToolSmall ]
   id: SolutionMopSmall
   categories: [ HideSpawnMenu ]
 
 - type: entity
-  parent: [SolutionMop, SolutionToolNormal]
+  parent: [ SolutionMop, SolutionToolNormal ]
   id: SolutionMopNormal
   categories: [ HideSpawnMenu ]
 
 - type: entity
-  parent: [SolutionMop, SolutionToolLarge]
+  parent: [ SolutionMop, SolutionToolLarge ]
   id: SolutionMopLarge
   categories: [ HideSpawnMenu ]
 
@@ -73,34 +73,35 @@
   parent: MopItem
   name: advanced mop
   id: AdvMopItem
-  description: Motorized mop that has a bigger reservoir and quickly replaces reagents inside with water. Automatic Clown Countermeasure not included.
+  description: Motorized mop that has a bigger reservoir and quickly replaces
+    reagents inside with water. Automatic Clown Countermeasure not included.
   components:
-    - type: Sprite
-      sprite: Objects/Specific/Janitorial/advmop.rsi
-      layers:
-      - state: advmop
-      - map: ["enum.SolutionContainerLayers.Fill"]
-        state: fill-2
-        visible: false
-    - type: SolutionContainerVisuals
-      maxFillLevels: 2
-    - type: Item
-      sprite: Objects/Specific/Janitorial/advmop.rsi
-    - type: Absorbent
-      pickupAmount: 100
-    - type: SolutionRegeneration
-      generated:
-        reagents:
-        - ReagentId: Water
-          Quantity: 5
-    - type: SolutionPurge
-      preserve:
-      - Water
-      quantity: 10
-    - type: Tag
-      tags:
-        - Mop
-        - MopAdv
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/advmop.rsi
+    layers:
+    - state: advmop
+    - map: [ "enum.SolutionContainerLayers.Fill" ]
+      state: fill-2
+      visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+  - type: Item
+    sprite: Objects/Specific/Janitorial/advmop.rsi
+  - type: Absorbent
+    pickupAmount: 100
+  - type: SolutionRegeneration
+    generated:
+      reagents:
+      - ReagentId: Water
+        Quantity: 5
+  - type: SolutionPurge
+    preserve:
+    - Water
+    quantity: 10
+  - type: Tag
+    tags:
+    - Mop
+    - MopAdv
 
 - type: entity
   name: wet floor sign
@@ -123,9 +124,8 @@
       Plastic: 50
   - type: Tag
     tags:
-      - WetFloorSign
-      - WhitelistChameleon
-
+    - WetFloorSign
+    - WhitelistChameleon
 
 - type: entity
   suffix: Explosive
@@ -143,15 +143,13 @@
   - type: Fixtures
     fixtures:
       slips:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.2,-0.2,0.2,0.2"
         hard: false
         layer:
-          - LowImpassable
+        - LowImpassable
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.2,-0.2,0.2,0.2"
         density: 30
         mask:
@@ -162,7 +160,7 @@
       params:
         maxDistance: 10
   - type: Explosive
-    explosionType: HardBomb  # normally Default and max 5 total 60
+    explosionType: HardBomb # normally Default and max 5 total 60
     maxIntensity: 10 # about a ~67.5 total damage
     totalIntensity: 30 # about a ~3 tile radius
     canCreateVacuum: false
@@ -175,7 +173,7 @@
     - timer
     - trigger
   - type: TimerTrigger
-    beepInterval: .25
+    beepInterval: 0.25
     beepSound:
       path: /Audio/Items/Janitor/floor_sign_beep.ogg
       params:
@@ -184,19 +182,21 @@
   - type: TriggerOnVerb
     text: trigger-on-verb-detonation
   - type: Tag
-    tags: # ignore "WhitelistChameleon" tag
+    tags:
+    # ignore "WhitelistChameleon" tag
     - WetFloorSign
 
 - type: entity
   name: plunger
   id: Plunger
   parent: BaseItem
-  description: A plunger with a red plastic suction-cup and a wooden handle. Used to unclog drains.
+  description: A plunger with a red plastic suction-cup and a wooden handle. Used
+    to unclog drains.
   components:
   - type: Tag
     tags:
-       - Plunger
-       - WhitelistChameleon
+    - Plunger
+    - WhitelistChameleon
   - type: Sprite
     sprite: Objects/Specific/Janitorial/plunger.rsi
     state: plunger
@@ -209,11 +209,11 @@
   - type: Clothing
     sprite: Objects/Specific/Janitorial/plunger.rsi
     slots:
-      - HEAD
+    - HEAD
     clothingVisuals:
       head:
-        - state: equipped-HELMET
-          offset: "0, 0.15625"
+      - state: equipped-HELMET
+        offset: "0, 0.15625"
   - type: Fixtures
     fixtures:
       fix1:
@@ -225,8 +225,7 @@
         restitution: 0.3
         friction: 0.2
       projectile:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.2,-0.4,0.2,-0.1"
         hard: false
         mask:
@@ -256,7 +255,9 @@
   name: golden plunger
   id: GoldenPlunger
   parent: Plunger
-  description: A plunger with a plastic suction cup coated in a thin layer of gold given as a token of appreciation for years of service. Still used to unclog drains.
+  description: A plunger with a plastic suction cup coated in a thin layer of gold
+    given as a token of appreciation for years of service. Still used to unclog
+    drains.
   components:
   - type: Tag # TODO change Plunger into a tool so we dont got to layer Tags like below.
     tags:
@@ -272,11 +273,11 @@
   - type: Clothing
     sprite: Objects/Specific/Janitorial/golden_plunger.rsi
     slots:
-      - HEAD
+    - HEAD
     clothingVisuals:
       head:
-        - state: equipped-HELMET
-          offset: "0, 0.15625"
+      - state: equipped-HELMET
+        offset: "0, 0.15625"
   - type: PointLight
     radius: 1.5
     energy: 0.75
@@ -297,56 +298,57 @@
     SpawnMobMoproach: 2
 
 - type: entity
-  parent: [SolutionMopSmall, BaseItem]
+  parent: [ SolutionMopSmall, BaseItem ]
   id: RagItem
   name: damp rag
   description: For cleaning up messes, you suppose.
   components:
-    - type: Sprite
-      sprite: Objects/Specific/Janitorial/rag.rsi
-      layers:
-      - state: rag
-      - map: ["enum.SolutionContainerLayers.Fill"]
-        state: fill-3
-        visible: false
-    - type: Appearance
-    - type: SolutionContainerVisuals
-      maxFillLevels: 3
-      fillBaseName: fill-
-    - type: Spillable
-      solution: absorbed
-      spillWhenThrown: false
-    - type: DrainableSolution
-      solution: absorbed
-    - type: MeleeWeapon
-      soundNoDamage:
-        path: "/Audio/Effects/Fluids/splat.ogg"
-      damage:
-        types:
-          Blunt: 0
-    - type: Item
-      size: Small
-      sprite: Objects/Specific/Janitorial/rag.rsi
-    - type: Absorbent
-      pickupAmount: 15
-      useAbsorberSolution: true
-    - type: Construction
-      graph: Rag
-      node: rag
-    - type: UseDelay
-      delay: 1.5
-    - type: Tag
-      tags:
-        - Mop
-    - type: Fiber
-      fiberColor: fibers-white
-    - type: DnaSubstanceTrace
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/rag.rsi
+    layers:
+    - state: rag
+    - map: [ "enum.SolutionContainerLayers.Fill" ]
+      state: fill-3
+      visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: fill-
+  - type: Spillable
+    solution: absorbed
+    spillWhenThrown: false
+  - type: DrainableSolution
+    solution: absorbed
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
+  - type: Item
+    size: Small
+    sprite: Objects/Specific/Janitorial/rag.rsi
+  - type: Absorbent
+    pickupAmount: 15
+    useAbsorberSolution: true
+  - type: Construction
+    graph: Rag
+    node: rag
+  - type: UseDelay
+    delay: 1.5
+  - type: Tag
+    tags:
+    - Mop
+  - type: Fiber
+    fiberColor: fibers-white
+  - type: DnaSubstanceTrace
 
 - type: entity
   parent: BaseItem
   id: WireBrush
   name: wire brush
-  description: A bristly steel wire brush, perfect for scraping away even the toughest patches of rust.
+  description: A bristly steel wire brush, perfect for scraping away even the
+    toughest patches of rust.
   components:
   - type: Sprite
     sprite: Objects/Specific/Janitorial/wirebrush.rsi
@@ -382,7 +384,8 @@
   parent: WireBrush
   id: WireBrushElectrical
   name: electrical wire brush
-  description: A bristly steel wire brush with a moving head, allowing for a way easier time cleaning.
+  description: A bristly steel wire brush with a moving head, allowing for a way
+    easier time cleaning.
   components:
   - type: Tool
     speedModifier: 1.5

@@ -28,7 +28,8 @@
   parent: BaseSign
   id: PlaqueAtmosFEA
   name: FEA Atmospherics Division plaque
-  description: This plaque commemorates the fall of the Atmos FEA division. For all the charred, dizzy, and brittle men who have died in its hands.
+  description: This plaque commemorates the fall of the Atmos FEA division. For
+    all the charred, dizzy, and brittle men who have died in its hands.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -38,14 +39,16 @@
   parent: PlaqueAtmosFEA
   id: PlaqueAtmosLINDA
   name: LINDA Atmospherics Division plaque
-  description: This plaque commemorates the fall of the Atmos LINDA division. For all the charred, dizzy, and brittle men who have died in its hands.
+  description: This plaque commemorates the fall of the Atmos LINDA division. For
+    all the charred, dizzy, and brittle men who have died in its hands.
   categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: PlaqueAtmosFEA
   id: PlaqueAtmosZAS
   name: ZAS Atmospherics Division plaque
-  description: This plaque commemorates the fall of the Atmos ZAS division. For all the charred, dizzy, and brittle men who have died in its hands.
+  description: This plaque commemorates the fall of the Atmos ZAS division. For
+    all the charred, dizzy, and brittle men who have died in its hands.
   categories: [ HideSpawnMenu ]
 
 # If you get the ZUM plaque it means your round will be blessed with good engineering luck.
@@ -53,7 +56,9 @@
   parent: PlaqueAtmosFEA
   id: PlaqueAtmosZUM
   name: ZUM Atmospherics Division plaque
-  description: This plaque commemorates the rise of the Atmos ZUM division. May they carry the torch that the Atmos ZAS, LINDA and FEA divisions left behind.
+  description: This plaque commemorates the rise of the Atmos ZUM division. May
+    they carry the torch that the Atmos ZAS, LINDA and FEA divisions left
+    behind.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite

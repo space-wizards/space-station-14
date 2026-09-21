@@ -22,8 +22,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
         density: 1000
         mask:
@@ -38,8 +37,8 @@
       types:
         Blunt: 20
   - type: MovementSpeedModifier
-    baseWalkSpeed : 1
-    baseSprintSpeed : 1
+    baseWalkSpeed: 1
+    baseSprintSpeed: 1
   - type: ToolRefinable
     refineResult:
     - id: DrinkChangelingStingCan

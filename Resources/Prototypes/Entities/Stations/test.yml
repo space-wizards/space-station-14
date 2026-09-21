@@ -2,10 +2,10 @@
 - type: entity
   id: TestStation
   parent:
-    - BaseStation
-    - BaseStationJobsSpawning
-    - BaseStationRecords
-    - BaseStationAlertLevels
+  - BaseStation
+  - BaseStationJobsSpawning
+  - BaseStationRecords
+  - BaseStationAlertLevels
   categories: [ HideSpawnMenu ]
   components:
-    - type: Transform
+  - type: Transform

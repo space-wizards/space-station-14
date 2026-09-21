@@ -23,8 +23,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.40
         density: 100
         mask:
@@ -50,7 +49,7 @@
     coldDamageThreshold: 0
   - type: MeleeWeapon
     soundHit:
-        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     angle: 0
     animation: WeaponArcClaw
     damage:
@@ -74,7 +73,7 @@
 - type: entity
   name: space bear
   id: MobBearSpace
-  parent: [MobSpaceBasic, BaseSlicingRefinable, BaseMobDestructible]
+  parent: [ MobSpaceBasic, BaseSlicingRefinable, BaseMobDestructible ]
   description: It looks friendly. Why don't you give it a hug?
   components:
   - type: Sprite
@@ -123,7 +122,13 @@
 - type: entity
   name: space kangaroo
   id: MobKangarooSpace
-  parent: [MobSpaceBasic, StripableInventoryBase, BaseSlicingRefinable, BaseMobDestructible]
+  parent:
+    [
+      MobSpaceBasic,
+      StripableInventoryBase,
+      BaseSlicingRefinable,
+      BaseMobDestructible
+    ]
   description: It looks friendly. Why don't you give it a hug?
   components:
   - type: Sprite
@@ -137,7 +142,7 @@
       shader: unshaded
   - type: MeleeWeapon
     soundHit:
-        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     angle: 0
     animation: WeaponArcClaw
     damage:
@@ -184,7 +189,7 @@
 - type: entity
   name: space spider
   id: MobSpiderSpace
-  parent: [MobSpaceBasic, BaseSlicingRefinable, BaseMobDestructible]
+  parent: [ MobSpaceBasic, BaseSlicingRefinable, BaseMobDestructible ]
   description: It's so glowing, it looks dangerous.
   components:
   - type: Sprite
@@ -224,8 +229,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         density: 120
         mask:
@@ -262,14 +266,14 @@
   - type: Speech
     speechVerb: Arachnid
     speechSounds: Arachnid
-    allowedEmotes: ['Click', 'Chitter']
+    allowedEmotes: [ 'Click', 'Chitter' ]
   - type: Vocal
     emoteSounds: UnisexArachnid
   - type: TypingIndicator
     proto: spider
 
 - type: entity
-  parent: [SolutionWeapon, SolutionTiny]
+  parent: [ SolutionWeapon, SolutionTiny ]
   id: SolutionVenomSpiderSpace
   categories: [ HideSpawnMenu ]
   components:
@@ -289,94 +293,93 @@
 - type: entity
   name: space cobra
   id: MobCobraSpace
-  parent: [MobSpaceBasic, BaseSlicingRefinable, BaseMobDestructible]
+  parent: [ MobSpaceBasic, BaseSlicingRefinable, BaseMobDestructible ]
   description: Long fangs and a glowing hood, and the alluring look begs to come closer.
   components:
-    - type: Sprite
-      drawdepth: Mobs
-      sprite: Mobs/Animals/spacecobra.rsi
-      layers:
-        - map: [ "enum.DamageStateVisualLayers.Base" ]
-          state: spacecobra
-        - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
-          state: glow
-          shader: unshaded
-    - type: FootstepModifier
-      footstepSoundCollection:
-        collection: FootstepSnake
-    - type: MobThresholds
-      thresholds:
-        0: Alive
-        45: Dead
-    - type: Stamina
-      baseCritThreshold: 150
-    - type: DamageStateVisuals
-      states:
-        Alive:
-          Base: spacecobra
-          BaseUnshaded: glow
-        Dead:
-          Base: dead_spacecobra
-    - type: ToolRefinable
-      refineResult:
-      - id: FoodMeatSnake
-        amount: 2
-      - id: UraniumOre1
-        amount: 1
-      - id: ClothingShoesSnakeskinBoots
-        amount: 1
-        prob: 0.3
-    - type: Bloodstream
-      bloodReferenceSolution:
-        reagents:
-        - ReagentId: Cryoxadone
-          Quantity: 200
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeCircle
-            radius: 0.40
-          density: 120
-          mask:
-          - MobMask
-          layer:
-          - MobLayer
-    - type: MeleeWeapon
-      hidden: true
-      soundHit:
-        path: /Audio/Effects/bite.ogg
-      angle: 0
-      animation: WeaponArcBite
-      damage:
-        types:
-          Piercing: 6
-          Poison: 4
-    - type: SolutionManager
-      solutions:
-      - SolutionVenomCobraSpace
-    - type: MeleeChemicalInjector
-      solution: melee
-      transferAmount: 6
-    - type: ReplacementAccent
-      accent: xeno
-    - type: InteractionPopup
-      successChance: 0.2
-      interactSuccessString: petting-success-snake
-      interactFailureString: petting-failure-generic
-    - type: PointLight
-      radius: 1.1
-      energy: 2.7
-      color: "#4faffb"
-    - type: Stealth
-      enabledOnDeath: false
-      maxVisibility: 1.2
-    - type: StealthOnMove
-      passiveVisibilityRate: -0.25
-      movementVisibilityRate: 0.25
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/spacecobra.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: spacecobra
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: glow
+      shader: unshaded
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepSnake
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      45: Dead
+  - type: Stamina
+    baseCritThreshold: 150
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: spacecobra
+        BaseUnshaded: glow
+      Dead:
+        Base: dead_spacecobra
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatSnake
+      amount: 2
+    - id: UraniumOre1
+      amount: 1
+    - id: ClothingShoesSnakeskinBoots
+      amount: 1
+      prob: 0.3
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Cryoxadone
+        Quantity: 200
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.40
+        density: 120
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 6
+        Poison: 4
+  - type: SolutionManager
+    solutions:
+    - SolutionVenomCobraSpace
+  - type: MeleeChemicalInjector
+    solution: melee
+    transferAmount: 6
+  - type: ReplacementAccent
+    accent: xeno
+  - type: InteractionPopup
+    successChance: 0.2
+    interactSuccessString: petting-success-snake
+    interactFailureString: petting-failure-generic
+  - type: PointLight
+    radius: 1.1
+    energy: 2.7
+    color: "#4faffb"
+  - type: Stealth
+    enabledOnDeath: false
+    maxVisibility: 1.2
+  - type: StealthOnMove
+    passiveVisibilityRate: -0.25
+    movementVisibilityRate: 0.25
 
 - type: entity
-  parent: [SolutionWeapon, SolutionTiny]
+  parent: [ SolutionWeapon, SolutionTiny ]
   id: SolutionVenomCobraSpace
   categories: [ HideSpawnMenu ]
   components:
@@ -391,7 +394,7 @@
   parent: MobCobraSpace
   suffix: "Salvage Ruleset"
   components:
-    - type: SalvageMobRestrictions
+  - type: SalvageMobRestrictions
 
 - type: entity
   parent: [ SimpleSpaceMobBase, FlyingMobBase, MobSheepBase, BaseMobDestructible ]
@@ -414,13 +417,13 @@
     visuals:
       enum.ShearableVisuals.Shearable:
         wooly:
-          True: {visible: true}
-          False: {visible: false}
+          True: { visible: true }
+          False: { visible: false }
       enum.MobStateVisuals.State:
         wooly:
-          Alive: {state: space_sheep_wool_glowmask}
-          Dead: {state: space_sheep_wool_dead}
-          Critical: {state: space_sheep_wool_dead}
+          Alive: { state: space_sheep_wool_glowmask }
+          Dead: { state: space_sheep_wool_dead }
+          Critical: { state: space_sheep_wool_dead }
   - type: Fixtures
     fixtures:
       fix1:
@@ -453,9 +456,9 @@
     shearableMarkupText: space-sheep-shearable-examine-markup
     unShearableMarkupText: space-sheep-not-shearable-examine-markup
     # Caused problems (SAD), to be re-implemented when we get a real particle system.
-  # - type: ActiveJetpack # Pretty particles
-  #   effectCooldown: 4
-  #   maxDistance: 0.3
+    # - type: ActiveJetpack # Pretty particles
+    #   effectCooldown: 4
+    #   maxDistance: 0.3
   - type: MovementSpeedModifier
     baseWalkSpeed: 0.6
     baseSprintSpeed: 2.0
@@ -499,7 +502,7 @@
         Quantity: 10
 
 - type: entity
-  parent: [SimpleSpaceMobBase, BaseMobAnimal, SolutionVermin, MobNightVision]
+  parent: [ SimpleSpaceMobBase, BaseMobAnimal, SolutionVermin, MobNightVision ]
   id: MobSnail
   name: snail
   description: Revolting unless you're french.
@@ -519,13 +522,13 @@
     drawdepth: SmallMobs
     sprite: Mobs/Animals/snail.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: snail
   - type: Item
     size: Tiny
   - type: NpcFactionMember
     factions:
-      - Mouse
+    - Mouse
   - type: HTN
     constantlyReplan: false
     rootTask:
@@ -534,8 +537,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.2
         density: 100
         mask:
@@ -557,16 +559,15 @@
       20: Dead
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
+    - trigger: !type:DamageTypeTrigger
         damageType: Blunt
         damage: 40
       behaviors:
       - !type:GibBehavior
         recursive: false
   - type: MovementSpeedModifier
-    baseWalkSpeed : 2
-    baseSprintSpeed : 3
+    baseWalkSpeed: 2
+    baseSprintSpeed: 3
   - type: NameIdentifier
     group: AdjectivePrefix
   - type: DamageStateVisuals
@@ -622,8 +623,8 @@
     coldDamageThreshold: 0
   - type: Reactive
     reactions:
-    - reagents: [TableSalt, Saline]
-      methods: [Touch, Ingestion, Injection]
+    - reagents: [ TableSalt, Saline ]
+      methods: [ Touch, Ingestion, Injection ]
       effects:
       - !type:HealthChange
         damage:
@@ -665,7 +666,7 @@
     rules: ghost-role-information-freeagent-rules
   - type: Sprite
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: spacesnail
   - type: DamageStateVisuals
     states:
@@ -676,9 +677,9 @@
       Dead:
         Base: spacedead
   - type: MovementSpeedModifier
-    baseWalkSpeed : 5 #he go fast, also they cant slip so its probably fine.
-    baseSprintSpeed : 7
-#  - type: ActiveJetpack # I think this will need a custom component to not make tests angry.
+    baseWalkSpeed: 5 #he go fast, also they cant slip so its probably fine.
+    baseSprintSpeed: 7
+  #  - type: ActiveJetpack # I think this will need a custom component to not make tests angry.
   - type: MovementAlwaysTouching
 
 - type: entity
@@ -692,7 +693,7 @@
     rules: ghost-role-information-freeagent-rules
   - type: Sprite
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: snoth
   - type: DamageStateVisuals
     states:

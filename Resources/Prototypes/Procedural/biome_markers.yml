@@ -61,7 +61,6 @@
   id: Carps
   prototype: MobCarpDungeon
 
-
 #- type: biomeMarkerLayer
 #  id: Experiment
 #  proto: DungeonMarkerExperiment

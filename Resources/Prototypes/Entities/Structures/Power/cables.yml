@@ -35,8 +35,7 @@
     damageModifierSet: RodMetalMod
   - type: Destructible
     thresholds:
-    - trigger: &DamageContainerWeak
-        !type:DamageTrigger
+    - trigger: &DamageContainerWeak !type:DamageTrigger
         damage: 60
       behaviors:
       - !type:PlaySoundBehavior
@@ -73,8 +72,7 @@
     state: hvcable_4
   - type: NodeContainer
     nodes:
-      power:
-        !type:CableNode
+      power: !type:CableNode
         nodeGroupID: HVPower
   - type: Cable
     cableDroppedOnCutPrototype: CableHVStack1
@@ -123,8 +121,7 @@
     state: mvcable_4
   - type: NodeContainer
     nodes:
-      power:
-        !type:CableNode
+      power: !type:CableNode
         nodeGroupID: MVPower
   - type: Cable
     cableDroppedOnCutPrototype: CableMVStack1
@@ -165,8 +162,7 @@
     state: lvcable_4
   - type: NodeContainer
     nodes:
-      power:
-        !type:CableNode
+      power: !type:CableNode
         nodeGroupID: Apc
   - type: PowerProvider
     voltage: Apc
@@ -205,7 +201,7 @@
     cableDroppedOnCutPrototype: CableDetStack1
     cableType: ExCable
   - type: Sprite
-#    color: white # maybe change this later and move the stripes to the CableVisualizerComp layer instead
+    #    color: white # maybe change this later and move the stripes to the CableVisualizerComp layer instead
     sprite: Structures/Power/Cables/ex_cable.rsi
     state: excable_0
   - type: Icon
@@ -216,22 +212,21 @@
     damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
+    - trigger: !type:DamageTypeTrigger
         damageType: Structural #this is as close as we can get to only letting explosives set it off.
         damage: 120
       behaviors:
       - !type:DoActsBehavior
-        acts: ["Destruction"]
+        acts: [ "Destruction" ]
       - !type:ExplodeBehavior
     - trigger:
-        !type:DamageTrigger #A fallback that deletes it but doesnt explode in case something somehow gets here without exploding violently enough.
+        #A fallback that deletes it but doesnt explode in case something somehow gets here without exploding violently enough.
+        !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
+        acts: [ "Destruction" ]
+    - trigger: !type:DamageTrigger
         damage: 35
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -245,8 +240,7 @@
     node: cordage
   - type: NodeContainer
     nodes:
-      cordage:
-        !type:CableNode
+      cordage: !type:CableNode
         nodeGroupID: ExCable
   - type: CableVisualizer
     statePrefix: excable_

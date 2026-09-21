@@ -28,8 +28,8 @@
   priority: 11
   showTo:
     components:
-      - ShowAntagIcons
-      - Revolutionary
+    - ShowAntagIcons
+    - Revolutionary
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Revolutionary
@@ -40,8 +40,8 @@
   priority: 11
   showTo:
     components:
-      - ShowAntagIcons
-      - Revolutionary
+    - ShowAntagIcons
+    - Revolutionary
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: HeadRevolutionary

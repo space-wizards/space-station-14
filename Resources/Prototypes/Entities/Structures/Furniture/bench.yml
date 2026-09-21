@@ -21,8 +21,7 @@
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 40
       behaviors:
       - !type:PlaySoundBehavior
@@ -43,8 +42,8 @@
       map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: RandomSprite
     available:
-      - enum.DamageStateVisualLayers.Base:
-          bench_solo_cover: Rainbow
+    - enum.DamageStateVisualLayers.Base:
+        bench_solo_cover: Rainbow
 
 - type: entity
   id: BenchRedComfy

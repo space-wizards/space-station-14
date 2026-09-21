@@ -14,8 +14,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.3
         density: 190
         mask:
@@ -24,16 +23,15 @@
         - Impassable
   - type: RandomSprite
     available:
-      - enum.DamageStateVisualLayers.Base:
-          closed: ""
-          ajar: ""
-          open: ""
+    - enum.DamageStateVisualLayers.Base:
+        closed: ""
+        ajar: ""
+        open: ""
   - type: Injurable
     damageContainer: StructuralBiological
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 40
       behaviors:
       - !type:PlaySoundBehavior

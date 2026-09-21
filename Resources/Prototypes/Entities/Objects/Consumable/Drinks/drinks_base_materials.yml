@@ -13,14 +13,13 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
-      - !type:SpillBehavior { }
+      - !type:SpillBehavior
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: DamageOnLand
@@ -32,9 +31,9 @@
     damage:
       types:
         Blunt: 5
-#  - type: EmitSoundOnLand TODO other materials need a sound
-#    sound:
-#      collection: GlassCrack
+  #  - type: EmitSoundOnLand TODO other materials need a sound
+  #    sound:
+  #      collection: GlassCrack
   - type: PhysicalComposition
     materialComposition:
       Glass: 25
@@ -50,14 +49,13 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: GlassCrack
-      - !type:SpillBehavior { }
+      - !type:SpillBehavior
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: DamageOnLand
@@ -78,17 +76,16 @@
   - type: Damageable
   - type: Injurable
     damageContainer: Inorganic
-#    damageModifierSet: FlimsyPlastic TODO
+  #    damageModifierSet: FlimsyPlastic TODO
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: MetalCrunch # TODO a plastic break collection
-      - !type:SpillBehavior { }
+      - !type:SpillBehavior
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: DamageOnLand
@@ -112,8 +109,7 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 20 # can take a few more hits than basic plastic
       behaviors:
       - !type:PlaySoundBehavior
@@ -121,7 +117,7 @@
           collection: MetalCrunch # TODO a plastic break collection
           params:
             volume: -4
-      - !type:SpillBehavior { }
+      - !type:SpillBehavior
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetPlastic1:
@@ -145,14 +141,13 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/unwrap.ogg # TODO a cardboard destruction collection
-      - !type:SpillBehavior { }
+      - !type:SpillBehavior
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: DamageOnLand
@@ -179,14 +174,13 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 10
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: MetalCrunch # TODO a flimsier metal break collection
-      - !type:SpillBehavior { }
+      - !type:SpillBehavior
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: DamageOnLand
@@ -212,14 +206,13 @@
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 25
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: MetalCrunch
-      - !type:SpillBehavior { }
+      - !type:SpillBehavior
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: PhysicalComposition
@@ -237,14 +230,13 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 5 # Gold is very weak
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak # Could use a shinier sound
-      - !type:SpillBehavior { }
+      - !type:SpillBehavior
       - !type:SpawnEntitiesBehavior
         spawn:
           IngotGold1:

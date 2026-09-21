@@ -13,14 +13,10 @@
     rootTask:
       task: XenoCompound
     blackboard:
-      NavClimb: !type:Bool
-        true
-      NavInteract: !type:Bool
-        true
-      NavPry: !type:Bool
-        true
-      NavSmash: !type:Bool
-        true
+      NavClimb: !type:Bool "true"
+      NavInteract: !type:Bool "true"
+      NavPry: !type:Bool "true"
+      NavSmash: !type:Bool "true"
   - type: Prying
     pryPowered: true
     force: true
@@ -29,8 +25,8 @@
       path: /Audio/Items/crowbar.ogg
   - type: Reactive
     groups:
-      Flammable: [Touch]
-      Extinguish: [Touch]
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
   - type: NpcFactionMember
     factions:
     - Xeno
@@ -40,13 +36,12 @@
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/burrower.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: running
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.25
         density: 1000
         mask:
@@ -75,7 +70,7 @@
     altDisarm: false
     angle: 0
     soundHit:
-     collection: AlienClaw
+      collection: AlienClaw
     animation: WeaponArcBite
     damage:
       types:
@@ -110,9 +105,9 @@
     coldDamageThreshold: -150
   - type: Tag
     tags:
-      - CannotSuicide
-      - DoorBumpOpener
-      - FootstepSound
+    - CannotSuicide
+    - DoorBumpOpener
+    - FootstepSound
   - type: NoSlip
   - type: Perishable #Ummmm the acid kills a lot of the bacteria or something
     molsPerSecondPerUnitMass: 0.0005
@@ -129,7 +124,7 @@
     sprite: Mobs/Aliens/Xenos/praetorian.rsi
     offset: 0,0.4
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: running
   - type: MobThresholds
     thresholds:
@@ -143,8 +138,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.45
         density: 400
         mask:
@@ -162,7 +156,7 @@
     sprite: Mobs/Aliens/Xenos/drone.rsi
     offset: 0,0.2
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: running
   - type: MobThresholds
     thresholds:
@@ -180,8 +174,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.45
         density: 450
         mask:
@@ -199,7 +192,7 @@
     sprite: Mobs/Aliens/Xenos/queen.rsi
     offset: 0,0.4
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: running
   - type: MobThresholds
     thresholds:
@@ -216,8 +209,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.45
         density: 15500
         mask:
@@ -238,7 +230,7 @@
     sprite: Mobs/Aliens/Xenos/ravager.rsi
     offset: 0,0.5
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: running
   - type: MobThresholds
     thresholds:
@@ -256,8 +248,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.45
         density: 1350
         mask:
@@ -275,7 +266,7 @@
     sprite: Mobs/Aliens/Xenos/runner.rsi
     offset: 0,0.6
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: running
   - type: MovementSpeedModifier
     baseSprintSpeed: 6.0
@@ -286,8 +277,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         density: 235
         mask:
@@ -319,7 +309,7 @@
     sprite: Mobs/Aliens/Xenos/spitter.rsi
     offset: 0,0.3
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: running
   - type: MobThresholds
     thresholds:
@@ -342,13 +332,12 @@
     useKey: false
     selectedMode: FullAuto
     availableModes:
-      - FullAuto
+    - FullAuto
     soundGunshot: /Audio/Weapons/Xeno/alien_spitacid.ogg
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.45
         density: 235
         mask:
@@ -358,7 +347,7 @@
 
 - type: entity
   name: space adder
-  parent: [SimpleSpaceMobBase, BaseSlicingRefinable, BaseMobDestructible]
+  parent: [ SimpleSpaceMobBase, BaseSlicingRefinable, BaseMobDestructible ]
   id: MobPurpleSnake
   description: A menacing purple snake from Kepler-283c.
   components:
@@ -366,7 +355,7 @@
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/purple_snake.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: purple_snake
   - type: DamageStateVisuals
     states:
@@ -407,8 +396,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         density: 25
         mask:
@@ -424,7 +412,7 @@
     - FootstepSound
 
 - type: entity
-  parent: [SolutionWeapon, SolutionTiny]
+  parent: [ SolutionWeapon, SolutionTiny ]
   id: SolutionVenomPurpleSnake
   categories: [ HideSpawnMenu ]
   components:
@@ -436,7 +424,7 @@
 
 - type: entity
   name: space adder
-  parent: [MobPurpleSnake, BaseSlicingRefinable]
+  parent: [ MobPurpleSnake, BaseSlicingRefinable ]
   id: MobSmallPurpleSnake
   suffix: small
   description: A smaller version of the menacing purple snake from Kepler-283c.
@@ -445,7 +433,7 @@
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/purple_snake.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: small_purple_snake
   - type: DamageStateVisuals
     states:
@@ -466,8 +454,10 @@
 
 - type: entity
   name: '"Dale"'
-  description: A praetorian left over from the station's initial security sweep. Has a pair of bloodied dog tags engraved with the name "Pvt. Dale" stuck in its maw.
-  parent: [SimpleSpaceMobBase, BaseMobDestructible]
+  description: A praetorian left over from the station's initial security sweep.
+    Has a pair of bloodied dog tags engraved with the name "Pvt. Dale" stuck in
+    its maw.
+  parent: [ SimpleSpaceMobBase, BaseMobDestructible ]
   id: MobXenoLonePraetorianNoGhost
   components:
   - type: Insulated
@@ -478,18 +468,14 @@
     rootTask:
       task: XenoCompound
     blackboard:
-      NavClimb: !type:Bool
-        true
-      NavInteract: !type:Bool
-        true
-      NavPry: !type:Bool
-        true
-      NavSmash: !type:Bool
-        true
+      NavClimb: !type:Bool "true"
+      NavInteract: !type:Bool "true"
+      NavPry: !type:Bool "true"
+      NavSmash: !type:Bool "true"
   - type: Reactive
     groups:
-      Flammable: [Touch]
-      Extinguish: [Touch]
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
   - type: NpcFactionMember
     factions:
     - Xeno
@@ -507,7 +493,7 @@
     altDisarm: false
     angle: 0
     soundHit:
-     collection: AlienClaw
+      collection: AlienClaw
     animation: WeaponArcBite
     damage:
       types:
@@ -540,7 +526,7 @@
     sprite: Mobs/Aliens/Xenos/praetorian.rsi
     offset: 0,0.4
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: running
   - type: MobThresholds
     thresholds:
@@ -555,8 +541,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.45
         density: 15500
         mask:
@@ -575,7 +560,7 @@
     pierceArmor: true
 
 - type: entity
-  parent: [SolutionWeapon, SolutionNormal]
+  parent: [ SolutionWeapon, SolutionNormal ]
   id: SolutionVenomDale
   categories: [ HideSpawnMenu ]
   components:

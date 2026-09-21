@@ -52,8 +52,7 @@
     anchored: false
   - type: Destructible
     thresholds:
-    - trigger: &DamageMachineFlimsy
-        !type:DamageTrigger
+    - trigger: &DamageMachineFlimsy !type:DamageTrigger
         damage: 50
       behaviors:
       - &SoundMetalBreak !type:PlaySoundBehavior
@@ -96,7 +95,7 @@
     range: 200
   - type: DeviceLinkSource
     ports:
-      - Pressed
+    - Pressed
   - type: Transform
     anchored: false
   - type: Destructible
@@ -229,7 +228,7 @@
   suffix: Captain
   components:
   - type: AccessReader
-    access: [["Captain"]]
+    access: [ [ "Captain" ] ]
 
 - type: entity
   parent: LockableButton
@@ -237,7 +236,7 @@
   suffix: HeadOfPersonnel
   components:
   - type: AccessReader
-    access: [["HeadOfPersonnel"]]
+    access: [ [ "HeadOfPersonnel" ] ]
 
 - type: entity
   parent: LockableButton
@@ -245,7 +244,7 @@
   suffix: ChiefEngineer
   components:
   - type: AccessReader
-    access: [["ChiefEngineer"]]
+    access: [ [ "ChiefEngineer" ] ]
 
 - type: entity
   parent: LockableButton
@@ -253,7 +252,7 @@
   suffix: ChiefMedicalOfficer
   components:
   - type: AccessReader
-    access: [["ChiefMedicalOfficer"]]
+    access: [ [ "ChiefMedicalOfficer" ] ]
 
 - type: entity
   parent: LockableButton
@@ -261,7 +260,7 @@
   suffix: HeadOfSecurity
   components:
   - type: AccessReader
-    access: [["HeadOfSecurity"]]
+    access: [ [ "HeadOfSecurity" ] ]
 
 - type: entity
   parent: LockableButton
@@ -269,7 +268,7 @@
   suffix: ResearchDirector
   components:
   - type: AccessReader
-    access: [["ResearchDirector"]]
+    access: [ [ "ResearchDirector" ] ]
 
 - type: entity
   parent: LockableButton
@@ -277,7 +276,7 @@
   suffix: Command
   components:
   - type: AccessReader
-    access: [["Command"]]
+    access: [ [ "Command" ] ]
 
 - type: entity
   parent: LockableButton
@@ -285,7 +284,7 @@
   suffix: Cryogenics
   components:
   - type: AccessReader
-    access: [["Cryogenics"]]
+    access: [ [ "Cryogenics" ] ]
 
 - type: entity
   parent: LockableButton
@@ -293,7 +292,7 @@
   suffix: Security
   components:
   - type: AccessReader
-    access: [["Security"]]
+    access: [ [ "Security" ] ]
 
 - type: entity
   parent: LockableButton
@@ -301,7 +300,7 @@
   suffix: Detective
   components:
   - type: AccessReader
-    access: [["Detective"]]
+    access: [ [ "Detective" ] ]
 
 - type: entity
   parent: LockableButton
@@ -309,7 +308,7 @@
   suffix: Armory
   components:
   - type: AccessReader
-    access: [["Armory"]]
+    access: [ [ "Armory" ] ]
 
 - type: entity
   parent: LockableButton
@@ -317,7 +316,7 @@
   suffix: Brig
   components:
   - type: AccessReader
-    access: [["Brig"]]
+    access: [ [ "Brig" ] ]
 
 - type: entity
   parent: LockableButton
@@ -325,7 +324,7 @@
   suffix: Lawyer
   components:
   - type: AccessReader
-    access: [["Lawyer"]]
+    access: [ [ "Lawyer" ] ]
 
 - type: entity
   parent: LockableButton
@@ -333,7 +332,7 @@
   suffix: Engineering
   components:
   - type: AccessReader
-    access: [["Engineering"]]
+    access: [ [ "Engineering" ] ]
 
 - type: entity
   parent: LockableButton
@@ -341,7 +340,7 @@
   suffix: Medical
   components:
   - type: AccessReader
-    access: [["Medical"]]
+    access: [ [ "Medical" ] ]
 
 - type: entity
   parent: LockableButton
@@ -349,7 +348,7 @@
   suffix: Quartermaster
   components:
   - type: AccessReader
-    access: [["Quartermaster"]]
+    access: [ [ "Quartermaster" ] ]
 
 - type: entity
   parent: LockableButton
@@ -357,7 +356,7 @@
   suffix: Salvage
   components:
   - type: AccessReader
-    access: [["Salvage"]]
+    access: [ [ "Salvage" ] ]
 
 - type: entity
   parent: LockableButton
@@ -365,7 +364,7 @@
   suffix: Cargo
   components:
   - type: AccessReader
-    access: [["Cargo"]]
+    access: [ [ "Cargo" ] ]
 
 - type: entity
   parent: LockableButton
@@ -373,7 +372,7 @@
   suffix: Research
   components:
   - type: AccessReader
-    access: [["Research"]]
+    access: [ [ "Research" ] ]
 
 - type: entity
   parent: LockableButton
@@ -381,7 +380,7 @@
   suffix: Service
   components:
   - type: AccessReader
-    access: [["Service"]]
+    access: [ [ "Service" ] ]
 
 - type: entity
   parent: LockableButton
@@ -389,7 +388,7 @@
   suffix: Maintenance
   components:
   - type: AccessReader
-    access: [["Maintenance"]]
+    access: [ [ "Maintenance" ] ]
 
 - type: entity
   parent: LockableButton
@@ -397,7 +396,7 @@
   suffix: External
   components:
   - type: AccessReader
-    access: [["External"]]
+    access: [ [ "External" ] ]
 
 - type: entity
   parent: LockableButton
@@ -405,7 +404,7 @@
   suffix: Janitor
   components:
   - type: AccessReader
-    access: [["Janitor"]]
+    access: [ [ "Janitor" ] ]
 
 - type: entity
   parent: LockableButton
@@ -413,7 +412,7 @@
   suffix: Theatre
   components:
   - type: AccessReader
-    access: [["Theatre"]]
+    access: [ [ "Theatre" ] ]
 
 - type: entity
   parent: LockableButton
@@ -421,7 +420,7 @@
   suffix: Bar
   components:
   - type: AccessReader
-    access: [["Bar"]]
+    access: [ [ "Bar" ] ]
 
 - type: entity
   parent: LockableButton
@@ -429,7 +428,7 @@
   suffix: Chemistry
   components:
   - type: AccessReader
-    access: [["Chemistry"]]
+    access: [ [ "Chemistry" ] ]
 
 - type: entity
   parent: LockableButton
@@ -437,7 +436,7 @@
   suffix: Kitchen
   components:
   - type: AccessReader
-    access: [["Kitchen"]]
+    access: [ [ "Kitchen" ] ]
 
 - type: entity
   parent: LockableButton
@@ -445,7 +444,7 @@
   suffix: Chapel
   components:
   - type: AccessReader
-    access: [["Chapel"]]
+    access: [ [ "Chapel" ] ]
 
 - type: entity
   parent: LockableButton
@@ -453,7 +452,7 @@
   suffix: Hydroponics
   components:
   - type: AccessReader
-    access: [["Hydroponics"]]
+    access: [ [ "Hydroponics" ] ]
 
 - type: entity
   parent: LockableButton
@@ -461,7 +460,7 @@
   suffix: Atmospherics
   components:
   - type: AccessReader
-    access: [["Atmospherics"]]
+    access: [ [ "Atmospherics" ] ]
 
 - type: entity
   parent: LockableButton
@@ -469,7 +468,7 @@
   suffix: CentComm
   components:
   - type: AccessReader
-    access: [["CentralCommand"]]
+    access: [ [ "CentralCommand" ] ]
 
 # button frames
 

@@ -7,7 +7,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 0,0
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig17x5b
@@ -15,7 +15,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 18,0
   tags:
-    - LavaBrig
+  - LavaBrig
 
 # - 7x7
 - type: dungeonRoom
@@ -24,7 +24,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 0,42
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig7x7b
@@ -32,7 +32,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 8,42
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig7x7c
@@ -40,7 +40,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 16,42
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig7x7d
@@ -48,7 +48,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 24,42
   tags:
-    - LavaBrig
+  - LavaBrig
 
 # Medium
 # - 11x5
@@ -58,7 +58,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 0,6
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig11x5b
@@ -66,7 +66,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 12,6
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig11x5c
@@ -74,7 +74,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 24,6
   tags:
-    - LavaBrig
+  - LavaBrig
 
 # - 7x5
 - type: dungeonRoom
@@ -83,7 +83,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 0,12
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig7x5b
@@ -91,7 +91,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 8,12
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig7x5c
@@ -99,7 +99,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 16,12
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig7x5d
@@ -107,7 +107,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 24,12
   tags:
-    - LavaBrig
+  - LavaBrig
 
 # - 13x3
 - type: dungeonRoom
@@ -116,7 +116,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 0,30
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig13x3b
@@ -124,7 +124,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 14,30
   tags:
-    - LavaBrig
+  - LavaBrig
 
 # - 11x3
 - type: dungeonRoom
@@ -133,7 +133,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 0,34
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig11x3b
@@ -141,7 +141,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 12,34
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig11x3c
@@ -149,7 +149,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 24,34
   tags:
-    - LavaBrig
+  - LavaBrig
 
 # - 7x3
 - type: dungeonRoom
@@ -158,7 +158,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 0,38
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig7x3b
@@ -166,7 +166,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 8,38
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig7x3c
@@ -174,7 +174,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 16,38
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig7x3d
@@ -182,7 +182,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 24,38
   tags:
-    - LavaBrig
+  - LavaBrig
 
 # Small
 # - 5x5
@@ -192,7 +192,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 0,18
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig5x5b
@@ -200,7 +200,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 6,18
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig5x5c
@@ -208,7 +208,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 12,18
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig5x5d
@@ -216,7 +216,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 18,18
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig5x5e
@@ -224,7 +224,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 24,18
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig5x5f
@@ -232,7 +232,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 30,18
   tags:
-    - LavaBrig
+  - LavaBrig
 
 # - 3x5
 - type: dungeonRoom
@@ -241,7 +241,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 0,24
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig3x5b
@@ -249,7 +249,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 4,24
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig3x5c
@@ -257,7 +257,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 8,24
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig3x5d
@@ -265,7 +265,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 12,24
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig3x5e
@@ -273,7 +273,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 16,24
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig3x5f
@@ -281,7 +281,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 20,24
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig3x5g
@@ -289,7 +289,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 24,24
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig3x5h
@@ -297,7 +297,7 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 28,24
   tags:
-    - LavaBrig
+  - LavaBrig
 
 - type: dungeonRoom
   id: LavaBrig3x5i
@@ -305,4 +305,4 @@
   atlas: /Maps/Dungeon/lava_brig.yml
   offset: 32,24
   tags:
-    - LavaBrig
+  - LavaBrig

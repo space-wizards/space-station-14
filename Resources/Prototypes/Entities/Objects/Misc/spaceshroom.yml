@@ -5,53 +5,51 @@
   suffix: Structure
   description: A cluster of wild mushrooms that likes to grow in dark, moist environments.
   components:
-    - type: Sprite
-      sprite: Objects/Misc/spaceshroom.rsi
-      state: structure
-    - type: Transform
-      anchored: true
-    - type: Physics
-      bodyType: Static
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeCircle
-            radius: 0.2
-    - type: InteractionOutline
-    - type: Gatherable
-      toolWhitelist:
-        components:
-          - Hands
-      loot:
-        All: !type:GroupSelector
-          children:
-          - id: FoodSpaceshroom
-    - type: Damageable
-      damageModifierSet: WoodMod
-    - type: Injurable
-      damageContainer: StructuralBiological
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 40
-        behaviors:
-        - !type:PlaySoundBehavior
-          sound:
-            path: /Audio/Effects/tree_fell.ogg
-            params:
-              volume: -5
-              variation: 0.05
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            FoodSpaceshroom:
-              min: 0
-              max: 1
+  - type: Sprite
+    sprite: Objects/Misc/spaceshroom.rsi
+    state: structure
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.2
+  - type: InteractionOutline
+  - type: Gatherable
+    toolWhitelist:
+      components:
+      - Hands
+    loot:
+      All: !type:GroupSelector
+        children:
+        - id: FoodSpaceshroom
+  - type: Damageable
+    damageModifierSet: WoodMod
+  - type: Injurable
+    damageContainer: StructuralBiological
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/tree_fell.ogg
+          params:
+            volume: -5
+            variation: 0.05
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodSpaceshroom:
+            min: 0
+            max: 1
 
 - type: entity
   name: spaceshroom
-  parent: [SolutionSmall, FoodProduceBase]
+  parent: [ SolutionSmall, FoodProduceBase ]
   id: FoodSpaceshroom
   description: A wild mushroom. There's no telling what effect it could have...
   components:
@@ -61,7 +59,7 @@
     state: object
   - type: FlavorProfile
     flavors:
-      - spaceshroom
+    - spaceshroom
   - type: Extractable
     juiceSolution:
       reagents:
@@ -69,7 +67,8 @@
         Quantity: 10
   - type: Solution
     solution:
-      reagents: # 20u out of 60u space, with 10-15 extra from solution random fill
+      reagents:
+      # 20u out of 60u space, with 10-15 extra from solution random fill
       - ReagentId: Nutriment
         Quantity: 12
       - ReagentId: Vitamin
@@ -82,8 +81,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
         density: 1
         mask:
@@ -132,16 +130,18 @@
 # Cooked Object
 - type: entity
   name: cooked spaceshroom
-  parent: [SolutionSmall, FoodProduceBase]
+  parent: [ SolutionSmall, FoodProduceBase ]
   id: FoodSpaceshroomCooked
-  description: A wild mushroom that has been cooked through. It seems the heat has removed its chemical effects.
+  description: A wild mushroom that has been cooked through. It seems the heat has
+    removed its chemical effects.
   components:
   - type: FlavorProfile
     flavors:
-      - spaceshroomcooked
+    - spaceshroomcooked
   - type: Solution
     solution:
-      reagents: # Cooked means no drugs I guess? Lame!
+      reagents:
+      # Cooked means no drugs I guess? Lame!
       - ReagentId: Nutriment
         Quantity: 20
       - ReagentId: Vitamin

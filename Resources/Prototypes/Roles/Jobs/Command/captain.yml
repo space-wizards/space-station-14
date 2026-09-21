@@ -4,21 +4,21 @@
   description: job-description-captain
   playTimeTracker: JobCaptain
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Engineering
-      time: 4h
-    - !type:DepartmentTimeRequirement
-      department: Medical
-      time: 4h
-    - !type:DepartmentTimeRequirement
-      department: Science
-      time: 4h
-    - !type:DepartmentTimeRequirement
-      department: Security
-      time: 4h
-    - !type:DepartmentTimeRequirement
-      department: Command
-      time: 4h
+  - !type:DepartmentTimeRequirement
+    department: Engineering
+    time: 4h
+  - !type:DepartmentTimeRequirement
+    department: Medical
+    time: 4h
+  - !type:DepartmentTimeRequirement
+    department: Science
+    time: 4h
+  - !type:DepartmentTimeRequirement
+    department: Security
+    time: 4h
+  - !type:DepartmentTimeRequirement
+    department: Command
+    time: 4h
   startingGear: CaptainGear
   icon: "JobIconCaptain"
   joinNotifyCrew: true
@@ -31,7 +31,7 @@
     implants: [ MindShieldImplant ]
   - !type:AddComponentSpecial
     components:
-      - type: CommandStaff
+    - type: CommandStaff
 
 - type: startingGear
   id: CaptainGear

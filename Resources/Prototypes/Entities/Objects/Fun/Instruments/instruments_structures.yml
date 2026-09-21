@@ -13,20 +13,19 @@
     damageModifierSet: WoodMod
   - type: Destructible
     thresholds: &ThresholdsFurnitureStrongWood
-    - trigger: &DamageFurnitureStrong
-        !type:DamageTrigger
-        damage: 80
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
-          params:
-            volume: -3
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          MaterialWoodPlank1:
-            min: 2
-            max: 4
+      - trigger: &DamageFurnitureStrong !type:DamageTrigger
+          damage: 80
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: WoodDestroy
+            params:
+              volume: -3
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            MaterialWoodPlank1:
+              min: 2
+              max: 4
 
 - type: entity
   name: upright piano
@@ -58,16 +57,16 @@
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds: &ThresholdsFurnitureStrongRods
-    - trigger: *DamageFurnitureStrong
-      behaviors:
-      - &SoundMetalBreak !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PartRodMetal1:
-            min: 2
-            max: 4
+      - trigger: *DamageFurnitureStrong
+        behaviors:
+        - &SoundMetalBreak !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            PartRodMetal1:
+              min: 2
+              max: 4
 
 - type: entity
   name: marimba
@@ -97,20 +96,21 @@
     damageModifierSet: BrassMod
   - type: Destructible
     thresholds: &ThresholdsFurnitureStrongBrass
-    - trigger: *DamageFurnitureStrong
-      behaviors:
-      - *SoundMetalBreak
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetBrass1:
-            min: 2
-            max: 4
+      - trigger: *DamageFurnitureStrong
+        behaviors:
+        - *SoundMetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetBrass1:
+              min: 2
+              max: 4
 
 - type: entity
   name: tuba
   parent: BasePlaceableInstrument
   id: TubaInstrument
-  description: The big daddy of the brass family. Standing next to its majesty makes you feel insecure.
+  description: The big daddy of the brass family. Standing next to its majesty
+    makes you feel insecure.
   components:
   - type: Instrument
     program: 58
@@ -183,8 +183,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.30
         density: 180
         mask:
@@ -228,7 +227,7 @@
     thresholds: *ThresholdsFurnitureStrongRods
 
 - type: entity
-  parent: [ BasePlaceableInstrumentRotatable, ConstructibleMachine]
+  parent: [ BasePlaceableInstrumentRotatable, ConstructibleMachine ]
   id: DawInstrument
   name: digital audio workstation
   description: Cutting edge music technology, straight from the 90s.
@@ -239,7 +238,7 @@
     - state: daw-display
       shader: unshaded
     - state: daw-panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: Appearance
   - type: WiresVisuals
   - type: WiresPanel

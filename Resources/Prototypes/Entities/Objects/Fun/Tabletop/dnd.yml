@@ -22,8 +22,7 @@
   - type: Sprite
     sprite: Objects/Fun/Tabletop/Battlemaps/grassbm.rsi
   - type: TabletopGame
-    setup:
-      !type:TabletopEmptySetup
+    setup: !type:TabletopEmptySetup
       boardPrototype: &GrassBoard GrassBoardTabletop
 
 - type: entity
@@ -35,8 +34,7 @@
   - type: Sprite
     sprite: Objects/Fun/Tabletop/Battlemaps/moonbm.rsi
   - type: TabletopGame
-    setup:
-      !type:TabletopEmptySetup
+    setup: !type:TabletopEmptySetup
       boardPrototype: &MoonBoard MoonBoardTabletop
 
 - type: entity
@@ -48,8 +46,7 @@
   - type: Sprite
     sprite: Objects/Fun/Tabletop/Battlemaps/sandbm.rsi
   - type: TabletopGame
-    setup:
-      !type:TabletopEmptySetup
+    setup: !type:TabletopEmptySetup
       boardPrototype: &SandBoard SandBoardTabletop
 
 - type: entity
@@ -61,8 +58,7 @@
   - type: Sprite
     sprite: Objects/Fun/Tabletop/Battlemaps/snowbm.rsi
   - type: TabletopGame
-    setup:
-      !type:TabletopEmptySetup
+    setup: !type:TabletopEmptySetup
       boardPrototype: &SnowBoard SnowBoardTabletop
 
 - type: entity
@@ -75,8 +71,7 @@
     sprite: Objects/Fun/Tabletop/Battlemaps/shipbm.rsi
   - type: TabletopGame
     size: 543, 543
-    setup:
-      !type:TabletopEmptySetup
+    setup: !type:TabletopEmptySetup
       boardPrototype: &ShipBoard ShipBoardTabletop
 
 # Background entity (actually shown in the board)

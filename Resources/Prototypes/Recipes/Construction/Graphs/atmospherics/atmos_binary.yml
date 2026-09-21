@@ -135,7 +135,12 @@
 
   - node: signalvalve
     entity: !type:CreateVariants
-      values: [ SignalControlledValve, SignalControlledValveAlt1, SignalControlledValveAlt2 ]
+      values:
+        [
+          SignalControlledValve,
+          SignalControlledValveAlt1,
+          SignalControlledValveAlt2
+        ]
     edges:
     - to: start
       conditions:

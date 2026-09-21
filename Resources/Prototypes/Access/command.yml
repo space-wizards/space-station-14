@@ -22,7 +22,7 @@
   - HeadOfSecurity
   - Quartermaster
   - ResearchDirector
-  
+
 - type: accessLevel
   id: EmergencyShuttleRepealAll
   name: id-card-access-level-emergency-shuttle-repeal

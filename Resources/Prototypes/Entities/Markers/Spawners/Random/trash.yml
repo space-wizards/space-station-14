@@ -49,16 +49,16 @@
   name: Trash Spawner
   suffix: 50
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Consumable/Food/snacks.rsi
-          state: pistachio-trash
-    - type: EntityTableSpawner
-      offset: 0.2
-      table: !type:NestedSelector
-        tableId: GenericTrashItems
-        prob: 0.5
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Consumable/Food/snacks.rsi
+      state: pistachio-trash
+  - type: EntityTableSpawner
+    offset: 0.2
+    table: !type:NestedSelector
+      tableId: GenericTrashItems
+      prob: 0.5
   placement:
     mode: AlignTileAny
 

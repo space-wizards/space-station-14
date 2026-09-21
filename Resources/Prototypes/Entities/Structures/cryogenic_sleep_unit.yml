@@ -13,7 +13,7 @@
     sprite: Structures/cryostorage.rsi
     layers:
     - state: sleeper_0
-      map: ["base"]
+      map: [ "base" ]
   - type: UserInterface
     interfaces:
       enum.CryostorageUIKey.Key:
@@ -22,15 +22,14 @@
     key: enum.CryostorageUIKey.Key
   - type: AccessReader
     breakOnAccessBreaker: false
-    access: [["Cryogenics"]]
+    access: [ [ "Cryogenics" ] ]
     examinationText: access-reader-examination-functionality-restricted
   - type: InteractionOutline
   - type: Cryostorage
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.05"
         density: 190
         mask:
@@ -71,6 +70,6 @@
   id: CryogenicSleepUnitSpawnerLateJoin
   suffix: Spawner, LateJoin
   components:
-    - type: ContainerSpawnPoint
-      containerId: storage
-      spawnType: LateJoin
+  - type: ContainerSpawnPoint
+    containerId: storage
+    spawnType: LateJoin

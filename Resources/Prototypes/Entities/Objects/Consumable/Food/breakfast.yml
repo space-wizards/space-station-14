@@ -28,11 +28,12 @@
   parent: FoodBreakfastBase
   id: FoodBreakfastAmerican
   name: full american breakfast
-  description: A huge plate of protein and carbs, more likely to put you back in bed than get you out of it. Oh, what fresh hell is this?
+  description: A huge plate of protein and carbs, more likely to put you back in
+    bed than get you out of it. Oh, what fresh hell is this?
   components:
   - type: FlavorProfile
     flavors:
-      - food
+    - food
   - type: Sprite
     state: fullamerican
 
@@ -40,10 +41,11 @@
   parent: FoodBreakfastBase
   id: FoodBreakfastEnglish
   name: full english breakfast
-  description: A huge plate of protein and carbs, more likely to put you back in bed than get you out of it. Don't mention the war!
+  description: A huge plate of protein and carbs, more likely to put you back in
+    bed than get you out of it. Don't mention the war!
   components:
   - type: FlavorProfile
     flavors:
-      - food
+    - food
   - type: Sprite
     state: fullenglish

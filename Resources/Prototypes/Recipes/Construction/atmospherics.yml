@@ -21,9 +21,8 @@
   id: BaseGasDevice
   conditions:
   - !type:NoUnstackableInTile
-
-# we allow stacking for shit like radiators on top of atmosdevices
-# for now (trademark patent pending)
+    # we allow stacking for shit like radiators on top of atmosdevices
+    # for now (trademark patent pending)
 - type: construction
   abstract: true
   parent: BaseAtmos
@@ -65,7 +64,6 @@
   canBuildInImpassable: true
   conditions:
   - !type:WallmountCondition
-
 - type: construction
   parent: BaseAtmos
   id: FireAlarm
@@ -74,7 +72,6 @@
   canBuildInImpassable: true
   conditions:
   - !type:WallmountCondition
-
 - type: construction
   parent: BaseAtmos
   id: AirSensor
@@ -178,7 +175,7 @@
   id: !type:CreateVariants
     values: [ GasVentScrubber, GasVentScrubberAlt1, GasVentScrubberAlt2 ]
   hide: !type:CreateVariants
-    values: [ false, true, true ]  
+    values: [ false, true, true ]
   graph: !type:CreateVariants
     values: [ GasUnary, GasUnaryAlt1, GasUnaryAlt2 ]
   targetNode: ventscrubber
@@ -248,7 +245,12 @@
 - type: construction
   parent: BaseGasBinary
   id: !type:CreateVariants
-    values: [ SignalControlledValve, SignalControlledValveAlt1, SignalControlledValveAlt2 ]
+    values:
+      [
+        SignalControlledValve,
+        SignalControlledValveAlt1,
+        SignalControlledValveAlt2
+      ]
   hide: !type:CreateVariants
     values: [ false, true, true ]
   graph: !type:CreateVariants
@@ -339,10 +341,16 @@
 - type: construction
   parent: BaseGasTrinary
   id: !type:CreateVariants
-    values: [ PressureControlledValve, PressureControlledValveAlt1, PressureControlledValveAlt2 ]
+    values:
+      [
+        PressureControlledValve,
+        PressureControlledValveAlt1,
+        PressureControlledValveAlt2
+      ]
   hide: !type:CreateVariants
     values: [ false, true, true ]
   graph: !type:CreateVariants
     values: [ GasTrinary, GasTrinaryAlt1, GasTrinaryAlt2 ]
   targetNode: pneumaticvalve
+
 # endregion Trinary

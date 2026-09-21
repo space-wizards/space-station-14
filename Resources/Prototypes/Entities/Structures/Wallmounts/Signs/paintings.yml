@@ -28,7 +28,8 @@
   parent: PaintingBase
   id: PaintingPersistenceOfMemory
   name: The Persistence of Memory
-  description: This painting depicts a barren landscape. It's filled with various surreal objects.
+  description: This painting depicts a barren landscape. It's filled with various
+    surreal objects.
   components:
   - type: Sprite
     state: painting2
@@ -46,7 +47,8 @@
   parent: PaintingBase
   id: PaintingTheKiss
   name: The Kiss
-  description: This painting depicts a couple in tender embrace. It's covered in glittery gold ornamentation.
+  description: This painting depicts a couple in tender embrace. It's covered in
+    glittery gold ornamentation.
   components:
   - type: Sprite
     state: painting4
@@ -64,7 +66,8 @@
   parent: PaintingBase
   id: PaintingTheGreatWave
   name: The Great Wave off Kanagawa
-  description: This painting depicts a majestic wave. It's throwing around several small fishing boats.
+  description: This painting depicts a majestic wave. It's throwing around several
+    small fishing boats.
   components:
   - type: Sprite
     state: painting6
@@ -82,7 +85,8 @@
   parent: PaintingBase
   id: PaintingNightHawks
   name: Nighthawks
-  description: This painting depicts a lonely-looking diner. The patrons are sitting glumly at the counter.
+  description: This painting depicts a lonely-looking diner. The patrons are
+    sitting glumly at the counter.
   components:
   - type: Sprite
     state: painting8
@@ -91,7 +95,8 @@
   parent: PaintingBase
   id: PaintingSkeletonCigarette
   name: Skull of a Skeleton with Burning Cigarette
-  description: This painting depicts an impressionist portrait of a skeleton. A lit cigarette is wedged between its teeth.
+  description: This painting depicts an impressionist portrait of a skeleton. A
+    lit cigarette is wedged between its teeth.
   components:
   - type: Sprite
     state: painting9
@@ -118,7 +123,8 @@
   parent: PaintingBase
   id: PaintingOldGuitarist
   name: The Old Guitarist
-  description: This painting depicts an old, thin man clutching a guitar. His face looks shallow and sickly.
+  description: This painting depicts an old, thin man clutching a guitar. His face
+    looks shallow and sickly.
   components:
   - type: Sprite
     state: painting12
@@ -127,7 +133,8 @@
   parent: PaintingBase
   id: PaintingOlympia
   name: Olympia
-  description: This painting depicts a nude woman lying on a bed. A servant is tending to her.
+  description: This painting depicts a nude woman lying on a bed. A servant is
+    tending to her.
   components:
   - type: Sprite
     state: painting13
@@ -136,7 +143,8 @@
   parent: PaintingBase
   id: PaintingSaturn
   name: Saturn Devouring His Son
-  description: This painting depicts giant devouring a human corpse. He has a frightening look in his eyes.
+  description: This painting depicts giant devouring a human corpse. He has a
+    frightening look in his eyes.
   components:
   - type: Sprite
     state: painting14
@@ -145,7 +153,8 @@
   parent: PaintingBase
   id: PaintingSleepingGypsy
   name: The Sleeping Gypsy
-  description: This painting depicts a gypsy sleeping among their belongings in the desert. A lion stands behind them.
+  description: This painting depicts a gypsy sleeping among their belongings in
+    the desert. A lion stands behind them.
   components:
   - type: Sprite
     state: painting15
@@ -154,7 +163,8 @@
   parent: PaintingBase
   id: PaintingRedBlueYellow
   name: Composition with Red Blue and Yellow
-  description: This painting is made up of several boxes. They are filled with flat shades of color.
+  description: This painting is made up of several boxes. They are filled with
+    flat shades of color.
   components:
   - type: Sprite
     state: painting16
@@ -163,7 +173,8 @@
   parent: PaintingBase
   id: PaintingAmogusTriptych
   name: Amogus Triptych (Untitled.)
-  description: This painting is made up of 3 individual sections. Each depicts a religious figure.
+  description: This painting is made up of 3 individual sections. Each depicts a
+    religious figure.
   components:
   - type: Sprite
     state: painting17
@@ -172,7 +183,8 @@
   parent: PaintingBase
   id: PaintingHelloWorld
   name: Hello World
-  description: This painting is made up of lots of multicolored squares arranged in a peculiar pattern. Perhaps it means something?
+  description: This painting is made up of lots of multicolored squares arranged
+    in a peculiar pattern. Perhaps it means something?
   components:
   - type: Sprite
     state: painting18

@@ -6,13 +6,13 @@
   - type: Sprite
     state: icon
   - type: Clothing
-    slots: [eyes]
+    slots: [ eyes ]
   - type: Item
     size: Small
     storedRotation: -90
 
 - type: entity
-  parent: [ClothingEyesBase, BaseFoldable]
+  parent: [ ClothingEyesBase, BaseFoldable ]
   id: ClothingHeadEyeBaseFlippable
   abstract: true
   components:
@@ -26,7 +26,7 @@
     layers:
     - map: [ "unfoldedLayer" ]
       state: icon
-    - map: ["foldedLayer"]
+    - map: [ "foldedLayer" ]
       state: icon
       visible: false
       scale: -1,1
@@ -44,7 +44,7 @@
     - map: [ "unfoldedLayer" ]
       state: icon
       visible: false
-    - map: ["foldedLayer"]
+    - map: [ "foldedLayer" ]
       state: icon
       visible: true
       scale: -1,1

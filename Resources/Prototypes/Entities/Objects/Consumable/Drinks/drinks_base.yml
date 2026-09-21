@@ -3,7 +3,7 @@
 # Inheritors are an easily and freely accessible solution like cups, teapots, cans, flasks, bottles, or beakers.
 - type: entity
   abstract: true
-  parent: [SolutionDrink, BaseItem]
+  parent: [ SolutionDrink, BaseItem ]
   id: DrinkBase
   components:
   - type: Sprite
@@ -100,12 +100,12 @@
     visuals:
       enum.OpenableVisuals.Opened:
         enum.OpenableVisuals.Layer:
-          True: {state: "icon_open"} # lid off
-          False: {state: "icon"} # lid on
+          True: { state: "icon_open" } # lid off
+          False: { state: "icon" } # lid on
   - type: Sprite
     layers:
     - state: icon
-      map: ["enum.OpenableVisuals.Layer"]
+      map: [ "enum.OpenableVisuals.Layer" ]
   - type: ExaminableSolution
     solution: *sol
     examinableWhileClosed: false # If you can't see the fill levels on the sprite, we can assume it's opaque
@@ -121,7 +121,7 @@
     layers:
     - state: icon
     - state: fill-1
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
   - type: SolutionContainerVisuals
     solutionName: *sol
@@ -156,26 +156,26 @@
     layers:
     - state: icon
     - state: fill-5 # this will need to be different with a different maxFillLevels
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
 
 # Visualizer for an openable entity with fill levels. Requires DrinkBaseOpenable
 - type: entity
   abstract: true
-  parent: [DrinkVisualsOpenable, DrinkVisualsFill]
+  parent: [ DrinkVisualsOpenable, DrinkVisualsFill ]
   id: DrinkVisualsAll
   components:
   - type: GenericVisualizer
     visuals:
       enum.OpenableVisuals.Opened:
         enum.OpenableVisuals.Layer:
-          True: {state: "icon_open"} # lid off
-          False: {state: "icon_empty"} # lid on
+          True: { state: "icon_open" } # lid off
+          False: { state: "icon_empty" } # lid on
   - type: Sprite
     layers:
     - state: icon_empty
-      map: ["enum.OpenableVisuals.Layer"]
+      map: [ "enum.OpenableVisuals.Layer" ]
     - state: fill-1
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
   - type: ExaminableSolution
     examinableWhileClosed: true # If you can see the fill levels it's not opaque
@@ -190,6 +190,6 @@
   - type: Sprite
     layers:
     - state: icon_empty
-      map: ["enum.OpenableVisuals.Layer"]
+      map: [ "enum.OpenableVisuals.Layer" ]
     - state: fill-5 # this will need to be different with a different maxFillLevels
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]

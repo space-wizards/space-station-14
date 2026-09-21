@@ -24,8 +24,7 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 40
       behaviors:
       - !type:PlaySoundBehavior
@@ -41,8 +40,7 @@
     damageModifierSet: CardboardMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:PlaySoundBehavior

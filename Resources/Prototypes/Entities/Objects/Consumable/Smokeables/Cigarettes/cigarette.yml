@@ -9,8 +9,8 @@
     state: unlit-icon
   - type: Tag
     tags:
-      - Cigarette
-      - Trash
+    - Cigarette
+    - Trash
   - type: SpaceGarbage
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi
@@ -36,8 +36,8 @@
     state: unlit-icon
   - type: Tag
     tags:
-      - Cigarette
-      - Trash
+    - Cigarette
+    - Trash
   - type: SpaceGarbage
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi
@@ -60,9 +60,9 @@
     state: Burnt
   - type: Tag
     tags:
-      - Cigarette
-      - Trash
-      - Burnt
+    - Cigarette
+    - Trash
+    - Burnt
 
 - type: entity
   id: CigaretteSyndicate
@@ -73,10 +73,10 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: Nicotine
-          Quantity: 10
-        - ReagentId: Omnizine
-          Quantity: 20
+      - ReagentId: Nicotine
+        Quantity: 10
+      - ReagentId: Omnizine
+        Quantity: 20
 
 - type: entity
   id: CigaretteOmnizine
@@ -125,10 +125,10 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: Nicotine
-          Quantity: 10
-        - ReagentId: Dylovene
-          Quantity: 10
+      - ReagentId: Nicotine
+        Quantity: 10
+      - ReagentId: Dylovene
+        Quantity: 10
 
 - type: entity
   id: CigaretteDermaline
@@ -138,10 +138,10 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: Nicotine
-          Quantity: 10
-        - ReagentId: Dermaline
-          Quantity: 10
+      - ReagentId: Nicotine
+        Quantity: 10
+      - ReagentId: Dermaline
+        Quantity: 10
 
 - type: entity
   id: CigaretteArithrazine
@@ -151,10 +151,10 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: Nicotine
-          Quantity: 10
-        - ReagentId: Arithrazine
-          Quantity: 10
+      - ReagentId: Nicotine
+        Quantity: 10
+      - ReagentId: Arithrazine
+        Quantity: 10
 
 - type: entity
   id: CigaretteNutriment
@@ -164,10 +164,10 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: Nicotine
-          Quantity: 10
-        - ReagentId: Nutriment
-          Quantity: 10
+      - ReagentId: Nicotine
+        Quantity: 10
+      - ReagentId: Nutriment
+        Quantity: 10
 
 - type: entity
   id: CigaretteBicaridine
@@ -177,10 +177,10 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: Nicotine
-          Quantity: 10
-        - ReagentId: Bicaridine
-          Quantity: 10
+      - ReagentId: Nicotine
+        Quantity: 10
+      - ReagentId: Bicaridine
+        Quantity: 10
 
 - type: entity
   id: CigaretteDexalin
@@ -190,10 +190,10 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: Nicotine
-          Quantity: 10
-        - ReagentId: Dexalin
-          Quantity: 10
+      - ReagentId: Nicotine
+        Quantity: 10
+      - ReagentId: Dexalin
+        Quantity: 10
 
 - type: entity
   id: CigaretteSaline
@@ -203,10 +203,10 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: Nicotine
-          Quantity: 10
-        - ReagentId: Saline
-          Quantity: 10
+      - ReagentId: Nicotine
+        Quantity: 10
+      - ReagentId: Saline
+        Quantity: 10
 
 - type: entity
   id: CigaretteBbqSauce
@@ -216,10 +216,10 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: Nicotine
-          Quantity: 10
-        - ReagentId: BbqSauce
-          Quantity: 10
+      - ReagentId: Nicotine
+        Quantity: 10
+      - ReagentId: BbqSauce
+        Quantity: 10
 
 - type: entity
   id: CigaretteFrezon
@@ -229,10 +229,10 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: Nicotine
-          Quantity: 10
-        - ReagentId: Frezon
-          Quantity: 10
+      - ReagentId: Nicotine
+        Quantity: 10
+      - ReagentId: Frezon
+        Quantity: 10
 
 - type: entity
   id: CigaretteCapsaicinOil
@@ -242,10 +242,10 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: Nicotine
-          Quantity: 10
-        - ReagentId: CapsaicinOil
-          Quantity: 10
+      - ReagentId: Nicotine
+        Quantity: 10
+      - ReagentId: CapsaicinOil
+        Quantity: 10
 
 - type: entity
   id: CigaretteRadium
@@ -255,10 +255,10 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: Nicotine
-          Quantity: 10
-        - ReagentId: Radium
-          Quantity: 10
+      - ReagentId: Nicotine
+        Quantity: 10
+      - ReagentId: Radium
+        Quantity: 10
 
 - type: entity
   id: CigaretteHaloperidol
@@ -268,10 +268,10 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: Nicotine
-          Quantity: 10
-        - ReagentId: Haloperidol
-          Quantity: 10
+      - ReagentId: Nicotine
+        Quantity: 10
+      - ReagentId: Haloperidol
+        Quantity: 10
 
 - type: entity
   id: CigaretteLaughter
@@ -281,10 +281,10 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: Nicotine
-          Quantity: 10
-        - ReagentId: Laughter
-          Quantity: 10
+      - ReagentId: Nicotine
+        Quantity: 10
+      - ReagentId: Laughter
+        Quantity: 10
 
 - type: entity
   id: CigaretteLipolicide
@@ -294,10 +294,10 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: Nicotine
-          Quantity: 10
-        - ReagentId: Lipolicide
-          Quantity: 10
+      - ReagentId: Nicotine
+        Quantity: 10
+      - ReagentId: Lipolicide
+        Quantity: 10
 
 - type: entity
   id: CigaretteSodiumPolyacrylate
@@ -307,10 +307,10 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: Nicotine
-          Quantity: 10
-        - ReagentId: SodiumPolyacrylate
-          Quantity: 10
+      - ReagentId: Nicotine
+        Quantity: 10
+      - ReagentId: SodiumPolyacrylate
+        Quantity: 10
 
 - type: entity
   id: CigaretteMold
@@ -320,10 +320,10 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: Nicotine
-          Quantity: 10
-        - ReagentId: Mold
-          Quantity: 10
+      - ReagentId: Nicotine
+        Quantity: 10
+      - ReagentId: Mold
+        Quantity: 10
 
 - type: entity
   id: CigaretteLicoxide
@@ -333,10 +333,10 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: Nicotine
-          Quantity: 10
-        - ReagentId: Licoxide
-          Quantity: 10
+      - ReagentId: Nicotine
+        Quantity: 10
+      - ReagentId: Licoxide
+        Quantity: 10
 
 - type: entity
   id: CigaretteWeldingFuel
@@ -346,10 +346,10 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: Nicotine
-          Quantity: 10
-        - ReagentId: WeldingFuel
-          Quantity: 10
+      - ReagentId: Nicotine
+        Quantity: 10
+      - ReagentId: WeldingFuel
+        Quantity: 10
 
 - type: entity
   id: CigaretteRobustHarvest
@@ -359,10 +359,10 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: Nicotine
-          Quantity: 10
-        - ReagentId: RobustHarvest
-          Quantity: 10
+      - ReagentId: Nicotine
+        Quantity: 10
+      - ReagentId: RobustHarvest
+        Quantity: 10
 
 - type: entity
   id: CigarettePhlogiston

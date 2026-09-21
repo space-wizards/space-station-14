@@ -87,7 +87,8 @@
   parent: PonderingOrb
   id: PonderingOrbWizard
   name: pondering orb
-  description: Ponderous, man... Really ponderous. Magically shows the station's camera network.
+  description: Ponderous, man... Really ponderous. Magically shows the station's
+    camera network.
   suffix: Wizard
   components:
   - type: ActivatableUI
@@ -151,8 +152,7 @@
       collection: GlassBreak
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 20
       behaviors:
       - !type:PlaySoundBehavior

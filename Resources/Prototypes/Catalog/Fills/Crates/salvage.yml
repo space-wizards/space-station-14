@@ -35,7 +35,7 @@
     containers:
       entity_storage: !type:AllSelector
         children:
-          # Normal (10%)
+        # Normal (10%)
         - id: OxygenTankFilled
           prob: 0.1
         - id: SheetPlasma
@@ -123,7 +123,8 @@
   parent: CrateGenericSteel
   id: CrateDoubleEmergencyTank
   name: double emergency tank crate
-  description: Contains 2 double emergency oxygen tanks and 2 double emergency nitrogen tanks
+  description: Contains 2 double emergency oxygen tanks and 2 double emergency
+    nitrogen tanks
   components:
   - type: EntityTableContainerFill
     containers:
@@ -175,7 +176,8 @@
   parent: CrateGenericSteel
   id: CrateSalvageHardsuit
   name: mining hardsuit crate
-  description: Contains a mining hardsuit, breath mask, and one tank of both oxygen and nitrogen.
+  description: Contains a mining hardsuit, breath mask, and one tank of both
+    oxygen and nitrogen.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -201,7 +203,8 @@
   parent: CrateGenericSteel
   id: CrateSupremeSalvagerCloak
   name: supreme salvager cloak crate
-  description: Contains a cloak only to be worn by supreme salvagers. Wearing it undeservedly will result in your doom.
+  description: Contains a cloak only to be worn by supreme salvagers. Wearing it
+    undeservedly will result in your doom.
   components:
   - type: EntityTableContainerFill
     containers:

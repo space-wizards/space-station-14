@@ -5,16 +5,13 @@
   description: He can count
   suffix: AI, DEBUG
   components:
-    - type: HTN
-      rootTask:
-        task: DebugCounterCompound
-      blackboard:
-        MinimumIdleTime: !type:Single
-          0.5
-        MaximumIdleTime: !type:Single
-          0.5
-        Count: !type:Single
-          0
+  - type: HTN
+    rootTask:
+      task: DebugCounterCompound
+    blackboard:
+      MinimumIdleTime: !type:Single "0.5"
+      MaximumIdleTime: !type:Single "0.5"
+      Count: !type:Single "0"
 
 - type: entity
   parent: MobHuman
@@ -23,16 +20,13 @@
   description: He can randomize
   suffix: AI, DEBUG
   components:
-    - type: HTN
-      rootTask:
-        task: DebugRandomCounterCompound
-      blackboard:
-        MinimumIdleTime: !type:Single
-          1
-        MaximumIdleTime: !type:Single
-          1
-        Count: !type:Single
-          0
+  - type: HTN
+    rootTask:
+      task: DebugRandomCounterCompound
+    blackboard:
+      MinimumIdleTime: !type:Single "1"
+      MaximumIdleTime: !type:Single "1"
+      Count: !type:Single "0"
 
 - type: entity
   parent: MobHuman
@@ -41,13 +35,10 @@
   description: He can lessing
   suffix: AI, DEBUG
   components:
-    - type: HTN
-      rootTask:
-        task: DebugRandomLessCompound
-      blackboard:
-        MinimumIdleTime: !type:Single
-          1
-        MaximumIdleTime: !type:Single
-          1
-        Count: !type:Single
-          0
+  - type: HTN
+    rootTask:
+      task: DebugRandomLessCompound
+    blackboard:
+      MinimumIdleTime: !type:Single "1"
+      MaximumIdleTime: !type:Single "1"
+      Count: !type:Single "0"

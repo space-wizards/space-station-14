@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [SolutionSpray, BaseItem]
+  parent: [ SolutionSpray, BaseItem ]
   id: BaseFireExtinguisher
   components:
   - type: RefillableSolution
@@ -53,7 +53,7 @@
           False: { state: fire_extinguisher_closed }
 
 - type: entity
-  parent: [SolutionFireExtinguisher, BaseFireExtinguisher]
+  parent: [ SolutionFireExtinguisher, BaseFireExtinguisher ]
   id: FireExtinguisher
   name: fire extinguisher
   description: It extinguishes fires.
@@ -78,7 +78,7 @@
       Steel: 100
 
 - type: entity
-  parent: [SolutionSpray, SolutionNormal]
+  parent: [ SolutionSpray, SolutionNormal ]
   id: SolutionFireExtinguisher
   categories: [ HideSpawnMenu ]
   components:
@@ -89,13 +89,14 @@
         Quantity: 120
 
 - type: entity
-  parent: [SolutionFireExtinguisherLarge, FireExtinguisher]
+  parent: [ SolutionFireExtinguisherLarge, FireExtinguisher ]
   id: BorgFireExtinguisher
   name: maneuvering jet
-  description: Based on fire extinguisher technology, the maneuvering jet is... well yes, its just a bigger fire extinguisher.
+  description: Based on fire extinguisher technology, the maneuvering jet is...
+    well yes, its just a bigger fire extinguisher.
 
 - type: entity
-  parent: [SolutionSpray, SolutionLarge]
+  parent: [ SolutionSpray, SolutionLarge ]
   id: SolutionFireExtinguisherLarge
   categories: [ HideSpawnMenu ]
   components:
@@ -114,8 +115,8 @@
   - type: Sprite
     sprite: Effects/extinguisherSpray.rsi
     layers:
-      - state: extinguish
-        map: [ "enum.VaporVisualLayers.Base" ]
+    - state: extinguish
+      map: [ "enum.VaporVisualLayers.Base" ]
   - type: Physics
     bodyType: Dynamic
   - type: Appearance
@@ -125,15 +126,16 @@
 
 - type: entity
   name: pocket fire extinguisher
-  parent: [SolutionFireExtinguisherMini, BaseFireExtinguisher]
+  parent: [ SolutionFireExtinguisherMini, BaseFireExtinguisher ]
   id: FireExtinguisherMini
-  description: A light and compact fibreglass-framed model fire extinguisher. It holds less water than its bigger brother.
+  description: A light and compact fibreglass-framed model fire extinguisher. It
+    holds less water than its bigger brother.
   components:
   - type: Sprite
     sprite: Objects/Misc/fire_extinguisher_mini.rsi
     layers:
-        - state: fire_extinguisher_closed
-          map: [ "enabled" ]
+    - state: fire_extinguisher_closed
+      map: [ "enabled" ]
   - type: Item
     sprite: Objects/Misc/fire_extinguisher_mini.rsi
     size: Small
@@ -150,7 +152,7 @@
       Glass: 40
 
 - type: entity
-  parent: [SolutionSpray, SolutionSmall]
+  parent: [ SolutionSpray, SolutionSmall ]
   id: SolutionFireExtinguisherMini
   categories: [ HideSpawnMenu ]
   components:

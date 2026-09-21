@@ -25,7 +25,7 @@
     shoes: ClothingShoesColorBlack
     id: ServiceWorkerPDA
     ears: ClothingHeadsetService
-  #storage:
+    #storage:
     #back:
     #- Stuff
 

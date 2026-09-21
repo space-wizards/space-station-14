@@ -9,7 +9,7 @@
     displayName: Mask
     whitelist:
       tags:
-        - PetWearable
+      - PetWearable
 
   - name: suitstorage
     slotTexture: suit_storage
@@ -21,7 +21,7 @@
     displayName: Suit Storage
     whitelist:
       components:
-        - GasTank
+      - GasTank
 
   - name: gloves
     slotTexture: gloves
@@ -31,7 +31,7 @@
     displayName: Gloves
     whitelist:
       tags:
-        - Kangaroo
+      - Kangaroo
 
   - name: belt
     slotTexture: belt
@@ -44,7 +44,7 @@
     displayName: Belt
     whitelist:
       tags:
-        - Kangaroo
+      - Kangaroo
 
   - name: pocket1
     slotTexture: pocket
@@ -79,4 +79,4 @@
     displayName: Gloves
     whitelist:
       tags:
-        - Kangaroo
+      - Kangaroo

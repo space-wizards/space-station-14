@@ -8,7 +8,7 @@
   - type: Sprite
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]
+      map: [ "enum.GunVisualLayers.Base" ]
   - type: Item
     size: Large
   - type: Clothing
@@ -40,9 +40,12 @@
 
 - type: entity
   name: Kardashev-Mosin
-  parent: [BaseWeaponSniper, BaseGunWieldable, SolutionDart, BaseMajorContraband]
+  parent: [ BaseWeaponSniper, BaseGunWieldable, SolutionDart, BaseMajorContraband ]
   id: WeaponSniperMosin
-  description: A true relic, the Kardashev-Mosin has served in nearly every armed conflict since its creation 670 years ago. The bolt-action design of the rifle remains virtually identical to its original design, whether used for hunting, sniping, or endless trench warfare. Loads 10 rounds of .30 rifle.
+  description: A true relic, the Kardashev-Mosin has served in nearly every armed
+    conflict since its creation 670 years ago. The bolt-action design of the
+    rifle remains virtually identical to its original design, whether used for
+    hunting, sniping, or endless trench warfare. Loads 10 rounds of .30 rifle.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
@@ -88,9 +91,10 @@
 
 - type: entity
   name: Hristov
-  parent: [BaseWeaponSniper, BaseGunWieldable, BaseSyndicateContraband]
+  parent: [ BaseWeaponSniper, BaseGunWieldable, BaseSyndicateContraband ]
   id: WeaponSniperHristov
-  description: For when you absolutely, positively need to make someone regret their life choices from a safe distance. Uses .60 anti-materiel ammo.
+  description: For when you absolutely, positively need to make someone regret
+    their life choices from a safe distance. Uses .60 anti-materiel ammo.
   components:
   - type: Item
     size: Huge
@@ -131,7 +135,8 @@
   name: musket
   parent: [ BaseWeaponSniper, BaseGunWieldable, BaseMajorContraband ]
   id: Musket
-  description: This should've been in a museum long before you were born. Uses .60 anti-materiel ammo.
+  description: This should've been in a museum long before you were born. Uses .60
+    anti-materiel ammo.
   components:
   - type: Tool
     qualities:
@@ -170,7 +175,7 @@
 
 - type: entity
   name: flintlock pistol
-  parent: [BaseWeaponSniper, BaseMajorContraband]
+  parent: [ BaseWeaponSniper, BaseMajorContraband ]
   id: WeaponPistolFlintlock
   description: A pirate's companion. Yarrr! Uses .45 magnum ammo.
   components:
@@ -193,7 +198,7 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - CartridgeMagnum # changed from Anti-material rifle rounds because it's a flintlock pistol not a Hristov
+      - CartridgeMagnum # changed from Anti-material rifle rounds because it's a flintlock pistol not a Hristov
     capacity: 1
     proto: CartridgeMagnum
   - type: StaticPrice

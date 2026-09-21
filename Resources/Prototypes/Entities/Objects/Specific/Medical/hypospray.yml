@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [SolutionHypospraySmall, BaseItem]
+  parent: [ SolutionHypospraySmall, BaseItem ]
   id: BaseHypoInjector
   components:
   - type: Injector
@@ -28,7 +28,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionHypospray, SolutionToolSmall]
+  parent: [ SolutionHypospray, SolutionToolSmall ]
   id: SolutionHypospraySmall
   components:
   - type: Solution
@@ -37,7 +37,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionHypospray, SolutionToolTiny]
+  parent: [ SolutionHypospray, SolutionToolTiny ]
   id: SolutionHyposprayTiny
   components:
   - type: Solution
@@ -45,7 +45,7 @@
       maxVol: 10
 
 - type: entity
-  parent: [SolutionToolSmall, BaseHypospray, BaseGrandTheftContraband]
+  parent: [ SolutionToolSmall, BaseHypospray, BaseGrandTheftContraband ]
   id: Hypospray
   name: hypospray
   description: A sterile injector for rapid administration of drugs to patients.
@@ -54,9 +54,9 @@
     sprite: Objects/Specific/Medical/hypospray.rsi
     layers:
     - state: hypo
-      map: ["enum.SolutionContainerLayers.Base"]
+      map: [ "enum.SolutionContainerLayers.Base" ]
     - state: hypo_fill1
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
   - type: Item
     sprite: Objects/Specific/Medical/hypospray.rsi
@@ -75,19 +75,21 @@
     solutionName: hypospray
 
 - type: entity
-  parent: [BaseHypospray, BaseSyndicateContraband]
+  parent: [ BaseHypospray, BaseSyndicateContraband ]
   id: SyndiHypo
   name: gorlex hypospray
-  description: A sterile injector for rapid administration of drugs. Reverse-engineered from Nanotrasen designs, Cybersun produces these in limited quantities for Gorlex Marauders' corpsmen.
+  description: A sterile injector for rapid administration of drugs.
+    Reverse-engineered from Nanotrasen designs, Cybersun produces these in
+    limited quantities for Gorlex Marauders' corpsmen.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/syndihypo.rsi
     layers:
-      - state: hypo
-        map: ["enum.SolutionContainerLayers.Base"]
-      - state: hypo_fill1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+    - state: hypo
+      map: [ "enum.SolutionContainerLayers.Base" ]
+    - state: hypo_fill1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
   - type: Item
     sprite: Objects/Specific/Medical/syndihypo.rsi
   - type: SolutionContainerVisuals
@@ -96,10 +98,11 @@
     solutionName: hypospray
 
 - type: entity
-  parent: [SolutionHyposprayTiny, BaseHypospray]
+  parent: [ SolutionHyposprayTiny, BaseHypospray ]
   id: BorgHypo
   name: borghypo
-  description: A sterile injector for rapid administration of drugs to patients. This integrated model is specialized for use by medical borgs.
+  description: A sterile injector for rapid administration of drugs to patients.
+    This integrated model is specialized for use by medical borgs.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/hypospray.rsi
@@ -152,10 +155,11 @@
     - JetInjectorInjectMode
 
 - type: entity
-  parent: [SolutionHypospraySmall, JetInjector]
+  parent: [ SolutionHypospraySmall, JetInjector ]
   id: AdvancedJetInjector
   name: advanced jet injector
-  description: A pristine, fashionable, high quality injector. Allows for a faster injection, with a slightly larger capacity.
+  description: A pristine, fashionable, high quality injector. Allows for a faster
+    injection, with a slightly larger capacity.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/advanced_jetinjector.rsi
@@ -180,7 +184,8 @@
   id: AdminHypo
   name: experimental hypospray
   suffix: Admeme
-  description: The ultimate application of bluespace technology and rapid chemical administration.
+  description: The ultimate application of bluespace technology and rapid chemical
+    administration.
   components:
   - type: Solution
     solution:
@@ -198,7 +203,7 @@
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
     - state: firstaid
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: Item
     sprite: Objects/Specific/Medical/medipen.rsi
     inhandVisuals:
@@ -236,13 +241,16 @@
   parent: ChemicalMedipen
   id: EmergencyMedipen
   name: emergency medipen
-  description: A single-dose, non-refillable medipen containing epinephrine and tranexamic acid, used to temporarily stabilize patients in critical condition and buy time for them to recieve proper medical treatment. Beware of overdose.
+  description: A single-dose, non-refillable medipen containing epinephrine and
+    tranexamic acid, used to temporarily stabilize patients in critical
+    condition and buy time for them to recieve proper medical treatment. Beware
+    of overdose.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
     - state: medipen
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     changeColor: false
@@ -259,7 +267,8 @@
   parent: ChemicalMedipen
   id: AntiPoisonMedipen
   name: poison auto-injector
-  description: A single-dose, non-refillable medipen containing stellibinin and epinephrine, used to quickly and easily treat poisoning.
+  description: A single-dose, non-refillable medipen containing stellibinin and
+    epinephrine, used to quickly and easily treat poisoning.
   components:
   - type: Item
     inhandVisuals:
@@ -277,7 +286,7 @@
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
     - state: penacid
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     changeColor: false
@@ -294,7 +303,9 @@
   parent: ChemicalMedipen
   id: BruteAutoInjector
   name: brute auto-injector
-  description: A single-dose, non-refillable medipen containing bicaridine and tranexamic acid, used to quickly and easily treat simple physical injuries. Commonly used as a combat medicine.
+  description: A single-dose, non-refillable medipen containing bicaridine and
+    tranexamic acid, used to quickly and easily treat simple physical injuries.
+    Commonly used as a combat medicine.
   components:
   - type: Item
     inhandVisuals:
@@ -312,7 +323,7 @@
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
     - state: bicpen
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     changeColor: false
@@ -329,7 +340,9 @@
   parent: ChemicalMedipen
   id: BurnAutoInjector
   name: burn auto-injector
-  description: A single-dose, non-refillable medipen containing dermaline and leporazine, used to quickly and easily treat non-chemical burns. Commonly used as a combat medicine.
+  description: A single-dose, non-refillable medipen containing dermaline and
+    leporazine, used to quickly and easily treat non-chemical burns. Commonly
+    used as a combat medicine.
   components:
   - type: Item
     inhandVisuals:
@@ -347,7 +360,7 @@
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
     - state: dermpen
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     changeColor: false
@@ -364,7 +377,8 @@
   parent: ChemicalMedipen
   id: RadAutoInjector
   name: rad auto-injector
-  description: A single-dose, non-refillable medipen containing arithrazine and bicaridine, used to quickly and easily treat radiation poisoning.
+  description: A single-dose, non-refillable medipen containing arithrazine and
+    bicaridine, used to quickly and easily treat radiation poisoning.
   components:
   - type: Item
     inhandVisuals:
@@ -382,7 +396,7 @@
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
     - state: arithpen
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     changeColor: false
@@ -399,7 +413,9 @@
   parent: ChemicalMedipen
   id: PunctAutoInjector
   name: puncturase auto-injector
-  description: A single-dose, non-refillable medipen containing puncturase and tranexamic acid, used to quickly and easily treat puncture wounds. Commonly used as a combat medicine.
+  description: A single-dose, non-refillable medipen containing puncturase and
+    tranexamic acid, used to quickly and easily treat puncture wounds. Commonly
+    used as a combat medicine.
   components:
   - type: Item
     inhandVisuals:
@@ -417,7 +433,7 @@
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
     - state: punctpen
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     changeColor: false
@@ -436,7 +452,9 @@
   parent: ChemicalMedipen
   id: PyraAutoInjector
   name: pyrazine auto-injector
-  description: A single-dose, non-refillable medipen containing pyrazine and dermaline, used to quickly and easily treat thermal burns. Commonly used as a combat medicine.
+  description: A single-dose, non-refillable medipen containing pyrazine and
+    dermaline, used to quickly and easily treat thermal burns. Commonly used as
+    a combat medicine.
   components:
   - type: Item
     inhandVisuals:
@@ -454,7 +472,7 @@
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
     - state: pyrapen
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     changeColor: false
@@ -471,7 +489,8 @@
   parent: ChemicalMedipen
   id: AirlossAutoInjector
   name: airloss auto-injector
-  description: A single-dose, non-refillable medipen containing saline and dexalin plus, used to quickly and easily treat blood loss and asphyxiation.
+  description: A single-dose, non-refillable medipen containing saline and dexalin
+    plus, used to quickly and easily treat blood loss and asphyxiation.
   components:
   - type: Item
     inhandVisuals:
@@ -489,7 +508,7 @@
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
     - state: dexpen
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     changeColor: false
@@ -506,7 +525,8 @@
   parent: ChemicalMedipen
   id: SpaceMedipen
   name: space medipen
-  description: A single-dose, non-refillable medipen containing barozine and leporazine, used to protect exposed flesh from the deadly effects of space.
+  description: A single-dose, non-refillable medipen containing barozine and
+    leporazine, used to protect exposed flesh from the deadly effects of space.
   components:
   - type: Item
     inhandVisuals:
@@ -539,14 +559,15 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionToolSmall, ChemicalMedipen, BaseSyndicateContraband]
+  parent: [ SolutionToolSmall, ChemicalMedipen, BaseSyndicateContraband ]
   id: SyndicateMedipen # Interdyne gets more capacity
 
 - type: entity
   parent: SyndicateMedipen
   id: Stimpack
   name: hyperzine injector
-  description: A chemical injector containing a large shot of pure hyperzine. For when it's time to throw down. Effects last for about 60 seconds.
+  description: A chemical injector containing a large shot of pure hyperzine. For
+    when it's time to throw down. Effects last for about 60 seconds.
   components:
   - type: Item
     inhandVisuals:
@@ -566,7 +587,7 @@
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
     - state: stimpen
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: Solution
     solution:
       reagents:
@@ -583,7 +604,8 @@
   parent: [ SolutionToolTiny, SyndicateMedipen ]
   id: StimpackMini
   name: hyperzine microinjector
-  description: A chemical microinjector containing a small shot of pure hyperzine. Effects last for about 30 seconds.
+  description: A chemical microinjector containing a small shot of pure hyperzine.
+    Effects last for about 30 seconds.
   components:
   - type: Item
     inhandVisuals:
@@ -603,7 +625,7 @@
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
     - state: microstimpen
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: Solution
     solution:
       reagents:
@@ -620,7 +642,8 @@
   parent: SyndicateMedipen
   id: CombatMedipen
   name: combat medipen
-  description: A single-dose, non-refillable medipen containing a chemical cocktail that treats most forms of damage.
+  description: A single-dose, non-refillable medipen containing a chemical
+    cocktail that treats most forms of damage.
   components:
   - type: Item
     inhandVisuals:
@@ -638,7 +661,7 @@
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
     - state: morphen
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     changeColor: false
@@ -654,7 +677,7 @@
     price: 1500
 
 - type: entity
-  parent: [Pen, SolutionHyposprayTiny] # It is just like normal pen, isn't it?
+  parent: [ Pen, SolutionHyposprayTiny ] # It is just like normal pen, isn't it?
   id: Hypopen
   suffix: Hypopen
   components:
@@ -683,7 +706,8 @@
   parent: [ BaseItem, BaseSyndicateContraband ]
   id: HypopenBox
   name: hypopen box
-  description: A small box containing a hypopen. Packaging disintegrates when opened, leaving no evidence behind.
+  description: A small box containing a hypopen. Packaging disintegrates when
+    opened, leaving no evidence behind.
   components:
   - type: Item
     size: Tiny

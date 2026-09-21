@@ -11,15 +11,20 @@
 - type: reaction
   id: BuzzochloricBees
   reactants:
-    Brass: # do you like jazz (not sorry)
+    Brass:
+      # do you like jazz (not sorry)
       amount: 1
-    Fiber: # bees are fuzzy
+    Fiber:
+      # bees are fuzzy
       amount: 1
-    GroundBee: # you need bee for the bees
+    GroundBee:
+      # you need bee for the bees
       amount: 1
-    Chlorine: # the chloric part of buzzochloric
+    Chlorine:
+      # the chloric part of buzzochloric
       amount: 1
-    UnstableMutagen: # to bring the buzz to life
+    UnstableMutagen:
+      # to bring the buzz to life
       amount: 1
   products:
     BuzzochloricBees: 3
@@ -38,8 +43,8 @@
     Carbon:
       amount: 10
   effects:
-    - !type:SpawnEntity
-      entity: FoodMeat
+  - !type:SpawnEntity
+    entity: FoodMeat
 
 - type: reaction
   id: SpaceGlue
@@ -101,8 +106,8 @@
     SulfuricAcid:
       amount: 2
   effects:
-    - !type:SpawnEntity
-      entity: SheetPlastic1
+  - !type:SpawnEntity
+    entity: SheetPlastic1
 
 - type: reaction
   id: FlashFreezeIce
@@ -179,8 +184,8 @@
     Ethanol:
       amount: 5
   effects:
-    - !type:SpawnEntity
-      entity: ShardCrystalRandom
+  - !type:SpawnEntity
+    entity: ShardCrystalRandom
 
 - type: reaction
   id: Gunpowder
@@ -195,8 +200,8 @@
     Charcoal:
       amount: 2
   effects:
-    - !type:SpawnEntity
-      entity: MaterialGunpowder
+  - !type:SpawnEntity
+    entity: MaterialGunpowder
 
 - type: reaction
   id: SolidifyGold

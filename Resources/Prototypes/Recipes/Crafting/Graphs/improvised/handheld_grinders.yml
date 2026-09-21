@@ -1,4 +1,3 @@
-
 # Mortar
 - type: constructionGraph
   id: MakeshiftMortarAndPestle
@@ -8,9 +7,9 @@
     edges:
     - to: incompleteMortarAndPestle
       steps:
-        - material: WoodPlank
-          amount: 5
-          doAfter: 4
+      - material: WoodPlank
+        amount: 5
+        doAfter: 4
 
   - node: incompleteMortarAndPestle
     entity: IncompleteMortarAndPestle
@@ -20,7 +19,7 @@
       - !type:SpawnPrototype
         prototype: MaterialWoodPlank1
         amount: 5
-      - !type:DeleteEntity {}
+      - !type:DeleteEntity
       steps:
       - tool: Prying
         doAfter: 1
@@ -63,7 +62,7 @@
       - !type:SpawnPrototype
         prototype: SheetPlastic1
         amount: 2
-      - !type:DeleteEntity {}
+      - !type:DeleteEntity
       steps:
       - tool: Prying
         doAfter: 1

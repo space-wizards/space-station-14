@@ -5,14 +5,14 @@
   - type: Sprite
     layers:
     - state: robot
-      map: ["enum.BorgVisualLayers.Body", "movement"]
+      map: [ "enum.BorgVisualLayers.Body", "movement" ]
     - state: robot_e_r
-      map: ["enum.BorgVisualLayers.Light"]
+      map: [ "enum.BorgVisualLayers.Light" ]
       shader: unshaded
       visible: false
     - state: robot_l
       shader: unshaded
-      map: ["light","enum.BorgVisualLayers.LightStatus"]
+      map: [ "light", "enum.BorgVisualLayers.LightStatus" ]
       visible: false
   - type: BorgChassis
     # Default borg can take no modules until selected type.
@@ -87,123 +87,126 @@
   name: syndicate assault cyborg
   description: A lean, mean killing machine with access to a variety of deadly modules.
   components:
-    - type: Sprite
-      layers:
-        - state: synd_sec
-        - state: synd_sec_e
-          map: ["enum.BorgVisualLayers.Light"]
-          shader: unshaded
-          visible: false
-        - state: synd_sec_l
-          shader: unshaded
-          map: ["light"]
-          visible: false
-    - type: BorgChassis
-      maxModules: 3
-      moduleWhitelist:
-        tags:
-          - BorgModuleGeneric
-          - BorgModuleSyndicate
-          - BorgModuleSyndicateAssault
-      hasMindState: synd_sec_e
-      noMindState: synd_sec
-    - type: InteractionPopup
-      interactSuccessString: petting-success-syndicate-cyborg
-      interactFailureString: petting-failure-syndicate-cyborg
-      interactSuccessSound:
-        path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: Sprite
+    layers:
+    - state: synd_sec
+    - state: synd_sec_e
+      map: [ "enum.BorgVisualLayers.Light" ]
+      shader: unshaded
+      visible: false
+    - state: synd_sec_l
+      shader: unshaded
+      map: [ "light" ]
+      visible: false
+  - type: BorgChassis
+    maxModules: 3
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleSyndicate
+      - BorgModuleSyndicateAssault
+    hasMindState: synd_sec_e
+    noMindState: synd_sec
+  - type: InteractionPopup
+    interactSuccessString: petting-success-syndicate-cyborg
+    interactFailureString: petting-failure-syndicate-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   id: BorgChassisSyndicateMedical
-  parent: [BaseBorgChassisSyndicate, ShowMedicalIcons]
+  parent: [ BaseBorgChassisSyndicate, ShowMedicalIcons ]
   name: syndicate medical cyborg
-  description: A combat medical cyborg. Has limited offensive potential, but makes more than up for it with its support capabilities.
+  description: A combat medical cyborg. Has limited offensive potential, but makes
+    more than up for it with its support capabilities.
   components:
-    - type: Sprite
-      layers:
-        - state: synd_medical
-        - state: synd_medical_e
-          map: ["enum.BorgVisualLayers.Light"]
-          shader: unshaded
-          visible: false
-        - state: synd_medical_l
-          shader: unshaded
-          map: ["light"]
-          visible: false
-    - type: BorgChassis
-      maxModules: 3
-      moduleWhitelist:
-        tags:
-          - BorgModuleGeneric
-          - BorgModuleMedical
-          - BorgModuleSyndicate
-      hasMindState: synd_medical_e
-      noMindState: synd_medical
-    - type: ShowHealthBars
-    - type: InteractionPopup
-      interactSuccessString: petting-success-syndicate-cyborg
-      interactFailureString: petting-failure-syndicate-cyborg
-      interactSuccessSound:
-        path: /Audio/Ambience/Objects/periodic_beep.ogg
-    - type: SolutionScanner
-    - type: FootstepModifier
-      footstepSoundCollection:
-        collection: FootstepHoverBorg
-        params:
-          volume: -6
+  - type: Sprite
+    layers:
+    - state: synd_medical
+    - state: synd_medical_e
+      map: [ "enum.BorgVisualLayers.Light" ]
+      shader: unshaded
+      visible: false
+    - state: synd_medical_l
+      shader: unshaded
+      map: [ "light" ]
+      visible: false
+  - type: BorgChassis
+    maxModules: 3
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleMedical
+      - BorgModuleSyndicate
+    hasMindState: synd_medical_e
+    noMindState: synd_medical
+  - type: ShowHealthBars
+  - type: InteractionPopup
+    interactSuccessString: petting-success-syndicate-cyborg
+    interactFailureString: petting-failure-syndicate-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: SolutionScanner
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepHoverBorg
+      params:
+        volume: -6
 
 - type: entity
   id: BorgChassisSyndicateSaboteur
   parent: BaseBorgChassisSyndicate
   name: syndicate saboteur cyborg
-  description: A streamlined engineering cyborg, equipped with covert modules. Its chameleon projector lets it disguise itself as a Nanotrasen cyborg.
+  description: A streamlined engineering cyborg, equipped with covert modules. Its
+    chameleon projector lets it disguise itself as a Nanotrasen cyborg.
   components:
-    - type: Sprite
-      layers:
-        - state: synd_engi
-        - state: synd_engi_e
-          map: ["enum.BorgVisualLayers.Light"]
-          shader: unshaded
-          visible: false
-        - state: synd_engi_l
-          shader: unshaded
-          map: ["light"]
-          visible: false
-    - type: BorgChassis
-      maxModules: 3
-      moduleWhitelist:
-        tags:
-          - BorgModuleGeneric
-          - BorgModuleEngineering
-          - BorgModuleSyndicate
-      hasMindState: synd_engi_e
-      noMindState: synd_engi
-    - type: ShowHealthBars
-      damageContainers:
-      - Inorganic
-      - Silicon
-    - type: InteractionPopup
-      interactSuccessString: petting-success-syndicate-cyborg
-      interactFailureString: petting-failure-syndicate-cyborg
-      interactSuccessSound:
-        path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: Sprite
+    layers:
+    - state: synd_engi
+    - state: synd_engi_e
+      map: [ "enum.BorgVisualLayers.Light" ]
+      shader: unshaded
+      visible: false
+    - state: synd_engi_l
+      shader: unshaded
+      map: [ "light" ]
+      visible: false
+  - type: BorgChassis
+    maxModules: 3
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleEngineering
+      - BorgModuleSyndicate
+    hasMindState: synd_engi_e
+    noMindState: synd_engi
+  - type: ShowHealthBars
+    damageContainers:
+    - Inorganic
+    - Silicon
+  - type: InteractionPopup
+    interactSuccessString: petting-success-syndicate-cyborg
+    interactFailureString: petting-failure-syndicate-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   id: BorgChassisDerelict
   parent: BaseBorgChassisDerelict
   name: derelict cyborg
-  description: A man-machine hybrid that assists in station activity. This one is in a state of great disrepair.
+  description: A man-machine hybrid that assists in station activity. This one is
+    in a state of great disrepair.
   components:
   - type: Sprite
     layers:
     - state: derelict
     - state: derelict_e_r
-      map: ["enum.BorgVisualLayers.Light"]
+      map: [ "enum.BorgVisualLayers.Light" ]
       shader: unshaded
       visible: false
     - state: derelict_l
       shader: unshaded
-      map: ["light"]
+      map: [ "light" ]
       visible: false
   - type: BorgChassis
     maxModules: 5 # One less module slot than the regular module to reflect this being a "broken" cyborg.
@@ -224,13 +227,14 @@
   parent: BaseBorgChassisDerelict
   id: EngineeringBorgChassisDerelict
   name: derelict engineer cyborg
-  description: A man-machine hybrid that assists the engineering department. This one seems to have chunks of strange crystals pockmarking its surface.
+  description: A man-machine hybrid that assists the engineering department. This
+    one seems to have chunks of strange crystals pockmarking its surface.
   components:
   - type: Sprite
     layers:
     - state: engineer_derelict
     - state: engineer_e_r
-      map: ["enum.BorgVisualLayers.Light"]
+      map: [ "enum.BorgVisualLayers.Light" ]
       shader: unshaded
       visible: false
     - state: engineer_derelict_crystal #This layer and the layer below are duplicated in order to create a more mellow unshaded layer. See https://github.com/space-wizards/space-station-14/pull/37869 for more info on the method.
@@ -239,7 +243,7 @@
       shader: shaded
     - state: engineer_l
       shader: unshaded
-      map: ["light"]
+      map: [ "light" ]
       visible: false
   - type: BorgChassis
     maxModules: 5 # One less module slot than the regular module to reflect this being a "broken" cyborg.
@@ -254,19 +258,20 @@
   parent: BaseBorgChassisDerelict
   id: JanitorBorgChassisDerelict
   name: derelict janitor cyborg
-  description: A man-machine hybrid that assists the service department. It's a bigger mess than anything it can clean up.
+  description: A man-machine hybrid that assists the service department. It's a
+    bigger mess than anything it can clean up.
   components:
   - type: Sprite
     layers:
     - state: janitor_derelict
-      map: ["movement"]
+      map: [ "movement" ]
     - state: janitor_e_r
-      map: ["enum.BorgVisualLayers.Light"]
+      map: [ "enum.BorgVisualLayers.Light" ]
       shader: unshaded
       visible: false
     - state: janitor_l
       shader: unshaded
-      map: ["light"]
+      map: [ "light" ]
       visible: false
   - type: SpriteMovement
     movementLayers:
@@ -288,19 +293,20 @@
   parent: BaseBorgChassisDerelict
   id: MedicalBorgChassisDerelict
   name: derelict medical cyborg
-  description: A man-machine hybrid that assists the medical department. This one's needles don't look very sanitary.
+  description: A man-machine hybrid that assists the medical department. This
+    one's needles don't look very sanitary.
   components:
   - type: Sprite
     layers:
     - state: medical_derelict
-      map: ["movement"]
+      map: [ "movement" ]
     - state: medical_e_r
-      map: ["enum.BorgVisualLayers.Light"]
+      map: [ "enum.BorgVisualLayers.Light" ]
       shader: unshaded
       visible: false
     - state: medical_l
       shader: unshaded
-      map: ["light"]
+      map: [ "light" ]
       visible: false
   - type: SpriteMovement
     movementLayers:
@@ -329,19 +335,20 @@
   parent: BaseBorgChassisDerelict
   id: MiningBorgChassisDerelict
   name: derelict salvage cyborg
-  description: A man-machine hybrid that assists the cargo department. This one has seen the wrong side of a gibtonite chunk.
+  description: A man-machine hybrid that assists the cargo department. This one
+    has seen the wrong side of a gibtonite chunk.
   components:
   - type: Sprite
     layers:
     - state: miner_derelict
-      map: ["movement"]
+      map: [ "movement" ]
     - state: miner_e_r
-      map: ["enum.BorgVisualLayers.Light"]
+      map: [ "enum.BorgVisualLayers.Light" ]
       shader: unshaded
       visible: false
     - state: miner_l
       shader: unshaded
-      map: ["light"]
+      map: [ "light" ]
       visible: false
   - type: SpriteMovement
     movementLayers:
@@ -363,22 +370,24 @@
   parent: BaseBorgChassisSyndicateDerelict
   id: SyndicateAssaultBorgChassisDerelict
   name: derelict syndicate assault cyborg
-  description: A lean, mean killing machine with access to a variety of deadly modules. This one is more rust-orange than blood-red.
+  description: A lean, mean killing machine with access to a variety of deadly
+    modules. This one is more rust-orange than blood-red.
   components:
   - type: Sprite
     layers:
     - state: synd_sec_derelict
     - state: synd_sec_e
-      map: ["enum.BorgVisualLayers.Light"]
+      map: [ "enum.BorgVisualLayers.Light" ]
       shader: unshaded
       visible: false
     - state: synd_sec_l
       shader: unshaded
-      map: ["light"]
+      map: [ "light" ]
       visible: false
   - type: BorgChassis
     maxModules: 3
-    moduleWhitelist: # Note - the Derelict Assault Borg does not have a traversal module. This is intentional as Assault Borgs have space traversal with their c20 and free space movement, and they can navigate to the station using the pinpointer.
+    moduleWhitelist:
+      # Note - the Derelict Assault Borg does not have a traversal module. This is intentional as Assault Borgs have space traversal with their c20 and free space movement, and they can navigate to the station using the pinpointer.
       tags:
       - BorgModuleGeneric
       - BorgModuleSyndicate

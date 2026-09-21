@@ -13,8 +13,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
         density: 400
         mask:
@@ -30,11 +29,11 @@
     - state: beam
       shader: unshaded
       visible: false
-      map: ["enum.EmitterVisualLayers.Lights"]
+      map: [ "enum.EmitterVisualLayers.Lights" ]
     - state: locked
       shader: unshaded
       visible: false
-      map: ["enum.LockVisualLayers.Lock"]
+      map: [ "enum.LockVisualLayers.Lock" ]
   - type: Emitter
   - type: PowerState
     idlePowerDraw: 5
@@ -53,7 +52,7 @@
     fireRate: 10 #just has to be fast enough to keep up with upgrades
     selectedMode: SemiAuto
     availableModes:
-      - SemiAuto
+    - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/emitter.ogg
   - type: PowerConsumer
@@ -62,8 +61,7 @@
   - type: NodeContainer
     examinable: true
     nodes:
-      input:
-        !type:CableDeviceNode
+      input: !type:CableDeviceNode
         nodeGroupID: MVPower
   - type: Electrified
     onHandInteract: false
@@ -78,8 +76,7 @@
     - Engineering
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 275
       behaviors:
       - !type:PlaySoundBehavior
@@ -100,7 +97,7 @@
   - type: LockedAnchorable
   - type: LockedWiresPanel
   - type: AccessReader
-    access: [[ "Engineering" ]]
+    access: [ [ "Engineering" ] ]
   - type: Machine
     board: EmitterCircuitboard
   - type: GuideHelp
@@ -113,6 +110,6 @@
     range: 200
   - type: DeviceLinkSink
     ports:
-      - On
-      - Off
-      - Toggle
+    - On
+    - Off
+    - Toggle

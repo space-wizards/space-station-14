@@ -7,10 +7,10 @@
   components:
   - type: Sprite
     layers:
-      - state: base
-        map: ["enum.GunVisualLayers.Base"]
-      - state: mag-0
-        map: ["enum.GunVisualLayers.Mag"]
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-0
+      map: [ "enum.GunVisualLayers.Mag" ]
   - type: Item
     size: Small
     shape:
@@ -30,8 +30,8 @@
     fireRate: 6
     selectedMode: SemiAuto
     availableModes:
-      - SemiAuto
-      - FullAuto
+    - SemiAuto
+    - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
   - type: ChamberMagazineAmmoProvider
@@ -47,15 +47,15 @@
         priority: 2
         whitelist:
           tags:
-            - MagazinePistol
-            - MagazinePistolHighCapacity
+          - MagazinePistol
+          - MagazinePistolHighCapacity
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
         priority: 1
         whitelist:
           tags:
-            - CartridgePistol
+          - CartridgePistol
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot
@@ -71,9 +71,12 @@
 
 - type: entity
   name: viper
-  parent: [BaseWeaponPistol, BaseSyndicateContraband]
+  parent: [ BaseWeaponPistol, BaseSyndicateContraband ]
   id: WeaponPistolViper
-  description: A common handgun illegally modified by the Syndicate. The Viper sports a selector switch between semi-auto and ‘rock and roll’. The standard sidearm for any soldier who fights under the three serpents. Feeds from .35 pistol magazines.
+  description: A common handgun illegally modified by the Syndicate. The Viper
+    sports a selector switch between semi-auto and ‘rock and roll’. The standard
+    sidearm for any soldier who fights under the three serpents. Feeds from .35
+    pistol magazines.
   components:
   - type: Gun
     minAngle: 2
@@ -93,15 +96,15 @@
         priority: 2
         whitelist:
           tags:
-            - MagazinePistol
-            - MagazinePistolHighCapacity
+          - MagazinePistol
+          - MagazinePistolHighCapacity
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
         priority: 1
         whitelist:
           tags:
-            - CartridgePistol
+          - CartridgePistol
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot
@@ -113,7 +116,9 @@
   name: echis
   parent: [ BaseItem, BaseSyndicateContraband ]
   id: WeaponPistolEchis
-  description: A cyborg-mounted weapon system based on the Viper pistol. Creates ammunition on the fly from an internal fabricator, which slowly self-charges.
+  description: A cyborg-mounted weapon system based on the Viper pistol. Creates
+    ammunition on the fly from an internal fabricator, which slowly
+    self-charges.
   components:
   - type: Gun
     fireRate: 6
@@ -126,10 +131,10 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
     layers:
-      - state: base
-        map: ["enum.GunVisualLayers.Base"]
-      - state: mag-0
-        map: ["enum.GunVisualLayers.Mag"]
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-0
+      map: [ "enum.GunVisualLayers.Mag" ]
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
@@ -149,15 +154,17 @@
   name: cobra
   parent: [ BaseWeaponPistol, BaseSyndicateContraband ]
   id: WeaponPistolCobra
-  description: Integrally suppressed semi-automatic pistol used by the Syndicate, firing caseless subsonic rounds. Favored by any agent who likes to keep things quiet and leave no evidence behind. Feeds from .25 pistol magazines.
+  description: Integrally suppressed semi-automatic pistol used by the Syndicate,
+    firing caseless subsonic rounds. Favored by any agent who likes to keep
+    things quiet and leave no evidence behind. Feeds from .25 pistol magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]
+      map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-0
-      map: ["enum.GunVisualLayers.Mag"]
+      map: [ "enum.GunVisualLayers.Mag" ]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
   - type: ChamberMagazineAmmoProvider
@@ -184,14 +191,14 @@
         priority: 2
         whitelist:
           tags:
-            - MagazinePistolCaselessRifle
+          - MagazinePistolCaselessRifle
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
         priority: 1
         whitelist:
           tags:
-            - CartridgeCaselessRifle
+          - CartridgeCaselessRifle
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot
@@ -201,17 +208,20 @@
 
 - type: entity
   name: mk 58
-  parent: [BaseWeaponPistol, BaseSecurityContraband]
+  parent: [ BaseWeaponPistol, BaseSecurityContraband ]
   id: WeaponPistolMk58
-  description: Designed by Nanotrasen’s Small Arms Division, the Mk58 is a conventional semi-automatic pistol with a simple recoil-operated action and excellent reliability. The standard sidearm of Nanotrasen’s station security and emergency response teams. Feeds from .35 pistol magazines.
+  description: Designed by Nanotrasen’s Small Arms Division, the Mk58 is a
+    conventional semi-automatic pistol with a simple recoil-operated action and
+    excellent reliability. The standard sidearm of Nanotrasen’s station security
+    and emergency response teams. Feeds from .35 pistol magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]
+      map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-0
-      map: ["enum.GunVisualLayers.Mag"]
+      map: [ "enum.GunVisualLayers.Mag" ]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
   - type: Item
@@ -231,17 +241,21 @@
 
 - type: entity
   name: N1984
-  parent: [BaseWeaponPistol, BaseSecurityContraband]
+  parent: [ BaseWeaponPistol, BaseSecurityContraband ]
   id: WeaponPistolN1984
-  description: An exceptionally powerful ‘hand cannon’ designed as part of Nanotrasen's BFG initiative. Chambered in .45, the lord’s caliber, it is generally considered too unwieldy for standard use but has become something of a status symbol among Nanotrasen officials. Feeds from .45 pistol magazines.
+  description: An exceptionally powerful ‘hand cannon’ designed as part of
+    Nanotrasen's BFG initiative. Chambered in .45, the lord’s caliber, it is
+    generally considered too unwieldy for standard use but has become something
+    of a status symbol among Nanotrasen officials. Feeds from .45 pistol
+    magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/N1984.rsi
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]
+      map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-0
-      map: ["enum.GunVisualLayers.Mag"]
+      map: [ "enum.GunVisualLayers.Mag" ]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/N1984.rsi
   - type: Gun
@@ -264,11 +278,11 @@
         priority: 2
         whitelist:
           tags:
-            - MagazineMagnum
+          - MagazineMagnum
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
         priority: 1
         whitelist:
           tags:
-            - CartridgeMagnum
+          - CartridgeMagnum

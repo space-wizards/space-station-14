@@ -8,9 +8,9 @@
     sprite: Objects/Storage/medalcase.rsi
     layers:
     - state: closed
-      map: ["closeLayer"]
+      map: [ "closeLayer" ]
     - state: open
-      map: ["openLayer"]
+      map: [ "openLayer" ]
   - type: Appearance
   - type: Item
     sprite: Objects/Storage/medalcase.rsi
@@ -20,7 +20,7 @@
     - 0,0,7,1
     whitelist:
       tags:
-        - Medal
+      - Medal
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector

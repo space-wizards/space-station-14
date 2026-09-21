@@ -1,5 +1,5 @@
 - type: entity
-  parent: [SolutionBeaker, SolutionSmall, BaseItem]
+  parent: [ SolutionBeaker, SolutionSmall, BaseItem ]
   id: BaseBeaker
   abstract: true
   components:
@@ -9,10 +9,10 @@
   - type: Sprite
     sprite: Objects/Specific/Chemistry/beaker.rsi
     layers:
-      - state: beaker
-      - state: beaker1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+    - state: beaker
+    - state: beaker1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
   - type: Item
     sprite: Objects/Specific/Chemistry/beaker.rsi
   - type: MeleeWeapon
@@ -59,8 +59,7 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:PlaySoundBehavior
@@ -96,7 +95,7 @@
   - type: DnaSubstanceTrace
 
 - type: entity
-  parent: [SolutionBeaker, SolutionSmall, BaseItem]
+  parent: [ SolutionBeaker, SolutionSmall, BaseItem ]
   id: BaseBeakerMetallic
   abstract: true
   components:
@@ -106,10 +105,10 @@
   - type: Sprite
     sprite: Objects/Specific/Chemistry/beaker.rsi
     layers:
-      - state: beaker
-      - state: beaker1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+    - state: beaker
+    - state: beaker1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
   - type: Item
     sprite: Objects/Specific/Chemistry/beaker.rsi
   - type: MeleeWeapon
@@ -270,7 +269,7 @@
 
 - type: entity
   name: large beaker
-  parent: [SolutionNormal, BaseBeaker]
+  parent: [ SolutionNormal, BaseBeaker ]
   description: Used to contain a large amount of chemicals or solutions.
   id: LargeBeaker
   components:
@@ -279,10 +278,10 @@
   - type: Sprite
     sprite: Objects/Specific/Chemistry/beaker_large.rsi
     layers:
-      - state: beakerlarge
-      - state: beakerlarge1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+    - state: beakerlarge
+    - state: beakerlarge1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
   - type: Item
     size: Normal
     sprite: Objects/Specific/Chemistry/beaker_large.rsi
@@ -300,7 +299,7 @@
 
 - type: entity
   name: cryostasis beaker
-  parent: [SolutionCryo, BaseBeakerMetallic]
+  parent: [ SolutionCryo, BaseBeakerMetallic ]
   description: Used to contain chemicals or solutions without reactions.
   id: CryostasisBeaker
   components:
@@ -309,13 +308,13 @@
   - type: Sprite
     sprite: Objects/Specific/Chemistry/beaker_cryostasis.rsi
     layers:
-      - state: beakernoreact
+    - state: beakernoreact
   - type: SolutionContainerVisuals
     maxFillLevels: 0
 
 - type: entity
   name: bluespace beaker
-  parent: [SolutionGinormous, BaseBeakerMetallic] # Bluespace items hold 8x the solution of regular items (240u a tile)
+  parent: [ SolutionGinormous, BaseBeakerMetallic ] # Bluespace items hold 8x the solution of regular items (240u a tile)
   description: Powered by experimental bluespace technology.
   id: BluespaceBeaker
   components:
@@ -324,7 +323,7 @@
   - type: Sprite
     sprite: Objects/Specific/Chemistry/beaker_bluespace.rsi
     layers:
-      - state: beakerbluespace
+    - state: beakerbluespace
   - type: SolutionContainerVisuals
     maxFillLevels: 0
   - type: Item
@@ -332,17 +331,17 @@
 
 - type: entity
   name: dropper
-  parent: [SolutionInjector, SolutionToolTiny, BaseItem]
+  parent: [ SolutionInjector, SolutionToolTiny, BaseItem ]
   description: Used to transfer small amounts of chemical solution between containers.
   id: Dropper
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/dropper.rsi
     layers:
-      - state: dropper
-      - state: dropper1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+    - state: dropper
+    - state: dropper1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
   - type: Injector
     ignoreMobs: true
     ignoreClosed: false
@@ -385,16 +384,16 @@
   - type: Sprite
     sprite: Objects/Specific/Chemistry/dropper.rsi
     layers:
-      - state: borgdropper
-      - state: dropper1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+    - state: borgdropper
+    - state: dropper1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
   - type: Item
     sprite: Objects/Specific/Chemistry/dropper.rsi
 
 - type: entity
   name: syringe
-  parent: [SolutionInjector, SolutionToolTiny, BaseItem]
+  parent: [ SolutionInjector, SolutionToolTiny, BaseItem ]
   description: Used to draw blood samples from mobs, or to inject them with reagents.
   id: BaseSyringe
   abstract: true
@@ -402,11 +401,11 @@
   - type: Sprite
     sprite: Objects/Specific/Chemistry/syringe.rsi
     layers:
-      - state: syringe1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
-      - state: syringe_base0
-        map: ["enum.SolutionContainerLayers.Base"]
+    - state: syringe1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+    - state: syringe_base0
+      map: [ "enum.SolutionContainerLayers.Base" ]
   - type: Icon
     sprite: Objects/Specific/Chemistry/syringe.rsi
     state: "syringe_base0"
@@ -446,17 +445,17 @@
 
 - type: entity
   name: mini syringe
-  parent: [SolutionToolVeryTiny, Syringe]
+  parent: [ SolutionToolVeryTiny, Syringe ]
   description: A regular syringe, reshaped to fit inside of a gun.
   id: MiniSyringe
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/syringe.rsi
     layers:
-      - state: minisyringe1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
-      - state: syringeproj
+    - state: minisyringe1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+    - state: syringeproj
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     fillBaseName: minisyringe
@@ -485,8 +484,7 @@
         restitution: 0.3
         friction: 0.2
       projectile:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.1,-0.3,0.1,0.3"
         hard: false
         mask:
@@ -514,17 +512,17 @@
 
 - type: entity
   id: SyringeBluespace
-  parent: [SolutionToolLarge, BaseSyringe]
+  parent: [ SolutionToolLarge, BaseSyringe ]
   name: bluespace syringe
   description: Injecting with advanced bluespace technology.
   components:
   - type: Sprite
     layers:
     - state: syringe1
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
     - state: bluespace_base0
-      map: ["enum.SolutionContainerLayers.Base"]
+      map: [ "enum.SolutionContainerLayers.Base" ]
   - type: Icon
     sprite: Objects/Specific/Chemistry/syringe.rsi
     state: bluespace_base0
@@ -543,17 +541,17 @@
 
 - type: entity
   id: SyringeCryostasis
-  parent: [SolutionCryo, BaseSyringe]
+  parent: [ SolutionCryo, BaseSyringe ]
   name: cryostasis syringe
   description: A syringe used to contain chemicals or solutions without reactions.
   components:
   - type: Sprite
     layers:
     - state: syringe1
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
     - state: cryo_base0
-      map: ["enum.SolutionContainerLayers.Base"]
+      map: [ "enum.SolutionContainerLayers.Base" ]
   - type: Icon
     sprite: Objects/Specific/Chemistry/syringe.rsi
     state: cryo_base0
@@ -564,7 +562,7 @@
 
 - type: entity
   name: pill
-  parent: [SolutionPill, BaseItem]
+  parent: [ SolutionPill, BaseItem ]
   id: Pill
   description: It's not a suppository.
   components:
@@ -590,8 +588,7 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 10
       behaviors:
       - !type:SpillBehavior
@@ -610,7 +607,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionFood, SolutionTiny]
+  parent: [ SolutionFood, SolutionTiny ]
   id: SolutionPill
   components:
   - type: Solution
@@ -632,7 +629,7 @@
     state: pill_canister
   - type: Tag
     tags:
-      - PillCanister
+    - PillCanister
   - type: Storage
     grid:
     - 0,0,4,1

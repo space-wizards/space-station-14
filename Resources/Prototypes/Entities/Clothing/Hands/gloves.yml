@@ -134,7 +134,7 @@
       - id: ClothingHandsGlovesBoxingRiggedYellow
 
 - type: entity
-  parent: [ClothingHandsBase, BaseCommandContraband]
+  parent: [ ClothingHandsBase, BaseCommandContraband ]
   id: ClothingHandsGlovesCaptain
   name: captain gloves
   description: Regal blue gloves, with a nice gold trim. Swanky.
@@ -201,7 +201,8 @@
   parent: ClothingHandsButcherable
   id: ClothingHandsGlovesLeather
   name: botanist's leather gloves
-  description: These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin. They're also quite warm.
+  description: These leather gloves protect against thorns, barbs, prickles,
+    spikes and other harmful objects of floral origin. They're also quite warm.
   components:
   - type: Sprite
     sprite: Clothing/Hands/Gloves/leather.rsi
@@ -247,10 +248,11 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: [ClothingHandsBase, BaseToggleClothing, BaseHighlyIllegalContraband]
+  parent: [ ClothingHandsBase, BaseToggleClothing, BaseHighlyIllegalContraband ]
   id: ClothingHandsGlovesSpaceNinja
   name: space ninja gloves
-  description: These black nano-enhanced gloves insulate from electricity and provide fire resistance.
+  description: These black nano-enhanced gloves insulate from electricity and
+    provide fire resistance.
   components:
   - type: Sprite
     sprite: Clothing/Hands/Gloves/spaceninja.rsi
@@ -264,8 +266,8 @@
     visuals:
       enum.ToggleableVisuals.Enabled:
         enum.ToggleableVisuals.Layer:
-          True: {state: icon-green}
-          False: {state: icon}
+          True: { state: icon-green }
+          False: { state: icon }
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-nanomachines
@@ -320,7 +322,8 @@
   parent: ClothingHandsGlovesSyntheticBase
   id: ClothingHandsTacticalMaidGloves
   name: tactical maid gloves
-  description: Tactical maid gloves, every self-respecting maid should be able to discreetly eliminate her goals.
+  description: Tactical maid gloves, every self-respecting maid should be able to
+    discreetly eliminate her goals.
   components:
   - type: Sprite
     sprite: Clothing/Hands/Gloves/tacticalmaidgloves.rsi
@@ -331,10 +334,16 @@
     fiberColor: fibers-black
 
 - type: entity
-  parent: [ BaseSecurityCargoContraband, ClothingHandsGlovesCombat, BaseSlicingRefinable ]
+  parent:
+    [
+      BaseSecurityCargoContraband,
+      ClothingHandsGlovesCombat,
+      BaseSlicingRefinable
+    ]
   id: ClothingHandsMercGlovesCombat
   name: mercenary combat gloves
-  description: High-quality combat gloves to protect hands from mechanical damage during combat.
+  description: High-quality combat gloves to protect hands from mechanical damage
+    during combat.
   components:
   - type: Sprite
     sprite: Clothing/Hands/Gloves/mercbattle.rsi
@@ -419,12 +428,12 @@
   id: ClothingHandsGlovesCluwne
   name: cluwne hands
   suffix: Unremoveable
-  description:  A cursed pair of cluwne hands.
+  description: A cursed pair of cluwne hands.
   components:
   - type: Unremoveable
 
 - type: entity
-  parent: [ClothingHandsButcherable, BaseSyndicateContraband]
+  parent: [ ClothingHandsButcherable, BaseSyndicateContraband ]
   id: ClothingHandsGlovesNorthStar
   name: gloves of the north star
   description: These gloves allow you to punch incredibly fast.
@@ -438,7 +447,7 @@
     attackRate: 4
     damage:
       types:
-       Blunt: 8
+        Blunt: 8
     soundHit:
       collection: Punch
     animation: WeaponArcFist
@@ -464,10 +473,11 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingHandsBase, BaseSecurityContraband]
+  parent: [ ClothingHandsBase, BaseSecurityContraband ]
   id: ClothingHandsGlovesForensic
   name: forensic gloves
-  description: Do not leave fibers or fingerprints. If you work without them, you're A TERRIBLE DETECTIVE.
+  description: Do not leave fibers or fingerprints. If you work without them,
+    you're A TERRIBLE DETECTIVE.
   components:
   - type: Sprite
     sprite: Clothing/Hands/Gloves/forensic.rsi
@@ -496,7 +506,7 @@
 
 #Knuckledusters
 - type: entity
-  parent: [ClothingHandsBase, BaseMinorContraband]
+  parent: [ ClothingHandsBase, BaseMinorContraband ]
   id: ClothingHandsKnuckleDusters
   name: knuckle dusters
   description: "Cold plasteel knuckle dusters, makes your punches hit much harder."
@@ -523,10 +533,11 @@
     - Kangaroo
 
 - type: entity
-  parent: [ClothingHandsKnuckleDusters, BaseMinorContraband] #Craftable version of base knuckledusters
+  parent: [ ClothingHandsKnuckleDusters, BaseMinorContraband ] #Craftable version of base knuckledusters
   id: ClothingHandsKnuckleDustersBrass
   name: brass knuckle dusters
-  description: "Brass knuckle dusters, just like how they used to make em and still hit just as hard."
+  description: "Brass knuckle dusters, just like how they used to make em and
+    still hit just as hard."
   components:
   - type: Sprite
     sprite: Clothing/Hands/Gloves/KnuckleDusters/brassknuckleduster.rsi
@@ -542,10 +553,11 @@
     - Kangaroo
 
 - type: entity
-  parent: [ClothingHandsBase, BaseGrandTheftContraband]
+  parent: [ ClothingHandsBase, BaseGrandTheftContraband ]
   id: ClothingHandsKnuckleDustersQM
   name: QM's golden knuckle dusters
-  description: "24karat gold infused with plasteel and branded with the Nanotrasen logo. A true symbol of the Quartermaster's might."
+  description: "24karat gold infused with plasteel and branded with the Nanotrasen
+    logo. A true symbol of the Quartermaster's might."
   components:
   - type: Sprite
     sprite: Clothing/Hands/Gloves/KnuckleDusters/goldenknuckleduster.rsi
@@ -571,10 +583,11 @@
     stealGroup: ClothingHandsKnuckleDustersQM
 
 - type: entity
-  parent: [ClothingHandsBase, BaseSyndicateContraband]
+  parent: [ ClothingHandsBase, BaseSyndicateContraband ]
   id: ClothingHandsKnuckleDustersSyndicate
   name: syndicate knuckle dusters
-  description: "Plastitanium knuckle dusters branded with the blood-red S. A real man beats someone to death with these."
+  description: "Plastitanium knuckle dusters branded with the blood-red S. A real
+    man beats someone to death with these."
   components:
   - type: Sprite
     sprite: Clothing/Hands/Gloves/KnuckleDusters/syndicateknuckleduster.rsi
@@ -600,9 +613,10 @@
 
 - type: entity
   name: stun knuckle dusters
-  parent: [ClothingHandsBase, BaseToggleClothing, BaseSecurityContraband]
+  parent: [ ClothingHandsBase, BaseToggleClothing, BaseSecurityContraband ]
   id: ClothingHandsKnuckleDustersStun
-  description: A pair of knuckle dusters combined with the tech of a stun baton. This makes beating tiders a whole lot easier.
+  description: A pair of knuckle dusters combined with the tech of a stun baton.
+    This makes beating tiders a whole lot easier.
   components:
   - type: Sprite
     sprite: Clothing/Hands/Gloves/KnuckleDusters/electricknuckleduster.rsi
@@ -617,8 +631,8 @@
     visuals:
       enum.ToggleableVisuals.Enabled:
         enum.ToggleableVisuals.Layer:
-          True: {state: knuckleduster_on}
-          False: {state: knuckleduster_off}
+          True: { state: knuckleduster_on }
+          False: { state: knuckleduster_off }
   - type: ToggleClothing
     action: ActionToggleKnuckleDustersStun
   - type: ItemToggleExaminableStatus

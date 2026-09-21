@@ -25,8 +25,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.5,0.25,0.5"
         mask:
         - SubfloorMask
@@ -37,8 +36,7 @@
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 60
       behaviors:
       - !type:PlaySoundBehavior
@@ -74,8 +72,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.25
 
 # Pipes
@@ -203,8 +200,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.5,0.25,0.4"
         mask:
         - SubfloorMask
@@ -216,7 +212,8 @@
   id: DisposalRouter
   parent: DisposalPipeBase
   name: disposal router
-  description: A three-way router. Entities with matching tags get routed to the side via configurable filters.
+  description: A three-way router. Entities with matching tags get routed to the
+    side via configurable filters.
   components:
   - type: Sprite
     layers:
@@ -245,8 +242,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.25,0.5"
         mask:
         - SubfloorMask
@@ -280,8 +276,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.5,0.5,0.5"
         mask:
         - SubfloorMask
@@ -315,8 +310,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.25,0.5"
         mask:
         - SubfloorMask
@@ -350,8 +344,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.5,0.5,0.5"
         mask:
         - SubfloorMask
@@ -383,8 +376,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.25"
         mask:
         - SubfloorMask
@@ -418,8 +410,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
         mask:
         - SubfloorMask
@@ -450,8 +441,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.25,0.25"
         mask:
         - SubfloorMask

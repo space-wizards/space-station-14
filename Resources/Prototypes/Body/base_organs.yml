@@ -508,8 +508,8 @@
     category: Kidneys
   - type: Sprite
     layers:
-      - state: kidney-l
-      - state: kidney-r
+    - state: kidney-l
+    - state: kidney-r
   - type: Item
     heldPrefix: kidneys
   - type: Metabolizer

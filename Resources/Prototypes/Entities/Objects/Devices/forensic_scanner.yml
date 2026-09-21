@@ -41,10 +41,10 @@
     layers:
     - state: paper_receipt_horizontal
     - state: paper_receipt_horizontal_words
-      map: ["enum.PaperVisualLayers.Writing"]
+      map: [ "enum.PaperVisualLayers.Writing" ]
       visible: false
     - state: paper_stamp-generic
-      map: ["enum.PaperVisualLayers.Stamp"]
+      map: [ "enum.PaperVisualLayers.Stamp" ]
       visible: false
   - type: PaperVisuals
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_perforated.svg.96dpi.png"

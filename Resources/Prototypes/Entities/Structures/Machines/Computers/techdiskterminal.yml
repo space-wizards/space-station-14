@@ -8,9 +8,9 @@
     noRot: true
     sprite: Structures/Machines/tech_disk_printer.rsi
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: icon
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: unshaded
   - type: DiskConsole
   - type: ResearchClient

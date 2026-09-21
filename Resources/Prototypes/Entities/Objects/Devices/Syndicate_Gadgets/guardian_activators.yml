@@ -1,8 +1,9 @@
 - type: entity
-  parent: [BaseItem, BaseSyndicateContraband]
+  parent: [ BaseItem, BaseSyndicateContraband ]
   id: HoloparasiteInjector
   name: holoparasite injector
-  description: A complex artwork of handheld machinery allowing the user to host a holoparasite guardian.
+  description: A complex artwork of handheld machinery allowing the user to host a
+    holoparasite guardian.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/hypospray.rsi
@@ -14,21 +15,23 @@
   parent: HoloparasiteInjector
   id: HoloClownInjector
   name: holoclown injector
-  description: A complex artwork of handheld machinery allowing the user to host a holoclown guardian.
+  description: A complex artwork of handheld machinery allowing the user to host a
+    holoclown guardian.
   components:
   - type: GuardianCreator
     guardianProto: MobHoloClownGuardian
 
 - type: entity
-  parent: [BaseItem, BaseMagicalContraband]
+  parent: [ BaseItem, BaseMagicalContraband ]
   id: GuardianDeck
   name: guardian deck
-  description: A deck of guardian tarot cards, capable of binding a personal guardian to your body.
+  description: A deck of guardian tarot cards, capable of binding a personal
+    guardian to your body.
   components:
   - type: Sprite
     sprite: Objects/Magic/deck.rsi
     layers:
-      - state: deck
+    - state: deck
   - type: GuardianCreator
     guardianProto: MobIfritGuardian
     emptyPopup: guardian-deck-invalid-creation
@@ -36,7 +39,7 @@
     usedSound: /Audio/Effects/guardian_deck_shuffle.ogg
 
 - type: entity
-  parent: [BoxCardboard, BaseSyndicateContraband]
+  parent: [ BoxCardboard, BaseSyndicateContraband ]
   id: BoxHoloparasite
   name: holoparasite box
   description: A box containing a holoparasite injector.
@@ -50,11 +53,11 @@
         - id: ClothingHeadHatBizarreSoft
   - type: Sprite
     layers:
-      - state: box
-      - state: holo
+    - state: box
+    - state: holo
 
 - type: entity
-  parent: [BoxCardboard, BaseSyndicateContraband]
+  parent: [ BoxCardboard, BaseSyndicateContraband ]
   id: BoxHoloclown
   name: holoclown box
   description: A box containing a holoclown injector.
@@ -68,8 +71,8 @@
         - id: ToyHammer
   - type: Sprite
     layers:
-      - state: box_hug
-      - state: holo
+    - state: box_hug
+    - state: holo
   - type: Tag
     tags:
     - BoxCardboard

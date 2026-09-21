@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ClothingHeadBaseButcherable, BaseFoldable]
+  parent: [ ClothingHeadBaseButcherable, BaseFoldable ]
   id: ClothingHeadHeadHatBaseFlippable
   abstract: true
   components:
@@ -15,7 +15,7 @@
     - state: icon
       map: [ "unfoldedLayer" ]
     - state: icon_flipped
-      map: ["foldedLayer"]
+      map: [ "foldedLayer" ]
       visible: false
 
 - type: entity
@@ -36,7 +36,7 @@
       map: [ "unfoldedLayer" ]
       visible: false
     - state: icon_flipped
-      map: ["foldedLayer"]
+      map: [ "foldedLayer" ]
       visible: true
 
 - type: entity
@@ -51,7 +51,7 @@
     sprite: Clothing/Head/Soft/bluesoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatBluesoft]
+  parent: [ ClothingHeadHeadHatBaseFlipped, ClothingHeadHatBluesoft ]
   id: ClothingHeadHatBluesoftFlipped
   name: blue cap
 
@@ -73,7 +73,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatCargosoft]
+  parent: [ ClothingHeadHeadHatBaseFlipped, ClothingHeadHatCargosoft ]
   id: ClothingHeadHatCargosoftFlipped
   name: cargo cap
   components:
@@ -96,7 +96,7 @@
     sprite: Clothing/Head/Soft/qmsoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatQMsoft]
+  parent: [ ClothingHeadHeadHatBaseFlipped, ClothingHeadHatQMsoft ]
   id: ClothingHeadHatQMsoftFlipped
   name: quartermaster's cap
 
@@ -128,7 +128,7 @@
     sprite: Clothing/Head/Soft/corpsoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatCorpsoft]
+  parent: [ ClothingHeadHeadHatBaseFlipped, ClothingHeadHatCorpsoft ]
   id: ClothingHeadHatCorpsoftFlipped
   name: corporate cap
 
@@ -144,7 +144,7 @@
     sprite: Clothing/Head/Soft/greensoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatGreensoft]
+  parent: [ ClothingHeadHeadHatBaseFlipped, ClothingHeadHatGreensoft ]
   id: ClothingHeadHatGreensoftFlipped
   name: green cap
 
@@ -160,7 +160,7 @@
     sprite: Clothing/Head/Soft/blacksoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatBlacksoft]
+  parent: [ ClothingHeadHeadHatBaseFlipped, ClothingHeadHatBlacksoft ]
   id: ClothingHeadHatBlacksoftFlipped
   name: black cap
 
@@ -176,7 +176,7 @@
     sprite: Clothing/Head/Soft/greysoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatGreysoft]
+  parent: [ ClothingHeadHeadHatBaseFlipped, ClothingHeadHatGreysoft ]
   id: ClothingHeadHatGreysoftFlipped
   name: grey cap
 
@@ -192,7 +192,7 @@
     sprite: Clothing/Head/Soft/mimesoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatMimesoft]
+  parent: [ ClothingHeadHeadHatBaseFlipped, ClothingHeadHatMimesoft ]
   id: ClothingHeadHatMimesoftFlipped
   name: white cap
 
@@ -208,7 +208,7 @@
     sprite: Clothing/Head/Soft/orangesoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatOrangesoft]
+  parent: [ ClothingHeadHeadHatBaseFlipped, ClothingHeadHatOrangesoft ]
   id: ClothingHeadHatOrangesoftFlipped
   name: orange cap
 
@@ -230,7 +230,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatPurplesoft]
+  parent: [ ClothingHeadHeadHatBaseFlipped, ClothingHeadHatPurplesoft ]
   id: ClothingHeadHatPurplesoftFlipped
   name: purple cap
   components:
@@ -253,7 +253,7 @@
     sprite: Clothing/Head/Soft/redsoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatRedsoft]
+  parent: [ ClothingHeadHeadHatBaseFlipped, ClothingHeadHatRedsoft ]
   id: ClothingHeadHatRedsoftFlipped
   name: red cap
 
@@ -269,7 +269,7 @@
     sprite: Clothing/Head/Soft/secsoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatSecsoft]
+  parent: [ ClothingHeadHeadHatBaseFlipped, ClothingHeadHatSecsoft ]
   id: ClothingHeadHatSecsoftFlipped
   name: security cap
 
@@ -285,7 +285,7 @@
     sprite: Clothing/Head/Soft/yellowsoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatYellowsoft]
+  parent: [ ClothingHeadHeadHatBaseFlipped, ClothingHeadHatYellowsoft ]
   id: ClothingHeadHatYellowsoftFlipped
   name: yellow cap
 
@@ -301,7 +301,7 @@
     sprite: Clothing/Head/Soft/bizarresoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatBizarreSoft]
+  parent: [ ClothingHeadHeadHatBaseFlipped, ClothingHeadHatBizarreSoft ]
   id: ClothingHeadHatBizarreSoftFlipped
   name: troublemaker's cap
 
@@ -323,7 +323,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatParamedicsoft]
+  parent: [ ClothingHeadHeadHatBaseFlipped, ClothingHeadHatParamedicsoft ]
   id: ClothingHeadHatParamedicsoftFlipped
   name: paramedic cap
   components:

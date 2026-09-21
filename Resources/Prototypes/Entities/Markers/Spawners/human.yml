@@ -3,7 +3,7 @@
   id: SpawnMobSyndicateFootSoldier
   parent: MarkerBase
   components:
-#God forgive me for what I'm about to do
+  #God forgive me for what I'm about to do
   - type: Sprite
     layers:
     - state: green

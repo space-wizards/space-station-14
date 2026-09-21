@@ -5,8 +5,8 @@
   components:
   - type: Sprite
     layers:
-      - map: [ base ]
-        state: icon
+    - map: [ base ]
+      state: icon
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/toolbox_drop.ogg
@@ -87,13 +87,13 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 1
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-      - !type:SpawnEntitiesBehavior # todo this is not a good way to be doing this. Should probably use a construction graph
+      # todo this is not a good way to be doing this. Should probably use a construction graph
+      - !type:SpawnEntitiesBehavior
         offset: 0
         spawn:
           WeaponTurretSyndicateDisposable:
@@ -116,7 +116,7 @@
 
 - type: entity
   name: suspicious toolbox
-  parent: [ToolboxBase, BaseSyndicateContraband]
+  parent: [ ToolboxBase, BaseSyndicateContraband ]
   id: ToolboxSyndicate
   description: A sinister looking toolbox filled with elite syndicate tools.
   components:

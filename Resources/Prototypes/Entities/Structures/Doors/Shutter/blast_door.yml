@@ -10,10 +10,10 @@
     sprite: Structures/Doors/Airlocks/Standard/airlock-blastdoor.rsi
     layers:
     - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
+      map: [ "enum.DoorVisualLayers.Base" ]
     - state: welded
       sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
-      map: ["enum.WeldableLayers.BaseWelded"]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
   - type: Door
     closeTimeOne: 0.4
     closeTimeTwo: 0.4
@@ -37,8 +37,7 @@
     damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 350
       behaviors:
       - !type:PlaySoundBehavior
@@ -95,8 +94,7 @@
     damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 200
       behaviors:
       - !type:PlaySoundBehavior
@@ -107,8 +105,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
         density: 55
         mask:
@@ -132,10 +129,10 @@
     sprite: Structures/Doors/Airlocks/Standard/exo-blastdoor.rsi
     layers:
     - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
+      map: [ "enum.DoorVisualLayers.Base" ]
     - state: welded
       sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
-      map: ["enum.WeldableLayers.BaseWelded"]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
   - type: Door
     closeTimeOne: 0.4
     closeTimeTwo: 0.7
@@ -184,10 +181,10 @@
     sprite: Structures/Doors/Airlocks/Standard/airlock-blastdoor.rsi
     layers:
     - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
+      map: [ "enum.DoorVisualLayers.Base" ]
     - state: welded
       sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
-      map: ["enum.WeldableLayers.BaseWelded"]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
       visible: true
   - type: Door
     closeTimeOne: 0.4

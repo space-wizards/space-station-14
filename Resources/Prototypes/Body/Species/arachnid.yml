@@ -99,14 +99,14 @@
       amount: 5
   - type: Reactive
     reactions:
-    - reagents: [Water]
-      methods: [Touch]
+    - reagents: [ Water ]
+      methods: [ Touch ]
       effects:
       - !type:SpawnEntityInInventory
         slot: head
         entity: WaterDropletHat
-    - reagents: [Water, SpaceCleaner]
-      methods: [Touch]
+    - reagents: [ Water, SpaceCleaner ]
+      methods: [ Touch ]
       effects:
       - !type:WashCreamPie
   - type: Bloodstream
@@ -131,7 +131,7 @@
   - type: Speech
     speechVerb: Arachnid
     speechSounds: Arachnid
-    allowedEmotes: ['Click', 'Chitter']
+    allowedEmotes: [ 'Click', 'Chitter' ]
   - type: Vocal
     emoteSounds: UnisexArachnid
   - type: TypingIndicator
@@ -254,9 +254,21 @@
   id: OrganArachnidStomach
 
 - type: entity
-  parent: [ OrganBaseLiver, OrganSpriteHumanInternal, OrganArachnidInternal, OrganAnimalMetabolizer ]
+  parent:
+    [
+      OrganBaseLiver,
+      OrganSpriteHumanInternal,
+      OrganArachnidInternal,
+      OrganAnimalMetabolizer
+    ]
   id: OrganArachnidLiver
 
 - type: entity
-  parent: [ OrganBaseKidneys, OrganSpriteHumanInternal, OrganArachnidInternal, OrganAnimalMetabolizer ]
+  parent:
+    [
+      OrganBaseKidneys,
+      OrganSpriteHumanInternal,
+      OrganArachnidInternal,
+      OrganAnimalMetabolizer
+    ]
   id: OrganArachnidKidneys

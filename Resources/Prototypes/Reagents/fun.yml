@@ -60,7 +60,8 @@
     randomOffsetMax: 0.3
     maxOnTileWhitelist:
       tags: [ Bee ]
-  - !type:CleanTileReaction # Bees are extremely obsessive about cleanliness within what they consider their hive.
+  # Bees are extremely obsessive about cleanliness within what they consider their hive.
+  - !type:CleanTileReaction
     cleanCost: 0 # Consume absolutely zero bees. Buzz buzz.
   metabolisms:
     Bloodstream:
@@ -86,11 +87,11 @@
         type: Local
         visualType: Medium
         messages:
-          - "buzzochloricbees-effect-histamine-bee-allergy"
-          - "buzzochloricbees-effect-histamine-swells"
-          - "buzzochloricbees-effect-histamine-numb-to-the-bees"
-          - "buzzochloricbees-effect-histamine-cannot-be-one-with-the-bees"
-          - "buzzochloricbees-effect-squeaky-clean"
+        - "buzzochloricbees-effect-histamine-bee-allergy"
+        - "buzzochloricbees-effect-histamine-swells"
+        - "buzzochloricbees-effect-histamine-numb-to-the-bees"
+        - "buzzochloricbees-effect-histamine-cannot-be-one-with-the-bees"
+        - "buzzochloricbees-effect-squeaky-clean"
         probability: 0.05
         conditions:
         - !type:ReagentCondition
@@ -103,10 +104,10 @@
         type: Local
         visualType: Medium
         messages:
-          - "buzzochloricbees-effect-licoxide-electrifying"
-          - "buzzochloricbees-effect-licoxide-shocked-by-bee-facts"
-          - "buzzochloricbees-effect-licoxide-buzzed"
-          - "buzzochloricbees-effect-licoxide-buzzes"
+        - "buzzochloricbees-effect-licoxide-electrifying"
+        - "buzzochloricbees-effect-licoxide-shocked-by-bee-facts"
+        - "buzzochloricbees-effect-licoxide-buzzed"
+        - "buzzochloricbees-effect-licoxide-buzzes"
         probability: 0.05
         conditions:
         - !type:TagCondition
@@ -118,8 +119,8 @@
       - !type:PopupMessage
         type: Local
         messages:
-          - "buzzochloricbees-effect-fiber-hairy"
-          - "buzzochloricbees-effect-fiber-soft"
+        - "buzzochloricbees-effect-fiber-hairy"
+        - "buzzochloricbees-effect-fiber-soft"
         probability: 0.05
         conditions:
         - !type:TagCondition
@@ -195,16 +196,16 @@
         probability: 0.7
   metabolisms:
     Bloodstream:
-      metabolismRate : 3.00
+      metabolismRate: 3.00
       effects:
       - !type:HealthChange
         damage:
           types:
-             Slash : 9
+            Slash: 9
       - !type:PopupMessage
         type: Local
         visualType: LargeCaution
-        messages: [ "generic-reagent-effect-slicing-insides"]
+        messages: [ "generic-reagent-effect-slicing-insides" ]
         probability: 0.33
       - !type:Emote
         emote: Scream
@@ -229,7 +230,7 @@
     entity: IceCrust
     maxOnTileWhitelist:
       tags: [ Ice ]
-  - !type:ExtinguishTileReaction { }
+  - !type:ExtinguishTileReaction
   reactiveEffects:
     Acidic:
       methods: [ Touch ]
@@ -250,13 +251,13 @@
       - !type:Extinguish # cold
   metabolisms:
     Bloodstream:
-      metabolismRate : 0.45
+      metabolismRate: 0.45
       effects:
       - !type:HealthChange
         damage:
           types:
-             Cold: 0.01 # slightly nips directly, other cold damage comes from the temp change
-             Heat: -3 # ghetto burn chem. i don't think anyone would use this intentionally but it's funny
+            Cold: 0.01 # slightly nips directly, other cold damage comes from the temp change
+            Heat: -3 # ghetto burn chem. i don't think anyone would use this intentionally but it's funny
       - !type:PopupMessage
         conditions:
         - !type:ReagentCondition
@@ -264,7 +265,7 @@
           max: 35
         type: Local
         visualType: LargeCaution
-        messages: [ "fresium-effect-freeze-insides"]
+        messages: [ "fresium-effect-freeze-insides" ]
         probability: 0.05
       - !type:PopupMessage
         conditions:
@@ -273,7 +274,7 @@
           max: 35
         type: Local
         visualType: LargeCaution
-        messages: [ "fresium-effect-slow"]
+        messages: [ "fresium-effect-slow" ]
         probability: 0.2
       - !type:AdjustTemperature
         conditions:
@@ -301,7 +302,7 @@
           min: 40
         type: Local
         visualType: LargeCaution
-        messages: [ "fresium-effect-frozen"]
+        messages: [ "fresium-effect-frozen" ]
         probability: 0.4
 
 - type: reagent
@@ -349,7 +350,7 @@
         prototype: ArtifactLizard # Does the same thing as the original YML I made for this reagent.
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Animal]
+          type: [ Animal ]
           inverted: true
         - !type:ReagentCondition
           reagent: JuiceThatMakesYouWeh

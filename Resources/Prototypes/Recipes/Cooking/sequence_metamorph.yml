@@ -11,7 +11,8 @@
     range:
       min: 3
       max: 4
-  - !type:IngredientsWithTags # 1 meat cutlet
+  # 1 meat cutlet
+  - !type:IngredientsWithTags
     tags:
     - Cooked
     - Cutlet
@@ -19,13 +20,15 @@
     count:
       min: 1
       max: 2
-  - !type:IngredientsWithTags # 1 cheese
+  # 1 cheese
+  - !type:IngredientsWithTags
     tags:
     - Cheese
     count:
       min: 1
       max: 2
-  - !type:LastElementHasTags # last bun
+  # last bun
+  - !type:LastElementHasTags
     tags:
     - Bun
 
@@ -38,7 +41,8 @@
     range:
       min: 2
       max: 3
-  - !type:IngredientsWithTags # 1 chicken meat
+  # 1 chicken meat
+  - !type:IngredientsWithTags
     tags:
     - Cooked
     - Cutlet
@@ -47,12 +51,14 @@
     count:
       min: 1
       max: 2
-  - !type:FoodHasReagent # 5 +- 2 mayo
+  # 5 +- 2 mayo
+  - !type:FoodHasReagent
     reagent: Mayo
     count:
-     min: 3
-     max: 7
-  - !type:LastElementHasTags # last bun
+      min: 3
+      max: 7
+  # last bun
+  - !type:LastElementHasTags
     tags:
     - Bun
 
@@ -65,7 +71,8 @@
     range:
       min: 3
       max: 4
-  - !type:IngredientsWithTags # 2 crab meat
+  # 2 crab meat
+  - !type:IngredientsWithTags
     tags:
     - Cooked
     - Meat
@@ -73,7 +80,8 @@
     count:
       min: 2
       max: 3
-  - !type:LastElementHasTags # last bun
+  # last bun
+  - !type:LastElementHasTags
     tags:
     - Bun
 
@@ -86,7 +94,8 @@
     range:
       min: 3
       max: 4
-  - !type:IngredientsWithTags # 1 duck meat
+  # 1 duck meat
+  - !type:IngredientsWithTags
     tags:
     - Cooked
     - Cutlet
@@ -95,13 +104,15 @@
     count:
       min: 1
       max: 2
-  - !type:IngredientsWithTags # 1 cheese
+  # 1 cheese
+  - !type:IngredientsWithTags
     tags:
     - Cheese
     count:
       min: 1
       max: 2
-  - !type:LastElementHasTags # last bun
+  # last bun
+  - !type:LastElementHasTags
     tags:
     - Bun
 
@@ -114,12 +125,14 @@
     range:
       min: 2
       max: 3
-  - !type:IngredientsWithTags # 1 brain
+  # 1 brain
+  - !type:IngredientsWithTags
     tags:
     - Brain
     count:
       min: 1
       max: 2
-  - !type:LastElementHasTags # last bun
+  # last bun
+  - !type:LastElementHasTags
     tags:
     - Bun

@@ -1,5 +1,5 @@
 - type: entity
-  parent: [SolutionFood, BaseItem]
+  parent: [ SolutionFood, BaseItem ]
   id: BasePaper
   abstract: true
   components:
@@ -28,8 +28,7 @@
   - type: Injurable
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 15
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -72,10 +71,10 @@
     layers:
     - state: paper
     - state: paper_words
-      map: ["enum.PaperVisualLayers.Writing"]
+      map: [ "enum.PaperVisualLayers.Writing" ]
       visible: false
     - state: paper_stamp-generic
-      map: ["enum.PaperVisualLayers.Stamp"]
+      map: [ "enum.PaperVisualLayers.Stamp" ]
       visible: false
   - type: Paper
   - type: PaperLabelType
@@ -129,10 +128,10 @@
     layers:
     - state: paper_dotmatrix
     - state: paper_dotmatrix_words
-      map: ["enum.PaperVisualLayers.Writing"]
+      map: [ "enum.PaperVisualLayers.Writing" ]
       visible: false
     - state: paper_stamp-generic
-      map: ["enum.PaperVisualLayers.Stamp"]
+      map: [ "enum.PaperVisualLayers.Stamp" ]
       visible: false
   - type: PaperVisuals
     headerImagePath: "/Textures/Interface/Paper/paper_heading_artifact_analyzer.svg.96dpi.png"
@@ -157,11 +156,11 @@
     - state: paper
       color: "#e6e6fa"
     - state: paper_words
-      map: ["enum.PaperVisualLayers.Writing"]
+      map: [ "enum.PaperVisualLayers.Writing" ]
       color: "#e6e6fa"
       visible: false
     - state: paper_stamp-generic
-      map: ["enum.PaperVisualLayers.Stamp"]
+      map: [ "enum.PaperVisualLayers.Stamp" ]
       visible: false
   - type: PaperLabelType
     paperType: CaptainsPaper
@@ -191,11 +190,11 @@
     - state: paper
       color: "#9ef5ff"
     - state: paper_words
-      map: ["enum.PaperVisualLayers.Writing"]
+      map: [ "enum.PaperVisualLayers.Writing" ]
       color: "#9ef5ff"
       visible: false
     - state: paper_stamp-generic
-      map: ["enum.PaperVisualLayers.Stamp"]
+      map: [ "enum.PaperVisualLayers.Stamp" ]
       visible: false
   - type: PaperLabelType
     paperType: Invoice
@@ -226,7 +225,8 @@
   id: PaperNanoTaskItem
   parent: Paper
   name: NanoTask item
-  description: A printed NanoTask item. Can be inserted into your PDA to add it to your tasks.
+  description: A printed NanoTask item. Can be inserted into your PDA to add it to
+    your tasks.
   components:
   - type: Tag
     tags:
@@ -241,10 +241,10 @@
     layers:
     - state: paper_receipt
     - state: paper_receipt_words
-      map: ["enum.PaperVisualLayers.Writing"]
+      map: [ "enum.PaperVisualLayers.Writing" ]
       visible: false
     - state: paper_stamp-generic
-      map: ["enum.PaperVisualLayers.Stamp"]
+      map: [ "enum.PaperVisualLayers.Stamp" ]
       visible: false
   - type: PaperVisuals
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_perforated.svg.96dpi.png"
@@ -260,18 +260,19 @@
   id: PaperCargoBountyManifest
   parent: PaperCargoInvoice
   name: bounty manifest
-  description: A paper label designating a crate as containing a bounty. Selling a crate with this label will fulfill the bounty.
+  description: A paper label designating a crate as containing a bounty. Selling a
+    crate with this label will fulfill the bounty.
   components:
   - type: Sprite
     layers:
     - state: paper
       color: "#f7e574"
     - state: paper_words
-      map: ["enum.PaperVisualLayers.Writing"]
+      map: [ "enum.PaperVisualLayers.Writing" ]
       color: "#f7e574"
       visible: false
     - state: paper_stamp-generic
-      map: ["enum.PaperVisualLayers.Stamp"]
+      map: [ "enum.PaperVisualLayers.Stamp" ]
       visible: false
   - type: PaperLabelType
     paperType: Bounty
@@ -309,18 +310,19 @@
   id: PaperSalvageJobLabel
   parent: PaperCargoInvoice
   name: salvage job shipment label
-  description: A paper label designating a crate as containing a shipment to fulfill a salvage job. Selling a crate with this will fulfill the job.
+  description: A paper label designating a crate as containing a shipment to
+    fulfill a salvage job. Selling a crate with this will fulfill the job.
   components:
   - type: Sprite
     layers:
     - state: paper
       color: "#f7e574"
     - state: paper_words
-      map: ["enum.PaperVisualLayers.Writing"]
+      map: [ "enum.PaperVisualLayers.Writing" ]
       color: "#f7e574"
       visible: false
     - state: paper_stamp-generic
-      map: ["enum.PaperVisualLayers.Stamp"]
+      map: [ "enum.PaperVisualLayers.Stamp" ]
       visible: false
   - type: PaperLabelType
     paperType: Bounty
@@ -359,15 +361,15 @@
     content: book-cnc-sheet
   - type: Sprite
     layers:
-      - state: paper
-        color: "#cccccc"
-      - state: paper_words
-        map: ["enum.PaperVisualLayers.Writing"]
-        color: "#cccccc" #aaaaaaaaaaaaaaaaaaaaaaa
-        visible: false
-      - state: paper_stamp-generic
-        map: ["enum.PaperVisualLayers.Stamp"]
-        visible: false
+    - state: paper
+      color: "#cccccc"
+    - state: paper_words
+      map: [ "enum.PaperVisualLayers.Writing" ]
+      color: "#cccccc" #aaaaaaaaaaaaaaaaaaaaaaa
+      visible: false
+    - state: paper_stamp-generic
+      map: [ "enum.PaperVisualLayers.Stamp" ]
+      visible: false
   - type: PaperVisuals
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
     contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
@@ -411,7 +413,7 @@
   - type: NukeCodePaper
 
 - type: entity
-  parent: [Paper, BaseSyndicateContraband] # eat or burn your damn piece of paper damn thieves
+  parent: [ Paper, BaseSyndicateContraband ] # eat or burn your damn piece of paper damn thieves
   id: TraitorCodePaper
   name: syndicate codeword
   description: A leaked codeword to possibly get in touch with the Syndicate.
@@ -420,7 +422,7 @@
   - type: TraitorCodePaper
 
 - type: entity
-  parent: [Paper, BaseSyndicateContraband]
+  parent: [ Paper, BaseSyndicateContraband ]
   id: AllTraitorCodesPaper
   name: syndicate codewords registry
   description: A registry of all active Syndicate codewords.
@@ -440,15 +442,15 @@
     sprite: Objects/Misc/bureaucracy.rsi
     layers:
     - state: envelope_open
-      map: ["enum.EnvelopeVisualLayers.Open"]
+      map: [ "enum.EnvelopeVisualLayers.Open" ]
     - state: envelope_closed
-      map: ["enum.EnvelopeVisualLayers.Sealed"]
+      map: [ "enum.EnvelopeVisualLayers.Sealed" ]
       visible: false
     - state: envelope_torn
-      map: ["enum.EnvelopeVisualLayers.Torn"]
+      map: [ "enum.EnvelopeVisualLayers.Torn" ]
       visible: false
     - state: paper_stamp-generic
-      map: ["enum.PaperVisualLayers.Stamp"]
+      map: [ "enum.PaperVisualLayers.Stamp" ]
       visible: false
   - type: Paper
     content: envelope-default-message
@@ -469,9 +471,9 @@
         ejectSound: /Audio/Effects/packetrip.ogg
         whitelist:
           components:
-            - Cash
+          - Cash
           tags:
-            - Paper
+          - Paper
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
     requiresComplex: false
@@ -506,8 +508,7 @@
     damageModifierSet: Wood
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 15
       behaviors:
       - !type:EmptyAllContainersBehaviour

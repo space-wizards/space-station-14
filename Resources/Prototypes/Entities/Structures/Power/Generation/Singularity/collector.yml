@@ -3,7 +3,8 @@
   id: RadiationCollector
   name: radiation collector
   suffix: Empty tank
-  description: A machine that collects radiation and turns it into power. Requires plasma gas to function.
+  description: A machine that collects radiation and turns it into power. Requires
+    plasma gas to function.
   placement:
     mode: SnapgridCenter
   components:
@@ -14,8 +15,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
         density: 190
         mask:
@@ -29,8 +29,8 @@
     sprite: Structures/Power/Generation/Singularity/collector.rsi
     snapCardinals: true
     layers:
-      - state: ca_off
-        map: ["enum.RadiationCollectorVisualLayers.Main"]
+    - state: ca_off
+      map: [ "enum.RadiationCollectorVisualLayers.Main" ]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -48,8 +48,7 @@
   - type: NodeContainer
     examinable: true
     nodes:
-      input:
-        !type:CableDeviceNode
+      input: !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: PowerMonitoringDevice
     group: Generator
@@ -60,9 +59,9 @@
   - type: RadiationCollector
     chargeModifier: 15000
     radiationReactiveGases:
-      - reactantPrototype: Plasma
-        powerGenerationEfficiency: 1
-        reactantBreakdownRate: 0.0001
+    - reactantPrototype: Plasma
+      powerGenerationEfficiency: 1
+      reactantBreakdownRate: 0.0001
   - type: RadiationReceiver
   - type: PowerSupplier
   - type: Anchorable
@@ -74,7 +73,7 @@
     - Power
   - type: ContainerContainer
     containers:
-      gas_tank: !type:ContainerSlot {}
+      gas_tank: !type:ContainerSlot
   - type: ItemSlots
     slots:
       gas_tank:
@@ -86,8 +85,7 @@
     delay: 1
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 175
       behaviors:
       - !type:PlaySoundBehavior

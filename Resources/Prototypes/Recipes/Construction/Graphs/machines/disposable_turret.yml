@@ -8,9 +8,9 @@
     - to: disposableTurret
       completed:
       - !type:SpawnPrototype
-            prototype: ToolboxElectricalTurret
-            amount: 1
-      - !type:DeleteEntity {}
+        prototype: ToolboxElectricalTurret
+        amount: 1
+      - !type:DeleteEntity
       steps:
-        - tool: Screwing
-          doAfter: 10
+      - tool: Screwing
+        doAfter: 10

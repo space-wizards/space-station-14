@@ -54,7 +54,8 @@
         - id: FoodBakedChevreChaud
         - id: FoodBakedNugget
         - id: FoodTacoShell
-      - !type:GroupSelector #rare
+      #rare
+      - !type:GroupSelector
         weight: 0.05
         children:
         - id: FoodBurgerAppendix

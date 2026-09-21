@@ -2,7 +2,7 @@
 
 - type: decal
   id: Dirt
-  tags: ["station", "dirty"]
+  tags: [ "station", "dirty" ]
   defaultCleanable: true
   sprite:
     sprite: Decals/dirty.rsi
@@ -10,7 +10,7 @@
 
 - type: decal
   id: DirtLight
-  tags: ["station", "dirty"]
+  tags: [ "station", "dirty" ]
   defaultCleanable: true
   sprite:
     sprite: Decals/dirty.rsi
@@ -18,7 +18,7 @@
 
 - type: decal
   id: DirtMedium
-  tags: ["station", "dirty"]
+  tags: [ "station", "dirty" ]
   defaultCleanable: true
   sprite:
     sprite: Decals/dirty.rsi
@@ -26,7 +26,7 @@
 
 - type: decal
   id: DirtHeavy
-  tags: ["station", "dirty"]
+  tags: [ "station", "dirty" ]
   defaultCleanable: true
   sprite:
     sprite: Decals/dirty.rsi
@@ -34,7 +34,7 @@
 
 - type: decal
   id: DirtHeavyMonotile
-  tags: ["station", "dirty"]
+  tags: [ "station", "dirty" ]
   defaultCleanable: true
   sprite:
     sprite: Decals/dirty.rsi
@@ -42,7 +42,7 @@
 
 - type: decal
   id: DirtLightVerticalSlats
-  tags: ["station", "dirty"]
+  tags: [ "station", "dirty" ]
   defaultCleanable: true
   sprite:
     sprite: Decals/dirty.rsi
@@ -50,7 +50,7 @@
 
 - type: decal
   id: DirtHeavyVerticalSlats
-  tags: ["station", "dirty"]
+  tags: [ "station", "dirty" ]
   defaultCleanable: true
   sprite:
     sprite: Decals/dirty.rsi
@@ -58,7 +58,7 @@
 
 - type: decal
   id: DirtLightHorizontalSlats
-  tags: ["station", "dirty"]
+  tags: [ "station", "dirty" ]
   defaultCleanable: true
   sprite:
     sprite: Decals/dirty.rsi
@@ -66,7 +66,7 @@
 
 - type: decal
   id: DirtHeavyHorizontalSlats
-  tags: ["station", "dirty"]
+  tags: [ "station", "dirty" ]
   defaultCleanable: true
   sprite:
     sprite: Decals/dirty.rsi
@@ -74,7 +74,7 @@
 
 - type: decal
   id: Damaged
-  tags: ["station", "dirty"]
+  tags: [ "station", "dirty" ]
   defaultCleanable: true
   sprite:
     sprite: Decals/dirty.rsi
@@ -82,7 +82,7 @@
 
 - type: decal
   id: Remains
-  tags: ["station", "dirty"]
+  tags: [ "station", "dirty" ]
   defaultCleanable: true
   sprite:
     sprite: Decals/dirty.rsi
@@ -90,10 +90,8 @@
 
 - type: decal
   id: Rust
-  tags: ["station", "dirty"]
+  tags: [ "station", "dirty" ]
   defaultCleanable: true
   sprite:
     sprite: Decals/dirty.rsi
     state: rust
-
-

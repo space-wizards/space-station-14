@@ -23,7 +23,7 @@
 # Empty
 
 - type: entity
-  parent: [DrinkVisualsOpenable, SolutionLarge, DrinkBottlePlasticBase]
+  parent: [ DrinkVisualsOpenable, SolutionLarge, DrinkBottlePlasticBase ]
   id: CustomDrinkJug
   name: beverage jug
   description: A jug for storing custom made drinks.
@@ -44,7 +44,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionSmall, DrinkBottlePlasticBase]
+  parent: [ SolutionSmall, DrinkBottlePlasticBase ]
   id: DrinkBottlePlasticSmallBaseFull
   suffix: Full
   components:
@@ -56,10 +56,11 @@
     solution: drink
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottlePlasticSmallBaseFull]
+  parent: [ DrinkVisualsAllFilled, DrinkBottlePlasticSmallBaseFull ]
   id: DrinkWaterBottleFull
   name: water bottle
-  description: Simple clean water of unknown origin. You think that maybe you dont want to know it.
+  description: Simple clean water of unknown origin. You think that maybe you dont
+    want to know it.
   components:
   - type: Solution
     solution:
@@ -80,7 +81,7 @@
   suffix: Full
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottlePlasticBaseFull]
+  parent: [ DrinkVisualsAllFilled, DrinkBottlePlasticBaseFull ]
   id: DrinkColaBottleFull
   name: Space Cola bottle
   description: Cola. In spaaace!
@@ -96,7 +97,7 @@
     sprite: Objects/Consumable/Drinks/colabottle.rsi
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottlePlasticBaseFull]
+  parent: [ DrinkVisualsAllFilled, DrinkBottlePlasticBaseFull ]
   id: DrinkSpaceMountainWindBottleFull
   name: Space Solar Wind bottle
   description: Blows right through you like a solar wind.
@@ -112,7 +113,7 @@
     sprite: Objects/Consumable/Drinks/space_mountain_wind_bottle.rsi
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottlePlasticBaseFull]
+  parent: [ DrinkVisualsAllFilled, DrinkBottlePlasticBaseFull ]
   id: DrinkSpaceUpBottleFull
   name: Space-Up bottle
   description: Tastes like a hull breach in your mouth.
@@ -128,7 +129,7 @@
     sprite: Objects/Consumable/Drinks/space-up_bottle.rsi
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottlePlasticBaseFull]
+  parent: [ DrinkVisualsAllFilled, DrinkBottlePlasticBaseFull ]
   id: DrinkSodaWaterBottleFull
   name: soda water bottle
   description: Like water, but angry!
@@ -144,7 +145,7 @@
     localizedLabel: reagent-name-soda-water
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottlePlasticBaseFull]
+  parent: [ DrinkVisualsAllFilled, DrinkBottlePlasticBaseFull ]
   id: DrinkTonicWaterBottleFull
   name: tonic water bottle
   description: Like soda water, but angrier maybe? Often sweeter.

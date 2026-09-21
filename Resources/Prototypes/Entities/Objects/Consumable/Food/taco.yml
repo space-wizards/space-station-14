@@ -1,7 +1,7 @@
 # When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_single.yml
 
 - type: entity
-  parent: [SolutionSmall, FoodMealBase]
+  parent: [ SolutionSmall, FoodMealBase ]
   id: FoodTacoShell
   name: taco shell
   description: A taco shell, easy to hold, but falls on its side when put down.
@@ -14,7 +14,7 @@
     sprite: Objects/Consumable/Food/taco_sequence.rsi
     layers:
     - state: tacoshell_back
-    - map: ["foodSequenceLayers"]
+    - map: [ "foodSequenceLayers" ]
     - state: tacoshell_forward
   - type: Solution
     solution:
@@ -37,13 +37,13 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionSmall, FoodInjectableBase]
+  parent: [ SolutionSmall, FoodInjectableBase ]
   id: FoodTacoBase
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
-      - cheesy
+    - meaty
+    - cheesy
   - type: Edible
     transferAmount: 3
   - type: Sprite
@@ -62,7 +62,7 @@
     storedOffset: 0,1
   - type: Tag
     tags:
-      - Meat
+    - Meat
 
 - type: entity
   name: beef taco
@@ -90,8 +90,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - onion
-      - fishy
+    - onion
+    - fishy
   - type: Sprite
     state: fishtaco
   - type: Solution
@@ -191,12 +191,12 @@
   components:
   - type: FlavorProfile
     flavors:
-      - cheesy
-      - tomato
-      - meaty
-      - onion
+    - cheesy
+    - tomato
+    - meaty
+    - onion
   - type: Sprite
     state: softtaco
   - type: Tag
     tags:
-      - Meat
+    - Meat

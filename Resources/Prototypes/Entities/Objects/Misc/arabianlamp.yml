@@ -1,6 +1,6 @@
 - type: entity
   name: lamp
-  parent: [SolutionToolWelderIndsutrial, BaseItem]
+  parent: [ SolutionToolWelderIndsutrial, BaseItem ]
   id: ArabianLamp
   description: Why the heck won't this piece of junk open!?
   components:
@@ -13,10 +13,10 @@
     breakOnAccessBreaker: false
   - type: EntityStorage
     capacity: 1 # Its smol.
-  # - type: EntityTableContainerFill
+    # - type: EntityTableContainerFill
     # containers:
-      # entity_storage:
-        # id: PuddleSparkle # Ha! Cute. Unfortunately it despawns before the container is likely to open.
+    # entity_storage:
+    # id: PuddleSparkle # Ha! Cute. Unfortunately it despawns before the container is likely to open.
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container
@@ -36,9 +36,9 @@
         Blunt: 6
   - type: ItemToggleMeleeWeapon
     activatedDamage:
-        types:
-            Blunt: 6
-            Heat: 3
+      types:
+        Blunt: 6
+        Heat: 3
     activatedSoundOnHit:
       path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
       params:
@@ -68,11 +68,11 @@
     - state: lamp
       map: [ "enum.StorageVisualLayers.Base" ]
     - state: lamptop
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: flame
       visible: false
       shader: unshaded
-      map: ["enum.ToggleableVisuals.Layer"]
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: GenericVisualizer
     visuals:
       enum.ToggleableVisuals.Enabled:

@@ -14,16 +14,16 @@
     sprite: Structures/Storage/closet.rsi
     layers:
     - state: generic
-      map: ["enum.StorageVisualLayers.Base"]
+      map: [ "enum.StorageVisualLayers.Base" ]
     - state: generic_door
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: welded
       visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
     - state: paper
       visible: false
       sprite: Structures/Storage/closet_labels.rsi
-      map: ["enum.PaperLabelVisuals.Layer"]
+      map: [ "enum.PaperLabelVisuals.Layer" ]
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
     damage:
@@ -36,8 +36,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.48,0.25,0.48"
         density: 75
         mask:
@@ -92,8 +91,7 @@
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 60
       behaviors:
       - !type:PlaySoundBehavior
@@ -125,12 +123,12 @@
     sprite: Structures/Storage/wall_locker.rsi
     layers:
     - state: generic
-      map: ["enum.StorageVisualLayers.Base"]
+      map: [ "enum.StorageVisualLayers.Base" ]
     - state: generic_door
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: welded
       visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
   - type: EntityStorage
     isCollidableWhenOpen: true
     enteringOffset: 0, -0.6
@@ -145,8 +143,7 @@
         ents: []
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 60
       behaviors:
       - !type:PlaySoundBehavior
@@ -185,15 +182,15 @@
     sprite: Structures/Storage/wall_locker.rsi
     layers:
     - state: generic
-      map: ["enum.StorageVisualLayers.Base"]
+      map: [ "enum.StorageVisualLayers.Base" ]
     - state: generic_door
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: locked
-      map: ["enum.LockVisualLayers.Lock"]
+      map: [ "enum.LockVisualLayers.Lock" ]
       shader: unshaded
     - state: welded
       visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
   - type: Paintable
     group: WallLocker
 
@@ -220,12 +217,12 @@
     layers:
     - state: base
     - state: door
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: welded
       visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
     - state: locked
-      map: ["enum.LockVisualLayers.Lock"]
+      map: [ "enum.LockVisualLayers.Lock" ]
       shader: unshaded
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
@@ -239,8 +236,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.48,0.25,0.48"
         density: 350
         mask:
@@ -259,8 +255,7 @@
     damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 140
       behaviors:
       - !type:PlaySoundBehavior

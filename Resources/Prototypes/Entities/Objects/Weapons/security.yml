@@ -1,8 +1,9 @@
 - type: entity
   name: stun baton
-  parent: [BaseItem, BaseSecurityContraband]
+  parent: [ BaseItem, BaseSecurityContraband ]
   id: Stunbaton
-  description: A stun baton for incapacitating people with. Has advanced wrist strap technology to prevent cadets accidentally dropping it.
+  description: A stun baton for incapacitating people with. Has advanced wrist
+    strap technology to prevent cadets accidentally dropping it.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/stunbaton.rsi
@@ -71,10 +72,10 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-     enum.ToggleableVisuals.Enabled:
+      enum.ToggleableVisuals.Enabled:
         enum.ToggleableVisuals.Layer:
-          True: {state: stunbaton_on}
-          False: {state: stunbaton_off}
+          True: { state: stunbaton_on }
+          False: { state: stunbaton_off }
   - type: StaticPrice
     price: 80
   - type: Riggable
@@ -104,7 +105,7 @@
 
 - type: entity
   name: truncheon
-  parent: [BaseItem, BaseSecurityContraband]
+  parent: [ BaseItem, BaseSecurityContraband ]
   id: Truncheon
   description: A rigid, steel-studded baton, meant to harm.
   components:
@@ -144,51 +145,52 @@
 
 - type: entity
   name: flash
-  parent: [BaseItem, BaseSecurityScienceCommandContraband]
+  parent: [ BaseItem, BaseSecurityScienceCommandContraband ]
   id: Flash
-  description: An ultrabright flashbulb with a trigger, which causes the victim to be dazed and lose their eyesight for a moment. Useless when burnt out.
+  description: An ultrabright flashbulb with a trigger, which causes the victim to
+    be dazed and lose their eyesight for a moment. Useless when burnt out.
   components:
-    - type: Sprite
-      sprite: Objects/Weapons/Melee/flash.rsi
-      layers:
-      - state: flash
-        map: [ "enum.FlashVisualLayers.BaseLayer" ]
-      - state: flashing
-        map: [ "enum.FlashVisualLayers.LightLayer" ]
-        visible: false
-        shader: unshaded
-    - type: Flash
-    - type: RevolutionaryConverter
-    - type: LimitedCharges
-      maxCharges: 5
-    - type: MeleeWeapon
-      wideAnimationRotation: 180
-      damage:
-        types:
-          Blunt: 0 # melee weapon to allow flashing individual targets
-      angle: 10
-    - type: Item
-      size: Small
-      sprite: Objects/Weapons/Melee/flash.rsi
-    - type: UseDelay
-      delay: 4 # has to be the same as the FlashingTime datafield in FlashComponent
-    - type: UseDelayOnMeleeHit
-    - type: StaticPrice
-      price: 40
-    - type: Appearance
-    - type: GenericVisualizer
-      visuals:
-        enum.FlashVisuals.Burnt:
-          enum.FlashVisualLayers.BaseLayer:
-            True: {state: burnt}
-        enum.FlashVisuals.Flashing:
-          enum.FlashVisualLayers.LightLayer:
-            True: {visible: true}
-            False: {visible: false}
-    - type: GuideHelp
-      guides:
-      - Security
-      - Antagonists
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/flash.rsi
+    layers:
+    - state: flash
+      map: [ "enum.FlashVisualLayers.BaseLayer" ]
+    - state: flashing
+      map: [ "enum.FlashVisualLayers.LightLayer" ]
+      visible: false
+      shader: unshaded
+  - type: Flash
+  - type: RevolutionaryConverter
+  - type: LimitedCharges
+    maxCharges: 5
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    damage:
+      types:
+        Blunt: 0 # melee weapon to allow flashing individual targets
+    angle: 10
+  - type: Item
+    size: Small
+    sprite: Objects/Weapons/Melee/flash.rsi
+  - type: UseDelay
+    delay: 4 # has to be the same as the FlashingTime datafield in FlashComponent
+  - type: UseDelayOnMeleeHit
+  - type: StaticPrice
+    price: 40
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.FlashVisuals.Burnt:
+        enum.FlashVisualLayers.BaseLayer:
+          True: { state: burnt }
+      enum.FlashVisuals.Flashing:
+        enum.FlashVisualLayers.LightLayer:
+          True: { visible: true }
+          False: { visible: false }
+  - type: GuideHelp
+    guides:
+    - Security
+    - Antagonists
 
 - type: entity
   name: flash
@@ -196,60 +198,59 @@
   suffix: 2 charges
   id: SciFlash
   components:
-    - type: LimitedCharges
-      maxCharges: 2
+  - type: LimitedCharges
+    maxCharges: 2
 
 - type: entity
   name: portable flasher
-  parent: [BaseMachine, BaseSecurityContraband, BaseMachineDestructible]
+  parent: [ BaseMachine, BaseSecurityContraband, BaseMachineDestructible ]
   id: PortableFlasher
-  description: An ultrabright flashbulb with a proximity trigger, useful for making an area security-only.
+  description: An ultrabright flashbulb with a proximity trigger, useful for
+    making an area security-only.
   components:
-    - type: EmitSoundOnTrigger
-      predicted: true
-      sound:
-        path: /Audio/Weapons/flash.ogg
-    - type: FlashOnTrigger
-      range: 3
-    - type: TriggerOnProximity
-      enabled: true
-      cooldown: 5
-      shape:
-        !type:PhysShapeCircle
-          radius: 2
-      repeating: true
-    - type: Sprite
-      sprite: Objects/Weapons/pflash.rsi
-      layers:
-        - state: "off"
-          map: ["enum.ProximityTriggerVisualLayers.Base"]
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.15,-0.3,0.15,0.3"
-          mask:
-          - MachineMask
-          layer:
-          - MachineLayer
-          density: 380
-    - type: Appearance
-    - type: AnimationPlayer
-    - type: PointLight
-      energy: 2.0
-      radius: 0
-      softness: 0
-      enabled: true
-    - type: GuideHelp
-      guides:
-      - Security
-      - Antagonists
-    - type: Destructible
-      thresholds:
-      - trigger: !type:DamageTrigger
-          damage: 175
-        behaviors:
-        - !type:PlaySoundBehavior
-          sound:
-            collection: MetalGlassBreak
+  - type: EmitSoundOnTrigger
+    predicted: true
+    sound:
+      path: /Audio/Weapons/flash.ogg
+  - type: FlashOnTrigger
+    range: 3
+  - type: TriggerOnProximity
+    enabled: true
+    cooldown: 5
+    shape: !type:PhysShapeCircle
+      radius: 2
+    repeating: true
+  - type: Sprite
+    sprite: Objects/Weapons/pflash.rsi
+    layers:
+    - state: "off"
+      map: [ "enum.ProximityTriggerVisualLayers.Base" ]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.15,-0.3,0.15,0.3"
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        density: 380
+  - type: Appearance
+  - type: AnimationPlayer
+  - type: PointLight
+    energy: 2.0
+    radius: 0
+    softness: 0
+    enabled: true
+  - type: GuideHelp
+    guides:
+    - Security
+    - Antagonists
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 175
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak

@@ -107,7 +107,7 @@
   result: HonkerTargetingElectronics
 
 - type: latheRecipe
-  parent: [ BaseGoldCircuitboardRecipe, BaseMechRecipeCategory]
+  parent: [ BaseGoldCircuitboardRecipe, BaseMechRecipeCategory ]
   id: HamtrCentralElectronics
   result: HamtrCentralElectronics
 

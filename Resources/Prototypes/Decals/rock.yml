@@ -1,6 +1,6 @@
 - type: decal
   id: Basalt1
-  tags: ["rock"]
+  tags: [ "rock" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -9,7 +9,7 @@
 
 - type: decal
   id: Basalt2
-  tags: ["rock"]
+  tags: [ "rock" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -18,7 +18,7 @@
 
 - type: decal
   id: Basalt3
-  tags: ["rock"]
+  tags: [ "rock" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -27,7 +27,7 @@
 
 - type: decal
   id: Basalt4
-  tags: ["rock"]
+  tags: [ "rock" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -36,7 +36,7 @@
 
 - type: decal
   id: Basalt5
-  tags: ["rock"]
+  tags: [ "rock" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -45,7 +45,7 @@
 
 - type: decal
   id: Basalt6
-  tags: ["rock"]
+  tags: [ "rock" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -54,7 +54,7 @@
 
 - type: decal
   id: Basalt7
-  tags: ["rock"]
+  tags: [ "rock" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -63,7 +63,7 @@
 
 - type: decal
   id: Basalt8
-  tags: ["rock"]
+  tags: [ "rock" ]
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -72,7 +72,7 @@
 
 - type: decal
   id: Basalt9
-  tags: ["rock"]
+  tags: [ "rock" ]
   snapCardinals: true
   defaultSnap: false
   sprite:

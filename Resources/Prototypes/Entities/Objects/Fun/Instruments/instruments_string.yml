@@ -28,9 +28,9 @@
     program: 27
   - type: SwappableInstrument
     instrumentList:
-      "Clean": {27: 0}
-      "Jazz": {26: 0}
-      "Muted": {28: 0}
+      "Clean": { 27: 0 }
+      "Jazz": { 26: 0 }
+      "Muted": { 28: 0 }
   - type: Sprite
     sprite: Objects/Fun/Instruments/eguitar.rsi
 
@@ -38,16 +38,17 @@
   parent: BaseStringInstrumentClothing
   id: BassGuitarInstrument
   name: bass guitar
-  description: You feel really cool holding this. Shame you're the only one that thinks that.
+  description: You feel really cool holding this. Shame you're the only one that
+    thinks that.
   components:
   - type: Instrument
     program: 33
   - type: SwappableInstrument
     instrumentList:
-      "Fingered": {33: 0}
-      "Pick": {34: 0}
-      "Slap": {36: 0}
-      "Slap (XTra Funky)": {37: 0}
+      "Fingered": { 33: 0 }
+      "Pick": { 34: 0 }
+      "Slap": { 36: 0 }
+      "Slap (XTra Funky)": { 37: 0 }
   - type: Sprite
     sprite: Objects/Fun/Instruments/bassguitar.rsi
 
@@ -55,15 +56,16 @@
   parent: BaseHandheldInstrument
   id: FretlessBassGuitarInstrument
   name: fretless bass guitar
-  description: You feel really cool holding this. Shame only fretted bass players think that.
+  description: You feel really cool holding this. Shame only fretted bass players
+    think that.
   components:
   - type: Instrument
     program: 35
   - type: SwappableInstrument
     instrumentList:
-      "Fretless": {35: 0}
-      "Slap": {36: 0}
-      "Slap (XTra Funky)": {37: 0}
+      "Fretless": { 35: 0 }
+      "Slap": { 36: 0 }
+      "Slap (XTra Funky)": { 37: 0 }
   - type: Sprite
     sprite: Objects/Fun/Instruments/bassguitarfretless.rsi
     state: icon
@@ -90,9 +92,9 @@
     program: 29
   - type: SwappableInstrument
     instrumentList:
-      "Overdrive": {29: 0}
-      "Distortion": {30: 0}
-      "Harmonics": {31: 0}
+      "Overdrive": { 29: 0 }
+      "Distortion": { 30: 0 }
+      "Harmonics": { 31: 0 }
   - type: Sprite
     sprite: Objects/Fun/Instruments/rockguitar.rsi
   - type: MeleeWeapon
@@ -118,8 +120,8 @@
     program: 24
   - type: SwappableInstrument
     instrumentList:
-      "Nylon": {24: 0}
-      "Steel": {25: 0}
+      "Nylon": { 24: 0 }
+      "Steel": { 25: 0 }
   - type: Sprite
     sprite: Objects/Fun/Instruments/guitar.rsi
   - type: Wieldable
@@ -128,8 +130,7 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 20
       behaviors:
       - !type:PlaySoundBehavior
@@ -188,8 +189,8 @@
     program: 40
   - type: SwappableInstrument
     instrumentList:
-      "Classical": {40: 0}
-      "Bluegrass": {110: 0}
+      "Classical": { 40: 0 }
+      "Bluegrass": { 110: 0 }
   - type: Sprite
     sprite: Objects/Fun/Instruments/violin.rsi
 

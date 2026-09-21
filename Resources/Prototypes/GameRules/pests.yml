@@ -2,7 +2,9 @@
 
 - type: entityTable
   id: CalmPestEventsTable
-  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+  table:
+    # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    !type:AllSelector
     children:
     - id: SnailMigrationLowPop
     - id: CockroachMigration
@@ -11,7 +13,9 @@
 
 - type: entityTable
   id: SpicyPestEventsTable
-  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+  table:
+    # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    !type:AllSelector
     children:
     - id: KingRatMigration
     - id: SnailMigration
@@ -132,12 +136,14 @@
       rolls: 3,5
       children:
       - !type:GroupSelector
-        children: # Increased chances for special snails on purpose. Makes it a bit more interesting.
+        children:
+        # Increased chances for special snails on purpose. Makes it a bit more interesting.
         - id: MobSnail
         - id: MobSnailSpeed
         - id: MobSnailMoth
       - !type:GroupSelector
-        children: # Increased chances for special roaches on purpose. Makes it a bit more interesting.
+        children:
+        # Increased chances for special roaches on purpose. Makes it a bit more interesting.
         - id: MobCockroach
         - id: MobMothroach
         - id: MobMoproach

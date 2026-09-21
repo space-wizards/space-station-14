@@ -18,8 +18,7 @@
   id: OffsetCaneClown
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobClown
       time: 1h
   storage:
@@ -31,8 +30,7 @@
   id: OffsetCaneMime
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobMime
       time: 1h
   storage:
@@ -44,8 +42,7 @@
   id: OffsetCaneNT
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
+    requirement: !type:DepartmentTimeRequirement
       department: Command
       time: 5h
   storage:
@@ -57,8 +54,7 @@
   id: Cane
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobLibrarian
       time: 1h # same as Jamjar.
   storage:

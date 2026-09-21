@@ -8,9 +8,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Objects/Consumable/Drinks/ginbottle.rsi
-        state: icon
+    - state: red
+    - sprite: Objects/Consumable/Drinks/ginbottle.rsi
+      state: icon
   - type: EntityTableSpawner
     table: !type:NestedSelector
       tableId: RandomAllAlcoholTable

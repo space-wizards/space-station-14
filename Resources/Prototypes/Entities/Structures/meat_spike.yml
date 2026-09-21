@@ -11,13 +11,12 @@
     state: spike
     layers:
     - state: spike
-      map: ["base"]
+      map: [ "base" ]
   - type: Damageable
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 40
       behaviors:
       - !type:PlaySoundBehavior

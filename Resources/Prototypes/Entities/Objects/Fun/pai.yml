@@ -32,7 +32,7 @@
     - state: pai-base
     - state: pai-off-overlay
       shader: unshaded
-      map: ["screen"]
+      map: [ "screen" ]
   - type: Input
     context: "human"
   - type: PAI
@@ -81,7 +81,7 @@
     # Note that the personal AI never "dies".
   - type: MobState
     allowedStates:
-      - Alive
+    - Alive
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -94,8 +94,8 @@
   - type: ChangeVoiceInContainer
     whitelist:
       components:
-        - SecretStash
-        - WrappedParcel
+      - SecretStash
+      - WrappedParcel
   - type: Vocal
     emoteSounds: UnisexSilicon
   - type: Tag
@@ -109,7 +109,7 @@
       - state: base-inhand-right
 
 - type: entity
-  parent: [ PersonalAI, BaseSyndicateContraband]
+  parent: [ PersonalAI, BaseSyndicateContraband ]
   id: SyndicatePersonalAI
   name: syndicate personal ai device
   description: Your Syndicate pal who's fun to be with!
@@ -120,7 +120,7 @@
     - state: pai-base
     - state: syndicate-pai-off-overlay
       shader: unshaded
-      map: ["screen"]
+      map: [ "screen" ]
   - type: ToggleableGhostRole
     roleName: pai-system-role-name-syndicate
     roleDescription: pai-system-role-description-syndicate
@@ -164,7 +164,7 @@
     - state: golden-pai-base
     - state: pai-off-overlay
       shader: unshaded
-      map: ["screen"]
+      map: [ "screen" ]
   - type: Appearance
   - type: Item
     inhandVisuals:
@@ -185,7 +185,7 @@
     - state: potato-base
     - state: potato-off-overlay
       shader: unshaded
-      map: ["screen"]
+      map: [ "screen" ]
   - type: ToggleableGhostRole
     roleName: pai-system-role-name-potato
     roleDescription: pai-system-role-description-potato

@@ -7,7 +7,7 @@
   contrabandSeverity: Minor
   flavor: bitter
   color: "#FAFAFA"
-  boilingPoint: 212.0  # Dexosyephedrine vape when?
+  boilingPoint: 212.0 # Dexosyephedrine vape when?
   meltingPoint: 170.0
   metabolisms:
     Bloodstream:
@@ -39,8 +39,7 @@
       - !type:ModifyStatusEffect
         effectProto: StatusEffectAdrenaline
         time: 3
-      # Side effects
-      - !type:Jitter
+      - !type:Jitter # Side effects
       - !type:GenericStatusEffect
         key: Stutter
         component: StutteringAccent
@@ -88,11 +87,10 @@
       - !type:ModifyKnockdown
         time: 1
         type: Remove
-      # Side effects
-      - !type:Jitter
+      - !type:Jitter # Side effects
       - !type:PopupMessage
         visualType: Medium
-        messages: ["ephedrine-effect-tight-pain", "ephedrine-effect-heart-pounds"]
+        messages: [ "ephedrine-effect-tight-pain", "ephedrine-effect-heart-pounds" ]
         type: Local
         probability: 0.05
       # OD
@@ -174,9 +172,10 @@
       - !type:ModifyStatusEffect
         effectProto: StatusEffectAdrenaline
         time: 3
-      # Side effects
       - !type:Jitter
-      # OD
+        # Side effects
+
+        # OD
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
@@ -208,7 +207,8 @@
         conditions:
         - !type:MobStateCondition
           mobstate: Critical
-        damage: # Doesn't heal poison because if you OD'd I'm not giving you a safety net
+        damage:
+          # Doesn't heal poison because if you OD'd I'm not giving you a safety net
           Burn: -0.5
           Brute: -0.5
       - !type:HealthChange
@@ -218,8 +218,7 @@
         damage:
           types:
             Asphyxiation: -2
-      # Side effects
-      - !type:ResetNarcolepsy
+      - !type:ResetNarcolepsy # Side effects
       - !type:Satiate
         satiationType: Hunger
         factor: 1
@@ -285,9 +284,11 @@
         effectProto: StatusEffectSeeingRainbow
         time: 10
         type: Add
-      - !type:Vomit # Vomiting is a symptom of brain damage
+      # Vomiting is a symptom of brain damage
+      - !type:Vomit
         probability: 0.05
-      - !type:Drunk # Headaches and slurring are major symptoms of brain damage, this is close enough
+      # Headaches and slurring are major symptoms of brain damage, this is close enough
+      - !type:Drunk
         boozePower: 5
 
 - type: reagent
@@ -335,7 +336,8 @@
   meltingPoint: 128.0
   metabolisms:
     Bloodstream:
-      effects: # It would be nice to have speech slurred or mumbly, but accents are a bit iffy atm. Same for distortion effects.
+      effects:
+      # It would be nice to have speech slurred or mumbly, but accents are a bit iffy atm. Same for distortion effects.
       - !type:MovementSpeedModifier
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
@@ -422,7 +424,6 @@
           reagent: NorepinephricAcid
           min: 20
         probability: 0.03
-        #If anyone wants to add a light dimming or grayscale effect when under 20u, be my guest
       - !type:ModifyStatusEffect
         effectProto: StatusEffectBlindness
         type: Add
@@ -487,7 +488,8 @@
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
         time: 1.5
-        conditions: # because of the remainding after effect, threshold is given so the effects ends simultaniously
+        conditions:
+        # because of the remainding after effect, threshold is given so the effects ends simultaniously
         - !type:ReagentCondition
           reagent: TearGas
           min: 4
@@ -520,7 +522,8 @@
         damage:
           types:
             Cellular: 0.05
-      - !type:AdjustReagent # TODO: MAKE THIS USE METABOLITES INSTEAD!!!
+      # TODO: MAKE THIS USE METABOLITES INSTEAD!!!
+      - !type:AdjustReagent
         reagent: Hydroxysomnolene
         amount: 1
 
@@ -554,7 +557,6 @@
         key: Stutter
         component: StutteringAccent
       - !type:Jitter
-
 - type: reagent
   id: Hydroxysomnolene
   name: reagent-name-Hydroxysomnolene
@@ -564,7 +566,8 @@
   flavor: bitter
   color: "#b51472"
   metabolisms:
-    Digestion: # TODO: Make this metabolize as a metabolite!
+    Digestion:
+      # TODO: Make this metabolize as a metabolite!
       effects:
       # Slow
       - !type:MovementSpeedModifier
@@ -634,7 +637,8 @@
         - !type:ReagentCondition
           reagent: Happiness
           min: 20
-      - !type:PopupMessage # we dont have sanity/mood so this will have to do
+      # we dont have sanity/mood so this will have to do
+      - !type:PopupMessage
         type: Local
         visualType: Medium
         messages:
@@ -670,4 +674,4 @@
       - !type:HealthChange
         damage:
           types:
-           Radiation: 0.5
+            Radiation: 0.5

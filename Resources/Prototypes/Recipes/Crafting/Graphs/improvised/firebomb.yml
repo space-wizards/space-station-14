@@ -27,7 +27,7 @@
         prototype: DrinkColaCanEmpty
       - !type:SpawnPrototype
         prototype: Igniter
-      - !type:DeleteEntity {}
+      - !type:DeleteEntity
       steps:
       - tool: Prying
         doAfter: 1
@@ -52,7 +52,8 @@
       - tool: Screwing
         doAfter: 1
     - to: firebomb
-      conditions: # no dumping out 29u of the fuel then adding wires :)
+      conditions:
+      # no dumping out 29u of the fuel then adding wires :)
       - !type:MinSolution
         solution: drink
         reagent:

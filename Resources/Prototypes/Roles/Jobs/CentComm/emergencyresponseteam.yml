@@ -343,8 +343,8 @@
     pocket2: CombatKnife
     suitstorage: WeaponRifleLecter
   inhand:
-    - WeaponLaserCannon
-    - PortableRecharger
+  - WeaponLaserCannon
+  - PortableRecharger
   storage:
     belt:
     - CrowbarRed
@@ -610,7 +610,7 @@
     - MagazinePistol
     - EmergencyMedipen
   inhand:
-    - TrashBag
+  - TrashBag
 
 - type: chameleonOutfit
   id: ERTJanitorChameleonOutfit

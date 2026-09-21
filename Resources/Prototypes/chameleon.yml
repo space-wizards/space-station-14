@@ -6,7 +6,7 @@
   components:
   - type: UIRequiresLock
     userInterfaceKeys:
-      - enum.ChameleonUiKey.Key
+    - enum.ChameleonUiKey.Key
     accessDeniedSound: null
     popup: null
   - type: UserInterface

@@ -13,7 +13,6 @@
     - state: state-laws
   - type: InstantAction
     event: !type:ToggleLawsScreenEvent
-
 - type: entity
   parent: BaseAction
   id: ActionSelectBorgType

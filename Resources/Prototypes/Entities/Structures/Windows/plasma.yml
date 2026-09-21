@@ -1,7 +1,13 @@
 - type: entity
   id: PlasmaWindow
   name: plasma window
-  parent: [BaseDeltaPressurePlasma, BaseWindowStructure, BaseRCDResistant, StructureHealthBarrier]
+  parent:
+    [
+      BaseDeltaPressurePlasma,
+      BaseWindowStructure,
+      BaseRCDResistant,
+      StructureHealthBarrier
+    ]
   components:
   - type: Sprite
     sprite: Structures/Windows/window-plasma.rsi
@@ -12,8 +18,7 @@
     damageModifierSet: GlassPlasmaMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 80
       behaviors:
       - !type:PlaySoundBehavior
@@ -31,7 +36,7 @@
     node: plasmaWindow
   - type: Appearance
   - type: DamageVisuals
-    thresholds: [5, 10, 20]
+    thresholds: [ 5, 10, 20 ]
     damageDivisor: 3
     trackAllDamage: true
     damageOverlay:
@@ -43,7 +48,13 @@
 
 - type: entity
   id: PlasmaWindowDirectional
-  parent: [BaseDeltaPressurePlasmaQuarter, BaseWindowStructureDirectional, BaseRCDResistant, StructureHealthBarrierWeak]
+  parent:
+    [
+      BaseDeltaPressurePlasmaQuarter,
+      BaseWindowStructureDirectional,
+      BaseRCDResistant,
+      StructureHealthBarrierWeak
+    ]
   name: directional plasma window
   description: Don't smudge up the glass down there.
   components:
@@ -58,7 +69,7 @@
     node: plasmaWindowDirectional
   - type: Appearance
   - type: DamageVisuals
-    thresholds: [5, 10, 20]
+    thresholds: [ 5, 10, 20 ]
     damageDivisor: 1.5
     trackAllDamage: true
     damageOverlay:
@@ -67,8 +78,7 @@
     damageModifierSet: GlassPlasmaMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 30
       behaviors:
       - !type:PlaySoundBehavior
@@ -98,8 +108,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,-0.28125,-0.28125"
         density: 1500
         mask:
@@ -110,7 +119,7 @@
     graph: WindowDirectionalCorner
     node: plasmaWindowDirectionalCorner
   - type: DamageVisuals
-    thresholds: [5, 10, 20]
+    thresholds: [ 5, 10, 20 ]
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks_directional_corner.rsi
@@ -142,12 +151,11 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PolygonShape
-            vertices:
-            - "-0.5,-0.5"
-            - "0.5,0.5"
-            - "0.5,-0.5"
+        shape: !type:PolygonShape
+          vertices:
+          - "-0.5,-0.5"
+          - "0.5,0.5"
+          - "0.5,-0.5"
         mask:
         - FullTileMask
         layer:

@@ -14,8 +14,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         density: 200
         mask:
@@ -35,8 +34,7 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 500
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -49,7 +47,6 @@
           collection: MetalBreak
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-
 
 - type: entity
   parent: BaseTarget
@@ -86,7 +83,8 @@
   parent: BaseTargetIndestructible
   id: TargetStrange
   name: strange target
-  description: A shooting target. You aren't quite sure what this one is, but it seems to be extra robust.
+  description: A shooting target. You aren't quite sure what this one is, but it
+    seems to be extra robust.
   components:
   - type: Sprite
     sprite: Objects/Specific/Security/target.rsi

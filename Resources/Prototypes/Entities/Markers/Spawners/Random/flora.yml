@@ -20,9 +20,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Objects/Decoration/Flora/flora_trees.rsi
-        state: tree01
+    - state: red
+    - sprite: Objects/Decoration/Flora/flora_trees.rsi
+      state: tree01
   - type: EntityTableSpawner
     table: !type:NestedSelector
       tableId: FloraTreeTable

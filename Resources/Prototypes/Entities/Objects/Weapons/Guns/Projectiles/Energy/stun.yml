@@ -20,8 +20,7 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.15,-0.45,0.15,0.15"
         hard: false
         mask:
@@ -29,8 +28,7 @@
         - Impassable
         - BulletImpassable
       fly-by: &flybyfixture
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 1.5
         layer:
         - Impassable
@@ -108,8 +106,7 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.15,-0.3,0.15,0.3"
         hard: false
         mask:
@@ -153,8 +150,7 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.15,-0.3,0.15,0.3"
         hard: false
         mask:
@@ -197,8 +193,7 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.15,-0.3,0.15,0.3"
         hard: false
         mask:
@@ -249,7 +244,7 @@
 
 # Energy crossbow
 - type: entity
-  parent: [SolutionAmmo, SolutionToolVeryTiny, BaseBullet]
+  parent: [ SolutionAmmo, SolutionToolVeryTiny, BaseBullet ]
   id: EnergyCrossbowBolt
   categories: [ HideSpawnMenu ]
   name: energy bolt

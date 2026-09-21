@@ -1,8 +1,14 @@
 - type: entity
   id: MachineAnomalySynchronizer
-  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
+  parent:
+    [
+      BaseMachinePowered,
+      ConstructibleMachine,
+      BaseConstructibleMachineDestructible
+    ]
   name: anomaly synchronizer
-  description: A sophisticated device that reads changes in anomalous waves, and converts them into energy signals.
+  description: A sophisticated device that reads changes in anomalous waves, and
+    converts them into energy signals.
   components:
   - type: AnomalySynchronizer
   - type: Machine
@@ -14,11 +20,11 @@
   - type: DeviceNetworkRequiresPower
   - type: DeviceLinkSource
     ports:
-      - Decaying
-      - Stabilize
-      - Growing
-      - Pulse
-      - Supercritical
+    - Decaying
+    - Stabilize
+    - Growing
+    - Pulse
+    - Supercritical
   - type: Sprite
     noRot: true
     sprite: Structures/Machines/anomaly_sync.rsi
@@ -26,7 +32,7 @@
     - state: base
     - state: energy
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
   - type: AmbientSound
     enabled: false
     sound:
@@ -36,8 +42,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
         density: 100
         mask:

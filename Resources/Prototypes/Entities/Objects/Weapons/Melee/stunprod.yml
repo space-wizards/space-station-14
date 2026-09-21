@@ -1,6 +1,6 @@
 - type: entity
   name: stun prod
-  parent: [BaseItem, BaseMinorContraband]
+  parent: [ BaseItem, BaseMinorContraband ]
   id: Stunprod
   description: A stun prod for illegal incapacitation.
   components:
@@ -70,8 +70,8 @@
     visuals:
       enum.ToggleableVisuals.Enabled:
         enum.ToggleableVisuals.Layer:
-          True: {state: stunprod_on}
-          False: {state: stunprod_off}
+          True: { state: stunprod_on }
+          False: { state: stunprod_off }
   - type: StaticPrice
     price: 100
   - type: Construction

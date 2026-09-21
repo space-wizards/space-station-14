@@ -13,8 +13,7 @@
     - state: icon
   - type: InstantAction
     event: !type:ToggleGhostVisibilityToAllEvent
-
-# TODO: Add Whitelist/Blacklist and Component support to EntitySpawnLists (to avoid making huge hardcoded lists like below).
+      # TODO: Add Whitelist/Blacklist and Component support to EntitySpawnLists (to avoid making huge hardcoded lists like below).
 
 - type: entity
   parent: BaseAction

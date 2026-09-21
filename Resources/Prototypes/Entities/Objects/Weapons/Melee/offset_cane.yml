@@ -2,7 +2,8 @@
   parent: BaseItem
   id: OffsetCane
   name: standard offset cane
-  description: A standard offset cane, essential for getting around when your legs aren't up to the task. May or may not grant you the wisdom of the elderly.
+  description: A standard offset cane, essential for getting around when your legs
+    aren't up to the task. May or may not grant you the wisdom of the elderly.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/offset_canes/standard.rsi
@@ -11,17 +12,17 @@
     size: Normal
     sprite: Objects/Weapons/Melee/offset_canes/standard.rsi
   - type: MobilityAid
-#  - type: RandomSprite # Ideally I'd rather these be their own selectable item instead of randomly picked.
-#    available:
-#    - color: "#91949C"  # standard gray
-#    - color: "#000000"  # black
-#    - color: "#406BDE"  # blue
-#    - color: "#00FFFF"  # cyan
-#    - color: "#00FF00"  # green
-#    - color: "#FF69B4"  # pink
-#    - color: "#800080"  # purple
-#    - color: "#FF0000"  # red
-#    - color: "#FFFF00"  # yellow
+  #  - type: RandomSprite # Ideally I'd rather these be their own selectable item instead of randomly picked.
+  #    available:
+  #    - color: "#91949C"  # standard gray
+  #    - color: "#000000"  # black
+  #    - color: "#406BDE"  # blue
+  #    - color: "#00FFFF"  # cyan
+  #    - color: "#00FF00"  # green
+  #    - color: "#FF69B4"  # pink
+  #    - color: "#800080"  # purple
+  #    - color: "#FF0000"  # red
+  #    - color: "#FFFF00"  # yellow
   - type: MeleeWeapon
     wideAnimationRotation: 45
     damage:
@@ -41,7 +42,8 @@
   parent: OffsetCane
   id: OffsetCaneClown
   name: rainbow offset cane
-  description: A rainbow offset cane, perfect for clowns and those who enjoy a splash of color in their lives.
+  description: A rainbow offset cane, perfect for clowns and those who enjoy a
+    splash of color in their lives.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/offset_canes/clown.rsi
@@ -65,7 +67,8 @@
   parent: OffsetCane
   id: OffsetCaneNT
   name: nanotrasen offset cane
-  description: A nanotrasen standard issue offset cane with the NT logo, favored by those who prefer a more corporate look.
+  description: A nanotrasen standard issue offset cane with the NT logo, favored
+    by those who prefer a more corporate look.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/offset_canes/nanotrasen.rsi
@@ -77,7 +80,8 @@
   parent: OffsetCane
   id: OffsetCaneWood
   name: wooden offset cane
-  description: A wooden offset cane, a classic choice for those who appreciate natural materials and a sturdy grip.
+  description: A wooden offset cane, a classic choice for those who appreciate
+    natural materials and a sturdy grip.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/offset_canes/wood.rsi

@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ClothingUniformBase, BaseChameleon]
+  parent: [ ClothingUniformBase, BaseChameleon ]
   id: ClothingUniformJumpsuitChameleon
   name: black jumpsuit
   suffix: Chameleon
@@ -32,9 +32,10 @@
     randomMode: false
     mode: SensorOff
   - type: Tag
-    tags: # ignore "WhitelistChameleon" tag
+    tags:
+    # ignore "WhitelistChameleon" tag
     - ClothMade
     - Recyclable
   - type: ChameleonClothing
-    slot: [innerclothing]
+    slot: [ innerclothing ]
     default: ClothingUniformJumpsuitColorBlack

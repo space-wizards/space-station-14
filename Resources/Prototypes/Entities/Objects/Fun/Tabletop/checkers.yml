@@ -11,8 +11,7 @@
   - type: TabletopGame
     boardName: tabletop-checkers-board-name
     size: 338, 274
-    setup:
-      !type:TabletopCheckerSetup
+    setup: !type:TabletopCheckerSetup
       boardPrototype: &checkerboard CheckerBoardTabletop
       prototypePieceWhite: &pieceWhite CheckerPieceWhite
       prototypeCrownWhite: &crownWhite CheckerCrownWhite

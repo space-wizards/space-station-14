@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [SolutionWelder, BaseItem]
+  parent: [ SolutionWelder, BaseItem ]
   id: BaseWelder
   components:
   - type: Sprite
@@ -100,7 +100,7 @@
     temperature: 700
 
 - type: entity
-  parent: [SolutionToolWelder, BaseWelder]
+  parent: [ SolutionToolWelder, BaseWelder ]
   id: Welder
   name: welding tool
   description: "Melts anything as long as it's fueled, don't forget your eye protection!"
@@ -109,7 +109,7 @@
     sprite: Objects/Tools/welder.rsi
 
 - type: entity
-  parent: [SolutionWelder, SolutionSmall]
+  parent: [ SolutionWelder, SolutionSmall ]
   id: SolutionToolWelder
   categories: [ HideSpawnMenu ]
   components:
@@ -122,7 +122,7 @@
 
 - type: entity
   name: industrial welding tool
-  parent: [SolutionToolWelderIndsutrial, BaseWelder]
+  parent: [ SolutionToolWelderIndsutrial, BaseWelder ]
   id: WelderIndustrial
   description: "An industrial welder with over double the fuel capacity."
   components:
@@ -132,7 +132,7 @@
     sprite: Objects/Tools/welder_industrial.rsi
 
 - type: entity
-  parent: [SolutionWelder, SolutionToolNormal]
+  parent: [ SolutionWelder, SolutionToolNormal ]
   id: SolutionToolWelderIndsutrial
   categories: [ HideSpawnMenu ]
   components:
@@ -147,7 +147,8 @@
   name: advanced industrial welding tool
   parent: WelderIndustrial
   id: WelderIndustrialAdvanced
-  description: "An advanced industrial welder with over double the fuel capacity and hotter flame."
+  description: "An advanced industrial welder with over double the fuel capacity
+    and hotter flame."
   components:
   - type: Sprite
     sprite: Objects/Tools/welder_industrialadv.rsi
@@ -158,9 +159,10 @@
 
 - type: entity
   name: experimental welding tool
-  parent: [SolutionToolWelderExperimental, BaseWelder]
+  parent: [ SolutionToolWelderExperimental, BaseWelder ]
   id: WelderExperimental
-  description: "An experimental welder capable of self-fuel generation and less harmful to the eyes."
+  description: "An experimental welder capable of self-fuel generation and less
+    harmful to the eyes."
   components:
   - type: Sprite
     sprite: Objects/Tools/welder_experimental.rsi
@@ -176,7 +178,7 @@
     statusEffectTime: 5 # less harmful; sunglasses can block it
 
 - type: entity
-  parent: [SolutionWelder, SolutionToolGinormous] # Bluespace technology
+  parent: [ SolutionWelder, SolutionToolGinormous ] # Bluespace technology
   id: SolutionToolWelderExperimental
   categories: [ HideSpawnMenu ]
   components:
@@ -193,7 +195,7 @@
 
 - type: entity
   name: emergency welding tool
-  parent: [SolutionToolWelderMiniEmergency, BaseWelder]
+  parent: [ SolutionToolWelderMiniEmergency, BaseWelder ]
   id: WelderMini
   description: "A miniature welder used during emergencies."
   components:
@@ -212,7 +214,7 @@
     color: orange
 
 - type: entity
-  parent: [SolutionWelder, SolutionTiny]
+  parent: [ SolutionWelder, SolutionTiny ]
   id: SolutionToolWelderMiniEmergency # TODO, replace with below :(
   categories: [ HideSpawnMenu ]
   components:
@@ -224,7 +226,7 @@
         Quantity: 50
 
 - type: entity
-  parent: [SolutionWelder, SolutionToolTiny]
+  parent: [ SolutionWelder, SolutionToolTiny ]
   id: SolutionToolWelderMini
   categories: [ HideSpawnMenu ]
   components:

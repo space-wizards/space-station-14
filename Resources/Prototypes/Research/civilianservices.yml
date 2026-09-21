@@ -63,11 +63,11 @@
   tier: 1
   cost: 7500
   recipeUnlocks:
-    - ComputerTelevisionCircuitboard
-    - SynthesizerInstrument
-    - DawInstrumentMachineCircuitboard
-    - MassMediaCircuitboard
-    - JukeboxCircuitBoard
+  - ComputerTelevisionCircuitboard
+  - SynthesizerInstrument
+  - DawInstrumentMachineCircuitboard
+  - MassMediaCircuitboard
+  - JukeboxCircuitBoard
 
 - type: technology
   id: MeatManipulation

@@ -7,7 +7,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
+    - meaty
   - type: Sprite
     sprite: Objects/Consumable/Food/meat.rsi
   - type: Extractable
@@ -27,14 +27,13 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
         # less mass so it can cook faster, a single strip of bacon isnt 5kg
         density: 1
         mask:
         - ItemMask
-        restitution: 0.3  # fite me
+        restitution: 0.3 # fite me
         friction: 0.2
   # let air cook and freeze meat for cooking and preservation
   - type: AtmosExposed
@@ -71,7 +70,7 @@
 # Raw
 
 - type: entity
-  parent: [FoodMeatRawBase, BaseSlicingRefinableFood]
+  parent: [ FoodMeatRawBase, BaseSlicingRefinableFood ]
   id: FoodMeat
   name: raw meat
   description: A slab of raw meat.
@@ -98,7 +97,7 @@
       - state: plain-inhand-right
 
 - type: entity
-  parent: [FoodMeatRawBase, BaseSlicingRefinableFood]
+  parent: [ FoodMeatRawBase, BaseSlicingRefinableFood ]
   id: FoodMeatHuman
   name: raw human meat
   description: Gross.
@@ -122,11 +121,12 @@
   # MeatFish?...
   id: FoodMeatFish
   name: raw carp fillet
-  description: Your last words being "Wow, exotic!" are not worth it. The taste itself though? Maybe.
+  description: Your last words being "Wow, exotic!" are not worth it. The taste
+    itself though? Maybe.
   components:
   - type: FlavorProfile
     flavors:
-      - fishy
+    - fishy
   - type: Tag
     tags:
     - Raw
@@ -157,7 +157,7 @@
 
 - type: entity
   # bacon is cured so not raw = cant rot
-  parent: [SolutionTiny, FoodMeatBase]
+  parent: [ SolutionTiny, FoodMeatBase ]
   id: FoodMeatBacon
   name: raw bacon
   description: A raw piece of bacon.
@@ -188,7 +188,7 @@
       - state: generic-pink-inhand-right
 
 - type: entity
-  parent: [FoodMeatRawBase, BaseSlicingRefinableFood]
+  parent: [ FoodMeatRawBase, BaseSlicingRefinableFood ]
   id: FoodMeatBear
   name: raw bear meat
   description: A very manly slab of raw bear meat.
@@ -214,7 +214,7 @@
         color: "#934C64"
 
 - type: entity
-  parent: [FoodMeatRawBase, BaseSlicingRefinableFood]
+  parent: [ FoodMeatRawBase, BaseSlicingRefinableFood ]
   id: FoodMeatPenguin
   name: raw penguin meat
   description: A slab of raw penguin meat. Can be used as a substitute for fish in recipes.
@@ -238,7 +238,7 @@
       - state: generic-pink-inhand-right
 
 - type: entity
-  parent: [FoodMeatRawBase, BaseSlicingRefinableFood]
+  parent: [ FoodMeatRawBase, BaseSlicingRefinableFood ]
   id: FoodMeatChicken
   name: raw chicken meat
   description: A slab of raw chicken. Remember to wash your hands!
@@ -262,7 +262,7 @@
       - state: generic-pink-inhand-right
 
 - type: entity
-  parent: [FoodMeatRawBase, BaseSlicingRefinableFood]
+  parent: [ FoodMeatRawBase, BaseSlicingRefinableFood ]
   id: FoodMeatDuck
   name: raw duck meat
   description: A slab of raw duck. Remember to wash your hands!
@@ -288,9 +288,10 @@
 - type: entity
   name: prime-cut corgi meat
   # can't rot since that would be very bad for syndies
-  parent: [FoodMeatBase, BaseGrandTheftContraband]
+  parent: [ FoodMeatBase, BaseGrandTheftContraband ]
   id: FoodMeatCorgi
-  description: The tainted gift of an evil crime. The meat may be delicious, but at what cost?
+  description: The tainted gift of an evil crime. The meat may be delicious, but
+    at what cost?
   components:
   - type: Tag
     tags:
@@ -327,7 +328,7 @@
     storedOffset: -1,2
   - type: FlavorProfile
     flavors:
-      - crabby
+    - crabby
   - type: Sprite
     state: crab
   - type: Construction
@@ -356,10 +357,11 @@
       - state: plain-inhand-right
 
 - type: entity
-  parent: [FoodMeatBase, BaseSlicingRefinableFood]
+  parent: [ FoodMeatBase, BaseSlicingRefinableFood ]
   id: FoodMeatDragon
   name: dragon flesh
-  description: The dense meat of the space-era apex predator is oozing with its mythical ichor. Ironically, best eaten raw.
+  description: The dense meat of the space-era apex predator is oozing with its
+    mythical ichor. Ironically, best eaten raw.
   components:
   - type: Tag
     tags:
@@ -399,7 +401,7 @@
       - state: dragon-inhand-right
 
 - type: entity
-  parent: [SolutionVeryTiny, FoodMeatRawBase, BaseSlicingRefinableFood]
+  parent: [ SolutionVeryTiny, FoodMeatRawBase, BaseSlicingRefinableFood ]
   id: FoodMeatRat
   name: raw rat meat
   description: Prime meat from maintenance!
@@ -427,7 +429,7 @@
       - state: plain-inhand-right
 
 - type: entity
-  parent: [FoodMeatRawBase, BaseSlicingRefinableFood]
+  parent: [ FoodMeatRawBase, BaseSlicingRefinableFood ]
   id: FoodMeatLizard
   name: raw lizard meat
   description: Delicious dino damage.
@@ -493,7 +495,7 @@
       - state: rotten-inhand-right
 
 - type: entity
-  parent: [FoodMeatRawBase, BaseSlicingRefinableFood]
+  parent: [ FoodMeatRawBase, BaseSlicingRefinableFood ]
   id: FoodMeatSpider
   name: raw spider meat
   description: A slab of spider meat. That's so Kafkaesque.
@@ -512,7 +514,8 @@
   parent: FoodMeatBase
   id: FoodMeatSpiderLeg
   name: raw spider leg
-  description: A still twitching leg of a giant spider... you don't really want to eat this, do you?
+  description: A still twitching leg of a giant spider... you don't really want to
+    eat this, do you?
   components:
   - type: Sprite
     state: spiderleg
@@ -529,14 +532,15 @@
         color: "#333333"
 
 - type: entity
-  parent: [SolutionTiny, FoodMeatBase]
+  parent: [ SolutionTiny, FoodMeatBase ]
   id: FoodMeatWheat
   name: meatwheat clump
-  description: This doesn't look like meat, but your standards aren't that high to begin with.
+  description: This doesn't look like meat, but your standards aren't that high to
+    begin with.
   components:
   - type: FlavorProfile
     flavors:
-      - falsemeat
+    - falsemeat
   - type: Sprite
     state: clump
   - type: Solution
@@ -556,7 +560,7 @@
         color: "#934C64"
 
 - type: entity
-  parent: [SolutionTiny, FoodMeatBase]
+  parent: [ SolutionTiny, FoodMeatBase ]
   id: FoodMeatSnake
   name: raw snake meat
   description: A long piece of snake meat, hopefully not poisonous.
@@ -586,15 +590,15 @@
 
 - type: entity
   # not raw since acid kills bacteria or something, same as xeno
-  parent: [FoodMeatBase, BaseSlicingRefinableFood]
+  parent: [ FoodMeatBase, BaseSlicingRefinableFood ]
   id: FoodMeatXeno
   name: raw xeno meat
   description: A slab of xeno meat, dripping with acid.
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
-      - acid
+    - meaty
+    - acid
   - type: Tag
     tags:
     - Raw
@@ -655,7 +659,7 @@
       - state: plain-inhand-right
 
 - type: entity
-  parent: [FoodMeatBase, BaseSlicingRefinableFood]
+  parent: [ FoodMeatBase, BaseSlicingRefinableFood ]
   id: FoodMeatTomato
   name: killer tomato meat
   description: A slice from a huge tomato.
@@ -677,7 +681,7 @@
       - state: tomato-inhand-right
 
 - type: entity
-  parent: [FoodMeatBase, BaseSlicingRefinableFood]
+  parent: [ FoodMeatBase, BaseSlicingRefinableFood ]
   id: FoodMeatSalami
   name: salami
   description: A large tube of salami. Best not to ask what went into it.
@@ -706,7 +710,7 @@
         Blunt: 2
 
 - type: entity
-  parent: [FoodMeatBase, BaseSlicingRefinableFood]
+  parent: [ FoodMeatBase, BaseSlicingRefinableFood ]
   id: FoodMeatClown
   name: meat clown
   description: A delicious, round piece of meat clown. How horrifying.
@@ -715,8 +719,8 @@
     storedOffset: 0,3
   - type: FlavorProfile
     flavors:
-      - meaty
-      - funny
+    - meaty
+    - funny
   - type: Tag
     tags:
     - Raw
@@ -728,7 +732,7 @@
     - id: FoodMeatSalamiSlice
 
 - type: entity
-  parent: [SolutionTiny, FoodMeatBase]
+  parent: [ SolutionTiny, FoodMeatBase ]
   id: FoodMeatMeatball
   name: meatball
   description: A raw ball of meat. Meat ball.
@@ -759,7 +763,7 @@
 # meat patty - grillin' time
 
 - type: entity
-  parent: [SolutionTiny, FoodMeatBase]
+  parent: [ SolutionTiny, FoodMeatBase ]
   id: FoodMeatPatty
   name: meat patty
   description: A flat slab of ground meat. Ready for grillin'.
@@ -796,7 +800,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - slimy
+    - slimy
   - type: Tag
     tags:
     - Raw
@@ -817,7 +821,7 @@
       - state: slime-inhand-right
 
 - type: entity
-  parent: [SolutionHuge, FoodMeatRawBase, BaseSlicingRefinableFood]
+  parent: [ SolutionHuge, FoodMeatRawBase, BaseSlicingRefinableFood ]
   id: FoodMeatAnomaly
   name: anomalous meat mass
   description: An impossibly dense slab of meat. Just looking at it makes you uncomfortable.
@@ -867,7 +871,7 @@
     grindableSolutionName: food
   - type: FlavorProfile
     flavors:
-      - sweet
+    - sweet
   - type: Sprite
     sprite: Mobs/Aliens/slimes.rsi
     layers:
@@ -906,7 +910,7 @@
         Quantity: 10
 
 - type: entity
-  parent: [FoodMeatCookedBase, BaseSlicingRefinableFood]
+  parent: [ FoodMeatCookedBase, BaseSlicingRefinableFood ]
   id: FoodMeatCooked
   name: steak
   description: A cooked slab of meat. Smells primal.
@@ -939,7 +943,7 @@
       - state: plain-cooked-inhand-right
 
 - type: entity
-  parent: [SolutionVeryTiny, FoodMeatCookedBase] # Bacon shrinks when its cooked so we shrink solution size as well.
+  parent: [ SolutionVeryTiny, FoodMeatCookedBase ] # Bacon shrinks when its cooked so we shrink solution size as well.
   id: FoodMeatBaconCooked
   name: bacon
   description: A delicious piece of cooked bacon.
@@ -950,9 +954,9 @@
       map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: RandomSprite
     available:
-      - enum.DamageStateVisualLayers.Base:
-          bacon-cooked: ""
-          bacon2-cooked: ""
+    - enum.DamageStateVisualLayers.Base:
+        bacon-cooked: ""
+        bacon2-cooked: ""
   - type: Solution
     solution:
       reagents:
@@ -978,7 +982,7 @@
         color: "#5B3E2A"
 
 - type: entity
-  parent: [FoodMeatCookedBase, BaseSlicingRefinableFood]
+  parent: [ FoodMeatCookedBase, BaseSlicingRefinableFood ]
   id: FoodMeatBearCooked
   name: cooked bear
   description: A well-cooked slab of bear meat. Tough, but tasty with the right sides.
@@ -1007,7 +1011,7 @@
     heldPrefix: meatball
 
 - type: entity
-  parent: [FoodMeatCookedBase, BaseSlicingRefinableFood]
+  parent: [ FoodMeatCookedBase, BaseSlicingRefinableFood ]
   id: FoodMeatPenguinCooked
   name: penguin filet
   description: A cooked filet of penguin. Can be used as a substitute for fish in recipes.
@@ -1037,7 +1041,7 @@
         color: "#F7E3A3"
 
 - type: entity
-  parent: [FoodMeatCookedBase, BaseSlicingRefinableFood]
+  parent: [ FoodMeatCookedBase, BaseSlicingRefinableFood ]
   id: FoodMeatChickenCooked
   name: cooked chicken
   description: A cooked piece of chicken. Best used in other recipes.
@@ -1078,9 +1082,9 @@
       map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: RandomSprite
     available:
-      - enum.DamageStateVisualLayers.Base:
-          chicken-fried: ""
-          chicken2-fried: ""
+    - enum.DamageStateVisualLayers.Base:
+        chicken-fried: ""
+        chicken2-fried: ""
   - type: FoodSequenceElement
     entries:
       Burger: MeatChicken
@@ -1111,7 +1115,7 @@
         Quantity: 5
 
 - type: entity
-  parent: [FoodMeatCookedBase, BaseSlicingRefinableFood]
+  parent: [ FoodMeatCookedBase, BaseSlicingRefinableFood ]
   id: FoodMeatDuckCooked
   name: cooked duck
   description: A cooked piece of duck. Best used in other recipes.
@@ -1148,7 +1152,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - crabby
+    - crabby
   - type: Sprite
     layers:
     - state: crab-cooked
@@ -1229,7 +1233,7 @@
       - state: plain-cooked-inhand-right
 
 - type: entity
-  parent: [FoodMeatCookedBase, BaseSlicingRefinableFood]
+  parent: [ FoodMeatCookedBase, BaseSlicingRefinableFood ]
   id: FoodMeatLizardCooked
   name: lizard steak
   description: Cooked, tough lizard meat.
@@ -1285,7 +1289,7 @@
         color: "#44201A"
 
 - type: entity
-  parent: [SolutionTiny, FoodMeatCookedBase]
+  parent: [ SolutionTiny, FoodMeatCookedBase ]
   id: FoodMeatMeatballCooked
   name: meatball
   description: A cooked meatball. Perfect to add to other dishes... except fruity ones.
@@ -1313,7 +1317,7 @@
     heldPrefix: meatball
 
 - type: entity
-  parent: [SolutionTiny, FoodMeatCookedBase]
+  parent: [ SolutionTiny, FoodMeatCookedBase ]
   id: FoodMeatPattyCooked
   name: cooked meat patty
   description: A cooked meat patty.
@@ -1345,7 +1349,7 @@
     heldPrefix: meatball
 
 - type: entity
-  parent: [SolutionTiny, FoodMeatCookedBase]
+  parent: [ SolutionTiny, FoodMeatCookedBase ]
   id: FoodMeatSnailCooked
   name: boiled snail
   description: Improved with salt.
@@ -1377,10 +1381,11 @@
         color: "#5B3E2A"
 
 - type: entity
-  parent: [SolutionLarge, FoodMeatCookedBase, BaseSlicingRefinableFood] # Intentionlly gets smaller when cooked
+  parent: [ SolutionLarge, FoodMeatCookedBase, BaseSlicingRefinableFood ] # Intentionlly gets smaller when cooked
   id: FoodMeatAnomalyCooked
   name: anomalous steak
-  description: A gigantic mass of cooked meat. A meal for a dinner party, or someone REALLY hungry.
+  description: A gigantic mass of cooked meat. A meal for a dinner party, or
+    someone REALLY hungry.
   components:
   - type: Sprite
     layers:
@@ -1410,7 +1415,7 @@
       - state: plain-cooked-inhand-right
 
 - type: entity
-  parent: [FoodMeatCookedBase, BaseSlicingRefinableFood]
+  parent: [ FoodMeatCookedBase, BaseSlicingRefinableFood ]
   id: FoodMeatDragonCooked
   name: dragon steak
   description: Pouring ketchup on this is considered a capital crime on most stations.
@@ -1457,7 +1462,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionVeryTiny, FoodMeatBase]
+  parent: [ SolutionVeryTiny, FoodMeatBase ]
   id: FoodMeatCutletBase
   components:
   - type: Tag
@@ -1529,7 +1534,8 @@
   parent: FoodMeatCutletBase
   id: FoodMeatPenguinCutlet
   name: raw penguin cutlet
-  description: A cutlet of raw penguin meat. Can be used as a substitute for fish in recipes.
+  description: A cutlet of raw penguin meat. Can be used as a substitute for fish
+    in recipes.
   components:
   - type: Sprite
     state: cutlet
@@ -1629,8 +1635,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
-      - acid
+    - meaty
+    - acid
   - type: Sprite
     state: xenocutlet
   - type: Solution

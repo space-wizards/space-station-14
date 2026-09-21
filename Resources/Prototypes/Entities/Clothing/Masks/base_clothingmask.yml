@@ -8,7 +8,7 @@
   - type: Item
     size: Small
   - type: Clothing
-    slots: [mask]
+    slots: [ mask ]
   - type: StaticPrice
     price: 25
 
@@ -30,16 +30,15 @@
     sprite: Clothing/Mask/gas.rsi
     layers:
     - state: icon
-      map: ["enum.ActionVisuals.Icon"]
+      map: [ "enum.ActionVisuals.Icon" ]
     - texture: Interface/Default/blocked.png
-      map: ["enum.ActionVisuals.IconToggled"]
+      map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
   - type: InstantAction
     event: !type:ToggleMaskEvent
-
 - type: entity
   abstract: true
-  parent: [SolutionFood, SolutionToolSmall, ClothingMaskBase, BaseSlicingRefinable]
+  parent: [ SolutionFood, SolutionToolSmall, ClothingMaskBase, BaseSlicingRefinable ]
   id: ClothingMaskBaseButcherable
   components:
   - type: ToolRefinable

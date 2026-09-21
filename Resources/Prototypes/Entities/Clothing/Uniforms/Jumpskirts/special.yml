@@ -1,8 +1,9 @@
 - type: entity
-  parent: [UnsensoredClothingUniformSkirtBase, BaseSyndicateContraband]
+  parent: [ UnsensoredClothingUniformSkirtBase, BaseSyndicateContraband ]
   id: ClothingUniformJumpskirtOperative
   name: operative jumpskirt
-  description: Uniform for elite syndicate operatives performing tactical operations in deep space.
+  description: Uniform for elite syndicate operatives performing tactical
+    operations in deep space.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirts/Special/operative_s.rsi
@@ -15,7 +16,8 @@
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtTacticool
   name: tacticool jumpskirt
-  description: Uniform for subpar operative LARPers performing tactical insulated glove theft in deep space.
+  description: Uniform for subpar operative LARPers performing tactical insulated
+    glove theft in deep space.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirts/Special/tacticool_s.rsi
@@ -30,7 +32,8 @@
   parent: [ ClothingUniformSkirtBase, BaseSyndicateContraband ]
   id: ClothingUniformJumpskirtSyndieFormalDress
   name: syndicate formal dress
-  description: "The syndicate's uniform is made in an elegant style, it's even a pity to do dirty tricks in this."
+  description: "The syndicate's uniform is made in an elegant style, it's even a
+    pity to do dirty tricks in this."
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirts/Special/syndieformaldress.rsi
@@ -49,7 +52,7 @@
     sprite: Clothing/Uniforms/Jumpskirts/Special/tacticalmaid.rsi
 
 - type: entity
-  parent: [ClothingUniformSkirtBase, BaseSlicingRefinable]
+  parent: [ ClothingUniformSkirtBase, BaseSlicingRefinable ]
   id: ClothingUniformJumpskirtWeb
   name: web jumpskirt
   description: Makes it clear that you are one with the webs.
@@ -64,9 +67,9 @@
       amount: 8
   - type: FlavorProfile
     flavors:
-      - cobwebs
+    - cobwebs
     ignoreReagents:
-      - Fiber
+    - Fiber
   - type: Construction
     graph: WebObjects
     node: jumpskirt

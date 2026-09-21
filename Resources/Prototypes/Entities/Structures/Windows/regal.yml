@@ -2,7 +2,7 @@
   id: RegalWindow
   name: regal window
   description: An ornate window adorned with gilded filigree. Expensive!
-  parent: [BaseDeltaPressureReinforcedGlass, Window]
+  parent: [ BaseDeltaPressureReinforcedGlass, Window ]
   components:
   - type: Sprite
     sprite: Structures/Windows/window-regal.rsi
@@ -18,8 +18,7 @@
     fx: EffectRCDDeconstruct6
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 200
       behaviors:
       - !type:PlaySoundBehavior
@@ -31,7 +30,7 @@
     base: window
   - type: Appearance
   - type: DamageVisuals
-    thresholds: [5, 10, 20]
+    thresholds: [ 5, 10, 20 ]
     damageDivisor: 3
     trackAllDamage: true
     damageOverlay:

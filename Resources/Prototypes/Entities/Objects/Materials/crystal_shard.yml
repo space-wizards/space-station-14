@@ -3,7 +3,7 @@
   parent: MaterialBase
   id: ShardCrystalBase
   name: crystal shard
-  description:  A small piece of crystal.
+  description: A small piece of crystal.
   components:
   - type: Tool
     qualities:
@@ -12,15 +12,15 @@
     doAfterDuration: 4.0
   - type: Sprite
     layers:
-      - sprite: Objects/Materials/Shards/crystal-shard.rsi
-        state: shard1
-        map: [ "enum.DamageStateVisualLayers.Base" ]
+    - sprite: Objects/Materials/Shards/crystal-shard.rsi
+      state: shard1
+      map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: RandomSprite
     available:
-      - enum.DamageStateVisualLayers.Base:
-          shard1: ""
-          shard2: ""
-          shard3: ""
+    - enum.DamageStateVisualLayers.Base:
+        shard1: ""
+        shard2: ""
+        shard3: ""
   - type: SpaceGarbage
   - type: MeleeWeapon
     wideAnimationRotation: -22.5
@@ -47,8 +47,8 @@
     color: "#47f8ff"
   - type: Tag
     tags:
-      - Trash
-      - CrystalCyan
+    - Trash
+    - CrystalCyan
 
 - type: entity
   parent: ShardCrystalBase
@@ -63,8 +63,8 @@
     color: "#39a1ff"
   - type: Tag
     tags:
-      - Trash
-      - CrystalBlue
+    - Trash
+    - CrystalBlue
 
 - type: entity
   parent: ShardCrystalBase
@@ -79,8 +79,8 @@
     color: "#ffde46"
   - type: Tag
     tags:
-      - Trash
-      - CrystalYellow
+    - Trash
+    - CrystalYellow
 
 - type: entity
   parent: ShardCrystalBase
@@ -95,8 +95,8 @@
     color: "#ff8227"
   - type: Tag
     tags:
-      - Trash
-      - CrystalOrange
+    - Trash
+    - CrystalOrange
 
 - type: entity
   parent: ShardCrystalBase
@@ -111,8 +111,8 @@
     color: "#363636"
   - type: Tag
     tags:
-      - Trash
-      - CrystalBlack
+    - Trash
+    - CrystalBlack
 
 - type: entity
   parent: ShardCrystalBase
@@ -127,8 +127,8 @@
     color: "#ff66cc"
   - type: Tag
     tags:
-      - Trash
-      - CrystalPink
+    - Trash
+    - CrystalPink
 
 - type: entity
   parent: ShardCrystalBase
@@ -143,8 +143,8 @@
     color: "#52ff39"
   - type: Tag
     tags:
-      - Trash
-      - CrystalGreen
+    - Trash
+    - CrystalGreen
 
 - type: entity
   parent: ShardCrystalBase
@@ -159,8 +159,8 @@
     color: "#fb4747"
   - type: Tag
     tags:
-      - Trash
-      - CrystalRed
+    - Trash
+    - CrystalRed
 
 - type: entity
   parent: ShardCrystalBase

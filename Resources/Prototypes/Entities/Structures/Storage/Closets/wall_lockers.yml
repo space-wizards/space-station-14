@@ -24,7 +24,8 @@
   parent: BaseWallCloset
   id: ClosetWallEmergencyN2
   name: emergency nitrogen wall closet
-  description: It's full of life-saving equipment. Assuming, that is, that you breathe nitrogen.
+  description: It's full of life-saving equipment. Assuming, that is, that you
+    breathe nitrogen.
   components:
   - type: EntityStorageVisuals
     stateBaseClosed: n2
@@ -160,7 +161,7 @@
     stateDoorOpen: med_open
     stateDoorClosed: med_door
   - type: AccessReader
-    access: [["Medical"]]
+    access: [ [ "Medical" ] ]
 
 - type: entity
   parent: BaseWallLocker
@@ -173,13 +174,14 @@
     stateDoorOpen: eng_open
     stateDoorClosed: eng_evac_door
   - type: AccessReader
-    access: [["Engineering"]]
+    access: [ [ "Engineering" ] ]
 
 - type: entity
-  parent: [ GenpopBase , BaseWallLocker ]
+  parent: [ GenpopBase, BaseWallLocker ]
   id: LockerWallBasePrisoner
   name: prisoner wall closet
-  description: It's a secure locker for an inmate's personal belongings during their time in prison.
+  description: It's a secure locker for an inmate's personal belongings during
+    their time in prison.
   suffix: 1
 
 - type: entity
@@ -251,4 +253,4 @@
     stateDoorOpen: syndicate_open
     stateDoorClosed: syndicate_closed
   - type: AccessReader
-    access: [["SyndicateAgent"]]
+    access: [ [ "SyndicateAgent" ] ]

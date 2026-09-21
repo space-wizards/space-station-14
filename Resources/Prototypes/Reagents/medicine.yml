@@ -170,7 +170,6 @@
           reagent: Bicaridine
           min: 15
       - !type:Drunk
-
 - type: reagent
   id: Cryoxadone
   name: reagent-name-cryoxadone
@@ -184,7 +183,7 @@
     amount: -5
   - !type:PlantAdjustHealth
     amount: 5
-  - !type:PlantCryoxadone {}
+  - !type:PlantCryoxadone
   metabolisms:
     Bloodstream:
       effects:
@@ -192,11 +191,11 @@
         amount: 80000 # Heats you up as it metabolizes necessitating constant cooling.
       - !type:EvenHealthChange
         conditions:
+        # taken from tg, must be below freezing.
         - !type:TemperatureCondition
-          # taken from tg, must be below freezing.
           max: 273.15
         damage:
-        # todo scale with temp like SS13
+          # todo scale with temp like SS13
           Airloss: -3
           Brute: -2
           Burn: -2
@@ -213,13 +212,13 @@
   metabolisms:
     Bloodstream:
       effects:
-        - !type:HealthChange
-          conditions:
-          - !type:TemperatureCondition
-            max: 273.15
-          damage:
-            types:
-             Cellular: -2
+      - !type:HealthChange
+        conditions:
+        - !type:TemperatureCondition
+          max: 273.15
+        damage:
+          types:
+            Cellular: -2
 
 - type: reagent
   id: Dermaline
@@ -272,9 +271,9 @@
             Bloodloss: -0.5
       - !type:HealthChange
         conditions:
-          - !type:ReagentCondition
-            reagent: Dexalin
-            min: 20
+        - !type:ReagentCondition
+          reagent: Dexalin
+          min: 20
         damage:
           types:
             Asphyxiation: 3
@@ -305,9 +304,9 @@
         amount: -3
       - !type:HealthChange
         conditions:
-          - !type:ReagentCondition
-            reagent: DexalinPlus
-            min: 25
+        - !type:ReagentCondition
+          reagent: DexalinPlus
+          min: 25
         damage:
           types:
             Asphyxiation: 5
@@ -334,7 +333,7 @@
         amount: -5
       - !type:HealthChange
         conditions:
-          # they gotta be in crit first
+        # they gotta be in crit first
         - !type:MobStateCondition
           mobstate: Critical
         - !type:ReagentCondition
@@ -346,7 +345,7 @@
             Poison: -0.5
       - !type:EvenHealthChange
         conditions:
-          # they gotta be in crit first
+        # they gotta be in crit first
         - !type:MobStateCondition
           mobstate: Critical
         - !type:ReagentCondition
@@ -417,7 +416,7 @@
           min: 30
         damage:
           types:
-           Heat: 2
+            Heat: 2
       - !type:Jitter
         conditions:
         - !type:ReagentCondition
@@ -458,7 +457,7 @@
       effects:
       - !type:HealthChange
         conditions:
-          # they gotta be in crit first
+        # they gotta be in crit first
         - !type:MobStateCondition
           mobstate: Critical
         damage:
@@ -555,18 +554,18 @@
             Heat: 0.5
       - !type:HealthChange
         conditions:
-          - !type:ReagentCondition
-            reagent: Barozine
-            min: 30
+        - !type:ReagentCondition
+          reagent: Barozine
+          min: 30
         damage:
           types:
             Poison: 3
       - !type:Vomit
         probability: 0.15
         conditions:
-          - !type:ReagentCondition
-            reagent: Barozine
-            min: 30
+        - !type:ReagentCondition
+          reagent: Barozine
+          min: 30
       - !type:ModifyStatusEffect
         effectProto: StatusEffectPressureImmunity
         type: Add
@@ -592,12 +591,12 @@
   flavor: medicine
   color: "#c8ff75"
   plantMetabolism:
-    - !type:PlantAdjustToxins
-      amount: 6
-    - !type:PlantChangeTraits
-      trait: PlantTraitUnviable
-      type: Remove
-      minScale: 4
+  - !type:PlantAdjustToxins
+    amount: 6
+  - !type:PlantChangeTraits
+    trait: PlantTraitUnviable
+    type: Remove
+    minScale: 4
   metabolisms:
     Bloodstream:
       metabolismRate: 0.1
@@ -662,18 +661,18 @@
   metabolisms:
     Bloodstream:
       effects:
-        - !type:CureZombieInfection
-          conditions:
-            - !type:ReagentCondition
-              reagent: Ambuzol
-              min: 15
+      - !type:CureZombieInfection
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ambuzol
+          min: 15
     Digestion:
       effects:
-        - !type:CureZombieInfection
-          conditions:
-            - !type:ReagentCondition
-              reagent: Ambuzol
-              min: 15
+      - !type:CureZombieInfection
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ambuzol
+          min: 15
 
 - type: reagent
   id: AmbuzolPlus
@@ -686,12 +685,12 @@
   metabolisms:
     Bloodstream:
       effects:
-        - !type:CureZombieInfection
-          innoculate: true
-          conditions:
-            - !type:ReagentCondition
-              reagent: AmbuzolPlus
-              min: 5
+      - !type:CureZombieInfection
+        innoculate: true
+        conditions:
+        - !type:ReagentCondition
+          reagent: AmbuzolPlus
+          min: 5
     Digestion:
       effects:
       - !type:CureZombieInfection
@@ -726,11 +725,11 @@
   metabolisms:
     Bloodstream:
       effects:
-        - !type:Satiate
-          satiationType: Thirst
-          factor: 6
-        - !type:ModifyBloodLevel
-          amount: 6
+      - !type:Satiate
+        satiationType: Thirst
+        factor: 6
+      - !type:ModifyBloodLevel
+        amount: 6
 
 - type: reagent
   id: Siderlac
@@ -838,7 +837,8 @@
       effects:
       - !type:EvenHealthChange
         conditions:
-        - !type:MobStateCondition # no healing in crit so that dedicated single damage type meds can still have a niche.
+        # no healing in crit so that dedicated single damage type meds can still have a niche.
+        - !type:MobStateCondition
           mobstate: Alive
         damage:
           Brute: -1
@@ -868,7 +868,6 @@
       - !type:Satiate
         satiationType: Hunger
         factor: -1
-
   # Should heal quite literally everything, use in very small amounts
 - type: reagent
   id: Omnizine
@@ -958,7 +957,6 @@
     Bloodstream:
       effects:
       - !type:EyeDamage
-
 - type: reagent
   id: Cognizine
   name: reagent-name-cognizine
@@ -1002,7 +1000,11 @@
           min: 10
       - !type:PopupMessage
         visualType: Medium
-        messages: ["ethyloxyephedrine-effect-feeling-awake", "ethyloxyephedrine-effect-clear-mind"]
+        messages:
+          [
+            "ethyloxyephedrine-effect-feeling-awake",
+            "ethyloxyephedrine-effect-clear-mind"
+          ]
         type: Local
         probability: 0.1
 
@@ -1028,7 +1030,11 @@
           min: 5
       - !type:PopupMessage
         visualType: Medium
-        messages: ["ethyloxyephedrine-effect-feeling-awake", "ethyloxyephedrine-effect-clear-mind"]
+        messages:
+          [
+            "ethyloxyephedrine-effect-feeling-awake",
+            "ethyloxyephedrine-effect-clear-mind"
+          ]
         type: Local
         probability: 0.1
 
@@ -1213,7 +1219,7 @@
   - !type:PlantAdjustWater
     amount: 1
   tileReactions:
-  - !type:ExtinguishTileReaction { }
+  - !type:ExtinguishTileReaction
 
 - type: reagent
   id: Pyrazine
@@ -1276,7 +1282,7 @@
         reagent: Licoxide
         amount: -2
       - !type:AdjustReagent
-        reagent:  Tazinide
+        reagent: Tazinide
         amount: -2
       # makes you a little chilly when not oding
       - !type:AdjustTemperature
@@ -1314,16 +1320,16 @@
   metabolisms:
     Bloodstream:
       effects:
-        - !type:AdjustTemperature
-         amount: 80000
-        - !type:ReduceRotting
-          seconds: 20
-          conditions:
-          #Patient must be dead and in a cryo tube (or something cold)
-          - !type:TemperatureCondition
-            max: 273.15
-          - !type:MobStateCondition
-            mobstate: Dead
+      - !type:AdjustTemperature
+        amount: 80000
+      - !type:ReduceRotting
+        seconds: 20
+        conditions:
+        #Patient must be dead and in a cryo tube (or something cold)
+        - !type:TemperatureCondition
+          max: 273.15
+        - !type:MobStateCondition
+          mobstate: Dead
 
 - type: reagent
   id: Arcryox
@@ -1369,7 +1375,7 @@
           Burn: -6
 
 - type: reagent
-  id : Mannitol # currently this is just a way to create psicodine
+  id: Mannitol # currently this is just a way to create psicodine
   name: reagent-name-mannitol
   group: Medicine
   desc: reagent-desc-mannitol
@@ -1424,7 +1430,8 @@
         effectProto: StatusEffectDrunk
         time: 6.0
         type: Remove
-      - !type:PopupMessage # we dont have sanity/mood so this will have to do
+      # we dont have sanity/mood so this will have to do
+      - !type:PopupMessage
         type: Local
         visualType: Medium
         messages:
@@ -1450,9 +1457,9 @@
         type: Add
       - !type:HealthChange
         conditions:
-          - !type:ReagentCondition
-            reagent: PotassiumIodide
-            min: 20
+        - !type:ReagentCondition
+          reagent: PotassiumIodide
+          min: 20
         damage:
           types:
             Poison: 1
@@ -1520,7 +1527,8 @@
   color: "#d0e21b"
   metabolisms:
     Bloodstream:
-      effects: # One day this could be useful for treating blood clots, if we get those
+      effects:
+      # One day this could be useful for treating blood clots, if we get those
       - !type:ModifyStatusEffect
         effectProto: StatusEffectAnticoagulant
         time: 30 # 10 bleed ticks, you bleed every 3 seconds by default.

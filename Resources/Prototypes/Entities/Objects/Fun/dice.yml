@@ -114,15 +114,13 @@
   - type: Fixtures
     fixtures:
       slips:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.2,-0.2,0.2,0.2"
         hard: false
         layer:
         - LowImpassable
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.2,-0.2,0.2,0.2"
         density: 30
         mask:
@@ -147,7 +145,8 @@
   parent: BaseCoin
   id: d2Dice
   name: Heads or Tails Coin
-  description: Some sort of two-sided die. Designed to represent the struggle between Nanotrasen and the Syndicate.
+  description: Some sort of two-sided die. Designed to represent the struggle
+    between Nanotrasen and the Syndicate.
   components:
   - type: Sprite
     state: d2_1
@@ -159,7 +158,6 @@
   components:
   - type: Dice
     weightedValue: 2
-
 
 # bags
 

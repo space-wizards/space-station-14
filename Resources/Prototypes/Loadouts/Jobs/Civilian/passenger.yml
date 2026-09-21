@@ -3,8 +3,7 @@
   id: GreyTider
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobPassenger
       time: 10h # silly reward for people who play passenger a lot
 
@@ -13,8 +12,7 @@
   id: MasterGrey
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobPassenger
       time: 20h # fun mantle for the most experienced greytiders
 

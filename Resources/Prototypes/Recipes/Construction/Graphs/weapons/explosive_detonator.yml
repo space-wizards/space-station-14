@@ -9,7 +9,7 @@
       - material: Bananium
         amount: 1
         doAfter: 1
-  
+
   - node: emptyDetonator
     entity: EmptyDetonator
     actions:

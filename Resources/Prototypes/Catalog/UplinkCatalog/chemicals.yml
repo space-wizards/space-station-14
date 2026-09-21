@@ -150,11 +150,11 @@
   categories:
   - UplinkChemicals
   conditions:
-    - !type:StoreWhitelistCondition
-      whitelist:
-        tags:
-          - NukeOpsUplink
-    - !type:BuyerWhitelistCondition
-      blacklist:
-        components:
-          - SurplusBundle
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle

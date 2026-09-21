@@ -13,7 +13,8 @@
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtVirology
   name: virology jumpskirt
-  description: It's made of a special fiber that gives special protection against biohazards. It has a virologist rank stripe on it.
+  description: It's made of a special fiber that gives special protection against
+    biohazards. It has a virologist rank stripe on it.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirts/Medical/virology.rsi
@@ -24,7 +25,8 @@
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtGenetics
   name: genetics jumpskirt
-  description: It's made of a special fiber that gives special protection against biohazards. It has a geneticist rank stripe on it.
+  description: It's made of a special fiber that gives special protection against
+    biohazards. It has a geneticist rank stripe on it.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirts/Medical/genetics.rsi
@@ -32,10 +34,11 @@
     sprite: Clothing/Uniforms/Jumpskirts/Medical/genetics.rsi
 
 - type: entity
-  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  parent: [ ClothingUniformSkirtBase, BaseCommandContraband ]
   id: ClothingUniformJumpskirtCMO
   name: chief medical officer's jumpskirt
-  description: It's a jumpskirt worn by those with the experience to be Chief Medical Officer. It provides minor biological protection.
+  description: It's a jumpskirt worn by those with the experience to be Chief
+    Medical Officer. It provides minor biological protection.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirts/Medical/cmo.rsi
@@ -43,10 +46,11 @@
     sprite: Clothing/Uniforms/Jumpskirts/Medical/cmo.rsi
 
 - type: entity
-  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  parent: [ ClothingUniformSkirtBase, BaseCommandContraband ]
   id: ClothingUniformJumpskirtCMOTurtle
   name: chief medical officer's turtleneck jumpskirt
-  description: It's a turtleneck worn by those with the experience to be Chief Medical Officer. It provides minor biological protection.
+  description: It's a turtleneck worn by those with the experience to be Chief
+    Medical Officer. It provides minor biological protection.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirts/Medical/cmo_turtle.rsi
@@ -57,7 +61,9 @@
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtMedicalDoctor
   name: medical doctor jumpskirt
-  description: It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel.
+  description: It's made of a special fiber that provides minor protection against
+    biohazards. It has a cross on the chest denoting that the wearer is trained
+    medical personnel.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirts/Medical/medical.rsi

@@ -5,8 +5,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.5
         density: 190
         hard: true
@@ -24,8 +23,7 @@
     damageContainer: Biological
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 75
       behaviors:
       - !type:DoActsBehavior
@@ -46,7 +44,7 @@
 - type: entity
   parent: BasePlant
   id: WheatPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: wheat stalk
   components:
   - type: Sprite
@@ -78,7 +76,7 @@
 - type: entity
   parent: BasePlant
   id: MeatWheatPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: meatwheat stalk
   components:
   - type: Sprite
@@ -109,7 +107,7 @@
 - type: entity
   parent: BasePlant
   id: OatPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: oat stalk
   components:
   - type: Sprite
@@ -140,7 +138,7 @@
 - type: entity
   parent: BasePlant
   id: BananaPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: banana plant
   components:
   - type: Sprite
@@ -176,7 +174,7 @@
 - type: entity
   parent: BasePlant
   id: MimanaPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: mimana plant
   components:
   - type: Sprite
@@ -211,7 +209,7 @@
 - type: entity
   parent: BasePlant
   id: CarrotPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: carrot
   components:
   - type: Sprite
@@ -247,7 +245,7 @@
 - type: entity
   parent: BasePlant
   id: LaughinPeaPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: laughin' pea
   components:
   - type: Sprite
@@ -287,7 +285,7 @@
 - type: entity
   parent: BasePlant
   id: LemonPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: lemon tree
   components:
   - type: Sprite
@@ -319,7 +317,7 @@
 - type: entity
   parent: BasePlant
   id: LemoonPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: lemoon tree
   components:
   - type: Sprite
@@ -350,7 +348,7 @@
 - type: entity
   parent: BasePlant
   id: LimePlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: lime tree
   components:
   - type: Sprite
@@ -382,7 +380,7 @@
 - type: entity
   parent: BasePlant
   id: OrangePlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: orange tree
   components:
   - type: Sprite
@@ -414,7 +412,7 @@
 - type: entity
   parent: BasePlant
   id: ExtradimensionalOrangePlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: extradimensional orange tree
   components:
   - type: Sprite
@@ -449,7 +447,7 @@
 - type: entity
   parent: BasePlant
   id: PineapplePlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: pineapple plant
   components:
   - type: Sprite
@@ -485,7 +483,7 @@
 - type: entity
   parent: BasePlant
   id: PotatoPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: potato
   components:
   - type: Sprite
@@ -517,7 +515,7 @@
 - type: entity
   parent: BasePlant
   id: SugarcanePlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: sugarcane
   components:
   - type: Sprite
@@ -549,7 +547,7 @@
 - type: entity
   parent: BasePlant
   id: TeaPlantPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: tea plant
   components:
   - type: Sprite
@@ -582,7 +580,7 @@
 - type: entity
   parent: BasePlant
   id: PapercanePlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: papercane
   components:
   - type: Sprite
@@ -607,7 +605,7 @@
 - type: entity
   parent: BasePlant
   id: TowercapPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: tower cap
   components:
   - type: Sprite
@@ -636,7 +634,7 @@
 - type: entity
   parent: BasePlant
   id: SteelcapPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: steel cap
   components:
   - type: Sprite
@@ -664,7 +662,7 @@
 - type: entity
   parent: BasePlant
   id: TomatoPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: tomato plant
   components:
   - type: Sprite
@@ -706,7 +704,7 @@
 - type: entity
   parent: BasePlant
   id: BlueTomatoPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: blue tomato plant
   components:
   - type: Sprite
@@ -747,7 +745,7 @@
 - type: entity
   parent: BasePlant
   id: BloodTomatoPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: blood tomato plant
   components:
   - type: Sprite
@@ -785,7 +783,7 @@
 - type: entity
   parent: BasePlant
   id: KillerTomatoPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: tomato killer plant
   components:
   - type: Sprite
@@ -825,7 +823,7 @@
 - type: entity
   parent: BasePlant
   id: EggplantPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: eggplant
   components:
   - type: Sprite
@@ -861,7 +859,7 @@
 - type: entity
   parent: BasePlant
   id: CabbagePlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: cabbage
   components:
   - type: Sprite
@@ -891,7 +889,7 @@
 - type: entity
   parent: BasePlant
   id: GarlicPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: garlic head
   components:
   - type: Sprite
@@ -925,7 +923,7 @@
 - type: entity
   parent: BasePlant
   id: ApplePlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: apple tree
   components:
   - type: Sprite
@@ -957,7 +955,7 @@
 - type: entity
   parent: BasePlant
   id: GoldenApplePlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: golden apple tree
   components:
   - type: Sprite
@@ -994,7 +992,7 @@
 - type: entity
   parent: BasePlant
   id: CornPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: ear of corn
   components:
   - type: Sprite
@@ -1029,7 +1027,7 @@
 - type: entity
   parent: BasePlant
   id: OnionPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: onion
   components:
   - type: Sprite
@@ -1072,7 +1070,7 @@
 - type: entity
   parent: BasePlant
   id: OnionRedPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: red onion
   components:
   - type: Sprite
@@ -1113,7 +1111,7 @@
 - type: entity
   parent: BasePlant
   id: ChanterellePlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: chanterelle mushroom
   components:
   - type: Sprite
@@ -1146,7 +1144,7 @@
 - type: entity
   parent: BasePlant
   id: EggyPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: egg-plant
   components:
   - type: Sprite
@@ -1178,7 +1176,7 @@
 - type: entity
   parent: BasePlant
   id: CannabisPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: cannabis
   components:
   - type: Sprite
@@ -1212,7 +1210,7 @@
 - type: entity
   parent: BasePlant
   id: RainbowCannabisPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: rainbow cannabis
   components:
   - type: Sprite
@@ -1259,7 +1257,7 @@
 - type: entity
   parent: BasePlant
   id: TobaccoPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: tobacco plant
   components:
   - type: Sprite
@@ -1292,7 +1290,7 @@
 - type: entity
   parent: BasePlant
   id: NettlePlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: nettle
   components:
   - type: Sprite
@@ -1324,7 +1322,7 @@
 - type: entity
   parent: BasePlant
   id: DeathNettlePlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: death nettle
   components:
   - type: Sprite
@@ -1362,7 +1360,7 @@
 - type: entity
   parent: BasePlant
   id: ChiliPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: chili pepper
   components:
   - type: Sprite
@@ -1401,7 +1399,7 @@
 - type: entity
   parent: BasePlant
   id: ChillyPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: chilly pepper
   components:
   - type: Sprite
@@ -1439,7 +1437,7 @@
 - type: entity
   parent: BasePlant
   id: PoppyPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: poppy
   components:
   - type: Sprite
@@ -1472,7 +1470,7 @@
 - type: entity
   parent: BasePlant
   id: LilyPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: lily
   components:
   - type: Sprite
@@ -1505,7 +1503,7 @@
 - type: entity
   parent: BasePlant
   id: AloePlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: aloe
   components:
   - type: Sprite
@@ -1537,7 +1535,7 @@
 - type: entity
   parent: BasePlant
   id: LingzhiPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: lingzhi
   components:
   - type: Sprite
@@ -1570,7 +1568,7 @@
 - type: entity
   parent: BasePlant
   id: AmbrosiaVulgarisPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: ambrosia vulgaris
   components:
   - type: Sprite
@@ -1611,7 +1609,7 @@
 - type: entity
   parent: BasePlant
   id: AmbrosiaDeusPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: ambrosia deus
   components:
   - type: Sprite
@@ -1635,7 +1633,8 @@
         min: 1
         max: 2
         potencyDivisor: 10
-      Omnizine: # Don't kill me
+      Omnizine:
+        # Don't kill me
         min: 1
         max: 3
         potencyDivisor: 35
@@ -1647,7 +1646,7 @@
 - type: entity
   parent: BasePlant
   id: GalaxythistlePlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: galaxythistle
   components:
   - type: Sprite
@@ -1676,7 +1675,7 @@
 - type: entity
   parent: BasePlant
   id: GlasstlePlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: glasstle
   components:
   - type: Sprite
@@ -1698,7 +1697,8 @@
         min: 1
         max: 25
         potencyDivisor: 4
-      Desoxyephedrine: # meff!!
+      Desoxyephedrine:
+        # meff!!
         min: 1
         max: 10
         potencyDivisor: 10
@@ -1706,7 +1706,7 @@
 - type: entity
   parent: BasePlant
   id: FlyAmanitaPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: fly amanita
   components:
   - type: Sprite
@@ -1732,7 +1732,8 @@
         min: 1
         max: 10
         potencyDivisor: 12
-      Nutriment: ## yumby :)
+      Nutriment:
+        ## yumby :)
         min: 1
         max: 5
         potencyDivisor: 20
@@ -1740,7 +1741,7 @@
 - type: entity
   parent: BasePlant
   id: GatfruitPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: gatfruit tree
   components:
   - type: Sprite
@@ -1771,7 +1772,7 @@
 - type: entity
   parent: BasePlant
   id: FakeCapfruitPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: capfruit tree
   components:
   - type: Sprite
@@ -1801,7 +1802,7 @@
 - type: entity
   parent: BasePlant
   id: RealCapfruitPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: capfruit tree
   components:
   - type: Sprite
@@ -1831,7 +1832,7 @@
 - type: entity
   parent: BasePlant
   id: RicePlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: rice stalk
   components:
   - type: Sprite
@@ -1864,7 +1865,7 @@
 - type: entity
   parent: BasePlant
   id: SoybeanPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: soy plant
   components:
   - type: Sprite
@@ -1893,7 +1894,7 @@
 - type: entity
   parent: BasePlant
   id: SpacemansTrumpetPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: spaceman's trumpet plant
   components:
   - type: Sprite
@@ -1925,7 +1926,7 @@
 - type: entity
   parent: BasePlant
   id: KoibeanPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: koibean plant
   components:
   - type: Sprite
@@ -1957,7 +1958,7 @@
 - type: entity
   parent: BasePlant
   id: GrapePlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: grape plant
   components:
   - type: Sprite
@@ -1987,7 +1988,7 @@
 - type: entity
   parent: BasePlant
   id: WatermelonPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: watermelon vine
   components:
   - type: Sprite
@@ -2021,7 +2022,7 @@
 - type: entity
   parent: BasePlant
   id: HolymelonPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: holymelon vine
   components:
   - type: Sprite
@@ -2054,7 +2055,7 @@
 - type: entity
   parent: BasePlant
   id: CocoaPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: cocoa plant
   components:
   - type: Sprite
@@ -2090,7 +2091,7 @@
 - type: entity
   parent: BasePlant
   id: BerryPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: berry bush
   components:
   - type: Sprite
@@ -2122,7 +2123,7 @@
 - type: entity
   parent: BasePlant
   id: BungoPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: bungo plant
   components:
   - type: Sprite
@@ -2159,7 +2160,7 @@
 - type: entity
   parent: BasePlant
   id: PeaPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: pea vine
   components:
   - type: Sprite
@@ -2194,7 +2195,7 @@
 - type: entity
   parent: BasePlant
   id: WorldPeaPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: world pea vine
   components:
   - type: Sprite
@@ -2232,7 +2233,7 @@
 - type: entity
   parent: BasePlant
   id: PumpkinPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: pumpkin
   components:
   - type: Sprite
@@ -2266,7 +2267,7 @@
 - type: entity
   parent: BasePlant
   id: BluePumpkinPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: blue pumpkin
   components:
   - type: Sprite
@@ -2303,7 +2304,7 @@
 - type: entity
   parent: BasePlant
   id: CottonPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: cotton plant
   components:
   - type: Sprite
@@ -2332,7 +2333,7 @@
 - type: entity
   parent: BasePlant
   id: PyrottonPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: pyrotton plant
   components:
   - type: Sprite
@@ -2364,7 +2365,7 @@
 - type: entity
   parent: BasePlant
   id: CherryPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: cherry tree
   components:
   - type: Sprite
@@ -2395,7 +2396,7 @@
 - type: entity
   parent: BasePlant
   id: AnomalyBerryPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: anomaly berry
   components:
   - type: Sprite
@@ -2432,7 +2433,7 @@
 - type: entity
   parent: BasePlant
   id: BloonionPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: bloonion bulb
   components:
   - type: Sprite

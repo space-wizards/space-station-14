@@ -14,11 +14,9 @@
   - type: NodeContainer
     examinable: true
     nodes:
-      input:
-        !type:CableDeviceNode
+      input: !type:CableDeviceNode
         nodeGroupID: HVPower
-      output:
-        !type:CableDeviceNode
+      output: !type:CableDeviceNode
         nodeGroupID: MVPower
   - type: BatteryCharger
     voltage: High
@@ -70,7 +68,13 @@
 - type: entity
   abstract: true
   id: BaseSubstation
-  parent: [ CoreSubstation, BaseMachine, ConstructibleMachine, BaseConstructibleMachineDestructible ]
+  parent:
+    [
+      CoreSubstation,
+      BaseMachine,
+      ConstructibleMachine,
+      BaseConstructibleMachineDestructible
+    ]
   name: substation
   description: Reduces the voltage of electricity put into it.
   placement:
@@ -98,8 +102,7 @@
     state: substation_static
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 175
       behaviors:
       - !type:PlaySoundBehavior
@@ -180,8 +183,7 @@
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 175
       behaviors:
       - !type:ExplodeBehavior
@@ -234,9 +236,7 @@
     containers:
       board: !type:Container
       manipulator: !type:Container
-      powercell: !type:Container
-
-      # Construction Frame
+      powercell: !type:Container # Construction Frame
 - type: entity
   id: BaseSubstationWallFrame
   categories: [ HideSpawnMenu ]

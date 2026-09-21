@@ -1,5 +1,10 @@
 - type: entity
-  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
+  parent:
+    [
+      BaseMachinePowered,
+      ConstructibleMachine,
+      BaseConstructibleMachineDestructible
+    ]
   id: Holopad
   name: holopad
   description: "A floor-mounted device for projecting holographic images."
@@ -9,8 +14,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.25
         mask:
         - Impassable
@@ -74,17 +78,17 @@
     listeningRange: 2.5
     speakerVolume: Speak
   - type: AccessReader
-    access: [[ "Command" ]]
+    access: [ [ "Command" ] ]
     examinationText: access-reader-examination-functionality-restricted
   - type: ActivatableUI
     key: enum.HolopadUiKey.InteractionWindow
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-        enum.HolopadUiKey.InteractionWindow:
-          type: HolopadBoundUserInterface
-        enum.WiresUiKey.Key:
-          type: WiresBoundUserInterface
+      enum.HolopadUiKey.InteractionWindow:
+        type: HolopadBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: WiresPanel
   - type: WiresVisuals
   - type: Wires
@@ -94,8 +98,7 @@
     damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 175
       behaviors:
       - !type:PlaySoundBehavior
@@ -104,7 +107,8 @@
 
 - type: entity
   name: long-range holopad
-  description: "A floor-mounted device for projecting holographic images to similar devices that are far away."
+  description: "A floor-mounted device for projecting holographic images to
+    similar devices that are far away."
   parent: Holopad
   id: HolopadLongRange
   components:
@@ -117,7 +121,8 @@
 
 - type: entity
   name: quantum entangling holopad
-  description: "An floor-mounted device for projecting holographic images to similar devices at extreme distances."
+  description: "An floor-mounted device for projecting holographic images to
+    similar devices at extreme distances."
   parent: Holopad
   id: HolopadUnlimitedRange
   components:
@@ -130,7 +135,8 @@
 
 - type: entity
   name: bluespace holopad
-  description: "An experimental floor-mounted device for projecting holographic images via bluespace."
+  description: "An experimental floor-mounted device for projecting holographic
+    images via bluespace."
   parent: Holopad
   id: HolopadBluespace
   suffix: Unrestricted range
@@ -927,7 +933,6 @@
   components:
   - type: Label
     localizedLabel: holopad-centcomm-evac
-
 
 # Map Specific
 # For holopads that only fit specific maps. For example: Bagel has Clown, Mime and Musician merged into one.

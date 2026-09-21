@@ -2,7 +2,7 @@
   name: handcuffs
   description: Used to detain criminals and other assholes.
   id: Handcuffs
-  parent: [BaseItem, BaseSecurityCommandContraband]
+  parent: [ BaseItem, BaseSecurityCommandContraband ]
   components:
   - type: Item
     size: Small
@@ -59,11 +59,11 @@
   - type: Item
     inhandVisuals:
       left:
-        - state: inhand-left
-          color: forestgreen
+      - state: inhand-left
+        color: forestgreen
       right:
-        - state: inhand-right
-          color: forestgreen
+      - state: inhand-right
+        color: forestgreen
   - type: Sprite
     sprite: Objects/Misc/cablecuffs.rsi
     state: cuff
@@ -80,7 +80,7 @@
     storedRotation: 0
   - type: Handcuff
     breakoutTime: 3
-    cuffedRSI: Objects/Misc/cablecuffs.rsi  # cablecuffs will look fine
+    cuffedRSI: Objects/Misc/cablecuffs.rsi # cablecuffs will look fine
     bodyIconState: body-overlay
     breakOnRemove: true
     brokenPrototype: ZiptiesBroken
@@ -135,11 +135,11 @@
   - type: Item
     inhandVisuals:
       left:
-        - state: inhand-left
-          color: forestgreen
+      - state: inhand-left
+        color: forestgreen
       right:
-        - state: inhand-right
-          color: forestgreen
+      - state: inhand-right
+        color: forestgreen
 
 - type: entity
   parent: Handcuffs

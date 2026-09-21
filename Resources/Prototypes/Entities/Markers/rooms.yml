@@ -6,6 +6,6 @@
   - type: RoomFill
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Mobs/Aliens/elemental.rsi
-        state: alive
+    - state: red
+    - sprite: Mobs/Aliens/elemental.rsi
+      state: alive

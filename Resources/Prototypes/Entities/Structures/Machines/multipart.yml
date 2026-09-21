@@ -4,15 +4,15 @@
   id: MultipartMachineGhost
   categories: [ HideSpawnMenu ]
   components:
-    - type: MultipartMachineGhost
-    - type: Sprite
-      sprite: Markers/cross.rsi
-      layers:
-        - state: green
-      color: "#FFFFFF80"
-    - type: TimedDespawn
-      lifetime: 5
-    - type: Clickable
-    - type: Tag
-      tags:
-        - HideContextMenu
+  - type: MultipartMachineGhost
+  - type: Sprite
+    sprite: Markers/cross.rsi
+    layers:
+    - state: green
+    color: "#FFFFFF80"
+  - type: TimedDespawn
+    lifetime: 5
+  - type: Clickable
+  - type: Tag
+    tags:
+    - HideContextMenu

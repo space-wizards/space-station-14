@@ -13,7 +13,7 @@
   - type: IngestionBlocker
   - type: GroupExamine
   - type: Armor
-    modifiers: { }
+    modifiers: {}
   - type: ZombificationResistance
     zombificationResistanceCoefficient: 0.9
   - type: Tag
@@ -31,7 +31,8 @@
   id: ClothingHeadHatHoodBioCmo
   name: bio hood
   suffix: CMO
-  description: An advanced hood for chief medical officers that protects the head and face from biological contaminants.
+  description: An advanced hood for chief medical officers that protects the head
+    and face from biological contaminants.
   components:
   - type: IdentityBlocker
   - type: Sprite
@@ -178,7 +179,8 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatHoodGoliathCloak
   name: goliath cloak hood
-  description: A hood of a goliath cloak, it is made from the hide of resilient fauna from a distant planet.
+  description: A hood of a goliath cloak, it is made from the hide of resilient
+    fauna from a distant planet.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hoods/goliathcloak.rsi
@@ -243,7 +245,10 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatHoodMoth
   name: moth mask
-  description: A mask in the form of a moths head is usually made of lightweight materials. It mimics the shape of a moths head with large eyes and long antennae. Such masks are often used in cosplay, or when shooting movies and videos.
+  description: A mask in the form of a moths head is usually made of lightweight
+    materials. It mimics the shape of a moths head with large eyes and long
+    antennae. Such masks are often used in cosplay, or when shooting movies and
+    videos.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hoods/moth.rsi
@@ -762,7 +767,8 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatHoodVoidCloak
   name: void cloak hood
-  description: The hood of a void cloak. For those who have gone to the dark side of the force.
+  description: The hood of a void cloak. For those who have gone to the dark side
+    of the force.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hoods/voidcloak.rsi

@@ -3,8 +3,7 @@
   id: MasterHoS
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobHeadOfSecurity
       time: 20h
 

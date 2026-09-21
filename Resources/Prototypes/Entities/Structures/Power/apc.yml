@@ -21,7 +21,7 @@
     castShadows: false
     netsync: false
   - type: AccessReader
-    access: [["Engineering"]]
+    access: [ [ "Engineering" ] ]
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/apc.rsi
@@ -29,14 +29,14 @@
     layers:
     - state: base
     - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false
     - state: display-charging
       shader: unshaded
-      map: ["enum.ApcVisualLayers.ChargeState"]
+      map: [ "enum.ApcVisualLayers.ChargeState" ]
     - state: channel-on
       shader: unshaded
-      map: ["enum.ApcVisualLayers.Equipment"]
+      map: [ "enum.ApcVisualLayers.Equipment" ]
       visible: false
   - type: Appearance
   - type: ApcVisuals
@@ -52,11 +52,9 @@
   - type: NodeContainer
     examinable: true
     nodes:
-      input:
-        !type:CableDeviceNode
+      input: !type:CableDeviceNode
         nodeGroupID: MVPower
-      output:
-        !type:CableDeviceNode
+      output: !type:CableDeviceNode
         nodeGroupID: Apc
   - type: PowerMonitoringDevice
     group: APC
@@ -100,8 +98,7 @@
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -136,7 +133,8 @@
   categories: [ HideSpawnMenu ]
   id: APCFrame
   name: APC frame
-  description: A control terminal for the area's electrical systems, lacking the electronics.
+  description: A control terminal for the area's electrical systems, lacking the
+    electronics.
   placement:
     mode: SnapgridCenter
   components:
@@ -148,8 +146,7 @@
     node: apcFrame
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -215,4 +212,4 @@
     maxCharge: 50000
     startingCharge: 50000
   - type: AccessReader
-    access: [["Xenoborg"]]
+    access: [ [ "Xenoborg" ] ]

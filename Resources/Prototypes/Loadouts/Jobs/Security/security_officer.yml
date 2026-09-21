@@ -3,13 +3,11 @@
   id: SeniorOfficer
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobWarden
       time: 6h
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
+    requirement: !type:DepartmentTimeRequirement
       department: Security
       time: 60h
 

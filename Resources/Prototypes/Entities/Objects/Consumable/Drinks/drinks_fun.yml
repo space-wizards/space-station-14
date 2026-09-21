@@ -1,6 +1,13 @@
 - type: entity
   abstract: true
-  parent: [ DrinkBaseMaterialPlastic, SolutionSmall, DrinkBase, DrinkBaseOpenable, DrinkVisualsAllFilled ]
+  parent:
+    [
+      DrinkBaseMaterialPlastic,
+      SolutionSmall,
+      DrinkBase,
+      DrinkBaseOpenable,
+      DrinkVisualsAllFilled
+    ]
   id: BaseSqueezeBottle
   components:
   - type: Openable
@@ -9,7 +16,7 @@
   - type: Sprite
     layers:
     - state: icon_empty
-      map: ["enum.OpenableVisuals.Layer"]
+      map: [ "enum.OpenableVisuals.Layer" ]
     - state: fill-6
       map: [ "enum.SolutionContainerLayers.Fill" ] # already has liquid, so no visible: false
     - state: icon-front
@@ -23,7 +30,8 @@
   parent: BaseSqueezeBottle
   id: DrinkSpaceGlue
   name: space glue tube
-  description: High performance glue intended for maintenance of extremely complex mechanical equipment. DON'T DRINK!
+  description: High performance glue intended for maintenance of extremely complex
+    mechanical equipment. DON'T DRINK!
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glue-tube.rsi
@@ -38,7 +46,8 @@
   parent: BaseSqueezeBottle
   id: DrinkSpaceLube
   name: space lube tube
-  description: High performance lubricant intended for maintenance of extremely complex mechanical equipment.
+  description: High performance lubricant intended for maintenance of extremely
+    complex mechanical equipment.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lube-tube.rsi
@@ -55,7 +64,8 @@
   id: BottomlessLube
   name: bottomless lube beaker
   suffix: DEBUG
-  description: This anomalous beaker infinitely produces space lube and as such is to be closely guarded such that it doesn't fall in the wrong hands.
+  description: This anomalous beaker infinitely produces space lube and as such is
+    to be closely guarded such that it doesn't fall in the wrong hands.
   components:
   - type: Solution
     solution:
@@ -69,7 +79,7 @@
         Quantity: 240
 
 - type: entity
-  parent: [DrinkBaseMaterialGlass, DrinkBase]
+  parent: [ DrinkBaseMaterialGlass, DrinkBase ]
   id: DrinkJarWhat
   name: jar of something
   description: You can't really tell what this is.
@@ -80,8 +90,7 @@
     solution: drink
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -139,10 +148,11 @@
     - FourteenLoko
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottleGlassSmallBaseFull]
+  parent: [ DrinkVisualsAllFilled, DrinkBottleGlassSmallBaseFull ]
   id: DrinkMopwataBottleRandom
   name: delicious mopwata
-  description: A foggy brown bottle with a faded label depicting a mop. It comes full of murky... vintage.
+  description: A foggy brown bottle with a faded label depicting a mop. It comes
+    full of murky... vintage.
   components:
   - type: Solution
     solution:

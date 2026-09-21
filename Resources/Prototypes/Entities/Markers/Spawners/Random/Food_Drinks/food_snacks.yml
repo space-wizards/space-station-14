@@ -8,9 +8,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Objects/Consumable/Food/snacks.rsi
-        state: cheesiehonkers
+    - state: red
+    - sprite: Objects/Consumable/Food/snacks.rsi
+      state: cheesiehonkers
   - type: EntityTableSpawner
     table: !type:NestedSelector
       tableId: RandomSnackTable

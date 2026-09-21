@@ -11,8 +11,7 @@
     node: start
   - type: Destructible
     thresholds:
-    - trigger: &DamageTrigger50
-        !type:DamageTrigger
+    - trigger: &DamageTrigger50 !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior
@@ -57,13 +56,14 @@
   parent: BaseDeskBell
   id: DeskBell
   name: desk bell
-  description: The cornerstone of any customer service job. You feel an unending urge to ring it.
+  description: The cornerstone of any customer service job. You feel an unending
+    urge to ring it.
   components:
   - type: Sprite
     state: icon-bell
   - type: Tag
     tags: &PayloadTag
-    - Payload
+      - Payload
   - type: Construction
     graph: *BellGraph
     node: deskBellNode

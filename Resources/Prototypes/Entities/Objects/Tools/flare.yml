@@ -1,8 +1,9 @@
 - type: entity
   name: emergency flare
-  parent: [SolutionComposite, SolutionTiny, BaseItem]
+  parent: [ SolutionComposite, SolutionTiny, BaseItem ]
   id: Flare
-  description: A flare that produces a very bright light for a short while. Point the flame away from yourself.
+  description: A flare that produces a very bright light for a short while. Point
+    the flame away from yourself.
   components:
   - type: Tag
     tags:
@@ -27,16 +28,16 @@
   - type: Sprite
     sprite: Objects/Misc/flare.rsi
     layers:
-      - map: [ enum.ExpendableLightVisualLayers.Base ]
-        state: flare_base
-      - map: [ enum.ExpendableLightVisualLayers.Glow ]
-        state: flare_burn
-        color: "#FFFFFF"
-        visible: false
-        shader: unshaded
-      - map: [ enum.ExpendableLightVisualLayers.Overlay ]
-        state: flare_unlit
-        color: "#FF0000"
+    - map: [ enum.ExpendableLightVisualLayers.Base ]
+      state: flare_base
+    - map: [ enum.ExpendableLightVisualLayers.Glow ]
+      state: flare_burn
+      color: "#FFFFFF"
+      visible: false
+      shader: unshaded
+    - map: [ enum.ExpendableLightVisualLayers.Overlay ]
+      state: flare_unlit
+      color: "#FF0000"
   - type: Icon
     sprite: Objects/Misc/flare.rsi
     state: icon
@@ -55,25 +56,28 @@
     temperature: 1000
   - type: LightBehaviour
     behaviours:
-      - !type:FadeBehaviour # have the radius start small and get larger as it starts to burn
-        id: turn_on
-        maxDuration: 45.0
-        startValue: 2.5
-        endValue: 10.0
-      - !type:RandomizeBehaviour # weaker flicker as it fades out
-        id: fade_out
-        interpolate: Nearest
-        minDuration: 0.001
-        maxDuration: 0.001
-        startValue: 4.0
-        endValue: 8.0
-        property: Energy
-        isLooped: true
-      - !type:FadeBehaviour # fade out radius as it burns out
-        id: fade_out
-        maxDuration: 15.0
-        startValue: 10.0
-        endValue: 1.0
+    # have the radius start small and get larger as it starts to burn
+    - !type:FadeBehaviour
+      id: turn_on
+      maxDuration: 45.0
+      startValue: 2.5
+      endValue: 10.0
+    # weaker flicker as it fades out
+    - !type:RandomizeBehaviour
+      id: fade_out
+      interpolate: Nearest
+      minDuration: 0.001
+      maxDuration: 0.001
+      startValue: 4.0
+      endValue: 8.0
+      property: Energy
+      isLooped: true
+    # fade out radius as it burns out
+    - !type:FadeBehaviour
+      id: fade_out
+      maxDuration: 15.0
+      startValue: 10.0
+      endValue: 1.0
   - type: Extractable
     grindableSolutionName: composite
   - type: Solution

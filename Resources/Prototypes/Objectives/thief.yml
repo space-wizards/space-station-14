@@ -11,7 +11,7 @@
 
 - type: entity
   abstract: true
-  parent: [BaseThiefObjective, BaseStealObjective]
+  parent: [ BaseThiefObjective, BaseStealObjective ]
   id: BaseThiefStealObjective
   components:
   - type: StealCondition
@@ -21,7 +21,7 @@
 
 - type: entity
   abstract: true
-  parent: [BaseThiefObjective, BaseThiefStealObjective]
+  parent: [ BaseThiefObjective, BaseThiefStealObjective ]
   id: BaseThiefStealCollectionObjective
   components:
   - type: StealCondition
@@ -29,7 +29,7 @@
 
 - type: entity
   abstract: true
-  parent: [BaseThiefObjective, BaseThiefStealObjective]
+  parent: [ BaseThiefObjective, BaseThiefStealObjective ]
   id: BaseThiefStealStructureObjective
   components:
   - type: StealCondition
@@ -39,7 +39,7 @@
 
 - type: entity
   abstract: true
-  parent: [BaseThiefObjective, BaseThiefStealObjective]
+  parent: [ BaseThiefObjective, BaseThiefStealObjective ]
   id: BaseThiefStealAnimalObjective
   components:
   - type: StealCondition
@@ -181,7 +181,7 @@
 
 # steal item
 
-- type: entity                                      #Security subgroup
+- type: entity #Security subgroup
   parent: BaseThiefStealObjective
   id: ForensicScannerStealObjective
   components:
@@ -221,7 +221,7 @@
   - type: Objective
     difficulty: 1
 
-- type: entity                                      #Medical subgroup
+- type: entity #Medical subgroup
   parent: BaseThiefStealObjective
   id: ClothingOuterHardsuitVoidParamedStealObjective
   components:
@@ -254,7 +254,7 @@
   - type: Objective
     difficulty: 1
 
-- type: entity                                      #Engineering subgroup
+- type: entity #Engineering subgroup
   parent: BaseThiefStealObjective
   id: FireAxeStealObjective
   components:
@@ -285,9 +285,9 @@
   - type: StealCondition
     stealGroup: ChiefEngineerToolBelt
   - type: Objective
-    difficulty: .7
+    difficulty: 0.7
 
-- type: entity                                      #Cargo subgroup
+- type: entity #Cargo subgroup
   parent: BaseThiefStealObjective
   id: ExpeditionsCircuitboardStealObjective
   components:
@@ -309,7 +309,7 @@
   - type: Objective
     difficulty: 0.7
 
-- type: entity                                      #Service subgroup
+- type: entity #Service subgroup
   parent: BaseThiefStealObjective
   id: BibleStealObjective
   components:
@@ -320,7 +320,7 @@
   - type: Objective
     difficulty: 0.4
 
-- type: entity                                      #Other subgroup
+- type: entity #Other subgroup
   parent: BaseThiefStealObjective
   id: ClothingNeckGoldmedalStealObjective
   components:
@@ -404,7 +404,16 @@
   id: FreezerHeaterStealObjective
   components:
   - type: NotJobRequirement
-    jobs: [ AtmosphericTechnician, MedicalDoctor, Chemist, Paramedic, Psychologist, Scientist, Chef ]
+    jobs:
+      [
+        AtmosphericTechnician,
+        MedicalDoctor,
+        Chemist,
+        Paramedic,
+        Psychologist,
+        Scientist,
+        Chef
+      ]
   - type: StealCondition
     stealGroup: FreezerHeater
   - type: Objective
@@ -554,7 +563,7 @@
 # Escape
 
 - type: entity
-  parent: [BaseThiefObjective, BaseLivingObjective]
+  parent: [ BaseThiefObjective, BaseLivingObjective ]
   id: EscapeThiefShuttleObjective
   name: Escape to CentComm alive and unrestrained via the escape shuttle.
   description: You don't want your illegal activities to be discovered by anyone, do you?

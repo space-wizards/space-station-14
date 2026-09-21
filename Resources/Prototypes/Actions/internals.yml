@@ -10,9 +10,9 @@
     sprite: Interface/Alerts/internals.rsi
     layers:
     - state: internal2
-      map: ["enum.ActionVisuals.Icon"]
+      map: [ "enum.ActionVisuals.Icon" ]
     - state: internal1
-      map: ["enum.ActionVisuals.IconToggled"]
+      map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
   - type: InstantAction
     event: !type:ToggleActionEvent

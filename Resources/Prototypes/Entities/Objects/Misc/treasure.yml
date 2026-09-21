@@ -2,7 +2,8 @@
   parent: BaseItem
   id: TreasureDatadiskEncrypted
   name: encrypted datadisk
-  description: An old data disk. Someone savvier than you could unencrypt it and learn something juicy. All you can do is sell it.
+  description: An old data disk. Someone savvier than you could unencrypt it and
+    learn something juicy. All you can do is sell it.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -23,7 +24,8 @@
   parent: BaseItem
   id: TreasureHardDiskDrive
   name: hard disk drive
-  description: A disk drive designed for old Earth technology, circa 1980. There's probably some kind of collector who might want to get their paws on this.
+  description: A disk drive designed for old Earth technology, circa 1980. There's
+    probably some kind of collector who might want to get their paws on this.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -45,7 +47,8 @@
   parent: BaseItem
   id: TreasureFlopDiskDrive
   name: floppy disk drive
-  description: A drive for reading off info off of floppy disks. Shame that the only things stored on them nowadays are nuclear bomb operations.
+  description: A drive for reading off info off of floppy disks. Shame that the
+    only things stored on them nowadays are nuclear bomb operations.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -60,7 +63,8 @@
   parent: BaseItem
   id: TreasureCDDrive
   name: CD drive
-  description: A piece of tech for reading data off of CDs. Nowadays that's not the most useful thing, unless you plan on flying somewhere.
+  description: A piece of tech for reading data off of CDs. Nowadays that's not
+    the most useful thing, unless you plan on flying somewhere.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -75,7 +79,8 @@
   parent: BaseItem
   id: TreasureCPUSupercharged
   name: supercharged CPU
-  description: Some kind of super alien space tech. Shame all the computers already come with CPUs nowadays.
+  description: Some kind of super alien space tech. Shame all the computers
+    already come with CPUs nowadays.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -144,7 +149,9 @@
   parent: BaseItem
   id: BaseCoin
   name: coin
-  description: A flat bit of metal. If it was still in circulation, inflation would've made it worthless. Since it isn't, it's worth enough to keep in a book.
+  description: A flat bit of metal. If it was still in circulation, inflation
+    would've made it worthless. Since it isn't, it's worth enough to keep in a
+    book.
   components:
   - type: Dice
     sides: 2
@@ -207,4 +214,3 @@
     state: coinDiamond_1
   - type: StaticPrice
     price: 500
-

@@ -36,7 +36,7 @@
   atlas: /Maps/Dungeon/maints.yml
   offset: 0,6
   tags:
-    - Maints
+  - Maints
 
 - type: dungeonRoom
   id: Maints5x5f
@@ -176,5 +176,3 @@
   components:
   - type: RoomFill
     clearExisting: true
-
-

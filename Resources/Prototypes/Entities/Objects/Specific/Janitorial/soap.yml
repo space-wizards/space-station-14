@@ -2,7 +2,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionSoapBase, BaseItem]
+  parent: [ SolutionSoapBase, BaseItem ]
   id: BaseSoap
   name: soap
   components:
@@ -29,15 +29,13 @@
   - type: Fixtures
     fixtures:
       slips:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
         layer:
         - SlipLayer
         hard: false
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
         density: 10
         mask:
@@ -64,7 +62,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionFood, SolutionSmall]
+  parent: [ SolutionFood, SolutionSmall ]
   id: SolutionSoapBase
   components:
   - type: Solution
@@ -78,7 +76,7 @@
   - type: Sprite
     layers:
     - state: soap-4
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: Residue
     residueColor: residue-green
   - type: Solution
@@ -95,7 +93,7 @@
   - type: Sprite
     layers:
     - state: nt-4
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: SolutionContainerVisuals
     fillBaseName: nt-
   - type: Item
@@ -118,7 +116,7 @@
   - type: Sprite
     layers:
     - state: deluxe-4
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: SolutionContainerVisuals
     fillBaseName: deluxe-
   - type: Item
@@ -127,14 +125,14 @@
     residueColor: residue-brown
 
 - type: entity
-  parent: [Soap, BaseSyndicateContraband]
+  parent: [ Soap, BaseSyndicateContraband ]
   id: SoapSyndie
   description: An untrustworthy bar of soap. Smells of fear.
   components:
   - type: Sprite
     layers:
     - state: syndie-4
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: SolutionContainerVisuals
     fillBaseName: syndie-
   - type: Slippery
@@ -146,8 +144,8 @@
     heldPrefix: syndie
   - type: FlavorProfile
     flavors:
-      - clean
-      - punishment
+    - clean
+    - punishment
   - type: CleansForensics
     cleanDelay: 8.0
   - type: Residue
@@ -183,15 +181,13 @@
   - type: Fixtures
     fixtures:
       slips:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.08,-0.06,0.08,0.06"
         layer:
         - SlipLayer
         hard: false
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.08,-0.06,0.08,0.06"
         density: 1
         mask:
@@ -216,20 +212,20 @@
   - type: Sprite
     layers:
     - state: gibs-4
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: SolutionContainerVisuals
     fillBaseName: gibs-
   - type: Item
     heldPrefix: gibs
   - type: FlavorProfile
     flavors:
-      - clean
-      - meaty
+    - clean
+    - meaty
   - type: Residue
     residueColor: residue-red
 
 - type: entity
-  parent: [SolutionLarge, BaseSoap]
+  parent: [ SolutionLarge, BaseSoap ]
   id: SoapOmega
   name: omega soap
   description: The most advanced soap known to mankind. Smells of bluespace.
@@ -237,7 +233,7 @@
   - type: Sprite
     layers:
     - state: omega-4
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: SolutionContainerVisuals
     fillBaseName: omega-
   - type: Slippery

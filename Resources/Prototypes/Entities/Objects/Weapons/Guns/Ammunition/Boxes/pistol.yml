@@ -8,7 +8,7 @@
     mayTransfer: true
     whitelist:
       tags:
-        - CartridgePistol
+      - CartridgePistol
     proto: CartridgePistol
     capacity: 60
   - type: Item
@@ -29,61 +29,65 @@
   parent: BaseMagazineBoxPistol
   id: MagazineBoxPistol
   name: ammunition box (.35 auto)
-  description: A cardboard box of .35 auto rounds. Intended to hold general-purpose kinetic ammunition.
+  description: A cardboard box of .35 auto rounds. Intended to hold
+    general-purpose kinetic ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistol
   - type: Sprite
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]
+      map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
+      map: [ "enum.GunVisualLayers.Mag" ]
 
 - type: entity
   parent: BaseMagazineBoxPistol
   id: MagazineBoxPistolPractice
   name: ammunition box (.35 auto practice)
-  description: A cardboard box of .35 auto rounds. Intended to hold harmless practice ammunition.
+  description: A cardboard box of .35 auto rounds. Intended to hold harmless
+    practice ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolPractice
   - type: Sprite
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]
+      map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
+      map: [ "enum.GunVisualLayers.Mag" ]
     - state: practice
 
 - type: entity
   id: MagazineBoxPistolIncendiary
   parent: BaseMagazineBoxPistol
   name: ammunition box (.35 auto incendiary)
-  description: A cardboard box of .35 auto rounds. Intended to hold self-igniting incendiary ammunition.
+  description: A cardboard box of .35 auto rounds. Intended to hold self-igniting
+    incendiary ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolIncendiary
   - type: Sprite
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]
+      map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
+      map: [ "enum.GunVisualLayers.Mag" ]
     - state: incendiary
 
 - type: entity
   parent: BaseMagazineBoxPistol
   id: MagazineBoxPistolUranium
   name: ammunition box (.35 auto uranium)
-  description: A cardboard box of .35 auto rounds. Intended to hold exotic uranium-core ammunition.
+  description: A cardboard box of .35 auto rounds. Intended to hold exotic
+    uranium-core ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolUranium
   - type: Sprite
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]
+      map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
+      map: [ "enum.GunVisualLayers.Mag" ]
     - state: uranium

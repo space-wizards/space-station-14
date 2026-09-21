@@ -45,9 +45,7 @@
 
   - tasks:
     - !type:HTNPrimitiveTask
-      operator: !type:NoOperator
-
-# Should be called only when in range
+      operator: !type:NoOperator # Should be called only when in range
 - type: htnCompound
   id: MedibotInject
   branches:
@@ -61,4 +59,3 @@
         targetKey: Target
         components:
         - type: NPCRecentlyInjected
-

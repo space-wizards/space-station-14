@@ -46,9 +46,9 @@
   - type: RadiationReceiver
   - type: Reactive
     groups:
-      Flammable: [Touch]
-      Extinguish: [Touch]
-      Acidic: [Touch]
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+      Acidic: [ Touch ]
   - type: LightningTarget
     priority: 2
     lightningExplode: false

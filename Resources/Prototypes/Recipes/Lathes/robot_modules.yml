@@ -2,7 +2,7 @@
   abstract: true
   id: BaseBorgModuleRecipe
   categories:
-    - Modules
+  - Modules
   completetime: 3
   materials:
     Steel: 250

@@ -2,7 +2,7 @@
   parent:
   - BaseSpeciesLayers
   id: DetachedBody
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   save: false
   components:
   - type: Clickable

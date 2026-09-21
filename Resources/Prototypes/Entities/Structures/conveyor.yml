@@ -2,7 +2,8 @@
   parent: StructureHealthMachineFlimsy
   id: ConveyorBelt
   name: conveyor belt
-  description: A conveyor belt, commonly used to transport large numbers of items elsewhere quite quickly.
+  description: A conveyor belt, commonly used to transport large numbers of items
+    elsewhere quite quickly.
   placement:
     mode: SnapgridCenter
   components:
@@ -60,8 +61,7 @@
     damageModifierSet: PlasticMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior

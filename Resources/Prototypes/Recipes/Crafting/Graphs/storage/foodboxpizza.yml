@@ -2,14 +2,13 @@
   id: FoodBoxPizza
   start: start
   graph:
-    - node: start
-      edges:
-        - to: foodboxpizza
-          steps:
-            - material: Cardboard
-              amount: 1
-              doAfter: 4
+  - node: start
+    edges:
+    - to: foodboxpizza
+      steps:
+      - material: Cardboard
+        amount: 1
+        doAfter: 4
 
-
-    - node: foodboxpizza
-      entity: FoodBoxPizza
+  - node: foodboxpizza
+    entity: FoodBoxPizza

@@ -5,8 +5,8 @@
   groupWhitelist: [ Vulpkanin ]
   canBeDisplaced: false
   sprites:
-    - sprite: Mobs/Customization/Vulpkanin/hair.rsi
-      state: adhara
+  - sprite: Mobs/Customization/Vulpkanin/hair.rsi
+    state: adhara
 
 - type: marking
   id: VulpHairAnita
@@ -14,8 +14,8 @@
   groupWhitelist: [ Vulpkanin ]
   canBeDisplaced: false
   sprites:
-    - sprite: Mobs/Customization/Vulpkanin/hair.rsi
-      state: anita
+  - sprite: Mobs/Customization/Vulpkanin/hair.rsi
+    state: anita
 
 - type: marking
   id: VulpHairApollo
@@ -23,8 +23,8 @@
   groupWhitelist: [ Vulpkanin ]
   canBeDisplaced: false
   sprites:
-    - sprite: Mobs/Customization/Vulpkanin/hair.rsi
-      state: apollo
+  - sprite: Mobs/Customization/Vulpkanin/hair.rsi
+    state: apollo
 
 - type: marking
   id: VulpHairBelle
@@ -32,8 +32,8 @@
   groupWhitelist: [ Vulpkanin ]
   canBeDisplaced: false
   sprites:
-    - sprite: Mobs/Customization/Vulpkanin/hair.rsi
-      state: belle
+  - sprite: Mobs/Customization/Vulpkanin/hair.rsi
+    state: belle
 
 - type: marking
   id: VulpHairBraided
@@ -41,8 +41,8 @@
   canBeDisplaced: false
   groupWhitelist: [ Vulpkanin ]
   sprites:
-    - sprite: Mobs/Customization/Vulpkanin/hair.rsi
-      state: braided
+  - sprite: Mobs/Customization/Vulpkanin/hair.rsi
+    state: braided
 
 - type: marking
   id: VulpHairBun
@@ -50,8 +50,8 @@
   canBeDisplaced: false
   groupWhitelist: [ Vulpkanin ]
   sprites:
-    - sprite: Mobs/Customization/Vulpkanin/hair.rsi
-      state: bun
+  - sprite: Mobs/Customization/Vulpkanin/hair.rsi
+    state: bun
 
 - type: marking
   id: VulpHairCleanCut
@@ -59,8 +59,8 @@
   canBeDisplaced: false
   groupWhitelist: [ Vulpkanin ]
   sprites:
-    - sprite: Mobs/Customization/Vulpkanin/hair.rsi
-      state: clean_cut
+  - sprite: Mobs/Customization/Vulpkanin/hair.rsi
+    state: clean_cut
 
 - type: marking
   id: VulpHairCurl
@@ -68,8 +68,8 @@
   canBeDisplaced: false
   groupWhitelist: [ Vulpkanin ]
   sprites:
-    - sprite: Mobs/Customization/Vulpkanin/hair.rsi
-      state: curl
+  - sprite: Mobs/Customization/Vulpkanin/hair.rsi
+    state: curl
 
 - type: marking
   id: VulpHairHawk
@@ -77,8 +77,8 @@
   canBeDisplaced: false
   groupWhitelist: [ Vulpkanin ]
   sprites:
-    - sprite: Mobs/Customization/Vulpkanin/hair.rsi
-      state: hawk
+  - sprite: Mobs/Customization/Vulpkanin/hair.rsi
+    state: hawk
 
 - type: marking
   id: VulpHairJagged
@@ -86,8 +86,8 @@
   canBeDisplaced: false
   groupWhitelist: [ Vulpkanin ]
   sprites:
-    - sprite: Mobs/Customization/Vulpkanin/hair.rsi
-      state: jagged
+  - sprite: Mobs/Customization/Vulpkanin/hair.rsi
+    state: jagged
 
 - type: marking
   id: VulpHairJeremy
@@ -95,8 +95,8 @@
   canBeDisplaced: false
   groupWhitelist: [ Vulpkanin ]
   sprites:
-    - sprite: Mobs/Customization/Vulpkanin/hair.rsi
-      state: jeremy
+  - sprite: Mobs/Customization/Vulpkanin/hair.rsi
+    state: jeremy
 
 - type: marking
   id: VulpHairKajam
@@ -104,8 +104,8 @@
   canBeDisplaced: false
   groupWhitelist: [ Vulpkanin ]
   sprites:
-    - sprite: Mobs/Customization/Vulpkanin/hair.rsi
-      state: kajam
+  - sprite: Mobs/Customization/Vulpkanin/hair.rsi
+    state: kajam
 
 - type: marking
   id: VulpHairKeid
@@ -113,8 +113,8 @@
   canBeDisplaced: false
   groupWhitelist: [ Vulpkanin ]
   sprites:
-    - sprite: Mobs/Customization/Vulpkanin/hair.rsi
-      state: keid
+  - sprite: Mobs/Customization/Vulpkanin/hair.rsi
+    state: keid
 
 - type: marking
   id: VulpHairKleeia
@@ -122,8 +122,8 @@
   canBeDisplaced: false
   groupWhitelist: [ Vulpkanin ]
   sprites:
-    - sprite: Mobs/Customization/Vulpkanin/hair.rsi
-      state: kleeia
+  - sprite: Mobs/Customization/Vulpkanin/hair.rsi
+    state: kleeia
 
 - type: marking
   id: VulpHairMizar
@@ -131,8 +131,8 @@
   canBeDisplaced: false
   groupWhitelist: [ Vulpkanin ]
   sprites:
-    - sprite: Mobs/Customization/Vulpkanin/hair.rsi
-      state: mizar
+  - sprite: Mobs/Customization/Vulpkanin/hair.rsi
+    state: mizar
 
 - type: marking
   id: VulpHairPunkBraided
@@ -140,8 +140,8 @@
   canBeDisplaced: false
   groupWhitelist: [ Vulpkanin ]
   sprites:
-    - sprite: Mobs/Customization/Vulpkanin/hair.rsi
-      state: punkbraided
+  - sprite: Mobs/Customization/Vulpkanin/hair.rsi
+    state: punkbraided
 
 - type: marking
   id: VulpHairRaine
@@ -149,8 +149,8 @@
   canBeDisplaced: false
   groupWhitelist: [ Vulpkanin ]
   sprites:
-    - sprite: Mobs/Customization/Vulpkanin/hair.rsi
-      state: raine
+  - sprite: Mobs/Customization/Vulpkanin/hair.rsi
+    state: raine
 
 - type: marking
   id: VulpHairRough
@@ -158,8 +158,8 @@
   canBeDisplaced: false
   groupWhitelist: [ Vulpkanin ]
   sprites:
-    - sprite: Mobs/Customization/Vulpkanin/hair.rsi
-      state: rough
+  - sprite: Mobs/Customization/Vulpkanin/hair.rsi
+    state: rough
 
 - type: marking
   id: VulpHairShort
@@ -167,8 +167,8 @@
   canBeDisplaced: false
   groupWhitelist: [ Vulpkanin ]
   sprites:
-    - sprite: Mobs/Customization/Vulpkanin/hair.rsi
-      state: short
+  - sprite: Mobs/Customization/Vulpkanin/hair.rsi
+    state: short
 
 - type: marking
   id: VulpHairShort2
@@ -176,8 +176,8 @@
   canBeDisplaced: false
   groupWhitelist: [ Vulpkanin ]
   sprites:
-    - sprite: Mobs/Customization/Vulpkanin/hair.rsi
-      state: short2
+  - sprite: Mobs/Customization/Vulpkanin/hair.rsi
+    state: short2
 
 - type: marking
   id: VulpHairSpike
@@ -185,8 +185,8 @@
   canBeDisplaced: false
   groupWhitelist: [ Vulpkanin ]
   sprites:
-    - sprite: Mobs/Customization/Vulpkanin/hair.rsi
-      state: spike
+  - sprite: Mobs/Customization/Vulpkanin/hair.rsi
+    state: spike
 
 # Facial Hairs
 - type: marking
@@ -195,8 +195,8 @@
   groupWhitelist: [ Vulpkanin ]
   canBeDisplaced: false
   sprites:
-    - sprite: Mobs/Customization/Vulpkanin/facial_hair.rsi
-      state: ruff
+  - sprite: Mobs/Customization/Vulpkanin/facial_hair.rsi
+    state: ruff
 
 - type: marking
   id: VulpFacialHairElder
@@ -204,8 +204,8 @@
   groupWhitelist: [ Vulpkanin ]
   canBeDisplaced: false
   sprites:
-    - sprite: Mobs/Customization/Vulpkanin/facial_hair.rsi
-      state: elder
+  - sprite: Mobs/Customization/Vulpkanin/facial_hair.rsi
+    state: elder
 
 - type: marking
   id: VulpFacialHairElderChin
@@ -213,8 +213,8 @@
   groupWhitelist: [ Vulpkanin ]
   canBeDisplaced: false
   sprites:
-    - sprite: Mobs/Customization/Vulpkanin/facial_hair.rsi
-      state: elder_chin
+  - sprite: Mobs/Customization/Vulpkanin/facial_hair.rsi
+    state: elder_chin
 
 - type: marking
   id: VulpFacialHairKita
@@ -222,8 +222,8 @@
   groupWhitelist: [ Vulpkanin ]
   canBeDisplaced: false
   sprites:
-    - sprite: Mobs/Customization/Vulpkanin/facial_hair.rsi
-      state: kita
+  - sprite: Mobs/Customization/Vulpkanin/facial_hair.rsi
+    state: kita
 
 - type: marking
   id: VulpFacialHairGoatee

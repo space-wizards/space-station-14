@@ -9,5 +9,5 @@
     state: door_electronics
   - type: Tag
     tags:
-      - FreezerElectronics
+    - FreezerElectronics
   - type: DoorElectronics

@@ -11,8 +11,8 @@
         amount: 6
   - type: Sprite
     layers:
-      - state: box
-      - state: syringe
+    - state: box
+    - state: syringe
 
 - type: entity
   name: pill canister box
@@ -27,8 +27,8 @@
         amount: 9
   - type: Sprite
     layers:
-      - state: box
-      - state: pillbox
+    - state: box
+    - state: pillbox
 
 - type: entity
   name: bottle box
@@ -43,8 +43,8 @@
         amount: 6
   - type: Sprite
     layers:
-      - state: box
-      - state: bottle
+    - state: box
+    - state: bottle
 
 - type: entity
   name: sterile mask box
@@ -59,8 +59,8 @@
         amount: 4
   - type: Sprite
     layers:
-      - state: box
-      - state: sterile
+    - state: box
+    - state: sterile
 
 - type: entity
   name: latex gloves box
@@ -75,8 +75,8 @@
         amount: 4
   - type: Sprite
     layers:
-      - state: box
-      - state: latex
+    - state: box
+    - state: latex
 
 - type: entity
   name: nitrile gloves box
@@ -91,8 +91,8 @@
         amount: 4
   - type: Sprite
     layers:
-      - state: box
-      - state: nitrile
+    - state: box
+    - state: nitrile
 
 - type: entity
   name: body bag box
@@ -107,12 +107,12 @@
         amount: 4
   - type: Sprite
     layers:
-      - state: box
-      - state: bodybags
+    - state: box
+    - state: bodybags
   - type: Storage # TODO cardboard boxes shouldn't have whitelisting
     whitelist:
       tags:
-        - BodyBag
+      - BodyBag
 
 - type: entity
   name: vial box
@@ -133,5 +133,5 @@
         rolls: 2 # group the small vials on the right column
   - type: Sprite
     layers:
-      - state: box
-      - state: vials
+    - state: box
+    - state: vials

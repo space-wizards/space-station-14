@@ -8,7 +8,7 @@
   - type: RandomHumanoidAppearance
     randomizeName: false
   - type: Loadout
-    prototypes: [SyndicateOperativeGearExtremelyBasic]
+    prototypes: [ SyndicateOperativeGearExtremelyBasic ]
     roleLoadout: [ RoleSurvivalSyndicate ]
   - type: RandomMetadata
     nameSegments:
@@ -35,7 +35,7 @@
   name: syndicate medic
   components:
   - type: Loadout
-    prototypes: [SyndicateReinforcementMedic]
+    prototypes: [ SyndicateReinforcementMedic ]
     roleLoadout: [ RoleSurvivalSyndicate ]
 
 - type: entity
@@ -44,7 +44,7 @@
   name: syndicate spy
   components:
   - type: Loadout
-    prototypes: [SyndicateReinforcementSpy]
+    prototypes: [ SyndicateReinforcementSpy ]
     roleLoadout: [ RoleSurvivalSyndicate ]
 
 - type: entity
@@ -53,7 +53,7 @@
   name: syndicate thief
   components:
   - type: Loadout
-    prototypes: [SyndicateReinforcementThief]
+    prototypes: [ SyndicateReinforcementThief ]
     roleLoadout: [ RoleSurvivalSyndicate ]
 
 - type: entity
@@ -67,7 +67,7 @@
     - NamesSyndicateNormal
     nameFormat: name-format-nukie-operator
   - type: Loadout
-    prototypes: [SyndicateOperativeGearFullNoUplink]
+    prototypes: [ SyndicateOperativeGearFullNoUplink ]
 
 # Nuclear Operative
 - type: entity
@@ -89,7 +89,7 @@
     randomizeName: false
   - type: NukeOperative
   - type: Loadout
-    prototypes: [SyndicateLoneOperativeGearFull]
+    prototypes: [ SyndicateLoneOperativeGearFull ]
     roleLoadout: [ RoleSurvivalSyndicate ]
   - type: RandomMetadata
     nameSegments:

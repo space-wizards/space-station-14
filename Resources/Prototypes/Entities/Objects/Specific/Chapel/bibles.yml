@@ -21,7 +21,8 @@
         Piercing: 5
         Slash: 5
         Asphyxiation: 15
-    damageOnUntrainedUse: ## What a non-chaplain takes when attempting to heal someone
+    damageOnUntrainedUse:
+      ## What a non-chaplain takes when attempting to heal someone
       types:
         Heat: 10
   - type: MeleeWeapon
@@ -62,7 +63,7 @@
     stealGroup: Bible
 
 - type: entity
-  parent: [Bible, BaseSyndicateContraband]
+  parent: [ Bible, BaseSyndicateContraband ]
   name: necronomicon
   description: "There's a note: Klatuu, Verata, Nikto -- Don't forget it again!"
   id: BibleNecronomicon
@@ -99,7 +100,8 @@
   parent: BaseAction
   id: ActionBibleSummon
   name: Summon familiar
-  description: Summon a familiar that will aid you and gain humanlike intelligence once inhabited by a soul.
+  description: Summon a familiar that will aid you and gain humanlike intelligence
+    once inhabited by a soul.
   components:
   - type: Action
     useDelay: 1
@@ -109,7 +111,6 @@
     - state: icon
   - type: InstantAction
     event: !type:SummonActionEvent
-
 - type: entity
   id: BibleDruid
   name: druidic tablet
@@ -158,7 +159,8 @@
   id: BibleHonk
   name: mirth of the honkmother
   parent: Bible
-  description: "Oh great and glorious Mother, Mistress of Mirth, Matron of Mask and Merriments, Blessed is she amongst us jesters."
+  description: "Oh great and glorious Mother, Mistress of Mirth, Matron of Mask
+    and Merriments, Blessed is she amongst us jesters."
   components:
   - type: Sprite
     sprite: Objects/Specific/Chapel/honk.rsi
@@ -169,7 +171,8 @@
   id: BibleRatvar
   name: tablet of ratvar
   parent: Bible
-  description: "A holy relic of the Clockwork Cult, blessed by the Clockwork Justice, Ratvar."
+  description: "A holy relic of the Clockwork Cult, blessed by the Clockwork
+    Justice, Ratvar."
   components:
   - type: Sprite
     sprite: Objects/Specific/Chapel/ratvartablet.rsi
@@ -180,21 +183,21 @@
   id: HolyLightEffect
   categories: [ HideSpawnMenu ]
   components:
-    - type: PointLight
-      enabled: true
-      radius: 1.5
-      energy: 20
-      color: lightgoldenrodyellow
-      netsync: false
-    - type: LightFade
-      duration: 0.7
-    - type: TimedDespawn
-      lifetime: 0.7
+  - type: PointLight
+    enabled: true
+    radius: 1.5
+    energy: 20
+    color: lightgoldenrodyellow
+    netsync: false
+  - type: LightFade
+    duration: 0.7
+  - type: TimedDespawn
+    lifetime: 0.7
 
 - type: entity
   id: EvilLightEffect
   categories: [ HideSpawnMenu ]
   parent: HolyLightEffect
   components:
-    - type: PointLight
-      color: red
+  - type: PointLight
+    color: red

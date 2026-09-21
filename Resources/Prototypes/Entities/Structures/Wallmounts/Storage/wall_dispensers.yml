@@ -1,6 +1,12 @@
 - type: entity
   abstract: true
-  parent: [SolutionTank, SolutionGinormous, BaseWallmountMetallic, StructureHealthContainerFlimsy]
+  parent:
+    [
+      SolutionTank,
+      SolutionGinormous,
+      BaseWallmountMetallic,
+      StructureHealthContainerFlimsy
+    ]
   id: BaseDispenser
   components:
   - type: Sprite
@@ -8,22 +14,19 @@
   - type: Appearance
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
+    - trigger: !type:DamageTypeTrigger
         damageType: Heat
         damage: 5
       behaviors:
       - !type:SolutionExplosionBehavior
         solution: tank
-    - trigger:
-        !type:DamageTypeTrigger
+    - trigger: !type:DamageTypeTrigger
         damageType: Piercing
         damage: 5
       behaviors:
       - !type:SolutionExplosionBehavior
         solution: tank
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 20
       behaviors:
       - !type:SpillBehavior
@@ -47,7 +50,7 @@
     layers:
     - state: cleanerdispenser
     - state: fill-1
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
   - type: SolutionContainerVisuals
     maxFillLevels: 5
@@ -68,7 +71,7 @@
     layers:
     - state: fueldispenser
     - state: fill-1
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
   - type: SolutionContainerVisuals
     maxFillLevels: 5

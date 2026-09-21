@@ -5,7 +5,7 @@
   id: SpamMailTable
   table: !type:GroupSelector
     children:
-      - id: MailSpamLetter
+    - id: MailSpamLetter
 
 # Letter Bundles
 ## Basically items that should always spawn together, specific to letters

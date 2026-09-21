@@ -43,7 +43,7 @@
     sprite: Clothing/Back/Duffels/medical.rsi
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseCommandContraband]
+  parent: [ ClothingBackpackDuffel, BaseCommandContraband ]
   id: ClothingBackpackDuffelCaptain
   name: captain's duffel bag
   description: A large duffel bag for holding extra captainly goods.
@@ -70,7 +70,7 @@
         variation: 0.125
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseSecurityContraband]
+  parent: [ ClothingBackpackDuffel, BaseSecurityContraband ]
   id: ClothingBackpackDuffelSecurity
   name: security duffel bag
   description: A large duffel bag for holding extra security related goods.
@@ -79,7 +79,7 @@
     sprite: Clothing/Back/Duffels/security.rsi
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseSecurityContraband]
+  parent: [ ClothingBackpackDuffel, BaseSecurityContraband ]
   id: ClothingBackpackDuffelBrigmedic
   name: brigmedic duffel bag
   description: A large duffel bag for holding extra medical related goods.
@@ -100,7 +100,8 @@
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelVirology
   name: virology duffel bag
-  description: A large duffel bag made of hypo-allergenic fibers. It's designed to help prevent the spread of disease. Smells like monkey.
+  description: A large duffel bag made of hypo-allergenic fibers. It's designed to
+    help prevent the spread of disease. Smells like monkey.
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/virology.rsi
@@ -141,8 +142,8 @@
   name: hydroponics duffel bag
   description: A large duffel bag for holding extra gardening tools.
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Duffels/hydroponics.rsi
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/hydroponics.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -150,8 +151,8 @@
   name: cargo duffel bag
   description: A large duffel bag for stealing cargo's precious loot.
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Duffels/cargo.rsi
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/cargo.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -159,11 +160,11 @@
   name: salvage duffel bag
   description: A large duffel bag for holding extra exotic treasures.
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Duffels/salvage.rsi
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/salvage.rsi
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseSyndicateContraband]
+  parent: [ ClothingBackpackDuffel, BaseSyndicateContraband ]
   id: ClothingBackpackDuffelSyndicate
   name: syndicate duffel bag
   description: A large duffel bag for holding various traitor goods.

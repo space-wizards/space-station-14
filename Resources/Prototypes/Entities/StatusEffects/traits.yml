@@ -12,7 +12,12 @@
   - type: ChangelingCloneableStatusEffect
 
 - type: entity
-  parent: [ BloodstreamStatusEffectBase, TraitStatusEffectBase, ChangelingStatusEffectBase ]
+  parent:
+    [
+      BloodstreamStatusEffectBase,
+      TraitStatusEffectBase,
+      ChangelingStatusEffectBase
+    ]
   id: TraitStatusEffectHemophilia
   components:
   - type: HemophiliaStatusEffect

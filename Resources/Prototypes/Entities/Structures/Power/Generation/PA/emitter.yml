@@ -47,7 +47,8 @@
   id: ParticleAcceleratorEmitterPortUnfinished
   name: PA port containment emitter
   suffix: Unfinished, Port
-  description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
+  description: This launchs the Alpha particles, might not want to stand near this
+    end. It looks unfinished.
   components:
   - type: Sprite
     sprite: Structures/Power/Generation/PA/emitter_port.rsi
@@ -60,7 +61,8 @@
   id: ParticleAcceleratorEmitterForeUnfinished
   name: PA fore containment emitter
   suffix: Unfinished, Fore
-  description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
+  description: This launchs the Alpha particles, might not want to stand near this
+    end. It looks unfinished.
   components:
   - type: Sprite
     sprite: Structures/Power/Generation/PA/emitter_fore.rsi
@@ -73,7 +75,8 @@
   id: ParticleAcceleratorEmitterStarboardUnfinished
   name: PA starboard containment emitter
   suffix: Unfinished, Starboard
-  description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
+  description: This launchs the Alpha particles, might not want to stand near this
+    end. It looks unfinished.
   components:
   - type: Sprite
     sprite: Structures/Power/Generation/PA/emitter_starboard.rsi

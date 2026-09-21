@@ -1,7 +1,13 @@
 - type: entity
   name: watcher
   id: MobWatcherBase
-  parent: [ SimpleSpaceMobBase, FlyingMobBase, BaseSlicingRefinable, BaseMobDestructible ]
+  parent:
+    [
+      SimpleSpaceMobBase,
+      FlyingMobBase,
+      BaseSlicingRefinable,
+      BaseMobDestructible
+    ]
   abstract: true
   description: It's like it's staring right through you.
   components:
@@ -23,12 +29,11 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.30
         density: 80
         mask:
-          - FlyingMobMask
+        - FlyingMobMask
         layer:
         - FlyingMobLayer
   - type: DamageStateVisuals

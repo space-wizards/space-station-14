@@ -16,17 +16,17 @@
     state:
     layers:
     - state: skewer
-    - map: ["foodSequenceLayers"]
+    - map: [ "foodSequenceLayers" ]
   - type: LandAtCursor
   - type: Fixtures
     fixtures:
       fix1:
         shape: !type:PolygonShape
           vertices:
-            - -0.40,-0.20
-            - -0.30,-0.30
-            - 0.50,0.10
-            - 0.40,0.20
+          - -0.40,-0.20
+          - -0.30,-0.30
+          - 0.50,0.10
+          - 0.40,0.20
         density: 20
         mask:
         - ItemMask

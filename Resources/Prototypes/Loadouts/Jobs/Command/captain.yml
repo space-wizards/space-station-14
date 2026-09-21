@@ -3,8 +3,7 @@
   id: MasterCap
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobCaptain
       time: 20h
 

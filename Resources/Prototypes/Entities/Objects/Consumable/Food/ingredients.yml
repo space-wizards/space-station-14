@@ -7,7 +7,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionFood, SolutionSmall, BaseItem]
+  parent: [ SolutionFood, SolutionSmall, BaseItem ]
   id: ReagentContainerBase # Despite the name its basically only used for ingredients
   components:
   - type: Sprite
@@ -45,8 +45,7 @@
   # packet can be broken open
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 2
       behaviors:
       - !type:PlaySoundBehavior
@@ -66,7 +65,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionNormal, ReagentPacketBase]
+  parent: [ SolutionNormal, ReagentPacketBase ]
   id: ReagentPacket
   components:
   - type: Item
@@ -74,7 +73,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionSmall, ReagentPacketBase]
+  parent: [ SolutionSmall, ReagentPacketBase ]
   id: ReagentPacketSmall
   components:
   - type: Item
@@ -94,7 +93,7 @@
         Blunt: 1
 
 - type: entity
-  parent: [ReagentPacket, ItemHeftyBase]
+  parent: [ ReagentPacket, ItemHeftyBase ]
   id: ReagentContainerFlour
   name: flour bag
   description: A big bag of flour. Good for baking!
@@ -104,12 +103,12 @@
     visuals:
       enum.OpenableVisuals.Opened:
         enum.OpenableVisuals.Layer:
-          True: {state: "flour-big_open"} # open
-          False: {state: "flour-big"} # closed
+          True: { state: "flour-big_open" } # open
+          False: { state: "flour-big" } # closed
   - type: Sprite
     layers:
     - state: flour-big
-      map: ["enum.OpenableVisuals.Layer"]
+      map: [ "enum.OpenableVisuals.Layer" ]
   - type: Solution
     solution:
       reagents:
@@ -117,7 +116,7 @@
         Quantity: 120 # About a pound of flour
 
 - type: entity
-  parent: [ReagentPacketSmall, ItemHeftyBase]
+  parent: [ ReagentPacketSmall, ItemHeftyBase ]
   id: ReagentContainerFlourSmall
   name: flour pack
   description: A pack of flour. Good for baking!
@@ -131,7 +130,7 @@
         Quantity: 60
 
 - type: entity
-  parent: [ReagentPacket, ItemHeftyBase]
+  parent: [ ReagentPacket, ItemHeftyBase ]
   id: ReagentContainerCornmeal
   name: cornmeal bag
   description: A big bag of cornmeal. Good for cooking!
@@ -141,12 +140,12 @@
     visuals:
       enum.OpenableVisuals.Opened:
         enum.OpenableVisuals.Layer:
-          True: {state: "cornmeal-big_open"} # open
-          False: {state: "cornmeal-big"} # closed
+          True: { state: "cornmeal-big_open" } # open
+          False: { state: "cornmeal-big" } # closed
   - type: Sprite
     layers:
     - state: cornmeal-big
-      map: ["enum.OpenableVisuals.Layer"]
+      map: [ "enum.OpenableVisuals.Layer" ]
   - type: Solution
     solution:
       reagents:
@@ -154,7 +153,7 @@
         Quantity: 120
 
 - type: entity
-  parent: [ReagentPacketSmall, ItemHeftyBase]
+  parent: [ ReagentPacketSmall, ItemHeftyBase ]
   id: ReagentContainerCornmealSmall
   name: cornmeal pack
   description: A pack of cornmeal. Good for cooking!
@@ -168,7 +167,7 @@
         Quantity: 60
 
 - type: entity
-  parent: [ReagentPacket, ItemHeftyBase]
+  parent: [ ReagentPacket, ItemHeftyBase ]
   id: ReagentContainerRice
   name: rice bag
   description: A big bag of rice. Good for cooking!
@@ -178,12 +177,12 @@
     visuals:
       enum.OpenableVisuals.Opened:
         enum.OpenableVisuals.Layer:
-          True: {state: "rice-big_open"} # open
-          False: {state: "rice-big"} # closed
+          True: { state: "rice-big_open" } # open
+          False: { state: "rice-big" } # closed
   - type: Sprite
     layers:
     - state: rice-big
-      map: ["enum.OpenableVisuals.Layer"]
+      map: [ "enum.OpenableVisuals.Layer" ]
   - type: Solution
     solution:
       reagents:
@@ -191,7 +190,7 @@
         Quantity: 120
 
 - type: entity
-  parent: [ReagentPacketSmall, ItemHeftyBase]
+  parent: [ ReagentPacketSmall, ItemHeftyBase ]
   id: ReagentContainerRiceSmall
   name: rice pack
   description: A pack of rice. Good for cooking!
@@ -205,7 +204,7 @@
         Quantity: 60
 
 - type: entity
-  parent: [ReagentPacket, ItemHeftyBase]
+  parent: [ ReagentPacket, ItemHeftyBase ]
   id: ReagentContainerSugar
   name: sugar bag
   description: A big bag of tasty spacey sugar.
@@ -215,12 +214,12 @@
     visuals:
       enum.OpenableVisuals.Opened:
         enum.OpenableVisuals.Layer:
-          True: {state: "sugar-big_open"} # open
-          False: {state: "sugar-big"} # closed
+          True: { state: "sugar-big_open" } # open
+          False: { state: "sugar-big" } # closed
   - type: Sprite
     layers:
     - state: sugar-big
-      map: ["enum.OpenableVisuals.Layer"]
+      map: [ "enum.OpenableVisuals.Layer" ]
   - type: Solution
     solution:
       reagents:
@@ -228,7 +227,7 @@
         Quantity: 120
 
 - type: entity
-  parent: [ReagentPacketSmall, ItemHeftyBase]
+  parent: [ ReagentPacketSmall, ItemHeftyBase ]
   id: ReagentContainerSugarSmall
   name: sugar pack
   description: A pack of tasty spacey sugar.
@@ -254,12 +253,12 @@
     visuals:
       enum.OpenableVisuals.Opened:
         enum.OpenableVisuals.Layer:
-          True: {state: "oliveoil_open"} # open
-          False: {state: "oliveoil"} # closed
+          True: { state: "oliveoil_open" } # open
+          False: { state: "oliveoil" } # closed
   - type: Sprite
     layers:
     - state: oliveoil
-      map: ["enum.OpenableVisuals.Layer"]
+      map: [ "enum.OpenableVisuals.Layer" ]
   - type: Solution
     solution:
       maxVol: 50
@@ -280,12 +279,12 @@
     visuals:
       enum.OpenableVisuals.Opened:
         enum.OpenableVisuals.Layer:
-          True: {state: "mayo_open"} # open
-          False: {state: "mayo"} # closed
+          True: { state: "mayo_open" } # open
+          False: { state: "mayo" } # closed
   - type: Sprite
     layers:
     - state: mayo
-      map: ["enum.OpenableVisuals.Layer"]
+      map: [ "enum.OpenableVisuals.Layer" ]
   - type: Solution
     solution:
       maxVol: 50
@@ -294,7 +293,7 @@
         Quantity: 50
   - type: Tag
     tags:
-      - Mayo
+    - Mayo
 
 # Baking
 
@@ -322,7 +321,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionNormal, FoodBakingBase]
+  parent: [ SolutionNormal, FoodBakingBase ]
   id: FoodDoughBase
   components:
   - type: Item
@@ -339,7 +338,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionVeryTiny, FoodBakingBase]
+  parent: [ SolutionVeryTiny, FoodBakingBase ]
   id: FoodDoughSliceBase
   components:
   - type: Item
@@ -371,7 +370,7 @@
     tags: []
 
 - type: entity
-  parent: [FoodDoughBase, BaseSlicingRefinableFood]
+  parent: [ FoodDoughBase, BaseSlicingRefinableFood ]
   id: FoodDough
   name: dough
   description: A piece of dough.
@@ -411,7 +410,7 @@
     node: rolled
 
 - type: entity
-  parent: [FoodDoughBase, BaseSlicingRefinableFood]
+  parent: [ FoodDoughBase, BaseSlicingRefinableFood ]
   id: FoodDoughCornmeal
   name: cornmeal dough
   description: A piece of cornmeal dough.
@@ -433,7 +432,7 @@
     state: cornmealdough-slice
 
 - type: entity
-  parent: [FoodDoughBase, BaseSlicingRefinableFood]
+  parent: [ FoodDoughBase, BaseSlicingRefinableFood ]
   id: FoodDoughTortilla
   name: tortilla dough
   description: A piece of tortilla dough.
@@ -458,7 +457,7 @@
     node: start
 
 - type: entity
-  parent: [SolutionVeryTiny, FoodDoughBase]
+  parent: [ SolutionVeryTiny, FoodDoughBase ]
   id: FoodDoughTortillaFlat
   name: flattened tortilla dough
   description: A flattened slice of tortilla dough, cook this to get a taco shell.
@@ -475,7 +474,7 @@
         Quantity: 7.5
 
 - type: entity
-  parent: [FoodDoughBase, BaseSlicingRefinableFood]
+  parent: [ FoodDoughBase, BaseSlicingRefinableFood ]
   id: FoodDoughCotton
   name: cotton dough
   description: A piece of fabric dough.
@@ -555,7 +554,7 @@
         Quantity: 5
   - type: Tag
     tags:
-     - ClothMade
+    - ClothMade
 
 - type: entity
   name: raw pastry base
@@ -585,7 +584,7 @@
     state: dough-pie
 
 - type: entity
-  parent: [FoodDough, BaseSlicingRefinableFood]
+  parent: [ FoodDough, BaseSlicingRefinableFood ]
   id: FoodDoughFlat
   name: flat dough
   description: A flattened dough.
@@ -604,7 +603,7 @@
       amount: 4
 
 - type: entity
-  parent: [FoodDoughCotton, BaseSlicingRefinableFood]
+  parent: [ FoodDoughCotton, BaseSlicingRefinableFood ]
   id: FoodDoughCottonFlat
   name: flat cotton dough
   description: A flattened cotton dough.
@@ -646,12 +645,12 @@
   components:
   - type: FlavorProfile
     flavors:
-      - sweetdough
+    - sweetdough
   - type: Sprite
     state: cakebatter
 
 - type: entity
-  parent: [SolutionSmall, FoodBakingMixableBase, BaseSlicingRefinableFood]
+  parent: [ SolutionSmall, FoodBakingMixableBase, BaseSlicingRefinableFood ]
   id: FoodButter
   name: stick of butter
   description: A stick of delicious, golden, fatty goodness.
@@ -671,15 +670,13 @@
   - type: Fixtures
     fixtures:
       slips:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.3,-0.2,0.3,0.2"
         layer:
         - SlipLayer
         hard: false
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.3,-0.2,0.3,0.2"
         density: 10
         mask:
@@ -695,7 +692,7 @@
       amount: 12
 
 - type: entity
-  parent: [SolutionVeryTiny, FoodBakingMixableBase]
+  parent: [ SolutionVeryTiny, FoodBakingMixableBase ]
   id: FoodButterSlice
   name: butter slice
   description: A pat of delicious, golden, fatty goodness.
@@ -735,7 +732,7 @@
 
 - type: entity
   name: cheese wheel
-  parent: [SolutionNormal, FoodBakingBase, BaseSlicingRefinableFood]
+  parent: [ SolutionNormal, FoodBakingBase, BaseSlicingRefinableFood ]
   id: FoodCheese
   description: A big wheel of delicious Cheddar.
   components:
@@ -743,7 +740,7 @@
     size: Normal
   - type: FlavorProfile
     flavors:
-      - cheesy
+    - cheesy
   - type: Sprite
     state: cheesewheel
   - type: ToolRefinable
@@ -757,14 +754,15 @@
         Quantity: 60
 
 - type: entity
-  parent: [SolutionTiny, FoodBakingBase]
+  parent: [ SolutionTiny, FoodBakingBase ]
   id: FoodCheeseSlice
   name: cheese wedge
-  description: A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far.
+  description: A wedge of delicious Cheddar. The cheese wheel it was cut from
+    can't have gone far.
   components:
   - type: FlavorProfile
     flavors:
-      - cheesy
+    - cheesy
   - type: Sprite
     state: cheesewedge
   - type: Solution
@@ -789,7 +787,7 @@
       - state: cheesewedge-inhand-right
 
 - type: entity
-  parent: [SolutionSmall, FoodBakingBase, BaseSlicingRefinableFood]
+  parent: [ SolutionSmall, FoodBakingBase, BaseSlicingRefinableFood ]
   id: FoodChevre
   name: chèvre log
   description: A soft log of creamy Chèvre.
@@ -800,8 +798,8 @@
     storedOffset: 0,-2
   - type: FlavorProfile
     flavors:
-      - nutty
-      - creamy
+    - nutty
+    - creamy
   - type: Sprite
     state: chevrelog
   - type: ToolRefinable
@@ -817,7 +815,7 @@
         Quantity: 6
 
 - type: entity
-  parent: [SolutionTiny, FoodBakingBase]
+  parent: [ SolutionTiny, FoodBakingBase ]
   id: FoodChevreSlice
   name: chèvre disk
   description: A small disk of creamy Chèvre. An ideal adornment for French side dishes.
@@ -826,8 +824,8 @@
     size: Tiny
   - type: FlavorProfile
     flavors:
-      - nutty
-      - creamy
+    - nutty
+    - creamy
   - type: Sprite
     state: chevredisk
   - type: Solution
@@ -843,7 +841,7 @@
     - Slice
 
 - type: entity
-  parent: [SolutionNormal, FoodBakingBase, BaseSlicingRefinableFood]
+  parent: [ SolutionNormal, FoodBakingBase, BaseSlicingRefinableFood ]
   id: FoodTofu
   name: tofu
   description: Solid white block with a subtle flavor.
@@ -852,7 +850,7 @@
     size: Normal
   - type: FlavorProfile
     flavors:
-      - tofu
+    - tofu
   - type: Sprite
     state: tofu
   - type: Solution
@@ -868,7 +866,7 @@
       amount: 5
 
 - type: entity
-  parent: [SolutionTiny, FoodBakingBase]
+  parent: [ SolutionTiny, FoodBakingBase ]
   id: FoodTofuSlice
   name: tofu slice
   description: A slice of tofu. Ingredient of various vegetarian dishes.
@@ -877,7 +875,7 @@
     size: Tiny
   - type: FlavorProfile
     flavors:
-      - tofu
+    - tofu
   - type: Sprite
     state: tofu-slice
   - type: Solution
@@ -893,13 +891,13 @@
 
 - type: entity
   name: burned mess
-  parent: [SolutionSmall, FoodBakingBase]
+  parent: [ SolutionSmall, FoodBakingBase ]
   id: FoodBadRecipe
   description: Someone should be demoted from cook for this.
   components:
   - type: FlavorProfile
     flavors:
-      - terrible
+    - terrible
   - type: Sprite
     state: badrecipe
   - type: Solution
@@ -925,7 +923,7 @@
     size: Tiny
   - type: FlavorProfile
     flavors:
-      - chocolate
+    - chocolate
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cocoa.rsi
     state: produce-beans
@@ -945,7 +943,7 @@
         Quantity: 10
 
 - type: entity
-  parent: [SolutionSmall, FoodBakingBase]
+  parent: [ SolutionSmall, FoodBakingBase ]
   id: FoodCroissantRaw
   name: raw croissant
   description: Buttery, flaky goodness waiting to happen.
@@ -957,7 +955,7 @@
     storedOffset: -2,-4
   - type: FlavorProfile
     flavors:
-      - dough
+    - dough
   - type: Sprite
     state: croissant-raw
   - type: Solution

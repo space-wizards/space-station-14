@@ -2,33 +2,41 @@
 
 - type: entityTable
   id: MeteorSwarmDustEventsTable
-  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+  table:
+    # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    !type:AllSelector
     children:
     - id: SpaceDustMinor
     - id: SpaceDustMajor
 
 - type: entityTable
   id: MeteorSwarmSmallChanceEventsTable
-  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+  table:
+    # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    !type:AllSelector
     children:
     - id: MeteorSwarmSmall
       prob: 0.15
 
 - type: entityTable
   id: MeteorSwarmMildTable
-  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+  table:
+    # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    !type:AllSelector
     children:
     - !type:NestedSelector
-        tableId: MeteorSwarmDustEventsTable
+      tableId: MeteorSwarmDustEventsTable
     - !type:NestedSelector
-        tableId: MeteorSwarmSmallChanceEventsTable
+      tableId: MeteorSwarmSmallChanceEventsTable
 
 - type: entityTable
   id: BasicMeteorSwarmEventsTable
-  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+  table:
+    # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    !type:AllSelector
     children:
     - !type:NestedSelector
-        tableId: MeteorSwarmDustEventsTable
+      tableId: MeteorSwarmDustEventsTable
     - id: MeteorSwarmSmall
     - id: MeteorSwarmMedium
     - id: MeteorSwarmLarge

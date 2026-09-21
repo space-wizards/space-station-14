@@ -295,7 +295,7 @@
 # Black Gloves
 # TECHNICALLY, if you ported the worn state to the RSI, this could be greyscaled, but I do not really feel like doing that.
 - type: entity
-  parent: [ClothingHandsGlovesSyntheticBase, BaseSlicingRefinable]
+  parent: [ ClothingHandsGlovesSyntheticBase, BaseSlicingRefinable ]
   id: ClothingHandsGlovesColorBlack
   name: black gloves
   description: Regular black gloves that do not keep you from frying.
@@ -319,7 +319,7 @@
 # Insulated Gloves (Yellow Gloves)
 # Currently can not be greyscaled without looking like shit.
 - type: entity
-  parent: [ClothingHandsBase, BaseSlicingRefinable]
+  parent: [ ClothingHandsBase, BaseSlicingRefinable ]
   id: ClothingHandsGlovesColorYellow
   name: insulated gloves
   description: These gloves will protect the wearer from electric shocks.
@@ -342,24 +342,25 @@
   parent: ClothingHandsGlovesColorYellow
   id: ClothingHandsGlovesColorYellowBudget
   name: budget insulated gloves
-  description: These gloves are cheap knockoffs of the coveted ones - no way this can end badly.
+  description: These gloves are cheap knockoffs of the coveted ones - no way this
+    can end badly.
   components:
   - type: RandomInsulation
     # Why repeated numbers? So some numbers are more common, of course!
     list:
-      - 0
-      - 0
-      - 0.5
-      - 0.5
-      - 0.5
-      - 1.5
-      - 1.5
-      - 2
-      - 2.5
-      - 2.5
-      - 3
-      - 3.5
-      - 4
+    - 0
+    - 0
+    - 0.5
+    - 0.5
+    - 0.5
+    - 1.5
+    - 1.5
+    - 2
+    - 2.5
+    - 2.5
+    - 3
+    - 3.5
+    - 4
   - type: Fiber
     fiberMaterial: fibers-insulative-frayed
     fiberColor: fibers-yellow

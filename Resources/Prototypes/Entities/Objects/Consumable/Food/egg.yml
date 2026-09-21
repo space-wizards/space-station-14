@@ -1,15 +1,15 @@
 # Base
 
 - type: entity
-  parent: [SolutionVeryTiny, FoodInjectableBase, ItemHeftyBase]
+  parent: [ SolutionVeryTiny, FoodInjectableBase, ItemHeftyBase ]
   id: FoodEggBase
   description: An egg!
   abstract: true
   components:
   - type: Tag
     tags:
-      - Egg
-      - Meat
+    - Egg
+    - Meat
   - type: Edible
     trash:
     - Eggshells
@@ -40,8 +40,7 @@
     damageContainer: Biological
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 1
       behaviors:
       - !type:PlaySoundBehavior
@@ -94,13 +93,13 @@
   components:
   - type: Sprite
     layers:
-      - state: icon
-        map: [ "enum.DamageStateVisualLayers.Base" ]
+    - state: icon
+      map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: RandomSprite
     available:
-      - enum.DamageStateVisualLayers.Base:
-          icon: ""
-          white: ""
+    - enum.DamageStateVisualLayers.Base:
+        icon: ""
+        white: ""
   - type: Construction
     graph: Egg
     node: start

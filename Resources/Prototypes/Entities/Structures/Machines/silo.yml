@@ -2,7 +2,8 @@
   id: MachineMaterialSilo
   parent: [ BaseMachinePowered, ConstructibleMachine, StructureHealthMachineStrong ]
   name: material silo
-  description: An advanced machine, capable of using bluespace technology to transmit materials to nearby machines.
+  description: An advanced machine, capable of using bluespace technology to
+    transmit materials to nearby machines.
   components:
   - type: Sprite
     sprite: Structures/Machines/silo.rsi
@@ -36,8 +37,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.4"
         density: 190
         mask:
@@ -48,8 +48,7 @@
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 275
       behaviors:
       - !type:PlaySoundBehavior

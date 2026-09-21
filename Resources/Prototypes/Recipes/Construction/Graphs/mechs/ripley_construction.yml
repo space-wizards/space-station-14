@@ -70,8 +70,8 @@
           key: "enum.MechAssemblyVisuals.State"
           data: 12
 
-#i omitted the steps involving inserting machine parts because
-#currently mechs don't support upgrading. add them back in once that's squared away.
+      #i omitted the steps involving inserting machine parts because
+      #currently mechs don't support upgrading. add them back in once that's squared away.
 
       - component: PowerCell
         name: construction-graph-component-power-cell

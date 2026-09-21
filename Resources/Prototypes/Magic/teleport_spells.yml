@@ -19,9 +19,7 @@
     repeat: false
     checkCanAccess: false
   - type: WorldTargetAction
-    event: !type:TeleportActionEvent
-
-# TODO: Second level upgrade sometime that allows swapping with all objects
+    event: !type:TeleportActionEvent # TODO: Second level upgrade sometime that allows swapping with all objects
 - type: entity
   parent: BaseEntitySpellAction
   id: ActionVoidApplause

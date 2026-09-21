@@ -104,7 +104,7 @@
         tableId: PackageDeliveryRewards
   - type: Tag
     tags:
-      - PackageDelivery
+    - PackageDelivery
 
 - type: entity
   parent: BaseDelivery
@@ -153,7 +153,6 @@
       delivery: !type:NestedSelector
         tableId: LetterDeliveryRewards
 
-
 # Modifier Tables
 - type: entityTable
   id: DeliveryModifierTable
@@ -195,8 +194,7 @@
         Blunt: 1
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 1
       behaviors:
       - !type:PlaySoundBehavior

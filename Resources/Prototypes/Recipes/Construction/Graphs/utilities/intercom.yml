@@ -27,7 +27,7 @@
       - !type:GivePrototype
         prototype: SheetSteel1
         amount: 2
-      - !type:DeleteEntity {}
+      - !type:DeleteEntity
       steps:
       - tool: Welding
         doAfter: 2
@@ -72,8 +72,8 @@
     edges:
     - to: wired
       conditions:
-      - !type:AllWiresCut {}
-      - !type:WirePanel {}
+      - !type:AllWiresCut
+      - !type:WirePanel
       - !type:ContainerNotEmpty
         container: board
       completed:

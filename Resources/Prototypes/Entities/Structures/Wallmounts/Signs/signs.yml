@@ -14,12 +14,12 @@
   id: BaseSignDirectional
   abstract: true
   components:
-    - type: Sprite
-      snapCardinals: false
-      # The way that Directonal Guide Signs are mapped are unaligned on the wall, making them anchored makes them all be placed in the middle of the wall
-      # TODO: Combine all the directional guide signs in to some modular prototype so it's easier to map and remove the overlap when rotating the camera
-    - type: Transform
-      anchored: false
+  - type: Sprite
+    snapCardinals: false
+    # The way that Directonal Guide Signs are mapped are unaligned on the wall, making them anchored makes them all be placed in the middle of the wall
+    # TODO: Combine all the directional guide signs in to some modular prototype so it's easier to map and remove the overlap when rotating the camera
+  - type: Transform
+    anchored: false
 
 - type: entity
   parent: BaseSignDirectional
@@ -280,8 +280,8 @@
   name: ai upload sign
   description: A sign, indicating an AI is present.
   components:
-    - type: Sprite
-      state: ai_upload
+  - type: Sprite
+    state: ai_upload
 
 - type: entity
   parent: BaseSign
@@ -498,7 +498,6 @@
   - type: Sprite
     state: cryo
 
-
 - type: entity
   parent: BaseSign
   id: SignDisposalSpace
@@ -566,7 +565,8 @@
   parent: BaseSign
   id: SignEVA
   name: EVA sign
-  description: A sign indicating an EVA area. EVA equipment may be required beyond this point.
+  description: A sign indicating an EVA area. EVA equipment may be required beyond
+    this point.
   components:
   - type: Sprite
     state: eva
@@ -611,7 +611,8 @@
   parent: BaseSign
   id: SignHead
   name: head sign
-  description: An official sign indicating the dwellings of a Nanotrasen-certified head of department.
+  description: An official sign indicating the dwellings of a Nanotrasen-certified
+    head of department.
   components:
   - type: Sprite
     state: commander
@@ -1016,7 +1017,8 @@
   parent: BaseSign
   id: SignZomlab
   name: zombie lab sign
-  description: The final remains of a shut-down Nanotrasen research project that aimed to harness the powers of Romerol. I wonder how that went...
+  description: The final remains of a shut-down Nanotrasen research project that
+    aimed to harness the powers of Romerol. I wonder how that went...
   components:
   - type: Sprite
     state: zomlab
@@ -1152,7 +1154,8 @@
   parent: BaseSign
   id: SignVox
   name: vox area sign
-  description: A sign indicating that the area ahead is intended for Vox crew members and does not have an oxygen atmosphere.
+  description: A sign indicating that the area ahead is intended for Vox crew
+    members and does not have an oxygen atmosphere.
   components:
   - type: Sprite
     state: vox

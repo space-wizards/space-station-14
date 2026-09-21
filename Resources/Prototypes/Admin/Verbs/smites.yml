@@ -347,7 +347,7 @@
     interfaces:
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
-  - !type:SiliconLawBound
+  - !type:SiliconLawBound ""
   - !type:AddAction
     action: ActionViewLaws
   - !type:AddMindRole
@@ -367,7 +367,7 @@
     sprite: Objects/Fun/Tabletop/chessboard.rsi
     state: chessboard
   effects:
-  - !type:SetGodmode
+  - !type:SetGodmode ""
   - !type:AddComponents
     components:
     - type: TabletopDraggable
@@ -393,8 +393,7 @@
     sprite: Structures/Storage/closet.rsi
     state: generic
   effects:
-  - !type:StuffIntoLocker
-
+  - !type:StuffIntoLocker ""
 - type: adminVerb
   id: AdminSmiteHomingRod
   categoryPrototype: Smite
@@ -434,8 +433,7 @@
     components:
     - CreamPied
   effects:
-  - !type:SetCreamPied
-
+  - !type:SetCreamPied ""
 - type: adminVerb
   id: AdminSmiteDust
   categoryPrototype: Smite
@@ -455,7 +453,6 @@
     entity: Ash
     predicted: false
   - !type:DeleteEntity
-
 - type: adminVerb
   id: AdminSmiteGhostKick
   categoryPrototype: Smite
@@ -476,7 +473,7 @@
   description: admin-smite-run-walk-swap-description
   icon: Interface/AdminActions/run-walk-swap.png
   effects:
-  - !type:SwapMovementSpeeds
+  - !type:SwapMovementSpeeds ""
   - !type:PopupMessage
     messages: [ admin-smite-run-walk-swap-prompt ]
     type: Local
@@ -495,7 +492,7 @@
     components:
     - Bloodstream
   effects:
-  - !type:SpillBloodstream
+  - !type:SpillBloodstream ""
   - !type:PopupMessage
     messages: [ admin-smite-remove-blood-self ]
     type: Local

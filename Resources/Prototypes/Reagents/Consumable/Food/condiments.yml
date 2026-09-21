@@ -179,7 +179,7 @@
   physicalDesc: reagent-physical-desc-sticky
   viscosity: 0.55 #Start using syrup to attach your remote recievers to your microwaves!
   tileReactions:
-    - !type:SpillTileReaction
+  - !type:SpillTileReaction
   metabolisms:
     Digestion:
       # 12 diona blood for 1 unit of syrup, this stuff better be worthwhile.

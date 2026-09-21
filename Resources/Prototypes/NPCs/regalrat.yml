@@ -2,27 +2,26 @@
   id: RatServantCompound
   branches:
   - preconditions:
-      - !type:HasOrdersPrecondition
-        orders: enum.RatKingOrderType.Stay
+    - !type:HasOrdersPrecondition
+      orders: enum.RatKingOrderType.Stay
     tasks:
-      - !type:HTNCompoundTask
-        task: IdleCompound
+    - !type:HTNCompoundTask
+      task: IdleCompound
   - preconditions:
-      - !type:HasOrdersPrecondition
-        orders: enum.RatKingOrderType.Follow
+    - !type:HasOrdersPrecondition
+      orders: enum.RatKingOrderType.Follow
     tasks:
-      - !type:HTNCompoundTask
-        task: FollowCompound
+    - !type:HTNCompoundTask
+      task: FollowCompound
   - preconditions:
-      - !type:HasOrdersPrecondition
-        orders: enum.RatKingOrderType.CheeseEm
+    - !type:HasOrdersPrecondition
+      orders: enum.RatKingOrderType.CheeseEm
     tasks:
-      - !type:HTNCompoundTask
-        task: RatServantTargetAttackCompound
+    - !type:HTNCompoundTask
+      task: RatServantTargetAttackCompound
   - preconditions:
-      - !type:HasOrdersPrecondition
-        orders: enum.RatKingOrderType.Loose
+    - !type:HasOrdersPrecondition
+      orders: enum.RatKingOrderType.Loose
     tasks:
-      - !type:HTNCompoundTask
-        task: SimpleHostileCompound
-
+    - !type:HTNCompoundTask
+      task: SimpleHostileCompound

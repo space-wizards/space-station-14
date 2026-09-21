@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [SolutionFood, SolutionToolSmall, Clothing]
+  parent: [ SolutionFood, SolutionToolSmall, Clothing ]
   id: ClothingHeadBase
   components:
   - type: Clothing
@@ -25,7 +25,7 @@
 
 - type: entity
   abstract: true
-  parent: [ClothingHeadBase, BaseSlicingRefinable]
+  parent: [ ClothingHeadBase, BaseSlicingRefinable ]
   id: ClothingHeadBaseButcherable
   components:
   - type: ToolRefinable
@@ -83,21 +83,21 @@
     radiatingBehaviourId: radiating
   - type: LightBehaviour
     behaviours:
-      - !type:FadeBehaviour
-        id: radiating
-        interpolate: Linear
-        maxDuration: 2.0
-        startValue: 3.0
-        endValue: 2.0
-        isLooped: true
-        reverseWhenFinished: true
-      - !type:PulseBehaviour
-        id: blinking
-        interpolate: Nearest
-        maxDuration: 1.0
-        startValue: 0.1
-        endValue: 2.0
-        isLooped: true
+    - !type:FadeBehaviour
+      id: radiating
+      interpolate: Linear
+      maxDuration: 2.0
+      startValue: 3.0
+      endValue: 2.0
+      isLooped: true
+      reverseWhenFinished: true
+    - !type:PulseBehaviour
+      id: blinking
+      interpolate: Nearest
+      maxDuration: 1.0
+      startValue: 0.1
+      endValue: 2.0
+      isLooped: true
   - type: PowerCellSlot
     cellSlotId: cell_slot
   - type: ItemSlots
@@ -107,7 +107,7 @@
         startingItem: PowerCellMedium
   - type: ContainerContainer
     containers:
-      cell_slot: !type:ContainerSlot {}
+      cell_slot: !type:ContainerSlot
 
 - type: entity
   abstract: true
@@ -115,9 +115,9 @@
   id: ClothingHeadEVAHelmetBase
   name: base space helmet
   components:
-# SlotBlocker blocked until UI change
-#  - type: SlotBlock
-#    slots: [ears, eyes, mask]
+  # SlotBlocker blocked until UI change
+  #  - type: SlotBlock
+  #    slots: [ears, eyes, mask]
   - type: BreathMask
   - type: Item
     size: Normal
@@ -151,9 +151,9 @@
   name: base hardsuit helmet
   categories: [ HideSpawnMenu ]
   components:
-# SlotBlocker blocked until UI change
-#  - type: SlotBlock
-#    slots: [ears, eyes, mask]
+  # SlotBlocker blocked until UI change
+  #  - type: SlotBlock
+  #    slots: [ears, eyes, mask]
   - type: BreathMask
   - type: Sprite
     state: icon # default state used by most inheritors
@@ -208,9 +208,9 @@
   name: base hardsuit helmet with light
   categories: [ HideSpawnMenu ]
   components:
-# SlotBlocker blocked until UI change
-#  - type: SlotBlock
-#    slots: [ears, eyes, mask]
+  # SlotBlocker blocked until UI change
+  #  - type: SlotBlock
+  #    slots: [ears, eyes, mask]
   - type: Sprite
     layers:
     - state: icon
@@ -243,21 +243,21 @@
     radiatingBehaviourId: radiating
   - type: LightBehaviour
     behaviours:
-      - !type:FadeBehaviour
-        id: radiating
-        interpolate: Linear
-        maxDuration: 2.0
-        startValue: 3.0
-        endValue: 2.0
-        isLooped: true
-        reverseWhenFinished: true
-      - !type:PulseBehaviour
-        id: blinking
-        interpolate: Nearest
-        maxDuration: 1.0
-        startValue: 0.1
-        endValue: 2.0
-        isLooped: true
+    - !type:FadeBehaviour
+      id: radiating
+      interpolate: Linear
+      maxDuration: 2.0
+      startValue: 3.0
+      endValue: 2.0
+      isLooped: true
+      reverseWhenFinished: true
+    - !type:PulseBehaviour
+      id: blinking
+      interpolate: Nearest
+      maxDuration: 1.0
+      startValue: 0.1
+      endValue: 2.0
+      isLooped: true
   - type: Battery
     maxCharge: 600 #lights drain 3/s but recharge of 2 makes this 1/s. Therefore 600 is 10 minutes of light.
     startingCharge: 600
@@ -284,7 +284,7 @@
     zombificationResistanceCoefficient: 0.90
   - type: Armor # so zombification resistance shows up
     modifiers:
-      coefficients: { }
+      coefficients: {}
   - type: GroupExamine
   - type: HideLayerClothing
     slots:

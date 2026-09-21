@@ -20,7 +20,6 @@
   - BorgModuleAnomaly
   radioChannels:
   - Science
-
   # Visual
   inventoryTemplateId: borgShort
   spriteBodyState: robot
@@ -31,7 +30,6 @@
   # Pet
   petSuccessString: petting-success-generic-cyborg
   petFailureString: petting-failure-generic-cyborg
-
 
 # Engineering borg
 - type: borgType
@@ -57,7 +55,6 @@
   radioChannels:
   - Engineering
   - Science
-
   # Visual
   inventoryTemplateId: borgShort
   spriteBodyState: engineer
@@ -68,7 +65,6 @@
   # Pet
   petSuccessString: petting-success-engineer-cyborg
   petFailureString: petting-failure-engineer-cyborg
-
 
 # Salvage borg
 - type: borgType
@@ -94,7 +90,6 @@
   radioChannels:
   - Supply
   - Science
-
   # Visual
   inventoryTemplateId: borgTall
   spriteBodyState: miner
@@ -106,7 +101,6 @@
   # Pet
   petSuccessString: petting-success-salvage-cyborg
   petFailureString: petting-failure-salvage-cyborg
-
 
 # Janitor borg
 - type: borgType
@@ -130,7 +124,6 @@
   radioChannels:
   - Science
   - Service
-
   # Visual
   inventoryTemplateId: borgShort
   spriteBodyState: janitor
@@ -142,7 +135,6 @@
   # Pet
   petSuccessString: petting-success-janitor-cyborg
   petFailureString: petting-failure-janitor-cyborg
-
 
 # Medical borg
 - type: borgType
@@ -176,7 +168,6 @@
   - type: ShowHealthIcons
     damageContainers:
     - Biological
-
   # Visual
   inventoryTemplateId: borgDutch
   spriteBodyState: medical
@@ -192,7 +183,6 @@
   # Sounds
   footstepCollection:
     collection: FootstepHoverBorg
-
 
 # Service borg
 - type: borgType
@@ -218,7 +208,6 @@
   radioChannels:
   - Science
   - Service
-
   # Visual
   inventoryTemplateId: borgTall
   spriteBodyState: service

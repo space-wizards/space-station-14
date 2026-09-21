@@ -8,7 +8,7 @@
   blacklist:
     tags:
     - SiliconEmotes
-  chatMessages: ["chat-emote-msg-sneeze"]
+  chatMessages: [ "chat-emote-msg-sneeze" ]
   chatTriggers:
   - sneeze
   - sneezes
@@ -31,41 +31,41 @@
   blacklist:
     tags:
     - SiliconEmotes
-  chatMessages: ["chat-emote-msg-cough"]
+  chatMessages: [ "chat-emote-msg-cough" ]
   chatTriggers:
-    - cough
-    - coughs
-    - coughed
-    - cough.
-    - coughs.
-    - coughed.
-    - cough!
-    - coughs!
-    - coughed!
+  - cough
+  - coughs
+  - coughed
+  - cough.
+  - coughs.
+  - coughed.
+  - cough!
+  - coughs!
+  - coughed!
 
 - type: emote
   id: CatMeow
   name: chat-emote-name-catmeow
   category: Vocal
-  chatMessages: ["chat-emote-msg-catmeow"]
+  chatMessages: [ "chat-emote-msg-catmeow" ]
 
 - type: emote
   id: CatHisses
   name: chat-emote-name-cathisses
   category: Vocal
-  chatMessages: ["chat-emote-msg-cathisses"]
+  chatMessages: [ "chat-emote-msg-cathisses" ]
 
 - type: emote
   id: MonkeyScreeches
   name: chat-emote-name-monkeyscreeches
   category: Vocal
-  chatMessages: ["chat-emote-msg-monkeyscreeches"]
+  chatMessages: [ "chat-emote-msg-monkeyscreeches" ]
 
 - type: emote
   id: RobotBeep
   name: chat-emote-name-robotbeep
   category: Vocal
-  chatMessages: ["chat-emote-msg-beep"]
+  chatMessages: [ "chat-emote-msg-beep" ]
 
 - type: emote
   id: Yawn
@@ -78,13 +78,13 @@
   blacklist:
     tags:
     - SiliconEmotes
-  chatMessages: ["chat-emote-msg-yawn"]
+  chatMessages: [ "chat-emote-msg-yawn" ]
   chatTriggers:
-    - yawn
-    - yawns
+  - yawn
+  - yawns
 
 - type: emote
   id: Snore
   name: chat-emote-name-snore
   category: Vocal
-  chatMessages: ["chat-emote-msg-snore"]
+  chatMessages: [ "chat-emote-msg-snore" ]

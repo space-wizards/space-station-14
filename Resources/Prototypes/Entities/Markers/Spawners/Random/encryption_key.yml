@@ -6,11 +6,11 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Objects/Devices/encryption_keys.rsi
-        state: crypt_rusted
-      - sprite: Objects/Devices/encryption_keys.rsi
-        state: nano_label
+    - state: red
+    - sprite: Objects/Devices/encryption_keys.rsi
+      state: crypt_rusted
+    - sprite: Objects/Devices/encryption_keys.rsi
+      state: nano_label
   - type: EntityTableSpawner
     table: !type:GroupSelector
       children:

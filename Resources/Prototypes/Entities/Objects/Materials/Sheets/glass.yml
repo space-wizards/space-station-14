@@ -31,7 +31,7 @@
     state: glass_3
     layers:
     - state: glass_3
-      map: ["base"]
+      map: [ "base" ]
   - type: Item
     heldPrefix: glass
   - type: FloorTile
@@ -47,8 +47,7 @@
         Quantity: 10
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior
@@ -105,7 +104,7 @@
     state: rglass_3
     layers:
     - state: rglass_3
-      map: ["base"]
+      map: [ "base" ]
   - type: Item
     heldPrefix: rglass
   - type: FloorTile
@@ -116,8 +115,7 @@
     node: SheetRGlass
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior
@@ -174,7 +172,7 @@
     state: pglass_3
     layers:
     - state: pglass_3
-      map: ["base"]
+      map: [ "base" ]
   - type: Item
     heldPrefix: pglass
   - type: Construction
@@ -182,8 +180,7 @@
     node: SheetPGlass
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior
@@ -238,7 +235,7 @@
     state: rpglass_3
     layers:
     - state: rpglass_3
-      map: ["base"]
+      map: [ "base" ]
   - type: Item
     heldPrefix: rpglass
   - type: Construction
@@ -290,7 +287,7 @@
     state: uglass_3
     layers:
     - state: uglass_3
-      map: ["base"]
+      map: [ "base" ]
   - type: Item
     heldPrefix: uglass
   - type: Construction
@@ -298,8 +295,7 @@
     node: SheetUGlass
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior
@@ -353,7 +349,7 @@
     state: ruglass_3
     layers:
     - state: ruglass_3
-      map: ["base"]
+      map: [ "base" ]
   - type: Item
     heldPrefix: ruglass
   - type: Construction
@@ -388,7 +384,8 @@
   parent: SheetGlassBase
   id: SheetClockworkGlass
   name: clockwork glass
-  description: A sheet of brass-hardened glass, primarily used by clockwork enthusiasts and remnants of Ratvarian cults.
+  description: A sheet of brass-hardened glass, primarily used by clockwork
+    enthusiasts and remnants of Ratvarian cults.
   suffix: Full
   components:
   - type: PhysicalComposition
@@ -405,7 +402,7 @@
     state: cglass_3
     layers:
     - state: cglass_3
-      map: ["base"]
+      map: [ "base" ]
   - type: Item
     heldPrefix: cglass
   - type: Construction
@@ -413,8 +410,7 @@
     node: SheetClockworkGlass
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior

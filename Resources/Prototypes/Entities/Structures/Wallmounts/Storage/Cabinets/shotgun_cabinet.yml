@@ -2,20 +2,21 @@
   parent: FireAxeCabinet
   id: ShotGunCabinet
   name: shotgun cabinet
-  description: There is a small label that reads "For Emergency use only" along with details for safe use of the shotgun. As if.
+  description: There is a small label that reads "For Emergency use only" along
+    with details for safe use of the shotgun. As if.
   components:
   - type: Sprite
     sprite: Structures/Wallmounts/shotgun_cabinet.rsi
     layers:
     - state: cabinet
     - state: shotgun
-      map: ["enum.ItemCabinetVisuals.Layer"]
+      map: [ "enum.ItemCabinetVisuals.Layer" ]
       visible: true
     - state: glass
-      map: ["enum.OpenableVisuals.Layer"]
+      map: [ "enum.OpenableVisuals.Layer" ]
     - state: locked
       shader: unshaded
-      map: ["enum.LockVisualLayers.Lock"]
+      map: [ "enum.LockVisualLayers.Lock" ]
   - type: ItemSlots
     slots:
       ItemCabinet:
@@ -24,7 +25,7 @@
           tags:
           - WeaponShotgunKammerer
   - type: AccessReader
-    access: [["Security"], ["Command"]]
+    access: [ [ "Security" ], [ "Command" ] ]
 
 - type: entity
   parent: ShotGunCabinet
@@ -47,6 +48,6 @@
       - WeaponShotgunKammerer
 
 - type: entity
-  parent: [ShotGunCabinetFilled, ShotGunCabinetOpen]
+  parent: [ ShotGunCabinetFilled, ShotGunCabinetOpen ]
   id: ShotGunCabinetFilledOpen
   suffix: Filled, Open

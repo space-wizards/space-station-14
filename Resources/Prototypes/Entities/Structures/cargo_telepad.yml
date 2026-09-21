@@ -1,6 +1,11 @@
 - type: entity
   id: CargoTelepad
-  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
+  parent:
+    [
+      BaseMachinePowered,
+      ConstructibleMachine,
+      BaseConstructibleMachineDestructible
+    ]
   name: cargo telepad
   description: Beam in the pizzas and dig in.
   components:
@@ -14,12 +19,11 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.00"
         density: 190
         mask:
-          - MachineMask
+        - MachineMask
   - type: Sprite
     sprite: Structures/cargo_telepad.rsi
     drawdepth: HighFloorObjects
@@ -44,7 +48,7 @@
     range: 200
   - type: DeviceLinkSink
     ports:
-      - OrderReceiver
+    - OrderReceiver
   - type: ApcPowerReceiver
     powerLoad: 1000 # TODO if we keep this make it spike power draw when teleporting
   - type: CargoTelepad

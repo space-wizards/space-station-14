@@ -11,17 +11,16 @@
     drawdepth: Objects
     noRot: true
     layers:
-    - map: ["enum.PoweredLightLayers.Base"]
+    - map: [ "enum.PoweredLightLayers.Base" ]
       state: base
-    - map: ["enum.PoweredLightLayers.Glow"]
+    - map: [ "enum.PoweredLightLayers.Glow" ]
       state: glow
       shader: unshaded
     state: base
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.17,-0.30,0.17,0.25"
         density: 190
         mask:
@@ -39,8 +38,7 @@
   - type: InteractionOutline
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -57,7 +55,8 @@
   id: PoweredLightPostSmallEmpty
   name: post light
   suffix: Empty
-  description: "A small light post. Draws power and produces light when equipped with a light tube."
+  description: "A small light post. Draws power and produces light when equipped
+    with a light tube."
   components:
   - type: Sprite
     sprite: Structures/Lighting/LightPosts/small_light_post.rsi
@@ -79,9 +78,9 @@
     range: 200
   - type: DeviceLinkSink
     ports:
-      - On
-      - Off
-      - Toggle
+    - On
+    - Off
+    - Toggle
   - type: Construction
     graph: LightFixture
     node: groundLight

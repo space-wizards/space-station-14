@@ -4,12 +4,12 @@
   description: job-description-technical-assistant
   playTimeTracker: JobTechnicalAssistant
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 1h
-    - !type:DepartmentTimeRequirement
-      department: Engineering
-      time: 10h
-      inverted: true # stop playing intern if you're good at engineering!
+  - !type:OverallPlaytimeRequirement
+    time: 1h
+  - !type:DepartmentTimeRequirement
+    department: Engineering
+    time: 10h
+    inverted: true # stop playing intern if you're good at engineering!
   startingGear: TechnicalAssistantGear
   icon: "JobIconTechnicalAssistant"
   supervisors: job-supervisors-engineering
@@ -27,7 +27,7 @@
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
     pocket2: BookEngineersHandbook
-  #storage:
+    #storage:
     #back:
     #- Stuff
 

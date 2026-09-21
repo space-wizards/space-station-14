@@ -3,13 +3,13 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionNormal, FoodInjectableBase]
+  parent: [ SolutionNormal, FoodInjectableBase ]
   id: FoodPizzaBase
   components:
   - type: FlavorProfile
     flavors:
-      - oily
-      - bread
+    - oily
+    - bread
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
   - type: Solution
@@ -31,14 +31,14 @@
     - ReptilianFood
 
 - type: entity
-  parent: [SolutionVeryTiny, FoodInjectableBase] # Not sliceable
+  parent: [ SolutionVeryTiny, FoodInjectableBase ] # Not sliceable
   id: FoodPizzaSliceBase
   abstract: true
   components:
   - type: FlavorProfile
     flavors:
-      - oily
-      - bread
+    - oily
+    - bread
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
   - type: Solution
@@ -60,15 +60,15 @@
 
 - type: entity
   name: margherita pizza
-  parent: [FoodPizzaBase, BaseSlicingRefinableFood]
+  parent: [ FoodPizzaBase, BaseSlicingRefinableFood ]
   id: FoodPizzaMargherita
   description: The flavor of Italy.
   components:
   - type: FlavorProfile
     flavors:
-      - cheesy
-      - oily
-      - bread
+    - cheesy
+    - oily
+    - bread
   - type: Sprite
     layers:
     - state: margherita
@@ -85,9 +85,9 @@
   components:
   - type: FlavorProfile
     flavors:
-      - cheesy
-      - oily
-      - bread
+    - cheesy
+    - oily
+    - bread
   - type: Sprite
     layers:
     - state: margherita-slice
@@ -96,16 +96,16 @@
 
 - type: entity
   name: meat pizza
-  parent: [FoodPizzaBase, BaseSlicingRefinableFood]
+  parent: [ FoodPizzaBase, BaseSlicingRefinableFood ]
   id: FoodPizzaMeat
   description: Greasy pizza with delicious meat.
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
-      - cheesy
-      - oily
-      - bread
+    - meaty
+    - cheesy
+    - oily
+    - bread
   - type: Sprite
     layers:
     - state: meat
@@ -126,10 +126,10 @@
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
-      - cheesy
-      - oily
-      - bread
+    - meaty
+    - cheesy
+    - oily
+    - bread
   - type: Sprite
     layers:
     - state: meat-slice
@@ -144,15 +144,15 @@
 
 - type: entity
   name: mushroom pizza
-  parent: [FoodPizzaBase, BaseSlicingRefinableFood]
+  parent: [ FoodPizzaBase, BaseSlicingRefinableFood ]
   id: FoodPizzaMushroom
   description: Very special pizza.
   components:
   - type: FlavorProfile
     flavors:
-      - mushroom
-      - oily
-      - bread
+    - mushroom
+    - oily
+    - bread
   - type: Sprite
     layers:
     - state: mushroom
@@ -169,9 +169,9 @@
   components:
   - type: FlavorProfile
     flavors:
-      - mushroom
-      - oily
-      - bread
+    - mushroom
+    - oily
+    - bread
   - type: Sprite
     layers:
     - state: mushroom-slice
@@ -181,18 +181,18 @@
 
 - type: entity
   name: vegetable pizza
-  parent: [FoodPizzaBase, BaseSlicingRefinableFood]
+  parent: [ FoodPizzaBase, BaseSlicingRefinableFood ]
   id: FoodPizzaVegetable
   description: The station's vegetarians will thank you for making this.
   components:
   - type: FlavorProfile
     flavors:
-      - eggplant
-      - corn
-      - tomato
-      - oily
-      - cheesy
-      - bread
+    - eggplant
+    - corn
+    - tomato
+    - oily
+    - cheesy
+    - bread
   - type: Sprite
     layers:
     - state: vegetable
@@ -209,13 +209,13 @@
   components:
   - type: FlavorProfile
     flavors:
-      - eggplant
-      - corn
-      - tomato
-      - carrot
-      - oily
-      - cheesy
-      - bread
+    - eggplant
+    - corn
+    - tomato
+    - carrot
+    - oily
+    - cheesy
+    - bread
   - type: Sprite
     layers:
     - state: vegetable-slice
@@ -226,13 +226,13 @@
 
 - type: entity
   name: donk-pocket pizza
-  parent: [FoodPizzaBase, BaseSlicingRefinableFood]
+  parent: [ FoodPizzaBase, BaseSlicingRefinableFood ]
   id: FoodPizzaDonkpocket
   description: Who thought this would be a good idea?
   components:
   - type: FlavorProfile
     flavors:
-      - donk
+    - donk
   - type: Sprite
     layers:
     - state: donkpocket
@@ -262,7 +262,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - donk
+    - donk
   - type: Sprite
     layers:
     - state: donkpocket-slice
@@ -286,16 +286,16 @@
 
 - type: entity
   name: dank pizza
-  parent: [FoodPizzaBase, BaseSlicingRefinableFood]
+  parent: [ FoodPizzaBase, BaseSlicingRefinableFood ]
   id: FoodPizzaDank
   description: The hippie's pizza of choice.
   components:
   - type: FlavorProfile
     flavors:
-      - oily
-      - bread
-      - cheesy
-      - leafy
+    - oily
+    - bread
+    - cheesy
+    - leafy
   - type: Sprite
     layers:
     - state: dank
@@ -321,10 +321,10 @@
   components:
   - type: FlavorProfile
     flavors:
-      - oily
-      - bread
-      - cheesy
-      - leafy
+    - oily
+    - bread
+    - cheesy
+    - leafy
   - type: Sprite
     layers:
     - state: dank-slice
@@ -343,16 +343,16 @@
 
 - type: entity
   name: sassysage pizza
-  parent: [FoodPizzaBase, BaseSlicingRefinableFood]
+  parent: [ FoodPizzaBase, BaseSlicingRefinableFood ]
   id: FoodPizzaSassysage
   description: You can really smell the sassiness.
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
-      - cheesy
-      - oily
-      - bread
+    - meaty
+    - cheesy
+    - oily
+    - bread
   - type: Sprite
     layers:
     - state: sassysage
@@ -373,10 +373,10 @@
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
-      - cheesy
-      - oily
-      - bread
+    - meaty
+    - cheesy
+    - oily
+    - bread
   - type: Sprite
     layers:
     - state: sassysage-slice
@@ -391,17 +391,18 @@
 
 - type: entity
   name: Hawaiian pizza
-  parent: [FoodPizzaBase, BaseSlicingRefinableFood]
+  parent: [ FoodPizzaBase, BaseSlicingRefinableFood ]
   id: FoodPizzaPineapple
-  description: Makes people burst into tears. Tears of joy or sadness depends on the person's fondness for pineapple.
+  description: Makes people burst into tears. Tears of joy or sadness depends on
+    the person's fondness for pineapple.
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
-      - pineapple
-      - cheesy
-      - oily
-      - bread
+    - meaty
+    - pineapple
+    - cheesy
+    - oily
+    - bread
   - type: Sprite
     layers:
     - state: pineapple
@@ -422,11 +423,11 @@
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
-      - pineapple
-      - cheesy
-      - oily
-      - bread
+    - meaty
+    - pineapple
+    - cheesy
+    - oily
+    - bread
   - type: Sprite
     layers:
     - state: pineapple-slice
@@ -442,17 +443,18 @@
 #TODO: This is a meme pizza from /tg/. It has specially coded mechanics.
 - type: entity
   name: Arnold's pizza
-  parent: [FoodPizzaBase, BaseSlicingRefinableFood]
+  parent: [ FoodPizzaBase, BaseSlicingRefinableFood ]
   id: FoodPizzaArnold
-  description: Hello, you've reached Arnold's pizza shop. I'm not here now, I'm out killing pepperoni.
+  description: Hello, you've reached Arnold's pizza shop. I'm not here now, I'm
+    out killing pepperoni.
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
-      - cheesy
-      - oily
-      - bread
-      - gunpowder
+    - meaty
+    - cheesy
+    - oily
+    - bread
+    - gunpowder
   - type: Sprite
     layers:
     - state: arnold
@@ -486,11 +488,11 @@
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
-      - cheesy
-      - oily
-      - bread
-      - gunpowder
+    - meaty
+    - cheesy
+    - oily
+    - bread
+    - gunpowder
   - type: Sprite
     layers:
     - state: arnold-slice
@@ -521,13 +523,14 @@
   name: slice of moldy pizza
   parent: FoodPizzaSliceBase
   id: FoodPizzaMoldySlice
-  description: Once a perfectly good slice of pizza pie, but now it lies here, rancid and bursting with spores.
+  description: Once a perfectly good slice of pizza pie, but now it lies here,
+    rancid and bursting with spores.
   components:
   - type: FlavorProfile
     flavors:
-      - bitter
-      - terrible
-      - mushroom
+    - bitter
+    - terrible
+    - mushroom
   - type: Sprite
     layers:
     - state: moldy-slice
@@ -549,7 +552,7 @@
 
 - type: entity
   name: spicy rock pizza
-  parent: [FoodPizzaBase, BaseSlicingRefinableFood]
+  parent: [ FoodPizzaBase, BaseSlicingRefinableFood ]
   id: FoodPizzaUranium
   description: Spicy pizza covered in peppers and uranium.
   components:
@@ -630,7 +633,7 @@
 
 - type: entity
   name: cotton pizza
-  parent: [FoodPizzaBase, BaseSlicingRefinableFood]
+  parent: [ FoodPizzaBase, BaseSlicingRefinableFood ]
   id: FoodPizzaCotton
   description: Flat fabric cotton dough with cotton topping. Incredible.
   components:
@@ -693,14 +696,14 @@
 
 - type: entity
   name: world peazza
-  parent: [FoodPizzaBase, BaseSlicingRefinableFood]
+  parent: [ FoodPizzaBase, BaseSlicingRefinableFood ]
   id: FoodPizzaWorldpeas
   description: Modern diplomacy in the shape of a disc.
   components:
   - type: FlavorProfile
     flavors:
-      - bread
-      - numbingtranquility
+    - bread
+    - numbingtranquility
   - type: Sprite
     layers:
     - state: worldpeas
@@ -726,8 +729,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - bread
-      - numbingtranquility
+    - bread
+    - numbingtranquility
   - type: Sprite
     layers:
     - state: worldpeas-slice

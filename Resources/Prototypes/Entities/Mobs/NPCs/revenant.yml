@@ -29,8 +29,8 @@
   - type: Eye
     drawFov: false
     visMask:
-      - Normal
-      - Ghost
+    - Normal
+    - Ghost
   - type: ContentEye
     maxZoom: 1.2, 1.2
   - type: GhostRole
@@ -86,7 +86,7 @@
     speechVerb: Ghost
   - type: Reactive
     groups:
-      Acidic: [Touch]
+      Acidic: [ Touch ]
   - type: Tag
     tags:
     - SlowImmune

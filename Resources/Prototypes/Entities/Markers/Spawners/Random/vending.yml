@@ -34,7 +34,6 @@
       - id: VendingMachineSpaceUp
       - id: VendingMachineStarkist
 
-
 - type: entityTable
   id: ClothingVendorTable
   table: !type:GroupSelector

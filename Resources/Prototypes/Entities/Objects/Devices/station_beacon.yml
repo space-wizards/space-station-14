@@ -12,14 +12,14 @@
     drawdepth: BelowFloor
     layers:
     - state: blink
-      map: ["base"]
+      map: [ "base" ]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.NavMapBeaconVisuals.Enabled:
         base:
-          True: {state: blink}
-          False: {state: icon}
+          True: { state: blink }
+          False: { state: icon }
   - type: ConfigurableNavMapBeacon
   - type: NavMapBeacon
     defaultText: station-beacon-general
@@ -48,8 +48,7 @@
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:PlaySoundBehavior
@@ -76,7 +75,7 @@
 
 - type: entity
   parent: BaseStationBeacon
-  id: DefaultStationBeacon  # the ninja's objective is to bomb this location.
+  id: DefaultStationBeacon # the ninja's objective is to bomb this location.
   suffix: General
   components:
   - type: Tag
@@ -98,7 +97,7 @@
     sprite: Objects/Devices/station_beacon.rsi
     layers:
     - state: icon
-      map: ["base"]
+      map: [ "base" ]
   - type: Physics
     canCollide: true
     bodyType: dynamic

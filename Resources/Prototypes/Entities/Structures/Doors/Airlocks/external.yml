@@ -2,7 +2,8 @@
   parent: AirlockRCDResistant
   id: AirlockExternal
   name: external airlock
-  description: It opens, it closes, it might crush you, and there might be only space behind it.
+  description: It opens, it closes, it might crush you, and there might be only
+    space behind it.
   components:
   - type: Door
     crushDamage:
@@ -18,39 +19,39 @@
     sprite: Structures/Doors/Airlocks/Standard/airlock-external.rsi
     layers:
     - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
+      map: [ "enum.DoorVisualLayers.Base" ]
     - state: closed_unlit
       shader: unshaded
       sprite: Structures/Doors/Airlocks/Effects/airlock-effects-external.rsi
-      map: ["enum.DoorVisualLayers.BaseUnlit"]
+      map: [ "enum.DoorVisualLayers.BaseUnlit" ]
       visible: true
     - state: welded
       sprite: Structures/Doors/Airlocks/Effects/airlock-effects-external.rsi
-      map: ["enum.WeldableLayers.BaseWelded"]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
     - state: bolted_unlit
       shader: unshaded
       sprite: Structures/Doors/Airlocks/Effects/airlock-effects-external.rsi
-      map: ["enum.DoorVisualLayers.BaseBolted"]
+      map: [ "enum.DoorVisualLayers.BaseBolted" ]
     - state: emergency_unlit
       sprite: Structures/Doors/Airlocks/Effects/airlock-effects-external.rsi
-      map: ["enum.DoorVisualLayers.BaseEmergencyAccess"]
+      map: [ "enum.DoorVisualLayers.BaseEmergencyAccess" ]
       shader: unshaded
     - state: panel_open
       sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
     - state: electrified_ai
       sprite: Interface/Misc/ai_hud.rsi
       shader: unshaded
       visible: false
-      map: ["enum.ElectrifiedLayers.HUD"]
+      map: [ "enum.ElectrifiedLayers.HUD" ]
     - state: electrified
       sprite: Effects/electricity.rsi
       shader: unshaded
       visible: false
-      map: ["enum.ElectrifiedLayers.Sparks"]
+      map: [ "enum.ElectrifiedLayers.Sparks" ]
     - state: sparks
       sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
-      map: ["enum.DoorVisualLayers.BaseEmagging"]
+      map: [ "enum.DoorVisualLayers.BaseEmagging" ]
       shader: unshaded
       visible: false
   - type: Wires
@@ -72,11 +73,11 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
         density: 100
         mask:
         - FullTileMask
-        layer:     #removed opaque from the layer, allowing lasers to pass through glass airlocks
+        layer:
+        #removed opaque from the layer, allowing lasers to pass through glass airlocks
         - GlassAirlockLayer

@@ -33,8 +33,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.45
         density: 60
         mask:
@@ -51,8 +50,7 @@
     damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
-    - trigger: &DamageFurnitureWeak
-        !type:DamageTrigger
+    - trigger: &DamageFurnitureWeak !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:PlaySoundBehavior
@@ -134,17 +132,17 @@
   id: CrystalBlack
   suffix: black
   components:
-    - type: Sprite
-      color: "#363636"
-    - type: PointLight
-      color: "#363636"
-    - type: Destructible
-      thresholds:
-      - trigger: *DamageFurnitureWeak
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            ShardCrystalBlack: *Min1Max2
+  - type: Sprite
+    color: "#363636"
+  - type: PointLight
+    color: "#363636"
+  - type: Destructible
+    thresholds:
+    - trigger: *DamageFurnitureWeak
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardCrystalBlack: *Min1Max2
 
 - type: entity
   parent: BaseCrystalStalagmite

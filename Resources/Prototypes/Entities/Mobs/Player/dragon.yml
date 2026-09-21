@@ -1,5 +1,12 @@
 - type: entity
-  parent: [ SimpleSpaceMobBase, FlyingMobBase, BaseSlicingRefinable, MobNightVision, BaseMobIrradiated ]
+  parent:
+    [
+      SimpleSpaceMobBase,
+      FlyingMobBase,
+      BaseSlicingRefinable,
+      MobNightVision,
+      BaseMobIrradiated
+    ]
   id: BaseMobDragon
   suffix: ""
   name: space dragon
@@ -27,12 +34,9 @@
     rootTask:
       task: XenoCompound
     blackboard:
-      NavInteract: !type:Bool
-        true
-      NavPry: !type:Bool
-        true
-      NavSmash: !type:Bool
-        true
+      NavInteract: !type:Bool "true"
+      NavPry: !type:Bool "true"
+      NavSmash: !type:Bool "true"
   - type: NpcFactionMember
     factions:
     - Dragon
@@ -75,8 +79,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.40
         density: 100
         mask:
@@ -171,7 +174,7 @@
     attributes:
       proper: true
   - type: NameIdentifier
-    group: null  # Strips the numeric identifier from the dragon's name, since they already have randomly-generated names anyway
+    group: null # Strips the numeric identifier from the dragon's name, since they already have randomly-generated names anyway
   - type: Prying
     pryPowered: true
     force: true
@@ -236,7 +239,6 @@
     - state: icon
   - type: InstantAction
     event: !type:DragonSpawnRiftActionEvent
-
 - type: entity
   parent: BaseAction
   id: ActionDevour
@@ -250,9 +252,9 @@
     sprite: Interface/Actions/devour.rsi
     layers:
     - state: icon
-      map: ["enum.ActionVisuals.Icon"]
+      map: [ "enum.ActionVisuals.Icon" ]
     - state: icon-on
-      map: ["enum.ActionVisuals.IconToggled"]
+      map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
   - type: TargetAction
   - type: EntityTargetAction
@@ -263,7 +265,6 @@
       - Door
       - Wall
     event: !type:DevourActionEvent
-
 - type: entity
   parent: BaseAction
   id: ActionDragonsBreath

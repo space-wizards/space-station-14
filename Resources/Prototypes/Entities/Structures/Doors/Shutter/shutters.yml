@@ -16,16 +16,15 @@
     drawdepth: BlastDoors
     layers:
     - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
+      map: [ "enum.DoorVisualLayers.Base" ]
     - state: welded
-      map: ["enum.WeldableLayers.BaseWelded"]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
   - type: AnimationPlayer
   - type: Physics
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
         density: 100
         mask:
@@ -78,9 +77,9 @@
     range: 200
   - type: DeviceLinkSink
     ports:
-      - Open
-      - Close
-      - Toggle
+    - Open
+    - Close
+    - Toggle
   - type: DeviceLinkSource
     ports:
     - DoorStatus
@@ -102,7 +101,7 @@
 
 - type: entity
   id: ShuttersNormal
-  parent: [BaseDeltaPressureGlass, BaseShutter, StructureHealthDoorWeak]
+  parent: [ BaseDeltaPressureGlass, BaseShutter, StructureHealthDoorWeak ]
   components:
   - type: Occluder
   - type: Construction
@@ -114,8 +113,7 @@
     damageModifierSet: SteelStaticMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:PlaySoundBehavior
@@ -150,9 +148,9 @@
     sprite: Structures/Doors/Shutters/shutters-radiation.rsi
     layers:
     - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
+      map: [ "enum.DoorVisualLayers.Base" ]
     - state: welded
-      map: ["enum.WeldableLayers.BaseWelded"]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
   - type: Occluder
   - type: Construction
     graph: Shutters
@@ -180,7 +178,7 @@
 
 - type: entity
   id: ShuttersWindow
-  parent: [BaseDeltaPressureGlass, BaseShutter, StructureHealthDoorWeak]
+  parent: [ BaseDeltaPressureGlass, BaseShutter, StructureHealthDoorWeak ]
   name: window shutters
   description: The Best (TM) place to see your friends explode!
   components:
@@ -188,9 +186,9 @@
     sprite: Structures/Doors/Shutters/shutters-window.rsi
     layers:
     - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
+      map: [ "enum.DoorVisualLayers.Base" ]
     - state: welded
-      map: ["enum.WeldableLayers.BaseWelded"]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
   - type: Construction
     graph: Shutters
     node: ShuttersWindow
@@ -202,8 +200,7 @@
     damageModifierSet: SteelStaticMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:PlaySoundBehavior
@@ -246,8 +243,7 @@
     damageModifierSet: SteelStaticMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:PlaySoundBehavior
@@ -260,8 +256,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
         density: 55
         mask:

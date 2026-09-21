@@ -100,7 +100,7 @@
   - type: Lock
     breakOnAccessBreaker: false
   - type: AccessReader
-    access: [[ "Wizard" ]]
+    access: [ [ "Wizard" ] ]
     breakOnAccessBreaker: false
   - type: Projectile
     deleteOnCollide: false
@@ -132,8 +132,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.48,0.25,0.48"
         density: 75
         mask:
@@ -141,8 +140,7 @@
         layer:
         - MachineLayer
       projectile:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.15,-0.45,0.15,0.15"
         hard: false
         mask:
@@ -244,7 +242,8 @@
       color: white
   - type: Projectile
     damage:
-      types: # good enough. Maybe make it call the rejuvenate command later.
+      types:
+        # good enough. Maybe make it call the rejuvenate command later.
         Asphyxiation: -200
         Bloodloss: -200
         Blunt: -200

@@ -1,5 +1,11 @@
 - type: entity
-  parent: [BaseStructureDynamic, ConstructibleMachine, BaseMachinePowered, BaseConstructibleMachineDestructible]
+  parent:
+    [
+      BaseStructureDynamic,
+      ConstructibleMachine,
+      BaseMachinePowered,
+      BaseConstructibleMachineDestructible
+    ]
   id: SmartFridge
   name: SmartFridge
   description: A refrigerated storage unit for keeping items cold and fresh.
@@ -19,16 +25,16 @@
     - state: "off"
     - state: smartfridge
       visible: false
-      map: ["powered-base"]
+      map: [ "powered-base" ]
     - state: smartfridge_open
       visible: false
-      map: ["powered-open"]
+      map: [ "powered-open" ]
       shader: unshaded
     - state: smartfridge_door # This state should be toggled off while somebody is accessing the UI. Until that's implemented, we'll just always draw it on top of the "open" sprite.
       visible: false
-      map: ["powered-closed"]
+      map: [ "powered-closed" ]
     - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: PointLight
     radius: 1.2
     energy: 3.0
@@ -85,8 +91,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
         mask:
         - MachineMask
@@ -137,4 +142,4 @@
   - type: SmartFridge
     flavorText: smart-fridge-request-chemistry
   - type: AccessReader
-    access: [["Medical"]]
+    access: [ [ "Medical" ] ]

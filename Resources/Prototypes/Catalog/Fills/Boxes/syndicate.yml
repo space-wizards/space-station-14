@@ -1,6 +1,6 @@
 - type: entity
   id: ElectricalDisruptionKit
-  parent: [BoxCardboard, BaseSyndicateContraband]
+  parent: [ BoxCardboard, BaseSyndicateContraband ]
   name: electrical disruption kit
   suffix: Filled
   components:
@@ -13,10 +13,11 @@
         - id: EmpImplanter
 
 - type: entity
-  parent: [BoxVial, BaseSyndicateContraband]
+  parent: [ BoxVial, BaseSyndicateContraband ]
   id: ChemicalSynthesisKit
   name: chemical synthesis kit
-  description: A starter kit for the aspiring chemist, includes two vials of vestine for all your criminal needs!
+  description: A starter kit for the aspiring chemist, includes two vials of
+    vestine for all your criminal needs!
   components:
   - type: Storage
     grid:
@@ -36,10 +37,11 @@
         - id: ChemistryEmptyVial
 
 - type: entity
-  parent: [BoxCardboard, BaseSyndicateContraband]
+  parent: [ BoxCardboard, BaseSyndicateContraband ]
   id: ThrowingKnivesKit
   name: throwing knives kit
-  description: A set of 8 syndicate branded throwing knives, perfect for embedding into the body of your victims.
+  description: A set of 8 syndicate branded throwing knives, perfect for embedding
+    into the body of your victims.
   components:
   - type: Storage
     grid:
@@ -51,19 +53,19 @@
         amount: 8
   - type: Sprite
     layers:
-      - state: box_of_doom
-      - state: throwing_knives
+    - state: box_of_doom
+    - state: throwing_knives
 
 - type: entity
   name: deathrattle implant box
-  parent: [BoxCardboard, BaseSyndicateContraband]
+  parent: [ BoxCardboard, BaseSyndicateContraband ]
   id: BoxDeathRattleImplants
   description: Six deathrattle implants for the whole squad.
   components:
   - type: Sprite
     layers:
-      - state: box_of_doom
-      - state: syringe
+    - state: box_of_doom
+    - state: syringe
   - type: Storage
     grid:
     - 0,0,5,3
@@ -74,7 +76,7 @@
         amount: 6
 
 - type: entity
-  parent: [BoxCardboard, BaseSyndicateContraband]
+  parent: [ BoxCardboard, BaseSyndicateContraband ]
   id: CombatBakeryKit
   name: combat bakery kit
   description: A kit of clandestine baked weapons.
@@ -89,8 +91,8 @@
     - 0,0,3,3
   - type: Sprite
     layers:
-      - state: box_of_doom
-      - state: france
+    - state: box_of_doom
+    - state: france
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
@@ -102,10 +104,11 @@
         - id: PaperWrittenCombatBakeryKit
 
 - type: entity
-  parent: [BoxCardboardSmall, BaseSyndicateContraband]
+  parent: [ BoxCardboardSmall, BaseSyndicateContraband ]
   id: SyndimovCircuitKit
   name: syndimov circuit kit
-  description: A kit containing an electronics board with the Syndimov lawset and a Syndicate ID.
+  description: A kit containing an electronics board with the Syndimov lawset and
+    a Syndicate ID.
   components:
   - type: Sprite
     layers:
@@ -117,4 +120,3 @@
         children:
         - id: SyndimovCircuitBoard
         - id: SyndicateIDCard
-

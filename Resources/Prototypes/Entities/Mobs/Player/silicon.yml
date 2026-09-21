@@ -78,7 +78,8 @@
 
 - type: entity
   id: AiHeldIntellicard
-  description: Components added / removed from an entity that gets inserted into an Intellicard.
+  description: Components added / removed from an entity that gets inserted into
+    an Intellicard.
   categories: [ HideSpawnMenu ]
   components:
   - type: IntrinsicRadioReceiver
@@ -116,11 +117,12 @@
         - StationAi
   - type: ContainerContainer
     containers:
-      station_ai_mind_slot: !type:ContainerSlot
+      station_ai_mind_slot:
         # Load-bearing.
         # The issue is verbs check for same transparent container.
         # The alternative is you add a bunch of events trying to override it; we don't even really need the container functionality
         # anyway it's just a quality of life thing.
+        !type:ContainerSlot
         showEnts: True
 
 # Items
@@ -141,7 +143,7 @@
     layers:
     - state: base
     - state: full
-      map: ["unshaded"]
+      map: [ "unshaded" ]
       shader: unshaded
   - type: Appearance
   - type: GenericVisualizer
@@ -183,8 +185,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
         mask:
         - MachineMask
@@ -202,8 +203,7 @@
     allowSelfRepair: false
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 500
       behaviors:
       - !type:PlaySoundBehavior
@@ -211,8 +211,7 @@
           collection: MetalBreak
       - !type:DoActsBehavior
         acts: [ "Breakage" ]
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 1000
       behaviors:
       - !type:PlaySoundBehavior
@@ -227,9 +226,9 @@
             min: 2
             max: 2
       - !type:DoActsBehavior
-        acts: ["Destruction"]
+        acts: [ "Destruction" ]
   - type: DamageVisuals
-    thresholds: [25, 50, 75, 100, 200, 300, 400]
+    thresholds: [ 25, 50, 75, 100, 200, 300, 400 ]
     damageDivisor: 4
     trackAllDamage: true
     damageOverlay:
@@ -258,14 +257,14 @@
     layers:
     - state: base
     - state: ai_empty
-      map: ["enum.StationAiVisualLayers.Base"]
+      map: [ "enum.StationAiVisualLayers.Base" ]
       shader: unshaded
     - state: ai
-      map: ["enum.StationAiVisualLayers.Icon"]
+      map: [ "enum.StationAiVisualLayers.Icon" ]
       shader: unshaded
       visible: false
     - state: ai_unpowered
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
       visible: false
   - type: Appearance
   - type: GenericVisualizer
@@ -284,8 +283,8 @@
       state: creampie_ai
   - type: Reactive
     reactions:
-    - reagents: [Water, SpaceCleaner]
-      methods: [Touch]
+    - reagents: [ Water, SpaceCleaner ]
+      methods: [ Touch ]
       effects:
       - !type:WashCreamPie
   - type: InteractionPopup
@@ -371,8 +370,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
         mask:
         - MachineMask
@@ -384,8 +382,7 @@
   - type: Injurable
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 400
       behaviors:
       - !type:PlaySoundBehavior
@@ -401,16 +398,14 @@
         - station_ai_brain_slot
         - board
       - !type:DoActsBehavior
-        acts: ["Destruction"]
+        acts: [ "Destruction" ]
   - type: Construction
     graph: StationAiCore
     node: frame
   - type: ContainerContainer
     containers:
       board: !type:Container
-      station_ai_brain_slot: !type:Container
-
-# The actual brain inside the core
+      station_ai_brain_slot: !type:Container # The actual brain inside the core
 - type: entity
   id: StationAiBrain
   parent: PositronicBrain
@@ -486,8 +481,7 @@
   - type: Fixtures
     fixtures:
       lightTrigger:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 8
         density: 80
         hard: false
@@ -505,7 +499,7 @@
     layers:
     - state: ai_camera
       shader: unshaded
-      map: ["base"]
+      map: [ "base" ]
   - type: CameraActiveOnCollideCollider
 
 # The holographic representation of the AI that is projected from a holopad.
@@ -557,11 +551,11 @@
   - type: ContainerFill
     containers:
       borg_brain:
-        - PositronicBrain
+      - PositronicBrain
       borg_module:
-        - BorgModuleOperative
-        - BorgModuleL6C
-        - BorgModuleDoubleEsword
+      - BorgModuleOperative
+      - BorgModuleL6C
+      - BorgModuleDoubleEsword
   - type: ItemSlots
     slots:
       cell_slot:
@@ -573,14 +567,14 @@
   parent: PlayerBorgSyndicateAssaultBattery
   suffix: Ghost role
   components:
-    - type: GhostRole
-      name: ghost-role-information-syndicate-cyborg-assault-name
-      description: ghost-role-information-syndicate-cyborg-description
-      rules: ghost-role-information-silicon-rules
-      raffle:
-        settings: default
-      job: Borg
-    - type: GhostTakeoverAvailable
+  - type: GhostRole
+    name: ghost-role-information-syndicate-cyborg-assault-name
+    description: ghost-role-information-syndicate-cyborg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+    job: Borg
+  - type: GhostTakeoverAvailable
 
 - type: entity
   id: PlayerBorgSyndicateSaboteurBattery
@@ -591,11 +585,11 @@
   - type: ContainerFill
     containers:
       borg_brain:
-        - PositronicBrain
+      - PositronicBrain
       borg_module:
-        - BorgModuleTool
-        - BorgModuleOperative
-        - BorgModuleSyndicateWeapon
+      - BorgModuleTool
+      - BorgModuleOperative
+      - BorgModuleSyndicateWeapon
   - type: ItemSlots
     slots:
       cell_slot:
@@ -607,14 +601,14 @@
   parent: PlayerBorgSyndicateSaboteurBattery
   suffix: Ghost role
   components:
-    - type: GhostRole
-      name: ghost-role-information-syndicate-cyborg-saboteur-name
-      description: ghost-role-information-syndicate-cyborg-description
-      rules: ghost-role-information-silicon-rules
-      raffle:
-        settings: default
-      job: Borg
-    - type: GhostTakeoverAvailable
+  - type: GhostRole
+    name: ghost-role-information-syndicate-cyborg-saboteur-name
+    description: ghost-role-information-syndicate-cyborg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+    job: Borg
+  - type: GhostTakeoverAvailable
 
 - type: entity
   parent: MarkerBase
@@ -623,9 +617,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_syndicate
+    - state: red
+    - sprite: Structures/Decoration/banner.rsi
+      state: banner_syndicate
   - type: EntityTableSpawner
     table: !type:GroupSelector
       children:
@@ -655,7 +649,7 @@
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellHigh
   - type: RandomMetadata
-    nameSegments: [NamesBorg]
+    nameSegments: [ NamesBorg ]
 
 - type: entity
   parent: PlayerEngineeringBorgDerelict
@@ -680,33 +674,33 @@
   - type: ContainerFill
     containers:
       borg_brain:
-        - PositronicBrain
+      - PositronicBrain
       borg_module:
-        - BorgModulePrying
-        - BorgModuleTool
-        - BorgModuleFireExtinguisher
+      - BorgModulePrying
+      - BorgModuleTool
+      - BorgModuleFireExtinguisher
   - type: ItemSlots
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellHigh
   - type: RandomMetadata
-    nameSegments: [NamesBorg]
+    nameSegments: [ NamesBorg ]
 
 - type: entity
   parent: PlayerBorgDerelict
   id: PlayerBorgDerelictGhostRole
   suffix: Ghost role
   components:
-    - type: GhostRole
-      name: ghost-role-information-derelict-cyborg-name
-      description: ghost-role-information-derelict-cyborg-description
-      rules: ghost-role-information-silicon-rules
-      raffle:
-        settings: default
-      reregister: false
-      job: Borg
-    - type: GhostTakeoverAvailable
+  - type: GhostRole
+    name: ghost-role-information-derelict-cyborg-name
+    description: ghost-role-information-derelict-cyborg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+    reregister: false
+    job: Borg
+  - type: GhostTakeoverAvailable
 
 - type: entity
   parent: JanitorBorgChassisDerelict
@@ -729,7 +723,7 @@
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellHigh
   - type: RandomMetadata
-    nameSegments: [NamesBorg]
+    nameSegments: [ NamesBorg ]
 
 - type: entity
   parent: PlayerJanitorBorgDerelict
@@ -768,7 +762,7 @@
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellHigh
   - type: RandomMetadata
-    nameSegments: [NamesBorg]
+    nameSegments: [ NamesBorg ]
 
 - type: entity
   parent: PlayerMedicalBorgDerelict
@@ -806,7 +800,7 @@
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellHigh
   - type: RandomMetadata
-    nameSegments: [NamesBorg]
+    nameSegments: [ NamesBorg ]
 
 - type: entity
   parent: PlayerMiningBorgDerelict
@@ -842,7 +836,8 @@
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellHyper
   - type: RandomMetadata
-    nameSegments: # TODO: add unique syndieborg-specific names; right now this is the same pool that syndicate agents use
+    nameSegments:
+    # TODO: add unique syndieborg-specific names; right now this is the same pool that syndicate agents use
     - NamesDeathCommandoFirst
     - NamesDeathCommandoLast
     nameFormat: name-format-standard

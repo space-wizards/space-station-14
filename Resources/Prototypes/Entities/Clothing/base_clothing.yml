@@ -8,7 +8,7 @@
   - type: Sprite
   - type: Tag
     tags:
-      - WhitelistChameleon
+    - WhitelistChameleon
   - type: StaticPrice
     price: 10
   - type: FlavorProfile #yes not every peice of clothing is edible, but this way every edible piece of clothing should have the flavor without me having to track down what specific clothing can and cannot be eaten.
@@ -19,8 +19,8 @@
   abstract: true
   id: GeigerCounterClothing
   components:
-    - type: Geiger
-      attachedToSuit: true
+  - type: Geiger
+    attachedToSuit: true
 
 - type: entity
   abstract: true
@@ -47,9 +47,7 @@
     allowSmartEquip: true
   - type: ContainerContainer
     containers:
-      item: !type:ContainerSlot
-
-# a piece of clothing that has explosion resistance *for its contents*, not the wearer
+      item: !type:ContainerSlot # a piece of clothing that has explosion resistance *for its contents*, not the wearer
 - type: entity
   abstract: true
   id: ContentsExplosionResistanceBase

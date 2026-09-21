@@ -85,7 +85,8 @@
         - id: FoodBakedBrownie
         - id: FoodPieBananaCreamSlice
         - id: FoodTartMimeSlice
-      - !type:GroupSelector #rare
+      #rare
+      - !type:GroupSelector
         weight: 0.05
         children:
         - id: FoodBreadMeatSpiderSlice

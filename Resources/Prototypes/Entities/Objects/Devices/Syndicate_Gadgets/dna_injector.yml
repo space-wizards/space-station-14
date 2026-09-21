@@ -8,7 +8,8 @@
   # - It completely makes the voice mask redundant.
   # - Unlike when disguising yourself as someone else, there is no way to get caught.
   name: DNA injector
-  description: Can be used to take a DNA sample from someone and inject it into another person, turning them into a clone of the original.
+  description: Can be used to take a DNA sample from someone and inject it into
+    another person, turning them into a clone of the original.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/implanter.rsi
@@ -29,13 +30,13 @@
     visuals:
       enum.ChangelingClonerVisuals.State:
         injector:
-          Empty: {state: implanter0}
-          Filled: {state: implanter0}
-          Spent: {state: broken}
+          Empty: { state: implanter0 }
+          Filled: { state: implanter0 }
+          Spent: { state: broken }
         fillState:
-          Empty: {visible: false}
-          Filled: {visible: true}
-          Spent: {visible: false}
+          Empty: { visible: false }
+          Filled: { visible: true }
+          Spent: { visible: false }
   - type: ChangelingCloner
 
 - type: entity

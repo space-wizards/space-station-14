@@ -2,7 +2,8 @@
   parent: [ ConstructibleMachine, BaseMachinePowered ]
   id: StationTeleporter
   name: teleporter
-  description: The peak of bluespace technology. A giant teleporter that allows you to travel vast distances in the blink of an eye.
+  description: The peak of bluespace technology. A giant teleporter that allows
+    you to travel vast distances in the blink of an eye.
   suffix: Unknown Coordinates, Without Autolink
   components:
   - type: Machine
@@ -15,10 +16,10 @@
     - state: powered
       shader: unshaded
       visible: false
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
     - sprite: Effects/portal.rsi
       state: portal-gray
-      map: ["portal"]
+      map: [ "portal" ]
       shader: unshaded
       visible: false
   - type: ApcPowerReceiver
@@ -48,8 +49,7 @@
   - type: Fixtures
     fixtures:
       portalFixture:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.48,0.25,0.48"
         mask:
         - FullTileMask

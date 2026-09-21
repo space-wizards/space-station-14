@@ -7,11 +7,11 @@
     Empty:
       stationProto: StandardNanotrasenStation
       components:
-        - type: StationNameSetup
-          mapNameTemplate: "Empty"
-        - type: StationJobs
-          availableJobs:
-            Passenger: [ -1, -1 ]
+      - type: StationNameSetup
+        mapNameTemplate: "Empty"
+      - type: StationJobs
+        availableJobs:
+          Passenger: [ -1, -1 ]
 
 - type: gameMap
   id: Dev
@@ -22,11 +22,11 @@
     Dev:
       stationProto: StandardNanotrasenStation
       components:
-        - type: StationNameSetup
-          mapNameTemplate: "Dev"
-        - type: StationJobs
-          availableJobs:
-            Captain: [ -1, -1 ]
+      - type: StationNameSetup
+        mapNameTemplate: "Dev"
+      - type: StationJobs
+        availableJobs:
+          Captain: [ -1, -1 ]
 
 - type: gameMap
   id: TestTeg
@@ -37,8 +37,8 @@
     TEG:
       stationProto: TestStation
       components:
-        - type: StationNameSetup
-          mapNameTemplate: "TEG"
-        - type: StationJobs
-          availableJobs:
-            ChiefEngineer: [ -1, -1 ]
+      - type: StationNameSetup
+        mapNameTemplate: "TEG"
+      - type: StationJobs
+        availableJobs:
+          ChiefEngineer: [ -1, -1 ]

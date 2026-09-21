@@ -117,7 +117,7 @@
   id: RandomGateInput
   name: signal-port-name-logic-random-input
   description: signal-port-description-logic-random-input
-  
+
 - type: sinkPort
   id: SetParticleDelta
   name: signal-port-name-set-particle-delta

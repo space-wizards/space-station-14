@@ -1,6 +1,6 @@
 - type: decal
   id: MarkupSquare
-  tags: ["overlay"]
+  tags: [ "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/markups.rsi
@@ -8,7 +8,7 @@
 
 - type: decal
   id: MarkupRectangle1x2
-  tags: ["overlay"]
+  tags: [ "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/markups.rsi
@@ -16,7 +16,7 @@
 
 - type: decal
   id: MarkupRectangle1x2Center
-  tags: ["overlay"]
+  tags: [ "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/markups.rsi
@@ -24,7 +24,7 @@
 
 - type: decal
   id: MarkupSquareQuater
-  tags: ["overlay"]
+  tags: [ "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/markups.rsi
@@ -32,7 +32,7 @@
 
 - type: decal
   id: MarkupSquareQuaterCenter
-  tags: ["overlay"]
+  tags: [ "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/markups.rsi

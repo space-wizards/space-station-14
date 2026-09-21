@@ -4,9 +4,9 @@
   name: BEAM ENTITY YOU SHOULD NOT SEE THIS
   categories: [ HideSpawnMenu ]
   components:
-    - type: Beam
-    - type: TimedDespawn
-      lifetime: 4
-    - type: Tag
-      tags:
-        - HideContextMenu
+  - type: Beam
+  - type: TimedDespawn
+    lifetime: 4
+  - type: Tag
+    tags:
+    - HideContextMenu

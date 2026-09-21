@@ -10,20 +10,20 @@
     radiatingBehaviourId: radiating
   - type: LightBehaviour
     behaviours:
-      - !type:FadeBehaviour
-        id: radiating
-        maxDuration: 2.0
-        startValue: 3.0
-        endValue: 2.0
-        isLooped: true
-        reverseWhenFinished: true
-      - !type:PulseBehaviour
-        id: blinking
-        interpolate: Nearest
-        maxDuration: 1.0
-        startValue: 0.1
-        endValue: 2.0
-        isLooped: true
+    - !type:FadeBehaviour
+      id: radiating
+      maxDuration: 2.0
+      startValue: 3.0
+      endValue: 2.0
+      isLooped: true
+      reverseWhenFinished: true
+    - !type:PulseBehaviour
+      id: blinking
+      interpolate: Nearest
+      maxDuration: 1.0
+      startValue: 0.1
+      endValue: 2.0
+      isLooped: true
   - type: PowerCellSlot
     cellSlotId: cell_slot
   - type: ItemSlots
@@ -63,12 +63,12 @@
   - type: Sprite
     sprite: Objects/Misc/Lights/lamp.rsi
     layers:
-      - state: lamp
-        map: [ "base" ]
-      - state: lamp-on
-        shader: unshaded
-        visible: false
-        map: [ "light" ]
+    - state: lamp
+      map: [ "base" ]
+    - state: lamp-on
+      shader: unshaded
+      visible: false
+      map: [ "light" ]
   - type: Item
     sprite: Objects/Misc/Lights/lamp.rsi
   - type: HolidayVisuals
@@ -91,11 +91,11 @@
   components:
   - type: Sprite
     layers:
-      - state: bananalamp
-      - state: bananalamp_on
-        shader: unshaded
-        visible: false
-        map: [ "light" ]
+    - state: bananalamp
+    - state: bananalamp_on
+      shader: unshaded
+      visible: false
+      map: [ "light" ]
 
 - type: entity
   name: desk lamp
@@ -106,12 +106,12 @@
   - type: Sprite
     sprite: Objects/Misc/Lights/lampgreen.rsi
     layers:
-      - state: lampgreen
-        map: [ "base" ]
-      - state: lampgreen-on
-        shader: unshaded
-        visible: false
-        map: [ "light" ]
+    - state: lampgreen
+      map: [ "base" ]
+    - state: lampgreen-on
+      shader: unshaded
+      visible: false
+      map: [ "light" ]
   - type: Item
     sprite: Objects/Misc/Lights/lampgreen.rsi
   - type: HolidayVisuals
@@ -139,15 +139,15 @@
   - type: Sprite
     sprite: Objects/Misc/Lights/lampint.rsi
     layers:
-      - state: lamp-int
-        map: [ "enum.FlashVisualLayers.BaseLayer" ]
-      - state: lamp-int-on
-        shader: unshaded
-        visible: false
-        map: [ "light" ]
-      - state: flashing
-        map: [ "enum.FlashVisualLayers.LightLayer" ]
-        visible: false
+    - state: lamp-int
+      map: [ "enum.FlashVisualLayers.BaseLayer" ]
+    - state: lamp-int-on
+      shader: unshaded
+      visible: false
+      map: [ "light" ]
+    - state: flashing
+      map: [ "enum.FlashVisualLayers.LightLayer" ]
+      visible: false
   - type: Item
     sprite: Objects/Misc/Lights/lampint.rsi
   - type: StaticPrice
@@ -181,11 +181,11 @@
     visuals:
       enum.FlashVisuals.Burnt:
         enum.FlashVisualLayers.BaseLayer:
-          True: {state: burnt}
+          True: { state: burnt }
       enum.FlashVisuals.Flashing:
         enum.FlashVisualLayers.LightLayer:
-          True: {visible: true}
-          False: {visible: false}
+          True: { visible: true }
+          False: { visible: false }
 
 - type: entity
   name: floodlight
@@ -198,19 +198,18 @@
   - type: Sprite
     sprite: Objects/Misc/Lights/lights.rsi
     layers:
-      - state: floodlight
-        map: [ "base" ]
-      - state: floodlight-on
-        shader: unshaded
-        visible: false
-        map: [ "light" ]
+    - state: floodlight
+      map: [ "base" ]
+    - state: floodlight-on
+      shader: unshaded
+      visible: false
+      map: [ "light" ]
   - type: Physics
     canCollide: true
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.2, -0.5, 0.2, 0.5"
         density: 50
         mask:
@@ -231,8 +230,7 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 10
       behaviors:
       - !type:PlaySoundBehavior
@@ -270,8 +268,7 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 20
       behaviors:
       - !type:PlaySoundBehavior
@@ -288,8 +285,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.2, -0.5, 0.2, 0.5"
         density: 50
         mask:

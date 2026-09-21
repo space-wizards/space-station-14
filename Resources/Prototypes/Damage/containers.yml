@@ -2,11 +2,11 @@
 - type: damageContainer
   id: Biological
   supportedGroups:
-    - Brute
-    - Burn
-    - Toxin
-    - Airloss
-    - Genetic
+  - Brute
+  - Burn
+  - Toxin
+  - Airloss
+  - Genetic
 
 # "Living" things that are predominantly static, like walls of meat
 - type: damageContainer
@@ -24,10 +24,10 @@
 - type: damageContainer
   id: Inorganic
   supportedGroups:
-    - Brute
+  - Brute
   supportedTypes:
-    - Heat
-    - Shock
+  - Heat
+  - Shock
 
 # Not living things that are "well-built" and rarely move, like machines or tables
 # If it's on wheels it probably belongs here, too
@@ -43,32 +43,32 @@
 - type: damageContainer
   id: Silicon
   supportedGroups:
-    - Brute
+  - Brute
   supportedTypes:
-    - Heat
-    - Shock
+  - Heat
+  - Shock
 
 - type: damageContainer
   id: Shield
   supportedGroups:
-    - Brute
+  - Brute
   supportedTypes:
-    - Heat
+  - Heat
 
 - type: damageContainer
   id: ShadowHaze
   supportedTypes:
-    - Heat
+  - Heat
 
 - type: damageContainer
   id: ManifestedSpirit
   supportedGroups:
-    - Metaphysical
-    - Brute
+  - Metaphysical
+  - Brute
   supportedTypes:
-    - Heat
-    - Shock
-    - Caustic
+  - Heat
+  - Shock
+  - Caustic
 
 - type: damageContainer
   id: BiologicalMetaphysical

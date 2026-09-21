@@ -6,7 +6,7 @@
   components:
   - type: Tag
     tags:
-      - CartridgeCaselessRifle
+    - CartridgeCaselessRifle
   - type: CartridgeAmmo
     deleteOnSpawn: true
   - type: Sprite
@@ -14,7 +14,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
     - state: base
-      map: ["enum.AmmoVisualLayers.Base"]
+      map: [ "enum.AmmoVisualLayers.Base" ]
   - type: Appearance
   - type: SpentAmmoVisuals
   - type: StaticPrice
@@ -24,7 +24,9 @@
   parent: BaseCartridgeCaselessRifle
   id: CartridgeCaselessRifle
   name: cartridge (.25 caseless)
-  description: A small caliber utilizing caseless technology, omitting conventional brass casing in favor of hardened propellant. Standard kinetic ammunition is common and useful in most situations.
+  description: A small caliber utilizing caseless technology, omitting
+    conventional brass casing in favor of hardened propellant. Standard kinetic
+    ammunition is common and useful in most situations.
   components:
   - type: CartridgeAmmo
     proto: BulletCaselessRifle
@@ -33,14 +35,17 @@
   parent: BaseCartridgeCaselessRifle
   id: CartridgeCaselessRiflePractice
   name: cartridge (.25 caseless practice)
-  description: A small caliber utilizing caseless technology, omitting conventional brass casing in favor of hardened propellant. Practice ammunition fires a chalk projectile that stings a little, but otherwise causes no lasting damage.
+  description: A small caliber utilizing caseless technology, omitting
+    conventional brass casing in favor of hardened propellant. Practice
+    ammunition fires a chalk projectile that stings a little, but otherwise
+    causes no lasting damage.
   components:
   - type: CartridgeAmmo
     proto: BulletCaselessRiflePractice
   - type: Sprite
     layers:
-      - state: base
-        map: [ "enum.AmmoVisualLayers.Base" ]
-      - state: tip
-        map: [ "enum.AmmoVisualLayers.Tip" ]
-        color: "#dbdbdb"
+    - state: base
+      map: [ "enum.AmmoVisualLayers.Base" ]
+    - state: tip
+      map: [ "enum.AmmoVisualLayers.Tip" ]
+      color: "#dbdbdb"

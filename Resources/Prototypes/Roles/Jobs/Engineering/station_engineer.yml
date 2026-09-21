@@ -4,9 +4,9 @@
   description: job-description-engineer
   playTimeTracker: JobStationEngineer
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Engineering
-      time: 2.5h
+  - !type:DepartmentTimeRequirement
+    department: Engineering
+    time: 2.5h
   startingGear: StationEngineerGear
   icon: "JobIconStationEngineer"
   supervisors: job-supervisors-ce
@@ -24,7 +24,7 @@
     eyes: ClothingEyesGlassesMeson
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
-  #storage:
+    #storage:
     #back:
     #- Stuff
 

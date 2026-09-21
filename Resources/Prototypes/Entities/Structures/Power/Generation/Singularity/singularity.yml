@@ -1,7 +1,8 @@
 - type: entity
   id: Singularity
   name: gravitational singularity
-  description: A mesmerizing swirl of darkness that sucks in everything. If it's moving towards you, run.
+  description: A mesmerizing swirl of darkness that sucks in everything. If it's
+    moving towards you, run.
   components:
   - type: Clickable
   - type: AmbientSound
@@ -25,9 +26,8 @@
   - type: Fixtures
     fixtures:
       EventHorizonCollider:
-        shape:
-          !type:PhysShapeCircle
-            radius: 0.35
+        shape: !type:PhysShapeCircle
+          radius: 0.35
         hard: true
         restitution: 0.8
         density: 99999
@@ -36,9 +36,8 @@
         layer:
         - SingularityLayer
       EventHorizonConsumer:
-        shape:
-          !type:PhysShapeCircle
-            radius: 0.35
+        shape: !type:PhysShapeCircle
+          radius: 0.35
         hard: false
         mask:
         - SingularityLayer
@@ -79,7 +78,7 @@
   - type: GenericVisualizer
     visuals:
       enum.SingularityAppearanceKeys.Singularity:
-       VisualLevel:
+        VisualLevel:
           1:
             sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
             state: singularity_1

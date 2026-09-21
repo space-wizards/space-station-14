@@ -1,7 +1,7 @@
 - type: entity
   name: explosive grenade
   description: Grenade that creates a small but devastating explosion.
-  parent: [VolatileGrenadeBase, TimerGrenadeBase, BaseSyndicateContraband]
+  parent: [ VolatileGrenadeBase, TimerGrenadeBase, BaseSyndicateContraband ]
   id: ExGrenade
   components:
   - type: ExplodeOnTrigger
@@ -64,22 +64,22 @@
   id: GrenadeFlashEffect
   categories: [ HideSpawnMenu ]
   components:
-    - type: PointLight
-      enabled: true
-      radius: 5
-      energy: 8
-      netsync: false
-    - type: LightFade
-      duration: 0.5
-    - type: TimedDespawn
-      lifetime: 0.5
+  - type: PointLight
+    enabled: true
+    radius: 5
+    energy: 8
+    netsync: false
+  - type: LightFade
+    duration: 0.5
+  - type: TimedDespawn
+    lifetime: 0.5
 
 # Tuned to be a general bomb that deals equipment damage without explicitly gibbing, however it will still gladly instakill anyone that mishandles it.
 # One of the few syndie bombs that should punch holes in space.
 - type: entity
   name: syndicate minibomb
   description: A syndicate-manufactured explosive used to stow destruction and cause chaos.
-  parent: [VolatileGrenadeBase, TimerGrenadeBase, BaseSyndicateContraband]
+  parent: [ VolatileGrenadeBase, TimerGrenadeBase, BaseSyndicateContraband ]
   id: SyndieMiniBomb
   components:
   - type: Sprite
@@ -144,12 +144,12 @@
     speed: 360
   - type: LightBehaviour
     behaviours:
-    - !type:FadeBehaviour # have the radius start small and get larger as it starts to burn
+    # have the radius start small and get larger as it starts to burn
+    - !type:FadeBehaviour
       id: activate
       maxDuration: 5
       startValue: 1
       endValue: 2
-
 
 - type: entity
   parent: [ FragileGrenadeBase, TimerGrenadeBase, BaseSyndicateContraband ]
@@ -187,39 +187,39 @@
     - timer
     triggerDelay: 10.45
     components:
-      - type: AmbientSound
-        enabled: true
-        volume: -5
-        range: 14
-        sound:
-          path: /Audio/Effects/Grenades/Supermatter/supermatter_loop.ogg
-      - type: GravityWell
-        maxRange: 5
-        minRange: 0.25
-        baseRadialAcceleration: 25
-        baseTangentialAcceleration: 5
-        gravPulsePeriod: 0.03
-      - type: SingularityDistortion
-        intensity: 150
-        falloffPower: 1.5
-      - type: PointLight
-        enabled: true
-        color: "#ffaa44"
-        energy: 8
-        radius: 6
-        softness: 1
-        offset: "0, 0"
-      - type: EmitSoundOnTrigger
-        sound:
-          path: /Audio/Effects/Grenades/Supermatter/supermatter_end.ogg
-          params:
-            volume: 5
-        positional: true
-        keysIn:
-        - stageTwo
-      - type: DeleteOnTrigger
-        keysIn:
-        - stageTwo
+    - type: AmbientSound
+      enabled: true
+      volume: -5
+      range: 14
+      sound:
+        path: /Audio/Effects/Grenades/Supermatter/supermatter_loop.ogg
+    - type: GravityWell
+      maxRange: 5
+      minRange: 0.25
+      baseRadialAcceleration: 25
+      baseTangentialAcceleration: 5
+      gravPulsePeriod: 0.03
+    - type: SingularityDistortion
+      intensity: 150
+      falloffPower: 1.5
+    - type: PointLight
+      enabled: true
+      color: "#ffaa44"
+      energy: 8
+      radius: 6
+      softness: 1
+      offset: "0, 0"
+    - type: EmitSoundOnTrigger
+      sound:
+        path: /Audio/Effects/Grenades/Supermatter/supermatter_end.ogg
+        params:
+          volume: 5
+      positional: true
+      keysIn:
+      - stageTwo
+    - type: DeleteOnTrigger
+      keysIn:
+      - stageTwo
   - type: StaticPrice
     price: 1000
 
@@ -248,38 +248,38 @@
   - type: TwoStageTrigger
     triggerDelay: 11.14
     components:
-      - type: AmbientSound
-        enabled: true
-        volume: -5
-        range: 14
-        sound:
-          path: /Audio/Effects/Grenades/Supermatter/whitehole_loop.ogg
-      - type: GravityWell
-        maxRange: 7
-        baseRadialAcceleration: -10
-        baseTangentialAcceleration: -1
-        gravPulsePeriod: 0.03
-      - type: SingularityDistortion
-        intensity: -200
-        falloffPower: 1.5
-      - type: PointLight
-        enabled: true
-        color: "#ffffff"
-        energy: 8
-        radius: 6
-        softness: 1
-        offset: "0, 0"
-      - type: EmitSoundOnTrigger
-        keysIn:
-        - stageTwo
-        sound:
-          path: /Audio/Effects/Grenades/Supermatter/supermatter_end.ogg
-          params:
-            volume: 15
-        positional: true
-      - type: DeleteOnTrigger
-        keysIn:
-        - stageTwo
+    - type: AmbientSound
+      enabled: true
+      volume: -5
+      range: 14
+      sound:
+        path: /Audio/Effects/Grenades/Supermatter/whitehole_loop.ogg
+    - type: GravityWell
+      maxRange: 7
+      baseRadialAcceleration: -10
+      baseTangentialAcceleration: -1
+      gravPulsePeriod: 0.03
+    - type: SingularityDistortion
+      intensity: -200
+      falloffPower: 1.5
+    - type: PointLight
+      enabled: true
+      color: "#ffffff"
+      energy: 8
+      radius: 6
+      softness: 1
+      offset: "0, 0"
+    - type: EmitSoundOnTrigger
+      keysIn:
+      - stageTwo
+      sound:
+        path: /Audio/Effects/Grenades/Supermatter/supermatter_end.ogg
+        params:
+          volume: 15
+      positional: true
+    - type: DeleteOnTrigger
+      keysIn:
+      - stageTwo
   - type: StaticPrice
     price: 1000
 
@@ -328,8 +328,7 @@
     node: emptyCase
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:TriggerBehavior
@@ -353,7 +352,7 @@
 - type: entity
   name: EMP grenade
   description: A grenade designed to wreak havoc on electronic systems.
-  parent: [ImpactGrenadeBase, BaseSyndicateContraband]
+  parent: [ ImpactGrenadeBase, BaseSyndicateContraband ]
   id: EmpGrenade
   components:
   - type: Sprite
@@ -371,8 +370,9 @@
 
 - type: entity
   name: holy hand grenade
-  description: O Lord, bless this thy hand grenade, that with it thou mayst blow thine enemies to tiny bits, in thy mercy.
-  parent: [TimerGrenadeBase, BaseSyndicateContraband]
+  description: O Lord, bless this thy hand grenade, that with it thou mayst blow
+    thine enemies to tiny bits, in thy mercy.
+  parent: [ TimerGrenadeBase, BaseSyndicateContraband ]
   id: HolyHandGrenade
   components:
   - type: Sprite
@@ -430,7 +430,7 @@
 - type: entity
   name: syndicate trickybomb
   description: A syndicate-manufactured explosive used to make an excellent distraction.
-  parent: [GrenadeDummy, BaseSyndicateContraband]
+  parent: [ GrenadeDummy, BaseSyndicateContraband ]
   id: SyndieTrickyBomb
   components:
   - type: Sprite

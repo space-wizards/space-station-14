@@ -5,7 +5,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyAtmospherics
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Atmospherics
   components:
   - type: Sprite
@@ -15,7 +15,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyAtmosphericsGlass
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Atmospherics, Glass
   components:
   - type: Sprite
@@ -26,7 +26,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyCargo
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Cargo
   components:
   - type: Sprite
@@ -36,7 +36,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyCargoGlass
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Cargo, Glass
   components:
   - type: Sprite
@@ -47,7 +47,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyCommand
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Command
   components:
   - type: Sprite
@@ -57,7 +57,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyCommandGlass
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Command, Glass
   components:
   - type: Sprite
@@ -68,7 +68,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyEngineering
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Engineering
   components:
   - type: Sprite
@@ -78,7 +78,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyEngineeringGlass
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Engineering, Glass
   components:
   - type: Sprite
@@ -89,7 +89,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyExternal
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: external airlock assembly
   components:
   - type: Sprite
@@ -99,7 +99,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyExternalGlass
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: external airlock assembly
   suffix: Glass
   components:
@@ -111,7 +111,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyGlass
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Glass
   components:
   - type: Sprite
@@ -122,7 +122,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyFreezer
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Freezer
   components:
   - type: Sprite
@@ -133,7 +133,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyHydroponics
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Hydroponics
   components:
   - type: Sprite
@@ -143,7 +143,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyHydroponicsGlass
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Hydroponics, Glass
   components:
   - type: Sprite
@@ -154,7 +154,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyMaintenance
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Maintenance
   components:
   - type: Sprite
@@ -164,7 +164,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyMaintenanceGlass
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Maintenance, Glass
   components:
   - type: Sprite
@@ -175,7 +175,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyMedical
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Medical
   components:
   - type: Sprite
@@ -185,7 +185,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyMedicalGlass
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Medical, Glass
   components:
   - type: Sprite
@@ -196,7 +196,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblySalvage
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Salvage
   components:
   - type: Sprite
@@ -206,7 +206,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblySalvageGlass
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Salvage, Glass
   components:
   - type: Sprite
@@ -217,7 +217,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyScience
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Science
   components:
   - type: Sprite
@@ -227,7 +227,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyScienceGlass
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Science, Glass
   components:
   - type: Sprite
@@ -238,7 +238,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblySecurity
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Security
   components:
   - type: Sprite
@@ -248,7 +248,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblySecurityGlass
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Security, Glass
   components:
   - type: Sprite
@@ -259,7 +259,7 @@
 - type: entity
   parent: AirlockShuttleAssembly
   id: AirlockAssemblyShuttle
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Shuttle
   components:
   - type: Sprite
@@ -272,7 +272,7 @@
 - type: entity
   parent: AirlockShuttleAssembly
   id: AirlockAssemblyShuttleGlass
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Shuttle, Glass
   components:
   - type: Sprite
@@ -283,7 +283,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyVirology
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Virology
   components:
   - type: Sprite
@@ -293,7 +293,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyVirologyGlass
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Virology, Glass
   components:
   - type: Sprite
@@ -304,7 +304,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyCentralCommand
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: CentralCommand
   components:
   - type: Sprite
@@ -314,7 +314,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyCentralCommandGlass
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: CentralCommand, Glass
   components:
   - type: Sprite
@@ -325,7 +325,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyMining
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Mining
   components:
   - type: Sprite
@@ -335,7 +335,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyMiningGlass
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Mining, Glass
   components:
   - type: Sprite
@@ -346,7 +346,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblySyndicate
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Syndicate
   components:
   - type: Sprite
@@ -356,7 +356,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblySyndicateGlass
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: Syndicate, Glass
   components:
   - type: Sprite
@@ -367,7 +367,7 @@
 - type: entity
   parent: AirlockShuttleAssembly
   id: AirlockAssemblyShuttleSyndicate
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: ShuttleSyndicate
   components:
   - type: Sprite
@@ -377,7 +377,7 @@
 - type: entity
   parent: AirlockShuttleAssembly
   id: AirlockAssemblyShuttleSyndicateGlass
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: ShuttleSyndicate, Glass
   components:
   - type: Sprite
@@ -388,7 +388,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyHighSec
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   suffix: HighSec
   components:
   - type: Sprite

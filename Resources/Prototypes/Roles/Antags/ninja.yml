@@ -55,9 +55,10 @@
     pocket2: PinpointerStation
     belt: EnergyKatana
   inhand:
-    - JetpackBlackFilled
+  - JetpackBlackFilled
   storage:
-    back: # belt holds katana so satchel has the tools for sabotaging things
+    back:
+    # belt holds katana so satchel has the tools for sabotaging things
     - Crowbar
     - Wrench
     - Screwdriver

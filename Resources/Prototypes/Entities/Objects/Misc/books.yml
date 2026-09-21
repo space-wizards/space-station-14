@@ -34,7 +34,7 @@
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_book.svg.96dpi.png"
     backgroundPatchMargin: 23.0, 15.0, 14.0, 16.0
     contentMargin: 20.0, 20.0, 20.0, 20.0
-  - type: MeleeWeapon  # This was originally a feature exclusive to the law book but maintainers decided it should apply to all books for consistency. I frankly disagree but :P
+  - type: MeleeWeapon # This was originally a feature exclusive to the law book but maintainers decided it should apply to all books for consistency. I frankly disagree but :P
     soundHit:
       collection: Punch
     damage:
@@ -60,7 +60,7 @@
     openOnActivation: true
     guides:
     - SS14
-  - type: MeleeWeapon  # Should write it again since BaseGuidebook doesn't inherit BookBase
+  - type: MeleeWeapon # Should write it again since BaseGuidebook doesn't inherit BookBase
     soundHit:
       collection: Punch
     damage:
@@ -74,7 +74,8 @@
   id: BookSpaceEncyclopedia
   parent: BaseGuidebook
   name: space encyclopedia
-  description: An encyclopedia containing all the knowledge. The author of this encyclopedia is unknown.
+  description: An encyclopedia containing all the knowledge. The author of this
+    encyclopedia is unknown.
   components:
   - type: Sprite
     layers:
@@ -212,7 +213,9 @@
   id: BookSecurity
   parent: BaseGuidebook
   name: security 101
-  description: A book about security written by Nanotrasen. The book is stained with blood. It seems to have been used more as a weapon than reading material.
+  description: A book about security written by Nanotrasen. The book is stained
+    with blood. It seems to have been used more as a weapon than reading
+    material.
   components:
   - type: Sprite
     layers:
@@ -253,7 +256,8 @@
   id: BookHowToRockAndStone
   parent: BaseGuidebook
   name: how to rock and stone
-  description: A very detailed guide about salvage written by Karl, a legendary space miner, however he's missing. It motivates you to rock and stone.
+  description: A very detailed guide about salvage written by Karl, a legendary
+    space miner, however he's missing. It motivates you to rock and stone.
   components:
   - type: Sprite
     layers:
@@ -274,7 +278,8 @@
   id: BookMedicalReferenceBook
   parent: BaseGuidebook
   name: medical reference book
-  description: A reference book about medical written by an old doctor. The handwriting is barely comprehensible.
+  description: A reference book about medical written by an old doctor. The
+    handwriting is barely comprehensible.
   components:
   - type: Sprite
     layers:
@@ -314,7 +319,8 @@
   id: BookChemicalCompendium
   parent: BaseGuidebook
   name: chempendium
-  description: A comprehensive guide written by some old skeleton of a professor about chemical synthesis.
+  description: A comprehensive guide written by some old skeleton of a professor
+    about chemical synthesis.
   components:
   - type: Sprite
     layers:
@@ -352,7 +358,8 @@
   id: BookSpaceLaw
   parent: BaseGuidebook
   name: space law
-  description: A set of Nanotrasen guidelines for keeping law and order on their space stations.
+  description: A set of Nanotrasen guidelines for keeping law and order on their
+    space stations.
   components:
   - type: Sprite
     layers:
@@ -378,57 +385,57 @@
     nameFormat: name-format-book
   - type: RandomSprite
     available:
-      - cover:
-          cover_base: Sixteen
-          cover_old: Sixteen
-          cover_strong: Sixteen
-        decor:
-          decor_wingette: Sixteen
-          decor_wingette_circle: Sixteen
-          decor_bottom: Sixteen
-          decor_middle: Sixteen
-          decor_spine: Sixteen
-          decor_diagonal: Sixteen
-          decor_vertical_middle: Sixteen
-          icon_corner: Sixteen
-          icon_mount: ""
-        icon:
-          icon_biohazard: Sixteen
-          icon_borg: ""
-          icon_banana: ""
-          icon_glow: Sixteen
-          icon_hacking: ""
-          icon_law: Sixteen
-          icon_magnifier: ""
-          icon_nuclear: ""
-          icon_time: Sixteen
-          icon_aurora: Sixteen
-          icon_briefcase: ""
-          icon_eye: ""
-          icon_letter_N: ""
-          icon_letter_P: ""
-          icon_lightning: ""
-          icon_planet: ""
-          icon_possum: ""
-          icon_question: Sixteen
-          icon_scmmd: ""
-          icon_stars: Sixteen
-          icon_stars2: Sixteen
-          icon_temple: Sixteen
-          icon_tree: ""
-          icon_pentagramm: Sixteen
-          icon_fish: ""
-          icon_origami: ""
-          icon_skull: ""
-          icon_text: ""
-          icon_text2: ""
-          icon_text3: ""
-        overlay:
-          overlay_blood: ""
-          overlay_dirt: Sixteen
-          detail_bookmark: Sixteen
-          detail_rivets: Sixteen
-          overlay_null: ""
+    - cover:
+        cover_base: Sixteen
+        cover_old: Sixteen
+        cover_strong: Sixteen
+      decor:
+        decor_wingette: Sixteen
+        decor_wingette_circle: Sixteen
+        decor_bottom: Sixteen
+        decor_middle: Sixteen
+        decor_spine: Sixteen
+        decor_diagonal: Sixteen
+        decor_vertical_middle: Sixteen
+        icon_corner: Sixteen
+        icon_mount: ""
+      icon:
+        icon_biohazard: Sixteen
+        icon_borg: ""
+        icon_banana: ""
+        icon_glow: Sixteen
+        icon_hacking: ""
+        icon_law: Sixteen
+        icon_magnifier: ""
+        icon_nuclear: ""
+        icon_time: Sixteen
+        icon_aurora: Sixteen
+        icon_briefcase: ""
+        icon_eye: ""
+        icon_letter_N: ""
+        icon_letter_P: ""
+        icon_lightning: ""
+        icon_planet: ""
+        icon_possum: ""
+        icon_question: Sixteen
+        icon_scmmd: ""
+        icon_stars: Sixteen
+        icon_stars2: Sixteen
+        icon_temple: Sixteen
+        icon_tree: ""
+        icon_pentagramm: Sixteen
+        icon_fish: ""
+        icon_origami: ""
+        icon_skull: ""
+        icon_text: ""
+        icon_text2: ""
+        icon_text3: ""
+      overlay:
+        overlay_blood: ""
+        overlay_dirt: Sixteen
+        detail_bookmark: Sixteen
+        detail_rivets: Sixteen
+        overlay_null: ""
 
 - type: entity
   parent: BookRandom
@@ -442,7 +449,8 @@
   parent: BookBase
   id: BookAtmosDistro
   name: "Newton's Guide to Atmos: The Distro"
-  description: There are endless illegible notes scribbled in the margins. Most of the text is covered in handwritten question marks.
+  description: There are endless illegible notes scribbled in the margins. Most of
+    the text is covered in handwritten question marks.
   components:
   - type: Sprite
     layers:
@@ -461,7 +469,8 @@
   parent: BookBase
   id: BookAtmosWaste
   name: "Newton's Guide to Atmos: Waste"
-  description: There are endless illegible notes scribbled in the margins. Most of the text is covered in handwritten question marks.
+  description: There are endless illegible notes scribbled in the margins. Most of
+    the text is covered in handwritten question marks.
   components:
   - type: Sprite
     layers:
@@ -480,7 +489,8 @@
   parent: BookBase
   id: BookAtmosAirAlarms
   name: "Newton's Guide to Atmos: Air Alarms"
-  description: There are endless illegible notes scribbled in the margins. Most of the text is covered in handwritten question marks.
+  description: There are endless illegible notes scribbled in the margins. Most of
+    the text is covered in handwritten question marks.
   components:
   - type: Sprite
     layers:
@@ -499,7 +509,8 @@
   parent: BookBase
   id: BookAtmosVentsMore
   name: "Newton's Guide to Atmos: Vents and More"
-  description: There are endless illegible notes scribbled in the margins. Most of the text is covered in handwritten question marks.
+  description: There are endless illegible notes scribbled in the margins. Most of
+    the text is covered in handwritten question marks.
   components:
   - type: Sprite
     layers:

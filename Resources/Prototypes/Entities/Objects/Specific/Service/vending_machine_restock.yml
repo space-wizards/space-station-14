@@ -26,20 +26,19 @@
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
       - !type:DumpRestockInventory
-
 - type: entity
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockBooze
   name: Booze-O-Mat restock box
-  description: Slot into your Booze-O-Mat to start the party! Not for sale to passengers below the legal age.
+  description: Slot into your Booze-O-Mat to start the party! Not for sale to
+    passengers below the legal age.
   components:
   - type: VendingMachineRestock
     canRestock:
@@ -55,7 +54,8 @@
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockChang
   name: Mr. Chang's restock box
-  description: A box covered in white labels with bold red Chinese characters, ready to be loaded into the nearest Mr. Chang's vending machine.
+  description: A box covered in white labels with bold red Chinese characters,
+    ready to be loaded into the nearest Mr. Chang's vending machine.
   components:
   - type: VendingMachineRestock
     canRestock:
@@ -103,7 +103,8 @@
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockClothes
   name: wardrobe restock box
-  description: It's time to step up your fashion! Place inside any clothes vendor restock slot to begin.
+  description: It's time to step up your fashion! Place inside any clothes vendor
+    restock slot to begin.
   components:
   - type: VendingMachineRestock
     canRestock:
@@ -137,7 +138,9 @@
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockCostumes
   name: AutoDrobe restock box
-  description: A panoply of NanoTrasen employees are prancing about a colorful theater in a tragicomedy. You can join them too! Load this into your nearest AutoDrobe vending machine.
+  description: A panoply of NanoTrasen employees are prancing about a colorful
+    theater in a tragicomedy. You can join them too! Load this into your nearest
+    AutoDrobe vending machine.
   components:
   - type: VendingMachineRestock
     canRestock:
@@ -153,7 +156,8 @@
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockDinnerware
   name: Plasteel Chef's restock box
-  description: It's never raw in this kitchen! Drop into the restock slot on the Plasteel Chef to begin.
+  description: It's never raw in this kitchen! Drop into the restock slot on the
+    Plasteel Chef to begin.
   components:
   - type: VendingMachineRestock
     canRestock:
@@ -169,7 +173,8 @@
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockDiscountDans
   name: Discount Dan's restock box
-  description: A box full of salt and starch. Why suffer Quality when you can have Quantity? Discount Dan's!
+  description: A box full of salt and starch. Why suffer Quality when you can have
+    Quantity? Discount Dan's!
   components:
   - type: VendingMachineRestock
     canRestock:
@@ -185,7 +190,8 @@
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockDonut
   name: Robust Donuts restock box
-  description: A box full of toroidal bundles of fried dough for restocking a vending machine. Use only as directed by Robust Industries, LLC.
+  description: A box full of toroidal bundles of fried dough for restocking a
+    vending machine. Use only as directed by Robust Industries, LLC.
   components:
   - type: VendingMachineRestock
     canRestock:
@@ -218,7 +224,8 @@
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockGames
   name: Good Clean Fun restock box
-  description: It's time to roll for initiative, dice dragons! Load up at the Good Clean Fun vending machine!
+  description: It's time to roll for initiative, dice dragons! Load up at the Good
+    Clean Fun vending machine!
   components:
   - type: VendingMachineRestock
     canRestock:
@@ -234,7 +241,8 @@
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockGetmoreChocolateCorp
   name: GetMore Chocolate restock box
-  description: A box loaded with the finest ersatz cacao. Only to be used in official Getmore Chocolate vending machines.
+  description: A box loaded with the finest ersatz cacao. Only to be used in
+    official Getmore Chocolate vending machines.
   components:
   - type: VendingMachineRestock
     canRestock:
@@ -250,7 +258,8 @@
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockHotDrinks
   name: Solar's Best restock box
-  description: Toasty! For use in Solar's Best Hot Drinks or other affiliate vending machines.
+  description: Toasty! For use in Solar's Best Hot Drinks or other affiliate
+    vending machines.
   components:
   - type: VendingMachineRestock
     canRestock:
@@ -266,7 +275,8 @@
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockMedical
   name: NanoMed restock box
-  description: Slot into your department's NanoMed or NanoMedPlus to dispense. Handle with care.
+  description: Slot into your department's NanoMed or NanoMedPlus to dispense.
+    Handle with care.
   components:
   - type: VendingMachineRestock
     canRestock:
@@ -285,7 +295,8 @@
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockNutriMax
   name: NutriMax restock box
-  description: We'll make your thumbs green with our tools. Let's get to harvesting! Load into a NutriMax vending machine.
+  description: We'll make your thumbs green with our tools. Let's get to
+    harvesting! Load into a NutriMax vending machine.
   components:
   - type: VendingMachineRestock
     canRestock:
@@ -301,7 +312,8 @@
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockPTech
   name: PTech restock box
-  description: All the bureaucracy you can handle, and more! Load into the PTech vending machine to get started.
+  description: All the bureaucracy you can handle, and more! Load into the PTech
+    vending machine to get started.
   components:
   - type: VendingMachineRestock
     canRestock:
@@ -317,7 +329,8 @@
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockRobustSoftdrinks
   name: beverage restock box
-  description: A cold, clunky container of colliding chilly cylinders. Use only as directed by Robust Industries, LLC.
+  description: A cold, clunky container of colliding chilly cylinders. Use only as
+    directed by Robust Industries, LLC.
   components:
   - type: VendingMachineRestock
     canRestock:
@@ -341,7 +354,8 @@
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockSecTech
   name: SecTech restock box
-  description: "Communists beware: the reinforcements have arrived! A label reads SECURITY PERSONNEL ONLY."
+  description: "Communists beware: the reinforcements have arrived! A label reads
+    SECURITY PERSONNEL ONLY."
   components:
   - type: VendingMachineRestock
     canRestock:
@@ -357,7 +371,8 @@
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockSalvageEquipment
   name: Salvage Vendor restock box
-  description: Strike the earth ere the space carp nip your behind! Slam into a salvage vendor to begin.
+  description: Strike the earth ere the space carp nip your behind! Slam into a
+    salvage vendor to begin.
   components:
   - type: VendingMachineRestock
     canRestock:
@@ -373,7 +388,8 @@
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockSeeds
   name: MegaSeed restock box
-  description: A label says they're heirloom seeds, passed down from our ancestors. Pack it into the MegaSeed Servitor!
+  description: A label says they're heirloom seeds, passed down from our
+    ancestors. Pack it into the MegaSeed Servitor!
   components:
   - type: VendingMachineRestock
     canRestock:
@@ -389,7 +405,8 @@
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockSmokes
   name: ShadyCigs restock box
-  description: It's hard to see anything under all the Surgeon General warnings, but it mentions loading it into a vending machine.
+  description: It's hard to see anything under all the Surgeon General warnings,
+    but it mentions loading it into a vending machine.
   components:
   - type: VendingMachineRestock
     canRestock:
@@ -438,7 +455,8 @@
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockRobotics
   name: Robotech Deluxe restock box
-  description: A box full of tools for creating borgs. Load it into a Robotech Deluxe to begin.
+  description: A box full of tools for creating borgs. Load it into a Robotech
+    Deluxe to begin.
   components:
   - type: VendingMachineRestock
     canRestock:
@@ -454,7 +472,8 @@
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockHappyHonk
   name: Happy Honk restock box
-  description: Place this box full of fun into the restock slot on the Happy Honk Dispenser to begin.
+  description: Place this box full of fun into the restock slot on the Happy Honk
+    Dispenser to begin.
   components:
   - type: VendingMachineRestock
     canRestock:
@@ -470,7 +489,8 @@
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockChemVend
   name: ChemVend restock box
-  description: A box filled with chemicals and covered in dangerous-looking NFPA diamonds. Load it into a ChemVend to begin.
+  description: A box filled with chemicals and covered in dangerous-looking NFPA
+    diamonds. Load it into a ChemVend to begin.
   components:
   - type: VendingMachineRestock
     canRestock:

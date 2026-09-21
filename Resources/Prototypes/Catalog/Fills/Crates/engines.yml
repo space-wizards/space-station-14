@@ -4,7 +4,8 @@
   parent: CrateEngineeringSecure
   id: CrateEngineeringAMEShielding
   name: packaged antimatter reactor crate
-  description: 9 parts for the main body of an antimatter reactor, or for expanding an existing one.
+  description: 9 parts for the main body of an antimatter reactor, or for
+    expanding an existing one.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -89,7 +90,8 @@
   parent: CrateEngineeringSecure
   id: CrateEngineeringParticleAccelerator
   name: PA board crate
-  description: Complex to setup, but rewarding as fuck. Contains boards for all particle accelerator components.
+  description: Complex to setup, but rewarding as fuck. Contains boards for all
+    particle accelerator components.
   components:
   - type: EntityTableContainerFill
     containers:

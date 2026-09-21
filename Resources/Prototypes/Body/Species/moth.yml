@@ -146,7 +146,7 @@
     accent: zombieMoth
   - type: Speech
     speechVerb: Moth
-    allowedEmotes: ['Chitter', 'Squeak', 'Flap']
+    allowedEmotes: [ 'Chitter', 'Squeak', 'Flap' ]
   - type: TypingIndicator
     proto: moth
   - type: CreamPied
@@ -317,9 +317,21 @@
       - Pill
 
 - type: entity
-  parent: [ OrganBaseLiver, OrganSpriteHumanInternal, OrganMothInternal, OrganAnimalMetabolizer ]
+  parent:
+    [
+      OrganBaseLiver,
+      OrganSpriteHumanInternal,
+      OrganMothInternal,
+      OrganAnimalMetabolizer
+    ]
   id: OrganMothLiver
 
 - type: entity
-  parent: [ OrganBaseKidneys, OrganSpriteHumanInternal, OrganMothInternal, OrganMothMetabolizer ]
+  parent:
+    [
+      OrganBaseKidneys,
+      OrganSpriteHumanInternal,
+      OrganMothInternal,
+      OrganMothMetabolizer
+    ]
   id: OrganMothKidneys

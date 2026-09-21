@@ -2,19 +2,21 @@
   id: ResearchAndDevelopmentServer
   parent: [ BaseMachinePowered, ConstructibleMachine, StructureHealthMachineStrong ]
   name: R&D server
-  description: Contains the collective knowledge of the station's scientists. Destroying it would send them back to the stone age. You don't want that do you?
+  description: Contains the collective knowledge of the station's scientists.
+    Destroying it would send them back to the stone age. You don't want that do
+    you?
   components:
   - type: Sprite
     sprite: Structures/Machines/server.rsi
     snapCardinals: true
     layers:
-      - state: server-off
-      - state: server-on
-        visible: false
-        map: ["enum.PowerDeviceVisualLayers.Powered"]
-      - state: variant-research
-      - state: server_o
-        map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - state: server-off
+    - state: server-on
+      visible: false
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+    - state: variant-research
+    - state: server_o
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: PointLight
     enabled: false
     castShadows: false
@@ -40,8 +42,7 @@
     damageModifierSet: PlasmaMod
   - type: Destructible
     thresholds:
-    - trigger: &DamageMachineStrong
-        !type:DamageTrigger
+    - trigger: &DamageMachineStrong !type:DamageTrigger
         damage: 275
       behaviors:
       - !type:ChangeConstructionNodeBehavior
@@ -57,10 +58,10 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-        enum.PowerDeviceVisuals.Powered:
-          enum.PowerDeviceVisualLayers.Powered:
-            True: {visible: true}
-            False: {visible: false}
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
   - type: AmbientOnPowered
   - type: AmbientSound
     volume: -9
@@ -84,7 +85,7 @@
     - state: rndpointsource-off
     - state: rndpointsource
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
   - type: ResearchClient
   - type: ResearchPointSource
     pointspersecond: 25
@@ -105,8 +106,8 @@
     visuals:
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
-          True: {visible: true}
-          False: {visible: false}
+          True: { visible: true }
+          False: { visible: false }
   - type: Damageable
     damageModifierSet: PlasteelMod
   - type: Destructible

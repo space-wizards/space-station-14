@@ -7,8 +7,8 @@
   color: "#664330"
   physicalDesc: reagent-physical-desc-thick
   plantMetabolism:
-    - !type:PlantAdjustNutrition
-      amount: 2
+  - !type:PlantAdjustNutrition
+    amount: 2
   metabolisms:
     Digestion:
       effects:
@@ -16,7 +16,7 @@
         satiationType: Hunger
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Plant]
+          type: [ Plant ]
 
 - type: reagent
   id: Left4Zed
@@ -27,13 +27,13 @@
   color: "#5b406c"
   physicalDesc: reagent-physical-desc-heterogeneous
   plantMetabolism:
-    - !type:PlantAdjustNutrition
-      amount: 1
-    - !type:PlantAdjustHealth
-      amount: -0.5
-    - !type:PlantAdjustMutationMod
-      probability: 0.3
-      amount: 0.4
+  - !type:PlantAdjustNutrition
+    amount: 1
+  - !type:PlantAdjustHealth
+    amount: -0.5
+  - !type:PlantAdjustMutationMod
+    probability: 0.3
+    amount: 0.4
   metabolisms:
     Bloodstream:
       effects:
@@ -41,14 +41,14 @@
         satiationType: Hunger
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Plant]
+          type: [ Plant ]
       - !type:HealthChange
         damage:
           types:
             Poison: 1
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Plant]
+          type: [ Plant ]
 
 - type: reagent
   id: PestKiller
@@ -59,10 +59,10 @@
   color: "#9e9886"
   physicalDesc: reagent-physical-desc-bubbling
   plantMetabolism:
-    - !type:PlantAdjustToxins
-      amount: 4
-    - !type:PlantAdjustPests
-      amount: -6
+  - !type:PlantAdjustToxins
+    amount: 4
+  - !type:PlantAdjustPests
+    amount: -6
   metabolisms:
     Bloodstream:
       effects:
@@ -72,7 +72,7 @@
             Poison: 3
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Plant]
+          type: [ Plant ]
 
 - type: reagent
   id: PlantBGone
@@ -83,17 +83,17 @@
   color: "#49002E"
   physicalDesc: reagent-physical-desc-bubbling
   plantMetabolism:
-    - !type:PlantAdjustToxins
-      amount: 6
-    - !type:PlantAdjustWeeds
-      amount: -8
-    - !type:PlantAdjustHealth
-      amount: -20
-    - !type:PlantAdjustMutationMod
-      amount: 0.1
-    - !type:PlantChangeTraits
-      trait: PlantTraitKudzu
-      type: Remove
+  - !type:PlantAdjustToxins
+    amount: 6
+  - !type:PlantAdjustWeeds
+    amount: -8
+  - !type:PlantAdjustHealth
+    amount: -20
+  - !type:PlantAdjustMutationMod
+    amount: 0.1
+  - !type:PlantChangeTraits
+    trait: PlantTraitKudzu
+    type: Remove
   metabolisms:
     Bloodstream:
       effects:
@@ -106,7 +106,7 @@
             Piercing: 1
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Plant]
+          type: [ Plant ]
 
 - type: reagent
   id: RobustHarvest
@@ -117,15 +117,15 @@
   color: "#3e901c"
   physicalDesc: reagent-physical-desc-robust
   plantMetabolism:
-    - !type:PlantAdjustNutrition
-      amount: 0.05
-    - !type:PlantAdjustWeeds
-      probability: 0.025
-      amount: 1
-    - !type:PlantAdjustPests
-      probability: 0.025
-      amount: 1
-    - !type:RobustHarvest {}
+  - !type:PlantAdjustNutrition
+    amount: 0.05
+  - !type:PlantAdjustWeeds
+    probability: 0.025
+    amount: 1
+  - !type:PlantAdjustPests
+    probability: 0.025
+    amount: 1
+  - !type:RobustHarvest
   metabolisms:
     Bloodstream:
       effects:
@@ -138,11 +138,11 @@
             Piercing: -3
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Plant]
+          type: [ Plant ]
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Plant]
+          type: [ Plant ]
         - !type:ReagentCondition
           reagent: RobustHarvest
           min: 30
@@ -154,11 +154,11 @@
       - !type:Polymorph
         prototype: TreeMorph
         conditions:
-          - !type:MetabolizerTypeCondition
-            type: [Plant]
-          - !type:ReagentCondition
-            reagent: RobustHarvest
-            min: 80
+        - !type:MetabolizerTypeCondition
+          type: [ Plant ]
+        - !type:ReagentCondition
+          reagent: RobustHarvest
+          min: 80
 
 - type: reagent
   id: Sedin
@@ -169,12 +169,12 @@
   color: "#3CB371"
   physicalDesc: reagent-physical-desc-sickly
   plantMetabolism:
-    - !type:PlantAdjustHealth
-      amount: -2
-    - !type:PlantRestoreSeeds
-      probability: 0.20
-    - !type:PlantAdjustPotency
-      amount: -3 # Match this with current rate of Robust Harvest potency increase
+  - !type:PlantAdjustHealth
+    amount: -2
+  - !type:PlantRestoreSeeds
+    probability: 0.20
+  - !type:PlantAdjustPotency
+    amount: -3 # Match this with current rate of Robust Harvest potency increase
 
 - type: reagent
   id: WeedKiller
@@ -185,10 +185,10 @@
   color: "#968395"
   physicalDesc: reagent-physical-desc-bubbling
   plantMetabolism:
-    - !type:PlantAdjustToxins
-      amount: 4
-    - !type:PlantAdjustWeeds
-      amount: -6
+  - !type:PlantAdjustToxins
+    amount: 4
+  - !type:PlantAdjustWeeds
+    amount: -6
   metabolisms:
     Bloodstream:
       effects:
@@ -198,7 +198,7 @@
             Poison: 4
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Plant]
+          type: [ Plant ]
 
 - type: reagent
   id: Ammonia
@@ -275,12 +275,12 @@
         - !type:ReagentCondition
           reagent: Ammonia
           min: 1
-      - !type:Oxygenate # ammonia displaces nitrogen in vox blood
+      # ammonia displaces nitrogen in vox blood
+      - !type:Oxygenate
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Vox ]
         factor: -4
-
 
 - type: reagent
   id: Diethylamine
@@ -303,7 +303,7 @@
   - !type:PlantAffectGrowth
     probability: 0.2
     amount: 1
-  - !type:PlantDiethylamine {}
+  - !type:PlantDiethylamine
   metabolisms:
     Bloodstream:
       effects:

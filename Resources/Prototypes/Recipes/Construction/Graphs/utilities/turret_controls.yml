@@ -27,7 +27,7 @@
       - !type:GivePrototype
         prototype: SheetSteel1
         amount: 3
-      - !type:DeleteEntity {}
+      - !type:DeleteEntity
       steps:
       - tool: Screwing
         doAfter: 4
@@ -67,15 +67,16 @@
         doAfter: 2
 
   - node: finish
-    entity: !type:BoardNodeEntity { container: board }
+    entity: !type:BoardNodeEntity
+      container: board
     actions:
     - !type:AddContainer
       container: board
     edges:
     - to: board
       conditions:
-      - !type:AllWiresCut {}
-      - !type:WirePanel {}
+      - !type:AllWiresCut
+      - !type:WirePanel
       completed:
       - !type:GivePrototype
         prototype: SheetGlass1

@@ -285,11 +285,11 @@
   name: guide-entry-power
   text: "/ServerInfo/Guidebook/Engineering/Power.xml"
   children:
-    - Generators
-    - InspectingPower
-    - PowerStorage
-    - Ramping
-    - VoltageNetworks
+  - Generators
+  - InspectingPower
+  - PowerStorage
+  - Ramping
+  - VoltageNetworks
 
 - type: guideEntry
   id: InspectingPower

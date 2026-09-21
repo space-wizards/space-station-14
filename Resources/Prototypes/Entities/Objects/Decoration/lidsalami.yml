@@ -7,7 +7,7 @@
   - type: Sprite
     sprite: Objects/Decoration/lidsalami.rsi
     layers:
-      - state: icon
+    - state: icon
   - type: Item
     size: Ginormous
     shape:

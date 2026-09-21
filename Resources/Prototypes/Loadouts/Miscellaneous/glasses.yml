@@ -3,8 +3,7 @@
   id: JamjarTimer
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobLibrarian
       time: 1h # for being the biggest nerd on the station
 
@@ -12,8 +11,7 @@
   id: JensenTimer
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
+    requirement: !type:DepartmentTimeRequirement
       department: Cargo
       time: 10h # 10 hours of being a space trucker
 

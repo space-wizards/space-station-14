@@ -6,8 +6,8 @@
   name: exterior button 1
   suffix: Autolink, Ext1
   components:
-    - type: AutoLinkTransmitter
-      channel: Ext1
+  - type: AutoLinkTransmitter
+    channel: Ext1
 
 - type: entity
   id: SignalButtonExt2
@@ -15,8 +15,8 @@
   name: exterior button 2
   suffix: Autolink, Ext2
   components:
-    - type: AutoLinkTransmitter
-      channel: Ext2
+  - type: AutoLinkTransmitter
+    channel: Ext2
 
 - type: entity
   id: SignalButtonExt3
@@ -24,8 +24,8 @@
   name: exterior button 3
   suffix: Autolink, Ext3
   components:
-    - type: AutoLinkTransmitter
-      channel: Ext3
+  - type: AutoLinkTransmitter
+    channel: Ext3
 
 - type: entity
   id: SignalButtonBridge
@@ -33,8 +33,8 @@
   name: bridge windows button
   suffix: Autolink, Bridge
   components:
-    - type: AutoLinkTransmitter
-      channel: Bridge
+  - type: AutoLinkTransmitter
+    channel: Bridge
 
 - type: entity
   id: SignalButtonWindows
@@ -42,6 +42,5 @@
   name: exterior windows button
   suffix: Autolink, Windows
   components:
-    - type: AutoLinkTransmitter
-      channel: Windows
-
+  - type: AutoLinkTransmitter
+    channel: Windows

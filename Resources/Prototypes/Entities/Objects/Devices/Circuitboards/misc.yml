@@ -11,4 +11,4 @@
     state: airalarm_electronics
   - type: Tag
     tags:
-      - StationMapElectronics
+    - StationMapElectronics

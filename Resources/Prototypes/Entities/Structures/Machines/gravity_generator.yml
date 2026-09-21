@@ -58,16 +58,15 @@
     sprite: Structures/Machines/gravity_generator.rsi
     layers:
     - state: on
-      map: ["enum.GravityGeneratorVisualLayers.Base"]
+      map: [ "enum.GravityGeneratorVisualLayers.Base" ]
     - sprite: Structures/Machines/gravity_generator_core.rsi
       state: activated
       shader: unshaded
-      map: ["enum.GravityGeneratorVisualLayers.Core"]
+      map: [ "enum.GravityGeneratorVisualLayers.Core" ]
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-1.5,-1.5,1.5,1.5"
         density: 50
         mask:
@@ -83,7 +82,12 @@
 #    damageModifierSet: PlastitaniumMod
 
 - type: entity
-  parent: [ BaseGravityGenerator, ConstructibleMachine, BaseConstructibleMachineDestructible ]
+  parent:
+    [
+      BaseGravityGenerator,
+      ConstructibleMachine,
+      BaseConstructibleMachineDestructible
+    ]
   id: GravityGeneratorMini
   name: mini gravity generator
   suffix: Charged
@@ -94,18 +98,17 @@
     snapCardinals: true
     layers:
     - state: on
-      map: ["enum.GravityGeneratorVisualLayers.Base"]
+      map: [ "enum.GravityGeneratorVisualLayers.Base" ]
     - sprite: Structures/Machines/gravity_generator_core.rsi
       state: activated
       shader: unshaded
-      map: ["enum.GravityGeneratorVisualLayers.Core"]
+      map: [ "enum.GravityGeneratorVisualLayers.Core" ]
       scale: "0.4,0.4"
       offset: "0,0.2"
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.4"
         density: 3125
         mask:
@@ -114,8 +117,7 @@
         - WallLayer
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 175
       behaviors:
       - !type:PlaySoundBehavior

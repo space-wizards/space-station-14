@@ -88,7 +88,7 @@
   cost:
     Telecrystal: 6
   categories:
-    - UplinkWeaponry
+  - UplinkWeaponry
 
 - type: listing
   id: UplinkGlovesNorthStar
@@ -107,7 +107,11 @@
   id: UplinkGlovesKnuckleDusters
   name: uplink-gloves-knuckleduster-name
   description: uplink-gloves-knuckleduster-desc
-  icon: { sprite: Clothing/Hands/Gloves/KnuckleDusters/syndicateknuckleduster.rsi, state: syndicateknuckleduster }
+  icon:
+    {
+      sprite: Clothing/Hands/Gloves/KnuckleDusters/syndicateknuckleduster.rsi,
+      state: syndicateknuckleduster
+    }
   productEntity: ClothingHandsKnuckleDustersSyndicate
   discountCategory: veryRareDiscounts
   discountDownTo:
@@ -154,7 +158,11 @@
   id: UplinkSniperBundle
   name: uplink-sniper-bundle-name
   description: uplink-sniper-bundle-desc
-  icon: { sprite: /Textures/Objects/Weapons/Guns/Snipers/heavy_sniper.rsi, state: base }
+  icon:
+    {
+      sprite: /Textures/Objects/Weapons/Guns/Snipers/heavy_sniper.rsi,
+      state: base
+    }
   productEntity: BriefcaseSyndieSniperBundleFilled
   discountCategory: usualDiscounts
   discountDownTo:
@@ -277,7 +285,11 @@
   id: UplinkGrenadeLauncher
   name: uplink-grenade-launcher-name
   description: uplink-grenade-launcher-desc
-  icon: { sprite: /Textures/Objects/Weapons/Guns/Launchers/china_lake.rsi, state: icon }
+  icon:
+    {
+      sprite: /Textures/Objects/Weapons/Guns/Launchers/china_lake.rsi,
+      state: icon
+    }
   productEntity: BriefcaseWeaponChinaLakeFilled
   cost:
     Telecrystal: 20
@@ -293,7 +305,11 @@
   id: UplinkGrenadeLauncherBundle
   name: uplink-grenade-launcher-bundle-name
   description: uplink-grenade-launcher-bundle-desc
-  icon: { sprite: /Textures/Objects/Weapons/Guns/Launchers/china_lake.rsi, state: icon }
+  icon:
+    {
+      sprite: /Textures/Objects/Weapons/Guns/Launchers/china_lake.rsi,
+      state: icon
+    }
   productEntity: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
   discountCategory: veryRareDiscounts
   discountDownTo:

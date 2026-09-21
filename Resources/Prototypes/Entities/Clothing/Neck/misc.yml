@@ -2,7 +2,8 @@
   parent: Clothing
   id: ClothingNeckStethoscope
   name: stethoscope
-  description: An outdated medical apparatus for listening to the sounds of the human body. It also makes you look like you know what you're doing.
+  description: An outdated medical apparatus for listening to the sounds of the
+    human body. It also makes you look like you know what you're doing.
   components:
   - type: Item
     size: Small
@@ -32,7 +33,6 @@
   - type: TargetAction
   - type: EntityTargetAction
     event: !type:StethoscopeActionEvent
-
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckBling
@@ -50,7 +50,8 @@
   parent: ClothingNeckBase
   id: ClothingNeckLawyerbadge
   name: lawyer badge
-  description: A badge to show that the owner is a 'legitimate' lawyer who passed the NT bar exam required to practice law.
+  description: A badge to show that the owner is a 'legitimate' lawyer who passed
+    the NT bar exam required to practice law.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/lawyerbadge.rsi
@@ -63,7 +64,8 @@
   parent: ClothingNeckBase
   id: Dinkystar
   name: star sticker
-  description: A dinky lil star for only the hardest working security officers! It's not even sticky anymore.
+  description: A dinky lil star for only the hardest working security officers!
+    It's not even sticky anymore.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/dinkystar.rsi

@@ -12,8 +12,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.18,-0.48,0.18,0.28"
         density: 200
         mask:
@@ -22,8 +21,7 @@
         - MachineLayer
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 20
       behaviors:
       - !type:SpillBehavior
@@ -49,7 +47,8 @@
   id: BaseBarrelChemRadioactive
   abstract: true
   name: radioactive barrel
-  description: It seems to be leaking a bit. I don't think you'd want to be around this for long.
+  description: It seems to be leaking a bit. I don't think you'd want to be around
+    this for long.
   components:
   - type: Sprite
     state: radbarrel

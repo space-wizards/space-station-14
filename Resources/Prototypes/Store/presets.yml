@@ -31,11 +31,11 @@
   - type: Store
     name: store-preset-name-spellbook
     categories:
-    - SpellbookOffensive    #Fireball, Rod Form
-    - SpellbookDefensive    #Magic Missile, Wall of Force
-    - SpellbookUtility      #Body Swap, Lich, Teleport, Knock, Polymorph
-    - SpellbookEquipment    #Battlemage Robes, Staff of Locker
-    - SpellbookEvents       #Summon Weapons, Summon Ghosts
+    - SpellbookOffensive #Fireball, Rod Form
+    - SpellbookDefensive #Magic Missile, Wall of Force
+    - SpellbookUtility #Body Swap, Lich, Teleport, Knock, Polymorph
+    - SpellbookEquipment #Battlemage Robes, Staff of Locker
+    - SpellbookEvents #Summon Weapons, Summon Ghosts
     currencyWhitelist:
     - WizCoin
     expectedFaction:

@@ -2,7 +2,8 @@
   parent: BaseAction
   id: ActionRetractableItemArmblade
   name: Armblade
-  description: Shed your flesh and reform it into a fleshy blade. Can be toggled when unconscious.
+  description: Shed your flesh and reform it into a fleshy blade. Can be toggled
+    when unconscious.
   components:
   - type: Action
     useDelay: 2
@@ -25,7 +26,10 @@
   parent: BaseAction
   id: ActionChangelingBiodegrade
   name: Biodegrade
-  description: "Vomit acid over your restraints, setting yourself free. \n\nRequires 20 Chemicals."
+  description: "Vomit acid over your restraints, setting yourself free.\
+
+
+    Requires 20 Chemicals."
   components:
   - type: Action
     useDelay: 10
@@ -55,7 +59,8 @@
 - type: entity
   id: ActionChangelingDevour
   name: "[color=red]Devour[/color]"
-  description: Consume the essence of your victims and subsume their identity and mind into your own.
+  description: Consume the essence of your victims and subsume their identity and
+    mind into your own.
   components:
   - type: Action
     itemIconStyle: BigAction
@@ -64,18 +69,17 @@
     sprite: Interface/Actions/changeling.rsi
     layers:
     - state: "devour"
-      map: ["enum.ActionVisuals.Icon"]
+      map: [ "enum.ActionVisuals.Icon" ]
     - state: "devour_on"
-      map: ["enum.ActionVisuals.IconToggled"]
+      map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
   - type: ActionRequirements
     conditions:
       Performer:
-      - !type:MouthUncoveredCondition
+      - !type:MouthUncoveredCondition ""
   - type: TargetAction
   - type: EntityTargetAction
     event: !type:ChangelingDevourActionEvent
-
 - type: entity
   id: ActionChangelingTransform
   name: "[color=red]Transform[/color]"
@@ -88,12 +92,12 @@
     - state: "transform"
   - type: InstantAction
     event: !type:ChangelingTransformActionEvent
-
 - type: entity
   parent: BaseMentalAction
   id: ActionChangelingStasis
   name: "[color=red]Enter Stasis[/color]"
-  description: Enter a regenerative stasis, faking death and allowing to regenerate all damage.
+  description: Enter a regenerative stasis, faking death and allowing to
+    regenerate all damage.
   components:
   - type: Sprite
     sprite: Interface/Actions/changeling.rsi
@@ -117,7 +121,6 @@
     maxStasisCooldown: 180
   - type: InstantAction
     event: !type:ChangelingStasisActionEvent
-
 - type: entity
   parent: ActionChangelingStasis
   id: ActionChangelingStasisWeak
@@ -153,12 +156,15 @@
     - state: mimicry
   - type: InstantAction
     event: !type:VoiceMaskSetNameEvent
-
 - type: entity
   parent: BaseAction
   id: ActionChangelingStingDna
   name: Extract DNA
-  description: "Sneakily absorb the identity of unsuspecting victims. Does not grant DNA to your store or objective progress. \n\nRequires 50 Chemicals."
+  description: "Sneakily absorb the identity of unsuspecting victims. Does not
+    grant DNA to your store or objective progress.\
+
+
+    Requires 50 Chemicals."
   components:
   - type: Action
     itemIconStyle: BigAction
@@ -169,9 +175,9 @@
     sprite: Interface/Actions/changeling2.rsi
     layers:
     - state: "extract_dna_off"
-      map: ["enum.ActionVisuals.Icon"]
+      map: [ "enum.ActionVisuals.Icon" ]
     - state: "extract_dna_on"
-      map: ["enum.ActionVisuals.IconToggled"]
+      map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
   - type: ActionRequirements
     conditions:
@@ -228,7 +234,11 @@
   parent: BaseActionChangelingSting
   id: ActionChangelingStingBlind
   name: Blind Sting
-  description: "Silently sting a target and worsen their sight for a short duration. \n\nRequires 30 Chemicals."
+  description: "Silently sting a target and worsen their sight for a short
+    duration.\
+
+
+    Requires 30 Chemicals."
   components:
   - type: Action
     useDelay: 30
@@ -248,7 +258,11 @@
   parent: BaseActionChangelingSting
   id: ActionChangelingStingCryogenic
   name: Cryogenic Sting
-  description: "Silently sting a target and slow down their movement drastically. \n\nRequires 30 Chemicals."
+  description: "Silently sting a target and slow down their movement
+    drastically.\
+
+
+    Requires 30 Chemicals."
   components:
   - type: Action
     useDelay: 10
@@ -268,7 +282,11 @@
   parent: BaseActionChangelingSting
   id: ActionChangelingStingLead
   name: Lethal Sting
-  description: "Silently sting a target and inject them with a lethal dose of a slow acting poison. \n\nRequires 50 Chemicals."
+  description: "Silently sting a target and inject them with a lethal dose of a
+    slow acting poison.\
+
+
+    Requires 50 Chemicals."
   components:
   - type: Action
     useDelay: 60
@@ -299,7 +317,11 @@
   parent: BaseActionChangelingSting
   id: ActionChangelingStingHallucinogenic
   name: Hallucinogenic Sting
-  description: "Silently sting a target and inject them with chemicals that slow down their higher brain functions. \n\nRequires 30 Chemicals."
+  description: "Silently sting a target and inject them with chemicals that slow
+    down their higher brain functions.\
+
+
+    Requires 30 Chemicals."
   components:
   - type: Action
     useDelay: 10
@@ -322,7 +344,11 @@
   parent: BaseActionChangelingSting
   id: ActionChangelingStingMute
   name: Mute Sting
-  description: "Silently sting a target and inject them with chemicals that prevent them from speaking. \n\nRequires 30 Chemicals."
+  description: "Silently sting a target and inject them with chemicals that
+    prevent them from speaking.\
+
+
+    Requires 30 Chemicals."
   components:
   - type: Action
     useDelay: 30
@@ -342,7 +368,11 @@
   parent: BaseActionChangelingSting
   id: ActionChangelingStingArmblade
   name: Armblade Sting
-  description: "Silently sting a target and cause them to grow a dull armblade after a lengthy delay. \n\nRequires 50 Chemicals."
+  description: "Silently sting a target and cause them to grow a dull armblade
+    after a lengthy delay.\
+
+
+    Requires 50 Chemicals."
   components:
   - type: Action
     useDelay: 30
@@ -367,7 +397,8 @@
     effects:
     - !type:ModifyStatusEffect
       conditions:
-      - !type:MobStateCondition # Only do the delay on living targets
+      # Only do the delay on living targets
+      - !type:MobStateCondition
         mobstate: Alive
       effectProto: StatusEffectForcedItemArmblade
       type: Update
@@ -386,7 +417,8 @@
   parent: BaseAction
   id: ActionChangelingLastResort
   name: "[color=red]Last Resort[/color]"
-  description: We sacrifice our current body in a moment of need, violently expanding to break through obstacles and reforming as a headslug.
+  description: We sacrifice our current body in a moment of need, violently
+    expanding to break through obstacles and reforming as a headslug.
   components:
   - type: ConfirmableAction
     popup: suicide-action-popup
@@ -457,7 +489,6 @@
       probability: 0.5
   - type: InstantAction
     event: !type:ScreechActionEvent
-
 - type: entity
   parent: FakeMindShieldToggleAction
   id: ActionChangelingFakeMindshieldToggle
@@ -468,9 +499,9 @@
     sprite: Interface/Actions/changeling2.rsi
     layers:
     - state: mindshield_off
-      map: ["enum.ActionVisuals.Icon"]
+      map: [ "enum.ActionVisuals.Icon" ]
     - state: mindshield_on
-      map: ["enum.ActionVisuals.IconToggled"]
+      map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
   - type: InstantAction
     event: !type:FakeMindShieldToggleEvent

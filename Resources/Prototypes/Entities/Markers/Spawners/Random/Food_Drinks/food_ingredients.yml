@@ -11,9 +11,9 @@
     anchored: false
   - type: Sprite
     layers:
-      - state: green
-      - sprite: Objects/Consumable/Food/ingredients.rsi
-        state: cheesewheel
+    - state: green
+    - sprite: Objects/Consumable/Food/ingredients.rsi
+      state: cheesewheel
   - type: EntityTableSpawner
     table: !type:NestedSelector
       tableId: IngredientTable

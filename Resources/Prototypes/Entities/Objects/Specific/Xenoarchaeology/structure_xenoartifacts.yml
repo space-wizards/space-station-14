@@ -1,5 +1,5 @@
 - type: entity
-  parent: [BaseStructureDynamic, BaseXenoArtifact]
+  parent: [ BaseStructureDynamic, BaseXenoArtifact ]
   id: BaseXenoArtifactStructure
   name: artifact
   abstract: true
@@ -31,11 +31,11 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.45
         density: 75
-        layer: # doesn't collide with artifact storage
+        layer:
+        # doesn't collide with artifact storage
         - Opaque
         mask:
         - MachineMask
@@ -57,4 +57,3 @@
     nodeCount:
       min: 9
       max: 13
-

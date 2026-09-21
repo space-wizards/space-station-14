@@ -2,7 +2,7 @@
   id: XenoArtifactTriggerDefaultTable
   table: !type:GroupSelector
     conditionsForChildren:
-      - !type:ExcludeEntitiesFromContextCondition
+    - !type:ExcludeEntitiesFromContextCondition
     children:
     - id: TriggerMusic
     - id: TriggerHeat
@@ -68,7 +68,8 @@
     - !type:NestedSelector
       tableId: XenoArtifactTriggerDefaultTable
       weight: 35
-    - !type:GroupSelector # Handheld exclusive
+    # Handheld exclusive
+    - !type:GroupSelector
       weight: 2
       children:
       - id: TriggerThrow
@@ -78,7 +79,7 @@
   abstract: true
   id: BaseXenoArtifactTrigger
   name: Unknown
-  categories: [XenoArtifactTriggers]
+  categories: [ XenoArtifactTriggers ]
 
 #region Standard triggers
 

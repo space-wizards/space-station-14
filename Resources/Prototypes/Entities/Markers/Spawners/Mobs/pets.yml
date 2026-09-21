@@ -161,7 +161,7 @@
 - type: entity
   parent: MarkerBase
   id: SpawnMobMcGriff
-  name:  McGriff Spawner
+  name: McGriff Spawner
   suffix: Warden Pet
   components:
   - type: Sprite

@@ -30,6 +30,6 @@
     protectionTime: 5
 
 - type: entity
-  parent: [ClothingEyesEyepatch, ClothingHeadEyeBaseFlipped]
+  parent: [ ClothingEyesEyepatch, ClothingHeadEyeBaseFlipped ]
   id: ClothingEyesEyepatchFlipped
   suffix: flipped

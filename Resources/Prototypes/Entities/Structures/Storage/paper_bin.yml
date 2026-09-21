@@ -22,12 +22,11 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.10,-0.10,0.10,0.10"
         density: 500
         mask:
-          - TabletopMachineMask
+        - TabletopMachineMask
   - type: InteractionOutline
   - type: Bin
     whitelist:
@@ -37,7 +36,6 @@
   - type: ContainerContainer
     containers:
       bin-container: !type:Container
-
 - type: entity
   parent: PaperBin
   id: PaperBin5

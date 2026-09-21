@@ -15,8 +15,7 @@
 - type: holiday
   id: ChineseNewYear
   name: holiday-name-chinese-new-year
-  shouldCelebrate:
-    !type:ChineseNewYear {}
+  shouldCelebrate: !type:ChineseNewYear
 
 - type: holiday
   id: GroundhogDay
@@ -70,8 +69,7 @@
 - type: holiday
   id: Easter
   name: holiday-name-easter
-  shouldCelebrate:
-    !type:Computus { }
+  shouldCelebrate: !type:Computus
 
 - type: holiday
   id: AprilFoolDay
@@ -90,8 +88,7 @@
   name: holiday-name-cosmonautics-day
   beginDay: 12
   beginMonth: April
-  greet:
-    !type:Custom
+  greet: !type:Custom
     text: holiday-custom-cosmonautics-day
 
 - type: holiday
@@ -140,12 +137,10 @@
   id: MothersDay
   name: holiday-name-mothers-day
   beginMonth: May
-  shouldCelebrate:
-    !type:WeekdayInMonth
+  shouldCelebrate: !type:WeekdayInMonth
     weekday: Sunday
     occurrence: 2
-  greet:
-    !type:Custom
+  greet: !type:Custom
     text: holiday-custom-mothers-day
 
 - type: holiday
@@ -182,8 +177,7 @@
   id: FathersDay
   name: holiday-name-fathers-day
   beginMonth: August
-  shouldCelebrate:
-    !type:WeekdayInMonth
+  shouldCelebrate: !type:WeekdayInMonth
     weekday: Sunday
     occurrence: 3
 
@@ -228,8 +222,7 @@
   name: holiday-name-bastille-day
   beginDay: 14
   beginMonth: July
-  greet:
-    !type:Custom
+  greet: !type:Custom
     text: holiday-custom-bastille-day
 
 - type: holiday
@@ -237,15 +230,13 @@
   name: holiday-name-friendship-day
   beginDay: 30
   beginMonth: July
-  greet:
-    !type:Custom
+  greet: !type:Custom
     text: holiday-custom-friendship-day
 
 - type: holiday
   id: BeerDay
   name: holiday-name-beer-day
-  shouldCelebrate:
-    !type:WeekdayInMonth
+  shouldCelebrate: !type:WeekdayInMonth
     weekday: Friday
   beginMonth: August
 
@@ -254,15 +245,13 @@
   name: holiday-name-talk-like-a-pirate-day
   beginDay: 19
   beginMonth: September
-  greet:
-    !type:Custom
+  greet: !type:Custom
     text: holiday-custom-talk-like-a-pirate-day
 
 - type: holiday
   id: ProgrammersDay
   name: holiday-name-programmers-day
-  shouldCelebrate:
-    !type:DayOfYear
+  shouldCelebrate: !type:DayOfYear
     dayOfYear: 256
 
 - type: holiday
@@ -305,8 +294,7 @@
   id: CanadianThanksgiving
   name: holiday-name-canadian-thanksgiving
   beginMonth: October
-  shouldCelebrate:
-    !type:WeekdayInMonth
+  shouldCelebrate: !type:WeekdayInMonth
     occurrence: 2
     weekday: Monday
 
@@ -314,8 +302,7 @@
   id: SpiritDay
   name: holiday-name-spirit-day
   beginMonth: October
-  shouldCelebrate:
-    !type:WeekdayInMonth
+  shouldCelebrate: !type:WeekdayInMonth
     occurrence: 3
     weekday: Thursday
 
@@ -324,8 +311,7 @@
   name: holiday-name-halloween
   beginDay: 31
   beginMonth: October
-  greet:
-    !type:Custom
+  greet: !type:Custom
     text: holiday-custom-halloween
 
 - type: holiday
@@ -345,8 +331,7 @@
   name: holiday-name-kindness-day
   beginDay: 13
   beginMonth: November
-  greet:
-    !type:Custom
+  greet: !type:Custom
     text: holiday-custom-kindness-day
 
 - type: holiday
@@ -377,8 +362,7 @@
   id: Thanksgiving
   name: holiday-name-thanksgiving
   beginMonth: November
-  shouldCelebrate:
-    !type:WeekdayInMonth
+  shouldCelebrate: !type:WeekdayInMonth
     occurrence: 4
     weekday: Thursday
 
@@ -412,8 +396,7 @@
   beginDay: 24
   endDay: 26
   beginMonth: December
-  greet:
-    !type:Custom
+  greet: !type:Custom
     text: holiday-custom-christmas
 
 - type: holiday
@@ -422,8 +405,7 @@
   beginDay: 1
   endDay: 31
   beginMonth: December
-  greet:
-    !type:Custom
+  greet: !type:Custom
     text: holiday-custom-festive-season
 
 - type: holiday
@@ -435,8 +417,7 @@
 - type: holiday
   id: FridayThirteenth
   name: holiday-name-friday-thirteenth
-  shouldCelebrate:
-    !type:FridayThirteenth { }
+  shouldCelebrate: !type:FridayThirteenth
 
 - type: holiday
   id: PrideMonth

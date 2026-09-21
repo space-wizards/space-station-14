@@ -48,9 +48,8 @@
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
-
 - type: entity
-  parent: [WeaponEnergyCrossbowBase, BaseSyndicateContraband]
+  parent: [ WeaponEnergyCrossbowBase, BaseSyndicateContraband ]
   id: WeaponEnergyCrossbow
   name: mini energy crossbow
   description: Launches renewable toxic arrows capable of flooring targets instantly.

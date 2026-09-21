@@ -78,6 +78,7 @@
   parent: BaseCubeRecipe
   id: AbominationCube
   result: AbominationCube
-  materials: # abominations are slow and essentially worse than even carp
+  materials:
+    # abominations are slow and essentially worse than even carp
     Biomass: 28
     Plasma: 500 # more biomass but less plasma

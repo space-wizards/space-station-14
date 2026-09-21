@@ -23,12 +23,12 @@
   - type: AtmosDevice
   - type: AtmosAlarmable
     syncWith:
-      - FireAlarm
-      - AirSensor
-      - GasVent
-      - GasScrubber
+    - FireAlarm
+    - AirSensor
+    - GasVent
+    - GasScrubber
     monitorAlertTypes:
-      - Temperature
+    - Temperature
   - type: AtmosAlarmableVisuals
     layerMap: "fireAlarmState"
     alarmStates:
@@ -39,7 +39,7 @@
     hideOnDepowered: [ "fireAlarmState" ]
   - type: Tag
     tags:
-      - FireAlarm
+    - FireAlarm
   - type: FireAlarm
   - type: AtmosAlertsDevice
     group: FireAlarm
@@ -73,11 +73,11 @@
     offset: 0, -0.25
     layers:
     - state: base
-      map: ["fireAlarmBase"]
+      map: [ "fireAlarmBase" ]
     - state: fire_0
-      map: ["fireAlarmState"]
+      map: [ "fireAlarmState" ]
     - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: Transform
     anchored: true
   - type: Construction
@@ -90,8 +90,7 @@
     - Networking
   - type: Destructible
     thresholds:
-    - trigger: &DamageMachineFlimsy
-        !type:DamageTrigger
+    - trigger: &DamageMachineFlimsy !type:DamageTrigger
         damage: 50
       behaviors:
       - &SoundMetalGlassBreak !type:PlaySoundBehavior

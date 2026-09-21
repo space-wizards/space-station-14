@@ -42,14 +42,14 @@
     layers:
     - state: cleaner
     - state: cleaner-fill-1
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
   - type: SolutionContainerVisuals
     fillBaseName: cleaner-fill-
     inHandsMaxFillLevels: 4
 
 - type: entity
-  parent: [SolutionNormal, SprayBottle]
+  parent: [ SolutionNormal, SprayBottle ]
   id: MegaSprayBottle
   name: mega spray bottle
   suffix: Empty
@@ -60,7 +60,7 @@
     layers:
     - state: cleaner_large
     - state: cleaner_large-fill-1
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
   - type: Item
     size: Normal
@@ -105,13 +105,14 @@
     localizedLabel: spray-bottle-label-space-cleaner
   - type: Tag
     tags:
-      - Spray
+    - Spray
 
 - type: entity
   parent: MegaSprayBottle
   id: MegaSprayBottleSpaceCleaner
   suffix: Space Cleaner
-  description: BLAM!-brand non-foaming space cleaner, now in a bigger package for those huge blood puddles!
+  description: BLAM!-brand non-foaming space cleaner, now in a bigger package for
+    those huge blood puddles!
   components:
   - type: Solution
     solution:
@@ -122,11 +123,13 @@
     localizedLabel: spray-bottle-label-space-cleaner
 
 - type: entity
-  parent: [SolutionNormal, SprayBottle]
+  parent: [ SolutionNormal, SprayBottle ]
   id: BorgSprayBottle
   name: internal spray jet
   suffix: Filled
-  description: A pressurized vessel for spraying reagents, installed directly into a custodial cyborg. Typically filled with space cleaner for dealing with those nasty spills.
+  description: A pressurized vessel for spraying reagents, installed directly into
+    a custodial cyborg. Typically filled with space cleaner for dealing with
+    those nasty spills.
   components:
   - type: Solution
     solution:
@@ -135,11 +138,13 @@
         Quantity: 120
 
 - type: entity
-  parent: [SolutionLarge, MegaSprayBottle]
+  parent: [ SolutionLarge, MegaSprayBottle ]
   id: BorgMegaSprayBottle
   name: adv. internal spray jet
   suffix: Filled
-  description: An upgraded version of the integrated spray bottle, installed directly into a custodial cyborg. This one is capable of creating space cleaner from moisture in the air.
+  description: An upgraded version of the integrated spray bottle, installed
+    directly into a custodial cyborg. This one is capable of creating space
+    cleaner from moisture in the air.
   components:
   - type: Solution
     solution:
@@ -156,7 +161,7 @@
 
 # Vapor
 - type: entity
-  parent: [SolutionSmall, SolutionVapor]
+  parent: [ SolutionSmall, SolutionVapor ]
   id: Vapor
   categories: [ HideSpawnMenu ]
   name: "vapor"
@@ -170,14 +175,13 @@
     rotation: 180
     layers:
     - state: chempuff
-      map: ["enum.VaporVisualLayers.Base"]
+      map: [ "enum.VaporVisualLayers.Base" ]
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
         hard: false
         mask:
@@ -201,12 +205,11 @@
     layers:
     - state: chempuff
       scale: 2, 2
-      map: ["enum.VaporVisualLayers.Base"]
+      map: [ "enum.VaporVisualLayers.Base" ]
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.6,-0.6,0.6,0.6"
         hard: false
         mask:

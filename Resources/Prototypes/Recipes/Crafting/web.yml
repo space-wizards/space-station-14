@@ -49,4 +49,5 @@
   parent: BaseWebObject
   id: ClothingShoesBootsWinterWeb
   targetNode: boots
+
 # endregion Web Objects

@@ -1,8 +1,15 @@
 - type: entity
   id: StasisBed
   name: stasis bed
-  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
-  description: A bed that massively slows down the patient's metabolism and prevents bodily decay, allowing more time to administer a proper treatment for stabilization.
+  parent:
+    [
+      BaseMachinePowered,
+      ConstructibleMachine,
+      BaseConstructibleMachineDestructible
+    ]
+  description: A bed that massively slows down the patient's metabolism and
+    prevents bodily decay, allowing more time to administer a proper treatment
+    for stabilization.
   components:
   - type: StasisBed
   - type: AntiRotOnBuckle
@@ -18,7 +25,7 @@
     - state: icon
     - state: unlit
       shader: unshaded
-      map: ["unlit"]
+      map: [ "unlit" ]
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
@@ -47,8 +54,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.05"
         density: 190
         mask:

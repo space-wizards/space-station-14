@@ -1,8 +1,9 @@
 - type: entity
   id: SingularityBeacon
-  parent: [BaseMachinePowered, BaseSyndicateContraband, BaseMachineDestructible]
+  parent: [ BaseMachinePowered, BaseSyndicateContraband, BaseMachineDestructible ]
   name: singularity beacon
-  description: A syndicate device that attracts the singularity. If it's loose and you're seeing this, run.
+  description: A syndicate device that attracts the singularity. If it's loose and
+    you're seeing this, run.
   components:
   - type: Sprite
     sprite: Objects/Devices/singularity_beacon.rsi
@@ -17,8 +18,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.40,-0.40,0.40,0.40"
         density: 80
         mask:

@@ -26,7 +26,7 @@
     id: BotanistPDA
     ears: ClothingHeadsetService
     belt: ClothingBeltPlantFilled
-  #storage:
+    #storage:
     #back:
     #- Stuff
 

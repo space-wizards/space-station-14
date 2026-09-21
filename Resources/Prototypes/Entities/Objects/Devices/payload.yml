@@ -13,8 +13,7 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:DoActsBehavior
@@ -40,14 +39,15 @@
   name: chemical payload
   parent: [ BasePayload, BaseMedicalScienceContraband ]
   id: ChemicalPayload
-  description: A chemical payload. Has space to store two beakers. In combination with a trigger and a case, this can be used to initiate chemical reactions.
+  description: A chemical payload. Has space to store two beakers. In combination
+    with a trigger and a case, this can be used to initiate chemical reactions.
   components:
   - type: Sprite
     sprite: Objects/Devices/payload.rsi
     state: payload-empty
     layers:
     - state: payload-empty
-      map: ["base"]
+      map: [ "base" ]
   - type: ChemicalPayload
     beakerSlotA: &slotDef
       whitelist:
@@ -78,13 +78,13 @@
   id: FlashPayload
   description: A single-use flash payload.
   components:
-    - type: Sprite
-      sprite: Objects/Devices/payload.rsi
-      state: payload-flash-armed
-    - type: DeleteOnTrigger
-    - type: FlashOnTrigger
-      range: 6
-    - type: EmitSoundOnTrigger
-      sound:
-        path: "/Audio/Effects/flash_bang.ogg"
-      positional: true
+  - type: Sprite
+    sprite: Objects/Devices/payload.rsi
+    state: payload-flash-armed
+  - type: DeleteOnTrigger
+  - type: FlashOnTrigger
+    range: 6
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Effects/flash_bang.ogg"
+    positional: true

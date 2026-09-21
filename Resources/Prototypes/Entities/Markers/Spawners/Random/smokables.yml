@@ -10,8 +10,8 @@
     anchored: false
   - type: Sprite
     layers:
-      - sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
-        state: closed
+    - sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
+      state: closed
   - type: EntityTableSpawner
     table: !type:NestedSelector
       tableId: SmokablesTable
@@ -28,8 +28,8 @@
     anchored: false
   - type: Sprite
     layers:
-      - sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi
-        state: unlit-icon
+    - sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi
+      state: unlit-icon
   - type: EntityTableSpawner
     table: !type:NestedSelector
       tableId: RandomSoakedSmokeTable

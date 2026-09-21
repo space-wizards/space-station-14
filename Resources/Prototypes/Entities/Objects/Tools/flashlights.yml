@@ -13,20 +13,20 @@
     radiatingBehaviourId: radiating
   - type: LightBehaviour
     behaviours:
-      - !type:FadeBehaviour
-        id: radiating
-        maxDuration: 2.0
-        startValue: 3.0
-        endValue: 2.0
-        isLooped: true
-        reverseWhenFinished: true
-      - !type:PulseBehaviour
-        id: blinking
-        interpolate: Nearest
-        maxDuration: 1.0
-        startValue: 0.1
-        endValue: 2.0
-        isLooped: true
+    - !type:FadeBehaviour
+      id: radiating
+      maxDuration: 2.0
+      startValue: 3.0
+      endValue: 2.0
+      isLooped: true
+      reverseWhenFinished: true
+    - !type:PulseBehaviour
+      id: blinking
+      interpolate: Nearest
+      maxDuration: 1.0
+      startValue: 0.1
+      endValue: 2.0
+      isLooped: true
   - type: ToggleableVisuals
     spriteLayer: light
     inhandVisuals:
@@ -50,11 +50,11 @@
   - type: Sprite
     sprite: Objects/Tools/flashlight.rsi
     layers:
-      - state: flashlight
-      - state: flashlight-overlay
-        shader: unshaded
-        visible: false
-        map: [ "light" ]
+    - state: flashlight
+    - state: flashlight-overlay
+      shader: unshaded
+      visible: false
+      map: [ "light" ]
   - type: Item
     sprite: Objects/Tools/flashlight.rsi
     storedRotation: -90
@@ -73,17 +73,17 @@
     sprite: Objects/Tools/flashlight.rsi
     quickEquip: false
     slots:
-      - Belt
+    - Belt
 
 - type: entity
   name: seclite
-  parent: [FlashlightLantern, BaseSecurityContraband]
+  parent: [ FlashlightLantern, BaseSecurityContraband ]
   id: FlashlightSeclite
   description: A robust flashlight used by security.
   components:
   - type: Tag
     tags:
-      - SecBeltEquip
+    - SecBeltEquip
   - type: ItemSlots
     slots:
       cell_slot:
@@ -103,11 +103,11 @@
   - type: Sprite
     sprite: Objects/Tools/seclite.rsi
     layers:
-      - state: seclite
-      - state: seclite-overlay
-        shader: unshaded
-        visible: false
-        map: [ "light" ]
+    - state: seclite
+    - state: seclite-overlay
+      shader: unshaded
+      visible: false
+      map: [ "light" ]
   - type: MeleeWeapon
     wideAnimationRotation: 90
     damage:
@@ -124,7 +124,7 @@
     sprite: Objects/Tools/seclite.rsi
     quickEquip: false
     slots:
-      - Belt
+    - Belt
 
 - type: entity
   parent: FlashlightLantern

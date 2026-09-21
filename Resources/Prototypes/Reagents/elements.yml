@@ -31,14 +31,14 @@
   meltingPoint: -101.5
   boilingPoint: -34.04
   plantMetabolism:
-    - !type:PlantAdjustWater
-      amount: -0.5
-    - !type:PlantAdjustToxins
-      amount: 15
-    - !type:PlantAdjustWeeds
-      amount: -3
-    - !type:PlantAdjustHealth
-      amount: -1
+  - !type:PlantAdjustWater
+    amount: -0.5
+  - !type:PlantAdjustToxins
+    amount: 15
+  - !type:PlantAdjustWeeds
+    amount: -3
+  - !type:PlantAdjustHealth
+    amount: -1
   metabolisms:
     Bloodstream:
       effects:
@@ -86,14 +86,14 @@
   boilingPoint: -188.11
   meltingPoint: -219.67
   plantMetabolism:
-    - !type:PlantAdjustWater
-      amount: -0.5
-    - !type:PlantAdjustToxins
-      amount: 25
-    - !type:PlantAdjustWeeds
-      amount: -4
-    - !type:PlantAdjustHealth
-      amount: -2
+  - !type:PlantAdjustWater
+    amount: -0.5
+  - !type:PlantAdjustToxins
+    amount: 25
+  - !type:PlantAdjustWeeds
+    amount: -4
+  - !type:PlantAdjustHealth
+    amount: -2
   metabolisms:
     Bloodstream:
       effects:
@@ -187,7 +187,6 @@
       - !type:Emote
         emote: Laugh
         probability: 0.05
-
   # TODO: cause some brain damage when woundmed, and generally reduce the stutter/scrambledaccent unless high doses
 
 - type: reagent
@@ -233,12 +232,12 @@
   meltingPoint: 44.2
   boilingPoint: 280.5
   plantMetabolism:
-    - !type:PlantAdjustNutrition
-      amount: 0.1
-    - !type:PlantAdjustWater
-      amount: -0.5
-    - !type:PlantAdjustWeeds
-      amount: -2
+  - !type:PlantAdjustNutrition
+    amount: 0.1
+  - !type:PlantAdjustWater
+    amount: -0.5
+  - !type:PlantAdjustWeeds
+    amount: -2
 
 - type: reagent
   id: Radium

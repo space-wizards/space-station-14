@@ -35,7 +35,8 @@
   parent: ClothingShoesBaseButcherable
   id: ClothingShoeSlippersDuck
   name: ducky slippers
-  description: You wish these made quacking sounds as you walked. It's a good thing they don't, though.
+  description: You wish these made quacking sounds as you walked. It's a good
+    thing they don't, though.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Misc/duck-slippers.rsi
@@ -54,7 +55,9 @@
   parent: ClothingShoesBaseButcherable
   id: ClothingShoeSlippersLizard
   name: lizard plushie slippers
-  description: An adorable pair of slippers that resemble a lizardperson. Combine this with some other green clothing and you'll be the coolest crewmember on the station!
+  description: An adorable pair of slippers that resemble a lizardperson. Combine
+    this with some other green clothing and you'll be the coolest crewmember on
+    the station!
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Misc/lizard-slippers.rsi
@@ -107,7 +110,8 @@
   parent: ClothingShoesBase
   id: ClothingShoesSnakeskinBoots
   name: snakeskin boots
-  description: Boots made of once-valuable snakeskin, everyone around you would have been jealous.
+  description: Boots made of once-valuable snakeskin, everyone around you would
+    have been jealous.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Misc/snakeskin.rsi
@@ -115,10 +119,11 @@
     sprite: Clothing/Shoes/Misc/snakeskin.rsi
 
 - type: entity
-  parent: [ClothingShoesBase, PowerCellSlotSmallItem, BaseToggleClothing]
+  parent: [ ClothingShoesBase, PowerCellSlotSmallItem, BaseToggleClothing ]
   id: ClothingShoesBootsSpeed
   name: speed boots
-  description: High-tech boots woven with quantum fibers, able to convert electricity into pure speed!
+  description: High-tech boots woven with quantum fibers, able to convert
+    electricity into pure speed!
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/speedboots.rsi
@@ -138,8 +143,8 @@
     visuals:
       enum.ToggleableVisuals.Enabled:
         enum.ToggleableVisuals.Layer:
-          True: {state: icon-on}
-          False: {state: icon}
+          True: { state: icon-on }
+          False: { state: icon }
   - type: StaticPrice
     price: 500
   - type: PowerCellDraw
@@ -162,12 +167,12 @@
     itemIconStyle: BigItem
   - type: InstantAction
     event: !type:ToggleActionEvent
-
 - type: entity
   parent: ClothingShoesBase
   id: ClothingShoesBootsMoon
   name: moon boots
-  description: Special anti-gravity boots developed with a speciality blend of lunar rock gel. Shipped from the Netherlands.
+  description: Special anti-gravity boots developed with a speciality blend of
+    lunar rock gel. Shipped from the Netherlands.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/moonboots.rsi
@@ -179,13 +184,14 @@
   - type: StaticPrice
     price: 75
   - type: Tag
-    tags: [ ]
+    tags: []
 
 - type: entity
   parent: ClothingShoesBase
   id: ClothingShoesBootsJump
   name: jump boots
-  description: High-tech boots that give you the incredible ability to JUMP! With these boots you can jump over lava, chasms and weird chemicals on the floor!
+  description: High-tech boots that give you the incredible ability to JUMP! With
+    these boots you can jump over lava, chasms and weird chemicals on the floor!
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/jumpboots.rsi

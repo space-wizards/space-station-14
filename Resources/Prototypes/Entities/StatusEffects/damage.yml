@@ -4,7 +4,8 @@
   abstract: true
   parent: StatusEffectBase
   id: StatusEffectDamageModifierBase
-  description: Status effect for modifying incoming sources of damage. You shouldn't be seeing this.
+  description: Status effect for modifying incoming sources of damage. You
+    shouldn't be seeing this.
   components:
   - type: DamageModifierStatusEffect
   - type: StatusEffect

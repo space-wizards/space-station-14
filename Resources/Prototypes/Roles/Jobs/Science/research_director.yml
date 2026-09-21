@@ -26,7 +26,7 @@
     implants: [ MindShieldImplant ]
   - !type:AddComponentSpecial
     components:
-      - type: CommandStaff
+    - type: CommandStaff
 
 - type: startingGear
   id: ResearchDirectorGear

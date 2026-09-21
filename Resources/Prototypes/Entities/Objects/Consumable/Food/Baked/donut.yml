@@ -2,7 +2,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionVeryTiny, FoodInjectableBase]
+  parent: [ SolutionVeryTiny, FoodInjectableBase ]
   id: FoodDonutBase
   description: Goes great with robust coffee.
   components:
@@ -58,7 +58,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - sweet
+    - sweet
   - type: Sprite
     state: plain
 
@@ -69,7 +69,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - jelly
+    - jelly
   - type: Sprite
     state: jelly-plain
 
@@ -82,7 +82,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - pink
+    - pink
   - type: Sprite
     state: homer
   - type: Item
@@ -96,10 +96,10 @@
   components:
   - type: FlavorProfile
     flavors:
-      - sweet
-      - funny
-      - magical
-      - tingly
+    - sweet
+    - funny
+    - magical
+    - tingly
   - type: Sprite
     state: chaos
 # Tastes like donut, chaos.
@@ -112,7 +112,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
+    - meaty
   - type: Sprite
     state: meat
   - type: Tag
@@ -129,7 +129,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - pink
+    - pink
   - type: Sprite
     state: pink
   - type: Item
@@ -153,8 +153,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - sweet
-      - apple
+    - sweet
+    - apple
   - type: Sprite
     state: green
 # Tastes like donut, green apples.
@@ -177,7 +177,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - chocolate
+    - chocolate
   - type: Sprite
     state: choc
   - type: Solution
@@ -199,8 +199,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - sweet
-      - bluepumpkin
+    - sweet
+    - bluepumpkin
   - type: Sprite
     state: blue
 # Tastes like donut, blue pumpkin.
@@ -213,8 +213,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - sweet
-      - bungo
+    - sweet
+    - bungo
   - type: Sprite
     state: yellow
 # Tastes like donut, tropical sweetness.
@@ -223,11 +223,12 @@
   parent: FoodDonutBase
   id: FoodDonut
   name: matcha donut
-  description: The L-theanine in this donut is relaxing, yet not euphoric. Goes great with a cup of tea.
+  description: The L-theanine in this donut is relaxing, yet not euphoric. Goes
+    great with a cup of tea.
   components:
   - type: FlavorProfile
     flavors:
-      - tea
+    - tea
   - type: Sprite
     state: olive
 # Tastes like donut, matcha.
@@ -326,8 +327,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - sweet
-      - bluepumpkin
+    - sweet
+    - bluepumpkin
   - type: Sprite
     state: jelly-blue
 # Tastes like jelly-donut, blue pumpkin.
@@ -346,7 +347,8 @@
   parent: FoodDonutFruitBase
   id: FoodDonutJelly
   name: matcha jelly-donut
-  description: The L-theanine in this jelly-donut is relaxing, yet not euphoric. Goes great with a cup of tea.
+  description: The L-theanine in this jelly-donut is relaxing, yet not euphoric.
+    Goes great with a cup of tea.
   components:
   - type: Sprite
     state: jelly-olive

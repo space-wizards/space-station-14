@@ -14,8 +14,7 @@
   id: ReporterPressFedora
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobReporter
       time: 10h
   equipment:
@@ -26,8 +25,7 @@
   id: ReporterPressVest
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobReporter
       time: 35h
   equipment:

@@ -203,7 +203,6 @@
       metabolites:
         Theobromine: 0.1
 
-
 - type: reagent
   id: JuiceBerryPoison
   parent: BaseJuice
@@ -255,10 +254,10 @@
   color: "#DFDFDF"
   recognizable: true
   plantMetabolism:
-    - !type:PlantAdjustNutrition
-      amount: 0.1
-    - !type:PlantAdjustWater
-      amount: 0.9
+  - !type:PlantAdjustNutrition
+    amount: 0.1
+  - !type:PlantAdjustWater
+    amount: 0.9
   metabolisms:
     Digestion:
       effects:
@@ -330,8 +329,6 @@
       - !type:Satiate
         satiationType: Thirst
         factor: 2
-        # TODO heal mimes
-
 - type: reagent
   id: NuclearCola
   parent: BaseSoda
@@ -559,9 +556,9 @@
   metabolisms:
     Digestion:
       effects:
-        - !type:Satiate
-          satiationType: Thirst
-          factor: 1
+      - !type:Satiate
+        satiationType: Thirst
+        factor: 1
   fizziness: 0.3
 
 - type: reagent

@@ -39,7 +39,7 @@
   cost:
     Telecrystal: 6
   categories:
-    - UplinkExplosives
+  - UplinkExplosives
 
 - type: listing
   id: UplinkGrenadePenguin
@@ -52,7 +52,7 @@
   cost:
     Telecrystal: 4
   categories:
-    - UplinkExplosives
+  - UplinkExplosives
   conditions:
   - !type:BuyerWhitelistCondition
     blacklist:
@@ -138,7 +138,7 @@
   cost:
     Telecrystal: 11
   categories:
-    - UplinkExplosives
+  - UplinkExplosives
   restockTime: 1800
   conditions:
   - !type:StoreWhitelistCondition
@@ -154,7 +154,7 @@
   cost:
     Telecrystal: 11
   categories:
-    - UplinkExplosives
+  - UplinkExplosives
   conditions:
   - !type:StoreWhitelistCondition
     whitelist:

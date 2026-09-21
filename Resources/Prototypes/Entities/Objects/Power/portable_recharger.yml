@@ -9,9 +9,9 @@
   - type: Sprite
     sprite: Objects/Power/portable_recharger.rsi
     layers:
-    - map: ["enum.PowerChargerVisualLayers.Base"]
+    - map: [ "enum.PowerChargerVisualLayers.Base" ]
       state: charging
-    - map: ["enum.PowerChargerVisualLayers.Light"]
+    - map: [ "enum.PowerChargerVisualLayers.Light" ]
       state: charging-unlit
       shader: unshaded
   - type: Clothing

@@ -60,10 +60,12 @@
   components:
   - type: PickRandomPerson
     conditions:
-    - !type:AntagonistTagCondition # Only roll on-station targets.
+    # Only roll on-station targets.
+    - !type:AntagonistTagCondition
       tags:
       - OnStation
-    - !type:AntagonistTagCondition # Don't roll unkillable targets.
+    # Don't roll unkillable targets.
+    - !type:AntagonistTagCondition
       inverted: true
       tags:
       - Unkillable

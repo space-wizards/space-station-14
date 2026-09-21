@@ -250,7 +250,8 @@
         - id: CrateRestraints
         - id: CrateEmergencyExplosive
         - id: CrateSecurityBiosuit
-      - !type:GroupSelector #Very useful stuff we probably don't want random people getting on space ruins often, even if there are hurdles to open it
+      #Very useful stuff we probably don't want random people getting on space ruins often, even if there are hurdles to open it
+      - !type:GroupSelector
         children:
         - id: CrateArmoryShotgun
         - id: CrateArmorySMG

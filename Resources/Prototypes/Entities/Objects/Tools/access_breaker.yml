@@ -1,9 +1,10 @@
 - type: entity
-  parent: [BaseItem, BaseSyndicateContraband]
+  parent: [ BaseItem, BaseSyndicateContraband ]
   id: AccessBreakerUnlimited
   suffix: Unlimited
   name: authentication disruptor
-  description: A hacked access configurator, specialized to unlock and erase access from digital locks.
+  description: A hacked access configurator, specialized to unlock and erase
+    access from digital locks.
   components:
   - type: Emag
     emagImmuneTag: AccessBreakerImmune
@@ -29,7 +30,8 @@
   id: XenoborgAccessBreaker
   suffix: Limited
   name: xenoborg authentication disruptor
-  description: An access scrubbing device, engineered by xenoborgs for disrupting digital locks.
+  description: An access scrubbing device, engineered by xenoborgs for disrupting
+    digital locks.
   components:
   - type: Emag
     emagImmuneTag: AccessBreakerImmune

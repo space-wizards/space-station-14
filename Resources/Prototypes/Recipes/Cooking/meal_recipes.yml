@@ -1904,7 +1904,7 @@
   group: Soup
   #todo Add blackpepper
   #reagents:
-    #blackpepper: 5
+  #blackpepper: 5
   solids:
     FoodChiliPepper: 1
     FoodCheeseSlice: 2

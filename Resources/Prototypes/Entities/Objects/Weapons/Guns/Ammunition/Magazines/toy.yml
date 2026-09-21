@@ -8,6 +8,6 @@
     mayTransfer: true
     whitelist:
       tags:
-        - BulletFoam
+      - BulletFoam
     proto: BulletFoam
     capacity: 100

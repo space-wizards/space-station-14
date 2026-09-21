@@ -14,12 +14,11 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.2
         density: 20
         mask:
-          - ItemMask
+        - ItemMask
         restitution: 0.3
         friction: 0.2
 
@@ -100,8 +99,8 @@
   parent: SteelOre
   suffix: Single
   components:
-    - type: Stack
-      count: 1
+  - type: Stack
+    count: 1
 
 - type: entity
   parent: OreBase
@@ -133,8 +132,8 @@
   id: PlasmaOre1
   suffix: Single
   components:
-    - type: Stack
-      count: 1
+  - type: Stack
+    count: 1
 
 - type: entity
   parent: OreBase

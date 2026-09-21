@@ -3,7 +3,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionVeryTiny, FoodInjectableBase]
+  parent: [ SolutionVeryTiny, FoodInjectableBase ]
   id: FoodBagelBase
   description: A delicious bagel.
   components:
@@ -11,7 +11,7 @@
     size: Tiny
   - type: FlavorProfile
     flavors:
-      - bread
+    - bread
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/bagel.rsi
     state: bagel
@@ -34,8 +34,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - bread
-      - medicine
+    - bread
+    - medicine
   - type: Sprite
     state: bagel-poppy
   - type: Solution

@@ -6,8 +6,8 @@
   components:
   - type: Sprite
     layers:
-      - state: ring
-        color: "#ffc833"
+    - state: ring
+      color: "#ffc833"
 
 - type: entity
   parent: [ RingBase, SilverRingBase ]
@@ -17,7 +17,7 @@
   components:
   - type: Sprite
     layers:
-      - state: ring
+    - state: ring
 
 - type: entity
   parent: [ RingBase, GoldRingBase ]
@@ -27,10 +27,10 @@
   components:
   - type: Sprite
     layers:
-      - state: ring
-        color: "#ffc833"
-      - state: gem
-        color: "#c1ffff"
+    - state: ring
+      color: "#ffc833"
+    - state: gem
+      color: "#c1ffff"
   - type: StaticPrice
     price: 1500
 
@@ -42,9 +42,9 @@
   components:
   - type: Sprite
     layers:
-      - state: ring
-      - state: gem
-        color: "#c1ffff"
+    - state: ring
+    - state: gem
+      color: "#c1ffff"
   - type: StaticPrice
     price: 1400
 
@@ -56,17 +56,17 @@
   components:
   - type: Sprite
     layers:
-      - state: ring
-        color: "#ffc833"
-      - state: gem
-        map: [ "gemColor" ]
+    - state: ring
+      color: "#ffc833"
+    - state: gem
+      map: [ "gemColor" ]
   - type: StaticPrice
     price: 2100
   - type: RandomSprite
     getAllGroups: true
     available:
-      - gemColor:
-          gem: Rainbow
+    - gemColor:
+        gem: Rainbow
 
 - type: entity
   parent: [ RingBase, SilverRingBase ]
@@ -76,13 +76,13 @@
   components:
   - type: Sprite
     layers:
-      - state: ring
-      - state: gem
-        map: [ "gemColor" ]
+    - state: ring
+    - state: gem
+      map: [ "gemColor" ]
   - type: StaticPrice
     price: 2000
   - type: RandomSprite
     getAllGroups: true
     available:
-      - gemColor:
-          gem: Rainbow
+    - gemColor:
+        gem: Rainbow

@@ -28,7 +28,6 @@
     prefix: story-gen-book-character-trait
     count: 24
 
-
 - type: localizedDataset
   id: BookEvents
   values:

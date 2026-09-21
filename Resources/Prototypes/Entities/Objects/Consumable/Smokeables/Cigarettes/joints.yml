@@ -9,8 +9,8 @@
     state: unlit-icon
   - type: Tag
     tags:
-      - Cigarette
-      - Trash
+    - Cigarette
+    - Trash
   - type: SpaceGarbage
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cannabis/joint.rsi
@@ -27,14 +27,15 @@
       - ReagentId: THC
         Quantity: 20
   - type: RandomMetadata
-    nameSegments: [NamesRollie]
+    nameSegments: [ NamesRollie ]
 
 - type: entity
   id: JointRainbow
   parent: Joint
   name: joint
   suffix: Rainbow
-  description: A roll of dried plant matter wrapped in thin paper. Seems to be colorful inside.
+  description: A roll of dried plant matter wrapped in thin paper. Seems to be
+    colorful inside.
   components:
   - type: Construction
     graph: smokeableJointRainbow
@@ -50,8 +51,8 @@
         Quantity: 5
       - ReagentId: Happiness
         Quantity: 5
-  #   - ReagentId: ColorfulReagent
-  #     Quantity: 1.33
+      #   - ReagentId: ColorfulReagent
+      #     Quantity: 1.33
       - ReagentId: Psicodine
         Quantity: 3.67
 
@@ -66,8 +67,8 @@
     state: unlit-icon
   - type: Tag
     tags:
-      - Cigarette
-      - Trash
+    - Cigarette
+    - Trash
   - type: SpaceGarbage
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cannabis/blunt.rsi
@@ -84,14 +85,15 @@
       - ReagentId: THC
         Quantity: 20
   - type: RandomMetadata
-    nameSegments: [NamesRollie]
+    nameSegments: [ NamesRollie ]
 
 - type: entity
   id: BluntRainbow
   parent: Blunt
   name: blunt
   suffix: Rainbow
-  description: A roll of dried plant matter wrapped in a dried tobacco leaf. Seems to be colorful inside.
+  description: A roll of dried plant matter wrapped in a dried tobacco leaf. Seems
+    to be colorful inside.
   components:
   - type: Construction
     graph: smokeableBluntRainbow
@@ -107,7 +109,7 @@
         Quantity: 5
       - ReagentId: Happiness
         Quantity: 5
-  #   - ReagentId: ColorfulReagent
-  #     Quantity: 1.33
+      #   - ReagentId: ColorfulReagent
+      #     Quantity: 1.33
       - ReagentId: Psicodine
         Quantity: 3.67

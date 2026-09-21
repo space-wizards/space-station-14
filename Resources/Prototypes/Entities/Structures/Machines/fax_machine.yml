@@ -25,8 +25,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
         density: 25
         mask:
@@ -61,10 +60,10 @@
       ejectSound: /Audio/Machines/tray_eject.ogg
       whitelist:
         components:
-          - FaxableObject #used to be PaperComponent - brainfood1183
+        - FaxableObject #used to be PaperComponent - brainfood1183
       blacklist:
         components:
-          - CargoSlip
+        - CargoSlip
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
@@ -141,8 +140,8 @@
   name: captain long range fax machine
   suffix: NukeCodes
   components:
-    - type: FaxMachine
-      name: "Captain's Office"
-      receiveNukeCodes: true
-    - type: StealTarget
-      stealGroup: FaxMachineCaptain
+  - type: FaxMachine
+    name: "Captain's Office"
+    receiveNukeCodes: true
+  - type: StealTarget
+    stealGroup: FaxMachineCaptain

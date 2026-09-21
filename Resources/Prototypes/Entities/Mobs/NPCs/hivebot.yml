@@ -15,16 +15,14 @@
     rootTask:
       task: SimpleHostileCompound
     blackboard:
-      NavSmash: !type:Bool
-        true
+      NavSmash: !type:Bool "true"
   - type: NpcFactionMember
     factions:
     - SimpleHostile
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.50
         density: 80
         mask:
@@ -53,17 +51,17 @@
         Slash: 6 # Pretty whatever on their own, but their strength is in numbers
   - type: Tag
     tags:
-      - DoorBumpOpener
-      - Unimplantable
+    - DoorBumpOpener
+    - Unimplantable
   - type: MovementSpeedModifier
     baseWalkSpeed: 1.5
     baseSprintSpeed: 2.5
-# Doesn't seem to work for some reason?
-#  - type: PointLight
-#    radius: 1.0
-#    energy: 1
-#    castShadows: false
-#    color: "#bc5858"
+  # Doesn't seem to work for some reason?
+  #  - type: PointLight
+  #    radius: 1.0
+  #    energy: 1
+  #    castShadows: false
+  #    color: "#bc5858"
   - type: RotationVisuals
     horizontalRotation: 90
   - type: Speech

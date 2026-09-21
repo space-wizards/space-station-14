@@ -19,7 +19,8 @@
   loadoutName: job-name-prisoner
   name: job-name-prisoner
   icon: "JobIconPrisoner"
-  equipment: # "real" prisoners obviously have limited access to clothing, so the head/eyes/outerClothing slots just use generic clothes to place *something* in that slot
+  equipment:
+    # "real" prisoners obviously have limited access to clothing, so the head/eyes/outerClothing slots just use generic clothes to place *something* in that slot
     head: ClothingHeadHatOrangesoft
     eyes: ClothingEyesGlassesCheapSunglasses
     ears: ClothingHeadsetGrey
@@ -31,4 +32,3 @@
     gloves: ClothingHandsGlovesColorBlack
     shoes: ClothingShoesColorBlack
     id: PrisonerPDA
-

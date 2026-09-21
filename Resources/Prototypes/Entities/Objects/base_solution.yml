@@ -194,7 +194,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionComposite, BaseItem]
+  parent: [ SolutionComposite, BaseItem ]
   id: SolutionCompositeTinyStackable
   categories: [ HideSpawnMenu ]
   components:
@@ -226,7 +226,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionComposite, BaseItem]
+  parent: [ SolutionComposite, BaseItem ]
   id: SolutionCompositeSmallStackable
   categories: [ HideSpawnMenu ]
   components:
@@ -258,7 +258,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionComposite, BaseItem]
+  parent: [ SolutionComposite, BaseItem ]
   id: SolutionCompositeNormalStackable
   categories: [ HideSpawnMenu ]
   components:
@@ -309,7 +309,7 @@
       maxVol: 480
 
 - type: entity
-  parent: [SolutionDrink, SolutionHuge]
+  parent: [ SolutionDrink, SolutionHuge ]
   id: SolutionDrinkHuge
   categories: [ HideSpawnMenu ]
 

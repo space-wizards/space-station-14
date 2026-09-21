@@ -2,9 +2,9 @@
   abstract: true
   id: BaseStationSyndicate
   components:
-    - type: NpcFactionMember
-      factions:
-        - Syndicate
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
 
 - type: entity
   id: StandardNukieOutpost
@@ -13,4 +13,4 @@
   - BaseStationSyndicate
   categories: [ HideSpawnMenu ]
   components:
-    - type: Transform
+  - type: Transform

@@ -12,7 +12,7 @@
     layers:
     - state: idle
     - state: locked
-      map: ["enum.LockVisualLayers.Lock"]
+      map: [ "enum.LockVisualLayers.Lock" ]
   - type: Appearance
   - type: LockVisuals
   - type: InteractionOutline
@@ -22,22 +22,20 @@
   - type: Fixtures
     fixtures:
       base:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.45
         density: 75
         mask:
         - MachineMask
       barrier:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.45
         layer:
         - WallLayer
   - type: DeployableBarrier
     fixture: barrier
   - type: AccessReader
-    access: [["Security"]]
+    access: [ [ "Security" ] ]
   - type: Lock
     locked: false
     lockOnClick: true # toggle lock just by clicking on barrier
@@ -47,8 +45,7 @@
     damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 120
       behaviors:
       - !type:SpawnEntitiesBehavior

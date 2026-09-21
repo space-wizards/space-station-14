@@ -3,7 +3,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionFood, SolutionTiny, BaseItem] # Produce should be less efficient volume wise
+  parent: [ SolutionFood, SolutionTiny, BaseItem ] # Produce should be less efficient volume wise
   id: ProduceBase
   components:
   - type: Sprite
@@ -36,7 +36,7 @@
 # For produce that can be immediately eaten
 
 - type: entity
-  parent: [SolutionTiny, FoodInjectableBase]
+  parent: [ SolutionTiny, FoodInjectableBase ]
   id: FoodProduceBase
   abstract: true
   components:
@@ -76,7 +76,8 @@
   parent: ProduceBaseRuminant
   id: MeatwheatBushel
   name: meatwheat bushel
-  description: Some blood-drenched wheat stalks. You can crush them into what passes for meat if you squint hard enough.
+  description: Some blood-drenched wheat stalks. You can crush them into what
+    passes for meat if you squint hard enough.
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/meatwheat.rsi
@@ -89,7 +90,7 @@
         Quantity: 15
   - type: SpawnItemsOnUse
     items:
-      - id: FoodMeatWheat
+    - id: FoodMeatWheat
     sound:
       path: /Audio/Voice/Slime/slime_squish.ogg
   - type: Produce
@@ -137,7 +138,7 @@
     plantId: SugarcanePlants
 
 - type: entity
-  parent: [ProduceBase, BaseSlicingRefinable]
+  parent: [ ProduceBase, BaseSlicingRefinable ]
   id: Papercane
   name: papercane roll
   description: Why do we even need to grow paper?
@@ -161,7 +162,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - peas
+    - peas
   - type: Solution
     solution:
       reagents:
@@ -188,7 +189,7 @@
     - Ruminant
 
 - type: entity
-  parent: [ProduceBase, BaseSlicingRefinable]
+  parent: [ ProduceBase, BaseSlicingRefinable ]
   id: Log
   name: tower-cap log
   description: It's better than bad, it's good!
@@ -210,7 +211,7 @@
       amount: 2
 
 - type: entity
-  parent: [ProduceBase, BaseSlicingRefinable]
+  parent: [ ProduceBase, BaseSlicingRefinable ]
   id: SteelLog
   name: steel-cap log
   description: Steel doesn't grow on trees! It grows on mushrooms, of course.
@@ -311,8 +312,7 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 25
       behaviors:
       - !type:PlaySoundBehavior
@@ -329,13 +329,13 @@
 
 - type: entity
   name: banana
-  parent: [FoodProduceBase, BaseSlicingRefinableFood]
+  parent: [ FoodProduceBase, BaseSlicingRefinableFood ]
   id: FoodBanana
   description: Rich in potassium.
   components:
   - type: FlavorProfile
     flavors:
-      - banana
+    - banana
   - type: Edible
     trash:
     - TrashBananaPeel
@@ -372,14 +372,14 @@
 
 - type: entity
   name: mimana
-  parent: [FoodProduceBase, BaseSlicingRefinableFood]
+  parent: [ FoodProduceBase, BaseSlicingRefinableFood ]
   id: FoodMimana
   description: Mime's favorite.
   components:
   - type: FlavorProfile
     flavors:
-      - banana
-      - nothing
+    - banana
+    - nothing
   - type: Edible
     trash:
     - TrashMimanaPeel
@@ -416,7 +416,7 @@
       Taco: Mimana
 
 - type: entity
-  parent: [SolutionFood, SolutionVeryTiny, BaseItem]
+  parent: [ SolutionFood, SolutionVeryTiny, BaseItem ]
   id: TrashBananaPeel
   name: banana peel
   components:
@@ -436,15 +436,13 @@
   - type: Fixtures
     fixtures:
       slips:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.2,-0.2,0.2,0.2"
         hard: false
         layer:
         - SlipLayer
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.2,-0.2,0.2,0.2"
         density: 30
         mask:
@@ -543,7 +541,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - carrot
+    - carrot
   - type: Tag
     tags:
     - Carrot
@@ -583,7 +581,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - cabbage
+    - cabbage
   - type: Solution
     solution:
       reagents:
@@ -615,7 +613,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - garlic
+    - garlic
   - type: Solution
     solution:
       reagents:
@@ -645,7 +643,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - sour
+    - sour
   - type: Solution
     solution:
       reagents:
@@ -679,11 +677,12 @@
   name: lemoon
   parent: FoodProduceBase
   id: FoodLemoon
-  description: People says Moon is made out of cheese, but Moon is actually made out of milk and laurel!
+  description: People says Moon is made out of cheese, but Moon is actually made
+    out of milk and laurel!
   components:
   - type: FlavorProfile
     flavors:
-      - lemoon
+    - lemoon
   - type: Solution
     solution:
       reagents:
@@ -718,7 +717,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - sour
+    - sour
   - type: Solution
     solution:
       reagents:
@@ -756,7 +755,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - orange
+    - orange
   - type: Solution
     solution:
       reagents:
@@ -793,7 +792,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - truenature
+    - truenature
   - type: Solution
     solution:
       reagents:
@@ -828,13 +827,13 @@
 
 - type: entity
   name: pineapple
-  parent: [FoodProduceBase, BaseSlicingRefinableFood]
+  parent: [ FoodProduceBase, BaseSlicingRefinableFood ]
   id: FoodPineapple
   description: Mmm, tropical.
   components:
   - type: FlavorProfile
     flavors:
-      - pineapple
+    - pineapple
   - type: Solution
     solution:
       reagents:
@@ -867,11 +866,14 @@
   name: potato
   parent: FoodProduceBase
   id: FoodPotato
-  description: The space Irish starved to death after their potato crops died. Sadly they were unable to fish for space carp due to it being the queen's space. Bringing this up to any space IRA member will drive them insane with anger.
+  description: The space Irish starved to death after their potato crops died.
+    Sadly they were unable to fish for space carp due to it being the queen's
+    space. Bringing this up to any space IRA member will drive them insane with
+    anger.
   components:
   - type: FlavorProfile
     flavors:
-      - potatoes
+    - potatoes
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/potato.rsi
   - type: Item
@@ -889,13 +891,13 @@
 
 - type: entity
   name: tomato
-  parent: [FoodProduceBase, ItemHeftyBase]
+  parent: [ FoodProduceBase, ItemHeftyBase ]
   id: FoodTomato
   description: I say to-mah-to, you say tom-mae-to.
   components:
   - type: FlavorProfile
     flavors:
-      - tomato
+    - tomato
   - type: Solution
     solution:
       reagents:
@@ -927,8 +929,7 @@
         Blunt: 1
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 1
       behaviors:
       - !type:PlaySoundBehavior
@@ -977,8 +978,7 @@
         Quantity: 10
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 1
       behaviors:
       - !type:PlaySoundBehavior
@@ -1024,8 +1024,7 @@
         Quantity: 10
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 1
       behaviors:
       - !type:PlaySoundBehavior
@@ -1053,7 +1052,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - eggplant
+    - eggplant
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/eggplant.rsi
   - type: Item
@@ -1073,7 +1072,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - apple
+    - apple
   - type: Solution
     solution:
       reagents:
@@ -1110,8 +1109,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - apple
-      - metallic
+    - apple
+    - metallic
   - type: Solution
     solution:
       reagents:
@@ -1150,7 +1149,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - chocolate
+    - chocolate
   - type: Solution
     solution:
       reagents:
@@ -1166,7 +1165,7 @@
     plantId: CocoaPlants
   - type: SpawnItemsOnUse
     items:
-      - id: FoodCocoaBeans
+    - id: FoodCocoaBeans
     sound:
       path: /Audio/Effects/packetrip.ogg
   - type: Tag
@@ -1175,13 +1174,13 @@
 
 - type: entity
   name: ear of corn
-  parent: [FoodProduceBase, BaseSlicingRefinable]
+  parent: [ FoodProduceBase, BaseSlicingRefinable ]
   id: FoodCorn
   description: Needs some butter! And some cooking...
   components:
   - type: FlavorProfile
     flavors:
-      - corn
+    - corn
   - type: Edible
     trash:
     - FoodCornTrash
@@ -1229,7 +1228,7 @@
     size: Tiny
   - type: Tag
     tags:
-      - Trash
+    - Trash
   - type: Solution
     solution:
       reagents:
@@ -1238,13 +1237,13 @@
 
 - type: entity
   name: onion
-  parent: [FoodProduceBase, BaseSlicingRefinableFood]
+  parent: [ FoodProduceBase, BaseSlicingRefinableFood ]
   id: FoodOnion
   description: Nothing to cry over.
   components:
   - type: FlavorProfile
     flavors:
-      - onion
+    - onion
   - type: Solution
     solution:
       reagents:
@@ -1270,13 +1269,13 @@
 
 - type: entity
   name: red onion
-  parent: [FoodProduceBase, BaseSlicingRefinableFood]
+  parent: [ FoodProduceBase, BaseSlicingRefinableFood ]
   id: FoodOnionRed
   description: Purple despite the name.
   components:
   - type: FlavorProfile
     flavors:
-      - onion
+    - onion
   - type: Solution
     solution:
       reagents:
@@ -1355,7 +1354,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - pineapple
+    - pineapple
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pineapple.rsi
   - type: Extractable
@@ -1380,7 +1379,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - onion
+    - onion
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion.rsi
   - type: Solution
@@ -1409,7 +1408,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - onion
+    - onion
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion_red.rsi
   - type: Solution
@@ -1438,7 +1437,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - spicy
+    - spicy
   - type: Solution
     solution:
       reagents:
@@ -1471,8 +1470,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - spicy
-      - cold
+    - spicy
+    - cold
   - type: Solution
     solution:
       reagents:
@@ -1502,7 +1501,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - medicine
+    - medicine
   - type: Solution
     solution:
       reagents:
@@ -1538,7 +1537,7 @@
     quickEquip: false
   - type: FlavorProfile
     flavors:
-      - medicine
+    - medicine
   - type: Solution
     solution:
       reagents:
@@ -1568,7 +1567,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - medicine
+    - medicine
   - type: Solution
     solution:
       reagents:
@@ -1592,14 +1591,14 @@
 
 - type: entity
   name: lingzhi
-  parent: [SolutionSmall, FoodProduceBase]
+  parent: [ SolutionSmall, FoodProduceBase ]
   id: FoodLingzhi
   description: A potent medicinal mushroom. Don't go overboard.
   components:
   - type: FlavorProfile
     flavors:
-      - mushroom
-      - medicine
+    - mushroom
+    - medicine
   - type: Solution
     solution:
       reagents:
@@ -1631,8 +1630,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - leafy
-      - medicine
+    - leafy
+    - medicine
   - type: Solution
     solution:
       reagents:
@@ -1672,8 +1671,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - leafy
-      - medicine
+    - leafy
+    - medicine
   - type: Solution
     solution:
       reagents:
@@ -1705,13 +1704,13 @@
 
 - type: entity
   name: galaxythistle
-  parent: [SolutionSmall, FoodProduceBase]
+  parent: [ SolutionSmall, FoodProduceBase ]
   id: FoodGalaxythistle
   description: A medicinal plant used for its antitoxin.
   components:
   - type: FlavorProfile
     flavors:
-      - medicine
+    - medicine
   - type: Solution
     solution:
       reagents:
@@ -1736,7 +1735,7 @@
 
 - type: entity
   name: glasstle
-  parent: [SolutionSmall, FoodProduceBase]
+  parent: [ SolutionSmall, FoodProduceBase ]
   id: FoodGlasstle
   description: A fragile crystal plant with lot of spiky thorns.
   components:
@@ -1746,7 +1745,7 @@
     heldPrefix: produce
   - type: FlavorProfile
     flavors:
-      - sharp
+    - sharp
   - type: Solution
     solution:
       reagents:
@@ -1768,8 +1767,7 @@
     - id: SheetGlass1
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 10
       behaviors:
       - !type:PlaySoundBehavior
@@ -1794,7 +1792,7 @@
       types:
         Slash: 15
     soundHit:
-        path: /Audio/Weapons/bladeslice.ogg
+      path: /Audio/Weapons/bladeslice.ogg
   - type: Tag
     tags:
     - Galaxythistle
@@ -1811,7 +1809,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - mushroom
+    - mushroom
   - type: Solution
     solution:
       reagents:
@@ -1844,7 +1842,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - gunpowder
+    - gunpowder
   - type: Solution
     solution:
       reagents:
@@ -1873,13 +1871,13 @@
 
 - type: entity
   name: capfruit
-  parent: [FoodProduceBase, BaseSlicingRefinable]
+  parent: [ FoodProduceBase, BaseSlicingRefinable ]
   id: FoodRealCapfruit
   description: A soft but smooth gun-shaped fruit.
   components:
   - type: FlavorProfile
     flavors:
-      - plastic
+    - plastic
   - type: Solution
     solution:
       reagents:
@@ -1910,7 +1908,7 @@
 
 - type: entity
   name: capfruit
-  parent: [FoodRealCapfruit, BaseSlicingRefinable]
+  parent: [ FoodRealCapfruit, BaseSlicingRefinable ]
   id: FoodFakeCapfruit
   suffix: Fake
   components:
@@ -1972,13 +1970,15 @@
 
 - type: entity
   name: spaceman's trumpet
-  description: A vivid flower that smells faintly of freshly cut grass. Touching the flower seems to stain the skin some time after contact, yet most other surfaces seem to be unaffected by this phenomenon.
+  description: A vivid flower that smells faintly of freshly cut grass. Touching
+    the flower seems to stain the skin some time after contact, yet most other
+    surfaces seem to be unaffected by this phenomenon.
   id: FoodSpacemansTrumpet
   parent: FoodProduceBase
   components:
   - type: FlavorProfile
     flavors:
-      - violets
+    - violets
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/spacemans_trumpet.rsi
   - type: Item
@@ -2038,7 +2038,7 @@
 
 - type: entity
   name: watermelon
-  parent: [FoodProduceBase, ItemHeftyBase, BaseSlicingRefinableFood]
+  parent: [ FoodProduceBase, ItemHeftyBase, BaseSlicingRefinableFood ]
   id: FoodWatermelon
   description: Round green object that you can slice and eat.
   components:
@@ -2047,7 +2047,7 @@
     heldPrefix: produce
   - type: FlavorProfile
     flavors:
-      - watermelon
+    - watermelon
   - type: Solution
     solution:
       reagents:
@@ -2080,8 +2080,7 @@
         Blunt: 1
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 1
       behaviors:
       - !type:PlaySoundBehavior
@@ -2103,7 +2102,7 @@
 
 - type: entity
   name: watermelon slice
-  parent: [SolutionTiny, ProduceSliceBase]
+  parent: [ SolutionTiny, ProduceSliceBase ]
   id: FoodWatermelonSlice
   description: Juicy green and red slice.
   components:
@@ -2111,7 +2110,7 @@
     size: Tiny
   - type: FlavorProfile
     flavors:
-      - watermelon
+    - watermelon
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/watermelon.rsi
   - type: Solution
@@ -2144,17 +2143,18 @@
 
 - type: entity
   name: holymelon
-  parent: [FoodProduceBase, ItemHeftyBase, BaseSlicingRefinableFood]
+  parent: [ FoodProduceBase, ItemHeftyBase, BaseSlicingRefinableFood ]
   id: FoodHolymelon
-  description: The water within this melon has been blessed by some deity that's particularly fond of watermelon.
+  description: The water within this melon has been blessed by some deity that's
+    particularly fond of watermelon.
   components:
   - type: Item
     size: Normal
     heldPrefix: produce
   - type: FlavorProfile
     flavors:
-      - holy
-      - watermelon
+    - holy
+    - watermelon
   - type: Solution
     solution:
       reagents:
@@ -2185,8 +2185,7 @@
         Blunt: 1
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 1
       behaviors:
       - !type:PlaySoundBehavior
@@ -2208,7 +2207,7 @@
 
 - type: entity
   name: holymelon slice
-  parent: [SolutionTiny, ProduceSliceBase]
+  parent: [ SolutionTiny, ProduceSliceBase ]
   id: FoodHolymelonSlice
   description: Juicy golden and red slice.
   components:
@@ -2216,8 +2215,8 @@
     size: Tiny
   - type: FlavorProfile
     flavors:
-      - holy
-      - watermelon
+    - holy
+    - watermelon
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/holymelon.rsi
   - type: Solution
@@ -2250,11 +2249,13 @@
   name: grapes
   parent: FoodProduceBase
   id: FoodGrape
-  description: The food of emperors, Space France inhabitants (usually as wine) and soccer moms. One day it could be used in wine production for the bartender if he ever runs out.
+  description: The food of emperors, Space France inhabitants (usually as wine)
+    and soccer moms. One day it could be used in wine production for the
+    bartender if he ever runs out.
   components:
   - type: FlavorProfile
     flavors:
-      - grape
+    - grape
   - type: Solution
     solution:
       reagents:
@@ -2287,7 +2288,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - berry
+    - berry
   - type: Solution
     solution:
       reagents:
@@ -2318,13 +2319,13 @@
 
 - type: entity
   name: bungo fruit
-  parent: [FoodProduceBase, BaseSlicingRefinable]
+  parent: [ FoodProduceBase, BaseSlicingRefinable ]
   id: FoodBungo
   description: The humble bungo fruit.
   components:
   - type: FlavorProfile
     flavors:
-      - bungo
+    - bungo
   - type: Edible
     trash:
     - FoodBungoPit
@@ -2389,7 +2390,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - peas
+    - peas
   - type: Solution
     solution:
       reagents:
@@ -2419,7 +2420,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - numbingtranquility
+    - numbingtranquility
   - type: Solution
     solution:
       reagents:
@@ -2445,7 +2446,7 @@
 
 - type: entity
   name: pumpkin
-  parent: [FoodProduceBase, BaseSlicingRefinable]
+  parent: [ FoodProduceBase, BaseSlicingRefinable ]
   id: FoodPumpkin
   description: A large, orange... berry. Seriously.
   components:
@@ -2454,7 +2455,7 @@
     heldPrefix: produce
   - type: FlavorProfile
     flavors:
-      - pumpkin
+    - pumpkin
   - type: Solution
     solution:
       reagents:
@@ -2473,8 +2474,7 @@
     damageContainer: Biological
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 16
       behaviors:
       - !type:PlaySoundBehavior
@@ -2504,7 +2504,7 @@
     heldPrefix: produce
   - type: FlavorProfile
     flavors:
-      - bluepumpkin
+    - bluepumpkin
   - type: Solution
     solution:
       reagents:
@@ -2532,8 +2532,7 @@
     damageContainer: Biological
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 16
       behaviors:
       - !type:PlaySoundBehavior
@@ -2551,13 +2550,13 @@
   name: cotton boll
   description: Moth people's favorite snack, and just as fluffy as them.
   id: CottonBol
-  parent: [FoodProduceBase, BaseSlicingRefinableFood]
+  parent: [ FoodProduceBase, BaseSlicingRefinableFood ]
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cotton.rsi
   - type: FlavorProfile
     flavors:
-      - cotton
+    - cotton
   - type: Edible
     requiresSpecialDigestion: true
   - type: Solution
@@ -2585,13 +2584,13 @@
   name: pyrotton boll
   description: This will probably set you on fire.
   id: PyrottonBol
-  parent: [FoodProduceBase, BaseSlicingRefinableFood]
+  parent: [ FoodProduceBase, BaseSlicingRefinableFood ]
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pyrotton.rsi
   - type: FlavorProfile
     flavors:
-      - pyrotton
+    - pyrotton
   - type: Edible
     requiresSpecialDigestion: true
   - type: Solution
@@ -2621,13 +2620,13 @@
 
 - type: entity
   name: cherry
-  parent: [FoodProduceBase, BaseSlicingRefinable]
+  parent: [ FoodProduceBase, BaseSlicingRefinable ]
   id: FoodCherry
   description: Juicy red cherry with a pit inside.
   components:
   - type: FlavorProfile
     flavors:
-      - cherry
+    - cherry
   - type: Edible
     trash:
     - TrashCherryPit
@@ -2688,14 +2687,14 @@
   - type: BadFood
 
 - type: entity
-  parent: [SolutionNormal, FoodProduceBase] # Anomalously large
+  parent: [ SolutionNormal, FoodProduceBase ] # Anomalously large
   id: FoodAnomalyBerry
   name: anomaly berry
   description: A strange blue fruit. Something about it doesn't seem right.
   components:
   - type: FlavorProfile
     flavors:
-      - strange
+    - strange
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/anomaly_berry.rsi
     state: produce
@@ -2733,7 +2732,7 @@
 - type: entity
   name: bloonion bulb
   description: A strange floating bulb.. Nothing worth crying over.
-  parent: [SolutionCryo, BaseStructureDynamic, ProduceBase]
+  parent: [ SolutionCryo, BaseStructureDynamic, ProduceBase ]
   id: FoodBloonion
   components:
   - type: Appearance
@@ -2779,8 +2778,7 @@
     damageContainer: Biological
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 1
       behaviors:
       - !type:SpillBehavior
@@ -2792,8 +2790,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.20
           position: 0, 0.35
         density: 80

@@ -14,7 +14,7 @@
     graph: Computer
     node: computer
     containers:
-      - board
+    - board
   - type: Computer
   - type: ApcPowerReceiver
     powerLoad: 50
@@ -27,13 +27,13 @@
   - type: Sprite
     sprite: Structures/Machines/computers.rsi
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: generic
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -62,7 +62,7 @@
       params:
         volume: -1
         variation: 0.10
-        pitch: 1.10  # low pitch keyboard sounds feel kinda weird
+        pitch: 1.10 # low pitch keyboard sounds feel kinda weird
     blacklist:
       tags:
       - NoConsoleSound

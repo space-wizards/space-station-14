@@ -6,12 +6,12 @@
   components:
   - type: Tag
     tags:
-      - MagazineMagnum
+    - MagazineMagnum
   - type: BallisticAmmoProvider
     mayTransfer: true
     whitelist:
       tags:
-        - CartridgeMagnum
+      - CartridgeMagnum
     capacity: 7
 
 - type: entity
@@ -26,9 +26,9 @@
   - type: Sprite
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]
+      map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
+      map: [ "enum.GunVisualLayers.Mag" ]
   - type: Item
     inhandVisuals:
       left:
@@ -40,16 +40,17 @@
   parent: BaseMagazineMagnum
   id: MagazineMagnum
   name: pistol magazine (.45 magnum)
-  description: 7-round single stack magazine for large-caliber pistols. Intended to hold general-purpose kinetic ammunition.
+  description: 7-round single stack magazine for large-caliber pistols. Intended
+    to hold general-purpose kinetic ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnum
   - type: Sprite
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]
+      map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
+      map: [ "enum.GunVisualLayers.Mag" ]
   - type: Item
     inhandVisuals:
       left:
@@ -61,16 +62,17 @@
   parent: BaseMagazineMagnum
   id: MagazineMagnumPractice
   name: pistol magazine (.45 magnum practice)
-  description: 7-round single stack magazine for large-caliber pistols. Intended to hold harmless practice ammunition.
+  description: 7-round single stack magazine for large-caliber pistols. Intended
+    to hold harmless practice ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumPractice
   - type: Sprite
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]
+      map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
+      map: [ "enum.GunVisualLayers.Mag" ]
     - state: stripe
       color: "#dbdbdb"
   - type: Item
@@ -88,16 +90,17 @@
   parent: BaseMagazineMagnum
   id: MagazineMagnumUranium
   name: pistol magazine (.45 magnum uranium)
-  description: 7-round single stack magazine for large-caliber pistols. Intended to hold exotic uranium-core ammunition.
+  description: 7-round single stack magazine for large-caliber pistols. Intended
+    to hold exotic uranium-core ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumUranium
   - type: Sprite
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]
+      map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
+      map: [ "enum.GunVisualLayers.Mag" ]
     - state: stripe
       color: "#00cd42"
   - type: Item
@@ -115,16 +118,17 @@
   parent: BaseMagazineMagnum
   id: MagazineMagnumAP
   name: pistol magazine (.45 magnum armor-piercing)
-  description: 7-round single stack magazine for large-caliber pistols. Intended to hold specialized armor-piercing ammunition.
+  description: 7-round single stack magazine for large-caliber pistols. Intended
+    to hold specialized armor-piercing ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumAP
   - type: Sprite
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]
+      map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
+      map: [ "enum.GunVisualLayers.Mag" ]
     - state: stripe
       color: "#540000"
   - type: Item

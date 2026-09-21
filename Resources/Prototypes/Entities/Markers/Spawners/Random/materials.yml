@@ -5,15 +5,15 @@
   suffix: Construction Materials
   parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Materials/Sheets/metal.rsi
-          state: steel_3
-    - type: EntityTableSpawner
-      table: !type:NestedSelector
-        tableId: RandomAllConstructionMaterialsTable
-        prob: 0.8
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Materials/Sheets/metal.rsi
+      state: steel_3
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: RandomAllConstructionMaterialsTable
+      prob: 0.8
 
 - type: entity
   name: materials spawner
@@ -21,15 +21,15 @@
   id: LootSpawnerMaterialsSupplementary
   parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Materials/materials.rsi
-          state: wood_2
-    - type: EntityTableSpawner
-      table: !type:NestedSelector
-        tableId: RandomAllSupplementaryMaterialsTable
-        prob: 0.8
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Materials/materials.rsi
+      state: wood_2
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: RandomAllSupplementaryMaterialsTable
+      prob: 0.8
 
 # High-value materials spawners
 # Maybe these should use the 10-in-stack variants?
@@ -39,30 +39,30 @@
   id: LootSpawnerMaterialsHighValueConstruction
   parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Materials/Sheets/metal.rsi
-          state: plasteel_2
-    - type: EntityTableSpawner
-      table: !type:NestedSelector
-        tableId: RandomAllHighValueConstructionMaterialsTable
-        prob: 0.8
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Materials/Sheets/metal.rsi
+      state: plasteel_2
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: RandomAllHighValueConstructionMaterialsTable
+      prob: 0.8
 
 - type: entity
   name: high-value materials spawner
   id: LootSpawnerMaterialsHighValue
   parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Materials/Sheets/other.rsi
-          state: plasma_2
-    - type: EntityTableSpawner
-      table: !type:NestedSelector
-        tableId: RandomAllHighValueMaterialsTable
-        prob: 0.8
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Materials/Sheets/other.rsi
+      state: plasma_2
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: RandomAllHighValueMaterialsTable
+      prob: 0.8
 
 # Surplus materials spawner.
 # Intended use case: randomly place in maintenance or in storage areas.
@@ -72,15 +72,15 @@
   id: LootSpawnerMaterialsSurplus
   parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Materials/Sheets/metal.rsi
-          state: steel_3
-    - type: EntityTableSpawner
-      table: !type:NestedSelector
-        tableId: RandomAllSurplusMaterialTable
-        prob: 0.9
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Materials/Sheets/metal.rsi
+      state: steel_3
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: RandomAllSurplusMaterialTable
+      prob: 0.9
 
 # Cable coil spawner
 - type: entity
@@ -88,15 +88,15 @@
   id: LootSpawnerCableCoil
   parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Tools/cable-coils.rsi
-          state: coilall-30
-    - type: EntityTableSpawner
-      table: !type:NestedSelector
-        tableId: RandomAllCableCoilTable
-        prob: 0.9
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Tools/cable-coils.rsi
+      state: coilall-30
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: RandomAllCableCoilTable
+      prob: 0.9
 
 # Entity tables
 ## Construction Materials

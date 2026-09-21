@@ -1,5 +1,5 @@
 - type: entity
-  parent: [BaseWeaponBallisticTurret, BaseSyndicateContraband]
+  parent: [ BaseWeaponBallisticTurret, BaseSyndicateContraband ]
   id: WeaponTurretSyndicate
   suffix: Syndicate
   components:
@@ -20,8 +20,7 @@
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:TriggerBehavior
@@ -110,8 +109,7 @@
     damageContainer: StructuralBiological
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 175
       behaviors:
       - !type:PlaySoundBehavior

@@ -21,16 +21,16 @@
     # Underwear & clothing
     - map: [ "enum.HumanoidVisualLayers.UndergarmentBottom" ]
     - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
-    - map: ["jumpsuit"]
+    - map: [ "jumpsuit" ]
 
     # Extremities
-    - map: ["enum.HumanoidVisualLayers.LFoot"]
-    - map: ["enum.HumanoidVisualLayers.RFoot"]
-    - map: ["enum.HumanoidVisualLayers.LHand"]
-    - map: ["enum.HumanoidVisualLayers.RHand"]
+    - map: [ "enum.HumanoidVisualLayers.LFoot" ]
+    - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+    - map: [ "enum.HumanoidVisualLayers.LHand" ]
+    - map: [ "enum.HumanoidVisualLayers.RHand" ]
 
     # Stuff that goes over the body but below equipment
-    - map: ["enum.HumanoidVisualLayers.Overlay"]
+    - map: [ "enum.HumanoidVisualLayers.Overlay" ]
 
     # More equipment
     - map: [ "gloves" ]
@@ -60,7 +60,7 @@
     - map: [ "pocket2" ]
 
     # Extra stuff
-    - map: ["enum.HumanoidVisualLayers.Handcuffs"]
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
       color: "#ffffff"
       sprite: Objects/Misc/handcuffs.rsi
       state: body-overlay-2
@@ -89,9 +89,22 @@
         type: StrippableBoundUserInterface
   - type: InitialBody
     relationships:
-      Torso: [Head, ArmLeft, ArmRight, LegLeft, LegRight, Appendix, Lungs, Heart, Stomach, Liver, Kidneys]
-      Head: [Brain, Eyes, Tongue, Ears]
-      ArmLeft: [HandLeft]
-      ArmRight: [HandRight]
-      LegLeft: [FootLeft]
-      LegRight: [FootRight]
+      Torso:
+        [
+          Head,
+          ArmLeft,
+          ArmRight,
+          LegLeft,
+          LegRight,
+          Appendix,
+          Lungs,
+          Heart,
+          Stomach,
+          Liver,
+          Kidneys
+        ]
+      Head: [ Brain, Eyes, Tongue, Ears ]
+      ArmLeft: [ HandLeft ]
+      ArmRight: [ HandRight ]
+      LegLeft: [ FootLeft ]
+      LegRight: [ FootRight ]

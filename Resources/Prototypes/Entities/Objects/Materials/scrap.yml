@@ -17,8 +17,7 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 150
       behaviors:
       - !type:DoActsBehavior
@@ -43,8 +42,7 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 150
       behaviors:
       - !type:DoActsBehavior
@@ -60,25 +58,25 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.40,-0.40,0.40,0.40"
         density: 200
         mask:
-          - MachineMask
+        - MachineMask
         layer:
-          - MachineLayer
+        - MachineLayer
 
 - type: entity
   parent: BaseScrap
   id: ScrapSteel
   name: blasted steel pile
-  description: An pile of steel welded together in extreme heat. It's of a decent size overall; you could probably get a fair amount of sheets out of it.
+  description: An pile of steel welded together in extreme heat. It's of a decent
+    size overall; you could probably get a fair amount of sheets out of it.
   components:
   - type: Sprite
     layers:
-      - state: metal-1
-        map: [ "base" ]
+    - state: metal-1
+      map: [ "base" ]
   - type: Item
     size: Large
     shape:
@@ -99,7 +97,8 @@
   parent: BaseScrap
   id: ScrapGlass
   name: scrap circuitry
-  description: A huge lump of various circuits, strangely fused together. You could likely extract some materials out of this.
+  description: A huge lump of various circuits, strangely fused together. You
+    could likely extract some materials out of this.
   components:
   - type: Sprite
     layers:
@@ -234,7 +233,8 @@
   parent: BaseScrap
   id: ScrapCloset
   name: closet door
-  description: A blown off door from a maintenance closet. Looks like a nice piece of wall decor.
+  description: A blown off door from a maintenance closet. Looks like a nice piece
+    of wall decor.
   components:
   - type: Sprite
     layers:
@@ -253,7 +253,8 @@
   parent: BaseScrap
   id: ScrapFaxMachine
   name: fax machine
-  description: The unfortunate result of one too many ASCII arts being sent to Central Command.
+  description: The unfortunate result of one too many ASCII arts being sent to
+    Central Command.
   components:
   - type: Sprite
     layers:
@@ -450,7 +451,8 @@
   parent: BaseScrap
   id: ScrapPAIGold
   name: gilded personal ai device
-  description: Wow! What a one-in-a-million find! This would be worth a fortune... if it was in good condition.
+  description: Wow! What a one-in-a-million find! This would be worth a fortune...
+    if it was in good condition.
   components:
   - type: Sprite
     layers:
@@ -467,7 +469,8 @@
   parent: BaseScrap
   id: ScrapTube
   name: shattered sample tube
-  description: A glass tube containing some kind of rare sample. Or at least, it used to contain it. Not much left in there now.
+  description: A glass tube containing some kind of rare sample. Or at least, it
+    used to contain it. Not much left in there now.
   components:
   - type: Sprite
     layers:
@@ -500,8 +503,8 @@
     sprite: Objects/Materials/Scrap/generator.rsi
     snapCardinals: true
     layers:
-      - state: old_generator_plasma
-      - state: old_generator_plasma_fuel_leak
+    - state: old_generator_plasma
+    - state: old_generator_plasma_fuel_leak
   - type: PhysicalComposition
     materialComposition:
       Steel: 4000 # 40 sheets
@@ -512,12 +515,13 @@
   parent: BaseScrapLarge
   id: ScrapGeneratorPlasma
   name: old P.A.C.M.A.N. generator
-  description: An old looking P.A.C.M.A.N. generator. It's in very poor condition and non functional.
+  description: An old looking P.A.C.M.A.N. generator. It's in very poor condition
+    and non functional.
   components:
   - type: Sprite
     sprite: Objects/Materials/Scrap/generator.rsi
     layers:
-      - state: old_generator_plasma
+    - state: old_generator_plasma
   - type: PhysicalComposition
     materialComposition:
       Steel: 4000 # 40 sheets
@@ -528,17 +532,18 @@
   parent: BaseScrapLarge
   id: ScrapGeneratorUraniumLeaking
   name: leaking S.U.P.E.R.P.A.C.M.A.N. generator
-  description: A S.U.P.E.R.P.A.C.M.A.N. generator that appears to have had some kind of catastrophic failure. It's leaking uranium.
+  description: A S.U.P.E.R.P.A.C.M.A.N. generator that appears to have had some
+    kind of catastrophic failure. It's leaking uranium.
   components:
   - type: Sprite
     sprite: Objects/Materials/Scrap/generator.rsi
     layers:
-      - state: uranium_generator
-      - map: [ "extra" ]
-      - state: rad_dripping
-        shader: unshaded
-      - state: rad_outline
-        shader: unshaded
+    - state: uranium_generator
+    - map: [ "extra" ]
+    - state: rad_dripping
+      shader: unshaded
+    - state: rad_outline
+      shader: unshaded
   - type: RandomSprite
     available:
     - extra:
@@ -557,13 +562,14 @@
   parent: BaseScrapLarge
   id: ScrapGeneratorUranium
   name: destroyed S.U.P.E.R.P.A.C.M.A.N. generator
-  description: A S.U.P.E.R.P.A.C.M.A.N. generator that appears to have had some kind of catastrophic failure.
+  description: A S.U.P.E.R.P.A.C.M.A.N. generator that appears to have had some
+    kind of catastrophic failure.
   components:
   - type: Sprite
     sprite: Objects/Materials/Scrap/generator.rsi
     layers:
-      - state: uranium_generator
-      - map: [ "extra" ]
+    - state: uranium_generator
+    - map: [ "extra" ]
   - type: RandomSprite
     available:
     - extra:
@@ -581,12 +587,13 @@
   parent: BaseScrapLarge
   id: ScrapGeneratorFrame
   name: generator frame
-  description: A frame of a P.A.C.M.A.N. or S.U.P.E.R.P.A.C.M.A.N. type generator. Where is the rest of it?
+  description: A frame of a P.A.C.M.A.N. or S.U.P.E.R.P.A.C.M.A.N. type generator.
+    Where is the rest of it?
   components:
   - type: Sprite
     sprite: Objects/Materials/Scrap/generator.rsi
     layers:
-      - state: generator_frame
+    - state: generator_frame
   - type: PhysicalComposition
     materialComposition:
       Steel: 1500 # 15 sheets
@@ -595,12 +602,13 @@
   parent: BaseScrap
   id: ScrapGeneratorFuelTank
   name: fuel tank
-  description: A fuel tank from a S.U.P.E.R.P.A.C.M.A.N. type generator. The gauge indicates its got a little fuel left.
+  description: A fuel tank from a S.U.P.E.R.P.A.C.M.A.N. type generator. The gauge
+    indicates its got a little fuel left.
   components:
   - type: Sprite
     sprite: Objects/Materials/Scrap/generator.rsi
     layers:
-      - state: uranium_generator_fuel_tank
+    - state: uranium_generator_fuel_tank
   - type: Item
     sprite: Objects/Materials/Scrap/generator.rsi
     heldPrefix: "fuel"

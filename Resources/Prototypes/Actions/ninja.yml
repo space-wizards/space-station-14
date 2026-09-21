@@ -3,7 +3,8 @@
   parent: BaseToggleAction
   id: ActionToggleNinjaGloves
   name: Toggle ninja gloves
-  description: Toggles all glove actions on left click. Includes your doorjack, draining power, stunning enemies and hacking certain computers.
+  description: Toggles all glove actions on left click. Includes your doorjack,
+    draining power, stunning enemies and hacking certain computers.
   components:
   - type: Action
     priority: -13
@@ -13,7 +14,8 @@
   parent: BaseAction
   id: ActionCreateThrowingStar
   name: Create throwing star
-  description: Channels suit power into creating a throwing star that deals extra stamina damage.
+  description: Channels suit power into creating a throwing star that deals extra
+    stamina damage.
   components:
   - type: Action
     useDelay: 0.5
@@ -24,13 +26,14 @@
     layers:
     - state: icon
   - type: InstantAction
-    event: !type:CreateItemEvent {}
+    event: !type:CreateItemEvent
 
 - type: entity
   parent: BaseAction
   id: ActionRecallKatana
   name: Recall katana
-  description: Teleports the Energy Katana linked to this suit to its wearer, cost based on distance.
+  description: Teleports the Energy Katana linked to this suit to its wearer, cost
+    based on distance.
   components:
   - type: Action
     useDelay: 1
@@ -41,7 +44,7 @@
     layers:
     - state: icon
   - type: InstantAction
-    event: !type:RecallKatanaEvent {}
+    event: !type:RecallKatanaEvent
 
 - type: entity
   parent: BaseAction
@@ -57,22 +60,21 @@
     layers:
     - state: icon
   - type: InstantAction
-    event: !type:NinjaEmpEvent {}
+    event: !type:NinjaEmpEvent
 
 - type: entity
   parent: BaseAction
   id: ActionTogglePhaseCloak
   name: Phase cloak
-  description: Toggles your suit's phase cloak. Beware that if you are hit, all abilities are disabled for 5 seconds, including your cloak!
+  description: Toggles your suit's phase cloak. Beware that if you are hit, all
+    abilities are disabled for 5 seconds, including your cloak!
   components:
   - type: Action
     # have to plan (un)cloaking ahead of time
     useDelay: 5
     priority: -9
   - type: InstantAction
-    event: !type:ToggleActionEvent
-
-# katana
+    event: !type:ToggleActionEvent # katana
 - type: entity
   parent: BaseAction
   id: ActionEnergyKatanaDash

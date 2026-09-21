@@ -12,7 +12,6 @@
   graph: Seat
   conditions:
   - !type:TileNotBlocked
-
 - type: construction
   abstract: true
   parent: BaseFurniture
@@ -21,7 +20,6 @@
   canRotate: false
   conditions:
   - !type:TileNotBlocked
-
 - type: construction
   abstract: true
   parent: BaseFurniture
@@ -30,7 +28,6 @@
   canRotate: false
   conditions:
   - !type:TileNotBlocked
-
 - type: construction
   abstract: true
   parent: BaseFurniture
@@ -346,7 +343,6 @@
   canRotate: false
   conditions:
   - !type:TileNotBlocked
-
 - type: construction
   parent: BaseTable # close enough
   id: Bookshelf
@@ -374,7 +370,6 @@
   canBuildInImpassable: true
   conditions:
   - !type:WallmountCondition
-
 - type: construction
   parent: BaseFurniture
   id: PostBoard
@@ -384,7 +379,6 @@
   canBuildInImpassable: true
   conditions:
   - !type:WallmountCondition
-
 - type: construction
   parent: BaseFurniture
   id: Mannequin

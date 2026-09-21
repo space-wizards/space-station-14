@@ -1,6 +1,6 @@
 # Mailcart
 - type: entity
-  parent: [BaseStructureDynamic, StructureWheeled, StructureHealthContainer]
+  parent: [ BaseStructureDynamic, StructureWheeled, StructureHealthContainer ]
   id: MailCart
   name: mail cart
   description: Deliver packages with style and efficiency.
@@ -9,7 +9,7 @@
     noRot: true
     sprite: Objects/Specific/Cargo/mailcart.rsi
     layers:
-      - state: mailcart_base
+    - state: mailcart_base
   - type: InteractionOutline
   - type: Storage
     grid:
@@ -28,8 +28,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.18,-0.2,0.18,0.2"
         density: 60
         mask:
@@ -40,8 +39,7 @@
     damageModifierSet: PlasticMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:EmptyAllContainersBehaviour

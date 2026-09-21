@@ -31,13 +31,12 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
         density: 20
         mask:
         - ItemMask
-        restitution: 0.3  # fite me
+        restitution: 0.3 # fite me
         friction: 0.2
   - type: Sprite
     drawdepth: Items
@@ -56,12 +55,11 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:DoActsBehavior
-        acts: ["Destruction"]
+        acts: [ "Destruction" ]
 
 - type: entity
   name: "storage item"
@@ -86,7 +84,8 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.SharedBagOpenVisuals.BagState: # You don't have to use both of these if its not necessary.
+      enum.SharedBagOpenVisuals.BagState:
+        # You don't have to use both of these if its not necessary.
         closeLayer:
           Open: { visible: false }
           Closed: { visible: true }
@@ -148,46 +147,46 @@
   id: PowerCellSlotSmallItem
   abstract: true
   components:
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot { }
-    - type: PowerCellSlot
-      cellSlotId: cell_slot
-    - type: ItemSlots
-      slots:
-        cell_slot:
-          name: power-cell-slot-component-slot-name-default
-          startingItem: PowerCellSmall
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
 
 - type: entity
   id: PowerCellSlotMediumItem
   abstract: true
   components:
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot { }
-    - type: PowerCellSlot
-      cellSlotId: cell_slot
-    - type: ItemSlots
-      slots:
-        cell_slot:
-          name: power-cell-slot-component-slot-name-default
-          startingItem: PowerCellMedium
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
 
 - type: entity
   id: PowerCellSlotHighItem
   abstract: true
   components:
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot { }
-    - type: PowerCellSlot
-      cellSlotId: cell_slot
-    - type: ItemSlots
-      slots:
-        cell_slot:
-          name: power-cell-slot-component-slot-name-default
-          startingItem: PowerCellHigh
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
 
 - type: entity
   abstract: true
@@ -234,4 +233,4 @@
     name: secret-stash-plushie
   - type: ContainerContainer
     containers:
-      stash: !type:ContainerSlot {}
+      stash: !type:ContainerSlot

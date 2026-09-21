@@ -17,5 +17,5 @@
         data: { state: test }
       - options: ReducedMotion
         data: { state: motion }
-      - options: [Test, ReducedMotion]
+      - options: [ Test, ReducedMotion ]
         data: { state: both }

@@ -93,7 +93,7 @@
         volume: -4
   - type: UseDelay
   - type: Clothing
-    slots: [mask]
+    slots: [ mask ]
   - type: Tag
     tags:
     - PetWearable
@@ -102,7 +102,8 @@
   parent: [ BaseItem, BaseSportsBall ]
   id: BeachBall
   name: beach ball
-  description: The simple beach ball is one of Nanotrasen's most popular products. 'Why do we make beach balls? Because we can! (TM)' - Nanotrasen
+  description: The simple beach ball is one of Nanotrasen's most popular products.
+    'Why do we make beach balls? Because we can! (TM)' - Nanotrasen
   components:
   - type: Sprite
     sprite: Objects/Fun/Balls/beach_ball.rsi

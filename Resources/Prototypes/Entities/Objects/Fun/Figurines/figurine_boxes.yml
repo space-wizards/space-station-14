@@ -19,12 +19,14 @@
   parent: BaseItem
   id: MysteryFigureBox
   name: mystery spacemen minifigure box
-  description: A box containing a mystery minifigure. The side of the box depicts a few blacked-out 'rare' figures, including one with a large, non-humanoid shilouette.
+  description: A box containing a mystery minifigure. The side of the box depicts
+    a few blacked-out 'rare' figures, including one with a large, non-humanoid
+    shilouette.
   components:
   - type: Sprite
     sprite: Objects/Fun/figurines.rsi
     layers:
-      - state: fig_box
+    - state: fig_box
   - type: TriggerOnActivate
   - type: DeleteOnTrigger
   - type: EmitSoundOnTrigger
@@ -45,7 +47,8 @@
   id: MysteryLighterBox
   name: Novelty lighter mystery box
   suffix: Filled
-  description: A box of discontinued promotional lighters, many of which have since been declared "contraband".
+  description: A box of discontinued promotional lighters, many of which have
+    since been declared "contraband".
   components:
   - type: Sprite
     sprite: Objects/Fun/figurines.rsi
@@ -53,33 +56,33 @@
     - state: fig_box
   - type: SpawnItemsOnUse
     items:
-      - id: MysteryFigureBoxTrash
-      - id: CybersunFlippo
-        orGroup: Lighterbox
-        weight: 0.15
-      - id: InterdyneFlippo
-        orGroup: Lighterbox
-        weight: 0.15
-      - id: NanotrasenFlippo
-        orGroup: Lighterbox
-        weight: 0.25
-      - id: WaffleCoFlippo
-        orGroup: Lighterbox
-        weight: 0.35
-      - id: HonkCoFlippo
-        orGroup: Lighterbox
-      - id: GorlexMatchbox
-        orGroup: Lighterbox
-        weight: 0.15
-      - id: DonkcoLighter
-        orGroup: Lighterbox
-        weight: 0.25
-      - id: SyndicateFlippo
-        orGroup: Lighterbox
-        weight: 0.15
-      - id: SpiderclanFlippo
-        orGroup: Lighterbox
-        weight: 0.15
+    - id: MysteryFigureBoxTrash
+    - id: CybersunFlippo
+      orGroup: Lighterbox
+      weight: 0.15
+    - id: InterdyneFlippo
+      orGroup: Lighterbox
+      weight: 0.15
+    - id: NanotrasenFlippo
+      orGroup: Lighterbox
+      weight: 0.25
+    - id: WaffleCoFlippo
+      orGroup: Lighterbox
+      weight: 0.35
+    - id: HonkCoFlippo
+      orGroup: Lighterbox
+    - id: GorlexMatchbox
+      orGroup: Lighterbox
+      weight: 0.15
+    - id: DonkcoLighter
+      orGroup: Lighterbox
+      weight: 0.25
+    - id: SyndicateFlippo
+      orGroup: Lighterbox
+      weight: 0.15
+    - id: SpiderclanFlippo
+      orGroup: Lighterbox
+      weight: 0.15
 
 - type: entity
   parent: MysteryLighterBox
@@ -88,16 +91,16 @@
   components:
   - type: SpawnItemsOnUse
     items:
-      - id: MysteryFigureBoxTrash
-      - id: CybersunFlippo
-        orGroup: Lighterbox
-      - id: InterdyneFlippo
-        orGroup: Lighterbox
-      - id: WaffleCoFlippo
-        orGroup: Lighterbox
-      - id: GorlexMatchbox
-        orGroup: Lighterbox
-      - id: DonkcoLighter
-        orGroup: Lighterbox
-      - id: SyndicateFlippo
-        orGroup: Lighterbox
+    - id: MysteryFigureBoxTrash
+    - id: CybersunFlippo
+      orGroup: Lighterbox
+    - id: InterdyneFlippo
+      orGroup: Lighterbox
+    - id: WaffleCoFlippo
+      orGroup: Lighterbox
+    - id: GorlexMatchbox
+      orGroup: Lighterbox
+    - id: DonkcoLighter
+      orGroup: Lighterbox
+    - id: SyndicateFlippo
+      orGroup: Lighterbox

@@ -1,6 +1,13 @@
 - type: entity
   abstract: true
-  parent: [ DrinkBaseMaterialGlass, DrinkBase, DrinkBaseOpenable, DrinkBaseEmptyTrash, DrinkVisualsAll ]
+  parent:
+    [
+      DrinkBaseMaterialGlass,
+      DrinkBase,
+      DrinkBaseOpenable,
+      DrinkBaseEmptyTrash,
+      DrinkVisualsAll
+    ]
   id: BaseChemistryVial
   components:
   - type: Item
@@ -45,7 +52,7 @@
 ## Entities
 
 - type: entity
-  parent: [SolutionTiny, BaseChemistryVial]
+  parent: [ SolutionTiny, BaseChemistryVial ]
   id: ChemistryEmptyVial
   name: vial
   description: A small vial.
@@ -63,8 +70,7 @@
     price: 100
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -75,7 +81,7 @@
         transferForensics: true
 
 - type: entity
-  parent: [SolutionVeryTiny, BaseChemistryVial]
+  parent: [ SolutionVeryTiny, BaseChemistryVial ]
   id: ChemistryEmptyVialSmall
   name: mini vial
   description: A smaller vial.
@@ -96,7 +102,7 @@
       Glass: 10
 
 - type: entity
-  parent: [SolutionTiny, BaseChemistryAmpoule]
+  parent: [ SolutionTiny, BaseChemistryAmpoule ]
   id: ChemistryEmptyAmpoule
   name: ampoule
   description: Break to open.
@@ -115,8 +121,7 @@
       Glass: 10
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -141,8 +146,10 @@
       - ReagentId: Vestine
         Quantity: 30
   - type: Tag
-    tags: &TagVial # Remove trash tag when we have a filled solution
-    - CentrifugeCompatible
+    tags:
+      # Remove trash tag when we have a filled solution
+      &TagVial
+      - CentrifugeCompatible
 
 - type: entity
   parent: ChemistryEmptyVialSmall
@@ -202,7 +209,7 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: XenoborgOil
-          Quantity: 30
+      - ReagentId: XenoborgOil
+        Quantity: 30
   - type: Tag
     tags: *TagVial

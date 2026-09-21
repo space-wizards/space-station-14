@@ -1,11 +1,10 @@
 - type: marking
   id: TattooHiveChest
   bodyPart: Chest
-  groupWhitelist: [Human]
+  groupWhitelist: [ Human ]
   coloring:
     default:
-      type:
-        !type:TattooColoring
+      type: !type:TattooColoring
       fallbackColor: "#666666"
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
@@ -14,11 +13,10 @@
 - type: marking
   id: TattooNightlingChest
   bodyPart: Chest
-  groupWhitelist: [Human]
+  groupWhitelist: [ Human ]
   coloring:
     default:
-      type:
-        !type:TattooColoring
+      type: !type:TattooColoring
       fallbackColor: "#666666"
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
@@ -27,11 +25,10 @@
 - type: marking
   id: TattooSilverburghLeftLeg
   bodyPart: LLeg
-  groupWhitelist: [Human]
+  groupWhitelist: [ Human ]
   coloring:
     default:
-      type:
-        !type:TattooColoring
+      type: !type:TattooColoring
       fallbackColor: "#666666"
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
@@ -40,11 +37,10 @@
 - type: marking
   id: TattooSilverburghRightLeg
   bodyPart: RLeg
-  groupWhitelist: [Human]
+  groupWhitelist: [ Human ]
   coloring:
     default:
-      type:
-        !type:TattooColoring
+      type: !type:TattooColoring
       fallbackColor: "#666666"
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
@@ -53,11 +49,10 @@
 - type: marking
   id: TattooCampbellLeftArm
   bodyPart: LArm
-  groupWhitelist: [Human]
+  groupWhitelist: [ Human ]
   coloring:
     default:
-      type:
-        !type:TattooColoring
+      type: !type:TattooColoring
       fallbackColor: "#666666"
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
@@ -66,11 +61,10 @@
 - type: marking
   id: TattooCampbellRightArm
   bodyPart: RArm
-  groupWhitelist: [Human]
+  groupWhitelist: [ Human ]
   coloring:
     default:
-      type:
-        !type:TattooColoring
+      type: !type:TattooColoring
       fallbackColor: "#666666"
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
@@ -79,11 +73,10 @@
 - type: marking
   id: TattooCampbellLeftLeg
   bodyPart: LLeg
-  groupWhitelist: [Human]
+  groupWhitelist: [ Human ]
   coloring:
     default:
-      type:
-        !type:TattooColoring
+      type: !type:TattooColoring
       fallbackColor: "#666666"
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
@@ -92,11 +85,10 @@
 - type: marking
   id: TattooCampbellRightLeg
   bodyPart: RLeg
-  groupWhitelist: [Human]
+  groupWhitelist: [ Human ]
   coloring:
     default:
-      type:
-        !type:TattooColoring
+      type: !type:TattooColoring
       fallbackColor: "#666666"
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
@@ -105,12 +97,11 @@
 - type: marking
   id: TattooEyeRight
   bodyPart: Eyes
-  groupWhitelist: [Human, Slime, Reptilian]
+  groupWhitelist: [ Human, Slime, Reptilian ]
   coloring:
     default:
-      type:
-        !type:EyeColoring
-          negative: true
+      type: !type:EyeColoring
+        negative: true
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_eye_r
@@ -118,12 +109,11 @@
 - type: marking
   id: TattooEyeLeft
   bodyPart: Eyes
-  groupWhitelist: [Human, Slime, Reptilian]
+  groupWhitelist: [ Human, Slime, Reptilian ]
   coloring:
     default:
-      type:
-        !type:EyeColoring
-          negative: true
+      type: !type:EyeColoring
+        negative: true
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_eye_l
@@ -131,12 +121,11 @@
 - type: marking
   id: TattooEyeMothRight
   bodyPart: Eyes
-  groupWhitelist: [Moth]
+  groupWhitelist: [ Moth ]
   coloring:
     default:
-      type:
-        !type:EyeColoring
-          negative: true
+      type: !type:EyeColoring
+        negative: true
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_eye_moth_r
@@ -144,12 +133,11 @@
 - type: marking
   id: TattooEyeMothLeft
   bodyPart: Eyes
-  groupWhitelist: [Moth]
+  groupWhitelist: [ Moth ]
   coloring:
     default:
-      type:
-        !type:EyeColoring
-          negative: true
+      type: !type:EyeColoring
+        negative: true
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_eye_moth_l
@@ -157,12 +145,11 @@
 - type: marking
   id: TattooEyeVulpkaninRight
   bodyPart: Eyes
-  groupWhitelist: [Vulpkanin]
+  groupWhitelist: [ Vulpkanin ]
   coloring:
     default:
-      type:
-        !type:EyeColoring
-          negative: true
+      type: !type:EyeColoring
+        negative: true
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_eye_vulpkanin_r
@@ -170,12 +157,11 @@
 - type: marking
   id: TattooEyeVulpkaninLeft
   bodyPart: Eyes
-  groupWhitelist: [Vulpkanin]
+  groupWhitelist: [ Vulpkanin ]
   coloring:
     default:
-      type:
-        !type:EyeColoring
-          negative: true
+      type: !type:EyeColoring
+        negative: true
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_eye_vulpkanin_l
@@ -188,7 +174,7 @@
   # this is not a very big issue on humans, but is much more pronounced on vox & other nonhuman species, where the skin being more colorful can make for some truly dreadful meshing with the sprite thats definitely not desired.
   # some of these limitations could possibly be removed with better control over how the marking can be customized - possibly removing stacking, allowing recoloring & clamping higher-end colors for the eyeshadow, etc.
   bodyPart: Eyes
-  groupWhitelist: [Human, Slime, Reptilian]
+  groupWhitelist: [ Human, Slime, Reptilian ]
   forcedColoring: true
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
@@ -197,7 +183,7 @@
 - type: marking
   id: TattooEyeshadowLower
   bodyPart: Eyes
-  groupWhitelist: [Human, Slime, Reptilian]
+  groupWhitelist: [ Human, Slime, Reptilian ]
   forcedColoring: true
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi

@@ -83,8 +83,8 @@
       Cold: 5
       Blunt: 5
       Structural: 50
-  tileBreakChance: [0]
-  tileBreakIntensity: [0]
+  tileBreakChance: [ 0 ]
+  tileBreakIntensity: [ 0 ]
   lightColor: Blue
   fireColor: Blue
   texturePath: /Textures/Effects/fire_greyscale.rsi
@@ -98,8 +98,8 @@
       Blunt: 7
       Piercing: 4
       Structural: 10
-  tileBreakChance: [0, 0.5, 1]
-  tileBreakIntensity: [0, 50, 75]
+  tileBreakChance: [ 0, 0.5, 1 ]
+  tileBreakIntensity: [ 0, 50, 75 ]
   tileBreakRerollReduction: 20
   lightColor: Orange
   texturePath: /Textures/Effects/fire.rsi

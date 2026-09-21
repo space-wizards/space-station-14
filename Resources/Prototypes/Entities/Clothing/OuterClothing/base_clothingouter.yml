@@ -63,7 +63,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionFood, SolutionNormal, ClothingOuterStorageBase]
+  parent: [ SolutionFood, SolutionNormal, ClothingOuterStorageBase ]
   id: ClothingOuterStorageEdible
   components:
   - type: Edible
@@ -76,12 +76,12 @@
 
 - type: entity
   abstract: true
-  parent: [ ClothingOuterStorageEdible, TemperatureProtectionMinimal]
+  parent: [ ClothingOuterStorageEdible, TemperatureProtectionMinimal ]
   id: ClothingOuterJacketBase
 
 - type: entity
   abstract: true
-  parent: [ClothingOuterStorageBase, BaseFoldable]
+  parent: [ ClothingOuterStorageBase, BaseFoldable ]
   id: ClothingOuterStorageFoldableBase
   components:
   - type: Foldable
@@ -96,7 +96,7 @@
     - state: icon
       map: [ "unfoldedLayer" ]
     - state: icon-open
-      map: ["foldedLayer"]
+      map: [ "foldedLayer" ]
       visible: false
 
 - type: entity
@@ -117,7 +117,7 @@
       map: [ "unfoldedLayer" ]
       visible: false
     - state: icon-open
-      map: ["foldedLayer"]
+      map: [ "foldedLayer" ]
       visible: true
 
 - type: entity
@@ -130,19 +130,19 @@
     slot: head
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:ContainerSlot
       storagebase: !type:Container
         ents: []
 
 - type: entity
   abstract: true
-  parent: [ClothingOuterBaseLargeInsulated, AllowSuitStorageClothing]
+  parent: [ ClothingOuterBaseLargeInsulated, AllowSuitStorageClothing ]
   id: ClothingOuterEVASuitBase
   name: base EVA Suit
   components:
-# SlotBlocker blocked until UI change
-#  - type: SlotBlock
-#    slots: [innerclothing, feet]
+  # SlotBlocker blocked until UI change
+  #  - type: SlotBlock
+  #    slots: [innerclothing, feet]
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000
@@ -189,7 +189,7 @@
     action: ActionToggleSuitPiece
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:ContainerSlot
   - type: GroupExamine
   - type: Tag
     tags:
@@ -207,7 +207,7 @@
     action: ActionToggleSuitPiece
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:ContainerSlot
 
 - type: entity
   abstract: true
@@ -221,7 +221,7 @@
     verbText: toggle-clothing-verb-hood
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:ContainerSlot
       storagebase: !type:Container
         ents: []
 

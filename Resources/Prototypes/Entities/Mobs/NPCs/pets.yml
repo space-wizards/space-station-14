@@ -22,7 +22,7 @@
     drawdepth: Mobs
     sprite: Mobs/Pets/corgi.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: ian
   - type: Inventory
     speciesId: dog
@@ -75,7 +75,7 @@
   components:
   - type: Sprite
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: old_ian
   - type: DamageStateVisuals
     states:
@@ -100,7 +100,7 @@
   components:
   - type: Sprite
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: lisa
   - type: DamageStateVisuals
     states:
@@ -142,7 +142,7 @@
   components:
   - type: Sprite
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: real_mouse
   - type: DamageStateVisuals
     states:
@@ -184,7 +184,7 @@
   components:
   - type: NpcFactionMember
     factions:
-      - PetsNT
+    - PetsNT
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
@@ -210,7 +210,7 @@
   components:
   - type: NpcFactionMember
     factions:
-      - PetsNT
+    - PetsNT
   - type: SpeakOnException
     speechCooldown: 2m
     chanceSpeakNoAccent: 0.007
@@ -234,8 +234,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         density: 40
         mask:
@@ -268,7 +267,14 @@
     - VimPilot
 
 - type: entity
-  parent: [ BaseUniquePet, SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable , BaseMobDestructible ]
+  parent:
+    [
+      BaseUniquePet,
+      SimpleMobBase,
+      StripableInventoryBase,
+      BaseSlicingRefinable,
+      BaseMobDestructible
+    ]
   id: MobBingus
   name: Bingus
   description: Bingus my beloved...
@@ -277,14 +283,13 @@
     drawdepth: Mobs
     sprite: Mobs/Pets/bingus.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: bingus
   - type: Physics
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         density: 12
         mask:
@@ -325,7 +330,14 @@
     stealGroup: AnimalNamedCat
 
 - type: entity
-  parent: [ BaseUniquePet, SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable , BaseMobDestructible ]
+  parent:
+    [
+      BaseUniquePet,
+      SimpleMobBase,
+      StripableInventoryBase,
+      BaseSlicingRefinable,
+      BaseMobDestructible
+    ]
   id: MobMcGriff
   name: McGriff
   description: This dog can tell something smells around here, and that something is CRIME!
@@ -334,7 +346,7 @@
     drawdepth: Mobs
     sprite: Mobs/Pets/mcgriff.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: mcgriff
     - map: [ "head" ]
     - map: [ "eyes" ]
@@ -342,8 +354,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         density: 20
         mask:
@@ -404,13 +415,14 @@
   parent: [ BaseUniquePet, MobSloth, BaseSlicingRefinable ]
   id: MobPaperwork
   name: Paperwork
-  description: Took up a new job sorting books in the library after he got transferred from Space Station 13. He seems to be just as slow at this.
+  description: Took up a new job sorting books in the library after he got
+    transferred from Space Station 13. He seems to be just as slow at this.
   components:
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/paperwork.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: paperwork
   - type: DamageStateVisuals
     states:
@@ -435,7 +447,14 @@
       gender: male
 
 - type: entity
-  parent: [ BaseUniquePet, SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable , BaseMobDestructible ]
+  parent:
+    [
+      BaseUniquePet,
+      SimpleMobBase,
+      StripableInventoryBase,
+      BaseSlicingRefinable,
+      BaseMobDestructible
+    ]
   id: MobWalter
   name: Walter
   description: He likes chems and treats. Walter.
@@ -444,14 +463,13 @@
     drawdepth: Mobs
     sprite: Mobs/Pets/walter.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: walter
   - type: Physics
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         density: 50
         mask:
@@ -501,7 +519,8 @@
   parent: [ BaseUniquePet, MobPossum ]
   id: MobPossumMorty
   name: Morty
-  description: The station's resident Didelphis virginiana. A sensitive but resilient kind of guy.
+  description: The station's resident Didelphis virginiana. A sensitive but
+    resilient kind of guy.
   components:
   - type: InteractionPopup
     successChance: 1.0 # Hey, c'mon, this is Morty we're talking about here.
@@ -544,7 +563,8 @@
   parent: MobPossumMorty
   id: MobPossumPoppy
   name: Poppy # the Safety Possum
-  description: It's an opossum, a small scavenging marsupial. It's wearing appropriate personal protective equipment.
+  description: It's an opossum, a small scavenging marsupial. It's wearing
+    appropriate personal protective equipment.
   components:
   - type: Grammar
     attributes:
@@ -647,7 +667,7 @@
     drawdepth: SmallMobs
     sprite: Mobs/Pets/hamlet.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+    - map: [ "enum.DamageStateVisualLayers.Base", "movement" ]
       state: hamster-0
   - type: SpriteMovement
     movementLayers:
@@ -721,11 +741,11 @@
       path: /Audio/Animals/snake_hiss.ogg
   - type: NpcFactionMember
     factions:
-      - PetsNT
+    - PetsNT
   - type: Sprite
     drawdepth: Mobs
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+    - map: [ "enum.DamageStateVisualLayers.Base", "movement" ]
       state: shiva
       sprite: Mobs/Pets/shiva.rsi
   - type: SpriteMovement
@@ -805,10 +825,17 @@
     prototypes: [ BoxingKangarooGear ]
 
 - type: entity
-  parent: [ BaseUniquePet, MobAdultSlimes, StripableInventoryBase, BaseSlicingRefinable ]
+  parent:
+    [
+      BaseUniquePet,
+      MobAdultSlimes,
+      StripableInventoryBase,
+      BaseSlicingRefinable
+    ]
   id: MobSlimesPet
   name: Smile
-  description: This masterpiece has gone through thousands of experiments. But it is the sweetest creature in the world. Smile Slime!
+  description: This masterpiece has gone through thousands of experiments. But it
+    is the sweetest creature in the world. Smile Slime!
   components:
   - type: Sprite
     layers:
@@ -858,8 +885,7 @@
   - type: Bloodstream
     bloodlossHealDamage:
       types:
-        Bloodloss:
-          -0.8
+        Bloodloss: -0.8
   - type: Temperature
   - type: TemperatureDamage
     heatDamageThreshold: 800
@@ -925,15 +951,15 @@
   name: Tropico
   description: The noble and stalwart defender of Atmosia. Viva!
   components:
-#  - type: GhostRole
-#    prob: 1
-#    makeSentient: true
-#    allowSpeech: true
-#    allowMovement: true
-#    name: ghost-role-information-tropico-name
-#    description: ghost-role-information-tropico-description
-#    rules: ghost-role-information-nonantagonist-rules
-#  - type: GhostTakeoverAvailable
+  #  - type: GhostRole
+  #    prob: 1
+  #    makeSentient: true
+  #    allowSpeech: true
+  #    allowMovement: true
+  #    name: ghost-role-information-tropico-name
+  #    description: ghost-role-information-tropico-description
+  #    rules: ghost-role-information-nonantagonist-rules
+  #  - type: GhostTakeoverAvailable
   - type: Tag
     tags:
     - VimPilot
@@ -942,7 +968,7 @@
     attributes:
       proper: true
       gender: male
-#  - type: AlwaysRevolutionaryConvertible
+  #  - type: AlwaysRevolutionaryConvertible
   - type: StealTarget
     stealGroup: AnimalTropico
 
@@ -962,4 +988,3 @@
       gender: male
   - type: Loadout
     prototypes: [ MobPollyGear ]
-

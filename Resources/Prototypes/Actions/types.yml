@@ -8,7 +8,7 @@
   - type: Action
   - type: Sprite
     layers:
-    - map: ["enum.ActionVisuals.Icon"]
+    - map: [ "enum.ActionVisuals.Icon" ]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -60,7 +60,6 @@
   components:
   - type: InstantAction
     event: !type:ActivateImplantEvent
-
 - type: entity
   abstract: true
   parent: BaseAction
@@ -68,8 +67,7 @@
   components:
   - type: InstantAction
     event: !type:ToggleActionEvent
-
-# actions
+      # actions
 
 - type: entity
   parent: BaseAction
@@ -99,7 +97,6 @@
     - texture: Interface/Actions/zombie-turn.png
   - type: InstantAction
     event: !type:ZombifySelfActionEvent
-
 - type: entity
   parent: BaseToggleAction
   id: ActionToggleLight
@@ -112,9 +109,9 @@
     sprite: Objects/Tools/flashlight.rsi
     layers:
     - state: flashlight
-      map: ["enum.ActionVisuals.Icon"]
+      map: [ "enum.ActionVisuals.Icon" ]
     - state: flashlight-on
-      map: ["enum.ActionVisuals.IconToggled"]
+      map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
 
 - type: entity
@@ -133,12 +130,12 @@
     - state: icon
   - type: InstantAction
     event: !type:OpenStorageImplantEvent
-
 - type: entity
-  parent: [BaseSuicideAction, BaseImplantAction]
+  parent: [ BaseSuicideAction, BaseImplantAction ]
   id: ActionActivateMicroBomb
   name: Activate Microbomb
-  description: Activates your internal microbomb, completely destroying you and your equipment
+  description: Activates your internal microbomb, completely destroying you and
+    your equipment
   components:
   - type: DangerousAction
   - type: Action
@@ -150,7 +147,7 @@
     - state: explosive
 
 - type: entity
-  parent: [BaseSuicideAction, BaseImplantAction]
+  parent: [ BaseSuicideAction, BaseImplantAction ]
   id: ActionActivateDeathAcidifier
   name: Activate Death-Acidifier
   description: Activates your death-acidifier, completely melting you and your equipment
@@ -179,7 +176,7 @@
     sprite: Actions/Implants/implants.rsi
     layers:
     - state: freedom
-      map: ["enum.ActionVisuals.Icon"]
+      map: [ "enum.ActionVisuals.Icon" ]
 
 - type: entity
   parent: BaseAction
@@ -196,7 +193,6 @@
     - state: old-radio
   - type: InstantAction
     event: !type:OpenUplinkImplantEvent
-
 - type: entity
   parent: BaseImplantAction
   id: ActionActivateEmpImplant
@@ -214,7 +210,7 @@
     sprite: Objects/Weapons/Grenades/empgrenade.rsi
     layers:
     - state: icon
-      map: ["enum.ActionVisuals.Icon"]
+      map: [ "enum.ActionVisuals.Icon" ]
 
 - type: entity
   parent: BaseImplantAction
@@ -233,13 +229,13 @@
     sprite: Structures/Specific/anomaly.rsi
     layers:
     - state: anom4
-      map: ["enum.ActionVisuals.Icon"]
+      map: [ "enum.ActionVisuals.Icon" ]
 
 - type: entity
   parent: BaseImplantAction
   id: ActionActivateDnaScramblerImplant
   name: Scramble DNA
-  description:  Randomly changes your name and appearance.
+  description: Randomly changes your name and appearance.
   components:
   - type: ConfirmableAction
     popup: dna-scrambler-action-popup
@@ -252,7 +248,7 @@
     sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
     layers:
     - state: icon
-      map: ["enum.ActionVisuals.Icon"]
+      map: [ "enum.ActionVisuals.Icon" ]
 
 - type: entity
   parent: BaseAction
@@ -265,7 +261,6 @@
     useDelay: 1 # equip noise spam.
   - type: InstantAction
     event: !type:ToggleClothingEvent
-
 - type: entity
   parent: BaseMentalAction
   id: ActionCombatModeToggle
@@ -277,13 +272,12 @@
   - type: Sprite
     layers:
     - texture: Interface/Actions/harmOff.png
-      map: ["enum.ActionVisuals.Icon"]
+      map: [ "enum.ActionVisuals.Icon" ]
     - texture: Interface/Actions/harm.png
-      map: ["enum.ActionVisuals.IconToggled"]
+      map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
   - type: InstantAction
     event: !type:ToggleCombatActionEvent
-
 - type: entity
   parent: ActionCombatModeToggle
   id: ActionCombatModeToggleOff
@@ -305,7 +299,6 @@
     - state: icon
   - type: InstantAction
     event: !type:VoiceMaskSetNameEvent
-
 - type: entity
   parent: BaseAction
   id: ActionShootWater
@@ -319,7 +312,6 @@
     - state: flower
   - type: InstantAction
     event: !type:SprayLiquidEvent
-
 - type: entity
   parent: BaseAction
   id: ActionVendingThrow
@@ -330,7 +322,6 @@
     useDelay: 30
   - type: InstantAction
     event: !type:VendingMachineSelfDispenseEvent
-
 - type: entity
   parent: BaseToggleAction
   id: ActionToggleBlock
@@ -342,9 +333,9 @@
     sprite: Objects/Weapons/Melee/shields.rsi
     layers:
     - state: teleriot-icon
-      map: ["enum.ActionVisuals.Icon"]
+      map: [ "enum.ActionVisuals.Icon" ]
     - state: teleriot-on
-      map: ["enum.ActionVisuals.IconToggled"]
+      map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
 
 - type: entity
@@ -362,7 +353,6 @@
     - state: icon
   - type: InstantAction
     event: !type:ClearAllOverlaysEvent
-
 - type: entity
   parent: BaseAction
   id: ActionAnimalLayEgg
@@ -377,7 +367,6 @@
     - state: icon
   - type: InstantAction
     event: !type:EntityProductionActionEvent
-
 - type: entity
   parent: BaseMentalAction
   id: ActionSleep
@@ -391,7 +380,6 @@
     - state: icon
   - type: InstantAction
     event: !type:SleepActionEvent
-
 - type: entity
   parent: BaseMentalAction
   id: ActionWake
@@ -407,12 +395,12 @@
     - state: icon
   - type: InstantAction
     event: !type:WakeActionEvent
-
 - type: entity
   parent: BaseImplantAction
   id: ActionActivateHonkImplant
   name: Honk
-  description: Activates your honking implant, which will produce the signature sound of the clown.
+  description: Activates your honking implant, which will produce the signature
+    sound of the clown.
   components:
   - type: Action
     useDelay: 1
@@ -435,25 +423,24 @@
     - texture: Interface/Actions/firestarter.png
   - type: InstantAction
     event: !type:FireStarterActionEvent
-
 - type: entity
   parent: BaseMentalAction
   id: ActionToggleEyes
   name: Open/Close eyes
-  description: Close your eyes to protect your peepers, or open your eyes to enjoy the pretty lights.
+  description: Close your eyes to protect your peepers, or open your eyes to enjoy
+    the pretty lights.
   components:
   - type: Action
     useDelay: 1 # so u cant give yourself and observers eyestrain by rapidly spamming the action
   - type: Sprite
     layers:
     - texture: Interface/Actions/eyeopen.png
-      map: ["enum.ActionVisuals.Icon"]
+      map: [ "enum.ActionVisuals.Icon" ]
     - texture: Interface/Actions/eyeclose.png
-      map: ["enum.ActionVisuals.IconToggled"]
+      map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
   - type: InstantAction
     event: !type:ToggleEyesActionEvent
-
 - type: entity
   parent: BaseToggleAction
   id: ActionToggleWagging
@@ -483,9 +470,9 @@
     sprite: Interface/Actions/actions_fakemindshield.rsi
     layers:
     - state: icon
-      map: ["enum.ActionVisuals.Icon"]
+      map: [ "enum.ActionVisuals.Icon" ]
     - state: icon-on
-      map: ["enum.ActionVisuals.IconToggled"]
+      map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
   - type: InstantAction
     event: !type:FakeMindShieldToggleEvent
@@ -520,7 +507,7 @@
     layers:
     - state: icon
   - type: InstantAction
-    event: !type:ToggleNightVisionEvent {}
+    event: !type:ToggleNightVisionEvent
 
 - type: entity
   parent: ActionToggleWagging
@@ -538,7 +525,8 @@
   parent: BaseAction
   id: ActionGravityJump
   name: Jump
-  description: Activating the advanced propulsion system, you propel yourself a short distance in the direction of your gaze.
+  description: Activating the advanced propulsion system, you propel yourself a
+    short distance in the direction of your gaze.
   components:
   - type: Action
     useDelay: 8
@@ -547,7 +535,7 @@
     layers:
     - state: icon
   - type: InstantAction
-    event: !type:GravityJumpEvent {}
+    event: !type:GravityJumpEvent
 
 - type: entity
   parent: ActionGravityJump
@@ -565,7 +553,8 @@
   parent: BaseAction
   id: ActionVulpkaninGravityJump
   name: Leap
-  description: Use your agile legs to leap a short distance. Be careful not to bump into anything!
+  description: Use your agile legs to leap a short distance. Be careful not to
+    bump into anything!
   components:
   - type: Action
     useDelay: 12
@@ -574,7 +563,7 @@
     layers:
     - state: icon
   - type: InstantAction
-    event: !type:GravityJumpEvent {}
+    event: !type:GravityJumpEvent
 
 - type: entity
   parent: BaseToggleAction
@@ -603,7 +592,6 @@
     - state: chameleon
   - type: InstantAction
     event: !type:ChameleonControllerOpenMenuEvent
-
 - type: entity
   parent: BaseMentalAction
   id: ActionIntrinsicStore
@@ -616,7 +604,6 @@
     - texture: Interface/Actions/shop.png
   - type: InstantAction
     event: !type:IntrinsicStoreActionEvent
-
 - type: entity
   parent: ActionChangeVoiceMask
   id: ActionChangeVoiceMaskImplant

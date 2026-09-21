@@ -15,7 +15,7 @@
   - AssistiveItems
   - SurvivalMedical
   - Trinkets
-#  - ChiefMedicalOfficerJobTrinkets
+  #  - ChiefMedicalOfficerJobTrinkets
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -33,7 +33,7 @@
   - AssistiveItems
   - SurvivalMedical
   - Trinkets
-#  - MedicalDoctorJobTrinkets
+  #  - MedicalDoctorJobTrinkets
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -46,7 +46,7 @@
   - AssistiveItems
   - SurvivalMedical
   - Trinkets
-#  - MedicalInternJobTrinkets
+  #  - MedicalInternJobTrinkets
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -62,7 +62,7 @@
   - AssistiveItems
   - SurvivalMedical
   - Trinkets
-#  - ChemistJobTrinkets
+  #  - ChemistJobTrinkets
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -79,5 +79,5 @@
   - AssistiveItems
   - SurvivalMedical
   - Trinkets
-#  - ParamedicJobTrinkets
+  #  - ParamedicJobTrinkets
   - GroupSpeciesBreathToolMedical

@@ -14,8 +14,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.1
         density: 190
         mask:
@@ -33,7 +32,7 @@
     secretStashName: secret-stash-plant
   - type: ContainerContainer
     containers:
-      stash: !type:ContainerSlot {}
+      stash: !type:ContainerSlot
   - type: Pullable
   - type: MultiHandedItem
   - type: Item
@@ -43,8 +42,7 @@
     damageModifierSet: RockMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 40
       behaviors:
       - !type:PlaySoundBehavior
@@ -241,7 +239,10 @@
   id: PottedPlantRD #PottedPlant25
   parent: PottedPlantBase
   name: "RD's potted plant"
-  description: "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
+  description: "A gift from the botanical staff, presented after the RD's
+    reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"
+
+    It doesn't look very healthy..."
   components:
   - type: Sprite
     state: plant-25
@@ -262,7 +263,8 @@
   id: PottedPlant27
   parent: PottedPlantBase
   name: plastic potted plant
-  description: A fake, cheap looking, plastic tree. Perfect for people who kill every plant they touch.
+  description: A fake, cheap looking, plastic tree. Perfect for people who kill
+    every plant they touch.
   components:
   - type: Sprite
     state: plant-27

@@ -106,14 +106,14 @@
   parent: MarkerBase
   suffix: 100
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Mobs/Aliens/Xenos/spacetick.rsi
-          state: icon
-    - type: ConditionalSpawner
-      prototypes:
-        - MobTickSalvage
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Mobs/Aliens/Xenos/spacetick.rsi
+      state: icon
+  - type: ConditionalSpawner
+    prototypes:
+    - MobTickSalvage
 
 - type: entity
   name: Salvage Space Bear Spawner
@@ -164,9 +164,9 @@
   components:
   - type: Sprite
     layers:
-      - state: green
-      - state: spacecobra
-        sprite: Mobs/Animals/spacecobra.rsi
+    - state: green
+    - state: spacecobra
+      sprite: Mobs/Animals/spacecobra.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobCobraSpaceSalvage

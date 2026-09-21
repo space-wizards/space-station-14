@@ -14,7 +14,6 @@
   materials:
     Cloth: 150
     Durathread: 50
-
   #Base bedsheets
 
 - type: latheRecipe
@@ -66,7 +65,6 @@
   parent: BaseBedsheetRecipe
   id: BedsheetYellow
   result: BedsheetYellow
-
   #Specified bedsheets
 
 - type: latheRecipe

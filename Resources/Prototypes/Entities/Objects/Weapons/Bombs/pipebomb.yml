@@ -8,7 +8,7 @@
     sprite: Objects/Weapons/Bombs/pipebomb.rsi
     layers:
     - state: base
-      map: ["enum.TriggerVisualLayers.Base"]
+      map: [ "enum.TriggerVisualLayers.Base" ]
     - state: wires
   - type: TriggerOnActivate # todo: make it activate through welder/lighter/fire instead
   - type: TimerTrigger

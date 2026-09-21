@@ -25,8 +25,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
         mask:
         - FullTileMask
@@ -43,8 +42,7 @@
     damageModifierSet: RockMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 30
       behaviors:
       - &SoundStoneBreak !type:PlaySoundBehavior
@@ -100,20 +98,18 @@
     damageModifierSet: RockMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 3
       behaviors:
       - !type:TimerStartBehavior
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 500 # you have to really smack it for it to manually detonate. re-examine once defusal exists
       behaviors:
       - !type:DoActsBehavior
-        acts: ["Destruction"]
+        acts: [ "Destruction" ]
       - !type:TriggerBehavior
         keyOut: timer # explode immediately
 
@@ -482,8 +478,7 @@
     damageModifierSet: RockMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 150
       behaviors:
       - *SoundStoneBreak

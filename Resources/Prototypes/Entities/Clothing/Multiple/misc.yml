@@ -30,8 +30,8 @@
     visuals:
       enum.ToggleableVisuals.Enabled:
         enum.ToggleableVisuals.Layer:
-          True: {state: icon-on}
-          False: {state: icon}
+          True: { state: icon-on }
+          False: { state: icon }
   - type: ItemToggle
     predictable: false
     soundActivate:

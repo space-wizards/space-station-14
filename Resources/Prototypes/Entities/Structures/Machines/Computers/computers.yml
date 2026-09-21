@@ -8,13 +8,13 @@
     board: AlertsComputerCircuitboard
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: alert-0
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: atmos_key
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -40,10 +40,10 @@
     key: enum.AtmosAlertsComputerUiKey.Key
   - type: UserInterface
     interfaces:
-        enum.AtmosAlertsComputerUiKey.Key:
-            type: AtmosAlertsComputerBoundUserInterface
-        enum.WiresUiKey.Key:
-          type: WiresBoundUserInterface
+      enum.AtmosAlertsComputerUiKey.Key:
+        type: AtmosAlertsComputerBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: GuideHelp
     guides:
     - AtmosphericAlertsComputer
@@ -60,13 +60,13 @@
     board: AtmosMonitoringComputerCircuitboard
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: tank
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: atmos_key
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -101,10 +101,10 @@
     key: enum.EmergencyConsoleUiKey.Key
   - type: UserInterface
     interfaces:
-        enum.EmergencyConsoleUiKey.Key:
-          type: EmergencyConsoleBoundUserInterface
-        enum.WiresUiKey.Key:
-          type: WiresBoundUserInterface
+      enum.EmergencyConsoleUiKey.Key:
+        type: EmergencyConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: PointLight
     radius: 1.5
     energy: 4.0
@@ -122,10 +122,10 @@
     key: enum.ShuttleConsoleUiKey.Key
   - type: UserInterface
     interfaces:
-        enum.ShuttleConsoleUiKey.Key:
-          type: ShuttleConsoleBoundUserInterface
-        enum.WiresUiKey.Key:
-          type: WiresBoundUserInterface
+      enum.ShuttleConsoleUiKey.Key:
+        type: ShuttleConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: RadarConsole
   - type: PointLight
     radius: 1.5
@@ -146,7 +146,7 @@
     containers:
       board: !type:Container
         ents: []
-      disk_slot: !type:ContainerSlot {}
+      disk_slot: !type:ContainerSlot
   - type: GuideHelp
     guides:
     - ShuttleCraft
@@ -159,13 +159,13 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: shuttle
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -180,19 +180,19 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: syndishuttle
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: syndie_key
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
   - type: Tag
     tags:
-      - Syndicate
+    - Syndicate
   - type: RadarConsole
     maxRange: 384
   - type: PointLight
@@ -210,19 +210,19 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: shuttle
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
   - type: DroneConsole
     components:
-      - type: CargoShuttle
+    - type: CargoShuttle
   - type: RadarConsole
     maxRange: 256
   - type: PointLight
@@ -243,14 +243,14 @@
   - type: IFFConsole
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       sprite: Structures/Shuttles/iff.rsi
       state: helm
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -258,10 +258,10 @@
     key: enum.IFFConsoleUiKey.Key
   - type: UserInterface
     interfaces:
-        enum.IFFConsoleUiKey.Key:
-          type: IFFConsoleBoundUserInterface
-        enum.WiresUiKey.Key:
-          type: WiresBoundUserInterface
+      enum.IFFConsoleUiKey.Key:
+        type: IFFConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: Computer
     board: ComputerIFFCircuitboard
 
@@ -274,17 +274,17 @@
   components:
   - type: IFFConsole
     allowedFlags:
-      - Hide
-      - HideLabel
+    - Hide
+    - HideLabel
     hideOnInit: true
   - type: ActivatableUI
     key: enum.IFFConsoleUiKey.Key
   - type: UserInterface
     interfaces:
-        enum.IFFConsoleUiKey.Key:
-          type: IFFConsoleBoundUserInterface
-        enum.WiresUiKey.Key:
-          type: WiresBoundUserInterface
+      enum.IFFConsoleUiKey.Key:
+        type: IFFConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: Computer
     board: ComputerIFFSyndicateCircuitboard
 
@@ -296,13 +296,13 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: power_monitor
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: power_key
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -317,8 +317,7 @@
   - type: NodeContainer
     examinable: true
     nodes:
-      hv:
-        !type:CableDeviceNode
+      hv: !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: ActivatableUI
     singleUser: true
@@ -339,13 +338,13 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: medcomp
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: med_key
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -374,13 +373,13 @@
     key: enum.CriminalRecordsConsoleKey.Key
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: explosive
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: security_key
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -391,7 +390,7 @@
   - type: Computer
     board: CriminalRecordsComputerCircuitboard
   - type: AccessReader
-    access: [["Security"]]
+    access: [ [ "Security" ] ]
   - type: GuideHelp
     guides:
     - CriminalRecords
@@ -405,10 +404,10 @@
   - type: GeneralStationRecordConsole
   - type: UserInterface
     interfaces:
-        enum.GeneralStationRecordConsoleKey.Key:
-          type: GeneralStationRecordConsoleBoundUserInterface
-        enum.WiresUiKey.Key:
-          type: WiresBoundUserInterface
+      enum.GeneralStationRecordConsoleKey.Key:
+        type: GeneralStationRecordConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: ActivatableUI
     key: enum.GeneralStationRecordConsoleKey.Key
   - type: PointLight
@@ -429,13 +428,13 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: crew
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: med_key
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -449,10 +448,10 @@
     key: enum.CrewMonitoringUIKey.Key
   - type: UserInterface
     interfaces:
-        enum.CrewMonitoringUIKey.Key:
-          type: CrewMonitoringBoundUserInterface
-        enum.WiresUiKey.Key:
-          type: WiresBoundUserInterface
+      enum.CrewMonitoringUIKey.Key:
+        type: CrewMonitoringBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: CrewMonitoringConsole
   - type: DeviceNetwork
     deviceNetId: Wireless
@@ -470,13 +469,13 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: teleporters_station
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: telesci_key
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -522,13 +521,12 @@
         occludes: True
         ents: []
   - type: AccessReader
-    access: [["Command"]]
+    access: [ [ "Command" ] ]
   - type: Lock
     unlockOnClick: false
   - type: EmptyOnMachineDeconstruct
     containers:
     - storagebase
-
 
 - type: entity
   parent: ComputerStationTeleportersControl
@@ -545,13 +543,13 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: teleporters_syndicate
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: syndie_key
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -560,7 +558,7 @@
   - type: Computer
     board: SyndicateTeleportersControlCircuitboard
   - type: AccessReader
-    access: [["SyndicateAgent"]]
+    access: [ [ "SyndicateAgent" ] ]
   - type: StationTeleporterConsole
     portalColor: "#c61414"
 
@@ -572,13 +570,13 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: rdcomp
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: rd_key
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -606,7 +604,7 @@
   - type: Computer
     board: ResearchComputerCircuitboard
   - type: AccessReader
-    access: [["Research"]]
+    access: [ [ "Research" ] ]
   - type: PointLight
     radius: 1.5
     energy: 4.0
@@ -623,13 +621,13 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: artifact
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: tech_key
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -641,7 +639,7 @@
   - type: DeviceLinkSource
     range: 5
     ports:
-      - ArtifactAnalyzerSender
+    - ArtifactAnalyzerSender
   - type: ActivatableUI
     key: enum.ArtifactAnalyzerUiKey.Key
   - type: UserInterface
@@ -671,7 +669,8 @@
   parent: BaseComputerAiAccess
   id: ComputerId
   name: ID card computer
-  description: Terminal for programming Nanotrasen employee ID cards to access parts of the station.
+  description: Terminal for programming Nanotrasen employee ID cards to access
+    parts of the station.
   components:
   - type: IdCardConsole
     privilegedIdSlot:
@@ -707,13 +706,13 @@
     speechSounds: Pai
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: id
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: id_key
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -729,7 +728,6 @@
       board: !type:Container
       IdCardConsole-privilegedId: !type:ContainerSlot
       IdCardConsole-targetId: !type:ContainerSlot
-
 - type: entity
   parent: BaseComputerAiAccess
   id: computerBodyScanner
@@ -748,22 +746,23 @@
   parent: BaseComputerAiAccess
   id: ComputerComms
   name: communications computer
-  description: A computer used to make station wide announcements via keyboard, set the appropriate alert level, and call the emergency shuttle.
+  description: A computer used to make station wide announcements via keyboard,
+    set the appropriate alert level, and call the emergency shuttle.
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: comm
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
   - type: AccessReader
-    access: [[ "Command" ]]
+    access: [ [ "Command" ] ]
   - type: CommunicationsConsole
     title: comms-console-announcement-title-station
   - type: DeviceNetwork
@@ -788,22 +787,24 @@
   parent: ComputerComms
   id: SyndicateComputerComms
   name: syndicate communications computer
-  description: A computer capable of remotely hacking into the station's communications systems. Using this to make an announcement will alert the station to your presence.
+  description: A computer capable of remotely hacking into the station's
+    communications systems. Using this to make an announcement will alert the
+    station to your presence.
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: comm_syndie
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: syndie_key
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
   - type: AccessReader
-    access: [[ "NuclearOperative" ]]
+    access: [ [ "NuclearOperative" ] ]
   - type: CommunicationsConsole
     title: comms-console-announcement-title-nukie
     color: "#ff0000"
@@ -822,22 +823,24 @@
   parent: ComputerComms
   id: WizardComputerComms
   name: wizard communications computer
-  description: A computer capable of magically projecting your speech to the station. Using this to make an announcement will alert the station to your presence.
+  description: A computer capable of magically projecting your speech to the
+    station. Using this to make an announcement will alert the station to your
+    presence.
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: comm_wizard
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: wizard_key
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
   - type: AccessReader
-    access: [[ "Wizard" ]]
+    access: [ [ "Wizard" ] ]
   - type: CommunicationsConsole
     title: comms-console-announcement-title-wizard
     color: "#ff00ff"
@@ -856,22 +859,23 @@
   parent: ComputerComms
   id: CentcommComputerComms
   name: central command communications computer
-  description: A computer used to make world wide announcements via keyboard. The superior cousin of the regular communications computer.
+  description: A computer used to make world wide announcements via keyboard. The
+    superior cousin of the regular communications computer.
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: comm_logs
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
   - type: AccessReader
-    access: [[ "CentralCommand" ]]
+    access: [ [ "CentralCommand" ] ]
   - type: CommunicationsConsole
     title: comms-console-announcement-title-centcom
     color: "#1d8bad"
@@ -892,13 +896,13 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: solar_screen
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -930,13 +934,13 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: solar_screen
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -945,10 +949,10 @@
     key: enum.RadarConsoleUiKey.Key
   - type: UserInterface
     interfaces:
-        enum.RadarConsoleUiKey.Key:
-          type: RadarConsoleBoundUserInterface
-        enum.WiresUiKey.Key:
-          type: WiresBoundUserInterface
+      enum.RadarConsoleUiKey.Key:
+        type: RadarConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: Computer
     board: RadarConsoleCircuitboard
   - type: PointLight
@@ -964,13 +968,13 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: request
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -994,7 +998,7 @@
     energy: 4.0
     color: "#b89f25"
   - type: AccessReader
-    access: [["Cargo"]]
+    access: [ [ "Cargo" ] ]
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
@@ -1017,13 +1021,13 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: request-eng
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -1040,7 +1044,7 @@
   - type: PointLight
     color: "#c9c042"
   - type: AccessReader
-    access: [["Engineering"]]
+    access: [ [ "Engineering" ] ]
   - type: AmbientMusicMarkerEngineering
 
 - type: entity
@@ -1051,13 +1055,13 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: request-med
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -1074,7 +1078,7 @@
   - type: PointLight
     color: "#41e0fc"
   - type: AccessReader
-    access: [["Medical"]]
+    access: [ [ "Medical" ] ]
   - type: AmbientMusicMarkerMedical
 
 - type: entity
@@ -1085,13 +1089,13 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: request-sci
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -1108,7 +1112,7 @@
   - type: PointLight
     color: "#b53ca1"
   - type: AccessReader
-    access: [["Research"]]
+    access: [ [ "Research" ] ]
 
 - type: entity
   id: ComputerCargoOrdersSecurity
@@ -1118,13 +1122,13 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: request-sec
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -1141,7 +1145,7 @@
   - type: PointLight
     color: "#d11d00"
   - type: AccessReader
-    access: [["Security"]]
+    access: [ [ "Security" ] ]
 
 - type: entity
   id: ComputerCargoOrdersService
@@ -1151,13 +1155,13 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: request-srv
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -1174,7 +1178,7 @@
   - type: PointLight
     color: "#afe837"
   - type: AccessReader
-    access: [["Service"], ["Theatre"]]
+    access: [ [ "Service" ], [ "Theatre" ] ]
 
 - type: entity
   id: ComputerCargoBounty
@@ -1184,13 +1188,13 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: bounty
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: tech_key
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -1210,7 +1214,7 @@
     energy: 4.0
     color: "#b89f25"
   - type: AccessReader
-    access: [["Quartermaster"]]
+    access: [ [ "Quartermaster" ] ]
   - type: GuideHelp
     guides:
     - CargoBounties
@@ -1224,13 +1228,13 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: allocate # ALLOCATION !!!
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -1239,7 +1243,7 @@
     key: enum.FundingAllocationConsoleUiKey.Key
   - type: ActivatableUIRequiresAccess
   - type: AccessReader
-    access: [["HeadOfPersonnel"]]
+    access: [ [ "HeadOfPersonnel" ] ]
   - type: UserInterface
     interfaces:
       enum.FundingAllocationConsoleUiKey.Key:
@@ -1257,7 +1261,8 @@
   parent: BaseComputerAiAccess
   id: ComputerCloningConsole
   name: cloning console computer
-  description: The centerpiece of the cloning system, medicine's greatest accomplishment. It has lots of ports and wires.
+  description: The centerpiece of the cloning system, medicine's greatest
+    accomplishment. It has lots of ports and wires.
   components:
   - type: CloningConsole
   - type: DeviceList
@@ -1265,13 +1270,13 @@
     deviceNetId: Wired
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: dna
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -1284,16 +1289,16 @@
   - type: DeviceLinkSource
     range: 4
     ports:
-      - MedicalScannerSender
-      - CloningPodSender
+    - MedicalScannerSender
+    - CloningPodSender
   - type: ActivatableUI
     key: enum.CloningConsoleUiKey.Key
   - type: UserInterface
     interfaces:
-        enum.CloningConsoleUiKey.Key:
-          type: CloningConsoleBoundUserInterface
-        enum.WiresUiKey.Key:
-          type: WiresBoundUserInterface
+      enum.CloningConsoleUiKey.Key:
+        type: CloningConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: Speech
     speechVerb: Robotic
     speechSounds: Pai
@@ -1309,13 +1314,13 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: salvjob # givin em a salvjob like hawk tuah
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -1343,48 +1348,48 @@
   name: salvage expeditions computer
   description: Used to accept salvage missions, if you're tough enough.
   components:
-    - type: Sprite
-      layers:
-        - map: ["computerLayerBody"]
-          state: computer
-        - map: ["computerLayerKeyboard"]
-          state: generic_keyboard
-        - map: [ "computerLayerScreen" ]
-          state: mining
-        - map: ["computerLayerKeys"]
-          state: tech_key
-        - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-          state: generic_panel_open
-    - type: Appearance
-    - type: GenericVisualizer
-      visuals:
-        enum.ComputerVisuals.Powered:
-          computerLayerScreen:
-            True: { visible: true, shader: unshaded }
-            False: { visible: false }
-          computerLayerKeys:
-            True: { visible: true, shader: unshaded }
-            False: { visible: true }
-    - type: SalvageExpeditionConsole
-    - type: ActivatableUI
-      key: enum.SalvageConsoleUiKey.Expedition
-    - type: ActivatableUIRequiresPower
-    - type: UserInterface
-      interfaces:
-        enum.SalvageConsoleUiKey.Expedition:
-          type: SalvageExpeditionConsoleBoundUserInterface
-        enum.WiresUiKey.Key:
-          type: WiresBoundUserInterface
-    - type: Computer
-      board: SalvageExpeditionsComputerCircuitboard
-    - type: PointLight
-      radius: 1.5
-      energy: 4.0
-      color: "#b89f25"
-    - type: AccessReader
-      access: [["Salvage"]]
-    - type: StealTarget
-      stealGroup: SalvageExpeditionsComputerCircuitboard
+  - type: Sprite
+    layers:
+    - map: [ "computerLayerBody" ]
+      state: computer
+    - map: [ "computerLayerKeyboard" ]
+      state: generic_keyboard
+    - map: [ "computerLayerScreen" ]
+      state: mining
+    - map: [ "computerLayerKeys" ]
+      state: tech_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ComputerVisuals.Powered:
+        computerLayerScreen:
+          True: { visible: true, shader: unshaded }
+          False: { visible: false }
+        computerLayerKeys:
+          True: { visible: true, shader: unshaded }
+          False: { visible: true }
+  - type: SalvageExpeditionConsole
+  - type: ActivatableUI
+    key: enum.SalvageConsoleUiKey.Expedition
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      enum.SalvageConsoleUiKey.Expedition:
+        type: SalvageExpeditionConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: Computer
+    board: SalvageExpeditionsComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 4.0
+    color: "#b89f25"
+  - type: AccessReader
+    access: [ [ "Salvage" ] ]
+  - type: StealTarget
+    stealGroup: SalvageExpeditionsComputerCircuitboard
 
 - type: entity
   parent: BaseComputer
@@ -1394,13 +1399,13 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: cameras
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: tech_key
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -1421,10 +1426,10 @@
     anchored: true
   - type: UserInterface
     interfaces:
-        enum.SurveillanceCameraMonitorUiKey.Key:
-          type: SurveillanceCameraMonitorBoundUserInterface
-        enum.WiresUiKey.Key:
-          type: WiresBoundUserInterface
+      enum.SurveillanceCameraMonitorUiKey.Key:
+        type: SurveillanceCameraMonitorBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
 
 - type: entity
   parent: BaseComputer
@@ -1434,13 +1439,13 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: cameras
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: tech_key
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -1463,10 +1468,10 @@
   - type: ActivatableUIRequiresVision
   - type: UserInterface
     interfaces:
-        enum.SurveillanceCameraMonitorUiKey.Key:
-          type: SurveillanceCameraMonitorBoundUserInterface
-        enum.WiresUiKey.Key:
-          type: WiresBoundUserInterface
+      enum.SurveillanceCameraMonitorUiKey.Key:
+        type: SurveillanceCameraMonitorBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
 
 - type: entity
   parent: ComputerSurveillanceWirelessCameraMonitor
@@ -1491,13 +1496,13 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: transfer
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -1531,13 +1536,13 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: service
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: service_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -1546,7 +1551,7 @@
   - type: DeviceNetworkRequiresPower
   - type: NewsWriter
   - type: AccessReader
-    access: [[ "Service" ]]
+    access: [ [ "Service" ] ]
   - type: ActivatableUI
     key: enum.NewsWriterUiKey.Key
   - type: ActivatableUIRequiresVision
@@ -1554,10 +1559,10 @@
     anchored: true
   - type: UserInterface
     interfaces:
-        enum.NewsWriterUiKey.Key:
-          type: NewsWriterBoundUserInterface
-        enum.WiresUiKey.Key:
-          type: WiresBoundUserInterface
+      enum.NewsWriterUiKey.Key:
+        type: NewsWriterBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
 
 - type: entity
   parent: BaseComputer
@@ -1569,43 +1574,43 @@
   suffix: TESTING, DO NOT MAP
   categories: [ DoNotMap ]
   components:
-    - type: Sprite
-      layers:
-        - map: ["computerLayerBody"]
-          state: computer
-        - map: ["computerLayerKeyboard"]
-          state: generic_keyboard
-        - map: ["computerLayerScreen"]
-          state: sensors
-        - map: ["computerLayerKeys"]
-          state: atmos_key
-        - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-          state: generic_panel_open
-    - type: PointLight
-      radius: 1.5
-      energy: 4.0
-      color: "#43ccb5"
-    - type: Computer
-      board: SensorConsoleCircuitboard
-    - type: SensorMonitoringConsole
-    - type: ActivatableUI
-      key: enum.SensorMonitoringConsoleUiKey.Key
-    - type: UserInterface
-      interfaces:
-        enum.SensorMonitoringConsoleUiKey.Key:
-          type: SensorMonitoringConsoleBoundUserInterface
-        enum.WiresUiKey.Key:
-          type: WiresBoundUserInterface
-    - type: DeviceNetwork
-      deviceNetId: AtmosDevices
-      receiveFrequencyId: AtmosMonitor
-      transmitFrequencyId: AtmosMonitor
-      prefix: device-address-prefix-sensor-monitor
-      sendBroadcastAttemptEvent: true
-      examinableAddress: true
-    - type: WiredNetworkConnection
-    - type: DeviceList
-    - type: AtmosDevice
+  - type: Sprite
+    layers:
+    - map: [ "computerLayerBody" ]
+      state: computer
+    - map: [ "computerLayerKeyboard" ]
+      state: generic_keyboard
+    - map: [ "computerLayerScreen" ]
+      state: sensors
+    - map: [ "computerLayerKeys" ]
+      state: atmos_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: PointLight
+    radius: 1.5
+    energy: 4.0
+    color: "#43ccb5"
+  - type: Computer
+    board: SensorConsoleCircuitboard
+  - type: SensorMonitoringConsole
+  - type: ActivatableUI
+    key: enum.SensorMonitoringConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.SensorMonitoringConsoleUiKey.Key:
+        type: SensorMonitoringConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: DeviceNetwork
+    deviceNetId: AtmosDevices
+    receiveFrequencyId: AtmosMonitor
+    transmitFrequencyId: AtmosMonitor
+    prefix: device-address-prefix-sensor-monitor
+    sendBroadcastAttemptEvent: true
+    examinableAddress: true
+  - type: WiredNetworkConnection
+  - type: DeviceList
+  - type: AtmosDevice
 
 - type: entity
   parent: BaseComputerAiAccess
@@ -1615,13 +1620,13 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: robot
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: rd_key
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -1651,7 +1656,7 @@
   - type: Computer
     board: RoboticsConsoleCircuitboard
   - type: AccessReader # only used for dangerous things
-    access: [["ResearchDirector"]]
+    access: [ [ "ResearchDirector" ] ]
   - type: Lock
     unlockOnClick: false
 
@@ -1663,13 +1668,13 @@
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: xenorobot
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: rd_key
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
@@ -1749,7 +1754,6 @@
     containers:
       circuit_holder: !type:ContainerSlot
       board: !type:Container
-
 - type: entity
   id: StationAiFixerComputer
   parent: BaseComputer
@@ -1836,17 +1840,21 @@
   parent: BaseComputer
   id: ComputerNukieDelivery
   name: syndicate delivery computer
-  description: "A computer that can bluespace in certain equipment for Nuclear Operations. \nThe circuitboard is integrated into the frame and can't be recovered if deconstructed."
+  description: "A computer that can bluespace in certain equipment for Nuclear
+    Operations.\
+
+    The circuitboard is integrated into the frame and can't be recovered if
+    deconstructed."
   components:
   - type: Sprite
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: computer
-    - map: ["computerLayerKeyboard"]
+    - map: [ "computerLayerKeyboard" ]
       state: generic_keyboard
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: request-syndie
-    - map: ["computerLayerKeys"]
+    - map: [ "computerLayerKeys" ]
       state: syndie_generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open

@@ -2,8 +2,8 @@
   abstract: true
   id: InventoryBase
   components:
-    - type: Inventory
-    - type: InventorySlots
+  - type: Inventory
+  - type: InventorySlots
 
 - type: entity
   abstract: true

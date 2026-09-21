@@ -1,8 +1,9 @@
 - type: entity
-  parent: [BaseItem, BaseSyndicateContraband]
+  parent: [ BaseItem, BaseSyndicateContraband ]
   id: ChameleonProjectorNoBattery
   name: chameleon projector
-  description: Holoparasite technology used to create a hard-light replica of any object around you. Disguise is destroyed when picked up or deactivated.
+  description: Holoparasite technology used to create a hard-light replica of any
+    object around you. Disguise is destroyed when picked up or deactivated.
   components:
   - type: Sprite
     sprite: /Textures/Objects/Devices/chameleon_projector.rsi
@@ -21,7 +22,8 @@
       tags:
       - Bot # for funny bot moments
     blacklist:
-      components: # TODO: This blacklist should be cut down by a lot once Chameleon Projector code is less buggy. See #40510
+      components:
+      # TODO: This blacklist should be cut down by a lot once Chameleon Projector code is less buggy. See #40510
       - ChameleonDisguise # no becoming kleiner
       - Door # no faking doors
       - MindContainer # no
@@ -39,7 +41,8 @@
   parent: ChameleonProjectorNoBattery
   id: ChameleonProjector
   name: chameleon projector
-  description: Holoparasite technology used to create a hard-light replica of any object around you. Disguise is destroyed when picked up or deactivated.
+  description: Holoparasite technology used to create a hard-light replica of any
+    object around you. Disguise is destroyed when picked up or deactivated.
   suffix: Battery
   components:
   - type: Appearance
@@ -95,7 +98,8 @@
   parent: BaseAction
   id: ActionDisguiseNoRot
   name: Toggle Rotation
-  description: Use this to prevent your disguise from rotating, making it easier to hide in some scenarios.
+  description: Use this to prevent your disguise from rotating, making it easier
+    to hide in some scenarios.
   components:
   - type: Action
     itemIconStyle: BigAction
@@ -104,7 +108,6 @@
     - texture: Interface/VerbIcons/refresh.svg.192dpi.png
   - type: InstantAction
     event: !type:DisguiseToggleNoRotEvent
-
 - type: entity
   parent: BaseAction
   id: ActionDisguiseAnchor

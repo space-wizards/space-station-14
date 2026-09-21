@@ -23,8 +23,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         density: 50
         mask:
@@ -78,9 +77,9 @@
     sprite: Structures/Specific/Anomalies/pyro_anom.rsi
     layers:
     - state: anom
-      map: ["enum.AnomalyVisualLayers.Base"]
+      map: [ "enum.AnomalyVisualLayers.Base" ]
     - state: pulse
-      map: ["enum.AnomalyVisualLayers.Animated"]
+      map: [ "enum.AnomalyVisualLayers.Animated" ]
       visible: false
   - type: PointLight
     radius: 6.0
@@ -132,9 +131,9 @@
   - type: Sprite
     layers:
     - state: anom2
-      map: ["enum.AnomalyVisualLayers.Base"]
+      map: [ "enum.AnomalyVisualLayers.Base" ]
     - state: anom2-pulse
-      map: ["enum.AnomalyVisualLayers.Animated"]
+      map: [ "enum.AnomalyVisualLayers.Animated" ]
       visible: false
   - type: PointLight
     radius: 5.0
@@ -166,9 +165,9 @@
   - type: Sprite
     layers:
     - state: anom3
-      map: ["enum.AnomalyVisualLayers.Base"]
+      map: [ "enum.AnomalyVisualLayers.Base" ]
     - state: anom3-pulse
-      map: ["enum.AnomalyVisualLayers.Animated"]
+      map: [ "enum.AnomalyVisualLayers.Animated" ]
       visible: false
   - type: PointLight
     radius: 2.0
@@ -193,9 +192,9 @@
   - type: Sprite
     layers:
     - state: anom5
-      map: ["enum.AnomalyVisualLayers.Base"]
+      map: [ "enum.AnomalyVisualLayers.Base" ]
     - state: anom5-pulse
-      map: ["enum.AnomalyVisualLayers.Animated"]
+      map: [ "enum.AnomalyVisualLayers.Animated" ]
       visible: false
   - type: PointLight
     radius: 2.0
@@ -281,9 +280,9 @@
   - type: Sprite
     layers:
     - state: anom4
-      map: ["enum.AnomalyVisualLayers.Base"]
+      map: [ "enum.AnomalyVisualLayers.Base" ]
     - state: anom4-pulse
-      map: ["enum.AnomalyVisualLayers.Animated"]
+      map: [ "enum.AnomalyVisualLayers.Animated" ]
       visible: false
   - type: PointLight
     radius: 2.0
@@ -295,8 +294,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         density: 50
         mask:
@@ -304,8 +302,7 @@
         layer:
         - MobLayer
       portalFixture:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.48,0.25,0.48"
         mask:
         - FullTileMask
@@ -331,9 +328,9 @@
     sprite: Structures/Specific/Anomalies/ice_anom.rsi
     layers:
     - state: anom
-      map: ["enum.AnomalyVisualLayers.Base"]
+      map: [ "enum.AnomalyVisualLayers.Base" ]
     - state: pulse
-      map: ["enum.AnomalyVisualLayers.Animated"]
+      map: [ "enum.AnomalyVisualLayers.Animated" ]
       visible: false
   - type: PointLight
     radius: 2.0
@@ -394,9 +391,9 @@
   - type: Sprite
     layers:
     - state: anom6
-      map: ["enum.AnomalyVisualLayers.Base"]
+      map: [ "enum.AnomalyVisualLayers.Base" ]
     - state: anom6-pulse
-      map: ["enum.AnomalyVisualLayers.Animated"]
+      map: [ "enum.AnomalyVisualLayers.Animated" ]
       visible: false
   - type: PointLight
     radius: 2.0
@@ -728,9 +725,9 @@
     sprite: Structures/Specific/Anomalies/flora_anom.rsi
     layers:
     - state: anom
-      map: ["enum.AnomalyVisualLayers.Base"]
+      map: [ "enum.AnomalyVisualLayers.Base" ]
     - state: pulse
-      map: ["enum.AnomalyVisualLayers.Animated"]
+      map: [ "enum.AnomalyVisualLayers.Animated" ]
       visible: false
   - type: PointLight
     radius: 8.0
@@ -780,7 +777,8 @@
   id: AnomalyFloraBulb
   name: strange glowing berry
   parent: BaseStructure
-  description: It's a beautiful strange glowing berry. It seems to have something growing inside it...
+  description: It's a beautiful strange glowing berry. It seems to have something
+    growing inside it...
   suffix: Flora Anomaly
   components:
   - type: Transform
@@ -790,8 +788,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.2
   - type: InteractionOutline
   - type: Damageable
@@ -800,8 +797,7 @@
     damageContainer: Biological
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 1
       behaviors:
       - !type:DoActsBehavior
@@ -829,12 +825,13 @@
     sprite: Structures/Specific/Anomalies/liquid_anom.rsi
     layers:
     - state: anom
-      map: ["enum.AnomalyVisualLayers.Base"]
+      map: [ "enum.AnomalyVisualLayers.Base" ]
     - state: pulse
-      map: ["enum.AnomalyVisualLayers.Animated"]
+      map: [ "enum.AnomalyVisualLayers.Animated" ]
       visible: false
   - type: RandomSprite
-    selected: # Initialized layer values. Edited through the ReagentProducerAnomalySystem
+    selected:
+      # Initialized layer values. Edited through the ReagentProducerAnomalySystem
       enum.AnomalyVisualLayers.Base:
         anom: "#ffffff"
       enum.AnomalyVisualLayers.Animated:
@@ -949,9 +946,9 @@
     sprite: Structures/Specific/Anomalies/shadow_anom.rsi
     layers:
     - state: anom
-      map: ["enum.AnomalyVisualLayers.Base"]
+      map: [ "enum.AnomalyVisualLayers.Base" ]
     - state: pulse
-      map: ["enum.AnomalyVisualLayers.Animated"]
+      map: [ "enum.AnomalyVisualLayers.Animated" ]
       visible: false
   - type: PointLight
     radius: 1.5
@@ -993,7 +990,7 @@
     departureSound: /Audio/Items/hiss.ogg
   - type: Tag
     tags:
-      - SpookyFog
+    - SpookyFog
   - type: DamageOnInteract
     damage:
       types:
@@ -1013,9 +1010,9 @@
     sprite: Structures/Specific/Anomalies/tech_anom.rsi
     layers:
     - state: bg
-      map: ["enum.AnomalyVisualLayers.Base"]
+      map: [ "enum.AnomalyVisualLayers.Base" ]
     - state: bg_powered
-      map: ["enum.AnomalyVisualLayers.Animated"]
+      map: [ "enum.AnomalyVisualLayers.Animated" ]
       visible: false
       shader: unshaded
     - state: part1
@@ -1036,8 +1033,8 @@
   - type: TechAnomaly
   - type: DeviceLinkSource
     ports:
-      - Pulse
-      - Timer
+    - Pulse
+    - Timer
 
 - type: entity
   id: AnomalyTechBeam
@@ -1064,7 +1061,7 @@
     lifetime: 2.3
   - type: Tag
     tags:
-      - HideContextMenu
+    - HideContextMenu
 
 - type: entity
   id: AnomalySanta
@@ -1076,9 +1073,9 @@
     sprite: Structures/Specific/Anomalies/santa_anom.rsi
     layers:
     - state: anom
-      map: ["enum.AnomalyVisualLayers.Base"]
+      map: [ "enum.AnomalyVisualLayers.Base" ]
     - state: pulse
-      map: ["enum.AnomalyVisualLayers.Animated"]
+      map: [ "enum.AnomalyVisualLayers.Animated" ]
       visible: false
   - type: PointLight
     radius: 8.0

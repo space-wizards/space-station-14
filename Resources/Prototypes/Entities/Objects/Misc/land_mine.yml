@@ -19,12 +19,11 @@
   - type: Fixtures
     fixtures:
       slips:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.2,-0.2,0.2,0.2"
         hard: false
         layer:
-          - LowImpassable
+        - LowImpassable
   - type: Sprite
     drawdepth: Items
     sprite: Objects/Misc/landmine.rsi
@@ -38,22 +37,21 @@
     visuals:
       enum.ToggleableVisuals.Enabled:
         enum.ToggleableVisuals.Layer:
-          True: {visible: true}
-          False: {visible: false}
+          True: { visible: true }
+          False: { visible: false }
   - type: Damageable
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:TriggerBehavior
   - type: LandMine
     sound:
-        path: /Audio/Effects/beep_landmine.ogg
-        params:
-            maxDistance: 10
+      path: /Audio/Effects/beep_landmine.ogg
+      params:
+        maxDistance: 10
   - type: Armable
   - type: StepTrigger
     requiredTriggeredSpeed: 0

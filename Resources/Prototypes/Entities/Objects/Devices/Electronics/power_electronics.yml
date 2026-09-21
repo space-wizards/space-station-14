@@ -5,17 +5,17 @@
   name: APC electronics
   description: Circuit used in APC construction.
   components:
-    - type: ApcElectronics
-    - type: Sprite
-      sprite: Objects/Misc/module.rsi
-      state: charger_APC
-    - type: PhysicalComposition
-      materialComposition:
-        Glass: 50
-      chemicalComposition:
-        Silicon: 20
-    - type: StaticPrice
-      price: 34
+  - type: ApcElectronics
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: charger_APC
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 50
+    chemicalComposition:
+      Silicon: 20
+  - type: StaticPrice
+    price: 34
 
 # Wallmount Substation
 - type: entity
@@ -24,14 +24,14 @@
   name: wallmount substation electronics
   description: Circuit used to construct a wallmount substation.
   components:
-    - type: Sprite
-      sprite: Objects/Misc/module.rsi
-      state: charger_APC
-    - type: StaticPrice
-      price: 40
-    - type: Tag
-      tags:
-        - WallmountSubstationElectronics
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: charger_APC
+  - type: StaticPrice
+    price: 40
+  - type: Tag
+    tags:
+    - WallmountSubstationElectronics
 
 # Wallmount Generator
 - type: entity
@@ -50,7 +50,7 @@
       Glass: 90
   - type: Tag
     tags:
-      - WallmountGeneratorElectronics
+    - WallmountGeneratorElectronics
 
 # APU
 - type: entity
@@ -59,14 +59,14 @@
   name: wallmount APU electronics
   description: Circuit used to construct a wallmount APU.
   components:
-    - type: Sprite
-      sprite: Objects/Misc/module.rsi
-      state: charger_APC
-    - type: StaticPrice
-      price: 40
-    - type: Tag
-      tags:
-        - WallmountGeneratorAPUElectronics
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: charger_APC
+  - type: StaticPrice
+    price: 40
+  - type: Tag
+    tags:
+    - WallmountGeneratorAPUElectronics
 
 # Solar Tracker Electronics
 - type: entity
@@ -75,11 +75,11 @@
   name: solar tracker electronics
   description: Advanced circuit board used to track the nearest star.
   components:
-    - type: Sprite
-      sprite: Objects/Misc/module.rsi
-      state: engineering
-    - type: StaticPrice
-      price: 85
-    - type: Tag
-      tags:
-        - SolarTrackerElectronics
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: engineering
+  - type: StaticPrice
+    price: 85
+  - type: Tag
+    tags:
+    - SolarTrackerElectronics

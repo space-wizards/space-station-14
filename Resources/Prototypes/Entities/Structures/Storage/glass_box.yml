@@ -14,8 +14,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
         density: 1000
         mask:
@@ -27,7 +26,7 @@
     delay: 4
 
 - type: entity
-  parent: [BaseGlassBox, BaseItemCabinetGlass, StructureHealthContainer]
+  parent: [ BaseGlassBox, BaseItemCabinetGlass, StructureHealthContainer ]
   id: GlassBox
   name: glass box
   description: A sturdy showcase for an expensive exhibit.
@@ -37,18 +36,17 @@
     layers:
     - state: base
     - state: caplaser # TODO: Remove it after item scaling in cabinets is implemented.
-      map: ["enum.ItemCabinetVisuals.Layer"]
+      map: [ "enum.ItemCabinetVisuals.Layer" ]
       visible: false
     - state: glass
-      map: ["enum.OpenableVisuals.Layer"]
+      map: [ "enum.OpenableVisuals.Layer" ]
     - state: locked
       shader: unshaded
-      map: ["enum.LockVisualLayers.Lock"]
+      map: [ "enum.LockVisualLayers.Lock" ]
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
         density: 1000
         mask:
@@ -64,7 +62,7 @@
   - type: Lock
   - type: LockVisuals
   - type: DamageVisuals
-    thresholds: [4, 8, 12] # TODO: Fix damage visuals on open state.
+    thresholds: [ 4, 8, 12 ] # TODO: Fix damage visuals on open state.
     damageDivisor: 7.555
     trackAllDamage: true
     damageOverlay:
@@ -77,8 +75,7 @@
     damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:EmptyAllContainersBehaviour
@@ -104,7 +101,7 @@
   suffix: AntiqueLaser
   components:
   - type: AccessReader
-    access: [["Captain"]]
+    access: [ [ "Captain" ] ]
   - type: Construction
     graph: GlassBox
     node: glassBox
@@ -138,7 +135,7 @@
       - WeaponAntiqueLaser
 
 - type: entity
-  parent: [GlassBoxLaserFilled, GlassBoxLaserOpen]
+  parent: [ GlassBoxLaserFilled, GlassBoxLaserOpen ]
   id: GlassBoxLaserFilledOpen
   suffix: AntiqueLaser, Filled, Open
 
@@ -160,8 +157,7 @@
     damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 60
       behaviors:
       - !type:PlaySoundBehavior
@@ -189,8 +185,7 @@
     node: brokenGlassBox
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 60
       behaviors:
       - !type:SpawnEntitiesBehavior

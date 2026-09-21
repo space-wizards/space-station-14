@@ -32,7 +32,8 @@
 
 - type: damageModifierSet
   id: Vox
-  coefficients: # To be decided
+  coefficients:
+    # To be decided
     Poison: 1
 
 # Vulps get more heat damage because fur

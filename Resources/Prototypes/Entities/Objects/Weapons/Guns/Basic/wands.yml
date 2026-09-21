@@ -7,7 +7,7 @@
     layers:
     - state: poly
     - state: poly-effect
-      map: ["effect"]
+      map: [ "effect" ]
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg
@@ -48,7 +48,7 @@
     layers:
     - state: fire
     - state: fire-effect
-      map: ["effect"]
+      map: [ "effect" ]
   - type: Gun
     fireRate: 0.25
     soundGunshot:
@@ -68,9 +68,9 @@
   - type: Sprite
     layers:
     - state: locker
-      map: ["base"]
+      map: [ "base" ]
     - state: locker-effect
-      map: ["effect"]
+      map: [ "effect" ]
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg
@@ -100,13 +100,14 @@
   name: magical wand of instant death
   parent: WeaponWandBase
   id: WeaponWandDeath
-  description: Only the best and brightest of the Space Wizards R&D team worked together to create this beauty.
+  description: Only the best and brightest of the Space Wizards R&D team worked
+    together to create this beauty.
   components:
   - type: Sprite
     layers:
     - state: death
     - state: death-effect
-      map: ["effect"]
+      map: [ "effect" ]
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mateba.ogg # PUNCH
@@ -126,7 +127,7 @@
     layers:
     - state: door
     - state: door-effect
-      map: ["effect"]
+      map: [ "effect" ]
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/Magic/staff_door.ogg
@@ -151,7 +152,8 @@
   parent: WeaponWandPolymorphBase
   id: WeaponWandPolymorphBread
   name: magic bread wand
-  description: Turn all your friends into bread! Your boss! Your enemies! Your dog! Make everything bread!
+  description: Turn all your friends into bread! Your boss! Your enemies! Your
+    dog! Make everything bread!
   components:
   - type: BasicEntityAmmoProvider
     proto: ProjectilePolyboltBread

@@ -3,14 +3,14 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionNormal, FoodInjectableBase]
+  parent: [ SolutionNormal, FoodInjectableBase ]
   id: FoodBreadBase
   components:
   - type: Item
     size: Normal
   - type: FlavorProfile
     flavors:
-      - bread
+    - bread
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/bread.rsi
   - type: Tag
@@ -23,7 +23,7 @@
         Quantity: 80
 
 - type: entity
-  parent: [SolutionVeryTiny, FoodBreadBase]
+  parent: [ SolutionVeryTiny, FoodBreadBase ]
   id: FoodBreadSliceBase
   abstract: true
   components:
@@ -31,7 +31,7 @@
     size: Tiny
   - type: FlavorProfile
     flavors:
-      - bread
+    - bread
   - type: Tag
     tags:
     - Bread
@@ -46,7 +46,7 @@
 
 - type: entity
   name: volcanic loaf
-  parent: [FoodBreadBase, BaseSlicingRefinableFood]
+  parent: [ FoodBreadBase, BaseSlicingRefinableFood ]
   id: FoodBreadVolcanic
   description: A dark loaf. Resembles pumice.
   components:
@@ -78,14 +78,14 @@
 
 - type: entity
   name: banana bread
-  parent: [FoodBreadBase, BaseSlicingRefinableFood]
+  parent: [ FoodBreadBase, BaseSlicingRefinableFood ]
   id: FoodBreadBanana
   description: A heavenly and filling treat.
   components:
   - type: FlavorProfile
     flavors:
-      - banana
-      - bread
+    - banana
+    - bread
   - type: Sprite
     layers:
     - state: banana
@@ -107,8 +107,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - banana
-      - bread
+    - banana
+    - bread
   - type: Sprite
     layers:
     - state: banana-slice
@@ -119,7 +119,7 @@
     - Slice
 
 - type: entity
-  parent: [FoodBreadBase, BaseSlicingRefinableFood]
+  parent: [ FoodBreadBase, BaseSlicingRefinableFood ]
   id: FoodBreadCotton
   name: cotton bread
   description: Bread, but for moff.
@@ -179,14 +179,15 @@
 
 - type: entity
   name: cornbread
-  parent: [FoodBreadBase, BaseSlicingRefinableFood]
+  parent: [ FoodBreadBase, BaseSlicingRefinableFood ]
   id: FoodBreadCorn
-  description: Some good down-home country-style, rootin'-tootin', revolver-shootin', dad-gum yeehaw cornbread.
+  description: Some good down-home country-style, rootin'-tootin',
+    revolver-shootin', dad-gum yeehaw cornbread.
   components:
   - type: FlavorProfile
     flavors:
-      - bread
-      - corn
+    - bread
+    - corn
   - type: Sprite
     layers:
     - state: cornbread
@@ -204,23 +205,23 @@
   components:
   - type: FlavorProfile
     flavors:
-      - bread
-      - corn
+    - bread
+    - corn
   - type: Sprite
     layers:
     - state: cornbread-slice
 
 - type: entity
   name: cream cheese bread
-  parent: [FoodBreadBase, BaseSlicingRefinableFood]
+  parent: [ FoodBreadBase, BaseSlicingRefinableFood ]
   id: FoodBreadCreamcheese
   description: Yum yum yum!
   components:
   - type: FlavorProfile
     flavors:
-      - cheesy
-      - creamy
-      - bread
+    - cheesy
+    - creamy
+    - bread
   - type: Sprite
     layers:
     - state: creamcheese
@@ -245,9 +246,9 @@
   components:
   - type: FlavorProfile
     flavors:
-      - cheesy
-      - creamy
-      - bread
+    - cheesy
+    - creamy
+    - bread
   - type: Sprite
     layers:
     - state: creamcheese-slice
@@ -261,14 +262,14 @@
 
 - type: entity
   name: meat bread
-  parent: [FoodBreadBase, BaseSlicingRefinableFood]
+  parent: [ FoodBreadBase, BaseSlicingRefinableFood ]
   id: FoodBreadMeat
   description: The culinary base of every self-respecting eloquen/tg/entleman.
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
-      - bread
+    - meaty
+    - bread
   - type: Sprite
     layers:
     - state: meat
@@ -299,8 +300,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
-      - bread
+    - meaty
+    - bread
   - type: Sprite
     layers:
     - state: meat-slice
@@ -321,14 +322,14 @@
 
 - type: entity
   name: mimana bread
-  parent: [FoodBreadBase, BaseSlicingRefinableFood]
+  parent: [ FoodBreadBase, BaseSlicingRefinableFood ]
   id: FoodBreadMimana
   description: Best eaten in silence.
   components:
   - type: FlavorProfile
     flavors:
-      - nothing
-      - bread
+    - nothing
+    - bread
   - type: Sprite
     layers:
     - state: mimana
@@ -355,8 +356,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - nothing
-      - bread
+    - nothing
+    - bread
   - type: Sprite
     layers:
     - state: mimana-slice
@@ -372,7 +373,7 @@
 
 - type: entity
   name: bread
-  parent: [FoodBreadBase, BaseSlicingRefinableFood]
+  parent: [ FoodBreadBase, BaseSlicingRefinableFood ]
   id: FoodBreadPlain
   description: Some plain old earthen bread.
   components:
@@ -396,14 +397,14 @@
 
 - type: entity
   name: sausage bread
-  parent: [FoodBreadBase, BaseSlicingRefinableFood]
+  parent: [ FoodBreadBase, BaseSlicingRefinableFood ]
   id: FoodBreadSausage
   description: Dont think too much about it.
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
-      - bread
+    - meaty
+    - bread
   - type: Sprite
     layers:
     - state: sausage
@@ -431,8 +432,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
-      - bread
+    - meaty
+    - bread
   - type: Sprite
     layers:
     - state: sausage-slice
@@ -451,14 +452,14 @@
 
 - type: entity
   name: spider meat bread
-  parent: [FoodBreadBase, BaseSlicingRefinableFood]
+  parent: [ FoodBreadBase, BaseSlicingRefinableFood ]
   id: FoodBreadMeatSpider
   description: Reassuringly green meatloaf made from spider meat.
   components:
   - type: FlavorProfile
     flavors:
-      - cobwebs
-      - bread
+    - cobwebs
+    - bread
   - type: Sprite
     layers:
     - state: spidermeat
@@ -485,12 +486,13 @@
   name: spider meat bread slice
   parent: FoodBreadSliceBase
   id: FoodBreadMeatSpiderSlice
-  description: A slice of meatloaf made from an animal that most likely still wants you dead.
+  description: A slice of meatloaf made from an animal that most likely still
+    wants you dead.
   components:
   - type: FlavorProfile
     flavors:
-      - cobwebs
-      - bread
+    - cobwebs
+    - bread
   - type: Sprite
     layers:
     - state: spidermeat-slice
@@ -511,14 +513,15 @@
 
 - type: entity
   name: tofu bread
-  parent: [FoodBreadBase, BaseSlicingRefinableFood]
+  parent: [ FoodBreadBase, BaseSlicingRefinableFood ]
   id: FoodBreadTofu
-  description: Like meatbread but for vegetarians. Brag to your crewmates about how much better it is.
+  description: Like meatbread but for vegetarians. Brag to your crewmates about
+    how much better it is.
   components:
   - type: FlavorProfile
     flavors:
-      - tofu
-      - bread
+    - tofu
+    - bread
   - type: Sprite
     layers:
     - state: tofu
@@ -543,8 +546,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - tofu
-      - bread
+    - tofu
+    - bread
   - type: Sprite
     layers:
     - state: tofu-slice
@@ -558,14 +561,14 @@
 
 - type: entity
   name: xeno meat bread
-  parent: [FoodBreadBase, BaseSlicingRefinableFood]
+  parent: [ FoodBreadBase, BaseSlicingRefinableFood ]
   id: FoodBreadMeatXeno
   description: A fitting, and filling, end to xeno scum.
   components:
   - type: FlavorProfile
     flavors:
-      - acid
-      - bread
+    - acid
+    - bread
   - type: Sprite
     layers:
     - state: xenomeat
@@ -596,8 +599,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - acid
-      - bread
+    - acid
+    - bread
   - type: Sprite
     layers:
     - state: xenomeat-slice
@@ -619,7 +622,7 @@
 # Other than bread/slice:
 
 - type: entity
-  parent: [FoodBreadBase, BaseSlicingRefinableFood]
+  parent: [ FoodBreadBase, BaseSlicingRefinableFood ]
   id: FoodBreadBaguette
   name: baguette
   description: Bon appétit!
@@ -662,7 +665,7 @@
 # Tastes like France.
 
 - type: entity
-  parent: [FoodBreadBaguette, BaseSlicingRefinableFood]
+  parent: [ FoodBreadBaguette, BaseSlicingRefinableFood ]
   id: FoodBreadBaguetteCotton
   name: cotton baguette
   description: Bon azzétit!
@@ -761,8 +764,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - butter
-      - bread
+    - butter
+    - bread
   - type: Sprite
     state: buttered-toast
   - type: Solution
@@ -776,14 +779,14 @@
 
 - type: entity
   name: french toast
-  parent: [SolutionTiny, FoodBreadSliceBase]
+  parent: [ SolutionTiny, FoodBreadSliceBase ]
   id: FoodBreadFrenchToast
   description: A slice of bread soaked in a beaten egg mixture.
   components:
   - type: FlavorProfile
     flavors:
-      - syrupy
-      - bread
+    - syrupy
+    - bread
   - type: Sprite
     state: french-toast
   - type: Solution
@@ -801,14 +804,14 @@
 
 - type: entity
   name: garlic bread
-  parent: [SolutionTiny, FoodBreadSliceBase]
+  parent: [ SolutionTiny, FoodBreadSliceBase ]
   id: FoodBreadGarlicSlice
   description: Alas, it is limited.
   components:
   - type: FlavorProfile
     flavors:
-      - bread
-      - garlic
+    - bread
+    - garlic
   - type: Sprite
     layers:
     - state: garlic-slice
@@ -827,14 +830,14 @@
 
 - type: entity
   name: jelly toast
-  parent: [SolutionTiny, FoodBreadSliceBase]
+  parent: [ SolutionTiny, FoodBreadSliceBase ]
   id: FoodBreadJellySlice
   description: As if science are gonna give up their slimes for toast!
   components:
   - type: FlavorProfile
     flavors:
-      - bread
-      - slimy
+    - bread
+    - slimy
   - type: Sprite
     layers:
     - state: jelly-toast
@@ -851,7 +854,8 @@
   name: moldy bread slice
   parent: FoodBreadSliceBase
   id: FoodBreadMoldySlice
-  description: Entire stations have been ripped apart over arguing whether this is still good to eat.
+  description: Entire stations have been ripped apart over arguing whether this is
+    still good to eat.
   components:
   - type: Sprite
     layers:
@@ -870,7 +874,7 @@
 
 - type: entity
   name: two slice
-  parent: [SolutionTiny, FoodBreadSliceBase]
+  parent: [ SolutionTiny, FoodBreadSliceBase ]
   id: FoodBreadTwoSlice
   description: Classy.
   components:
@@ -889,7 +893,7 @@
 - type: entity
   name: bread dog
   id: MobBreadDog
-  parent: [SolutionLarge, FoodBase, BaseSlicingRefinableFood]
+  parent: [ SolutionLarge, FoodBase, BaseSlicingRefinableFood ]
   description: It's a bread. It's a dog. It's a... breaddog?
   components:
   - type: FlavorProfile
@@ -916,13 +920,12 @@
     drawdepth: Mobs
     sprite: Mobs/Pets/breaddog.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: base
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         density: 50
         mask:
@@ -952,8 +955,8 @@
     speechSounds: Dog
     speechVerb: SmallMob
   - type: MovementSpeedModifier
-    baseWalkSpeed : 5
-    baseSprintSpeed : 3
+    baseWalkSpeed: 5
+    baseSprintSpeed: 3
   - type: Tag
     tags:
     - VimPilot
@@ -976,7 +979,7 @@
         Blunt: 1
 
 - type: entity
-  parent: [SolutionVeryTiny, FoodBreadSliceBase]
+  parent: [ SolutionVeryTiny, FoodBreadSliceBase ]
   id: FoodBreadNutriBatard
   name: nutri-bâtard
   description: bon 'pétite!

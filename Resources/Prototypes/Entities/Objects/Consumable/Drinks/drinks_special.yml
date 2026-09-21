@@ -1,5 +1,5 @@
 - type: entity
-  parent: [DrinkBaseMaterialGlass, DrinkBase, DrinkVisualsFillOverlay]
+  parent: [ DrinkBaseMaterialGlass, DrinkBase, DrinkVisualsFillOverlay ]
   id: DrinkShotGlass
   name: shot glass
   description: Perfect for slamming down onto the table angrily.
@@ -18,8 +18,7 @@
     solution: drink
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -30,10 +29,11 @@
         transferForensics: true
 
 - type: entity
-  parent: [DrinkBaseMaterialMetal, SolutionLarge, DrinkBase]
+  parent: [ DrinkBaseMaterialMetal, SolutionLarge, DrinkBase ]
   id: DrinkIceBucket
   name: ice bucket
-  description: A special bucket of refreshy ice. Prohibited use for challenge with the same name!
+  description: A special bucket of refreshy ice. Prohibited use for challenge with
+    the same name!
   components:
   - type: Item
     size: Large
@@ -50,9 +50,9 @@
       Steel: 75
 
 - type: entity
-  parent: [DrinkBaseMaterialPorcelain, SolutionNormal, DrinkBase]
+  parent: [ DrinkBaseMaterialPorcelain, SolutionNormal, DrinkBase ]
   id: DrinkTeapot
-  name: teapot  # short and stout
+  name: teapot # short and stout
   description: An elegant teapot. It simply oozes class.
   components:
   - type: Item
@@ -79,17 +79,17 @@
     layers:
     - state: plastic-thingy
     - state: 6pack1
-      map: ["6pack1"]
+      map: [ "6pack1" ]
     - state: 6pack2
-      map: ["6pack2"]
+      map: [ "6pack2" ]
     - state: 6pack3
-      map: ["6pack3"]
+      map: [ "6pack3" ]
     - state: 6pack4
-      map: ["6pack4"]
+      map: [ "6pack4" ]
     - state: 6pack5
-      map: ["6pack5"]
+      map: [ "6pack5" ]
     - state: 6pack6
-      map: ["6pack6"]
+      map: [ "6pack6" ]
   - type: Item
     size: Normal
   - type: Storage
@@ -106,7 +106,7 @@
         amount: 6
   - type: ItemCounter
     count:
-      tags: [Cola]
+      tags: [ Cola ]
     composite: true
     layerStates:
     - 6pack1
@@ -120,7 +120,7 @@
 # Bartender tools
 
 - type: entity
-  parent: [DrinkBaseMaterialStrongMetal, SolutionSmall, DrinkBase]
+  parent: [ DrinkBaseMaterialStrongMetal, SolutionSmall, DrinkBase ]
   id: DrinkShaker
   name: shaker
   description: The trusty mixing buddy of the bartender.
@@ -152,7 +152,8 @@
   parent: DrinkShaker
   id: DrinkShakerGold
   name: golden shaker
-  description: A gold-plated shaker given as a token of appreciation for years of service. It doesn't make the drinks taste any different.
+  description: A gold-plated shaker given as a token of appreciation for years of
+    service. It doesn't make the drinks taste any different.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shaker_gold.rsi
@@ -164,7 +165,7 @@
       Steel: 40
 
 - type: entity
-  parent: [DrinkBaseMaterialMetal, DrinkBase]
+  parent: [ DrinkBaseMaterialMetal, DrinkBase ]
   id: DrinkJigger
   name: jigger
   description: Like a shaker, but smaller. Used to control the amount of ingredients.
@@ -191,7 +192,7 @@
       Steel: 20
 
 - type: entity
-  parent: [DrinkBaseMaterialStrongMetal, SolutionNormal, DrinkBase, DrinkVisualsFill]
+  parent: [ DrinkBaseMaterialStrongMetal, SolutionNormal, DrinkBase, DrinkVisualsFill ]
   id: Pitcher
   name: metal pitcher
   description: A stainless steel insulated pitcher. Everyone's best friend in the morning.
@@ -210,7 +211,7 @@
 
 - type: entity
   abstract: true
-  parent: [DrinkBaseMaterialGlass, DrinkBase]
+  parent: [ DrinkBaseMaterialGlass, DrinkBase ]
   id: DrinkShakeBase
   description: ''
   components:
@@ -220,8 +221,7 @@
     solution: drink
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:SpawnEntitiesBehavior

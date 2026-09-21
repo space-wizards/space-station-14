@@ -1,6 +1,13 @@
 - type: entity
   abstract: true
-  parent: [DrinkBaseMaterialStrongMetal, SolutionSmall, DrinkBase, DrinkBaseOpenable, DrinkVisualsOpenable]
+  parent:
+    [
+      DrinkBaseMaterialStrongMetal,
+      SolutionSmall,
+      DrinkBase,
+      DrinkBaseOpenable,
+      DrinkVisualsOpenable
+    ]
   id: FlaskBase
   components:
   - type: Sprite
@@ -17,7 +24,7 @@
 # Flasks
 
 - type: entity
-  parent: [DrinkBaseMaterialStrongMetal, SolutionSmall, DrinkBase]
+  parent: [ DrinkBaseMaterialStrongMetal, SolutionSmall, DrinkBase ]
   id: DrinkFlaskOld
   name: old flask
   description: A decrepit old flask, its lid seems to be missing.
@@ -57,7 +64,8 @@
   parent: FlaskBase
   id: DrinkDetFlask
   name: inspector's flask
-  description: A metal flask with a leather band and golden badge belonging to the inspector.
+  description: A metal flask with a leather band and golden badge belonging to the
+    inspector.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/detflask.rsi
@@ -86,8 +94,8 @@
   name: flask
   description: A reusable metal flask. Classier than drinking straight from a bottle.
   components:
-    - type: Sprite
-      sprite: Objects/Consumable/Drinks/barflask.rsi
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/barflask.rsi
 
 - type: entity
   parent: FlaskBase

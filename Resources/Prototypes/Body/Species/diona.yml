@@ -96,8 +96,8 @@
         sprite: Mobs/Effects/burn_damage.rsi
   - type: Butcherable
     spawned:
-      - id: FoodMeatPlant
-        amount: 5
+    - id: FoodMeatPlant
+      amount: 5
   - type: Bloodstream
     bloodReferenceSolution:
       reagents:
@@ -107,10 +107,10 @@
     groups:
       Flammable: [ Touch ]
       Extinguish: [ Touch ]
-      Acidic: [Touch, Ingestion]
+      Acidic: [ Touch, Ingestion ]
     reactions:
-    - reagents: [Water, SpaceCleaner]
-      methods: [Touch]
+    - reagents: [ Water, SpaceCleaner ]
+      methods: [ Touch ]
       effects:
       - !type:WashCreamPie
     - reagents: [ PlantBGone ]
@@ -142,18 +142,17 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         density: 300 #weighs more than humans because wood
         restitution: 0.0
         mask:
-          - MobMask
+        - MobMask
         layer:
-          - MobLayer
+        - MobLayer
   - type: Speech
     speechVerb: Plant
-    allowedEmotes: ['Chirp']
+    allowedEmotes: [ 'Chirp' ]
   - type: Vocal
     emoteSounds: UnisexDiona
   - type: TypingIndicator

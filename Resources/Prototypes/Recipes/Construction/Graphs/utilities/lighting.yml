@@ -2,162 +2,162 @@
   id: CyanLight
   start: start
   graph:
-    - node: start
-      edges:
-        - to: icon
-          steps:
-            - material: Glass
-              amount: 1
-              doAfter: 1
-            - tag: CrystalCyan
-              name: construction-graph-tag-cyan-crystal-shard
-              icon:
-                sprite: Objects/Materials/Shards/crystal-shard.rsi
-                state: shard0
-                color: #52ff39
-              doAfter: 1
-    - node: icon
-      entity: LightTubeCrystalCyan
+  - node: start
+    edges:
+    - to: icon
+      steps:
+      - material: Glass
+        amount: 1
+        doAfter: 1
+      - tag: CrystalCyan
+        name: construction-graph-tag-cyan-crystal-shard
+        icon:
+          sprite: Objects/Materials/Shards/crystal-shard.rsi
+          state: shard0
+          color: #52ff39
+        doAfter: 1
+  - node: icon
+    entity: LightTubeCrystalCyan
 
 - type: constructionGraph
   id: BlueLight
   start: start
   graph:
-    - node: start
-      edges:
-        - to: icon
-          steps:
-            - material: Glass
-              amount: 1
-              doAfter: 1
-            - tag: CrystalBlue
-              name: construction-graph-tag-blue-crystal-shard
-              icon:
-                sprite: Objects/Materials/Shards/crystal-shard.rsi
-                state: shard1
-              doAfter: 1
-    - node: icon
-      entity: LightTubeCrystalBlue
+  - node: start
+    edges:
+    - to: icon
+      steps:
+      - material: Glass
+        amount: 1
+        doAfter: 1
+      - tag: CrystalBlue
+        name: construction-graph-tag-blue-crystal-shard
+        icon:
+          sprite: Objects/Materials/Shards/crystal-shard.rsi
+          state: shard1
+        doAfter: 1
+  - node: icon
+    entity: LightTubeCrystalBlue
 
 - type: constructionGraph
   id: YellowLight
   start: start
   graph:
-    - node: start
-      edges:
-        - to: icon
-          steps:
-            - material: Glass
-              amount: 1
-              doAfter: 1
-            - tag: CrystalYellow
-              name: construction-graph-tag-yellow-crystal-shard
-              icon:
-                sprite: Objects/Materials/Shards/crystal-shard.rsi
-                state: shard2
-              doAfter: 1
-    - node: icon
-      entity: LightTubeCrystalYellow
+  - node: start
+    edges:
+    - to: icon
+      steps:
+      - material: Glass
+        amount: 1
+        doAfter: 1
+      - tag: CrystalYellow
+        name: construction-graph-tag-yellow-crystal-shard
+        icon:
+          sprite: Objects/Materials/Shards/crystal-shard.rsi
+          state: shard2
+        doAfter: 1
+  - node: icon
+    entity: LightTubeCrystalYellow
 
 - type: constructionGraph
   id: PinkLight
   start: start
   graph:
-    - node: start
-      edges:
-        - to: icon
-          steps:
-            - material: Glass
-              amount: 1
-              doAfter: 1
-            - tag: CrystalPink
-              name: construction-graph-tag-pink-crystal-shard
-              icon:
-                sprite: Objects/Materials/Shards/crystal-shard.rsi
-                state: shard3
-              doAfter: 1
-    - node: icon
-      entity: LightTubeCrystalPink
+  - node: start
+    edges:
+    - to: icon
+      steps:
+      - material: Glass
+        amount: 1
+        doAfter: 1
+      - tag: CrystalPink
+        name: construction-graph-tag-pink-crystal-shard
+        icon:
+          sprite: Objects/Materials/Shards/crystal-shard.rsi
+          state: shard3
+        doAfter: 1
+  - node: icon
+    entity: LightTubeCrystalPink
 
 - type: constructionGraph
   id: OrangeLight
   start: start
   graph:
-    - node: start
-      edges:
-        - to: icon
-          steps:
-            - material: Glass
-              amount: 1
-              doAfter: 1
-            - tag: CrystalOrange
-              name: construction-graph-tag-orange-crystal-shard
-              icon:
-                sprite: Objects/Materials/Shards/crystal-shard.rsi
-                state: shard0
-              doAfter: 1
-    - node: icon
-      entity: LightTubeCrystalOrange
+  - node: start
+    edges:
+    - to: icon
+      steps:
+      - material: Glass
+        amount: 1
+        doAfter: 1
+      - tag: CrystalOrange
+        name: construction-graph-tag-orange-crystal-shard
+        icon:
+          sprite: Objects/Materials/Shards/crystal-shard.rsi
+          state: shard0
+        doAfter: 1
+  - node: icon
+    entity: LightTubeCrystalOrange
 
 - type: constructionGraph
   id: BlackLight
   start: start
   graph:
-    - node: start
-      edges:
-        - to: icon
-          steps:
-            - material: Glass
-              amount: 1
-              doAfter: 1
-            - tag: CrystalBlack
-              name: construction-graph-tag-black-crystal-shard
-              icon:
-                sprite: Objects/Materials/Shards/crystal-shard.rsi
-                state: shard1
-              doAfter: 1
-    - node: icon
-      entity: LightTubeCrystalBlack
+  - node: start
+    edges:
+    - to: icon
+      steps:
+      - material: Glass
+        amount: 1
+        doAfter: 1
+      - tag: CrystalBlack
+        name: construction-graph-tag-black-crystal-shard
+        icon:
+          sprite: Objects/Materials/Shards/crystal-shard.rsi
+          state: shard1
+        doAfter: 1
+  - node: icon
+    entity: LightTubeCrystalBlack
 
 - type: constructionGraph
   id: RedLight
   start: start
   graph:
-    - node: start
-      edges:
-        - to: icon
-          steps:
-            - material: Glass
-              amount: 1
-              doAfter: 1
-            - tag: CrystalRed
-              name: construction-graph-tag-red-crystal-shard
-              icon:
-                sprite: Objects/Materials/Shards/crystal-shard.rsi
-                state: shard2
-              doAfter: 1
-    - node: icon
-      entity: LightTubeCrystalRed
+  - node: start
+    edges:
+    - to: icon
+      steps:
+      - material: Glass
+        amount: 1
+        doAfter: 1
+      - tag: CrystalRed
+        name: construction-graph-tag-red-crystal-shard
+        icon:
+          sprite: Objects/Materials/Shards/crystal-shard.rsi
+          state: shard2
+        doAfter: 1
+  - node: icon
+    entity: LightTubeCrystalRed
 
 - type: constructionGraph
   id: GreenLight
   start: start
   graph:
-    - node: start
-      edges:
-        - to: icon
-          steps:
-            - material: Glass
-              amount: 1
-              doAfter: 1
-            - tag: CrystalGreen
-              name: construction-graph-tag-green-crystal-shard
-              icon:
-                sprite: Objects/Materials/Shards/crystal-shard.rsi
-                state: shard3
-              doAfter: 1
-    - node: icon
-      entity: LightTubeCrystalGreen
+  - node: start
+    edges:
+    - to: icon
+      steps:
+      - material: Glass
+        amount: 1
+        doAfter: 1
+      - tag: CrystalGreen
+        name: construction-graph-tag-green-crystal-shard
+        icon:
+          sprite: Objects/Materials/Shards/crystal-shard.rsi
+          state: shard3
+        doAfter: 1
+  - node: icon
+    entity: LightTubeCrystalGreen
 
 - type: constructionGraph
   id: CyanLightBulb

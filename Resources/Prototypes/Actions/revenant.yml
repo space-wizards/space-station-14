@@ -18,7 +18,6 @@
     - texture: Interface/Actions/defile.png
   - type: InstantAction
     event: !type:RevenantDefileActionEvent
-
 - type: entity
   parent: BaseAction
   id: ActionRevenantOverloadLights
@@ -33,18 +32,17 @@
     - texture: Interface/Actions/overloadlight.png
   - type: InstantAction
     event: !type:RevenantOverloadLightsActionEvent
-
-#- type: entity
-#  parent: BaseAction
-#  id: ActionRevenantBlight
-#  name: Blight
-#  description: Costs 50 Essence.
-#  components:
-#  - type: Action
-#    icon: Interface/Actions/blight.png
-#    useDelay: 20
-#  - type: InstantAction
-#    event: !type:RevenantBlightActionEvent
+      #- type: entity
+      #  parent: BaseAction
+      #  id: ActionRevenantBlight
+      #  name: Blight
+      #  description: Costs 50 Essence.
+      #  components:
+      #  - type: Action
+      #    icon: Interface/Actions/blight.png
+      #    useDelay: 20
+      #  - type: InstantAction
+      #    event: !type:RevenantBlightActionEvent
 
 - type: entity
   parent: BaseAction

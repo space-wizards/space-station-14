@@ -1,6 +1,6 @@
 - type: entity
   id: Mannequin
-  parent: [BaseStructureDynamic, StripableInventoryBase, StructureHealthFurniture]
+  parent: [ BaseStructureDynamic, StripableInventoryBase, StructureHealthFurniture ]
   name: mannequin
   description: It can wear any clothing with style.
   components:
@@ -24,8 +24,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.2
         density: 200
         mask:
@@ -41,8 +40,7 @@
     damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 40
       behaviors:
       - !type:PlaySoundBehavior

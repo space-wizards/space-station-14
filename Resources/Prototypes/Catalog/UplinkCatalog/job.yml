@@ -120,9 +120,9 @@
   categories:
   - UplinkJob
   conditions:
-    - !type:BuyerDepartmentCondition
-      whitelist:
-      - Science
+  - !type:BuyerDepartmentCondition
+    whitelist:
+    - Science
 
 - type: listing
   id: uplinkProximityMine
@@ -149,7 +149,7 @@
   id: UplinkSyndicateSpongeBox
   name: uplink-syndicate-sponge-box-name
   description: uplink-syndicate-sponge-box-desc
-  icon: { sprite:  Objects/Misc/monkeycube.rsi, state: box}
+  icon: { sprite: Objects/Misc/monkeycube.rsi, state: box }
   discountCategory: rareDiscounts
   discountDownTo:
     Telecrystal: 2
@@ -159,7 +159,8 @@
   categories:
   - UplinkJob
   conditions:
-  - !type:BuyerJobCondition # We can't use BuyerDepartmentCondition here since Chef can also get this
+  # We can't use BuyerDepartmentCondition here since Chef can also get this
+  - !type:BuyerJobCondition
     whitelist:
     - Scientist
     - ResearchDirector
@@ -169,7 +170,7 @@
   id: UplinkCaneBlade
   name: uplink-cane-blade-name
   description: uplink-cane-blade-desc
-  icon: { sprite:  Objects/Weapons/Melee/cane.rsi, state: cane}
+  icon: { sprite: Objects/Weapons/Melee/cane.rsi, state: cane }
   productEntity: CaneSheathFilled
   discountCategory: rareDiscounts
   discountDownTo:
@@ -187,7 +188,7 @@
   id: UplinkCombatBakery
   name: uplink-combat-bakery-name
   description: uplink-combat-bakery-desc
-  icon: { sprite:  Objects/Consumable/Food/Baked/bread.rsi, state: baguette}
+  icon: { sprite: Objects/Consumable/Food/Baked/bread.rsi, state: baguette }
   productEntity: CombatBakeryKit
   discountCategory: usualDiscounts
   discountDownTo:
@@ -206,7 +207,7 @@
   id: UplinkAcolyteArmor
   name: uplink-acolyte-armor-name
   description: uplink-acolyte-armor-desc
-  icon: { sprite: Clothing/OuterClothing/Armor/cult_armour.rsi, state: icon}
+  icon: { sprite: Clothing/OuterClothing/Armor/cult_armour.rsi, state: icon }
   productEntity: ClothingBackpackDuffelAcolyteBundle
   discountCategory: veryRareDiscounts
   discountDownTo:
@@ -224,7 +225,7 @@
   id: UplinkSawAdvanced
   name: uplink-saw-advanced-name
   description: uplink-saw-advanced-desc
-  icon: { sprite:  Objects/Specific/Medical/Surgery/saw.rsi, state: advanced}
+  icon: { sprite: Objects/Specific/Medical/Surgery/saw.rsi, state: advanced }
   productEntity: SawAdvanced
   discountCategory: rareDiscounts
   discountDownTo:

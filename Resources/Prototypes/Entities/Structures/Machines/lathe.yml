@@ -1,6 +1,11 @@
 - type: entity
   id: BaseLathe
-  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
+  parent:
+    [
+      BaseMachinePowered,
+      ConstructibleMachine,
+      BaseConstructibleMachineDestructible
+    ]
   abstract: true
   name: lathe
   components:
@@ -9,20 +14,18 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.4"
         density: 190
         mask:
         - MachineMask
         layer:
-          - MachineLayer
+        - MachineLayer
   - type: Lathe
   - type: MaterialStorage
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 175
       behaviors:
       - !type:PlaySoundBehavior
@@ -73,7 +76,7 @@
     solution: lube
 
 - type: entity
-  parent: [SolutionLube, SolutionLarge]
+  parent: [ SolutionLube, SolutionLarge ]
   id: SolutionLatheLube # Its own prototype since some lathes might interface with solutions in other ways
   categories: [ HideSpawnMenu ]
 
@@ -94,29 +97,30 @@
   id: Autolathe
   parent: BaseLatheLube
   name: autolathe
-  description: It produces basic items using metal and glass. Has the ability to process blueprints to print new recipes.
+  description: It produces basic items using metal and glass. Has the ability to
+    process blueprints to print new recipes.
   components:
   - type: Sprite
     sprite: Structures/Machines/autolathe.rsi
     snapCardinals: true
     layers:
     - state: icon
-      map: ["enum.LatheVisualLayers.IsRunning"]
+      map: [ "enum.LatheVisualLayers.IsRunning" ]
     - state: unlit
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
     - state: inserting
-      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+      map: [ "enum.MaterialStorageVisualLayers.Inserting" ]
     - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: Machine
     board: AutolatheMachineCircuitboard
   - type: MaterialStorage
     whitelist: &StandardMaterialWhitelist
       tags:
-        - Sheet
-        - RawMaterial
-        - Ingot
+      - Sheet
+      - RawMaterial
+      - Ingot
   - type: OreSiloClient
   - type: Lathe
     idleState: icon
@@ -157,9 +161,10 @@
 
 - type: entity
   id: AutolatheHyperConvection
-  parent: [Autolathe, BaseHyperlathe]
+  parent: [ Autolathe, BaseHyperlathe ]
   name: hyper convection autolathe
-  description: A highly-experimental autolathe that harnesses the power of extreme heat to slowly create objects more cost-effectively.
+  description: A highly-experimental autolathe that harnesses the power of extreme
+    heat to slowly create objects more cost-effectively.
   components:
   - type: Sprite
     sprite: Structures/Machines/autolathe_hypercon.rsi
@@ -177,14 +182,14 @@
     snapCardinals: true
     layers:
     - state: icon
-      map: ["enum.LatheVisualLayers.IsRunning"]
+      map: [ "enum.LatheVisualLayers.IsRunning" ]
     - state: unlit
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
     - state: inserting
-      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+      map: [ "enum.MaterialStorageVisualLayers.Inserting" ]
     - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: Machine
     board: ProtolatheMachineCircuitboard
   - type: MaterialStorage
@@ -221,9 +226,10 @@
 
 - type: entity
   id: ProtolatheHyperConvection
-  parent: [Protolathe, BaseHyperlathe]
+  parent: [ Protolathe, BaseHyperlathe ]
   name: hyper convection protolathe
-  description: A highly-experimental protolathe that harnesses the power of extreme heat to slowly create objects more cost-effectively.
+  description: A highly-experimental protolathe that harnesses the power of
+    extreme heat to slowly create objects more cost-effectively.
   components:
   - type: Sprite
     sprite: Structures/Machines/protolathe_hypercon.rsi
@@ -241,12 +247,12 @@
     snapCardinals: true
     layers:
     - state: icon
-      map: ["enum.LatheVisualLayers.IsRunning"]
+      map: [ "enum.LatheVisualLayers.IsRunning" ]
     - state: unlit
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
     - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: Machine
     board: CircuitImprinterMachineCircuitboard
   - type: Lathe
@@ -278,9 +284,10 @@
 
 - type: entity
   id: CircuitImprinterHyperConvection
-  parent: [CircuitImprinter, BaseHyperlathe]
+  parent: [ CircuitImprinter, BaseHyperlathe ]
   name: hyper convection circuit imprinter
-  description: A highly-experimental circuit imprinter that harnesses the power of extreme heat to slowly create objects more cost-effectively.
+  description: A highly-experimental circuit imprinter that harnesses the power of
+    extreme heat to slowly create objects more cost-effectively.
   components:
   - type: Sprite
     sprite: Structures/Machines/circuit_imprinter_hypercon.rsi
@@ -297,11 +304,11 @@
     sprite: Structures/Machines/exosuit_fabricator.rsi
     layers:
     - state: fab-idle
-      map: ["enum.LatheVisualLayers.IsRunning"]
+      map: [ "enum.LatheVisualLayers.IsRunning" ]
     - state: fab-load
-      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+      map: [ "enum.MaterialStorageVisualLayers.Inserting" ]
     - state: fab-o
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: Machine
     board: ExosuitFabricatorMachineCircuitboard
   - type: Lathe
@@ -334,25 +341,25 @@
     snapCardinals: true
     layers:
     - state: icon
-      map: ["enum.LatheVisualLayers.IsRunning"]
+      map: [ "enum.LatheVisualLayers.IsRunning" ]
       color: "#ffaa99"
     - state: unlit
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
       color: "#ffaaaa"
     - state: inserting
-      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+      map: [ "enum.MaterialStorageVisualLayers.Inserting" ]
       color: "#ffaaaa"
     - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: Machine
     board: BiofabricatorMachineCircuitboard
   - type: MaterialStorage
     ignoreColor: true
     whitelist:
       tags:
-        - Sheet
-        - RawMaterial
+      - Sheet
+      - RawMaterial
   - type: Lathe
     idleState: icon
     runningState: building
@@ -372,15 +379,15 @@
     sprite: Structures/Machines/techfab.rsi
     layers:
     - state: icon
-      map: ["enum.LatheVisualLayers.IsRunning"]
+      map: [ "enum.LatheVisualLayers.IsRunning" ]
     - state: sec
     - state: unlit
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
     - state: inserting
-      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+      map: [ "enum.MaterialStorageVisualLayers.Inserting" ]
     - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: Machine
     board: SecurityTechFabCircuitboard
   - type: Lathe
@@ -409,42 +416,43 @@
     whitelist: *StandardMaterialWhitelist
   - type: OreSiloClient
   - type: LatheAnnouncing
-    channels: [Security]
+    channels: [ Security ]
 
 - type: entity
   id: AmmoTechFab
   parent: BaseLatheLube
   name: ammo techfab
-  description: Prints the bare minimum of bullets that any budget military or armory could need. Nothing fancy.
+  description: Prints the bare minimum of bullets that any budget military or
+    armory could need. Nothing fancy.
   components:
-    - type: Sprite
-      sprite: Structures/Machines/techfab.rsi
-      layers:
-        - state: icon
-          map: ["enum.LatheVisualLayers.IsRunning"]
-        - state: ammo
-        - state: unlit
-          shader: unshaded
-          map: ["enum.PowerDeviceVisualLayers.Powered"]
-        - state: inserting
-          map: ["enum.MaterialStorageVisualLayers.Inserting"]
-        - state: panel
-          map: ["enum.WiresVisualLayers.MaintenancePanel"]
-    - type: Machine
-      board: AmmoTechFabCircuitboard
-    - type: Lathe
-      idleState: icon
-      runningState: icon
-      unlitIdleState: unlit
-      unlitRunningState: unlit-building
-      staticPacks:
-      - SecurityAmmoStatic
-    - type: EmagLatheRecipes
-      emagStaticPacks:
-      - SyndicateAmmoStatic
-    - type: MaterialStorage
-      whitelist: *StandardMaterialWhitelist
-    - type: OreSiloClient
+  - type: Sprite
+    sprite: Structures/Machines/techfab.rsi
+    layers:
+    - state: icon
+      map: [ "enum.LatheVisualLayers.IsRunning" ]
+    - state: ammo
+    - state: unlit
+      shader: unshaded
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+    - state: inserting
+      map: [ "enum.MaterialStorageVisualLayers.Inserting" ]
+    - state: panel
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+  - type: Machine
+    board: AmmoTechFabCircuitboard
+  - type: Lathe
+    idleState: icon
+    runningState: icon
+    unlitIdleState: unlit
+    unlitRunningState: unlit-building
+    staticPacks:
+    - SecurityAmmoStatic
+  - type: EmagLatheRecipes
+    emagStaticPacks:
+    - SyndicateAmmoStatic
+  - type: MaterialStorage
+    whitelist: *StandardMaterialWhitelist
+  - type: OreSiloClient
 
 - type: entity
   id: MedicalTechFab
@@ -456,15 +464,15 @@
     sprite: Structures/Machines/techfab.rsi
     layers:
     - state: icon
-      map: ["enum.LatheVisualLayers.IsRunning"]
+      map: [ "enum.LatheVisualLayers.IsRunning" ]
     - state: med
     - state: unlit
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
     - state: inserting
-      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+      map: [ "enum.MaterialStorageVisualLayers.Inserting" ]
     - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: Lathe
     idleState: icon
     runningState: icon
@@ -486,7 +494,7 @@
     stealGroup: MedicalTechFabCircuitboard
   - type: OreSiloClient
   - type: LatheAnnouncing
-    channels: [Medical]
+    channels: [ Medical ]
   - type: AmbientMusicMarkerMedical
 
 - type: entity
@@ -502,7 +510,7 @@
     snapCardinals: false
     layers:
     - state: icon
-      map: ["enum.LatheVisualLayers.IsRunning"]
+      map: [ "enum.LatheVisualLayers.IsRunning" ]
   - type: Machine
     board: UniformPrinterMachineCircuitboard
   - type: Lathe
@@ -543,14 +551,14 @@
     snapCardinals: true
     layers:
     - state: icon
-      map: ["enum.LatheVisualLayers.IsRunning"]
+      map: [ "enum.LatheVisualLayers.IsRunning" ]
     - state: unlit
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
     - state: inserting
-      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+      map: [ "enum.MaterialStorageVisualLayers.Inserting" ]
     - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: Machine
     board: BiogeneratorMachineCircuitboard
   - type: MaterialStorage
@@ -585,38 +593,39 @@
   name: ore processor
   description: It produces sheets and ingots using ores.
   components:
-    - type: Sprite
-      sprite: Structures/Machines/ore_processor.rsi
-      layers:
-        - state: icon
-          map: ["enum.LatheVisualLayers.IsRunning"]
-        - state: unlit
-          shader: unshaded
-          map: ["enum.PowerDeviceVisualLayers.Powered"]
-        - state: inserting
-          map: ["enum.MaterialStorageVisualLayers.Inserting"]
-        - state: panel
-          map: ["enum.WiresVisualLayers.MaintenancePanel"]
-    - type: Machine
-      board: OreProcessorMachineCircuitboard
-    - type: MaterialStorage
-      ignoreColor: true
-      whitelist:
-        tags:
-          - Ore
-    - type: Lathe
-      idleState: icon
-      runningState: building
-      defaultProductionAmount: 10
-      staticPacks:
-      - OreSmelting
-      - RGlassSmelting
+  - type: Sprite
+    sprite: Structures/Machines/ore_processor.rsi
+    layers:
+    - state: icon
+      map: [ "enum.LatheVisualLayers.IsRunning" ]
+    - state: unlit
+      shader: unshaded
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+    - state: inserting
+      map: [ "enum.MaterialStorageVisualLayers.Inserting" ]
+    - state: panel
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+  - type: Machine
+    board: OreProcessorMachineCircuitboard
+  - type: MaterialStorage
+    ignoreColor: true
+    whitelist:
+      tags:
+      - Ore
+  - type: Lathe
+    idleState: icon
+    runningState: building
+    defaultProductionAmount: 10
+    staticPacks:
+    - OreSmelting
+    - RGlassSmelting
 
 - type: entity
   parent: OreProcessor
   id: OreProcessorIndustrial
   name: industrial ore processor
-  description: An ore processor specifically designed for mass-producing metals in industrial applications.
+  description: An ore processor specifically designed for mass-producing metals in
+    industrial applications.
   components:
   - type: Sprite
     sprite: Structures/Machines/ore_processor_industrial.rsi
@@ -640,10 +649,10 @@
     sprite: Structures/Machines/sheetifier.rsi
     layers:
     - state: base_machine
-      map: ["enum.LatheVisualLayers.IsRunning"]
+      map: [ "enum.LatheVisualLayers.IsRunning" ]
     - state: buttons_on
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
   - type: Machine
     board: SheetifierMachineCircuitboard
   - type: MaterialStorage
@@ -665,19 +674,20 @@
   parent: BaseLathe
   id: CutterMachine
   name: cutter machine
-  description: This is a cutter. It cuts. Add variety to your station floor with eye-pleasing patterns! Don't stick your fingers in.
+  description: This is a cutter. It cuts. Add variety to your station floor with
+    eye-pleasing patterns! Don't stick your fingers in.
   components:
   - type: Sprite
     sprite: Structures/Machines/cuttermachine.rsi
     snapCardinals: true
     layers:
     - state: icon
-      map: ["enum.LatheVisualLayers.IsRunning"]
+      map: [ "enum.LatheVisualLayers.IsRunning" ]
     - state: unlit
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
     - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: Machine
     board: CutterMachineCircuitboard
   - type: Lathe

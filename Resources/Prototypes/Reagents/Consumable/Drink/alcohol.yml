@@ -1,4 +1,3 @@
-
 # Base Alcohol
 
 - type: reagent
@@ -461,8 +460,8 @@
   flavor: alienbrainhemorrhage
   color: "#FFFDD0"
   metamorphicSprite:
-      sprite: Objects/Consumable/Drinks/alienbrainhemorrhage.rsi
-      state: icon_empty
+    sprite: Objects/Consumable/Drinks/alienbrainhemorrhage.rsi
+    state: icon_empty
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
@@ -688,7 +687,7 @@
   metamorphicChangeColor: true
 
 - type: reagent
-  id:  Booger
+  id: Booger
   name: reagent-name-booger
   parent: BaseAlcohol
   desc: reagent-desc-booger
@@ -1805,13 +1804,13 @@
         Ethanol: 0.2
         Theobromine: 0.1
       effects:
-        - !type:Satiate
-          satiationType: Thirst
-          factor: 1
-        - !type:ModifyStatusEffect
-          effectProto: StatusEffectDrowsiness
-          time: 1
-          type: Remove
+      - !type:Satiate
+        satiationType: Thirst
+        factor: 1
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 1
+        type: Remove
   fizziness: 0.25
 
 - type: reagent
@@ -1834,13 +1833,13 @@
         Ethanol: 0.3
         Theobromine: 0.1
       effects:
-        - !type:Satiate
-          satiationType: Thirst
-          factor: 1
-        - !type:ModifyStatusEffect
-          effectProto: StatusEffectDrowsiness
-          time: 1
-          type: Remove
+      - !type:Satiate
+        satiationType: Thirst
+        factor: 1
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 1
+        type: Remove
   fizziness: 0.15
 
 - type: reagent
@@ -1863,13 +1862,13 @@
         Ethanol: 0.2
         Theobromine: 0.1
       effects:
-        - !type:Satiate
-          satiationType: Thirst
-          factor: 1
-        - !type:ModifyStatusEffect
-          effectProto: StatusEffectDrowsiness
-          time: 1
-          type: Remove
+      - !type:Satiate
+        satiationType: Thirst
+        factor: 1
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 1
+        type: Remove
   fizziness: 0.15
 
 - type: reagent
@@ -1892,13 +1891,13 @@
         Ethanol: 0.3
         Theobromine: 0.1
       effects:
-        - !type:Satiate
-          satiationType: Thirst
-          factor: 1
-        - !type:ModifyStatusEffect
-          effectProto: StatusEffectDrowsiness
-          time: 1
-          type: Remove
+      - !type:Satiate
+        satiationType: Thirst
+        factor: 1
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 1
+        type: Remove
   fizziness: 0.25
 
 - type: reagent
@@ -1921,13 +1920,13 @@
         Ethanol: 0.14
         Theobromine: 0.1
       effects:
-        - !type:Satiate
-          satiationType: Thirst
-          factor: 1
-        - !type:ModifyStatusEffect
-          effectProto: StatusEffectDrowsiness
-          time: 1
-          type: Remove
+      - !type:Satiate
+        satiationType: Thirst
+        factor: 1
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 1
+        type: Remove
   fizziness: 0.15
 
 - type: reagent
@@ -1950,13 +1949,13 @@
         Ethanol: 0.3
         Theobromine: 0.1
       effects:
-        - !type:Satiate
-          satiationType: Thirst
-          factor: 1
-        - !type:ModifyStatusEffect
-          effectProto: StatusEffectDrowsiness
-          time: 1
-          type: Remove
+      - !type:Satiate
+        satiationType: Thirst
+        factor: 1
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 1
+        type: Remove
   fizziness: 0.25
 
 - type: reagent
@@ -2089,7 +2088,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: .5
+            Poison: 0.5
       - !type:Satiate
         satiationType: Thirst
         factor: 1
@@ -2257,7 +2256,7 @@
           reagent: BacchusBlessing
           min: 6
         - !type:MetabolizerTypeCondition
-          type: [Dwarf]
+          type: [ Dwarf ]
           inverted: true
         damage:
           types:
@@ -2268,7 +2267,7 @@
           reagent: BacchusBlessing
           min: 6
         - !type:MetabolizerTypeCondition
-          type: [Dwarf]
+          type: [ Dwarf ]
         damage:
           types:
             Poison: 0.04 # TODO: Might increase this, even though it's just double of ethanol from 0.02 to 0.04
@@ -2279,5 +2278,5 @@
           reagent: BacchusBlessing
           min: 8
         - !type:MetabolizerTypeCondition
-          type: [Dwarf]
+          type: [ Dwarf ]
           inverted: true

@@ -8,9 +8,9 @@
   category: Disabilities
   whitelist:
     components:
-      - Blindable
+    - Blindable
   components:
-    - type: PermanentBlindness
+  - type: PermanentBlindness
 
 - type: trait
   id: PoorVision
@@ -20,10 +20,10 @@
   category: Disabilities
   whitelist:
     components:
-      - Blindable
+    - Blindable
   components:
-    - type: PermanentBlindness
-      blindness: 4
+  - type: PermanentBlindness
+    blindness: 4
 
 - type: trait
   id: Narcolepsy
@@ -31,11 +31,11 @@
   description: trait-narcolepsy-desc
   category: Disabilities
   components:
-    - type: Narcolepsy
-      maxTimeBetweenIncidents: 600
-      minTimeBetweenIncidents: 300
-      maxDurationOfIncident: 30
-      minDurationOfIncident: 10
+  - type: Narcolepsy
+    maxTimeBetweenIncidents: 600
+    minTimeBetweenIncidents: 300
+    maxDurationOfIncident: 30
+    minDurationOfIncident: 10
 
 - type: trait
   id: Unrevivable
@@ -43,8 +43,8 @@
   description: trait-unrevivable-desc
   category: Disabilities
   components:
-    - type: Unrevivable
-      cloneable: true
+  - type: Unrevivable
+    cloneable: true
 
 - type: trait
   id: Monochromacy
@@ -61,7 +61,7 @@
   category: Disabilities
   blacklist:
     components:
-      - BorgChassis
+    - BorgChassis
   specials:
   - !type:ApplyStatusEffectSpecial
     statusEffects:
@@ -73,12 +73,12 @@
   description: trait-paracusia-desc
   category: Disabilities
   components:
-    - type: Paracusia
-      minTimeBetweenIncidents: 0.1
-      maxTimeBetweenIncidents: 300
-      maxSoundDistance: 7
-      sounds:
-        collection: Paracusia
+  - type: Paracusia
+    minTimeBetweenIncidents: 0.1
+    maxTimeBetweenIncidents: 300
+    maxSoundDistance: 7
+    sounds:
+      collection: Paracusia
 
 - type: trait
   id: PainNumbness
@@ -107,4 +107,4 @@
   traitGear: OffsetCane
   category: Disabilities
   components:
-    - type: ImpairedMobility
+  - type: ImpairedMobility

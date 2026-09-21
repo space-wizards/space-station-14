@@ -128,7 +128,7 @@
   - type: Speech
     speechSounds: Lizard
     speechVerb: Reptilian
-    allowedEmotes: ['Thump']
+    allowedEmotes: [ 'Thump' ]
   - type: TypingIndicator
     proto: lizard
   - type: CreamPied
@@ -154,10 +154,10 @@
     coldDamageThreshold: 285
     coldDamage:
       types:
-        Cold : 0.1 #per second, scales with temperature & other constants
+        Cold: 0.1 #per second, scales with temperature & other constants
     heatDamage:
       types:
-        Heat : 1.5 #per second, scales with temperature & other constants
+        Heat: 1.5 #per second, scales with temperature & other constants
   - type: TemperatureSpeed
     thresholds:
       301: 0.9
@@ -297,9 +297,21 @@
       - Paper
 
 - type: entity
-  parent: [ OrganBaseLiver, OrganSpriteHumanInternal, OrganReptilianInternal, OrganReptilianMetabolizer ]
+  parent:
+    [
+      OrganBaseLiver,
+      OrganSpriteHumanInternal,
+      OrganReptilianInternal,
+      OrganReptilianMetabolizer
+    ]
   id: OrganReptilianLiver
 
 - type: entity
-  parent: [ OrganBaseKidneys, OrganSpriteHumanInternal, OrganReptilianInternal, OrganReptilianMetabolizer ]
+  parent:
+    [
+      OrganBaseKidneys,
+      OrganSpriteHumanInternal,
+      OrganReptilianInternal,
+      OrganReptilianMetabolizer
+    ]
   id: OrganReptilianKidneys

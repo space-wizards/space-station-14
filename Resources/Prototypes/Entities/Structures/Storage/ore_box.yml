@@ -12,8 +12,7 @@
     damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:EmptyAllContainersBehaviour
@@ -56,12 +55,11 @@
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
-        ents: [ ]
+        ents: []
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.3
         # very not dense to make it easy to pull
         density: 20

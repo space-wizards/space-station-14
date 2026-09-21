@@ -27,7 +27,8 @@
   parent: BaseBalloon
   id: BalloonSyn
   name: syndie balloon
-  description: Handed out to the bravest souls who survived the "atomic twister" ride at Syndieland.
+  description: Handed out to the bravest souls who survived the "atomic twister"
+    ride at Syndieland.
   components:
   - type: Sprite
     sprite: Objects/Fun/Balloons/syndicate.rsi
@@ -41,7 +42,8 @@
   parent: BaseBalloon
   id: BalloonNT
   name: nanotrasen balloon
-  description: Specially designed to inflict maximum psychological damage to Syndicate operatives.
+  description: Specially designed to inflict maximum psychological damage to
+    Syndicate operatives.
   components:
   - type: Sprite
     sprite: Objects/Fun/Balloons/nanotrasen.rsi

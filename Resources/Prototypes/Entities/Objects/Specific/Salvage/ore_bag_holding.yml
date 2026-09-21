@@ -2,7 +2,9 @@
   name: ore bag of holding
   id: OreBagOfHolding
   parent: OreBag
-  description: A robust bag of holding for salvage billionaires and rich miners alike to carry large amounts of ore. Magnetises any nearby ores when attached to a belt.
+  description: A robust bag of holding for salvage billionaires and rich miners
+    alike to carry large amounts of ore. Magnetises any nearby ores when
+    attached to a belt.
   components:
   - type: MagnetPickup
     range: 2
@@ -19,9 +21,10 @@
   parent: OreBagOfHolding
   id: BorgOreBagOfHolding
   name: integrated ore bag of holding
-  description: A very large ore bag built into the frame of a rich mining cyborg. Magnetises any nearby ores when held.
+  description: A very large ore bag built into the frame of a rich mining cyborg.
+    Magnetises any nearby ores when held.
   components:
-    - type: MagnetPickup
-      slotFlags: null
-      range: 2
-      requireActiveHand: true
+  - type: MagnetPickup
+    slotFlags: null
+    range: 2
+    requireActiveHand: true

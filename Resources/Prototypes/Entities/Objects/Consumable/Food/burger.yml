@@ -2,7 +2,7 @@
 # Bun
 
 - type: entity
-  parent: [FoodBreadSliceBase, BaseSlicingRefinableFood]
+  parent: [ FoodBreadSliceBase, BaseSlicingRefinableFood ]
   id: FoodBreadBun
   name: bun
   description: A hamburger bun. Round and convenient to hold.
@@ -30,7 +30,7 @@
     sprite: Objects/Consumable/Food/burger_sequence.rsi
     layers:
     - state: bun_bottom
-    - map: ["foodSequenceLayers"]
+    - map: [ "foodSequenceLayers" ]
   - type: FoodSequenceStartPoint
     key: Burger
     maxLayers: 10
@@ -79,8 +79,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - bun
-      - meaty
+    - bun
+    - meaty
   - type: Sprite
     sprite: Objects/Consumable/Food/burger.rsi
   - type: Solution
@@ -107,8 +107,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - bun
-      - jelly
+    - bun
+    - jelly
   - type: Sprite
     layers:
     - state: custburg-bottom
@@ -140,8 +140,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - bun
-      - grass
+    - bun
+    - grass
   - type: Sprite
     state: appendix
   - type: Tag
@@ -171,8 +171,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - bun
-      - bacon
+    - bun
+    - bacon
   - type: Sprite
     state: bacon
   - type: Solution
@@ -211,8 +211,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - bun
-      - homerun
+    - bun
+    - homerun
   - type: Sprite
     state: baseball
   - type: Solution
@@ -253,8 +253,8 @@
       - state: bear-inhand-right
   - type: FlavorProfile
     flavors:
-      - bun
-      - meaty
+    - bun
+    - meaty
   - type: Sprite
     state: bearger
   - type: Tag
@@ -262,7 +262,7 @@
     - Meat
 
 - type: entity
-  parent: [SolutionNormal, FoodBurgerBase]
+  parent: [ SolutionNormal, FoodBurgerBase ]
   id: FoodBurgerBig
   name: big bite burger
   description: Forget the Big Mac. THIS is the future!
@@ -277,10 +277,11 @@
       right:
       - state: burger-big-inhand-right
   - type: FlavorProfile
-    flavors: # What bun?
-      - meaty
-      - oily
-      - cheesy
+    flavors:
+    # What bun?
+    - meaty
+    - oily
+    - cheesy
   - type: Solution
     solution:
       reagents:
@@ -314,8 +315,8 @@
       - state: brain-inhand-right
   - type: FlavorProfile
     flavors:
-      - bun
-      - meaty
+    - bun
+    - meaty
   - type: Sprite
     state: brain
   - type: Tag
@@ -342,9 +343,9 @@
     state: cat
   - type: FlavorProfile
     flavors:
-      - bun
-      - meaty
-      - cat
+    - bun
+    - meaty
+    - cat
   - type: Tag
     tags:
     - Meat
@@ -357,9 +358,9 @@
   components:
   - type: FlavorProfile
     flavors:
-      - bun
-      - meaty
-      - cheesy
+    - bun
+    - meaty
+    - cheesy
   - type: Sprite
     state: cheese
   - type: Solution
@@ -378,7 +379,7 @@
       - state: plain-inhand-left
       right:
       - state: plain-inhand-right
-# TODO: Make this work.
+  # TODO: Make this work.
   # - type: Sprite
   #   state: plate
   # - type: RandomSpriteState
@@ -386,18 +387,19 @@
   #   spriteStates:
   #     - cheese
   #     - cheesealt
-# Tastes like bun, beef patty, cheese.
+  # Tastes like bun, beef patty, cheese.
 
 - type: entity
   parent: FoodBurgerBase
   id: FoodBurgerChicken
   name: chicken sandwich
-  description: A delicious chicken sandwich, it is said the proceeds from this treat helps criminalize disarming people on the space frontier.
+  description: A delicious chicken sandwich, it is said the proceeds from this
+    treat helps criminalize disarming people on the space frontier.
   components:
   - type: FlavorProfile
     flavors:
-      - bun
-      - chicken
+    - bun
+    - chicken
   - type: Sprite
     state: chicken
   - type: Solution
@@ -445,8 +447,8 @@
       - state: clown-inhand-right
   - type: FlavorProfile
     flavors:
-      - bun
-      - funny
+    - bun
+    - funny
   - type: Sprite
     state: clown
   - type: Tag
@@ -461,8 +463,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - bun
-      - validhunting
+    - bun
+    - validhunting
   - type: Sprite
     state: ian
   - type: Solution
@@ -492,8 +494,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - bun
-      - crabby
+    - bun
+    - crabby
   - type: Sprite
     state: crab
   - type: Tag
@@ -515,10 +517,11 @@
         color: "#7e1a07"
 
 - type: entity
-  parent: [SolutionNormal, FoodBurgerBase]
+  parent: [ SolutionNormal, FoodBurgerBase ]
   id: FoodBurgerCrazy
   name: crazy hamburger # Burger for you euro-cucks
-  description: This looks like the sort of food that a demented clown in a trenchcoat would make.
+  description: This looks like the sort of food that a demented clown in a
+    trenchcoat would make.
   components:
   - type: Item
     size: Normal
@@ -532,10 +535,10 @@
       - state: crazy-inhand-right
   - type: FlavorProfile
     flavors:
-      - bun
-      - meaty
-      - cheesy
-      - flare
+    - bun
+    - meaty
+    - cheesy
+    - flare
   - type: Sprite
     state: crazy
   - type: Solution
@@ -573,7 +576,8 @@
   parent: FoodBurgerBase
   id: FoodBurgerDuck
   name: duck sandwich # Burger for you sick bastards
-  description: A duck sandwich, only the criminally insane would dare to eat the meat of such an adorable creature.
+  description: A duck sandwich, only the criminally insane would dare to eat the
+    meat of such an adorable creature.
   components:
   - type: Item
     storedOffset: 0,1
@@ -592,8 +596,8 @@
         color: "#e8b348"
   - type: FlavorProfile
     flavors:
-      - bun
-      - duck
+    - bun
+    - duck
   - type: Sprite
     state: chicken
   - type: Tag
@@ -618,8 +622,8 @@
     state: empowered
   - type: FlavorProfile
     flavors:
-      - bun
-      - shocking
+    - bun
+    - shocking
   - type: Solution
     solution:
       reagents:
@@ -654,8 +658,8 @@
         color: "#f4bb53"
   - type: FlavorProfile
     flavors:
-      - bun
-      - fishy
+    - bun
+    - fishy
   - type: Sprite
     state: fish
   - type: Tag
@@ -664,7 +668,7 @@
 # Tastes like bun, fish.
 
 - type: entity
-  parent: [SolutionNormal, FoodBurgerBase]
+  parent: [ SolutionNormal, FoodBurgerBase ]
   id: FoodBurgerFive
   name: five alarm burger
   description: HOT! HOT! HOT!
@@ -680,8 +684,8 @@
       - state: plain-inhand-right
   - type: FlavorProfile
     flavors:
-      - meaty
-      - spicy
+    - meaty
+    - spicy
   - type: Sprite
     state: fivealarm
   - type: Solution
@@ -730,8 +734,8 @@
         color: "#95a79f"
   - type: FlavorProfile
     flavors:
-      - bun
-      - spooky
+    - bun
+    - spooky
   - type: Sprite
     state: ghost
   - type: Solution
@@ -745,8 +749,8 @@
         Quantity: 15
   - type: Tag
     tags:
-      - ClothMade
-      - Meat
+    - ClothMade
+    - Meat
 # Tastes like bun, ectoplasm.
 
 - type: entity
@@ -757,8 +761,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - bun
-      - people
+    - bun
+    - people
   - type: Sprite
     state: human
   - type: Tag
@@ -794,8 +798,8 @@
         color: "#e3756d"
   - type: FlavorProfile
     flavors:
-      - muffin
-      - egg
+    - muffin
+    - egg
   - type: Sprite
     state: mcguffin
   - type: Solution
@@ -814,18 +818,19 @@
     - Meat
 
 - type: entity
-  parent: [SolutionNormal, FoodBurgerBase]
+  parent: [ SolutionNormal, FoodBurgerBase ]
   id: FoodBurgerMcrib
   name: BBQ Rib Sandwich
-  description: An elusive rib shaped burger with limited availability across the galaxy. Not as good as you remember it.
+  description: An elusive rib shaped burger with limited availability across the
+    galaxy. Not as good as you remember it.
   components:
   - type: Edible
     trash:
     - FoodKebabSkewer
   - type: FlavorProfile
     flavors:
-      - bun
-      - bacon
+    - bun
+    - bacon
   - type: Sprite
     state: mcrib
   - type: Solution
@@ -870,8 +875,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - bun
-      - nothing
+    - bun
+    - nothing
   - type: Sprite
     state: mime
   - type: Solution
@@ -899,8 +904,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - bun
-      - meaty
+    - bun
+    - meaty
   - type: Sprite
     state: plain
   - type: Tag
@@ -921,8 +926,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - bun
-      - meaty
+    - bun
+    - meaty
   - type: Sprite
     state: rat
   - type: Solution
@@ -958,9 +963,9 @@
   components:
   - type: FlavorProfile
     flavors:
-      - bun
-      - leafy
-      - metallic
+    - bun
+    - leafy
+    - metallic
   - type: Sprite
     state: ro
   - type: Solution
@@ -1005,7 +1010,8 @@
   parent: FoodBurgerBase
   id: FoodBurgerSoy
   name: soylent burger
-  description: After eating this you have the overwhelming urge to purchase overpriced figurines of superheroes.
+  description: After eating this you have the overwhelming urge to purchase
+    overpriced figurines of superheroes.
   components:
   - type: Item
     storedOffset: 0,1
@@ -1024,8 +1030,8 @@
         color: "#91d90b"
   - type: FlavorProfile
     flavors:
-      - bun
-      - soy
+    - bun
+    - soy
   - type: Sprite
     state: soylent
   - type: Solution
@@ -1057,8 +1063,8 @@
       - state: spell-inhand-right
   - type: FlavorProfile
     flavors:
-      - bun
-      - magical
+    - bun
+    - magical
   - type: Sprite
     state: spell
 # Tastes like bun, silver.
@@ -1079,10 +1085,11 @@
       right:
       - state: burger-super-inhand-right
   - type: FlavorProfile
-    flavors: # What bun?
-      - meaty
-      - oily
-      - cheesy
+    flavors:
+    # What bun?
+    - meaty
+    - oily
+    - cheesy
   - type: Solution
     solution:
       reagents:
@@ -1111,8 +1118,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - bun
-      - tofu
+    - bun
+    - tofu
   - type: Sprite
     state: tofu
   - type: Solution
@@ -1148,9 +1155,9 @@
   components:
   - type: FlavorProfile
     flavors:
-      - bun
-      - meaty
-      - acid
+    - bun
+    - meaty
+    - acid
   - type: Sprite
     state: x
   - type: Tag
@@ -1191,12 +1198,11 @@
       - state: mothroach-inhand-right
   - type: FlavorProfile
     flavors:
-      - bun
-      - meaty
-      - light
+    - bun
+    - meaty
+    - light
   - type: Sprite
     state: mothroach
   - type: Tag
     tags:
     - Meat
-

@@ -349,7 +349,7 @@
   conditions:
   - !type:BuyBeforeCondition
     whitelist:
-      - SpellbookFireball
+    - SpellbookFireball
   # manual for now
   - !type:ListingLimitedStockCondition
     stock: 2

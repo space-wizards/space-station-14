@@ -8,9 +8,9 @@
   components:
   - type: Sprite
     layers:
-      - state: green
-      - sprite: Objects/Specific/Hydroponics/onion_red.rsi
-        state: produce
+    - state: green
+    - sprite: Objects/Specific/Hydroponics/onion_red.rsi
+      state: produce
   - type: EntityTableSpawner
     table: !type:NestedSelector
       tableId: ProduceTable

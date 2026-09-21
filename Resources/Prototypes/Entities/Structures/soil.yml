@@ -12,8 +12,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.1"
         density: 190
         hard: false
@@ -34,8 +33,8 @@
     anchored: true
   - type: Reactive
     reactions:
-    - reagents: [Water]
-      methods: [Touch, Ingestion, Injection]
+    - reagents: [ Water ]
+      methods: [ Touch, Ingestion, Injection ]
       effects:
       - !type:AddReagentToSolution
         reagent: Water
@@ -47,14 +46,14 @@
   parent: [ BaseHydroponicsSoil, StructureHealthContainer ]
   id: hydroponicsSoil
   name: soil
-  description: A mix of organic matter and minerals creating a soil to grow your plant in space. Seems to be dry.
+  description: A mix of organic matter and minerals creating a soil to grow your
+    plant in space. Seems to be dry.
   components:
   - type: Damageable
     damageModifierSet: RockMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:PlaySoundBehavior
@@ -68,7 +67,8 @@
   parent: hydroponicsSoil
   id: FungalSoil
   name: fungal soil
-  description: A mix of organic matter and fungal root creating a soil to grow your plant in space. Seems to be dry.
+  description: A mix of organic matter and fungal root creating a soil to grow
+    your plant in space. Seems to be dry.
   components:
   - type: Construction
     graph: Soil

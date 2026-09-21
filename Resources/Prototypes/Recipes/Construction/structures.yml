@@ -12,14 +12,12 @@
   canRotate: false
   conditions:
   - !type:TileNotBlocked
-
 - type: construction
   abstract: true
   parent: BaseStructure
   id: BaseStructureFullTileDirectional
   conditions:
   - !type:TileNotBlocked
-
 - type: construction
   abstract: true
   parent: BaseStructure
@@ -30,7 +28,6 @@
   conditions:
   - !type:EmptyOrWindowValidInTile
   - !type:NoWindowsInTile
-
 - type: construction
   abstract: true
   parent: BaseWindow
@@ -231,8 +228,8 @@
   category: construction-category-structures
   canBuildInImpassable: true
   conditions:
-    - !type:EmptyOrWindowValidInTile
-    - !type:NoWindowsInTile
+  - !type:EmptyOrWindowValidInTile
+  - !type:NoWindowsInTile
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -249,8 +246,8 @@
   category: construction-category-structures
   canBuildInImpassable: true
   conditions:
-    - !type:EmptyOrWindowValidInTile
-    - !type:NoWindowsInTile
+  - !type:EmptyOrWindowValidInTile
+  - !type:NoWindowsInTile
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -267,8 +264,8 @@
   category: construction-category-structures
   canBuildInImpassable: true
   conditions:
-    - !type:EmptyOrWindowValidInTile
-    - !type:NoWindowsInTile
+  - !type:EmptyOrWindowValidInTile
+  - !type:NoWindowsInTile
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -286,8 +283,8 @@
   category: construction-category-structures
   canBuildInImpassable: true
   conditions:
-    - !type:EmptyOrWindowValidInTile
-    - !type:NoWindowsInTile
+  - !type:EmptyOrWindowValidInTile
+  - !type:NoWindowsInTile
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -518,7 +515,6 @@
   conditions:
   - !type:TileNotBlocked
   - !type:AgainstWall
-
 - type: construction
   parent: LightTubeFixture
   id: LightSmallFixture
@@ -654,4 +650,5 @@
   id: BonfireStake
   graph: Bonfire
   targetNode: bonfireStake
+
 # endregion Miscallaneous

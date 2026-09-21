@@ -2,18 +2,20 @@
   parent: BaseItem
   id: MMI
   name: man-machine interface
-  description: A machine able to facilitate communication between a biological brain and electronics, enabling crew to continue to provide value after work-related incidents.
+  description: A machine able to facilitate communication between a biological
+    brain and electronics, enabling crew to continue to provide value after
+    work-related incidents.
   components:
   - type: Sprite
     sprite: Objects/Specific/Robotics/mmi.rsi
     layers:
     - state: mmi_brain
-      map: ["enum.MMIVisualLayers.Brain"]
+      map: [ "enum.MMIVisualLayers.Brain" ]
       visible: false
     - state: mmi_off
-      map: ["enum.MMIVisualLayers.Base"]
+      map: [ "enum.MMIVisualLayers.Base" ]
     - state: mmi_light
-      map: ["enum.MMIVisualLayers.Unlit"]
+      map: [ "enum.MMIVisualLayers.Unlit" ]
       shader: unshaded
       visible: false
   - type: Input
@@ -76,69 +78,69 @@
   name: positronic brain
   description: An artificial brain capable of spontaneous neural activity.
   components:
-    - type: Sprite
-      sprite: Objects/Specific/Robotics/mmi.rsi
-      layers:
-      - state: posibrain
-      - map: ["light"]
-        shader: unshaded
-    - type: Input
-      context: human
-    - type: ToggleableGhostRole
-      examineTextMindPresent: positronic-brain-installed
-      examineTextMindSearching: positronic-brain-still-searching
-      examineTextNoMind: positronic-brain-off
-      beginSearchingText: positronic-brain-searching
-      roleName: positronic-brain-role-name
-      roleDescription: positronic-brain-role-description
-      roleRules: ghost-role-information-silicon-rules
-      mindRoles:
-      - MindRoleGhostRoleSilicon
-      wipeVerbText: positronic-brain-wipe-device-verb-text
-      wipeVerbPopup: positronic-brain-wiped-device
-      stopSearchVerbText: positronic-brain-stop-searching-verb-text
-      stopSearchVerbPopup: positronic-brain-stopped-searching
-      job: Borg
-    - type: BlockMovement
-    - type: Examiner
-    - type: BorgBrain
-    - type: IntrinsicRadioReceiver
-    - type: IntrinsicRadioTransmitter
-      channels:
-      - Binary
-    - type: ActiveRadio
-      channels:
-      - Binary
-      - Common
-    - type: NameIdentifier
-      group: PositronicBrain
-    - type: DoAfter
-    - type: Actions
-    - type: TypingIndicator
-      proto: robot
-    - type: Speech
-      speechSounds: Pai
-    - type: Alerts
-    - type: MobState
-      allowedStates:
-      - Alive
-      - Dead
-    - type: Appearance
-    - type: Tag
-      tags:
-      - CannotSuicide
-    - type: GenericVisualizer
-      visuals:
-        enum.ToggleableGhostRoleVisuals.Status:
-          light:
-            Off: { state: empty } # TODO: fix null states in SpriteComp.LayerSetData, use a null state
-            Searching: { state: posibrain-searching }
-            On: { state: posibrain-occupied }
-    - type: GuideHelp
-      guides:
-      - Cyborgs
-      - Robotics
-    - type: ChangeVoiceInContainer
-      whitelist:
-        components:
-        - SecretStash
+  - type: Sprite
+    sprite: Objects/Specific/Robotics/mmi.rsi
+    layers:
+    - state: posibrain
+    - map: [ "light" ]
+      shader: unshaded
+  - type: Input
+    context: human
+  - type: ToggleableGhostRole
+    examineTextMindPresent: positronic-brain-installed
+    examineTextMindSearching: positronic-brain-still-searching
+    examineTextNoMind: positronic-brain-off
+    beginSearchingText: positronic-brain-searching
+    roleName: positronic-brain-role-name
+    roleDescription: positronic-brain-role-description
+    roleRules: ghost-role-information-silicon-rules
+    mindRoles:
+    - MindRoleGhostRoleSilicon
+    wipeVerbText: positronic-brain-wipe-device-verb-text
+    wipeVerbPopup: positronic-brain-wiped-device
+    stopSearchVerbText: positronic-brain-stop-searching-verb-text
+    stopSearchVerbPopup: positronic-brain-stopped-searching
+    job: Borg
+  - type: BlockMovement
+  - type: Examiner
+  - type: BorgBrain
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Common
+  - type: NameIdentifier
+    group: PositronicBrain
+  - type: DoAfter
+  - type: Actions
+  - type: TypingIndicator
+    proto: robot
+  - type: Speech
+    speechSounds: Pai
+  - type: Alerts
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: Appearance
+  - type: Tag
+    tags:
+    - CannotSuicide
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableGhostRoleVisuals.Status:
+        light:
+          Off: { state: empty } # TODO: fix null states in SpriteComp.LayerSetData, use a null state
+          Searching: { state: posibrain-searching }
+          On: { state: posibrain-occupied }
+  - type: GuideHelp
+    guides:
+    - Cyborgs
+    - Robotics
+  - type: ChangeVoiceInContainer
+    whitelist:
+      components:
+      - SecretStash

@@ -2,7 +2,8 @@
   name: shimmering anomaly
   id: RadiationPulse
   categories: [ HideSpawnMenu ]
-  description: Looking at this anomaly makes you feel strange, like something is pushing at your eyes.
+  description: Looking at this anomaly makes you feel strange, like something is
+    pushing at your eyes.
   components:
   - type: RadiationSource
     intensity: 5
@@ -10,6 +11,5 @@
     lifetime: 2
   - type: EmitSoundOnSpawn
     sound:
-      collection:
-        RadiationPulse
+      collection: RadiationPulse
   - type: RadiationPulse

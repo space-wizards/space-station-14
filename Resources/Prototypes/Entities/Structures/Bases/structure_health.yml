@@ -25,8 +25,8 @@
     - trigger: !type:DamageTrigger
         damage: 5
       behaviors: &DoDestruction
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
 
 # General furniture like tables and chairs
 - type: entity
@@ -160,8 +160,8 @@
     - trigger: !type:DamageTrigger
         damage: 25
       behaviors: &DoBreakage
-      - !type:DoActsBehavior
-        acts: [ "Breakage" ]
+        - !type:DoActsBehavior
+          acts: [ "Breakage" ]
 
 # Computer / tabletop machine
 - type: entity

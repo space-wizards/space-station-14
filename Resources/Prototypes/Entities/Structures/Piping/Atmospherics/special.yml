@@ -16,15 +16,14 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
-            bounds: "-0.5,-0.5,0.5,0.5"
+        shape: !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
   - type: Airtight
     noAirWhenFullyAirBlocked: false
   - type: Clickable
   - type: Tag
     tags:
-      - SpreaderIgnore
+    - SpreaderIgnore
 
 - type: entity
   id: AtmosDeviceFanDirectional
@@ -43,14 +42,13 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
-            bounds: "-0.48,-0.48,0.48,-0.40"
+        shape: !type:PhysShapeAabb
+          bounds: "-0.48,-0.48,0.48,-0.40"
   - type: Airtight
     noAirWhenFullyAirBlocked: false
     airBlockedDirection:
-      - South
+    - South
   - type: Clickable
   - type: Tag
     tags:
-      - SpreaderIgnore
+    - SpreaderIgnore

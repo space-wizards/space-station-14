@@ -15,14 +15,13 @@
     layers:
     - state: control
     - state: control_on
-      map: ["display"]
+      map: [ "display" ]
       visible: false
   - type: Physics
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
         density: 190
         mask:
@@ -33,8 +32,7 @@
     damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 275
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -78,11 +76,9 @@
   - type: NodeContainer
     examinable: true
     nodes:
-      ame:
-        !type:AdjacentNode
+      ame: !type:AdjacentNode
         nodeGroupID: AMEngine
-      input:
-        !type:CableDeviceNode
+      input: !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: PowerMonitoringDevice
     group: Generator
@@ -136,18 +132,17 @@
     layers:
     - state: shield_0
     - state: core
-      map: ["core"]
+      map: [ "core" ]
       visible: false
     - state: core_weak
-      map: ["core_glow"]
+      map: [ "core_glow" ]
       shader: unshaded
       visible: false
   - type: Physics
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
         density: 190
         mask:
@@ -158,8 +153,7 @@
     damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 275
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -176,8 +170,7 @@
   - type: AmeShield
   - type: NodeContainer
     nodes:
-      ame:
-        !type:AdjacentNode
+      ame: !type:AdjacentNode
         nodeGroupID: AMEngine
   - type: PointLight
     enabled: false

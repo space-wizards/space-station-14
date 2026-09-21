@@ -142,26 +142,30 @@
   id: RandomMaterialCrateTable
   table: !type:GroupSelector
     children:
-    - !type:GroupSelector # regular materials, 10
+    # regular materials, 10
+    - !type:GroupSelector
       weight: 35
       children:
       - id: SheetGlass10
       - id: SheetSteel10
       - id: SheetPlastic10
-    - !type:GroupSelector # regular materials, stack
+    # regular materials, stack
+    - !type:GroupSelector
       weight: 30
       children:
       - id: SheetGlass
       - id: SheetSteel
       - id: SheetPlastic
-    - !type:GroupSelector # secondary materials, stack
+    # secondary materials, stack
+    - !type:GroupSelector
       weight: 30
       children:
       - id: MaterialCloth
       - id: SheetPlasteel
       - id: MaterialWoodPlank
       - id: PartRodMetal
-    - !type:GroupSelector # tertiary materials, singles
+    # tertiary materials, singles
+    - !type:GroupSelector
       weight: 5
       children:
       - id: SheetPlasma1

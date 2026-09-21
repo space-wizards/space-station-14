@@ -58,7 +58,9 @@
   id: BedsheetCaptain
   parent: BedsheetBase
   name: captain's bedsheet
-  description: It has a Nanotrasen symbol on it, and was woven with a revolutionary new kind of thread guaranteed to have 0.01% permeability for most non-chemical substances, popular among most modern captains.
+  description: It has a Nanotrasen symbol on it, and was woven with a
+    revolutionary new kind of thread guaranteed to have 0.01% permeability for
+    most non-chemical substances, popular among most modern captains.
   components:
   - type: Sprite
     state: sheetcaptain
@@ -71,7 +73,8 @@
   id: BedsheetCE
   parent: BedsheetBase
   name: CE's bedsheet
-  description: It's decorated with a wrench emblem. It's highly reflective and stain resistant, so you don't need to worry about ruining it with oil.
+  description: It's decorated with a wrench emblem. It's highly reflective and
+    stain resistant, so you don't need to worry about ruining it with oil.
   components:
   - type: Sprite
     state: sheetce
@@ -84,7 +87,8 @@
   id: BedsheetCentcom
   parent: BedsheetBase
   name: CentComm bedsheet
-  description: Woven with advanced nanothread for warmth as well as being very decorated, essential for all officials.
+  description: Woven with advanced nanothread for warmth as well as being very
+    decorated, essential for all officials.
   components:
   - type: Sprite
     state: sheetcentcom
@@ -108,7 +112,8 @@
   id: BedsheetCMO
   parent: BedsheetBase
   name: CMO's bedsheet
-  description: It's a sterilized blanket that has a cross emblem. There's some cat fur on it, likely from Runtime.
+  description: It's a sterilized blanket that has a cross emblem. There's some cat
+    fur on it, likely from Runtime.
   components:
   - type: Sprite
     state: sheetcmo
@@ -132,7 +137,8 @@
   id: BedsheetCult
   parent: BedsheetBase
   name: cult bedsheet
-  description: You might dream of Nar'Sie if you sleep with this. It seems rather tattered and glows of an eldritch presence.
+  description: You might dream of Nar'Sie if you sleep with this. It seems rather
+    tattered and glows of an eldritch presence.
   components:
   - type: Sprite
     state: sheetcult
@@ -163,7 +169,9 @@
   id: BedsheetHOP
   parent: BedsheetBase
   name: HOP's bedsheet
-  description: It's decorated with a key emblem. For those rare moments when you can rest and cuddle with Ian without someone screaming for you over the radio.
+  description: It's decorated with a key emblem. For those rare moments when you
+    can rest and cuddle with Ian without someone screaming for you over the
+    radio.
   components:
   - type: Sprite
     state: sheethop
@@ -176,7 +184,8 @@
   id: BedsheetHOS
   parent: BedsheetBase
   name: HOS's bedsheet
-  description: It's decorated with a shield emblem. While crime doesn't sleep, you do, but you are still THE LAW!
+  description: It's decorated with a shield emblem. While crime doesn't sleep, you
+    do, but you are still THE LAW!
   components:
   - type: Sprite
     state: sheethos
@@ -199,7 +208,8 @@
   id: BedsheetMedical
   parent: BedsheetBase
   name: medical bedsheet
-  description: It's a sterilized blanket commonly used in the Medbay. Sterilization is voided if a virologist is present onboard the station.
+  description: It's a sterilized blanket commonly used in the Medbay.
+    Sterilization is voided if a virologist is present onboard the station.
   components:
   - type: Sprite
     state: sheetmedical
@@ -210,7 +220,8 @@
   id: BedsheetMime
   parent: BedsheetBase
   name: mime's bedsheet
-  description: A very soothing striped blanket.  All the noise just seems to fade out when you're under the covers in this.
+  description: A very soothing striped blanket.  All the noise just seems to fade
+    out when you're under the covers in this.
   components:
   - type: Sprite
     state: sheetmime
@@ -274,7 +285,9 @@
   id: BedsheetRD
   parent: BedsheetBase
   name: RD's bedsheet
-  description: It appears to have a beaker emblem, and is made out of fire-resistant material, although it probably won't protect you in the event of fires you're familiar with every day.
+  description: It appears to have a beaker emblem, and is made out of
+    fire-resistant material, although it probably won't protect you in the event
+    of fires you're familiar with every day.
   components:
   - type: Sprite
     state: sheetrd
@@ -327,7 +340,7 @@
 
 - type: entity
   id: BedsheetWhite
-  parent: [BedsheetBase, BaseSlicingRefinable]
+  parent: [ BedsheetBase, BaseSlicingRefinable ]
   name: white bedsheet
   components:
   - type: ToolRefinable
@@ -342,7 +355,8 @@
   id: BedsheetWiz
   parent: BedsheetBase
   name: wizard's bedsheet
-  description: A special fabric enchanted with magic so you can have an enchanted night. It even glows!
+  description: A special fabric enchanted with magic so you can have an enchanted
+    night. It even glows!
   components:
   - type: Sprite
     state: sheetwiz

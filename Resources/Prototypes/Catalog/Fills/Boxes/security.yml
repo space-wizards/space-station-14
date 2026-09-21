@@ -34,7 +34,8 @@
   name: flashbang box
   parent: BoxCardboard
   id: BoxFlashbang
-  description: 'WARNING: These devices are extremely dangerous and can cause blindness or deafness in repeated use.'
+  description: 'WARNING: These devices are extremely dangerous and can cause
+    blindness or deafness in repeated use.'
   components:
   - type: EntityTableContainerFill
     containers:

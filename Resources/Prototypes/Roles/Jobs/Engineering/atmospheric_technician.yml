@@ -28,7 +28,7 @@
     id: AtmosPDA
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
-  #storage:
+    #storage:
     #back:
     #- Stuff
 

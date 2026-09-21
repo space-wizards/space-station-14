@@ -16,7 +16,8 @@
   - OffStation
   # - Roundstart - Not currently available roundstart
   - Midround
-  requirements: # I hate time locked roles but this should be enough time for someone to be acclimated
+  requirements:
+  # I hate time locked roles but this should be enough time for someone to be acclimated
   - !type:OverallPlaytimeRequirement
     time: 5h
 
@@ -32,7 +33,7 @@
     color: Turquoise
     # TODO: Need Wizard Start sound
     #sound: "/Audio/Ambience/Antag/wizard_start.ogg"
-  # TODO: WizardComp as needed
+    # TODO: WizardComp as needed
   components:
   - type: NpcFactionMember
     factions:

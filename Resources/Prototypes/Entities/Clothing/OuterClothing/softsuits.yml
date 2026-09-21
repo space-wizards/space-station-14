@@ -3,7 +3,8 @@
   parent: ClothingOuterEVASuitBase
   id: ClothingOuterHardsuitEVA
   name: EVA suit
-  description: A lightweight space suit with the basic ability to protect the wearer from the vacuum of space.
+  description: A lightweight space suit with the basic ability to protect the
+    wearer from the vacuum of space.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/eva.rsi
@@ -20,7 +21,8 @@
   parent: [ ClothingOuterEVASuitBase, BaseSyndicateContraband ]
   id: ClothingOuterEVASuitSyndicate
   name: syndicate EVA suit
-  description: "Has a tag on the back that reads: 'Totally not property of an enemy corporation, honest!'"
+  description: "Has a tag on the back that reads: 'Totally not property of an
+    enemy corporation, honest!'"
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/eva_syndicate.rsi
@@ -39,7 +41,9 @@
   parent: [ TemperatureProtectionMinimal, ClothingOuterEVASuitBaseToggleable ]
   id: ClothingOuterSuitEmergency
   name: emergency pressure suit
-  description: This bulky, uninsulated pressure suit was clearly not meant for extended use in outer space, despite NanoTrasen's claims that it passes corporate regulations.
+  description: This bulky, uninsulated pressure suit was clearly not meant for
+    extended use in outer space, despite NanoTrasen's claims that it passes
+    corporate regulations.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/eva_emergency.rsi
@@ -59,10 +63,12 @@
 
 #Prisoner EVA
 - type: entity
-  parent: [ TemperatureProtectionMinimal, ClothingOuterEVASuitBase]
-  id:  ClothingOuterHardsuitEVAPrisoner
+  parent: [ TemperatureProtectionMinimal, ClothingOuterEVASuitBase ]
+  id: ClothingOuterHardsuitEVAPrisoner
   name: prisoner pressure suit
-  description: An emergency pressure suit meant for prisoners. It's not fully rated for extended use in outer space, but some wardens consider the lack of thermal insulation a feature.
+  description: An emergency pressure suit meant for prisoners. It's not fully
+    rated for extended use in outer space, but some wardens consider the lack of
+    thermal insulation a feature.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
@@ -82,7 +88,9 @@
   parent: ClothingOuterEVASuitBase
   id: ClothingOuterHardsuitAncientEVA
   name: NTSRA voidsuit #Nanotrasen Space Research Association
-  description: An ancient space suit, designed by the NTSRA branch of CentComm. It is very finely crafted, allowing for greater mobility than most modern space suits.
+  description: An ancient space suit, designed by the NTSRA branch of CentComm. It
+    is very finely crafted, allowing for greater mobility than most modern space
+    suits.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/ancient_voidsuit.rsi
@@ -95,7 +103,7 @@
 
 #Paramedic Voidsuit
 - type: entity
-  parent: [ClothingOuterEVASuitBaseToggleable, BaseMedicalContraband] #Despite "Voidsuits are light hardsuits", since it parents of EVA Suits, it goes with the other softsuits
+  parent: [ ClothingOuterEVASuitBaseToggleable, BaseMedicalContraband ] #Despite "Voidsuits are light hardsuits", since it parents of EVA Suits, it goes with the other softsuits
   id: ClothingOuterHardsuitVoidParamed
   name: paramedic void suit
   description: A void suit made for paramedics.

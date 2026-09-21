@@ -29,7 +29,7 @@
     state: paper_3
     layers:
     - state: paper_3
-      map: ["base"]
+      map: [ "base" ]
   - type: Item
     heldPrefix: paper
   - type: Solution
@@ -69,7 +69,7 @@
     state: plasma_3
     layers:
     - state: plasma_3
-      map: ["base"]
+      map: [ "base" ]
   - type: Item
     heldPrefix: plasma
   - type: Solution
@@ -124,7 +124,7 @@
     state: plastic_3
     layers:
     - state: plastic_3
-      map: ["base"]
+      map: [ "base" ]
   - type: Item
     heldPrefix: plastic
   - type: Solution
@@ -158,7 +158,7 @@
     count: 1
 
 - type: entity
-  parent: [SheetOtherBase, FoodBase]
+  parent: [ SheetOtherBase, FoodBase ]
   id: SheetUranium
   name: uranium
   suffix: Full
@@ -181,7 +181,7 @@
     state: uranium_3
     layers:
     - state: uranium_3
-      map: ["base"]
+      map: [ "base" ]
   - type: Item
     heldPrefix: uranium
   - type: Solution
@@ -207,42 +207,42 @@
   name: meat sheet
   suffix: Full
   components:
-    - type: Sprite
-      sprite: Objects/Materials/Sheets/meaterial.rsi
-      layers:
-      - state: meat_3
-        map: [ "base" ]
-    - type: Tag
-      tags:
-      - Sheet
-    - type: Material
-    - type: PhysicalComposition
-      materialComposition:
-        Meaterial: 100
-    - type: Stack
-      stackType: MeatSheets
-      baseLayer: base
-      layerStates:
-        - meat
-        - meat_2
-        - meat_3
-    - type: Item
-      sprite: Objects/Materials/Sheets/meaterial.rsi
-      heldPrefix: meat
-    - type: Solution
-      solution:
-        reagents:
-        - ReagentId: Protein
-          Quantity: 7
-        - ReagentId: Fat
-          Quantity: 3
+  - type: Sprite
+    sprite: Objects/Materials/Sheets/meaterial.rsi
+    layers:
+    - state: meat_3
+      map: [ "base" ]
+  - type: Tag
+    tags:
+    - Sheet
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Meaterial: 100
+  - type: Stack
+    stackType: MeatSheets
+    baseLayer: base
+    layerStates:
+    - meat
+    - meat_2
+    - meat_3
+  - type: Item
+    sprite: Objects/Materials/Sheets/meaterial.rsi
+    heldPrefix: meat
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Protein
+        Quantity: 7
+      - ReagentId: Fat
+        Quantity: 3
 
 - type: entity
   parent: MaterialSheetMeat
   id: MaterialSheetMeat1
   suffix: Single
   components:
-    - type: Sprite
-      state: meat
-    - type: Stack
-      count: 1
+  - type: Sprite
+    state: meat
+  - type: Stack
+    count: 1

@@ -9,7 +9,7 @@
     state: airalarm_electronics
   - type: Tag
     tags:
-      - AirAlarmElectronics
+    - AirAlarmElectronics
   - type: StaticPrice
     price: 61
 
@@ -26,6 +26,6 @@
     state: airalarm_electronics
   - type: Tag
     tags:
-      - FireAlarmElectronics
+    - FireAlarmElectronics
   - type: StaticPrice
     price: 61

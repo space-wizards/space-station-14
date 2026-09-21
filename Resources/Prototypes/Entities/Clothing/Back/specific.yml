@@ -1,29 +1,30 @@
 - type: entity
-  parent: [ClothingBackpack, BaseChameleon]
+  parent: [ ClothingBackpack, BaseChameleon ]
   id: ClothingBackpackChameleon
   name: backpack
   description: You wear this on your back and put items into it.
   suffix: Chameleon
   components:
-    - type: Tag
-      tags: [] # ignore "WhitelistChameleon" tag
-    - type: Sprite
-      sprite: Clothing/Back/Backpacks/backpack.rsi
-    - type: ChameleonClothing
-      slot: [back]
-      default: ClothingBackpack
-    - type: UserInterface
-      interfaces:
-        enum.StorageUiKey.Key:
-          type: StorageBoundUserInterface
-        enum.ChameleonUiKey.Key:
-          type: ChameleonBoundUserInterface
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/backpack.rsi
+  - type: ChameleonClothing
+    slot: [ back ]
+    default: ClothingBackpack
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+      enum.ChameleonUiKey.Key:
+        type: ChameleonBoundUserInterface
 
 - type: entity
-  parent: [SolutionTank, SolutionGinormous, Clothing, ClothingSlotBase]
+  parent: [ SolutionTank, SolutionGinormous, Clothing, ClothingSlotBase ]
   id: ClothingBackpackWaterTank
   name: backpack water tank
-  description: Holds a large amount of fluids. Supplies to spray nozzles in your hands, and has a slot on the side for said spray nozzles.
+  description: Holds a large amount of fluids. Supplies to spray nozzles in your
+    hands, and has a slot on the side for said spray nozzles.
   components:
   - type: Tag
     tags:
@@ -49,7 +50,7 @@
       icon-filled:
         whitelist:
           tags:
-            - SprayNozzle
+          - SprayNozzle
   - type: Appearance
   - type: SolutionAmmoProvider
     solutionId: tank
@@ -123,7 +124,8 @@
   parent: ClothingBackpack
   id: XenoborgMaterialBag
   name: silicon storage square
-  description: A knockoff version of a bluespace bag, can vacuum up select materials, unfit for use by humanoids due to harmful emissions.
+  description: A knockoff version of a bluespace bag, can vacuum up select
+    materials, unfit for use by humanoids due to harmful emissions.
   components:
   - type: Sprite
     sprite: Objects/Specific/Robotics/silicon_storage_cube.rsi
@@ -137,15 +139,15 @@
     areaInsert: true
     whitelist:
       tags:
-        - Sheet
-        - ConstructionMaterial
-        - RawMaterial
-        - Ingot
-        - XenoborgCrystal
+      - Sheet
+      - ConstructionMaterial
+      - RawMaterial
+      - Ingot
+      - XenoborgCrystal
       components:
-        - Circuitboard
-        - Flatpack
-        - FloorTile
+      - Circuitboard
+      - Flatpack
+      - FloorTile
     blacklist:
       components:
       - SiliconLawProvider

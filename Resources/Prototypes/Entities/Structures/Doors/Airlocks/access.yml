@@ -508,7 +508,6 @@
     containers:
       board: [ DoorElectronicsBarKitchen ]
 
-
 - type: entity
   parent: AirlockExternalGlass
   id: AirlockExternalGlassLocked

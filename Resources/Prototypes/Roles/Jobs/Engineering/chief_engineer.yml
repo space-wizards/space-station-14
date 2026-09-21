@@ -4,15 +4,15 @@
   description: job-description-ce
   playTimeTracker: JobChiefEngineer
   requirements:
-    - !type:RoleTimeRequirement
-      role: JobAtmosphericTechnician
-      time: 2.5h
-    - !type:RoleTimeRequirement
-      role: JobStationEngineer
-      time: 5h
-    - !type:DepartmentTimeRequirement
-      department: Engineering
-      time: 10h
+  - !type:RoleTimeRequirement
+    role: JobAtmosphericTechnician
+    time: 2.5h
+  - !type:RoleTimeRequirement
+    role: JobStationEngineer
+    time: 5h
+  - !type:DepartmentTimeRequirement
+    department: Engineering
+    time: 10h
   startingGear: ChiefEngineerGear
   icon: "JobIconChiefEngineer"
   supervisors: job-supervisors-captain
@@ -31,7 +31,7 @@
     implants: [ MindShieldImplant ]
   - !type:AddComponentSpecial
     components:
-      - type: CommandStaff
+    - type: CommandStaff
 
 - type: startingGear
   id: ChiefEngineerGear

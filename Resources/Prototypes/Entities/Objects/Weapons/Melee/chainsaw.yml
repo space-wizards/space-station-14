@@ -2,7 +2,8 @@
   name: chainsaw
   parent: BaseItem
   id: Chainsaw
-  description: A very large chainsaw. Usually you use this for cutting down trees... usually.
+  description: A very large chainsaw. Usually you use this for cutting down
+    trees... usually.
   components:
   - type: Tool
     qualities:

@@ -1,8 +1,14 @@
 - type: entity
   id: ChemMaster
-  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
+  parent:
+    [
+      BaseMachinePowered,
+      ConstructibleMachine,
+      BaseConstructibleMachineDestructible
+    ]
   name: ChemMaster 4000
-  description: An industrial grade chemical manipulator with pill and bottle production included.
+  description: An industrial grade chemical manipulator with pill and bottle
+    production included.
   placement:
     mode: SnapgridCenter
   components:
@@ -13,12 +19,12 @@
     - state: mixer_empty
     - state: mixer_screens
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
   - type: Icon
     sprite: Structures/Machines/mixer.rsi
     state: mixer_empty
   - type: ItemMapper
-    containerWhitelist: [beakerSlot]
+    containerWhitelist: [ beakerSlot ]
     mapLayers:
       mixer_loaded:
         whitelist:
@@ -31,8 +37,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.4,0.25,0.4"
         density: 190
         mask:

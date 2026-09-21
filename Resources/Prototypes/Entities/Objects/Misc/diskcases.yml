@@ -13,8 +13,8 @@
     maxItemSize: Normal
     whitelist:
       tags:
-        - Document
-        - CoordinatesDisk
+      - Document
+      - CoordinatesDisk
     storageOpenSound: /Audio/Machines/screwdriveropen.ogg
     storageCloseSound: /Audio/Machines/screwdriverclose.ogg
     storageInsertSound: /Audio/Items/crowbar.ogg

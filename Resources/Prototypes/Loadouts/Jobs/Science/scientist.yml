@@ -3,8 +3,7 @@
   id: SeniorResearcher
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
+    requirement: !type:DepartmentTimeRequirement
       department: Science
       time: 60h
 

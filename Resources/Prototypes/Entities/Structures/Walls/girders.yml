@@ -11,8 +11,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
         density: 60
         mask:
@@ -25,7 +24,8 @@
   parent: [ BaseGirder, StructureHealthBarrier ]
   id: Girder
   name: girder
-  description: A large structural assembly made out of metal; It requires a layer of metal before it can be considered a wall.
+  description: A large structural assembly made out of metal; It requires a layer
+    of metal before it can be considered a wall.
   components:
   - type: Construction
     graph: Girder
@@ -37,8 +37,7 @@
     damageModifierSet: SteelStaticMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 80
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -56,7 +55,8 @@
   parent: [ BaseGirder, StructureHealthBarrierWeak ]
   id: ReinforcedGirder
   name: reinforced girder
-  description: A large structural assembly made out of metal and plasteel; It requires a layer of plasteel before it can be considered a reinforced wall.
+  description: A large structural assembly made out of metal and plasteel; It
+    requires a layer of plasteel before it can be considered a reinforced wall.
   components:
   - type: Sprite
     sprite: Structures/Walls/solid.rsi
@@ -68,8 +68,7 @@
     damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 30
       behaviors:
       - !type:SpawnEntitiesBehavior

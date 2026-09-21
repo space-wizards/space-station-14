@@ -211,7 +211,7 @@
         color: "#9ed63a"
       - state: trinkets-equipped-INNERCLOTHING
 
- # Dark Green Jumpsuit
+# Dark Green Jumpsuit
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitColorDarkGreen

@@ -10,9 +10,9 @@
     anchored: false
   - type: Sprite
     layers:
-      - state: green
-      - sprite: Objects/Consumable/Food/meat.rsi
-        state: plain
+    - state: green
+    - sprite: Objects/Consumable/Food/meat.rsi
+      state: plain
   - type: EntityTableSpawner
     table: !type:NestedSelector
       tableId: MeatTable
@@ -136,12 +136,12 @@
           range: 1, 4
       - !type:GroupSelector
         children:
-          - id: FoodMeatBearCutlet
-            amount: !type:RangeNumberSelector
-              range: 1, 4
-          - id: FoodMeatPenguinCutlet
-            amount: !type:RangeNumberSelector
-              range: 1, 4
-          - id: FoodMeatXenoCutlet
-            amount: !type:RangeNumberSelector
-              range: 1, 4
+        - id: FoodMeatBearCutlet
+          amount: !type:RangeNumberSelector
+            range: 1, 4
+        - id: FoodMeatPenguinCutlet
+          amount: !type:RangeNumberSelector
+            range: 1, 4
+        - id: FoodMeatXenoCutlet
+          amount: !type:RangeNumberSelector
+            range: 1, 4

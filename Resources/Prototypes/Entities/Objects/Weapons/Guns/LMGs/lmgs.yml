@@ -29,7 +29,7 @@
     fireRate: 8
     selectedMode: FullAuto
     availableModes:
-      - FullAuto
+    - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
     soundEmpty:
@@ -48,13 +48,13 @@
         priority: 2
         whitelist:
           tags:
-            - MagazineLightRifleBox
+          - MagazineLightRifleBox
       gun_chamber:
         name: Chamber
         priority: 1
         whitelist:
           tags:
-            - CartridgeLightRifle
+          - CartridgeLightRifle
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot
@@ -67,16 +67,19 @@
 - type: entity
   name: L6 SAW
   id: WeaponLightMachineGunL6
-  parent: [BaseWeaponLightMachineGun, BaseSyndicateContraband]
-  description: Developed by Waffle Corp, the L6 Squad Automatic Weapon is a deadly light machine gun often used by the Gorlex Marauders. Although bulky and cumbersome, its heavy barrel and high ammo capacity make it perfect for suppressing combatants with a hail of bullets. Feeds from .30 ammo belts.
+  parent: [ BaseWeaponLightMachineGun, BaseSyndicateContraband ]
+  description: Developed by Waffle Corp, the L6 Squad Automatic Weapon is a deadly
+    light machine gun often used by the Gorlex Marauders. Although bulky and
+    cumbersome, its heavy barrel and high ammo capacity make it perfect for
+    suppressing combatants with a hail of bullets. Feeds from .30 ammo belts.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/LMGs/l6.rsi
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]
+      map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-3
-      map: ["enum.GunVisualLayers.Mag"]
+      map: [ "enum.GunVisualLayers.Mag" ]
   - type: MagazineVisuals
     magState: mag
     steps: 4
@@ -89,41 +92,42 @@
   name: L6C ROW
   id: WeaponLightMachineGunL6C
   parent: BaseItem
-  description: A L6 SAW for use by cyborgs. Creates .30 rifle ammo on the fly from an internal ammo fabricator, which slowly self-charges.
+  description: A L6 SAW for use by cyborgs. Creates .30 rifle ammo on the fly from
+    an internal ammo fabricator, which slowly self-charges.
   components:
-    - type: Gun
-      minAngle: 4
-      maxAngle: 25
-      angleIncrease: 4
-      angleDecay: 16
-      fireRate: 8
-      selectedMode: FullAuto
-      availableModes:
-        - FullAuto
-      soundGunshot:
-        path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
-      soundEmpty:
-        path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
-    - type: Sprite
-      sprite: Objects/Weapons/Guns/LMGs/l6.rsi
-      layers:
-        - state: base
-          map: [ "enum.GunVisualLayers.Base" ]
-        - state: mag-3
-          map: [ "enum.GunVisualLayers.Mag" ]
-    - type: Item
-      size: Huge
-    - type: ContainerContainer
-      containers:
-        ballistic-ammo: !type:Container
-    - type: BallisticAmmoProvider
-      whitelist:
-        tags:
-        - CartridgeLightRifle
-      capacity: 100
-      proto: CartridgeLightRifle
-      cycleable: false # No synthesizing ammo for your syndicate masters.
-    - type: BallisticAmmoSelfRefiller
-      autoRefillRate: 4s
-      affectedByEmp: true
-    - type: AmmoCounter
+  - type: Gun
+    minAngle: 4
+    maxAngle: 25
+    angleIncrease: 4
+    angleDecay: 16
+    fireRate: 8
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/LMGs/l6.rsi
+    layers:
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-3
+      map: [ "enum.GunVisualLayers.Mag" ]
+  - type: Item
+    size: Huge
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - CartridgeLightRifle
+    capacity: 100
+    proto: CartridgeLightRifle
+    cycleable: false # No synthesizing ammo for your syndicate masters.
+  - type: BallisticAmmoSelfRefiller
+    autoRefillRate: 4s
+    affectedByEmp: true
+  - type: AmmoCounter

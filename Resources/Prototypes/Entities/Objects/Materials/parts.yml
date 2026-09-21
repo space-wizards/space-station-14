@@ -36,7 +36,7 @@
     state: rods_5
     layers:
     - state: rods_5
-      map: ["base"]
+      map: [ "base" ]
   - type: Item
     heldPrefix: rods
   - type: Construction

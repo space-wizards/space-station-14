@@ -64,8 +64,8 @@
   suffix: Single
   parent: PaperRolling
   components:
-    - type: Stack
-      count: 1
+  - type: Stack
+    count: 1
 
 - type: entity
   id: CigaretteFilter
@@ -93,5 +93,5 @@
   suffix: Single
   parent: CigaretteFilter
   components:
-    - type: Stack
-      count: 1
+  - type: Stack
+    count: 1

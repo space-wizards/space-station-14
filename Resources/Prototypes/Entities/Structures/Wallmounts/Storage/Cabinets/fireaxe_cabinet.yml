@@ -2,14 +2,14 @@
   parent: [ BaseWallmountCabinetGlass, StructureHealthContainerStrong ]
   id: FireAxeCabinet
   name: fire axe cabinet
-  description: There is a small label that reads "For Emergency use only" along with details for safe use of the axe. As if.
+  description: There is a small label that reads "For Emergency use only" along
+    with details for safe use of the axe. As if.
   placement:
     mode: SnapgridCenter
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 140
       behaviors:
       - !type:EmptyAllContainersBehaviour
@@ -21,13 +21,13 @@
     layers:
     - state: cabinet
     - state: fireaxe
-      map: ["enum.ItemCabinetVisuals.Layer"]
+      map: [ "enum.ItemCabinetVisuals.Layer" ]
       visible: true
     - state: glass
-      map: ["enum.OpenableVisuals.Layer"]
+      map: [ "enum.OpenableVisuals.Layer" ]
     - state: locked
       shader: unshaded
-      map: ["enum.LockVisualLayers.Lock"]
+      map: [ "enum.LockVisualLayers.Lock" ]
   - type: ItemSlots
     slots:
       ItemCabinet:
@@ -37,7 +37,7 @@
           - FireAxe
   - type: Lock
   - type: AccessReader
-    access: [["Atmospherics"], ["Command"]]
+    access: [ [ "Atmospherics" ], [ "Command" ] ]
 
 - type: entity
   parent: FireAxeCabinet
@@ -60,6 +60,6 @@
       - FireAxe
 
 - type: entity
-  parent: [FireAxeCabinetFilled, FireAxeCabinetOpen]
+  parent: [ FireAxeCabinetFilled, FireAxeCabinetOpen ]
   id: FireAxeCabinetFilledOpen
   suffix: Filled, Open

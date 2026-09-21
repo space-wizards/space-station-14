@@ -2,7 +2,8 @@
   parent: CrateChemistrySecure
   id: CrateChemistryP
   name: chemicals crate (P)
-  description: Contains chemicals from the P-Block of elements. Requires Chemistry access to open.
+  description: Contains chemicals from the P-Block of elements. Requires Chemistry
+    access to open.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -23,7 +24,8 @@
   parent: CrateChemistrySecure
   id: CrateChemistryS
   name: chemicals crate (S)
-  description: Contains chemicals from the S-Block of elements. Requires Chemistry access to open.
+  description: Contains chemicals from the S-Block of elements. Requires Chemistry
+    access to open.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -39,7 +41,8 @@
   parent: CrateChemistrySecure
   id: CrateChemistryD
   name: chemicals crate (D)
-  description: Contains chemicals from the D-Block of elements. Requires Chemistry access to open.
+  description: Contains chemicals from the D-Block of elements. Requires Chemistry
+    access to open.
   components:
   - type: EntityTableContainerFill
     containers:

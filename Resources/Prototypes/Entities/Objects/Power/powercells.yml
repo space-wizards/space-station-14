@@ -28,7 +28,7 @@
         Quantity: 5
   - type: Tag
     tags:
-      - PowerCell
+    - PowerCell
   - type: Riggable
   - type: Appearance
   - type: BatteryVisuals
@@ -36,9 +36,9 @@
     visuals:
       enum.BatteryVisuals.State:
         enum.PowerCellVisualLayers.Unshaded:
-          Full: {visible: true, state: o2}
-          Neither: {visible: true, state: o1}
-          Empty: {visible: false}
+          Full: { visible: true, state: o2 }
+          Neither: { visible: true, state: o1 }
+          Empty: { visible: false }
 
 - type: entity
   parent: Solution
@@ -52,7 +52,8 @@
 
 - type: entity
   name: potato battery
-  description: Someone's stuck two nails and some wire in a large potato. Somehow it provides a little charge.
+  description: Someone's stuck two nails and some wire in a large potato. Somehow
+    it provides a little charge.
   id: PowerCellPotato
   parent: BasePowerCell
   components:
@@ -64,7 +65,7 @@
     startingCharge: 70
   - type: Tag
     tags:
-      - PotatoBattery
+    - PotatoBattery
   - type: Construction
     graph: PowerCellPotato
     node: potatobattery
@@ -88,7 +89,7 @@
     startingCharge: 360
   - type: Tag
     tags:
-      - PowerCellSmall
+    - PowerCellSmall
 
 - type: entity
   id: PowerCellSmallPrinted
@@ -97,12 +98,12 @@
   components:
   - type: Sprite
     layers:
-      - map: [ "enum.PowerCellVisualLayers.Base" ]
-        state: small
-      - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
-        state: o2
-        shader: unshaded
-        visible: false
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: small
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
+      visible: false
   - type: Battery
     maxCharge: 360
     startingCharge: 0
@@ -111,7 +112,8 @@
   parent: PowerCellSmall
   id: PowerCellSmallNuclear
   name: small-capacity nuclear power cell
-  description: A self rechargeable power cell, designed for fast recharge rate at the expense of capacity.
+  description: A self rechargeable power cell, designed for fast recharge rate at
+    the expense of capacity.
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 36 # 10 seconds to recharge
@@ -152,19 +154,20 @@
   components:
   - type: Sprite
     layers:
-      - map: [ "enum.PowerCellVisualLayers.Base" ]
-        state: medium
-      - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
-        state: o2
-        shader: unshaded
-        visible: false
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: medium
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
+      visible: false
   - type: Battery
     maxCharge: 720
     startingCharge: 0
 
 - type: entity
   name: high-capacity power cell
-  description: A rechargeable standardized power cell. This premium brand stores up to 50% more energy than the competition.
+  description: A rechargeable standardized power cell. This premium brand stores
+    up to 50% more energy than the competition.
   id: PowerCellHigh
   suffix: Full
   parent: BasePowerCell
@@ -192,19 +195,21 @@
   components:
   - type: Sprite
     layers:
-      - map: [ "enum.PowerCellVisualLayers.Base" ]
-        state: high
-      - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
-        state: o2
-        shader: unshaded
-        visible: false
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: high
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
+      visible: false
   - type: Battery
     maxCharge: 1080
     startingCharge: 0
 
 - type: entity
   name: hyper-capacity power cell
-  description: A rechargeable standardized power cell. This iteration pushes the upper limits of portable power storage, boasting 66% more capacity than its predecessor.
+  description: A rechargeable standardized power cell. This iteration pushes the
+    upper limits of portable power storage, boasting 66% more capacity than its
+    predecessor.
   id: PowerCellHyper
   suffix: Full
   parent: BasePowerCell
@@ -232,12 +237,12 @@
   components:
   - type: Sprite
     layers:
-      - map: [ "enum.PowerCellVisualLayers.Base" ]
-        state: hyper
-      - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
-        state: o2
-        shader: unshaded
-        visible: false
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: hyper
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
+      visible: false
   - type: Battery
     maxCharge: 1800
     startingCharge: 0
@@ -246,7 +251,8 @@
   parent: BasePowerCell
   id: PowerCellMicroreactor
   name: microreactor power cell
-  description: A rechargeable standardized microreactor cell. Has lower capacity but slowly recharges by itself.
+  description: A rechargeable standardized microreactor cell. Has lower capacity
+    but slowly recharges by itself.
   suffix: Full
   components:
   - type: Sprite
@@ -289,23 +295,23 @@
   id: PowerCellAntiqueProto
   parent: BasePowerCell
   components:
-    - type: Sprite
-      layers:
-      - map: [ "enum.PowerCellVisualLayers.Base" ]
-        state: antique
-      - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
-        state: o2
-        shader: unshaded
-    - type: Battery
-      maxCharge: 1200
-      startingCharge: 1200
-    - type: BatterySelfRecharger
-      autoRechargeRate: 40
-    - type: Extractable
-      juiceSolution:
-        reagents:
-        - ReagentId: Uranium
-          Quantity: 5
+  - type: Sprite
+    layers:
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: antique
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
+  - type: Battery
+    maxCharge: 1200
+    startingCharge: 1200
+  - type: BatterySelfRecharger
+    autoRechargeRate: 40
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Uranium
+        Quantity: 5
 
 # Power cage (big heavy power cell for big devices)
 
@@ -333,7 +339,7 @@
         Quantity: 15
   - type: Tag
     tags:
-      - PowerCage
+    - PowerCage
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
@@ -353,7 +359,8 @@
   id: PowerCageSmall
   parent: BasePowerCage
   name: small-capacity power cage
-  description: A rechargeable power cage for big devices. This is the cheapest kind you can find.
+  description: A rechargeable power cage for big devices. This is the cheapest
+    kind you can find.
   components:
   - type: Sprite
     sprite: Objects/Power/power_cages.rsi
@@ -371,7 +378,8 @@
   id: PowerCageMedium
   parent: BasePowerCage
   name: medium-capacity power cage
-  description: A rechargeable power cage for big devices. The gold standard of capacity and cost.
+  description: A rechargeable power cage for big devices. The gold standard of
+    capacity and cost.
   components:
   - type: Sprite
     sprite: Objects/Power/power_cages.rsi
@@ -394,7 +402,8 @@
   id: PowerCageHigh
   parent: BasePowerCage
   name: high-capacity power cage
-  description: A rechargeable power cage for big devices. Increased capacity for increased power levels.
+  description: A rechargeable power cage for big devices. Increased capacity for
+    increased power levels.
   components:
   - type: Sprite
     sprite: Objects/Power/power_cages.rsi

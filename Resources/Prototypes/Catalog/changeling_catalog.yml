@@ -32,7 +32,7 @@
   id: ChangelingVoiceMimic
   name: changeling-catalog-voice-mimic-name
   description: changeling-catalog-voice-mimic-desc
-  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: mimicry}
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: mimicry }
   cost:
     ChangelingDNA: 10
   categories:
@@ -120,7 +120,11 @@
   id: ChangelingStingHallucinogenic
   name: changeling-catalog-hallucinogenic-sting-name
   description: changeling-catalog-hallucinogenic-sting-desc
-  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: hallucination_sting }
+  icon:
+    {
+      sprite: /Textures/Interface/Actions/changeling2.rsi,
+      state: hallucination_sting
+    }
   applyToMob: true
   cost:
     ChangelingDNA: 10

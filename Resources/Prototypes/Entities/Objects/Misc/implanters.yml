@@ -9,7 +9,7 @@
   - type: ItemSlots
   - type: ContainerContainer
     containers:
-      implanter_slot: !type:ContainerSlot { }
+      implanter_slot: !type:ContainerSlot
   - type: Implanter
     whitelist:
       components:
@@ -71,12 +71,12 @@
     visuals:
       enum.ImplanterVisuals.Full:
         implantFull:
-          True: {visible: true}
-          False: {visible: false}
+          True: { visible: true }
+          False: { visible: false }
       enum.ImplanterImplantOnlyVisuals.ImplantOnly:
         implantOnly:
-          True: {state: broken}
-          False: {state: implanter0}
+          True: { state: broken }
+          False: { state: implanter0 }
   - type: UserInterface
     interfaces:
       enum.DeimplantUiKey.Key:
@@ -86,7 +86,12 @@
   id: Implanter
   parent: BaseImplanter
   name: implant extractor
-  description: "A dual-purpose syringe designed for the removal of specific subdermal implants. Once an implant is extracted, it is stored within and can be re-administered.\nWARNING: Operator error, such as selecting a non-present implant type, causes severe genetic trauma to the operator."
+  description: "A dual-purpose syringe designed for the removal of specific
+    subdermal implants. Once an implant is extracted, it is stored within and
+    can be re-administered.
+
+    WARNING: Operator error, such as selecting a non-present implant type,
+    causes severe genetic trauma to the operator."
   components:
   - type: Tag
     tags:
@@ -107,7 +112,8 @@
 - type: entity
   id: BaseImplantOnlyImplanter
   parent: Implanter
-  description: A disposable syringe exclusively designed for the injection of subdermal implants.
+  description: A disposable syringe exclusively designed for the injection of
+    subdermal implants.
   abstract: true
   components:
   - type: Sprite
@@ -125,9 +131,11 @@
 
 - type: entity
   id: BaseImplantOnlyImplanterSyndi
-  parent: [BaseImplantOnlyImplanter, BaseSyndicateContraband]
+  parent: [ BaseImplantOnlyImplanter, BaseSyndicateContraband ]
   name: syndicate implanter
-  description: A compact disposable syringe exclusively designed for the injection of subdermal implants. Make sure to scrub it with soap to remove residual DNA after use!
+  description: A compact disposable syringe exclusively designed for the injection
+    of subdermal implants. Make sure to scrub it with soap to remove residual
+    DNA after use!
   abstract: true
   components:
   - type: Item
@@ -146,12 +154,12 @@
     visuals:
       enum.ImplanterVisuals.Full:
         implantFull:
-          True: {visible: true}
-          False: {visible: false}
+          True: { visible: true }
+          False: { visible: false }
       enum.ImplanterImplantOnlyVisuals.ImplantOnly:
         implantOnly:
-          True: {state: broken}
-          False: {state: implanter1}
+          True: { state: broken }
+          False: { state: implanter1 }
   - type: Tag
     tags: []
 

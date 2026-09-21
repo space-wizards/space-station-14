@@ -99,7 +99,8 @@
   name: mooltitool
   parent: BaseItem
   id: Mooltitool
-  description: An crude tool to copy, store, and send electrical pulses and signals through wires and machines. Moo!
+  description: An crude tool to copy, store, and send electrical pulses and
+    signals through wires and machines. Moo!
   components:
   - type: Sprite
     sprite: Objects/Tools/Cowtools/mooltitool.rsi
@@ -111,13 +112,14 @@
     - Pulsing
   - type: Tag
     tags:
-      - Multitool
+    - Multitool
 
 - type: entity
   name: cowelding tool
   parent: Welder
   id: Cowelder
-  description: "Melts anything as long as it's fueled, don't forget your eye protection! Moo!"
+  description: "Melts anything as long as it's fueled, don't forget your eye
+    protection! Moo!"
   components:
   - type: Sprite
     sprite: Objects/Tools/Cowtools/cowelder.rsi

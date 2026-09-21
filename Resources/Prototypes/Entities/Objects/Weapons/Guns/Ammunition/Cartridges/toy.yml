@@ -6,13 +6,13 @@
   components:
   - type: Tag
     tags:
-      - CartridgeCap
+    - CartridgeCap
   - type: CartridgeAmmo
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Casings/capgun_casing.rsi
     layers:
     - state: base
-      map: ["enum.AmmoVisualLayers.Base"]
+      map: [ "enum.AmmoVisualLayers.Base" ]
   - type: SpentAmmoVisuals
   - type: Appearance
   - type: StaticPrice
@@ -22,7 +22,8 @@
   parent: BaseCartridgeCap
   id: CartridgeCap
   name: cap gun cartridge
-  description: A mock pistol cartridge that makes noise and smoke, but has no actual projectile.
+  description: A mock pistol cartridge that makes noise and smoke, but has no
+    actual projectile.
   components:
   - type: CartridgeAmmo
     proto: BulletCap

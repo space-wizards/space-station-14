@@ -19,8 +19,7 @@
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger: &DamageMachineNormal
-        !type:DamageTrigger
+    - trigger: &DamageMachineNormal !type:DamageTrigger
         damage: 175
       behaviors:
       - !type:PlaySoundBehavior
@@ -47,7 +46,8 @@
   parent: WeaponEnergyTurretControlPanelFrame
   id: WeaponEnergyTurretStationControlPanelBase
   name: sentry turret control panel
-  description: A wall-mounted interface for remotely configuring the operational parameters of linked sentry turrets.
+  description: A wall-mounted interface for remotely configuring the operational
+    parameters of linked sentry turrets.
   components:
   - type: Appearance
   - type: Sprite
@@ -57,10 +57,10 @@
     layers:
     - state: base
     - state: safe
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
       shader: unshaded
     - state: wires
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false
   - type: GenericVisualizer
     visuals:
@@ -181,7 +181,7 @@
   suffix: AI, Silicon
   components:
   - type: AccessReader
-    access: [["StationAi"], ["ResearchDirector"]]
+    access: [ [ "StationAi" ], [ "ResearchDirector" ] ]
   - type: ContainerFill
     containers:
       board:
@@ -206,7 +206,7 @@
   suffix: Security
   components:
   - type: AccessReader
-    access: [["StationAi"], ["Security"]]
+    access: [ [ "StationAi" ], [ "Security" ] ]
   - type: ContainerFill
     containers:
       board:
@@ -223,7 +223,7 @@
   suffix: Command
   components:
   - type: AccessReader
-    access: [["StationAi"], ["Command"]]
+    access: [ [ "StationAi" ], [ "Command" ] ]
   - type: ContainerFill
     containers:
       board:

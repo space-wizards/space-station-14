@@ -12,7 +12,7 @@
     accent: scurret
   - type: Sprite
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       sprite: Mobs/Animals/scurret/scurret.rsi
       state: scurret
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
@@ -50,7 +50,7 @@
   - type: Speech
     speechVerb: Wawa
     speechSounds: Wawa
-    allowedEmotes: ["Thump"] # They're 80% tail
+    allowedEmotes: [ "Thump" ] # They're 80% tail
   - type: TypingIndicator
     proto: moth
   - type: InteractionPopup
@@ -153,7 +153,8 @@
 
 - type: entity
   name: scurret
-  description: Commonly known as Wawa, from the wetlands of Planet Wawa, these critters make up the bulk of Arnolds's Pizza's "loyal workforce".
+  description: Commonly known as Wawa, from the wetlands of Planet Wawa, these
+    critters make up the bulk of Arnolds's Pizza's "loyal workforce".
   id: MobScurret
   parent: MobBaseScurret
   components:
@@ -185,24 +186,26 @@
   id: MobBaseEmotionalSupportScurret
   name: Emotional Support Scurret
   components:
-    - type: Loadout
-      prototypes: [ EmotionalSupportScurretGear ]
-    - type: NpcFactionMember
-      factions:
-      - Passive
-    - type: GhostRole
-      makeSentient: true
-      name: ghost-role-information-emotional-support-scurret-name
-      description: ghost-role-information-emotional-support-scurret-description
-      rules: ghost-role-information-nonantagonist-rules
-      raffle:
-        settings: default
-    - type: GhostTakeoverAvailable
+  - type: Loadout
+    prototypes: [ EmotionalSupportScurretGear ]
+  - type: NpcFactionMember
+    factions:
+    - Passive
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-emotional-support-scurret-name
+    description: ghost-role-information-emotional-support-scurret-description
+    rules: ghost-role-information-nonantagonist-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
 
 # Spawnable ESS have a ghost role, equipment, a random name and a random colour.
 
 - type: entity
   name: Emotional Support Scurret
   id: MobEmotionalSupportScurret
-  parent: [MobScurret, MobBaseEmotionalSupportScurret]
-  description: Commonly known as Wawa, from the wetlands of Planet Wawa, these critters make up the bulk of Arnold's Pizza's "loyal workforce". This one is here as a temp.
+  parent: [ MobScurret, MobBaseEmotionalSupportScurret ]
+  description: Commonly known as Wawa, from the wetlands of Planet Wawa, these
+    critters make up the bulk of Arnold's Pizza's "loyal workforce". This one is
+    here as a temp.

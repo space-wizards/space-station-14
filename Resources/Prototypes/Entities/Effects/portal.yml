@@ -16,8 +16,7 @@
   - type: Fixtures
     fixtures:
       portalFixture:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.48,0.25,0.48"
         mask:
         - FullTileMask
@@ -98,8 +97,7 @@
   - type: Fixtures
     fixtures:
       portalFixture:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.6
           position: 0, 0.26
         mask:

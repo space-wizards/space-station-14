@@ -3,7 +3,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionSmall, FoodInjectableBase]
+  parent: [ SolutionSmall, FoodInjectableBase ]
   id: FoodBowlBase
   components:
   - type: Item
@@ -46,8 +46,7 @@
     - Soup
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:PlaySoundBehavior
@@ -55,7 +54,7 @@
           collection: GlassBreak
           params:
             volume: -8
-      - !type:SpillBehavior { }
+      - !type:SpillBehavior
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodBowlBigTrash:
@@ -74,8 +73,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - creamy
-      - peas
+    - creamy
+    - peas
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
     layers:
@@ -102,7 +101,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - leafy
+    - leafy
   - type: Sprite
     layers:
     - state: bowl
@@ -129,8 +128,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - leafy
-      - apple
+    - leafy
+    - apple
   - type: Sprite
     layers:
     - state: bowl
@@ -155,14 +154,15 @@
   name: valid salad
   parent: FoodBowlBase
   id: FoodSaladValid
-  description: It's just an herb salad with meatballs and fried potato slices. Nothing suspicious about it.
+  description: It's just an herb salad with meatballs and fried potato slices.
+    Nothing suspicious about it.
   components:
   - type: FlavorProfile
     flavors:
-      - leafy
-      - meaty
-      - potatoes
-      - validhunting
+    - leafy
+    - meaty
+    - potatoes
+    - validhunting
   - type: Sprite
     layers:
     - state: bowl
@@ -194,9 +194,9 @@
   components:
   - type: FlavorProfile
     flavors:
-      - onion
-      - cabbage
-      - sour
+    - onion
+    - cabbage
+    - sour
   - type: Sprite
     layers:
     - state: bowl
@@ -217,14 +217,15 @@
   name: caesar salad
   parent: FoodBowlBase
   id: FoodSaladCaesar
-  description: A simple yet flavorful salad of onions, lettuce, croutons, and shreds of cheese dressed in oil. Comes with a slice of pita bread!
+  description: A simple yet flavorful salad of onions, lettuce, croutons, and
+    shreds of cheese dressed in oil. Comes with a slice of pita bread!
   components:
   - type: FlavorProfile
     flavors:
-      - onion
-      - cabbage
-      - bread
-      - cheesy
+    - onion
+    - cabbage
+    - bread
+    - cheesy
   - type: Sprite
     layers:
     - state: bowl
@@ -249,9 +250,9 @@
   components:
   - type: FlavorProfile
     flavors:
-      - spicy
-      - cabbage
-      - carrot
+    - spicy
+    - cabbage
+    - carrot
   - type: Sprite
     layers:
     - state: bowl
@@ -280,7 +281,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - fruity
+    - fruity
   - type: Sprite
     layers:
     - state: bowl
@@ -315,8 +316,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - fruity
-      - jungle
+    - fruity
+    - jungle
   - type: Sprite
     layers:
     - state: bowl
@@ -351,8 +352,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - leafy
-      - sour
+    - leafy
+    - sour
   - type: Sprite
     layers:
     - state: bowl
@@ -383,8 +384,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - bitter
-      - hope
+    - bitter
+    - hope
   - type: Sprite
     layers:
     - state: bowl
@@ -409,7 +410,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - rice
+    - rice
   - type: Sprite
     layers:
     - state: bowl
@@ -423,8 +424,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - rice
-      - egg
+    - rice
+    - egg
   - type: Sprite
     layers:
     - state: bowl
@@ -455,8 +456,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - rice
-      - meaty
+    - rice
+    - meaty
   - type: Sprite
     layers:
     - state: bowl
@@ -485,8 +486,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - rice
-      - sweet
+    - rice
+    - sweet
   - type: Sprite
     layers:
     - state: bowl
@@ -513,10 +514,10 @@
   components:
   - type: FlavorProfile
     flavors:
-      - rice
-      - spicy
-      - meaty
-      - savory
+    - rice
+    - spicy
+    - meaty
+    - savory
   - type: Sprite
     layers:
     - state: bowl
@@ -547,8 +548,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - oats
-      - milk
+    - oats
+    - milk
   - type: Sprite
     layers:
     - state: bowl
@@ -562,8 +563,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - jelly
-      - mushroom
+    - jelly
+    - mushroom
   - type: Sprite
     layers:
     - state: bowl
@@ -580,8 +581,8 @@
     storedOffset: 0,-3
   - type: FlavorProfile
     flavors:
-      - mushroom
-      - jelly
+    - mushroom
+    - jelly
   - type: Sprite
     sprite: Objects/Consumable/Food/meals.rsi
     state: amanita-jelly
@@ -605,7 +606,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - meatballs
+    - meatballs
   - type: Sprite
     layers:
     - state: bowl
@@ -638,7 +639,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - slimy
+    - slimy
   - type: Sprite
     layers:
     - state: bowl
@@ -652,8 +653,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - metallic
-      - tomato
+    - metallic
+    - tomato
   - type: Sprite
     layers:
     - state: bowl
@@ -678,8 +679,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
-      - salty
+    - meaty
+    - salty
   - type: Sprite
     layers:
     - state: bowl
@@ -702,7 +703,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - bad-joke
+    - bad-joke
   - type: Sprite
     layers:
     - state: bowl
@@ -731,8 +732,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - vegetables
-      - sadness
+    - vegetables
+    - sadness
   - type: Sprite
     layers:
     - state: bowl
@@ -757,7 +758,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - nettles
+    - nettles
   - type: Sprite
     layers:
     - state: bowl
@@ -784,7 +785,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - chaos
+    - chaos
   - type: Sprite
     layers:
     - state: bowl
@@ -798,7 +799,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - spicy
+    - spicy
   - type: Sprite
     layers:
     - state: bowl
@@ -806,22 +807,21 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: Nutriment
-          Quantity: 14
-        - ReagentId: CapsaicinOil
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 7
-        - ReagentId: Protein
-          Quantity: 2
-        - ReagentId: Allicin
-          Quantity: 1
-        - ReagentId: Water
-          Quantity: 4
+      - ReagentId: Nutriment
+        Quantity: 14
+      - ReagentId: CapsaicinOil
+        Quantity: 10
+      - ReagentId: Vitamin
+        Quantity: 7
+      - ReagentId: Protein
+        Quantity: 2
+      - ReagentId: Allicin
+        Quantity: 1
+      - ReagentId: Water
+        Quantity: 4
   - type: Tag
     tags:
     - ChiliBowl
-
 
 - type: entity
   name: cold chili
@@ -831,8 +831,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - minty
-      - tomato
+    - minty
+    - tomato
   - type: Sprite
     layers:
     - state: bowl
@@ -864,10 +864,10 @@
   components:
   - type: FlavorProfile
     flavors:
-      - spicy
-      - tomato
-      - bad-joke
-      - parents
+    - spicy
+    - tomato
+    - bad-joke
+    - parents
   - type: Sprite
     layers:
     - state: bowl
@@ -880,12 +880,13 @@
   name: monkey's delight
   parent: FoodBowlBase
   id: FoodSoupMonkey
-  description: A delicious soup with hunks of monkey meat simmered to perfection, in a broth that tastes faintly of bananas.
+  description: A delicious soup with hunks of monkey meat simmered to perfection,
+    in a broth that tastes faintly of bananas.
   components:
   - type: FlavorProfile
     flavors:
-      - jungle
-      - banana
+    - jungle
+    - banana
   - type: Sprite
     layers:
     - state: bowl
@@ -918,7 +919,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - tomato
+    - tomato
   - type: Sprite
     layers:
     - state: bowl
@@ -945,8 +946,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - tomato
-      - squirming
+    - tomato
+    - squirming
   - type: Sprite
     layers:
     - state: bowl
@@ -954,14 +955,14 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: Nutriment
-          Quantity: 20 # Eyes are yummy
-        - ReagentId: Vitamin
-          Quantity: 12
-        - ReagentId: JuiceCarrot
-          Quantity: 5
-        - ReagentId: Oculine
-          Quantity: 8
+      - ReagentId: Nutriment
+        Quantity: 20 # Eyes are yummy
+      - ReagentId: Vitamin
+        Quantity: 12
+      - ReagentId: JuiceCarrot
+        Quantity: 5
+      - ReagentId: Oculine
+        Quantity: 8
   - type: Tag
     tags:
     - Meat
@@ -975,15 +976,14 @@
   components:
   - type: FlavorProfile
     flavors:
-      - miso
+    - miso
   - type: Edible
     trash:
     - FoodBowlFancy
   - type: Sprite
     layers:
     - state: bowl2
-    - state: miso
-        #rip milo
+    - state: miso #rip milo
   - type: Tag
     tags:
     - Meat
@@ -997,7 +997,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - mushroom
+    - mushroom
   - type: Sprite
     layers:
     - state: bowl
@@ -1044,26 +1044,27 @@
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
-      - tomato
-      - carrot
+    - meaty
+    - tomato
+    - carrot
   - type: Sprite
     layers:
     - state: bowl
     - state: stew
   - type: Solution
     solution:
-      reagents: # This loses a lot of reagents because it takes so many ingredients, if you're refactoring cooking, redo these numbers.
-        - ReagentId: Nutriment
-          Quantity: 30
-        - ReagentId: Protein
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 15
-        - ReagentId: JuiceCarrot
-          Quantity: 5
-        - ReagentId: Oculine
-          Quantity: 3
+      reagents:
+      # This loses a lot of reagents because it takes so many ingredients, if you're refactoring cooking, redo these numbers.
+      - ReagentId: Nutriment
+        Quantity: 30
+      - ReagentId: Protein
+        Quantity: 6
+      - ReagentId: Vitamin
+        Quantity: 15
+      - ReagentId: JuiceCarrot
+        Quantity: 5
+      - ReagentId: Oculine
+        Quantity: 3
   - type: Tag
     tags:
     - Meat
@@ -1078,7 +1079,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - sweet
+    - sweet
   - type: Sprite
     layers:
     - state: bowl
@@ -1093,7 +1094,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - onion
+    - onion
   - type: Sprite
     layers:
     - state: bowl
@@ -1116,7 +1117,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - creamy
+    - creamy
   - type: Sprite
     layers:
     - state: bowl
@@ -1147,8 +1148,8 @@
     storedOffset: 0,2
   - type: FlavorProfile
     flavors:
-      - mushroom
-      - electrons
+    - mushroom
+    - electrons
   - type: Sprite
     layers:
     - state: bowl
@@ -1156,10 +1157,10 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: Nutriment
-          Quantity: 25
-        - ReagentId: Licoxide
-          Quantity: 10
+      - ReagentId: Nutriment
+        Quantity: 25
+      - ReagentId: Licoxide
+        Quantity: 10
 
 - type: entity
   name: bungo curry
@@ -1169,7 +1170,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - jungle
+    - jungle
   - type: Sprite
     layers:
     - state: bowl
@@ -1177,12 +1178,12 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: Nutriment
-          Quantity: 20
-        - ReagentId: Vitamin
-          Quantity: 3
-        - ReagentId: CapsaicinOil
-          Quantity: 10
+      - ReagentId: Nutriment
+        Quantity: 20
+      - ReagentId: Vitamin
+        Quantity: 3
+      - ReagentId: CapsaicinOil
+        Quantity: 10
   - type: Tag
     tags:
     - Fruit
@@ -1197,8 +1198,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - creamy
-      - slimy
+    - creamy
+    - slimy
   - type: Sprite
     layers:
     - state: bowl

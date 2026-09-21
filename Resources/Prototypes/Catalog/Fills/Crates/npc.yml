@@ -247,9 +247,9 @@
     containers:
       entity_storage: !type:GroupSelector
         children:
-          - id: MobHamsterHamlet
-          - id: MobHamsterHamletSlippery
-            weight: 0.001
+        - id: MobHamsterHamlet
+        - id: MobHamsterHamletSlippery
+          weight: 0.001
 
 - type: entity
   parent: CrateLivestock

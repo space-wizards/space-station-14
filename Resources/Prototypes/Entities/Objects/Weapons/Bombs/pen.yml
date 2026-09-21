@@ -24,7 +24,8 @@
   - type: EmitSoundOnUse
     handle: false # don't want the sound to stop the explosion from triggering
   - type: AddComponentsOnTrigger # make them embed into the target, but only when activated so that they can't be metagamed
-    components: # copied from PenEmbeddable
+    components:
+    # copied from PenEmbeddable
     - type: EmbeddableProjectile
       offset: 0.3,0.0
       removalTime: 0.0
@@ -37,10 +38,11 @@
           Piercing: 3
 
 - type: entity
-  parent: [BaseItem, BaseSyndicateContraband]
+  parent: [ BaseItem, BaseSyndicateContraband ]
   id: PenExplodingBox
   name: exploding pen box
-  description: A small box containing an exploding pen. Packaging disintegrates when opened, leaving no evidence behind.
+  description: A small box containing an exploding pen. Packaging disintegrates
+    when opened, leaving no evidence behind.
   components:
   - type: Item
     size: Tiny

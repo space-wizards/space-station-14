@@ -28,7 +28,7 @@
     - Trash
   - type: Ammo
   - type: EmbeddableProjectile
-    removalTime: .2
+    removalTime: 0.2
   - type: ThrowingAngle
     angle: 180
   - type: LandAtCursor

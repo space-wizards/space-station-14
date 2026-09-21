@@ -98,7 +98,7 @@
   id: Turret
   name: device-frequency-prototype-name-turret
   frequency: 2152
-  
+
 # AI turret controllers send data to their turrets on this frequency
 - type: deviceFrequency
   id: TurretControlAI

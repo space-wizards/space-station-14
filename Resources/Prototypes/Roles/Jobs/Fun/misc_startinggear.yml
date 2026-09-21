@@ -125,7 +125,7 @@
     ears: ClothingHeadsetGrey
     gloves: ClothingHandsGlovesFingerless
   inhand:
-    - WeaponMeleeToolboxRobust
+  - WeaponMeleeToolboxRobust
 
 #Brigmedic
 

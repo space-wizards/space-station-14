@@ -8,8 +8,8 @@
   components:
   - type: Sprite
     layers:
-      - state: box_security
-      - state: magazine
+    - state: box_security
+    - state: magazine
 
 - type: entity
   name: box of .25 caseless magazines

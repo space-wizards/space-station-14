@@ -12,7 +12,7 @@
   - type: BarSign
     emped: EmpBarSign
   - type: AccessReader
-    access: [["Bar"]]
+    access: [ [ "Bar" ] ]
   - type: ActivatableUIRequiresPower
   - type: ActivatableUIRequiresAccess
   - type: ActivatableUI
@@ -26,8 +26,7 @@
   - type: Appearance
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:PlaySoundBehavior
@@ -146,7 +145,8 @@
   parent: BaseBarSign
   id: BarSignTheCoderbus
   name: The Coderbus
-  description: A very controversial bar known for its wide variety of constantly-changing drinks.
+  description: A very controversial bar known for its wide variety of
+    constantly-changing drinks.
   components:
   - type: BarSign
     current: TheCoderbus
@@ -182,7 +182,8 @@
   parent: BaseBarSign
   id: BarSignTheLightbulb
   name: The Lightbulb
-  description: A cafe popular among moths and moffs. Once shut down for a week after the bartender used mothballs to protect her spare uniforms.
+  description: A cafe popular among moths and moffs. Once shut down for a week
+    after the bartender used mothballs to protect her spare uniforms.
   components:
   - type: BarSign
     current: TheLightbulb
@@ -263,7 +264,8 @@
   parent: BaseBarSign
   id: BarSignSpacebucks
   name: Spacebucks
-  description: You can't get away from them, even in space, and even after we started calling them 'spesos' instead.
+  description: You can't get away from them, even in space, and even after we
+    started calling them 'spesos' instead.
   components:
   - type: BarSign
     current: Spacebucks
@@ -281,7 +283,8 @@
   parent: BaseBarSign
   id: BarSignWhiskeyEchoes
   name: Whiskey Echoes
-  description: An elite bar for elite oper-wait, this is a Nanotrasen station. Why's this sign in the database?
+  description: An elite bar for elite oper-wait, this is a Nanotrasen station.
+    Why's this sign in the database?
   components:
   - type: BarSign
     current: WhiskeyEchoes

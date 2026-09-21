@@ -65,40 +65,40 @@
   id: StringInstrumentTable
   table: !type:GroupSelector
     children:
-      - id: AcousticGuitarInstrument
-      - id: ElectricGuitarInstrument
-      - id: BassGuitarInstrument
-      - id: FretlessBassGuitarInstrument
-      - id: RockGuitarInstrument
-      - id: BanjoInstrument
-      - id: ViolinInstrument
-      - id: CelloInstrument
-      - id: ViolaInstrument
-      - id: HarpInstrument
+    - id: AcousticGuitarInstrument
+    - id: ElectricGuitarInstrument
+    - id: BassGuitarInstrument
+    - id: FretlessBassGuitarInstrument
+    - id: RockGuitarInstrument
+    - id: BanjoInstrument
+    - id: ViolinInstrument
+    - id: CelloInstrument
+    - id: ViolaInstrument
+    - id: HarpInstrument
 
 - type: entityTable
   id: WoodwindInstrumentTable
   table: !type:GroupSelector
     children:
-      - id: RecorderInstrument
-      - id: BagpipeInstrument
-      - id: ClarinetInstrument
-      - id: FluteInstrument
-      - id: HarmonicaInstrument
-      - id: SaxophoneInstrument
-      - id: OcarinaInstrument
-      - id: PanFluteInstrument
+    - id: RecorderInstrument
+    - id: BagpipeInstrument
+    - id: ClarinetInstrument
+    - id: FluteInstrument
+    - id: HarmonicaInstrument
+    - id: SaxophoneInstrument
+    - id: OcarinaInstrument
+    - id: PanFluteInstrument
 
 - type: entityTable
   id: KeyedPercussionInstrumentTable
   table: !type:GroupSelector
     children:
-      - id: SynthesizerInstrument
-      - id: AccordionInstrument
-      - id: KalimbaInstrument
-      - id: WoodblockInstrument
-      - id: GlockenspielInstrument
-      - id: VibraphoneInstrument
+    - id: SynthesizerInstrument
+    - id: AccordionInstrument
+    - id: KalimbaInstrument
+    - id: WoodblockInstrument
+    - id: GlockenspielInstrument
+    - id: VibraphoneInstrument
 
 - type: entityTable
   id: SpecialInstrumentTable
@@ -146,9 +146,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Objects/Fun/Instruments/h_synthesizer.rsi
-        state: icon
+    - state: red
+    - sprite: Objects/Fun/Instruments/h_synthesizer.rsi
+      state: icon
   - type: EntityTableSpawner
     table: !type:NestedSelector
       tableId: RandomInstrumentTable

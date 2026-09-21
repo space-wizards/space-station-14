@@ -2,7 +2,8 @@
   parent: StructureHealthMachineWeak
   id: Morgue
   name: morgue
-  description: Used to store bodies until someone fetches them. Includes a high-tech alert system for false-positives!
+  description: Used to store bodies until someone fetches them. Includes a
+    high-tech alert system for false-positives!
   placement:
     mode: SnapgridCenter
   components:
@@ -12,14 +13,14 @@
     sprite: Structures/Storage/morgue.rsi
     layers:
     - state: morgue_closed
-      map: ["enum.MorgueVisualLayers.Base"]
+      map: [ "enum.MorgueVisualLayers.Base" ]
     - state: morgue_tray
       offset: 0, -1
       visible: false
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: morgue_nomob_light
       visible: false
-      map: ["enum.MorgueVisualLayers.Light"]
+      map: [ "enum.MorgueVisualLayers.Light" ]
       shader: unshaded
   - type: Clickable
   - type: InteractionOutline
@@ -28,8 +29,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
         density: 1000
         mask:
@@ -56,19 +56,19 @@
       enum.StorageVisuals.Open:
         # basic open.close layer:
         enum.MorgueVisualLayers.Base:
-          True: { state: morgue_open}
-          False: { state: morgue_closed}
+          True: { state: morgue_open }
+          False: { state: morgue_closed }
         # show/hide morgue tray:
         enum.StorageVisualLayers.Door:
-          True: { visible: true}
-          False: { visible: false}
+          True: { visible: true }
+          False: { visible: false }
       enum.MorgueVisuals.Contents:
         # toggle contents light indicator:
         enum.MorgueVisualLayers.Light:
-          Empty: {visible: false}
-          HasContents: {visible: true, state: morgue_nomob_light}
-          HasMob: {visible: true, state: morgue_nosoul_light}
-          HasSoul: {visible: true, state: morgue_soul_light}
+          Empty: { visible: false }
+          HasContents: { visible: true, state: morgue_nomob_light }
+          HasMob: { visible: true, state: morgue_nosoul_light }
+          HasSoul: { visible: true, state: morgue_soul_light }
   - type: Transform
     anchored: true
   - type: AntiRottingContainer
@@ -79,8 +79,7 @@
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger: &DamageMachineWeak
-        !type:DamageTrigger
+    - trigger: &DamageMachineWeak !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -106,17 +105,17 @@
     sprite: Structures/Storage/morgue.rsi
     layers:
     - state: crema_closed
-      map: ["enum.CrematoriumVisualLayers.Base", "enum.StorageVisualLayers.Base"]
+      map: [ "enum.CrematoriumVisualLayers.Base", "enum.StorageVisualLayers.Base" ]
     - state: crema_tray
       offset: 0, -1
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: crema_contents_light
       visible: false
-      map: ["enum.CrematoriumVisualLayers.LightContent"]
+      map: [ "enum.CrematoriumVisualLayers.LightContent" ]
       shader: unshaded
     - state: crema_active_light
       visible: false
-      map: ["enum.CrematoriumVisualLayers.LightBurning"]
+      map: [ "enum.CrematoriumVisualLayers.LightBurning" ]
       shader: unshaded
   - type: Clickable
   - type: InteractionOutline
@@ -125,8 +124,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
         density: 190
         mask:

@@ -2,30 +2,31 @@
   parent: BaseItem
   id: AnomalyScanner
   name: anomaly scanner
-  description: A hand-held scanner built to collect information on various anomalous objects.
+  description: A hand-held scanner built to collect information on various
+    anomalous objects.
   components:
   - type: Sprite
     sprite: Objects/Specific/Research/anomalyscanner.rsi
     layers:
-      - state: icon
-        map: ["enum.AnomalyScannerVisualLayers.Base"]
-      - map: ["enum.AnomalyScannerVisualLayers.Screen"]
-        visible: false
-        shader: unshaded
-      - state: severity_mask
-        map: ["enum.AnomalyScannerVisualLayers.SeverityMask"]
-        visible: false
-        shader: unshaded
-      - map: ["enum.AnomalyScannerVisualLayers.Stability"]
-        visible: false
-        shader: unshaded
-      - visible: false
-        map: ["enum.AnomalyScannerVisualLayers.Pulse"]
-        shader: unshaded
-      - state: supercritical
-        map: ["enum.AnomalyScannerVisualLayers.Supercritical"]
-        shader: unshaded
-        visible: false
+    - state: icon
+      map: [ "enum.AnomalyScannerVisualLayers.Base" ]
+    - map: [ "enum.AnomalyScannerVisualLayers.Screen" ]
+      visible: false
+      shader: unshaded
+    - state: severity_mask
+      map: [ "enum.AnomalyScannerVisualLayers.SeverityMask" ]
+      visible: false
+      shader: unshaded
+    - map: [ "enum.AnomalyScannerVisualLayers.Stability" ]
+      visible: false
+      shader: unshaded
+    - visible: false
+      map: [ "enum.AnomalyScannerVisualLayers.Pulse" ]
+      shader: unshaded
+    - state: supercritical
+      map: [ "enum.AnomalyScannerVisualLayers.Supercritical" ]
+      shader: unshaded
+      visible: false
   - type: ActivatableUI
     key: enum.AnomalyScannerUiKey.Key
     requireActiveHand: false
@@ -73,7 +74,8 @@
   parent: AnomalyScanner
   id: AnomalyScannerAdmin
   name: admin anomaly scanner
-  description: A hand-held scanner built to collect information on various anomalous objects. This one seems to have a few extra features.
+  description: A hand-held scanner built to collect information on various
+    anomalous objects. This one seems to have a few extra features.
   suffix: Admin
   components:
   - type: AnomalyScanner
@@ -85,17 +87,18 @@
   id: AnomalyLocatorUnpowered
   parent: BaseItem
   name: anomaly locator
-  description: A device designed to aid in the locating of anomalies. Did you check the gas miners?
+  description: A device designed to aid in the locating of anomalies. Did you
+    check the gas miners?
   suffix: Always Powered
   components:
   - type: Sprite
     sprite: Objects/Specific/Research/anomalylocator.rsi
     layers:
-      - state: icon
-      - state: screen
-        shader: unshaded
-        visible: false
-        map: ["enum.ToggleableVisuals.Layer"]
+    - state: icon
+    - state: screen
+      shader: unshaded
+      visible: false
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -144,7 +147,8 @@
   id: AnomalyLocatorWideUnpowered
   parent: AnomalyLocatorUnpowered
   name: wide-spectrum anomaly locator
-  description: A device that looks for anomalies from an extended distance, but has no way to determine the distance to them.
+  description: A device that looks for anomalies from an extended distance, but
+    has no way to determine the distance to them.
   suffix: Always Powered
   components:
   - type: Sprite
@@ -179,7 +183,8 @@
   name: G.O.R.I.L.L.A. gauntlet
   parent: BaseItem
   id: WeaponGauntletGorilla
-  description: A robust piece of research equipment. When powered with an anomaly core, a single blow can launch anomalous objects through the air.
+  description: A robust piece of research equipment. When powered with an anomaly
+    core, a single blow can launch anomalous objects through the air.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/gorilla.rsi

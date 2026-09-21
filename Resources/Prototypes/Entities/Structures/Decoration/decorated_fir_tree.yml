@@ -8,10 +8,10 @@
     noRot: true
     sprite: Structures/Decoration/decorated_fir_tree.rsi
     layers:
-      - state: base
-      - state: balls
-      - state: lights
-        shader: unshaded
+    - state: base
+    - state: balls
+    - state: lights
+      shader: unshaded
   - type: PointLight
     radius: 1.6
     energy: 2.0

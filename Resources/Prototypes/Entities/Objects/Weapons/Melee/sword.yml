@@ -16,7 +16,7 @@
     size: Normal
   - type: Utensil
     types:
-      - Knife
+    - Knife
   - type: Tool
     qualities:
     - Slicing
@@ -81,9 +81,9 @@
       types:
         Slash: 17 #cmon, it has to be at least BETTER than the rest.
     soundHit:
-        path: /Audio/Weapons/bladeslice.ogg
+      path: /Audio/Weapons/bladeslice.ogg
   - type: Reflect
-    reflectProb: .1
+    reflectProb: 0.1
     spread: 90
   - type: Item
     storedSprite:
@@ -116,7 +116,7 @@
       types:
         Slash: 15
     soundHit:
-        path: /Audio/Weapons/bladeslice.ogg
+      path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     storedSprite:
       state: storage
@@ -180,7 +180,7 @@
       types:
         Slash: 20
     soundHit:
-        path: /Audio/Weapons/bladeslice.ogg
+      path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     storedSprite:
       state: storage
@@ -199,33 +199,34 @@
   name: throngler
   parent: [ BaseSword, BaseMajorContraband ]
   id: Throngler
-  description: If Security dares take it from you, just remind them that they are indeed mortal.
+  description: If Security dares take it from you, just remind them that they are
+    indeed mortal.
   components:
-    - type: Sprite
-      sprite: Objects/Weapons/Melee/Throngler2.rsi
-    - type: MeleeWeapon
-      attackRate: 10
-      damage:
-        types:
-          Structural: 60
-          Slash: 20 #Horror
-          Blunt: 20
-          Heat: 20
-          Piercing: 20
-          Radiation: 10
-      soundHit:
-        path: /Audio/Effects/explosion_small1.ogg
-    - type: Reflect
-      reflectProb: .25
-      spread: 90
-    - type: Item
-      size: Ginormous
-      sprite: Objects/Weapons/Melee/Throngler-in-hand.rsi
-      shape:
-      - 0,0,3,3
-      - 1,4,2,6
-      storedRotation: -45
-    - type: DisarmMalus
-    - type: Grammar
-      attributes:
-        proper: true
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/Throngler2.rsi
+  - type: MeleeWeapon
+    attackRate: 10
+    damage:
+      types:
+        Structural: 60
+        Slash: 20 #Horror
+        Blunt: 20
+        Heat: 20
+        Piercing: 20
+        Radiation: 10
+    soundHit:
+      path: /Audio/Effects/explosion_small1.ogg
+  - type: Reflect
+    reflectProb: 0.25
+    spread: 90
+  - type: Item
+    size: Ginormous
+    sprite: Objects/Weapons/Melee/Throngler-in-hand.rsi
+    shape:
+    - 0,0,3,3
+    - 1,4,2,6
+    storedRotation: -45
+  - type: DisarmMalus
+  - type: Grammar
+    attributes:
+      proper: true

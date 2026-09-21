@@ -307,7 +307,8 @@
         whitelist:
           components:
           - BotanyHoe
-      secateurs: # We don't have secateurs and this looks similar enough.
+      secateurs:
+        # We don't have secateurs and this looks similar enough.
         whitelist:
           tags:
           - BotanyShovel
@@ -399,7 +400,12 @@
   - type: Appearance
 
 - type: entity
-  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase, BaseSecurityContraband]
+  parent:
+    [
+      ClothingBeltStorageBase,
+      ContentsExplosionResistanceBase,
+      BaseSecurityContraband
+    ]
   id: ClothingBeltSecurity
   name: security belt
   description: Can hold security gear like handcuffs and flashes.

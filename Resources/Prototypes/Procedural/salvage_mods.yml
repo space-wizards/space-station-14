@@ -39,14 +39,14 @@
   desc: salvage-light-mod-daylight
   color: "#D8B059"
   biomes:
-    - Grasslands
+  - Grasslands
 
 - type: salvageLightMod
   id: Lavalight
   desc: salvage-light-mod-daylight
   color: "#A34931"
   biomes:
-    - Lava
+  - Lava
 
 - type: salvageLightMod
   id: Evening
@@ -71,10 +71,10 @@
   cost: 1
   temperature: 323.15 # 50C
   biomes:
-    - Caves
-    #- LowDesert
-    - Grasslands
-    - Lava
+  - Caves
+  #- LowDesert
+  - Grasslands
+  - Lava
 
 - type: salvageTemperatureMod
   id: Burning
@@ -82,9 +82,9 @@
   cost: 2
   temperature: 423.15 # 200C
   biomes:
-    - Caves
-    #- LowDesert
-    - Lava
+  - Caves
+  #- LowDesert
+  - Lava
 
 - type: salvageTemperatureMod
   id: Melting
@@ -92,7 +92,7 @@
   cost: 4
   temperature: 1273.15 # 1000C hot hot hot
   biomes:
-    - Lava
+  - Lava
 
 - type: salvageTemperatureMod
   id: Cold
@@ -100,10 +100,10 @@
   cost: 1
   temperature: 275.15 # 2C
   biomes:
-    - Caves
-    #- LowDesert
-    - Grasslands
-    - Snow
+  - Caves
+  #- LowDesert
+  - Grasslands
+  - Snow
 
 - type: salvageTemperatureMod
   id: Tundra
@@ -111,8 +111,8 @@
   cost: 2
   temperature: 263.15 # -40C
   biomes:
-    - Caves
-    - Snow
+  - Caves
+  - Snow
 
 - type: salvageTemperatureMod
   id: Frozen
@@ -120,7 +120,7 @@
   cost: 4
   temperature: 123.15 # -150C
   biomes:
-    - Snow
+  - Snow
 
 # Air mixtures
 - type: salvageAirMod
@@ -129,90 +129,90 @@
   space: true
   cost: 2
   biomes:
-    - Caves
-    - Lava
+  - Caves
+  - Lava
 
 - type: salvageAirMod
   id: Breathable
   cost: 0
   desc: salvage-air-mod-breathable-atmosphere
   gases:
-    - 21.824779 # oxygen
-    - 82.10312 # nitrogen
+  - 21.824779 # oxygen
+  - 82.10312 # nitrogen
 
 - type: salvageAirMod
   id: Sleepy
   cost: 1
   desc: salvage-air-mod-dangerous-atmosphere
   gases:
-    - 21.824779 # oxygen
-    - 72.10312 # nitrogen
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 10 # nitrous oxide
+  - 21.824779 # oxygen
+  - 72.10312 # nitrogen
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 10 # nitrous oxide
   biomes:
-    - Caves
-    #- LowDesert
-    - Snow
-    - Grasslands
-    - Lava
+  - Caves
+  #- LowDesert
+  - Snow
+  - Grasslands
+  - Lava
 
 - type: salvageAirMod
   id: Poisoned
   cost: 2
   desc: salvage-air-mod-dangerous-atmosphere
   gases:
-    - 21.824779 # oxygen
-    - 77.10312 # nitrogen
-    - 10 # carbon dioxide
+  - 21.824779 # oxygen
+  - 77.10312 # nitrogen
+  - 10 # carbon dioxide
   biomes:
-    - Caves
-    #- LowDesert
-    - Snow
-    - Grasslands
-    - Lava
+  - Caves
+  #- LowDesert
+  - Snow
+  - Grasslands
+  - Lava
 
 - type: salvageAirMod
   id: Poison
   cost: 3
   desc: salvage-air-mod-toxic-atmosphere
   gases:
-    - 21.824779 # oxygen
-    - 0
-    - 82.10312 # carbon dioxide
+  - 21.824779 # oxygen
+  - 0
+  - 82.10312 # carbon dioxide
   biomes:
-    - Caves
-    - Snow
-    - Lava
+  - Caves
+  - Snow
+  - Lava
 
 - type: salvageAirMod
   id: Plasma
   cost: 4
   desc: salvage-air-mod-toxic-atmosphere
   gases:
-    - 0
-    - 0
-    - 0
-    - 103.927899 # plasma
+  - 0
+  - 0
+  - 0
+  - 103.927899 # plasma
   biomes:
-    - Caves
-    - Lava
+  - Caves
+  - Lava
 
 - type: salvageAirMod
   id: Burnable
   cost: 5
   desc: salvage-air-mod-volatile-atmosphere
   gases:
-    - 21.824779 # oxygen
-    - 0
-    - 0
-    - 82.10312 # plasma
+  - 21.824779 # oxygen
+  - 0
+  - 0
+  - 82.10312 # plasma
   biomes:
-    - Caves
-    - Lava
+  - Caves
+  - Lava
 
 # Weather mods -> not required
 #- type: salvageWeatherMod
@@ -231,33 +231,33 @@
   desc: salvage-dungeon-mod-experiment
   proto: Experiment
   biomes:
-    #- LowDesert
-    - Grasslands
+  #- LowDesert
+  - Grasslands
 
 - type: salvageDungeonMod
   id: LavaBrig
   desc: salvage-dungeon-mod-lava-brig
   proto: LavaBrig
   biomes:
-    - Lava
+  - Lava
 
 - type: salvageDungeonMod
   id: Mineshaft
   desc: salvage-dungeon-mod-mineshaft
   proto: Mineshaft
   biomes:
-    - Caves
+  - Caves
 
 - type: salvageDungeonMod
   id: SnowyLabs
   desc: salvage-dungeon-mod-snowy-labs
   proto: SnowyLabs
   biomes:
-    - Snow
+  - Snow
 
 - type: salvageDungeonMod
   id: Haunted
   desc: salvage-dungeon-mod-haunted
   proto: Haunted
   biomes:
-    - Caves
+  - Caves

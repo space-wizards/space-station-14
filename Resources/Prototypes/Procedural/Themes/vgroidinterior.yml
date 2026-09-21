@@ -41,7 +41,7 @@
   offset: 0,6
   ignoreTile: FloorShuttleOrange
   tags:
-    - VGRoidInterior
+  - VGRoidInterior
 
 - type: dungeonRoom
   id: VGRoidInterior5x5f

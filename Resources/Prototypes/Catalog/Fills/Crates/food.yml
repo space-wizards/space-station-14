@@ -2,7 +2,8 @@
   parent: CratePlastic
   id: CrateFoodPizza
   name: emergency pizza delivery
-  description: Help do your part to end station hunger by distributing pizza to underfunded departments! Includes 4 pizzas.
+  description: Help do your part to end station hunger by distributing pizza to
+    underfunded departments! Includes 4 pizzas.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -30,7 +31,8 @@
   parent: CrateFreezer
   id: CrateFoodSoftdrinks
   name: softdrinks crate
-  description: A variety of sodas to complement a small party, without having to empty the soda machines. Includes 14 sodas.
+  description: A variety of sodas to complement a small party, without having to
+    empty the soda machines. Includes 14 sodas.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -55,7 +57,8 @@
   parent: CrateFreezer
   id: CrateFoodIceCream
   name: ice cream delivery
-  description: An assortment of ice cream delights for any occasion! Includes 16 frozen treats.
+  description: An assortment of ice cream delights for any occasion! Includes 16
+    frozen treats.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -80,7 +83,8 @@
   parent: CrateFreezer
   id: CrateFoodSnowcone
   name: snowcone delivery
-  description: A freezer packed with refreshing snowcones for a hard working crew, or even a lazy one! Includes 16 snowcones.
+  description: A freezer packed with refreshing snowcones for a hard working crew,
+    or even a lazy one! Includes 16 snowcones.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -103,7 +107,8 @@
   parent: CratePlastic
   id: CrateFoodHappyHonkBigBite
   name: Happy Honk meal delivery
-  description: Two fully loaded Happy Honk Big Bite burger meals, complete with cheesy fries, a bottle of Space Cola, a slice of apple pie and a toy!
+  description: Two fully loaded Happy Honk Big Bite burger meals, complete with
+    cheesy fries, a bottle of Space Cola, a slice of apple pie and a toy!
   components:
   - type: EntityTableContainerFill
     containers:

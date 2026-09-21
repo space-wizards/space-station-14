@@ -168,7 +168,7 @@
   - type: Speech
     speechVerb: Vox
     speechSounds: Vox
-    allowedEmotes: ['Click', 'Chitter']
+    allowedEmotes: [ 'Click', 'Chitter' ]
   - type: TypingIndicator
     proto: vox
   - type: CreamPied
@@ -183,8 +183,7 @@
       amount: 5
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
+    - trigger: !type:DamageTypeTrigger
         damageType: Heat
         damage: 1500
       behaviors:
@@ -367,9 +366,21 @@
     isSpecialDigestibleExclusive: false
 
 - type: entity
-  parent: [ OrganBaseLiver, OrganSpriteHumanInternal, OrganVoxInternal, OrganVoxMetabolizer ]
+  parent:
+    [
+      OrganBaseLiver,
+      OrganSpriteHumanInternal,
+      OrganVoxInternal,
+      OrganVoxMetabolizer
+    ]
   id: OrganVoxLiver
 
 - type: entity
-  parent: [ OrganBaseKidneys, OrganSpriteHumanInternal, OrganVoxInternal, OrganVoxMetabolizer ]
+  parent:
+    [
+      OrganBaseKidneys,
+      OrganSpriteHumanInternal,
+      OrganVoxInternal,
+      OrganVoxMetabolizer
+    ]
   id: OrganVoxKidneys

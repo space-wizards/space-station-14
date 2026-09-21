@@ -5,55 +5,56 @@
 - type: htnCompound
   id: FollowCompound
   branches:
-    # Head to follow target
-    - tasks:
-        - !type:HTNPrimitiveTask
-          preconditions:
-            - !type:CoordinatesNotInRangePrecondition
-              targetKey: FollowTarget
-              rangeKey: FollowRange
-          operator: !type:MoveToOperator
-            pathfindInPlanning: true
-            targetKey: FollowTarget
-            rangeKey: FollowCloseRange
-            removeKeyOnFinish: false
+  # Head to follow target
+  - tasks:
+    - !type:HTNPrimitiveTask
+      preconditions:
+      - !type:CoordinatesNotInRangePrecondition
+        targetKey: FollowTarget
+        rangeKey: FollowRange
+      operator: !type:MoveToOperator
+        pathfindInPlanning: true
+        targetKey: FollowTarget
+        rangeKey: FollowCloseRange
+        removeKeyOnFinish: false
 
-    # Keep idling near follow target
-    - tasks:
-        - !type:HTNPrimitiveTask
-          preconditions:
-            - !type:KeyExistsPrecondition
-              key: IdleTime
-            - !type:CoordinatesInRangePrecondition
-              targetKey: FollowTarget
-              rangeKey: FollowRange
-          operator: !type:WaitOperator
-            key: IdleTime
+  # Keep idling near follow target
+  - tasks:
+    - !type:HTNPrimitiveTask
+      preconditions:
+      - !type:KeyExistsPrecondition
+        key: IdleTime
+      - !type:CoordinatesInRangePrecondition
+        targetKey: FollowTarget
+        rangeKey: FollowRange
+      operator: !type:WaitOperator
+        key: IdleTime
 
-    # Pick a new idle spot near the follow target
-    - tasks:
-        - !type:HTNPrimitiveTask
-          operator: !type:PickAccessibleOperator
-            # originKey: FollowTarget
-            rangeKey: FollowCloseRange
-            targetCoordinates: FollowIdleTarget
+  # Pick a new idle spot near the follow target
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator:
+        # originKey: FollowTarget
+        !type:PickAccessibleOperator
+        rangeKey: FollowCloseRange
+        targetCoordinates: FollowIdleTarget
 
-        - !type:HTNPrimitiveTask
-          operator: !type:MoveToOperator
-            targetKey: FollowIdleTarget
+    - !type:HTNPrimitiveTask
+      operator: !type:MoveToOperator
+        targetKey: FollowIdleTarget
 
-        - !type:HTNPrimitiveTask
-          operator: !type:RandomOperator
-            targetKey: IdleTime
-            minKey: MinimumIdleTime
-            maxKey: MaximumIdleTime
+    - !type:HTNPrimitiveTask
+      operator: !type:RandomOperator
+        targetKey: IdleTime
+        minKey: MinimumIdleTime
+        maxKey: MaximumIdleTime
 
-        - !type:HTNPrimitiveTask
-          preconditions:
-            - !type:KeyExistsPrecondition
-              key: IdleTime
-            - !type:CoordinatesInRangePrecondition
-              targetKey: FollowTarget
-              rangeKey: FollowRange
-          operator: !type:WaitOperator
-            key: IdleTime
+    - !type:HTNPrimitiveTask
+      preconditions:
+      - !type:KeyExistsPrecondition
+        key: IdleTime
+      - !type:CoordinatesInRangePrecondition
+        targetKey: FollowTarget
+        rangeKey: FollowRange
+      operator: !type:WaitOperator
+        key: IdleTime

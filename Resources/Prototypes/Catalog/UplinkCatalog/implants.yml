@@ -12,12 +12,12 @@
   cost:
     Telecrystal: 8
   categories:
-    - UplinkImplants
+  - UplinkImplants
   conditions:
-    - !type:StoreWhitelistCondition
-      blacklist:
-        tags:
-          - NukeOpsUplink
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
 
 - type: listing
   id: UplinkFreedomImplanter
@@ -31,7 +31,7 @@
   cost:
     Telecrystal: 2
   categories:
-    - UplinkImplants
+  - UplinkImplants
 
 - type: listing
   id: UplinkScramImplanter
@@ -45,7 +45,7 @@
   cost:
     Telecrystal: 2 # it's a gamble that may kill you easily so 1 TC per use.
   categories:
-    - UplinkImplants
+  - UplinkImplants
 
 - type: listing
   id: UplinkDnaScramblerImplant
@@ -59,7 +59,7 @@
   cost:
     Telecrystal: 3
   categories:
-    - UplinkImplants
+  - UplinkImplants
 
 - type: listing
   id: UplinkEmpImplanter
@@ -73,7 +73,7 @@
   cost:
     Telecrystal: 2
   categories:
-    - UplinkImplants
+  - UplinkImplants
 
 - type: listing
   id: UplinkRadioImplanter
@@ -118,16 +118,16 @@
   cost:
     Telecrystal: 13
   categories:
-    - UplinkImplants
+  - UplinkImplants
   conditions:
-    - !type:StoreWhitelistCondition
-      whitelist:
-        tags:
-          - NukeOpsUplink
-    - !type:BuyerWhitelistCondition
-      blacklist:
-        components:
-          - SurplusBundle
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
 
 - type: listing
   id: UplinkDeathAcidifierImplanter
@@ -138,12 +138,12 @@
   cost:
     Telecrystal: 4
   categories:
-    - UplinkImplants
+  - UplinkImplants
   conditions:
-    - !type:StoreWhitelistCondition
-      whitelist:
-        tags:
-          - NukeOpsUplink
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
 
 - type: listing
   id: UplinkUplinkImplanter # uplink uplink real
@@ -156,10 +156,10 @@
   categories:
   - UplinkImplants
   conditions:
-    - !type:StoreWhitelistCondition
-      blacklist:
-        tags:
-          - NukeOpsUplink
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
 
 - type: listing
   id: UplinkDeathRattle
@@ -171,14 +171,14 @@
   categories:
   - UplinkImplants
   conditions:
-    - !type:StoreWhitelistCondition
-      whitelist:
-        tags:
-          - NukeOpsUplink
-    - !type:BuyerWhitelistCondition
-      blacklist:
-        components:
-          - SurplusBundle
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
 
 - type: listing
   id: UplinkFakeMindshield

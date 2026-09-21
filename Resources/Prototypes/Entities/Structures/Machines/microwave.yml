@@ -1,6 +1,11 @@
 - type: entity
   id: KitchenMicrowave
-  parent: [ BaseMachinePowered, SmallConstructibleMachine, BaseSmallConstructibleMachineDestructible ]
+  parent:
+    [
+      BaseMachinePowered,
+      SmallConstructibleMachine,
+      BaseSmallConstructibleMachineDestructible
+    ]
   name: microwave
   description: It's magic.
   components:
@@ -50,8 +55,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.3,-0.16,0.3,0.16"
         density: 190
         mask:
@@ -65,22 +69,23 @@
     offset: "0.0,0.2"
     layers:
     - state: mw0
-      map: ["enum.MicrowaveVisualizerLayers.Base"]
+      map: [ "enum.MicrowaveVisualizerLayers.Base" ]
     - state: mw_unlit
       shader: unshaded
-      map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
+      map: [ "enum.MicrowaveVisualizerLayers.BaseUnlit" ]
     - state: mwbloody0
-      map: ["bloody"]
+      map: [ "bloody" ]
       visible: false
     - state: mwbloody1
       shader: unshaded
-      map: ["bloodyunshaded"]
+      map: [ "bloodyunshaded" ]
       visible: false
   - type: Damageable
     damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
+    - trigger:
+        # Excess damage, don't spawn entities
         !type:DamageTrigger
         damage: 100
       behaviors:

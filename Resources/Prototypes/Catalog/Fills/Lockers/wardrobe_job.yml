@@ -2,7 +2,8 @@
   id: WardrobePrisonFilled
   suffix: Filled
   parent: WardrobePrison
-  description: "Contains a selection of nice orange clothes for people enjoying their stay in the brig."
+  description: "Contains a selection of nice orange clothes for people enjoying
+    their stay in the brig."
   components:
   - type: EntityTableContainerFill
     containers:
@@ -113,7 +114,8 @@
   id: WardrobeChemistryFilled
   suffix: Filled
   parent: WardrobeChemistry
-  description: "The sleek orange threads contained within make you much less likely to be thrown out of the chemistry lab."
+  description: "The sleek orange threads contained within make you much less
+    likely to be thrown out of the chemistry lab."
   components:
   - type: EntityTableContainerFill
     containers:
@@ -134,7 +136,8 @@
   id: WardrobeGeneticsFilled
   suffix: Filled
   parent: WardrobeGenetics
-  description: "The sleek blue threads contained within make you much less likely to be thrown out of the genetics lab."
+  description: "The sleek blue threads contained within make you much less likely
+    to be thrown out of the genetics lab."
   components:
   - type: EntityTableContainerFill
     containers:
@@ -155,7 +158,8 @@
   id: WardrobeVirologyFilled
   suffix: Filled
   parent: WardrobeVirology
-  description: "The sleek green threads contained within make you much less likely to be thrown out of the virology lab."
+  description: "The sleek green threads contained within make you much less likely
+    to be thrown out of the virology lab."
   components:
   - type: EntityTableContainerFill
     containers:
@@ -201,7 +205,8 @@
   id: WardrobeBotanistFilled
   suffix: Filled
   parent: WardrobeBotanist
-  description: "Plant yourself among the plant men with these 100% natural plant-derived clothes."
+  description: "Plant yourself among the plant men with these 100% natural
+    plant-derived clothes."
   components:
   - type: EntityTableContainerFill
     containers:

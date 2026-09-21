@@ -10,7 +10,7 @@
     layers:
     - state: brain
   - type: InstantAction
-    event: !type:GibActionEvent {}
+    event: !type:GibActionEvent
 
 - type: entity
   parent: BaseAction
@@ -25,4 +25,4 @@
     layers:
     - state: full
   - type: InstantAction
-    event: !type:ReformEvent {}
+    event: !type:ReformEvent

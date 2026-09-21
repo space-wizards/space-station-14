@@ -1,6 +1,6 @@
 - type: entity
   name: BaseWeaponRifle
-  parent: [BaseItem, BaseGunWieldable]
+  parent: [ BaseItem, BaseGunWieldable ]
   id: BaseWeaponRifle
   description: A rooty tooty point and shooty.
   abstract: true
@@ -21,8 +21,8 @@
     fireRate: 5
     selectedMode: FullAuto
     availableModes:
-      - FullAuto
-      - SemiAuto
+    - FullAuto
+    - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
   - type: ChamberMagazineAmmoProvider
@@ -38,14 +38,14 @@
         priority: 2
         whitelist:
           tags:
-            - MagazineLightRifle
+          - MagazineLightRifle
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
         priority: 1
         whitelist:
           tags:
-            - CartridgeLightRifle
+          - CartridgeLightRifle
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot
@@ -55,17 +55,19 @@
 
 - type: entity
   name: AKMS
-  parent: [BaseWeaponRifle, BaseSecurityContraband]
+  parent: [ BaseWeaponRifle, BaseSecurityContraband ]
   id: WeaponRifleAk
-  description: A somewhat battered combat rifle of a design originating from old Earth. Favored by criminals, militias, and terrorists due to its famed reliability and easy-to-manufacture design. Feeds from .30 rifle magazines.
+  description: A somewhat battered combat rifle of a design originating from old
+    Earth. Favored by criminals, militias, and terrorists due to its famed
+    reliability and easy-to-manufacture design. Feeds from .30 rifle magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
     layers:
-      - state: base
-        map: ["enum.GunVisualLayers.Base"]
-      - state: mag-0
-        map: ["enum.GunVisualLayers.Mag"]
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-0
+      map: [ "enum.GunVisualLayers.Mag" ]
   - type: GunWieldBonus
     minAngle: -20
     maxAngle: -16
@@ -87,14 +89,14 @@
         priority: 2
         whitelist:
           tags:
-            - MagazineLightRifle
+          - MagazineLightRifle
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
         priority: 1
         whitelist:
           tags:
-            - CartridgeLightRifle
+          - CartridgeLightRifle
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot
@@ -107,17 +109,21 @@
 
 - type: entity
   name: Lecter
-  parent: [BaseWeaponRifle, BaseSecurityContraband]
+  parent: [ BaseWeaponRifle, BaseSecurityContraband ]
   id: WeaponRifleLecter
-  description: "Popular gas-operated combat rifle used heavily by Nanotrasen and SolGov. Operating in semi or fully automatic, its accuracy, stopping power, and reliability make it excel in all manner of environments.\nFeeds from .20 rifle magazines."
+  description: "Popular gas-operated combat rifle used heavily by Nanotrasen and
+    SolGov. Operating in semi or fully automatic, its accuracy, stopping power,
+    and reliability make it excel in all manner of environments.
+
+    Feeds from .20 rifle magazines."
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
     layers:
-      - state: base
-        map: ["enum.GunVisualLayers.Base"]
-      - state: mag-0
-        map: ["enum.GunVisualLayers.Mag"]
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-0
+      map: [ "enum.GunVisualLayers.Mag" ]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
   - type: GunWieldBonus
@@ -138,14 +144,14 @@
         priority: 2
         whitelist:
           tags:
-            - MagazineRifle
+          - MagazineRifle
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
         priority: 1
         whitelist:
           tags:
-            - CartridgeRifle
+          - CartridgeRifle
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot
@@ -185,17 +191,21 @@
 
 - type: entity
   name: Estoc DMR
-  parent: [BaseWeaponRifle, BaseSyndicateContraband]
+  parent: [ BaseWeaponRifle, BaseSyndicateContraband ]
   id: WeaponRifleEstoc
-  description: "A designated marksman rifle firing in 3-round bursts. The Estoc was designed as the Lecter’s long-range counterpart, equipped with an extended 20-inch barrel and telescopic sight.\nFeeds from .20 rifle magazines."
+  description: "A designated marksman rifle firing in 3-round bursts. The Estoc
+    was designed as the Lecter’s long-range counterpart, equipped with an
+    extended 20-inch barrel and telescopic sight.
+
+    Feeds from .20 rifle magazines."
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/estoc.rsi
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]
+      map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-0
-      map: ["enum.GunVisualLayers.Mag"]
+      map: [ "enum.GunVisualLayers.Mag" ]
   - type: Item
     shape:
     - 0,0,4,2
@@ -203,7 +213,7 @@
     sprite: Objects/Weapons/Guns/Rifles/estoc.rsi
   - type: Gun
     minAngle: 21
-    maxAngle: 32 
+    maxAngle: 32
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/estocshot.ogg
     shotsPerBurst: 3

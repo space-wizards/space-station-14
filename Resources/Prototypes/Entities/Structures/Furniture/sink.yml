@@ -1,8 +1,9 @@
 - type: entity
-  parent: [SolutionTank, SolutionHuge, StructureHealthFurnitureStrong]
+  parent: [ SolutionTank, SolutionHuge, StructureHealthFurnitureStrong ]
   id: SinkEmpty
   name: sink
-  description: The faucets have been tightened to the maximum possible torque but are still known to drip.
+  description: The faucets have been tightened to the maximum possible torque but
+    are still known to drip.
   suffix: Empty
   placement:
     mode: SnapgridCenter
@@ -45,8 +46,7 @@
     damageModifierSet: RockMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 80
       behaviors:
       - !type:PlaySoundBehavior
@@ -77,17 +77,17 @@
   id: SinkWide
   name: wide sink
   components:
-    - type: Sprite
-      sprite: Structures/Furniture/sink.rsi
-      layers:
-        - state: sink_wide
-        - map: [ "enum.SolutionContainerLayers.Fill" ]
-          state: sink_wide-fill-1
-          visible: false
-    - type: SolutionContainerVisuals
-      maxFillLevels: 1
-      fillBaseName: sink_wide-fill-
-      solutionName: drainBuffer
+  - type: Sprite
+    sprite: Structures/Furniture/sink.rsi
+    layers:
+    - state: sink_wide
+    - map: [ "enum.SolutionContainerLayers.Fill" ]
+      state: sink_wide-fill-1
+      visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    fillBaseName: sink_wide-fill-
+    solutionName: drainBuffer
 
 #Stemless Sink
 
@@ -99,10 +99,10 @@
   - type: Sprite
     sprite: Structures/Furniture/sink.rsi
     layers:
-      - state: sink
-      - map: [ "enum.SolutionContainerLayers.Fill" ]
-        state: sink-fill-1
-        visible: false
+    - state: sink
+    - map: [ "enum.SolutionContainerLayers.Fill" ]
+      state: sink-fill-1
+      visible: false
 
 - type: entity
   name: sink

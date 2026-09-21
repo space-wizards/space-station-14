@@ -5,7 +5,7 @@
   name: dwarf appearance
   components:
   - type: Inventory
-    femaleDisplacements: { } # Necessary due to MobHuman inheritance for MobDwarf
+    femaleDisplacements: {} # Necessary due to MobHuman inheritance for MobDwarf
     displacements:
       jumpsuit:
         sizeMaps:
@@ -124,10 +124,10 @@
   name: Urist McHands the Dwarf
   components:
   - type: Fixtures
-    fixtures: # TODO: This needs a second fixture just for mob collisions.
+    fixtures:
+      # TODO: This needs a second fixture just for mob collisions.
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         # they r smaller
         density: 120

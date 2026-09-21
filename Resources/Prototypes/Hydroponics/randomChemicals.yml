@@ -121,7 +121,7 @@
   - quantity: 5
     weight: 0.02 # Ultra rare mega hit farming table
     reagents:
-      - Cognizine
+    - Cognizine
 
 - type: weightedRandomFillSolution
   id: EvilRandomFillSolution

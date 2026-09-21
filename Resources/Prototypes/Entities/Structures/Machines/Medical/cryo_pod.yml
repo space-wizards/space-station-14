@@ -1,8 +1,9 @@
 - type: entity
-  parent: [BaseStructure, ConstructibleMachine, BaseConstructibleMachineDestructible] # Not a BaseMachinePowered since we don't want the anchorable component
+  parent: [ BaseStructure, ConstructibleMachine, BaseConstructibleMachineDestructible ] # Not a BaseMachinePowered since we don't want the anchorable component
   id: CryoPod
   name: cryo pod
-  description: A special machine intended to create a safe environment for the use of chemicals that react in cold environments.
+  description: A special machine intended to create a safe environment for the use
+    of chemicals that react in cold environments.
   components:
   - type: Sprite
     sprite: Structures/Machines/Medical/cryopod.rsi
@@ -28,20 +29,18 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
         density: 200
         mask:
-          - MachineMask
+        - MachineMask
         layer:
-          - MachineLayer
+        - MachineLayer
   - type: ContainerContainer
     containers:
-      scanner-body:
-        !type:ContainerSlot
+      scanner-body: !type:ContainerSlot
         showEnts: true
-      beakerSlot: !type:ContainerSlot {}
+      beakerSlot: !type:ContainerSlot
       machine_board: !type:Container
       machine_parts: !type:Container
   - type: AtmosDevice
@@ -57,8 +56,7 @@
     damageModifierSet: GlassReinforcedMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 175
       behaviors:
       - !type:PlaySoundBehavior
@@ -69,8 +67,7 @@
   - type: ExtensionCableReceiver
   - type: NodeContainer
     nodes:
-      port:
-        !type:PortablePipeNode
+      port: !type:PortablePipeNode
         nodeGroupID: Pipe
         pipeDirection: South
   - type: AtmosMonitoringConsoleDevice
@@ -80,7 +77,7 @@
       beakerSlot:
         whitelist:
           components:
-            - FitsInDispenser
+          - FitsInDispenser
   - type: UserInterface
     interfaces:
       enum.CryoPodUiKey.Key:
@@ -98,7 +95,7 @@
     enabled: false
   - type: EmptyOnMachineDeconstruct
     containers:
-      - scanner-body
+    - scanner-body
   - type: SolutionManager
     solutions:
     - SolutionCryoBuffer
@@ -125,7 +122,8 @@
   parent: [ BaseMachine, BaseMachineDestructible ]
   id: CryoPodDestroyed
   name: destroyed cryo pod
-  description: A cryo pod that has seen better days. It's entirely inoperable; not good for anything but scrap.
+  description: A cryo pod that has seen better days. It's entirely inoperable; not
+    good for anything but scrap.
   components:
   - type: Sprite
     sprite: Structures/Machines/Medical/cryopod.rsi
@@ -136,8 +134,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
         density: 200
         mask:
@@ -148,8 +145,7 @@
     damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 175
       behaviors:
       - !type:PlaySoundBehavior

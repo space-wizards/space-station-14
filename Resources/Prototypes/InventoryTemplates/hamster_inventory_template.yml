@@ -9,8 +9,8 @@
     displayName: Mask
     whitelist:
       tags:
-        - PetWearable
-        - HamsterWearable
+      - PetWearable
+      - HamsterWearable
   - name: neck
     slotTexture: neck
     slotFlags: NECK
@@ -19,7 +19,7 @@
     displayName: Neck
     whitelist:
       tags:
-        - HamsterWearable
+      - HamsterWearable
   - name: eyes
     slotTexture: glasses
     slotFlags: EYES
@@ -29,7 +29,7 @@
     displayName: Eyes
     whitelist:
       tags:
-        - HamsterWearable
+      - HamsterWearable
   - name: suitstorage
     slotTexture: suit_storage
     slotFlags: SUITSTORAGE
@@ -39,7 +39,7 @@
     displayName: Suit Storage
     whitelist:
       components:
-        - GasTank
+      - GasTank
   - name: head
     slotTexture: head
     slotFlags: HEAD
@@ -48,4 +48,4 @@
     displayName: Head
     whitelist:
       tags:
-        - HamsterWearable
+      - HamsterWearable

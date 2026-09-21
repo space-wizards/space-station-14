@@ -22,11 +22,11 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
         density: 55
-        mask: #mouse can pass under, but I think this is can understandable by logic
+        mask:
+        #mouse can pass under, but I think this is can understandable by logic
         - TableMask
         layer:
         - TableLayer

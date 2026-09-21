@@ -3,8 +3,7 @@
   id: MasterRD
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobResearchDirector
       time: 20h
 

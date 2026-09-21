@@ -23,8 +23,7 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.4
         density: 100
         hard: false
@@ -56,8 +55,7 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.45
         density: 100
         hard: false
@@ -70,8 +68,7 @@
     totalIntensity: 25
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:DoActsBehavior
@@ -80,7 +77,6 @@
         sound:
           collection: MetalBreak
       - !type:ExplodeBehavior
-
 - type: entity
   parent: BaseMeteor
   id: MeteorSmall
@@ -91,8 +87,7 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.25
         density: 100
         hard: false
@@ -105,8 +100,7 @@
     totalIntensity: 50
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 150
       behaviors:
       - !type:DoActsBehavior
@@ -131,8 +125,7 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.3
         density: 100
         hard: false
@@ -145,8 +138,7 @@
     totalIntensity: 100
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 450
       behaviors:
       - !type:DoActsBehavior
@@ -173,8 +165,7 @@
     totalIntensity: 150
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 900
       behaviors:
       - !type:DoActsBehavior
@@ -200,7 +191,12 @@
   id: MeteorUrist
   name: Urist McMeteor
   suffix: Meteor
-  description: As a successful member of society with a stable unflinching psyche and limitless drive, natural affinity for finance and domination, you have been selected, no, you have been effortlessly guided by divine (biological) trauma towards this moment. The gates of destiny fling open, and once again you're left standing on pulsating nothingness. A strobing headache of the soul.
+  description: As a successful member of society with a stable unflinching psyche
+    and limitless drive, natural affinity for finance and domination, you have
+    been selected, no, you have been effortlessly guided by divine (biological)
+    trauma towards this moment. The gates of destiny fling open, and once again
+    you're left standing on pulsating nothingness. A strobing headache of the
+    soul.
   components:
   - type: Sprite
     state: human_pixel
@@ -213,8 +209,7 @@
     totalIntensity: 25
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 1500
       behaviors:
       - !type:DoActsBehavior
@@ -231,9 +226,7 @@
           FoodMeatHuman:
             min: 1
             max: 2
-      - !type:ExplodeBehavior
-
-# Cow Meteor
+      - !type:ExplodeBehavior # Cow Meteor
 - type: entity
   parent: BaseSolutionMeteor
   id: MeteorCow
@@ -252,8 +245,7 @@
         Quantity: 480
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 1500
       behaviors:
       - !type:DoActsBehavior
@@ -271,9 +263,7 @@
           FoodCheeseSlice:
             min: 1
             max: 2
-      - !type:ExplodeBehavior
-
-# Clown Meteor
+      - !type:ExplodeBehavior # Clown Meteor
 - type: entity
   parent: BaseSolutionMeteor
   id: MeteorClown
@@ -292,8 +282,7 @@
         Quantity: 480
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 1500
       behaviors:
       - !type:DoActsBehavior
@@ -314,14 +303,13 @@
           RubberChicken:
             min: 0
             max: 1
-      - !type:ExplodeBehavior
-
-# Potato Meteor
+      - !type:ExplodeBehavior # Potato Meteor
 - type: entity
   parent: BaseSolutionMeteor
   id: MeteorPotato
   name: Space potato
-  description: A starchy threat from the depths of the space. Contains 200% of your daily sodium intake!
+  description: A starchy threat from the depths of the space. Contains 200% of
+    your daily sodium intake!
   components:
   - type: Sprite
     state: potato
@@ -334,8 +322,7 @@
         Quantity: 120
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 1500
       behaviors:
       - !type:DoActsBehavior

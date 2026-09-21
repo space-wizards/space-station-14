@@ -62,7 +62,8 @@
   id: LetterCommonEntityTable # Basically trash and spam mail, maybe something barely useful here and there
   table: !type:GroupSelector
     children:
-    - !type:NestedSelector # Don't you love getting mailed trash?
+    # Don't you love getting mailed trash?
+    - !type:NestedSelector
       tableId: GenericTrashItems
     - !type:NestedSelector
       weight: 4
@@ -162,4 +163,3 @@
     - !type:NestedSelector
       tableId: SyndieMaintLoot
       weight: 0.5
-      

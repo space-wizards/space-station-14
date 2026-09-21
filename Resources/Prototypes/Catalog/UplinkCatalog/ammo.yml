@@ -4,7 +4,11 @@
   id: UplinkPistol9mmMagazine
   name: uplink-pistol-magazine-name
   description: uplink-pistol-magazine-desc
-  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_high_capacity_mag.rsi, state: base-icon }
+  icon:
+    {
+      sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_high_capacity_mag.rsi,
+      state: base-icon
+    }
   productEntity: MagazinePistolHighCapacity
   cost:
     Telecrystal: 1
@@ -16,7 +20,11 @@
   id: UplinkMagazinePistolSubMachineGun
   name: uplink-pistol-magazine-c20r-name
   description: uplink-pistol-magazine-c20r-desc
-  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag.rsi, state: red-icon }
+  icon:
+    {
+      sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag.rsi,
+      state: red-icon
+    }
   productEntity: MagazinePistolSubMachineGun
   cost:
     Telecrystal: 2
@@ -28,7 +36,11 @@
   id: UplinkMagazineShotgunPellet
   name: uplink-magazine-bulldog-pellet-name
   description: uplink-magazine-bulldog-pellet-desc
-  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12.rsi, state: pellets }
+  icon:
+    {
+      sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12.rsi,
+      state: pellets
+    }
   productEntity: MagazineShotgun
   cost:
     Telecrystal: 2
@@ -39,7 +51,11 @@
   id: UplinkMagazineShotgunSlug
   name: uplink-magazine-bulldog-slug-name
   description: uplink-magazine-bulldog-slug-desc
-  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12.rsi, state: slug }
+  icon:
+    {
+      sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12.rsi,
+      state: slug
+    }
   productEntity: MagazineShotgunSlug
   cost:
     Telecrystal: 2
@@ -51,7 +67,11 @@
   id: UplinkMagazinePistolCaselessRifle
   name: uplink-pistol-magazine-caseless-name
   description: uplink-pistol-magazine-caseless-desc
-  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_pistol_mag.rsi, state: red-icon }
+  icon:
+    {
+      sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_pistol_mag.rsi,
+      state: red-icon
+    }
   productEntity: MagazinePistolCaselessRifle
   cost:
     Telecrystal: 1
@@ -101,14 +121,14 @@
   categories:
   - UplinkAmmo
   conditions:
-    - !type:StoreWhitelistCondition
-      whitelist:
-        tags:
-          - NukeOpsUplink
-    - !type:BuyerWhitelistCondition
-      blacklist:
-        components:
-          - SurplusBundle
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
 
 # for the clake:
 - type: listing
@@ -129,4 +149,4 @@
   cost:
     Telecrystal: 3
   categories:
-    - UplinkAmmo
+  - UplinkAmmo

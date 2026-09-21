@@ -9,6 +9,6 @@
     state: id_mod
   - type: Tag
     tags:
-      - IntercomElectronics
+    - IntercomElectronics
   - type: StaticPrice
     price: 55

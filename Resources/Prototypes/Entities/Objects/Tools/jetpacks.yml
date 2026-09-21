@@ -9,13 +9,13 @@
     noRot: true
     layers:
     - shader: unshaded
-      map: ["enum.EffectLayers.Unshaded"]
+      map: [ "enum.EffectLayers.Unshaded" ]
       sprite: Effects/atmospherics.rsi
       state: frezon_old
   - type: EffectVisuals
   - type: Tag
     tags:
-      - HideContextMenu
+    - HideContextMenu
   - type: AnimationPlayer
 
 - type: entity
@@ -29,7 +29,7 @@
     sprite: Objects/Tanks/Jetpacks/blue.rsi
     layers:
     - state: icon
-      map: ["enum.JetpackVisuals.Layer"]
+      map: [ "enum.JetpackVisuals.Layer" ]
   - type: Item
     sprite: Objects/Tanks/Jetpacks/blue.rsi
     size: Huge
@@ -58,8 +58,8 @@
     visuals:
       enum.JetpackVisuals.Enabled:
         enum.JetpackVisuals.Layer:
-          True: {state: icon-on}
-          False: {state: icon}
+          True: { state: icon-on }
+          False: { state: icon }
   - type: StaticPrice
     price: 100
 
@@ -75,14 +75,12 @@
     sprite: Objects/Tanks/Jetpacks/blue.rsi
     layers:
     - state: icon
-      map: ["enum.ActionVisuals.Icon"]
+      map: [ "enum.ActionVisuals.Icon" ]
     - state: icon-on
-      map: ["enum.ActionVisuals.IconToggled"]
+      map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
   - type: InstantAction
-    event: !type:ToggleJetpackEvent
-
-#Empty blue
+    event: !type:ToggleJetpackEvent #Empty blue
 - type: entity
   id: JetpackBlue
   parent: BaseJetpack
@@ -94,7 +92,7 @@
   - type: Clothing
     sprite: Objects/Tanks/Jetpacks/blue.rsi
     slots:
-      - Back
+    - Back
 
 # Filled blue
 - type: entity
@@ -116,7 +114,7 @@
 #Empty black
 - type: entity
   id: JetpackBlack
-  parent: [BaseJetpack, BaseSyndicateContraband]
+  parent: [ BaseJetpack, BaseSyndicateContraband ]
   name: jetpack
   suffix: Empty
   components:
@@ -127,7 +125,7 @@
   - type: Clothing
     sprite: Objects/Tanks/Jetpacks/black.rsi
     slots:
-      - Back
+    - Back
   - type: StaticPrice
     price: 1000
 
@@ -151,7 +149,7 @@
 #Empty captain
 - type: entity
   id: JetpackCaptain
-  parent: [BaseJetpack, BaseGrandTheftContraband]
+  parent: [ BaseJetpack, BaseGrandTheftContraband ]
   name: captain's jetpack
   suffix: Empty
   components:
@@ -160,8 +158,8 @@
   - type: Clothing
     sprite: Objects/Tanks/Jetpacks/captain.rsi
     slots:
-      - Back
-      - SuitStorage
+    - Back
+    - SuitStorage
   - type: Item
     sprite: Objects/Tanks/Jetpacks/captain.rsi
     size: Normal
@@ -196,21 +194,21 @@
   description: It's a jetpack. It can hold 1.5 L of gas.
   suffix: Empty
   components:
-    - type: Item
-      sprite: Objects/Tanks/Jetpacks/mini.rsi
-    - type: Sprite
-      sprite: Objects/Tanks/Jetpacks/mini.rsi
-    - type: Clothing
-      sprite: Objects/Tanks/Jetpacks/mini.rsi
-      slots:
-        - Back
-        - suitStorage
-        - Belt
-    - type: GasTank
-      overpressure: 1519.875 # Poorly manufactured, they also lose pressure quickly so this makes exploding them easier, at the cost of the explosion being tiny.
-      releasePressure: 42.6
-      air:
-        volume: 1.5
+  - type: Item
+    sprite: Objects/Tanks/Jetpacks/mini.rsi
+  - type: Sprite
+    sprite: Objects/Tanks/Jetpacks/mini.rsi
+  - type: Clothing
+    sprite: Objects/Tanks/Jetpacks/mini.rsi
+    slots:
+    - Back
+    - suitStorage
+    - Belt
+  - type: GasTank
+    overpressure: 1519.875 # Poorly manufactured, they also lose pressure quickly so this makes exploding them easier, at the cost of the explosion being tiny.
+    releasePressure: 42.6
+    air:
+      volume: 1.5
 
 # Filled mini
 - type: entity
@@ -232,9 +230,11 @@
 #Empty security
 - type: entity
   id: JetpackSecurity
-  parent: [JetpackMini, BaseSecurityContraband]
+  parent: [ JetpackMini, BaseSecurityContraband ]
   name: security mini jetpack
-  description: A compact jetpack utilized by station security when patrolling the station's exterior. Not intended for long range travel, it holds only 1.5 L of gas.
+  description: A compact jetpack utilized by station security when patrolling the
+    station's exterior. Not intended for long range travel, it holds only 1.5 L
+    of gas.
   suffix: Empty
   components:
   - type: Item
@@ -275,9 +275,9 @@
   - type: Clothing
     sprite: Objects/Tanks/Jetpacks/void.rsi
     slots:
-      - Back
-      - suitStorage
-      - Belt
+    - Back
+    - suitStorage
+    - Belt
 
 # Filled void
 - type: entity

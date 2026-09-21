@@ -2,7 +2,8 @@
   id: InflatableWallStack
   parent: BaseItem
   name: inflatable barricade
-  description: A folded membrane which rapidly expands into a large cubical shape on activation.
+  description: A folded membrane which rapidly expands into a large cubical shape
+    on activation.
   suffix: Full
   components:
   - type: Stack
@@ -30,7 +31,8 @@
   id: InflatableDoorStack
   parent: BaseItem
   name: inflatable door
-  description: A folded membrane which rapidly expands into a large cubical shape on activation.
+  description: A folded membrane which rapidly expands into a large cubical shape
+    on activation.
   suffix: Full
   components:
   - type: Stack

@@ -93,8 +93,7 @@
   - type: TransferMindOnGib
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:GibBehavior
@@ -111,15 +110,14 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         density: 130
         restitution: 0.0
         mask:
-          - MobMask
+        - MobMask
         layer:
-          - MobLayer
+        - MobLayer
   - type: Reactive
     groups:
       Flammable: [ Touch ]
@@ -134,9 +132,11 @@
       # because turns out oat milk has 1/30th the amount of calcium in it compared to the rest
       # even if it's a meme - I did research
       methods: [ Touch ]
-      effects: # TODO: when magic is around - make a milk transformation to a skeleton monster
+      effects:
+      # TODO: when magic is around - make a milk transformation to a skeleton monster
       - !type:EvenHealthChange
-        damage: # these groups are the only 3 possible ways to damage a skeleton. numerical values obviously up to discussion
+        damage:
+          # these groups are the only 3 possible ways to damage a skeleton. numerical values obviously up to discussion
           Burn: -1
           Brute: -0.75
           Metaphysical: -2 # Gameplay: skeletons need some way to heal holy damage. Lore: milk is an unholy liquid that shuns the light of god. (/j)
@@ -148,11 +148,11 @@
     - reagents: [ MilkOat ]
       methods: [ Touch ]
       effects:
-        - !type:PopupMessage
-          type: Local
-          visualType: Large
-          messages: [ "skeleton-sprayed-by-oat-milk-popup" ]
-          probability: 0.5
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "skeleton-sprayed-by-oat-milk-popup" ]
+        probability: 0.5
   - type: FireVisuals
     alternateState: Standing
   - type: Flammable

@@ -2,23 +2,23 @@
   id: PlushieGhostRevenant
   start: start
   graph:
-    - node: start
-      edges:
-        - to: plushie
-          steps:
-            - tag: PlushieGhost
-              name: construction-graph-tag-ghost
-              icon:
-                sprite: Mobs/Ghosts/ghost_human.rsi
-                state: icon
-            - tag: Ectoplasm
-              name: construction-graph-tag-ectoplasm
-              icon:
-                sprite: Mobs/Ghosts/revenant.rsi
-                state: ectoplasm
-              doAfter: 10
-    - node: plushie
-      entity: PlushieGhostRevenant
+  - node: start
+    edges:
+    - to: plushie
+      steps:
+      - tag: PlushieGhost
+        name: construction-graph-tag-ghost
+        icon:
+          sprite: Mobs/Ghosts/ghost_human.rsi
+          state: icon
+      - tag: Ectoplasm
+        name: construction-graph-tag-ectoplasm
+        icon:
+          sprite: Mobs/Ghosts/revenant.rsi
+          state: ectoplasm
+        doAfter: 10
+  - node: plushie
+    entity: PlushieGhostRevenant
 
 - type: constructionGraph
   id: ClothingOuterSuitIan

@@ -12,9 +12,9 @@
     - state: server-off
     - state: server-on
       visible: false
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
     - state: server_o
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
@@ -145,7 +145,12 @@
 
 - type: entity
   abstract: true
-  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
+  parent:
+    [
+      BaseMachinePowered,
+      ConstructibleMachine,
+      BaseConstructibleMachineDestructible
+    ]
   id: SurveillanceCameraWirelessRouterBase
   name: wireless camera router
   description: A wireless surveillance camera router. It routes. Perhaps.
@@ -156,9 +161,9 @@
     - state: server-off
     - state: server-on
       visible: false
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
     - state: server_o
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:

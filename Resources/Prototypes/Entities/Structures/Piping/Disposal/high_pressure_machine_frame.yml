@@ -2,7 +2,8 @@
   parent: StructureHealthMachineWeak
   id: DisposalMachineFrame
   name: high pressure machine frame
-  description: A machine frame made to withstand the amount of pressure used in the station's disposal system.
+  description: A machine frame made to withstand the amount of pressure used in
+    the station's disposal system.
   placement:
     mode: SnapgridCenter
   components:
@@ -14,8 +15,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.4,0.25,0.4"
         density: 190
         mask:
@@ -33,8 +33,7 @@
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:PlaySoundBehavior

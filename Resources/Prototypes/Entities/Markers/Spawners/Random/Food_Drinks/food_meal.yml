@@ -76,7 +76,8 @@
         - id: FoodSoupBungo
         - id: FoodMealCornInButter
         - id: FoodSoupStew
-      - !type:GroupSelector #rare
+      #rare
+      - !type:GroupSelector
         weight: 0.05
         children:
         - id: FoodMealMint

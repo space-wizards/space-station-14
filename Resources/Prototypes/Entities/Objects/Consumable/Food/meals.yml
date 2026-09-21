@@ -33,8 +33,8 @@
     storedOffset: 0,-2
   - type: FlavorProfile
     flavors:
-      - cheesy
-      - potatoes
+    - cheesy
+    - potatoes
   - type: Sprite
     state: loadedbakedpotato
 # Tastes like potato.
@@ -49,8 +49,8 @@
     storedOffset: 0,-3
   - type: FlavorProfile
     flavors:
-      - potatoes
-      - salty
+    - potatoes
+    - salty
   - type: Sprite
     state: fries
 # Tastes like fries, salt.
@@ -65,9 +65,9 @@
     storedOffset: 0,-3
   - type: FlavorProfile
     flavors:
-      - potatoes
-      - salty
-      - cheesy
+    - potatoes
+    - salty
+    - cheesy
   - type: Sprite
     state: fries-cheesy
 # Tastes like fries, cheese.
@@ -82,8 +82,8 @@
     storedOffset: 0,-3
   - type: FlavorProfile
     flavors:
-      - carrot
-      - salty
+    - carrot
+    - salty
   - type: Sprite
     state: fries-carrot
   - type: Tag
@@ -111,7 +111,7 @@
     - FoodPlateSmall
   - type: FlavorProfile
     flavors:
-      - nachos
+    - nachos
   - type: Sprite
     state: nachos
   - type: Solution
@@ -136,8 +136,8 @@
     - FoodPlateSmall
   - type: FlavorProfile
     flavors:
-      - nachos
-      - cheesy
+    - nachos
+    - cheesy
   - type: Sprite
     state: nachos-cheesy
   - type: Solution
@@ -162,9 +162,9 @@
     - FoodPlateSmall
   - type: FlavorProfile
     flavors:
-      - nachos
-      - tomato
-      - spicy
+    - nachos
+    - tomato
+    - spicy
   - type: Sprite
     state: nachos-cuban
   - type: Solution
@@ -191,7 +191,7 @@
     storedOffset: 0,-1
   - type: FlavorProfile
     flavors:
-      - minty
+    - minty
   - type: Sprite
     state: mint
   - type: Solution
@@ -213,8 +213,8 @@
     storedOffset: 0,-2
   - type: FlavorProfile
     flavors:
-      - eggplant
-      - cheesy
+    - eggplant
+    - cheesy
   - type: Sprite
     state: eggplantparm
   - type: Tag
@@ -232,14 +232,14 @@
     storedOffset: 0,-2
   - type: FlavorProfile
     flavors:
-      - sweet
-      - potatoes
+    - sweet
+    - potatoes
   - type: Sprite
     state: yakiimo
 # Tastes like sweet potato.
 
 - type: entity
-  parent: [SolutionNormal, FoodMealBase]
+  parent: [ SolutionNormal, FoodMealBase ]
   id: FoodMealCubancarp
   name: Cuban carp
   description: A grifftastic sandwich that burns your tongue and then leaves it numb!
@@ -250,9 +250,9 @@
     storedOffset: 3,-7
   - type: FlavorProfile
     flavors:
-      - fishy
-      - batter
-      - spicy
+    - fishy
+    - batter
+    - spicy
   - type: Sprite
     state: cubancarp
   - type: Solution
@@ -282,8 +282,8 @@
     storedOffset: 0,-1
   - type: FlavorProfile
     flavors:
-      - meaty
-      - cabbage
+    - meaty
+    - cabbage
   - type: Sprite
     state: cornedbeef
   - type: Tag
@@ -292,7 +292,7 @@
 # Tastes like meat, cabbage.
 
 - type: entity
-  parent: [SolutionNormal, FoodMealBase]
+  parent: [ SolutionNormal, FoodMealBase ]
   id: FoodMealBearsteak
   name: filet migrawr
   description: Because eating bear wasn't manly enough.
@@ -303,8 +303,8 @@
     storedOffset: -1,4
   - type: FlavorProfile
     flavors:
-      - meaty
-      - fishy
+    - meaty
+    - fishy
   - type: Sprite
     state: bearsteak
   - type: Tag
@@ -313,18 +313,19 @@
 # Tastes like meat, salmon.
 
 - type: entity
-  parent: [SolutionTiny, FoodMealBase]
+  parent: [ SolutionTiny, FoodMealBase ]
   id: FoodMealPigblanket
   name: pig in a blanket
-  description: A tiny sausage wrapped in a flakey, buttery roll. Free this pig from its blanket prison by eating it.
+  description: A tiny sausage wrapped in a flakey, buttery roll. Free this pig
+    from its blanket prison by eating it.
   components:
   - type: Item
     size: Tiny
     shape:
   - type: FlavorProfile
     flavors:
-      - meaty
-      - butter
+    - meaty
+    - butter
   - type: Sprite
     state: pigblanket
   - type: Tag
@@ -333,10 +334,11 @@
 # Tastes like meat, butter.
 
 - type: entity
-  parent: [SolutionNormal, FoodMealBase]
+  parent: [ SolutionNormal, FoodMealBase ]
   id: FoodMealRibs
   name: bbq ribs
-  description: BBQ ribs, slathered in a healthy coating of BBQ sauce. The least vegan thing to ever exist.
+  description: BBQ ribs, slathered in a healthy coating of BBQ sauce. The least
+    vegan thing to ever exist.
   components:
   - type: Item
     size: Normal
@@ -347,8 +349,8 @@
     - FoodKebabSkewer
   - type: FlavorProfile
     flavors:
-      - meaty
-      - smokey
+    - meaty
+    - smokey
   - type: Sprite
     state: ribs
   - type: Solution
@@ -373,9 +375,9 @@
   components:
   - type: FlavorProfile
     flavors:
-      - egg
-      - bacon
-      - bun
+    - egg
+    - bacon
+    - bun
   - type: Sprite
     state: benedict
   - type: Tag
@@ -393,8 +395,8 @@
     storedOffset: 0,-1
   - type: FlavorProfile
     flavors:
-      - egg
-      - cheesy
+    - egg
+    - cheesy
   - type: Sprite
     state: omelette
   - type: Tag
@@ -412,9 +414,9 @@
     storedOffset: 0,-1
   - type: FlavorProfile
     flavors:
-      - egg
-      - salty
-      - peppery
+    - egg
+    - salty
+    - peppery
   - type: Sprite
     state: friedegg
   - type: Tag
@@ -423,7 +425,7 @@
 # Tastes like egg, salt, pepper.
 
 - type: entity
-  parent: [SolutionNormal, FoodMealBase]
+  parent: [ SolutionNormal, FoodMealBase ]
   id: FoodMealMilkape
   name: milk ape
   description: The king of Jungle Thick.
@@ -433,8 +435,8 @@
     shape:
   - type: FlavorProfile
     flavors:
-      - milk
-      - chocolate
+    - milk
+    - chocolate
   - type: Sprite
     state: milkape
 # Tastes like milk, chocolate, the jungle.
@@ -450,13 +452,13 @@
     - 0,0,0,1
   - type: FlavorProfile
     flavors:
-      - memoryleek
+    - memoryleek
   - type: Sprite
     state: memoryLeek
 # Tastes like pain.
 
 - type: entity
-  parent: [SolutionNormal, FoodMealBase]
+  parent: [ SolutionNormal, FoodMealBase ]
   id: DisgustingSweptSoup
   name: salty sweet miso cola soup
   description: Jesus christ.
@@ -475,24 +477,25 @@
   name: queso
   description: A classic dipping sauce that you can't go wrong with.
   components:
-    - type: Item
-      storedOffset: 0,-6
-    - type: FlavorProfile
-      flavors:
-        - cheesy
-    - type: Sprite
-      state: queso
+  - type: Item
+    storedOffset: 0,-6
+  - type: FlavorProfile
+    flavors:
+    - cheesy
+  - type: Sprite
+    state: queso
 # Its queso! Everyone loves queso... Right?.
 
 - type: entity
   name: sashimi
   parent: FoodMealBase
   id: FoodMealSashimi
-  description: Its taste can only be described as "Exotic". The poisoning though? That's pretty common.
+  description: Its taste can only be described as "Exotic". The poisoning though?
+    That's pretty common.
   components:
   - type: FlavorProfile
     flavors:
-      - fishy
+    - fishy
   - type: Sprite
     state: sashimi
   - type: Solution
@@ -515,31 +518,31 @@
   name: enchiladas
   description: Viva La Mexico!
   components:
-    - type: Item
-      storedOffset: -1,0
-    - type: FlavorProfile
-      flavors:
-        - meaty
-    - type: Sprite
-      state: enchiladas
-    - type: Solution
-      solution:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 25
-        - ReagentId: Protein
-          Quantity: 5
-        - ReagentId: CapsaicinOil
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 5
-    - type: Tag
-      tags:
-      - Meat
+  - type: Item
+    storedOffset: -1,0
+  - type: FlavorProfile
+    flavors:
+    - meaty
+  - type: Sprite
+    state: enchiladas
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 25
+      - ReagentId: Protein
+        Quantity: 5
+      - ReagentId: CapsaicinOil
+        Quantity: 10
+      - ReagentId: Vitamin
+        Quantity: 5
+  - type: Tag
+    tags:
+    - Meat
 # What do Europeans eat instead of enchiladas? 25.4 millimeter-iladas.
 
 - type: entity
-  parent: [SolutionNormal, FoodMealBase]
+  parent: [ SolutionNormal, FoodMealBase ]
   id: FoodSaladWatermelonFruitBowl
   name: melon fruit bowl
   description: The only salad where you can eat the bowl.
@@ -550,8 +553,8 @@
     storedOffset: 0,-3
   - type: FlavorProfile
     flavors:
-      - fruity
-      - sour
+    - fruity
+    - sour
   - type: Sprite
     state: melonfruitbowl
   - type: Solution
@@ -584,8 +587,8 @@
     - FoodPlate
   - type: FlavorProfile
     flavors:
-      - corn
-      - butter
+    - corn
+    - butter
   - type: Sprite
     state: corn-in-butter
   - type: Solution

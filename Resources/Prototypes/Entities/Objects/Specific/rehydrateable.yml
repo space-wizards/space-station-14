@@ -12,8 +12,8 @@
     solution: cube
   - type: Reactive
     reactions:
-    - reagents: [Water]
-      methods: [Touch, Ingestion, Injection]
+    - reagents: [ Water ]
+      methods: [ Touch, Ingestion, Injection ]
       effects:
       - !type:AddReagentToSolution
         reagent: Water
@@ -24,15 +24,14 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.3,-0.3,0.3,0.3"
         density: 5
         mask:
         - ItemMask
-      rehydrate: # needed to react to fire extinguishers
-        shape:
-          !type:PhysShapeAabb
+      rehydrate:
+        # needed to react to fire extinguishers
+        shape: !type:PhysShapeAabb
           bounds: "-0.3,-0.3,0.3,0.3"
         hard: false
         layer:
@@ -52,7 +51,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionTiny, SolutionFood, RehydratableItem]
+  parent: [ SolutionTiny, SolutionFood, RehydratableItem ]
   id: RehydratableAnimalCube
   description: Just add water!
   components:
@@ -61,7 +60,8 @@
     state: cube
   - type: Solution
     solution:
-      reagents: # Same as raw meat.
+      reagents:
+      # Same as raw meat.
       - ReagentId: Nutriment
         Quantity: 5
       - ReagentId: UncookedAnimalProteins
@@ -192,8 +192,8 @@
   components:
   - type: Reactive
     reactions:
-    - reagents: [Blood]
-      methods: [Touch, Ingestion, Injection]
+    - reagents: [ Blood ]
+      methods: [ Touch, Ingestion, Injection ]
       effects:
       - !type:AddReagentToSolution
         reagent: Blood
@@ -206,23 +206,23 @@
 # It inherits FoodComponent from PlushieCarp, but is de-facto inedible
 # PlushieCarp has requiresSpecialDigestion:true, and this one is not whitelisted anywhere, so it behaves like it's not edible
 - type: entity
-  parent: [PlushieCarp, RehydratableItem, BaseSyndicateContraband]
+  parent: [ PlushieCarp, RehydratableItem, BaseSyndicateContraband ]
   id: DehydratedSpaceCarp
   name: dehydrated space carp
-  description: Looks like a plush toy carp, but just add water and it becomes a real-life space carp!
+  description: Looks like a plush toy carp, but just add water and it becomes a
+    real-life space carp!
   components:
   - type: Fixtures # BaseItem from PlushieCarp overrides fixtures, making carp not react to extinguishers
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.3,-0.3,0.3,0.3"
         density: 5
         mask:
         - ItemMask
-      rehydrate: # needed to react to fire extinguishers
-        shape:
-          !type:PhysShapeAabb
+      rehydrate:
+        # needed to react to fire extinguishers
+        shape: !type:PhysShapeAabb
           bounds: "-0.3,-0.3,0.3,0.3"
         hard: false
         layer:

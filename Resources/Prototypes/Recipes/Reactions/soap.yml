@@ -12,8 +12,8 @@
     TableSalt:
       amount: 10
   effects:
-    - !type:SpawnEntity
-      entity: Soap
+  - !type:SpawnEntity
+    entity: Soap
 
 - type: reaction
   id: CreateSoapNT
@@ -30,8 +30,8 @@
     Plasma:
       amount: 5
   effects:
-    - !type:SpawnEntity
-      entity: SoapNT
+  - !type:SpawnEntity
+    entity: SoapNT
 
 - type: reaction
   id: CreateSoapDeluxe
@@ -48,8 +48,8 @@
     JuiceBerry:
       amount: 5
   effects:
-    - !type:SpawnEntity
-      entity: SoapDeluxe
+  - !type:SpawnEntity
+    entity: SoapDeluxe
 
 - type: reaction
   id: CreateSoapBlood
@@ -66,8 +66,8 @@
     Blood:
       amount: 10
   effects:
-    - !type:SpawnEntity
-      entity: SoapHomemade
+  - !type:SpawnEntity
+    entity: SoapHomemade
 
 - type: reaction
   id: CreateSoapSyndie
@@ -84,8 +84,8 @@
     Stimulants:
       amount: 5
   effects:
-    - !type:SpawnEntity
-      entity: SoapSyndie
+  - !type:SpawnEntity
+    entity: SoapSyndie
 
 - type: reaction
   id: CreateSoapOmega
@@ -116,5 +116,5 @@
     Amatoxin:
       amount: 1
   effects:
-    - !type:SpawnEntity
-      entity: SoapOmega
+  - !type:SpawnEntity
+    entity: SoapOmega

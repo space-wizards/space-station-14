@@ -237,7 +237,7 @@
     price: 15000
 
 - type: entity
-  parent: [ClothingHeadHatCatEars, BaseToggleClothing]
+  parent: [ ClothingHeadHatCatEars, BaseToggleClothing ]
   id: ClothingHeadHatCatEarsValid
   suffix: Valid, DO NOT MAP
   categories: [ DoNotMap ]
@@ -315,7 +315,7 @@
     - FacialHair
 
 - type: entity
-  parent: [SolutionDrink, Clothing]
+  parent: [ SolutionDrink, Clothing ]
   id: WaterDropletHat
   name: water droplet
   description: Makes 8-eyed friends 8 times more adorable!
@@ -338,7 +338,7 @@
     utensil: Spoon
   - type: FlavorProfile
     flavors:
-      - water
+    - water
   - type: DrainableSolution
     solution: drink
   - type: Solution
@@ -357,8 +357,7 @@
     damageContainer: Biological
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 1
       behaviors:
       - !type:PlaySoundBehavior
@@ -370,7 +369,7 @@
         acts: [ "Destruction" ]
   - type: Tag
     tags:
-      - WhitelistChameleon
+    - WhitelistChameleon
   - type: StaticPrice
     price: 1
 

@@ -18,8 +18,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.1,0.45,0.1"
         density: 550
         mask:
@@ -32,8 +31,7 @@
   - type: NodeContainer
     examinable: true
     nodes:
-      output:
-        !type:CableDeviceNode
+      output: !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: PowerMonitoringDevice
     group: Generator
@@ -72,15 +70,15 @@
     damageModifierSet: GlassPlasmaMod
   - type: Destructible
     thresholds:
-    - trigger: &DamageMachineNormal # Excess damage, don't spawn entities
-        !type:DamageTrigger
+    - trigger:
+        # Excess damage, don't spawn entities
+        &DamageMachineNormal !type:DamageTrigger
         damage: 175
       behaviors:
       - &SoundGlassBreak !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 75
       behaviors:
       - *SoundGlassBreak
@@ -108,13 +106,11 @@
     damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 275
       behaviors:
       - *SoundGlassBreak
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 175
       behaviors:
       - *SoundGlassBreak
@@ -138,13 +134,13 @@
     damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
+    - trigger:
+        # Excess damage, don't spawn entities
         !type:DamageTrigger
         damage: 100
       behaviors:
       - *SoundGlassBreak
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - *SoundGlassBreak
@@ -168,8 +164,7 @@
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger: &DamageMachineFlimsy
-        !type:DamageTrigger
+    - trigger: &DamageMachineFlimsy !type:DamageTrigger
         damage: 50
       behaviors:
       - *SoundGlassBreak
@@ -251,8 +246,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.25
         density: 375
         mask:
@@ -300,8 +294,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb {}
+        shape: !type:PhysShapeAabb
         density: 100
         mask:
         - MachineMask

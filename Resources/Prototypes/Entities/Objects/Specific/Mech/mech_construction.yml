@@ -13,13 +13,12 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
         density: 100
         mask:
         - ItemMask
-        restitution: 0.3  # fite me
+        restitution: 0.3 # fite me
         friction: 0.2
   - type: Pullable
   - type: GuideHelp
@@ -212,7 +211,8 @@
   parent: BaseHonkerPartItem
   id: HonkerLArm
   name: H.O.N.K. left arm
-  description: A H.O.N.K. left arm, with unique sockets that accept odd weaponry designed by clown scientists.
+  description: A H.O.N.K. left arm, with unique sockets that accept odd weaponry
+    designed by clown scientists.
   components:
   - type: Sprite
     state: honker_l_arm
@@ -224,7 +224,8 @@
   parent: BaseHonkerPartItem
   id: HonkerLLeg
   name: H.O.N.K. left leg
-  description: A H.O.N.K. left leg. The foot appears just large enough to fully accommodate a clown shoe.
+  description: A H.O.N.K. left leg. The foot appears just large enough to fully
+    accommodate a clown shoe.
   components:
   - type: Sprite
     state: honker_l_leg
@@ -236,7 +237,8 @@
   parent: BaseHonkerPartItem
   id: HonkerRLeg
   name: H.O.N.K. right leg
-  description: A H.O.N.K. right leg. The foot appears just large enough to fully accommodate a clown shoe.
+  description: A H.O.N.K. right leg. The foot appears just large enough to fully
+    accommodate a clown shoe.
   components:
   - type: Sprite
     state: honker_r_leg
@@ -248,7 +250,8 @@
   parent: BaseHonkerPartItem
   id: HonkerRArm
   name: H.O.N.K. right arm
-  description: A H.O.N.K. right arm, with unique sockets that accept odd weaponry designed by clown scientists.
+  description: A H.O.N.K. right arm, with unique sockets that accept odd weaponry
+    designed by clown scientists.
   components:
   - type: Sprite
     state: honker_r_arm

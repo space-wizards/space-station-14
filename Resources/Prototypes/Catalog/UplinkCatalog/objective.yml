@@ -6,7 +6,7 @@
   description: uplink-hijack-beacon-desc
   productEntity: HijackBeacon
   categories:
-    - UplinkObjective
+  - UplinkObjective
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1

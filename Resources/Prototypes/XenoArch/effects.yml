@@ -339,8 +339,7 @@
     - type: NodeContainer
       examinable: true
       nodes:
-        output_hv:
-          !type:CableDeviceNode
+        output_hv: !type:CableDeviceNode
           nodeGroupID: HVPower
 
 - type: entity
@@ -403,8 +402,8 @@
     components:
     - type: UserInterface
       interfaces:
-          enum.SignalLinkerUiKey.Key:
-            type: SignalPortSelectorBoundUserInterface
+        enum.SignalLinkerUiKey.Key:
+          type: SignalPortSelectorBoundUserInterface
     - type: ToolTileCompatible
     - type: Tool
       qualities:
@@ -413,7 +412,7 @@
       useSound: /Audio/Items/drill_use.ogg
     - type: Tag
       tags:
-        - Multitool
+      - Multitool
     - type: MultipleTool
       statusShowBehavior: true
       entries:

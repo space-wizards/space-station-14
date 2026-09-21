@@ -4,9 +4,9 @@
   description: job-description-chef
   playTimeTracker: JobChef
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Service
-      time: 0.5h
+  - !type:DepartmentTimeRequirement
+    department: Service
+    time: 0.5h
   startingGear: ChefGear
   icon: "JobIconChef"
   supervisors: job-supervisors-hop
@@ -26,7 +26,7 @@
     id: ChefPDA
     ears: ClothingHeadsetService
     belt: ClothingBeltChefFilled
-  #storage:
+    #storage:
     #back:
     #- Stuff
 

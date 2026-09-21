@@ -149,12 +149,12 @@
     sprite: Structures/Storage/Crates/web.rsi
     layers:
     - state: base
-      map: ["enum.StorageVisualLayers.Base"]
+      map: [ "enum.StorageVisualLayers.Base" ]
     - state: closed
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
-      map: ["enum.PaperLabelVisuals.Layer"]
+      map: [ "enum.PaperLabelVisuals.Layer" ]
   - type: Construction
     graph: WebStructures
     node: crate
@@ -164,8 +164,7 @@
     damageModifierSet: ThreadMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 20
       behaviors:
       - !type:PlaySoundBehavior
@@ -195,7 +194,7 @@
   - type: Sprite
     sprite: Structures/Storage/Crates/sec_gear.rsi
   - type: AccessReader
-    access: [["Security"]]
+    access: [ [ "Security" ] ]
 
 - type: entity
   parent: CrateBaseSecure
@@ -207,7 +206,7 @@
   - type: Sprite
     sprite: Structures/Storage/Crates/engicrate_secure.rsi
   - type: AccessReader
-    access: [["Engineering"]]
+    access: [ [ "Engineering" ] ]
 
 - type: entity
   parent: CrateBaseSecure
@@ -219,19 +218,19 @@
   - type: Sprite
     sprite: Structures/Storage/Crates/medicalcrate_secure.rsi
   - type: AccessReader
-    access: [["Medical"]]
+    access: [ [ "Medical" ] ]
 
 - type: entity
   parent: CrateBaseSecure
   id: CrateChemistrySecure
   name: secure chemistry crate
   components:
-    - type: Icon
-      sprite: Structures/Storage/Crates/chemcrate_secure.rsi
-    - type: Sprite
-      sprite: Structures/Storage/Crates/chemcrate_secure.rsi
-    - type: AccessReader
-      access: [["Chemistry"]]
+  - type: Icon
+    sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+  - type: AccessReader
+    access: [ [ "Chemistry" ] ]
 
 - type: entity
   parent: CrateBaseSecure
@@ -253,7 +252,7 @@
   - type: Sprite
     sprite: Structures/Storage/Crates/scicrate_secure.rsi
   - type: AccessReader
-    access: [["Research"]]
+    access: [ [ "Research" ] ]
 
 - type: entity
   parent: CrateBaseSecure
@@ -265,17 +264,17 @@
   - type: Sprite
     sprite: Structures/Storage/Crates/plasma.rsi
   - type: AccessReader
-    access: [["Engineering"], ["Research"], ["Chemistry"]]
+    access: [ [ "Engineering" ], [ "Research" ], [ "Chemistry" ] ]
 
 - type: entity
   parent: CrateBaseSecure
   id: CrateSecure
   name: secure crate
   components:
-    - type: Icon
-      sprite: Structures/Storage/Crates/secure.rsi
-    - type: Sprite
-      sprite: Structures/Storage/Crates/secure.rsi
+  - type: Icon
+    sprite: Structures/Storage/Crates/secure.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/secure.rsi
 
 - type: entity
   parent: CrateBaseSecure
@@ -287,7 +286,7 @@
   - type: Sprite
     sprite: Structures/Storage/Crates/hydro_secure.rsi
   - type: AccessReader
-    access: [["Hydroponics"]]
+    access: [ [ "Hydroponics" ] ]
 
 - type: entity
   parent: CrateBaseSecure
@@ -299,19 +298,20 @@
   - type: Sprite
     sprite: Structures/Storage/Crates/weapon.rsi
   - type: AccessReader
-    access: [["Armory"]]
+    access: [ [ "Armory" ] ]
 
 - type: entity
   parent: [ CrateBaseSecure, BaseSecurityContraband ]
   suffix: Armory, Secure
   id: CrateContrabandStorageSecure
   name: contraband storage crate
-  description: An armory access locked crate for storing contraband confiscated from suspects or prisoners.
+  description: An armory access locked crate for storing contraband confiscated
+    from suspects or prisoners.
   components:
   - type: Sprite
     sprite: Structures/Storage/Crates/sec_gear.rsi
   - type: AccessReader
-    access: [["Armory"]]
+    access: [ [ "Armory" ] ]
 
 - type: entity
   parent: CrateBaseSecure
@@ -323,7 +323,7 @@
   - type: Sprite
     sprite: Structures/Storage/Crates/command.rsi
   - type: AccessReader
-    access: [["Command"]]
+    access: [ [ "Command" ] ]
 
 - type: entity
   parent: CrateBaseSecure
@@ -336,7 +336,7 @@
   - type: Sprite
     sprite: Structures/Storage/Crates/syndicate_secure.rsi
   - type: AccessReader
-    access: [["SyndicateAgent", "NuclearOperative"]]
+    access: [ [ "SyndicateAgent", "NuclearOperative" ] ]
 
 - type: entity
   parent: [ BaseCrate, StructureHealthContainerFlimsy ]
@@ -350,11 +350,11 @@
     layers:
     - state: base
     - state: closed
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
       offset: "-0.25,0.625"
-      map: ["enum.PaperLabelVisuals.Layer"]
+      map: [ "enum.PaperLabelVisuals.Layer" ]
   - type: Icon
     sprite: Structures/Storage/Crates/livestock.rsi
     state: base
@@ -362,8 +362,7 @@
     damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 20
       behaviors:
       - !type:PlaySoundBehavior
@@ -379,8 +378,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.29"
         density: 135
         mask:
@@ -407,11 +405,11 @@
     layers:
     - state: base
     - state: closed
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
       offset: "0.0,0.125"
-      map: ["enum.PaperLabelVisuals.Layer"]
+      map: [ "enum.PaperLabelVisuals.Layer" ]
   - type: Icon
     sprite: Structures/Storage/Crates/cage.rsi
     state: icon
@@ -419,8 +417,7 @@
     damageModifierSet: PlasticMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 20
       behaviors:
       - !type:PlaySoundBehavior
@@ -439,8 +436,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.4,-0.2,0.4,0.29"
         density: 80
         mask:
@@ -454,7 +450,8 @@
   id: CrateBaseLockBox
   parent: CrateBaseSecure
   name: lock box
-  description: "A secure lock box. Funds from its sale will be distributed back to the department. Just remember: Cargo always takes a cut."
+  description: "A secure lock box. Funds from its sale will be distributed back to
+    the department. Just remember: Cargo always takes a cut."
   abstract: true
   components:
   - type: Sprite
@@ -479,8 +476,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.3,-0.4,0.3,0.19"
         density: 50
         mask:
@@ -501,24 +497,24 @@
     - state: overlay
       color: "#ad8c27"
     - state: closed
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: overlay-closed
       color: "#ad8c27"
       map: [ lid_overlay ]
     - state: welded
       visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
     - state: locked
-      map: ["enum.LockVisualLayers.Lock"]
+      map: [ "enum.LockVisualLayers.Lock" ]
       shader: unshaded
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
       offset: "-0.46875,0.03125"
-      map: ["enum.PaperLabelVisuals.Layer"]
+      map: [ "enum.PaperLabelVisuals.Layer" ]
   - type: OverrideSell
     overrideAccount: Engineering
   - type: AccessReader
-    access: [["Engineering"]]
+    access: [ [ "Engineering" ] ]
 
 - type: entity
   id: CrateLockBoxMedical
@@ -531,24 +527,24 @@
     - state: overlay
       color: "#92c7e8"
     - state: closed
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: overlay-closed
       color: "#92c7e8"
       map: [ lid_overlay ]
     - state: welded
       visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
     - state: locked
-      map: ["enum.LockVisualLayers.Lock"]
+      map: [ "enum.LockVisualLayers.Lock" ]
       shader: unshaded
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
       offset: "-0.46875,0.03125"
-      map: ["enum.PaperLabelVisuals.Layer"]
+      map: [ "enum.PaperLabelVisuals.Layer" ]
   - type: OverrideSell
     overrideAccount: Medical
   - type: AccessReader
-    access: [["Medical"]]
+    access: [ [ "Medical" ] ]
 
 - type: entity
   id: CrateLockBoxScience
@@ -561,24 +557,24 @@
     - state: overlay
       color: "#ba4bf0"
     - state: closed
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: overlay-closed
       color: "#ba4bf0"
       map: [ lid_overlay ]
     - state: welded
       visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
     - state: locked
-      map: ["enum.LockVisualLayers.Lock"]
+      map: [ "enum.LockVisualLayers.Lock" ]
       shader: unshaded
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
       offset: "-0.46875,0.03125"
-      map: ["enum.PaperLabelVisuals.Layer"]
+      map: [ "enum.PaperLabelVisuals.Layer" ]
   - type: OverrideSell
     overrideAccount: Science
   - type: AccessReader
-    access: [["Research"]]
+    access: [ [ "Research" ] ]
 
 - type: entity
   id: CrateLockBoxSecurity
@@ -591,24 +587,24 @@
     - state: overlay
       color: "#c12d30"
     - state: closed
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: overlay-closed
       color: "#c12d30"
       map: [ lid_overlay ]
     - state: welded
       visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
     - state: locked
-      map: ["enum.LockVisualLayers.Lock"]
+      map: [ "enum.LockVisualLayers.Lock" ]
       shader: unshaded
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
       offset: "-0.46875,0.03125"
-      map: ["enum.PaperLabelVisuals.Layer"]
+      map: [ "enum.PaperLabelVisuals.Layer" ]
   - type: OverrideSell
     overrideAccount: Security
   - type: AccessReader
-    access: [["Security"]]
+    access: [ [ "Security" ] ]
 
 - type: entity
   id: CrateLockBoxService
@@ -621,24 +617,24 @@
     - state: overlay
       color: "#53b723"
     - state: closed
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: overlay-closed
       color: "#53b723"
       map: [ lid_overlay ]
     - state: welded
       visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
     - state: locked
-      map: ["enum.LockVisualLayers.Lock"]
+      map: [ "enum.LockVisualLayers.Lock" ]
       shader: unshaded
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
       offset: "-0.46875,0.03125"
-      map: ["enum.PaperLabelVisuals.Layer"]
+      map: [ "enum.PaperLabelVisuals.Layer" ]
   - type: OverrideSell
     overrideAccount: Service
   - type: AccessReader
-    access: [["Service"]]
+    access: [ [ "Service" ] ]
 
 - type: entity
   parent: CrateGeneric
@@ -650,16 +646,16 @@
     sprite: Structures/Storage/Crates/piratechest.rsi
     layers:
     - state: crate
-      map: ["enum.StorageVisualLayers.Base"]
+      map: [ "enum.StorageVisualLayers.Base" ]
     - state: crate_door
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: welded
       visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
       offset: "0.0,-0.09375"
-      map: ["enum.PaperLabelVisuals.Layer"]
+      map: [ "enum.PaperLabelVisuals.Layer" ]
   - type: Icon
     sprite: Structures/Storage/Crates/piratechest.rsi
     state: crate_icon
@@ -679,14 +675,14 @@
     sprite: Structures/Storage/Crates/toybox.rsi
     layers:
     - state: crate
-      map: ["enum.StorageVisualLayers.Base"]
+      map: [ "enum.StorageVisualLayers.Base" ]
     - state: crate_door
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: welded
       visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
     - state: paper
-      map: ["enum.PaperLabelVisuals.Layer"]
+      map: [ "enum.PaperLabelVisuals.Layer" ]
   - type: Icon
     sprite: Structures/Storage/Crates/toybox.rsi
     state: crate_icon
@@ -702,9 +698,9 @@
     layers:
     - state: base
     - state: closed
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: paper
-      map: ["enum.PaperLabelVisuals.Layer"]
+      map: [ "enum.PaperLabelVisuals.Layer" ]
   - type: Icon
     sprite: Structures/Storage/Crates/coffin.rsi
     state: base
@@ -712,8 +708,7 @@
     damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 20
       behaviors:
       - !type:PlaySoundBehavior
@@ -742,11 +737,11 @@
     layers:
     - state: base
     - state: closed
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
       offset: "-0.28125,0.625"
-      map: ["enum.PaperLabelVisuals.Layer"]
+      map: [ "enum.PaperLabelVisuals.Layer" ]
   - type: Icon
     sprite: Structures/Storage/Crates/wooden_grave.rsi
     state: base
@@ -754,8 +749,7 @@
     damageModifierSet: RockMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100 # discourage just beating the grave to break it open
       behaviors:
       - !type:PlaySoundBehavior
@@ -790,11 +784,11 @@
     layers:
     - state: base
     - state: closed
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
       offset: "-0.3125,0.5625"
-      map: ["enum.PaperLabelVisuals.Layer"]
+      map: [ "enum.PaperLabelVisuals.Layer" ]
   - type: Icon
     sprite: Structures/Storage/Crates/stone_grave.rsi
     state: base
@@ -811,7 +805,7 @@
     sprite: Structures/Storage/Crates/syndicate.rsi
 
 - type: entity
-  parent: [StructureWheeled, CrateBaseWeldable]
+  parent: [ StructureWheeled, CrateBaseWeldable ]
   id: CrateTrashCart
   name: trash cart
   components:
@@ -822,14 +816,14 @@
     layers:
     - state: base
     - state: closed
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: welded
       visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
       offset: "0.0,0.03125"
-      map: ["enum.PaperLabelVisuals.Layer"]
+      map: [ "enum.PaperLabelVisuals.Layer" ]
   - type: Paintable
     group: null
 
@@ -845,19 +839,19 @@
     layers:
     - state: base
     - state: closed
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: welded
       visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
     - state: locked
-      map: ["enum.LockVisualLayers.Lock"]
+      map: [ "enum.LockVisualLayers.Lock" ]
       shader: unshaded
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
       offset: "0.0,0.03125"
-      map: ["enum.PaperLabelVisuals.Layer"]
+      map: [ "enum.PaperLabelVisuals.Layer" ]
   - type: AccessReader
-    access: [["Janitor"]]
+    access: [ [ "Janitor" ] ]
   - type: Paintable
     group: null
 

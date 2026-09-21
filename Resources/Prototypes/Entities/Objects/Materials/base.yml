@@ -1,6 +1,12 @@
 - type: entity
   abstract: true
-  parent: [SolutionCryo, SolutionCompositeNormalStackable, BaseItem, BaseItemDestructible]
+  parent:
+    [
+      SolutionCryo,
+      SolutionCompositeNormalStackable,
+      BaseItem,
+      BaseItemDestructible
+    ]
   id: MaterialBase
   description: A raw material.
   components:

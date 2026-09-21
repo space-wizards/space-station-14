@@ -4,10 +4,10 @@
   description: job-description-intern
   playTimeTracker: JobMedicalIntern
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Medical
-      time: 10h
-      inverted: true # stop playing intern if you're good at med!
+  - !type:DepartmentTimeRequirement
+    department: Medical
+    time: 10h
+    inverted: true # stop playing intern if you're good at med!
   startingGear: MedicalInternGear
   icon: "JobIconMedicalIntern"
   supervisors: job-supervisors-medicine

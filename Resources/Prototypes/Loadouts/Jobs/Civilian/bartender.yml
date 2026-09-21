@@ -2,8 +2,7 @@
   id: SeniorBar
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobBartender
       time: 52h # 1 hour per week for 1 year
 

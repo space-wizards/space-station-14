@@ -16,8 +16,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.4
         density: 1000
         layer:
@@ -43,8 +42,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.35,-0.4,0.35,0.4"
         density: 1000
         layer:
@@ -61,8 +59,7 @@
     damageContainer: StructuralBiological
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 80
       behaviors:
       - !type:PlaySoundBehavior
@@ -90,8 +87,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.1,-0.3,0.1,0.3"
         density: 4000
         layer:
@@ -108,8 +104,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.18,-0.35,0.18,0.35"
         density: 2000
         layer:
@@ -126,8 +121,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.1,-0.35,0.1,0.35"
         density: 3500
         layer:
@@ -143,7 +137,7 @@
   - type: Sprite
     layers:
     - state: rocksolid01
-      map: ["random"]
+      map: [ "random" ]
   - type: RandomSprite
     available:
     - random:
@@ -154,8 +148,7 @@
     damageModifierSet: RockMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 80
       behaviors:
       - !type:PlaySoundBehavior
@@ -172,8 +165,7 @@
     damageModifierSet: RockMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:PlaySoundBehavior
@@ -183,7 +175,7 @@
     sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
     layers:
     - state: stalagmite1
-      map: ["random"]
+      map: [ "random" ]
   - type: RandomSprite
     available:
     - random:
@@ -202,7 +194,7 @@
     sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
     layers:
     - state: grey_stalagmite1
-      map: ["random"]
+      map: [ "random" ]
   - type: RandomSprite
     available:
     - random:
@@ -224,7 +216,7 @@
   - type: Sprite
     layers:
     - state: tree01
-      map: ["random"]
+      map: [ "random" ]
   - type: RandomSprite
     available:
     - random:
@@ -243,7 +235,7 @@
   - type: Sprite
     layers:
     - state: treesnow01
-      map: ["random"]
+      map: [ "random" ]
   - type: RandomSprite
     available:
     - random:
@@ -270,7 +262,7 @@
   - type: Sprite
     layers:
     - state: treelarge01
-      map: ["random"]
+      map: [ "random" ]
   - type: RandomSprite
     available:
     - random:
@@ -289,7 +281,7 @@
   - type: Sprite
     layers:
     - state: treeconifer01
-      map: ["random"]
+      map: [ "random" ]
   - type: RandomSprite
     available:
     - random:
@@ -316,22 +308,21 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,0,0.5,0.75"
         density: 4500
         layer:
         - WallLayer
   - type: LimitedItemGiver
     spawnEntries:
-      - id: PresentRandom
-        orGroup: present
-      - id: PresentRandomCash # buy your own.
-        prob: 0.1
-        orGroup: present
-      - id: PresentRandomCoal # naughty
-        prob: 0.05
-        orGroup: present
+    - id: PresentRandom
+      orGroup: present
+    - id: PresentRandomCash # buy your own.
+      prob: 0.1
+      orGroup: present
+    - id: PresentRandomCoal # naughty
+      prob: 0.05
+      orGroup: present
     receivedPopup: christmas-tree-got-gift
     deniedPopup: christmas-tree-no-gift
     requiredHoliday: FestiveSeason
@@ -344,14 +335,14 @@
   components:
   - type: LimitedItemGiver
     spawnEntries:
-      - id: PresentRandom
-        orGroup: present
-      - id: PresentRandomUnsafe
-        prob: 0.5
-        orGroup: present
-      - id: PresentRandomInsane
-        prob: 0.2
-        orGroup: present
+    - id: PresentRandom
+      orGroup: present
+    - id: PresentRandomUnsafe
+      prob: 0.5
+      orGroup: present
+    - id: PresentRandomInsane
+      prob: 0.2
+      orGroup: present
 
 - type: entity
   parent: BaseTreeConifer
@@ -384,7 +375,7 @@
     sprite: Objects/Decoration/Flora/flora_treeslight.rsi
     layers:
     - state: tree01
-      map: ["random"]
+      map: [ "random" ]
   - type: RandomSprite
     available:
     - random:
@@ -396,8 +387,7 @@
         tree06: ""
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 80
       behaviors:
       - !type:SpawnEntitiesBehavior

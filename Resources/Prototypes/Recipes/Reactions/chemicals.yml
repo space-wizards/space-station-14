@@ -9,8 +9,9 @@
   products:
     Ammonia: 4
   effects:
-    - !type:AdjustSolutionThermalEnergy # remove heat to stop reaction on repeated recombination during electrolysis
-      delta: -92.28 # actual energy requirement of reaction, works surprisingly well.
+  # remove heat to stop reaction on repeated recombination during electrolysis
+  - !type:AdjustSolutionThermalEnergy
+    delta: -92.28 # actual energy requirement of reaction, works surprisingly well.
 
 - type: reaction
   id: AmmoniaBreakdown
@@ -127,12 +128,12 @@
     Potassium:
       amount: 1
   effects:
-    - !type:Explosion
-      explosionType: Default
-      intensityPerUnit: 0.25
-      maxTotalIntensity: 100
-      intensitySlope: 4
-      maxIntensity: 7
+  - !type:Explosion
+    explosionType: Default
+    intensityPerUnit: 0.25
+    maxTotalIntensity: 100
+    intensitySlope: 4
+    maxIntensity: 7
 
 - type: reaction
   id: Smoke
@@ -147,11 +148,11 @@
     Sugar:
       amount: 1
   effects:
-    - !type:AreaReactionEffect
-      duration: 10
-      prototypeId: Smoke
-      sound:
-        path: /Audio/Effects/smoke.ogg
+  - !type:AreaReactionEffect
+    duration: 10
+    prototypeId: Smoke
+    sound:
+      path: /Audio/Effects/smoke.ogg
 
 - type: reaction
   id: Foam
@@ -164,11 +165,11 @@
     Water:
       amount: 1
   effects:
-    - !type:AreaReactionEffect
-      duration: 10
-      prototypeId: Foam
-      sound:
-        path: /Audio/Effects/extinguish.ogg
+  - !type:AreaReactionEffect
+    duration: 10
+    prototypeId: Foam
+    sound:
+      path: /Audio/Effects/extinguish.ogg
 
 - type: reaction
   id: IronMetalFoam
@@ -183,11 +184,11 @@
     FluorosulfuricAcid:
       amount: 1
   effects:
-    - !type:AreaReactionEffect
-      duration: 10
-      prototypeId: IronMetalFoam
-      sound:
-        path: /Audio/Effects/extinguish.ogg
+  - !type:AreaReactionEffect
+    duration: 10
+    prototypeId: IronMetalFoam
+    sound:
+      path: /Audio/Effects/extinguish.ogg
 
 - type: reaction
   id: AluminiumMetalFoam
@@ -202,11 +203,11 @@
     FluorosulfuricAcid:
       amount: 1
   effects:
-    - !type:AreaReactionEffect
-      duration: 10
-      prototypeId: AluminiumMetalFoam
-      sound:
-        path: /Audio/Effects/extinguish.ogg
+  - !type:AreaReactionEffect
+    duration: 10
+    prototypeId: AluminiumMetalFoam
+    sound:
+      path: /Audio/Effects/extinguish.ogg
 
 - type: reaction
   id: UraniumEmpExplosion
@@ -221,11 +222,11 @@
     Aluminium:
       amount: 1
   effects:
-    - !type:Emp
-      rangeModifier: 0.2
-      maxRange: 6
-      energyConsumption: 12500
-      duration: 15
+  - !type:Emp
+    rangeModifier: 0.2
+    maxRange: 6
+    energyConsumption: 12500
+    duration: 15
 
 - type: reaction
   id: Flash
@@ -240,8 +241,7 @@
     Sulfur:
       amount: 1
   effects:
-    - !type:Flash
-
+  - !type:Flash
 - type: reaction
   id: TableSalt
   minTemp: 370
@@ -327,7 +327,7 @@
     Iodine:
       amount: 1
     Phosphorus:
-     amount: 1
+      amount: 1
   products:
     Desoxyephedrine: 4 #I kinda remember having to heat this up, and if you heated it up too much, it went boom, I can't remember the specific values tho.
 
@@ -374,7 +374,7 @@
     Sugar:
       amount: 1
     Diethylamine:
-     amount: 1
+      amount: 1
   products:
     Ephedrine: 4
 
@@ -614,5 +614,3 @@
       amount: 1
   products:
     TearGas: 3
-
-

@@ -39,7 +39,8 @@
       - MobState
       - StandingState
       requireAll: true
-    blacklist: # This blacklist exists because mob prototypes are smelly and everything needs a standing state component.
+    blacklist:
+      # This blacklist exists because mob prototypes are smelly and everything needs a standing state component.
       tags:
       - KnockdownImmune
 
@@ -62,7 +63,6 @@
   - type: ForcedSleepingStatusEffect
   - type: StunnedStatusEffect
   - type: KnockdownStatusEffect
-
 
 # Makes the creature immune to pressure damage.
 - type: entity

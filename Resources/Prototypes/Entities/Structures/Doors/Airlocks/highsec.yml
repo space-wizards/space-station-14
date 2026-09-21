@@ -23,8 +23,7 @@
     damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 350
       behaviors:
       - !type:SpawnEntitiesBehavior

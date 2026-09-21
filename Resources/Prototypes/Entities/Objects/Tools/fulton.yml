@@ -15,46 +15,46 @@
   name: fulton beacon
   description: Beacon to receive fulton extractions.
   components:
-    - type: Physics
-      bodyType: Dynamic
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.25,-0.4,0.25,0.1"
-          density: 20
-          mask:
-            - Impassable
-    - type: Item
-      size: Normal
-      inhandVisuals:
-        left:
-        - state: inhand-left-beacon
-        right:
-        - state: inhand-right-beacon
-    - type: Foldable
-      folded: true
-    - type: Clickable
-    - type: InteractionOutline
-    - type: FultonBeacon
-    - type: Sprite
-      sprite: Objects/Tools/fulton.rsi
-      drawdepth: SmallObjects
-      noRot: true
-      layers:
-        - state: extraction_point
-          map: ["unfoldedLayer"]
-          visible: false
-        - state: folded_extraction
-          map: ["foldedLayer"]
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.25,-0.4,0.25,0.1"
+        density: 20
+        mask:
+        - Impassable
+  - type: Item
+    size: Normal
+    inhandVisuals:
+      left:
+      - state: inhand-left-beacon
+      right:
+      - state: inhand-right-beacon
+  - type: Foldable
+    folded: true
+  - type: Clickable
+  - type: InteractionOutline
+  - type: FultonBeacon
+  - type: Sprite
+    sprite: Objects/Tools/fulton.rsi
+    drawdepth: SmallObjects
+    noRot: true
+    layers:
+    - state: extraction_point
+      map: [ "unfoldedLayer" ]
+      visible: false
+    - state: folded_extraction
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: [ BaseItem, BaseItemDestructible ]
   id: Fulton
   name: fulton
   suffix: Full
-  description: Used to extract containers, items, or forcibly recruit people into your base of operations.
+  description: Used to extract containers, items, or forcibly recruit people into
+    your base of operations.
   components:
   - type: Fulton
   - type: Item
@@ -93,10 +93,10 @@
     noRot: true
     offset: 0,0.5
     layers:
-      - map: [ "enum.FultonVisualLayers.Base" ]
-        sprite: Objects/Tools/fulton_balloon.rsi
-        state: fulton_balloon
+    - map: [ "enum.FultonVisualLayers.Base" ]
+      sprite: Objects/Tools/fulton_balloon.rsi
+      state: fulton_balloon
   - type: Tag
     tags:
-      - HideContextMenu
+    - HideContextMenu
   - type: AnimationPlayer

@@ -3,6 +3,6 @@
   id: hoverentity
   categories: [ HideSpawnMenu ]
   components:
-    - type: Sprite
-      layers:
-        - shader: unshaded
+  - type: Sprite
+    layers:
+    - shader: unshaded

@@ -3,8 +3,7 @@
   id: MasterHoP
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobHeadOfPersonnel
       time: 20h
 
@@ -13,8 +12,7 @@
   id: ProfessionalHoP
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobHeadOfPersonnel
       time: 15h # special reward for HoP mains
 

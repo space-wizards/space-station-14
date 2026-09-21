@@ -4,21 +4,21 @@
   description: job-description-hop
   playTimeTracker: JobHeadOfPersonnel
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Engineering
-      time: 2.5h
-    - !type:DepartmentTimeRequirement
-      department: Medical
-      time: 2.5h
-    - !type:DepartmentTimeRequirement
-      department: Science
-      time: 2.5h
-    - !type:DepartmentTimeRequirement
-      department: Security
-      time: 2.5h
-    - !type:DepartmentTimeRequirement
-      department: Command
-      time: 2.5h
+  - !type:DepartmentTimeRequirement
+    department: Engineering
+    time: 2.5h
+  - !type:DepartmentTimeRequirement
+    department: Medical
+    time: 2.5h
+  - !type:DepartmentTimeRequirement
+    department: Science
+    time: 2.5h
+  - !type:DepartmentTimeRequirement
+    department: Security
+    time: 2.5h
+  - !type:DepartmentTimeRequirement
+    department: Command
+    time: 2.5h
   startingGear: HoPGear
   icon: "JobIconHeadOfPersonnel"
   supervisors: job-supervisors-captain
@@ -57,7 +57,7 @@
     implants: [ MindShieldImplant ]
   - !type:AddComponentSpecial
     components:
-      - type: CommandStaff
+    - type: CommandStaff
 
 - type: startingGear
   id: HoPGear
@@ -82,4 +82,3 @@
     mask: ClothingMaskNeckGaiterRed
     neck: ClothingNeckCloakHop
     outerClothing: ClothingOuterWinterHoP
-

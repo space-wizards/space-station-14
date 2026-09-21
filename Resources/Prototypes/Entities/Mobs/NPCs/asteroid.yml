@@ -10,9 +10,9 @@
   components:
   - type: Reactive
     groups:
-      Flammable: [Touch]
-      Extinguish: [Touch]
-      Acidic: [Touch, Ingestion]
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+      Acidic: [ Touch, Ingestion ]
   - type: Climbing
   - type: NameIdentifier
     group: GenericNumber
@@ -27,14 +27,21 @@
 
 - type: entity
   id: MobGoliath
-  parent: [ BaseMobAsteroid, MobBloodstream, BaseSlicingRefinable, BaseMobDestructible ]
+  parent:
+    [
+      BaseMobAsteroid,
+      MobBloodstream,
+      BaseSlicingRefinable,
+      BaseMobDestructible
+    ]
   name: goliath
-  description: A massive beast that uses long tentacles to ensnare its prey, threatening them is not advised under any conditions.
+  description: A massive beast that uses long tentacles to ensnare its prey,
+    threatening them is not advised under any conditions.
   components:
   - type: Sprite
     sprite: Mobs/Aliens/Asteroid/goliath.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: goliath
   - type: DamageStateVisuals
     states:
@@ -43,8 +50,8 @@
       Dead:
         Base: goliath_dead
   - type: MovementSpeedModifier
-    baseWalkSpeed : 2.00
-    baseSprintSpeed : 2.00
+    baseWalkSpeed: 2.00
+    baseSprintSpeed: 2.00
   - type: Bloodstream
     bloodReferenceSolution:
       reagents:
@@ -72,12 +79,9 @@
     rootTask:
       task: GoliathCompound
     blackboard:
-      VisionRadius: !type:Single
-        6
-      AggroVisionRadius: !type:Single
-        10
-      NavSmash: !type:Bool
-        true
+      VisionRadius: !type:Single "6"
+      AggroVisionRadius: !type:Single "10"
+      NavSmash: !type:Bool "true"
   - type: NPCUseActionOnTarget
     actionId: ActionGoliathTentacle
   - type: Tag
@@ -108,15 +112,14 @@
     sprite: Mobs/Aliens/Asteroid/goliath.rsi
     layers:
     - state: goliath_tentacle_spawn
-      map: ["enum.ActionVisuals.Icon"]
+      map: [ "enum.ActionVisuals.Icon" ]
     - state: goliath_tentacle_wiggle
-      map: ["enum.ActionVisuals.IconToggled"]
+      map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
   - type: TargetAction
     range: 10
   - type: WorldTargetAction
     event: !type:GoliathSummonTentacleAction
-
 - type: entity
   id: GoliathTentacle
   name: tentacle
@@ -141,8 +144,7 @@
   - type: Fixtures
     fixtures:
       fix:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
         mask:
         - Impassable
@@ -177,10 +179,10 @@
   categories: [ HideSpawnMenu ]
   name: tentacle
   components:
-    - type: Sprite
-      state: goliath_tentacle_spawn
-    - type: SpawnOnDespawn
-      prototype: GoliathTentacle
+  - type: Sprite
+    state: goliath_tentacle_spawn
+  - type: SpawnOnDespawn
+    prototype: GoliathTentacle
 
 - type: entity
   id: EffectGoliathTentacleRetract
@@ -196,12 +198,14 @@
   id: MobHivelord
   parent: [ BaseMobAsteroid, FlyingMobBase, BaseSlicingRefinable, BaseMobDestructible ]
   name: hivelord
-  description: A truly alien creature, it is a mass of unknown organic material, constantly fluctuating. When attacking, pieces of it split off and attack in tandem with the original.
+  description: A truly alien creature, it is a mass of unknown organic material,
+    constantly fluctuating. When attacking, pieces of it split off and attack in
+    tandem with the original.
   components:
   - type: Sprite
     sprite: Mobs/Aliens/Asteroid/hivelord.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: hivelord
   - type: DamageStateVisuals
     states:
@@ -210,8 +214,8 @@
       Dead:
         Base: hivelord_dead
   - type: MovementSpeedModifier
-    baseWalkSpeed : 3.5
-    baseSprintSpeed : 4.0
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 4.0
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -242,12 +246,9 @@
     rootTask:
       task: SimpleRangedHostileCompound
     blackboard:
-      VisionRadius: !type:Single
-        4
-      AggroVisionRadius: !type:Single
-        9
-      NavSmash: !type:Bool
-        true
+      VisionRadius: !type:Single "4"
+      AggroVisionRadius: !type:Single "9"
+      NavSmash: !type:Bool "true"
   - type: ToolRefinable
     refineResult:
     - id: FoodHivelordRemains
@@ -256,15 +257,16 @@
   id: MobHivelordBrood
   parent: [ BaseMobAsteroid, FlyingMobBase ]
   name: hivelord brood
-  description: A fragment of the original hivelord, rallying behind its original. One isn't much of a threat, but...
+  description: A fragment of the original hivelord, rallying behind its original.
+    One isn't much of a threat, but...
   components:
   - type: Sprite
     sprite: Mobs/Aliens/Asteroid/hivelord.rsi
     layers:
     - state: hivelordbrood
   - type: MovementSpeedModifier
-    baseWalkSpeed : 3.5
-    baseSprintSpeed : 4.0
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 4.0
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -283,8 +285,7 @@
     muzzleFlash: null
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:DoActsBehavior
@@ -295,13 +296,11 @@
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
-    blackboard: # highly aggressive
-      VisionRadius: !type:Single
-        15
-      AggroVisionRadius: !type:Single
-        15
-      NavSmash: !type:Bool
-        true
+    blackboard:
+      # highly aggressive
+      VisionRadius: !type:Single "15"
+      AggroVisionRadius: !type:Single "15"
+      NavSmash: !type:Bool "true"
   - type: TimedDespawn
     lifetime: 100
 
@@ -309,7 +308,10 @@
   id: FoodHivelordRemains
   parent: FoodBase
   name: hivelord remains
-  description: All that remains of a hivelord, it seems to be what allows it to break pieces of itself off without being hurt... its healing properties will soon become inert if not used quickly. Try not to think about what you're eating.
+  description: All that remains of a hivelord, it seems to be what allows it to
+    break pieces of itself off without being hurt... its healing properties will
+    soon become inert if not used quickly. Try not to think about what you're
+    eating.
   components:
   - type: Solution
     solution:
@@ -359,14 +361,21 @@
 
 - type: entity
   id: MobBasilisk
-  parent: [ BaseMobAsteroid, MobBloodstream, BaseSlicingRefinable, BaseMobDestructible ]
+  parent:
+    [
+      BaseMobAsteroid,
+      MobBloodstream,
+      BaseSlicingRefinable,
+      BaseMobDestructible
+    ]
   name: basilisk
-  description: A territorial beast, covered in a thick shell that absorbs energy. Its stare causes victims to freeze from the inside.
+  description: A territorial beast, covered in a thick shell that absorbs energy.
+    Its stare causes victims to freeze from the inside.
   components:
   - type: Sprite
     sprite: Mobs/Aliens/Asteroid/basilisk.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: basilisk
   - type: DamageStateVisuals
     states:
@@ -375,8 +384,8 @@
       Dead:
         Base: basilisk_dead
   - type: MovementSpeedModifier
-    baseWalkSpeed : 2
-    baseSprintSpeed : 3
+    baseWalkSpeed: 2
+    baseSprintSpeed: 3
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -417,12 +426,9 @@
     rootTask:
       task: BasiliskCompound
     blackboard:
-      VisionRadius: !type:Single
-        7
-      AggroVisionRadius: !type:Single
-        12
-      NavSmash: !type:Bool
-        true
+      VisionRadius: !type:Single "7"
+      AggroVisionRadius: !type:Single "12"
+      NavSmash: !type:Bool "true"
   - type: Reflect
     reflectProb: 1
     reflects:

@@ -1,7 +1,7 @@
 # Cotton Bun
 
 - type: entity
-  parent: [FoodBreadSliceBase, BaseSlicingRefinable]
+  parent: [ FoodBreadSliceBase, BaseSlicingRefinable ]
   id: FoodCottonBun
   name: cotton bun
   description: A cotton hamburger bun. Soft, round and convenient to hold.
@@ -32,7 +32,6 @@
     - Bread
     - Slice
 
-
 - type: entity
   parent: FoodBreadSliceBase
   id: FoodCottonBunBottom
@@ -49,7 +48,7 @@
     sprite: Objects/Consumable/Food/cottonburger.rsi
     layers:
     - state: cottonbun_bottom
-    - map: ["foodSequenceLayers"]
+    - map: [ "foodSequenceLayers" ]
   - type: FoodSequenceStartPoint
     key: CottonBurger
     maxLayers: 10

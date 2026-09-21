@@ -204,5 +204,5 @@
   hidden: true
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
-    state: empbarsign 
+    state: empbarsign
   description: barsign-prototype-description-empbarsign

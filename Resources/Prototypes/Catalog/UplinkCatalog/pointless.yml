@@ -171,7 +171,7 @@
   description: uplink-scarf-syndie-green-desc
   productEntity: ClothingNeckScarfStripedSyndieGreen
   categories:
-    - UplinkPointless
+  - UplinkPointless
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -182,7 +182,7 @@
   description: uplink-business-card-desc
   productEntity: SyndicateBusinessCard
   categories:
-    - UplinkPointless
+  - UplinkPointless
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 3
@@ -202,7 +202,7 @@
   id: UplinkContrabandLighter
   name: uplink-contraband-lighter-name
   description: uplink-contraband-lighter-desc
-  icon: { sprite:  Objects/Tools/Lighters/syndielighter.rsi, state: icon}
+  icon: { sprite: Objects/Tools/Lighters/syndielighter.rsi, state: icon }
   productEntity: UplinkLighterBox
   cost:
     Telecrystal: 1

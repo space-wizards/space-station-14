@@ -87,4 +87,5 @@
   parent: BaseLight
   id: GreenLightBulb
   graph: GreenLightBulb
+
 # endregion Lights

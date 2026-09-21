@@ -5,8 +5,8 @@
   components:
   - type: Sprite
     layers:
-      - sprite: Structures/Walls/random.rsi
-        state: randomgrille
+    - sprite: Structures/Walls/random.rsi
+      state: randomgrille
   - type: EntityTableSpawner
     table: !type:GroupSelector
       children:

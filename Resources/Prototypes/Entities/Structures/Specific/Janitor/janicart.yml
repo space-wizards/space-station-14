@@ -1,6 +1,13 @@
 # Mop Bucket
 - type: entity
-  parent: [SolutionGinormous, SolutionTank, BaseStructureDynamic, StructureWheeled, StructureHealthContainerWeak]
+  parent:
+    [
+      SolutionGinormous,
+      SolutionTank,
+      BaseStructureDynamic,
+      StructureWheeled,
+      StructureHealthContainerWeak
+    ]
   id: MopBucket
   name: mop bucket
   description: Holds water and the tears of the janitor.
@@ -12,7 +19,7 @@
     layers:
     - state: mopbucket
     - state: mopbucket_water-1
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
     drawdepth: Objects
   - type: InteractionOutline
@@ -31,19 +38,19 @@
       mopbucket_shark_blue:
         whitelist:
           tags:
-            - PlushieSharkBlue
+          - PlushieSharkBlue
       mopbucket_shark_pink:
         whitelist:
           tags:
-            - PlushieSharkPink
+          - PlushieSharkPink
       mopbucket_shark_grey:
         whitelist:
           tags:
-            - PlushieSharkGrey
+          - PlushieSharkGrey
       mopbucket_carpplush:
         whitelist:
           tags:
-            - PlushieCarp
+          - PlushieCarp
       mopbucket_magicarpplush:
         whitelist:
           tags:
@@ -62,14 +69,14 @@
         ejectVerbText: mop-bucket-slot-component-eject-verb
         whitelist:
           tags:
-            - PlushieSharkBlue
-            - PlushieSharkPink
-            - PlushieSharkGrey
-            - PlushieCarp
-            - PlushieCarpHolo
-            - PlushieCarpMagi
+          - PlushieSharkBlue
+          - PlushieSharkPink
+          - PlushieSharkGrey
+          - PlushieCarp
+          - PlushieCarpHolo
+          - PlushieCarpMagi
           components:
-            - Rehydratable
+          - Rehydratable
         priority: 3 # Higher than drinking priority
   - type: ReactiveContainer
     solution: tank
@@ -87,7 +94,7 @@
     containers:
       storagebase: !type:Container
         ents: []
-      item_slot: !type:ContainerSlot {}
+      item_slot: !type:ContainerSlot
   - type: GuideHelp
     guides:
     - Janitorial
@@ -95,8 +102,7 @@
     damageModifierSet: PlasticMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 60
       behaviors:
       - !type:PlaySoundBehavior
@@ -113,8 +119,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
         density: 60
         mask:
@@ -128,9 +133,9 @@
   components:
   - type: Sprite
     layers:
-      - state: mopbucket
-      - state: mopbucket_water-3
-        map: [ "enum.SolutionContainerLayers.Fill" ]
+    - state: mopbucket
+    - state: mopbucket_water-3
+      map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: Solution
     solution:
       reagents:
@@ -151,7 +156,14 @@
 
 # Janicart
 - type: entity
-  parent: [SolutionGinormous, SolutionTank, BaseStructureDynamic, StructureWheeled, StructureHealthContainer]
+  parent:
+    [
+      SolutionGinormous,
+      SolutionTank,
+      BaseStructureDynamic,
+      StructureWheeled,
+      StructureHealthContainer
+    ]
   id: JanitorialTrolley
   name: janitorial trolley
   description: This is the alpha and omega of sanitation.
@@ -162,7 +174,7 @@
     layers:
     - state: cart
     - state: cart_water-1
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
   - type: Rotatable
   - type: InteractionOutline
@@ -245,8 +257,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.3
         density: 250
         layer:
@@ -272,8 +283,7 @@
     damageModifierSet: PlasticMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:EmptyAllContainersBehaviour
@@ -313,7 +323,8 @@
         whitelist:
           tags:
           - Spray
-      cart_sign1: # this is like stack of floor signs
+      cart_sign1:
+        # this is like stack of floor signs
         minCount: 1
         whitelist:
           tags:
@@ -363,17 +374,17 @@
     containers:
       storagebase: !type:Container
         ents: []
-      mop_slot: !type:ContainerSlot {}
-      trashbag_slot: !type:ContainerSlot {}
-      bucket_slot: !type:ContainerSlot {}
-      plunger_slot: !type:ContainerSlot {}
-      goldenplunger_slot: !type:ContainerSlot {}
-      wetfloorsign_slot4: !type:ContainerSlot {}
-      wetfloorsign_slot3: !type:ContainerSlot {}
-      wetfloorsign_slot2: !type:ContainerSlot {}
-      wetfloorsign_slot1: !type:ContainerSlot {}
-      lightreplacer_slot: !type:ContainerSlot {}
-      spraybottle_slot:  !type:ContainerSlot {}
+      mop_slot: !type:ContainerSlot
+      trashbag_slot: !type:ContainerSlot
+      bucket_slot: !type:ContainerSlot
+      plunger_slot: !type:ContainerSlot
+      goldenplunger_slot: !type:ContainerSlot
+      wetfloorsign_slot4: !type:ContainerSlot
+      wetfloorsign_slot3: !type:ContainerSlot
+      wetfloorsign_slot2: !type:ContainerSlot
+      wetfloorsign_slot1: !type:ContainerSlot
+      lightreplacer_slot: !type:ContainerSlot
+      spraybottle_slot: !type:ContainerSlot
   - type: GuideHelp
     guides:
     - Janitorial

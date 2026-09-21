@@ -14,8 +14,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
         density: 190
         mask:
@@ -92,7 +91,7 @@
   parent: ConstructibleMachine
   id: SmallConstructibleMachine
   components:
-    - type: RequireProjectileTarget
+  - type: RequireProjectileTarget
 
 - type: entity
   abstract: true

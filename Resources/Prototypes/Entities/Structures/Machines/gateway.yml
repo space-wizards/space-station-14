@@ -2,7 +2,8 @@
   parent: BaseStructure
   id: Gateway
   name: gateway
-  description: A mysterious gateway built by unknown hands, it allows for faster than light travel to far-flung locations.
+  description: A mysterious gateway built by unknown hands, it allows for faster
+    than light travel to far-flung locations.
   components:
   - type: Sprite
     sprite: Structures/Machines/gateway.rsi
@@ -11,11 +12,11 @@
     - state: frame
     - state: on
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
       visible: false
     - state: portal
       shader: unshaded
-      map: ["portal"]
+      map: [ "portal" ]
       visible: false
   - type: GenericVisualizer
     visuals:
@@ -35,8 +36,7 @@
   - type: Fixtures
     fixtures:
       portalFixture:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.48,0.25,0.48"
         mask:
         - FullTileMask

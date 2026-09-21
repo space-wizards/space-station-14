@@ -6,14 +6,14 @@
   components:
   - type: Tag
     tags:
-      - MagazineRifle
+    - MagazineRifle
   - type: Item
     size: Small
   - type: BallisticAmmoProvider
     mayTransfer: true
     whitelist:
       tags:
-        - CartridgeRifle
+      - CartridgeRifle
     capacity: 25
   - type: ContainerContainer
     containers:
@@ -22,9 +22,9 @@
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Rifle/rifle_mag.rsi
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]
+      map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
+      map: [ "enum.GunVisualLayers.Mag" ]
   - type: MagazineVisuals
     magState: mag
     steps: 2
@@ -35,16 +35,17 @@
   parent: BaseMagazineRifle
   id: MagazineRifle
   name: "magazine (.20 rifle)"
-  description: 25-round double stack magazine for combat rifles. Intended to hold general-purpose kinetic ammunition.
+  description: 25-round double stack magazine for combat rifles. Intended to hold
+    general-purpose kinetic ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifle
   - type: Sprite
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]
+      map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
+      map: [ "enum.GunVisualLayers.Mag" ]
   - type: Item
     inhandVisuals:
       left:
@@ -64,9 +65,9 @@
   - type: Sprite
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]
+      map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
+      map: [ "enum.GunVisualLayers.Mag" ]
   - type: Item
     inhandVisuals:
       left:
@@ -78,16 +79,17 @@
   parent: MagazineRifle
   id: MagazineRifleIncendiary
   name: "magazine (.20 rifle incendiary)"
-  description: 25-round double stack magazine for combat rifles. Intended to hold self-igniting incendiary ammunition.
+  description: 25-round double stack magazine for combat rifles. Intended to hold
+    self-igniting incendiary ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifleIncendiary
   - type: Sprite
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]
+      map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
+      map: [ "enum.GunVisualLayers.Mag" ]
     - state: stripe
       color: "#ff6e52"
   - type: Item
@@ -105,16 +107,17 @@
   parent: BaseMagazineRifle
   id: MagazineRiflePractice
   name: "magazine (.20 rifle practice)"
-  description: 25-round double stack magazine for combat rifles. Intended to hold harmless practice ammunition.
+  description: 25-round double stack magazine for combat rifles. Intended to hold
+    harmless practice ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRiflePractice
   - type: Sprite
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]
+      map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
+      map: [ "enum.GunVisualLayers.Mag" ]
     - state: stripe
       color: "#dbdbdb"
   - type: Item
@@ -132,16 +135,17 @@
   parent: BaseMagazineRifle
   id: MagazineRifleUranium
   name: "magazine (.20 rifle uranium)"
-  description: 25-round double stack magazine for combat rifles. Intended to hold exotic uranium-core ammunition.
+  description: 25-round double stack magazine for combat rifles. Intended to hold
+    exotic uranium-core ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifleUranium
   - type: Sprite
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]
+      map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
+      map: [ "enum.GunVisualLayers.Mag" ]
     - state: stripe
       color: "#00cd42"
   - type: Item

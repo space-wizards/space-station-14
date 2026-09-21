@@ -1,4 +1,3 @@
-
 #region Bases
 
 - type: entity
@@ -18,8 +17,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.2
         density: 100
         mask:
@@ -112,18 +110,17 @@
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds: &ThresholdsFurnitureNormalSteel
-    - trigger: &DamageFurnitureNormal
-        !type:DamageTrigger
-        damage: 40
-      behaviors:
-      - &SoundMetalBreak !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-      - &SpawnSteel01 !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1: &Min0Max1
-            min: 0
-            max: 1
+      - trigger: &DamageFurnitureNormal !type:DamageTrigger
+          damage: 40
+        behaviors:
+        - &SoundMetalBreak !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - &SpawnSteel01 !type:SpawnEntitiesBehavior
+          spawn:
+            SheetSteel1: &Min0Max1
+              min: 0
+              max: 1
 
 - type: entity
   name: chair
@@ -341,8 +338,7 @@
   - type: MeleeSound
     soundGroups:
       Brute:
-        path:
-          "/Audio/Weapons/slash.ogg"
+        path: "/Audio/Weapons/slash.ogg"
   - type: Damageable
     damageModifierSet: ThreadMod
   - type: Destructible
@@ -358,7 +354,7 @@
     node: chair
 
 - type: entity
-  parent: [SeatBase, BaseDeployFoldable, StructureHealthFurniture]
+  parent: [ SeatBase, BaseDeployFoldable, StructureHealthFurniture ]
   id: ChairFolding
   name: folding chair
   description: If you carry six of these you become the coolest kid at church.
@@ -368,9 +364,9 @@
     sprite: Structures/Furniture/folding_chair.rsi
     layers:
     - state: folding
-      map: ["unfoldedLayer"]
+      map: [ "unfoldedLayer" ]
     - state: folding_folded
-      map: ["foldedLayer"]
+      map: [ "foldedLayer" ]
       visible: false
   - type: Item
     size: Huge
@@ -437,8 +433,7 @@
     damageModifierSet: CardboardMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:PlaySoundBehavior

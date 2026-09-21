@@ -2,7 +2,8 @@
   name: chemistry bag
   id: ChemBag
   parent: BaseStorageItem
-  description: A bag for storing chemistry products, such as pills, pill canisters, bottles, and syringes.
+  description: A bag for storing chemistry products, such as pills, pill
+    canisters, bottles, and syringes.
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/chem_bag.rsi
@@ -22,12 +23,12 @@
     areaInsert: true
     whitelist:
       components:
-        - FitsInDispenser
-        - Pill
+      - FitsInDispenser
+      - Pill
       tags:
-        - Document
-        - PillCanister
-        - Bottle
-        - Syringe
-        - Dropper
+      - Document
+      - PillCanister
+      - Bottle
+      - Syringe
+      - Dropper
   - type: Dumpable

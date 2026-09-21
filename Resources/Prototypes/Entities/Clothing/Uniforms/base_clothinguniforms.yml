@@ -1,12 +1,12 @@
 - type: entity
   abstract: true
-  parent: [SolutionFood, SolutionToolNormal, Clothing, BaseSlicingRefinable]
+  parent: [ SolutionFood, SolutionToolNormal, Clothing, BaseSlicingRefinable ]
   id: UnsensoredClothingUniformBase
   components:
   - type: Sprite
     state: icon
   - type: Clothing
-    slots: [innerclothing]
+    slots: [ innerclothing ]
     equipSound:
       path: /Audio/Items/jumpsuit_equip.ogg
   - type: ToolRefinable
@@ -35,7 +35,7 @@
   id: UnsensoredClothingUniformSkirtBase
   components:
   - type: Clothing
-    slots: [innerclothing]
+    slots: [ innerclothing ]
     femaleMask: UniformTop
 
 - type: entity
@@ -58,7 +58,7 @@
   id: ClothingUniformSkirtBase
   components:
   - type: Clothing
-    slots: [innerclothing]
+    slots: [ innerclothing ]
     femaleMask: UniformTop
 
 - type: entity

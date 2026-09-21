@@ -1,15 +1,21 @@
 - type: entity
   id: Jukebox
   name: jukebox
-  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
-  description: A machine capable of playing a wide variety of tunes. Enjoyment not guaranteed.
+  parent:
+    [
+      BaseMachinePowered,
+      ConstructibleMachine,
+      BaseConstructibleMachineDestructible
+    ]
+  description: A machine capable of playing a wide variety of tunes. Enjoyment not
+    guaranteed.
   components:
   - type: StationAiWhitelist
   - type: Sprite
     sprite: Structures/Machines/jukebox.rsi
     layers:
     - state: "off"
-      map: ["enum.JukeboxVisualLayers.Base"]
+      map: [ "enum.JukeboxVisualLayers.Base" ]
   - type: Transform
     anchored: true
   - type: Jukebox
@@ -27,10 +33,10 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-        enum.JukeboxUiKey.Key:
-          type: JukeboxBoundUserInterface
-        enum.WiresUiKey.Key:
-          type: WiresBoundUserInterface
+      enum.JukeboxUiKey.Key:
+        type: JukeboxBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: WiresPanel
   - type: Wires
     boardName: wires-board-name-jukebox
@@ -39,8 +45,7 @@
     damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 175
       behaviors:
       - !type:PlaySoundBehavior
@@ -51,8 +56,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.45,0.25,0.45"
         mask:
         - MachineMask

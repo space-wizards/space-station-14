@@ -2,7 +2,8 @@
   id: MineralScannerUnpowered
   parent: BaseItem
   name: mineral scanner
-  description: A scanner that checks surrounding rock for useful minerals. It must be in your hand or pocket to work.
+  description: A scanner that checks surrounding rock for useful minerals. It must
+    be in your hand or pocket to work.
   suffix: Always Powered
   components:
   - type: Sprite
@@ -12,7 +13,7 @@
     - state: icon-o
       shader: unshaded
       visible: false
-      map: ["enum.ToggleableVisuals.Layer"]
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: Item
     inhandVisuals:
       left:
@@ -64,7 +65,8 @@
   id: AdvancedMineralScannerUnpowered
   parent: MineralScannerUnpowered
   name: advanced mineral scanner
-  description: A scanner that checks surrounding rock for useful minerals. It must be in your hand or pocket to work. This one has an extended range.
+  description: A scanner that checks surrounding rock for useful minerals. It must
+    be in your hand or pocket to work. This one has an extended range.
   suffix: Always Powered
   components:
   - type: Sprite
@@ -73,7 +75,7 @@
     - state: adv-o
       shader: unshaded
       visible: false
-      map: ["enum.ToggleableVisuals.Layer"]
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: Item
     storedRotation: -90
     inhandVisuals:

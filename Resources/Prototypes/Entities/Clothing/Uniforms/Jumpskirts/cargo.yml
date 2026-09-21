@@ -10,7 +10,7 @@
     sprite: Clothing/Uniforms/Jumpskirts/Cargo/cargotech.rsi
 
 - type: entity
-  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  parent: [ ClothingUniformSkirtBase, BaseCommandContraband ]
   id: ClothingUniformJumpskirtQM
   name: quartermaster's jumpskirt
   description: 'What can brown do for you?'
@@ -21,7 +21,7 @@
     sprite: Clothing/Uniforms/Jumpskirts/Cargo/qm.rsi
 
 - type: entity
-  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  parent: [ ClothingUniformSkirtBase, BaseCommandContraband ]
   id: ClothingUniformJumpskirtQMTurtleneck
   name: quartermasters's turtleneck
   description: A sharp turtleneck made for the hardy work environment of supply.

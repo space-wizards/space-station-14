@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [SolutionFood, SolutionToolNormal, Clothing]
+  parent: [ SolutionFood, SolutionToolNormal, Clothing ]
   id: ClothingShoesBase
   components:
   - type: Clothing
@@ -26,7 +26,7 @@
 
 - type: entity
   abstract: true
-  parent: [ClothingShoesBase, BaseSlicingRefinable]
+  parent: [ ClothingShoesBase, BaseSlicingRefinable ]
   id: ClothingShoesBaseButcherable
   components:
   - type: ToolRefinable
@@ -40,7 +40,7 @@
 # stuff common to all military boots
 - type: entity
   abstract: true
-  parent: [ClothingShoesBase, ClothingSlotBase]
+  parent: [ ClothingShoesBase, ClothingSlotBase ]
   id: ClothingShoesMilitaryBase
   components:
   - type: Matchbox

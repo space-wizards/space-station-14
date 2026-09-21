@@ -2,7 +2,8 @@
   abstract: true
   id: MobRatvarBase #can't have the clockwork justiciar be associated with his (im)mortal enemy
   name: Ratvar
-  description: Your mind aches as it fails to understand the complex mechanics of what is before you.
+  description: Your mind aches as it fails to understand the complex mechanics of
+    what is before you.
   components:
   - type: Sprite
     sprite: Mobs/Demons/ratvar.rsi
@@ -27,7 +28,7 @@
     prototype: MobRatvar
 
 - type: entity
-  parent: [MobRatvarBase, BaseMob]
+  parent: [ MobRatvarBase, BaseMob ]
   id: MobRatvar
   components:
   - type: AnnounceOnSpawn
@@ -42,9 +43,8 @@
   - type: Fixtures
     fixtures:
       EventHorizonCollider:
-        shape:
-          !type:PhysShapeCircle
-            radius: 5
+        shape: !type:PhysShapeCircle
+          radius: 5
         hard: false
         restitution: 0.8
         density: 1
@@ -53,9 +53,8 @@
         layer:
         - SingularityLayer
       EventHorizonConsumer:
-        shape:
-          !type:PhysShapeCircle
-            radius: 5
+        shape: !type:PhysShapeCircle
+          radius: 5
         hard: false
         mask:
         - SingularityLayer

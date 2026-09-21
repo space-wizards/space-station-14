@@ -7,11 +7,11 @@
   - type: Sprite
     sprite: Objects/Tools/geiger.rsi
     layers:
-      - state: geiger_base
-      - state: geiger_on_idle
-        map: ["enum.GeigerLayers.Screen"]
-        shader: unshaded
-        visible: false
+    - state: geiger_base
+    - state: geiger_on_idle
+      map: [ "enum.GeigerLayers.Screen" ]
+      shader: unshaded
+      visible: false
   - type: Item
     sprite: Objects/Tools/geiger.rsi
   - type: Geiger
@@ -27,11 +27,11 @@
           False: { visible: False }
       enum.GeigerVisuals.DangerLevel:
         GeigerLayers.Screen:
-          None: {state: geiger_on_idle}
-          Low: {state: geiger_on_low}
-          Med: {state: geiger_on_med}
-          High: {state: geiger_on_high}
-          Extreme: {state: geiger_on_ext}
+          None: { state: geiger_on_idle }
+          Low: { state: geiger_on_low }
+          Med: { state: geiger_on_med }
+          High: { state: geiger_on_high }
+          Extreme: { state: geiger_on_ext }
   - type: PhysicalComposition
     materialComposition:
       Plastic: 100

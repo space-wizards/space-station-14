@@ -5,24 +5,24 @@
   id: LootSpawnerMedicalMinor
   parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Specific/Medical/medical.rsi
-          state: brutepack
-    - type: RandomSpawner
-      rarePrototypes:
-        - MedkitFilled
-      rareChance: 0.1
-      prototypes:
-        - Syringe #you win some you lose some
-        - Brutepack
-        - Ointment
-        - Gauze
-        - EmergencyMedipen
-        - PillCanisterIron
-      chance: 0.9
-      offset: 0.0
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Specific/Medical/medical.rsi
+      state: brutepack
+  - type: RandomSpawner
+    rarePrototypes:
+    - MedkitFilled
+    rareChance: 0.1
+    prototypes:
+    - Syringe #you win some you lose some
+    - Brutepack
+    - Ointment
+    - Gauze
+    - EmergencyMedipen
+    - PillCanisterIron
+    chance: 0.9
+    offset: 0.0
 
 # Proper medical loot spawner, contains things like beakers and better meds.
 - type: entity
@@ -30,36 +30,36 @@
   id: LootSpawnerMedicalClassy
   parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Specific/Medical/firstaidkits.rsi
-          state: firstaid
-    - type: RandomSpawner
-      rarePrototypes:
-        - PillCanisterDermaline
-        - PillCanisterDylovene
-        - PillCanisterBicaridine
-        - PillCanisterKelotane
-        - PillCanisterDexalin
-        - HandheldHealthAnalyzer
-        - ClothingHandsGlovesLatex
-      rareChance: 0.1
-      prototypes:
-        - Syringe
-        - Dropper
-        - Beaker
-        - LargeBeaker
-        - Brutepack
-        - Ointment
-        - Gauze
-        - EmergencyMedipen
-        - ChemistryBottleEpinephrine
-        - PillCanisterTricordrazine
-        - PillCanisterCharcoal
-        - PillCanisterHyronalin
-        - PillCanisterIron
-        - Bloodpack
-        - MedkitFilled
-      chance: 0.9
-      offset: 0.0
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Specific/Medical/firstaidkits.rsi
+      state: firstaid
+  - type: RandomSpawner
+    rarePrototypes:
+    - PillCanisterDermaline
+    - PillCanisterDylovene
+    - PillCanisterBicaridine
+    - PillCanisterKelotane
+    - PillCanisterDexalin
+    - HandheldHealthAnalyzer
+    - ClothingHandsGlovesLatex
+    rareChance: 0.1
+    prototypes:
+    - Syringe
+    - Dropper
+    - Beaker
+    - LargeBeaker
+    - Brutepack
+    - Ointment
+    - Gauze
+    - EmergencyMedipen
+    - ChemistryBottleEpinephrine
+    - PillCanisterTricordrazine
+    - PillCanisterCharcoal
+    - PillCanisterHyronalin
+    - PillCanisterIron
+    - Bloodpack
+    - MedkitFilled
+    chance: 0.9
+    offset: 0.0

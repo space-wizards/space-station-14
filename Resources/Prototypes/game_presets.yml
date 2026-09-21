@@ -1,30 +1,30 @@
 - type: gamePreset
   id: Survival
   alias:
-    - survival
+  - survival
   name: survival-title
   showInVote: false # secret
   description: survival-description
   rules:
-    - MeteorSwarmScheduler
-    - RampingStationEventScheduler
-    - SpaceTrafficControlEventScheduler
-    - BasicRoundstartVariation
+  - MeteorSwarmScheduler
+  - RampingStationEventScheduler
+  - SpaceTrafficControlEventScheduler
+  - BasicRoundstartVariation
 
 - type: gamePreset
   id: KesslerSyndrome
   alias:
-    - kessler
-    - junk
-    - meteorhell
+  - kessler
+  - junk
+  - meteorhell
   name: kessler-syndrome-title
   showInVote: false # secret
   description: kessler-syndrome-description
   rules:
-    - KesslerSyndromeScheduler
-    - RampingStationEventScheduler
-    - SpaceTrafficControlEventScheduler
-    - BasicRoundstartVariation
+  - KesslerSyndromeScheduler
+  - RampingStationEventScheduler
+  - SpaceTrafficControlEventScheduler
+  - BasicRoundstartVariation
 
 - type: gamePreset
   id: AllAtOnce
@@ -34,17 +34,17 @@
   description: all-at-once-description
   showInVote: false
   rules:
-    - Nukeops
-    - Traitor
-    - Revolutionary
-    - Zombie
-    - Wizard
-    - Xenoborgs
-    - Changeling
-    - KesslerSyndromeScheduler
-    - RampingStationEventScheduler
-    - SpaceTrafficControlEventScheduler
-    - BasicRoundstartVariation
+  - Nukeops
+  - Traitor
+  - Revolutionary
+  - Zombie
+  - Wizard
+  - Xenoborgs
+  - Changeling
+  - KesslerSyndromeScheduler
+  - RampingStationEventScheduler
+  - SpaceTrafficControlEventScheduler
+  - BasicRoundstartVariation
 
 - type: gamePreset
   id: AllerAtOnce
@@ -57,20 +57,20 @@
   description: aller-at-once-description
   showInVote: false #Please god dont do this
   rules:
-    - Nukeops
-    - Traitor
-    - Revolutionary
-    - Zombie
-    - Wizard
-    - Xenoborgs
-    - Changeling
-    - BasicStationEventScheduler
-    - KesslerSyndromeScheduler
-    - MeteorSwarmMildScheduler
-    - MeteorSwarmScheduler
-    - RampingStationEventScheduler
-    - SpaceTrafficControlEventScheduler
-    - BasicRoundstartVariation
+  - Nukeops
+  - Traitor
+  - Revolutionary
+  - Zombie
+  - Wizard
+  - Xenoborgs
+  - Changeling
+  - BasicStationEventScheduler
+  - KesslerSyndromeScheduler
+  - MeteorSwarmMildScheduler
+  - MeteorSwarmScheduler
+  - RampingStationEventScheduler
+  - SpaceTrafficControlEventScheduler
+  - BasicRoundstartVariation
 
 - type: gamePreset
   id: Extended
@@ -117,30 +117,30 @@
 - type: gamePreset
   id: Secret
   alias:
-    - secret
-    - sekrit
+  - secret
+  - sekrit
   name: secret-title
   showInVote: true
   description: secret-description
   rules:
-    - Secret
+  - Secret
 
 - type: gamePreset
   id: Sandbox
   alias:
-    - sandbox
+  - sandbox
   name: sandbox-title
   description: sandbox-description
   showInVote: false # Not suitable for use without admin intervention, since entity spamming can quickly crash a server
   maxPlayers: 5
   rules:
-    - Sandbox
+  - Sandbox
 
 - type: gamePreset
   id: Traitor
   alias:
-    - traitor
-    - tator
+  - traitor
+  - tator
   name: traitor-title
   description: traitor-description
   showInVote: false
@@ -156,20 +156,20 @@
 - type: gamePreset
   id: Deathmatch
   alias:
-    - deathmatch
-    - dm
+  - deathmatch
+  - dm
   name: death-match-title
   description: death-match-description
   maxPlayers: 15
   showInVote: true
   supportedMaps: DeathMatchMapPool
   rules:
-    - DeathMatch31
+  - DeathMatch31
 
 - type: gamePreset
   id: Nukeops
   alias:
-    - nukeops
+  - nukeops
   name: nukeops-title
   description: nukeops-description
   showInVote: false
@@ -185,9 +185,9 @@
 - type: gamePreset
   id: Revolutionary
   alias:
-    - rev
-    - revs
-    - revolutionaries
+  - rev
+  - revs
+  - revolutionaries
   name: rev-title
   description: rev-description
   showInVote: false
@@ -219,7 +219,7 @@
 - type: gamePreset
   id: Xenoborgs
   alias:
-    - xenoborgs
+  - xenoborgs
   name: xenoborgs-title
   description: xenoborgs-description
   showInVote: false

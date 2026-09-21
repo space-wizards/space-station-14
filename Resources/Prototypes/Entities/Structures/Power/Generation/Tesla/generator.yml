@@ -2,7 +2,8 @@
   id: TeslaGenerator
   name: tesla generator
   parent: BaseStructureDynamic
-  description: An Odd Device which produces a powerful Tesla ball when set up. Comes with a temporary shutdown containment failsafe.
+  description: An Odd Device which produces a powerful Tesla ball when set up.
+    Comes with a temporary shutdown containment failsafe.
   components:
   - type: Sprite
     noRot: true
@@ -17,7 +18,7 @@
         shape:
           # Using a circle here makes it a lot easier to pull it all the way from Cargo
           !type:PhysShapeCircle
-            radius: 0.45
+          radius: 0.45
         density: 190
         # Keep an eye on ParticlesProjectile when adjusting these
         mask:
@@ -29,4 +30,3 @@
     guides:
     - TeslaEngine
     - Power
-

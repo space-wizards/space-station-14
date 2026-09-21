@@ -16,12 +16,12 @@
     sprite: Objects/Tools/jaws_of_life.rsi
     quickEquip: false
     slots:
-      - Belt
+    - Belt
   - type: ToolTileCompatible
     delay: 0.5
   - type: Tool
     qualities:
-      - Prying
+    - Prying
     useSound: !type:SoundPathSpecifier
       path: /Audio/Items/jaws_pry.ogg
       params:
@@ -36,30 +36,30 @@
   - type: MultipleTool
     statusShowBehavior: true
     entries:
-      - behavior: [ Prying ]
-        sprite:
-          sprite: Objects/Tools/jaws_of_life.rsi
-          state: jaws_pry
-        useSound: !type:SoundPathSpecifier
-          path: /Audio/Items/jaws_pry.ogg
-          params:
-            volume: -2
-        changeSound: !type:SoundPathSpecifier
-          path: /Audio/Items/change_jaws.ogg
-          params:
-            volume: -5
-      - behavior: [ Cutting ]
-        sprite:
-          sprite: Objects/Tools/jaws_of_life.rsi
-          state: jaws_cutter
-        useSound: !type:SoundPathSpecifier
-          path: /Audio/Items/jaws_cut.ogg
-          params:
-            volume: -4
-        changeSound: !type:SoundPathSpecifier
-          path: /Audio/Items/change_jaws.ogg
-          params:
-            volume: -5
+    - behavior: [ Prying ]
+      sprite:
+        sprite: Objects/Tools/jaws_of_life.rsi
+        state: jaws_pry
+      useSound: !type:SoundPathSpecifier
+        path: /Audio/Items/jaws_pry.ogg
+        params:
+          volume: -2
+      changeSound: !type:SoundPathSpecifier
+        path: /Audio/Items/change_jaws.ogg
+        params:
+          volume: -5
+    - behavior: [ Cutting ]
+      sprite:
+        sprite: Objects/Tools/jaws_of_life.rsi
+        state: jaws_cutter
+      useSound: !type:SoundPathSpecifier
+        path: /Audio/Items/jaws_cut.ogg
+        params:
+          volume: -4
+      changeSound: !type:SoundPathSpecifier
+        path: /Audio/Items/change_jaws.ogg
+        params:
+          volume: -5
   - type: MeleeWeapon
     wideAnimationRotation: 90
     damage:
@@ -70,7 +70,7 @@
 
 - type: entity
   name: syndicate jaws of death
-  parent: [ JawsOfLife, BaseSyndicateContraband]
+  parent: [ JawsOfLife, BaseSyndicateContraband ]
   id: SyndicateJawsOfLife
   description: Useful for breaking into secure areas and other nefarious activities.
   components:
@@ -89,30 +89,30 @@
     speedModifier: 3.0
   - type: MultipleTool
     entries:
-      - behavior: [ Prying ]
-        sprite:
-          sprite: Objects/Tools/jaws_of_life.rsi
-          state: syn_jaws_pry
-        useSound: !type:SoundPathSpecifier
-          path: /Audio/Items/jaws_pry.ogg
-          params:
-            volume: -2
-        changeSound: !type:SoundPathSpecifier
-          path: /Audio/Items/change_jaws.ogg
-          params:
-            volume: -5
-      - behavior: [ Cutting ]
-        sprite:
-          sprite: Objects/Tools/jaws_of_life.rsi
-          state: syn_jaws_cutter
-        useSound: !type:SoundPathSpecifier
-          path: /Audio/Items/jaws_cut.ogg
-          params:
-            volume: -4
-        changeSound: !type:SoundPathSpecifier
-          path: /Audio/Items/change_jaws.ogg
-          params:
-            volume: -5
+    - behavior: [ Prying ]
+      sprite:
+        sprite: Objects/Tools/jaws_of_life.rsi
+        state: syn_jaws_pry
+      useSound: !type:SoundPathSpecifier
+        path: /Audio/Items/jaws_pry.ogg
+        params:
+          volume: -2
+      changeSound: !type:SoundPathSpecifier
+        path: /Audio/Items/change_jaws.ogg
+        params:
+          volume: -5
+    - behavior: [ Cutting ]
+      sprite:
+        sprite: Objects/Tools/jaws_of_life.rsi
+        state: syn_jaws_cutter
+      useSound: !type:SoundPathSpecifier
+        path: /Audio/Items/jaws_cut.ogg
+        params:
+          volume: -4
+      changeSound: !type:SoundPathSpecifier
+        path: /Audio/Items/change_jaws.ogg
+        params:
+          volume: -5
   - type: MeleeWeapon
     damage:
       types:
@@ -122,7 +122,7 @@
 
 - type: entity
   name: xenoborg jaws of death
-  parent: [JawsOfLife, BaseXenoborgContraband ]
+  parent: [ JawsOfLife, BaseXenoborgContraband ]
   id: XenoborgJawsOfLife
   description: Useful for prying open bolted doors where organics are hiding.
   components:

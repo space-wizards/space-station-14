@@ -4,9 +4,9 @@
   description: job-description-bartender
   playTimeTracker: JobBartender
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Service
-      time: 0.5h
+  - !type:DepartmentTimeRequirement
+    department: Service
+    time: 0.5h
   startingGear: BartenderGear
   icon: "JobIconBartender"
   supervisors: job-supervisors-hop
@@ -25,7 +25,7 @@
     shoes: ClothingShoesColorBlack
     id: BartenderPDA
     ears: ClothingHeadsetService
-  #storage:
+    #storage:
     #back:
     #- Stuff
 
@@ -39,4 +39,3 @@
     neck: ClothingNeckScarfStripedBlack
     outerClothing: ClothingOuterArmorBasicSlim
     gloves: ClothingHandsGlovesColorBlack
-

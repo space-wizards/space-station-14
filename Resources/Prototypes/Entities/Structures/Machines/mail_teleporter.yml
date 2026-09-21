@@ -7,8 +7,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
         density: 190
         mask:

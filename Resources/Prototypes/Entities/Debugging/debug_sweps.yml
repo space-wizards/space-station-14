@@ -45,8 +45,8 @@
     fireRate: 100
     selectedMode: FullAuto
     availableModes:
-      - SemiAuto
-      - FullAuto
+    - SemiAuto
+    - FullAuto
   - type: AmmoCounter
   - type: ChamberMagazineAmmoProvider
     boltClosed: null
@@ -60,14 +60,14 @@
         priority: 2
         whitelist:
           tags:
-            - MagazineDebug
+          - MagazineDebug
       gun_chamber:
         name: Chamber
         startingItem: CartridgeDebug
         priority: 1
         whitelist:
           tags:
-            - CartridgeDebug
+          - CartridgeDebug
 
 - type: entity
   id: MagazinePistolDebug
@@ -77,7 +77,7 @@
   components:
   - type: Tag
     tags:
-      - MagazineDebug
+    - MagazineDebug
   - type: BallisticAmmoProvider
     proto: CartridgeDebug
     capacity: 1000

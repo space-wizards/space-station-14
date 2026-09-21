@@ -52,7 +52,7 @@
 
 #Tank Harness
 - type: entity
-  parent: [ClothingOuterBase, AllowSuitStorageClothingGasTanks]
+  parent: [ ClothingOuterBase, AllowSuitStorageClothingGasTanks ]
   id: ClothingOuterVestTank
   name: tank harness
   description: A simple harness that can hold a gas tank.
@@ -68,10 +68,11 @@
 
 # Reporter unlockable PRESS vest
 - type: entity
-  parent: [ClothingOuterBase, AllowSuitStorageClothingGasTanks]
+  parent: [ ClothingOuterBase, AllowSuitStorageClothingGasTanks ]
   id: ClothingOuterVestPress
   name: press vest
-  description: A cloth vest for the fearless reporter in the field. Go land an interview with that space dragon!
+  description: A cloth vest for the fearless reporter in the field. Go land an
+    interview with that space dragon!
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Vests/pressvest.rsi

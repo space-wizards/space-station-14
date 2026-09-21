@@ -1,22 +1,28 @@
 - type: entity
-  parent: [ClothingOuterBase, TemperatureProtectionMinimal, AllowSuitStorageClothingGasTanks, BaseChameleon]
+  parent:
+    [
+      ClothingOuterBase,
+      TemperatureProtectionMinimal,
+      AllowSuitStorageClothingGasTanks,
+      BaseChameleon
+    ]
   id: ClothingOuterChameleon
   name: vest
   description: A thick vest with a rubbery, water-resistant shell.
   suffix: Chameleon
   components:
-    - type: Tag
-      tags: [] # ignore "WhitelistChameleon" tag
-    - type: Sprite
-      sprite: Clothing/OuterClothing/Vests/vest.rsi
-    - type: Clothing
-      sprite: Clothing/OuterClothing/Vests/vest.rsi
-    - type: ChameleonClothing
-      slot: [outerClothing]
-      default: ClothingOuterVest
-    - type: Armor
-      modifiers:
-        coefficients:
-          Slash: 0.95
-          Heat: 0.90
-      showArmorOnExamine: false
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Vests/vest.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Vests/vest.rsi
+  - type: ChameleonClothing
+    slot: [ outerClothing ]
+    default: ClothingOuterVest
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95
+        Heat: 0.90
+    showArmorOnExamine: false

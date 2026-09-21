@@ -30,9 +30,9 @@
     sprite: Structures/Wallmounts/Lighting/strobe_light.rsi
     drawdepth: WallMountedItems
     layers:
-    - map: ["enum.PoweredLightLayers.Base"]
+    - map: [ "enum.PoweredLightLayers.Base" ]
       state: base
-    - map: ["enum.PoweredLightLayers.Glow"]
+    - map: [ "enum.PoweredLightLayers.Glow" ]
       state: glow
       shader: unshaded
     state: base
@@ -49,8 +49,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.2,0.35,0.2,0.5"
         density: 190
         mask:
@@ -59,8 +58,7 @@
         - TabletopMachineLayer
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -108,9 +106,9 @@
       on: base
   - type: DeviceLinkSink
     ports:
-      - On
-      - Off
-      - Toggle
+    - On
+    - Off
+    - Toggle
   - type: Construction
     graph: LightFixture
     node: strobeLight

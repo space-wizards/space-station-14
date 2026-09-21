@@ -7,7 +7,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 0,0
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab17x5b
@@ -15,7 +15,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 18,0
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab17x5c
@@ -23,7 +23,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 36,0
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 # - 7x7
 - type: dungeonRoom
@@ -32,7 +32,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 0,42
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab7x7b
@@ -40,7 +40,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 8,42
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab7x7c
@@ -48,7 +48,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 16,42
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 # Medium
 # - 11x5
@@ -58,7 +58,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 0,6
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab11x5b
@@ -66,7 +66,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 12,6
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab11x5c
@@ -74,7 +74,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 24,6
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab11x5d
@@ -82,7 +82,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 36,6
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 # - 7x5
 - type: dungeonRoom
@@ -91,7 +91,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 0,12
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab7x5b
@@ -99,7 +99,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 8,12
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab7x5c
@@ -107,7 +107,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 16,12
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab7x5d
@@ -115,7 +115,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 24,12
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab7x5e
@@ -123,7 +123,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 32,12
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab7x5f
@@ -131,7 +131,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 40,12
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab7x5g
@@ -139,7 +139,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 48,12
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 # - 13x3
 - type: dungeonRoom
@@ -148,7 +148,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 0,30
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab13x3b
@@ -156,7 +156,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 14,30
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 # - 11x3
 - type: dungeonRoom
@@ -165,7 +165,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 0,34
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab11x3b
@@ -173,7 +173,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 12,34
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab11x3c
@@ -181,7 +181,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 24,34
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 # - 7x3
 - type: dungeonRoom
@@ -190,7 +190,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 0,38
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab7x3b
@@ -198,7 +198,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 8,38
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab7x3c
@@ -206,7 +206,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 16,38
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab7x3d
@@ -214,7 +214,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 24,38
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab7x3e
@@ -222,7 +222,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 32,38
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab7x3f
@@ -230,7 +230,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 40,38
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab7x3g
@@ -238,7 +238,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 48,38
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 # Small
 # - 5x5
@@ -248,7 +248,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 0,18
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab5x5b
@@ -256,7 +256,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 6,18
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab5x5c
@@ -264,7 +264,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 12,18
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab5x5d
@@ -272,7 +272,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 18,18
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab5x5e
@@ -280,7 +280,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 24,18
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab5x5f
@@ -288,7 +288,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 30,18
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 # - 3x5
 - type: dungeonRoom
@@ -297,7 +297,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 0,24
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab3x5b
@@ -305,7 +305,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 4,24
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab3x5c
@@ -313,7 +313,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 8,24
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab3x5d
@@ -321,7 +321,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 12,24
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab3x5e
@@ -329,7 +329,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 16,24
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab3x5f
@@ -337,7 +337,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 20,24
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab3x5g
@@ -345,7 +345,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 24,24
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab3x5h
@@ -353,7 +353,7 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 28,24
   tags:
-    - SnowyLabs
+  - SnowyLabs
 
 - type: dungeonRoom
   id: SnowyLab3x5i
@@ -361,4 +361,4 @@
   atlas: /Maps/Dungeon/snowy_labs.yml
   offset: 32,24
   tags:
-    - SnowyLabs
+  - SnowyLabs

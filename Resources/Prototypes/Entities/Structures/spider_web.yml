@@ -11,8 +11,7 @@
   - type: MeleeSound
     soundGroups:
       Brute:
-        path:
-          "/Audio/Weapons/slash.ogg"
+        path: "/Audio/Weapons/slash.ogg"
   - type: Sprite
     sprite: Structures/floor_web.rsi
     drawdepth: WallMountedItems
@@ -31,8 +30,8 @@
         Heat: 5
   - type: Reactive
     groups:
-      Flammable: [Touch]
-      Extinguish: [Touch]
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
   - type: SpiderWebObject
   - type: IconSmooth
     key: web
@@ -56,15 +55,13 @@
       fix1:
         hard: false
         density: 7
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
         layer:
         - MidImpassable
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 10
       behaviors:
       - !type:DoActsBehavior
@@ -83,7 +80,7 @@
 
 - type: entity
   id: SpiderWebClown
-  parent: [SolutionFood, SolutionVeryTiny, SpiderWebBase]
+  parent: [ SolutionFood, SolutionVeryTiny, SpiderWebBase ]
   name: clown spider web
   description: It's stringy and slippy.
   components:
@@ -97,22 +94,20 @@
       fix1:
         hard: false
         density: 7
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.4"
         layer:
         - MidImpassable
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 10
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: FlavorProfile
     flavors:
-      - sweet
+    - sweet
   - type: Edible
     delay: 2
   - type: Solution

@@ -13,8 +13,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
         density: 60
         mask:
@@ -25,7 +24,7 @@
   - type: Pullable
   - type: Tag
     tags:
-      - Structure
+    - Structure
 
 - type: entity
   # This means that it's not anchored on spawn.
@@ -33,11 +32,11 @@
   parent: BaseStructure
   abstract: true
   components:
-# These might/might not be a good idea
-#  - type: MovedByPressure
-#  - type: DamageOnHighSpeedImpact
-#  - type: TileFrictionModifier
-#    modifier: 0.5
+  # These might/might not be a good idea
+  #  - type: MovedByPressure
+  #  - type: DamageOnHighSpeedImpact
+  #  - type: TileFrictionModifier
+  #    modifier: 0.5
   - type: Transform
     anchored: false
   - type: Clickable
@@ -46,8 +45,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
         density: 60
         mask:
@@ -62,5 +60,5 @@
   id: StructureWheeled
   abstract: true
   components:
-    - type: TileFrictionModifier
-      modifier: 0.4
+  - type: TileFrictionModifier
+    modifier: 0.4

@@ -11,7 +11,7 @@
     heldPrefix: carpet-red
   - type: FloorTile
     outputs:
-      - Plating
+    - Plating
   - type: Stack
     stackType: FloorCarpetRed
   - type: SpawnAfterInteract #Nuke after convert to FloorTile

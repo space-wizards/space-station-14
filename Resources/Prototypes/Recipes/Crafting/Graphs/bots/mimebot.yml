@@ -13,8 +13,8 @@
         name: construction-graph-tag-mime-meal
       - tag: MimeBelt
         icon:
-            sprite: Clothing/Belt/suspenders_red.rsi
-            state: icon
+          sprite: Clothing/Belt/suspenders_red.rsi
+          state: icon
         name: construction-graph-tag-suspenders
         doAfter: 2
       - tag: ProximitySensor

@@ -2,7 +2,8 @@
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtCasualBlue
   name: casual blue jumpskirt
-  description: A loose worn blue shirt with a grey skirt, perfect for someone looking to relax.
+  description: A loose worn blue shirt with a grey skirt, perfect for someone
+    looking to relax.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuits/Civilian/casual.rsi
@@ -32,7 +33,8 @@
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtCasualPurple
   name: casual purple jumpskirt
-  description: A loose worn purple shirt with a grey skirt, perfect for someone looking to relax.
+  description: A loose worn purple shirt with a grey skirt, perfect for someone
+    looking to relax.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuits/Civilian/casual.rsi
@@ -62,7 +64,8 @@
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtCasualRed
   name: casual red jumpskirt
-  description: A loose worn red shirt with a grey skirt, perfect for someone looking to relax.
+  description: A loose worn red shirt with a grey skirt, perfect for someone
+    looking to relax.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuits/Civilian/casual.rsi
@@ -92,7 +95,8 @@
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtCasualGreen
   name: casual green jumpskirt
-  description: A loose worn green shirt with a grey skirt, perfect for someone looking to relax.
+  description: A loose worn green shirt with a grey skirt, perfect for someone
+    looking to relax.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuits/Civilian/casual.rsi

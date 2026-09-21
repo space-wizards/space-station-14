@@ -63,7 +63,8 @@
   name: luxury pen
   parent: Pen
   id: LuxuryPen
-  description: A fancy and expensive pen that you only deserve to own if you're qualified to handle vast amounts of paperwork.
+  description: A fancy and expensive pen that you only deserve to own if you're
+    qualified to handle vast amounts of paperwork.
   components:
   - type: Sprite
     state: luxury_pen
@@ -95,9 +96,12 @@
 
 - type: entity
   name: Cybersun pen
-  parent: [BaseAdvancedPen, BaseSyndicateContraband]
+  parent: [ BaseAdvancedPen, BaseSyndicateContraband ]
   id: CyberPen
-  description: A high-tech pen straight from Cybersun's legal department, capable of refracting hard-light at impossible angles through its diamond tip in order to write. So powerful, it's even able to rewrite officially stamped documents should the need arise.
+  description: A high-tech pen straight from Cybersun's legal department, capable
+    of refracting hard-light at impossible angles through its diamond tip in
+    order to write. So powerful, it's even able to rewrite officially stamped
+    documents should the need arise.
   components:
   - type: Sprite
     state: overpriced_pen
@@ -108,9 +112,10 @@
 
 - type: entity
   name: CentComm pen
-  parent: [BaseAdvancedPen, BaseCentcommContraband]
+  parent: [ BaseAdvancedPen, BaseCentcommContraband ]
   id: PenCentcom
-  description: In an attempt to keep up with the "power" of the cybersun bureaucracy, NT made a replica of cyber pen, in their corporate style.
+  description: In an attempt to keep up with the "power" of the cybersun
+    bureaucracy, NT made a replica of cyber pen, in their corporate style.
   components:
   - type: Sprite
     state: pen_centcom

@@ -1,5 +1,10 @@
 - type: entity
-  parent: [BaseDeltaPressureReinforcedGlass, BaseWindowStructure, StructureHealthBarrierStrong]
+  parent:
+    [
+      BaseDeltaPressureReinforcedGlass,
+      BaseWindowStructure,
+      StructureHealthBarrierStrong
+    ]
   id: ReinforcedWindow
   name: reinforced window
   components:
@@ -19,8 +24,7 @@
     fx: EffectRCDDeconstruct6
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 120
       behaviors:
       - !type:PlaySoundBehavior
@@ -38,14 +42,19 @@
     node: reinforcedWindow
   - type: Appearance
   - type: DamageVisuals
-    thresholds: [5, 10, 20]
+    thresholds: [ 5, 10, 20 ]
     damageDivisor: 3
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
 
 - type: entity
-  parent: [BaseDeltaPressureReinforcedGlassQuarter, BaseWindowStructureDirectional, StructureHealthBarrier]
+  parent:
+    [
+      BaseDeltaPressureReinforcedGlassQuarter,
+      BaseWindowStructureDirectional,
+      StructureHealthBarrier
+    ]
   id: WindowReinforcedDirectional
   name: directional reinforced window
   components:
@@ -60,7 +69,7 @@
     node: windowReinforcedDirectional
   - type: Appearance
   - type: DamageVisuals
-    thresholds: [5, 10, 20]
+    thresholds: [ 5, 10, 20 ]
     damageDivisor: 1.5
     trackAllDamage: true
     damageOverlay:
@@ -73,8 +82,7 @@
     fx: EffectRCDDeconstruct4
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 80
       behaviors:
       - !type:PlaySoundBehavior
@@ -102,8 +110,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,-0.28125,-0.28125"
         density: 1500
         mask:
@@ -114,7 +121,7 @@
     graph: WindowDirectionalCorner
     node: windowReinforcedDirectionalCorner
   - type: DamageVisuals
-    thresholds: [5, 10, 20]
+    thresholds: [ 5, 10, 20 ]
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks_directional_corner.rsi
@@ -145,12 +152,11 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PolygonShape
-            vertices:
-            - "-0.5,-0.5"
-            - "0.5,0.5"
-            - "0.5,-0.5"
+        shape: !type:PolygonShape
+          vertices:
+          - "-0.5,-0.5"
+          - "0.5,0.5"
+          - "0.5,-0.5"
         mask:
         - FullTileMask
         layer:

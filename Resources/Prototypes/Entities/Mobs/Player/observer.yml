@@ -21,8 +21,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         density: 15
         layer:
@@ -139,7 +138,6 @@
     - texture: Interface/Actions/scream.png
   - type: InstantAction
     event: !type:BooActionEvent
-
 - type: entity
   parent: BaseMentalAction
   id: ActionToggleLighting
@@ -153,7 +151,6 @@
     - texture: Interface/VerbIcons/light.svg.192dpi.png
   - type: InstantAction
     event: !type:ToggleLightingActionEvent
-
 - type: entity
   parent: BaseMentalAction
   id: ActionToggleFov
@@ -167,7 +164,6 @@
     - texture: Interface/VerbIcons/vv.svg.192dpi.png
   - type: InstantAction
     event: !type:ToggleFoVActionEvent
-
 - type: entity
   parent: BaseMentalAction
   id: ActionToggleGhosts
@@ -182,7 +178,6 @@
     - state: icon
   - type: InstantAction
     event: !type:ToggleGhostsActionEvent
-
 - type: entity
   parent: BaseMentalAction
   id: ActionToggleGhostHearing
@@ -194,9 +189,9 @@
     sprite: Clothing/Ears/Headsets/base.rsi
     layers:
     - state: icon
-      map: ["enum.ActionVisuals.Icon"]
+      map: [ "enum.ActionVisuals.Icon" ]
     - texture: Interface/Actions/ghostHearingToggled.png
-      map: ["enum.ActionVisuals.IconToggled"]
+      map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
   - type: InstantAction
     event: !type:ToggleGhostHearingActionEvent

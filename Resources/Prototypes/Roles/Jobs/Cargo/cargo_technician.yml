@@ -22,7 +22,7 @@
   equipment:
     ears: ClothingHeadsetCargo
     pocket1: AppraisalTool
-  #storage:
+    #storage:
     #back:
     #- Stuff
 

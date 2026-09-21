@@ -4,7 +4,7 @@
 # trash prototypes use "trash" state
 - type: entity
   abstract: true
-  parent: [FoodBaseTrash, FoodOpenableBase]
+  parent: [ FoodBaseTrash, FoodOpenableBase ]
   id: FoodTinBase
   name: tin
   description: A tin of something, sealed tight.
@@ -26,14 +26,12 @@
   - type: Destructible
     thresholds:
     # if tinned food is nuked just delete it, no sound
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 6
       behaviors:
       - !type:OpenBehavior
@@ -131,7 +129,7 @@
   - type: Sprite
     layers:
     - state: icon-open
-      map: ["icon"]
+      map: [ "icon" ]
   - type: Openable
     opened: true
 

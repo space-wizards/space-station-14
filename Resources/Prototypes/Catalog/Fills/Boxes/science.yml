@@ -18,5 +18,5 @@
           amount: 2
   - type: Sprite
     layers:
-      - state: box
-      - state: beaker
+    - state: box
+    - state: beaker

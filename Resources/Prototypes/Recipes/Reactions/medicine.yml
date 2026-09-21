@@ -345,7 +345,8 @@
       amount: 3
     Oxygen:
       amount: 2
-    PhosphoricAcid: # Really shitty simulation of ATP ADP nonsense for synthesizing histamine... Should probably use Enzyme in the future :P, or be replaced with a Phoron acid with this as a derivative.
+    PhosphoricAcid:
+      # Really shitty simulation of ATP ADP nonsense for synthesizing histamine... Should probably use Enzyme in the future :P, or be replaced with a Phoron acid with this as a derivative.
       amount: 1
       catalyst: true
   effects:
@@ -422,7 +423,8 @@
   impact: Medium
   minTemp: 335
   reactants:
-    Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
+    Bicaridine:
+      # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
       amount: 1
     Benzene:
       amount: 1
@@ -434,7 +436,8 @@
   impact: Medium
   minTemp: 325
   reactants:
-    Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
+    Bicaridine:
+      # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
       amount: 1
     Hydroxide:
       amount: 1
@@ -445,7 +448,8 @@
   id: Bruizine
   impact: Medium
   reactants:
-    Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
+    Bicaridine:
+      # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
       amount: 1
     Lithium:
       amount: 0.9
@@ -583,7 +587,8 @@
   id: OpporozidoneLivingTissue
   minTemp: 400
   reactants:
-    LivingTissue: # Do you want to save the victim from rotting, or check if the dude is a changeling? Hmm...
+    LivingTissue:
+      # Do you want to save the victim from rotting, or check if the dude is a changeling? Hmm...
       amount: 2
     Plasma:
       amount: 2
@@ -616,7 +621,7 @@
     Leporazine:
       amount: 2
   products:
-      Aloxadone: 4
+    Aloxadone: 4
 
 - type: reaction
   id: Psicodine
@@ -629,7 +634,7 @@
     Water:
       amount: 2
   products:
-      Psicodine: 4
+    Psicodine: 4
 
 - type: reaction
   id: Lipolicide

@@ -1,5 +1,5 @@
 - type: entity
-  parent: [Clothing, ContentsExplosionResistanceBase]
+  parent: [ Clothing, ContentsExplosionResistanceBase ]
   id: ClothingBackpack
   name: backpack
   description: You wear this on your back and put items into it.
@@ -19,8 +19,8 @@
     maxItemSize: Huge
     blacklist:
       tags:
-        - TrashBag
-        - TrashBagHolding
+      - TrashBag
+      - TrashBagHolding
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
@@ -70,7 +70,7 @@
       collection: IanBark
 
 - type: entity
-  parent: [ClothingBackpack, BaseSecurityContraband]
+  parent: [ ClothingBackpack, BaseSecurityContraband ]
   id: ClothingBackpackSecurity
   name: security backpack
   description: It's a very robust backpack.
@@ -79,7 +79,7 @@
     sprite: Clothing/Back/Backpacks/security.rsi
 
 - type: entity
-  parent: [ClothingBackpack, BaseSecurityContraband]
+  parent: [ ClothingBackpack, BaseSecurityContraband ]
   id: ClothingBackpackBrigmedic
   name: brigmedic backpack
   description: It's a very sterile backpack.
@@ -115,7 +115,7 @@
     sprite: Clothing/Back/Backpacks/medical.rsi
 
 - type: entity
-  parent: [ClothingBackpack, BaseCommandContraband]
+  parent: [ ClothingBackpack, BaseCommandContraband ]
   id: ClothingBackpackCaptain
   name: captain's backpack
   description: It's a special backpack made exclusively for Nanotrasen officers.
@@ -166,7 +166,8 @@
   parent: ClothingBackpack
   id: ClothingBackpackVirology
   name: virology backpack
-  description: A backpack made of hypo-allergenic fibers. It's designed to help prevent the spread of disease. Smells like monkey.
+  description: A backpack made of hypo-allergenic fibers. It's designed to help
+    prevent the spread of disease. Smells like monkey.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/virology.rsi
@@ -186,8 +187,8 @@
   name: cargo backpack
   description: A robust backpack for stealing cargo's loot.
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Backpacks/cargo.rsi
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/cargo.rsi
 
 - type: entity
   parent: ClothingBackpack
@@ -195,24 +196,26 @@
   name: salvage bag
   description: A robust backpack for stashing your loot.
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Backpacks/salvage.rsi
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/salvage.rsi
 
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackMerc
   name: mercenary bag
-  description: A backpack that has been in many dangerous places, a reliable combat backpack.
+  description: A backpack that has been in many dangerous places, a reliable
+    combat backpack.
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Backpacks/merc.rsi
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/merc.rsi
 
 #ERT
 - type: entity
   parent: [ ClothingBackpack, BaseCentcommContraband ]
   id: ClothingBackpackERTLeader
   name: ERT leader backpack
-  description: A spacious backpack with lots of pockets, worn by the Leader of an Emergency Response Team.
+  description: A spacious backpack with lots of pockets, worn by the Leader of an
+    Emergency Response Team.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertleader.rsi
@@ -226,7 +229,8 @@
   parent: ClothingBackpackERTLeader
   id: ClothingBackpackERTSecurity
   name: ERT security backpack
-  description: A spacious backpack with lots of pockets, worn by Security Officers of an Emergency Response Team.
+  description: A spacious backpack with lots of pockets, worn by Security Officers
+    of an Emergency Response Team.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertsec.rsi
@@ -235,7 +239,8 @@
   parent: ClothingBackpackERTLeader
   id: ClothingBackpackERTMedical
   name: ERT medical backpack
-  description: A spacious backpack with lots of pockets, worn by Medical Officers of an Emergency Response Team.
+  description: A spacious backpack with lots of pockets, worn by Medical Officers
+    of an Emergency Response Team.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertmed.rsi
@@ -244,7 +249,8 @@
   parent: ClothingBackpackERTLeader
   id: ClothingBackpackERTEngineer
   name: ERT engineer backpack
-  description: A spacious backpack with lots of pockets, worn by Engineers of an Emergency Response Team.
+  description: A spacious backpack with lots of pockets, worn by Engineers of an
+    Emergency Response Team.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/erteng.rsi
@@ -253,7 +259,8 @@
   parent: ClothingBackpackERTLeader
   id: ClothingBackpackERTJanitor
   name: ERT janitor backpack
-  description: A spacious backpack with lots of pockets, worn by Janitors of an Emergency Response Team.
+  description: A spacious backpack with lots of pockets, worn by Janitors of an
+    Emergency Response Team.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertjanitor.rsi
@@ -262,7 +269,8 @@
   parent: ClothingBackpackERTLeader
   id: ClothingBackpackERTClown
   name: ERT clown backpack
-  description: A spacious backpack with lots of pockets, worn by Clowns of an Emergency Response Team.
+  description: A spacious backpack with lots of pockets, worn by Clowns of an
+    Emergency Response Team.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertclown.rsi
@@ -271,7 +279,8 @@
   parent: ClothingBackpackERTLeader
   id: ClothingBackpackERTChaplain
   name: ERT chaplain backpack
-  description: A spacious backpack with lots of pockets, worn by Chaplains of an Emergency Response Team.
+  description: A spacious backpack with lots of pockets, worn by Chaplains of an
+    Emergency Response Team.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertchaplain.rsi
@@ -287,7 +296,7 @@
 
 #Syndicate
 - type: entity
-  parent: [ClothingBackpack, BaseSyndicateContraband]
+  parent: [ ClothingBackpack, BaseSyndicateContraband ]
   id: ClothingBackpackSyndicate
   name: syndicate backpack
   description:
@@ -349,7 +358,8 @@
   id: ClothingBackpackElectropack
   name: electropack
   suffix: SelfUnremovable
-  description: Shocks on the signal. It is used to keep a particularly dangerous criminal under control.
+  description: Shocks on the signal. It is used to keep a particularly dangerous
+    criminal under control.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/electropack.rsi
@@ -365,7 +375,7 @@
   - type: TriggerOnSignal
   - type: DeviceLinkSink
     ports:
-      - Trigger
+    - Trigger
 
 # Debug
 - type: entity

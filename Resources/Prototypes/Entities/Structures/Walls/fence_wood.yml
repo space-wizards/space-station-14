@@ -8,8 +8,7 @@
   - type: MeleeSound
     soundGroups:
       Brute:
-        path:
-          "/Audio/Weapons/boxingpunch1.ogg"
+        path: "/Audio/Weapons/boxingpunch1.ogg"
   - type: Tag
     tags:
     - Wooden
@@ -37,8 +36,7 @@
     damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 80
       behaviors:
       - !type:PlaySoundBehavior
@@ -55,12 +53,12 @@
   parent: [ BaseFenceWood, StructureHealthBarrierWeak ]
   id: BaseFenceWoodSmall
   name: small wooden fence
-  description: Wooden piece of small fence. The best protection for the fencing of a private territory!
+  description: Wooden piece of small fence. The best protection for the fencing of
+    a private territory!
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 30
       behaviors:
       - !type:PlaySoundBehavior
@@ -90,8 +88,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.10,-0.5,0.10,0.5"
         density: 1000
         mask:
@@ -119,8 +116,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.1,-0.5,0.1,0.0"
         density: 1000
         mask:
@@ -148,8 +144,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.1,-0.1,0.1,0.5"
         density: 1000
         mask:
@@ -157,8 +152,7 @@
         layer:
         - TableLayer
       fix2:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.1,-0.1,0.1"
         density: 1000
         mask:
@@ -186,8 +180,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.10,-0.5,0.10,0.5"
         density: 1000
         mask:
@@ -195,8 +188,7 @@
         layer:
         - TableLayer
       fix2:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.1,-0.1,0.1"
         density: 1000
         mask:
@@ -214,17 +206,18 @@
   parent: BaseFenceWoodHigh
   id: FenceWoodHighGate
   name: wooden fence gate
-  description: Do you have any idea what awaits you behind these gates? It can be either a toilet or a luxurious mansion. But you continue to love your emo boys.
+  description: Do you have any idea what awaits you behind these gates? It can be
+    either a toilet or a luxurious mansion. But you continue to love your emo
+    boys.
   components:
   - type: Sprite
     layers:
     - state: end
-      map: ["enum.DoorVisualLayers.Base"]
+      map: [ "enum.DoorVisualLayers.Base" ]
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.1,0.5,0.1"
         density: 1000
         mask:
@@ -275,8 +268,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.10,-0.5,0.10,0.5"
         density: 1000
         mask:
@@ -303,8 +295,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.1,-0.5,0.1,0.0"
         density: 1000
         mask:
@@ -331,8 +322,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.1,-0.1,0.1,0.5"
         density: 1000
         mask:
@@ -340,8 +330,7 @@
         layer:
         - TableLayer
       fix2:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.1,-0.1,0.1"
         density: 1000
         mask:
@@ -368,8 +357,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.10,-0.5,0.10,0.5"
         density: 1000
         mask:
@@ -377,8 +365,7 @@
         layer:
         - TableLayer
       fix2:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.1,-0.1,0.1"
         density: 1000
         mask:
@@ -395,17 +382,17 @@
   parent: BaseFenceWoodSmall
   id: FenceWoodSmallGate
   name: wooden fence gate
-  description: Looking at this gate, a familiar image pops up in your head. Where's my piggy?
+  description: Looking at this gate, a familiar image pops up in your head.
+    Where's my piggy?
   components:
   - type: Sprite
     layers:
     - state: end_small
-      map: ["enum.DoorVisualLayers.Base"]
+      map: [ "enum.DoorVisualLayers.Base" ]
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.1,0.5,0.1"
         density: 1000
         mask:

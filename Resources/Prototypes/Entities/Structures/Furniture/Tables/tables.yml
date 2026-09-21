@@ -1,4 +1,3 @@
-
 #region Frames
 
 - type: entity
@@ -16,8 +15,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.40,-0.30,0.40,0.45"
         density: 80
         mask:
@@ -31,8 +29,7 @@
     damageModifierSet: RodMetalMod
   - type: Destructible
     thresholds:
-    - trigger: &DamageFurnitureWeak
-        !type:DamageTrigger
+    - trigger: &DamageFurnitureWeak !type:DamageTrigger
         damage: 5
       behaviors:
       - &SoundMetalBreak !type:PlaySoundBehavior
@@ -64,8 +61,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
         density: 55
         mask:
@@ -110,8 +106,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
         density: 55
         mask:
@@ -154,8 +149,7 @@
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger: &DamageFurnitureNormal
-        !type:DamageTrigger
+    - trigger: &DamageFurnitureNormal !type:DamageTrigger
         damage: 40
       behaviors:
       - *SoundMetalBreak
@@ -530,8 +524,7 @@
   - type: MeleeSound
     soundGroups:
       Brute:
-        path:
-          "/Audio/Weapons/slash.ogg"
+        path: "/Audio/Weapons/slash.ogg"
   - type: IconSmooth
     key: webtable
   - type: Construction
@@ -830,12 +823,11 @@
     sprite: Structures/Furniture/Tables/debug.rsi
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 1
       behaviors:
       - !type:DoActsBehavior
-        acts: ["Destruction"]
+        acts: [ "Destruction" ]
 
 #region Counters
 

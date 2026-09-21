@@ -28,7 +28,8 @@
 - type: satiation
   id: SimpleMobBaseHunger
   parent: NormalSatiationHunger
-  thresholds: # only animals and rats are derived from this prototype so let's override it here and in rats' proto
+  thresholds:
+    # only animals and rats are derived from this prototype so let's override it here and in rats' proto
     Overfed: 100
     Okay: 50
     Peckish: 25

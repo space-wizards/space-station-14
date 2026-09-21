@@ -1,14 +1,15 @@
 - type: entity
-  parent: [BaseItem, BaseMinorContraband]
+  parent: [ BaseItem, BaseMinorContraband ]
   id: ThrowingStar
   name: throwing star
-  description: An ancient weapon still used to this day, due to its ease of lodging itself into its victim's body parts.
+  description: An ancient weapon still used to this day, due to its ease of
+    lodging itself into its victim's body parts.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Throwable/throwing_star.rsi
     layers:
     - state: icon
-      map: ["base"]
+      map: [ "base" ]
   - type: Appearance
   - type: HolidayVisuals
     holidays:

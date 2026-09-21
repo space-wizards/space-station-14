@@ -7,9 +7,9 @@
   components:
   - type: Sprite
     layers:
-      - state: green
-      - sprite: Objects/Consumable/Drinks/dr_gibb.rsi
-        state: icon
+    - state: green
+    - sprite: Objects/Consumable/Drinks/dr_gibb.rsi
+      state: icon
   - type: EntityTableSpawner
     table: !type:NestedSelector
       tableId: RandomAllSodaTable

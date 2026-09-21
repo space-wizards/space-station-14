@@ -8,16 +8,15 @@
   - type: Sprite
     sprite: Structures/Machines/computers.rsi
     layers:
-      - map: ["computerLayerBody"]
-        state: telescreen_frame
-      - map: ["computerLayerScreen"]
-        state: telescreen
+    - map: [ "computerLayerBody" ]
+      state: telescreen_frame
+    - map: [ "computerLayerScreen" ]
+      state: telescreen
   - type: Damageable
     damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:PlaySoundBehavior
@@ -54,8 +53,8 @@
   - type: ActivatableUIRequiresVision
   - type: UserInterface
     interfaces:
-        enum.SurveillanceCameraMonitorUiKey.Key:
-          type: SurveillanceCameraMonitorBoundUserInterface
+      enum.SurveillanceCameraMonitorUiKey.Key:
+        type: SurveillanceCameraMonitorBoundUserInterface
 
 - type: entity
   parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
@@ -69,14 +68,13 @@
   - type: Sprite
     sprite: Structures/Machines/computers.rsi
     layers:
-    - map: ["computerLayerBody"]
+    - map: [ "computerLayerBody" ]
       state: telescreen_frame
-    - map: ["computerLayerScreen"]
+    - map: [ "computerLayerScreen" ]
       state: telescreen
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior

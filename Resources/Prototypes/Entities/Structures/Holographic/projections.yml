@@ -27,8 +27,7 @@
     state: icon
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 30
       behaviors:
       - !type:DoActsBehavior
@@ -46,17 +45,15 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
-            bounds: "-0.5,-0.5,0.5,0.5"
+        shape: !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
   - type: TimedDespawn
     lifetime: 180
   - type: Airtight
     noAirWhenFullyAirBlocked: false
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 30
       behaviors:
       - !type:DoActsBehavior
@@ -81,8 +78,7 @@
   - type: Fixtures
     fixtures:
       slips:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.2,-0.2,0.2,0.2"
         hard: false
         layer:
@@ -91,8 +87,7 @@
     lifetime: 30
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 10
       behaviors:
       - !type:DoActsBehavior
@@ -104,43 +99,42 @@
   name: holographic barrier
   description: A barrier of hard light that blocks movement, but pretty weak.
   components:
-    - type: Physics
-      canCollide: true
-    - type: Sprite
-      sprite: Structures/Holo/security.rsi
-      state: icon
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.4,-0.4,0.4,0.4"
-          mask:
-          - TableMask
-          layer:
-          - TableLayer
-          - LowImpassable
-    - type: TimedDespawn
-      lifetime: 180
-    - type: PointLight
-      enabled: true
-      radius: 3
-      color: red
-    - type: Climbable
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 30
-        behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+  - type: Physics
+    canCollide: true
+  - type: Sprite
+    sprite: Structures/Holo/security.rsi
+    state: icon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
+        - LowImpassable
+  - type: TimedDespawn
+    lifetime: 180
+  - type: PointLight
+    enabled: true
+    radius: 3
+    color: red
+  - type: Climbable
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: BaseHoloSign
   id: XenoborgDeflectorField
   name: deflector field
-  description: An energy matrix, comprised of interlocking fields that deflect projectiles. Powerful, but short-lived.
+  description: An energy matrix, comprised of interlocking fields that deflect
+    projectiles. Powerful, but short-lived.
   components:
   - type: Physics
     bodyType: Static
@@ -151,8 +145,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.3,-0.3,0.3,0.3"
         hard: true
         mask:
@@ -173,7 +166,8 @@
   parent: BaseHoloSign
   id: HolosignForcefield
   name: holographic force field
-  description: A powerful temporal containment field that doesn't let anything through, not even a tesla or singularity.
+  description: A powerful temporal containment field that doesn't let anything
+    through, not even a tesla or singularity.
   components:
   - type: Physics
     canCollide: true
@@ -183,8 +177,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
         mask:
         - FullTileMask
@@ -200,8 +193,7 @@
     throwForce: 0
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 60
       behaviors:
       - !type:DoActsBehavior

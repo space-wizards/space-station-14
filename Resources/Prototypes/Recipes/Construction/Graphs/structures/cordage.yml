@@ -9,7 +9,7 @@
       - !type:SnapToGrid
         southRotation: true
       steps:
-      - material: Bananium 
+      - material: Bananium
         amount: 1
         doAfter: 0
 
@@ -21,7 +21,7 @@
       - !type:SpawnPrototype
         prototype: CableDetStack1
         amount: 1
-      - !type:DeleteEntity {}
+      - !type:DeleteEntity
       steps:
       - tool: Cutting
         doAfter: 0.5

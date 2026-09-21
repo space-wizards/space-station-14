@@ -1,14 +1,14 @@
 # Rockets
 
 - type: entity
-  parent: [BaseItem, BaseMajorContraband]
+  parent: [ BaseItem, BaseMajorContraband ]
   id: CartridgeRocket
   name: PG-7VL grenade
   description: A 1.5 warhead designed for the RPG-7 launcher. Has tubular shape.
   components:
   - type: Tag
     tags:
-      - CartridgeRocket
+    - CartridgeRocket
   - type: Item
     size: Small
   - type: CartridgeAmmo
@@ -21,30 +21,30 @@
     price: 20
 
 - type: entity
-  parent: [BaseItem, BaseMajorContraband]
+  parent: [ BaseItem, BaseMajorContraband ]
   id: CartridgeRocketSlow
   name: PG-7VL grenade "Snail-Rocket"
   description: A 1.5 warhead designed for the RPG-7 launcher. It's unusually slow.
   components:
-    - type: Tag
-      tags:
-        - CartridgeRocket
-    - type: Item
-      size: Small
-    - type: CartridgeAmmo
-      proto: BulletWeakRocket
-      deleteOnSpawn: true
-    - type: Sprite
-      sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
-      state: frag
-    - type: StaticPrice
-      price: 20
+  - type: Tag
+    tags:
+    - CartridgeRocket
+  - type: Item
+    size: Small
+  - type: CartridgeAmmo
+    proto: BulletWeakRocket
+    deleteOnSpawn: true
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    state: frag
+  - type: StaticPrice
+    price: 20
 
 # Grenades
 
 - type: entity
   abstract: true
-  parent: [BaseItem, BaseMajorContraband]
+  parent: [ BaseItem, BaseMajorContraband ]
   id: BaseGrenade
   name: base grenade
   components:
@@ -59,7 +59,8 @@
   parent: BaseGrenade
   id: GrenadeBaton
   name: baton grenade
-  description: A grenade round containing a single non-lethal projectile. Like being punched in the solar plexus.
+  description: A grenade round containing a single non-lethal projectile. Like
+    being punched in the solar plexus.
   components:
   - type: CartridgeAmmo
     proto: BulletGrenadeBaton
@@ -67,7 +68,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     layers:
     - state: baton
-      map: ["enum.AmmoVisualLayers.Base"]
+      map: [ "enum.AmmoVisualLayers.Base" ]
   - type: Appearance
   - type: SpentAmmoVisuals
     state: baton
@@ -77,7 +78,8 @@
   parent: BaseGrenade
   id: GrenadeBlast
   name: blast grenade round
-  description: A grenade round containing an explosive compound made specifically for breaching the reinforced hulls of space stations.
+  description: A grenade round containing an explosive compound made specifically
+    for breaching the reinforced hulls of space stations.
   components:
   - type: CartridgeAmmo
     proto: BulletGrenadeBlast
@@ -85,7 +87,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     layers:
     - state: blast
-      map: ["enum.AmmoVisualLayers.Base"]
+      map: [ "enum.AmmoVisualLayers.Base" ]
   - type: Appearance
   - type: SpentAmmoVisuals
     state: blast
@@ -95,7 +97,8 @@
   parent: BaseGrenade
   id: GrenadeFlash
   name: flash grenade round
-  description: A grenade round containing a chemical compound causing a blinding flash of light on impact.
+  description: A grenade round containing a chemical compound causing a blinding
+    flash of light on impact.
   components:
   - type: CartridgeAmmo
     proto: BulletGrenadeFlash
@@ -103,7 +106,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     layers:
     - state: flash
-      map: ["enum.AmmoVisualLayers.Base"]
+      map: [ "enum.AmmoVisualLayers.Base" ]
   - type: Appearance
   - type: SpentAmmoVisuals
     state: flash
@@ -113,7 +116,8 @@
   parent: BaseGrenade
   id: GrenadeFrag
   name: frag grenade round
-  description: A grenade round containing a concentrated anti-personnel explosive alongside shrapnel, shredding anyone close to the impact zone.
+  description: A grenade round containing a concentrated anti-personnel explosive
+    alongside shrapnel, shredding anyone close to the impact zone.
   components:
   - type: CartridgeAmmo
     proto: BulletGrenadeFrag
@@ -121,7 +125,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     layers:
     - state: frag
-      map: ["enum.AmmoVisualLayers.Base"]
+      map: [ "enum.AmmoVisualLayers.Base" ]
   - type: Appearance
   - type: SpentAmmoVisuals
     state: frag
@@ -131,7 +135,8 @@
   parent: BaseGrenade
   id: GrenadeCleanade
   name: cleanade grenade round
-  description: A grenade round containing space cleaner foam. For when you need to declare war on the concept of messiness.
+  description: A grenade round containing space cleaner foam. For when you need to
+    declare war on the concept of messiness.
   components:
   - type: CartridgeAmmo
     proto: BulletGrenadeCleanade
@@ -149,7 +154,8 @@
   parent: BaseGrenade
   id: GrenadeEMP
   name: EMP grenade round
-  description: A grenade round containing an chemical compound calibrated to cause an electromagnetic pulse on impact.
+  description: A grenade round containing an chemical compound calibrated to cause
+    an electromagnetic pulse on impact.
   components:
   - type: CartridgeAmmo
     proto: BulletGrenadeEMP
@@ -157,7 +163,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     layers:
     - state: emp
-      map: ["enum.AmmoVisualLayers.Base"]
+      map: [ "enum.AmmoVisualLayers.Base" ]
   - type: Appearance
   - type: SpentAmmoVisuals
     state: frag
@@ -167,7 +173,7 @@
 
 - type: entity
   abstract: true
-  parent: [BaseItem, BaseMajorContraband]
+  parent: [ BaseItem, BaseMajorContraband ]
   id: BaseCannonBall
   name: base cannon ball
   components:
@@ -197,7 +203,9 @@
   id: CannonBallGrapeshot
   name: grapeshot
   suffix: Pirate
-  description: A spread of small iron balls that scatter upon being fired. For when you need to send a strongly worded message but don't know exactly where your enemy is.
+  description: A spread of small iron balls that scatter upon being fired. For
+    when you need to send a strongly worded message but don't know exactly where
+    your enemy is.
   components:
   - type: CartridgeAmmo
     proto: PelletGrapeshotSpread
@@ -211,7 +219,8 @@
   id: CannonBallGlassshot
   name: glassshot
   suffix: Pirate
-  description: Turns out you can just put a bunch of glass into a cannon and fire it. Causes nasty cuts.
+  description: Turns out you can just put a bunch of glass into a cannon and fire
+    it. Causes nasty cuts.
   components:
   - type: CartridgeAmmo
     proto: PelletGlassSpread

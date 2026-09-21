@@ -20,7 +20,7 @@
       - !type:SpawnPrototype
         prototype: SheetSteel1
         amount: 3
-      - !type:DeleteEntity {}
+      - !type:DeleteEntity
     - to: logic_gate
       steps:
       - material: Cable

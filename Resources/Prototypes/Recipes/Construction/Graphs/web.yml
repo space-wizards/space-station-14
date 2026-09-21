@@ -11,7 +11,7 @@
 
   - node: removed
     actions:
-    - !type:DestroyEntity {}
+    - !type:DestroyEntity
 
 - type: constructionGraph
   id: WebStructures
@@ -19,7 +19,7 @@
   graph:
   - node: start
     actions:
-    - !type:DestroyEntity {}
+    - !type:DestroyEntity
     edges:
     - to: wall
       completed:
@@ -70,7 +70,6 @@
       - material: WebSilk
         amount: 8
         doAfter: 6
-
 
   # Deconstruction is down here
   - node: wall

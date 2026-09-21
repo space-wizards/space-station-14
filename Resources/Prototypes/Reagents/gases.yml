@@ -38,8 +38,8 @@
         alertType: Toxins
         minScale: 1
         conditions:
-          - !type:MetabolizerTypeCondition
-            type: [ Vox ]
+        - !type:MetabolizerTypeCondition
+          type: [ Vox ]
         clear: true
         time: 5
     Respiration:
@@ -69,8 +69,8 @@
         alertType: Toxins
         minScale: 0.5
         conditions:
-          - !type:MetabolizerTypeCondition
-            type: [ Vox ]
+        - !type:MetabolizerTypeCondition
+          type: [ Vox ]
         clear: true
         time: 5
 
@@ -103,8 +103,7 @@
         ignoreResistances: true
         damage:
           types:
-            Poison:
-              0.1
+            Poison: 0.1
       # We need a metabolism effect on reagent removal
       - !type:AdjustAlert
         alertType: Toxins
@@ -116,7 +115,6 @@
       methods: [ Touch ]
       effects:
       - !type:Flammable
-
 - type: reagent
   id: Tritium
   name: reagent-name-tritium
@@ -148,8 +146,7 @@
         ignoreResistances: true
         damage:
           types:
-            Radiation:
-              1
+            Radiation: 1
       # We need a metabolism effect on reagent removal
       - !type:AdjustAlert
         alertType: Toxins
@@ -179,8 +176,7 @@
         ignoreResistances: true
         damage:
           types:
-            Poison:
-              0.4
+            Poison: 0.4
       - !type:Oxygenate
         conditions:
         - !type:MetabolizerTypeCondition
@@ -204,9 +200,9 @@
         ignoreResistances: true
         damage:
           types:
-            Poison:
-              0.8
-      - !type:Oxygenate # carbon dioxide displaces oxygen from the bloodstream, causing asphyxiation
+            Poison: 0.8
+      # carbon dioxide displaces oxygen from the bloodstream, causing asphyxiation
+      - !type:Oxygenate
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Plant ]

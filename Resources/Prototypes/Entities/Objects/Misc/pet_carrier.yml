@@ -1,7 +1,8 @@
 - type: entity
   id: PetCarrier
   name: pet carrier
-  description: Allows large animals to be carried comfortably. It smells vaguely of toilet water and explosives.
+  description: Allows large animals to be carried comfortably. It smells vaguely
+    of toilet water and explosives.
   parent: BaseStructureDynamic
   components:
   - type: Sprite
@@ -10,12 +11,12 @@
     sprite: Objects/Storage/petcarrier.rsi
     layers:
     - state: pet_carrier_base
-      map: ["enum.StorageVisualLayers.Base"]
+      map: [ "enum.StorageVisualLayers.Base" ]
     - state: pet_carrier_door
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: welded
       visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
   - type: Icon
     sprite: Objects/Storage/petcarrier.rsi
     state: icon
@@ -25,8 +26,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.45
         density: 25
         mask:
@@ -36,7 +36,7 @@
     airtight: false
     whitelist:
       tags:
-        - VimPilot # If it can fit in a Vim it can fit in a pet carrier.
+      - VimPilot # If it can fit in a Vim it can fit in a pet carrier.
   - type: Weldable
   - type: ResistLocker
   - type: PlaceableSurface
@@ -47,12 +47,11 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:DoActsBehavior
-        acts: ["Destruction"]
+        acts: [ "Destruction" ]
   - type: Appearance
   - type: EntityStorageVisuals
     stateDoorOpen: pet_carrier_open

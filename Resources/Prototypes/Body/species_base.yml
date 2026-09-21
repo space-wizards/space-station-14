@@ -38,10 +38,10 @@
       60: 0.7
       80: 0.5
   - type: Fixtures
-    fixtures: # TODO: This needs a second fixture just for mob collisions.
+    fixtures:
+      # TODO: This needs a second fixture just for mob collisions.
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         density: 185
         restitution: 0.0
@@ -53,20 +53,18 @@
   - type: RangedDamageSound
     soundGroups:
       Brute:
-        collection:
-          MeatBulletImpact
+        collection: MeatBulletImpact
     soundTypes:
       Heat:
-        collection:
-          MeatLaserImpact
+        collection: MeatLaserImpact
   - type: Reactive
     groups:
       Flammable: [ Touch ]
       Extinguish: [ Touch ]
-      Acidic: [Touch, Ingestion]
+      Acidic: [ Touch, Ingestion ]
     reactions:
-    - reagents: [Water, SpaceCleaner]
-      methods: [Touch]
+    - reagents: [ Water, SpaceCleaner ]
+      methods: [ Touch ]
       effects:
       - !type:WashCreamPie
   - type: StatusEffects

@@ -4,7 +4,7 @@
 - type: entity
   abstract: true
   parent: Clothing
-  id : ChangelingFleshClothingBase
+  id: ChangelingFleshClothingBase
   suffix: Changeling
   components:
   - type: Clothing

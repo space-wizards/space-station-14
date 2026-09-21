@@ -21,7 +21,7 @@
     hideOnToggle: true
 
 - type: entity
-  parent: [ClothingMaskGas, BaseSecurityContraband]
+  parent: [ ClothingMaskGas, BaseSecurityContraband ]
   id: ClothingMaskGasSecurity
   name: security gas mask
   description: A standard issue Security gas mask.
@@ -41,7 +41,7 @@
         Heat: 0.95
 
 - type: entity
-  parent: [ClothingMaskGas, BaseSyndicateContraband]
+  parent: [ ClothingMaskGas, BaseSyndicateContraband ]
   id: ClothingMaskGasSyndicate
   name: syndicate gas mask
   description: A close-fitting tactical mask that can be connected to an air supply.
@@ -76,10 +76,11 @@
         Heat: 0.80
 
 - type: entity
-  parent: [ClothingMaskGasAtmos, BaseCommandContraband]
+  parent: [ ClothingMaskGasAtmos, BaseCommandContraband ]
   id: ClothingMaskGasCaptain
   name: captain's gas mask
-  description: Nanotrasen cut corners and repainted a spare atmospheric gas mask, but don't tell anyone.
+  description: Nanotrasen cut corners and repainted a spare atmospheric gas mask,
+    but don't tell anyone.
   components:
   - type: Sprite
     sprite: Clothing/Mask/gascaptain.rsi
@@ -102,7 +103,7 @@
   - type: IngestionBlocker
 
 - type: entity
-  parent: [ClothingMaskGas, BaseCargoContraband]
+  parent: [ ClothingMaskGas, BaseCargoContraband ]
   id: ClothingMaskGasExplorer
   name: explorer gas mask
   description: A military-grade gas mask that can be connected to an air supply.
@@ -146,7 +147,9 @@
   parent: ClothingMaskBreathMedical
   id: ClothingMaskBreathMedicalSecurity
   name: military-style medical mask
-  description: A medical mask with a small layer of protection against damage and viruses, similar to the one used in the medical units of the first corporate war.
+  description: A medical mask with a small layer of protection against damage and
+    viruses, similar to the one used in the medical units of the first corporate
+    war.
   components:
   - type: Item
     size: Tiny
@@ -192,7 +195,8 @@
   id: ClothingMaskClownBase
   abstract: true
   name: clown wig and mask
-  description: A true prankster's facial attire. A clown is incomplete without his wig and mask.
+  description: A true prankster's facial attire. A clown is incomplete without his
+    wig and mask.
   components:
   - type: Appearance
   - type: Sprite
@@ -210,7 +214,7 @@
     - Snout
 
 - type: entity
-  parent: [ClothingMaskClownBase, BaseFoldable]
+  parent: [ ClothingMaskClownBase, BaseFoldable ]
   id: ClothingMaskClown
   description: A clown mask featuring a foldable wig; a true prankster's attire.
   components:
@@ -258,7 +262,7 @@
     - Snout
 
 - type: entity
-  parent: [ClothingMaskClownBase, BaseSecurityContraband]
+  parent: [ ClothingMaskClownBase, BaseSecurityContraband ]
   id: ClothingMaskClownSecurity
   name: security clown wig and mask
   description: A debatably oxymoronic but protective mask and wig.
@@ -287,7 +291,8 @@
   parent: ClothingMaskBase
   id: ClothingMaskJoy
   name: joy mask
-  description: Express your happiness or hide your sorrows with this laughing face with crying tears of joy cutout.
+  description: Express your happiness or hide your sorrows with this laughing face
+    with crying tears of joy cutout.
   components:
   - type: Sprite
     sprite: Clothing/Mask/joy.rsi
@@ -498,7 +503,8 @@
   parent: ClothingMaskBase
   id: ClothingMaskRat
   name: rat mask
-  description: A mask of a rat that looks like a rat. Perhaps they will take you for a fellow rat.
+  description: A mask of a rat that looks like a rat. Perhaps they will take you
+    for a fellow rat.
   components:
   - type: Sprite
     sprite: Clothing/Mask/rat.rsi
@@ -681,7 +687,7 @@
     sprite: Clothing/Mask/scaredmime.rsi
 
 - type: entity
-  parent: [ClothingMaskMime, BaseSecurityContraband]
+  parent: [ ClothingMaskMime, BaseSecurityContraband ]
   id: ClothingMaskMimeSecurity
   name: security mime mask
   description: You have the right to remain silent.
@@ -702,7 +708,8 @@
   parent: ClothingMaskBase
   id: ClothingMaskItalianMoustache
   name: italian moustache
-  description: Made from authentic Italian moustache hairs. Gives the wearer an irresistable urge to gesticulate wildly.
+  description: Made from authentic Italian moustache hairs. Gives the wearer an
+    irresistable urge to gesticulate wildly.
   components:
   - type: Sprite
     sprite: Clothing/Mask/italian_moustache.rsi
@@ -715,7 +722,8 @@
   parent: ClothingMaskBase
   id: ClothingMaskNinja
   name: ninja mask
-  description: A close-fitting nano-enhanced mask that acts both as an air filter and a post-modern fashion statement.
+  description: A close-fitting nano-enhanced mask that acts both as an air filter
+    and a post-modern fashion statement.
   components:
   - type: Sprite
     sprite: Clothing/Mask/ninja.rsi
@@ -728,10 +736,11 @@
   - type: IdentityBlocker
 
 - type: entity
-  parent: [ClothingMaskGas, WeldingMaskBase]
+  parent: [ ClothingMaskGas, WeldingMaskBase ]
   id: ClothingMaskWeldingGas
   name: welding gas mask
-  description: A gas mask with built in welding goggles and face shield. Looks like a skull, clearly designed by a nerd.
+  description: A gas mask with built in welding goggles and face shield. Looks
+    like a skull, clearly designed by a nerd.
   components:
   - type: Sprite
     sprite: Clothing/Mask/welding-gas.rsi

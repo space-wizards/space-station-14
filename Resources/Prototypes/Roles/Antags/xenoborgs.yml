@@ -11,7 +11,7 @@
   requirements:
   - !type:RoleTimeRequirement
     role: JobBorg
-    time: 18000  # 5 hrs
+    time: 18000 # 5 hrs
 
 - type: antagSpecifier
   parent: RestrictedAntag
@@ -33,7 +33,7 @@
   requirements:
   - !type:RoleTimeRequirement
     role: JobBorg
-    time: 18000  # 5 hrs
+    time: 18000 # 5 hrs
 
 - type: antagSpecifier
   abstract: true

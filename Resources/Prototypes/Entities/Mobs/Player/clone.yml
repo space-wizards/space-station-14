@@ -25,7 +25,7 @@
   - Unrevivable
 
 - type: cloningSettings
-  parent: [TraitsMental, TraitsPhysical]
+  parent: [ TraitsMental, TraitsPhysical ]
   id: Traits
 
 # for basic physical traits
@@ -111,12 +111,12 @@
 # a full clone with all traits and items, but no antag roles
 - type: cloningSettings
   id: BaseClone
-  parent: [Body, Special, Traits, BaseEquipmentBlacklist]
+  parent: [ Body, Special, Traits, BaseEquipmentBlacklist ]
 
 # for cloning pods
 - type: cloningSettings
   id: CloningPod
-  parent: [BaseClone, Antag]
+  parent: [ BaseClone, Antag ]
   forceCloning: false
   copyEquipment: null
   copyInternalStorage: false
@@ -125,14 +125,14 @@
 # for paradox clones
 - type: cloningSettings
   id: ParadoxCloningSettings
-  parent: [BaseClone, Antag]
+  parent: [ BaseClone, Antag ]
   components:
   - Forensics # This is so hugging data is copied to the clone, so you can't hug metagame them
 
 # changeling identity copying
 - type: cloningSettings
   id: ChangelingCloningSettings
-  parent: [Body, TraitsPhysical, BaseEquipmentBlacklist]
+  parent: [ Body, TraitsPhysical, BaseEquipmentBlacklist ]
   statusEffectWhitelist:
     components:
     - ChangelingCloneableStatusEffect
@@ -160,7 +160,6 @@
   copyInternalStorage: false
   copyImplants: false
   raiseEntityRenamedEvent: false
-
 
 # spawner
 - type: entity

@@ -1,5 +1,5 @@
 - type: entity
-  parent: [BaseStructure, StructureWheeled, BaseMajorContraband]
+  parent: [ BaseStructure, StructureWheeled, BaseMajorContraband ]
   id: NuclearBomb
   name: nuclear fission explosive
   description: You probably shouldn't stick around to see if this is armed.
@@ -11,16 +11,16 @@
     noRot: true
     layers:
     - state: nuclearbomb_base
-      map: ["enum.NukeVisualLayers.Base"]
+      map: [ "enum.NukeVisualLayers.Base" ]
     - state: nuclearbomb_deployed_unlit
-      map: ["enum.NukeVisualLayers.Unlit"]
+      map: [ "enum.NukeVisualLayers.Unlit" ]
       shader: unshaded
       visible: false
     - state: nuclearbomb_gay
-      map: ["pride"]
+      map: [ "pride" ]
       visible: false
     - state: nukefestive
-      map: ["christmas"]
+      map: [ "christmas" ]
       visible: false
   - type: Appearance
   - type: HolidayVisuals
@@ -39,22 +39,21 @@
       enum.NukeVisuals.Deployed:
         enum.NukeVisualLayers.Base:
           False: { state: nuclearbomb_base }
-          True:  { state: nuclearbomb_deployed }
+          True: { state: nuclearbomb_deployed }
         enum.NukeVisualLayers.Unlit:
-          True:  { visible: true }
+          True: { visible: true }
           False: { visible: false }
       enum.NukeVisuals.State:
         enum.NukeVisualLayers.Unlit:
-          Idle:        { state: nuclearbomb_deployed_unlit }
-          Armed:       { state: nuclearbomb_timing }
+          Idle: { state: nuclearbomb_deployed_unlit }
+          Armed: { state: nuclearbomb_timing }
           YoureFucked: { state: nuclearbomb_exploding }
   - type: Physics
     bodyType: Static
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.45
         density: 255 # Has "bluespace technology" to make it lighter, whatever that means. Don't mind the fact that this is lighter then a high capacity fuel tank.
         mask:
@@ -127,7 +126,8 @@
   id: NuclearBombKeg
   name: nuclear fission explosive
   suffix: keg
-  description: You probably shouldn't stick around to see if this is armed. It has a tap on the side.
+  description: You probably shouldn't stick around to see if this is armed. It has
+    a tap on the side.
   components:
   - type: Transform
     anchored: false
@@ -137,7 +137,7 @@
     layers:
     - state: nuclearbomb_base
     - state: nukefestive
-      map: ["christmas"]
+      map: [ "christmas" ]
       visible: false
     - state: nuclearbomb_gay
       map: [ "pride" ]
@@ -161,8 +161,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.45
         density: 255
         mask:

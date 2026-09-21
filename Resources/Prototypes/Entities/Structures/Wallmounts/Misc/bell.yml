@@ -15,15 +15,13 @@
   - type: MeleeSound
     soundGroups:
       Brute:
-        path:
-          "/Audio/Weapons/boxingbell.ogg"
+        path: "/Audio/Weapons/boxingbell.ogg"
   - type: Appearance
   - type: Damageable
     damageModifierSet: BrassMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 80
       behaviors:
       - !type:PlaySoundBehavior

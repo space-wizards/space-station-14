@@ -1,96 +1,99 @@
 - type: entity
-  parent: [ BaseStructureDynamic, BasePaperLabelableVisualized, StructureHealthContainer ]
+  parent:
+    [
+      BaseStructureDynamic,
+      BasePaperLabelableVisualized,
+      StructureHealthContainer
+    ]
   id: CrateArtifactContainer
   name: artifact container
   description: Used to safely contain and move artifacts.
   components:
-    - type: Transform
-      noRot: true
-    - type: AccessReader
-      access: [["Research"], ["Cargo"]]
-    - type: Lock
-    - type: ResistLocker
-    - type: Sprite
-      drawdepth: Objects
-      sprite: Structures/Storage/Crates/artifact.rsi
-      layers:
-      - state: artifact_container
-        map: ["enum.StorageVisualLayers.Base"]
-      - state: artifact_container_door
-        map: ["enum.StorageVisualLayers.Door"]
-      - state: welded
-        visible: false
-        map: ["enum.WeldableLayers.BaseWelded"]
-      - state: locked
-        map: ["enum.LockVisualLayers.Lock"]
-        shader: unshaded
-      - state: paper
-        map: ["enum.PaperLabelVisuals.Layer"]
-    - type: InteractionOutline
-    - type: Physics
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeCircle
-            radius: 0.45
-          density: 50
-          mask:
-          - CrateMask #this is so they can go under plastic flaps
-          layer:
-          - MachineLayer
-    - type: Icon
-      sprite: Structures/Storage/Crates/artifact.rsi
-      state: artifact_container_icon
-    - type: EntityStorage
-      capacity: 1
-      whitelist:
-        components:
-        - XenoArtifact
-    - type: Weldable
-    - type: SuppressArtifactContainer
-    - type: RadiationBlockingContainer
-      resistance: 5
-    - type: PlaceableSurface
-      isPlaceable: false
-    - type: Damageable
-      damageModifierSet: PlasteelMod
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 100
-        behaviors:
-        - !type:PlaySoundBehavior
-          sound:
-            collection: MetalGlassBreak
-    - type: Appearance
-    - type: EntityStorageVisuals
-      stateDoorOpen: artifact_container_open
-      stateDoorClosed: artifact_container_door
-    - type: GenericVisualizer
-      visuals:
-        enum.PaperLabelVisuals.HasLabel:
-          enum.PaperLabelVisuals.Layer:
-            True: { visible: true }
-            False: { visible: false }
-        enum.PaperLabelVisuals.LabelType:
-          enum.PaperLabelVisuals.Layer:
-            Paper: { state: paper }
-            Bounty: { state: bounty }
-            CaptainsPaper: { state: captains_paper }
-            Invoice: { state: invoice }
-        enum.StorageVisuals.Open:
-          enum.PaperLabelVisuals.Layer:
-            True: { offset: "0.0,0.3125" }
-            False: { offset: "0.0,0.0" }
-    - type: LockVisuals
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-        paper_label: !type:ContainerSlot
-    - type: StaticPrice
-      price: 250
+  - type: Transform
+    noRot: true
+  - type: AccessReader
+    access: [ [ "Research" ], [ "Cargo" ] ]
+  - type: Lock
+  - type: ResistLocker
+  - type: Sprite
+    drawdepth: Objects
+    sprite: Structures/Storage/Crates/artifact.rsi
+    layers:
+    - state: artifact_container
+      map: [ "enum.StorageVisualLayers.Base" ]
+    - state: artifact_container_door
+      map: [ "enum.StorageVisualLayers.Door" ]
+    - state: welded
+      visible: false
+      map: [ "enum.WeldableLayers.BaseWelded" ]
+    - state: locked
+      map: [ "enum.LockVisualLayers.Lock" ]
+      shader: unshaded
+    - state: paper
+      map: [ "enum.PaperLabelVisuals.Layer" ]
+  - type: InteractionOutline
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.45
+        density: 50
+        mask:
+        - CrateMask #this is so they can go under plastic flaps
+        layer:
+        - MachineLayer
+  - type: Icon
+    sprite: Structures/Storage/Crates/artifact.rsi
+    state: artifact_container_icon
+  - type: EntityStorage
+    capacity: 1
+    whitelist:
+      components:
+      - XenoArtifact
+  - type: Weldable
+  - type: SuppressArtifactContainer
+  - type: RadiationBlockingContainer
+    resistance: 5
+  - type: PlaceableSurface
+    isPlaceable: false
+  - type: Damageable
+    damageModifierSet: PlasteelMod
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateDoorOpen: artifact_container_open
+    stateDoorClosed: artifact_container_door
+  - type: GenericVisualizer
+    visuals:
+      enum.PaperLabelVisuals.HasLabel:
+        enum.PaperLabelVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PaperLabelVisuals.LabelType:
+        enum.PaperLabelVisuals.Layer:
+          Paper: { state: paper }
+          Bounty: { state: bounty }
+          CaptainsPaper: { state: captains_paper }
+          Invoice: { state: invoice }
+      enum.StorageVisuals.Open:
+        enum.PaperLabelVisuals.Layer:
+          True: { offset: "0.0,0.3125" }
+          False: { offset: "0.0,0.0" }
+  - type: LockVisuals
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+      paper_label: !type:ContainerSlot
+  - type: StaticPrice
+    price: 250
 
 - type: entity
   parent: [ BaseStorageItem, StructureHealthContainerWeak ]
@@ -102,11 +105,11 @@
     sprite: Objects/Storage/artifact_container.rsi
     state: icon
     layers:
-      - state: icon
-        map: [ base ]
-      - state: locked
-        map: ["enum.LockVisualLayers.Lock"]
-        shader: unshaded
+    - state: icon
+      map: [ base ]
+    - state: locked
+      map: [ "enum.LockVisualLayers.Lock" ]
+      shader: unshaded
   - type: Storage
     maxItemSize: Normal
     grid:
@@ -125,7 +128,7 @@
       path: "/Audio/Weapons/smash.ogg"
   - type: Appearance
   - type: AccessReader
-    access: [["Research"], ["Cargo"]]
+    access: [ [ "Research" ], [ "Cargo" ] ]
   - type: Lock
   - type: LockedStorage
   - type: SuppressArtifactContainer
@@ -139,8 +142,7 @@
     damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 60
       behaviors:
       - !type:PlaySoundBehavior
@@ -152,7 +154,7 @@
       ejectVerbText: Remove Label
       whitelist:
         components:
-          - Paper
+        - Paper
       blacklist:
         tags:
         - Book

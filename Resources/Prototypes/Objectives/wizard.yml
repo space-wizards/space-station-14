@@ -12,7 +12,7 @@
     - WizardRole
 
 - type: entity
-  parent: [BaseWizardObjective, BaseSurviveObjective]
+  parent: [ BaseWizardObjective, BaseSurviveObjective ]
   id: WizardSurviveObjective
   name: Survive
   description: The Space Wizards Federation want you to live!
@@ -23,7 +23,7 @@
       state: icon
 
 - type: entity
-  parent: [BaseWizardObjective, BaseFreeObjective]
+  parent: [ BaseWizardObjective, BaseFreeObjective ]
   id: WizardDemonstrateObjective
   name: Cause chaos
   description: Teach those station welps to never disrespect a Wizard again!

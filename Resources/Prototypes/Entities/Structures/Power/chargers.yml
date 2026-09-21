@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [BaseMachinePowered, ConstructibleMachine]
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: BaseRecharger
   placement:
     mode: SnapgridCenter
@@ -28,16 +28,15 @@
   - type: Sprite
     drawdepth: SmallObjects
     layers:
-    - map: ["enum.PowerChargerVisualLayers.Base"]
+    - map: [ "enum.PowerChargerVisualLayers.Base" ]
       state: "empty"
-    - map: ["enum.PowerChargerVisualLayers.Light"]
+    - map: [ "enum.PowerChargerVisualLayers.Light" ]
       state: "light-off"
       shader: "unshaded"
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.10,-0.10,0.10,0.10"
         density: 500
         mask:
@@ -53,8 +52,7 @@
   - type: RequireProjectileTarget
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:EmptyContainersBehaviour
@@ -73,13 +71,13 @@
   - type: Sprite
     sprite: Structures/Power/cell_recharger.rsi
     layers:
-    - map: ["enum.PowerChargerVisualLayers.Base"]
+    - map: [ "enum.PowerChargerVisualLayers.Base" ]
       state: "empty"
-    - map: ["enum.PowerChargerVisualLayers.Light"]
+    - map: [ "enum.PowerChargerVisualLayers.Light" ]
       state: "light-off"
       shader: "unshaded"
     - state: open
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false
   - type: Machine
     board: CellRechargerCircuitboard
@@ -108,13 +106,13 @@
   parent: [ BaseItemRecharger, ConstructibleMachine ]
   id: PowerCageRecharger
   name: cage recharger
-  description: A specialized machine made for recharging the heavy cage batteries used by ship-mounted weapons.
+  description: A specialized machine made for recharging the heavy cage batteries
+    used by ship-mounted weapons.
   components:
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.35,0.25,0.35"
         density: 190
         mask:
@@ -151,7 +149,8 @@
   parent: BaseItemRecharger
   id: WeaponCapacitorRecharger
   name: recharger
-  description: A modern recharging station that can fit both power cells and small electronic devices.
+  description: A modern recharging station that can fit both power cells and small
+    electronic devices.
   components:
   - type: Sprite
     sprite: Structures/Power/recharger.rsi
@@ -207,14 +206,15 @@
   parent: [ BaseItemRecharger, BaseWallmount ]
   id: WallWeaponCapacitorRecharger
   name: wall recharger
-  description: A compact wall-mounted recharger. It can only recharge electronic devices and has no space for power cells.
+  description: A compact wall-mounted recharger. It can only recharge electronic
+    devices and has no space for power cells.
   components:
   - type: Sprite
     sprite: Structures/Power/wall_recharger.rsi
     layers:
-    - map: ["enum.PowerChargerVisualLayers.Base"]
+    - map: [ "enum.PowerChargerVisualLayers.Base" ]
       state: "empty"
-    - map: ["enum.PowerChargerVisualLayers.Light"]
+    - map: [ "enum.PowerChargerVisualLayers.Light" ]
       state: "light-off"
       shader: "unshaded"
   - type: Charger
@@ -236,24 +236,25 @@
   parent: [ BaseRecharger, BaseConstructibleMachineDestructible ]
   id: BorgCharger
   name: cyborg recharging station
-  description: A stationary charger for various robotic and cyborg entities. Surprisingly spacious.
+  description: A stationary charger for various robotic and cyborg entities.
+    Surprisingly spacious.
   components:
   - type: Sprite
     sprite: Structures/Power/borg_charger.rsi
     noRot: True
     layers:
-      - state: borgcharger-u1
-        map: ["base"]
-      - state: borgcharger0
-        map: ["enum.PowerDeviceVisualLayers.Powered"]
-        shader: "unshaded"
-      - state: borgcharger1
-        map: ["charged"]
-        shader: "unshaded"
-        visible: false
-      - state: borgdecon1
-        map: ["enum.WiresVisualLayers.MaintenancePanel"]
-        visible: false
+    - state: borgcharger-u1
+      map: [ "base" ]
+    - state: borgcharger0
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+      shader: "unshaded"
+    - state: borgcharger1
+      map: [ "charged" ]
+      shader: "unshaded"
+      visible: false
+    - state: borgdecon1
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      visible: false
   - type: Charger
     chargeRate: 30
     slotId: entity_storage
@@ -311,8 +312,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.48
         density: 190
         mask:
@@ -321,8 +321,7 @@
         - MachineLayer
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 175
       behaviors:
       - !type:PlaySoundBehavior

@@ -9,7 +9,7 @@
     state: icon
   - type: Tag
     tags:
-      - ProximitySensor
+    - ProximitySensor
   - type: StaticPrice
     price: 40
 

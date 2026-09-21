@@ -30,8 +30,8 @@
   components:
   - type: Contraband
     severity: Syndicate
-    allowedDepartments: [  ]
-    allowedJobs: [  ]
+    allowedDepartments: []
+    allowedJobs: []
 
 # minor contraband not departmentally restricted -- improvised weapons etc
 - type: entity
@@ -56,8 +56,8 @@
   components:
   - type: Contraband
     severity: Restricted
-    allowedDepartments: [  ]
-    allowedJobs: [  ]
+    allowedDepartments: []
+    allowedJobs: []
 
 # one department restricted contraband
 - type: entity

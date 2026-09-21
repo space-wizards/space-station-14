@@ -12,7 +12,7 @@
     - NinjaRole
 
 - type: entity
-  parent: [BaseNinjaObjective, BaseCounterObjective]
+  parent: [ BaseNinjaObjective, BaseCounterObjective ]
   id: DoorjackObjective
   components:
   - type: Objective
@@ -29,7 +29,8 @@
 - type: entity
   parent: BaseNinjaObjective
   id: StealResearchObjective
-  description: Your gloves can be used to hack a research server and steal its precious data. If science has been slacking you'll have to get to work.
+  description: Your gloves can be used to hack a research server and steal its
+    precious data. If science has been slacking you'll have to get to work.
   components:
   - type: Objective
     icon:
@@ -42,9 +43,10 @@
   - type: StealResearchCondition
 
 - type: entity
-  parent: [BaseNinjaObjective, BaseCodeObjective]
+  parent: [ BaseNinjaObjective, BaseCodeObjective ]
   id: SpiderChargeObjective
-  description: This bomb can be detonated in a specific location. Note that the bomb will not work anywhere else!
+  description: This bomb can be detonated in a specific location. Note that the
+    bomb will not work anywhere else!
   components:
   - type: Objective
     icon:
@@ -59,7 +61,7 @@
       - NinjaBombingTargetBlacklist
 
 - type: entity
-  parent: [BaseNinjaObjective, BaseSurviveObjective]
+  parent: [ BaseNinjaObjective, BaseSurviveObjective ]
   id: NinjaSurviveObjective
   name: Survive
   description: You wouldn't be a very good ninja if you died, now would you?
@@ -70,10 +72,11 @@
       state: icon
 
 - type: entity
-  parent: [BaseNinjaObjective, BaseCodeObjective]
+  parent: [ BaseNinjaObjective, BaseCodeObjective ]
   id: TerrorObjective
   name: Call in a threat
-  description: Use your gloves on a communication console in order to bring another threat to the station.
+  description: Use your gloves on a communication console in order to bring
+    another threat to the station.
   components:
   - type: Objective
     icon:
@@ -81,10 +84,11 @@
       state: red_phone
 
 - type: entity
-  parent: [BaseNinjaObjective, BaseCodeObjective]
+  parent: [ BaseNinjaObjective, BaseCodeObjective ]
   id: MassArrestObjective
   name: Set everyone to wanted
-  description: Use your gloves to hack a criminal records console, setting the entire station to be wanted!
+  description: Use your gloves to hack a criminal records console, setting the
+    entire station to be wanted!
   components:
   - type: Objective
     icon:

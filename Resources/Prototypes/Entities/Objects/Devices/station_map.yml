@@ -5,24 +5,24 @@
   description: Displays a readout of the current station.
   abstract: true
   components:
-    - type: StationMap
-    - type: Sprite
-      sprite: Objects/Devices/tablets.rsi
-      layers:
-        - state: tablet
-        - state: generic
-          shader: unshaded
-    - type: ActivatableUI
-      inHandsOnly: true
-      singleUser: true
-      key: enum.StationMapUiKey.Key
-    - type: Damageable
-    - type: Injurable
-      damageContainer: Inorganic
-    - type: UserInterface
-      interfaces:
-        enum.StationMapUiKey.Key:
-          type: StationMapBoundUserInterface
+  - type: StationMap
+  - type: Sprite
+    sprite: Objects/Devices/tablets.rsi
+    layers:
+    - state: tablet
+    - state: generic
+      shader: unshaded
+  - type: ActivatableUI
+    inHandsOnly: true
+    singleUser: true
+    key: enum.StationMapUiKey.Key
+  - type: Damageable
+  - type: Injurable
+    damageContainer: Inorganic
+  - type: UserInterface
+    interfaces:
+      enum.StationMapUiKey.Key:
+        type: StationMapBoundUserInterface
 
 - type: entity
   id: HandheldStationMap
@@ -78,4 +78,3 @@
     showLocation: false
     initializeWithStation: true
   - type: NukeopsStationMap
-

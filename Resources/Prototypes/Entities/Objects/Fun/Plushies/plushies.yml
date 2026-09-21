@@ -4,7 +4,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionFood, SolutionSmall, BaseItem, BaseStash]
+  parent: [ SolutionFood, SolutionSmall, BaseItem, BaseStash ]
   id: BasePlushie
   components:
   - type: EmitSoundOnUse
@@ -91,8 +91,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
         density: 20
         mask:
@@ -140,7 +139,8 @@
   parent: BasePlushie
   id: PlushieBee
   name: bee plushie
-  description: A cute toy that resembles an even cuter programmer. You'd have to be a monster to grind this up.
+  description: A cute toy that resembles an even cuter programmer. You'd have to
+    be a monster to grind this up.
   components:
   - type: Sprite
     sprite: Objects/Fun/Plushies/bee.rsi
@@ -232,7 +232,8 @@
   parent: BasePlushie
   id: PlushieNuke
   name: nukie plushie
-  description: A stuffed toy that resembles a syndicate nuclear operative. The tag claims operatives to be purely fictitious.
+  description: A stuffed toy that resembles a syndicate nuclear operative. The tag
+    claims operatives to be purely fictitious.
   components:
   - type: Sprite
     sprite: Objects/Fun/Plushies/nukie.rsi
@@ -326,7 +327,9 @@
   parent: BasePlushie
   id: PlushieLizard #Weh!
   name: lizard plushie
-  description: An adorable stuffed toy that resembles a lizardperson. Made by CentComm as a token initiative to combat speciesism in work environments. "Welcome your new colleagues as you do this plush, with open arms!"
+  description: An adorable stuffed toy that resembles a lizardperson. Made by
+    CentComm as a token initiative to combat speciesism in work environments.
+    "Welcome your new colleagues as you do this plush, with open arms!"
   components:
   - type: Sprite
     sprite: Objects/Fun/Plushies/lizard.rsi
@@ -439,7 +442,8 @@
   parent: PlushieLizard
   id: PlushieRainbowLizard #Weh but gay
   name: rainbow lizard plushie
-  description: An adorable stuffed toy that resembles a lizardperson of every color. You just might trip while staring at it...
+  description: An adorable stuffed toy that resembles a lizardperson of every
+    color. You just might trip while staring at it...
   components:
   - type: Sprite
     state: rainbowlizardplush
@@ -476,7 +480,10 @@
   parent: PlushieLizard
   id: PlushieSpaceLizard #ᵂᵉʰ!
   name: space lizard plushie
-  description: An adorable stuffed toy that resembles a lizardperson in an EVA suit. Made by CentComm as a token initiative to combat speciesism in space environments. "Welcome your new colleagues as you do this plush, with open arms!"
+  description: An adorable stuffed toy that resembles a lizardperson in an EVA
+    suit. Made by CentComm as a token initiative to combat speciesism in space
+    environments. "Welcome your new colleagues as you do this plush, with open
+    arms!"
   components:
   - type: Sprite
     sprite: Objects/Fun/Plushies/lizard.rsi
@@ -518,7 +525,8 @@
   parent: PlushieLizard
   id: PlushieLizardInversed #Hew!
   name: drazil plushie
-  description: An adorable stuffed toy that resembles a lizardperson from an inversed dimension. Hew!
+  description: An adorable stuffed toy that resembles a lizardperson from an
+    inversed dimension. Hew!
   components:
   - type: Sprite
     state: plushie_lizard_inversed
@@ -571,7 +579,8 @@
   parent: BasePlushie
   id: PlushieDiona # TODO Better way of doing the flowering visuals. Probably make it an "AppearanceChangeEntityEffect" on reactive?
   name: diona plushie
-  description: An adorable stuffed toy that resembles a diona. Love water and cuddles. Do not wet!
+  description: An adorable stuffed toy that resembles a diona. Love water and
+    cuddles. Do not wet!
   components:
   - type: Sprite
     sprite: Objects/Fun/Plushies/diona.rsi
@@ -616,15 +625,13 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.3,-0.3,0.3,0.3"
         density: 15
         mask:
         - ItemMask
       rehydrate:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.3,-0.3,0.3,0.3"
         hard: false
         layer:
@@ -648,7 +655,8 @@
   parent: BasePlushie
   id: PlushieSharkBlue
   name: blue shark soft toy
-  description: Big and safe to have by your side if you want to discover the world below the surface of the ocean.
+  description: Big and safe to have by your side if you want to discover the world
+    below the surface of the ocean.
   components:
   - type: Sprite
     sprite: Objects/Fun/Plushies/shark.rsi
@@ -1022,7 +1030,8 @@
   parent: BasePlushie
   id: PlushieAtmosian
   name: atmosian plushie
-  description: An adorable stuffed toy that resembles a brave atmosian. Unfortunately, he won't fix those depressurizations for you.
+  description: An adorable stuffed toy that resembles a brave atmosian.
+    Unfortunately, he won't fix those depressurizations for you.
   components:
   - type: Sprite
     sprite: Objects/Fun/Plushies/atmosian.rsi
@@ -1044,7 +1053,8 @@
   parent: BasePlushie
   id: PlushieXeno
   name: xeno plushie
-  description: An adorable stuffed toy that resembles a scary xenomorf. You're lucky it's just a toy.
+  description: An adorable stuffed toy that resembles a scary xenomorf. You're
+    lucky it's just a toy.
   components:
   - type: Sprite
     sprite: Objects/Fun/Plushies/xeno.rsi
@@ -1103,7 +1113,8 @@
   parent: BasePlushie
   id: PlushieHuman
   name: human plushie
-  description: This is a felt plush of a human. All craftsmanship is of the lowest quality. The human is naked. The human is crying. The human is screaming.
+  description: This is a felt plush of a human. All craftsmanship is of the lowest
+    quality. The human is naked. The human is crying. The human is screaming.
   components:
   - type: Sprite
     sprite: Objects/Fun/Plushies/human.rsi
@@ -1367,6 +1378,7 @@
     available:
     - enum.DamageStateVisualLayers.Base:
         base: Sixteen
+
 #  - type: FoodSequenceElement - does not work with randomized sprites
 #    entries:
 #      CottonBurger: AmongPequeno

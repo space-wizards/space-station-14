@@ -6,17 +6,17 @@
   name: ripley central control module
   description: The electrical control center for the ripley mech.
   components:
-    - type: Item
-      storedRotation: 0
-    - type: Sprite
-      sprite: Objects/Misc/module.rsi
-      state: mainboard
-    - type: Tag
-      tags:
-      - RipleyCentralControlModule
-    - type: GuideHelp
-      guides:
-      - Robotics
+  - type: Item
+    storedRotation: 0
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: mainboard
+  - type: Tag
+    tags:
+    - RipleyCentralControlModule
+  - type: GuideHelp
+    guides:
+    - Robotics
 
 - type: entity
   id: RipleyPeripheralsElectronics
@@ -24,15 +24,15 @@
   name: ripley peripherals control module
   description: The electrical peripherals control for the ripley mech.
   components:
-    - type: Sprite
-      sprite: Objects/Misc/module.rsi
-      state: id_mod
-    - type: Tag
-      tags:
-      - RipleyPeripheralsControlModule
-    - type: GuideHelp
-      guides:
-      - Robotics
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: id_mod
+  - type: Tag
+    tags:
+    - RipleyPeripheralsControlModule
+  - type: GuideHelp
+    guides:
+    - Robotics
 
 # H.O.N.K.
 
@@ -42,17 +42,17 @@
   name: H.O.N.K. central control module
   description: The electrical control center for the H.O.N.K. mech.
   components:
-    - type: Item
-      storedRotation: 0
-    - type: Sprite
-      sprite: Objects/Misc/module.rsi
-      state: mainboard
-    - type: Tag
-      tags:
-      - HonkerCentralControlModule
-    - type: GuideHelp
-      guides:
-      - Robotics
+  - type: Item
+    storedRotation: 0
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: mainboard
+  - type: Tag
+    tags:
+    - HonkerCentralControlModule
+  - type: GuideHelp
+    guides:
+    - Robotics
 
 - type: entity
   id: HonkerPeripheralsElectronics
@@ -60,15 +60,15 @@
   name: H.O.N.K. peripherals control module
   description: The electrical peripherals control for the H.O.N.K. mech.
   components:
-    - type: Sprite
-      sprite: Objects/Misc/module.rsi
-      state: id_mod
-    - type: Tag
-      tags:
-      - HonkerPeripheralsControlModule
-    - type: GuideHelp
-      guides:
-      - Robotics
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: id_mod
+  - type: Tag
+    tags:
+    - HonkerPeripheralsControlModule
+  - type: GuideHelp
+    guides:
+    - Robotics
 
 - type: entity
   id: HonkerTargetingElectronics
@@ -76,15 +76,15 @@
   name: H.O.N.K. weapon control and targeting module
   description: The electrical targeting control for the H.O.N.K. mech.
   components:
-    - type: Sprite
-      sprite: Objects/Misc/module.rsi
-      state: id_mod
-    - type: Tag
-      tags:
-      - HonkerTargetingControlModule
-    - type: GuideHelp
-      guides:
-      - Robotics
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: id_mod
+  - type: Tag
+    tags:
+    - HonkerTargetingControlModule
+  - type: GuideHelp
+    guides:
+    - Robotics
 
 # HAMTR
 
@@ -94,17 +94,17 @@
   name: HAMTR central control module
   description: The electrical control center for the HAMTR mech.
   components:
-    - type: Item
-      storedRotation: 0
-    - type: Sprite
-      sprite: Objects/Misc/module.rsi
-      state: mainboard
-    - type: Tag
-      tags:
-      - HamtrCentralControlModule
-    - type: GuideHelp
-      guides:
-      - Robotics
+  - type: Item
+    storedRotation: 0
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: mainboard
+  - type: Tag
+    tags:
+    - HamtrCentralControlModule
+  - type: GuideHelp
+    guides:
+    - Robotics
 
 - type: entity
   id: HamtrPeripheralsElectronics
@@ -112,12 +112,12 @@
   name: HAMTR peripherals control module
   description: The electrical peripherals control for the HAMTR mech.
   components:
-    - type: Sprite
-      sprite: Objects/Misc/module.rsi
-      state: id_mod
-    - type: Tag
-      tags:
-      - HamtrPeripheralsControlModule
-    - type: GuideHelp
-      guides:
-      - Robotics
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: id_mod
+  - type: Tag
+    tags:
+    - HamtrPeripheralsControlModule
+  - type: GuideHelp
+    guides:
+    - Robotics

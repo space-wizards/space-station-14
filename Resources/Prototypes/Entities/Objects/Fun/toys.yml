@@ -17,12 +17,11 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 1
       behaviors:
       - !type:DoActsBehavior
-        acts: ["Destruction"]
+        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/snap.ogg
@@ -65,7 +64,7 @@
   - type: Dumpable
 
 - type: entity
-  parent: [SolutionSmall, FoodProduceBase]
+  parent: [ SolutionSmall, FoodProduceBase ]
   id: PlasticBanana
   name: banana
   suffix: Plastic
@@ -87,24 +86,24 @@
     - Banana
 
 - type: entity
-  parent: [SolutionSmall, DrinkBase]
+  parent: [ SolutionSmall, DrinkBase ]
   id: CrazyGlue
   name: crazy glue
-  description:  A bottle of crazy glue manufactured by Honk! Co.
+  description: A bottle of crazy glue manufactured by Honk! Co.
   components:
   - type: Sprite
     sprite: Objects/Fun/glue.rsi
     state: icon
     layers:
     - state: icon
-      map: ["enum.OpenableVisuals.Layer"]
+      map: [ "enum.OpenableVisuals.Layer" ]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.OpenableVisuals.Opened:
         enum.OpenableVisuals.Layer:
-          True: {state: "icon_open"}
-          False: {state: "icon"}
+          True: { state: "icon_open" }
+          False: { state: "icon" }
   - type: Glue
     consumptionUnit: 10
   - type: Item
@@ -121,7 +120,7 @@
     solution: drink
 
 - type: entity
-  parent: [SolutionSmall, DrinkBase]
+  parent: [ SolutionSmall, DrinkBase ]
   id: CrazyLube
   name: crazy lube
   description: A bottle of super slipery crazy lube manufactured by Honk! Co.
@@ -133,7 +132,7 @@
     sprite: Objects/Fun/lube.rsi
     layers:
     - state: icon
-      map: ["enum.OpenableVisuals.Layer"]
+      map: [ "enum.OpenableVisuals.Layer" ]
   - type: Appearance
   - type: Solution
     solution:
@@ -144,8 +143,8 @@
     visuals:
       enum.OpenableVisuals.Opened:
         enum.OpenableVisuals.Layer:
-          True: {state: "icon_open"}
-          False: {state: "icon"}
+          True: { state: "icon_open" }
+          False: { state: "icon" }
   - type: Lube
   - type: TrashOnSolutionEmpty
     solution: drink
@@ -223,15 +222,13 @@
   - type: Fixtures
     fixtures:
       slips:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
         hard: false
         layer:
         - SlipLayer
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
         density: 30
         mask:
@@ -251,7 +248,7 @@
     - state: screen
       shader: unshaded
       visible: false
-      map: ["enum.ToggleableVisuals.Layer"]
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: Appearance
   - type: GenericVisualizer
     visuals:

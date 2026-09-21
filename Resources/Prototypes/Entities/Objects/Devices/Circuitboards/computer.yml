@@ -4,20 +4,20 @@
   name: computer board
   abstract: true
   components:
-    - type: ComputerBoard
-    - type: Sprite
-      sprite: Objects/Misc/module.rsi
-      state: cpuboard
-    - type: Item
-      storedRotation: -90
-    - type: StaticPrice
-      price: 100
-    - type: PhysicalComposition
-      materialComposition:
-        Glass: 230
-      chemicalComposition:
-        Silicon: 20
-    - type: Circuitboard
+  - type: ComputerBoard
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: cpuboard
+  - type: Item
+    storedRotation: -90
+  - type: StaticPrice
+    price: 100
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 230
+    chemicalComposition:
+      Silicon: 20
+  - type: Circuitboard
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -25,10 +25,10 @@
   name: atmospheric alerts computer board
   description: A computer printed circuit board for an atmospheric alerts computer.
   components:
-    - type: Sprite
-      state: cpu_engineering
-    - type: ComputerBoard
-      prototype: ComputerAlert
+  - type: Sprite
+    state: cpu_engineering
+  - type: ComputerBoard
+    prototype: ComputerAlert
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -36,10 +36,10 @@
   name: atmospheric network monitor board
   description: A computer printed circuit board for an atmospheric network monitor.
   components:
-    - type: Sprite
-      state: cpu_engineering
-    - type: ComputerBoard
-      prototype: ComputerAtmosMonitoring
+  - type: Sprite
+    state: cpu_engineering
+  - type: ComputerBoard
+    prototype: ComputerAtmosMonitoring
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -47,10 +47,10 @@
   name: power monitoring computer board
   description: A computer printed circuit board for a power monitoring computer.
   components:
-    - type: Sprite
-      state: cpu_engineering
-    - type: ComputerBoard
-      prototype: ComputerPowerMonitoring
+  - type: Sprite
+    state: cpu_engineering
+  - type: ComputerBoard
+    prototype: ComputerPowerMonitoring
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -58,10 +58,10 @@
   name: medical records computer board
   description: A computer printed circuit board for a medical records computer.
   components:
-    - type: Sprite
-      state: cpu_medical
-    - type: ComputerBoard
-      prototype: ComputerMedicalRecords
+  - type: Sprite
+    state: cpu_medical
+  - type: ComputerBoard
+    prototype: ComputerMedicalRecords
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -69,10 +69,10 @@
   name: criminal records computer board
   description: A computer printed circuit board for a criminal records computer.
   components:
-    - type: Sprite
-      state: cpu_security
-    - type: ComputerBoard
-      prototype: ComputerCriminalRecords
+  - type: Sprite
+    state: cpu_security
+  - type: ComputerBoard
+    prototype: ComputerCriminalRecords
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -80,10 +80,10 @@
   name: station records computer board
   description: A computer printed circuit board for a station records computer.
   components:
-    - type: Sprite
-      state: cpu_command
-    - type: ComputerBoard
-      prototype: ComputerStationRecords
+  - type: Sprite
+    state: cpu_command
+  - type: ComputerBoard
+    prototype: ComputerStationRecords
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -91,12 +91,12 @@
   name: cargo request computer board
   description: A computer printed circuit board for a cargo request computer.
   components:
-    - type: Sprite
-      state: cpu_supply
-    - type: ComputerBoard
-      prototype: ComputerCargoOrders
-    - type: StaticPrice
-      price: 750
+  - type: Sprite
+    state: cpu_supply
+  - type: ComputerBoard
+    prototype: ComputerCargoOrders
+  - type: StaticPrice
+    price: 750
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -182,10 +182,10 @@
   name: cargo sale computer board
   description: A computer printed circuit board for a cargo sale computer.
   components:
-    - type: Sprite
-      state: cpu_supply
-    - type: ComputerBoard
-      prototype: ComputerPalletConsole
+  - type: Sprite
+    state: cpu_supply
+  - type: ComputerBoard
+    prototype: ComputerPalletConsole
 
 - type: entity
   id: CargoBountyComputerCircuitboard
@@ -216,12 +216,12 @@
   name: salvage expeditions computer board
   description: A computer printed circuit board for a salvage expeditions computer.
   components:
-    - type: Sprite
-      state: cpu_supply
-    - type: ComputerBoard
-      prototype: ComputerSalvageExpedition
-    - type: StealTarget
-      stealGroup: SalvageExpeditionsComputerCircuitboard
+  - type: Sprite
+    state: cpu_supply
+  - type: ComputerBoard
+    prototype: ComputerSalvageExpedition
+  - type: StealTarget
+    stealGroup: SalvageExpeditionsComputerCircuitboard
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -278,11 +278,11 @@
   name: television board
   description: A computer printed circuit board for a television.
   components:
-    - type: ComputerBoard
-      prototype: ComputerTelevision
-    - type: Tag
-      tags:
-        - ComputerTelevisionCircuitboard
+  - type: ComputerBoard
+    prototype: ComputerTelevision
+  - type: Tag
+    tags:
+    - ComputerTelevisionCircuitboard
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -290,10 +290,10 @@
   name: R&D computer board
   description: A computer printed circuit board for a R&D console.
   components:
-    - type: Sprite
-      state: cpu_science
-    - type: ComputerBoard
-      prototype: ComputerResearchAndDevelopment
+  - type: Sprite
+    state: cpu_science
+  - type: ComputerBoard
+    prototype: ComputerResearchAndDevelopment
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -301,10 +301,10 @@
   name: analysis computer board
   description: A computer printed circuit board for an analysis console.
   components:
-    - type: Sprite
-      state: cpu_science
-    - type: ComputerBoard
-      prototype: ComputerAnalysisConsole
+  - type: Sprite
+    state: cpu_science
+  - type: ComputerBoard
+    prototype: ComputerAnalysisConsole
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -329,20 +329,20 @@
     prototype: ComputerCrewMonitoring
 
 - type: entity
-  parent: [BaseComputerCircuitboard, BaseCommandContraband]
+  parent: [ BaseComputerCircuitboard, BaseCommandContraband ]
   id: IDComputerCircuitboard
   name: ID card computer board
   description: A computer printed circuit board for an ID card console.
   components:
-    - type: Sprite
-      state: cpu_command
-    - type: ComputerBoard
-      prototype: ComputerId
-    - type: StaticPrice
-      price: 750
-    - type: Tag
-      tags:
-      - HighRiskItem
+  - type: Sprite
+    state: cpu_command
+  - type: ComputerBoard
+    prototype: ComputerId
+  - type: StaticPrice
+    price: 750
+  - type: Tag
+    tags:
+    - HighRiskItem
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -350,10 +350,10 @@
   name: body scanner computer board
   description: A computer printed circuit board for a body scanner console.
   components:
-    - type: Sprite
-      state: cpu_medical
-    - type: ComputerBoard
-      prototype: computerBodyScanner
+  - type: Sprite
+    state: cpu_medical
+  - type: ComputerBoard
+    prototype: computerBodyScanner
 
 - type: entity
   parent: [ BaseComputerCircuitboard, BaseCommandContraband ]
@@ -361,10 +361,10 @@
   name: communications computer board
   description: A computer printed circuit board for a communications console.
   components:
-    - type: Sprite
-      state: cpu_command
-    - type: ComputerBoard
-      prototype: ComputerComms
+  - type: Sprite
+    state: cpu_command
+  - type: ComputerBoard
+    prototype: ComputerComms
 
 - type: entity
   parent: [ BaseComputerCircuitboard, BaseSyndicateContraband ]
@@ -392,7 +392,8 @@
   parent: [ BaseComputerCircuitboard, BaseCentcommContraband ]
   id: CentcommCommsComputerCircuitboard
   name: central command communications computer board
-  description: A computer printed circuit board for a central command communications console.
+  description: A computer printed circuit board for a central command
+    communications console.
   components:
   - type: Sprite
     state: cpu_centcomm
@@ -415,10 +416,10 @@
   name: solar control computer board
   description: A computer printed circuit board for a solar control console.
   components:
-    - type: Sprite
-      state: cpu_engineering
-    - type: ComputerBoard
-      prototype: ComputerSolarControl
+  - type: Sprite
+    state: cpu_engineering
+  - type: ComputerBoard
+    prototype: ComputerSolarControl
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -426,8 +427,8 @@
   name: space villain arcade board
   description: A computer printed circuit board for a space villain arcade cabinet.
   components:
-    - type: ComputerBoard
-      prototype: SpaceVillainArcade
+  - type: ComputerBoard
+    prototype: SpaceVillainArcade
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -435,8 +436,8 @@
   name: block game arcade board
   description: A computer printed circuit board for a block game arcade cabinet.
   components:
-    - type: ComputerBoard
-      prototype: BlockGameArcade
+  - type: ComputerBoard
+    prototype: BlockGameArcade
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -444,10 +445,10 @@
   name: PA control box computer board
   description: A computer printed circuit board for a particle accelerator control box.
   components:
-    - type: Sprite
-      state: cpu_engineering
-    - type: ComputerBoard
-      prototype: ParticleAcceleratorControlBoxUnfinished
+  - type: Sprite
+    state: cpu_engineering
+  - type: ComputerBoard
+    prototype: ParticleAcceleratorControlBoxUnfinished
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -477,10 +478,10 @@
   name: cloning console computer board
   description: A computer printed circuit board for a cloning console.
   components:
-    - type: Sprite
-      state: cpu_medical
-    - type: ComputerBoard
-      prototype: ComputerCloningConsole
+  - type: Sprite
+    state: cpu_medical
+  - type: ComputerBoard
+    prototype: ComputerCloningConsole
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -488,10 +489,10 @@
   name: IFF console board
   description: Allows you to control the IFF characteristics of this vessel.
   components:
-    - type: Sprite
-      state: cpu_command
-    - type: ComputerBoard
-      prototype: ComputerIFF
+  - type: Sprite
+    state: cpu_command
+  - type: ComputerBoard
+    prototype: ComputerIFF
 
 - type: entity
   parent: [ BaseComputerCircuitboard, BaseSyndicateContraband ]
@@ -510,12 +511,12 @@
   name: news manager console board
   description: Write your message to the world!
   components:
-    - type: Sprite
-      state: cpu_service
-    - type: StaticPrice
-      price: 150
-    - type: ComputerBoard
-      prototype: ComputerMassMedia
+  - type: Sprite
+    state: cpu_service
+  - type: StaticPrice
+    price: 150
+  - type: ComputerBoard
+    prototype: ComputerMassMedia
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -523,10 +524,10 @@
   name: sensor monitoring console board
   description: A computer printed circuit board for a sensor monitoring console.
   components:
-    - type: Sprite
-      state: cpu_engineering
-    - type: ComputerBoard
-      prototype: ComputerSensorMonitoring
+  - type: Sprite
+    state: cpu_engineering
+  - type: ComputerBoard
+    prototype: ComputerSensorMonitoring
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -534,10 +535,10 @@
   name: robotics control console board
   description: A computer printed circuit board for a robotics control console.
   components:
-    - type: Sprite
-      state: cpu_science
-    - type: ComputerBoard
-      prototype: ComputerRoboticsControl
+  - type: Sprite
+    state: cpu_science
+  - type: ComputerBoard
+    prototype: ComputerRoboticsControl
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -545,10 +546,10 @@
   name: xenoborg control console board
   description: A computer printed circuit board for a xenoborg control console.
   components:
-    - type: Sprite
-      state: cpu_science
-    - type: ComputerBoard
-      prototype: ComputerXenoborgsControl
+  - type: Sprite
+    state: cpu_science
+  - type: ComputerBoard
+    prototype: ComputerXenoborgsControl
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -556,10 +557,10 @@
   name: AI upload console board
   description: A computer printed circuit board for an AI upload console.
   components:
-    - type: Sprite
-      state: cpu_science
-    - type: ComputerBoard
-      prototype: StationAiUploadComputer
+  - type: Sprite
+    state: cpu_science
+  - type: ComputerBoard
+    prototype: StationAiUploadComputer
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -587,7 +588,7 @@
   name: AI restoration console board
   description: A computer printed circuit board for an AI restoration console console.
   components:
-    - type: Sprite
-      state: cpu_science
-    - type: ComputerBoard
-      prototype: StationAiFixerComputer
+  - type: Sprite
+    state: cpu_science
+  - type: ComputerBoard
+    prototype: StationAiFixerComputer

@@ -13,8 +13,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
         density: 190
         mask:
@@ -26,11 +25,11 @@
     snapCardinals: true
     noRot: true
     layers:
-      - state: coil
-        map: ["enabled"]
-      - state: coilhit
-        visible: false
-        map: ["hit"]
+    - state: coil
+      map: [ "enabled" ]
+    - state: coilhit
+      visible: false
+      map: [ "hit" ]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -47,8 +46,7 @@
   - type: NodeContainer
     examinable: true
     nodes:
-      input:
-        !type:CableDeviceNode
+      input: !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: PowerMonitoringDevice
     group: Generator
@@ -90,15 +88,14 @@
     messages: WindowMessages
   - type: Repairable
   - type: DamageVisuals
-    thresholds: [8, 16, 25]
+    thresholds: [ 8, 16, 25 ]
     damageDivisor: 3.333
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Power/Generation/Tesla/coil_cracks.rsi
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 225
       behaviors:
       - !type:DoActsBehavior
@@ -131,8 +128,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
         density: 110
         mask:
@@ -144,11 +140,11 @@
     noRot: true
     snapCardinals: true
     layers:
-      - state: grounding_rod
-        map: ["power"]
-      - state: grounding_rodhit
-        visible: false
-        map: ["hit"]
+    - state: grounding_rod
+      map: [ "power" ]
+    - state: grounding_rodhit
+      visible: false
+      map: [ "hit" ]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -175,15 +171,14 @@
     messages: WindowMessages
   - type: Repairable
   - type: DamageVisuals
-    thresholds: [8, 16, 25]
+    thresholds: [ 8, 16, 25 ]
     damageDivisor: 3.333
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Power/Generation/Tesla/groundingrod_cracks.rsi
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 300
       behaviors:
       - !type:DoActsBehavior

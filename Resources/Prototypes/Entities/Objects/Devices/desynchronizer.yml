@@ -2,7 +2,8 @@
   id: DeviceDesynchronizer
   parent: BaseItem
   name: desynchronizer
-  description: An experimental device that can temporarily desynchronize the user from spacetime, effectively making them disappear while it's active.
+  description: An experimental device that can temporarily desynchronize the user
+    from spacetime, effectively making them disappear while it's active.
   components:
   - type: Sprite
     sprite: Objects/Devices/desynchronizer.rsi

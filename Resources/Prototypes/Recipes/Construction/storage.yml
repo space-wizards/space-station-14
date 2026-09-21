@@ -6,7 +6,6 @@
   placementMode: SnapgridCenter
   conditions:
   - !type:TileNotBlocked
-
 - type: construction
   abstract: true
   parent: BaseStorageStructure
@@ -15,9 +14,9 @@
   canBuildInImpassable: true
   conditions:
   - !type:WallmountCondition
-# endregion Base
+    # endregion Base
 
-# region Bureaucracy
+    # region Bureaucracy
 - type: construction
   parent: BaseStorageStructure
   id: FilingCabinet
@@ -88,4 +87,5 @@
   parent: BaseShelf
   id: ShelfChemistry
   targetNode: ShelfChemistry
+
 # endregion Shelves

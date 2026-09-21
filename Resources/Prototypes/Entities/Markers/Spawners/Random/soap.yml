@@ -6,7 +6,8 @@
       tableId: AllBananaPeelsTable
     - !type:NestedSelector
       tableId: AllSoapsTable
-    - !type:GroupSelector # Other
+    # Other
+    - !type:GroupSelector
       weight: 0.02 # 1 in 100
       children:
       - id: FoodButter
@@ -24,7 +25,8 @@
     - id: Soap
     - id: SoapHomemade
     - id: SoapDeluxe
-    - !type:GroupSelector # Rare soaps
+    # Rare soaps
+    - !type:GroupSelector
       weight: 0.02 # 1 in 250
       children:
       - id: SoapSyndie
@@ -52,10 +54,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Objects/Specific/Janitorial/soap.rsi
-        state: soap-4
+    - state: red
+    - sprite: Objects/Specific/Janitorial/soap.rsi
+      state: soap-4
   - type: EntityTableSpawner
     table: !type:NestedSelector
       tableId: AllSoapsTable
-

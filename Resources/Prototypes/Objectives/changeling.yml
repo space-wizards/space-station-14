@@ -11,7 +11,7 @@
     - ChangelingRole
 
 - type: entity
-  parent: [BaseChangelingObjective, BaseSurviveObjective]
+  parent: [ BaseChangelingObjective, BaseSurviveObjective ]
   id: ChangelingSurviveObjective
   name: Survive.
   description: We must stay alive at all cost.
@@ -56,9 +56,10 @@
   - type: ChangelingUniqueIdentityCondition
 
 - type: entity
-  parent: [BaseChangelingObjective, BaseLivingObjective]
+  parent: [ BaseChangelingObjective, BaseLivingObjective ]
   id: ChangelingEscapeIdentityObjective
-  description: We must escape with the target person's identity and wear an ID card with their name on it.
+  description: We must escape with the target person's identity and wear an ID
+    card with their name on it.
   components:
   - type: Objective
     difficulty: 1.5
@@ -70,10 +71,12 @@
   - type: ChangelingEscapeIdentityCondition
   - type: PickRandomPerson
     conditions:
-    - !type:AntagonistTagCondition # The only targets we want to roll for this objective are on-station.
+    # The only targets we want to roll for this objective are on-station.
+    - !type:AntagonistTagCondition
       tags:
       - OnStation
-    - !type:AntagonistTagCondition # We don't want to roll unkillable antagonists, because cannot be devoured.
+    # We don't want to roll unkillable antagonists, because cannot be devoured.
+    - !type:AntagonistTagCondition
       inverted: true
       tags:
       - Unkillable
@@ -86,7 +89,7 @@
         - ChangelingEscapeIdentityCondition
 
 - type: entity
-  parent: [BaseChangelingObjective, BaseLivingObjective]
+  parent: [ BaseChangelingObjective, BaseLivingObjective ]
   id: ChangelingEscapeDepartmentObjective
   description: We must escape with the identity & ID card of any member of this department.
   components:
@@ -100,17 +103,19 @@
   - type: ChangelingEscapeDepartmentCondition
   - type: PickRandomPerson
     conditions:
-    - !type:AntagonistTagCondition # Only allow on-station targets.
+    # Only allow on-station targets.
+    - !type:AntagonistTagCondition
       tags:
       - OnStation # Also don't bother checking for unkillable cause here we only need the DEPARTMENT of the target and I don't foresee departments full of unkillable antags in the future.
     - !type:RoleCondition
       whitelist:
         components:
         - JobRole # Our target has to be employed, obviously.
-    - !type:DifferentDepartmentCondition # I love spawning as a scientist and having to escape as a scientist
+    - !type:DifferentDepartmentCondition
+      # I love spawning as a scientist and having to escape as a scientist
 
 - type: entity
-  parent: [BaseChangelingObjective, BaseKillObjective]
+  parent: [ BaseChangelingObjective, BaseKillObjective ]
   id: ChangelingKillRandomPersonObjective
   description: This person is our prey. We must ensure they stay dead on the station.
   components:
@@ -121,10 +126,12 @@
     title: objective-condition-kill-maroon-title
   - type: PickRandomPerson
     conditions:
-    - !type:AntagonistTagCondition # Only roll on-station targets.
+    # Only roll on-station targets.
+    - !type:AntagonistTagCondition
       tags:
       - OnStation
-    - !type:AntagonistTagCondition # Don't roll unkillable targets.
+    # Don't roll unkillable targets.
+    - !type:AntagonistTagCondition
       inverted: true
       tags:
       - Unkillable
@@ -157,7 +164,8 @@
   parent: BaseChangelingObjective
   id: ChangelingMostExtractedObjective
   name: Extract the most identities.
-  description: We must extract the most unique DNA sequences out of all other changelings, via devouring or otherwise.
+  description: We must extract the most unique DNA sequences out of all other
+    changelings, via devouring or otherwise.
   components:
   - type: Objective
     difficulty: 1

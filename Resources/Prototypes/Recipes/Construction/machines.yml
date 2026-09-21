@@ -6,7 +6,6 @@
   placementMode: SnapgridCenter
   conditions:
   - !type:TileNotBlocked
-
 - type: construction
   abstract: true
   parent: BaseMachine
@@ -14,9 +13,9 @@
   canBuildInImpassable: true
   conditions:
   - !type:WallmountCondition
-# endregion Base
+    # endregion Base
 
-# region Machines
+    # region Machines
 - type: construction
   parent: BaseMachine
   id: Computer
@@ -79,4 +78,5 @@
   name: construction-recipe-signal-button-directional
   graph: SignalButtonDirectionalGraph
   targetNode: SignalButtonDirectionalNode
+
 # endregion Switching

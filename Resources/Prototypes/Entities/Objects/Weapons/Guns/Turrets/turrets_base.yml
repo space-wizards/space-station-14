@@ -9,8 +9,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
         density: 60
         mask:
@@ -35,8 +34,7 @@
     rootTask:
       task: TurretCompound
     blackboard:
-      RotateSpeed: !type:Single
-        3.141
+      RotateSpeed: !type:Single "3.141"
       SoundTargetInLOS: !type:SoundPathSpecifier
         path: /Audio/Effects/double_beep.ogg
   - type: MouseRotator
@@ -57,10 +55,8 @@
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 275
-        # TODO: Construction graph
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -107,7 +103,8 @@
   parent: BaseWeaponTurretIndestructible
   id: BaseWeaponEnergyTurretIndestructible
   name: laser turret
-  description: An auto-turret armed with a heavy laser. Its weapon will recharge while connected to an active power grid.
+  description: An auto-turret armed with a heavy laser. Its weapon will recharge
+    while connected to an active power grid.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Turrets/sentry_turret.rsi

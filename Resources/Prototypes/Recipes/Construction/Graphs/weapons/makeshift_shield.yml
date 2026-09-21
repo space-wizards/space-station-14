@@ -2,16 +2,16 @@
   id: MakeshiftShield
   start: start
   graph:
-    - node: start
-      edges:
-        - to: makeshiftShield
-          steps:
-            - material: Cable
-              amount: 5
-              doAfter: 2
-            - material: Steel
-              amount: 10
-              doAfter: 2
+  - node: start
+    edges:
+    - to: makeshiftShield
+      steps:
+      - material: Cable
+        amount: 5
+        doAfter: 2
+      - material: Steel
+        amount: 10
+        doAfter: 2
 
-    - node: makeshiftShield
-      entity: MakeshiftShield
+  - node: makeshiftShield
+    entity: MakeshiftShield

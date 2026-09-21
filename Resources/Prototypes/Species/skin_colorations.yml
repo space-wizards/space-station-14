@@ -9,13 +9,13 @@
 - type: skinColoration
   id: Hues
   strategy: !type:ClampedHsvColoration
-    value: [0.175, 1]
+    value: [ 0.175, 1 ]
 
 - type: skinColoration
   id: TintedHues
   strategy: !type:ClampedHslColoration
-    saturation: [0, 0.1]
-    lightness: [0.85, 1]
+    saturation: [ 0, 0.1 ]
+    lightness: [ 0.85, 1 ]
   squashEyeHairColors: true
 
 - type: skinColoration
@@ -40,7 +40,7 @@
 
 - type: skinColoration
   id: HumanToned
-  strategy: !type:HumanTonedSkinColoration {}
+  strategy: !type:HumanTonedSkinColoration
   realisticColors: true
 
 - type: skinColoration

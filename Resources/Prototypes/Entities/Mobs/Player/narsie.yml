@@ -29,7 +29,7 @@
     prototype: MobNarsie
 
 - type: entity
-  parent: [MobNarsieBase, BaseMob]
+  parent: [ MobNarsieBase, BaseMob ]
   id: MobNarsie
   components:
   - type: AnnounceOnSpawn
@@ -45,9 +45,8 @@
   - type: Fixtures
     fixtures:
       EventHorizonCollider:
-        shape:
-          !type:PhysShapeCircle
-            radius: 5
+        shape: !type:PhysShapeCircle
+          radius: 5
         hard: false
         restitution: 0.8
         density: 99999
@@ -56,9 +55,8 @@
         layer:
         - SingularityLayer
       EventHorizonConsumer:
-        shape:
-          !type:PhysShapeCircle
-            radius: 5
+        shape: !type:PhysShapeCircle
+          radius: 5
         hard: false
         mask:
         - SingularityLayer

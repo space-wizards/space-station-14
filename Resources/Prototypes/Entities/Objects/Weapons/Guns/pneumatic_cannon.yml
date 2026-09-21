@@ -1,8 +1,9 @@
 - type: entity
   name: improvised pneumatic cannon
-  parent: [BaseStorageItem, BaseMinorContraband]
+  parent: [ BaseStorageItem, BaseMinorContraband ]
   id: WeaponImprovisedPneumaticCannon
-  description: Improvised using nothing but a pipe, some zipties, and a pneumatic cannon. Doesn't accept tanks without enough gas.
+  description: Improvised using nothing but a pipe, some zipties, and a pneumatic
+    cannon. Doesn't accept tanks without enough gas.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Cannons/pneumatic_cannon.rsi
@@ -36,7 +37,7 @@
     - 0,0,1,1
   - type: Appearance
   - type: ItemMapper
-    containerWhitelist: [gas_tank]
+    containerWhitelist: [ gas_tank ]
     mapLayers:
       tank:
         whitelist:
@@ -61,7 +62,6 @@
       storagebase: !type:Container
         ents: []
       gas_tank: !type:ContainerSlot
-
 - type: entity
   parent: BaseStorageItem
   id: LauncherCreamPie
@@ -109,7 +109,8 @@
   name: experimental pie cannon
   parent: BaseWeaponBattery
   id: BorgLauncherCreamPie
-  description: Deliver a generous portion of cream directly to the crew! Automatically bakes pies over time.
+  description: Deliver a generous portion of cream directly to the crew!
+    Automatically bakes pies over time.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Cannons/pie_cannon.rsi

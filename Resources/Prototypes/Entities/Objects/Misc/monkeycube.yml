@@ -83,7 +83,7 @@
   components:
   - type: SpawnItemsOnUse
     items:
-      - id: KoboldCube
+    - id: KoboldCube
   - type: Sprite
     state: wrapper_kobold
 
@@ -111,4 +111,4 @@
   components:
   - type: SpawnItemsOnUse
     items:
-      - id: SyndicateSponge
+    - id: SyndicateSponge

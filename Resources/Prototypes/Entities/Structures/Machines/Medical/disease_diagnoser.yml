@@ -1,6 +1,11 @@
 - type: entity
   id: DiseaseDiagnoser
-  parent: [ BaseMachinePowered, SmallConstructibleMachine, BaseSmallConstructibleMachineDestructible ]
+  parent:
+    [
+      BaseMachinePowered,
+      SmallConstructibleMachine,
+      BaseSmallConstructibleMachineDestructible
+    ]
   name: Disease Diagnoser Delta Extreme
   description: A machine that analyzes disease samples.
   placement:
@@ -10,10 +15,10 @@
     sprite: Structures/Machines/diagnoser.rsi
     layers:
     - state: icon
-      map: ["enum.DiseaseMachineVisualLayers.IsRunning"]
+      map: [ "enum.DiseaseMachineVisualLayers.IsRunning" ]
     - state: unlit
       shader: unshaded
-      map: ["enum.DiseaseMachineVisualLayers.IsOn"]
+      map: [ "enum.DiseaseMachineVisualLayers.IsOn" ]
   - type: Appearance
   - type: Machine
     board: DiagnoserMachineCircuitboard
@@ -37,10 +42,10 @@
     layers:
     - state: paper_receipt
     - state: paper_receipt_words
-      map: ["enum.PaperVisualLayers.Writing"]
+      map: [ "enum.PaperVisualLayers.Writing" ]
       visible: false
     - state: paper_stamp-generic
-      map: ["enum.PaperVisualLayers.Stamp"]
+      map: [ "enum.PaperVisualLayers.Stamp" ]
       visible: false
   - type: PaperVisuals
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_perforated.svg.96dpi.png"

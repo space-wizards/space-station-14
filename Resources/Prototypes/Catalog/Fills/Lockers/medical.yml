@@ -7,7 +7,8 @@
     - !type:NestedSelector
       tableId: CoreMedicineReagentBottleTable
       rolls: 2
-    - !type:GroupSelector # Basic topicals
+    # Basic topicals
+    - !type:GroupSelector
       rolls: 7
       children:
       - id: Brutepack
@@ -87,14 +88,16 @@
     - id: HandLabeler
     - id: BarSpoon # Should be replaced by a stirring tool with medical theming, like a glass rod
     - id: PlasmaChemistryVial
-    - !type:AllSelector # The wonderful world of chemical storage
+    # The wonderful world of chemical storage
+    - !type:AllSelector
       children:
       - id: BoxSyringe
       - id: BoxBottle
       - id: BoxVial
       - id: BoxBeaker
       - id: BoxPillCanister
-      - !type:GroupSelector # Remind chemists once in a while of alternate storage options
+      # Remind chemists once in a while of alternate storage options
+      - !type:GroupSelector
         prob: 0.2
         children:
         - id: SprayBottle

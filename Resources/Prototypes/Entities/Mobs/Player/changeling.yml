@@ -37,8 +37,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.2
         density: 100
         mask:
@@ -77,8 +76,7 @@
   - type: Puller
     needsHands: false
   - type: Tag # Removes DoorBumpOpener
-    tags:
-      [ ]
+    tags: []
 
 - type: entity
   parent:
@@ -87,12 +85,13 @@
   - MobAtmosStandard
   id: MobHeadSlug
   name: headslug
-  description: A small, slug-like creature with a large, gaping maw. It's covered in a thick, slimy mucus.
+  description: A small, slug-like creature with a large, gaping maw. It's covered
+    in a thick, slimy mucus.
   components:
   - type: Sprite
     drawdepth: SmallMobs
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: slug
       sprite: Mobs/Animals/headslug.rsi
   - type: DamageStateVisuals
@@ -133,12 +132,14 @@
   - FlyingMobBase # its space faring because it spawns from space
   id: MobHeadSlugElder
   name: elder headslug
-  description: After living a few years, headslugs develop into this state and gain space faring abilities as a part of the changeling's reproduction cycle.
+  description: After living a few years, headslugs develop into this state and
+    gain space faring abilities as a part of the changeling's reproduction
+    cycle.
   components:
   - type: Sprite
     drawdepth: SmallMobs
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: slug_elder
       sprite: Mobs/Animals/headslug.rsi
   - type: DamageStateVisuals
@@ -194,7 +195,7 @@
   id: ChangelingVoiceMimicDummy
   categories: [ HideSpawnMenu ]
   components:
-  - type:  VoiceMask
+  - type: VoiceMask
     action: ActionChangelingVoiceMimic
     isInnate: true
     changeIDName: false

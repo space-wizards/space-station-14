@@ -3,12 +3,12 @@
 #
 - type: entity
   abstract: true
-  parent: [BaseItem, SolutionFood, SolutionSmall]
+  parent: [ BaseItem, SolutionFood, SolutionSmall ]
   id: FoodBase
   components:
   - type: FlavorProfile
     flavors:
-      - food
+    - food
   - type: Edible
   - type: Sprite
   - type: StaticPrice
@@ -49,11 +49,11 @@
   - type: Sprite
     layers:
     - state: icon
-      map: ["icon"]
+      map: [ "icon" ]
   - type: GenericVisualizer
     visuals:
       enum.OpenableVisuals.Opened:
         icon:
-          True: {state: "icon-open"}
-          False: {state: "icon"}
+          True: { state: "icon-open" }
+          False: { state: "icon" }
   - type: Openable

@@ -13,8 +13,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.05"
         density: 190
         mask:
@@ -44,12 +43,12 @@
   parent: [ BaseBed, StructureHealthFurniture ]
   id: Bed
   name: bed
-  description: This is used to lie in, sleep in or strap on. Resting here provides extremely slow healing.
+  description: This is used to lie in, sleep in or strap on. Resting here provides
+    extremely slow healing.
   components:
   - type: Destructible
     thresholds:
-    - trigger: &DamageFurnitureNormal
-        !type:DamageTrigger
+    - trigger: &DamageFurnitureNormal !type:DamageTrigger
         damage: 40
       behaviors:
       - !type:PlaySoundBehavior
@@ -65,7 +64,8 @@
   parent: Bed
   id: MedicalBed
   name: medical bed
-  description: A hospital bed for patients to recover in. Resting here provides fairly slow healing.
+  description: A hospital bed for patients to recover in. Resting here provides
+    fairly slow healing.
   components:
   - type: Sprite
     state: bed-MED
@@ -87,7 +87,8 @@
   parent: [ BaseBed, StructureHealthFurniture ]
   id: DogBed
   name: dog bed
-  description: A comfy-looking dog bed. You can even strap your pet in, in case the gravity turns off.
+  description: A comfy-looking dog bed. You can even strap your pet in, in case
+    the gravity turns off.
   components:
   - type: Sprite
     state: dogbed
@@ -151,7 +152,7 @@
     node: bed
 
 - type: entity
-  parent: [ BaseBed,StructureHealthFurnitureStrong ]
+  parent: [ BaseBed, StructureHealthFurnitureStrong ]
   id: PsychBed
   name: psychologist bed
   description: An upholstered bed for the psychological care of patients.
@@ -166,8 +167,7 @@
     damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 80
       behaviors:
       - *SoundWoodDestroy

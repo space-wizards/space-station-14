@@ -14,8 +14,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.4,-0.5,0.4,0.3"
         density: 190
         mask:
@@ -29,8 +28,7 @@
   - type: NodeContainer
     examinable: true
     nodes:
-      output:
-        !type:CableDeviceNode
+      output: !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: PowerMonitoringDevice
     group: Generator
@@ -47,8 +45,7 @@
   - type: PacifismDangerousAttack
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:PlaySoundBehavior
@@ -104,8 +101,7 @@
   - type: NodeContainer
     examinable: true
     nodes:
-      output:
-        !type:CableDeviceNode
+      output: !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: PowerMonitoringDevice
     group: Generator
@@ -139,8 +135,7 @@
     node: frame
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior
@@ -162,8 +157,8 @@
   id: GeneratorBasic15kW
   suffix: Basic, 15kW
   components:
-    - type: PowerSupplier
-      supplyRate: 15000
+  - type: PowerSupplier
+    supplyRate: 15000
 
 - type: entity
   parent: BaseGeneratorWallmount
@@ -183,7 +178,6 @@
   - type: ContainerContainer
     containers:
       board: !type:Container
-
 - type: entity
   parent: BaseGeneratorWallmount
   id: GeneratorWallmountAPU
@@ -217,8 +211,7 @@
   - type: NodeContainer
     examinable: true
     nodes:
-      output:
-        !type:CableDeviceNode
+      output: !type:CableDeviceNode
         nodeGroupID: Apc
   - type: PowerSupplier
     voltage: Apc
@@ -236,8 +229,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.4,-0.5,0.4,0.3"
         density: 190
         mask:
@@ -262,8 +254,7 @@
   - type: NodeContainer
     examinable: true
     nodes:
-      output:
-        !type:CableDeviceNode
+      output: !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: PacifismDangerousAttack
   - type: StaticPrice
@@ -294,8 +285,7 @@
     damageModifierSet: GlassReinforcedMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 275
       behaviors:
       - !type:PlaySoundBehavior
@@ -314,7 +304,8 @@
   parent: [ BaseRTG, StructureHealthMachineFlimsy ]
   id: GeneratorRTGDamaged
   name: damaged RTG
-  description: A Radioisotope Thermoelectric Generator for long term power. This one has damaged shielding.
+  description: A Radioisotope Thermoelectric Generator for long term power. This
+    one has damaged shielding.
   suffix: 10kW
   components:
   - type: Sprite
@@ -329,8 +320,7 @@
     damageModifierSet: PreciousMetalMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior

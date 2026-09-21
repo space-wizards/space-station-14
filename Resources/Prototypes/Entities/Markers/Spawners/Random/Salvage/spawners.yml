@@ -406,7 +406,8 @@
   id: SalvageMagnetMobTable
   table: !type:GroupSelector
     children:
-    - !type:GroupSelector # normal theats
+    # normal theats
+    - !type:GroupSelector
       weight: 95
       children:
       - id: MobCarpSalvage
@@ -415,10 +416,12 @@
         weight: 1
         children:
         - id: LandMineExplosive
-        - !type:NestedSelector # what's that thing underneath the scrap?
+        # what's that thing underneath the scrap?
+        - !type:NestedSelector
           prob: 0.33
           tableId: SalvageScrapSpawnerCommon
-    - !type:GroupSelector # scary monsters
+    # scary monsters
+    - !type:GroupSelector
       weight: 5
       children:
       - !type:AllSelector

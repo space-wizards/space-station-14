@@ -1,5 +1,5 @@
 - type: entity
-  parent: [BaseItem, BaseXenoborgContraband]
+  parent: [ BaseItem, BaseXenoborgContraband ]
   id: WeaponTileGun
   name: tile gun
   description: A strange gun that shoots tiles. Shoot them with the floor!
@@ -10,7 +10,7 @@
     layers:
     - state: icon
     - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
+      map: [ "enum.GunVisualLayers.Mag" ]
   - type: MagazineVisuals
     magState: mag
     steps: 7

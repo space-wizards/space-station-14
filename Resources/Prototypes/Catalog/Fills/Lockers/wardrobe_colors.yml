@@ -111,7 +111,6 @@
       amount: 2
     - id: ClothingHeadBandGold
 
-
 - type: entity
   id: WardrobeWhiteFilled
   suffix: Filled

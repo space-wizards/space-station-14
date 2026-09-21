@@ -2,18 +2,18 @@
   id: Brute
   name: damage-group-brute
   damageTypes:
-    - Blunt
-    - Slash
-    - Piercing
+  - Blunt
+  - Slash
+  - Piercing
 
 - type: damageGroup
   id: Burn
   name: damage-group-burn
   damageTypes:
-    - Heat
-    - Shock
-    - Cold
-    - Caustic
+  - Heat
+  - Shock
+  - Cold
+  - Caustic
 
 # Airloss (sometimes called oxyloss)
 # Caused by asphyxiation or bloodloss.
@@ -23,8 +23,8 @@
   id: Airloss
   name: damage-group-airloss
   damageTypes:
-    - Asphyxiation
-    - Bloodloss
+  - Asphyxiation
+  - Bloodloss
 
 # As with airloss, most medicine and damage effects should probably modify either poison or radiation.
 # Though there are probably some radioactive poisons.
@@ -32,14 +32,14 @@
   id: Toxin
   name: damage-group-toxin
   damageTypes:
-    - Poison
-    - Radiation
+  - Poison
+  - Radiation
 
 - type: damageGroup
   id: Genetic
   name: damage-group-genetic
   damageTypes:
-    - Cellular
+  - Cellular
 
 # Metaphysical damage types should be used very sparingly, and likely not affect normal crew entities.
 # Revenants and other ghost-like/demonic creatures are more fitting. Healing should never be available via medicine.

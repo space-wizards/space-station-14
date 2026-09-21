@@ -104,7 +104,7 @@
     pocket1: HandheldHealthAnalyzer
     pocket2: PillCanisterBicaridine
   inhand:
-    - MedkitCombatFilled
+  - MedkitCombatFilled
   storage:
     back:
     - Defibrillator
@@ -125,7 +125,7 @@
     pocket1: WeaponPistolViper
     pocket2: VoiceMaskImplanter
   inhand:
-    - ClothingBackpackChameleonFillAgent
+  - ClothingBackpackChameleonFillAgent
 - type: startingGear
   id: SyndicateReinforcementThief
   parent: SyndicateOperativeClothing
@@ -133,7 +133,7 @@
     pocket1: WeaponPistolViper
     pocket2: MagazinePistolHighCapacity
   inhand:
-    - ToolboxSyndicateFilled
+  - ToolboxSyndicateFilled
   storage:
     back:
     - SyndicateJawsOfLife

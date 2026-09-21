@@ -23,10 +23,10 @@
     sprite: Structures/Machines/station_anchor.rsi
     layers:
     - state: station_anchor
-      map: ["base"]
+      map: [ "base" ]
     - state: station_anchor_unlit
       shader: unshaded
-      map: ["unlit"]
+      map: [ "unlit" ]
   - type: GenericVisualizer
     visuals:
       enum.PowerChargeVisuals.Active:
@@ -37,8 +37,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.7,-0.7,0.7,0.7"
         density: 190
         mask:
@@ -53,7 +52,13 @@
 
 - type: entity
   id: StationAnchor
-  parent: [StationAnchorBase, BaseMachinePowered, ConstructibleMachine, StructureHealthMachineMassive]
+  parent:
+    [
+      StationAnchorBase,
+      BaseMachinePowered,
+      ConstructibleMachine,
+      StructureHealthMachineMassive
+    ]
   placement:
     mode: AlignTileAny
   components:
@@ -82,8 +87,7 @@
     damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 400
       behaviors:
       - !type:PlaySoundBehavior

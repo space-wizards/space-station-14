@@ -272,7 +272,6 @@
       - id: PKAUpgradeRange
       - id: PKAUpgradeFireRate
 
-
 - type: entityTable
   id: RandomGeneratorTable
   table: !type:GroupSelector

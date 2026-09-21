@@ -1,5 +1,5 @@
 - type: entity
-  parent: [MobObserverBase, InventoryBase]
+  parent: [ MobObserverBase, InventoryBase ]
   id: AdminObserver
   name: admin observer
   categories: [ HideSpawnMenu ]
@@ -59,7 +59,7 @@
       enum.CrewMonitoringUIKey.Key:
         type: CrewMonitoringBoundUserInterface
       enum.GeneralStationRecordConsoleKey.Key:
-      # who the fuck named this bruh
+        # who the fuck named this bruh
         type: GeneralStationRecordConsoleBoundUserInterface
   - type: IntrinsicUI
     uis:
@@ -125,9 +125,9 @@
     sprite: Structures/Machines/parts.rsi
     layers:
     - state: box_0
-      map: ["enum.ActionVisuals.Icon"]
+      map: [ "enum.ActionVisuals.Icon" ]
     - state: box_2
-      map: ["enum.ActionVisuals.IconToggled"]
+      map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
 
 - type: entity
@@ -137,7 +137,8 @@
   description: View a Solar Control Interface.
   components:
   - type: InstantAction
-    event: !type:ToggleIntrinsicUIEvent { key: enum.SolarControlConsoleUiKey.Key }
+    event: !type:ToggleIntrinsicUIEvent
+      key: enum.SolarControlConsoleUiKey.Key
 
 - type: entity
   parent: BaseAGhostAction
@@ -153,7 +154,8 @@
     layers:
     - state: comms_console
   - type: InstantAction
-    event: !type:ToggleIntrinsicUIEvent { key: enum.CommunicationsConsoleUiKey.Key }
+    event: !type:ToggleIntrinsicUIEvent
+      key: enum.CommunicationsConsoleUiKey.Key
 
 - type: entity
   parent: BaseAGhostAction
@@ -168,12 +170,13 @@
     sprite: Interface/Actions/actions_ai.rsi
     layers:
     - state: mass_scanner
-      map: ["enum.ActionVisuals.Icon"]
+      map: [ "enum.ActionVisuals.Icon" ]
     - state: comms_console
-      map: ["enum.ActionVisuals.IconToggled"]
+      map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
   - type: InstantAction
-    event: !type:ToggleIntrinsicUIEvent { key: enum.RadarConsoleUiKey.Key }
+    event: !type:ToggleIntrinsicUIEvent
+      key: enum.RadarConsoleUiKey.Key
 
 - type: entity
   parent: BaseAGhostAction
@@ -182,7 +185,8 @@
   description: View a Cargo Ordering Interface.
   components:
   - type: InstantAction
-    event: !type:ToggleIntrinsicUIEvent { key: enum.CargoConsoleUiKey.Orders }
+    event: !type:ToggleIntrinsicUIEvent
+      key: enum.CargoConsoleUiKey.Orders
 
 - type: entity
   parent: BaseAGhostAction
@@ -198,7 +202,8 @@
     layers:
     - state: crew_monitor
   - type: InstantAction
-    event: !type:ToggleIntrinsicUIEvent { key: enum.CrewMonitoringUIKey.Key }
+    event: !type:ToggleIntrinsicUIEvent
+      key: enum.CrewMonitoringUIKey.Key
 
 - type: entity
   parent: BaseAGhostAction
@@ -214,4 +219,5 @@
     layers:
     - state: station_records
   - type: InstantAction
-    event: !type:ToggleIntrinsicUIEvent { key: enum.GeneralStationRecordConsoleKey.Key }
+    event: !type:ToggleIntrinsicUIEvent
+      key: enum.GeneralStationRecordConsoleKey.Key

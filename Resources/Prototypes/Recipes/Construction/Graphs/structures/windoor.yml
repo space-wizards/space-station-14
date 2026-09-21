@@ -16,13 +16,13 @@
   - node: assembly
     entity: WindoorAssembly
     actions:
-    - !type:SnapToGrid {}
-    - !type:SetAnchor {}
+    - !type:SnapToGrid
+    - !type:SetAnchor
     edges:
     #to normal
     - to: glass
       conditions:
-      - !type:EntityAnchored {}
+      - !type:EntityAnchored
       steps:
       - material: Glass
         amount: 5
@@ -31,7 +31,7 @@
     #to plasma
     - to: pglass
       conditions:
-      - !type:EntityAnchored {}
+      - !type:EntityAnchored
       steps:
       - material: PlasmaGlass
         amount: 5
@@ -40,7 +40,7 @@
     #to uranium
     - to: uglass
       conditions:
-      - !type:EntityAnchored {}
+      - !type:EntityAnchored
       steps:
       - material: UraniumGlass
         amount: 5
@@ -55,7 +55,7 @@
       - !type:SpawnPrototype
         prototype: SheetSteel1
         amount: 4
-      - !type:DeleteEntity {}
+      - !type:DeleteEntity
       steps:
       - tool: Welding
         doAfter: 2
@@ -66,7 +66,7 @@
     edges:
     - to: wired
       conditions:
-      - !type:EntityAnchored { }
+      - !type:EntityAnchored
       steps:
       - material: Cable
         amount: 5
@@ -88,7 +88,7 @@
     edges:
     - to: electronics
       conditions:
-      - !type:EntityAnchored {}
+      - !type:EntityAnchored
       steps:
       - component: DoorElectronics
         store: board
@@ -111,7 +111,7 @@
     edges:
     - to: windoor
       conditions:
-      - !type:EntityAnchored {}
+      - !type:EntityAnchored
       steps:
       - tool: Screwing
         doAfter: 2
@@ -121,10 +121,10 @@
     edges:
     - to: wired
       conditions:
-      - !type:EntityAnchored {}
+      - !type:EntityAnchored
       - !type:DoorBolted
         value: false
-      - !type:WirePanel {}
+      - !type:WirePanel
       - !type:AllWiresCut
       completed:
       - !type:EmptyAllContainers
@@ -136,7 +136,7 @@
 
     - to: medSecurityUnfinished
       conditions:
-      - !type:WirePanel {}
+      - !type:WirePanel
       steps:
       - material: Steel
         amount: 2
@@ -149,7 +149,7 @@
     edges:
     - to: pwired
       conditions:
-      - !type:EntityAnchored { }
+      - !type:EntityAnchored
       steps:
       - material: Cable
         amount: 5
@@ -171,7 +171,7 @@
     edges:
     - to: pelectronics
       conditions:
-      - !type:EntityAnchored {}
+      - !type:EntityAnchored
       steps:
       - tag: DoorElectronics
         store: board
@@ -194,7 +194,7 @@
     edges:
     - to: pwindoor
       conditions:
-      - !type:EntityAnchored {}
+      - !type:EntityAnchored
       steps:
       - tool: Screwing
         doAfter: 2
@@ -204,10 +204,10 @@
     edges:
     - to: pwired
       conditions:
-      - !type:EntityAnchored {}
+      - !type:EntityAnchored
       - !type:DoorBolted
         value: false
-      - !type:WirePanel {}
+      - !type:WirePanel
       - !type:AllWiresCut
       completed:
       - !type:EmptyAllContainers
@@ -219,7 +219,7 @@
 
     - to: medSecurityUnfinished
       conditions:
-      - !type:WirePanel {}
+      - !type:WirePanel
       steps:
       - material: Steel
         amount: 2
@@ -232,7 +232,7 @@
     edges:
     - to: uwired
       conditions:
-      - !type:EntityAnchored { }
+      - !type:EntityAnchored
       steps:
       - material: Cable
         amount: 5
@@ -254,7 +254,7 @@
     edges:
     - to: uelectronics
       conditions:
-      - !type:EntityAnchored {}
+      - !type:EntityAnchored
       steps:
       - tag: DoorElectronics
         store: board
@@ -277,7 +277,7 @@
     edges:
     - to: uwindoor
       conditions:
-      - !type:EntityAnchored {}
+      - !type:EntityAnchored
       steps:
       - tool: Screwing
         doAfter: 2
@@ -287,10 +287,10 @@
     edges:
     - to: uwired
       conditions:
-      - !type:EntityAnchored {}
+      - !type:EntityAnchored
       - !type:DoorBolted
         value: false
-      - !type:WirePanel {}
+      - !type:WirePanel
       - !type:AllWiresCut
       completed:
       - !type:EmptyAllContainers
@@ -302,7 +302,7 @@
 
     - to: medSecurityUnfinished
       conditions:
-      - !type:WirePanel {}
+      - !type:WirePanel
       steps:
       - material: Steel
         amount: 2
@@ -322,7 +322,7 @@
         prototype: SheetSteel1
         amount: 2
       conditions:
-      - !type:WirePanel {}
+      - !type:WirePanel
       - !type:HasTag
         tag: Windoor
       steps:
@@ -335,7 +335,7 @@
         prototype: SheetSteel1
         amount: 2
       conditions:
-      - !type:WirePanel {}
+      - !type:WirePanel
       - !type:HasTag
         tag: WindoorPlasma
       steps:
@@ -348,7 +348,7 @@
         prototype: SheetSteel1
         amount: 2
       conditions:
-      - !type:WirePanel {}
+      - !type:WirePanel
       - !type:HasTag
         tag: WindoorUranium
       steps:
@@ -357,7 +357,7 @@
 
     - to: medSecurity
       conditions:
-      - !type:WirePanel {}
+      - !type:WirePanel
       steps:
       - tool: Welding
         doAfter: 3
@@ -370,9 +370,8 @@
     edges:
     - to: medSecurityUnfinished
       conditions:
-      - !type:WirePanel {}
+      - !type:WirePanel
       steps:
       - tool: Welding
         doAfter: 10
-
   #endregion

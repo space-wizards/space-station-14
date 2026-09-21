@@ -1,14 +1,15 @@
 - type: entity
-  parent: [BaseMob, StripableInventoryBase]
+  parent: [ BaseMob, StripableInventoryBase ]
   id: BaseBorgChassisNotIonStormable
   name: cyborg
-  description: A man-machine hybrid that assists in station activity. They love being asked to state their laws over and over.
+  description: A man-machine hybrid that assists in station activity. They love
+    being asked to state their laws over and over.
   save: false
   abstract: true
   components:
   - type: Reactive
     groups:
-      Acidic: [Touch]
+      Acidic: [ Touch ]
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -22,8 +23,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         density: 300
         mask:
@@ -31,8 +31,8 @@
         layer:
         - MobLayer
   - type: MovementSpeedModifier
-    baseWalkSpeed : 2.5
-    baseSprintSpeed : 4.5
+    baseWalkSpeed: 2.5
+    baseSprintSpeed: 4.5
   - type: Sprite
     sprite: Mobs/Silicon/chassis.rsi
   - type: RotationVisuals
@@ -55,11 +55,11 @@
     allowRevives: true
   - type: HealthExaminable
     examinableTypes:
-      - Blunt
-      - Slash
-      - Piercing
-      - Heat
-      - Shock
+    - Blunt
+    - Slash
+    - Piercing
+    - Heat
+    - Shock
     locPrefix: silicon
   - type: UserInterface
     interfaces:
@@ -119,9 +119,9 @@
     group: Silicon
   - type: ContainerContainer
     containers:
-      borg_brain: !type:ContainerSlot { }
-      cell_slot: !type:ContainerSlot { }
-      borg_module: !type:Container { }
+      borg_brain: !type:ContainerSlot
+      cell_slot: !type:ContainerSlot
+      borg_module: !type:Container
       part-container: !type:Container
   - type: PowerCellSlot
     cellSlotId: cell_slot
@@ -238,8 +238,7 @@
   - type: Destructible
     generateOverkillThreshold: false
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 75
       behaviors:
       - !type:PlaySoundBehavior
@@ -247,8 +246,7 @@
           path: /Audio/Machines/warning_buzzer.ogg
           params:
             volume: 5
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 300
       behaviors:
       - !type:PlaySoundBehavior
@@ -315,7 +313,7 @@
 
 - type: entity
   id: BaseBorgChassisNT
-  parent: [BaseBorgChassis, BaseBorgTransponder]
+  parent: [ BaseBorgChassis, BaseBorgTransponder ]
   abstract: true
   components:
   - type: RandomMetadata
@@ -330,7 +328,7 @@
     tags:
     - Borg
   - type: AccessReader
-    access: [["Command"], ["Research"]]
+    access: [ [ "Command" ], [ "Research" ] ]
   - type: ShowJobIcons
   - type: ShowCrewIcons
   - type: InteractionPopup
@@ -350,7 +348,7 @@
     - NuclearOperative
     - SyndicateAgent
   - type: AccessReader
-    access: [["SyndicateAgent"], ["NuclearOperative"]]
+    access: [ [ "SyndicateAgent" ], [ "NuclearOperative" ] ]
   - type: SiliconLawProvider
     laws: SyndicateStatic
     subverted: true
@@ -387,7 +385,7 @@
     groups:
     - AllAccess #Randomized access would be fun. AllAccess is the best i can think of right now that does make it too hard for it to enter the station or navigate it..
   - type: AccessReader
-    access: [["Command"], ["Research"]]
+    access: [ [ "Command" ], [ "Research" ] ]
   - type: StartIonStormed
     ionStormAmount: 3
   - type: IonStormTarget
@@ -439,7 +437,8 @@
   parent: BaseBorgChassisNotIonStormable
   id: BaseXenoborgChassis
   name: xenoborg
-  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh Xenoborg chassis to grow their army.
+  description: A man-machine hybrid that aims to replicate itself. They love
+    extracting brains to insert into fresh Xenoborg chassis to grow their army.
   save: false
   abstract: true
   components:
@@ -451,7 +450,8 @@
   - type: Sprite
     sprite: Mobs/Silicon/chassis.rsi
   - type: MobThresholds
-    thresholds: # slightly tankier than a normal borg
+    thresholds:
+      # slightly tankier than a normal borg
       0: Alive
       125: Critical
       375: Dead # Same as destruction threshold. Borgs act exactly like crit when dead, except for ghosting on move
@@ -514,7 +514,7 @@
     tags:
     - Xenoborg
   - type: AccessReader
-    access: [["Xenoborg"]]
+    access: [ [ "Xenoborg" ] ]
   - type: ShowJobIcons # not sure if it is needed
   - type: ShowCrewIcons
   - type: InteractionPopup
@@ -532,8 +532,7 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 90
       behaviors:
       - !type:PlaySoundBehavior
@@ -541,8 +540,7 @@
           path: /Audio/Machines/warning_buzzer_xenoborg.ogg
           params:
             volume: 5
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 375
       behaviors:
       - !type:PlaySoundBehavior
@@ -550,7 +548,8 @@
           collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
-          PinpointerMothershipPiece: # drop a piece of core pinpointer upon being destructed (4 pieces to make a core pinpointer)
+          PinpointerMothershipPiece:
+            # drop a piece of core pinpointer upon being destructed (4 pieces to make a core pinpointer)
             min: 1
             max: 1
       - !type:EmptyContainersBehaviour

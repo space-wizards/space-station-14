@@ -23,14 +23,14 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - BulletFoam
+      - BulletFoam
     capacity: 40
     proto: BulletFoam
   - type: Sprite
     sprite: Objects/Storage/boxes.rsi
     layers:
-      - state: boxwidetoy
-      - state: shelltoy
+    - state: boxwidetoy
+    - state: shelltoy
 
 - type: entity
   parent: BaseMagazineBoxMagnum
@@ -48,8 +48,8 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/magnum.rsi
     layers:
-      - state: base
-        map: ["enum.GunVisualLayers.Base"]
-      - state: mag-cap-1
-        map: ["enum.GunVisualLayers.Mag"]
-      - state: capbase
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-cap-1
+      map: [ "enum.GunVisualLayers.Mag" ]
+    - state: capbase

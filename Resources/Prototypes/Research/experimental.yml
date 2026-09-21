@@ -132,8 +132,8 @@
   tier: 2
   cost: 10000
   recipeUnlocks:
-    - WeaponForceGun
-    - WeaponTetherGun
+  - WeaponForceGun
+  - WeaponTetherGun
 
 # Tier 3
 

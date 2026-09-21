@@ -45,7 +45,7 @@
 #Command
 
 - type: entity
-  parent: [IDCardStandard, BaseGrandTheftContraband]
+  parent: [ IDCardStandard, BaseGrandTheftContraband ]
   id: CaptainIDCard
   name: captain ID card
   components:
@@ -953,7 +953,7 @@
 #Antags
 
 - type: entity
-  parent: [IDCardStandard, BaseChameleon]
+  parent: [ IDCardStandard, BaseChameleon ]
   id: AgentIDCard
   name: passenger ID card
   suffix: Agent
@@ -991,7 +991,7 @@
     tags:
     - DoorBumpOpener
   - type: ChameleonClothing
-    slot: [idcard]
+    slot: [ idcard ]
     default: PassengerIDCard
     requireTag: WhitelistChameleonIdCard
   - type: UserInterface

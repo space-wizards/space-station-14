@@ -70,7 +70,7 @@
     - id: WeaponPistolCobra
     - id: WeaponShotgunSawn
     - id: RevolverCapGunFake
-      weight: .01
+      weight: 0.01
 
 - type: entityTable
   id: NukeOpsAmmoTable

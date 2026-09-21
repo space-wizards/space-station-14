@@ -11,7 +11,7 @@
     stateDoorClosed: cabinet_door
 
   - type: AccessReader
-    access: [["Bar"]]
+    access: [ [ "Bar" ] ]
   - type: EntityStorage
     closeSound:
       path: /Audio/Effects/woodenclosetclose.ogg
@@ -44,7 +44,7 @@
     stateDoorOpen: qm_open
     stateDoorClosed: qm_door
   - type: AccessReader
-    access: [["Quartermaster"]]
+    access: [ [ "Quartermaster" ] ]
 
 - type: entity
   id: LockerSalvageSpecialist
@@ -58,7 +58,7 @@
     stateDoorOpen: mining_open
     stateDoorClosed: mining_door
   - type: AccessReader
-    access: [["Salvage"]]
+    access: [ [ "Salvage" ] ]
 
 # Command
 - type: entity
@@ -72,7 +72,7 @@
     stateDoorOpen: cap_open
     stateDoorClosed: cap_door
   - type: AccessReader
-    access: [["Captain"]]
+    access: [ [ "Captain" ] ]
 
 - type: entity
   id: LockerHeadOfPersonnel
@@ -85,7 +85,7 @@
     stateDoorOpen: hop_open
     stateDoorClosed: hop_door
   - type: AccessReader
-    access: [["HeadOfPersonnel"]]
+    access: [ [ "HeadOfPersonnel" ] ]
 
 # CE
 - type: entity
@@ -261,7 +261,6 @@
   - type: AccessReader
     access: [ [ "Medical" ] ]
 
-
 # Chemical
 - type: entity
   id: LockerChemistry
@@ -329,7 +328,7 @@
     stateDoorOpen: hos_open
     stateDoorClosed: hos_door
   - type: AccessReader
-    access: [["HeadOfSecurity"]]
+    access: [ [ "HeadOfSecurity" ] ]
 
 # Warden
 - type: entity
@@ -343,7 +342,7 @@
     stateDoorOpen: warden_open
     stateDoorClosed: warden_door
   - type: AccessReader
-    access: [["Armory"]]
+    access: [ [ "Armory" ] ]
 
 # Brigmedic
 - type: entity
@@ -357,7 +356,7 @@
     stateDoorOpen: armory_open
     stateDoorClosed: brigmedic_door
   - type: AccessReader
-    access: [["Medical"]]
+    access: [ [ "Medical" ] ]
 
 # Security Officer
 - type: entity
@@ -371,7 +370,7 @@
     stateDoorOpen: sec_open
     stateDoorClosed: sec_door
   - type: AccessReader
-    access: [["Security"]]
+    access: [ [ "Security" ] ]
 
 - type: entity
   id: GunSafe
@@ -400,7 +399,7 @@
   suffix: Armory, Locked
   components:
   - type: AccessReader
-    access: [["Armory"]]
+    access: [ [ "Armory" ] ]
 
 # Genpop Storage
 - type: entity
@@ -417,7 +416,7 @@
       enum.GenpopLockerUiKey.Key:
         type: GenpopLockerBoundUserInterface
   - type: AccessReader # note! this access is for the UI, not the door. door access is handled on GenpopLocker
-    access: [["Security"]]
+    access: [ [ "Security" ] ]
     examinationText: access-reader-examination-functionality-restricted
   - type: Lock
     locked: false
@@ -429,10 +428,11 @@
     isPlaceable: True
 
 - type: entity
-  parent: [ GenpopBase , LockerBase ]
+  parent: [ GenpopBase, LockerBase ]
   id: LockerPrisoner
   name: prisoner closet
-  description: It's a secure locker for an inmate's personal belongings during their time in prison.
+  description: It's a secure locker for an inmate's personal belongings during
+    their time in prison.
   suffix: 1
   components:
   - type: Fixtures
@@ -522,7 +522,7 @@
   description: Usually cold and empty... like your heart.
   components:
   - type: AccessReader
-    access: [["Detective"]]
+    access: [ [ "Detective" ] ]
 
 - type: entity
   id: LockerEvidence
@@ -531,7 +531,7 @@
   description: To store bags of bullet casings and detainee belongings.
   components:
   - type: AccessReader
-    access: [["Security"]]
+    access: [ [ "Security" ] ]
 
 # Syndicate
 - type: entity
@@ -547,7 +547,7 @@
     stateDoorOpen: syndicate_open
     stateDoorClosed: syndicate_door
   - type: AccessReader
-    access: [["SyndicateAgent"]]
+    access: [ [ "SyndicateAgent" ] ]
 
 # Bluespace
 - type: entity
@@ -589,7 +589,7 @@
   components:
   - type: Appearance
   - type: AccessReader
-    access: [["Theatre"]]
+    access: [ [ "Theatre" ] ]
   - type: EntityStorageVisuals
     stateBaseClosed: clown
     stateDoorOpen: clown_open
@@ -603,7 +603,7 @@
   components:
   - type: Appearance
   - type: AccessReader
-    access: [["Theatre"]]
+    access: [ [ "Theatre" ] ]
   - type: EntityStorageVisuals
     stateBaseClosed: mime
     stateDoorOpen: mime_open
@@ -617,7 +617,7 @@
   components:
   - type: Appearance
   - type: AccessReader
-    access: [["Command"]]
+    access: [ [ "Command" ] ]
   - type: EntityStorageVisuals
     stateBaseClosed: hop
     stateDoorOpen: hop_open

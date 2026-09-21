@@ -44,7 +44,7 @@
     hideOnDepowered: [ "airAlarmState" ]
   - type: Tag
     tags:
-      - AirAlarm
+    - AirAlarm
   - type: AtmosDevice
   - type: AirAlarm
   - type: AtmosAlertsDevice
@@ -65,7 +65,7 @@
     boardName: wires-board-name-airalarm
     layoutId: AirAlarm
   - type: AccessReader
-    access: [["Atmospherics"]]
+    access: [ [ "Atmospherics" ] ]
   - type: ContainerFill
     containers:
       board: [ AirAlarmElectronics ]
@@ -81,16 +81,15 @@
     - state: base
     - state: alarm0
       shader: unshaded
-      map: ["airAlarmState"] # TODO: fire alarm enum
+      map: [ "airAlarmState" ] # TODO: fire alarm enum
     - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: Construction
     graph: AirAlarm
     node: air_alarm
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:PlaySoundBehavior
@@ -128,8 +127,7 @@
     anchored: true
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior

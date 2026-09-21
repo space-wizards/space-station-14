@@ -11,10 +11,11 @@
   - type: Matchbox
 
 - type: entity
-  parent: [ClothingShoesMilitaryBase, BaseSecurityContraband]
+  parent: [ ClothingShoesMilitaryBase, BaseSecurityContraband ]
   id: ClothingShoesBootsJack
   name: jackboots
-  description: Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time.
+  description: Nanotrasen-issue Security combat boots for combat scenarios or
+    combat situations. All combat, all the time.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/jackboots.rsi
@@ -47,10 +48,11 @@
     sprite: Clothing/Shoes/Boots/performer.rsi
 
 - type: entity
-  parent: [ClothingShoesMilitaryBase, BaseSecurityContraband]
+  parent: [ ClothingShoesMilitaryBase, BaseSecurityContraband ]
   id: ClothingShoesBootsCombat
   name: combat boots
-  description: Robust combat boots for combat scenarios or combat situations. All combat, all the time.
+  description: Robust combat boots for combat scenarios or combat situations. All
+    combat, all the time.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/combatboots.rsi
@@ -84,7 +86,8 @@
   parent: [ ClothingShoesMilitaryBase ]
   id: ClothingShoesBootsMerc
   name: mercenary boots
-  description: Boots that have gone through many conflicts and that have proven their combat reliability.
+  description: Boots that have gone through many conflicts and that have proven
+    their combat reliability.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/mercboots.rsi
@@ -155,7 +158,12 @@
     sprite: Clothing/Shoes/Boots/winterbootssci.rsi
 
 - type: entity
-  parent: [ClothingShoesBaseWinterBoots, ClothingShoesMilitaryBase, BaseSecurityContraband]
+  parent:
+    [
+      ClothingShoesBaseWinterBoots,
+      ClothingShoesMilitaryBase,
+      BaseSecurityContraband
+    ]
   id: ClothingShoesBootsWinterSec
   name: security winter boots
   components:
@@ -165,7 +173,7 @@
     sprite: Clothing/Shoes/Boots/winterbootssec.rsi
 
 - type: entity
-  parent: [ClothingShoesBaseWinterBoots, BaseSyndicateContraband]
+  parent: [ ClothingShoesBaseWinterBoots, BaseSyndicateContraband ]
   id: ClothingShoesBootsWinterSyndicate
   name: syndicate's winter boots
   description: Durable heavy boots, looks like merch from "Syndieland".
@@ -176,7 +184,7 @@
     sprite: Clothing/Shoes/Boots/winterbootssyndicate.rsi
 
 - type: entity
-  parent: [ClothingShoesBaseWinterBoots, BaseSlicingRefinable]
+  parent: [ ClothingShoesBaseWinterBoots, BaseSlicingRefinable ]
   id: ClothingShoesBootsWinterWeb
   name: web winter boots
   description: Boots made out of dense webbing to help survive even the coldest of winters.
@@ -187,11 +195,12 @@
     sprite: Clothing/Shoes/Boots/winterbootsweb.rsi
   - type: FlavorProfile
     flavors:
-      - cobwebs
+    - cobwebs
     ignoreReagents:
-      - Fiber
+    - Fiber
   - type: Solution
-    solution: # 20 (10 (fiber count of web) * 2 (to craft))
+    solution:
+      # 20 (10 (fiber count of web) * 2 (to craft))
       reagents:
       - ReagentId: Fiber
         Quantity: 20

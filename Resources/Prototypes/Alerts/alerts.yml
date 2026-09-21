@@ -4,29 +4,29 @@
   # If item is not in list it will go at the bottom (ties broken by alert type enum value)
   id: BaseAlertOrder
   order:
-    - category: Health
-    - category: Stamina
-    - alertType: SuitPower
-    - category: Internals
-    - alertType: Fire
-    - alertType: Handcuffed
-    - alertType: Ensnared
-    - category: Buckled
-    - alertType: Pulling
-    - alertType: Walking
-    - category: Piloting
-    - alertType: Corporeal
-    - alertType: Stun
-    - category: Breathing # Vox gang not calling this oxygen
-    - category: Pressure
-    - alertType: Bleed
-    - category: Temperature
-    - category: Hunger
-    - category: Thirst
-    - alertType: Magboots
-    - alertType: Rooted
-    - alertType: Pacified
-    - alertType: Stealthy
+  - category: Health
+  - category: Stamina
+  - alertType: SuitPower
+  - category: Internals
+  - alertType: Fire
+  - alertType: Handcuffed
+  - alertType: Ensnared
+  - category: Buckled
+  - alertType: Pulling
+  - alertType: Walking
+  - category: Piloting
+  - alertType: Corporeal
+  - alertType: Stun
+  - category: Breathing # Vox gang not calling this oxygen
+  - category: Pressure
+  - alertType: Bleed
+  - category: Temperature
+  - category: Hunger
+  - category: Thirst
+  - alertType: Magboots
+  - alertType: Rooted
+  - alertType: Pacified
+  - alertType: Stealthy
 
 - type: entity
   id: AlertSpriteView
@@ -49,8 +49,8 @@
   id: LowNitrogen
   category: Breathing
   icons:
-    - sprite: /Textures/Interface/Alerts/breathing.rsi
-      state: not_enough_nitro
+  - sprite: /Textures/Interface/Alerts/breathing.rsi
+    state: not_enough_nitro
   name: alerts-low-nitrogen-name
   description: alerts-low-nitrogen-desc
 
@@ -93,7 +93,6 @@
   clickEvent: !type:ResistFireAlertEvent
   name: alerts-on-fire-name
   description: alerts-on-fire-desc
-
 
 - type: alert
   id: Cold

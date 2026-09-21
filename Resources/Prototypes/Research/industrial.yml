@@ -162,12 +162,12 @@
   tier: 2
   cost: 10000
   recipeUnlocks:
-    - WelderExperimental
-    - PowerDrill
-    - JawsOfLife
-    - BorgModuleAdvancedTool
-    - Fulton
-    - FultonBeacon
+  - WelderExperimental
+  - PowerDrill
+  - JawsOfLife
+  - BorgModuleAdvancedTool
+  - Fulton
+  - FultonBeacon
 
 - type: technology
   id: MassExcavation
@@ -179,10 +179,10 @@
   tier: 2
   cost: 12500
   recipeUnlocks:
-    - OreBagOfHolding
-    - MiningDrillDiamond
-    - AdvancedMineralScannerEmpty
-    - BorgModuleAdvancedMining
+  - OreBagOfHolding
+  - MiningDrillDiamond
+  - AdvancedMineralScannerEmpty
+  - BorgModuleAdvancedMining
 
 # Tier 3
 

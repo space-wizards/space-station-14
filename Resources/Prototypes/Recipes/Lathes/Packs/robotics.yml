@@ -66,6 +66,6 @@
 - type: latheRecipePack
   id: MechEquipment
   recipes:
-    - MechEquipmentGrabber
-    - MechEquipmentHorn
-    - MechEquipmentGrabberSmall
+  - MechEquipmentGrabber
+  - MechEquipmentHorn
+  - MechEquipmentGrabberSmall

@@ -2,13 +2,13 @@
   id: UpgradeWeaponPistolCHIMP
   start: start
   graph:
-    - node: start
-      edges:
-        - to: upgraded
-          steps:
-            - tag: WeaponPistolCHIMPUpgradeKit
-              name: construction-graph-tag-weapon-pistol-chimp-upgrade-kit
-              doAfter: 2
+  - node: start
+    edges:
+    - to: upgraded
+      steps:
+      - tag: WeaponPistolCHIMPUpgradeKit
+        name: construction-graph-tag-weapon-pistol-chimp-upgrade-kit
+        doAfter: 2
 
-    - node: upgraded
-      entity: WeaponPistolCHIMPUpgraded
+  - node: upgraded
+    entity: WeaponPistolCHIMPUpgraded

@@ -11,7 +11,7 @@
     sprite: Objects/Weapons/Bombs/ied.rsi
     layers:
     - state: base
-      map: ["enum.TriggerVisualLayers.Base"]
+      map: [ "enum.TriggerVisualLayers.Base" ]
     - state: fuel
     - state: wires
   - type: Item
@@ -43,8 +43,7 @@
     unprimedSprite: base
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:ExplodeBehavior
@@ -64,14 +63,14 @@
     sprite: Objects/Weapons/Bombs/ied.rsi
     layers:
     - state: base
-      map: ["enum.OpenableVisuals.Layer"]
+      map: [ "enum.OpenableVisuals.Layer" ]
   # bad dog
   - type: GenericVisualizer
     visuals:
       enum.OpenableVisuals.Opened:
         enum.OpenableVisuals.Layer:
-          True: {state: "base"}
-          False: {state: "base"}
+          True: { state: "base" }
+          False: { state: "base" }
   - type: Construction
     graph: FireBomb
     node: empty
@@ -90,7 +89,7 @@
   - type: Sprite
     layers:
     - state: base
-      map: ["enum.OpenableVisuals.Layer"]
+      map: [ "enum.OpenableVisuals.Layer" ]
     - state: fuel
   - type: Solution
     solution:

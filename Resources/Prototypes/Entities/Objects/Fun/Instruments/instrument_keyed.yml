@@ -16,8 +16,8 @@
     program: 62
   - type: SwappableInstrument
     instrumentList:
-      "Electro": {62: 0} #i needed generic sounding synth presets, sue me
-      "Bubbles": {63: 0}
+      "Electro": { 62: 0 } #i needed generic sounding synth presets, sue me
+      "Bubbles": { 63: 0 }
   - type: Sprite
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
   - type: StaticPrice
@@ -56,8 +56,8 @@
     program: 21
   - type: SwappableInstrument
     instrumentList:
-      "Standard": {21: 0}
-      "Tango": {23: 0}
+      "Standard": { 21: 0 }
+      "Tango": { 23: 0 }
   - type: Sprite
     sprite: Objects/Fun/Instruments/accordion.rsi
 

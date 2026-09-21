@@ -14,7 +14,7 @@
     sprite: Objects/Consumable/Food/bowl.rsi
     layers:
     - state: bowl
-    - map: ["enum.SolutionContainerLayers.Fill"]
+    - map: [ "enum.SolutionContainerLayers.Fill" ]
       state: fill-1
       visible: false
   - type: Solution
@@ -47,14 +47,13 @@
         type: TransferAmountBoundUserInterface
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
-      - !type:SpillBehavior { }
+      - !type:SpillBehavior
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodBowlBigTrash:
@@ -99,6 +98,6 @@
     sprite: Objects/Consumable/Food/bowl.rsi
     layers:
     - state: bowl2
-    - map: ["enum.SolutionContainerLayers.Fill"]
+    - map: [ "enum.SolutionContainerLayers.Fill" ]
       state: fill-1
       visible: false

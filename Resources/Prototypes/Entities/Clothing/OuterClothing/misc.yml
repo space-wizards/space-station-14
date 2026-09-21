@@ -34,7 +34,8 @@
   id: ClothingOuterApronBotanist
   name: apron
   suffix: Botanical
-  description: A thick blue-apron, perfect for insulating your soft flesh from spills, soil and thorns.
+  description: A thick blue-apron, perfect for insulating your soft flesh from
+    spills, soil and thorns.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/apronbotanist.rsi
@@ -223,7 +224,8 @@
   parent: ClothingOuterWizardBase
   id: ClothingOuterWizardRed
   name: red wizard robes
-  description: Strange-looking, red, hat-wear that most certainly belongs to a real magic user.
+  description: Strange-looking, red, hat-wear that most certainly belongs to a
+    real magic user.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/redwizard.rsi
@@ -237,7 +239,8 @@
   parent: ClothingOuterBase
   id: ClothingOuterWizardFake
   name: fake wizard robes
-  description: Covered in glittery stars and mystery stains. Instantly boosts your arcane fashion sense.
+  description: Covered in glittery stars and mystery stains. Instantly boosts your
+    arcane fashion sense.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/wizard_fake.rsi

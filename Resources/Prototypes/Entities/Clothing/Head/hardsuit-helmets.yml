@@ -10,7 +10,8 @@
   parent: [ ClothingHeadHardsuitInsulatedBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitAtmos
   name: atmos hardsuit helmet
-  description: A special hardsuit helmet designed for working in low-pressure, high thermal environments.
+  description: A special hardsuit helmet designed for working in low-pressure,
+    high thermal environments.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/atmospherics.rsi
@@ -32,7 +33,8 @@
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitEngineering
   name: engineering hardsuit helmet
-  description: An engineering hardsuit helmet designed for working in low-pressure, high radioactive environments.
+  description: An engineering hardsuit helmet designed for working in
+    low-pressure, high radioactive environments.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/engineering.rsi
@@ -72,7 +74,9 @@
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitSalvage
   name: mining hardsuit helmet
-  description: A special helmet designed for work in a hazardous, low pressure environment. Has reinforced plating for wildlife encounters and dual floodlights.
+  description: A special helmet designed for work in a hazardous, low pressure
+    environment. Has reinforced plating for wildlife encounters and dual
+    floodlights.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/salvage.rsi
@@ -91,7 +95,8 @@
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitGoliath
   name: goliath hardsuit helmet
-  description: A sturdy hardsuit helmet, infused with a goliath's hide and an eerie, unblinking eye cut from its mass.
+  description: A sturdy hardsuit helmet, infused with a goliath's hide and an
+    eerie, unblinking eye cut from its mass.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/goliathhelm.rsi
@@ -157,7 +162,8 @@
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitBrigmedic
   name: brigmedic hardsuit helmet
-  description: The lightweight helmet of the brigmedic hardsuit. Protects against viruses, and clowns.
+  description: The lightweight helmet of the brigmedic hardsuit. Protects against
+    viruses, and clowns.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/brigmedic.rsi
@@ -241,7 +247,8 @@
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitMedical
   name: chief medical officer's hardsuit helmet
-  description: Lightweight medical hardsuit helmet that doesn't restrict your head movements.
+  description: Lightweight medical hardsuit helmet that doesn't restrict your head
+    movements.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/medical.rsi
@@ -277,7 +284,8 @@
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitSecurityRed
   name: head of security's hardsuit helmet
-  description: Security hardsuit helmet with the latest top secret NT-HUD software. Belongs to the HoS.
+  description: Security hardsuit helmet with the latest top secret NT-HUD
+    software. Belongs to the HoS.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/security-red.rsi
@@ -299,7 +307,8 @@
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitLuxury #DO NOT MAP - https://github.com/space-wizards/space-station-14/pull/19738#issuecomment-1703486738
   name: luxury mining hardsuit helmet
-  description: A refurbished mining hardsuit helmet, fitted with satin cushioning and an extra (non-functioning) antenna, because you're that extra.
+  description: A refurbished mining hardsuit helmet, fitted with satin cushioning
+    and an extra (non-functioning) antenna, because you're that extra.
   categories: [ DoNotMap ]
   components:
   - type: Sprite
@@ -317,7 +326,8 @@
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitSyndie
   name: blood-red hardsuit helmet
-  description: A heavily armored helmet designed for work in special operations. Property of Gorlex Marauders.
+  description: A heavily armored helmet designed for work in special operations.
+    Property of Gorlex Marauders.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/syndicate.rsi
@@ -344,7 +354,8 @@
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitSyndieMedic
   name: blood-red medic hardsuit helmet
-  description: An advanced red hardsuit helmet specifically designed for field medic operations.
+  description: An advanced red hardsuit helmet specifically designed for field
+    medic operations.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/syndiemedic.rsi
@@ -368,7 +379,8 @@
   parent: [ ClothingHeadHardsuitInsulatedBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitSyndieElite
   name: syndicate elite helmet
-  description: An elite version of the blood-red hardsuit's helmet, with improved radiation resistance and fireproofing. Property of Gorlex Marauders.
+  description: An elite version of the blood-red hardsuit's helmet, with improved
+    radiation resistance and fireproofing. Property of Gorlex Marauders.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/syndieelite.rsi
@@ -397,7 +409,9 @@
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitSyndieCommander
   name: syndicate commander helmet
-  description: A bulked up version of the blood-red hardsuit's helmet, purpose-built for the commander of a syndicate operative squad. Has significantly improved armor for those deadly front-lines firefights.
+  description: A bulked up version of the blood-red hardsuit's helmet,
+    purpose-built for the commander of a syndicate operative squad. Has
+    significantly improved armor for those deadly front-lines firefights.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/syndiecommander.rsi
@@ -424,7 +438,8 @@
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitCybersun
   name: cybersun juggernaut helmet
-  description: Made of compressed red matter, this helmet was designed in the Tau chromosphere facility.
+  description: Made of compressed red matter, this helmet was designed in the Tau
+    chromosphere facility.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/cybersun.rsi
@@ -621,7 +636,12 @@
 
 #CBURN Hardsuit
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  parent:
+    [
+      BaseCentcommContraband,
+      ClothingHeadHardsuitBase,
+      ClothingHeadSuitWithLightBase
+    ]
   id: ClothingHeadHelmetCBURN
   name: CBURN exosuit helmet
   description: A pressure resistant and fireproof hood worn by special cleanup units.
@@ -699,7 +719,8 @@
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitSanta
   name: Santa's hardsuit helmet
-  description: A festive-looking hardsuit helmet that provides the jolly gift-giver protection from low-pressure environments.
+  description: A festive-looking hardsuit helmet that provides the jolly
+    gift-giver protection from low-pressure environments.
   components:
   - type: BreathMask
   - type: Sprite

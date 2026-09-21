@@ -5,12 +5,12 @@
   components:
   - type: Sprite
     layers:
-      - state: green
-      - sprite: Objects/Specific/Mech/mecha.rsi
-        state: ripley
+    - state: green
+    - sprite: Objects/Specific/Mech/mecha.rsi
+      state: ripley
   - type: ConditionalSpawner
     prototypes:
-      - MechRipleyBattery
+    - MechRipleyBattery
 
 - type: entity
   name: H.O.N.K. Spawner
@@ -19,9 +19,9 @@
   components:
   - type: Sprite
     layers:
-      - state: green
-      - sprite: Objects/Specific/Mech/mecha.rsi
-        state: honker
+    - state: green
+    - sprite: Objects/Specific/Mech/mecha.rsi
+      state: honker
   - type: ConditionalSpawner
     prototypes:
-      - MechHonkerBattery
+    - MechHonkerBattery

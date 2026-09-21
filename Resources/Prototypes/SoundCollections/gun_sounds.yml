@@ -9,7 +9,7 @@
 - type: soundCollection
   id: EnergyMiss
   files:
-    - /Audio/Weapons/Guns/Miss/energy_miss1.ogg
+  - /Audio/Weapons/Guns/Miss/energy_miss1.ogg
 
 - type: soundCollection
   id: CasingEject

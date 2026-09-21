@@ -2,14 +2,13 @@
   id: BaseBigBox
   start: start
   graph:
-    - node: start
-      edges:
-        - to: basebigbox
-          steps:
-            - material: Cardboard
-              amount: 5
-              doAfter: 5
+  - node: start
+    edges:
+    - to: basebigbox
+      steps:
+      - material: Cardboard
+        amount: 5
+        doAfter: 5
 
-
-    - node: basebigbox
-      entity: BigBox
+  - node: basebigbox
+    entity: BigBox

@@ -37,8 +37,8 @@
   name: guide-entry-xenoarchaeology
   text: "/ServerInfo/Guidebook/Science/Xenoarchaeology.xml"
   children:
-    - AnalysisConsole
-    - XenoarchaeologyUnlockingNodes
+  - AnalysisConsole
+  - XenoarchaeologyUnlockingNodes
 
 - type: guideEntry
   id: XenoarchaeologyUnlockingNodes

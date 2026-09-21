@@ -14,8 +14,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         density: 120
         mask:
@@ -36,7 +35,7 @@
     speedModifierThresholds:
       60: 0.7
       80: 0.5
-      
+
 - type: entity
   name: shadow cat
   parent: BaseShadowMob
@@ -47,7 +46,7 @@
     drawdepth: Mobs
     sprite: Mobs/Pets/cat.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: cat
   - type: Physics
   - type: ReplacementAccent

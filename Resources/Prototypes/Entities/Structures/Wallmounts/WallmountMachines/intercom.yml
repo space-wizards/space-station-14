@@ -44,18 +44,18 @@
     layers:
     - state: base
     - state: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
       shader: unshaded
     - state: broadcasting
-      map: ["enum.RadioDeviceVisualLayers.Broadcasting"]
+      map: [ "enum.RadioDeviceVisualLayers.Broadcasting" ]
       shader: unshaded
       visible: false
     - state: speaker
-      map: ["enum.RadioDeviceVisualLayers.Speaker"]
+      map: [ "enum.RadioDeviceVisualLayers.Speaker" ]
       shader: unshaded
       visible: false
     - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false
   - type: WiresPanel
   - type: Wires
@@ -79,8 +79,7 @@
     - key_slots
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:PlaySoundBehavior
@@ -127,8 +126,7 @@
       map: [ "wires" ]
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior
@@ -157,18 +155,18 @@
     layers:
     - state: base
     - state: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
       shader: unshaded
     - state: broadcasting
-      map: ["enum.RadioDeviceVisualLayers.Broadcasting"]
+      map: [ "enum.RadioDeviceVisualLayers.Broadcasting" ]
       shader: unshaded
       visible: false
     - state: speaker
-      map: ["enum.RadioDeviceVisualLayers.Speaker"]
+      map: [ "enum.RadioDeviceVisualLayers.Speaker" ]
       shader: unshaded
       visible: false
     - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: true
   - type: WiresPanel
     open: true
@@ -182,18 +180,18 @@
     layers:
     - state: base
     - state: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
       shader: unshaded
     - state: broadcasting
-      map: ["enum.RadioDeviceVisualLayers.Broadcasting"]
+      map: [ "enum.RadioDeviceVisualLayers.Broadcasting" ]
       shader: unshaded
       visible: false
     - state: speaker
-      map: ["enum.RadioDeviceVisualLayers.Speaker"]
+      map: [ "enum.RadioDeviceVisualLayers.Speaker" ]
       shader: unshaded
       visible: false
     - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: WiresPanel
     open: false
 
@@ -279,7 +277,8 @@
   id: IntercomSecurity
   parent: BaseIntercomSecure
   suffix: Security
-  description: An intercom. It's been reinforced with metal from security helmets, making it a bitch-and-a-half to open.
+  description: An intercom. It's been reinforced with metal from security helmets,
+    making it a bitch-and-a-half to open.
   components:
   - type: ContainerFill
     containers:

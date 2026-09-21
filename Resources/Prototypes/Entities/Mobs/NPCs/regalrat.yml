@@ -1,13 +1,22 @@
 - type: entity
   name: rat king
   id: MobRatKing
-  parent: [ BaseMobRat, SimpleMobBase, MobCombat, BaseSlicingRefinable, MobNightVision, BaseMobDestructible, BaseThirstSlowdown ]
+  parent:
+    [
+      BaseMobRat,
+      SimpleMobBase,
+      MobCombat,
+      BaseSlicingRefinable,
+      MobNightVision,
+      BaseMobDestructible,
+      BaseThirstSlowdown
+    ]
   description: He's da rat. He make da roolz.
   components:
   - type: CombatMode
   - type: MovementSpeedModifier
-    baseWalkSpeed : 3.00
-    baseSprintSpeed : 5.00
+    baseWalkSpeed: 3.00
+    baseSprintSpeed: 5.00
   - type: InputMover
   - type: MobMover
   - type: HTN
@@ -15,8 +24,8 @@
       task: SimpleHostileCompound
   - type: Reactive
     groups:
-      Flammable: [Touch]
-      Extinguish: [Touch]
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
   - type: NpcFactionMember
     factions:
     - SimpleHostile
@@ -24,7 +33,7 @@
     drawdepth: SmallMobs
     sprite: Mobs/Animals/regalrat.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: regalrat
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
       state: eyes
@@ -38,8 +47,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.3
         density: 230
         mask:
@@ -54,7 +62,7 @@
   - type: MeleeWeapon
     altDisarm: false
     soundHit:
-        path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
+      path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
     angle: 0
     animation: WeaponArcClaw
     damage:
@@ -88,8 +96,8 @@
   - type: GhostTakeoverAvailable
   - type: Tag
     tags:
-      - CannotSuicide
-      - FootstepSound
+    - CannotSuicide
+    - FootstepSound
   - type: NoSlip
   - type: Insulated
     coefficient: 0.5 # rat king touches more wires, see?
@@ -112,7 +120,7 @@
     - NamesRegalratTitle
     nameFormat: name-format-regal-rat
   - type: NameIdentifier
-    group: null  # Strips the numeric identifier from the rat king's name, since they already have randomly-generated names anyway
+    group: null # Strips the numeric identifier from the rat king's name, since they already have randomly-generated names anyway
   - type: Grammar
     attributes:
       proper: true
@@ -132,9 +140,9 @@
     sprite: Mobs/Animals/buffrat.rsi
     scale: 1.2, 1.2
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: regalrat
-    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded"]
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
       state: eyes
       shader: unshaded
   - type: MobState
@@ -145,7 +153,7 @@
   - type: MeleeWeapon
     altDisarm: false
     soundHit:
-        path: /Audio/Weapons/Xeno/alien_claw_flesh2.ogg
+      path: /Audio/Weapons/Xeno/alien_claw_flesh2.ogg
     angle: 0
     attackRate: 0.75
     animation: WeaponArcFist
@@ -163,30 +171,34 @@
 - type: entity
   name: rat servant
   id: MobRatServant
-  parent: [ BaseMobRat, SimpleMobBase, MobCombat, BaseSlicingRefinable, BaseThirstSlowdown ]
+  parent:
+    [
+      BaseMobRat,
+      SimpleMobBase,
+      MobCombat,
+      BaseSlicingRefinable,
+      BaseThirstSlowdown
+    ]
   description: He's da mini rat. He don't make da roolz.
   categories: [ HideSpawnMenu ] #Must be configured to a King or the AI breaks.
   components:
   - type: CombatMode
   - type: MovementSpeedModifier
-    baseWalkSpeed : 3.5
-    baseSprintSpeed : 3.5
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 3.5
   - type: InputMover
   - type: MobMover
   - type: HTN
     rootTask:
       task: RatServantCompound
     blackboard:
-      IdleRange: !type:Single
-        3.5
-      FollowCloseRange: !type:Single
-        2.0
-      FollowRange: !type:Single
-        3.0
+      IdleRange: !type:Single "3.5"
+      FollowCloseRange: !type:Single "2.0"
+      FollowRange: !type:Single "3.0"
   - type: Reactive
     groups:
-      Flammable: [Touch]
-      Extinguish: [Touch]
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
   - type: NpcFactionMember
     factions:
     - SimpleHostile
@@ -194,9 +206,9 @@
     drawdepth: SmallMobs
     sprite: Mobs/Animals/rat.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+    - map: [ "enum.DamageStateVisualLayers.Base", "movement" ]
       state: rat
-    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded"]
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
       state: eyes
       shader: unshaded
   - type: SpriteMovement
@@ -211,8 +223,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.2
         density: 30 #Bulky by mouse standards...
         mask:
@@ -227,8 +238,7 @@
       30: Dead
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
+    - trigger: !type:DamageTypeTrigger
         damageType: Blunt
         damage: 60
       behaviors:
@@ -238,7 +248,7 @@
     baseCritThreshold: 60
   - type: MeleeWeapon
     soundHit:
-        path: /Audio/Weapons/bladeslice.ogg
+      path: /Audio/Weapons/bladeslice.ogg
     angle: 0
     animation: WeaponArcClaw
     damage:
@@ -269,8 +279,8 @@
     wilhelmProbability: 0.001
   - type: Tag
     tags:
-      - CannotSuicide
-      - FootstepSound
+    - CannotSuicide
+    - FootstepSound
   - type: NoSlip
   - type: Insulated
     coefficient: 0.2 # they don't make da roolz, but they sneaky
@@ -312,7 +322,6 @@
     - state: ratKingArmy
   - type: InstantAction
     event: !type:RatKingRaiseArmyActionEvent
-
 - type: entity
   parent: BaseAction
   id: ActionRatKingDomain
@@ -327,7 +336,6 @@
     - state: ratKingDomain
   - type: InstantAction
     event: !type:RatKingDomainActionEvent
-
 - type: entity
   parent: BaseAction
   id: ActionRatKingOrderStay
@@ -341,9 +349,9 @@
     sprite: Interface/Actions/actions_rat_king.rsi
     layers:
     - state: stayOff
-      map: ["enum.ActionVisuals.Icon"]
+      map: [ "enum.ActionVisuals.Icon" ]
     - state: stay
-      map: ["enum.ActionVisuals.IconToggled"]
+      map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
   - type: InstantAction
     event: !type:RatKingOrderActionEvent
@@ -362,9 +370,9 @@
     sprite: Interface/Actions/actions_rat_king.rsi
     layers:
     - state: followOff
-      map: ["enum.ActionVisuals.Icon"]
+      map: [ "enum.ActionVisuals.Icon" ]
     - state: follow
-      map: ["enum.ActionVisuals.IconToggled"]
+      map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
   - type: InstantAction
     event: !type:RatKingOrderActionEvent
@@ -383,9 +391,9 @@
     sprite: Interface/Actions/actions_rat_king.rsi
     layers:
     - state: attackOff
-      map: ["enum.ActionVisuals.Icon"]
+      map: [ "enum.ActionVisuals.Icon" ]
     - state: attack
-      map: ["enum.ActionVisuals.IconToggled"]
+      map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
   - type: InstantAction
     event: !type:RatKingOrderActionEvent
@@ -404,11 +412,10 @@
     sprite: Interface/Actions/actions_rat_king.rsi
     layers:
     - state: looseOff
-      map: ["enum.ActionVisuals.Icon"]
+      map: [ "enum.ActionVisuals.Icon" ]
     - state: loose
-      map: ["enum.ActionVisuals.IconToggled"]
+      map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
   - type: InstantAction
-    event:
-      !type:RatKingOrderActionEvent
+    event: !type:RatKingOrderActionEvent
       type: Loose

@@ -16,12 +16,12 @@
   - node: assembly
     entity: AirlockShuttleAssembly
     actions:
-    - !type:SnapToGrid {}
-    - !type:SetAnchor {}
+    - !type:SnapToGrid
+    - !type:SetAnchor
     edges:
     - to: electronics
       conditions:
-      - !type:EntityAnchored {}
+      - !type:EntityAnchored
       steps:
       - component: DoorElectronics
         store: board
@@ -38,7 +38,7 @@
       - !type:SpawnPrototype
         prototype: SheetPlasteel1
         amount: 2
-      - !type:DeleteEntity {}
+      - !type:DeleteEntity
       steps:
       - tool: Welding
         doAfter: 3
@@ -47,7 +47,7 @@
     edges:
     - to: wired
       conditions:
-      - !type:EntityAnchored {}
+      - !type:EntityAnchored
       steps:
       - material: Cable
         amount: 5
@@ -73,7 +73,7 @@
         doAfter: 2
     - to: skeleton
       conditions:
-      - !type:EntityAnchored {}
+      - !type:EntityAnchored
       steps:
       - material: Plasteel
         amount: 2
@@ -83,7 +83,7 @@
     edges:
     - to: skeletonWrenched
       conditions:
-      - !type:EntityAnchored {}
+      - !type:EntityAnchored
       steps:
       - tool: Anchoring
         doAfter: 2
@@ -100,7 +100,7 @@
     edges:
     - to: skeletonWelded
       conditions:
-      - !type:EntityAnchored {}
+      - !type:EntityAnchored
       steps:
       - tool: Welding
         doAfter: 2
@@ -113,7 +113,7 @@
     edges:
     - to: skeletonSilver
       conditions:
-      - !type:EntityAnchored {}
+      - !type:EntityAnchored
       steps:
       - material: Silver
         amount: 2
@@ -128,13 +128,13 @@
     edges:
     - to: airlock
       conditions:
-      - !type:EntityAnchored {}
+      - !type:EntityAnchored
       steps:
       - tool: Screwing
         doAfter: 2
     - to: skeletonGlass
       conditions:
-      - !type:EntityAnchored {}
+      - !type:EntityAnchored
       steps:
       - material: ReinforcedGlass
         amount: 2
@@ -153,11 +153,11 @@
     edges:
     - to: skeletonSilver
       conditions:
-      - !type:EntityAnchored {}
-      - !type:DoorWelded {}
+      - !type:EntityAnchored
+      - !type:DoorWelded
       - !type:DoorBolted
         value: false
-      - !type:WirePanel {}
+      - !type:WirePanel
       steps:
       - tool: Prying
         doAfter: 5
@@ -167,15 +167,15 @@
     edges:
     - to: skeletonSilver
       completed:
-        - !type:SpawnPrototype
-          prototype: SheetRGlass1
-          amount: 2
+      - !type:SpawnPrototype
+        prototype: SheetRGlass1
+        amount: 2
       steps:
       - tool: Prying
         doAfter: 4
     - to: airlockGlass
       conditions:
-      - !type:EntityAnchored {}
+      - !type:EntityAnchored
       steps:
       - tool: Screwing
         doAfter: 2
@@ -183,13 +183,13 @@
   - node: airlockGlass
     entity: AirlockGlassShuttle
     edges:
-      - to: skeletonGlass
-        conditions:
-          - !type:EntityAnchored {}
-          - !type:DoorWelded {}
-          - !type:DoorBolted
-            value: false
-          - !type:WirePanel {}
-        steps:
-          - tool: Prying
-            doAfter: 5
+    - to: skeletonGlass
+      conditions:
+      - !type:EntityAnchored
+      - !type:DoorWelded
+      - !type:DoorBolted
+        value: false
+      - !type:WirePanel
+      steps:
+      - tool: Prying
+        doAfter: 5

@@ -28,7 +28,7 @@
     storedRotation: 90
   - type: MeleeWeapon
     damage:
-       types:
+      types:
         Heat: 5
     soundHit:
       path: /Audio/Effects/lightburn.ogg
@@ -72,7 +72,7 @@
     speedModifier: 0.66 # pretend the sixes go on forever :)
   - type: Utensil
     types:
-      - Knife
+    - Knife
   - type: Sprite
     sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
     state: scalpel
@@ -110,7 +110,6 @@
         restitution: 0.3
         friction: 0.2
 
-
 - type: entity
   name: advanced scalpel
   id: ScalpelAdvanced
@@ -130,7 +129,8 @@
   name: laser scalpel
   id: ScalpelLaser
   parent: Scalpel
-  description: A scalpel which uses a directed laser to slice instead of a blade, for more precise surgery while also cauterizing as it cuts.
+  description: A scalpel which uses a directed laser to slice instead of a blade,
+    for more precise surgery while also cauterizing as it cuts.
   components:
   - type: Sprite
     state: laser
@@ -163,24 +163,24 @@
   - type: Item
     heldPrefix: hemostat
     storedRotation: 90
-
   # - type: entity
   #   name: bone setter
   #   id: BoneSetter
   #   parent: Retractor
   #   description: A surgical tool used for setting bones.
   #   components:
-# Saws
+  # Saws
 
 - type: entity
   name: metal saw
   id: Saw
   parent: BaseToolSurgery
-  description: For cutting wood and other objects to pieces. Or sawing bones, in case of emergency.
+  description: For cutting wood and other objects to pieces. Or sawing bones, in
+    case of emergency.
   components:
   - type: Utensil
     types:
-      - Knife
+    - Knife
   - type: Sprite
     sprite: Objects/Specific/Medical/Surgery/saw.rsi
     state: saw
@@ -237,7 +237,8 @@
   name: advanced circular saw
   id: SawAdvanced
   parent: [ SawElectric, BaseSyndicateContraband ]
-  description: Interdyne's state-of-the-art surgical saw. Guaranteed to stay spotless and sterile, no matter how messy the job.
+  description: Interdyne's state-of-the-art surgical saw. Guaranteed to stay
+    spotless and sterile, no matter how messy the job.
   components:
   - type: Sprite
     state: advanced

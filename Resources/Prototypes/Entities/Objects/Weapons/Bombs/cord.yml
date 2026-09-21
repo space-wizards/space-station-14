@@ -17,7 +17,7 @@
     state: coilex-30
     layers:
     - state: coilex-30
-      map: ["base"]
+      map: [ "base" ]
   - type: Item
     heldPrefix: coilex
   - type: CablePlacer
@@ -39,16 +39,15 @@
     damageContainer: StructuralInorganic
   - type: Destructible # should have the same general explosive behavior as in cables.yml & detonator.yml
     thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
+    - trigger: !type:DamageTypeTrigger
         damageType: Structural # as close as we can get to only letting explosives trigger it.
         damage: 120
       behaviors:
       - !type:DoActsBehavior
-        acts: ["Destruction"]
+        acts: [ "Destruction" ]
       - !type:ExplodeBehavior
-    # the 50 damage destruction node is inherited from the parent
-    # idea here is to prevent you from just beating it until it explodes.
+        # the 50 damage destruction node is inherited from the parent
+        # idea here is to prevent you from just beating it until it explodes.
   - type: Explosive
     explosionType: DemolitionCharge
     totalIntensity: 60
@@ -58,16 +57,16 @@
   - type: Tag
     tags:
     - Payload
-  # - type: Sticky #While cool, this doesn't actually work because the structure prevents the explosion from the cable reaching the stickied wire.
+    # - type: Sticky #While cool, this doesn't actually work because the structure prevents the explosion from the cable reaching the stickied wire.
     # stickDelay: 5
     # unstickDelay: 5
     # whitelist:
-      # components:
-      # - Airlock
-      # - Wall
-      # tags:
-      # - Window
-  # - type: StickyVisualizer
+    # components:
+    # - Airlock
+    # - Wall
+    # tags:
+    # - Window
+    # - type: StickyVisualizer
 
 - type: entity
   parent: CableDetStack

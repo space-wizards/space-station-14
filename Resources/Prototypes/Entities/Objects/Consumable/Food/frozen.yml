@@ -2,7 +2,7 @@
 # Base
 
 - type: entity
-  parent: [SolutionVeryTiny, FoodInjectableBase]
+  parent: [ SolutionVeryTiny, FoodInjectableBase ]
   id: FoodFrozenBase
   abstract: true
   components:
@@ -62,7 +62,8 @@
   parent: FoodFrozenBase
   id: FoodFrozenCornuto
   name: cornuto
-  description: A Neapolitan vanilla and chocolate ice-cream cone. It menaces with a sprinkling of caramelized nuts.
+  description: A Neapolitan vanilla and chocolate ice-cream cone. It menaces with
+    a sprinkling of caramelized nuts.
   components:
   - type: Item
     storedRotation: -45
@@ -122,7 +123,8 @@
   name: jumbo ice-cream
   parent: FoodFrozenBase
   id: FoodFrozenPopsicleJumbo
-  description: A luxurious ice-cream covered in rich chocolate. It's smaller than you remember.
+  description: A luxurious ice-cream covered in rich chocolate. It's smaller than
+    you remember.
   components:
   - type: Sprite
     layers:
@@ -152,23 +154,23 @@
   description: It's just shaved ice and simple syrup, minimum effort.
   #  description: [Liquid] drizzled over a snowball in a paper cup.
   components:
-    - type: Sprite
-      layers:
-        - state: cone
-        - state: alpha-filling
-    #      color: foo
-    - type: Edible
-      trash:
-      - FoodFrozenSnowconeTrash
-    - type: Solution
-      solution:
-        reagents:
-          - ReagentId: Ice
-            Quantity: 8
-          - ReagentId: Water
-            Quantity: 2
-          - ReagentId: Sugar
-            Quantity: 2
+  - type: Sprite
+    layers:
+    - state: cone
+    - state: alpha-filling
+  #      color: foo
+  - type: Edible
+    trash:
+    - FoodFrozenSnowconeTrash
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Ice
+        Quantity: 8
+      - ReagentId: Water
+        Quantity: 2
+      - ReagentId: Sugar
+        Quantity: 2
 
 - type: entity
   name: flavorless snowcone
@@ -179,8 +181,8 @@
   - type: Solution
     solution:
       reagents:
-        - ReagentId: Ice
-          Quantity: 8
+      - ReagentId: Ice
+        Quantity: 8
 
 - type: entity
   name: berry snowcone
@@ -284,13 +286,13 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/frozen.rsi
     layers:
-      - state: stick
-        map: [ "enum.DamageStateVisualLayers.Base" ]
+    - state: stick
+      map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: RandomSprite
     available:
-      - enum.DamageStateVisualLayers.Base:
-          stick: ""
-          stick2: ""
+    - enum.DamageStateVisualLayers.Base:
+        stick: ""
+        stick2: ""
   - type: Tag
     tags:
     - Trash

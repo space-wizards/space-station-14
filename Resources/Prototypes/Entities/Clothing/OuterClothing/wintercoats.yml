@@ -36,7 +36,7 @@
     verbText: toggle-clothing-verb-hood
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:ContainerSlot
       storagebase: !type:Container
         ents: []
 
@@ -87,7 +87,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterBartender
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseCommandContraband]
+  parent: [ ClothingOuterWinterCoatToggleable, BaseCommandContraband ]
   id: ClothingOuterWinterCap
   name: captain's winter coat
   components:
@@ -133,7 +133,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterCargo
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseCommandContraband]
+  parent: [ ClothingOuterWinterCoatToggleable, BaseCommandContraband ]
   id: ClothingOuterWinterCE
   name: chief engineer's winter coat
   components:
@@ -182,7 +182,8 @@
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterChef
   name: chef's freezer coat
-  description: A coat specifically designed for work inside cold storage, sorely needed by cold-blooded lizard chefs.
+  description: A coat specifically designed for work inside cold storage, sorely
+    needed by cold-blooded lizard chefs.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
@@ -231,7 +232,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterChem
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseCommandContraband]
+  parent: [ ClothingOuterWinterCoatToggleable, BaseCommandContraband ]
   id: ClothingOuterWinterCMO
   name: chief medical officer's winter coat
   components:
@@ -324,7 +325,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterSci
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseCommandContraband]
+  parent: [ ClothingOuterWinterCoatToggleable, BaseCommandContraband ]
   id: ClothingOuterWinterHoP
   name: head of personnel's winter coat
   components:
@@ -346,13 +347,18 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterHOP
 
-
 ##########################################################
 - type: entity
-  parent: [ClothingOuterArmorHoS, ClothingOuterWinterCoatToggleable, BaseSecurityCommandContraband]
+  parent:
+    [
+      ClothingOuterArmorHoS,
+      ClothingOuterWinterCoatToggleable,
+      BaseSecurityCommandContraband
+    ]
   id: ClothingOuterWinterHoS
   name: head of security's armored winter coat
-  description: A sturdy, utilitarian winter coat designed to protect a head of security from any brig-bound threats and hypothermic events.
+  description: A sturdy, utilitarian winter coat designed to protect a head of
+    security from any brig-bound threats and hypothermic events.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coathosarmored.rsi
@@ -362,13 +368,13 @@
     clothingPrototype: ClothingHeadHatHoodWinterHOS
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot { }
+      toggleable-clothing: !type:ContainerSlot
       storagebase: !type:Container
-        ents: [ ]
+        ents: []
 ##########################################################
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseSecurityCommandContraband]
+  parent: [ ClothingOuterWinterCoatToggleable, BaseSecurityCommandContraband ]
   id: ClothingOuterWinterHoSUnarmored
   name: head of security's winter coat
   description: A sturdy coat, a warm coat, but not an armored coat.
@@ -551,7 +557,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterPara
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseCommandContraband]
+  parent: [ ClothingOuterWinterCoatToggleable, BaseCommandContraband ]
   id: ClothingOuterWinterQM
   name: quartermaster's winter coat
   components:
@@ -573,9 +579,8 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterQM
 
-
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseCommandContraband]
+  parent: [ ClothingOuterWinterCoatToggleable, BaseCommandContraband ]
   id: ClothingOuterWinterRD
   name: research director's winter coat
   components:
@@ -627,7 +632,6 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterRobo
 
-
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterSci
@@ -659,7 +663,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterSci
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseSecurityContraband]
+  parent: [ ClothingOuterWinterCoatToggleable, BaseSecurityContraband ]
   id: ClothingOuterWinterSec
   name: security winter coat
   components:
@@ -713,10 +717,16 @@
 
 ################################################################
 - type: entity
-  parent: [ClothingOuterArmorWarden, ClothingOuterWinterCoatToggleable, BaseSecurityContraband]
+  parent:
+    [
+      ClothingOuterArmorWarden,
+      ClothingOuterWinterCoatToggleable,
+      BaseSecurityContraband
+    ]
   id: ClothingOuterWinterWarden
   name: warden's armored winter coat
-  description: A sturdy, utilitarian winter coat designed to protect a warden from any brig-bound threats and hypothermic events.
+  description: A sturdy, utilitarian winter coat designed to protect a warden from
+    any brig-bound threats and hypothermic events.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatwardenarmored.rsi
@@ -726,13 +736,13 @@
     clothingPrototype: ClothingHeadHatHoodWinterWarden
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot { }
+      toggleable-clothing: !type:ContainerSlot
       storagebase: !type:Container
-        ents: [ ]
+        ents: []
 ################################################################
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseSecurityContraband]
+  parent: [ ClothingOuterWinterCoatToggleable, BaseSecurityContraband ]
   id: ClothingOuterWinterWardenUnarmored
   name: warden's winter coat
   description: A sturdy coat, a warm coat, but not an armored coat.
@@ -756,10 +766,11 @@
     clothingPrototype: ClothingHeadHatHoodWinterWarden
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseSyndicateContraband]
+  parent: [ ClothingOuterWinterCoatToggleable, BaseSyndicateContraband ]
   id: ClothingOuterWinterSyndieCap
   name: syndicate's winter coat
-  description: "The syndicate's winter coat is made of durable fabric, with gilded patterns, and coarse wool."
+  description: "The syndicate's winter coat is made of durable fabric, with gilded
+    patterns, and coarse wool."
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
@@ -784,7 +795,8 @@
   parent: [ BaseSyndicateContraband, ClothingOuterWinterWarden ]
   id: ClothingOuterWinterSyndieCapArmored
   name: syndicate's armored winter coat
-  description: "The syndicate's armored winter coat is made of durable fabric, with gilded patterns, and coarse wool."
+  description: "The syndicate's armored winter coat is made of durable fabric,
+    with gilded patterns, and coarse wool."
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/syndicate/coatsyndiecaparmored.rsi
@@ -795,7 +807,7 @@
 ##############################################################
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseSyndicateContraband]
+  parent: [ ClothingOuterWinterCoatToggleable, BaseSyndicateContraband ]
   id: ClothingOuterWinterSyndie
   name: syndicate's winter coat
   description: Insulated winter coat, looks like a merch from "Syndieland".
@@ -822,7 +834,8 @@
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterMusician
   name: musician's winter coat
-  description: An oversized, plasticine space tuxedo that'll have people asking "do you know me?"
+  description: An oversized, plasticine space tuxedo that'll have people asking
+    "do you know me?"
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatnomi.rsi
@@ -830,10 +843,11 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatnomi.rsi
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseSlicingRefinable]
+  parent: [ ClothingOuterWinterCoatToggleable, BaseSlicingRefinable ]
   id: ClothingOuterWinterWeb
   name: web winter coat
-  description: Feels like the inside of a cocoon, not that this would make you less afraid of being in one.
+  description: Feels like the inside of a cocoon, not that this would make you
+    less afraid of being in one.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
@@ -859,9 +873,9 @@
       amount: 5
   - type: FlavorProfile
     flavors:
-      - cobwebs
+    - cobwebs
     ignoreReagents:
-      - Fiber
+    - Fiber
   - type: Solution
     solution:
       reagents:

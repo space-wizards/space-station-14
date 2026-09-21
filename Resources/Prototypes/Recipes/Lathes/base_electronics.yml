@@ -21,8 +21,8 @@
   abstract: true
   id: BaseCheapCircuitboardRecipe
   materials:
-     Steel: 50
-     Glass: 250
+    Steel: 50
+    Glass: 250
 
 - type: latheRecipe
   parent: BaseElectronicsRecipe

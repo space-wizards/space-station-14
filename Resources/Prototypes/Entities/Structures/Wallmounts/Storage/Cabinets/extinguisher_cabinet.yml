@@ -10,10 +10,10 @@
     layers:
     - state: frame
     - state: extinguisher
-      map: ["enum.ItemCabinetVisuals.Layer"]
+      map: [ "enum.ItemCabinetVisuals.Layer" ]
       visible: true
     - state: closed
-      map: ["enum.OpenableVisuals.Layer"]
+      map: [ "enum.OpenableVisuals.Layer" ]
   - type: ItemSlots
     slots:
       ItemCabinet:
@@ -23,8 +23,7 @@
           - SpraySafety
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 60
       behaviors:
       - !type:EmptyAllContainersBehaviour
@@ -53,6 +52,6 @@
       - FireExtinguisher
 
 - type: entity
-  parent: [ExtinguisherCabinetFilled, ExtinguisherCabinetOpen]
+  parent: [ ExtinguisherCabinetFilled, ExtinguisherCabinetOpen ]
   id: ExtinguisherCabinetFilledOpen
   suffix: Filled, Open

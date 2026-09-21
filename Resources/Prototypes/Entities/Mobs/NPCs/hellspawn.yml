@@ -29,7 +29,7 @@
       task: SimpleHostileCompound
   - type: NpcFactionMember
     factions:
-      - SimpleHostile
+    - SimpleHostile
   - type: Damageable
     damageModifierSet: HellSpawn
   - type: Injurable
@@ -40,8 +40,8 @@
   - type: Sprite
     sprite: Mobs/Demons/hellspawn.rsi
     layers:
-      - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: alive
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
   - type: DamageStateVisuals
     states:
       Alive:
@@ -61,12 +61,11 @@
   - type: Reflect
     reflectProb: 0.7
     reflects:
-      - Energy
+    - Energy
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.9
         density: 300
         mask:
@@ -76,9 +75,9 @@
   - type: MobState
   - type: Tag
     tags:
-      - CannotSuicide
-      - DoorBumpOpener
-      - FootstepSound
+    - CannotSuicide
+    - DoorBumpOpener
+    - FootstepSound
   - type: MobThresholds
     thresholds:
       0: Alive

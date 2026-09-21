@@ -12,8 +12,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         density: 50
         mask:
@@ -120,8 +119,7 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
+    - trigger: !type:DamageTypeTrigger
         damageType: Radiation
         damage: 15
       behaviors:
@@ -129,14 +127,11 @@
         popup: mouth-taste-metal
         popupType: LargeCaution
         targetOnly: true
-    - trigger:
-        !type:DamageTypeTrigger
+    - trigger: !type:DamageTypeTrigger
         damageType: Radiation
         damage: 40
       behaviors:
-      - !type:VomitBehavior
-
-# Used as a simple default for mob destruction
+      - !type:VomitBehavior # Used as a simple default for mob destruction
 - type: entity
   abstract: true
   parent: BaseMobIrradiated
@@ -144,14 +139,12 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
+    - trigger: !type:DamageTypeTrigger
         damageType: Blunt
         damage: 400
       behaviors:
-      - !type:GibBehavior { }
-    - trigger:
-        !type:DamageTypeTrigger
+      - !type:GibBehavior
+    - trigger: !type:DamageTypeTrigger
         damageType: Heat
         damage: 1500
       behaviors:
@@ -192,12 +185,14 @@
   - type: TemperatureDamage
     heatDamageThreshold: 325
     coldDamageThreshold: 0
-    coldDamage: #per second, scales with temperature & other constants
+    coldDamage:
+      #per second, scales with temperature & other constants
       types:
-        Cold : 0.1
-    heatDamage: #per second, scales with temperature & other constants
+        Cold: 0.1
+    heatDamage:
+      #per second, scales with temperature & other constants
       types:
-        Heat : 1.5
+        Heat: 1.5
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100
@@ -245,7 +240,8 @@
   - type: Flammable
     fireSpread: true
     canResistFire: true
-    damage: #per second, scales with number of fire 'stacks'
+    damage:
+      #per second, scales with number of fire 'stacks'
       types:
         Heat: 1.5
   - type: FireVisuals

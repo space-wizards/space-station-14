@@ -7,7 +7,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 0,0
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science17x5b
@@ -15,7 +15,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 18,0
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science17x5c
@@ -23,7 +23,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 36,0
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 # - 7x7
 - type: dungeonRoom
@@ -32,7 +32,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 0,42
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science7x7b
@@ -40,7 +40,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 8,42
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science7x7c
@@ -48,7 +48,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 16,42
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 # Medium
 # - 11x5
@@ -58,7 +58,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 0,6
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science11x5b
@@ -66,7 +66,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 12,6
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science11x5c
@@ -74,7 +74,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 24,6
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 # - 7x5
 - type: dungeonRoom
@@ -83,7 +83,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 0,12
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science7x5b
@@ -91,7 +91,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 8,12
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science7x5c
@@ -99,7 +99,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 16,12
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science7x5d
@@ -107,7 +107,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 24,12
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science7x5e
@@ -115,7 +115,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 32,12
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science7x5f
@@ -123,7 +123,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 40,12
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 # - 13x3
 - type: dungeonRoom
@@ -132,7 +132,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 0,30
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science13x3b
@@ -140,7 +140,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 14,30
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science13x3c
@@ -148,7 +148,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 28,30
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 # - 11x3
 - type: dungeonRoom
@@ -157,7 +157,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 0,34
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science11x3b
@@ -165,7 +165,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 12,34
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science11x3c
@@ -173,7 +173,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 24,34
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 # - 7x3
 - type: dungeonRoom
@@ -182,7 +182,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 0,38
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science7x3b
@@ -190,7 +190,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 8,38
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science7x3c
@@ -198,7 +198,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 16,38
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science7x3d
@@ -206,7 +206,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 24,38
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science7x3e
@@ -214,7 +214,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 32,38
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science7x3f
@@ -222,7 +222,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 40,38
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 # Small
 # - 5x5
@@ -232,7 +232,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 0,18
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science5x5b
@@ -240,7 +240,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 6,18
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science5x5c
@@ -248,7 +248,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 12,18
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science5x5d
@@ -256,7 +256,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 18,18
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science5x5e
@@ -264,7 +264,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 24,18
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science5x5f
@@ -272,7 +272,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 30,18
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 # - 3x5
 - type: dungeonRoom
@@ -281,7 +281,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 0,24
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science3x5b
@@ -289,7 +289,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 4,24
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science3x5c
@@ -297,7 +297,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 8,24
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science3x5d
@@ -305,7 +305,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 12,24
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science3x5e
@@ -313,7 +313,7 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 16,24
   tags:
-    - SalvageExperiment
+  - SalvageExperiment
 
 - type: dungeonRoom
   id: Science3x5f
@@ -321,4 +321,4 @@
   atlas: /Maps/Dungeon/experiment.yml
   offset: 20,24
   tags:
-    - SalvageExperiment
+  - SalvageExperiment

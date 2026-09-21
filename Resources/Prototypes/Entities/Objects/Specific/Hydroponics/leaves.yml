@@ -33,7 +33,7 @@
 
 - type: entity
   name: ground cannabis
-  parent: [SolutionFood, SolutionTiny, BaseItem]
+  parent: [ SolutionFood, SolutionTiny, BaseItem ]
   id: GroundCannabis
   description: "Ground cannabis, ready to take you on a trip."
   components:
@@ -54,7 +54,7 @@
     node: ground
   - type: Tag
     tags:
-      - Smokable
+    - Smokable
   - type: Item
     size: Tiny
 
@@ -88,8 +88,8 @@
         Quantity: 2
       - ReagentId: Happiness
         Quantity: 2
-#       - ReagentId: ColorfulReagent
-#         Quantity: 1
+      #       - ReagentId: ColorfulReagent
+      #         Quantity: 1
       - ReagentId: Psicodine
         Quantity: 1
 
@@ -126,8 +126,8 @@
         Quantity: 4
       - ReagentId: Happiness
         Quantity: 4
-#       - ReagentId: ColorfulReagent
-#         Quantity: 2
+      #       - ReagentId: ColorfulReagent
+      #         Quantity: 2
       - ReagentId: Psicodine
         Quantity: 2
   - type: Sprite
@@ -202,7 +202,7 @@
 
 - type: entity
   name: ground tobacco
-  parent: [SolutionFood, SolutionTiny, BaseItem]
+  parent: [ SolutionFood, SolutionTiny, BaseItem ]
   id: GroundTobacco
   description: "Ground tobacco, perfect for hand-rolled cigarettes."
   components:
@@ -223,6 +223,6 @@
     node: ground
   - type: Tag
     tags:
-      - Smokable
+    - Smokable
   - type: Item
     size: Tiny

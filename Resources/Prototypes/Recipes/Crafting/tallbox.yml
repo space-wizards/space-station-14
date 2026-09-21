@@ -37,5 +37,4 @@
   canRotate: true
   canBuildInImpassable: true
   conditions:
-  - !type:WallmountCondition
-# endregion Closets
+  - !type:WallmountCondition # endregion Closets

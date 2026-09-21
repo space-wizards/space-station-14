@@ -5,7 +5,7 @@
   description: It's a personal storage unit for operative gear.
   components:
   - type: AccessReader
-    access: [["NuclearOperative"]]
+    access: [ [ "NuclearOperative" ] ]
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:AllSelector
@@ -25,7 +25,7 @@
   description: It's a personal storage unit for operative gear.
   components:
   - type: AccessReader
-    access: [["NuclearOperative"]]
+    access: [ [ "NuclearOperative" ] ]
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:AllSelector

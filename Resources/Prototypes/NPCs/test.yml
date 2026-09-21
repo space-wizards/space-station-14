@@ -2,14 +2,12 @@
 - type: htnCompound
   id: MoveToPathfindPointCompound
   branches:
-    - tasks:
-        - !type:HTNPrimitiveTask
-          operator: !type:PickPathfindPointOperator
-
-        - !type:HTNPrimitiveTask
-          operator: !type:MoveToOperator
-            pathfindInPlanning: false
-
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:PickPathfindPointOperator
+    - !type:HTNPrimitiveTask
+      operator: !type:MoveToOperator
+        pathfindInPlanning: false
 
 - type: entity
   id: MobPathfindDummy

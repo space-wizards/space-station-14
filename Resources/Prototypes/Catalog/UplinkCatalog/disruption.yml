@@ -11,7 +11,7 @@
   cost:
     Telecrystal: 2
   categories:
-    - UplinkDisruption
+  - UplinkDisruption
 
 - type: listing
   id: UplinkAccessBreaker
@@ -88,14 +88,18 @@
   name: uplink-syndicate-martyr-module-name
   description: uplink-syndicate-martyr-module-desc
   productEntity: BorgModuleMartyr
-  icon: { sprite: /Textures/Objects/Specific/Robotics/borgmodule.rsi, state: syndicateborgbomb }
+  icon:
+    {
+      sprite: /Textures/Objects/Specific/Robotics/borgmodule.rsi,
+      state: syndicateborgbomb
+    }
   discountCategory: veryRareDiscounts
   discountDownTo:
     Telecrystal: 2
   cost:
     Telecrystal: 4
   categories:
-    - UplinkDisruption
+  - UplinkDisruption
 
 - type: listing
   id: UplinkSoapSyndie
@@ -173,9 +177,9 @@
   - UplinkDisruption
   conditions:
   - !type:StoreWhitelistCondition
-     blacklist:
-       tags:
-       - NukeOpsUplink
+    blacklist:
+      tags:
+      - NukeOpsUplink
 
 - type: listing
   id: UplinkAntimovCircuitBoard
@@ -224,14 +228,14 @@
   categories:
   - UplinkDisruption
   conditions:
-    - !type:StoreWhitelistCondition
-      whitelist:
-        tags:
-        - NukeOpsUplink
-    - !type:BuyerWhitelistCondition
-      blacklist:
-        components:
-        - SurplusBundle
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
 
 - type: listing
   id: UplinkSingarityBeacon
@@ -244,7 +248,7 @@
   cost:
     Telecrystal: 12
   categories:
-    - UplinkDisruption
+  - UplinkDisruption
   conditions:
   - !type:StoreWhitelistCondition
     whitelist:

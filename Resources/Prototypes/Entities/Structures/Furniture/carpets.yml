@@ -22,8 +22,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
         density: 5
         layer:
@@ -46,8 +45,7 @@
     sprite: Structures/Furniture/Carpets/red_carpet.rsi
   - type: Destructible
     thresholds:
-    - trigger: &DamageFurnitureWeak
-        !type:DamageTrigger
+    - trigger: &DamageFurnitureWeak !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:SpawnEntitiesBehavior

@@ -100,12 +100,12 @@
 
 # Very high burst damage if you land a mark, while also providing a small amount of healing.
 - type: entity
-  parent: [BaseWeaponCrusher, BaseSecurityCargoContraband]
+  parent: [ BaseWeaponCrusher, BaseSecurityCargoContraband ]
   id: WeaponCrusher
   components:
   - type: Tag
     tags:
-      - Pickaxe
+    - Pickaxe
   - type: Sprite
     sprite: Objects/Weapons/Melee/crusher.rsi
     state: icon
@@ -165,10 +165,11 @@
 
 # No mark ability in exchange for wideswing, autoattack, and being one-handed
 - type: entity
-  parent: [ BaseKnife, BaseWeaponCrusher, BaseSecurityCargoContraband]
+  parent: [ BaseKnife, BaseWeaponCrusher, BaseSecurityCargoContraband ]
   id: WeaponCrusherDagger
   name: crusher dagger
-  description: A scaled down version of a proto-kinetic crusher. Uses kinetic energy to vibrate the blade at high speeds.
+  description: A scaled down version of a proto-kinetic crusher. Uses kinetic
+    energy to vibrate the blade at high speeds.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/crusher_dagger.rsi
@@ -210,10 +211,11 @@
 
 # Less mark damage in exchange for more healing. Also has a better ratio of blunt to slash damage, but less structural.
 - type: entity
-  parent: [ WeaponCrusher, BaseSecurityCargoContraband]
+  parent: [ WeaponCrusher, BaseSecurityCargoContraband ]
   id: WeaponCrusherGlaive
   name: crusher glaive
-  description: An early design of the proto-kinetic accelerator, in glaive form. Provides better healing in exchange for less charged damage.
+  description: An early design of the proto-kinetic accelerator, in glaive form.
+    Provides better healing in exchange for less charged damage.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/crusher_glaive.rsi
@@ -244,7 +246,7 @@
         Slash: -5
   - type: Tag
     tags:
-      - Pickaxe
+    - Pickaxe
   - type: MeleeWeapon
     attackRate: 1
     wideAnimationRotation: -135

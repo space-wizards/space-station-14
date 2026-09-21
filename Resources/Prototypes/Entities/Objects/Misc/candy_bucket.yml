@@ -17,19 +17,19 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-     enum.ToggleableVisuals.Enabled:
+      enum.ToggleableVisuals.Enabled:
         enum.ToggleableVisuals.Layer:
-          True: {state: full_icon}
-          False: {state: empty_icon}
+          True: { state: full_icon }
+          False: { state: empty_icon }
   - type: Storage
     maxItemSize: Small
     grid:
     - 0,0,3,2
     whitelist:
       components:
-        - Pill
+      - Pill
       tags:
-        - FoodSnack
+      - FoodSnack
   - type: ContainerContainer
     containers:
       storagebase: !type:Container

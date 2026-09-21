@@ -1,7 +1,14 @@
 # When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\drinks_soda.yml
 - type: entity
   abstract: true
-  parent: [ DrinkBaseMaterialMetal, SolutionSmall, DrinkBase, DrinkBaseOpenable, DrinkVisualsOpenable ]
+  parent:
+    [
+      DrinkBaseMaterialMetal,
+      SolutionSmall,
+      DrinkBase,
+      DrinkBaseOpenable,
+      DrinkVisualsOpenable
+    ]
   id: DrinkCanBase
   components:
   - type: Solution
@@ -46,7 +53,8 @@
   - type: Solution
     solution:
       maxVol: 5
-      reagents: # 5u -> 1/2 steel sheet (10u)
+      reagents:
+      # 5u -> 1/2 steel sheet (10u)
       - ReagentId: Aluminium # Fun fact: soda can makeup is approx. 75% aluminium and 25% tin/iron.
         Quantity: 4
       - ReagentId: Iron
@@ -130,7 +138,8 @@
   parent: DrinkCanBaseFull
   id: DrinkLemonLimeCranberryCan
   name: Smite Cranberry can
-  description: Y'all want a Smite Cranberry? Beloved by administrators everywhere. Drink in moderation. A limited run for the holidays!
+  description: Y'all want a Smite Cranberry? Beloved by administrators everywhere.
+    Drink in moderation. A limited run for the holidays!
   components:
   - type: Solution
     solution:
@@ -152,8 +161,7 @@
         restitution: 0.3
         friction: 0.2
       projectile:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.1,-0.1,0.1,0.1"
         hard: false
         mask:
@@ -311,7 +319,9 @@
   parent: DrinkCanBaseFull
   id: DrinkFourteenLokoCan
   name: Fourteen Loko can
-  description: The MBO has advised crew members that consumption of Fourteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsibly.
+  description: The MBO has advised crew members that consumption of Fourteen Loko
+    may result in seizures, blindness, drunkeness, or even death. Please Drink
+    Responsibly.
   components:
   - type: Solution
     solution:
@@ -359,7 +369,8 @@
   parent: DrinkCanBaseFull
   id: DrinkNukieCan
   name: Blood-red Brew can
-  description: A home-brewed drink made from the crazed minds at the Syndicate. Not recommended by doctors.
+  description: A home-brewed drink made from the crazed minds at the Syndicate.
+    Not recommended by doctors.
   components:
   - type: Solution
     solution:
@@ -411,7 +422,8 @@
   parent: DrinkCanBaseFull
   id: DrinkPwrGameCan
   name: PWR Game can
-  description: The only drink with the PWR that true gamers crave. When a gamer talks about gamerfuel, this is what they're literally referring to.
+  description: The only drink with the PWR that true gamers crave. When a gamer
+    talks about gamerfuel, this is what they're literally referring to.
   components:
   - type: Solution
     solution:

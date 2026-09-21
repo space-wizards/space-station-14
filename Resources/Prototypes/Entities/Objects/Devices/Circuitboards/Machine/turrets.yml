@@ -45,7 +45,7 @@
     state: security
   - type: MachineBoard
     prototype: WeaponEnergyTurretSecurity
-    
+
 - type: entity
   parent: WeaponEnergyTurretStationMachineCircuitboardBase
   id: WeaponEnergyTurretCommandMachineCircuitboard
@@ -56,4 +56,3 @@
     state: command
   - type: MachineBoard
     prototype: WeaponEnergyTurretCommand
-

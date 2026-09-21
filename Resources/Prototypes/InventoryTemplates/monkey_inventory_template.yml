@@ -39,7 +39,7 @@
     displayName: ID
   - name: suitstorage
     slotTexture: suit_storage
-    slotFlags:   SUITSTORAGE
+    slotFlags: SUITSTORAGE
     slotGroup: MainHotbar
     stripTime: 3
     uiWindowPos: 2,0
@@ -57,7 +57,7 @@
     displayName: Suit
     whitelist:
       tags:
-        - MonkeyWearable
+      - MonkeyWearable
   - name: neck
     slotTexture: neck
     slotFlags: NECK
@@ -66,4 +66,4 @@
     displayName: Neck
     whitelist:
       tags:
-        - MonkeyWearable
+      - MonkeyWearable

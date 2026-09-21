@@ -3,7 +3,7 @@
   name: debug name
   description: debug desc
   categories:
-    - Debug
+  - Debug
   cost:
     DebugDollar: 10
     Telecrystal: 10
@@ -13,7 +13,7 @@
   name: debug name 3
   description: debug desc 3
   categories:
-    - Debug
+  - Debug
   cost:
     DebugDollar: 10
 
@@ -22,7 +22,7 @@
   name: debug name 5
   description: debug desc 5
   categories:
-    - Debug
+  - Debug
 
 - type: listing
   id: DebugListing4
@@ -30,7 +30,7 @@
   description: debug desc 4
   productAction: ActionScream
   categories:
-    - Debug
+  - Debug
   cost:
     DebugDollar: 1
 
@@ -39,6 +39,6 @@
   name: debug name 2
   description: debug desc 2
   categories:
-    - Debug2
+  - Debug2
   cost:
     DebugDollar: 10

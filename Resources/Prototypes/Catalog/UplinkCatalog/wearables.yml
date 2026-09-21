@@ -25,14 +25,18 @@
   name: uplink-chameleon-name
   description: uplink-chameleon-desc
   productEntity: ClothingBackpackChameleonFillAgent
-  icon: { sprite: /Textures/Clothing/Uniforms/Jumpsuits/Color/rainbow.rsi, state: icon }
+  icon:
+    {
+      sprite: /Textures/Clothing/Uniforms/Jumpsuits/Color/rainbow.rsi,
+      state: icon
+    }
   discountCategory: usualDiscounts
   discountDownTo:
     Telecrystal: 2
   cost:
     Telecrystal: 4
   categories:
-    - UplinkWearables
+  - UplinkWearables
 
 - type: listing
   id: UplinkClothingNoSlipsShoes
@@ -90,7 +94,11 @@
   id: UplinkEVASyndie
   name: uplink-eva-syndie-name
   description: uplink-eva-syndie-desc
-  icon: { sprite: /Textures/Clothing/OuterClothing/Suits/eva_syndicate.rsi, state: icon }
+  icon:
+    {
+      sprite: /Textures/Clothing/OuterClothing/Suits/eva_syndicate.rsi,
+      state: icon
+    }
   productEntity: ClothingBackpackDuffelSyndicateEVABundle
   cost:
     Telecrystal: 1
@@ -115,7 +123,11 @@
   id: UplinkHardsuitSyndie
   name: uplink-hardsuit-syndie-name
   description: uplink-hardsuit-syndie-desc
-  icon: { sprite: /Textures/Clothing/OuterClothing/Hardsuits/syndicate.rsi, state: icon }
+  icon:
+    {
+      sprite: /Textures/Clothing/OuterClothing/Hardsuits/syndicate.rsi,
+      state: icon
+    }
   productEntity: ClothingBackpackDuffelSyndicateHardsuitBundle
   discountCategory: veryRareDiscounts
   discountDownTo:
@@ -145,7 +157,11 @@
   id: UplinkHardsuitSyndieElite
   name: uplink-hardsuit-syndieelite-name
   description: uplink-hardsuit-syndieelite-desc
-  icon: { sprite: /Textures/Clothing/OuterClothing/Hardsuits/syndieelite.rsi, state: icon }
+  icon:
+    {
+      sprite: /Textures/Clothing/OuterClothing/Hardsuits/syndieelite.rsi,
+      state: icon
+    }
   productEntity: ClothingBackpackDuffelSyndicateEliteHardsuitBundle
   cost:
     Telecrystal: 12
@@ -181,12 +197,12 @@
   cost:
     Telecrystal: 2
   categories:
-    - UplinkWearables
+  - UplinkWearables
   conditions:
-    - !type:StoreWhitelistCondition
-      whitelist:
-        tags:
-          - NukeOpsUplink
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
 
 - type: listing
   id: UplinkBackpackSyndicate
@@ -196,4 +212,4 @@
   cost:
     Telecrystal: 2
   categories:
-    - UplinkWearables
+  - UplinkWearables

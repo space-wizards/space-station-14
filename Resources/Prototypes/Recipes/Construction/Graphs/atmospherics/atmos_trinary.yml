@@ -109,7 +109,12 @@
 
   - node: pneumaticvalve
     entity: !type:CreateVariants
-      values: [ PressureControlledValve, PressureControlledValveAlt1, PressureControlledValveAlt2 ]
+      values:
+        [
+          PressureControlledValve,
+          PressureControlledValveAlt1,
+          PressureControlledValveAlt2
+        ]
     edges:
     - to: start
       conditions:

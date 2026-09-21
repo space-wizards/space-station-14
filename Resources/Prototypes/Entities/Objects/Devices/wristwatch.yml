@@ -2,14 +2,15 @@
   id: Wristwatch
   parent: [ BaseItem, BaseItemDestructible ]
   name: wristwatch
-  description: A cheap watch for telling time. How much did you waste playing Space Station 14?
+  description: A cheap watch for telling time. How much did you waste playing
+    Space Station 14?
   components:
   - type: Sprite
     sprite: Objects/Devices/wristwatch.rsi
     layers:
     - state: wristwatch
-    - map: [ "enum.ClockVisualLayers.MinuteHand"]
-    - map: [ "enum.ClockVisualLayers.HourHand"]
+    - map: [ "enum.ClockVisualLayers.MinuteHand" ]
+    - map: [ "enum.ClockVisualLayers.HourHand" ]
   - type: Clock
   - type: Item
     sprite: Objects/Devices/wristwatch.rsi
@@ -26,8 +27,7 @@
     price: 50
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageGroupTrigger
+    - trigger: !type:DamageGroupTrigger
         damageGroup: Brute
         damage: 5
       behaviors:
@@ -41,14 +41,16 @@
   id: WristwatchGold
   parent: Wristwatch
   name: gold watch
-  description: A fancy watch worth more than your kidney. It was owned by the notorious Syndicate mobster Vunibaldo "200 Pound Horse Meat Grinder" Frediani.
+  description: A fancy watch worth more than your kidney. It was owned by the
+    notorious Syndicate mobster Vunibaldo "200 Pound Horse Meat Grinder"
+    Frediani.
   components:
   - type: Sprite
     sprite: Objects/Devices/goldwatch.rsi
     layers:
     - state: goldwatch
-    - map: [ "enum.ClockVisualLayers.MinuteHand"]
-    - map: [ "enum.ClockVisualLayers.HourHand"]
+    - map: [ "enum.ClockVisualLayers.MinuteHand" ]
+    - map: [ "enum.ClockVisualLayers.HourHand" ]
   - type: Item
     sprite: Objects/Devices/goldwatch.rsi
   - type: Clothing

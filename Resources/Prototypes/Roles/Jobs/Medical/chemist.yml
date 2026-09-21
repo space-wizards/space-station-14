@@ -4,9 +4,9 @@
   description: job-description-chemist
   playTimeTracker: JobChemist
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Medical
-      time: 5h
+  - !type:DepartmentTimeRequirement
+    department: Medical
+    time: 5h
   startingGear: ChemistGear
   icon: "JobIconChemist"
   supervisors: job-supervisors-cmo

@@ -17,8 +17,8 @@
     program: 56
   - type: SwappableInstrument
     instrumentList:
-      "Standard": {56: 0}
-      "Muted": {59: 0}
+      "Standard": { 56: 0 }
+      "Muted": { 59: 0 }
   - type: Sprite
     sprite: Objects/Fun/Instruments/trumpet.rsi
 
@@ -37,7 +37,8 @@
   parent: BaseBrassInstrument
   id: FrenchHornInstrument
   name: french horn
-  description: The fact that holding it involves using your hand to muffle it may suggest something about its sound.
+  description: The fact that holding it involves using your hand to muffle it may
+    suggest something about its sound.
   components:
   - type: Instrument
     program: 60

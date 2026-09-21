@@ -1,6 +1,11 @@
 - type: entity
   id: FatExtractor
-  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
+  parent:
+    [
+      BaseMachinePowered,
+      ConstructibleMachine,
+      BaseConstructibleMachineDestructible
+    ]
   name: lipid extractor
   description: Safely and efficiently extracts excess fat from a subject.
   components:
@@ -16,25 +21,25 @@
     snapCardinals: true
     layers:
     - state: fat
-      map: ["enum.StorageVisualLayers.Base"]
+      map: [ "enum.StorageVisualLayers.Base" ]
     - state: fat_door_off
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: fat_red
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
     - state: fat_green
       shader: unshaded
       visible: false
-      map: ["enum.FatExtractorVisualLayers.Light"]
+      map: [ "enum.FatExtractorVisualLayers.Light" ]
     - state: fat_panel
       visible: false
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
     - state: fat_stack #cash cash cash
       visible: false
-      map: ["enum.FatExtractorVisualLayers.Stack"]
+      map: [ "enum.FatExtractorVisualLayers.Stack" ]
     - state: fat_smoke
       visible: false
-      map: ["enum.FatExtractorVisualLayers.Smoke"]
+      map: [ "enum.FatExtractorVisualLayers.Smoke" ]
   - type: Lock
     breakOnAccessBreaker: false
   - type: GenericVisualizer
@@ -73,7 +78,7 @@
     - entity_storage
   - type: EmptyOnMachineDeconstruct
     containers:
-     - entity_storage
+    - entity_storage
   - type: Damageable
     damageModifierSet: SteelMod
   - type: Destructible

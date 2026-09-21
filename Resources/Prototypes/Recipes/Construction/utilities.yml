@@ -12,9 +12,9 @@
   canBuildInImpassable: true
   conditions:
   - !type:WallmountCondition
-# endregion Base
+    # endregion Base
 
-# region Surveillance
+    # region Surveillance
 - type: construction
   parent: BaseUtility
   id: camera
@@ -190,4 +190,5 @@
   id: WeaponEnergyTurretControlPanel
   graph: WeaponEnergyTurretControlPanel
   targetNode: finish
+
 # endregion Defenses

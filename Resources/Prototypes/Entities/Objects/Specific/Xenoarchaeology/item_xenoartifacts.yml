@@ -1,8 +1,9 @@
 - type: entity
-  parent: [BaseItem, BaseXenoArtifact]
+  parent: [ BaseItem, BaseXenoArtifact ]
   id: BaseXenoArtifactItem
   name: artifact
-  description: A strange artifact from time unknown. Looks like a good time. Fits in hand perfectly.
+  description: A strange artifact from time unknown. Looks like a good time. Fits
+    in hand perfectly.
   abstract: true
   components:
   # Visual
@@ -26,15 +27,14 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
         density: 20
         mask:
         - ItemMask
         layer:
         - Opaque
-        restitution: 0.3  # fite me
+        restitution: 0.3 # fite me
         friction: 0.2
   - type: RandomArtifactSprite
     maxSprite: 11
@@ -94,7 +94,8 @@
     - state: ancientball1
       map: [ "enum.ArtifactsVisualLayers.Base" ]
   - type: RandomSprite
-    available: #yaml hero
+    available:
+    #yaml hero
     - enum.ArtifactsVisualLayers.Base:
         ancientball1: ""
         ancientball2: ""

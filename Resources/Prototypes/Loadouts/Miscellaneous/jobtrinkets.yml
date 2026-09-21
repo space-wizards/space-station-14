@@ -13,8 +13,7 @@
   id: FlowerWaterClown
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobClown
       time: 4h
   storage:
@@ -24,11 +23,10 @@
 - type: loadout
   id: SecStar
   effects:
-    - !type:JobRequirementLoadoutEffect
-      requirement:
-        !type:DepartmentTimeRequirement
-        department: Security
-        time: 100h
+  - !type:JobRequirementLoadoutEffect
+    requirement: !type:DepartmentTimeRequirement
+      department: Security
+      time: 100h
   storage:
     back:
     - Dinkystar

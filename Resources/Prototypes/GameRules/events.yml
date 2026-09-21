@@ -1,6 +1,8 @@
 - type: entityTable
   id: BasicCalmEventsTable
-  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+  table:
+    # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    !type:AllSelector
     children:
     - id: AnomalySpawn
     - id: BluespaceArtifact
@@ -26,7 +28,9 @@
 
 - type: entityTable
   id: BasicAntagEventsTable
-  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+  table:
+    # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    !type:AllSelector
     children:
     - id: ClosetSkeleton
     - id: KingRatMigration
@@ -36,7 +40,9 @@
 
 - type: entityTable
   id: ModerateAntagEventsTable
-  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+  table:
+    # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    !type:AllSelector
     children:
     - id: DragonSpawn
     - id: NinjaSpawn
@@ -53,18 +59,20 @@
   id: DerelictBorgEventTable #For Derelict Borg spawns
   table: !type:GroupSelector
     children:
-    - !type:GroupSelector # Standard NT Borgs
+    # Standard NT Borgs
+    - !type:GroupSelector
       weight: 85
       children:
-        - id: DerelictEngineerCyborgSpawn
-        - id: DerelictGenericCyborgSpawn
-        - id: DerelictJanitorCyborgSpawn
-        - id: DerelictMedicalCyborgSpawn
-        - id: DerelictMiningCyborgSpawn
-    - !type:GroupSelector # Other Borgs
+      - id: DerelictEngineerCyborgSpawn
+      - id: DerelictGenericCyborgSpawn
+      - id: DerelictJanitorCyborgSpawn
+      - id: DerelictMedicalCyborgSpawn
+      - id: DerelictMiningCyborgSpawn
+    # Other Borgs
+    - !type:GroupSelector
       weight: 15
       children:
-        - id: DerelictSyndicateAssaultCyborgSpawn
+      - id: DerelictSyndicateAssaultCyborgSpawn
 
 - type: entity
   abstract: true
@@ -81,8 +89,8 @@
   components:
   - type: GameRule
     delay:
-      min:  10
-      max:  20
+      min: 10
+      max: 20
 
 - type: entity
   id: BaseStationEventShortDelay
@@ -91,8 +99,8 @@
   components:
   - type: GameRule
     delay:
-      min:  10
-      max:  20
+      min: 10
+      max: 20
 
 - type: entity
   id: BaseStationEventLongDelay
@@ -101,8 +109,8 @@
   components:
   - type: GameRule
     delay:
-      min:  40
-      max:  60
+      min: 40
+      max: 60
 
 - type: entity
   id: AnomalySpawn
@@ -122,8 +130,8 @@
   components:
   - type: GameRule
     delay:
-      min:  30
-      max:  30
+      min: 30
+      max: 30
   - type: StationEvent
     startAnnouncementColor: "#18abf5"
     startAudio:
@@ -154,8 +162,7 @@
   - type: BreakerFlipRule
     blacklist:
       components:
-        - ProtectedGrid
-
+      - ProtectedGrid
 
 - type: entity
   id: BureaucraticError

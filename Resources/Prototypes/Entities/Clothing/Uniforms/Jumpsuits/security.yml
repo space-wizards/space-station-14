@@ -21,7 +21,7 @@
     sprite: Clothing/Uniforms/Jumpsuits/Security/detective_grey.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseCommandContraband]
+  parent: [ ClothingUniformBase, BaseCommandContraband ]
   id: ClothingUniformJumpsuitHoS
   name: head of security's jumpsuit
   description: It's bright red and rather crisp, much like security's victims tend to be.
@@ -44,10 +44,11 @@
     sprite: Clothing/Uniforms/Jumpsuits/Security/hos.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseCommandContraband]
+  parent: [ ClothingUniformBase, BaseCommandContraband ]
   id: ClothingUniformJumpsuitHoSAlt
   name: head of security's turtleneck
-  description: It's a turtleneck worn by those strong and disciplined enough to achieve the position of Head of Security.
+  description: It's a turtleneck worn by those strong and disciplined enough to
+    achieve the position of Head of Security.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuits/Security/hos_alt.rsi
@@ -55,7 +56,7 @@
     sprite: Clothing/Uniforms/Jumpsuits/Security/hos_alt.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseCommandContraband]
+  parent: [ ClothingUniformBase, BaseCommandContraband ]
   id: ClothingUniformJumpsuitHoSBlue
   name: head of security's blue jumpsuit
   description: A blue jumpsuit of Head of Security.
@@ -66,10 +67,11 @@
     sprite: Clothing/Uniforms/Jumpsuits/Security/hos_blue.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseCommandContraband]
+  parent: [ ClothingUniformBase, BaseCommandContraband ]
   id: ClothingUniformJumpsuitHoSGrey
   name: head of security's grey jumpsuit
-  description: A grey jumpsuit of Head of Security, which make him look somewhat like a passenger.
+  description: A grey jumpsuit of Head of Security, which make him look somewhat
+    like a passenger.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuits/Security/hos_grey.rsi
@@ -77,7 +79,7 @@
     sprite: Clothing/Uniforms/Jumpsuits/Security/hos_grey.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseCommandContraband]
+  parent: [ ClothingUniformBase, BaseCommandContraband ]
   id: ClothingUniformJumpsuitHoSParadeMale
   name: head of security's parade uniform
   description: A male head of security's luxury-wear, for special occasions.
@@ -91,7 +93,8 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitBrigmedic
   name: brigmedic jumpsuit
-  description: This uniform is issued to qualified personnel who have been trained. No one cares that the training took half a day.
+  description: This uniform is issued to qualified personnel who have been
+    trained. No one cares that the training took half a day.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuits/Security/brigmedic.rsi
@@ -102,7 +105,8 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitPrisoner
   name: prisoner jumpsuit
-  description: A jumpsuit used for prisoners. It has suit sensors automatically enabled at all times.
+  description: A jumpsuit used for prisoners. It has suit sensors automatically
+    enabled at all times.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuits/Color/color.rsi
@@ -139,7 +143,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingUniformBase, BaseSecurityContraband, ClothingUniformFoldableBase]
+  parent: [ ClothingUniformBase, BaseSecurityContraband, ClothingUniformFoldableBase ]
   id: ClothingUniformJumpsuitSec
   name: security jumpsuit
   description: A jumpsuit made of strong material, providing robust protection.
@@ -171,10 +175,11 @@
     sprite: Clothing/Uniforms/Jumpsuits/Security/security_blue.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseSecurityContraband]
+  parent: [ ClothingUniformBase, BaseSecurityContraband ]
   id: ClothingUniformJumpsuitSecGrey
   name: grey security jumpsuit
-  description: A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood.
+  description: A tactical relic of years past before Nanotrasen decided it was
+    cheaper to dye the suits red instead of washing out the blood.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuits/Security/security_grey.rsi
@@ -182,10 +187,11 @@
     sprite: Clothing/Uniforms/Jumpsuits/Security/security_grey.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseSecurityContraband]
+  parent: [ ClothingUniformBase, BaseSecurityContraband ]
   id: ClothingUniformSecurityTrooper
   name: trooper uniform
-  description: A formal uniform issued to the Nanotrasen Troopers, usually it comes with a car.
+  description: A formal uniform issued to the Nanotrasen Troopers, usually it
+    comes with a car.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuits/Security/security_trooper.rsi
@@ -193,7 +199,7 @@
     sprite: Clothing/Uniforms/Jumpsuits/Security/security_trooper.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseSecurityContraband]
+  parent: [ ClothingUniformBase, BaseSecurityContraband ]
   id: ClothingUniformJumpsuitWarden
   name: warden's uniform
   description: A formal security suit for officers complete with Nanotrasen belt buckle.
@@ -216,7 +222,7 @@
     sprite: Clothing/Uniforms/Jumpsuits/Security/warden.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseCommandContraband]
+  parent: [ ClothingUniformBase, BaseCommandContraband ]
   id: ClothingUniformJumpsuitHosFormal
   name: hos's formal suit
   description: A suit for special occasions.
@@ -227,7 +233,7 @@
     sprite: Clothing/Uniforms/Jumpsuits/Security/hosformal.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseSecurityContraband]
+  parent: [ ClothingUniformBase, BaseSecurityContraband ]
   id: ClothingUniformJumpsuitSeniorOfficer
   name: senior officer jumpsuit
   description: A sign of skill and prestige within the security department.

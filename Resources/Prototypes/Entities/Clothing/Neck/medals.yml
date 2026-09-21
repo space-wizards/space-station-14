@@ -7,9 +7,9 @@
   components:
   - type: Tag
     tags:
-      - Medal
-      - MonkeyWearable
-      - WhitelistChameleon
+    - Medal
+    - MonkeyWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingNeckMedalBase

@@ -142,4 +142,3 @@
     - !type:Disarm
     - !type:ModifyKnockdown
       probability: 0.5
-

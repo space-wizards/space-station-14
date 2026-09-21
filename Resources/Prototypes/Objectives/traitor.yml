@@ -11,7 +11,7 @@
 
 - type: entity
   abstract: true
-  parent: [BaseTraitorObjective, BaseSocialObjective]
+  parent: [ BaseTraitorObjective, BaseSocialObjective ]
   id: BaseTraitorSocialObjective
   components:
   - type: Objective
@@ -22,7 +22,7 @@
 
 - type: entity
   abstract: true
-  parent: [BaseTraitorObjective, BaseStealObjective]
+  parent: [ BaseTraitorObjective, BaseStealObjective ]
   id: BaseTraitorStealObjective
   components:
   - type: StealCondition
@@ -35,10 +35,11 @@
 # state
 
 - type: entity
-  parent: [BaseTraitorObjective, BaseLivingObjective]
+  parent: [ BaseTraitorObjective, BaseLivingObjective ]
   id: EscapeShuttleObjective
   name: Escape to CentComm alive and unrestrained via the escape shuttle.
-  description: One of our undercover agents will debrief you when you arrive. Don't show up in cuffs.
+  description: One of our undercover agents will debrief you when you arrive.
+    Don't show up in cuffs.
   components:
   - type: Objective
     difficulty: 1.3
@@ -83,7 +84,7 @@
 # kill
 
 - type: entity
-  parent: [BaseTraitorObjective, BaseKillRandomObjective]
+  parent: [ BaseTraitorObjective, BaseKillRandomObjective ]
   id: KillRandomPersonObjective
   description: Do it however you like, just make sure they don't get off the station.
   components:
@@ -96,9 +97,10 @@
     requireMaroon: true
 
 - type: entity
-  parent: [BaseTraitorObjective, BaseKillRandomObjective]
+  parent: [ BaseTraitorObjective, BaseKillRandomObjective ]
   id: KillRandomHeadObjective
-  description: We need this head gone and you probably know why. Make sure they don't make it to CentComm, even if they're dead. Good luck, agent.
+  description: We need this head gone and you probably know why. Make sure they
+    don't make it to CentComm, even if they're dead. Good luck, agent.
   components:
   - type: Objective
     # technically its still possible for KillRandomPersonObjective to roll a head but this is guaranteed, so higher difficulty
@@ -120,9 +122,10 @@
     requireMaroon: true
 
 - type: entity
-  parent: [BaseTraitorObjective, BaseKillRandomObjective]
+  parent: [ BaseTraitorObjective, BaseKillRandomObjective ]
   id: KillStationAiObjective
-  description: Nanotrasen proudly boasts about their state of the art artificial intelligence. Remind them it's just another toy that can be broken.
+  description: Nanotrasen proudly boasts about their state of the art artificial
+    intelligence. Remind them it's just another toy that can be broken.
   components:
   - type: Objective
     difficulty: 3.0
@@ -141,7 +144,7 @@
 # social
 
 - type: entity
-  parent: [BaseTraitorSocialObjective, BaseKeepAliveObjective]
+  parent: [ BaseTraitorSocialObjective, BaseKeepAliveObjective ]
   id: RandomTraitorAliveObjective
   description: Identify yourself at your own risk. We just need them alive.
   components:
@@ -164,7 +167,7 @@
         - KeepAliveCondition
 
 - type: entity
-  parent: [BaseTraitorSocialObjective, BaseHelpProgressObjective]
+  parent: [ BaseTraitorSocialObjective, BaseHelpProgressObjective ]
   id: RandomTraitorProgressObjective
   description: Identify yourself at your own risk. We just need them to succeed.
   components:
@@ -367,7 +370,8 @@
 - type: entity
   parent: BaseTraitorObjective
   id: SupercritAnomaliesObjective
-  description: Nanotrasen is very interested in anomalies with potentially catastrophic consequences. Introduce them to the fire they're playing with.
+  description: Nanotrasen is very interested in anomalies with potentially
+    catastrophic consequences. Introduce them to the fire they're playing with.
   components:
   - type: Objective
     difficulty: 2
@@ -387,7 +391,8 @@
   parent: BaseTraitorObjective
   id: HijackTradeStationObjective
   name: Hijack the Automated Trade Station.
-  description: Your uplink has been authorized one hijack beacon. Deploy it on the Automated Trade Station and defend it whilst it hijacks the trade station.
+  description: Your uplink has been authorized one hijack beacon. Deploy it on the
+    Automated Trade Station and defend it whilst it hijacks the trade station.
   components:
   - type: Objective
     difficulty: 3
@@ -400,7 +405,7 @@
     limit: 1
 
 - type: entity
-  parent: [BaseTraitorObjective, BaseCounterObjective]
+  parent: [ BaseTraitorObjective, BaseCounterObjective ]
   id: MailFraudObjective
   description: We're interested in Nanotrasen's correspondence. Letter opener not provided.
   components:

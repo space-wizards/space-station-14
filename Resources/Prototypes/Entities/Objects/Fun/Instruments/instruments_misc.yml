@@ -2,7 +2,8 @@
   parent: BaseHandheldInstrument
   id: MusicalLungInstrument
   name: musical lung
-  description: The spiritual and magical lung of a former opera singer. Though, to be honest, the vocal chords make the performance.
+  description: The spiritual and magical lung of a former opera singer. Though, to
+    be honest, the vocal chords make the performance.
   components:
   - type: Sprite
     sprite: Mobs/Species/Human/organs.rsi
@@ -52,7 +53,7 @@
     state: red_phone
   - type: EmitSoundOnLand
     sound:
-       path: /Audio/Items/ring.ogg
+      path: /Audio/Items/ring.ogg
   - type: Instrument
     program: 124
   - type: Item
@@ -142,7 +143,7 @@
     size: Small
     storedRotation: -90
   - type: Clothing
-    slots: [Belt]
+    slots: [ Belt ]
     quickEquip: false
 
 - type: entity
@@ -155,7 +156,7 @@
     state: banana_phone
   - type: EmitSoundOnLand
     sound:
-       path: /Audio/Items/bikehorn.ogg
+      path: /Audio/Items/bikehorn.ogg
   - type: Slippery
   - type: StepTrigger
   - type: CollisionWake
@@ -163,15 +164,13 @@
   - type: Fixtures
     fixtures:
       slips:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
         hard: false
         layer:
         - SlipLayer
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
         density: 5
         mask:

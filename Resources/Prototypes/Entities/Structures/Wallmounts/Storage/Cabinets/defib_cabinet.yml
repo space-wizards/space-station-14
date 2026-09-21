@@ -13,10 +13,10 @@
     layers:
     - state: frame
     - state: fill
-      map: ["enum.ItemCabinetVisuals.Layer"]
+      map: [ "enum.ItemCabinetVisuals.Layer" ]
       visible: true
     - state: closed
-      map: ["enum.OpenableVisuals.Layer"]
+      map: [ "enum.OpenableVisuals.Layer" ]
   - type: ItemSlots
     slots:
       ItemCabinet:
@@ -56,6 +56,6 @@
       - Defibrillator
 
 - type: entity
-  parent: [DefibrillatorCabinetFilled, DefibrillatorCabinetOpen]
+  parent: [ DefibrillatorCabinetFilled, DefibrillatorCabinetOpen ]
   id: DefibrillatorCabinetFilledOpen
   suffix: Filled, Open

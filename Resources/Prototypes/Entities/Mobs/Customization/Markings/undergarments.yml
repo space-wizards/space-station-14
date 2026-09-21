@@ -1,10 +1,10 @@
 # These options are kept very sparse to not put emphasis on nudity, and to provide a base for players to feel comfortable with.
-# It's unlikely more will be added to upstream for cosmetic reasons. 
+# It's unlikely more will be added to upstream for cosmetic reasons.
 
 - type: marking
   id: UndergarmentBottomBoxers
   bodyPart: UndergarmentBottom
-  groupWhitelist: [Arachnid, Diona, Human, Moth, Slime]
+  groupWhitelist: [ Arachnid, Diona, Human, Moth, Slime ]
   coloring:
     default:
       type: null
@@ -16,7 +16,7 @@
 - type: marking
   id: UndergarmentBottomBriefs
   bodyPart: UndergarmentBottom
-  groupWhitelist: [Arachnid, Diona, Human, Moth, Slime]
+  groupWhitelist: [ Arachnid, Diona, Human, Moth, Slime ]
   coloring:
     default:
       type: null
@@ -28,7 +28,7 @@
 - type: marking
   id: UndergarmentBottomSatin
   bodyPart: UndergarmentBottom
-  groupWhitelist: [Arachnid, Diona, Human, Moth, Slime]
+  groupWhitelist: [ Arachnid, Diona, Human, Moth, Slime ]
   coloring:
     default:
       type: null
@@ -40,7 +40,7 @@
 - type: marking
   id: UndergarmentTopBra
   bodyPart: UndergarmentTop
-  groupWhitelist: [Arachnid, Diona, Human, Moth, Reptilian, Slime]
+  groupWhitelist: [ Arachnid, Diona, Human, Moth, Reptilian, Slime ]
   coloring:
     default:
       type: null
@@ -52,7 +52,7 @@
 - type: marking
   id: UndergarmentTopSportsbra
   bodyPart: UndergarmentTop
-  groupWhitelist: [Arachnid, Diona, Human, Moth, Reptilian, Slime]
+  groupWhitelist: [ Arachnid, Diona, Human, Moth, Reptilian, Slime ]
   coloring:
     default:
       type: null
@@ -64,7 +64,7 @@
 - type: marking
   id: UndergarmentTopBinder
   bodyPart: UndergarmentTop
-  groupWhitelist: [Arachnid, Diona, Human, Moth, Reptilian, Slime]
+  groupWhitelist: [ Arachnid, Diona, Human, Moth, Reptilian, Slime ]
   coloring:
     default:
       type: null
@@ -76,7 +76,7 @@
 - type: marking
   id: UndergarmentTopTanktop
   bodyPart: UndergarmentTop
-  groupWhitelist: [Arachnid, Diona, Human, Moth, Reptilian, Slime]
+  groupWhitelist: [ Arachnid, Diona, Human, Moth, Reptilian, Slime ]
   coloring:
     default:
       type: null
@@ -88,7 +88,7 @@
 - type: marking
   id: UndergarmentBottomBoxersVox # Voxers.
   bodyPart: UndergarmentBottom
-  groupWhitelist: [Vox]
+  groupWhitelist: [ Vox ]
   coloring:
     default:
       type: null
@@ -100,7 +100,7 @@
 - type: marking
   id: UndergarmentBottomBriefsVox
   bodyPart: UndergarmentBottom
-  groupWhitelist: [Vox]
+  groupWhitelist: [ Vox ]
   coloring:
     default:
       type: null
@@ -112,7 +112,7 @@
 - type: marking
   id: UndergarmentBottomSatinVox
   bodyPart: UndergarmentBottom
-  groupWhitelist: [Vox]
+  groupWhitelist: [ Vox ]
   coloring:
     default:
       type: null
@@ -124,7 +124,7 @@
 - type: marking
   id: UndergarmentTopBraVox
   bodyPart: UndergarmentTop
-  groupWhitelist: [Vox]
+  groupWhitelist: [ Vox ]
   coloring:
     default:
       type: null
@@ -136,7 +136,7 @@
 - type: marking
   id: UndergarmentTopSportsbraVox
   bodyPart: UndergarmentTop
-  groupWhitelist: [Vox]
+  groupWhitelist: [ Vox ]
   coloring:
     default:
       type: null
@@ -148,7 +148,7 @@
 - type: marking
   id: UndergarmentTopBinderVox
   bodyPart: UndergarmentTop
-  groupWhitelist: [Vox]
+  groupWhitelist: [ Vox ]
   coloring:
     default:
       type: null
@@ -160,7 +160,7 @@
 - type: marking
   id: UndergarmentTopTanktopVox
   bodyPart: UndergarmentTop
-  groupWhitelist: [Vox]
+  groupWhitelist: [ Vox ]
   coloring:
     default:
       type: null
@@ -172,7 +172,7 @@
 - type: marking
   id: UndergarmentBottomBoxersReptilian
   bodyPart: UndergarmentBottom
-  groupWhitelist: [Reptilian]
+  groupWhitelist: [ Reptilian ]
   coloring:
     default:
       type: null
@@ -184,7 +184,7 @@
 - type: marking
   id: UndergarmentBottomBriefsReptilian
   bodyPart: UndergarmentBottom
-  groupWhitelist: [Reptilian]
+  groupWhitelist: [ Reptilian ]
   coloring:
     default:
       type: null
@@ -196,7 +196,7 @@
 - type: marking
   id: UndergarmentBottomSatinReptilian
   bodyPart: UndergarmentBottom
-  groupWhitelist: [Reptilian]
+  groupWhitelist: [ Reptilian ]
   coloring:
     default:
       type: null
@@ -208,7 +208,7 @@
 - type: marking
   id: UndergarmentBottomBoxersVulpkanin
   bodyPart: UndergarmentBottom
-  groupWhitelist: [Vulpkanin]
+  groupWhitelist: [ Vulpkanin ]
   coloring:
     default:
       type: null
@@ -220,7 +220,7 @@
 - type: marking
   id: UndergarmentBottomBriefsVulpkanin
   bodyPart: UndergarmentBottom
-  groupWhitelist: [Vulpkanin]
+  groupWhitelist: [ Vulpkanin ]
   coloring:
     default:
       type: null
@@ -232,7 +232,7 @@
 - type: marking
   id: UndergarmentBottomSatinVulpkanin
   bodyPart: UndergarmentBottom
-  groupWhitelist: [Vulpkanin]
+  groupWhitelist: [ Vulpkanin ]
   coloring:
     default:
       type: null
@@ -244,7 +244,7 @@
 - type: marking
   id: UndergarmentTopBraVulpkanin
   bodyPart: UndergarmentTop
-  groupWhitelist: [Vulpkanin]
+  groupWhitelist: [ Vulpkanin ]
   coloring:
     default:
       type: null
@@ -256,7 +256,7 @@
 - type: marking
   id: UndergarmentTopSportsbraVulpkanin
   bodyPart: UndergarmentTop
-  groupWhitelist: [Vulpkanin]
+  groupWhitelist: [ Vulpkanin ]
   coloring:
     default:
       type: null
@@ -268,7 +268,7 @@
 - type: marking
   id: UndergarmentTopBinderVulpkanin
   bodyPart: UndergarmentTop
-  groupWhitelist: [Vulpkanin]
+  groupWhitelist: [ Vulpkanin ]
   coloring:
     default:
       type: null
@@ -280,7 +280,7 @@
 - type: marking
   id: UndergarmentTopTanktopVulpkanin
   bodyPart: UndergarmentTop
-  groupWhitelist: [Vulpkanin]
+  groupWhitelist: [ Vulpkanin ]
   coloring:
     default:
       type: null
@@ -288,4 +288,3 @@
   sprites:
   - sprite: Mobs/Customization/undergarments.rsi
     state: tanktop_vulpkanin
-    

@@ -288,7 +288,7 @@
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Slime]
+          type: [ Slime ]
           inverted: true
         damage:
           types:

@@ -28,7 +28,7 @@
   - type: CarpRiftsCondition
 
 - type: entity
-  parent: [BaseDragonObjective, BaseSurviveObjective]
+  parent: [ BaseDragonObjective, BaseSurviveObjective ]
   id: DragonSurviveObjective
   name: Survive
   description: You have to stay alive to maintain control.

@@ -19,8 +19,8 @@
     arc: 360 # interact despite grilles
   - type: Tag
     tags:
-      - ForceFixRotations
-      - Window
+    - ForceFixRotations
+    - Window
   - type: Physics
     bodyType: Static
   - type: ExaminableDamage
@@ -37,8 +37,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
         mask:
         - FullTileMask
@@ -71,8 +70,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb {}
+        shape: !type:PhysShapeAabb
         mask:
         - FullTileMask
         layer:
@@ -94,8 +92,7 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 120
       behaviors:
       - !type:PlaySoundBehavior
@@ -110,7 +107,7 @@
             min: 1
             max: 2
   - type: DamageVisuals
-    thresholds: [5, 10, 20]
+    thresholds: [ 5, 10, 20 ]
     damageDivisor: 20
     trackAllDamage: true
     damageOverlay:
@@ -146,12 +143,11 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PolygonShape
-            vertices:
-            - "-0.5,-0.5"
-            - "0.5,0.5"
-            - "0.5,-0.5"
+        shape: !type:PolygonShape
+          vertices:
+          - "-0.5,-0.5"
+          - "0.5,0.5"
+          - "0.5,-0.5"
         mask:
         - FullTileMask
         layer:
@@ -180,8 +176,7 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 120
       behaviors:
       - !type:PlaySoundBehavior
@@ -196,7 +191,7 @@
             min: 1
             max: 2
   - type: DamageVisuals
-    thresholds: [5, 10, 20]
+    thresholds: [ 5, 10, 20 ]
     damageDivisor: 20
     trackAllDamage: true
     damageOverlay:

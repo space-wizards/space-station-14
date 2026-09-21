@@ -2,13 +2,12 @@
   id: GhostSheet
   start: start
   graph:
-    - node: start
-      edges:
-        - to: ghost_sheet
-          steps:
-            - material: Cloth
-              amount: 5
-              doAfter: 12
-    - node: ghost_sheet
-      entity: ClothingOuterGhostSheet
-
+  - node: start
+    edges:
+    - to: ghost_sheet
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 12
+  - node: ghost_sheet
+    entity: ClothingOuterGhostSheet

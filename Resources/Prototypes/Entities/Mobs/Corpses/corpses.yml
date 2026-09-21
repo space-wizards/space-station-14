@@ -5,16 +5,16 @@
   components:
   - type: Loadout
     prototypes:
-      - HoPGear
-      - ClownGear
-      - MimeGear
-      - JanitorGear
-      - ServiceWorkerGear
-      - MusicianGear
-      - BotanistGear
-      - ChefGear
-      - ChaplainGear
-      - PassengerGear
+    - HoPGear
+    - ClownGear
+    - MimeGear
+    - JanitorGear
+    - ServiceWorkerGear
+    - MusicianGear
+    - BotanistGear
+    - ChefGear
+    - ChaplainGear
+    - PassengerGear
 
 - type: entity
   parent: SalvageHumanCorpse

@@ -10,10 +10,10 @@
     sprite: Structures/Machines/vaccinator.rsi
     layers:
     - state: icon
-      map: ["enum.DiseaseMachineVisualLayers.IsRunning"]
+      map: [ "enum.DiseaseMachineVisualLayers.IsRunning" ]
     - state: unlit
       shader: unshaded
-      map: ["enum.DiseaseMachineVisualLayers.IsOn"]
+      map: [ "enum.DiseaseMachineVisualLayers.IsOn" ]
   - type: Appearance
   - type: Machine
     board: VaccinatorMachineCircuitboard

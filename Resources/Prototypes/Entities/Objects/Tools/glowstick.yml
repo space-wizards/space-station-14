@@ -39,21 +39,24 @@
     netsync: false
   - type: LightBehaviour
     behaviours:
-    - !type:FadeBehaviour # slowly fade in once activated
+    # slowly fade in once activated
+    - !type:FadeBehaviour
       id: turn_on
       interpolate: Linear
       maxDuration: 10.0
       startValue: 0.0
       endValue: 3.0
       property: Energy
-    - !type:FadeBehaviour # fade out energy as it burns out
+    # fade out energy as it burns out
+    - !type:FadeBehaviour
       id: fade_out
       interpolate: Linear
       maxDuration: 10 # 300.0
       startValue: 3.0
       endValue: 0.2
       property: Energy
-    - !type:FadeBehaviour # fade out radius as it burns out
+    # fade out radius as it burns out
+    - !type:FadeBehaviour
       id: fade_out
       interpolate: Linear
       maxDuration: 10 # 300.0

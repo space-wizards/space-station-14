@@ -8,9 +8,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Objects/Specific/Research/anomalyscanner.rsi
-        state: icon
+    - state: red
+    - sprite: Objects/Specific/Research/anomalyscanner.rsi
+      state: icon
   - type: RandomSpawner
     rarePrototypes:
     - AnomalyScanner

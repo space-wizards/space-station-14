@@ -3,18 +3,15 @@
   id: SeniorPhysician
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobChemist
       time: 6h
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobMedicalDoctor
       time: 6h
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
+    requirement: !type:DepartmentTimeRequirement
       department: Medical
       time: 60h
 
@@ -23,8 +20,7 @@
   id: MedicalJourneymanTimer
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobMedicalDoctor
       time: 20h
 
@@ -33,7 +29,6 @@
   id: MasterCMO
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
+    requirement: !type:RoleTimeRequirement
       role: JobChiefMedicalOfficer
       time: 20h

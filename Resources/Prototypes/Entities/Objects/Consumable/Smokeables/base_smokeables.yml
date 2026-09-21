@@ -1,7 +1,7 @@
 - type: entity
   description: "If you want to get cancer, might as well do it in style."
   id: BaseSmokable
-  parent: [SolutionSmokable, SolutionTiny, BaseItem]
+  parent: [ SolutionSmokable, SolutionTiny, BaseItem ]
   abstract: true
   components:
   - type: Reactive
@@ -55,14 +55,14 @@
       name: smoking-pipe-slot-component-slot-name-bowl
       whitelist:
         tags:
-          - Smokable
+        - Smokable
       insertSound:
         path: /Audio/Weapons/Guns/Empty/empty.ogg
       ejectSound:
         path: /Audio/Weapons/Guns/Empty/empty.ogg
 
 - type: entity
-  parent: [SolutionSmokable, SolutionTiny, BaseItem]
+  parent: [ SolutionSmokable, SolutionTiny, BaseItem ]
   id: BaseVape
   abstract: true
   components:

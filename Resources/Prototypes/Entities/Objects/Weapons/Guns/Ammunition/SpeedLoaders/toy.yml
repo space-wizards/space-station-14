@@ -6,19 +6,19 @@
   components:
   - type: Tag
     tags:
-      - SpeedLoaderCap
+    - SpeedLoaderCap
   - type: SpeedLoader
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - CartridgeCap
+      - CartridgeCap
     capacity: 6
   - type: Sprite
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]
+      map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-6
-      map: ["enum.GunVisualLayers.Mag"]
+      map: [ "enum.GunVisualLayers.Mag" ]
   - type: MagazineVisuals
     magState: mag
     steps: 7

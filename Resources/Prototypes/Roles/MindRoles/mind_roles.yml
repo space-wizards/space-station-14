@@ -110,7 +110,7 @@
   name: Job Role
   # JobPrototype is filled by SharedJobSystem
 
-# Silicon
+  # Silicon
 - type: entity
   parent: BaseMindRole
   id: MindRoleSiliconBrain

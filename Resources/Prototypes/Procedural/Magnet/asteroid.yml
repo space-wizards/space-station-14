@@ -8,14 +8,14 @@
     capStd: 32
     iterations: 3
     layers:
-      - tile: FloorAsteroidSand
-        threshold: 0.30
-        noise:
-          frequency: 0.020
-          noiseType: OpenSimplex2
-          fractalType: FBm
-          octaves: 2
-          lacunarity: 2
+    - tile: FloorAsteroidSand
+      threshold: 0.30
+      noise:
+        frequency: 0.020
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        octaves: 2
+        lacunarity: 2
 
   # Generate biome
   - !type:BiomeDunGen
@@ -37,14 +37,14 @@
     tileCap: 750
     capStd: 32
     layers:
-      - tile: FloorAsteroidSand
-        threshold: 0.10
-        noise:
-          frequency: 0.130
-          noiseType: OpenSimplex2
-          fractalType: FBm
-          octaves: 2
-          lacunarity: 2
+    - tile: FloorAsteroidSand
+      threshold: 0.10
+      noise:
+        frequency: 0.130
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        octaves: 2
+        lacunarity: 2
 
   # Generate biome
   - !type:BiomeDunGen
@@ -65,15 +65,15 @@
     tileCap: 1000
     capStd: 32
     layers:
-      - tile: FloorAsteroidSand
-        threshold: -0.50
-        noise:
-          frequency: 0.055
-          noiseType: Cellular
-          fractalType: FBm
-          octaves: 3
-          lacunarity: 2
-          cellularDistanceFunction: Euclidean
+    - tile: FloorAsteroidSand
+      threshold: -0.50
+      noise:
+        frequency: 0.055
+        noiseType: Cellular
+        fractalType: FBm
+        octaves: 3
+        lacunarity: 2
+        cellularDistanceFunction: Euclidean
 
   # Generate biome
   - !type:BiomeDunGen
@@ -94,14 +94,14 @@
     tileCap: 1000
     capStd: 32
     layers:
-      - tile: FloorAsteroidSand
-        threshold: -0.10
-        noise:
-          frequency: 0.155
-          noiseType: OpenSimplex2
-          fractalType: FBm
-          octaves: 2
-          lacunarity: 2
+    - tile: FloorAsteroidSand
+      threshold: -0.10
+      noise:
+        frequency: 0.155
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        octaves: 2
+        lacunarity: 2
 
   # Generate biome
   - !type:BiomeDunGen

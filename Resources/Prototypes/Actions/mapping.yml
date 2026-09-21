@@ -24,7 +24,7 @@
   - type: Sprite
     layers:
     - texture: Tiles/cropped_parallax.png
-      map: ["enum.ActionVisuals.Icon"]
+      map: [ "enum.ActionVisuals.Icon" ]
   - type: InstantAction
     event: null # has to be set with SetEvent in MappingSystem
 

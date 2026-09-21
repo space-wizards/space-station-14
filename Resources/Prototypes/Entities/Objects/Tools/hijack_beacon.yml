@@ -2,7 +2,8 @@
   parent: [ BaseItem, BaseSyndicateContraband ]
   id: HijackBeacon
   name: hijack beacon
-  description: A device that bypasses the firewall on Nanotrasen-brand Automated Trade Stations.
+  description: A device that bypasses the firewall on Nanotrasen-brand Automated
+    Trade Stations.
   components:
   - type: Transform
     anchored: false
@@ -16,8 +17,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.3,-0.3,0.3,0.3"
         density: 190
         mask:

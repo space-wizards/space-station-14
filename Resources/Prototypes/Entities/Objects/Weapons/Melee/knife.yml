@@ -10,7 +10,7 @@
     doAfterDuration: 4.0
   - type: Utensil
     types:
-      - Knife
+    - Knife
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
@@ -31,7 +31,8 @@
   parent: BaseKnife
   id: KitchenKnife
   name: kitchen knife
-  description: A general purpose Chef's Knife made by Asters Merchant Guild. Guaranteed to stay sharp for years to come..
+  description: A general purpose Chef's Knife made by Asters Merchant Guild.
+    Guaranteed to stay sharp for years to come..
   components:
   - type: Tag
     tags:
@@ -67,7 +68,8 @@
   name: butcher's cleaver
   parent: BaseKnife
   id: ButchCleaver
-  description: A huge blade used for chopping and chopping up meat. This includes clowns and clown-by-products.
+  description: A huge blade used for chopping and chopping up meat. This includes
+    clowns and clown-by-products.
   components:
   - type: Tag
     tags:
@@ -106,7 +108,7 @@
 
 - type: entity
   name: combat knife
-  parent: [BaseKnife, BaseSecurityContraband]
+  parent: [ BaseKnife, BaseSecurityContraband ]
   id: CombatKnife
   description: A deadly knife intended for melee confrontations.
   components:
@@ -157,7 +159,7 @@
 
 - type: entity
   name: survival knife
-  parent: [BaseSecurityCargoContraband, CombatKnife]
+  parent: [ BaseSecurityCargoContraband, CombatKnife ]
   id: SurvivalKnife
   description: Weapon of first and last resort for combatting space carp.
   components:
@@ -172,9 +174,10 @@
 
 - type: entity
   name: kukri knife
-  parent: [BaseSecurityCargoContraband, CombatKnife]
+  parent: [ BaseSecurityCargoContraband, CombatKnife ]
   id: KukriKnife
-  description: Professionals have standards. Be polite. Be efficient. Have a plan to kill everyone you meet.
+  description: Professionals have standards. Be polite. Be efficient. Have a plan
+    to kill everyone you meet.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/kukri_knife.rsi
@@ -192,7 +195,8 @@
   parent: [ CombatKnife, BaseXenoborgContraband ]
   id: XenoborgBioKnife
   name: bio knife
-  description: Melds itself to specific metabolizers and will deal extra damage to those targets!
+  description: Melds itself to specific metabolizers and will deal extra damage to
+    those targets!
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/bioknife.rsi
@@ -217,10 +221,11 @@
         Poison: 10
 
 - type: entity
-  parent: [ClothingHeadHatGreyFlatcap, BaseMinorContraband]
+  parent: [ ClothingHeadHatGreyFlatcap, BaseMinorContraband ]
   id: BladedFlatcapGrey
   name: grey flatcap
-  description: Fashionable for both the working class and old man Jenkins. It has glass shards hidden in the brim.
+  description: Fashionable for both the working class and old man Jenkins. It has
+    glass shards hidden in the brim.
   suffix: Bladed
   components:
   - type: Construction
@@ -246,7 +251,8 @@
   parent: BladedFlatcapGrey
   id: BladedFlatcapBrown
   name: brown flatcap
-  description: "\"Stupid clown! You made me look bad!\" It has glass shards hidden in the brim."
+  description: "\"Stupid clown! You made me look bad!\" It has glass shards hidden
+    in the brim."
   components:
   - type: Construction
     graph: BladedFlatcapBrown
@@ -257,7 +263,7 @@
 
 - type: entity
   name: shiv
-  parent: [BaseKnife, BaseMinorContraband]
+  parent: [ BaseKnife, BaseMinorContraband ]
   id: Shiv
   description: A crude weapon fashioned from a piece of cloth and a glass shard.
   components:
@@ -338,7 +344,8 @@
   name: uranium shiv
   parent: Shiv
   id: UraniumShiv
-  description: A crude weapon fashioned from a piece of cloth and a uranium glass shard. Violates the geneva convention!
+  description: A crude weapon fashioned from a piece of cloth and a uranium glass
+    shard. Violates the geneva convention!
   components:
   - type: Construction
     graph: UraniumShiv
@@ -356,9 +363,10 @@
 
 - type: entity
   name: throwing knife
-  parent: [BaseKnife, BaseSyndicateContraband]
+  parent: [ BaseKnife, BaseSyndicateContraband ]
   id: ThrowingKnife
-  description: This blood-red knife is very aerodynamic and easy to throw, but good luck trying to fight someone hand-to-hand.
+  description: This blood-red knife is very aerodynamic and easy to throw, but
+    good luck trying to fight someone hand-to-hand.
   components:
   - type: Tag
     tags:
@@ -410,7 +418,8 @@
   name: utility knife
   parent: BaseItem
   id: UtilityKnife
-  description: A knife with a retractable, tiny blade. Useful as a box cutter and letter opener, among other things.
+  description: A knife with a retractable, tiny blade. Useful as a box cutter and
+    letter opener, among other things.
   components:
   - type: Appearance
   - type: ComponentToggler

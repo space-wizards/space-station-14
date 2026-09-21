@@ -1,9 +1,17 @@
 - type: entity
   save: false
-  parent: [ BaseSimpleMob, BaseMobAnimal, MobCombat, MobBloodstream, BaseMobDestructible ]
+  parent:
+    [
+      BaseSimpleMob,
+      BaseMobAnimal,
+      MobCombat,
+      MobBloodstream,
+      BaseMobDestructible
+    ]
   id: BaseMobArgocyte
   suffix: AI
-  description: A dangerous alien found on the wrong side of planets, known for their propensity for munching on ruins.
+  description: A dangerous alien found on the wrong side of planets, known for
+    their propensity for munching on ruins.
   abstract: true
   components:
   - type: NpcFactionMember
@@ -23,12 +31,10 @@
         Quantity: 75 #we don't want the map to become pools of blood
     bloodlossDamage:
       types:
-        Bloodloss:
-          0.5
+        Bloodloss: 0.5
     bloodlossHealDamage:
       types:
-        Bloodloss:
-          -1
+        Bloodloss: -1
   - type: Insulated
   - type: CombatMode
   - type: MeleeWeapon
@@ -51,7 +57,7 @@
     group: GenericNumber
 
 - type: entity
-  parent: [BaseMobArgocyte, BaseSlicingRefinable]
+  parent: [ BaseMobArgocyte, BaseSlicingRefinable ]
   id: MobArgocyteSlurva
   name: slurva
   description: A pathetic creature, incapable of doing much.
@@ -59,7 +65,7 @@
   - type: Sprite
     layers:
     - state: slurva
-      map: ["enum.DamageStateVisualLayers.Base"]
+      map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: DamageStateVisuals
     states:
       Alive:
@@ -78,22 +84,22 @@
     - id: FoodMeatXeno
       amount: 1
   - type: MovementSpeedModifier
-    baseSprintSpeed : 3.5
-    baseWalkSpeed : 3
+    baseSprintSpeed: 3.5
+    baseWalkSpeed: 3
   - type: MeleeWeapon
     damage:
       types:
         Blunt: 3
 
 - type: entity
-  parent: [BaseMobArgocyte, BaseSlicingRefinable]
+  parent: [ BaseMobArgocyte, BaseSlicingRefinable ]
   id: MobArgocyteBarrier
   name: barrier
   components:
   - type: Sprite
     layers:
     - state: barrier
-      map: ["enum.DamageStateVisualLayers.Base"]
+      map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: DamageStateVisuals
     states:
       Alive:
@@ -114,8 +120,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.2
         density: 50
         mask:
@@ -128,7 +133,7 @@
         Blunt: 3
 
 - type: entity
-  parent: [BaseMobArgocyte, BaseSlicingRefinable]
+  parent: [ BaseMobArgocyte, BaseSlicingRefinable ]
   id: MobArgocyteSkitter
   name: skitter
   description: A devious little alien... Make sure they don't run off with your rations!
@@ -136,7 +141,7 @@
   - type: Sprite
     layers:
     - state: skitter
-      map: ["enum.DamageStateVisualLayers.Base"]
+      map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: DamageStateVisuals
     states:
       Alive:
@@ -154,8 +159,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.2
         density: 50
         mask:
@@ -168,7 +172,7 @@
         Slash: 3
 
 - type: entity
-  parent: [BaseMobArgocyte, BaseSlicingRefinable]
+  parent: [ BaseMobArgocyte, BaseSlicingRefinable ]
   id: MobArgocyteSwiper
   name: swiper
   description: Where did that stack of steel go?
@@ -176,7 +180,7 @@
   - type: Sprite
     layers:
     - state: swiper
-      map: ["enum.DamageStateVisualLayers.Base"]
+      map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: DamageStateVisuals
     states:
       Alive:
@@ -192,17 +196,17 @@
     - id: FoodMeatXeno
       amount: 2
   - type: MovementSpeedModifier
-    baseSprintSpeed : 5
+    baseSprintSpeed: 5
 
 - type: entity
-  parent: [BaseMobArgocyte, BaseSlicingRefinable]
+  parent: [ BaseMobArgocyte, BaseSlicingRefinable ]
   id: MobArgocyteMolder
   name: molder
   components:
   - type: Sprite
     layers:
     - state: molder
-      map: ["enum.DamageStateVisualLayers.Base"]
+      map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: DamageStateVisuals
     states:
       Alive:
@@ -218,18 +222,18 @@
     - id: FoodMeatXeno
       amount: 2
   - type: MovementSpeedModifier
-    baseSprintSpeed : 4
-    baseWalkSpeed : 3.5
+    baseSprintSpeed: 4
+    baseWalkSpeed: 3.5
 
 - type: entity
-  parent: [BaseMobArgocyte, BaseSlicingRefinable]
+  parent: [ BaseMobArgocyte, BaseSlicingRefinable ]
   id: MobArgocytePouncer
   name: pouncer
   components:
   - type: Sprite
     layers:
     - state: pouncer
-      map: ["enum.DamageStateVisualLayers.Base"]
+      map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: DamageStateVisuals
     states:
       Alive:
@@ -251,14 +255,14 @@
         Slash: 7.5
 
 - type: entity
-  parent: [BaseMobArgocyte, BaseSlicingRefinable]
+  parent: [ BaseMobArgocyte, BaseSlicingRefinable ]
   id: MobArgocyteGlider
   name: glider
   components:
   - type: Sprite
     layers:
     - state: glider
-      map: ["enum.DamageStateVisualLayers.Base"]
+      map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: DamageStateVisuals
     states:
       Alive:
@@ -279,18 +283,18 @@
         Blunt: 3.5
         Slash: 3.5
   - type: MovementSpeedModifier
-    baseSprintSpeed : 5
+    baseSprintSpeed: 5
     baseWalkSpeed: 4.5
 
 - type: entity
-  parent: [BaseMobArgocyte, BaseSlicingRefinable]
+  parent: [ BaseMobArgocyte, BaseSlicingRefinable ]
   id: MobArgocyteHarvester
   name: harvester
   components:
   - type: Sprite
     layers:
     - state: harvester
-      map: ["enum.DamageStateVisualLayers.Base"]
+      map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: DamageStateVisuals
     states:
       Alive:
@@ -312,15 +316,15 @@
         Slash: 10
 
 - type: entity
-  parent: [BaseMobArgocyte, BaseSlicingRefinable]
+  parent: [ BaseMobArgocyte, BaseSlicingRefinable ]
   id: MobArgocyteCrawler
   name: crawler
   description: Deadly, pack-animals that maul unsuspecting travelers.
   components:
   - type: Sprite
     layers:
-      - state: crawler
-        map: ["enum.DamageStateVisualLayers.Base"]
+    - state: crawler
+      map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: DamageStateVisuals
     states:
       Alive:
@@ -341,18 +345,18 @@
         Blunt: 15
         Slash: 5
   - type: MovementSpeedModifier
-    baseSprintSpeed : 6.5
+    baseSprintSpeed: 6.5
     baseWalkSpeed: 5
 
 - type: entity
-  parent: [BaseMobArgocyte, BaseSlicingRefinable]
+  parent: [ BaseMobArgocyte, BaseSlicingRefinable ]
   id: MobArgocyteEnforcer
   name: enforcer
   components:
   - type: Sprite
     layers:
-      - state: enforcer
-        map: ["enum.DamageStateVisualLayers.Base"]
+    - state: enforcer
+      map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: DamageStateVisuals
     states:
       Alive:
@@ -373,7 +377,7 @@
         Blunt: 10
         Slash: 15
   - type: MovementSpeedModifier
-    baseSprintSpeed : 3.5
+    baseSprintSpeed: 3.5
     baseWalkSpeed: 3
 
 - type: entity
@@ -384,8 +388,8 @@
   - type: Sprite
     sprite: Mobs/Aliens/Argocyte/argocyte_large.rsi
     layers:
-      - state: founder
-        map: ["enum.DamageStateVisualLayers.Base"]
+    - state: founder
+      map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: DamageStateVisuals
     states:
       Alive:
@@ -405,9 +409,9 @@
           radius: 0.75
         density: 300
         mask:
-          - MobMask
+        - MobMask
         layer:
-          - MobLayer
+        - MobLayer
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -417,7 +421,7 @@
       types:
         Blunt: 25
   - type: MovementSpeedModifier
-    baseSprintSpeed : 3
+    baseSprintSpeed: 3
     baseWalkSpeed: 3
 
 - type: entity
@@ -428,8 +432,8 @@
   - type: Sprite
     sprite: Mobs/Aliens/Argocyte/argocyte_large.rsi
     layers:
-      - state: leviathing
-        map: ["enum.DamageStateVisualLayers.Base"]
+    - state: leviathing
+      map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: DamageStateVisuals
     states:
       Alive:

@@ -19,21 +19,18 @@
   category: construction-category-structures
   conditions:
   - !type:TileNotBlocked
-
 - type: construction
   parent: BaseWebStructure
   id: TableWeb
   targetNode: table
   conditions:
   - !type:TileNotBlocked
-
 - type: construction
   parent: BaseWebStructure
   id: WebBed
   targetNode: bed
   conditions:
   - !type:TileNotBlocked
-
 - type: construction
   parent: BaseWebStructure
   id: ChairWeb
@@ -41,7 +38,6 @@
   canRotate: true
   conditions:
   - !type:TileNotBlocked
-
 - type: construction
   parent: BaseWebStructure
   id: CrateWeb
@@ -55,5 +51,4 @@
   targetNode: door
   category: construction-category-structures
   conditions:
-  - !type:TileNotBlocked
-# endregion Web
+  - !type:TileNotBlocked # endregion Web

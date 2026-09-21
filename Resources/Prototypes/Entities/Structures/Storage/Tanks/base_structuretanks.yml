@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [SolutionTank, SolutionGinormous, BaseStructureDynamic]
+  parent: [ SolutionTank, SolutionGinormous, BaseStructureDynamic ]
   id: StorageTankIndestructible
   name: storage tank
   description: A liquids storage tank.
@@ -13,8 +13,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.4"
         density: 155
         mask:
@@ -39,22 +38,19 @@
     damageModifierSet: PlasticMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
+    - trigger: !type:DamageTypeTrigger
         damageType: Heat
         damage: 5
       behaviors:
       - !type:SolutionExplosionBehavior
         solution: tank
-    - trigger:
-        !type:DamageTypeTrigger
+    - trigger: !type:DamageTypeTrigger
         damageType: Piercing
         damage: 5
       behaviors:
       - !type:SolutionExplosionBehavior
         solution: tank
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 20
       behaviors:
       - !type:SpillBehavior
@@ -66,14 +62,13 @@
 # For highcap tanks
 - type: entity
   abstract: true
-  parent: [SolutionTank, Solution3840, StorageTank]
+  parent: [ SolutionTank, Solution3840, StorageTank ]
   id: StorageTankBig
   components:
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.4"
         density: 455 #very heavy, they store 10k units of reagents after all.
         mask:

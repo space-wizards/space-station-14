@@ -1,6 +1,6 @@
 - type: decal
   id: FullTileOverlayGreyscale
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -8,7 +8,7 @@
 
 - type: decal
   id: BrickBoxOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -16,7 +16,7 @@
 
 - type: decal
   id: BrickCornerOverlayNE
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -24,7 +24,7 @@
 
 - type: decal
   id: BrickCornerOverlayNW
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -32,7 +32,7 @@
 
 - type: decal
   id: BrickCornerOverlaySE
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -40,7 +40,7 @@
 
 - type: decal
   id: BrickCornerOverlaySW
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -48,7 +48,7 @@
 
 - type: decal
   id: BrickEndOverlayE
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -56,7 +56,7 @@
 
 - type: decal
   id: BrickEndOverlayN
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -64,7 +64,7 @@
 
 - type: decal
   id: BrickEndOverlayS
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -72,7 +72,7 @@
 
 - type: decal
   id: BrickEndOverlayW
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -80,7 +80,7 @@
 
 - type: decal
   id: BrickLineOverlayE
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -88,7 +88,7 @@
 
 - type: decal
   id: BrickLineOverlayN
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -96,7 +96,7 @@
 
 - type: decal
   id: BrickLineOverlayS
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -104,7 +104,7 @@
 
 - type: decal
   id: BrickLineOverlayW
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -112,7 +112,7 @@
 
 - type: decal
   id: HalfTileOverlayGreyscale
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -120,7 +120,7 @@
 
 - type: decal
   id: HalfTileOverlayGreyscale90
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -128,7 +128,7 @@
 
 - type: decal
   id: HalfTileOverlayGreyscale180
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -136,7 +136,7 @@
 
 - type: decal
   id: HalfTileOverlayGreyscale270
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -144,7 +144,7 @@
 
 - type: decal
   id: QuarterTileOverlayGreyscale
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -152,7 +152,7 @@
 
 - type: decal
   id: QuarterTileOverlayGreyscale90
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -160,7 +160,7 @@
 
 - type: decal
   id: QuarterTileOverlayGreyscale180
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -168,7 +168,7 @@
 
 - type: decal
   id: QuarterTileOverlayGreyscale270
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -176,7 +176,7 @@
 
 - type: decal
   id: ThreeQuarterTileOverlayGreyscale
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -184,7 +184,7 @@
 
 - type: decal
   id: ThreeQuarterTileOverlayGreyscale90
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -192,7 +192,7 @@
 
 - type: decal
   id: ThreeQuarterTileOverlayGreyscale180
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -200,7 +200,7 @@
 
 - type: decal
   id: ThreeQuarterTileOverlayGreyscale270
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -208,7 +208,7 @@
 
 - type: decal
   id: MonoOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -216,7 +216,7 @@
 
 - type: decal
   id: CheckerNESW
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -224,7 +224,7 @@
 
 - type: decal
   id: CheckerNWSE
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -232,7 +232,7 @@
 
 - type: decal
   id: DiagonalOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -240,7 +240,7 @@
 
 - type: decal
   id: DiagonalCheckerAOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -248,7 +248,7 @@
 
 - type: decal
   id: DiagonalCheckerBOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -256,7 +256,7 @@
 
 - type: decal
   id: HerringboneOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -264,7 +264,7 @@
 
 - type: decal
   id: MiniTileOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -272,7 +272,7 @@
 
 - type: decal
   id: MiniTileCheckerAOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -280,7 +280,7 @@
 
 - type: decal
   id: MiniTileCheckerBOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -288,7 +288,7 @@
 
 - type: decal
   id: MiniTileDiagonalOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -296,7 +296,7 @@
 
 - type: decal
   id: MiniTileDiagonalCheckerAOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -304,7 +304,7 @@
 
 - type: decal
   id: MiniTileDiagonalCheckerBOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -312,7 +312,7 @@
 
 - type: decal
   id: MiniTileBoxOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -320,7 +320,7 @@
 
 - type: decal
   id: MiniTileCornerOverlayNE
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -328,7 +328,7 @@
 
 - type: decal
   id: MiniTileCornerOverlayNW
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -336,7 +336,7 @@
 
 - type: decal
   id: MiniTileCornerOverlaySE
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -344,7 +344,7 @@
 
 - type: decal
   id: MiniTileCornerOverlaySW
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -352,7 +352,7 @@
 
 - type: decal
   id: MiniTileEndOverlayE
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -360,7 +360,7 @@
 
 - type: decal
   id: MiniTileEndOverlayN
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -368,7 +368,7 @@
 
 - type: decal
   id: MiniTileEndOverlayS
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -376,7 +376,7 @@
 
 - type: decal
   id: MiniTileEndOverlayW
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -384,7 +384,7 @@
 
 - type: decal
   id: MiniTileInnerOverlayNE
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -392,7 +392,7 @@
 
 - type: decal
   id: MiniTileInnerOverlayNW
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -400,7 +400,7 @@
 
 - type: decal
   id: MiniTileInnerOverlaySE
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -408,7 +408,7 @@
 
 - type: decal
   id: MiniTileInnerOverlaySW
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -416,7 +416,7 @@
 
 - type: decal
   id: MiniTileLineOverlayE
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -424,7 +424,7 @@
 
 - type: decal
   id: MiniTileLineOverlayN
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -432,7 +432,7 @@
 
 - type: decal
   id: MiniTileLineOverlayS
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -440,7 +440,7 @@
 
 - type: decal
   id: MiniTileLineOverlayW
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -448,7 +448,7 @@
 
 - type: decal
   id: VerticalSlatContinuousFullOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -456,7 +456,7 @@
 
 - type: decal
   id: VerticalSlatContinuousInnerOverlayW
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -464,7 +464,7 @@
 
 - type: decal
   id: VerticalSlatContinuousInnerOverlayE
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -472,7 +472,7 @@
 
 - type: decal
   id: VerticalSlatContinuousOuterOverlayW
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -480,7 +480,7 @@
 
 - type: decal
   id: VerticalSlatContinuousOuterOverlayE
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -488,7 +488,7 @@
 
 - type: decal
   id: VerticalSlatBorderedFullOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -496,7 +496,7 @@
 
 - type: decal
   id: VerticalSlatBorderedInnerOverlayW
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -504,7 +504,7 @@
 
 - type: decal
   id: VerticalSlatBorderedInnerOverlayE
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -512,7 +512,7 @@
 
 - type: decal
   id: VerticalSlatBorderedOuterOverlayW
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -520,7 +520,7 @@
 
 - type: decal
   id: VerticalSlatBorderedOuterOverlayE
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -528,7 +528,7 @@
 
 - type: decal
   id: HorizontalSlatContinuousFullOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -536,7 +536,7 @@
 
 - type: decal
   id: HorizontalSlatContinuousOuterOverlayN
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -544,7 +544,7 @@
 
 - type: decal
   id: HorizontalSlatContinuousOuterOverlayS
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -552,7 +552,7 @@
 
 - type: decal
   id: HorizontalSlatContinuousInnerOverlayN
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -560,7 +560,7 @@
 
 - type: decal
   id: HorizontalSlatContinuousInnerOverlayS
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -568,7 +568,7 @@
 
 - type: decal
   id: HorizontalSlatBorderedFullOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -576,7 +576,7 @@
 
 - type: decal
   id: HorizontalSlatBorderedOuterOverlayN
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -584,7 +584,7 @@
 
 - type: decal
   id: HorizontalSlatBorderedOuterOverlayS
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -592,7 +592,7 @@
 
 - type: decal
   id: HorizontalSlatBorderedInnerOverlayN
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -600,7 +600,7 @@
 
 - type: decal
   id: HorizontalSlatBorderedInnerOverlayS
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -608,7 +608,7 @@
 
 - type: decal
   id: OffsetOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -616,7 +616,7 @@
 
 - type: decal
   id: OffsetCheckerAOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -624,7 +624,7 @@
 
 - type: decal
   id: OffsetCheckerBOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -632,7 +632,7 @@
 
 - type: decal
   id: PavementOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -640,7 +640,7 @@
 
 - type: decal
   id: PavementCheckerAOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -648,7 +648,7 @@
 
 - type: decal
   id: PavementCheckerBOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -656,7 +656,7 @@
 
 - type: decal
   id: PavementVerticalOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -664,7 +664,7 @@
 
 - type: decal
   id: PavementVerticalCheckerAOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
@@ -672,7 +672,7 @@
 
 - type: decal
   id: PavementVerticalCheckerBOverlay
-  tags: ["station", "overlay"]
+  tags: [ "station", "overlay" ]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi

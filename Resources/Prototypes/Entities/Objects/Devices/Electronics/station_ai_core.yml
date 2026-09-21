@@ -9,6 +9,6 @@
     state: mainboard
   - type: Tag
     tags:
-      - StationAiCoreElectronics
+    - StationAiCoreElectronics
   - type: StaticPrice
     price: 404

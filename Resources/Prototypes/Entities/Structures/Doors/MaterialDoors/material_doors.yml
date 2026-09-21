@@ -14,14 +14,13 @@
     sprite: Structures/Doors/MaterialDoors/silver-door.rsi
     layers:
     - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
+      map: [ "enum.DoorVisualLayers.Base" ]
   - type: AnimationPlayer
   - type: Physics
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.49,-0.49,0.49,0.49"
         density: 100
         mask:
@@ -80,8 +79,7 @@
     damageModifierSet: PlasmaMod
   - type: Destructible
     thresholds:
-    - trigger: &DamageDoorWeak
-        !type:DamageTrigger
+    - trigger: &DamageDoorWeak !type:DamageTrigger
         damage: 100
       behaviors:
       - &SoundMetalBreak !type:PlaySoundBehavior
@@ -156,8 +154,7 @@
     damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 120
       behaviors:
       - &SoundWoodDestroy !type:PlaySoundBehavior
@@ -186,8 +183,7 @@
     damageModifierSet: CardboardMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 30
       behaviors:
       - !type:PlaySoundBehavior
@@ -217,8 +213,7 @@
     damageModifierSet: ThreadMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 30
       behaviors:
       - *SoundWoodDestroy
@@ -246,14 +241,12 @@
   - type: MeleeSound
     soundGroups:
       Brute:
-        path:
-          "/Audio/Weapons/pierce.ogg"
+        path: "/Audio/Weapons/pierce.ogg"
   - type: Damageable
     damageModifierSet: CardboardMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 30
       behaviors:
       - !type:PlaySoundBehavior

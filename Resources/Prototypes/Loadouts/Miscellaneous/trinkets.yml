@@ -3,8 +3,7 @@
   id: Command
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
+    requirement: !type:DepartmentTimeRequirement
       department: Command
       time: 1h
 

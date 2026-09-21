@@ -48,7 +48,7 @@
 
 - type: entity
   name: captain's rubber stamp
-  parent: [RubberStampBase, BaseCommandContraband]
+  parent: [ RubberStampBase, BaseCommandContraband ]
   id: RubberStampCaptain
   categories: [ DoNotMap ]
   components:
@@ -163,7 +163,7 @@
 
 - type: entity
   name: chief engineer's rubber stamp
-  parent: [RubberStampBase, BaseCommandContraband]
+  parent: [ RubberStampBase, BaseCommandContraband ]
   id: RubberStampCE
   categories: [ DoNotMap ]
   components:
@@ -186,7 +186,7 @@
 
 - type: entity
   name: chief medical officer's rubber stamp
-  parent: [RubberStampBase, BaseCommandContraband]
+  parent: [ RubberStampBase, BaseCommandContraband ]
   id: RubberStampCMO
   categories: [ DoNotMap ]
   components:
@@ -209,7 +209,7 @@
 
 - type: entity
   name: head of personnel's rubber stamp
-  parent: [RubberStampBase, BaseCommandContraband]
+  parent: [ RubberStampBase, BaseCommandContraband ]
   id: RubberStampHop
   categories: [ DoNotMap ]
   components:
@@ -232,7 +232,7 @@
 
 - type: entity
   name: head of security's rubber stamp
-  parent: [RubberStampBase, BaseCommandContraband]
+  parent: [ RubberStampBase, BaseCommandContraband ]
   id: RubberStampHos
   categories: [ DoNotMap ]
   components:
@@ -279,7 +279,7 @@
 
 - type: entity
   name: quartermaster's rubber stamp
-  parent: [RubberStampBase, BaseCommandContraband]
+  parent: [ RubberStampBase, BaseCommandContraband ]
   id: RubberStampQm
   categories: [ DoNotMap ]
   components:
@@ -302,7 +302,7 @@
 
 - type: entity
   name: research director's rubber stamp
-  parent: [RubberStampBase, BaseCommandContraband]
+  parent: [ RubberStampBase, BaseCommandContraband ]
   id: RubberStampRd
   categories: [ DoNotMap ]
   components:
@@ -347,7 +347,7 @@
 
 - type: entity
   name: syndicate rubber stamp
-  parent: [RubberStampBase, BaseSyndicateContraband]
+  parent: [ RubberStampBase, BaseSyndicateContraband ]
   id: RubberStampSyndicate
   categories: [ DoNotMap ]
   components:
@@ -372,7 +372,7 @@
 
 - type: entity
   name: warden's rubber stamp
-  parent: [RubberStampBase, BaseSecurityContraband]
+  parent: [ RubberStampBase, BaseSecurityContraband ]
   id: RubberStampWarden
   categories: [ DoNotMap ]
   components:
@@ -439,7 +439,7 @@
 
 - type: entity
   name: detective's rubber stamp
-  parent: [RubberStampBase, BaseSecurityContraband]
+  parent: [ RubberStampBase, BaseSecurityContraband ]
   id: RubberStampDetective
   categories: [ DoNotMap ]
   components:
@@ -464,7 +464,8 @@
   name: greytide's rubber stamp
   parent: RubberStampBase
   id: RubberStampGreytide
-  description: A rubber stamp for stamping important documents. The tide washes over you, just looking at it...
+  description: A rubber stamp for stamping important documents. The tide washes
+    over you, just looking at it...
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-greytide
@@ -509,7 +510,7 @@
 
 - type: entity
   name: wizard's rubber stamp
-  parent: [RubberStampBase, BaseMagicalContraband]
+  parent: [ RubberStampBase, BaseMagicalContraband ]
   id: RubberStampWizard
   description: A chaotic wizard stamp for serving unchaotic paperwork, how ironic.
   categories: [ DoNotMap ]

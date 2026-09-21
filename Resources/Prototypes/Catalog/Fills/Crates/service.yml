@@ -59,7 +59,8 @@
   parent: CratePlastic
   id: CrateServiceDinnerware
   name: kitchen dinnerware crate
-  description: Extra kitchen supplies, in case the clown was allowed in the cafeteria unsupervised.
+  description: Extra kitchen supplies, in case the clown was allowed in the
+    cafeteria unsupervised.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -86,7 +87,8 @@
   parent: CrateFreezer
   id: CrateServiceGetMore
   name: Getmore Bakemore crate
-  description: Getmore branded snacks and baking supplies for the creative chef, all without the need of emptying your station's Getmore machines!
+  description: Getmore branded snacks and baking supplies for the creative chef,
+    all without the need of emptying your station's Getmore machines!
   components:
   - type: EntityTableContainerFill
     containers:
@@ -116,7 +118,8 @@
   parent: CrateGenericSteel
   id: CrateServiceSmokeables
   name: smokeables crate
-  description: Tired of a quick death on the station? Order this crate and chain-smoke your way to a coughy demise!
+  description: Tired of a quick death on the station? Order this crate and
+    chain-smoke your way to a coughy demise!
   components:
   - type: EntityTableContainerFill
     containers:
@@ -144,7 +147,8 @@
   parent: CrateGenericSteel
   id: CrateServiceTheatre
   name: theatrical performances crate
-  description: Contains a moth cloak, barber scissors, maid uniform, clown and mime attributes, and other performance charms.
+  description: Contains a moth cloak, barber scissors, maid uniform, clown and
+    mime attributes, and other performance charms.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -156,11 +160,13 @@
         - id: ClothingUniformJumpskirtJanimaid
         - id: ClothingUniformJumpskirtOldDress
         - id: ClothingHeadHatMagician
-        - !type:AllSelector # Cloaks
+        # Cloaks
+        - !type:AllSelector
           children:
           - id: ClothingNeckCloakMoth
           - id: ClothingNeckCloakVoid
-        - !type:AllSelector # Clown starter kit
+        # Clown starter kit
+        - !type:AllSelector
           children:
           - id: ClothingMaskClown
           - id: ClownRecorder
@@ -171,12 +177,14 @@
               weight: 0.1
           - !type:NestedSelector
             tableId: RandomBikeHornTable
-        - !type:AllSelector # Mime starter kit
+        # Mime starter kit
+        - !type:AllSelector
           children:
           - id: ClothingMaskMime
           - id: ClothingBeltSuspendersRed
           - id: ClothingBeltSuspendersBlack
-        - !type:AllSelector # Performer starter kit
+        # Performer starter kit
+        - !type:AllSelector
           children:
           - id: ClothingUniformJumpskirtPerformer
           - id: ClothingShoesBootsPerformer
@@ -186,7 +194,9 @@
   parent: CrateGenericSteel
   id: CrateServiceCustomSmokable
   name: DIY smokeables crate
-  description: Want to get a little creative with what you use to destroy your lungs? Then this crate is for you! Has everything you need to roll your own cigarettes.
+  description: Want to get a little creative with what you use to destroy your
+    lungs? Then this crate is for you! Has everything you need to roll your own
+    cigarettes.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -204,7 +214,8 @@
   parent: CrateGenericSteel
   id: CrateServiceBureaucracy
   name: bureaucracy crate
-  description: Several stacks of paper, a few pens and an office toy. What more could you ask for?
+  description: Several stacks of paper, a few pens and an office toy. What more
+    could you ask for?
   components:
   - type: EntityTableContainerFill
     containers:
@@ -363,7 +374,7 @@
     containers:
       entity_storage: !type:AllSelector
         children:
-          # Creatures
+        # Creatures
         - id: MobCockroach
           prob: 0.05
         - id: MobMothroach
@@ -435,7 +446,8 @@
   parent: CrateGenericSteel
   id: CrateCandles
   name: candles crate
-  description: Contains 4 boxes of candles, 2 large and 2 small. For atmosphere or something.
+  description: Contains 4 boxes of candles, 2 large and 2 small. For atmosphere or
+    something.
   components:
   - type: EntityTableContainerFill
     containers:

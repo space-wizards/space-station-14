@@ -27,8 +27,7 @@
     damageModifierSet: SteelStaticMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 80
       behaviors:
       - !type:SpawnEntitiesBehavior

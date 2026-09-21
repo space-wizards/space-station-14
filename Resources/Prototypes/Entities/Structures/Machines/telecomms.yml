@@ -1,8 +1,14 @@
 - type: entity
-  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
+  parent:
+    [
+      BaseMachinePowered,
+      ConstructibleMachine,
+      BaseConstructibleMachineDestructible
+    ]
   id: TelecomServer
   name: telecommunication server
-  description: When powered and filled with encryption keys it allows radio headset communication.
+  description: When powered and filled with encryption keys it allows radio
+    headset communication.
   components:
   - type: Sprite
     sprite: Structures/Machines/telecomms.rsi
@@ -13,38 +19,38 @@
     - state: telecom-on
       shader: unshaded
       visible: false
-      map: ["telecom-on"]
+      map: [ "telecom-on" ]
     - state: variant-nokey
-      map: ["variant-nokey"]
+      map: [ "variant-nokey" ]
     - state: variant-default
-      map: ["variant-default"]
+      map: [ "variant-default" ]
     - state: variant-common
-      map: ["variant-common"]
+      map: [ "variant-common" ]
     - state: variant-cargo
-      map: ["variant-cargo"]
+      map: [ "variant-cargo" ]
     - state: variant-engineering
-      map: ["variant-engineering"]
+      map: [ "variant-engineering" ]
     - state: variant-medical
-      map: ["variant-medical"]
+      map: [ "variant-medical" ]
     - state: variant-science
-      map: ["variant-science"]
+      map: [ "variant-science" ]
     - state: variant-sec
-      map: ["variant-sec"]
+      map: [ "variant-sec" ]
     - state: variant-service
-      map: ["variant-service"]
+      map: [ "variant-service" ]
     - state: variant-command
-      map: ["variant-command"]
+      map: [ "variant-command" ]
     - state: variant-multiple
-      map: ["variant-multiple"]
+      map: [ "variant-multiple" ]
     - state: telecom-open
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: ItemMapper
     sprite: Structures/Machines/telecomms.rsi
     mapLayers:
       variant-nokey:
         whitelist:
           components:
-          - EncryptionKey  #Shown when no keys are present
+          - EncryptionKey #Shown when no keys are present
         minCount: 0
       variant-default:
         whitelist:
@@ -86,7 +92,7 @@
       variant-multiple:
         whitelist:
           components:
-          - EncryptionKey  #Shown when multiple keys are present
+          - EncryptionKey #Shown when multiple keys are present
         minCount: 2
   - type: PointLight
     enabled: false
@@ -148,8 +154,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.4"
         density: 190
         mask:
@@ -182,7 +187,6 @@
       key_slots: !type:Container
       machine_board: !type:Container
       machine_parts: !type:Container
-
 - type: entity
   parent: TelecomServer
   id: TelecomServerFilled

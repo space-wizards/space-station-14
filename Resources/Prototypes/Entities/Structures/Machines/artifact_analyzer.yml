@@ -1,6 +1,11 @@
 - type: entity
   id: MachineArtifactAnalyzer
-  parent: [ BaseMachinePowered, SmallConstructibleMachine, BaseSmallConstructibleMachineDestructible ]
+  parent:
+    [
+      BaseMachinePowered,
+      SmallConstructibleMachine,
+      BaseSmallConstructibleMachineDestructible
+    ]
   name: artifact analyzer
   description: A platform capable of performing analysis on various types of artifacts.
   components:
@@ -12,7 +17,7 @@
     - state: icon
     - state: unshaded
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
   - type: Physics
     bodyType: Static
     canCollide: true
@@ -25,16 +30,14 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
         mask:
         - Impassable
         - HighImpassable
         - MidImpassable
       fix2:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
         density: 190
         mask:
@@ -68,7 +71,7 @@
   - type: DeviceList
   - type: DeviceLinkSink
     ports:
-      - ArtifactAnalyzerReceiver
+    - ArtifactAnalyzerReceiver
   - type: Machine
     board: ArtifactAnalyzerMachineCircuitboard
   - type: PointLight
@@ -89,7 +92,12 @@
 
 - type: entity
   id: MachineArtifactCrusher
-  parent: [ ConstructibleMachine, BaseMachinePowered, BaseConstructibleMachineDestructible ]
+  parent:
+    [
+      ConstructibleMachine,
+      BaseMachinePowered,
+      BaseConstructibleMachineDestructible
+    ]
   name: artifact crusher
   description: Best not to let your fingers get stuck...
   components:
@@ -109,20 +117,19 @@
     noRot: true
     layers:
     - state: base
-      map: ["enum.StorageVisualLayers.Base"]
+      map: [ "enum.StorageVisualLayers.Base" ]
     - state: door-closed
-      map: ["enum.StorageVisualLayers.Door"]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: piston
-      map: ["pistonlayer"]
+      map: [ "pistonlayer" ]
     - state: glass
     - state: lights
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
       shader: unshaded
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.45
         density: 50
         mask:
@@ -150,8 +157,8 @@
     visuals:
       enum.ArtifactCrusherVisuals.Crushing:
         pistonlayer:
-          True: {state: piston-push}
-          False: {state: piston}
+          True: { state: piston-push }
+          False: { state: piston }
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
@@ -171,9 +178,7 @@
       machine_board: !type:Container
       machine_parts: !type:Container
       entity_storage: !type:Container
-      output_container: !type:Container
-
-# just a resprite
+      output_container: !type:Container # just a resprite
 - type: entity
   parent: MachineArtifactCrusher
   id: MachineArtifactCrusherXenoborg

@@ -1,12 +1,12 @@
 - type: entity
   abstract: true
-  parent: [SolutionFood, SolutionToolSmall, Clothing]
+  parent: [ SolutionFood, SolutionToolSmall, Clothing ]
   id: ClothingHandsBase
   components:
   - type: Sprite
     state: icon
   - type: Clothing
-    slots: [gloves]
+    slots: [ gloves ]
   - type: Edible
     requiresSpecialDigestion: true
   - type: Item
@@ -28,7 +28,7 @@
 
 - type: entity
   abstract: true
-  parent: [ClothingHandsBase, BaseSlicingRefinable]
+  parent: [ ClothingHandsBase, BaseSlicingRefinable ]
   id: ClothingHandsButcherable
   components:
   - type: ToolRefinable

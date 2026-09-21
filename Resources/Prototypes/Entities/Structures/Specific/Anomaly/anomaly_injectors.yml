@@ -15,8 +15,7 @@
   - type: Fixtures
     fixtures:
       anom:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 2.27 # i love 27
         hard: false
         mask:
@@ -42,29 +41,29 @@
       state: full
   - type: InnerBodyAnomalyInjector
     injectionComponents:
-      - type: Anomaly
-        deleteEntity: false
-        maxPointsPerSecond: 100
-        corePrototype: AnomalyCorePyroclastic
-        coreInertPrototype: AnomalyCorePyroclasticInert
-        supercriticalSoundAtAnimationStart:
-          collection: AnomalyPyroSupercritical
-      - type: InnerBodyAnomaly
-        injectionProto: AnomalyInjectionPyroclastic
-        startMessage: inner-anomaly-start-message-pyro
-        fallbackSprite:
+    - type: Anomaly
+      deleteEntity: false
+      maxPointsPerSecond: 100
+      corePrototype: AnomalyCorePyroclastic
+      coreInertPrototype: AnomalyCorePyroclasticInert
+      supercriticalSoundAtAnimationStart:
+        collection: AnomalyPyroSupercritical
+    - type: InnerBodyAnomaly
+      injectionProto: AnomalyInjectionPyroclastic
+      startMessage: inner-anomaly-start-message-pyro
+      fallbackSprite:
+        sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+        state: fire
+      speciesSprites:
+        Vox:
           sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-          state: fire
-        speciesSprites:
-          Vox:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: fire_VOX
-          Arachnid:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: fire_ARACHNID
-          Moth:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: fire_MOTH
+          state: fire_VOX
+        Arachnid:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: fire_ARACHNID
+        Moth:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: fire_MOTH
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -80,29 +79,29 @@
       state: full
   - type: InnerBodyAnomalyInjector
     injectionComponents:
-      - type: Anomaly
-        deleteEntity: false
-        maxPointsPerSecond: 100
-        corePrototype: AnomalyCoreElectricity
-        coreInertPrototype: AnomalyCoreElectricityInert
-        supercriticalSoundAtAnimationStart:
-          collection: AnomalyElectricitySupercritical
-      - type: InnerBodyAnomaly
-        injectionProto: AnomalyInjectionElectric
-        startMessage: inner-anomaly-start-message-shock
-        fallbackSprite:
+    - type: Anomaly
+      deleteEntity: false
+      maxPointsPerSecond: 100
+      corePrototype: AnomalyCoreElectricity
+      coreInertPrototype: AnomalyCoreElectricityInert
+      supercriticalSoundAtAnimationStart:
+        collection: AnomalyElectricitySupercritical
+    - type: InnerBodyAnomaly
+      injectionProto: AnomalyInjectionElectric
+      startMessage: inner-anomaly-start-message-shock
+      fallbackSprite:
+        sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+        state: shock
+      speciesSprites:
+        Vox:
           sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-          state: shock
-        speciesSprites:
-          Vox:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: shock_VOX
-          Arachnid:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: shock_ARACHNID
-          Moth:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: shock_MOTH
+          state: shock_VOX
+        Arachnid:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: shock_ARACHNID
+        Moth:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: shock_MOTH
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -118,29 +117,29 @@
       state: full
   - type: InnerBodyAnomalyInjector
     injectionComponents:
-      - type: Anomaly
-        deleteEntity: false
-        maxPointsPerSecond: 100
-        corePrototype: AnomalyCoreShadow
-        coreInertPrototype: AnomalyCoreShadowInert
-        supercriticalSoundAtAnimationStart:
-          collection: AnomalyShadowSupercritical
-      - type: InnerBodyAnomaly
-        injectionProto: AnomalyInjectionShadow
-        startMessage: inner-anomaly-start-message-shadow
-        fallbackSprite:
+    - type: Anomaly
+      deleteEntity: false
+      maxPointsPerSecond: 100
+      corePrototype: AnomalyCoreShadow
+      coreInertPrototype: AnomalyCoreShadowInert
+      supercriticalSoundAtAnimationStart:
+        collection: AnomalyShadowSupercritical
+    - type: InnerBodyAnomaly
+      injectionProto: AnomalyInjectionShadow
+      startMessage: inner-anomaly-start-message-shadow
+      fallbackSprite:
+        sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+        state: shadow
+      speciesSprites:
+        Vox:
           sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-          state: shadow
-        speciesSprites:
-          Vox:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: shadow_VOX
-          Arachnid:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: shadow_ARACHNID
-          Moth:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: shadow_MOTH
+          state: shadow_VOX
+        Arachnid:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: shadow_ARACHNID
+        Moth:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: shadow_MOTH
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -156,29 +155,29 @@
       state: full
   - type: InnerBodyAnomalyInjector
     injectionComponents:
-      - type: Anomaly
-        deleteEntity: false
-        maxPointsPerSecond: 100
-        corePrototype: AnomalyCoreIce
-        coreInertPrototype: AnomalyCoreIceInert
-        supercriticalSoundAtAnimationStart:
-          collection: AnomalyIceSupercritical
-      - type: InnerBodyAnomaly
-        injectionProto: AnomalyInjectionIce
-        startMessage: inner-anomaly-start-message-frost
-        fallbackSprite:
+    - type: Anomaly
+      deleteEntity: false
+      maxPointsPerSecond: 100
+      corePrototype: AnomalyCoreIce
+      coreInertPrototype: AnomalyCoreIceInert
+      supercriticalSoundAtAnimationStart:
+        collection: AnomalyIceSupercritical
+    - type: InnerBodyAnomaly
+      injectionProto: AnomalyInjectionIce
+      startMessage: inner-anomaly-start-message-frost
+      fallbackSprite:
+        sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+        state: frost
+      speciesSprites:
+        Vox:
           sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-          state: frost
-        speciesSprites:
-          Vox:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: frost_VOX
-          Arachnid:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: frost_ARACHNID
-          Moth:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: frost_MOTH
+          state: frost_VOX
+        Arachnid:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: frost_ARACHNID
+        Moth:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: frost_MOTH
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -194,29 +193,29 @@
       state: full
   - type: InnerBodyAnomalyInjector
     injectionComponents:
-      - type: Anomaly
-        deleteEntity: false
-        maxPointsPerSecond: 100
-        corePrototype: AnomalyCoreFlora
-        coreInertPrototype: AnomalyCoreFloraInert
-        supercriticalSoundAtAnimationStart:
-          collection: AnomalyFloraSupercritical
-      - type: InnerBodyAnomaly
-        injectionProto: AnomalyInjectionFlora
-        startMessage: inner-anomaly-start-message-flora
-        fallbackSprite:
+    - type: Anomaly
+      deleteEntity: false
+      maxPointsPerSecond: 100
+      corePrototype: AnomalyCoreFlora
+      coreInertPrototype: AnomalyCoreFloraInert
+      supercriticalSoundAtAnimationStart:
+        collection: AnomalyFloraSupercritical
+    - type: InnerBodyAnomaly
+      injectionProto: AnomalyInjectionFlora
+      startMessage: inner-anomaly-start-message-flora
+      fallbackSprite:
+        sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+        state: flora
+      speciesSprites:
+        Vox:
           sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-          state: flora
-        speciesSprites:
-          Vox:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: flora_VOX
-          Arachnid:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: flora_ARACHNID
-          Moth:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: flora_MOTH
+          state: flora_VOX
+        Arachnid:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: flora_ARACHNID
+        Moth:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: flora_MOTH
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -232,29 +231,29 @@
       state: full
   - type: InnerBodyAnomalyInjector
     injectionComponents:
-      - type: Anomaly
-        deleteEntity: false
-        maxPointsPerSecond: 100
-        corePrototype: AnomalyCoreBluespace
-        coreInertPrototype: AnomalyCoreBluespaceInert
-        supercriticalSoundAtAnimationStart:
-          collection: AnomalyBluespaceSupercritical
-      - type: InnerBodyAnomaly
-        injectionProto: AnomalyInjectionBluespace
-        startMessage: inner-anomaly-start-message-bluespace
-        fallbackSprite:
+    - type: Anomaly
+      deleteEntity: false
+      maxPointsPerSecond: 100
+      corePrototype: AnomalyCoreBluespace
+      coreInertPrototype: AnomalyCoreBluespaceInert
+      supercriticalSoundAtAnimationStart:
+        collection: AnomalyBluespaceSupercritical
+    - type: InnerBodyAnomaly
+      injectionProto: AnomalyInjectionBluespace
+      startMessage: inner-anomaly-start-message-bluespace
+      fallbackSprite:
+        sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+        state: bluespace
+      speciesSprites:
+        Vox:
           sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-          state: bluespace
-        speciesSprites:
-          Vox:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: bluespace_VOX
-          Arachnid:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: bluespace_ARACHNID
-          Moth:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: bluespace_MOTH
+          state: bluespace_VOX
+        Arachnid:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: bluespace_ARACHNID
+        Moth:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: bluespace_MOTH
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -270,29 +269,29 @@
       state: full
   - type: InnerBodyAnomalyInjector
     injectionComponents:
-      - type: Anomaly
-        deleteEntity: false
-        maxPointsPerSecond: 100
-        corePrototype: AnomalyCoreFlesh
-        coreInertPrototype: AnomalyCoreFleshInert
-        supercriticalSoundAtAnimationStart:
-          collection: AnomalyFleshSupercritical
-      - type: InnerBodyAnomaly
-        injectionProto: AnomalyInjectionFlesh
-        startMessage: inner-anomaly-start-message-flesh
-        fallbackSprite:
+    - type: Anomaly
+      deleteEntity: false
+      maxPointsPerSecond: 100
+      corePrototype: AnomalyCoreFlesh
+      coreInertPrototype: AnomalyCoreFleshInert
+      supercriticalSoundAtAnimationStart:
+        collection: AnomalyFleshSupercritical
+    - type: InnerBodyAnomaly
+      injectionProto: AnomalyInjectionFlesh
+      startMessage: inner-anomaly-start-message-flesh
+      fallbackSprite:
+        sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+        state: flesh
+      speciesSprites:
+        Vox:
           sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-          state: flesh
-        speciesSprites:
-          Vox:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: flesh_VOX
-          Arachnid:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: flesh_ARACHNID
-          Moth:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: flesh_MOTH
+          state: flesh_VOX
+        Arachnid:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: flesh_ARACHNID
+        Moth:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: flesh_MOTH
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -308,30 +307,30 @@
       state: full
   - type: InnerBodyAnomalyInjector
     injectionComponents:
-      - type: Anomaly
-        deleteEntity: false
-        maxPointsPerSecond: 100
-        corePrototype: AnomalyCoreGravity
-        coreInertPrototype: AnomalyCoreGravityInert
-        supercriticalSoundAtAnimationStart:
-          collection: AnomalyGravitySupercritical
-        supercriticalDuration: 15
-      - type: InnerBodyAnomaly
-        injectionProto: AnomalyInjectionGravity
-        startMessage: inner-anomaly-start-message-grav
-        fallbackSprite:
+    - type: Anomaly
+      deleteEntity: false
+      maxPointsPerSecond: 100
+      corePrototype: AnomalyCoreGravity
+      coreInertPrototype: AnomalyCoreGravityInert
+      supercriticalSoundAtAnimationStart:
+        collection: AnomalyGravitySupercritical
+      supercriticalDuration: 15
+    - type: InnerBodyAnomaly
+      injectionProto: AnomalyInjectionGravity
+      startMessage: inner-anomaly-start-message-grav
+      fallbackSprite:
+        sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+        state: grav
+      speciesSprites:
+        Vox:
           sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-          state: grav
-        speciesSprites:
-          Vox:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: grav_VOX
-          Arachnid:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: grav_ARACHNID
-          Moth:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: grav_MOTH
+          state: grav_VOX
+        Arachnid:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: grav_ARACHNID
+        Moth:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: grav_MOTH
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -347,29 +346,29 @@
       state: full
   - type: InnerBodyAnomalyInjector
     injectionComponents:
-      - type: Anomaly
-        deleteEntity: false
-        maxPointsPerSecond: 100
-        corePrototype: AnomalyCoreTech
-        coreInertPrototype: AnomalyCoreTechInert
-        supercriticalSoundAtAnimationStart:
-          collection: AnomalyTechSupercritical
-      - type: InnerBodyAnomaly
-        injectionProto: AnomalyInjectionTech
-        startMessage: inner-anomaly-start-message-tech
-        fallbackSprite:
+    - type: Anomaly
+      deleteEntity: false
+      maxPointsPerSecond: 100
+      corePrototype: AnomalyCoreTech
+      coreInertPrototype: AnomalyCoreTechInert
+      supercriticalSoundAtAnimationStart:
+        collection: AnomalyTechSupercritical
+    - type: InnerBodyAnomaly
+      injectionProto: AnomalyInjectionTech
+      startMessage: inner-anomaly-start-message-tech
+      fallbackSprite:
+        sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+        state: tech
+      speciesSprites:
+        Vox:
           sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-          state: tech
-        speciesSprites:
-          Vox:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: tech_VOX
-          Arachnid:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: tech_ARACHNID
-          Moth:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: tech_MOTH
+          state: tech_VOX
+        Arachnid:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: tech_ARACHNID
+        Moth:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: tech_MOTH
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -386,29 +385,29 @@
       state: full
   - type: InnerBodyAnomalyInjector
     injectionComponents:
-      - type: Anomaly
-        deleteEntity: false
-        maxPointsPerSecond: 100
-        corePrototype: AnomalyCoreRock
-        coreInertPrototype: AnomalyCoreRockInert
-        supercriticalSoundAtAnimationStart:
-          collection: AnomalyRockSupercritical
-      - type: InnerBodyAnomaly
-        injectionProto: AnomalyInjectionRock
-        startMessage: inner-anomaly-start-message-rock
-        fallbackSprite:
+    - type: Anomaly
+      deleteEntity: false
+      maxPointsPerSecond: 100
+      corePrototype: AnomalyCoreRock
+      coreInertPrototype: AnomalyCoreRockInert
+      supercriticalSoundAtAnimationStart:
+        collection: AnomalyRockSupercritical
+    - type: InnerBodyAnomaly
+      injectionProto: AnomalyInjectionRock
+      startMessage: inner-anomaly-start-message-rock
+      fallbackSprite:
+        sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+        state: rock
+      speciesSprites:
+        Vox:
           sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-          state: rock
-        speciesSprites:
-          Vox:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: rock_VOX
-          Arachnid:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: rock_ARACHNID
-          Moth:
-            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-            state: rock_MOTH
+          state: rock_VOX
+        Arachnid:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: rock_ARACHNID
+        Moth:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: rock_MOTH
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -424,16 +423,16 @@
       state: full
   - type: InnerBodyAnomalyInjector
     injectionComponents:
-      - type: Anomaly
-        deleteEntity: false
-        maxPointsPerSecond: 100
-        corePrototype: AnomalyCoreSanta
-        coreInertPrototype: AnomalyCoreSantaInert
-        supercriticalSoundAtAnimationStart:
-          collection: AnomalyPresentSupercritical
-      - type: InnerBodyAnomaly
-        injectionProto: AnomalyInjectionSanta
-        startMessage: inner-anomaly-start-message-santa
-        fallbackSprite:
-          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-          state: santa
+    - type: Anomaly
+      deleteEntity: false
+      maxPointsPerSecond: 100
+      corePrototype: AnomalyCoreSanta
+      coreInertPrototype: AnomalyCoreSantaInert
+      supercriticalSoundAtAnimationStart:
+        collection: AnomalyPresentSupercritical
+    - type: InnerBodyAnomaly
+      injectionProto: AnomalyInjectionSanta
+      startMessage: inner-anomaly-start-message-santa
+      fallbackSprite:
+        sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+        state: santa

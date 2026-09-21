@@ -6,11 +6,11 @@
   - type: SolutionRegeneration
     generated:
       reagents:
-        - ReagentId: Water
-          Quantity: 10
+      - ReagentId: Water
+        Quantity: 10
   - type: SolutionPurge
     preserve:
-      - Water
+    - Water
     quantity: 10
 
 - type: entity
@@ -36,7 +36,7 @@
       45: Critical
       65: Dead
   - type: MovementSpeedModifier
-    baseSprintSpeed : 5 # extra speed for that moppin'!
+    baseSprintSpeed: 5 # extra speed for that moppin'!
   - type: HTN
     rootTask:
       task: MoproachCompound

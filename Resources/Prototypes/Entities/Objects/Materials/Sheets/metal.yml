@@ -40,7 +40,7 @@
     state: steel_3
     layers:
     - state: steel_3
-      map: ["base"]
+      map: [ "base" ]
   - type: Item
     heldPrefix: steel
   - type: Solution
@@ -79,7 +79,8 @@
   parent: SheetMetalBase
   id: SheetBrass
   name: brass
-  description: A sheet of brass, primarily used by clockwork enthusiasts and the remnants of Ratvarian cults.
+  description: A sheet of brass, primarily used by clockwork enthusiasts and the
+    remnants of Ratvarian cults.
   suffix: Full
   components:
   - type: PhysicalComposition
@@ -96,7 +97,7 @@
     state: brass_3
     layers:
     - state: brass_3
-      map: ["base"]
+      map: [ "base" ]
   - type: Item
     heldPrefix: brass
   - type: Solution
@@ -149,7 +150,7 @@
     state: plasteel_3
     layers:
     - state: plasteel_3
-      map: ["base"]
+      map: [ "base" ]
   - type: Item
     heldPrefix: plasteel
   - type: Solution

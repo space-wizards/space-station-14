@@ -6,10 +6,10 @@
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
-      - state: green
+    - state: green
   - type: ConditionalSpawner
     prototypes:
-      - SalvageHumanCorpse
+    - SalvageHumanCorpse
 
 - type: entity
   name: Random Service Corpse Spawner
@@ -18,11 +18,11 @@
   components:
   - type: Sprite
     layers:
-      - state: botanist
-      - state: green
+    - state: botanist
+    - state: green
   - type: ConditionalSpawner
     prototypes:
-      - MobRandomServiceCorpse
+    - MobRandomServiceCorpse
 
 - type: entity
   name: Random Engineer Corpse Spawner
@@ -31,11 +31,11 @@
   components:
   - type: Sprite
     layers:
-      - state: engineer
-      - state: green
+    - state: engineer
+    - state: green
   - type: ConditionalSpawner
     prototypes:
-      - MobRandomEngineerCorpse
+    - MobRandomEngineerCorpse
 
 - type: entity
   name: Random Cargo Corpse Spawner
@@ -44,11 +44,11 @@
   components:
   - type: Sprite
     layers:
-      - state: cargo_tech
-      - state: green
+    - state: cargo_tech
+    - state: green
   - type: ConditionalSpawner
     prototypes:
-      - MobRandomCargoCorpse
+    - MobRandomCargoCorpse
 
 - type: entity
   name: Random Medic Corpse Spawner
@@ -57,11 +57,11 @@
   components:
   - type: Sprite
     layers:
-      - state: doctor
-      - state: green
+    - state: doctor
+    - state: green
   - type: ConditionalSpawner
     prototypes:
-      - MobRandomMedicCorpse
+    - MobRandomMedicCorpse
 
 - type: entity
   name: Random Science Corpse Spawner
@@ -70,11 +70,11 @@
   components:
   - type: Sprite
     layers:
-      - state: scientist
-      - state: green
+    - state: scientist
+    - state: green
   - type: ConditionalSpawner
     prototypes:
-      - MobRandomScienceCorpse
+    - MobRandomScienceCorpse
 
 - type: entity
   name: Random Security Corpse Spawner
@@ -83,11 +83,11 @@
   components:
   - type: Sprite
     layers:
-      - state: security_officer
-      - state: green
+    - state: security_officer
+    - state: green
   - type: ConditionalSpawner
     prototypes:
-      - MobRandomSecurityCorpse
+    - MobRandomSecurityCorpse
 
 - type: entity
   name: Random Command Corpse Spawner
@@ -96,8 +96,8 @@
   components:
   - type: Sprite
     layers:
-      - state: captain
-      - state: green
+    - state: captain
+    - state: green
   - type: ConditionalSpawner
     prototypes:
-      - MobRandomCommandCorpse
+    - MobRandomCommandCorpse

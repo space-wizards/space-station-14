@@ -195,8 +195,8 @@
       entity_storage: !type:GroupSelector
         rolls: 2
         children:
-         - id: SheetSteel
-         - id: PartRodMetal
+        - id: SheetSteel
+        - id: PartRodMetal
 
 - type: entity
   parent: CrateGenericSteel

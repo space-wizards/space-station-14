@@ -47,14 +47,13 @@
   cost: 1500
   category: cargoproduct-category-name-space
   group: market
-
-# - type: cargoProduct
+  # - type: cargoProduct
   # id: SpaceShuttlePower
   # icon:
-    # sprite: Structures/Machines/computers.rsi
-    # state: avionics-systems
+  # sprite: Structures/Machines/computers.rsi
+  # state: avionics-systems
   # product: CrateSpaceShuttlePower
   # cost: 3000
   # category: cargoproduct-category-name-space
   # group: market
-#  locked: true   # only the QM has permission to order by default
+  #  locked: true   # only the QM has permission to order by default

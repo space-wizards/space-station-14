@@ -35,7 +35,8 @@
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtHydroponics
   name: hydroponics jumpskirt
-  description: Has a strong earthy smell to it. Hopefully it's merely dirty as opposed to soiled.
+  description: Has a strong earthy smell to it. Hopefully it's merely dirty as
+    opposed to soiled.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirts/Service/hydro.rsi
@@ -90,7 +91,8 @@
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtPerformer
   name: performer's jumpskirt
-  description: Hi, I'm Scott, president of Donk Pizza. Have you heard of [FAMOUS VIRTUAL PERFORMER]?
+  description: Hi, I'm Scott, president of Donk Pizza. Have you heard of [FAMOUS
+    VIRTUAL PERFORMER]?
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirts/Service/performer.rsi

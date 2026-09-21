@@ -173,7 +173,8 @@
   id: FoolboxTable
   table: !type:AllSelector
     children:
-    - !type:GroupSelector # Fun clothing
+    # Fun clothing
+    - !type:GroupSelector
       prob: 0.75
       children:
       - !type:NestedSelector
@@ -198,19 +199,22 @@
         tableId: AllPartyHatsTable
       - !type:NestedSelector
         tableId: InsulsTable
-      - !type:GroupSelector # ~1/115
+      # ~1/115
+      - !type:GroupSelector
         weight: 0.175
         children:
         - id: ClothingHeadHatCatEars
         - id: ClothingHeadHatFancyCrown
         - id: ClothingHeadHatChameleon
-    - !type:GroupSelector # Offensive clown items
+    # Offensive clown items
+    - !type:GroupSelector
       children:
       - !type:NestedSelector
         tableId: AllToyWeaponsTable
       - id: EnergySword # ~1/1001
         weight: 0.001
-    - !type:GroupSelector # Rarer clown tools
+    # Rarer clown tools
+    - !type:GroupSelector
       children:
       - !type:NestedSelector
         tableId: AllMiscToysTable
@@ -231,7 +235,8 @@
         weight: 1.25
       - id: RubberStampCaptain # ~1/100
         weight: 0.2
-    - !type:GroupSelector # Common clown consumables
+    # Common clown consumables
+    - !type:GroupSelector
       children:
       - !type:NestedSelector
         tableId: SlipTable

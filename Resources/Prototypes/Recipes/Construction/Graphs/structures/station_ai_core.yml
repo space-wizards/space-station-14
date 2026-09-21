@@ -23,12 +23,12 @@
         icon:
           sprite: "Objects/Misc/module.rsi"
           state: "mainboard"
-    - to: start       
+    - to: start
       completed:
       - !type:SpawnPrototype
         prototype: SheetPlasteel1
         amount: 4
-      - !type:DeleteEntity {}
+      - !type:DeleteEntity
       steps:
       - tool: Welding
         doAfter: 8
@@ -101,7 +101,7 @@
     - to: frameWithWires
       completed:
       - !type:EmptyContainer
-        container: station_ai_brain_slot    
+        container: station_ai_brain_slot
       steps:
       - tool: Prying
         doAfter: 4
@@ -122,7 +122,7 @@
       steps:
       - tool: Prying
         doAfter: 4
-        
+
   - node: frameWithoutBrainFinished
     actions:
     - !type:AppearanceChange

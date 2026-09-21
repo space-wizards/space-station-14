@@ -1,5 +1,11 @@
 - type: entity
-  parent: [BaseDeltaPressureReinforcedGlass, BaseWindowStructure, BaseRCDResistant, StructureHealthBarrierStrong]
+  parent:
+    [
+      BaseDeltaPressureReinforcedGlass,
+      BaseWindowStructure,
+      BaseRCDResistant,
+      StructureHealthBarrierStrong
+    ]
   id: ShuttleWindow
   name: shuttle window
   components:
@@ -15,8 +21,7 @@
     damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 120
       behaviors:
       - !type:PlaySoundBehavior
@@ -37,7 +42,7 @@
     node: shuttleWindow
   - type: Appearance
   - type: DamageVisuals
-    thresholds: [5, 10, 20]
+    thresholds: [ 5, 10, 20 ]
     damageDivisor: 20
     trackAllDamage: true
     damageOverlay:
@@ -72,12 +77,11 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PolygonShape
-            vertices:
-            - "-0.5,-0.5"
-            - "0.5,0.5"
-            - "0.5,-0.5"
+        shape: !type:PolygonShape
+          vertices:
+          - "-0.5,-0.5"
+          - "0.5,0.5"
+          - "0.5,-0.5"
         mask:
         - FullTileMask
         layer:

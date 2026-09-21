@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  parent: [ ClothingUniformBase, ClothingUniformFoldableBase ]
   id: ClothingUniformJumpsuitBartender
   name: bartender's uniform
   description: A nice and tidy uniform. Shame about the bar though.
@@ -108,16 +108,17 @@
     sprite: Clothing/Uniforms/Jumpsuits/Service/jester2.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  parent: [ ClothingUniformBase, ClothingUniformFoldableBase ]
   id: ClothingUniformJumpsuitHydroponics
   name: hydroponics jumpsuit
-  description: Has a strong earthy smell to it. Hopefully it's merely dirty as opposed to soiled.
+  description: Has a strong earthy smell to it. Hopefully it's merely dirty as
+    opposed to soiled.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuits/Service/hydro.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  parent: [ ClothingUniformBase, ClothingUniformFoldableBase ]
   id: ClothingUniformJumpsuitJanitor
   name: janitor jumpsuit
   description: The jumpsuit for the poor sop with a mop.

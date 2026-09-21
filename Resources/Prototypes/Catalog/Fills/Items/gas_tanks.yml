@@ -62,7 +62,6 @@
         Nitrogen: 0.270782035 # nitrogen
       temperature: 293.15
 
-
 - type: entity
   id: ExtendedEmergencyOxygenTankFilled
   parent: ExtendedEmergencyOxygenTank
@@ -90,7 +89,6 @@
       moles:
         Nitrogen: 0.615413715 # nitrogen
       temperature: 293.15
-
 
 - type: entity
   id: DoubleEmergencyOxygenTankFilled
@@ -256,7 +254,7 @@
     air:
       volume: 2.5
       moles:
-        Oxygen:  0.68379301666
+        Oxygen: 0.68379301666
         Tritium: 0.34189650833
       temperature: 373.149
 

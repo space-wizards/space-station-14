@@ -9,11 +9,11 @@
     drawdepth: Effects
     layers:
     - shader: unshaded
-      map: ["enum.EffectLayers.Unshaded"]
+      map: [ "enum.EffectLayers.Unshaded" ]
   - type: EffectVisuals
   - type: Tag
     tags:
-      - HideContextMenu
+    - HideContextMenu
   - type: AnimationPlayer
 
 - type: entity

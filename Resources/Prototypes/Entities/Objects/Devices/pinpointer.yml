@@ -1,6 +1,8 @@
 - type: entity
   name: pinpointer
-  description: A handheld tracking device. While typically far more capable, this one has been configured to lock onto certain signals. Keep upright to retain accuracy.
+  description: A handheld tracking device. While typically far more capable, this
+    one has been configured to lock onto certain signals. Keep upright to retain
+    accuracy.
   parent: BaseItem
   id: PinpointerBase
   abstract: true
@@ -12,9 +14,9 @@
     sprite: Objects/Devices/pinpointer.rsi
     layers:
     - state: pinpointer
-      map: ["enum.PinpointerLayers.Base"]
+      map: [ "enum.PinpointerLayers.Base" ]
     - state: pinonnull
-      map: ["enum.PinpointerLayers.Screen"]
+      map: [ "enum.PinpointerLayers.Screen" ]
       shader: unshaded
       visible: false
   - type: Icon
@@ -70,9 +72,9 @@
   - type: Sprite
     layers:
     - state: pinpointer-syndicate
-      map: ["enum.PinpointerLayers.Base"]
+      map: [ "enum.PinpointerLayers.Base" ]
     - state: pinonnull
-      map: ["enum.PinpointerLayers.Screen"]
+      map: [ "enum.PinpointerLayers.Screen" ]
       shader: unshaded
       visible: false
   - type: Item
@@ -97,16 +99,17 @@
 
 - type: entity
   name: universal pinpointer
-  description: A handheld tracking device that locks onto any physical entity while off. Keep upright to retain accuracy.
+  description: A handheld tracking device that locks onto any physical entity
+    while off. Keep upright to retain accuracy.
   id: PinpointerUniversal
   parent: PinpointerBase
   components:
   - type: Sprite
     layers:
     - state: pinpointer-way
-      map: ["enum.PinpointerLayers.Base"]
+      map: [ "enum.PinpointerLayers.Base" ]
     - state: pinonnull
-      map: ["enum.PinpointerLayers.Screen"]
+      map: [ "enum.PinpointerLayers.Screen" ]
       shader: unshaded
       visible: false
   - type: Item
@@ -139,9 +142,9 @@
   - type: Sprite
     layers:
     - state: pinpointer-station
-      map: ["enum.PinpointerLayers.Base"]
+      map: [ "enum.PinpointerLayers.Base" ]
     - state: pinonnull
-      map: ["enum.PinpointerLayers.Screen"]
+      map: [ "enum.PinpointerLayers.Screen" ]
       shader: unshaded
       visible: false
   - type: Item
@@ -168,14 +171,15 @@
   parent: [ PinpointerBase, BaseXenoborgContraband ]
   id: PinpointerMothership
   name: core pinpointer
-  description: A handheld tracking device that leads to the direction of the Mothership core.
+  description: A handheld tracking device that leads to the direction of the
+    Mothership core.
   components:
   - type: Sprite
     layers:
     - state: pinpointer-xenoborg
-      map: ["enum.PinpointerLayers.Base"]
+      map: [ "enum.PinpointerLayers.Base" ]
     - state: pinonnull
-      map: ["enum.PinpointerLayers.Screen"]
+      map: [ "enum.PinpointerLayers.Screen" ]
       shader: unshaded
       visible: false
   - type: Item
@@ -225,12 +229,13 @@
   parent: PinpointerMothership
   id: PinpointerMothershipRepaired
   name: repaired core pinpointer
-  description: A handheld tracking device that leads to the direction of the Mothership core. This one has seen better days.
+  description: A handheld tracking device that leads to the direction of the
+    Mothership core. This one has seen better days.
   components:
   - type: Sprite
     layers:
     - state: pinpointer-xenoborg-repaired
-      map: ["enum.PinpointerLayers.Base"]
+      map: [ "enum.PinpointerLayers.Base" ]
   - type: Icon
     state: pinpointer-xenoborg-repaired
   - type: Construction

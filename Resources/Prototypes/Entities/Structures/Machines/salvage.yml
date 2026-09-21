@@ -1,5 +1,10 @@
 - type: entity
-  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
+  parent:
+    [
+      BaseMachinePowered,
+      ConstructibleMachine,
+      BaseConstructibleMachineDestructible
+    ]
   id: SalvageMagnet
   name: salvage magnet
   description: Pulls in salvage.
@@ -21,7 +26,7 @@
       visible: false
       map: [ "unreadyBlinking" ]
     - state: salvage-magnet-o4
-      map: ["chargeState"]
+      map: [ "chargeState" ]
       shader: unshaded
   - type: ActivatableUI
     key: enum.SalvageMagnetUiKey.Key

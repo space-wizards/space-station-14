@@ -32,7 +32,7 @@
       sprite: Objects/Specific/Medical/medical.rsi
   - type: Healing
     damageContainers:
-      - Biological
+    - Biological
     damage:
       types:
         Heat: -5
@@ -80,7 +80,7 @@
     heldPrefix: regenerative-mesh
   - type: Healing
     damageContainers:
-      - Biological
+    - Biological
     damage:
       types:
         Heat: -10
@@ -128,7 +128,7 @@
     heldPrefix: brutepack
   - type: Healing
     damageContainers:
-      - Biological
+    - Biological
     damage:
       types:
         Blunt: -5
@@ -161,7 +161,8 @@
 
 - type: entity
   name: medicated suture
-  description: A suture soaked in medicine, treats blunt-force trauma effectively and closes wounds.
+  description: A suture soaked in medicine, treats blunt-force trauma effectively
+    and closes wounds.
   parent: BaseHealingItem
   id: MedicatedSuture
   suffix: Full
@@ -176,7 +177,7 @@
     storedRotation: -90
   - type: Healing
     damageContainers:
-      - Biological
+    - Biological
     damage:
       types:
         Blunt: -10
@@ -210,7 +211,8 @@
 
 - type: entity
   name: blood pack
-  description: Contains a groundbreaking universal blood replacement created by Nanotrasen's advanced medical science.
+  description: Contains a groundbreaking universal blood replacement created by
+    Nanotrasen's advanced medical science.
   parent: BaseHealingItem
   id: Bloodpack
   suffix: Full
@@ -224,7 +226,7 @@
     state: bloodpack
   - type: Healing
     damageContainers:
-      - Biological
+    - Biological
     damage:
       types:
         Bloodloss: -0.5 #lowers bloodloss damage
@@ -260,33 +262,33 @@
   name: tourniquet
   description: Stops bleeding! Hopefully.
   components:
-    - type: Tag
-      tags:
-        - SecBeltEquip
-        - Tourniquet
-    - type: Sprite
-      state: tourniquet
-    - type: Item
-      heldPrefix: tourniquet
-    - type: Healing
-      damageContainers:
-        - Biological
-      damage:
-        types:
-          Blunt: 5 # Tourniquets HURT
-          Asphyxiation: 5 # Essentially Stopping all blood reaching a part of your body
-      bloodlossModifier: -10 # Tourniquets stop bleeding
-      delay: 0.5
-      healingBeginSound:
-        path: "/Audio/Items/Medical/brutepack_begin.ogg"
-        params:
-          volume: 1.0
-          variation: 0.125
-      healingEndSound:
-        path: "/Audio/Items/Medical/brutepack_end.ogg"
-        params:
-          volume: 1.0
-          variation: 0.125
+  - type: Tag
+    tags:
+    - SecBeltEquip
+    - Tourniquet
+  - type: Sprite
+    state: tourniquet
+  - type: Item
+    heldPrefix: tourniquet
+  - type: Healing
+    damageContainers:
+    - Biological
+    damage:
+      types:
+        Blunt: 5 # Tourniquets HURT
+        Asphyxiation: 5 # Essentially Stopping all blood reaching a part of your body
+    bloodlossModifier: -10 # Tourniquets stop bleeding
+    delay: 0.5
+    healingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
+    healingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
 
 - type: entity
   name: roll of gauze
@@ -308,7 +310,7 @@
     node: gauze
   - type: Healing
     damageContainers:
-      - Biological
+    - Biological
     damage:
       types:
         Slash: -5
@@ -361,7 +363,8 @@
   parent: BaseHealingItem
   id: HealingToolbox
   name: healing toolbox
-  description: A powerful toolbox imbued with robust energy. It can heal your wounds and fill you with murderous intent.
+  description: A powerful toolbox imbued with robust energy. It can heal your
+    wounds and fill you with murderous intent.
   categories: [ DoNotMap ]
   components:
   - type: Sprite
@@ -371,7 +374,8 @@
     damageContainers:
     - Biological
     damage:
-      types: # these are all split across multiple types
+      types:
+        # these are all split across multiple types
         Blunt: -50
         Piercing: -50
         Slash: -50
@@ -693,19 +697,19 @@
         id: PillTricordrazine
         amount: 5
 
--  type: entity
-   name: pill canister
-   parent: PillCanister
-   id: PillCanisterAmbuzol
-   suffix: Ambuzol 15u, 2
-   components:
-   - type: Label
-     localizedLabel: pill-label-ambuzol-15u
-   - type: EntityTableContainerFill
-     containers:
-       storagebase:
-         id: PillAmbuzol
-         amount: 2
+- type: entity
+  name: pill canister
+  parent: PillCanister
+  id: PillCanisterAmbuzol
+  suffix: Ambuzol 15u, 2
+  components:
+  - type: Label
+    localizedLabel: pill-label-ambuzol-15u
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: PillAmbuzol
+        amount: 2
 
 - type: entity
   name: pill

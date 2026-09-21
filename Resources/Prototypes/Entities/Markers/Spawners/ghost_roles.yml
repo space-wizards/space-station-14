@@ -32,9 +32,9 @@
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
-      - state: green
-      - sprite: Mobs/Animals/regalrat.rsi
-        state: icon
+    - state: green
+    - sprite: Mobs/Animals/regalrat.rsi
+      state: icon
 
 - type: entity
   id: SpawnPointGhostRemilia
@@ -55,9 +55,9 @@
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
-      - state: green
-      - sprite: Mobs/Animals/bat.rsi
-        state: bat
+    - state: green
+    - sprite: Mobs/Animals/bat.rsi
+      state: bat
 
 - type: entity
   id: SpawnPointGhostCerberus
@@ -78,9 +78,9 @@
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
-      - state: green
-      - sprite: Mobs/Pets/corgi.rsi
-        state: narsian
+    - state: green
+    - sprite: Mobs/Pets/corgi.rsi
+      state: narsian
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -100,9 +100,9 @@
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
-      - state: green
-      - sprite: Structures/Wallmounts/signs.rsi
-        state: radiation
+    - state: green
+    - sprite: Structures/Wallmounts/signs.rsi
+      state: radiation
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -118,9 +118,9 @@
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
-      - state: green
-      - sprite: Structures/Wallmounts/signs.rsi
-        state: radiation
+    - state: green
+    - sprite: Structures/Wallmounts/signs.rsi
+      state: radiation
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]

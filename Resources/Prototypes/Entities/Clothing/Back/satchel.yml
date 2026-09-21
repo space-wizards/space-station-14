@@ -91,7 +91,8 @@
   parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelVirology
   name: virology satchel
-  description: A satchel made of hypo-allergenic fibers. It's designed to help prevent the spread of disease. Smells like monkey.
+  description: A satchel made of hypo-allergenic fibers. It's designed to help
+    prevent the spread of disease. Smells like monkey.
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/virology.rsi
@@ -115,7 +116,7 @@
     sprite: Clothing/Back/Satchels/science.rsi
 
 - type: entity
-  parent: [ClothingBackpackSatchel, BaseSecurityContraband]
+  parent: [ ClothingBackpackSatchel, BaseSecurityContraband ]
   id: ClothingBackpackSatchelSecurity
   name: security satchel
   description: A robust satchel for security related needs.
@@ -124,7 +125,7 @@
     sprite: Clothing/Back/Satchels/security.rsi
 
 - type: entity
-  parent: [ClothingBackpackSatchel, BaseSecurityContraband]
+  parent: [ ClothingBackpackSatchel, BaseSecurityContraband ]
   id: ClothingBackpackSatchelBrigmedic
   name: brigmedic satchel
   description: A sterile satchel for medical related needs.
@@ -133,7 +134,7 @@
     sprite: Clothing/Back/Satchels/brigmedic.rsi
 
 - type: entity
-  parent: [ClothingBackpackSatchel, BaseCommandContraband]
+  parent: [ ClothingBackpackSatchel, BaseCommandContraband ]
   id: ClothingBackpackSatchelCaptain
   name: captain's satchel
   description: An exclusive satchel for Nanotrasen officers.
@@ -156,8 +157,8 @@
   name: cargo satchel
   description: A robust satchel for stealing cargo's loot.
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Satchels/cargo.rsi
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/cargo.rsi
 
 - type: entity
   parent: ClothingBackpackSatchel
@@ -165,11 +166,11 @@
   name: salvage satchel
   description: A robust satchel for stashing your loot.
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Satchels/salvage.rsi
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/salvage.rsi
 
 - type: entity
-  parent: [ClothingBackpackSatchel, BaseHighlyIllegalContraband]
+  parent: [ ClothingBackpackSatchel, BaseHighlyIllegalContraband ]
   id: ClothingBackpackSatchelNinja
   name: spider clan satchel
   description: A robust satchel for stashing your loot.

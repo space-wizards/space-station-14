@@ -2,7 +2,8 @@
   parent: StructureHealthContainerWeak
   id: CableTerminal
   name: cable terminal
-  description: You see a small warning on the red cables in grungy black ink. "CONNECT RED TO BATTERY FOR CHARGE."
+  description: You see a small warning on the red cables in grungy black ink.
+    "CONNECT RED TO BATTERY FOR CHARGE."
   placement:
     mode: SnapgridCenter
   components:
@@ -19,8 +20,7 @@
     damageModifierSet: RodMetalMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 60
       behaviors:
       - !type:PlaySoundBehavior
@@ -43,11 +43,9 @@
     nodes:
       # Just define nodes for both MV and HV. One will end up unused in 99% of cases
       # but it means one cable terminal type.
-      powerHV:
-        !type:CableTerminalNode
+      powerHV: !type:CableTerminalNode
         nodeGroupID: HVPower
-      powerMV:
-        !type:CableTerminalNode
+      powerMV: !type:CableTerminalNode
         nodeGroupID: MVPower
 
 - type: entity
