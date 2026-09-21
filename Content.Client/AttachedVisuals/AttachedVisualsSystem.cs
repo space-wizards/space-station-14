@@ -187,7 +187,7 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
     }
 
     /// <summary>
-    /// Gets the layers all the way down
+    /// Gets the layers for this entities children
     /// </summary>
     private void GetLayers(Entity<AttachedVisualsComponent> ent, List<AttachmentDefinition> attachments, string keyPrefix, List<(EntityUid, string, HashSet<string> mapKeys, PrototypeLayerData)> results)
     {
@@ -214,33 +214,6 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
                 GetLayers((child, childComp), def.Attachments, childPrefix, results);
             }
         }
-
-        //
-        //
-        // // Sorted so layer order is deterministic between rebuilds and between clients.
-        // foreach (var containerId in containers.Containers.Keys.Order())
-        // {
-        //     if (!attachments.TryGetValue(containerId, out var view))
-        //         continue;
-        //
-        //     if (!ProtoMan.Resolve(view, out var visualAttachmentPrototype))
-        //         continue;
-        //
-        //     foreach (var child in containers.Containers[containerId].ContainedEntities)
-        //     {
-        //         if (!_attachedVisualsQuery.TryComp(child, out var childComp))
-        //             continue;
-        //
-        //         if (!childComp.AttachedVisuals.TryGetValue(visualAttachmentPrototype, out var def))
-        //             continue;
-        //
-        //         var childPrefix = $"{keyPrefix}-{containerId}-{child.Id}";
-        //
-        //         GetAttachedVisuals((child, childComp), visualAttachmentPrototype, childPrefix, results);
-        //
-        //         GetLayers((child, childComp), def.Attachments, childPrefix, results);
-        //     }
-        // }
     }
 
     /// <summary>
