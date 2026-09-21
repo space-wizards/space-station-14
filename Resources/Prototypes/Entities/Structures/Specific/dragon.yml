@@ -53,8 +53,8 @@
       path: /Audio/Weapons/Guns/Gunshots/rocket_launcher.ogg
 
 - type: entity
-  id: MobDragonBrood
   abstract: true
+  id: MobDragonBrood
   components:
   - type: GhostTakeoverAvailable
   - type: HTN

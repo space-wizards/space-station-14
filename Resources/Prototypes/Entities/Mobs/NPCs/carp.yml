@@ -1,9 +1,9 @@
 - type: entity
-  name: space carp
-  id: BaseMobCarp
-  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat, BaseSlicingRefinable, MobNightVision, BaseMobDestructible ]
-  description: It's a space carp.
   abstract: true
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat, BaseSlicingRefinable, MobNightVision, BaseMobDestructible ]
+  id: BaseMobCarp
+  name: space carp
+  description: It's a space carp.
   components:
     - type: InputMover
     - type: MobMover
@@ -32,9 +32,9 @@
             radius: 0.40
           density: 80
           mask:
-            - FlyingMobMask
+          - FlyingMobMask
           layer:
-            - FlyingMobLayer
+          - FlyingMobLayer
     - type: MobState
     - type: MobThresholds
       thresholds:
@@ -74,9 +74,9 @@
       proto: alien
     - type: Tag
       tags:
-        - Carp
-        - DoorBumpOpener
-        - CannotSuicide
+      - Carp
+      - DoorBumpOpener
+      - CannotSuicide
     - type: ReplacementAccent
       accent: genericAggressive
     - type: Speech
@@ -106,9 +106,9 @@
         mouth: ""
 
 - type: entity
-  name: magicarp
   parent: BaseMobCarp
   id: MobCarpMagic
+  name: magicarp
   description: Looks like some kind of fish. Might be magical.
   components:
   - type: Sprite
@@ -117,9 +117,9 @@
     proto: guardian
 
 - type: entity
-  name: holocarp
   parent: BaseMobCarp
   id: MobCarpHolo
+  name: holocarp
   description: Carp made out of holographic energies. Sadly for you, it is very much real.
   components:
   - type: Sprite
@@ -152,21 +152,21 @@
     layers: [ 0 ]
 
 - type: entity
-  id: MobCarpSalvage
   parent: MobCarp
+  id: MobCarpSalvage
   suffix: "Salvage Ruleset"
   components:
-    - type: SalvageMobRestrictions
-    - type: MobThresholds
-      thresholds:
-        0: Alive
-        30: Dead
+  - type: SalvageMobRestrictions
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      30: Dead
 
 - type: entity
-  name: space carp
-  id: MobCarpDragon
-  suffix: DragonBrood
   parent: [ MobDragonBrood, MobCarp ]
+  id: MobCarpDragon
+  name: space carp
+  suffix: DragonBrood
   components:
   - type: GhostRole
     name: ghost-role-information-sentient-carp-name
@@ -174,8 +174,8 @@
     rules: ghost-role-information-space-dragon-summoned-carp-rules
 
 - type: entity
-  id: MobCarpDungeon
   parent: MobCarp
+  id: MobCarpDungeon
   suffix: Dungeon
   components:
   - type: MobThresholds
@@ -191,9 +191,9 @@
         Slash: 6
 
 - type: entity
-  name: sharkminnow
   parent: [ BaseMobBloodsucker, BaseMobCarp, BaseSlicingRefinable ]
   id: MobShark
+  name: sharkminnow
   description: A dangerous shark from the blackness of endless space, who loves to drink blood.
   components:
   - type: Sprite
@@ -248,8 +248,8 @@
         Bloodloss: 5
 
 - type: entity
-  id: MobSharkSalvage
   parent: MobShark
+  id: MobSharkSalvage
   suffix: "Salvage Ruleset"
   components:
   - type: SalvageMobRestrictions
@@ -259,12 +259,11 @@
       82: Dead # Might seem random, but this brings up the hits to kill with a crusher mark to 3
 
 - type: entity
+  parent: [ MobDragonBrood, MobShark ]
   id: MobSharkDragon
   suffix: DragonBrood
-  parent: [ MobDragonBrood, MobShark ]
   components:
   - type: GhostRole
     name: ghost-role-information-sentient-sharkminnow-name
     description: ghost-role-information-sentient-carp-description
     rules: ghost-role-information-space-dragon-summoned-carp-rules
-
