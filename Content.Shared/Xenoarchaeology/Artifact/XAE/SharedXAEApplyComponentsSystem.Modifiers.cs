@@ -1,4 +1,3 @@
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Item;
@@ -31,10 +30,10 @@ public partial class SharedXAEApplyComponentsSystem
         {
             StorageComponent storage => TryApplyModifiersFor(storage, modifications),
             SolutionManagerComponent solutionContainer => TryApplyModifiersFor(solutionContainer, modifications, artifact),
-            HeldSpeedModifierComponent speedModifier => TryApplyModifiersFor(speedModifier, modifications),
+            HeldSpeedModifierComponent speedModifier => TryApplyModifiersFor(speedModifier, modifications, artifact),
             MeleeWeaponComponent meleeWeapon => TryApplyModifiersFor(meleeWeapon, modifications),
             RevolverAmmoProviderComponent revolverAmmo => TryApplyModifiersFor(revolverAmmo, modifications),
-            ToolComponent tool => TryApplyModifiersFor(tool, modifications),
+            ToolComponent tool => TryApplyModifiersFor(tool, modifications, artifact),
             RadiationSourceComponent radiation => TryApplyModifiersFor(radiation, modifications, artifact),
             StealthOnMoveComponent stealthOnMove => TryApplyModifiersFor(stealthOnMove, modifications),
             _ => false
@@ -68,12 +67,16 @@ public partial class SharedXAEApplyComponentsSystem
         return false;
     }
 
-    private bool TryApplyModifiersFor(ToolComponent tool, XenoArtifactEffectsModifications modifications)
+    private bool TryApplyModifiersFor(
+        ToolComponent tool,
+        XenoArtifactEffectsModifications modifications,
+        EntityUid artifact
+    )
     {
         if (modifications.TryGetValue(XenoArtifactEffectModifier.Power, out var modifier))
         {
             var newSpeedModifier = Math.Max(0.5f, modifier.Modify(tool.SpeedModifier));
-            _tool.ChangeSpeedModifier(tool, newSpeedModifier);
+            _tool.ChangeSpeedModifier((artifact, tool), newSpeedModifier);
             return true;
         }
 
@@ -113,12 +116,16 @@ public partial class SharedXAEApplyComponentsSystem
         return changed;
     }
 
-    private bool TryApplyModifiersFor(HeldSpeedModifierComponent speedModifier, XenoArtifactEffectsModifications modifications)
+    private bool TryApplyModifiersFor(
+        HeldSpeedModifierComponent speedModifier,
+        XenoArtifactEffectsModifications modifications,
+        EntityUid artifact
+    )
     {
         if (modifications.TryGetValue(XenoArtifactEffectModifier.Power, out var modifier))
         {
             _heldSpeedModifier.ChangeModifiers(
-                speedModifier,
+                (artifact, speedModifier),
                 modifier.Modify(speedModifier.SprintModifier),
                 modifier.Modify(speedModifier.WalkModifier)
             );

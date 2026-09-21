@@ -240,30 +240,4 @@ public sealed partial class XenoArtifactSystem
         }
     }
 
-    /// <summary>
-    /// Container that represents pool of XenoArtifact triggers.
-    /// </summary>
-    private sealed class TriggerPoolData
-    {
-        private readonly HashSet<EntProtoId> _usedTriggers;
-
-        public TriggerPoolData(int requestedSize)
-        {
-            _usedTriggers = new(requestedSize);
-            Context = new EntityTableContext(new Dictionary<string, object>
-            {
-                [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = _usedTriggers
-            });
-        }
-
-        public readonly EntityTableContext Context;
-
-        public void AddTriggerAsUsed(EntProtoId trigger)
-        {
-            if (!_usedTriggers.Add(trigger))
-                throw new ArgumentException();
-        }
-
-        public IReadOnlyCollection<EntProtoId> UsedTriggers => _usedTriggers;
-    }
 }

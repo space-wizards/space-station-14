@@ -162,7 +162,7 @@ public abstract partial class SharedXenoArtifactSystem
         EntProtoId? effect;
         using (var _ = new TemporarilyAddToContext<float>(triggerPool.Context, HasBudgetInRangeCondition.BudgetContextKey, actualBudget))
         {
-            effect = _entityTable.GetFirstOrNull(ent.Comp.Ef, pr, triggerPool.Context); // todo:add context
+            effect = _entityTable.GetFirstOrNull(ent.Comp.EffectsTable, pr, triggerPool.Context); // todo:add context
         }
 
         if (effect == null)
