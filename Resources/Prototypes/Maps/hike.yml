@@ -1,0 +1,51 @@
+- type: gameMap
+  id: Hike
+  mapName: 'Hike Habitat'
+  mapPath: /Maps/hike.yml
+  minPlayers: 0
+  maxPlayers: 16
+  stations:
+    Hike:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Hike Habitat {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/Shuttles/emergency_elkridge.yml
+        - type: StationCargoShuttle
+          path: /Maps/Shuttles/cargo_hike.yml # corgi shuttle
+        - type: StationJobs
+          availableJobs:
+            #command (3)
+            Captain: [ 1, 1 ]
+            HeadOfPersonnel: [ 1, 1 ]
+            HeadOfSecurity: [ 1, 1 ]
+            #service 7-8
+            Bartender: [ 1, 1 ]
+            Botanist: [ 2, 2 ]
+            Chef: [ 1, 1 ]
+            Janitor: [ 1, 2 ]
+            ServiceWorker: [ 2, 3 ]
+            #engineering 2
+            StationEngineer: [ 2, 2 ]
+            TechnicalAssistant: [ 2, 2 ]
+            #medical 2
+            MedicalDoctor: [ 2, 2 ]
+            MedicalIntern: [ 2, 2 ]
+            #science 2
+            Scientist: [ 2, 2 ]
+            ResearchAssistant: [ 2, 2 ]
+            #security 3
+            SecurityOfficer: [ 3, 3 ]
+            SecurityCadet: [ 2, 2 ]
+            #supply 2-3
+            CargoTechnician: [ 2, 3 ]
+            #civilian 2-3 + overflow
+            Passenger: [ -1, -1 ]
+            Clown: [ 1, 1 ]
+            Mime: [ 1, 1 ]
+            #silicon 1
+            Borg: [ 1, 1 ]

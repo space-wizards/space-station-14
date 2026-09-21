@@ -135,6 +135,14 @@
       entity_storage: !type:NestedSelector
         tableId: FillLockerBotanist
 
+- type: entity
+  id: LockerBotanistFilledService
+  suffix: Filled, Service
+  parent: LockerBotanistFilled
+  components:
+  - type: AccessReader
+    access: [ [ "Hydroponics" ], [ "Service" ] ]
+
 - type: entityTable
   id: FillLockerBotanist
   table: !type:AllSelector
