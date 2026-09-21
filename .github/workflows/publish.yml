@@ -83,7 +83,7 @@ jobs:
       id: changelog
       run: |
         git config user.name "Space-Wizards-Bot"
-        git config user.email "support@spacestation14.com"
+        git config user.email "bot@spacestation14.com"
         if [ -n "$(git status --porcelain Resources/Changelog)" ]; then
           git add Resources/Changelog
           if [ "$DRY_RUN" = "true" ]; then
