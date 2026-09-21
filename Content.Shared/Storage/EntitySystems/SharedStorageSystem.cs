@@ -174,18 +174,16 @@ public abstract partial class SharedStorageSystem : EntitySystem
 
     private void OnItemSizeChanged(ref ItemSizeChangedEvent ev)
     {
-        var itemEnt = new Entity<ItemComponent?>(ev.Entity, null);
-
-        if (!TryGetStorageLocation(itemEnt, out var container, out var storage, out var loc))
-        {
+        if (!TryGetContainingStorage(ev.Entity, out var storage))
             return;
-        }
 
-        UpdateOccupied((container.Owner, storage));
+        var loc = storage.Value.Comp.StoredItems[ev.Entity];
 
-        if (!ItemFitsInGridLocation((itemEnt.Owner, itemEnt.Comp), (container.Owner, storage), loc))
+        UpdateOccupied(storage.Value);
+
+        if (!ItemFitsInGridLocation(ev.Entity, storage.Value.AsNullable(), loc))
         {
-            ContainerSystem.Remove(itemEnt.Owner, container, force: true);
+            ContainerSystem.Remove(ev.Entity, storage.Value.Comp.Container, force: true);
         }
     }
 
@@ -355,33 +353,31 @@ public abstract partial class SharedStorageSystem : EntitySystem
     }
 
     /// <summary>
-    /// Tries to get the storage location of an item.
+    /// Tries to get the storage that the specified entity is stored inside of.
     /// </summary>
-    public bool TryGetStorageLocation(Entity<ItemComponent?> itemEnt, [NotNullWhen(true)] out BaseContainer? container, [NotNullWhen(true)] out StorageComponent? storage, out ItemStorageLocation loc)
+    public bool TryGetContainingStorage(EntityUid uid, [NotNullWhen(true)] out Entity<StorageComponent>? storage)
     {
-        loc = default;
         storage = null;
 
-        if (!ContainerSystem.TryGetContainingContainer(itemEnt.Owner, out container) ||
+        if (!ContainerSystem.TryGetContainingContainer(uid, out var container) ||
             container.ID != StorageComponent.ContainerId ||
-            !TryComp(container.Owner, out storage) ||
-            !_itemQuery.Resolve(itemEnt, ref itemEnt.Comp, false))
+            !TryComp(container.Owner, out StorageComponent? storageComp))
         {
             return false;
         }
 
-        loc = storage.StoredItems[itemEnt];
+        storage = (container.Owner, storageComp);
         return true;
     }
 
     public void OpenStorageUI(EntityUid uid, EntityUid actor, StorageComponent? storageComp = null, bool silent = true)
     {
         // Handle recursively opening nested storages.
-        if (ContainerSystem.TryGetContainingContainer(uid, out var container) &&
-            UI.IsUiOpen(container.Owner, StorageComponent.StorageUiKey.Key, actor))
+        if (TryGetContainingStorage(uid, out var parentStorage) &&
+            UI.IsUiOpen(parentStorage.Value.Owner, StorageComponent.StorageUiKey.Key, actor))
         {
             _nestedCheck = true;
-            HideStorageWindow(container.Owner, actor);
+            HideStorageWindow(parentStorage.Value.Owner, actor);
             OpenStorageUIInternal(uid, actor, storageComp, silent: true);
             _nestedCheck = false;
         }
@@ -779,8 +775,8 @@ public abstract partial class SharedStorageSystem : EntitySystem
         var itemEnt = new Entity<ItemComponent?>(itemUid.Value, itemComp);
 
         // Validate the source storage
-        if (!TryGetStorageLocation(itemEnt, out var container, out _, out _) ||
-            !ValidateInput(args, GetNetEntity(container.Owner), out _, out _))
+        if (!TryGetContainingStorage(itemEnt.Owner, out var sourceStorage) ||
+            !ValidateInput(args, GetNetEntity(sourceStorage.Value.Owner), out _, out _))
         {
             return;
         }

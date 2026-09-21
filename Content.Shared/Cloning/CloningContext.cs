@@ -40,27 +40,29 @@ public sealed partial class CloningContext :
     ITypeCopier<VocalComponent>,
     ITypeCopier<WaggingComponent>
 {
-    /// <inheritdoc />
     public SerializationManager.SerializerProvider SerializerProvider { get; }
 
-    /// <inheritdoc />
     public bool WritingReadingPrototypes { get; set; }
 
+    // System dependencies
+    [Dependency] private EntityManager _entMan = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
+
     // Dependencies
-    [Dependency] private EntityQuery<BloodstreamComponent> _bloodstreamQuery = default!;
-    [Dependency] private EntityQuery<CreamPiedComponent> _creamPiedQuery = default!;
-    [Dependency] private EntityQuery<DamageableComponent> _damageableQuery = default!;
-    [Dependency] private EntityQuery<FlammableComponent> _flammableQuery = default!;
-    [Dependency] private EntityQuery<HandsComponent> _handsQuery = default!;
-    [Dependency] private EntityQuery<InventoryComponent> _inventoryQuery = default!;
-    [Dependency] private EntityQuery<JumpAbilityComponent> _jumpAbilityQuery = default!;
-    [Dependency] private EntityQuery<PullerComponent> _pullerQuery = default!;
-    [Dependency] private EntityQuery<RootableComponent> _rootableQuery = default!;
-    [Dependency] private EntityQuery<SericultureComponent> _sericultureQuery = default!;
-    [Dependency] private EntityQuery<StorageComponent> _storageQuery = default!;
-    [Dependency] private EntityQuery<StoreComponent> _storeQuery = default!;
-    [Dependency] private EntityQuery<VocalComponent> _vocalQuery = default!;
-    [Dependency] private EntityQuery<WaggingComponent> _waggingQuery = default!;
+    [Dependency] private EntityQuery<BloodstreamComponent> _bloodstreamQuery;
+    [Dependency] private EntityQuery<CreamPiedComponent> _creamPiedQuery;
+    [Dependency] private EntityQuery<DamageableComponent> _damageableQuery;
+    [Dependency] private EntityQuery<FlammableComponent> _flammableQuery;
+    [Dependency] private EntityQuery<HandsComponent> _handsQuery;
+    [Dependency] private EntityQuery<InventoryComponent> _inventoryQuery;
+    [Dependency] private EntityQuery<JumpAbilityComponent> _jumpAbilityQuery;
+    [Dependency] private EntityQuery<PullerComponent> _pullerQuery;
+    [Dependency] private EntityQuery<RootableComponent> _rootableQuery;
+    [Dependency] private EntityQuery<SericultureComponent> _sericultureQuery;
+    [Dependency] private EntityQuery<StorageComponent> _storageQuery;
+    [Dependency] private EntityQuery<StoreComponent> _storeQuery;
+    [Dependency] private EntityQuery<VocalComponent> _vocalQuery;
+    [Dependency] private EntityQuery<WaggingComponent> _waggingQuery;
 
     // Persistence entity
     private EntityUid _target = EntityUid.Invalid;
@@ -331,6 +333,10 @@ public sealed partial class CloningContext :
         _storageQuery.TryComp(_target, out var storage);
         target.StoredItems = storage?.StoredItems ?? new();
         target.SavedLocations = storage?.SavedLocations ?? new();
+
+        var targetUI = _entMan.EnsureComponent<UserInterfaceComponent>(_target);
+
+        _ui.SetUi((_target, targetUI), StorageComponent.StorageUiKey.Key, new InterfaceData("StorageBoundUserInterface"));
     }
     #endregion Storage
 
