@@ -26,6 +26,16 @@ jobs:
       DRY_RUN: ${{ github.event.inputs.dry_run == 'true' }}
 
     steps:
+    - name: Announce dry run
+      if: ${{ github.event.inputs.dry_run == 'true' }}
+      run: |
+        echo "::warning::DRY RUN IS RUNNING - nothing will be committed, pushed, tagged, uploaded or posted, and this run is expected to fail at the end."
+        echo "################################################################################"
+        echo "#                            DRY RUN IS RUNNING                                #"
+        echo "#  Nothing will be committed, pushed, tagged, uploaded or posted.              #"
+        echo "#  This run is expected to fail at the end and never counts as a publish.      #"
+        echo "################################################################################"
+
     - name: Fail if we are attempting to run on the master branch
       if: ${{GITHUB.REF_NAME == 'master' && github.repository == 'space-wizards/space-station-14'}}
       run: exit 1
