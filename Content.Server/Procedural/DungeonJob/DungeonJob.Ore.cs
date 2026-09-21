@@ -35,7 +35,7 @@ public sealed partial class DungeonJob
                     continue;
 
                 // Check if it's a valid spawn, if so then use it.
-                var enumerator = _maps.GetAnchoredEntitiesEnumerator(_gridUid, _grid, node);
+                var enumerator = _maps.GetAnchoredEntities(_gridUid, _grid, node);
                 var found = false;
 
                 // We use existing entities as a mark to spawn in place
@@ -75,7 +75,7 @@ public sealed partial class DungeonJob
             if (_prototype.Resolve(gen.Entity, out var proto) &&
                 proto.Components.TryGetComponent("EntityRemap", out var comps))
             {
-                var remappingComp = (EntityRemapComponent) comps;
+                var remappingComp = (EntityRemapComponent)comps;
                 remapping = remappingComp.Mask;
             }
 

@@ -11,14 +11,7 @@ public sealed partial class HolosignSystem : EntitySystem
     [Dependency] private INetManager _net = default!;
     [Dependency] private PowerCellSystem _powerCell = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<HolosignProjectorComponent, BeforeRangedInteractEvent>(OnBeforeInteract);
-        SubscribeLocalEvent<HolosignProjectorComponent, ExaminedEvent>(OnExamine);
-    }
-
+    [SubscribeLocalEvent]
     private void OnExamine(Entity<HolosignProjectorComponent> ent, ref ExaminedEvent args)
     {
         // TODO: This should probably be using an itemstatus
@@ -37,6 +30,7 @@ public sealed partial class HolosignSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnBeforeInteract(Entity<HolosignProjectorComponent> ent, ref BeforeRangedInteractEvent args)
     {
         if (args.Handled
@@ -48,10 +42,7 @@ public sealed partial class HolosignSystem : EntitySystem
 
         // overlapping of the same holo on one tile remains allowed to allow holofan refreshes
         if (ent.Comp.PredictedSpawn || _net.IsServer)
-        {
-            // TODO: make a proxy for this method.
-            EntityManager.PredictedSpawnAtPosition(ent.Comp.SignProto, args.ClickLocation, Angle.Zero);
-        }
+            PredictedSpawnAtPosition(ent.Comp.SignProto, args.ClickLocation);
 
         args.Handled = true;
     }

@@ -185,7 +185,9 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         instrument.Renderer.FilteredChannels.SetAll(false);
         instrument.Renderer.FilteredChannels.Or(instrument.FilteredChannels);
 
-        instrument.Renderer.DisablePercussionChannel = !instrument.AllowPercussion;
+        instrument.Renderer.DisablePercussionChannel = !instrument.AllowPercussion |
+                                                       instrument.FilteredChannels[RobustMidiEvent.PercussionChannel];
+
         instrument.Renderer.DisableProgramChangeEvent = !instrument.AllowProgramChange;
 
         for (int i = 0; i < RobustMidiEvent.MaxChannels; i++)
