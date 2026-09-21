@@ -1,13 +1,10 @@
-using System.Linq;
 using Content.Client.DisplacementMap;
 using Content.Shared.AttachedVisuals;
 using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization.Manager;
-using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Utility;
 
 namespace Content.Client.AttachedVisuals;
@@ -61,9 +58,6 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
         if (!ent.Comp.AttachedVisuals.TryGetValue(attachmentName, out var visuals))
             return;
 
-        if (!_spriteQuery.TryComp(ent, out var sprite))
-            return;
-
         _genericVisualizerQuery.TryComp(ent, out var visualizer);
         _appearanceQuery.TryComp(ent, out var appearance);
 
@@ -75,12 +69,8 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
             if (layer.RsiPath == null && layer.TexturePath == null)
             {
                 layer.RsiPath = ent.Comp.RsiPath;
-                if (layer.RsiPath == null && sprite.BaseRSI != null)
-                {
-                    //fuck this wtf??
-                    sprite.BaseRSI.Path.TryRelativeTo(SpriteSpecifierSerializer.TextureRoot, out var resPath);
-                    layer.RsiPath = resPath.ToString();
-                }
+                if (layer.RsiPath == null)
+                    continue;
             }
 
             var keys = new HashSet<string>();

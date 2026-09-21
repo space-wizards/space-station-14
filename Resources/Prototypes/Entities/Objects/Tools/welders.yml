@@ -72,11 +72,6 @@
         - state: inhand-right-flame
           map: [ "enum.ToggleableVisuals.Layer" ]
           visible: false
-      InBelt:
-        layers:
-        - state: inhand-right-flame
-          map: [ "enum.ToggleableVisuals.Layer" ]
-          visible: false
   - type: UseDelay
   - type: MeleeWeapon
     wideAnimationRotation: -90

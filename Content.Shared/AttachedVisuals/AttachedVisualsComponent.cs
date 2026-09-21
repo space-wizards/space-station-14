@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.DisplacementMap;
-using Content.Shared.Humanoid;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.AttachedVisuals;
@@ -27,14 +26,14 @@ public sealed partial class AttachedVisualsComponent : Component
     /// Visuals to show when this entity is in a given attachment slot
     /// </summary>
     [DataField]
-    public Dictionary<ProtoId<VisualAttachmentPrototype>, AttachedVisualDefinition> AttachedVisuals = new();
+    public Dictionary<ProtoId<VisualAttachmentPrototype>, AttachedVisualLayers> AttachedVisuals = new();
 
     [ViewVariables]
     public readonly Dictionary<EntityUid, List<string>> RevealedLayers = new();
 }
 
 [DataDefinition]
-public sealed partial class AttachedVisualDefinition
+public sealed partial class AttachedVisualLayers
 {
     /// <summary>
     /// Sprite layers to draw
@@ -49,6 +48,9 @@ public sealed partial class AttachedVisualDefinition
     public List<AttachmentDefinition> Attachments = new();
 }
 
+/// <summary>
+/// Defines an attachment
+/// </summary>
 [DataDefinition]
 public sealed partial class AttachmentDefinition
 {
@@ -74,7 +76,7 @@ public sealed partial class AttachmentDefinition
     /// If we have sex displacement data, put it here
     /// </summary>
     [DataField]
-    public Dictionary<Sex, DisplacementData>? SexedDisplacementData;
+    public Dictionary<Enum, DisplacementData>? SexedDisplacementData;
 }
 
 [Prototype]
@@ -91,6 +93,7 @@ public record struct GetAttachedVisualsEvent
 
     public readonly VisualAttachmentPrototype AttachmentName;
 
+    /// Kill this thing
     public readonly List<(EntityUid, string, HashSet<string>, PrototypeLayerData)> Layers;
 
     public GetAttachedVisualsEvent(VisualAttachmentPrototype attachmentName, string childPrefix, List<(EntityUid, string, HashSet<string>, PrototypeLayerData)> layers)
@@ -105,7 +108,6 @@ public record struct GetAttachedVisualsEvent
         Layers.Add((owner, $"{_childPrefix}-{Layers.Count}", mapKeys, layer));
     }
 }
-
 
 [ByRefEvent]
 public record struct AttachedVisualsUpdatedEvent
