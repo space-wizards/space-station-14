@@ -70,7 +70,7 @@ jobs:
     - name: Update changelog
       run: |
         dotnet tool install --global SpaceWizards.ChangelogTool --version 1.0.8
-        ss14-changelog update -d Resources/Changelog -s steps.last-publish.outputs.last_publish_sha
+        ss14-changelog update -d Resources/Changelog -s ${LAST_PUBLISH_SHA}
       env:
         REPO: ${{ github.repository }}
         BRANCH: stable
