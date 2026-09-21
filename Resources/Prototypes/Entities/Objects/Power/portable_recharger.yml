@@ -33,7 +33,6 @@
   - type: ItemSlots
     slots:
       charger_slot:
-        ejectOnInteract: true
         whitelist:
           components:
           - BatteryAmmoProvider
