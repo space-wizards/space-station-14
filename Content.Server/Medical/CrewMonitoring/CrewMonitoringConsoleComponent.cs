@@ -12,12 +12,6 @@ public sealed partial class CrewMonitoringConsoleComponent : Component
     public Dictionary<string, SuitSensorStatus> ConnectedSensors = new();
 
     /// <summary>
-    ///     EntityUid of the station that console attached to.
-    /// </summary>
-    [ViewVariables]
-    public EntityUid? Station;
-
-    /// <summary>
     ///     After what time sensor consider to be lost.
     /// </summary>
     [DataField("sensorTimeout"), ViewVariables(VVAccess.ReadWrite)]

@@ -30,13 +30,7 @@ public sealed partial class CrewMonitoringConsoleSystem : EntitySystem
     private void OnSuitSensorBroadcast(Entity<CrewMonitoringConsoleComponent> ent, ref DeviceNetworkPacketEvent<BroadcastSuitSensorStatePayload> args)
     {
         ent.Comp.ConnectedSensors = args.Data.SensorStatus;
-        UpdateUserInterface(ent, ent.Comp);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnInit(Entity<CrewMonitoringConsoleComponent> ent, ref MapInitEvent args)
-    {
-        ent.Comp.Station = _station.GetOwningStation(ent);
+        UpdateUserInterface(ent, ent.Comp, args.Data.Station);
     }
 
     private void OnUIOpened(EntityUid uid, CrewMonitoringConsoleComponent component, BoundUIOpenedEvent args)
@@ -47,7 +41,7 @@ public sealed partial class CrewMonitoringConsoleSystem : EntitySystem
         UpdateUserInterface(uid, component);
     }
 
-    private void UpdateUserInterface(EntityUid uid, CrewMonitoringConsoleComponent? component = null)
+    private void UpdateUserInterface(EntityUid uid, CrewMonitoringConsoleComponent? component = null, NetEntity? station = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -63,6 +57,6 @@ public sealed partial class CrewMonitoringConsoleSystem : EntitySystem
 
         // Update all sensors info
         var allSensors = component.ConnectedSensors.Values.ToList();
-        _uiSystem.SetUiState(uid, CrewMonitoringUIKey.Key, new CrewMonitoringState(allSensors, GetNetEntity(component.Station)));
+        _uiSystem.SetUiState(uid, CrewMonitoringUIKey.Key, new CrewMonitoringState(allSensors, station));
     }
 }
