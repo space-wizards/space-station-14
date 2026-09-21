@@ -94,6 +94,30 @@ public abstract partial class SharedLatheSystem : EntitySystem
         return HasMaterials(materials, recipe, component.MaterialUseMultiplier, amount);
     }
 
+    /// <summary>
+    /// Returns whether or not the given lathe can produce some number of a given recipe.
+    /// </summary>
+    /// <remarks>
+    /// Useful for reducing material lookup with batched checks.
+    /// </remarks>
+    /// <param name="ent">The lathe that would produce the recipe.</param>
+    /// <param name="recipe">The recipe to be produced.</param>
+    /// <param name="materials">The set of materials to check.</param>
+    /// <param name="amount">The number of times the recipe should be made.</param>
+    public bool CanProduce(Entity<LatheComponent?> ent, LatheRecipePrototype recipe, Dictionary<ProtoId<MaterialPrototype>, int> materials, int amount)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
+        if (amount <= 0)
+            return false;
+
+        if (!HasRecipe(ent, recipe, ent.Comp))
+            return false;
+
+        return HasMaterials(materials, recipe, ent.Comp.MaterialUseMultiplier, amount);
+    }
+
     public bool HasMaterials(Dictionary<ProtoId<MaterialPrototype>, int> materials, LatheRecipePrototype recipe, float materialMultiplier, int amount = 1)
     {
         foreach (var (material, needed) in recipe.Materials)
@@ -123,7 +147,7 @@ public abstract partial class SharedLatheSystem : EntitySystem
     public static int AdjustMaterial(int original, bool reduce, float multiplier)
         => reduce ? (int)MathF.Ceiling(original * multiplier) : original;
 
-    public abstract bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component);
+    protected abstract bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component);
 
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs obj)
     {

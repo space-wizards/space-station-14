@@ -53,7 +53,7 @@ public sealed partial class LatheSystem : SharedLatheSystem
     /// Whether or not a recipe is available is not really visible to the client,
     /// so it just defaults to true.
     ///</remarks>
-    public override bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component)
+    protected override bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component)
     {
         return true;
     }

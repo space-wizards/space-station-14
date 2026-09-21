@@ -143,7 +143,7 @@ public sealed partial class LatheMenu : FancyWindow
         int idx = 0;
         foreach (var recipe in sortedRecipesToShow)
         {
-            var canProduce = CanProduce((Entity, lathe), recipe.Proto, quantity, materials);
+            var canProduce = _lathe.CanProduce((Entity, lathe), recipe.Proto, materials, quantity);
             var tooltipFunction = () => GenerateTooltipText(recipe.Proto);
 
             if (idx >= oldChildCount)
@@ -362,22 +362,5 @@ public sealed partial class LatheMenu : FancyWindow
             CurrentCategory = Categories?[obj.Id];
         }
         PopulateRecipes();
-    }
-
-    /// <summary>
-    /// A version of LatheSystem.CanProduce that caches material lookup as much as possible.
-    /// </summary>
-    private bool CanProduce(Entity<LatheComponent?> ent, LatheRecipePrototype recipe, int amount, Dictionary<ProtoId<MaterialPrototype>, int> materials)
-    {
-        if (amount <= 0)
-            return false;
-
-        if (ent.Comp == null)
-            return false;
-
-        if (!_lathe.HasRecipe(ent, recipe, ent.Comp))
-            return false;
-
-        return _lathe.HasMaterials(materials, recipe, ent.Comp.MaterialUseMultiplier, amount);
     }
 }

@@ -413,7 +413,7 @@ namespace Content.Server.Lathe
             UpdateUserInterfaceState(uid, component);
         }
 
-        public override bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component)
+        protected override bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component)
         {
             return GetAvailableRecipes(uid, component).Contains(recipe.ID);
         }
