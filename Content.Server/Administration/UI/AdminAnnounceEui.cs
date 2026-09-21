@@ -85,9 +85,6 @@ public sealed partial class AdminAnnounceEui : BaseEui
         int maxLength)
     {
         var announcer = announce.Announcer.Trim();
-        if (string.IsNullOrEmpty(announcer))
-            announcer = Loc.GetString("admin-announce-announcer-default");
-
         var signature = SharedChatSystem.SanitizeAnnouncement(announce.Signature, maxLength);
 
         if (!string.IsNullOrWhiteSpace(signature))

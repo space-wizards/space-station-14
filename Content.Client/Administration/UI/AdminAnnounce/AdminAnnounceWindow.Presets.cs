@@ -33,7 +33,6 @@ public sealed partial class AdminAnnounceWindow
             ? Loc.GetString(message)
             : string.Empty);
 
-        UpdateSignatureEditable();
-        UpdateButtons();
+        UpdateControls();
     }
 }

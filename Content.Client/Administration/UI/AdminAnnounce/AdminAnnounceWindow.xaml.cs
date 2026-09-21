@@ -41,21 +41,14 @@ public sealed partial class AdminAnnounceWindow : DefaultWindow
         InitAnnounceMethods();
         InitScopeOptions();
 
-        EnableSignature.OnToggled += _ => UpdateSignatureEditable();
+        EnableSignature.OnToggled += _ => UpdateControls();
         PlayAudio.OnPressed += _ => PlayPreview();
         StopAudio.OnPressed += _ => StopPreview();
         ColorPreview.OnPressed += _ => OpenPalette();
         OpenPresetsButton.OnPressed += _ => OpenPresets();
-        SoundPath.OnTextChanged += _ => UpdateButtons();
-        Announcement.OnTextChanged += _ => UpdateButtons();
+        SoundPath.OnTextChanged += _ => UpdateControls();
+        Announcement.OnTextChanged += _ => UpdateControls();
         AnnounceButton.OnPressed += _ => Announce();
-    }
-
-    private void UpdateSignatureEditable()
-    {
-        Signature.Editable =
-            GetSelectedAnnounceType() == AdminAnnounceType.Station &&
-            EnableSignature.Pressed;
     }
 
     private void InitAnnounceMethods()
@@ -125,8 +118,7 @@ public sealed partial class AdminAnnounceWindow : DefaultWindow
         StopPreview();
         _presetWindow?.Close();
 
-        UpdateSignatureEditable();
-        UpdateButtons();
+        UpdateControls();
     }
 
     private void Announce()
