@@ -6,7 +6,7 @@ namespace Content.Shared.NewPlayer;
 /// Enum to track which new player indicator should show.
 /// </summary>
 [Serializable, NetSerializable]
-public enum NewPlayerVisuals
+public enum NewPlayerVisuals : byte
 {
     NewTotal,
 }
