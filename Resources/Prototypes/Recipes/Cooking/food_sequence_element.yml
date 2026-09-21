@@ -510,7 +510,7 @@
   id: Tofu
   name: food-sequence-content-tofu
   sprites:
-    sprite: Objects/Consumable/Food/ingredients.rsi
+  - sprite: Objects/Consumable/Food/ingredients.rsi
     state: tofu-slice
   tags:
   - Slice
