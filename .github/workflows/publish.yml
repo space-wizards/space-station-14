@@ -128,7 +128,7 @@ jobs:
             gh pr create --repo "$GITHUB_REPOSITORY" --base master --head stable --title "Update changelog" --body "Sync from release to master."
           fi
         else
-          echo "A changelog PR already exists, skipping."
+          echo "Merge from stable to master PR already exist, skipping."
         fi
 
     - name: Build Packaging
