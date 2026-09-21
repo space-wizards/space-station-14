@@ -83,21 +83,8 @@
 
 - type: entity
   parent: AnomalousShard
-  id: AnomalousShardEmpty
-  suffix: Empty
+  id: AnomalousShardDebug
+  suffix: DEBUG
   components:
   - type: XenoArtifact
-    nodeCount:
-      min: 0
-      max: 0
-    segmentSize:
-      min: 1
-      max: 1
-    nodesPerSegmentLayer:
-      min: 1
-      max: 1
-    scatterPerLayer:
-      min: 0
-      max: 0
-    unlockStateDuration: 0
-    unlockStateRefractory: 1
+    isGenerationRequired: false
