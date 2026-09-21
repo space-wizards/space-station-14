@@ -15,8 +15,6 @@ public sealed partial class SpeakOnActionSystem : EntitySystem
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private SharedChatSystem _chat = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
-    [Dependency] private IRobustRandom _random = default!;
 
     [SubscribeLocalEvent]
     private void OnActionPerformed(Entity<SpeakOnActionComponent> ent, ref ActionPerformedEvent args)
@@ -41,7 +39,7 @@ public sealed partial class SpeakOnActionSystem : EntitySystem
 
     private string? GetDialogue(ProtoId<LocalizedDatasetPrototype>? dialogue, IRobustRandom random)
     {
-        if (!_proto.TryIndex(dialogue, out var proto))
+        if (!ProtoMan.TryIndex(dialogue, out var proto))
             return null;
 
         return random.Pick(proto.Values);
