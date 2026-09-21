@@ -118,7 +118,10 @@ public abstract partial class SharedLatheSystem : EntitySystem
         return HasMaterials(materials, recipe, ent.Comp.MaterialUseMultiplier, amount);
     }
 
-    public bool HasMaterials(Dictionary<ProtoId<MaterialPrototype>, int> materials, LatheRecipePrototype recipe, float materialMultiplier, int amount = 1)
+    /// <summary>
+    /// Returns whether or not the given materials dictionary can produce <paramref name="amount"/> copies of <paramref name="recipe"/>.
+    /// </summary>
+    private bool HasMaterials(Dictionary<ProtoId<MaterialPrototype>, int> materials, LatheRecipePrototype recipe, float materialMultiplier, int amount = 1)
     {
         foreach (var (material, needed) in recipe.Materials)
         {
