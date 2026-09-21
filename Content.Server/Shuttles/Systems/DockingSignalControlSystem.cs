@@ -1,4 +1,3 @@
-using Content.Server.Database.Migrations.Postgres;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
@@ -45,18 +44,17 @@ public sealed partial class DockingSignalControlSystem : EntitySystem
         var state = SignalState.Momentary;
         args.Data?.TryGetValue(DeviceNetworkConstants.LogicState, out state);
 
-        var shouldDock = state == SignalState.High || (state == SignalState.Momentary && !dock.Docked);
+        var shouldDock = state == SignalState.High || state == SignalState.Momentary && !dock.Docked;
 
         if (shouldDock)
         {
             var query = AllEntityQuery<DockingComponent>();
-
-            foreach (var dockingEntity in query)
+            while (query.MoveNext(out var dockingUid, out var docking))
             {
-                if (!_dockingSystem.CanDock((ent, dock), dockingEntity))
+                if (!_dockingSystem.CanDock((ent, dock), (dockingUid, docking)))
                     continue;
 
-                _dockingSystem.Dock((ent, dock), dockingEntity);
+                _dockingSystem.Dock((ent, dock), (dockingUid, docking));
                 break;
             }
         }
