@@ -44,7 +44,6 @@
       - TrayScanner
       - GasAnalyzer
       - HandLabeler
-      - AccessOverrider
   - type: ItemMapper
     sprite: &BeltOverlay Clothing/Belt/belt_overlay.rsi
     mapLayers:
