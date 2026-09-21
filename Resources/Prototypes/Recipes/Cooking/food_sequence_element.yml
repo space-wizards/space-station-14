@@ -989,7 +989,7 @@
   - Vegetable
 
 - type: foodSequenceElement
-  id: ChillyPepper
+  id: ChillyPepperBurger
   name: food-sequence-content-chilly
   sprites:
   - sprite: Objects/Consumable/Food/burger_sequence_veg.rsi
