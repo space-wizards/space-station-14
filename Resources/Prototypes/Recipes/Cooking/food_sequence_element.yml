@@ -324,6 +324,16 @@
   - Cutlet
   - Meat
 
+- type: foodSequenceElement
+  id: MeatCutletBurger
+  sprites:
+  - sprite: Objects/Consumable/Food/burger_sequence_cutlet.rsi
+    state: meat
+  tags:
+  - Cooked
+  - Cutlet
+  - Meat
+
 # Bear cutlet
 
 - type: foodSequenceElement
@@ -341,8 +351,8 @@
   id: BearCutletBurger
   name: food-sequence-burger-content-bear
   sprites:
-  - sprite: Objects/Consumable/Food/meat.rsi
-    state: cutlet-cooked
+  - sprite: Objects/Consumable/Food/burger_sequence_cutlet.rsi
+    state: bear
   tags:
   - Cooked
   - Cutlet
@@ -365,8 +375,8 @@
   id: PenguinCutletBurger
   name: food-sequence-burger-content-penguin
   sprites:
-  - sprite: Objects/Consumable/Food/meat.rsi
-    state: cutlet-cooked
+  - sprite: Objects/Consumable/Food/burger_sequence_cutlet.rsi
+    state: poultry
   tags:
   - Cooked
   - Cutlet
@@ -386,6 +396,18 @@
   - Meat
   - Chicken
 
+- type: foodSequenceElement
+  id: ChickenCutletBurger
+  name: food-sequence-content-chicken
+  sprites:
+  - sprite: Objects/Consumable/Food/burger_sequence_cutlet.rsi
+    state: poultry
+  tags:
+  - Cooked
+  - Cutlet
+  - Meat
+  - Chicken
+
 # Duck cutlet
 
 - type: foodSequenceElement
@@ -394,6 +416,17 @@
   sprites:
   - sprite: Objects/Consumable/Food/meat.rsi
     state: cutlet-cooked
+  tags:
+  - Cooked
+  - Cutlet
+  - Meat
+
+- type: foodSequenceElement
+  id: DuckCutletBurger
+  name: food-sequence-content-duck
+  sprites:
+  - sprite: Objects/Consumable/Food/burger_sequence_cutlet.rsi
+    state: poultry
   tags:
   - Cooked
   - Cutlet
@@ -416,8 +449,8 @@
   id: LizardCutletBurger
   name: food-sequence-burger-content-lizard
   sprites:
-  - sprite: Objects/Consumable/Food/meat.rsi
-    state: cutlet-cooked
+  - sprite: Objects/Consumable/Food/burger_sequence_cutlet.rsi
+    state: lizard
   tags:
   - Cooked
   - Cutlet
@@ -440,8 +473,8 @@
   id: SpiderCutletBurger
   name: food-sequence-burger-content-spider
   sprites:
-  - sprite: Objects/Consumable/Food/meat.rsi
-    state: spidercutlet-cooked
+  - sprite: Objects/Consumable/Food/burger_sequence_cutlet.rsi
+    state: spider
   tags:
   - Cooked
   - Cutlet
@@ -459,6 +492,37 @@
   - Cooked
   - Cutlet
   - Meat
+
+- type: foodSequenceElement
+  id: XenoCutletBurger
+  name: food-sequence-content-xeno
+  sprites:
+  - sprite: Objects/Consumable/Food/burger_sequence_cutlet.rsi
+    state: xeno
+  tags:
+  - Cooked
+  - Cutlet
+  - Meat
+
+# Tofu
+
+- type: foodSequenceElement
+  id: Tofu
+  name: food-sequence-content-tofu
+  sprites:
+    sprite: Objects/Consumable/Food/ingredients.rsi
+    state: tofu-slice
+  tags:
+  - Slice
+
+- type: foodSequenceElement
+  id: TofuBurger
+  name: food-sequence-content-tofu
+  sprites:
+  - sprite: Objects/Consumable/Food/burger_sequence_cutlet.rsi
+    state: tofu
+  tags:
+  - Slice
 
 # Dragon cutlet
 
