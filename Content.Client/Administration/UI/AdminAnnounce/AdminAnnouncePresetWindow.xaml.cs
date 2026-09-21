@@ -21,11 +21,6 @@ public sealed partial class AdminAnnouncePresetWindow : DefaultWindow
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
-    }
-
-    internal void PopulatePresets()
-    {
-        PresetContainer.RemoveAllChildren();
 
         foreach (var preset in _prototypes
                      .EnumeratePrototypes<AdminAnnouncementPresetPrototype>()
@@ -41,7 +36,6 @@ public sealed partial class AdminAnnouncePresetWindow : DefaultWindow
         {
             Orientation = BoxContainer.LayoutOrientation.Horizontal,
             SeparationOverride = 8,
-            HorizontalExpand = true,
             Children =
             {
                 new PanelContainer
@@ -63,7 +57,6 @@ public sealed partial class AdminAnnouncePresetWindow : DefaultWindow
 
         var button = new Button
         {
-            HorizontalExpand = true,
             Children = { content }
         };
 

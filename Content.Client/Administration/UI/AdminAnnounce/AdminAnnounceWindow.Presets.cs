@@ -15,7 +15,6 @@ public sealed partial class AdminAnnounceWindow
             _presetWindow = presets;
         }
 
-        presets.PopulatePresets();
         presets.OpenCentered();
     }
 

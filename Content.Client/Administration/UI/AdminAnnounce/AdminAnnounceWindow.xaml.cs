@@ -62,39 +62,31 @@ public sealed partial class AdminAnnounceWindow : DefaultWindow
         AnnounceMethod.OnItemSelected += args =>
         {
             AnnounceMethod.SelectId(args.Id);
-            UpdateFields((AdminAnnounceType) args.Id);
+            UpdateFields();
         };
 
         AnnounceMethod.SelectId((int) AdminAnnounceType.Station);
-        UpdateFields(AdminAnnounceType.Station);
+        UpdateFields();
     }
 
     private void InitScopeOptions()
     {
         ScopeOption.OnItemSelected += args => ScopeOption.SelectId(args.Id);
-        UpdateScopeOptions();
-    }
-
-    private void UpdateScopeOptions()
-    {
-        ScopeOption.Clear();
-        ScopeOption.AddItem(Loc.GetString("admin-announce-scope-global"));
+        ScopeOption.AddItem(Loc.GetString("admin-announce-scope-global"), (int) MapId.Nullspace);
 
         var query = _entityManager.AllEntityQueryEnumerator<MapComponent, MetaDataComponent>();
-        var index = 1;
 
         while (query.MoveNext(out _, out var map, out var metadata))
         {
-            ScopeOption.AddItem($"{metadata.EntityName} ({map.MapId})");
-            ScopeOption.SetItemMetadata(index++, map.MapId);
+            ScopeOption.AddItem($"{metadata.EntityName} ({map.MapId})", (int) map.MapId);
         }
 
-        ScopeOption.SelectId(0);
+        ScopeOption.SelectId((int) MapId.Nullspace);
     }
 
-    private void UpdateFields(AdminAnnounceType type)
+    private void UpdateFields()
     {
-        var isStation = type == AdminAnnounceType.Station;
+        var isStation = SelectedAnnounceType == AdminAnnounceType.Station;
 
         Announcer.Editable = isStation;
         SoundPath.Editable = isStation;
@@ -132,22 +124,16 @@ public sealed partial class AdminAnnounceWindow : DefaultWindow
             Signature.Text,
             _announcementColor,
             GetSound(),
-            GetSelectedAnnounceType(),
-            GetSelectedMap(),
+            SelectedAnnounceType,
+            SelectedMap,
             !KeepWindowOpen.Pressed));
     }
 
-    private AdminAnnounceType GetSelectedAnnounceType()
-    {
-        return (AdminAnnounceType) AnnounceMethod.SelectedId;
-    }
+    private AdminAnnounceType SelectedAnnounceType => (AdminAnnounceType) AnnounceMethod.SelectedId;
 
-    private MapId? GetSelectedMap()
-    {
-        return ScopeOption.SelectedMetadata is MapId mapId
-            ? mapId
-            : null;
-    }
+    private MapId? SelectedMap => ScopeOption.SelectedId == (int) MapId.Nullspace
+        ? null
+        : new MapId(ScopeOption.SelectedId);
 
     public override void Close()
     {

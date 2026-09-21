@@ -9,7 +9,7 @@ public sealed partial class AdminAnnounceWindow
 {
     private void UpdateControls()
     {
-        var isStation = GetSelectedAnnounceType() == AdminAnnounceType.Station;
+        var isStation = SelectedAnnounceType == AdminAnnounceType.Station;
         var message = Rope.Collapse(Announcement.TextRope);
         var maxLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementLength);
         var tooLong = message.Length > maxLength;

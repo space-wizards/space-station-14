@@ -2,7 +2,7 @@
                Title="{Loc admin-announce-presets}"
                Resizable="False"
                SetSize="280 300">
-    <ScrollContainer VerticalExpand="True">
+    <ScrollContainer>
         <BoxContainer Name="PresetContainer" Orientation="Vertical"
                       SeparationOverride="4" Margin="8" />
     </ScrollContainer>

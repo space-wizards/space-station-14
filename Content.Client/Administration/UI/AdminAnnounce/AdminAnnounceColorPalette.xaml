@@ -2,7 +2,5 @@
                Title="{Loc admin-announce-palette-title}"
                Resizable="False"
                SetSize="330 230">
-    <BoxContainer Orientation="Vertical" Margin="10" HorizontalExpand="True" VerticalExpand="True">
-        <ColorSelectorSliders Name="Picker" IsAlphaVisible="False" VerticalExpand="True" HorizontalExpand="True" />
-    </BoxContainer>
+    <ColorSelectorSliders Name="Picker" IsAlphaVisible="False" Margin="10" />
 </DefaultWindow>
