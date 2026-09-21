@@ -189,35 +189,58 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
     /// <summary>
     /// Gets the layers all the way down
     /// </summary>
-    private void GetLayers(Entity<AttachedVisualsComponent> ent, Dictionary<string, ProtoId<VisualAttachmentPrototype>> attachments, string keyPrefix, List<(EntityUid, string, HashSet<string> mapKeys, PrototypeLayerData)> results)
+    private void GetLayers(Entity<AttachedVisualsComponent> ent, List<AttachmentDefinition> attachments, string keyPrefix, List<(EntityUid, string, HashSet<string> mapKeys, PrototypeLayerData)> results)
     {
-        if (!TryComp(ent, out ContainerManagerComponent? containers))
-            return;
-
-        // Sorted so layer order is deterministic between rebuilds and between clients.
-        foreach (var containerId in containers.Containers.Keys.Order())
+        foreach (var attachment in attachments)
         {
-            if (!attachments.TryGetValue(containerId, out var view))
+            if (!_container.TryGetContainer(ent, attachment.Container, out var container))
                 continue;
 
-            if (!ProtoMan.Resolve(view, out var visualAttachmentPrototype))
+            if (!ProtoMan.Resolve(attachment.Attachment, out var attachmentPrototype))
                 continue;
 
-            foreach (var child in containers.Containers[containerId].ContainedEntities)
+            foreach (var child in container.ContainedEntities)
             {
                 if (!_attachedVisualsQuery.TryComp(child, out var childComp))
                     continue;
 
-                if (!childComp.AttachedVisuals.TryGetValue(visualAttachmentPrototype, out var def))
+                if (!childComp.AttachedVisuals.TryGetValue(attachmentPrototype, out var def))
                     continue;
 
-                var childPrefix = $"{keyPrefix}-{containerId}-{child.Id}";
+                var childPrefix = $"{keyPrefix}-{attachment.Container}-{child.Id}";
 
-                GetAttachedVisuals((child, childComp), visualAttachmentPrototype, childPrefix, results);
+                GetAttachedVisuals((child, childComp), attachmentPrototype, childPrefix, results);
 
                 GetLayers((child, childComp), def.Attachments, childPrefix, results);
             }
         }
+
+        //
+        //
+        // // Sorted so layer order is deterministic between rebuilds and between clients.
+        // foreach (var containerId in containers.Containers.Keys.Order())
+        // {
+        //     if (!attachments.TryGetValue(containerId, out var view))
+        //         continue;
+        //
+        //     if (!ProtoMan.Resolve(view, out var visualAttachmentPrototype))
+        //         continue;
+        //
+        //     foreach (var child in containers.Containers[containerId].ContainedEntities)
+        //     {
+        //         if (!_attachedVisualsQuery.TryComp(child, out var childComp))
+        //             continue;
+        //
+        //         if (!childComp.AttachedVisuals.TryGetValue(visualAttachmentPrototype, out var def))
+        //             continue;
+        //
+        //         var childPrefix = $"{keyPrefix}-{containerId}-{child.Id}";
+        //
+        //         GetAttachedVisuals((child, childComp), visualAttachmentPrototype, childPrefix, results);
+        //
+        //         GetLayers((child, childComp), def.Attachments, childPrefix, results);
+        //     }
+        // }
     }
 
     /// <summary>

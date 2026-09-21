@@ -54,23 +54,27 @@
   - type: AttachedVisuals
     sprite: Clothing/Belt/utility.rsi
     attachments:
-        storagebase: InBelt
+      - attachment: InBelt
+        container: storagebase
     attachedVisuals:
-      inhand-right:
+      InhandRight:
         layers:
           - state: inhand-right
         attachments:
-          storagebase: InHandInBeltRight
-      inhand-left:
+          - attachment: InHandInBeltRight
+            container: storagebase
+      InhandLeft:
         layers:
           - state: inhand-left
         attachments:
-          storagebase: InHandInBeltLeft
-      equipped-belt:
+          - attachment: InHandInBeltLeft
+            container: storagebase
+      BeltEquipped:
         layers:
           - state: equipped-BELT
         attachments:
-          storagebase: InBeltEquipped
+          - attachment: InBeltEquipped
+            container: storagebase
 
 - type: entity
   parent: BaseItem

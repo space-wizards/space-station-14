@@ -73,16 +73,16 @@
   - type: PhysicalComposition
     materialComposition:
       Glass: 50
-  - type: AttachedVisuals
-    attachments:
-      storagebase: plate-food
-    attachedVisuals:
-      InhandRight:
-        attachments:
-          storagebase: OnPlateInhandRight
-      InhandLeft:
-        attachments:
-          storagebase: OnPlateInhandLeft
+#  - type: AttachedVisuals
+#    attachments:
+#      storagebase: plate-food
+#    attachedVisuals:
+#      InhandRight:
+#        attachments:
+#          storagebase: OnPlateInhandRight
+#      InhandLeft:
+#        attachments:
+#          storagebase: OnPlateInhandLeft
   - type: Storage
     maxItemSize: Normal
     defaultStorageOrientation: Vertical

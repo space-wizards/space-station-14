@@ -97,9 +97,12 @@
       LegRight: [FootRight]
   - type: AttachedVisuals
     attachments:
-        left: InhandLeft
-        right: InhandRight
-        belt: BeltEquipped
+      - attachment: InhandLeft
+        container: left
+      - attachment: InhandRight
+        container: right
+      - attachment: BeltEquipped
+        container: belt
 
 
 - type: visualAttachment

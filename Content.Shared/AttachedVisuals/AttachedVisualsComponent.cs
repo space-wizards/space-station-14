@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.DisplacementMap;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.AttachedVisuals;
@@ -14,7 +15,7 @@ public sealed partial class AttachedVisualsComponent : Component
 
     //Mapping to Container ID (on this entity) -> View name
     [DataField]
-    public Dictionary<string, ProtoId<VisualAttachmentPrototype>> Attachments = new();
+    public List<AttachmentDefinition> Attachments = new();
 
     [DataField]
     public Dictionary<ProtoId<VisualAttachmentPrototype>, AttachedVisualDefinition> AttachedVisuals = new();
@@ -31,7 +32,21 @@ public sealed partial class AttachedVisualDefinition
 
     // Container ID -> view name,
     [DataField]
-    public Dictionary<string, ProtoId<VisualAttachmentPrototype>> Attachments = new();
+    public List<AttachmentDefinition> Attachments = new();
+}
+
+[DataDefinition]
+public sealed partial class AttachmentDefinition
+{
+    [DataField]
+    public string Container;
+
+    [DataField]
+    public ProtoId<VisualAttachmentPrototype> Attachment;
+
+
+    [DataField]
+    public DisplacementData? DisplacementData;
 }
 
 [Prototype]
