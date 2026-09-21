@@ -12,6 +12,13 @@ public sealed class IntegerLineEdit : LineEdit
     private int? _min;
     private int? _max;
 
+    public IntegerLineEdit()
+    {
+        IsValid += s => RegNumbers.IsMatch(s);
+
+        OnTextChanged += Clamp;
+    }
+
     /// <summary>
     /// When not null, text entered that's smaller than this will be rewritten to this.
     /// </summary>
@@ -31,13 +38,6 @@ public sealed class IntegerLineEdit : LineEdit
     {
         get => _max;
         set => SetMax(value);
-    }
-
-    public IntegerLineEdit()
-    {
-        IsValid += s => RegNumbers.IsMatch(s);
-
-        OnTextChanged += Clamp;
     }
 
     /// <returns>The integer value of the text.</returns>
@@ -64,7 +64,7 @@ public sealed class IntegerLineEdit : LineEdit
         if (value > _max)
         {
             value = _max;
-            Log.Warning($"Min value of { this } was set above max.");
+            Log.Warning($"Min value of {this} was set above max.");
         }
 
         _min = value;
@@ -87,7 +87,7 @@ public sealed class IntegerLineEdit : LineEdit
         if (value < _min)
         {
             value = _min;
-            Log.Warning($"Max value of { this } was set below min.");
+            Log.Warning($"Max value of {this} was set below min.");
         }
 
         _max = value;
@@ -100,7 +100,7 @@ public sealed class IntegerLineEdit : LineEdit
     {
         if (minimum is { } min && maximum is { } max && min > max)
         {
-            Log.Warning($"Min value of { this } was set above max.");
+            Log.Warning($"Min value of {this} was set above max.");
             minimum = maximum;
         }
 
