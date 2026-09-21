@@ -13,7 +13,7 @@ concurrency:
 jobs:
   this_aint_right:
     name: Submodule update in pr found
-    if: github.actor != 'PJBot' && github.event.pull_request.draft == false
+    if: ${{ github.actor != vars.REPO_BOT_NAME && github.event.pull_request.draft == false }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
