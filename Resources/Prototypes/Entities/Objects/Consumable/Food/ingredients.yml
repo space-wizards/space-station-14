@@ -270,8 +270,6 @@
         Quantity: 50
   - type: Edible
     edible: Drink # slurping sounds!
-  - type: Tag
-    tags: [ Condiment ]
 
 - type: entity
   parent: ReagentPacketBase # TODO Move to condiments.yml and parent off of BaseFoodCondimentBottle
@@ -297,7 +295,7 @@
       - ReagentId: Mayo
         Quantity: 50
   - type: Tag
-    tags: [ Condiment, Mayo ]
+    tags: [ Mayo ]
 
 # Baking
 
