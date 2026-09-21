@@ -106,6 +106,12 @@
       - attachment: EquippedBelt
         container: belt
         order: 6
+      - attachment: EquippedShoes
+        container: shoes
+        order: 2
+      - attachment: EquippedBoots
+        container: shoes
+        order: 5
       - attachment: EquippedJumpsuit
         container: jumpsuit
         order: 3
@@ -118,6 +124,12 @@
 
 - type: visualAttachment
   id: InhandLeft
+
+- type: visualAttachment
+  id: EquippedShoes
+
+- type: visualAttachment
+  id: EquippedBoots
 
 - type: visualAttachment
   id: EquippedJumpsuit
