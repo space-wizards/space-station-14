@@ -7,7 +7,6 @@
         <GridContainer Columns="2" HorizontalExpand="True" Margin="0,0,0,4">
             <LineEdit Name="Announcer"
                       PlaceHolder="{Loc admin-announce-announcer-placeholder}"
-                      Text="{Loc admin-announce-announcer-default}"
                       HorizontalExpand="True"
                       Margin="2" />
             <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="2">
@@ -22,7 +21,7 @@
         </GridContainer>
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0,0,0,4">
             <BoxContainer Orientation="Horizontal" Margin="2">
-                <Button Name="ColorPreview" Text=" " MinSize="30,30" />
+                <Button Name="ColorPreview" MinSize="30,30" />
                 <Button Name="OpenPresetsButton" Text="{Loc admin-announce-presets}" Margin="4,0,0,0" />
             </BoxContainer>
             <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="2">
@@ -31,13 +30,13 @@
                 <Button Name="StopAudio" Text="■" Margin="2,0,0,0" MinWidth="35" />
             </BoxContainer>
         </BoxContainer>
-        <TextEdit Name="Announcement" VerticalExpand="True" MinHeight="150" Margin="0,4" />
+        <TextEdit Name="Announcement" VerticalExpand="True" MinHeight="150" Margin="0,4,0,0" />
+        <Label Name="AnnounceCharLimitLabel"
+               StyleClasses="CommsConsoleCharLimit"
+               HorizontalAlignment="Right"
+               Margin="0,2,8,0" />
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0,4,0,0">
             <CheckBox Name="KeepWindowOpen" Text="{Loc admin-announce-keep-open}" VerticalAlignment="Center" />
-            <Label Name="AnnounceCharLimitLabel"
-                   StyleClasses="CommsConsoleCharLimit"
-                   Margin="8,0,0,0"
-                   VerticalAlignment="Center" />
             <Control HorizontalExpand="True" />
             <Button Name="AnnounceButton" Disabled="True" Text="{Loc admin-announce-button}" MinWidth="150" />
             <OptionButton Name="ScopeOption" MinWidth="150" Margin="4,0,0,0" />

@@ -49,8 +49,6 @@ public sealed partial class AdminAnnounceWindow : DefaultWindow
         SoundPath.OnTextChanged += _ => UpdateButtons();
         Announcement.OnTextChanged += _ => UpdateButtons();
         AnnounceButton.OnPressed += _ => Announce();
-
-        UpdateSignatureEditable();
     }
 
     private void UpdateSignatureEditable()
@@ -62,19 +60,20 @@ public sealed partial class AdminAnnounceWindow : DefaultWindow
 
     private void InitAnnounceMethods()
     {
-        AnnounceMethod.AddItem(Loc.GetString("admin-announce-type-station"));
-        AnnounceMethod.SetItemMetadata(0, AdminAnnounceType.Station);
-
-        AnnounceMethod.AddItem(Loc.GetString("admin-announce-type-server"));
-        AnnounceMethod.SetItemMetadata(1, AdminAnnounceType.Server);
+        AnnounceMethod.AddItem(
+            Loc.GetString("admin-announce-type-station"),
+            (int) AdminAnnounceType.Station);
+        AnnounceMethod.AddItem(
+            Loc.GetString("admin-announce-type-server"),
+            (int) AdminAnnounceType.Server);
 
         AnnounceMethod.OnItemSelected += args =>
         {
             AnnounceMethod.SelectId(args.Id);
-            UpdateFields((AdminAnnounceType?) args.Button.SelectedMetadata ?? AdminAnnounceType.Station);
+            UpdateFields((AdminAnnounceType) args.Id);
         };
 
-        AnnounceMethod.SelectId(0);
+        AnnounceMethod.SelectId((int) AdminAnnounceType.Station);
         UpdateFields(AdminAnnounceType.Station);
     }
 
@@ -114,18 +113,17 @@ public sealed partial class AdminAnnounceWindow : DefaultWindow
         if (isStation)
         {
             ApplyPreset(_prototypes.Index(DefaultStationPreset));
+            return;
         }
-        else
-        {
-            SetColor(ServerColor);
-            Announcer.Text = string.Empty;
-            Signature.Text = string.Empty;
-            EnableSignature.Pressed = false;
-            SoundPath.Text = string.Empty;
 
-            StopPreview();
-            _presetWindow?.Close();
-        }
+        SetColor(ServerColor);
+        Announcer.Text = string.Empty;
+        Signature.Text = string.Empty;
+        EnableSignature.Pressed = false;
+        SoundPath.Text = string.Empty;
+
+        StopPreview();
+        _presetWindow?.Close();
 
         UpdateSignatureEditable();
         UpdateButtons();
@@ -152,7 +150,7 @@ public sealed partial class AdminAnnounceWindow : DefaultWindow
 
     private AdminAnnounceType GetSelectedAnnounceType()
     {
-        return (AdminAnnounceType?) AnnounceMethod.SelectedMetadata ?? AdminAnnounceType.Station;
+        return (AdminAnnounceType) AnnounceMethod.SelectedId;
     }
 
     private MapId? GetSelectedMap()

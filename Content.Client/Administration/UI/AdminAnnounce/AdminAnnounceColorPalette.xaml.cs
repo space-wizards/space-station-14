@@ -13,12 +13,7 @@ public sealed partial class AdminAnnounceColorPalette : DefaultWindow
     {
         RobustXamlLoader.Load(this);
 
-        Picker.OnColorChanged += SetColor;
-    }
-
-    private void SetColor(Color color)
-    {
-        OnColorChanged?.Invoke(color);
+        Picker.OnColorChanged += color => OnColorChanged?.Invoke(color);
     }
 
     public void UpdateDisplay(Color color) => Picker.Color = color;

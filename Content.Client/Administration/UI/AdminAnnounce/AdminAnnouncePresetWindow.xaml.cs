@@ -37,38 +37,36 @@ public sealed partial class AdminAnnouncePresetWindow : DefaultWindow
 
     private void AddPreset(AdminAnnouncementPresetPrototype preset)
     {
-        var button = new Button
-        {
-            HorizontalExpand = true
-        };
-
         var content = new BoxContainer
         {
             Orientation = BoxContainer.LayoutOrientation.Horizontal,
             SeparationOverride = 8,
-            HorizontalExpand = true
-        };
-
-        var color = new PanelContainer
-        {
-            MinSize = new Vector2(24, 24),
-            VerticalAlignment = VAlignment.Center,
-            PanelOverride = new StyleBoxFlat
+            HorizontalExpand = true,
+            Children =
             {
-                BackgroundColor = preset.Color
+                new PanelContainer
+                {
+                    MinSize = new Vector2(24, 24),
+                    VerticalAlignment = VAlignment.Center,
+                    PanelOverride = new StyleBoxFlat
+                    {
+                        BackgroundColor = preset.Color
+                    }
+                },
+                new Label
+                {
+                    Text = Loc.GetString(preset.Name),
+                    VerticalAlignment = VAlignment.Center
+                }
             }
         };
 
-        var label = new Label
+        var button = new Button
         {
-            Text = Loc.GetString(preset.Name),
-            VerticalAlignment = VAlignment.Center
+            HorizontalExpand = true,
+            Children = { content }
         };
 
-        content.AddChild(color);
-        content.AddChild(label);
-
-        button.AddChild(content);
         button.OnPressed += _ => OnPresetSelected?.Invoke(preset);
 
         PresetContainer.AddChild(button);

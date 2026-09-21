@@ -21,31 +21,19 @@ public sealed partial class AdminAnnounceWindow
 
     private void ApplyPreset(AdminAnnouncementPresetPrototype preset)
     {
-        ResetPresetFields();
-
         SetColor(preset.Color);
         Announcer.Text = Loc.GetString(preset.Announcer);
 
-        if (preset.Signature is { } signature)
-        {
-            Signature.Text = Loc.GetString(signature);
-            EnableSignature.Pressed = true;
-        }
-
-        if (preset.Sound is { } sound)
-            SoundPath.Text = sound.Path.ToString();
-
-        if (preset.Message is { } message)
-            Announcement.TextRope = new Rope.Leaf(Loc.GetString(message));
+        Signature.Text = preset.Signature is { } signature
+            ? Loc.GetString(signature)
+            : string.Empty;
+        EnableSignature.Pressed = preset.Signature != null;
+        SoundPath.Text = preset.Sound?.Path.ToString() ?? string.Empty;
+        Announcement.TextRope = new Rope.Leaf(preset.Message is { } message
+            ? Loc.GetString(message)
+            : string.Empty);
 
         UpdateSignatureEditable();
         UpdateButtons();
-    }
-
-    private void ResetPresetFields()
-    {
-        Signature.Text = string.Empty;
-        EnableSignature.Pressed = false;
-        SoundPath.Text = string.Empty;
     }
 }
