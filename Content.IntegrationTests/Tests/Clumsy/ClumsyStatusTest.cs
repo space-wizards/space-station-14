@@ -166,7 +166,7 @@ public sealed class ClumsyStatusTest : InteractionTest
             Assert.That(ev.Cancelled, Is.True, "Clumsy mob didn't cancel climb event.");
         }
     }
-    
+
     [Test, Description("Test that a mob with the ClumsyGrab status will be unable to hold items in hands.")]
     public async Task TestClumsyGrab()
     {

@@ -14,7 +14,7 @@ public sealed partial class ClumsyGrabStatusEffectComponent : Component
     /// </summary>
     [DataField]
     public float ClumsyChance = 0.5f;
-    
+
     /// <summary>
     /// Popup played to the afflicted when they fail to grab the item.
     /// </summary>

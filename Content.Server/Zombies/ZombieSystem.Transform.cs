@@ -17,7 +17,6 @@ using Content.Shared.CombatMode;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Cuffs;
 using Content.Shared.Ghost.Roles.Components;
-using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
@@ -35,18 +34,18 @@ using Content.Shared.Popups;
 using Content.Shared.Prying.Components;
 using Content.Shared.Roles;
 using Content.Shared.Speech.EntitySystems;
+using Content.Shared.StatusEffectNew;
+using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Tag;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Traits.Assorted;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Zombies;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using Content.Shared.StatusEffectNew.Components;
-using Content.Shared.StatusEffectNew;
-using Robust.Shared.Containers;
 
 namespace Content.Server.Zombies;
 
@@ -329,10 +328,10 @@ public sealed partial class ZombieSystem
         // forcibly empties hands (even if they contain something sticky/unremovable)
         _hands.DropAll(target); // TODO refactor to force drop all if #45844 gets merged
         // temp backup to get rid of unremovable items
-        foreach (var hand in _hands.EnumerateHands(target)) 
+        foreach (var hand in _hands.EnumerateHands(target))
         {
-            if (_containerSystem.TryGetContainer(target, hand, out var handContainer)) 
-                _containerSystem.EmptyContainer(handContainer, true); 
+            if (_containerSystem.TryGetContainer(target, hand, out var handContainer))
+                _containerSystem.EmptyContainer(handContainer, true);
         }
 
         // the zombie is now clumsy. it will drop anything handed to it.

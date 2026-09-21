@@ -87,7 +87,7 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
 
         _audio.PlayPredicted(status.Comp.ClumsySound, args.AppliedTo, args.AppliedTo);
     }
-    
+
     /// <summary> Especially clumsy people may sometimes fail to pick things up, and fail to hold on to things they are given.</summary>
     [SubscribeLocalEvent]
     private void OnBeforeEquippingHandEvent(Entity<ClumsyGrabStatusEffectComponent> status,
@@ -106,7 +106,9 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
         _popup.PopupEntity(selfMessage, othersMessage, args.AppliedTo, args.AppliedTo);
     }
 
-    /// <summary> Clumsy people can't be trusted with guns! </summary>
+    /// <summary>
+    /// Clumsy people can't be trusted with guns!
+    /// </summary>
     [SubscribeLocalEvent]
     private void OnBeforeGunShotEvent(Entity<ClumsyGunStatusEffectComponent> status, ref StatusEffectRelayedEvent<SelfBeforeGunShotEvent> args)
     {
