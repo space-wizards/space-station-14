@@ -537,6 +537,17 @@
   - Cutlet
   - Meat
 
+- type: foodSequenceElement
+  id: DragonCutletBurger
+  name: food-sequence-content-dragon
+  sprites:
+  - sprite: Objects/Consumable/Food/burger_sequence_cutlet.rsi
+    state: dragon
+  tags:
+  - Cooked
+  - Cutlet
+  - Meat
+
 # Brain
 
 - type: foodSequenceElement

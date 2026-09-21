@@ -1961,7 +1961,7 @@
     node: dragon cutlet
   - type: FoodSequenceElement
     entries:
-      Burger: DragonCutlet
+      Burger: DragonCutletBurger
       Taco: DragonCutlet
   - type: Item
     storedOffset: -1,1
