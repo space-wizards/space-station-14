@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Shared.Destructible.Thresholds;
 using Content.Shared.EntityTable;
 using Content.Shared.EntityTable.Conditions;
-using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
@@ -14,27 +13,16 @@ public sealed partial class XenoArtifactSystem
 {
     [Dependency] private EntityTableSystem _entityTable = default!;
 
-    // pre-allocated list for storing generated nodes in current segment during generation process
-    private readonly List<Entity<XenoArtifactNodeComponent>> _generatedInCurrentScope = new(20);
-    // pre-allocated list for storing generated nodes in current layer of current segment during generation process
-    private readonly List<Entity<XenoArtifactNodeComponent>> _currentLayerNodes = new(8);
-    // pre-allocated list for storing generated nodes in previous layer of current segment during generation process
-    private readonly List<Entity<XenoArtifactNodeComponent>> _previousLayerNodes = new(8);
-    // pre-allocated list for storing direct predecessor nodes, calculated for each node during artifact generation process
-    private readonly List<Entity<XenoArtifactNodeComponent>> _directPredecessors = new(8);
-
     private void GenerateArtifactStructure(Entity<XenoArtifactComponent> ent)
     {
         var desiredNodeCount = ent.Comp.NodeCount.Next(RobustRandom);
-        var triggers = ent.Comp.TriggersTable;
-        var effects = ent.Comp.EffectsTable;
         var totalGenerated = 0;
 
         var triggerPool = new TriggerPoolData(desiredNodeCount);
 
         while (desiredNodeCount > 0)
         {
-            var generatedInSegment = GenerateArtifactSegment(ent, triggers, effects, triggerPool, desiredNodeCount);
+            var generatedInSegment = GenerateArtifactSegment(ent, triggerPool, desiredNodeCount);
 
             desiredNodeCount -= generatedInSegment;
             totalGenerated += generatedInSegment;
@@ -49,10 +37,18 @@ public sealed partial class XenoArtifactSystem
         RebuildXenoArtifactMetaData((ent, ent));
     }
 
+    /// <summary>
+    /// Generates segment of nodes inside artifact, layer by layer.
+    /// Segment is interconnected graph of nodes.
+    /// </summary>
+    /// <param name="ent">Artifact entity, in which we need to generate segment.</param>
+    /// <param name="triggerPool">
+    /// Entity table context container that holds information about triggers that already was used.
+    /// </param>
+    /// <param name="maxNodeCount">Max number of nodes to be constructed in this layer.</param>
+    /// <returns>Count of generated nodes.</returns>
     private int GenerateArtifactSegment(
         Entity<XenoArtifactComponent> ent,
-        EntityTableSelector triggers,
-        EntityTableSelector effects,
         TriggerPoolData triggerPool,
         int maxNodeCount
     )
@@ -60,36 +56,41 @@ public sealed partial class XenoArtifactSystem
         var nodesForSegmentToGenerate = GetArtifactSegmentDesiredSize(ent, maxNodeCount);
         var depth = 0;
         IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> generatedNodes = [];
-        _generatedInCurrentScope.Clear();
+        List<Entity<XenoArtifactNodeComponent>> totalGenerated = new();
         while (nodesForSegmentToGenerate != 0)
         {
-            generatedNodes = PopulateLayer(ent, triggers, effects, generatedNodes, triggerPool, nodesForSegmentToGenerate, depth);
+            generatedNodes = PopulateLayer(ent, generatedNodes, triggerPool, nodesForSegmentToGenerate, depth);
             if (generatedNodes.Count == 0) // failed to generate nodes - time to finish up
                 break;
 
             nodesForSegmentToGenerate -= generatedNodes.Count;
 
-            _generatedInCurrentScope.AddRange(generatedNodes);
+            totalGenerated.AddRange(generatedNodes);
             depth++;
         }
 
-        if (_generatedInCurrentScope.Count == 0)
+        if (totalGenerated.Count == 0)
             return 0;
 
-        AddEdgesToUnderConnectedNodes(ent, _generatedInCurrentScope);
+        AddEdgesToUnderConnectedNodes(ent, totalGenerated);
 
-        return _generatedInCurrentScope.Count;
+        return totalGenerated.Count;
     }
 
     /// <summary>
-    /// Recursively populate layers of artifact segment - isolated graph, nodes inside which are interconnected.
-    /// Each next iteration is going to have more chances to have more nodes (so it goes 'from top to bottom' of
+    /// Populates layer of artifact segment and return resulting set of nodes.
+    /// Each next layer is going to have more chances to have more nodes (so it goes 'from top to bottom' of
     /// the tree, creating its peak nodes first, and then making layers with more and more branches).
     /// </summary>
+    /// <param name="ent">Artifact entity, in which we need to generate segment.</param>
+    /// <param name="predecessors">Collection of nodes which are parts of previous layers for current segment.</param>
+    /// <param name="triggerPool">
+    /// Entity table context container that holds information about triggers that already was used.
+    /// </param>
+    /// <param name="maxNodes">Max number of nodes to be constructed in this layer.</param>
+    /// <param name="iteration">Number of layer.</param>
     private IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> PopulateLayer(
         Entity<XenoArtifactComponent> ent,
-        EntityTableSelector triggers,
-        EntityTableSelector effects,
         IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> predecessors,
         TriggerPoolData triggerPool,
         int maxNodes,
@@ -108,21 +109,27 @@ public sealed partial class XenoArtifactSystem
         var desiredNodeCount = 1;
         if (maxPerLayer >= minPerLayer)
             desiredNodeCount = new MinMax(minPerLayer, maxPerLayer).Next(RobustRandom);
-        _previousLayerNodes.Clear();
-        _previousLayerNodes.AddRange(predecessors);
-        _currentLayerNodes.Clear();
+
+        var nodes = new List<Entity<XenoArtifactNodeComponent>>();
         var scatterCount = ent.Comp.ScatterPerLayer.Next(RobustRandom);
 
         for (var i = 0; i < desiredNodeCount; i++)
         {
-            var directPredecessors = SelectDirectPredecessors(_previousLayerNodes, scatterCount);
+            var directPredecessors = SelectDirectPredecessors(predecessors, scatterCount);
             scatterCount -= (directPredecessors.Count - 1);
 
-            var nodeEntity = CreateNode(ent, directPredecessors, triggers, triggerPool, effects, iteration);
+            var trigger = _entityTable.GetFirstOrNull(ent.Comp.TriggersTable, RobustRandom, triggerPool.Context);
+            // should log error but in next PRs we will get cases of no nodes fitting into budget so it will be usual case, not error
+            if (trigger == null)
+                continue;
+
+            var nodeEntity = CreateNode(ent, trigger.Value, ent.Comp.EffectsTable, iteration);
             if (!nodeEntity.HasValue)
                 continue;
 
-            _currentLayerNodes.Add(nodeEntity.Value);
+            triggerPool.AddTriggerAsUsed(trigger.Value);
+
+            nodes.Add(nodeEntity.Value);
 
             foreach (var predecessorForEdge in directPredecessors)
             {
@@ -130,7 +137,7 @@ public sealed partial class XenoArtifactSystem
             }
         }
 
-        return _currentLayerNodes;
+        return nodes;
     }
 
     private IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> SelectDirectPredecessors(
@@ -142,25 +149,23 @@ public sealed partial class XenoArtifactSystem
         if (predecessors.Count <= 0)
             return [];
 
-        _directPredecessors.Clear();
-        var predecessor = RobustRandom.Pick(predecessorsToUse);
-        _directPredecessors.Add(predecessor);
-        predecessorsToUse.Remove(predecessor);
-
-        // randomly add in some extra edges for variance.
-        while (scatterCount > 0 && predecessorsToUse.Count != 0)
+        List<Entity<XenoArtifactNodeComponent>> directPredecessors = new();
+        // Select predecessors to build an edge to
+        do
         {
-            scatterCount--;
-            var predecessorFromScatter = RobustRandom.Pick(predecessorsToUse);
-            _directPredecessors.Add(predecessorFromScatter);
+            var predecessor = RobustRandom.Pick(predecessorsToUse);
+            directPredecessors.Add(predecessor);
             predecessorsToUse.Remove(predecessor);
+
+            // Randomly add extra edges
             if (RobustRandom.Prob(0.5f))
                 break;
-        }
 
-        return _directPredecessors;
+            scatterCount--;
+        } while (scatterCount >= 0 && predecessorsToUse.Count != 0);
+
+        return directPredecessors;
     }
-
 
     /// <summary>
     /// Rolls segment size, based on amount of nodes left and XenoArtifactComponent settings.
@@ -233,5 +238,32 @@ public sealed partial class XenoArtifactSystem
             else
                 AddEdge((ent, ent.Comp), node2, node1, false);
         }
+    }
+
+    /// <summary>
+    /// Container that represents pool of XenoArtifact triggers.
+    /// </summary>
+    private sealed class TriggerPoolData
+    {
+        private readonly HashSet<EntProtoId> _usedTriggers;
+
+        public TriggerPoolData(int requestedSize)
+        {
+            _usedTriggers = new(requestedSize);
+            Context = new EntityTableContext(new Dictionary<string, object>
+            {
+                [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = _usedTriggers
+            });
+        }
+
+        public readonly EntityTableContext Context;
+
+        public void AddTriggerAsUsed(EntProtoId trigger)
+        {
+            if (!_usedTriggers.Add(trigger))
+                throw new ArgumentException();
+        }
+
+        public IReadOnlyCollection<EntProtoId> UsedTriggers => _usedTriggers;
     }
 }

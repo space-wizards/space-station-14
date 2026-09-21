@@ -1,6 +1,6 @@
 using Content.Client.Message;
 using Content.Client.Pinpointer.UI;
-using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Palette;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Monitor;
@@ -49,8 +49,8 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
     private Color _monitorBlipColor = Color.Cyan;
     private Color _untrackedEntColor = Color.DimGray;
     private Color _regionBaseColor = new Color(154, 154, 154);
-    private Color _inactiveColor = StyleNano.DisabledFore;
-    private Color _statusTextColor = StyleNano.GoodGreenFore;
+    private Color _inactiveColor = Palettes.Neutral.Base;
+    private Color _statusTextColor = Palettes.Status.Good;
     private Color _goodColor = Color.LimeGreen;
     private Color _warningColor = new Color(255, 182, 72);
     private Color _dangerColor = new Color(255, 67, 67);

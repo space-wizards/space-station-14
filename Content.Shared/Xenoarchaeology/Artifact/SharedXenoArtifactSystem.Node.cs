@@ -9,7 +9,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using System.Linq;
 
 namespace Content.Shared.Xenoarchaeology.Artifact;
 
@@ -110,10 +109,9 @@ public abstract partial class SharedXenoArtifactSystem
         int depth = 0
     )
     {
-        EntProtoId? effect = _entityTable.GetSpawns(effects)
-                                         .FirstOrDefault();
-        if (effect == null)
-            return null;
+        var triggerProto = ProtoMan.Index(trigger);
+        return CreateNode(ent, triggerProto, depth);
+    }
 
         var trigger = ProtoMan.Index(triggerProtoId);
         return CreateNode(ent, effect.Value, trigger, depth);
