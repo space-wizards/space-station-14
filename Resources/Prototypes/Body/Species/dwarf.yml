@@ -107,6 +107,29 @@
           state: dwarfism_hand_right
   - type: HumanoidProfile
     species: Dwarf
+  - type: AttachedVisuals
+    attachments:
+    - attachment: InhandLeft
+      container: left
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: dwarfism_hand_left
+    - attachment: InhandRight
+      container: right
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: dwarfism_hand_right
+    - attachment: BeltEquipped
+      container: belt
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: dwarfism
 
 - type: displacementData
   id: Dwarfism

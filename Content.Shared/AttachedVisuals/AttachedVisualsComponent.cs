@@ -44,7 +44,6 @@ public sealed partial class AttachmentDefinition
     [DataField]
     public ProtoId<VisualAttachmentPrototype> Attachment;
 
-
     [DataField]
     public DisplacementData? DisplacementData;
 }

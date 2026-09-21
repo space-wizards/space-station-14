@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Client.DisplacementMap;
 using Content.Shared.AttachedVisuals;
 using Robust.Client.GameObjects;
 using Robust.Shared.Containers;
@@ -17,6 +18,7 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private ISerializationManager _serialization = default!;
     [Dependency] private IReflectionManager _reflection = default!;
+    [Dependency] public DisplacementMapSystem _displacement = default!;
 
 
     [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery = default!;
@@ -155,27 +157,62 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
         }
         ent.Comp.RevealedLayers.Clear();
 
-        var results = new List<(EntityUid Origin, string Key, HashSet<string> mapKeys, PrototypeLayerData Data)>();
-        GetLayers(ent, ent.Comp.Attachments, "attached", results);
-
-        foreach (var (origin, key, mapKeys, data) in results)
+        foreach (var attachment in ent.Comp.Attachments)
         {
-            var index = _sprite.LayerMapReserve((ent.Owner, sprite), key);
-            _sprite.LayerSetData((ent.Owner, sprite), index, data);
-            ent.Comp.RevealedLayers.GetOrNew(origin).Add(key);
+            var results = new List<(EntityUid Origin, string Key, HashSet<string> mapKeys, PrototypeLayerData Data)>();
+            GetAttachmentLayers(ent, attachment, results);
 
-            var addedLayerMap = new Dictionary<object, int>();
-
-            foreach (var mapkey in mapKeys)
+            foreach (var (origin, key, mapKeys, data) in results)
             {
-                var obj = ParseKey(mapkey);
-                addedLayerMap[obj] = index;
+                var index = _sprite.LayerMapReserve((ent.Owner, sprite), key);
+                _sprite.LayerSetData((ent.Owner, sprite), index, data);
+                ent.Comp.RevealedLayers.GetOrNew(origin).Add(key);
+
+                var addedLayerMap = new Dictionary<object, int>();
+
+                if (attachment.DisplacementData is not null && _displacement.TryAddDisplacement(attachment.DisplacementData, (ent, sprite), index, key, out var displacementKey))
+                    ent.Comp.RevealedLayers.GetOrNew(origin).Add(displacementKey);
+
+                foreach (var mapkey in mapKeys)
+                {
+                    var obj = ParseKey(mapkey);
+                    addedLayerMap[obj] = index;
+                }
+
+                var ev = new AttachedVisualsUpdatedEvent(ent, addedLayerMap);
+                RaiseLocalEvent(origin, ref ev);
             }
-
-            var ev = new AttachedVisualsUpdatedEvent(ent, addedLayerMap);
-            RaiseLocalEvent(origin, ref ev);
         }
+    }
 
+    /// <summary>
+    /// Gets the layers for a specific attachment on an entity
+    /// </summary>
+    private void GetAttachmentLayers(Entity<AttachedVisualsComponent> ent, AttachmentDefinition attachment, List<(EntityUid, string, HashSet<string> mapKeys, PrototypeLayerData)> results, string keyPrefix = "attached")
+    {
+        if (!ProtoMan.Resolve(attachment.Attachment, out var attachmentPrototype))
+            return;
+
+        if (!_container.TryGetContainer(ent, attachment.Container, out var container))
+            return;
+
+        foreach (var child in container.ContainedEntities)
+        {
+            if (!_attachedVisualsQuery.TryComp(child, out var childComp))
+                continue;
+
+            if (!childComp.AttachedVisuals.TryGetValue(attachmentPrototype, out var def))
+                continue;
+
+            var childPrefix = $"{keyPrefix}-{attachment.Container}-{child.Id}";
+
+            GetAttachedVisuals((child, childComp), attachmentPrototype, childPrefix, results);
+
+            foreach (var childAttachment in def.Attachments)
+            {
+                GetAttachmentLayers((child, childComp), childAttachment, results, childPrefix);
+            }
+        }
     }
 
     private object ParseKey(string keyString)
@@ -184,36 +221,6 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
             return @enum;
 
         return keyString;
-    }
-
-    /// <summary>
-    /// Gets the layers for this entities children
-    /// </summary>
-    private void GetLayers(Entity<AttachedVisualsComponent> ent, List<AttachmentDefinition> attachments, string keyPrefix, List<(EntityUid, string, HashSet<string> mapKeys, PrototypeLayerData)> results)
-    {
-        foreach (var attachment in attachments)
-        {
-            if (!_container.TryGetContainer(ent, attachment.Container, out var container))
-                continue;
-
-            if (!ProtoMan.Resolve(attachment.Attachment, out var attachmentPrototype))
-                continue;
-
-            foreach (var child in container.ContainedEntities)
-            {
-                if (!_attachedVisualsQuery.TryComp(child, out var childComp))
-                    continue;
-
-                if (!childComp.AttachedVisuals.TryGetValue(attachmentPrototype, out var def))
-                    continue;
-
-                var childPrefix = $"{keyPrefix}-{attachment.Container}-{child.Id}";
-
-                GetAttachedVisuals((child, childComp), attachmentPrototype, childPrefix, results);
-
-                GetLayers((child, childComp), def.Attachments, childPrefix, results);
-            }
-        }
     }
 
     /// <summary>
