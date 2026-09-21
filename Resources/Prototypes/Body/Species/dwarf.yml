@@ -111,6 +111,7 @@
     attachments:
     - attachment: InhandLeft
       container: left
+      order: 10
       displacementData:
         sizeMaps:
           32:
@@ -118,13 +119,31 @@
             state: dwarfism_hand_left
     - attachment: InhandRight
       container: right
+      order: 10
       displacementData:
         sizeMaps:
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: dwarfism_hand_right
-    - attachment: BeltEquipped
+    - attachment: EquippedBelt
       container: belt
+      order: 7
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+    - attachment: EquippedJumpsuit
+      container: jumpsuit
+      order: 3
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+    - attachment: EquippedOuterClothing
+      container: outerClothing
+      order: 4
       displacementData:
         sizeMaps:
           32:
