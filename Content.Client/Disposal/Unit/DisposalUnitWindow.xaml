@@ -33,11 +33,11 @@
                     Text="{Loc 'ui-disposal-unit-button-flush'}"
                     StyleClasses="OpenRight"
                     ToggleMode="True" />
-            <Button Name="Routing"
-                    Text="{Loc 'ui-disposal-unit-button-routing'}"
-                    StyleClasses="OpenBoth" />
             <Button Name="Eject"
                     Text="{Loc 'ui-disposal-unit-button-eject'}"
+                    StyleClasses="OpenBoth" />
+            <Button Name="Routing"
+                    Text="{Loc 'ui-disposal-unit-button-routing'}"
                     StyleClasses="OpenLeft" />
         </BoxContainer>
     </BoxContainer>
