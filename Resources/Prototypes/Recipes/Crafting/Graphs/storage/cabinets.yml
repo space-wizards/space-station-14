@@ -64,7 +64,10 @@
       steps:
       - material: Steel
         amount: 5
-        doAfter: 10
+        doAfter: 6
+      - material: Glass
+        amount: 2
+        doAfter: 2
   - node: done
     entity: FireAxeCabinetConstructed
     edges:
@@ -94,7 +97,10 @@
       steps:
       - material: Steel
         amount: 5
-        doAfter: 10
+        doAfter: 6
+      - material: Glass
+        amount: 2
+        doAfter: 2
   - node: done
     entity: ShotGunCabinetConstructed
     edges:
