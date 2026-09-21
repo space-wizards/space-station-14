@@ -123,7 +123,7 @@ public sealed partial class XenoArtifactSystem
             if (trigger == null)
                 continue;
 
-            var nodeEntity = CreateNode(ent, trigger.Value, ent.Comp.EffectsTable, iteration);
+            var nodeEntity = CreateNode(ent, directPredecessors, triggerPool, iteration);
             if (!nodeEntity.HasValue)
                 continue;
 

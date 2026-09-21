@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.EntityTable;
 using Content.Shared.EntityTable.Conditions;
 using Content.Shared.EntityTable.EntitySelectors;
@@ -102,24 +103,6 @@ public abstract partial class SharedXenoArtifactSystem
     /// <summary>
     /// Creates artifact node entity, attaching trigger and marking depth level for future use.
     /// </summary>
-    public Entity<XenoArtifactNodeComponent>? CreateNode(
-        Entity<XenoArtifactComponent> ent,
-        EntProtoId triggerProtoId,
-        EntityTableSelector effects,
-        int depth = 0
-    )
-    {
-        var triggerProto = ProtoMan.Index(trigger);
-        return CreateNode(ent, triggerProto, depth);
-    }
-
-        var trigger = ProtoMan.Index(triggerProtoId);
-        return CreateNode(ent, effect.Value, trigger, depth);
-    }
-
-    /// <summary>
-    /// Creates artifact node entity, attaching trigger and marking depth level for future use.
-    /// </summary>
     public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, EntProtoId effect, EntityPrototype trigger, int depth = 0)
     {
         AddNode((ent, ent), effect, out var nodeEnt, dirty: false);
@@ -138,9 +121,7 @@ public abstract partial class SharedXenoArtifactSystem
     protected Entity<XenoArtifactNodeComponent>? CreateNode(
         Entity<XenoArtifactComponent> ent,
         IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> directPredecessors,
-        EntityTableSelector triggers,
         TriggerPoolData triggerPool,
-        EntityTableSelector effects,
         int depth = 0
     )
     {
@@ -158,7 +139,7 @@ public abstract partial class SharedXenoArtifactSystem
         EntProtoId? triggerProtoId;
         using (var _ = new TemporarilyAddToContext<float>(triggerPool.Context, HasBudgetInRangeCondition.BudgetContextKey, virtualNodeBudget))
         {
-            triggerProtoId = _entityTable.GetFirstOrDefault(triggers, pr, triggerPool.Context);
+            triggerProtoId = _entityTable.GetFirstOrNull(ent.Comp.TriggersTable, pr, triggerPool.Context);
         }
 
         if (triggerProtoId == null)
@@ -181,7 +162,7 @@ public abstract partial class SharedXenoArtifactSystem
         EntProtoId? effect;
         using (var _ = new TemporarilyAddToContext<float>(triggerPool.Context, HasBudgetInRangeCondition.BudgetContextKey, actualBudget))
         {
-            effect = _entityTable.GetFirstOrDefault(effects, pr, triggerPool.Context); // todo:add context
+            effect = _entityTable.GetFirstOrNull(ent.Comp.Ef, pr, triggerPool.Context); // todo:add context
         }
 
         if (effect == null)
