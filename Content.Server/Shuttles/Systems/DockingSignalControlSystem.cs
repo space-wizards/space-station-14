@@ -13,7 +13,13 @@ public sealed partial class DockingSignalControlSystem : EntitySystem
     [Dependency] private DeviceLinkSystem _deviceLinkSystem = default!;
     [Dependency] private DockingSystem _dockingSystem = default!;
 
-    #region Subscriptions
+    [SubscribeLocalEvent]
+    private void OnComponentInit(Entity<DockingSignalControlComponent> ent,
+        ref ComponentInit args)
+    {
+        _deviceLinkSystem.EnsureSourcePorts(ent, ent.Comp.DockStatusSignalPort);
+        _deviceLinkSystem.EnsureSinkPorts(ent, ent.Comp.DockTogglePort);
+    }
 
     [SubscribeLocalEvent]
     private void OnDocked(Entity<DockingSignalControlComponent> ent, ref DockEvent args)
@@ -28,12 +34,12 @@ public sealed partial class DockingSignalControlSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnSignalRecieved(Entity<DockingSignalControlComponent> ent, ref SignalReceivedEvent args)
+    private void OnSignalReceived(Entity<DockingSignalControlComponent> ent, ref SignalReceivedEvent args)
     {
-        if (!TryComp<DockingComponent>(ent, out var dock))
+        if (args.Port != ent.Comp.DockTogglePort)
             return;
 
-        if (args.Port != ent.Comp.DockTogglePort)
+        if (!TryComp<DockingComponent>(ent, out var dock))
             return;
 
         var state = SignalState.Momentary;
@@ -62,6 +68,4 @@ public sealed partial class DockingSignalControlSystem : EntitySystem
             _dockingSystem.Undock((ent, dock));
         }
     }
-
-    #endregion
 }
