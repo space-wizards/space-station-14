@@ -241,7 +241,7 @@
   - type: EntityEffectAction
     effects:
     - !type:EyeDamage
-      amount: 2
+      amount: 1
     - !type:PopupMessage
       type: Local
       messages:
