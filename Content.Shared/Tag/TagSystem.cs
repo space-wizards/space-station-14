@@ -14,17 +14,13 @@ namespace Content.Shared.Tag;
 /// if you need to use them often, it's better to make a proper implementation,
 /// you can read more <a href="https://github.com/space-wizards/space-station-14/pull/28272">HERE</a>.
 /// </summary>
-public sealed class TagSystem : EntitySystem
+public sealed partial class TagSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-
-    private EntityQuery<TagComponent> _tagQuery;
+    [Dependency] private EntityQuery<TagComponent> _tagQuery = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-
-        _tagQuery = GetEntityQuery<TagComponent>();
 
 #if DEBUG
         SubscribeLocalEvent<TagComponent, ComponentInit>(OnTagInit);
@@ -710,6 +706,6 @@ public sealed class TagSystem : EntitySystem
 
     private void AssertValidTag(string id)
     {
-        DebugTools.Assert(_proto.HasIndex<TagPrototype>(id), $"Unknown tag: {id}");
+        DebugTools.Assert(ProtoMan.HasIndex<TagPrototype>(id), $"Unknown tag: {id}");
     }
 }

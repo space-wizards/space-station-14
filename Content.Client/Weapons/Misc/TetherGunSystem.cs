@@ -8,16 +8,15 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Weapons.Misc;
 
-public sealed class TetherGunSystem : SharedTetherGunSystem
+public sealed partial class TetherGunSystem : SharedTetherGunSystem
 {
-    [Dependency] private readonly IEyeManager _eyeManager = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IInputManager _input = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IOverlayManager _overlay = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly MapSystem _mapSystem = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private IEyeManager _eyeManager = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IInputManager _input = default!;
+    [Dependency] private IOverlayManager _overlay = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private MapSystem _mapSystem = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -73,7 +72,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
 
         EntityCoordinates coords;
 
-        if (_mapManager.TryFindGridAt(mouseWorldPos, out var gridUid, out _))
+        if (_mapSystem.TryFindGridAt(mouseWorldPos, out var gridUid, out _))
         {
             coords = TransformSystem.ToCoordinates(gridUid, mouseWorldPos);
         }

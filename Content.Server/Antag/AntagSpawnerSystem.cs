@@ -1,11 +1,12 @@
 using Content.Server.Antag.Components;
+using Content.Shared.Antag;
 
 namespace Content.Server.Antag;
 
 /// <summary>
 /// Spawns an entity when creating an antag for <see cref="AntagSpawnerComponent"/>.
 /// </summary>
-public sealed class AntagSpawnerSystem : EntitySystem
+public sealed partial class AntagSpawnerSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -16,6 +17,6 @@ public sealed class AntagSpawnerSystem : EntitySystem
 
     private void OnSelectEntity(Entity<AntagSpawnerComponent> ent, ref AntagSelectEntityEvent args)
     {
-        args.Entity = Spawn(ent.Comp.Prototype);
+        args.Entity = Spawn(ent.Comp.Prototype, args.Coords);
     }
 }

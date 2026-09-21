@@ -1,5 +1,6 @@
 using Content.Client.Guidebook;
 using Content.Client.Guidebook.Richtext;
+using Content.IntegrationTests.Fixtures;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Prototypes;
 using Content.IntegrationTests.Utility;
@@ -12,7 +13,7 @@ namespace Content.IntegrationTests.Tests.Guidebook;
 [TestOf(typeof(GuidebookSystem))]
 [TestOf(typeof(GuideEntryPrototype))]
 [TestOf(typeof(DocumentParsingManager))]
-public sealed class GuideEntryPrototypeTests
+public sealed class GuideEntryPrototypeTests : GameTest
 {
     private static string[] _guideEntries = GameDataScrounger.PrototypesOfKind<GuideEntryPrototype>();
 
@@ -21,7 +22,7 @@ public sealed class GuideEntryPrototypeTests
     [Description("Ensures a given guidebook entry is valid, checking the document/etc.")]
     public async Task Validate(string protoKey)
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+        var pair = Pair;
         var client = pair.Client;
         await client.WaitIdleAsync();
         var protoMan = client.ResolveDependency<IPrototypeManager>();
@@ -36,7 +37,5 @@ public sealed class GuideEntryPrototypeTests
 
             Assert.That(parser.TryAddMarkup(new Document(), text), $"Failed to parse the guide entry's document.");
         });
-
-        await pair.CleanReturnAsync();
     }
 }

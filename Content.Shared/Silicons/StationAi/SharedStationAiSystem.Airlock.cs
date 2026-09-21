@@ -9,7 +9,7 @@ namespace Content.Shared.Silicons.StationAi;
 // Handles airlock radial
 public abstract partial class SharedStationAiSystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
 
     private void InitializeAirlock()
     {

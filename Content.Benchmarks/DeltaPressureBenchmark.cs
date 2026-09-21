@@ -1,3 +1,4 @@
+using System.IO;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Content.IntegrationTests;
@@ -31,7 +32,7 @@ public class DeltaPressureBenchmark
     /// <summary>
     /// Number of entities (windows, really) to spawn with a <see cref="DeltaPressureComponent"/>.
     /// </summary>
-    [Params(1, 10, 100, 1000, 5000, 10000, 50000, 100000)]
+    [Params(100, 1000, 5000, 10000)]
     public int EntityCount;
 
     /// <summary>
@@ -68,7 +69,7 @@ public class DeltaPressureBenchmark
     {
         ProgramShared.PathOffset = "../../../../";
         PoolManager.Startup();
-        _pair = await PoolManager.GetServerClient();
+        _pair = await PoolManager.GetServerClient(testContext: new ExternalTestContext("Benchmark", StreamWriter.Null));
         var server = _pair.Server;
 
         var mapdata = await _pair.CreateTestMap();

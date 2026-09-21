@@ -1,11 +1,10 @@
 using Content.Shared.Audio;
-using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.DeviceNetwork.Payloads;
 using Content.Shared.DoAfter;
 using Content.Shared.Emp;
 using Content.Shared.Hands.EntitySystems;
@@ -21,21 +20,24 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Light.EntitySystems;
 
-public abstract class SharedPoweredLightSystem : EntitySystem
+/// <summary>
+/// System for handling PoweredLightComponent events.
+/// </summary>
+public abstract partial class SharedPoweredLightSystem : EntitySystem
 {
-    [Dependency] protected readonly IGameTiming GameTiming = default!;
-    [Dependency] private readonly DamageOnInteractSystem _damageOnInteractSystem = default!;
-    [Dependency] private readonly SharedAmbientSoundSystem _ambientSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly SharedLightBulbSystem _bulbSystem = default!;
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private readonly SharedPowerReceiverSystem _receiver = default!;
-    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
-    [Dependency] private readonly SharedStorageSystem _storage = default!;
-    [Dependency] private readonly SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] protected IGameTiming GameTiming = default!;
+    [Dependency] private DamageOnInteractSystem _damageOnInteractSystem = default!;
+    [Dependency] private SharedAmbientSoundSystem _ambientSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] protected SharedContainerSystem ContainerSystem = default!;
+    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private SharedLightBulbSystem _bulbSystem = default!;
+    [Dependency] private SharedHandsSystem _handsSystem = default!;
+    [Dependency] private SharedPowerReceiverSystem _receiver = default!;
+    [Dependency] private SharedPointLightSystem _pointLight = default!;
+    [Dependency] private SharedStorageSystem _storage = default!;
+    [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
 
     private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
     public const string LightBulbContainer = "light_bulb";
@@ -49,7 +51,6 @@ public abstract class SharedPoweredLightSystem : EntitySystem
         SubscribeLocalEvent<PoweredLightComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<PoweredLightComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<PoweredLightComponent, SignalReceivedEvent>(OnSignalReceived);
-        SubscribeLocalEvent<PoweredLightComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<PoweredLightComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<PoweredLightComponent, PoweredLightDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<PoweredLightComponent, DamageChangedEvent>(HandleLightDamaged);
@@ -128,15 +129,12 @@ public abstract class SharedPoweredLightSystem : EntitySystem
     }
 
     /// <summary>
-    /// Turns the light on or of when receiving a <see cref="DeviceNetworkConstants.CmdSetState"/> command.
-    /// The light is turned on or of according to the <see cref="DeviceNetworkConstants.StateEnabled"/> value
+    /// Turns the light on or of when receiving a <see cref="ApcNetTogglePayload"/>.
     /// </summary>
-    private void OnPacketReceived(EntityUid uid, PoweredLightComponent component, DeviceNetworkPacketEvent args)
+    [SubscribeLocalEvent]
+    private void OnPacketReceived(Entity<PoweredLightComponent> ent, ref DeviceNetworkPacketEvent<ApcNetTogglePayload> args)
     {
-        if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command) || command != DeviceNetworkConstants.CmdSetState) return;
-        if (!args.Data.TryGetValue(DeviceNetworkConstants.StateEnabled, out bool enabled)) return;
-
-        SetState(uid, enabled, component);
+        SetState(ent, args.Data.Enabled, ent.Comp);
     }
 
     /// <summary>
@@ -299,7 +297,7 @@ public abstract class SharedPoweredLightSystem : EntitySystem
                     {
                         light.LastThunk = time;
                         Dirty(uid, light);
-                        _audio.PlayPredicted(light.TurnOnSound, uid, user: user, light.TurnOnSound.Params.AddVolume(-10f));
+                        _audio.PlayPredicted(light.TurnOnSound, uid, user: user, light.TurnOnSound.Params.AddVolume(-6f));
                     }
                 }
                 else

@@ -1,4 +1,4 @@
-﻿using Content.Client.Markers;
+using Content.Client.Markers;
 using Content.Client.SubFloor;
 using Content.Client.Stylesheets;
 using Content.Shared.Silicons.StationAi;
@@ -14,10 +14,10 @@ namespace Content.Client.UserInterface.Systems.Sandbox.Windows;
 [GenerateTypedNameReferences]
 public sealed partial class SandboxWindow : DefaultWindow
 {
-    [Dependency] private readonly IEntityManager _entManager = null!;
-    [Dependency] private readonly IEyeManager _eyeManager = null!;
-    [Dependency] private readonly ILightManager _lightManager = null!;
-    [Dependency] private readonly IPlayerManager _playerManager = null!;
+    [Dependency] private IEntityManager _entManager = null!;
+    [Dependency] private IEyeManager _eyeManager = null!;
+    [Dependency] private ILightManager _lightManager = null!;
+    [Dependency] private IPlayerManager _playerManager = null!;
     private readonly DebugPhysicsSystem _debugPhysicsSystem;
     private readonly MarkerSystem _markerSystem;
     private readonly SubFloorHideSystem _subFloorSystem;

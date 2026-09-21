@@ -1,5 +1,7 @@
 using System.Numerics;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.Shuttles.Components;
+using Content.Shared.Shuttles.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -9,16 +11,15 @@ using Robust.Shared.Physics.Systems;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public sealed class ShuttleTest
+    public sealed class ShuttleTest : GameTest
     {
         [Test]
         public async Task Test()
         {
-            await using var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var server = pair.Server;
             await server.WaitIdleAsync();
 
-            var mapMan = server.ResolveDependency<IMapManager>();
             var entManager = server.ResolveDependency<IEntityManager>();
             var physicsSystem = entManager.System<SharedPhysicsSystem>();
 
@@ -50,7 +51,6 @@ namespace Content.IntegrationTests.Tests
             {
                 Assert.That(entManager.GetComponent<TransformComponent>(map.Grid).LocalPosition, Is.Not.EqualTo(Vector2.Zero));
             });
-            await pair.CleanReturnAsync();
         }
     }
 }

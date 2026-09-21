@@ -5,9 +5,9 @@ namespace Content.Shared.Item.ItemToggle;
 /// <summary>
 /// On toggle handles the changes to ItemComponent.HeldPrefix. <see cref="ItemTogglePrefixComponent"/>.
 /// </summary>
-public sealed class ItemTogglePrefixSystem : EntitySystem
+public sealed partial class ItemTogglePrefixSystem : EntitySystem
 {
-    [Dependency] private readonly SharedItemSystem _item = default!;
+    [Dependency] private SharedItemSystem _item = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

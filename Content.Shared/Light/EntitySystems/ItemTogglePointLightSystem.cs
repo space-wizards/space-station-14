@@ -8,10 +8,10 @@ namespace Content.Shared.Light.EntitySystems;
 /// Implements the behavior of <see cref="ItemTogglePointLightComponent"/>, causing <see cref="ItemToggledEvent"/>s to
 /// enable and disable lights on the entity.
 /// </summary>
-public sealed class ItemTogglePointLightSystem : EntitySystem
+public sealed partial class ItemTogglePointLightSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPointLightSystem _light = default!;
-    [Dependency] private readonly SharedHandheldLightSystem _handheldLight = default!;
+    [Dependency] private SharedPointLightSystem _light = default!;
+    [Dependency] private SharedHandheldLightSystem _handheldLight = default!;
 
     public override void Initialize()
     {

@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Item;
@@ -52,7 +52,7 @@ public sealed class StorageCommand : ToolshedCommand
         return null;
     }
 
-    [CommandImplementation("query")]
+    [CommandImplementation("contents")]
     public IEnumerable<EntityUid> StorageQuery([PipedArgument] IEnumerable<EntityUid> storageEnts, bool recursive) =>
         storageEnts.SelectMany(x => StorageQueryRecursiveBase(x, recursive));
 

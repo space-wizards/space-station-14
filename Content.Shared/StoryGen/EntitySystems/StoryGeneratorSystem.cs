@@ -10,8 +10,7 @@ namespace Content.Shared.StoryGen;
 /// </summary>
 public sealed partial class StoryGeneratorSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     /// <summary>
     /// Tries to generate a random story using the given template, picking a random word from the referenced
@@ -24,7 +23,7 @@ public sealed partial class StoryGeneratorSystem : EntitySystem
     public bool TryGenerateStoryFromTemplate(ProtoId<StoryTemplatePrototype> template, [NotNullWhen(true)] out string? story, int? seed = null)
     {
         // Get the story template prototype from the ID
-        if (!_protoMan.Resolve(template, out var templateProto))
+        if (!ProtoMan.Resolve(template, out var templateProto))
         {
             story = null;
             return false;
@@ -39,7 +38,7 @@ public sealed partial class StoryGeneratorSystem : EntitySystem
         foreach (var (name, list) in templateProto.Variables)
         {
             // Get the prototype for the world list dataset
-            if (!_protoMan.Resolve(list, out var listProto))
+            if (!ProtoMan.Resolve(list, out var listProto))
                 continue; // Missed one, but keep going with the rest of the story
 
             // Pick a random word from the dataset and localize it

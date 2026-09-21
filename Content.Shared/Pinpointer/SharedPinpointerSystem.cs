@@ -7,10 +7,10 @@ using Content.Shared.Interaction;
 
 namespace Content.Shared.Pinpointer;
 
-public abstract class SharedPinpointerSystem : EntitySystem
+public abstract partial class SharedPinpointerSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private EmagSystem _emag = default!;
 
     public override void Initialize()
     {

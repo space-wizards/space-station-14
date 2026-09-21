@@ -1,4 +1,4 @@
-﻿using Content.Shared.CrewManifest;
+using Content.Shared.CrewManifest;
 using Content.Shared.Roles;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
@@ -7,10 +7,10 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.CrewManifest.UI;
 
-public sealed class CrewManifestListing : BoxContainer
+public sealed partial class CrewManifestListing : BoxContainer
 {
-    [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IEntitySystemManager _entitySystem = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
     private readonly SpriteSystem _spriteSystem;
 
     public CrewManifestListing()

@@ -3,9 +3,9 @@ using Robust.Shared.Console;
 
 namespace Content.Client.Shuttles.Commands;
 
-public sealed class ShowEmergencyShuttleCommand : LocalizedEntityCommands
+public sealed partial class ShowEmergencyShuttleCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly ShuttleSystem _shuttle = default!;
+    [Dependency] private ShuttleSystem _shuttle = default!;
 
     public override string Command => "showemergencyshuttle";
 

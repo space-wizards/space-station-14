@@ -8,9 +8,9 @@ using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.Equipment.Components;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Vehicle.Systems;
 using Content.Shared.Wall;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -22,14 +22,15 @@ namespace Content.Server.Mech.Equipment.EntitySystems;
 /// <summary>
 /// Handles <see cref="MechGrabberComponent"/> and all related UI logic
 /// </summary>
-public sealed class MechGrabberSystem : EntitySystem
+public sealed partial class MechGrabberSystem : EntitySystem
 {
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly MechSystem _mech = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly InteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private MechSystem _mech = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private InteractionSystem _interaction = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private VehicleSystem _vehicle = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -145,7 +146,10 @@ public sealed class MechGrabberSystem : EntitySystem
         if (component.ItemContainer.ContainedEntities.Count >= component.MaxContents)
             return;
 
-        if (!TryComp<MechComponent>(args.User, out var mech) || mech.PilotSlot.ContainedEntity == target)
+        if (_vehicle.GetOperatorOrNull(args.User) == target)
+            return;
+
+        if (!TryComp<MechComponent>(args.User, out var mech))
             return;
 
         if (mech.Energy + component.GrabEnergyDelta < 0)

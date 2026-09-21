@@ -6,19 +6,12 @@ using Robust.Shared.Network;
 
 namespace Content.Shared.Holosign;
 
-public sealed class HolosignSystem : EntitySystem
+public sealed partial class HolosignSystem : EntitySystem
 {
-    [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private PowerCellSystem _powerCell = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<HolosignProjectorComponent, BeforeRangedInteractEvent>(OnBeforeInteract);
-        SubscribeLocalEvent<HolosignProjectorComponent, ExaminedEvent>(OnExamine);
-    }
-
+    [SubscribeLocalEvent]
     private void OnExamine(Entity<HolosignProjectorComponent> ent, ref ExaminedEvent args)
     {
         // TODO: This should probably be using an itemstatus
@@ -37,6 +30,7 @@ public sealed class HolosignSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnBeforeInteract(Entity<HolosignProjectorComponent> ent, ref BeforeRangedInteractEvent args)
     {
         if (args.Handled
@@ -48,10 +42,7 @@ public sealed class HolosignSystem : EntitySystem
 
         // overlapping of the same holo on one tile remains allowed to allow holofan refreshes
         if (ent.Comp.PredictedSpawn || _net.IsServer)
-        {
-            var holosign = PredictedSpawnAtPosition(ent.Comp.SignProto, args.ClickLocation);
-            Transform(holosign).LocalRotation = Angle.Zero;
-        }
+            PredictedSpawnAtPosition(ent.Comp.SignProto, args.ClickLocation);
 
         args.Handled = true;
     }

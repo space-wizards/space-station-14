@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Coordinates;
@@ -5,17 +7,18 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests.Fluids
 {
     [TestFixture]
     [TestOf(typeof(PuddleComponent))]
-    public sealed class PuddleTest
+    public sealed class PuddleTest : GameTest
     {
         [Test]
         public async Task TilePuddleTest()
         {
-            await using var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var server = pair.Server;
 
             var testMap = await pair.CreateTestMap();
@@ -32,32 +35,32 @@ namespace Content.IntegrationTests.Tests.Fluids
 
                 Assert.That(spillSystem.TrySpillAt(coordinates, solution, out _), Is.True);
             });
-            await pair.RunTicksSync(5);
-
-            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task SpaceNoPuddleTest()
         {
-            await using var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var server = pair.Server;
 
             var testMap = await pair.CreateTestMap();
             var grid = testMap.Grid;
 
-            var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
             var spillSystem = server.System<PuddleSystem>();
             var mapSystem = server.System<SharedMapSystem>();
 
             // Remove all tiles
             await server.WaitPost(() =>
             {
-                var tiles = mapSystem.GetAllTiles(grid.Owner, grid.Comp);
-                foreach (var tile in tiles)
+                var tiles = new List<(Vector2i GridIndices, Tile Tile)>();
+                var tileEnumerator = mapSystem.GetAllTiles(grid.Owner, grid.Comp);
+
+                foreach (var tile in tileEnumerator)
                 {
-                    mapSystem.SetTile(grid, tile.GridIndices, Tile.Empty);
+                    tiles.Add((tile.GridIndices, Tile.Empty));
                 }
+
+                mapSystem.SetTiles(grid, tiles);
             });
 
             await pair.RunTicksSync(5);
@@ -69,8 +72,6 @@ namespace Content.IntegrationTests.Tests.Fluids
 
                 Assert.That(spillSystem.TrySpillAt(coordinates, solution, out _), Is.False);
             });
-
-            await pair.CleanReturnAsync();
         }
     }
 }

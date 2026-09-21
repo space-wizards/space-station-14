@@ -6,18 +6,22 @@ using Content.Shared.Access.Components;
 using Content.Shared.Station.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.GameTicking.Components;
-using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed class BluespaceLockerRule : StationEventSystem<BluespaceLockerRuleComponent>
+/// <summary>
+/// Handler for events bluespace linking two lockers together (teleporting between them on close).
+/// </summary>
+/// <seealso cref="BluespaceLockerRuleComponent"/>
+/// <seealso cref="BluespaceLockerComponent"/>
+public sealed partial class BluespaceLockerRule : StationEventSystem<BluespaceLockerRuleComponent>
 {
-    [Dependency] private readonly BluespaceLockerSystem _bluespaceLocker = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private BluespaceLockerSystem _bluespaceLocker = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
-    protected override void Started(EntityUid uid, BluespaceLockerRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    protected override void Started(Entity<BluespaceLockerRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
     {
-        base.Started(uid, component, gameRule, args);
+        base.Started(ent, ref args);
 
         var targets = new List<EntityUid>();
         var query = EntityQueryEnumerator<EntityStorageComponent, ResistLockerComponent>();

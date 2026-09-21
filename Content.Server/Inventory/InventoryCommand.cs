@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Inventory;
@@ -12,7 +12,7 @@ public sealed class InventoryCommand : ToolshedCommand
 {
     private InventorySystem? _inventorySystem;
 
-    [CommandImplementation("query")]
+    [CommandImplementation("contents")]
     public IEnumerable<EntityUid> InventoryQuery([PipedArgument] IEnumerable<EntityUid> entities) =>
         entities.SelectMany(InventoryQuery);
 

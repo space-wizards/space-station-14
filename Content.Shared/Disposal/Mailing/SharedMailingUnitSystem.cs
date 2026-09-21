@@ -1,174 +1,146 @@
 using Content.Shared.Configurable;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Unit;
-using Content.Shared.Disposal.Unit.Events;
 using Content.Shared.Interaction;
-using Content.Shared.Power.EntitySystems;
 using Robust.Shared.Player;
 
 namespace Content.Shared.Disposal.Mailing;
 
-public abstract class SharedMailingUnitSystem : EntitySystem
+public abstract partial class SharedMailingUnitSystem : EntitySystem
 {
-    [Dependency] private readonly SharedDeviceNetworkSystem _deviceNetworkSystem = default!;
-    [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
-    [Dependency] protected readonly SharedUserInterfaceSystem UserInterfaceSystem = default!;
+    [Dependency] private SharedDeviceNetworkSystem _deviceNetwork = default!;
+    [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
 
     private const string MailTag = "mail";
-
     private const string TagConfigurationKey = "tag";
-
-    private const string NetTag = "tag";
-    private const string NetSrc = "src";
-    private const string NetTarget = "target";
-    private const string NetCmdSent = "mail_sent";
-    private const string NetCmdRequest = "get_mailer_tag";
-    private const string NetCmdResponse = "mailer_tag";
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<MailingUnitComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<MailingUnitComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<MailingUnitComponent, BeforeDisposalFlushEvent>(OnBeforeFlush);
         SubscribeLocalEvent<MailingUnitComponent, ConfigurationUpdatedEvent>(OnConfigurationUpdated);
         SubscribeLocalEvent<MailingUnitComponent, ActivateInWorldEvent>(HandleActivate, before: new[] { typeof(SharedDisposalUnitSystem) });
         SubscribeLocalEvent<MailingUnitComponent, TargetSelectedMessage>(OnTargetSelected);
     }
 
-    private void OnComponentInit(EntityUid uid, MailingUnitComponent component, ComponentInit args)
+    private void OnComponentInit(Entity<MailingUnitComponent> ent, ref ComponentInit args)
     {
-        UpdateTargetList(uid, component);
+        UpdateTargetList(ent);
     }
 
-    private void OnPacketReceived(EntityUid uid, MailingUnitComponent component, DeviceNetworkPacketEvent args)
+    [SubscribeLocalEvent]
+    private void OnRequestTag(Entity<MailingUnitComponent> ent, ref DeviceNetworkPacketEvent<MailRequestTagPayload> args)
     {
-        if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command) || !_power.IsPowered(uid))
+        if (ent.Comp.Tag == null)
             return;
 
-        switch (command)
+        var tagPayload = new MailTagPayload
         {
-            case NetCmdRequest:
-                SendTagRequestResponse(uid, args, component.Tag);
-                break;
-            case NetCmdResponse when args.Data.TryGetValue(NetTag, out string? tag):
-                //Add the received tag request response to the list of targets
-                component.TargetList.Add(tag);
-                Dirty(uid, component);
-                break;
-        }
-    }
-
-    /// <summary>
-    /// Sends the given tag as a response to a <see cref="NetCmdRequest"/> if it's not null
-    /// </summary>
-    private void SendTagRequestResponse(EntityUid uid, DeviceNetworkPacketEvent args, string? tag)
-    {
-        if (tag == null)
-            return;
-
-        var payload = new NetworkPayload
-        {
-            [DeviceNetworkConstants.Command] = NetCmdResponse,
-            [NetTag] = tag
+            Tag = ent.Comp.Tag,
         };
 
-        _deviceNetworkSystem.QueuePacket(uid, args.Address, payload, args.Frequency);
+        _deviceNetwork.SendPacket(ent.Owner, args.SenderAddress, ref tagPayload, args.Frequency);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnTag(Entity<MailingUnitComponent> ent, ref DeviceNetworkPacketEvent<MailTagPayload> args)
+    {
+        ent.Comp.TargetList.Add(args.Data.Tag);
+        Dirty(ent);
     }
 
     /// <summary>
     /// Prevents the unit from flushing if no target is selected
     /// </summary>
-    private void OnBeforeFlush(EntityUid uid, MailingUnitComponent component, BeforeDisposalFlushEvent args)
+    private void OnBeforeFlush(Entity<MailingUnitComponent> ent, ref BeforeDisposalFlushEvent args)
     {
-        if (string.IsNullOrEmpty(component.Target))
+        if (string.IsNullOrEmpty(ent.Comp.Target))
         {
             args.Cancel();
             return;
         }
 
-        Dirty(uid, component);
+        Dirty(ent);
         args.Tags.Add(MailTag);
-        args.Tags.Add(component.Target);
+        args.Tags.Add(ent.Comp.Target);
 
-        BroadcastSentMessage(uid, component);
+        BroadcastSentMessage(ent);
     }
 
     /// <summary>
     /// Broadcast that a mail was sent including the src and target tags
     /// </summary>
-    private void BroadcastSentMessage(EntityUid uid, MailingUnitComponent component, DeviceNetworkComponent? device = null)
+    private void BroadcastSentMessage(Entity<MailingUnitComponent> ent, DeviceNetworkComponent? device = null)
     {
-        if (string.IsNullOrEmpty(component.Tag) || string.IsNullOrEmpty(component.Target) || !Resolve(uid, ref device))
+        if (string.IsNullOrEmpty(ent.Comp.Tag) || string.IsNullOrEmpty(ent.Comp.Target) || !Resolve(ent, ref device))
             return;
 
-        var payload = new NetworkPayload
+        var payload = new MailSendPayload
         {
-            [DeviceNetworkConstants.Command] = NetCmdSent,
-            [NetSrc] = component.Tag,
-            [NetTarget] = component.Target
+            Tag = ent.Comp.Tag,
+            Target = ent.Comp.Target,
         };
 
-        _deviceNetworkSystem.QueuePacket(uid, null, payload, null, null, device);
+        _deviceNetwork.SendPacket((ent.Owner, device), null, ref payload);
     }
 
     /// <summary>
-    /// Clears the units target list and broadcasts a <see cref="NetCmdRequest"/>.
-    /// The target list will then get populated with <see cref="NetCmdResponse"/> responses from all active mailing units on the same grid
+    /// Clears the units target list and broadcasts a <see cref="MailRequestTagPayload"/>.
+    /// The target list will then get populated with <see cref="MailTagPayload"/> responses from all active mailing units on the same grid
     /// </summary>
-    private void UpdateTargetList(EntityUid uid, MailingUnitComponent component, DeviceNetworkComponent? device = null)
+    private void UpdateTargetList(Entity<MailingUnitComponent> ent, DeviceNetworkComponent? device = null)
     {
-        if (!Resolve(uid, ref device, false))
+        if (!Resolve(ent, ref device, false))
             return;
 
-        var payload = new NetworkPayload
-        {
-            [DeviceNetworkConstants.Command] = NetCmdRequest
-        };
-
-        component.TargetList.Clear();
-        _deviceNetworkSystem.QueuePacket(uid, null, payload, null, null, device);
+        var payload = new MailRequestTagPayload();
+        ent.Comp.TargetList.Clear();
+        _deviceNetwork.SendPacket((ent.Owner, device), null, ref payload);
     }
 
     /// <summary>
     /// Gets called when the units tag got updated
     /// </summary>
-    private void OnConfigurationUpdated(EntityUid uid, MailingUnitComponent component, ConfigurationUpdatedEvent args)
+    private void OnConfigurationUpdated(Entity<MailingUnitComponent> ent, ref ConfigurationUpdatedEvent args)
     {
         var configuration = args.Configuration.Config;
         if (!configuration.ContainsKey(TagConfigurationKey) || configuration[TagConfigurationKey] == string.Empty)
         {
-            component.Tag = null;
+            ent.Comp.Tag = null;
             return;
         }
 
-        component.Tag = configuration[TagConfigurationKey];
-        Dirty(uid, component);
+        ent.Comp.Tag = configuration[TagConfigurationKey];
+        Dirty(ent);
     }
 
-    private void HandleActivate(EntityUid uid, MailingUnitComponent component, ActivateInWorldEvent args)
+    private void HandleActivate(Entity<MailingUnitComponent> ent, ref ActivateInWorldEvent args)
     {
         if (args.Handled || !args.Complex)
             return;
 
         if (!TryComp(args.User, out ActorComponent? actor))
-        {
             return;
-        }
 
         args.Handled = true;
-        UpdateTargetList(uid, component);
-        UserInterfaceSystem.OpenUi(uid, MailingUnitUiKey.Key, actor.PlayerSession);
+        UpdateTargetList(ent);
+
+        _userInterface.OpenUi(ent.Owner, MailingUnitUiKey.Key, actor.PlayerSession);
     }
 
-    private void OnTargetSelected(EntityUid uid, MailingUnitComponent component, TargetSelectedMessage args)
+    private void OnTargetSelected(Entity<MailingUnitComponent> ent, ref TargetSelectedMessage args)
     {
-        component.Target = args.Target;
-        Dirty(uid, component);
+        ent.Comp.Target = args.Target;
+        Dirty(ent);
+
+        if (_userInterface.TryGetOpenUi(ent.Owner, MailingUnitUiKey.Key, out var bui))
+        {
+            bui.Update<MailingUnitBoundUserInterfaceState>();
+        }
     }
 }

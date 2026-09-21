@@ -14,7 +14,7 @@ namespace Content.Server.Atmos.EntitySystems
 {
     public sealed partial class AtmosphereSystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
 
         private readonly Stopwatch _simulationStopwatch = new();
 
@@ -395,14 +395,9 @@ namespace Content.Server.Atmos.EntitySystems
             // Note: This is still processed even if space wind is turned off since this handles playing the sounds.
 
             var number = 0;
-            var bodies = GetEntityQuery<PhysicsComponent>();
-            var xforms = GetEntityQuery<TransformComponent>();
-            var metas = GetEntityQuery<MetaDataComponent>();
-            var pressureQuery = GetEntityQuery<MovedByPressureComponent>();
-
             while (atmosphere.CurrentRunTiles.TryDequeue(out var tile))
             {
-                HighPressureMovements(ent, tile, bodies, xforms, pressureQuery, metas);
+                HighPressureMovements(ent, tile);
                 tile.PressureDifference = 0f;
                 tile.LastPressureDirection = tile.PressureDirection;
                 tile.PressureDirection = AtmosDirection.Invalid;

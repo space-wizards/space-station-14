@@ -1,3 +1,4 @@
+using Content.Shared.DisplacementMap;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Robust.Shared.GameStates;
@@ -36,6 +37,13 @@ public sealed partial class VisualOrganMarkingsComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public Dictionary<Enum, HashSet<Enum>> DependentHidingLayers = new();
+
+    /// <summary>
+    /// Optional displacement data for this organ to apply to markings.
+    /// Only applies to markings which support displacement data.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Dictionary<HumanoidVisualLayers, DisplacementData> MarkingsDisplacement = new();
 
     /// <summary>
     /// Client only - the last markings applied by this component
