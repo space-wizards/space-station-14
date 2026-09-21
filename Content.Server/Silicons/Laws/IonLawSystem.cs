@@ -256,7 +256,10 @@ public sealed partial class IonLawSystem : EntitySystem
     private object GetSelectorValue(IonLawSelector selector, int depth)
     {
         if (depth > MaxDepth)
+        {
+            _sawmill.Error("A selector ending in " + selector + " went over the recursion limit");
             return Loc.GetString("ion-law-error-max-recursion");
+        }
 
         switch (selector)
         {
@@ -293,7 +296,7 @@ public sealed partial class IonLawSystem : EntitySystem
                 if (constantFill.BoolValue.HasValue)
                     return constantFill.BoolValue.Value;
 
-                if (constantFill.Value != string.Empty)
+                if (!string.IsNullOrEmpty(constantFill.Value))
                     return constantFill.Value;
 
                 _sawmill.Error("The selected Constant Fill did not have a value: " + constantFill);
@@ -316,8 +319,11 @@ public sealed partial class IonLawSystem : EntitySystem
                 return s[..(s.Length - joinedDatasetFill.Separator.Length)];
 
             case TranslateFill translateFill:
-                if (translateFill.Key == string.Empty)
+                if (string.IsNullOrEmpty(translateFill.Key))
+                {
+                    _sawmill.Error(selector.ToString() + " has no defined translation string");
                     return Loc.GetString("ion-law-error-no-protos");
+                }
 
                 if (translateFill.Args.Count == 0)
                     return Loc.GetString(translateFill.Key);
