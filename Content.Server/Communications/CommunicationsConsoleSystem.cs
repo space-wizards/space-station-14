@@ -205,9 +205,7 @@ namespace Content.Server.Communications
             if (message.Actor is { Valid: true } mob)
             {
                 if (!CanAnnounce(comp))
-                {
                     return;
-                }
 
                 if (!CanUse(mob, uid))
                 {
@@ -229,19 +227,17 @@ namespace Content.Server.Communications
             title ??= comp.Title;
 
             var signature = comp.AnnounceSentBy ? author : null;
+            var scope = comp.Global ? "global" : "station";
 
             if (comp.Global)
-            {
                 _chatSystem.DispatchGlobalAnnouncement(msg, title, announcementSound: comp.Sound, colorOverride: comp.Color, signature: signature);
+            else
+                _chatSystem.DispatchStationAnnouncement(uid, msg, title, colorOverride: comp.Color, signature: signature);
 
-                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(message.Actor):player} has sent the following global announcement: {msg}");
-                return;
-            }
-
-            _chatSystem.DispatchStationAnnouncement(uid, msg, title, colorOverride: comp.Color, signature: signature);
-
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(message.Actor):player} has sent the following station announcement: {msg}");
-
+            if (signature != null)
+                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(message.Actor):player} has sent the following {scope} announcement as {signature}: {msg}");
+            else
+                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(message.Actor):player} has sent the following {scope} announcement: {msg}");
         }
 
         private void OnBroadcastMessage(EntityUid uid, CommunicationsConsoleComponent component, CommunicationsConsoleBroadcastMessage message)
