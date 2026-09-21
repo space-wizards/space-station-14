@@ -33,7 +33,7 @@ public sealed partial class DockingSignalControlSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnSignalReceived(Entity<DockingSignalControlComponent> ent, ref SignalReceivedEvent args)
+    private void OnSignalReceived(Entity<DockingSignalControlComponent> ent, ref SignalReceivedEvent<LogicStatePayload> args)
     {
         if (args.Port != ent.Comp.DockTogglePort)
             return;
@@ -41,8 +41,7 @@ public sealed partial class DockingSignalControlSystem : EntitySystem
         if (!TryComp<DockingComponent>(ent, out var dock))
             return;
 
-        var state = SignalState.Momentary;
-        args.Data?.TryGetValue(DeviceNetworkConstants.LogicState, out state);
+        var state = args.Data.State;
 
         var shouldDock = state == SignalState.High || state == SignalState.Momentary && !dock.Docked;
 
