@@ -18,7 +18,7 @@ public sealed partial class AdminAnnounceWindow
             ? Loc.GetString("comms-console-message-too-long")
             : null;
 
-        UpdateCharacterLimit(AnnounceCharLimitLabel, message.Length, maxLength);
+        UpdateCharacterLimitLabel(AnnounceCharLimitLabel, message.Length, maxLength);
 
         var isStation = GetSelectedAnnounceType() == AdminAnnounceType.Station;
         PlayAudio.Disabled = !isStation || GetSound() == null;

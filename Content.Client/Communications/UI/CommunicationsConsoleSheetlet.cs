@@ -24,13 +24,12 @@ public sealed class CommunicationsConsoleSheetlet : Sheetlet<PalettedStylesheet>
     /// <summary>
     /// Updates a character limit label with the current length and appropriate style.
     /// </summary>
-    public static void UpdateCharacterLimit(Label label, int length, int maximum)
+    public static void UpdateCharacterLimitLabel(Label label, int length, int maximum)
     {
         label.SetOnlyStyleClass(length > maximum
             ? CharLimitExceeded
             : CharLimit);
-        label.Text = Loc.GetString(
-            "comms-console-char-limit",
+        label.Text = Loc.GetString("comms-console-char-limit",
             ("count", length),
             ("max", maximum));
     }
