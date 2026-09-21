@@ -217,8 +217,8 @@
   components:
   - type: RandomMetadata
     nameSegments:
-    - ColossusNames
-    - ColossusTitles
+    - DatasetCosmicColossusNames
+    - DatasetCosmicColossusTitles
     nameFormat: name-format-colossus
   - type: MobThresholds
     thresholds:

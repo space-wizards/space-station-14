@@ -1,0 +1,23 @@
+- type: localizedDataset
+  id: DatasetCosmicAbilityDialogueLapse
+  values:
+    prefix: cosmic-dialogue-lapse-
+    count: 1
+
+- type: localizedDataset
+  id: DatasetCosmicAbilityDialogueImposition
+  values:
+    prefix: cosmic-dialogue-imposition-
+    count: 1
+
+- type: localizedDataset
+  id: DatasetCosmicAbilityDialogueGlare
+  values:
+    prefix: cosmic-dialogue-glare-
+    count: 1
+
+- type: localizedDataset
+  id: DatasetCosmicAbilityDialogueGlare
+  values:
+    prefix: cosmic-dialogue-glare-
+    count: 1
