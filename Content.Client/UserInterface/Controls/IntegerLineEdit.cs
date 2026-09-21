@@ -9,8 +9,6 @@ namespace Content.Client.UserInterface.Controls;
 public sealed class IntegerLineEdit : LineEdit
 {
     private static readonly Regex RegNumbers = new("^-?[0-9]*$");
-    private int? _min;
-    private int? _max;
 
     public IntegerLineEdit()
     {
@@ -26,8 +24,26 @@ public sealed class IntegerLineEdit : LineEdit
     [ViewVariables(VVAccess.ReadWrite)]
     public int? MinValue
     {
-        get => _min;
-        set => SetMin(value);
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (value == null)
+            {
+                field = null;
+                return;
+            }
+
+            if (value > MaxValue)
+            {
+                value = MaxValue;
+                Log.Warning($"Min value of {this} was set above max.");
+            }
+
+            field = value;
+        }
     }
 
     /// <summary>
@@ -36,8 +52,26 @@ public sealed class IntegerLineEdit : LineEdit
     [ViewVariables(VVAccess.ReadWrite)]
     public int? MaxValue
     {
-        get => _max;
-        set => SetMax(value);
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (value == null)
+            {
+                field = null;
+                return;
+            }
+
+            if (value < MinValue)
+            {
+                value = MinValue;
+                Log.Warning($"Max value of {this} was set below min.");
+            }
+
+            field = value;
+        }
     }
 
     /// <returns>The integer value of the text.</returns>
@@ -48,64 +82,18 @@ public sealed class IntegerLineEdit : LineEdit
     }
 
     /// <summary>
-    /// Sets the current minimum value.
-    /// </summary>
-    public void SetMin(int? value)
-    {
-        if (value == _min)
-            return;
-
-        if (value == null)
-        {
-            _min = null;
-            return;
-        }
-
-        if (value > _max)
-        {
-            value = _max;
-            Log.Warning($"Min value of {this} was set above max.");
-        }
-
-        _min = value;
-    }
-
-    /// <summary>
-    /// Sets the current maximum value.
-    /// </summary>
-    public void SetMax(int? value)
-    {
-        if (value == _max)
-            return;
-
-        if (value == null)
-        {
-            _max = null;
-            return;
-        }
-
-        if (value < _min)
-        {
-            value = _min;
-            Log.Warning($"Max value of {this} was set below min.");
-        }
-
-        _max = value;
-    }
-
-    /// <summary>
     /// Sets the minimum and maximum values for clamping.
     /// </summary>
     public void SetBoth(int? minimum, int? maximum)
     {
         if (minimum is { } min && maximum is { } max && min > max)
         {
-            Log.Warning($"Min value of {this} was set above max.");
+            Log.Warning($"Min value of { this } was set above max.");
             minimum = maximum;
         }
 
-        _min = minimum;
-        _max = maximum;
+        MinValue = minimum;
+        MaxValue = maximum;
     }
 
     /// <summary>
@@ -116,6 +104,10 @@ public sealed class IntegerLineEdit : LineEdit
         if (Text is "" or "-")
             return;
 
-        Text = Math.Clamp(Value(), _min ?? int.MinValue, _max ?? int.MaxValue).ToString();
+        Text = Math.Clamp(
+            Value(),
+            MinValue ?? int.MinValue,
+            MaxValue ?? int.MaxValue
+        ).ToString();
     }
 }
