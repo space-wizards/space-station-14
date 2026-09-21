@@ -1,4 +1,4 @@
-using Content.Client.Communications.UI;
+using static Content.Client.Communications.UI.CommunicationsConsoleSheetlet;
 using Content.Shared.Administration.AdminAnnounce;
 using Content.Shared.CCVar;
 using Robust.Shared.Utility;
@@ -18,13 +18,7 @@ public sealed partial class AdminAnnounceWindow
             ? Loc.GetString("comms-console-message-too-long")
             : null;
 
-        AnnounceCharLimitLabel.SetOnlyStyleClass(tooLong
-            ? CommunicationsConsoleSheetlet.CharLimitExceeded
-            : CommunicationsConsoleSheetlet.CharLimit);
-        AnnounceCharLimitLabel.Text = Loc.GetString(
-            "comms-console-char-limit",
-            ("count", message.Length),
-            ("max", maxLength));
+        UpdateCharacterLimit(AnnounceCharLimitLabel, message.Length, maxLength);
 
         var isStation = GetSelectedAnnounceType() == AdminAnnounceType.Station;
         PlayAudio.Disabled = !isStation || GetSound() == null;
