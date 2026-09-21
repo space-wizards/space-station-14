@@ -30,8 +30,7 @@
       - WeldingMask
       - RemoteSignaller
       - UtilityKnife
-      - AccessBreaker
-      - MetalFoamGrenade
+      - FoamGrenade
       components:
       - StationMap
       - SprayPainter
@@ -145,10 +144,11 @@
       - CleanerGrenade
       - Screwdriver
       - Crowbar
-      - PowerDrill
+      - Powerdrill
+      components:
+      - TrayScanner
       - SprayPainter
       - SprayPainterAmmo
-      - TrayScanner
   - type: ItemMapper
     sprite: *BeltOverlay
     mapLayers:

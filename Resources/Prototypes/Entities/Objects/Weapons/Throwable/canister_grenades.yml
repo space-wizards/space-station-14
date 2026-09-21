@@ -80,6 +80,10 @@
     duration: 10
     spreadAmount: 20
     smokePrototype: AluminiumMetalFoam
+  - type: Tag
+    tags: # ignore "WhitelistChameleon" tag
+    - HandGrenade
+    - FoamGrenade
   - type: StaticPrice
     price: 350
 
