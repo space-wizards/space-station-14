@@ -279,7 +279,6 @@
   - type: Storage
     whitelist:
       tags:
-      - Wrench
       - Bottle
       - Brutepack
       - Bloodpack
