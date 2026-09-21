@@ -1,15 +1,15 @@
-﻿using System.Linq;
-using Content.Shared.Conditions;
-using Content.Shared.Localizations;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
-using Content.Shared.Roles.Components;
-using Content.Shared.Roles.Jobs;
 using Content.Shared.Whitelist;
-using Robust.Shared.Prototypes;
 
-namespace Content.Shared.EntityConditions.Conditions.Mind;
+namespace Content.Shared.Conditions.UnifiedConditions;
+
+public interface IRoleCondition : ICondition<IRoleCondition>
+{
+    EntityWhitelist Whitelist { get; }
+
+}
 
 /// <summary>
 /// Returns true if this entity has any of the specified jobs. False if the entity has no mind, none of the specified jobs, or is jobless.
@@ -19,7 +19,7 @@ public sealed partial class MindContainerRoleEntityConditionSystem : EntitySyste
     [Dependency] private SharedRoleSystem _role = default!;
 
     [SubscribeLocalEvent]
-    private void Condition(Entity<MindContainerComponent> entity, ref ConditionEvaluationEvent<RoleCondition> args)
+    private void Condition(Entity<MindContainerComponent> entity, ref ConditionEvaluationEvent<IRoleCondition> args)
     {
         args.Handled = true;
 
@@ -30,22 +30,10 @@ public sealed partial class MindContainerRoleEntityConditionSystem : EntitySyste
     }
 
     [SubscribeLocalEvent]
-    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<RoleCondition> args)
+    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<IRoleCondition> args)
     {
         args.Handled = true;
         args.Value = _role.MindHasRole(entity, args.Condition.Whitelist)?1:0;
     }
 
-}
-
-/// <inheritdoc cref="EntityCondition"/>
-public sealed partial class RoleCondition : EntityConditionBase<RoleCondition>
-{
-    [DataField(required: true)]
-    public EntityWhitelist Whitelist = new();
-
-    public override string EntityConditionGuidebookText(IPrototypeManager prototype)
-    {
-        return String.Empty;
-    }
 }

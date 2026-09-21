@@ -1,9 +1,16 @@
-﻿using Content.Shared.Conditions;
 using Content.Shared.Mind;
 using Content.Shared.Whitelist;
-using Robust.Shared.Prototypes;
 
-namespace Content.Shared.EntityConditions.Conditions.Mind;
+namespace Content.Shared.Conditions.UnifiedConditions;
+
+public interface IObjectiveWhitelistCondition : ICondition<IObjectiveWhitelistCondition>
+{
+
+    EntityWhitelist? Whitelist { get; }
+
+    EntityWhitelist? Blacklist { get; }
+}
+
 
 /// <summary>
 /// Checks if the target mind has an objective which passes the given whitelist and/or blacklist.
@@ -12,9 +19,8 @@ public sealed partial class ObjectiveEntityConditionSystem : EntitySystem
 {
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
-    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<ObjectiveCondition> args)
+    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<IObjectiveWhitelistCondition> args)
     {
-
         args.Handled = true;
 
         foreach (var obj in entity.Comp.Objectives)
@@ -29,18 +35,3 @@ public sealed partial class ObjectiveEntityConditionSystem : EntitySystem
         args.Value /= (float)entity.Comp.Objectives.Count;
     }
 }
-
-public sealed partial class ObjectiveCondition : EntityConditionBase<ObjectiveCondition>
-{
-    [DataField]
-    public EntityWhitelist? Whitelist;
-
-    [DataField]
-    public EntityWhitelist? Blacklist;
-
-    public override string EntityConditionGuidebookText(IPrototypeManager prototype)
-    {
-        return String.Empty;
-    }
-}
-

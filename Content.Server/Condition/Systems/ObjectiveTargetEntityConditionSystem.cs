@@ -1,11 +1,10 @@
 ﻿using Content.Server.Objectives.Components;
 using Content.Shared.Conditions;
-using Content.Shared.EntityConditions;
-using Content.Shared.EntityConditions.Conditions.Mind;
+using Content.Shared.Conditions.UnifiedConditions;
 using Content.Shared.Mind;
 using Content.Shared.Whitelist;
 
-namespace Content.Server.EntityConditions.Conditions;
+namespace Content.Server.Condition.Systems;
 
 /// <summary>
 /// Checks if the target entity, is an objective target of the given source mind entity.
@@ -18,7 +17,7 @@ public sealed partial class ObjectiveTargetEntityConditionSystem : EntitySystem
     [Dependency] private EntityQuery<TargetObjectiveComponent> _targetQuery;
 
     [SubscribeLocalEvent]
-    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<ObjectiveTargetCondition> args)
+    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<IObjectiveTargetCondition> args)
     {
         args.Handled = true;
 

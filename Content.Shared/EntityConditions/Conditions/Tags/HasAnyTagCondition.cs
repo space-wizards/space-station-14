@@ -3,33 +3,18 @@ using Content.Shared.Localizations;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Content.Shared.Conditions.UnifiedConditions;
 
 namespace Content.Shared.EntityConditions.Conditions.Tags;
 
-/// <summary>
-/// Returns true if this entity have any of the listed tags.
-/// </summary>
-public sealed partial class HasAnyTagEntityConditionSystem : EntitySystem
-{
-    [Dependency] private TagSystem _tag = default!;
-
-    private void Condition(Entity<TagComponent> entity, ref ConditionEvaluationEvent<AnyTagCondition> args)
-    {
-        args.Handled = true;
-        //count matches to scale, as default condition if value != 0 -> satisfy == true.
-        args.Value = args.Condition.Tags.Count(tag => _tag.HasTag(entity.Comp, tag)) /
-                     (float)args.Condition.Tags.Length;
-    }
-}
-
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class AnyTagCondition : EntityConditionBase<AnyTagCondition>
+public sealed partial class AnyTagCondition : EntityConditionBase<IHasAnyTagCondition>, IHasAnyTagCondition
 {
     /// <summary>
     /// List of tags from which one must be matched.
     /// </summary>
     [DataField(required: true)]
-    public ProtoId<TagPrototype>[] Tags = [];
+    public ProtoId<TagPrototype>[] Tags { get; set; } = [];
 
     public override string EntityConditionGuidebookText(IPrototypeManager prototype)
     {
