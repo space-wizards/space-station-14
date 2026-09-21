@@ -54,23 +54,23 @@
   - type: AttachedVisuals
     sprite: Clothing/Belt/utility.rsi
     attachments:
-        storagebase: inside-belt
+        storagebase: InBelt
     attachedVisuals:
       inhand-right:
         layers:
           - state: inhand-right
         attachments:
-          storagebase: belt-inhand-right
+          storagebase: InHandInBeltRight
       inhand-left:
         layers:
           - state: inhand-left
         attachments:
-          storagebase: belt-inhand-right
+          storagebase: InHandInBeltLeft
       equipped-belt:
         layers:
           - state: equipped-BELT
         attachments:
-          storagebase: inside-belt-equipped
+          storagebase: InBeltEquipped
 
 - type: entity
   parent: BaseItem
@@ -121,28 +121,41 @@
   - type: AttachedVisuals
     sprite: Objects/Tools/crowbar.rsi
     attachedVisuals:
-      inhand-left:
+      InhandLeft:
         layers:
         - state: inhand-left
         - state: cover-inhand-left
           color: limegreen
-      inhand-right:
+      InhandRight:
         layers:
         - state: inhand-right
         - state: cover-inhand-right
           color: limegreen
-      equipped-belt:
+      BeltEquipped:
         layers:
         - state: equipped-BELT
         - state: cover-equipped-BELT
           color: limegreen
-      inside-belt:
+      InBelt:
         layers:
         - sprite: Clothing/Belt/belt_overlay.rsi
           state: crowbar
           color: limegreen
-      inside-belt-equipped:
+      InBeltEquipped:
         layers:
         - sprite: Clothing/Belt/belt_overlay.rsi
           state: crowbar-belt-equipped
           color: limegreen
+
+
+- type: visualAttachment
+  id: InBelt
+
+- type: visualAttachment
+  id: InBeltEquipped
+
+- type: visualAttachment
+  id: InHandInBeltRight
+
+- type: visualAttachment
+  id: InHandInBeltLeft

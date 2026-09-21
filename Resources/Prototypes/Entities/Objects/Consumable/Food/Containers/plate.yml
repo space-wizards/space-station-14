@@ -77,12 +77,12 @@
     attachments:
       storagebase: plate-food
     attachedVisuals:
-      inhand-right:
+      InhandRight:
         attachments:
-          storagebase: plate-inhand-right
-      inhand-left:
+          storagebase: OnPlateInhandRight
+      InhandLeft:
         attachments:
-          storagebase: plate-inhand-left
+          storagebase: OnPlateInhandLeft
   - type: Storage
     maxItemSize: Normal
     defaultStorageOrientation: Vertical
@@ -92,6 +92,15 @@
     interfaces:
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
+
+- type: visualAttachment
+  id: OnPlate
+
+- type: visualAttachment
+  id: OnPlateInhandRight
+
+- type: visualAttachment
+  id: OnPlateInhandLeft
 
 - type: entity
   parent: BaseItem

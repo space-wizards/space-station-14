@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.AttachedVisuals;
 using Robust.Client.GameObjects;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
@@ -52,7 +53,7 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
         UpdateVisuals(ent);
     }
 
-    private void GetAttachedVisuals(Entity<AttachedVisualsComponent> ent, string attachmentName, string prefix, List<(EntityUid, string, HashSet<string> mapKeys, PrototypeLayerData)> layers)
+    private void GetAttachedVisuals(Entity<AttachedVisualsComponent> ent, VisualAttachmentPrototype attachmentName, string prefix, List<(EntityUid, string, HashSet<string> mapKeys, PrototypeLayerData)> layers)
     {
         if (!ent.Comp.AttachedVisuals.TryGetValue(attachmentName, out var visuals))
             return;
@@ -188,7 +189,7 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
     /// <summary>
     /// Gets the layers all the way down
     /// </summary>
-    private void GetLayers(Entity<AttachedVisualsComponent> ent, Dictionary<string, string> attachments, string keyPrefix, List<(EntityUid, string, HashSet<string> mapKeys, PrototypeLayerData)> results)
+    private void GetLayers(Entity<AttachedVisualsComponent> ent, Dictionary<string, ProtoId<VisualAttachmentPrototype>> attachments, string keyPrefix, List<(EntityUid, string, HashSet<string> mapKeys, PrototypeLayerData)> results)
     {
         if (!TryComp(ent, out ContainerManagerComponent? containers))
             return;
@@ -199,17 +200,20 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
             if (!attachments.TryGetValue(containerId, out var view))
                 continue;
 
+            if (!ProtoMan.Resolve(view, out var visualAttachmentPrototype))
+                continue;
+
             foreach (var child in containers.Containers[containerId].ContainedEntities)
             {
                 if (!_attachedVisualsQuery.TryComp(child, out var childComp))
                     continue;
 
-                if (!childComp.AttachedVisuals.TryGetValue(view, out var def))
+                if (!childComp.AttachedVisuals.TryGetValue(visualAttachmentPrototype, out var def))
                     continue;
 
                 var childPrefix = $"{keyPrefix}-{containerId}-{child.Id}";
 
-                GetAttachedVisuals((child, childComp), view, childPrefix, results);
+                GetAttachedVisuals((child, childComp), visualAttachmentPrototype, childPrefix, results);
 
                 GetLayers((child, childComp), def.Attachments, childPrefix, results);
             }

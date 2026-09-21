@@ -389,13 +389,13 @@
 # Tastes like bun, beef patty, cheese.
   - type: AttachedVisuals
     attachedVisuals:
-      plate-food:
+      OnPlate:
         layers:
         - state: cheese
-      plate-inhand-left:
+      OnPlateInhandLeft:
         layers:
         - state: plain-inhand-left
-      plate-inhand-right:
+      OnPlateInhandRight:
         layers:
         - state: plain-inhand-right
 

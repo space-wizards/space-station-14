@@ -14,10 +14,10 @@ public sealed partial class AttachedVisualsComponent : Component
 
     //Mapping to Container ID (on this entity) -> View name
     [DataField]
-    public Dictionary<string, string> Attachments = new();
+    public Dictionary<string, ProtoId<VisualAttachmentPrototype>> Attachments = new();
 
     [DataField]
-    public Dictionary<string, AttachedVisualDefinition> AttachedVisuals = new();
+    public Dictionary<ProtoId<VisualAttachmentPrototype>, AttachedVisualDefinition> AttachedVisuals = new();
 
     [ViewVariables]
     public readonly Dictionary<EntityUid, List<string>> RevealedLayers = new();
@@ -31,7 +31,14 @@ public sealed partial class AttachedVisualDefinition
 
     // Container ID -> view name,
     [DataField]
-    public Dictionary<string, string> Attachments = new();
+    public Dictionary<string, ProtoId<VisualAttachmentPrototype>> Attachments = new();
+}
+
+[Prototype]
+public sealed partial class VisualAttachmentPrototype : IPrototype
+{
+    [IdDataField]
+    public string ID { get; private set; } = string.Empty;
 }
 
 [ByRefEvent]
@@ -39,11 +46,11 @@ public record struct GetAttachedVisualsEvent
 {
     private readonly string _childPrefix;
 
-    public readonly string AttachmentName;
+    public readonly VisualAttachmentPrototype AttachmentName;
 
     public readonly List<(EntityUid, string, HashSet<string>, PrototypeLayerData)> Layers;
 
-    public GetAttachedVisualsEvent(string attachmentName, string childPrefix, List<(EntityUid, string, HashSet<string>, PrototypeLayerData)> layers)
+    public GetAttachedVisualsEvent(VisualAttachmentPrototype attachmentName, string childPrefix, List<(EntityUid, string, HashSet<string>, PrototypeLayerData)> layers)
     {
         _childPrefix = childPrefix;
         Layers = layers;

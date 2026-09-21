@@ -71,17 +71,17 @@
   - type: AttachedVisuals
     sprite: Objects/Tools/welder.rsi
     attachedVisuals:
-      inhand-left:
+      InhandLeft:
         layers:
         - state: inhand-left-flame
           map: [ "enum.ToggleableVisuals.Layer" ]
           visible: false
-      inhand-right:
+      InhandRight:
         layers:
         - state: inhand-right-flame
           map: [ "enum.ToggleableVisuals.Layer" ]
           visible: false
-      inside-belt:
+      InBelt:
         layers:
         - state: inhand-right-flame
           map: [ "enum.ToggleableVisuals.Layer" ]
