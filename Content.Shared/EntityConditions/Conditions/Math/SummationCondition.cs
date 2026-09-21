@@ -4,16 +4,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Math;
 
-public sealed partial class SummationCondition : EntityCondition, ISummationCondition
+public sealed partial class SummationCondition : EntityConditionBase<ISummationCondition>, ISummationCondition
 {
     public override string EntityConditionGuidebookText(IPrototypeManager prototype)
     {
         return "";
-    }
-
-    public override ConditionEvaluationEvent? WrapInEvent(EntityUid entity, EntityUid? sourceEntity)
-    {
-        return null;
     }
 
     IEnumerable<ICondition> ISummationCondition.Summands => Conditions;

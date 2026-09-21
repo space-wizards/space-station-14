@@ -1,12 +1,14 @@
 using System.Linq;
-using Content.Shared.Conditions;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
-using Content.Shared.Throwing;
-using Robust.Shared.Prototypes;
 
-namespace Content.Shared.EntityConditions.Conditions.Mind;
+namespace Content.Shared.Conditions.UnifiedConditions;
+
+public interface IDifferentDepartmentCondition : ICondition<IDifferentDepartmentCondition>
+{
+
+}
 
 public sealed partial class DifferentDepartmentConditionSystem : EntitySystem
 {
@@ -14,7 +16,7 @@ public sealed partial class DifferentDepartmentConditionSystem : EntitySystem
     [Dependency] private SharedJobSystem _jobSystem = default!;
 
     [SubscribeLocalEvent]
-    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<DifferentDepartmentCondition> args)
+    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<IDifferentDepartmentCondition> args)
     {
         args.Handled = true;
         args.Value = !IsInvalid(entity, args.SourceEntity) ? 1 : 0;
@@ -45,17 +47,5 @@ public sealed partial class DifferentDepartmentConditionSystem : EntitySystem
             return true;
 
         return false;
-    }
-}
-
-/// <summary>
-/// A condition that requires minds to have a job with a different department from the excluded entity's.
-/// This uses mind roles, not ID cards.
-/// </summary>
-public sealed partial class DifferentDepartmentCondition : EntityConditionBase<DifferentDepartmentCondition>
-{
-    public override string EntityConditionGuidebookText(IPrototypeManager prototype)
-    {
-        return string.Empty;
     }
 }

@@ -1,10 +1,9 @@
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Shared.Conditions;
-using Content.Shared.EntityConditions;
-using Content.Shared.EntityConditions.Conditions.Body;
+using Content.Shared.Conditions.UnifiedConditions;
 
-namespace Content.Server.EntityConditions.Conditions;
+namespace Content.Server.Condition.Systems;
 
 /// <summary>
 /// Returns true if this entity is both able to breathe and is currently breathing.
@@ -13,7 +12,8 @@ public sealed partial class IsBreathingEntityConditionSystem : EntitySystem
 {
     [Dependency] private RespiratorSystem _respirator = default!;
 
-    private void Condition(Entity<RespiratorComponent> entity, ref ConditionEvaluationEvent<BreathingCondition> args)
+    [SubscribeLocalEvent]
+    private void Condition(Entity<RespiratorComponent> entity, ref ConditionEvaluationEvent<IIsBreathingCondition> args)
     {
         args.Handled = true;
         args.Value = _respirator.IsBreathing(entity.AsNullable()) ? 1 : 0;

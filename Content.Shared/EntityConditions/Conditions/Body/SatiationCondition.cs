@@ -1,14 +1,8 @@
-using Content.Shared.Conditions;
-using Content.Shared.Conditions.HelperConditions;
 using Content.Shared.Conditions.UnifiedConditions;
-using Content.Shared.Nutrition.Components;
-using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Nutrition.Prototypes;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Body;
-
-
 
 /// <inheritdoc cref="EntityCondition"/>
 public sealed partial class SatiationCondition : EntityConditionBase<ISatiationCondition>, ISatiationCondition

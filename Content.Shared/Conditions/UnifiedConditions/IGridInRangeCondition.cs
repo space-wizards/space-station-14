@@ -1,10 +1,12 @@
 using System.Numerics;
-using Content.Shared.Conditions;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Prototypes;
 
-namespace Content.Shared.EntityConditions.Conditions.Generic;
+namespace Content.Shared.Conditions.UnifiedConditions;
+
+public interface IGridInRangeCondition : ICondition<IGridInRangeCondition>
+{
+    float Range { get; }
+}
 
 /// <summary>
 /// Returns true if entity is on a grid or in range of one.
@@ -15,7 +17,7 @@ public sealed partial class GridInRangeConditionSystem : EntitySystem
     [Dependency] private SharedMapSystem _map = default!;
 
     [SubscribeLocalEvent]
-    private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent<GridInRangeCondition> args)
+    private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent<IGridInRangeCondition> args)
     {
         args.Handled = true;
 
@@ -35,13 +37,4 @@ public sealed partial class GridInRangeConditionSystem : EntitySystem
 
         args.Value = grids.Count > 0 ? 1 : 0;
     }
-}
-
-/// <inheritdoc cref="EntityCondition"/>
-public sealed partial class GridInRangeCondition : EntityConditionBase<GridInRangeCondition>
-{
-    [DataField]
-    public float Range = 10f;
-
-    public override string EntityConditionGuidebookText(IPrototypeManager prototype) => String.Empty;
 }

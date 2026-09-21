@@ -4,16 +4,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Math;
 
-public sealed partial class MultiplierCondition : EntityCondition, IMultiplierCondition
+public sealed partial class MultiplierCondition : EntityConditionBase<IMultiplierCondition>, IMultiplierCondition
 {
     public override string EntityConditionGuidebookText(IPrototypeManager prototype)
     {
         return "";
-    }
-
-    public override ConditionEvaluationEvent? WrapInEvent(EntityUid entity, EntityUid? sourceEntity)
-    {
-        return null;
     }
 
     IEnumerable<ICondition> IMultiplierCondition.Multipliers => Multipliers;

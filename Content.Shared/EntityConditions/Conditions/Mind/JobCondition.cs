@@ -1,11 +1,7 @@
 ﻿using System.Linq;
-using Content.Shared.Conditions;
 using Content.Shared.Conditions.UnifiedConditions;
 using Content.Shared.Localizations;
-using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
-using Content.Shared.Roles.Jobs;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Mind;

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Content.Shared.Conditions;
+﻿using Content.Shared.Conditions.UnifiedConditions;
 using Content.Shared.Localizations;
 using Content.Shared.Metabolism;
 using Robust.Shared.Prototypes;
@@ -7,13 +6,13 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityConditions.Conditions.Body;
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class MetabolizerTypeCondition : EntityConditionBase<MetabolizerTypeCondition>
+public sealed partial class MetabolizerTypeCondition : EntityConditionBase<IMetabolizerTypeCondition>, IMetabolizerTypeCondition
 {
     /// <summary>
     /// Which metabolizer types would fulfill this condition. Need only one match.
     /// </summary>
     [DataField(required: true)]
-    public ProtoId<MetabolizerTypePrototype>[] Type = default!;
+    public ProtoId<MetabolizerTypePrototype>[] Type { get; set; } = default!;
 
     public override string EntityConditionGuidebookText(IPrototypeManager prototype)
     {
@@ -32,21 +31,5 @@ public sealed partial class MetabolizerTypeCondition : EntityConditionBase<Metab
         return Loc.GetString("entity-condition-guidebook-organ-type",
             ("name", names),
             ("shouldhave", !Inverted));
-    }
-}
-
-/// <summary>
-/// Returns true if this entity has any of the listed metabolizer types.
-/// </summary>
-public sealed partial class MetabolizerTypeEntityConditionSystem : EntitySystem
-{
-    [SubscribeLocalEvent]
-    private void Condition(Entity<MetabolizerComponent> entity, ref ConditionEvaluationEvent<MetabolizerTypeCondition> args)
-    {
-        args.Handled = true;
-        if (entity.Comp.MetabolizerTypes == null)
-            return;
-
-        args.Value = (float)entity.Comp.MetabolizerTypes.Intersect(args.Condition.Type).Count()/(float)args.Condition.Type.Length;
     }
 }
