@@ -1,4 +1,4 @@
-﻿using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Medical.SuitSensors;
 
 namespace Content.Shared.Medical.CrewMonitoring;

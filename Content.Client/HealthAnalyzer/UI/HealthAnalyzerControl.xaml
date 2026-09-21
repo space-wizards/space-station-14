@@ -1,5 +1,6 @@
 <BoxContainer
     xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     VerticalExpand="True"
     Orientation="Vertical">
     <Label
@@ -22,7 +23,7 @@
                    Text="{Loc 'health-analyzer-window-entity-unknown-text'}" />
         </BoxContainer>
 
-        <PanelContainer StyleClasses="LowDivider" />
+        <controls:Separator StyleClasses="LowDivider"/>
 
         <GridContainer Margin="0 5 0 0" Columns="2">
             <Label Text="{Loc 'health-analyzer-window-entity-status-text'}" />
@@ -36,13 +37,13 @@
         </GridContainer>
     </BoxContainer>
 
-    <PanelContainer Name="AlertsDivider" Visible="False" StyleClasses="LowDivider" />
+    <controls:Separator Name="AlertsDivider" Visible="False" StyleClasses="LowDivider"/>
 
     <BoxContainer Name="AlertsContainer" Visible="False" Margin="0 5" Orientation="Vertical" HorizontalAlignment="Center">
 
     </BoxContainer>
 
-    <PanelContainer StyleClasses="LowDivider" />
+    <controls:Separator StyleClasses="LowDivider"/>
 
     <BoxContainer
         Name="GroupsContainer"
