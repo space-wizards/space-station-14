@@ -13,10 +13,6 @@
                 <LineEdit Name="Signature"
                           PlaceHolder="{Loc admin-announce-signature-placeholder}"
                           HorizontalExpand="True" />
-                <CheckBox Name="EnableSignature"
-                          ToolTip="{Loc admin-announce-enable-signature-tooltip}"
-                          Margin="4,0,0,0"
-                          VerticalAlignment="Center" />
             </BoxContainer>
         </GridContainer>
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0,0,0,4">

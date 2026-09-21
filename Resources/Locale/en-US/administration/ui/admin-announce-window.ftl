@@ -9,7 +9,6 @@ admin-announce-scope-global = All maps
 admin-announce-palette-title = Announcement Color
 admin-announce-sound-placeholder = Audio Path
 admin-announce-signature-placeholder = Sent by...
-admin-announce-enable-signature-tooltip = Enable sender signature
 admin-announce-with-signature = {$message}
     Sent by {$signature}
 

@@ -41,7 +41,6 @@ public sealed partial class AdminAnnounceWindow : DefaultWindow
         InitAnnounceMethods();
         InitScopeOptions();
 
-        EnableSignature.OnToggled += _ => UpdateControls();
         PlayAudio.OnPressed += _ => PlayPreview();
         StopAudio.OnPressed += _ => StopPreview();
         ColorPreview.OnPressed += _ => OpenPalette();
@@ -99,7 +98,6 @@ public sealed partial class AdminAnnounceWindow : DefaultWindow
 
         Announcer.Editable = isStation;
         SoundPath.Editable = isStation;
-        EnableSignature.Visible = isStation;
         ScopeOption.Visible = isStation;
         OpenPresetsButton.Visible = isStation;
 
@@ -112,7 +110,6 @@ public sealed partial class AdminAnnounceWindow : DefaultWindow
         SetColor(ServerColor);
         Announcer.Text = string.Empty;
         Signature.Text = string.Empty;
-        EnableSignature.Pressed = false;
         SoundPath.Text = string.Empty;
 
         StopPreview();
@@ -132,7 +129,7 @@ public sealed partial class AdminAnnounceWindow : DefaultWindow
         OnAnnounce?.Invoke(new AdminAnnounceEuiMsg.DoAnnounce(
             announcement,
             Announcer.Text,
-            EnableSignature.Pressed ? Signature.Text : string.Empty,
+            Signature.Text,
             _announcementColor,
             GetSound(),
             GetSelectedAnnounceType(),

@@ -27,7 +27,6 @@ public sealed partial class AdminAnnounceWindow
         Signature.Text = preset.Signature is { } signature
             ? Loc.GetString(signature)
             : string.Empty;
-        EnableSignature.Pressed = preset.Signature != null;
         SoundPath.Text = preset.Sound?.Path.ToString() ?? string.Empty;
         Announcement.TextRope = new Rope.Leaf(preset.Message is { } message
             ? Loc.GetString(message)

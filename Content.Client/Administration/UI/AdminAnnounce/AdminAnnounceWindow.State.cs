@@ -14,7 +14,7 @@ public sealed partial class AdminAnnounceWindow
         var maxLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementLength);
         var tooLong = message.Length > maxLength;
 
-        Signature.Editable = isStation && EnableSignature.Pressed;
+        Signature.Editable = isStation;
         AnnounceButton.Disabled = string.IsNullOrWhiteSpace(message) || tooLong;
         AnnounceButton.ToolTip = tooLong
             ? Loc.GetString("comms-console-message-too-long")
