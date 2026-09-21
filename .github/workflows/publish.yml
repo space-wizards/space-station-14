@@ -119,7 +119,6 @@ jobs:
         fi
 
     - name: Create PR from stable to master
-      if: steps.changelog.outputs.committed == 'true'
       env:
         GH_TOKEN: ${{ secrets.CL_ACCESS_TOKEN }}
       run: |
