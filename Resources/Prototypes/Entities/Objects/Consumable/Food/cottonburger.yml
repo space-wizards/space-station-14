@@ -55,8 +55,8 @@
     maxLayers: 10
     startPosition: 0, 0.0625 # 2 pixels above
     offset: 0, 0.0625 # 2 pixels above
-    minLayerOffset: -0.03125, -0.03125 # 1px left, 1px down
-    maxLayerOffset: 0.03125, 0 # 1px right, 0px
+    minLayerOffset: -0.0625, -0.03125 # 2px left, 1px down
+    maxLayerOffset: 0.0625, 0 # 2px right, 0px
     nameGeneration: food-sequence-cotton-burger-gen
   - type: Appearance
   - type: FoodMetamorphableByAdding
