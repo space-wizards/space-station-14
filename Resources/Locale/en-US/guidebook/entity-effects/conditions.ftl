@@ -92,3 +92,6 @@ entity-condition-guidebook-internals =
                 [true] using internals
                 *[false] breathing atmospheric air
                }
+
+entity-condition-guidebook-mouth-uncovered-condition =
+    the mob has an uncovered mouth

@@ -1,4 +1,4 @@
-﻿using Content.Shared.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork.Systems;
 
 namespace Content.Shared.Atmos.Monitor;
 
