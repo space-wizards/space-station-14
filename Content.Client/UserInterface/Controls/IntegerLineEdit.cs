@@ -12,13 +12,6 @@ public sealed class IntegerLineEdit : LineEdit
     private int? _min;
     private int? _max;
 
-    /// <returns>The integer value of the text.</returns>
-    [ViewVariables(VVAccess.ReadOnly)]
-    public int Value()
-    {
-        return int.TryParse(Text, out var i) ? i : 0;
-    }
-
     /// <summary>
     /// When not null, text entered that's smaller than this will be rewritten to this.
     /// </summary>
@@ -28,6 +21,30 @@ public sealed class IntegerLineEdit : LineEdit
     {
         get => _min;
         set => SetMin(value);
+    }
+
+    /// <summary>
+    /// When not null, text entered that's larger than this will be rewritten to this.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public int? MaxValue
+    {
+        get => _max;
+        set => SetMax(value);
+    }
+
+    public IntegerLineEdit()
+    {
+        IsValid += s => RegNumbers.IsMatch(s);
+
+        OnTextChanged += Clamp;
+    }
+
+    /// <returns>The integer value of the text.</returns>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public int Value()
+    {
+        return int.TryParse(Text, out var i) ? i : 0;
     }
 
     /// <summary>
@@ -51,16 +68,6 @@ public sealed class IntegerLineEdit : LineEdit
         }
 
         _min = value;
-    }
-
-    /// <summary>
-    /// When not null, text entered that's larger than this will be rewritten to this.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public int? MaxValue
-    {
-        get => _max;
-        set => SetMax(value);
     }
 
     /// <summary>
@@ -99,13 +106,6 @@ public sealed class IntegerLineEdit : LineEdit
 
         _min = minimum;
         _max = maximum;
-    }
-
-    public IntegerLineEdit()
-    {
-        IsValid += s => RegNumbers.IsMatch(s);
-
-        OnTextChanged += Clamp;
     }
 
     /// <summary>
