@@ -116,7 +116,7 @@ public sealed partial class MessagingControls : TabContainer
             AnnounceButton.ToolTip = Loc.GetString("comms-console-message-cannot-send");
         }
 
-        UpdateCharacterLimit(AnnounceCharLimitLabel, RadioMessageInput.TextLength, maxAnnounceLength);
+        UpdateCharacterLimitLabel(AnnounceCharLimitLabel, RadioMessageInput.TextLength, maxAnnounceLength);
 
         BroadcastButton.Disabled = !_canScreenBroadcast;
     }
@@ -128,8 +128,8 @@ public sealed partial class MessagingControls : TabContainer
         var topCount = strings.Length > 0 ? strings[0].Length : 0;
         var bottomCount = strings.Length > 1 ? strings[1].Length : 0;
 
-        UpdateCharacterLimit(BroadcastTopCharLimitLabel, topCount, MaxScreenCharacters);
-        UpdateCharacterLimit(BroadcastBottomCharLimitLabel, bottomCount, MaxScreenCharacters);
+        UpdateCharacterLimitLabel(BroadcastTopCharLimitLabel, topCount, MaxScreenCharacters);
+        UpdateCharacterLimitLabel(BroadcastBottomCharLimitLabel, bottomCount, MaxScreenCharacters);
 
         if (!_broadcastDisplayEntity.IsValid())
             return;
