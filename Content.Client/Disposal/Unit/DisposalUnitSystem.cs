@@ -47,7 +47,7 @@ public sealed partial class DisposalUnitSystem : SharedDisposalUnitSystem
             anim.AnimationTracks.Add(
                 new AnimationTrackPlaySound
                 {
-                    KeyFrames = { new AnimationTrackPlaySound.KeyFrame(_audioSystem.ResolveSound(ent.Comp.FlushSound), 0) }
+                    KeyFrames = { new AnimationTrackPlaySound.KeyFrame(_audioSystem.ResolveSound(ent.Comp.FlushSound), 0, () => ent.Comp.FlushSound.Params) }
                 }
             );
         }
