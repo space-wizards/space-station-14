@@ -1,4 +1,4 @@
-﻿using Content.Shared.MapText;
+using Content.Shared.MapText;
 using Robust.Shared.GameStates;
 
 namespace Content.Server.MapText;

@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Configuration;
+using Robust.Shared.Configuration;
 
 namespace Content.Shared.CCVar;
 
@@ -90,6 +90,15 @@ public sealed partial class CCVars
     public static readonly CVarDef<string> ChatWordFilters =
         CVarDef.Create("chat.word_filters", "", CVar.CLIENTONLY | CVar.ARCHIVE, "A list of newline-separated words to be masked in the chat.");
 
+    /// <summary>
+    /// A string containing the mask symbol.
+    /// </summary>
     public static readonly CVarDef<string> ChatWordFiltersSymbol = 
         CVarDef.Create("chat.word_filters_symbol", "*", CVar.CLIENTONLY | CVar.ARCHIVE, "The symbol used to mask words in the chat.");
+    
+    /// <summary>
+    /// If true will allow TextLinkTags to make interactable chat labels in place of sender names.
+    /// </summary>
+    public static readonly CVarDef<bool> ChatNameLinks =
+        CVarDef.Create("chat.chat_name_links", true, CVar.REPLICATED | CVar.SERVER, "Toggles Chat Name Link functionality.");
 }

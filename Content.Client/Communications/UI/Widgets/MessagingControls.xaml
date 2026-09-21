@@ -25,12 +25,14 @@
         <Label StyleClasses="StatusFieldTitle" Align="Center" VAlign="Top"
             VerticalAlignment="Top"
             Text="{Loc 'comms-console-station-broadcast-header'}" />
-        <Label Name="BroadcastTopCharLimitLabel"
-            StyleClasses="CommsConsoleCharLimit" HorizontalAlignment="Center" Margin="0 10 0 0" />
-        <SpriteView Name="BroadcastEntityDisplay" Scale="8 8" SpriteOffset="True"
-            VerticalExpand="True" Margin="0 -124 0 -112" /> <!-- Forgive me for negamargin but there's just too much goddamn space - whatstone -->
-        <Label Name="BroadcastBottomCharLimitLabel"
-            StyleClasses="CommsConsoleCharLimit" HorizontalAlignment="Center" />
+        <BoxContainer Orientation="Vertical" VerticalExpand="True" VerticalAlignment="Center">
+            <Label Name="BroadcastTopCharLimitLabel"
+                StyleClasses="CommsConsoleCharLimit" HorizontalAlignment="Center" Margin="0 10 0 0" />
+            <SpriteView Name="BroadcastEntityDisplay" Scale="8 8" SpriteOffset="True"
+                Margin="0 -56 0 -56" /> <!-- Forgive me for negamargin but there's just too much goddamn space - whatstone -->
+            <Label Name="BroadcastBottomCharLimitLabel"
+                StyleClasses="CommsConsoleCharLimit" HorizontalAlignment="Center" />
+        </BoxContainer>
         <PanelContainer StyleClasses="BackgroundDark" Margin="10 6 6 6"
             HorizontalExpand="True" VerticalExpand="True">
             <TextEdit Name="ScreenMessageInput" MinHeight="40"

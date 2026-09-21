@@ -1,6 +1,9 @@
 using Content.Server.Antag;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Spawners.Components;
+using Content.Shared.Antag;
+using Content.Shared.GameTicking.Rules;
+using Content.Shared.Spawners.Components;
 using Content.Shared.Whitelist;
 using Robust.Server.Physics;
 using Robust.Shared.Map;
@@ -28,7 +31,7 @@ public sealed partial class RuleGridsSystem : GameRuleSystem<RuleGridsComponent>
     private void OnGridSplit(ref GridSplitEvent args)
     {
         var rule = QueryActiveRules();
-        while (rule.MoveNext(out _, out var comp, out _))
+        while (rule.MoveNext(out var comp, out _, out _))
         {
             if (!comp.MapGrids.Contains(args.Grid))
                 continue;
