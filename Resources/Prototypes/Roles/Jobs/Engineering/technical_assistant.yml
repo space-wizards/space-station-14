@@ -13,6 +13,7 @@
   startingGear: TechnicalAssistantGear
   icon: "JobIconTechnicalAssistant"
   supervisors: job-supervisors-engineering
+  guides: [ Engineering ] # TODO: should have a more specific guidebook page instead of using the department itself
   access:
   - Maintenance
   - Engineering

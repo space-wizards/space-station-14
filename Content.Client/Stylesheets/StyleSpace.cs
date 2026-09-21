@@ -80,20 +80,6 @@ namespace Content.Client.Stylesheets
                     .Prop(Label.StylePropertyFont, notoSans10)
                     .Prop(Label.StylePropertyFontColor, Color.DarkGray),
 
-                Element<PanelContainer>().Class(StyleClass.HighDivider)
-                    .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat
-                    {
-                        BackgroundColor = SpaceRed, ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2
-                    }),
-
-                Element<PanelContainer>().Class(StyleClass.LowDivider)
-                    .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat
-                    {
-                        BackgroundColor = Color.FromHex("#444"),
-                        ContentMarginLeftOverride = 2,
-                        ContentMarginBottomOverride = 2
-                    }),
-
                 // Shapes for the buttons.
                 Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
                     .Prop(ContainerButton.StylePropertyStyleBox, BaseButton),
