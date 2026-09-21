@@ -1,35 +1,29 @@
+using System.Linq;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Lathe;
 using Content.Shared.Popups;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using System.Linq;
-using Content.Shared.Lathe.Components;
 
 namespace Content.Shared.Research.Systems;
 
 public sealed partial class BlueprintSystem : EntitySystem
 {
-    [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<BlueprintReceiverComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<BlueprintReceiverComponent, AfterInteractUsingEvent>(OnAfterInteract);
-        SubscribeLocalEvent<BlueprintReceiverComponent, LatheGetRecipesEvent>(OnGetRecipes);
-    }
-
+    [SubscribeLocalEvent]
     private void OnStartup(Entity<BlueprintReceiverComponent> ent, ref ComponentStartup args)
     {
         _container.EnsureContainer<Container>(ent, ent.Comp.ContainerId);
     }
 
+    [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<BlueprintReceiverComponent> ent, ref AfterInteractUsingEvent args)
     {
         if (args.Handled || !args.CanReach || !TryComp<BlueprintComponent>(args.Used, out var blueprintComponent))
@@ -37,6 +31,7 @@ public sealed partial class BlueprintSystem : EntitySystem
         args.Handled = TryInsertBlueprint(ent, (args.Used, blueprintComponent), args.User);
     }
 
+    [SubscribeLocalEvent]
     private void OnGetRecipes(Entity<BlueprintReceiverComponent> ent, ref LatheGetRecipesEvent args)
     {
         var recipes = GetBlueprintRecipes(ent);

@@ -28,22 +28,45 @@ public abstract partial class LatheSystem
     /// <returns>True if we can produce that recipe in that quantity.</returns>
     public bool CanProduce(Entity<LatheComponent?> entity, LatheRecipePrototype recipe, int amount = 1)
     {
-        if (!Resolve(entity, ref entity.Comp))
-            return false;
-        if (!HasRecipe((entity, entity.Comp), recipe))
-            return false;
-        if (amount <= 0)
-            return false;
+        return CanProduce(entity, recipe, _materialStorage.GetStoredMaterials(entity.Owner), amount);
+    }
 
+    /// <inheritdoc cref="CanProduce(Entity{LatheComponent?},LatheRecipePrototype,Dictionary{ProtoId{MaterialPrototype},int},int)"/>
+    [PublicAPI]
+    public bool CanProduce(Entity<LatheComponent?> entity, ProtoId<LatheRecipePrototype> recipe, Dictionary<ProtoId<MaterialPrototype>, int> materials, int amount = 1)
+    {
+        return ProtoMan.Resolve(recipe, out var proto) && CanProduce(entity, proto, materials, amount);
+    }
+
+
+
+    /// <inheritdoc cref="HasMaterials(Dictionary{ProtoId{MaterialPrototype},int},LatheRecipePrototype,float,int)"/>
+    public bool HasMaterials(Dictionary<ProtoId<MaterialPrototype>, int> materials, ProtoId<LatheRecipePrototype> recipe, float materialMultiplier, int amount = 1)
+    {
+        return ProtoMan.Resolve(recipe, out var proto) && HasMaterials(materials, proto, materialMultiplier, amount);
+    }
+
+    /// <summary>
+    /// Checks if a given set of materials has enough quantity of each material to produce a given amount of a recipe.
+    /// </summary>
+    /// <param name="materials">Materials available</param>
+    /// <param name="recipe">Recipe to produce</param>
+    /// <param name="materialMultiplier">Multiplier for material usage.</param>
+    /// <param name="amount">Amount we'd like to produce</param>
+    /// <returns>Returns true if all needed materials exist in the passed material set.</returns>
+    [PublicAPI]
+    public bool HasMaterials(Dictionary<ProtoId<MaterialPrototype>, int> materials, LatheRecipePrototype recipe, float materialMultiplier, int amount = 1)
+    {
         foreach (var (material, needed) in recipe.Materials)
         {
-            var adjustedAmount =
-                AdjustMaterial(needed, recipe.ApplyMaterialDiscount, entity.Comp.MaterialUseMultiplier);
+            if (!materials.TryGetValue(material, out var availableAmount))
+                return false;
 
-            if (_materialStorage.GetMaterialAmount(entity.Owner, material) < adjustedAmount * amount)
+            var adjustedAmount = AdjustMaterial(needed, recipe.ApplyMaterialDiscount, materialMultiplier);
+
+            if (availableAmount < adjustedAmount * amount)
                 return false;
         }
-
         return true;
     }
 

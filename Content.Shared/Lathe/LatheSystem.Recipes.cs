@@ -24,6 +24,7 @@ public abstract partial class LatheSystem
     {
         if (!args.WasModified<LatheRecipePrototype>())
             return;
+
         BuildInverseRecipeDictionary();
     }
 

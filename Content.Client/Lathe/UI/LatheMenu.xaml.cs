@@ -98,7 +98,8 @@ public sealed partial class LatheMenu : FancyWindow
     // TODO: OPTIMIZE THE FUCK OUT OF THIS!!! THIS IS SUPER GC CHURN HELL!!!
     public void PopulateRecipes()
     {
-        var recipesToShow = new List<LatheRecipePrototype>();
+        var searchBarText = SearchBar.Text.Trim().ToLowerInvariant();
+        var recipesToShow = new List<(LatheRecipePrototype Proto, string Name)>(Recipes.Count);
         foreach (var recipe in Recipes)
         {
             if (!_prototypeManager.Resolve(recipe, out var proto))
@@ -116,14 +117,15 @@ public sealed partial class LatheMenu : FancyWindow
                     continue;
             }
 
-            if (SearchBar.Text.Trim().Length != 0)
+            if (searchBarText.Length <= 0)
             {
-                if (_lathe.GetRecipeName(recipe).ToLowerInvariant().Contains(SearchBar.Text.Trim().ToLowerInvariant()))
-                    recipesToShow.Add(proto);
+                recipesToShow.Add((proto, _lathe.GetRecipeName(recipe)));
             }
             else
             {
-                recipesToShow.Add(proto);
+                var recipeName = _lathe.GetRecipeName(recipe);
+                if (recipeName.ToLowerInvariant().Contains(searchBarText))
+                    recipesToShow.Add((proto, recipeName));
             }
         }
 
@@ -132,21 +134,24 @@ public sealed partial class LatheMenu : FancyWindow
 
         RecipeCount.Text = Loc.GetString("lathe-menu-recipe-count", ("count", recipesToShow.Count));
 
-        var sortedRecipesToShow = recipesToShow.OrderBy(_lathe.GetRecipeName);
+        var sortedRecipesToShow = recipesToShow.OrderBy(x => x.Name);
+
 
         // Get the existing list of queue controls
         var oldChildCount = RecipeList.ChildCount;
         _entityManager.TryGetComponent(Entity, out LatheComponent? lathe);
 
+        var materials = _materialStorage.GetStoredMaterials(Entity);
+
         int idx = 0;
-        foreach (var prototype in sortedRecipesToShow)
+        foreach (var recipe in sortedRecipesToShow)
         {
-            var canProduce = _lathe.CanProduce((Entity, lathe), prototype, quantity);
-            var tooltipFunction = () => GenerateTooltipText(prototype);
+            var canProduce = _lathe.CanProduce((Entity, lathe), recipe.Proto, materials, quantity);
+            var tooltipFunction = () => GenerateTooltipText(recipe.Proto);
 
             if (idx >= oldChildCount)
             {
-                var control = new RecipeControl(_lathe, prototype, tooltipFunction, canProduce, GetRecipeDisplayControl(prototype));
+                var control = new RecipeControl(_lathe, recipe.Proto, tooltipFunction, canProduce, GetRecipeDisplayControl(recipe.Proto), recipe.Name);
                 control.OnButtonPressed += s =>
                 {
                     if (!int.TryParse(AmountLineEdit.Text, out var amount) || amount <= 0)
@@ -165,10 +170,14 @@ public sealed partial class LatheMenu : FancyWindow
                     continue;
                 }
 
-                child.SetRecipe(prototype);
                 child.SetTooltipSupplier(tooltipFunction);
                 child.SetCanProduce(canProduce);
-                child.SetDisplayControl(GetRecipeDisplayControl(prototype));
+                if (recipe.Proto.ID != child.RecipeId)
+                {
+                    child.SetRecipe(recipe.Proto, recipe.Name);
+                    // NOTE: doesn't nicely handle prototype reloads.
+                    child.SetDisplayControl(GetRecipeDisplayControl(recipe.Proto));
+                }
             }
             idx++;
         }
@@ -190,15 +199,15 @@ public sealed partial class LatheMenu : FancyWindow
             if (!_prototypeManager.Resolve(id, out var proto))
                 continue;
 
-            var adjustedAmount = Shared.Lathe.LatheSystem.AdjustMaterial(amount, prototype.ApplyMaterialDiscount, multiplier);
+            var adjustedAmount = LatheSystem.AdjustMaterial(amount, prototype.ApplyMaterialDiscount, multiplier);
             var sheetVolume = _materialStorage.GetSheetVolume(proto);
 
             var unit = Loc.GetString(proto.Unit);
-            var sheets = adjustedAmount / (float) sheetVolume;
+            var sheets = adjustedAmount / (float)sheetVolume;
 
             var availableAmount = _materialStorage.GetMaterialAmount(Entity, id);
             var missingAmount = Math.Max(0, adjustedAmount - availableAmount);
-            var missingSheets = missingAmount / (float) sheetVolume;
+            var missingSheets = missingAmount / (float)sheetVolume;
 
             var name = Loc.GetString(proto.Name);
 
@@ -336,18 +345,10 @@ public sealed partial class LatheMenu : FancyWindow
     public Control GetRecipeDisplayControl(LatheRecipePrototype recipe)
     {
         if (recipe.Icon != null)
-        {
-            var textRect = new TextureRect();
-            textRect.Texture = _spriteSystem.Frame0(recipe.Icon);
-            return textRect;
-        }
+            return new TextureRect { Texture = _spriteSystem.Frame0(recipe.Icon) };
 
         if (recipe.Result is { } result)
-        {
-            var entProtoView = new EntityPrototypeView();
-            entProtoView.SetPrototype(result);
-            return entProtoView;
-        }
+            return new EntityPrototypeView(result, _entityManager);
 
         return new Control();
     }
