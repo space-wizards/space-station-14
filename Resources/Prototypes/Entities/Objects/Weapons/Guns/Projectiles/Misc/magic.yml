@@ -231,13 +231,11 @@
       - Wall
 
 - type: entity
-  parent: BaseBullet
+  parent: BaseBulletTrigger
   id: ProjectileHealingBolt
   categories: [ HideSpawnMenu ]
   name: healing bolt
   description: I COMMAND YOU TO LIVE!
-  parent: BaseBulletTrigger
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
