@@ -60,7 +60,7 @@
   - type: Item
     size: Tiny
   - type: Tag
-    tags: [ Cake, Slice]
+    tags: [ Cake, Slice ]
 
 # Custom Cake Example
 
