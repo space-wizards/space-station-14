@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Client.DisplacementMap;
 using Content.Shared.AttachedVisuals;
+using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -18,7 +19,7 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private ISerializationManager _serialization = default!;
     [Dependency] private IReflectionManager _reflection = default!;
-    [Dependency] public DisplacementMapSystem _displacement = default!;
+    [Dependency] private DisplacementMapSystem _displacement = default!;
 
 
     [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery = default!;
@@ -162,6 +163,16 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
             var results = new List<(EntityUid Origin, string Key, HashSet<string> mapKeys, PrototypeLayerData Data)>();
             GetAttachmentLayers(ent, attachment, results);
 
+            // Select displacement maps
+            var displacementData = attachment.DisplacementData;
+            var equipeeSex = CompOrNull<HumanoidProfileComponent>(ent)?.Sex;
+            if (equipeeSex != null
+                && attachment.SexedDisplacementData != null
+                && attachment.SexedDisplacementData.TryGetValue(equipeeSex.Value, out var sexedDisplacementData))
+            {
+                displacementData = sexedDisplacementData;
+            }
+
             foreach (var (origin, key, mapKeys, data) in results)
             {
                 var index = _sprite.LayerMapReserve((ent.Owner, sprite), key);
@@ -170,7 +181,7 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
 
                 var addedLayerMap = new Dictionary<object, int>();
 
-                if (attachment.DisplacementData is not null && _displacement.TryAddDisplacement(attachment.DisplacementData, (ent, sprite), index, key, out var displacementKey))
+                if (displacementData is not null && _displacement.TryAddDisplacement(displacementData, (ent, sprite), index, key, out var displacementKey))
                     ent.Comp.RevealedLayers.GetOrNew(origin).Add(displacementKey);
 
                 foreach (var mapkey in mapKeys)

@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.DisplacementMap;
+using Content.Shared.Humanoid;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.AttachedVisuals;
@@ -10,13 +11,21 @@ namespace Content.Shared.AttachedVisuals;
 [RegisterComponent]
 public sealed partial class AttachedVisualsComponent : Component
 {
+    /// <summary>
+    /// Path to RSI to use for sprites
+    /// </summary>
     [DataField("sprite")]
     public string? RsiPath;
 
-    //Mapping to Container ID (on this entity) -> View name
+    /// <summary>
+    /// Attachment points that this entity supports
+    /// </summary>
     [DataField]
     public List<AttachmentDefinition> Attachments = new();
 
+    /// <summary>
+    /// Visuals to show when this entity is in a given attachment slot
+    /// </summary>
     [DataField]
     public Dictionary<ProtoId<VisualAttachmentPrototype>, AttachedVisualDefinition> AttachedVisuals = new();
 
@@ -27,10 +36,15 @@ public sealed partial class AttachedVisualsComponent : Component
 [DataDefinition]
 public sealed partial class AttachedVisualDefinition
 {
+    /// <summary>
+    /// Sprite layers to draw
+    /// </summary>
     [DataField]
     public List<PrototypeLayerData> Layers = new();
 
-    // Container ID -> view name,
+    /// <summary>
+    /// List of extra attachments slots that this slot can provide
+    /// </summary>
     [DataField]
     public List<AttachmentDefinition> Attachments = new();
 }
@@ -38,14 +52,29 @@ public sealed partial class AttachedVisualDefinition
 [DataDefinition]
 public sealed partial class AttachmentDefinition
 {
+    /// <summary>
+    /// Container ID that this attachment maps to
+    /// </summary>
     [DataField]
     public string Container;
 
+    /// <summary>
+    /// Attachment ID
+    /// </summary>
     [DataField]
     public ProtoId<VisualAttachmentPrototype> Attachment;
 
+    /// <summary>
+    /// Default displacement data
+    /// </summary>
     [DataField]
     public DisplacementData? DisplacementData;
+
+    /// <summary>
+    /// If we have sex displacement data, put it here
+    /// </summary>
+    [DataField]
+    public Dictionary<Sex, DisplacementData>? SexedDisplacementData;
 }
 
 [Prototype]

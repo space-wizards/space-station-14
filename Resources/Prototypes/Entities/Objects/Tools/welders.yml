@@ -59,15 +59,6 @@
     - type: IgniteOnMeleeHit
     - type: DisarmMalus
       malus: 0.6
-  - type: ToggleableVisuals
-    spriteLayer: flame
-#    inhandVisuals:
-#      left:
-#      - state: inhand-left-flame
-#        shader: unshaded
-#      right:
-#      - state: inhand-right-flame
-#        shader: unshaded
   - type: AttachedVisuals
     sprite: Objects/Tools/welder.rsi
     attachedVisuals:
