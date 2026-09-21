@@ -14,7 +14,9 @@
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/Shuttles/emergency_elkridge.yml
+          emergencyShuttlePath: /Maps/Shuttles/emergency_hike.yml
+        - type: StationArrivals
+          shuttlePath: /Maps/Shuttles/arrivals_micro.yml
         - type: StationCargoShuttle
           path: /Maps/Shuttles/cargo_hike.yml # corgi shuttle
         - type: StationJobs
