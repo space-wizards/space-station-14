@@ -4,8 +4,10 @@ using Content.Server.Players.Whitelist;
 using Content.Shared.CCVar;
 using Content.Shared.NewPlayer;
 using Content.Shared.GameTicking;
+using Content.Shared.Ghost.Components;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
+using Robust.Shared.Player;
 
 namespace Content.Server.NewPlayer;
 
@@ -67,5 +69,12 @@ public sealed partial class NewPlayerSystem : EntitySystem
         {
             Log.Error($"Error getting new player playtime:\n{e}");
         }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnPlayerAttachedEvent(Entity<GhostComponent> ent, ref PlayerAttachedEvent ev)
+    {
+        if (_whitelistManager.IsConnectedWhitelisted(ev.Player))
+            EnsureComp<ShowNewPlayerIconComponent>(ev.Entity);
     }
 }
