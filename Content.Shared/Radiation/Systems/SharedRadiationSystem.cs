@@ -17,5 +17,20 @@ public abstract partial class SharedRadiationSystem : EntitySystem
             return;
 
         entity.Comp.Intensity = intensity;
+        Dirty(entity);
+    }
+
+    /// <summary>
+    /// Change intensity of a <see cref="RadiationSourceComponent"/> using the passed intensity.
+    /// </summary>
+    /// <param name="entity">Radiation source we're attempting to update. </param>
+    /// <param name="intensityChange">Intensity change value that will be added to current intensity value.</param>
+    public void ChangeIntensity(Entity<RadiationSourceComponent?> entity, float intensityChange)
+    {
+        if (!SourceQuery.Resolve(entity, ref entity.Comp, false))
+            return;
+
+        entity.Comp.Intensity += intensityChange;
+        Dirty(entity);
     }
 }
