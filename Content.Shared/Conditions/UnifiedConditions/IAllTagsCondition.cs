@@ -11,10 +11,10 @@ public interface IAllTagsCondition : ICondition<IAllTagsCondition>, IConditionWi
 
     Satisfier.Satisfier IConditionWithDefaultSatisfactionRule.GetDefaultSatisfier()
     {
-        return new WithThreshold()
+        return new WithThreshold
         {
-          Comparison   = WithThreshold.Comparator.Equal,
-          Threshold = 1f
+            Comparison = WithThreshold.Comparator.Equal,
+            Threshold = 1f,
         };
     }
 }
@@ -30,6 +30,6 @@ public sealed partial class HasAllTagsEntityConditionSystem : EntitySystem
     private void Condition(Entity<TagComponent> entity, ref ConditionEvaluationEvent<IAllTagsCondition> args)
     {
         args.Handled = true;
-        args.Value = args.Condition.Tags.Count(tag=>_tag.HasTag(entity.Comp, tag));
+        args.Value = args.Condition.Tags.Count(tag => _tag.HasTag(entity.Comp, tag));
     }
 }

@@ -14,9 +14,9 @@ public interface IMultiplierCondition : ICondition<IMultiplierCondition>
 }
 
 /// <summary>
-/// Evaluation of <see cref="IMultiplierCondition"/>
+/// Evaluation of <see cref="IMultiplierCondition" />
 /// </summary>
-public sealed partial class  MultiplierConditionSystem : EntitySystem
+public sealed partial class MultiplierConditionSystem : EntitySystem
 {
     [Dependency] private SharedConditionEvaluationSystem _conditionEvaluationSystem = default!;
 
@@ -33,8 +33,6 @@ public sealed partial class  MultiplierConditionSystem : EntitySystem
                 .Aggregate((a, b) => a * b);
         }
         else
-        {
             args.Value = 0;
-        }
     }
 }

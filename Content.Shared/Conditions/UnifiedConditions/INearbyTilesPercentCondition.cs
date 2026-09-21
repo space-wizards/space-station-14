@@ -7,22 +7,23 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface INearbyTilesPercentCondition : ICondition<INearbyTilesPercentCondition>, IConditionWithDefaultSatisfactionRule
+public interface INearbyTilesPercentCondition : ICondition<INearbyTilesPercentCondition>,
+    IConditionWithDefaultSatisfactionRule
 {
     bool IgnoreAnchored { get; }
 
     float Percent { get; }
 
-     List<ProtoId<ContentTileDefinition>> Tiles { get; }
+    List<ProtoId<ContentTileDefinition>> Tiles { get; }
 
-     float Range { get; }
+    float Range { get; }
 
     Satisfier.Satisfier IConditionWithDefaultSatisfactionRule.GetDefaultSatisfier()
     {
-        return new WithThreshold()
+        return new WithThreshold
         {
-            Comparison=WithThreshold.Comparator.GreaterEqual,
-                Threshold=Percent,
+            Comparison = WithThreshold.Comparator.GreaterEqual,
+            Threshold = Percent,
         };
     }
 }
@@ -30,23 +31,22 @@ public interface INearbyTilesPercentCondition : ICondition<INearbyTilesPercentCo
 /// <summary>
 /// Checks if a percentage of the tiles we are nearby match
 /// </summary>
-public sealed partial class NearbyTilesPercentConditionSystem :EntitySystem
+public sealed partial class NearbyTilesPercentConditionSystem : EntitySystem
 {
-    [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedMapSystem _map = default!;
-    [Dependency] private ITileDefinitionManager _tileDef = default!;
 
-    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery;
+    [Dependency] private ITileDefinitionManager _tileDef = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     [SubscribeLocalEvent]
-    private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent<INearbyTilesPercentCondition> args)
+    private void Condition(Entity<TransformComponent> entity,
+        ref ConditionEvaluationEvent<INearbyTilesPercentCondition> args)
     {
         args.Handled = true;
 
         if (!TryComp<MapGridComponent>(entity.Comp.GridUid, out var grid))
-        {
             return;
-        }
 
         var tileCount = 0;
         var matchingTileCount = 0;

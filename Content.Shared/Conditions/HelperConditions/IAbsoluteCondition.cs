@@ -10,9 +10,9 @@ public interface IAbsoluteCondition : ICondition<IAbsoluteCondition>
 }
 
 /// <summary>
-/// System for evaluating <see cref="IAbsoluteCondition"/>
+/// System for evaluating <see cref="IAbsoluteCondition" />
 /// </summary>
-public  sealed partial class AbsoluteConditionSystem : EntitySystem
+public sealed partial class AbsoluteConditionSystem : EntitySystem
 {
     [SubscribeLocalEvent]
     private void Condition(Entity<MetaDataComponent> _, ref ConditionEvaluationEvent<IAbsoluteCondition> args)
@@ -20,5 +20,4 @@ public  sealed partial class AbsoluteConditionSystem : EntitySystem
         args.Handled = true;
         args.Value = args.Condition.Value;
     }
-
 }

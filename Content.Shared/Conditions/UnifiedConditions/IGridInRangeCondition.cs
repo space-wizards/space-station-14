@@ -13,8 +13,8 @@ public interface IGridInRangeCondition : ICondition<IGridInRangeCondition>
 /// </summary>
 public sealed partial class GridInRangeConditionSystem : EntitySystem
 {
-    [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     [SubscribeLocalEvent]
     private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent<IGridInRangeCondition> args)

@@ -1,15 +1,11 @@
-using System.Collections.Concurrent;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.Conditions.HelperConditions;
 
 namespace Content.Shared.Conditions;
 
 /// <summary>
-/// The central API through which <see cref="ICondition"/>s can be evaluated.
+/// The central API through which <see cref="ICondition" />s can be evaluated.
 /// </summary>
-public sealed partial class SharedConditionEvaluationSystem : EntitySystem
+public sealed class SharedConditionEvaluationSystem : EntitySystem
 {
     /// <summary>
     /// Evaluates a condition against an entity given an optional source entity.
@@ -17,8 +13,14 @@ public sealed partial class SharedConditionEvaluationSystem : EntitySystem
     /// <param name="condition"></param>
     /// <param name="entityUid">The entity on which the condition is to be tested.</param>
     /// <param name="sourceEntity"></param>
-    /// <returns>A factor representing how much the condition is satisfied. For most binary conditions, this is 0 and 1, but anything gray it could be any arbitrary value</returns>
-    /// <exception cref="NotImplementedException">A condition that cannot be evaluated should not exist. Either you using it on an entity missing necessary components or there is no system to evaluate the condition</exception>
+    /// <returns>
+    /// A factor representing how much the condition is satisfied. For most binary conditions, this is 0 and 1, but
+    /// anything gray it could be any arbitrary value
+    /// </returns>
+    /// <exception cref="NotImplementedException">
+    /// A condition that cannot be evaluated should not exist. Either you using it on
+    /// an entity missing necessary components or there is no system to evaluate the condition
+    /// </exception>
     public float EvaluateCondition(ICondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
         //make the event using our cached building function.
@@ -45,9 +47,9 @@ public sealed partial class SharedConditionEvaluationSystem : EntitySystem
     /// <param name="entityUid">The entity to check against</param>
     /// <param name="sourceEntity">An optional entity, likely the raiser of the evaluation</param>
     /// <returns></returns>
-    /// <seealso cref="IWithInverted"/>
-    /// <seealso cref="IWithBoundary"/>
-    /// <seealso cref="IWithThreshold"/>
+    /// <seealso cref="IWithInverted" />
+    /// <seealso cref="IWithBoundary" />
+    /// <seealso cref="IWithThreshold" />
     public bool IsConditionSatisfied(ICondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
         return IsConditionSatisfied(condition, entityUid, out _, sourceEntity);
@@ -62,10 +64,13 @@ public sealed partial class SharedConditionEvaluationSystem : EntitySystem
     /// <param name="scale"></param>
     /// <param name="sourceEntity">An optional entity, likely the raiser of the evaluation</param>
     /// <returns></returns>
-    /// <remarks>Use this version if you want to use both the scale and satisfy result. Like EntityEffect check and then Scaling.</remarks>
-    /// <seealso cref="IWithInverted"/>
-    /// <seealso cref="IWithBoundary"/>
-    /// <seealso cref="IWithThreshold"/>
+    /// <remarks>
+    /// Use this version if you want to use both the scale and satisfy result. Like EntityEffect check and then
+    /// Scaling.
+    /// </remarks>
+    /// <seealso cref="IWithInverted" />
+    /// <seealso cref="IWithBoundary" />
+    /// <seealso cref="IWithThreshold" />
     public bool IsConditionSatisfied(ICondition condition,
         EntityUid entityUid,
         out float scale,

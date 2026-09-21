@@ -4,7 +4,8 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface INearbyComponentsCondition : ICondition<INearbyComponentsCondition>, IConditionWithDefaultSatisfactionRule
+public interface INearbyComponentsCondition : ICondition<INearbyComponentsCondition>,
+    IConditionWithDefaultSatisfactionRule
 {
     /// <summary>
     /// Does the entity need to be anchored.
@@ -19,7 +20,7 @@ public interface INearbyComponentsCondition : ICondition<INearbyComponentsCondit
 
     Satisfier.Satisfier IConditionWithDefaultSatisfactionRule.GetDefaultSatisfier()
     {
-        return new WithThreshold()
+        return new WithThreshold
         {
             Comparison = WithThreshold.Comparator.GreaterEqual,
             Threshold = 1,
@@ -32,11 +33,12 @@ public interface INearbyComponentsCondition : ICondition<INearbyComponentsCondit
 /// </summary>
 public sealed partial class NearbyComponentsConditionSystem : EntitySystem
 {
-    [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     [SubscribeLocalEvent]
-    private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent<INearbyComponentsCondition> args)
+    private void Condition(Entity<TransformComponent> entity,
+        ref ConditionEvaluationEvent<INearbyComponentsCondition> args)
     {
         args.Handled = true;
 

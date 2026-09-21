@@ -4,7 +4,6 @@ namespace Content.Shared.Conditions.UnifiedConditions;
 
 public interface IIsGhostCondition : ICondition<IIsGhostCondition>
 {
-
 }
 
 /// <summary>

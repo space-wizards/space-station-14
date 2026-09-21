@@ -8,11 +8,11 @@ namespace Content.Shared.Conditions.UnifiedConditions;
 public interface IRoleCondition : ICondition<IRoleCondition>
 {
     EntityWhitelist Whitelist { get; }
-
 }
 
 /// <summary>
-/// Returns true if this entity has any of the specified jobs. False if the entity has no mind, none of the specified jobs, or is jobless.
+/// Returns true if this entity has any of the specified jobs. False if the entity has no mind, none of the specified jobs,
+/// or is jobless.
 /// </summary>
 public sealed partial class MindContainerRoleEntityConditionSystem : EntitySystem
 {
@@ -33,7 +33,6 @@ public sealed partial class MindContainerRoleEntityConditionSystem : EntitySyste
     private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<IRoleCondition> args)
     {
         args.Handled = true;
-        args.Value = _role.MindHasRole(entity, args.Condition.Whitelist)?1:0;
+        args.Value = _role.MindHasRole(entity, args.Condition.Whitelist) ? 1 : 0;
     }
-
 }

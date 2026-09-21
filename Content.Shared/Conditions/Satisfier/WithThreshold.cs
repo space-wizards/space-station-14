@@ -16,7 +16,7 @@ public sealed partial class WithThreshold : Satisfier
 
     /// <summary>
     /// Which comparison is to be used?
-    /// Hint: [Value of Condition] [<see cref="Comparison"/>] [<see cref="Threshold"/>]
+    /// Hint: [Value of Condition] [<see cref="Comparison" />] [<see cref="Threshold" />]
     /// </summary>
     [DataField]
     public Comparator Comparison { get; set; }
@@ -27,7 +27,7 @@ public sealed partial class WithThreshold : Satisfier
     [DataField]
     public float Threshold { get; set; }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     protected override bool IsSatisfiedInternal(float value)
     {
         switch (Comparison)

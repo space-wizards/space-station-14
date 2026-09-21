@@ -2,7 +2,6 @@ namespace Content.Shared.Conditions.UnifiedConditions;
 
 public interface IInSpaceCondition : ICondition<IInSpaceCondition>
 {
-
 }
 
 /// <summary>

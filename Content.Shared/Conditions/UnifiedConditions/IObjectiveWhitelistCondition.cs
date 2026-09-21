@@ -5,12 +5,10 @@ namespace Content.Shared.Conditions.UnifiedConditions;
 
 public interface IObjectiveWhitelistCondition : ICondition<IObjectiveWhitelistCondition>
 {
-
     EntityWhitelist? Whitelist { get; }
 
     EntityWhitelist? Blacklist { get; }
 }
-
 
 /// <summary>
 /// Checks if the target mind has an objective which passes the given whitelist and/or blacklist.
@@ -19,7 +17,8 @@ public sealed partial class ObjectiveEntityConditionSystem : EntitySystem
 {
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
-    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<IObjectiveWhitelistCondition> args)
+    private void Condition(Entity<MindComponent> entity,
+        ref ConditionEvaluationEvent<IObjectiveWhitelistCondition> args)
     {
         args.Handled = true;
 
@@ -32,6 +31,6 @@ public sealed partial class ObjectiveEntityConditionSystem : EntitySystem
             args.Value++;
         }
 
-        args.Value /= (float)entity.Comp.Objectives.Count;
+        args.Value /= entity.Comp.Objectives.Count;
     }
 }

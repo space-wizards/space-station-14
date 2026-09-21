@@ -25,7 +25,7 @@ public interface INearbyAccessCondition : ICondition<INearbyAccessCondition>, IC
 
     Satisfier.Satisfier IConditionWithDefaultSatisfactionRule.GetDefaultSatisfier()
     {
-        return new WithThreshold()
+        return new WithThreshold
         {
             Comparison = WithThreshold.Comparator.GreaterEqual,
             Threshold = 1,
@@ -47,9 +47,7 @@ public sealed partial class NearbyAccessConditionSystem : EntitySystem
         args.Handled = true;
 
         if (entity.Comp.MapUid == null)
-        {
             return;
-        }
 
         var count = 0f;
 

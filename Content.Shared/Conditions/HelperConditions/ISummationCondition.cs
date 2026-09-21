@@ -14,9 +14,9 @@ public interface ISummationCondition : ICondition<ISummationCondition>
 }
 
 /// <summary>
-/// Evaluation of <see cref="ISummationCondition"/>
+/// Evaluation of <see cref="ISummationCondition" />
 /// </summary>
-public sealed partial class  SummationConditionSystem : EntitySystem
+public sealed partial class SummationConditionSystem : EntitySystem
 {
     [Dependency] private SharedConditionEvaluationSystem _conditionEvaluationSystem = default!;
 
@@ -31,8 +31,6 @@ public sealed partial class  SummationConditionSystem : EntitySystem
                 .Sum(e => _conditionEvaluationSystem.EvaluateCondition(e, entity, sourceEntity));
         }
         else
-        {
             args.Value = 0;
-        }
     }
 }

@@ -23,10 +23,10 @@ public interface IReagentCondition : ICondition<IReagentCondition>, IConditionWi
     /// </summary>
     ProtoId<ReagentPrototype> Reagent { get; }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     Satisfier.Satisfier IConditionWithDefaultSatisfactionRule.GetDefaultSatisfier()
     {
-        return new WithBoundary()
+        return new WithBoundary
         {
             IncludeLowerBound = true,
             IncludeUpperBound = true,
@@ -35,7 +35,6 @@ public interface IReagentCondition : ICondition<IReagentCondition>, IConditionWi
             Inverted = false,
         };
     }
-
 }
 
 /// <summary>

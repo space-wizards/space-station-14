@@ -7,16 +7,16 @@ namespace Content.Shared.Conditions.UnifiedConditions;
 
 public interface IDifferentDepartmentCondition : ICondition<IDifferentDepartmentCondition>
 {
-
 }
 
 public sealed partial class DifferentDepartmentConditionSystem : EntitySystem
 {
-    [Dependency] private SharedRoleSystem _roleSystem = default!;
     [Dependency] private SharedJobSystem _jobSystem = default!;
+    [Dependency] private SharedRoleSystem _roleSystem = default!;
 
     [SubscribeLocalEvent]
-    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<IDifferentDepartmentCondition> args)
+    private void Condition(Entity<MindComponent> entity,
+        ref ConditionEvaluationEvent<IDifferentDepartmentCondition> args)
     {
         args.Handled = true;
         args.Value = !IsInvalid(entity, args.SourceEntity) ? 1 : 0;

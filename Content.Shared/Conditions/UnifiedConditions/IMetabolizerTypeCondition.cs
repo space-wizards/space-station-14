@@ -18,12 +18,14 @@ public interface IMetabolizerTypeCondition : ICondition<IMetabolizerTypeConditio
 public sealed partial class MetabolizerTypeConditionSystem : EntitySystem
 {
     [SubscribeLocalEvent]
-    private void Condition(Entity<MetabolizerComponent> entity, ref ConditionEvaluationEvent<IMetabolizerTypeCondition> args)
+    private void Condition(Entity<MetabolizerComponent> entity,
+        ref ConditionEvaluationEvent<IMetabolizerTypeCondition> args)
     {
         args.Handled = true;
         if (entity.Comp.MetabolizerTypes == null)
             return;
 
-        args.Value = (float)entity.Comp.MetabolizerTypes.Intersect(args.Condition.Type).Count()/(float)args.Condition.Type.Length;
+        args.Value = entity.Comp.MetabolizerTypes.Intersect(args.Condition.Type).Count() /
+                     (float)args.Condition.Type.Length;
     }
 }

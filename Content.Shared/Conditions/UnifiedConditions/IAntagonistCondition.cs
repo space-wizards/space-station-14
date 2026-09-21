@@ -1,4 +1,3 @@
-using Content.Shared.EntityConditions.Conditions.Mind;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
 
@@ -6,7 +5,6 @@ namespace Content.Shared.Conditions.UnifiedConditions;
 
 public interface IAntagonistCondition : ICondition<IAntagonistCondition>
 {
-
 }
 
 public sealed partial class AntagonistEntityConditionSystem : EntitySystem

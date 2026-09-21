@@ -1,13 +1,11 @@
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Conditions;
-using Content.Shared.Conditions.HelperConditions;
 using Content.Shared.Conditions.Satisfier;
 using Content.Shared.Temperature.Components;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
 /// <summary>
-/// A condition checked against <see cref="TemperatureComponent"/> and <see cref="SolutionComponent"/> for value.
+/// A condition checked against <see cref="TemperatureComponent" /> and <see cref="SolutionComponent" /> for value.
 /// </summary>
 public interface ITemperatureCondition : ICondition<ITemperatureCondition>, IConditionWithDefaultSatisfactionRule
 {
@@ -21,10 +19,10 @@ public interface ITemperatureCondition : ICondition<ITemperatureCondition>, ICon
     /// </summary>
     float Max { get; }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     Satisfier.Satisfier IConditionWithDefaultSatisfactionRule.GetDefaultSatisfier()
     {
-        return new WithBoundary()
+        return new WithBoundary
         {
             LowerBound = 0,
             UpperBound = 1,
@@ -35,7 +33,7 @@ public interface ITemperatureCondition : ICondition<ITemperatureCondition>, ICon
 }
 
 /// <summary>
-/// Evaluates <see cref="ITemperatureCondition"/>
+/// Evaluates <see cref="ITemperatureCondition" />
 /// </summary>
 public sealed partial class TemperatureEntityConditionSystem : EntitySystem
 {

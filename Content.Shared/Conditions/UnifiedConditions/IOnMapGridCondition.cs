@@ -2,7 +2,6 @@ namespace Content.Shared.Conditions.UnifiedConditions;
 
 public interface IOnMapGridCondition : ICondition<IOnMapGridCondition>
 {
-
 }
 
 /// <summary>
@@ -14,6 +13,6 @@ public sealed partial class OnMapGridConditionSystem : EntitySystem
     private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent<IOnMapGridCondition> args)
     {
         args.Handled = true;
-        args.Value = (entity.Comp.GridUid == entity.Comp.MapUid && entity.Comp.MapUid != null) ? 1 : 0;
+        args.Value = entity.Comp.GridUid == entity.Comp.MapUid && entity.Comp.MapUid != null ? 1 : 0;
     }
 }
