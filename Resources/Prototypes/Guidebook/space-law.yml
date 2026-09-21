@@ -1,0 +1,271 @@
+# Minor Crimes (1-XX)
+
+- type: spaceLaw
+  id: PettyTheft
+  color: "#2e422e"
+  name: crime-petty-theft-name
+  desc: crime-petty-theft-desc
+  notes: crime-petty-theft-notes
+  code: crime-petty-theft-code
+
+- type: spaceLaw
+  id: Vandalism
+  color: "#453a59"
+  name: crime-vandalism-name
+  desc: crime-vandalism-desc
+  notes: crime-vandalism-notes
+  code: crime-vandalism-code
+
+- type: spaceLaw
+  id: Trespass
+  color: "#59563a"
+  name: crime-trespass-name
+  desc: crime-trespass-desc
+  notes: crime-trespass-notes
+  code: crime-trespass-code
+
+- type: spaceLaw
+  id: AnimalCruelty
+  color: "#4d2e2e"
+  name: crime-animal-cruelty-name
+  desc: crime-animal-cruelty-desc
+  notes: crime-animal-cruelty-notes
+  code: crime-animal-cruelty-code
+
+- type: spaceLaw
+  id: Endangerment
+  color: "#4d2e2e"
+  name: crime-endangerment-name
+  desc: crime-endangerment-desc
+  notes: crime-endangerment-notes
+  code: crime-endangerment-code
+
+- type: spaceLaw
+  id: Disturbance
+  color: "#3b4354"
+  name: crime-disturbance-name
+  desc: crime-disturbance-desc
+  notes: crime-disturbance-notes
+  code: crime-disturbance-code
+
+# Moderate Crimes (2-XX)
+
+- type: spaceLaw
+  id: ResistingLawfulSearch
+  color: "#593a4e"
+  name: crime-resisting-search-name
+  desc: crime-resisting-search-desc
+  notes: crime-resisting-search-notes
+  code: crime-resisting-search-code
+
+- type: spaceLaw
+  id: GrandTheft
+  color: "#2e422e"
+  name: crime-grand-theft-name
+  desc: crime-grand-theft-desc
+  notes: crime-grand-theft-notes
+  code: crime-grand-theft-code
+
+- type: spaceLaw
+  id: DamageOfProperty
+  color: "#453a59"
+  name: crime-damage-property-name
+  desc: crime-damage-property-desc
+  notes: crime-damage-property-notes
+  code: crime-damage-property-code
+
+- type: spaceLaw
+  id: SecureTrespass
+  color: "#59563a"
+  name: crime-secure-trespass-name
+  desc: crime-secure-trespass-desc
+  notes: crime-secure-trespass-notes
+  code: crime-secure-trespass-code
+
+- type: spaceLaw
+  id: Assault
+  color: "#4d2e2e"
+  name: crime-assault-name
+  desc: crime-assault-desc
+  notes: crime-assault-notes
+  code: crime-assault-code
+
+- type: spaceLaw
+  id: GrossNegligence
+  color: "#4d2e2e"
+  name: crime-gross-negligence-name
+  desc: crime-gross-negligence-desc
+  notes: crime-gross-negligence-notes
+  code: crime-gross-negligence-code
+
+# Major Crimes (3-XX)
+
+- type: spaceLaw
+  id: ObstructionOfJustice
+  color: "#593a4e"
+  name: crime-obstruction-justice-name
+  desc: crime-obstruction-justice-desc
+  notes: crime-obstruction-justice-notes
+  code: crime-obstruction-justice-code
+
+- type: spaceLaw
+  id: MinorSabotage
+  color: "#453a59"
+  name: crime-minor-sabotage-name
+  desc: crime-minor-sabotage-desc
+  notes: crime-minor-sabotage-notes
+  code: crime-minor-sabotage-code
+
+- type: spaceLaw
+  id: Kidnapping
+  color: "#4d2e2e"
+  name: crime-kidnapping-name
+  desc: crime-kidnapping-desc
+  notes: crime-kidnapping-notes
+  code: crime-kidnapping-code
+
+- type: spaceLaw
+  id: Rioting
+  color: "#3b4354"
+  name: crime-rioting-name
+  desc: crime-rioting-desc
+  notes: crime-rioting-notes
+  code: crime-rioting-code
+
+# Extreme Crimes (4-XX)
+
+- type: spaceLaw
+  id: BreachOfCustody
+  color: "#593a4e"
+  name: crime-breach-custody-name
+  desc: crime-breach-custody-desc
+  notes: crime-breach-custody-notes
+  code: crime-breach-custody-code
+
+- type: spaceLaw
+  id: MajorSabotage
+  color: "#453a59"
+  name: crime-major-sabotage-name
+  desc: crime-major-sabotage-desc
+  notes: crime-major-sabotage-notes
+  code: crime-major-sabotage-code
+
+- type: spaceLaw
+  id: AttemptedMurder
+  color: "#4d2e2e"
+  name: crime-attempted-murder-name
+  desc: crime-attempted-murder-desc
+  notes: crime-attempted-murder-notes
+  code: crime-attempted-murder-code
+
+- type: spaceLaw
+  id: Manslaughter
+  color: "#4d2e2e"
+  name: crime-manslaughter-name
+  desc: crime-manslaughter-desc
+  notes: crime-manslaughter-notes
+  code: crime-manslaughter-code
+
+# Capital Crimes (5-XX)
+
+- type: spaceLaw
+  id: BreachOfPermanentConfinement
+  color: "#593a4e"
+  name: crime-breach-permanent-confinement-name
+  desc: crime-breach-permanent-confinement-desc
+  notes: crime-breach-permanent-confinement-notes
+  code: crime-breach-permanent-confinement-code
+
+- type: spaceLaw
+  id: StationWideDestruction
+  color: "#453a59"
+  name: crime-station-destruction-name
+  desc: crime-station-destruction-desc
+  notes: crime-station-destruction-notes
+  code: crime-station-destruction-code
+
+- type: spaceLaw
+  id: Murder
+  color: "#4d2e2e"
+  name: crime-murder-name
+  desc: crime-murder-desc
+  notes: crime-murder-notes
+  code: crime-murder-code
+
+- type: spaceLaw
+  id: MassActsOfViolence
+  color: "#4d2e2e"
+  name: crime-mass-violence-name
+  desc: crime-mass-violence-desc
+  notes: crime-mass-violence-notes
+  code: crime-mass-violence-code
+
+- type: spaceLaw
+  id: RefusalOfMentalShielding
+  color: "#3b4354"
+  name: crime-mental-shielding-name
+  desc: crime-mental-shielding-desc
+  notes: crime-mental-shielding-notes
+  code: crime-mental-shielding-code
+
+# Law Severity Tiers
+
+- type: spaceLawTier
+  id: MinorCrimes
+  name: crime-severity-minor-name
+  code: crime-severity-minor-code
+  sentence: crime-severity-minor-sentence
+  laws:
+  - PettyTheft
+  - Vandalism
+  - Trespass
+  - AnimalCruelty
+  - Endangerment
+  - Disturbance
+
+- type: spaceLawTier
+  id: ModerateCrimes
+  name: crime-severity-moderate-name
+  code: crime-severity-moderate-code
+  sentence: crime-severity-moderate-sentence
+  laws:
+  - ResistingLawfulSearch
+  - GrandTheft
+  - DamageOfProperty
+  - SecureTrespass
+  - Assault
+  - GrossNegligence
+
+- type: spaceLawTier
+  id: MajorCrimes
+  name: crime-severity-major-name
+  code: crime-severity-major-code
+  sentence: crime-severity-major-sentence
+  laws:
+  - ObstructionOfJustice
+  - MinorSabotage
+  - Kidnapping
+  - Rioting
+
+- type: spaceLawTier
+  id: ExtremeCrimes
+  name: crime-severity-extreme-name
+  code: crime-severity-extreme-code
+  sentence: crime-severity-extreme-sentence
+  laws:
+  - BreachOfCustody
+  - MajorSabotage
+  - AttemptedMurder
+  - Manslaughter
+
+- type: spaceLawTier
+  id: CapitalCrimes
+  name: crime-severity-capital-name
+  code: crime-severity-capital-code
+  sentence: crime-severity-capital-sentence
+  laws:
+  - BreachOfPermanentConfinement
+  - StationWideDestruction
+  - Murder
+  - MassActsOfViolence
+  - RefusalOfMentalShielding
