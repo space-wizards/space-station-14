@@ -89,11 +89,21 @@ public abstract partial class SharedLatheSystem : EntitySystem
         if (amount <= 0)
             return false;
 
+        var materials = _materialStorage.GetStoredMaterials(uid);
+
+        return HasMaterials(materials, recipe, component.MaterialUseMultiplier, amount);
+    }
+
+    public bool HasMaterials(Dictionary<ProtoId<MaterialPrototype>, int> materials, LatheRecipePrototype recipe, float materialMultiplier, int amount = 1)
+    {
         foreach (var (material, needed) in recipe.Materials)
         {
-            var adjustedAmount = AdjustMaterial(needed, recipe.ApplyMaterialDiscount, component.MaterialUseMultiplier);
+            if (!materials.TryGetValue(material, out var availableAmount))
+                return false;
 
-            if (_materialStorage.GetMaterialAmount(uid, material) < adjustedAmount * amount)
+            var adjustedAmount = AdjustMaterial(needed, recipe.ApplyMaterialDiscount, materialMultiplier);
+
+            if (availableAmount < adjustedAmount * amount)
                 return false;
         }
         return true;
@@ -111,9 +121,9 @@ public abstract partial class SharedLatheSystem : EntitySystem
     }
 
     public static int AdjustMaterial(int original, bool reduce, float multiplier)
-        => reduce ? (int) MathF.Ceiling(original * multiplier) : original;
+        => reduce ? (int)MathF.Ceiling(original * multiplier) : original;
 
-    protected abstract bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component);
+    public abstract bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component);
 
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs obj)
     {
@@ -127,7 +137,7 @@ public abstract partial class SharedLatheSystem : EntitySystem
         InverseRecipes.Clear();
         foreach (var latheRecipe in ProtoMan.EnumeratePrototypes<LatheRecipePrototype>())
         {
-            if (latheRecipe.Result is not {} result)
+            if (latheRecipe.Result is not { } result)
                 continue;
 
             InverseRecipes.GetOrNew(result).Add(latheRecipe);
@@ -152,7 +162,7 @@ public abstract partial class SharedLatheSystem : EntitySystem
         if (!string.IsNullOrWhiteSpace(proto.Name))
             return Loc.GetString(proto.Name);
 
-        if (proto.Result is {} result)
+        if (proto.Result is { } result)
         {
             return ProtoMan.Index(result).Name;
         }
@@ -178,7 +188,7 @@ public abstract partial class SharedLatheSystem : EntitySystem
         if (!string.IsNullOrWhiteSpace(proto.Description))
             return Loc.GetString(proto.Description);
 
-        if (proto.Result is {} result)
+        if (proto.Result is { } result)
         {
             return ProtoMan.Index(result).Description;
         }
