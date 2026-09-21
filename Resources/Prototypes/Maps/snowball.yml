@@ -3,7 +3,7 @@
   mapName: 'Snowball Station'
   mapPath: /Maps/snowball.yml
   minPlayers: 5
-  maxPlayers: 24
+  maxPlayers: 25
   stations:
     Snowball:
       stationProto: StandardNanotrasenStation

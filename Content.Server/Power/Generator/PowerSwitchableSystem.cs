@@ -5,7 +5,8 @@ using Content.Server.Power.Nodes;
 using Content.Shared.NodeContainer;
 using Content.Shared.Power;
 using Content.Shared.Power.Generator;
-using Content.Shared.Timing;
+using Content.Shared.Timing.Components;
+using Content.Shared.Timing.Systems;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Power.Generator;
