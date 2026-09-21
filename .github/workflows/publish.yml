@@ -29,7 +29,6 @@ jobs:
     - name: Announce dry run
       if: ${{ github.event.inputs.dry_run == 'true' }}
       run: |
-        echo "::warning::DRY RUN IS RUNNING - nothing will be committed, pushed, tagged, uploaded or posted, and this run is expected to fail at the end."
         echo "################################################################################"
         echo "#                            DRY RUN IS RUNNING                                #"
         echo "#  Nothing will be committed, pushed, tagged, uploaded or posted.              #"
