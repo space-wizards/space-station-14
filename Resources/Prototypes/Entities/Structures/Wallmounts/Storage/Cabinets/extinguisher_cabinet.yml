@@ -5,8 +5,10 @@
   description: A small wall mounted cabinet designed to hold a fire extinguisher.
   components:
   - type: Construction
-    graph: ExtinguisherCabinet
+    graph: ExtinguisherCabinetGraph
     node: done
+    containers:
+    - ItemCabinet
   - type: Sprite
     sprite: Structures/Wallmounts/extinguisher-cabinet.rsi
     offset: 0, -0.25

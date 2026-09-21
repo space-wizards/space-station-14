@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: DefibrillatorCabinet
+  id: DefibrillatorCabinetGraph
   start: start
   graph:
   - node: start
@@ -27,7 +27,7 @@
       - !type:DeleteEntity
 
 - type: constructionGraph
-  id: ExtinguisherCabinet
+  id: ExtinguisherCabinetGraph
   start: start
   graph:
   - node: start
@@ -55,7 +55,7 @@
       - !type:DeleteEntity
 
 - type: constructionGraph
-  id: FireAxeCabinet
+  id: FireAxeCabinetGraph
   start: start
   graph:
   - node: start
@@ -85,7 +85,7 @@
       - !type:DeleteEntity
 
 - type: constructionGraph
-  id: ShotGunCabinet
+  id: ShotGunCabinetGraph
   start: start
   graph:
   - node: start

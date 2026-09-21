@@ -7,8 +7,10 @@
     mode: SnapgridCenter
   components:
   - type: Construction
-    graph: FireAxeCabinet
+    graph: FireAxeCabinetGraph
     node: done
+    containers:
+    - ItemCabinet
   - type: Destructible
     thresholds:
     - trigger:
