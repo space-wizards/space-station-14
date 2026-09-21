@@ -1,7 +1,8 @@
 - type: entity
   parent: [ BaseWallmountCabinetGlass, StructureHealthContainerStrong ]
-  id: FireAxeCabinet
+  id: FireAxeCabinetConstructed
   name: fire axe cabinet
+  suffix: No Access
   description: There is a small label that reads "For Emergency use only" along with details for safe use of the axe. As if.
   placement:
     mode: SnapgridCenter
@@ -41,6 +42,17 @@
           tags:
           - FireAxe
   - type: Lock
+  - type: AccessReader
+    access: []
+
+
+- type: entity
+  parent: FireAxeCabinetConstructed
+  id: FireAxeCabinet
+  name: fire axe cabinet
+  suffix: Atmospherics
+  description: There is a small label that reads "For Emergency use only" along with details for safe use of the axe. As if.
+  components:
   - type: AccessReader
     access: [["Atmospherics"], ["Command"]]
 
