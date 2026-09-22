@@ -203,6 +203,7 @@ public sealed partial class EntityProviderSystem
         entity = null;
         if (!Resolve(provider, ref provider.Comp) || !TryEjectEntities(provider, protoId, out var entities, 1, user))
             return false;
+
         // Using Single because if there's more than one entity in the list after just taking one, something went wrong.
         entity = entities.Single();
         _hands.TryPickupAnyHand(user, entity.Value);
