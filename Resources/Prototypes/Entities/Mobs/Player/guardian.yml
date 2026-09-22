@@ -387,18 +387,22 @@
 - type: entity
   parent: [MobFighterGuardianBase, MobGuardianWizardBase]
   id: MobFighterGuardianWizard
+  suffix: Wizard
 
 - type: entity
   parent: [MobHealerGuardianBase, MobGuardianWizardBase]
   id: MobHealerGuardianWizard
+  suffix: Wizard
 
 - type: entity
   parent: [MobExplosiveGuardianBase, MobGuardianWizardBase]
   id: MobExplosiveGuardianWizard
+  suffix: Wizard
 
 - type: entity
   parent: [MobSwordGuardianBase, MobGuardianWizardBase]
   id: MobSwordGuardianWizard
+  suffix: Wizard
 
 # From cybersun holoparasite injector
 
@@ -421,15 +425,19 @@
 - type: entity
   parent: [MobFighterGuardianBase, MobGuardianSyndicateBase]
   id: MobFighterGuardianSyndicate
+  suffix: Syndicate
 
 - type: entity
   parent: [MobHealerGuardianBase, MobGuardianSyndicateBase]
   id: MobHealerGuardianSyndicate
+  suffix: Syndicate
 
 - type: entity
   parent: [MobExplosiveGuardianBase, MobGuardianSyndicateBase]
   id: MobExplosiveGuardianSyndicate
+  suffix: Syndicate
 
 - type: entity
   parent: [MobSwordGuardianBase, MobGuardianSyndicateBase]
   id: MobSwordGuardianSyndicate
+  suffix: Syndicate
