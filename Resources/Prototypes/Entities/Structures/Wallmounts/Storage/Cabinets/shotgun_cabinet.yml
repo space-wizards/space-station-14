@@ -2,7 +2,7 @@
   parent: FireAxeCabinetConstructed
   id: ShotGunCabinetConstructed
   name: shotgun cabinet
-  suffix: No Access
+  suffix: Free Access
   description: There is a small label that reads "For Emergency use only" along with details for safe use of the shotgun. As if.
   components:
   - type: Construction
@@ -31,7 +31,6 @@
           - WeaponShotgunKammerer
   - type: Lock
   - type: AccessReader
-    access: []
 
 - type: entity
   parent: ShotGunCabinetConstructed

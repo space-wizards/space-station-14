@@ -2,7 +2,7 @@
   parent: [ BaseWallmountCabinetGlass, StructureHealthContainerStrong ]
   id: FireAxeCabinetConstructed
   name: fire axe cabinet
-  suffix: No Access
+  suffix: Free Access
   description: There is a small label that reads "For Emergency use only" along with details for safe use of the axe. As if.
   placement:
     mode: SnapgridCenter
@@ -43,8 +43,6 @@
           - FireAxe
   - type: Lock
   - type: AccessReader
-    access: []
-
 
 - type: entity
   parent: FireAxeCabinetConstructed
