@@ -1,21 +1,18 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
 						xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
 						xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-						MinSize="700 700">
+						MinSize="500 400"
+                        SetSize="700 700">
 	<BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
 		<!-- First Informational panel -->
-		<Label Name="Description" Margin="5 5"/>
+		<RichTextLabel Name="Description" Margin="5 5"/>
 		<controls:Separator ColorOverride="#404040" Margin="0 5"/>
-		<Label Name="SelectedSets" Text="{Loc 'thief-backpack-window-selected'}" Margin="5 5"/>
+		<RichTextLabel Name="SelectedSets" Text="{Loc 'thief-backpack-window-selected'}" Margin="5 5"/>
 
 		<!-- Second sets panel -->
-		<PanelContainer Margin="5 5">
-			<PanelContainer.PanelOverride>
-				<gfx:StyleBoxFlat BackgroundColor="#050505" />
-			</PanelContainer.PanelOverride>
+		<PanelContainer Margin="5 5" VerticalExpand="True" StyleClasses="PanelDark">
 			<ScrollContainer
 					HScrollEnabled="False"
-					MinSize="0 600"
 					SizeFlagsStretchRatio="2"
 					VerticalExpand="True">
 				<BoxContainer Name="SetsGrid" Orientation="Vertical" MinSize="460 200">
@@ -25,13 +22,10 @@
 			</ScrollContainer>
 		</PanelContainer>
 		<!-- Third approve button panel -->
-		<PanelContainer Margin="10">
-			<Button Name="ApproveButton"
-					Text="{Loc 'thief-backpack-window-approve-button'}"
-					Margin="0 5"
-					Access="Public"
-					HorizontalAlignment ="Right"
-					StyleClasses="OpenRight"/>
-		</PanelContainer>
+        <Button Name="ApproveButton"
+                Text="{Loc 'thief-backpack-window-approve-button'}"
+                Margin="10 5 10 10"
+                Access="Public"
+                HorizontalAlignment ="Right"/>
 	</BoxContainer>
 </controls:FancyWindow>
