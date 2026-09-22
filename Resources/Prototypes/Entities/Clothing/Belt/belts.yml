@@ -232,7 +232,7 @@
     sprite: Clothing/Belt/syndieholster.rsi
   - type: Appearance
   - type: UseDelay
-    delay: 3
+    delay: 1.5
   - type: ContainerContainer
     containers:
       upgraded_utility_slot: !type:ContainerSlot
