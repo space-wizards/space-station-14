@@ -10,7 +10,8 @@ namespace Content.Shared.Containers.ItemSlots.Components;
 public sealed partial class OpenItemSlotRadialOnInteractComponent : Component
 {
     /// <summary>
-    /// Whether the radial menu opens up on normal interactions or alternative interactions.
+    /// Whether the radial menu opens up exclusively on alternative interactions.
+    /// Default is both empty hand interactions and alternative interactions.
     /// </summary>
     [DataField]
     public bool AltInteraction;

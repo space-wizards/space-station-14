@@ -38,9 +38,12 @@ public sealed partial class OpenItemSlotRadialOnInteractSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnAfterInteract(Entity<OpenItemSlotRadialOnInteractComponent> container, ref InteractHandEvent args)
+    private void OnEmptyHandInteract(Entity<OpenItemSlotRadialOnInteractComponent> container, ref InteractHandEvent args)
     {
-        if (args.Handled || !_itemSlotsQuery.TryComp(container, out var slots) || !HasItemInAnySlot(slots))
+        if (args.Handled
+            || container.Comp.AltInteraction
+            ||!_itemSlotsQuery.TryComp(container, out var slots)
+            || !HasItemInAnySlot(slots))
             return;
 
         args.Handled = _ui.TryOpenUi(container.Owner, ItemSlotRadialUiKey.Key, args.User);
