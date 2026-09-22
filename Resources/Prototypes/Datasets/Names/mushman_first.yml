@@ -1,4 +1,4 @@
-﻿- type: localizedDataset
+- type: localizedDataset
   id: NamesMushmanFirst
   values:
     prefix: names-mushman-first-dataset-
