@@ -5,6 +5,7 @@ using Content.Server.VentHorde.Components;
 using Content.Server.VentHorde.Systems;
 using Content.Shared.EntityTable;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.Pinpointer;
 using Content.Shared.Station.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;

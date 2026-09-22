@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Pinpointer;
 
-public sealed partial class NavMapSystem : SharedNavMapSystem
+public sealed partial class ClientNavMapSystem : NavMapSystem
 {
     public override void Initialize()
     {
