@@ -1,7 +1,7 @@
 - type: entity
   parent: AirlockRCDResistant
   id: AirlockExternal
-  suffix: External
+  name: external airlock
   description: It opens, it closes, it might crush you, and there might be only space behind it.
   components:
   - type: Door
@@ -61,7 +61,7 @@
 - type: entity
   parent: AirlockExternal
   id: AirlockExternalGlass
-  suffix: Glass, External
+  suffix: Glass
   components:
   - type: Door
     occludes: false
