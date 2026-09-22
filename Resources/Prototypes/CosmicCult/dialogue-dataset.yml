@@ -1,23 +1,29 @@
 - type: localizedDataset
-  id: DatasetCosmicAbilityDialogueLapse
+  id: DatasetCosmicDialogueLapse
   values:
     prefix: cosmic-dialogue-lapse-
-    count: 1
+    count: 5
 
 - type: localizedDataset
-  id: DatasetCosmicAbilityDialogueImposition
+  id: DatasetCosmicDialogueImposition
   values:
     prefix: cosmic-dialogue-imposition-
-    count: 1
+    count: 5
 
 - type: localizedDataset
-  id: DatasetCosmicAbilityDialogueGlare
+  id: DatasetCosmicDialogueGlare
   values:
     prefix: cosmic-dialogue-glare-
-    count: 1
+    count: 5
 
 - type: localizedDataset
-  id: DatasetCosmicAbilityDialogueGlare
+  id: DatasetCosmicDialogueNova
   values:
-    prefix: cosmic-dialogue-glare-
-    count: 1
+    prefix: cosmic-dialogue-nova-
+    count: 5
+
+- type: localizedDataset
+  id: DatasetCosmicDialogueFragmentation
+  values:
+    prefix: cosmic-dialogue-fragmentation-
+    count: 5

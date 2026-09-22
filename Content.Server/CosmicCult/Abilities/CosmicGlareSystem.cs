@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Flash;
 using Content.Server.Stunnable;
 using Content.Shared.CosmicCult;
-using Content.Shared.CosmicCult.Components;
 using Content.Shared.CosmicCult.Components.Actions;
 using Content.Shared.Effects;
 using Content.Shared.Interaction;
@@ -35,8 +34,8 @@ public sealed partial class CosmicGlareSystem : EntitySystem
         if (!_cult.CultActionQuery.TryComp(ent, out var action))
             return;
 
-        _audio.PlayPvs(action.Sfx, ent);
-        Spawn(action.Vfx, Transform(ent).Coordinates);
+        _audio.PlayPvs(action.Sfx, args.Performer);
+        SpawnAttachedTo(action.Vfx, Transform(args.Performer).Coordinates);
         args.Handled = true;
 
         var stun = action.Empowered ? ent.Comp.StunEmpowered : ent.Comp.StunDefault;
