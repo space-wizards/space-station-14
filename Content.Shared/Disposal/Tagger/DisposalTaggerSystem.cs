@@ -1,4 +1,3 @@
-using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Holder;
@@ -23,8 +22,6 @@ public sealed partial class DisposalTaggerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DisposalTaggerComponent, GetDisposalsNextDirectionEvent>(OnGetTaggerNextDirection, after: new[] { typeof(DisposalTubeSystem) });
-
         Subs.BuiEvents<DisposalTaggerComponent>(DisposalUnitUiKey.Key, subs =>
         {
             subs.Event<DisposalTaggerOpenUiMessage>(OnOpenUiAction);
@@ -42,6 +39,7 @@ public sealed partial class DisposalTaggerSystem : EntitySystem
         args.Tags.Add(ent.Comp.Tag);
     }
 
+    [SubscribeLocalEvent(after: [typeof(DisposalTubeSystem)])]
     private void OnGetTaggerNextDirection(Entity<DisposalTaggerComponent> ent, ref GetDisposalsNextDirectionEvent args)
     {
         _disposalHolder.AddTag(args.Holder, ent.Comp.Tag);
@@ -60,7 +58,7 @@ public sealed partial class DisposalTaggerSystem : EntitySystem
     /// <param name="msg">A user interface message from the client.</param>
     private void OnUiAction(Entity<DisposalTaggerComponent> ent, ref DisposalTaggerUiActionMessage msg)
     {
-        if (!Exists(msg.Actor))
+        if (!Exists(msg.Actor) || !ent.Comp.Editable)
             return;
 
         // Check for correct message and ignore maleformed strings
