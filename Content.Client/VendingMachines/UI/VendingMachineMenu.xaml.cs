@@ -69,8 +69,7 @@ public sealed partial class VendingMachineMenu : FancyWindow
     }
 
     /// <summary>
-    /// Populates the list of available items on the vending machine interface
-    /// and sets icons based on their prototypes
+    /// Populates the vending machine inventory and categories.
     /// </summary>
     public void Populate(List<VendingMachineInventoryEntry> inventory, IReadOnlyList<VendingMachineInventoryCategory> categories, bool enabled)
     {
