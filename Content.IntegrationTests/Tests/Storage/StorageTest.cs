@@ -251,8 +251,8 @@ public sealed class StorageTest : GameTest
 #pragma warning disable CS0618 // StorageFillComponent is obsolete, but this test is still needed while it exists.
             foreach (var (proto, fill) in pair.GetPrototypesWithComponent<StorageFillComponent>())
             {
-                Assert.That(!proto.HasComp<EntityTableContainerFillComponent>(compFact), $"Prototype {proto.ID} has both {nameof(EntityTableContainerFillComponent)} and {nameof(StorageFillComponent)}.");
-                Assert.That(!proto.HasComp<ContainerFillComponent>(compFact), $"Prototype {proto.ID} has both {nameof(ContainerFillComponent)} and {nameof(StorageFillComponent)}.");
+                Assert.That(!proto.HasComp<EntityTableContainerFillComponent>(compFact), $"Prototype {proto.ID} has both {nameof(StorageFillComponent)} and {nameof(EntityTableContainerFillComponent)}.");
+                Assert.That(!proto.HasComp<ContainerFillComponent>(compFact), $"Prototype {proto.ID} has both {nameof(StorageFillComponent)} and {nameof(ContainerFillComponent)}.");
             }
 #pragma warning restore CS0618
 
