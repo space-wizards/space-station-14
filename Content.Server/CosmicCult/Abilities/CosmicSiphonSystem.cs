@@ -2,6 +2,7 @@ using Content.Server.GameTicking.Rules;
 using Content.Shared.CosmicCult;
 using Content.Shared.CosmicCult.Components.Actions;
 using Content.Shared.DoAfter;
+using Content.Shared.GameTicking.Rules;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;

@@ -1,10 +1,5 @@
-using Content.Server.Antag;
-using Content.Server.Audio;
-using Content.Server.Chat.Systems;
-using Content.Server.Pinpointer;
-using Content.Server.Popups;
 using Content.Shared.Antag;
-using Content.Shared.CosmicCult;
+using Content.Shared.Chat;
 using Content.Shared.CosmicCult.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Mind;
@@ -15,23 +10,22 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
-namespace Content.Server.CosmicCult;
+namespace Content.Shared.CosmicCult;
 public sealed partial class CosmicChantrySystem : EntitySystem
 {
     [Dependency] private AntagSelectionSystem _antag = default!;
-    [Dependency] private ChatSystem _chatSystem = default!;
+    [Dependency] private SharedChatSystem _chatSystem = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private PopupSystem _popup = default!;
-    [Dependency] private ServerGlobalSoundSystem _sound = default!;
+    // [Dependency] private GlobalSoundSystem _sound = default!; // TODO: COSMIC CULT - SOUND
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedRoleSystem _role = default!;
-    [Dependency] private NavMapSystem _navMap = default!;
+    // [Dependency] private NavMapSystem _navMap = default!; // TODO: COSMIC CULT - NAVMAP
 
     /// <summary>
     /// Mind role to add to colossi.
@@ -86,17 +80,17 @@ public sealed partial class CosmicChantrySystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnChantryStarted(Entity<CosmicChantryComponent> ent, ref ComponentInit args)
     {
-        var indicatedLocation = FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((ent, Transform(ent))));
+        // var indicatedLocation = FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((ent, Transform(ent)))); // TODO: COSMIC CULT - NAVMAP
         var comp = ent.Comp;
 
         comp.SpawnTimer = _timing.CurTime + comp.SpawningTime;
         comp.CountdownTimer = _timing.CurTime + comp.EventTime;
 
-        _sound.PlayGlobalOnStation(ent, _audio.ResolveSound(comp.ChantryAlarm));
-        _chatSystem.DispatchStationAnnouncement(ent,
-        Loc.GetString("cosmiccult-chantry-location", ("location", indicatedLocation)),
-        null, false, null,
-        Color.FromHex("#cae8e8"));
+        // _sound.PlayGlobalOnStation(ent, _audio.ResolveSound(comp.ChantryAlarm)); // TODO: COSMIC CULT - SOUND
+        // _chatSystem.DispatchStationAnnouncement(ent,
+        // Loc.GetString("cosmiccult-chantry-location", ("location", indicatedLocation)),
+        // null, false, null,
+        // Color.FromHex("#cae8e8")); // TODO: COSMIC CULT - NAVMAP
 
         if (_mind.TryGetMind(comp.InternalVictim, out _, out var mind))
             mind.PreventGhosting = true;

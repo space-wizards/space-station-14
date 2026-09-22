@@ -6,20 +6,17 @@ using Content.Shared.Parallax;
 using Content.Shared.Radio.Components;
 using Content.Shared.Roles;
 using Robust.Shared.Audio;
-using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Containers;
-using Robust.Shared.Utility;
 using System.Collections.Immutable;
 using System.Linq;
 using Content.Server.CosmicCult.Components;
 using Content.Shared.Actions;
 using Content.Shared.Antag;
-using Content.Shared.Audio;
 using Content.Shared.Chat;
 using Content.Shared.Coordinates;
 using Content.Shared.CosmicCult;
@@ -46,17 +43,17 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
     [Dependency] private CosmicBreachSystem _breach = default!;
     [Dependency] private CosmicCultSystem _cosmicCult = default!;
     [Dependency] private CosmicShiftSystem _cultShift = default!;
-    // [Dependency] private EuiManager _euiMan = default!;
+    // [Dependency] private EuiManager _euiMan = default!; // TODO: COSMIC CULT - EUI
     [Dependency] private EntityLookupSystem _lookup = default!;
-    [Dependency] private IConfigurationManager _config = default!;
+    // [Dependency] private IConfigurationManager _config = default!; // TODO: COSMIC CULT - COMMENTED OUT FOR DEBUGGING. UNCOMMENT BEFORE MERGE.
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private ISharedPlayerManager _playerMan = default!;
     [Dependency] private IPrototypeManager _protoMan = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private MobStateSystem _mobState = default!;
-    [Dependency] private SharedNavMapSystem _navMap = default!;
-    // [Dependency] private RoundEndSystem _roundEnd = default!;
-    // [Dependency] private ServerGlobalSoundSystem _sound = default!;
+    // [Dependency] private NavMapSystem _navMap = default!; // TODO: COSMIC CULT - NAVMAP
+    // [Dependency] private RoundEndSystem _roundEnd = default!; // TODO: COSMIC CULT - ROUNDEND
+    // [Dependency] private GlobalSoundSystem _sound = default!; // TODO: COSMIC CULT - SOUND
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
@@ -78,7 +75,7 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
     private HashSet<Entity<CosmicBreachComponent, TransformComponent>> _breachSet = new();
 
     private ISawmill _sawmill = default!;
-    private TimeSpan _finaleTimeMax = TimeSpan.FromMinutes(5); // DEBUG. Set to five minutes for debug testing. Remove the hardcoded timespan when not debugging.
+    private TimeSpan _finaleTimeMax = TimeSpan.FromMinutes(5); // TODO: COSMIC CULT - DEBUG. Set to five minutes for debug testing. Remove the hardcoded timespan when not debugging.
 
     public override void Initialize()
     {
@@ -86,7 +83,7 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("cosmiccult");
 
         // Subs.CVar(_config, CCVars.EmergencyShuttleAutoCallTime, value => _finaleTimeMax = TimeSpan.FromMinutes(value), true); // Round length scaling is derived from the CVAR for ShuttleAutoCallTime.
-        // Commented out for debugging.
+        // TODO: COSMIC CULT - COMMENTED OUT FOR DEBUGGING. UNCOMMENT BEFORE MERGE.
     }
 
     #region Starting Events
@@ -228,8 +225,8 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
                 _breachSet.Remove(cosmicBreach);
                 Spawn("CosmicBreachSpawnEffect", Transform(stationBreach.Value).Coordinates);
 
-                var indicatedLocation = FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((stationBreach.Value, Transform(stationBreach.Value))));
-                _chatSystem.DispatchStationAnnouncement(stationBreach.Value, Loc.GetString("cosmiccult-announce-breach-location", ("location", indicatedLocation)), null, false, null, Color.FromHex("#cae8e8"));
+                // var indicatedLocation = FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((stationBreach.Value, Transform(stationBreach.Value)))); // TODO: COSMIC CULT - NAVMAP
+                // _chatSystem.DispatchStationAnnouncement(stationBreach.Value, Loc.GetString("cosmiccult-announce-breach-location", ("location", indicatedLocation)), null, false, null, Color.FromHex("#cae8e8"));
             }
         }
     }
@@ -239,8 +236,8 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         component.CultWinTimer = null;
         component.CultWin = true;
         AdjustCultObjectiveFinality(1);
-        _sound.StopStationEventMusic(component.StationGrid, StationEventMusicType.CosmicCult);
-        _roundEnd.EndRound();
+        // _sound.StopStationEventMusic(component.StationGrid, StationEventMusicType.CosmicCult);
+        // _roundEnd.EndRound();
     }
 
     private void StartFinale(EntityUid uid, CosmicCultRuleComponent component)
@@ -318,7 +315,7 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         }
 
         var resolvedMusic = _audio.ResolveSound(component.FinaleMusic);
-        _sound.DispatchStationEventMusic(component.StationGrid, resolvedMusic, StationEventMusicType.CosmicCult);
+        // _sound.DispatchStationEventMusic(component.StationGrid, resolvedMusic, StationEventMusicType.CosmicCult); // TODO: COSMIC CULT - SOUND
     }
 
     private void FinaleSetup(EntityUid uid, CosmicCultRuleComponent component)
@@ -427,8 +424,8 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         if (AssociatedGamerule(ent.Owner) is not { } cult || args.NewMobState is MobState.Alive || CultistsAlive(cult))
             return;
 
-        _sound.StopStationEventMusic(cult.Comp.StationGrid, StationEventMusicType.CosmicCult);
-        _roundEnd.DoRoundEndBehavior(cult.Comp.RoundEndBehavior, cult.Comp.EvacShuttleTime, cult.Comp.RoundEndTextSender, cult.Comp.RoundEndTextShuttleCall, cult.Comp.RoundEndTextAnnouncement);
+        // _sound.StopStationEventMusic(cult.Comp.StationGrid, StationEventMusicType.CosmicCult); // TODO: COSMIC CULT - SOUND
+        // _roundEnd.DoRoundEndBehavior(cult.Comp.RoundEndBehavior, cult.Comp.EvacShuttleTime, cult.Comp.RoundEndTextSender, cult.Comp.RoundEndTextShuttleCall, cult.Comp.RoundEndTextAnnouncement); // TODO: COSMIC CULT - ROUNDEND
         cult.Comp.RoundEndBehavior = RoundEndBehavior.Nothing; // prevent this being called multiple times.
         cult.Comp.CultWin = false;
         cult.Comp.Tier2Timer = null;

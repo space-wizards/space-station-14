@@ -5,6 +5,7 @@ using Content.Server.StationEvents.Events;
 using Content.Shared.CosmicCult.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.GameTicking.Rules.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Station.Components;
 using Content.Shared.Station.Systems;
