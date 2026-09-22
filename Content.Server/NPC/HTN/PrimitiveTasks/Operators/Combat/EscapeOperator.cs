@@ -11,7 +11,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat;
 public sealed partial class EscapeOperator : HTNOperator, IHtnConditionalShutdown
 {
     [Dependency] private IEntityManager _entManager = default!;
-    private ContainerSystem _containerSystem = default!;
+    private ContainerSystem _container = default!;
     private EntityStorageSystem _entityStorage = default!;
 
     [DataField("shutdownState")]
@@ -20,7 +20,7 @@ public sealed partial class EscapeOperator : HTNOperator, IHtnConditionalShutdow
     public override void Initialize(IEntitySystemManager sysManager)
     {
         base.Initialize(sysManager);
-        _containerSystem = sysManager.GetEntitySystem<ContainerSystem>();
+        _container = sysManager.GetEntitySystem<ContainerSystem>();
         _entityStorage = sysManager.GetEntitySystem<EntityStorageSystem>();
     }
 
@@ -29,7 +29,7 @@ public sealed partial class EscapeOperator : HTNOperator, IHtnConditionalShutdow
         base.Startup(blackboard);
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        if (!_containerSystem.TryGetContainingContainer(owner, out var container))
+        if (!_container.TryGetContainingContainer(owner, out var container))
         {
             return;
         }
@@ -44,7 +44,7 @@ public sealed partial class EscapeOperator : HTNOperator, IHtnConditionalShutdow
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        if (!_containerSystem.TryGetContainingContainer(owner, out var container))
+        if (!_container.TryGetContainingContainer(owner, out var container))
         {
             return (false, null);
         }
@@ -53,11 +53,6 @@ public sealed partial class EscapeOperator : HTNOperator, IHtnConditionalShutdow
         {
             // We must be in a backpack or something that we can't open or attack to escape from.
             // It could be possible to mirror some of the Resist.EscapeInventorySystem logic in this case.
-            return (false, null);
-        }
-
-        if (!_containerSystem.IsEntityInContainer(owner))
-        {
             return (false, null);
         }
 
@@ -90,7 +85,7 @@ public sealed partial class EscapeOperator : HTNOperator, IHtnConditionalShutdow
         base.Update(blackboard, frameTime);
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        if (!_containerSystem.TryGetContainingContainer(owner, out var container)
+        if (!_container.TryGetContainingContainer(owner, out var container)
             || _entityStorage.TryOpenStorage(owner, container.Owner))
         {
             return HTNOperatorStatus.Finished;
