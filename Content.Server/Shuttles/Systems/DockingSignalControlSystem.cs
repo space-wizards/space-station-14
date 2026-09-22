@@ -3,7 +3,6 @@ using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
-using Content.Shared.DeviceNetwork;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -13,8 +12,7 @@ public sealed partial class DockingSignalControlSystem : EntitySystem
     [Dependency] private DockingSystem _dockingSystem = default!;
 
     [SubscribeLocalEvent]
-    private void OnComponentInit(Entity<DockingSignalControlComponent> ent,
-        ref ComponentInit args)
+    private void OnMapInit(Entity<DockingSignalControlComponent> ent, ref MapInitEvent args)
     {
         _deviceLinkSystem.EnsureSourcePorts(ent, ent.Comp.DockStatusSignalPort);
         _deviceLinkSystem.EnsureSinkPorts(ent, ent.Comp.DockTogglePort);
