@@ -23,7 +23,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -32,7 +31,7 @@ namespace Content.Shared.Guardian;
 /// <summary>
 /// A guardian has a host it's attached to that it fights for. A fighting spirit.
 /// </summary>
-public abstract partial class SharedGuardianSystem : EntitySystem
+public abstract partial class GuardianSystem : EntitySystem
 {
     [Dependency] private DamageableSystem _damage = default!;
     [Dependency] private GibbingSystem _gibbing = default!;
