@@ -11,22 +11,22 @@ namespace Content.Server.Storage.EntitySystems;
 public sealed partial class StorageSystem
 {
     [Obsolete("StorageFillComponent is obsolete.")]
-    private void OnStorageFillMapInit(EntityUid uid, StorageFillComponent component, MapInitEvent args)
+    private void OnStorageFillMapInit(Entity<StorageFillComponent> ent, ref MapInitEvent args)
     {
-        if (component.Contents.Count == 0)
+        if (ent.Comp.Contents.Count == 0)
             return;
 
-        if (TryComp<StorageComponent>(uid, out var storageComp))
+        if (TryComp<StorageComponent>(ent, out var storageComp))
         {
-            FillStorage((uid, component, storageComp));
+            FillStorage((ent, ent.Comp, storageComp));
         }
-        else if (TryComp<EntityStorageComponent>(uid, out var entityStorageComp))
+        else if (TryComp<EntityStorageComponent>(ent, out var entityStorageComp))
         {
-            FillEntityStorage((uid, component, entityStorageComp));
+            FillEntityStorage((ent, ent.Comp, entityStorageComp));
         }
         else
         {
-            Log.Error($"StorageFillComponent couldn't find any StorageComponent ({uid})");
+            Log.Error($"StorageFillComponent couldn't find any StorageComponent ({ent})");
         }
     }
 

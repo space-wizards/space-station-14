@@ -37,10 +37,10 @@ public sealed partial class DecalSystem : SharedDecalSystem
 
     [SubscribeLocalEvent]
     [Obsolete("Uses obsolete DecalGridComponent.")]
-    private void OnLegacyDecalGridStartup(EntityUid uid, DecalGridComponent component, ComponentStartup args)
+    private void OnLegacyDecalGridStartup(Entity<DecalGridComponent> ent, ref ComponentStartup args)
     {
-        MigrateLegacyDecalGrid(uid, component);
-        RemCompDeferred(uid, component);
+        MigrateLegacyDecalGrid(ent);
+        RemCompDeferred(ent, ent.Comp);
     }
 
     private void OnBeforeSerialization(BeforeSerializationEvent ev)
@@ -60,7 +60,7 @@ public sealed partial class DecalSystem : SharedDecalSystem
             if (!TryComp<DecalGridComponent>(uid, out var component))
                 continue;
 
-            MigrateLegacyDecalGrid(uid, component);
+            MigrateLegacyDecalGrid((uid, component));
             RemComp(uid, component);
             migrated.Add(uid);
 #pragma warning restore CS0618
@@ -76,14 +76,14 @@ public sealed partial class DecalSystem : SharedDecalSystem
     }
 
     [Obsolete("Uses obsolete DecalGridComponent.")]
-    private void MigrateLegacyDecalGrid(EntityUid uid, DecalGridComponent component)
+    private void MigrateLegacyDecalGrid(Entity<DecalGridComponent> ent)
     {
         // Old maps store grid-wide decal chunks; convert them into chunk entities and remove the legacy component.
-        foreach (var chunk in component.ChunkCollection.ChunkCollection.Values)
+        foreach (var chunk in ent.Comp.ChunkCollection.ChunkCollection.Values)
         {
             foreach (var (id, decal) in chunk.Decals)
             {
-                AddDecalWithId(uid, id, decal);
+                AddDecalWithId(ent, id, decal);
             }
         }
     }

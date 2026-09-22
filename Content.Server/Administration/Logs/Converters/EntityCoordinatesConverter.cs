@@ -11,13 +11,10 @@ public sealed class EntityCoordinatesConverter : AdminLogConverter<EntityCoordin
     // System.Text.Json actually keeps hold of your JsonSerializerOption instances in a cache on .NET 7.
     // Use a weak reference to avoid holding server instances live too long in integration tests.
     private WeakReference<IEntityManager> _entityManager = default!;
-    private WeakReference<SharedTransformSystem> _xform = default!;
 
     public override void Init(IDependencyCollection dependencies)
     {
-        var entMan = dependencies.Resolve<IEntityManager>();
-        _entityManager = new WeakReference<IEntityManager>(entMan);
-        _xform = new WeakReference<SharedTransformSystem>(entMan.System<SharedTransformSystem>());
+        _entityManager = new WeakReference<IEntityManager>(dependencies.Resolve<IEntityManager>());
     }
 
     public void Write(Utf8JsonWriter writer, EntityCoordinates value, JsonSerializerOptions options, IEntityManager entities)
@@ -27,8 +24,8 @@ public sealed class EntityCoordinatesConverter : AdminLogConverter<EntityCoordin
         writer.WriteNumber("x", value.X);
         writer.WriteNumber("y", value.Y);
         EntityUid? mapUid = null;
-        if (_xform.TryGetTarget(out var xform))
-            mapUid = xform.GetMap(value);
+        if (_entityManager.TryGetTarget(out var entMan))
+            mapUid = entMan.GetComponent<TransformComponent>(value.EntityId).MapUid;
 
         if (mapUid.HasValue)
         {
