@@ -16,8 +16,18 @@
   weight: 120 # Highest weight of all NT departments; Central Command's authority is absolute
   editorHidden: true
   roles:
-  - CBURN
   - CentralCommandOfficial
+
+- type: department
+  id: Civilian
+  name: department-Civilian
+  description: department-Civilian-description
+  color: "#7F7F7F"
+  weight: -10 # Lowest weight of all "regular" crew departments
+  ignoreForDepartmentFallback: true
+  roles:
+  - Passenger
+  - Visitor
 
 - type: department
   id: Command
