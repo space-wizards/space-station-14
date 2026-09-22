@@ -16,7 +16,9 @@ public sealed partial class SpecialDeathCauseEffectSystem : EntityEffectSystem<S
     }
 }
 
-/// <inheritdoc cref="EntityEffect"/>
+/// <summary>
+/// Sets the cause of death of affected entities to change their ghost visuals.
+/// </summary>
 public sealed partial class SpecialDeathCause : EntityEffectBase<SpecialDeathCause>
 {
     /// <summary>
