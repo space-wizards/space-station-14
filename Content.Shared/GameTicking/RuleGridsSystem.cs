@@ -1,19 +1,15 @@
-using Content.Server.Antag;
-using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Spawners.Components;
 using Content.Shared.Antag;
 using Content.Shared.GameTicking.Rules;
 using Content.Shared.Spawners.Components;
 using Content.Shared.Whitelist;
-using Robust.Server.Physics;
 using Robust.Shared.Map;
 
-namespace Content.Server.GameTicking.Rules;
+namespace Content.Shared.GameTicking;
 
 /// <summary>
 /// Handles storing grids from <see cref="RuleLoadedGridsEvent"/> and antags spawning on their spawners.
 /// </summary>
-public sealed partial class RuleGridsSystem : GameRuleSystem<RuleGridsComponent>
+public abstract partial class RuleGridsSystem : GameRuleSystem<RuleGridsComponent>
 {
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
@@ -22,23 +18,8 @@ public sealed partial class RuleGridsSystem : GameRuleSystem<RuleGridsComponent>
     {
         base.Initialize();
 
-        SubscribeLocalEvent<GridSplitEvent>(OnGridSplit);
-
         SubscribeLocalEvent<RuleGridsComponent, RuleLoadedGridsEvent>(OnLoadedGrids);
         SubscribeLocalEvent<RuleGridsComponent, AntagSelectLocationEvent>(OnSelectLocation);
-    }
-
-    private void OnGridSplit(ref GridSplitEvent args)
-    {
-        var rule = QueryActiveRules();
-        while (rule.MoveNext(out var comp, out _, out _))
-        {
-            if (!comp.MapGrids.Contains(args.Grid))
-                continue;
-
-            comp.MapGrids.AddRange(args.NewGrids);
-            break; // only 1 rule can own a grid, not multiple
-        }
     }
 
     private void OnLoadedGrids(Entity<RuleGridsComponent> ent, ref RuleLoadedGridsEvent args)
