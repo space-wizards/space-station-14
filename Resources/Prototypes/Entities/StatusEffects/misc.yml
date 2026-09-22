@@ -186,7 +186,7 @@
   - type: StatusEffect
   - type: GuardianTrappedStatusEffect
     selfPrototype: StatusEffectGuardianTrapped
-    selfEffects:
+    victimEffects:
     - !type:Explosion
       explosionType: Default
 

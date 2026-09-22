@@ -23,10 +23,7 @@
   - type: GuardianCreator
     canChoose: false
     guardians:
-    - GuardianBaseFighter
-    - GuardianBaseHeal
-    - GuardianBaseNuke
-    - GuardianBaseSword
+    - GuardianClown
 
 - type: entity
   parent: [BaseItem, BaseMagicalContraband]
@@ -166,3 +163,12 @@
   guardian: MobExplosiveGuardianWizard
 
 # Holoclown
+
+- type: guardianEntry
+  id: GuardianClown
+  icon:
+    sprite: Interface/Actions/guardian.rsi # you wont see this icon anyway
+    state: nuke
+  description: guardian-desc-nuke # same for these fields
+  title: guardian-title-nuke
+  guardian: MobHoloClownGuardian

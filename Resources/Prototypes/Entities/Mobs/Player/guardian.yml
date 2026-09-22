@@ -201,7 +201,18 @@
     - type: NameIdentifier
       group: Holoparasite
     - type: Reflect
-      reflectProb: 0.5
+      reflectProb: 0.9
+    - type: Fixtures # can be hit by bullets and lasers
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.35
+          density: 25
+          mask:
+            - FlyingMobMask
+          layer:
+            - FlyingMobLayer
     - type: TypingIndicator
       proto: holo
     - type: Sprite
