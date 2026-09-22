@@ -204,7 +204,7 @@
   - type: Produce
     plantId: TowercapPlants
   - type: ToolRefinable
-    qualityNeeded: Sawing
+    qualityNeeded: Slicing
     refineResult:
     - id: MaterialWoodPlank1
       amount: 2
@@ -226,7 +226,7 @@
   - type: Produce
     plantId: SteelcapPlants
   - type: ToolRefinable
-    qualityNeeded: Sawing
+    qualityNeeded: Slicing
     refineResult:
     - id: SheetSteel1
 
