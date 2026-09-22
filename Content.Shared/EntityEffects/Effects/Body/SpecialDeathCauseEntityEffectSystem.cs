@@ -4,8 +4,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityEffects.Effects.Body;
 
 /// <summary>
-/// Sets a death cause to the entity
+/// Sets the cause of death of affected entities.
 /// </summary>
+/// <seealso cref="SpecialCauseOfDeathPrototype"/>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class SpecialDeathCauseEffectSystem : EntityEffectSystem<StoreDamageTakenOnMindComponent, SpecialDeathCause>
 {
