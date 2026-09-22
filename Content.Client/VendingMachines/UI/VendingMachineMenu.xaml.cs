@@ -7,6 +7,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 using FancyWindow = Content.Client.UserInterface.Controls.FancyWindow;
 using Robust.Client.UserInterface;
 using Content.Client.UserInterface.Controls;
@@ -25,6 +26,9 @@ public sealed partial class VendingMachineMenu : FancyWindow
     private readonly Dictionary<VendorItemKey, uint> _amounts = new();
     private List<VendingMachineInventoryEntry> _cachedInventory = new();
     private VendingMachineInventoryCategory? _selectedCategory;
+
+    private static readonly SpriteSpecifier AllCategoryIcon =
+        new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/grid.svg.96dpi.png"));
 
     /// <summary>
     /// Whether the vending machine is able to be interacted with or not.
@@ -149,26 +153,19 @@ public sealed partial class VendingMachineMenu : FancyWindow
             _selectedCategory = null;
 
         var group = new ButtonGroup(isNoneSetAllowed: false);
+        var spriteSystem = _entityManager.System<SpriteSystem>();
 
         var selectedButton = CreateCategoryButton(
             _loc.GetString("vending-machine-category-all"),
             null,
-            group);
+            group,
+            spriteSystem);
 
         CategoryButtons.AddChild(selectedButton);
 
-        var spriteSystem = _entityManager.System<SpriteSystem>();
-
         foreach (var category in visibleCategories)
         {
-            var button = CreateCategoryButton(_loc.GetString(category.Name), category, group);
-
-            button.AddChild(new TextureRect
-            {
-                Texture = spriteSystem.Frame0(category.Icon),
-                Stretch = TextureRect.StretchMode.KeepAspectCentered,
-                SetSize = new Vector2(48, 48)
-            });
+            var button = CreateCategoryButton(_loc.GetString(category.Name), category, group, spriteSystem);
 
             CategoryButtons.AddChild(button);
 
@@ -179,7 +176,7 @@ public sealed partial class VendingMachineMenu : FancyWindow
         selectedButton.Pressed = true;
     }
 
-    private Button CreateCategoryButton(string name, VendingMachineInventoryCategory? category, ButtonGroup group)
+    private Button CreateCategoryButton(string name, VendingMachineInventoryCategory? category, ButtonGroup group, SpriteSystem spriteSystem)
     {
         var button = new Button
         {
@@ -189,15 +186,12 @@ public sealed partial class VendingMachineMenu : FancyWindow
             StyleClasses = { StyleClass.ButtonSquare }
         };
 
-        if (category == null)
+        button.AddChild(new TextureRect
         {
-            button.AddChild(new TextureRect
-            {
-                TexturePath = "/Textures/Interface/grid.svg.96dpi.png",
-                Stretch = TextureRect.StretchMode.KeepAspectCentered,
-                SetSize = new Vector2(32, 32)
-            });
-        }
+            Texture = spriteSystem.Frame0(category?.Icon ?? AllCategoryIcon),
+            Stretch = TextureRect.StretchMode.KeepAspectCentered,
+            SetSize = new Vector2(category == null ? 32 : 48)
+        });
 
         button.OnPressed += _ =>
         {
