@@ -34,7 +34,7 @@ public sealed partial class VendingMachineBoundUserInterface(EntityUid owner, En
 
         IReadOnlyList<VendingMachineInventoryCategory> categories = [];
         if (EntMan.TryGetComponent(Owner, out VendingMachineComponent? vending) &&
-            _prototypeManager.Resolve(vending.PackPrototypeId, out VendingMachineInventoryPrototype? inventoryPrototype))
+            _prototypeManager.Resolve(vending.PackPrototypeId, out var inventoryPrototype))
         {
             categories = inventoryPrototype.Categories;
         }
