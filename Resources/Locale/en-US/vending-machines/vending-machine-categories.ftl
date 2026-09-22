@@ -1,4 +1,4 @@
-﻿# General
+# General
 vending-machine-category-all = All
 
 # Clothing
