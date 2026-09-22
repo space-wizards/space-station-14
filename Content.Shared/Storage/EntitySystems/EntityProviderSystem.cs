@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Examine;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Materials;
@@ -24,6 +25,7 @@ public sealed partial class EntityProviderSystem : EntitySystem
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
@@ -87,12 +89,12 @@ public sealed partial class EntityProviderSystem : EntitySystem
 
     /// <summary> Eject one of the currently selected entity. </summary>
     [SubscribeLocalEvent]
-    private void OnUseInHand(Entity<EntityProviderComponent> provider, ref UseInHandEvent args)
+    private void OnActivation(Entity<EntityProviderComponent> provider, ref ActivateInWorldEvent args)
     {
         if (args.Handled || !provider.Comp.CanEject || provider.Comp.SelectedEntityProtoId == null)
             return;
 
-        TryEjectEntities(provider.AsNullable(), provider.Comp.SelectedEntityProtoId.Value, out _, 1, args.User);
+        TryEjectEntityToHand(provider.AsNullable(), provider.Comp.SelectedEntityProtoId.Value, out _, args.User);
     }
 
     [SubscribeLocalEvent]
@@ -178,27 +180,27 @@ public sealed partial class EntityProviderSystem : EntitySystem
         if (IsProviderFull(refillTarget, user))
             return false;
 
-        foreach (var (entProtoId, count) in provider.Comp.EntityCounter)
+        foreach (var (entProtoId, providerCount) in provider.Comp.EntityCounter)
         {
             if (_whitelist.IsWhitelistFailOrNull(refillTarget.Comp.Whitelist, entProtoId))
                 continue;
 
-            var amount = count;
+            var transferAmount = providerCount;
             // Get the total count of entities inside the refillTarget.
-            var entityCount = refillTarget.Comp.EntityCounter.Values.Sum();
-            var isFull = false;
+            var refillTotalCount = refillTarget.Comp.EntityCounter.Values.Sum();
+            var providerNotEmptied = false;
 
-            if (refillTarget.Comp.MaxEntityCount.HasValue && count + entityCount > refillTarget.Comp.MaxEntityCount)
+            if (refillTarget.Comp.MaxEntityCount.HasValue && providerCount + refillTotalCount > refillTarget.Comp.MaxEntityCount)
             {
-                isFull = true;
-                amount = refillTarget.Comp.MaxEntityCount.Value - entityCount;
+                providerNotEmptied = true;
+                transferAmount = refillTarget.Comp.MaxEntityCount.Value - refillTotalCount;
             }
 
-            if (!refillTarget.Comp.EntityCounter.TryAdd(entProtoId, amount))
-                refillTarget.Comp.EntityCounter[entProtoId] += amount;
+            if (!refillTarget.Comp.EntityCounter.TryAdd(entProtoId, transferAmount))
+                refillTarget.Comp.EntityCounter[entProtoId] += transferAmount;
 
             // Move all spawned entities over to the new provider.
-            var existingEntities = GetEntitiesFromContainer(provider.AsNullable(), entProtoId, amount).ToArray();
+            var existingEntities = GetEntitiesFromContainer(provider.AsNullable(), entProtoId, transferAmount).ToArray();
             foreach (var spawnedEntity in existingEntities)
             {
                 _container.Insert(spawnedEntity, refillTarget.Comp.Container);
@@ -206,7 +208,7 @@ public sealed partial class EntityProviderSystem : EntitySystem
 
             success = true;
             // Don't add it to the remove list if the entity provider wasn't emptied.
-            if (isFull)
+            if (providerNotEmptied)
                 break;
 
             toRemove.Add(entProtoId);
@@ -301,11 +303,11 @@ public sealed partial class EntityProviderSystem : EntitySystem
         var count = provider.Comp.EntityCounter.Count;
 
         if (count == 0)
-            _appearance.SetData(provider.Owner, EntityProviderVisuals.Key, EntityProviderVisuals.Empty);
+            _appearance.SetData(provider.Owner, EntityProviderVisualsKey.Key, EntityProviderVisuals.Empty);
         else if (count == provider.Comp.MaxEntityCount)
-            _appearance.SetData(provider.Owner, EntityProviderVisuals.Key, EntityProviderVisuals.Full);
+            _appearance.SetData(provider.Owner, EntityProviderVisualsKey.Key, EntityProviderVisuals.Full);
         else
-            _appearance.SetData(provider.Owner, EntityProviderVisuals.Key, EntityProviderVisuals.Opened);
+            _appearance.SetData(provider.Owner, EntityProviderVisualsKey.Key, EntityProviderVisuals.Opened);
     }
 
     /// <summary>
@@ -339,9 +341,17 @@ public enum EntityProviderUiKey : byte
 /// Used for appearance visuals based on how whether the provider is full, empty or neither.
 /// </summary>
 [Serializable, NetSerializable]
-public enum EntityProviderVisuals : byte
+public enum EntityProviderVisualsKey : byte
 {
     Key, // This is where the data will be stored.
+}
+
+/// <summary>
+/// Used for appearance visuals based on how whether the provider is full, empty or neither.
+/// </summary>
+[Serializable, NetSerializable]
+public enum EntityProviderVisuals : byte
+{
     Full,
     Opened,
     Empty,

@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.Events;
@@ -23,7 +24,9 @@ public sealed partial class EntityProviderSystem
         if (!provider.Comp.CanReceive
             || IsProviderFull(provider, user)
             || _whitelist.IsWhitelistFailOrNull(provider.Comp.Whitelist, target))
+        {
             return false;
+        }
 
         // This event allows for a deeper check than a whitelist/blacklist.
         var ev = new EntityProviderInsertCheckEvent();
@@ -92,7 +95,9 @@ public sealed partial class EntityProviderSystem
         if (requestedAmount <= 0
             || !Resolve(provider, ref provider.Comp)
             || !provider.Comp.EntityCounter.TryGetValue(protoId, out var amountInEntityProvider))
+        {
             return false;
+        }
 
         requestedAmount = requestedAmount == null ? amountInEntityProvider : Math.Min(requestedAmount.Value, amountInEntityProvider);
 
@@ -143,13 +148,13 @@ public sealed partial class EntityProviderSystem
     }
 
     /// <summary>
-    /// Attempts to spawn all entities of a kind, and then eject them from the provider.
+    /// Attempts to spawn entities of a kind, and then eject them from the provider.
     /// </summary>
     /// <param name="provider">The entity providing the entityProvider storage.</param>
     /// <param name="protoId">The entity prototype ID to be spawned.</param>
     /// <param name="entities">The uid list of the spawned and ejected entities.</param>
     /// <param name="requestedAmount">The amount of entities to spawn and eject. If null, it'll spawn all of them.</param>
-    /// <param name="user">The user ejecting the items.</param>
+    /// <param name="user">The user ejecting the entities.</param>
     /// <returns>Returns true when the entities were spawned and ejected, otherwise false.</returns>
     [PublicAPI]
     public bool TryEjectEntities(
@@ -175,11 +180,32 @@ public sealed partial class EntityProviderSystem
             _container.Remove(entity, provider.Comp.Container);
         }
 
-        if (!ProtoMan.Resolve(protoId, out var prototype))
-            return true;
+        var sound = requestedAmount == 1 ? provider.Comp.SingularTransferSound : provider.Comp.PluralTransferSound;
+        _audio.PlayPredicted(sound, provider, user);
+        return true;
+    }
 
-        _audio.PlayPredicted(requestedAmount == 1 ? provider.Comp.SingularTransferSound : provider.Comp.PluralTransferSound, provider, user);
-
+    /// <summary>
+    /// Attempts to spawn an entity of a kind, and then eject them to the hands of the user from the provider.
+    /// </summary>
+    /// <param name="provider">The entity providing the entityProvider storage.</param>
+    /// <param name="protoId">The entity prototype ID to be spawned.</param>
+    /// <param name="entity">The spawned and ejected entity.</param>
+    /// <param name="user">The user ejecting and picking up the entity.</param>
+    /// <returns>Returns true when the entity was spawned and ejected regardless whether the user picked it up, otherwise false.</returns>
+    [PublicAPI]
+    public bool TryEjectEntityToHand(
+        Entity<EntityProviderComponent?> provider,
+        EntProtoId protoId,
+        [NotNullWhen(true)] out EntityUid? entity,
+        EntityUid user)
+    {
+        entity = null;
+        if (!Resolve(provider, ref provider.Comp) || !TryEjectEntities(provider, protoId, out var entities, 1, user))
+            return false;
+        // Using Single because if there's more than one entity in the list after just taking one, something went wrong.
+        entity = entities.Single();
+        _hands.TryPickupAnyHand(user, entity.Value);
         return true;
     }
 

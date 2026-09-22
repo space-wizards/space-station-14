@@ -26,7 +26,7 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.EntityProviderVisuals.Key:
+      enum.EntityProviderVisualsKey.Key:
         emptyLayer:
           Full: { visible: false }
           Opened: { visible: false }
@@ -160,6 +160,7 @@
   parent: BoxLightbulb
   id: BoxLightbulbColorfulMixed
   name: mixed colorful lightbulb box
+  description: A cardboard package containing a mixture of colored light bulbs.
   components:
   - type: EntityProvider
     entityCounter:
@@ -174,6 +175,7 @@
   parent: BoxLighttube
   id: BoxLighttubeColorfulMixed
   name: mixed colorful lighttube box
+  description: A cardboard package containing a mixture of colored light tubes.
   components:
   - type: EntityProvider
     entityCounter:

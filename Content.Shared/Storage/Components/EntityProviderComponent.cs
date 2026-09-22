@@ -32,6 +32,8 @@ public sealed partial class EntityProviderComponent : Component
 
     /// <summary>
     /// The whitelist that entities have to pass in order to be inserted.
+    /// If this is null, the container won't accept any entity to be inserted.
+    /// You should never add an empty whitelist.
     /// </summary>
     [DataField]
     public EntityWhitelist? Whitelist;
@@ -49,7 +51,7 @@ public sealed partial class EntityProviderComponent : Component
     public bool CanReceive = true;
 
     /// <summary>
-    /// Whether this provider can eject entities on its own.
+    /// Whether this provider can eject entities when manually interacted with.
     /// </summary>
     [DataField]
     public bool CanEject = true;
@@ -60,6 +62,10 @@ public sealed partial class EntityProviderComponent : Component
     [DataField]
     public bool DeleteIfEmpty;
 
+    /// <summary>
+    /// If not null, providers won't accept more items in total than this count.
+    /// This is a total sum, not individual per entity type.
+    /// </summary>
     [DataField]
     public int? MaxEntityCount;
 
