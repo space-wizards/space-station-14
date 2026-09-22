@@ -1,5 +1,5 @@
 - type: entity
-  parent: [BaseDeltaPressureReinforcedGlass, BaseWindowStructure, BaseRCDResistant]
+  parent: [BaseDeltaPressureReinforcedGlass, BaseWindowStructure, BaseRCDResistant, StructureHealthBarrierStrong]
   id: ShuttleWindow
   name: shuttle window
   components:
@@ -12,14 +12,12 @@
     fuelCost: 15
     doAfterDelay: 3
   - type: Damageable
-    damageModifierSet: RGlass
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 500
+        damage: 120
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -32,8 +30,6 @@
           PartRodMetal:
             min: 1
             max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: IconSmooth
     base: swindow
   - type: Construction

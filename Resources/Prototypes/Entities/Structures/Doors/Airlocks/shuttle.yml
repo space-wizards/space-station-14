@@ -1,8 +1,7 @@
-﻿- type: entity
+- type: entity
   parent: AirlockRCDResistant
   id: AirlockShuttle
-  suffix: Docking
-  name: external airlock
+  name: docking airlock
   description: Necessary for connecting two space craft together.
   components:
   - type: Docking
@@ -10,7 +9,6 @@
   - type: DeviceLinkSource
     ports:
       - DoorStatus
-      - DockStatus
   - type: Fixtures
     fixtures:
       fix1:
@@ -31,6 +29,8 @@
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/shuttle-base.rsi
     layers:
+    - state: docking-clamp
+      offset: 0, -1
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
     - state: closed_unlit
@@ -50,7 +50,7 @@
       map: ["enum.DoorVisualLayers.BaseEmergencyAccess"]
       shader: unshaded
     - state: panel_open
-      sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects-shuttle.rsi
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - state: electrified_ai
       sprite: Interface/Misc/ai_hud.rsi
@@ -98,11 +98,14 @@
   - type: DirectionalArrowIndicator
     arrows:
     - offset: 0, -1.5
+  - type: StructureAligner
+    alignerType:
+    - DoNotAlign
 
 - type: entity
   id: AirlockGlassShuttle
   parent: AirlockShuttle
-  suffix: Glass, Docking
+  suffix: Glass
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/shuttle-base.rsi
@@ -116,20 +119,16 @@
         layer:     #removed opaque from the layer, allowing lasers to pass through glass airlocks
         - GlassAirlockLayer
 
+# TODO: migrate into assembly with the others
 - type: entity
   id: AirlockShuttleAssembly
   parent: AirlockAssembly
-  name: external airlock assembly
-  suffix: Docking
+  name: docking airlock assembly
   description: An incomplete structure necessary for connecting two space craft together.
   components:
-  - type: Transform
-    anchored: true
-    noRot: false
-  - type: Rotatable
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/shuttle-base.rsi
-    state: closed
+    sprite: Structures/Doors/Airlocks/Standard/shuttle-base.rsi
+    state: "assembly"
     snapCardinals: false
   - type: Construction
     graph: AirlockShuttle
@@ -138,6 +137,7 @@
 - type: entity
   id: AirlockGlassShuttleSyndicate
   parent: AirlockGlassShuttle
+  suffix: Syndicate, Glass
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/shuttle-syndicate.rsi
@@ -145,6 +145,7 @@
 - type: entity
   parent: AirlockShuttle
   id: AirlockShuttleSyndicate
+  suffix: Syndicate
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/shuttle-syndicate.rsi
@@ -152,11 +153,13 @@
 - type: entity
   parent: AirlockShuttle
   id: AirlockShuttleXenoborg
-  name: external mechadermis airlock
+  name: docking mechadermis airlock
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/shuttle-xenoborg.rsi
     layers:
+    - state: docking-clamp
+      offset: 0, -1
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
     - state: closed_unlit
@@ -176,7 +179,7 @@
       map: ["enum.DoorVisualLayers.BaseEmergencyAccess"]
       shader: unshaded
     - state: panel_open
-      sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects-shuttle.rsi
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - state: electrified_ai
       sprite: Interface/Misc/ai_hud.rsi

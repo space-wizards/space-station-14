@@ -64,6 +64,6 @@
     sprite: Structures/Storage/closet.rsi
     state: genpop
   product: LockerPrisoner
-  cost: 250
+  cost: 300
   category: cargoproduct-category-name-security
   group: market

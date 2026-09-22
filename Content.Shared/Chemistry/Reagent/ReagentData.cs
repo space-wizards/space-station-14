@@ -1,4 +1,4 @@
-﻿using Content.Shared.FixedPoint;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry.Reagent;

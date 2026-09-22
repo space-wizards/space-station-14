@@ -30,6 +30,8 @@ public sealed partial class AfkConfirmSystem : EntitySystem
     private readonly Dictionary<ICommonSession, AfkConfirmation> _confirmations = new();
     private readonly Dictionary<ICommonSession, AfkConfirmation> _tempConfirmation = new();
 
+    private bool _afkAutomaticChecks; // CCVar
+
     public override void Initialize()
     {
         base.Initialize();
@@ -37,6 +39,7 @@ public sealed partial class AfkConfirmSystem : EntitySystem
         // Unafking does NOT clear it, require them to confirm via the window so they don't just random mash buttons.
         SubscribeLocalEvent<AfkEvent>(OnAfk);
         _players.PlayerStatusChanged += OnPlayerStatusChanged;
+        Subs.CVar(_cfg, CCVars.AfkAutomaticChecks, b => _afkAutomaticChecks = b, true);
         _cfg.OnValueChanged(CCVars.AfkTime, OnAfkTimeChanged);
     }
 
@@ -56,6 +59,9 @@ public sealed partial class AfkConfirmSystem : EntitySystem
 
     private void OnAfk(ref AfkEvent ev)
     {
+        if (!_afkAutomaticChecks) // If no automatic checks, just don't consume the event.
+            return;
+
         TryStartConfirmation(ev.Session);
     }
 

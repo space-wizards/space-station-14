@@ -1,6 +1,6 @@
 # TODO: same as other wallmount cabinets they should use a base structure prototype
 - type: entity
-  parent: BaseWallmountCabinet
+  parent: [ BaseWallmountCabinet, StructureHealthContainerWeak ]
   id: DefibrillatorCabinet
   name: defibrillator cabinet
   description: A small wall mounted cabinet designed to hold a defibrillator.
@@ -30,11 +30,9 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 40
+        damage: 60
       behaviors:
       - !type:EmptyAllContainersBehaviour
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
