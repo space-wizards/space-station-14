@@ -1173,17 +1173,16 @@
 - type: Tag
   id: PowerCage # Storage whitelist: PowerCageRecharger, ShuttleGunPerforator
 
-
 - type: Tag
   id: PowerCell # Storage whitelist: BountyLaserGun, ClothingBeltHolster, ClothingBeltSyndieHolster, ClothingOuterSuitSpaceNinja, BaseWeaponPowerCell, PowerCellRecharger, WeaponCapacitorRecharger,
                 # TurboItemRecharger, ShuttleGunSvalinnMachineGun. ConstructionGraph: WallmountSubstation.
                 # ItemMapper: ClothingBeltHolster, ClothingBeltSyndieHolster.
                 # Could potentially be replaced by whitelisting PowerCellComponent.
+
 - type: Tag
   id: PowerCellSmall # Storage whitelist: BaseWeaponPowerCell, ClothingBeltHolster, ClothingBeltSyndieHolster, PowerCellRecharger, ShuttleGunSvalinnMachineGun.
                      # ItemMapper: ClothingBeltHolster, ClothingBeltSyndieHolster.
                      # ConstructionGraph: WallmountSubstation, makeshiftstunprod
-
 - type: Tag
   id: Powerdrill # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering
 
@@ -1308,6 +1307,9 @@
 
 - type: Tag
   id: Shiv # CargoBounty: BountyShiv
+
+- type: Tag
+  id: SmeltingImmune # for entities that should not be deleted industrial smelter's MaterialReclaimer
 
 - type: Tag
   id: Shotgun # Storage whitelist: ClothingBeltSyndieHolster
