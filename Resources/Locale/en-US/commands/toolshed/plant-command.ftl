@@ -7,5 +7,5 @@ command-description-plant-age =
 command-description-plant-ageuntilready =
     Advances each piped plant until it is ready to harvest.
 
-command-description-plantmutation-add =
+command-description-plant-addmutation =
     Adds the named mutation from a mutation table to the piped plant entities.

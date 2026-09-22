@@ -19,7 +19,9 @@ public sealed partial class PlantCommand : ToolshedCommand
 {
     private const int MaxAgeTicks = 1000;
     private static readonly EntProtoId TrayPrototype = "hydroponicsTray";
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
+    private PlantMutationSystem? _mutationSystem;
     private BotanySystem? _botany;
     private PlantHolderSystem? _plantHolder;
     private PlantSystem? _plant;
@@ -181,6 +183,57 @@ public sealed partial class PlantCommand : ToolshedCommand
             .Where(entity => entity.IsValid());
     }
 
+    [CommandImplementation("addmutation")]
+    public EntityUid Add(
+        IInvocationContext ctx,
+        [PipedArgument] EntityUid input,
+        ProtoId<RandomPlantMutationListPrototype> tableId,
+        string mutationName)
+    {
+        if (!TryComp<PlantComponent>(input, out var plant))
+        {
+            ctx.ReportError(new PlantCommandError($"Entity {input} is not a plant."));
+            return EntityUid.Invalid;
+        }
+
+        var table = _prototypeManager.Index(tableId);
+        var mutation = table.Mutations.FirstOrDefault(candidate =>
+            string.Equals(candidate.Name, mutationName, StringComparison.OrdinalIgnoreCase));
+
+        if (mutation == null)
+        {
+            ctx.ReportError(new PlantCommandError(
+                $"Mutation '{mutationName}' does not exist in mutation table '{tableId}'."));
+            return EntityUid.Invalid;
+        }
+
+        _mutationSystem ??= GetSys<PlantMutationSystem>();
+        if (!_mutationSystem.TryAddMutation((input, plant), mutation))
+        {
+            ctx.ReportError(new PlantCommandError(
+                $"Mutation '{mutation.Name}' is already present or conflicts with another mutation on entity {input}."));
+            return EntityUid.Invalid;
+        }
+
+        return input;
+    }
+
+    [CommandImplementation("addmutation")]
+    public IEnumerable<EntityUid> Add(
+        IInvocationContext ctx,
+        [PipedArgument] IEnumerable<EntityUid> input,
+        ProtoId<RandomPlantMutationListPrototype> tableId,
+        string mutationName)
+    {
+        foreach (var entity in input)
+        {
+            var mutated = Add(ctx, entity, tableId, mutationName);
+            if (mutated.IsValid())
+                yield return mutated;
+        }
+    }
+
+
     private bool TryGetPlant(
         EntityUid input,
         IInvocationContext ctx,
@@ -220,63 +273,6 @@ public sealed partial class PlantCommand : ToolshedCommand
     }
 }
 
-[ToolshedCommand, AdminCommand(AdminFlags.VarEdit)]
-public sealed partial class PlantMutationCommand : ToolshedCommand
-{
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
-
-    private PlantMutationSystem? _mutationSystem;
-
-    [CommandImplementation("add")]
-    public EntityUid Add(
-        IInvocationContext ctx,
-        [PipedArgument] EntityUid input,
-        ProtoId<RandomPlantMutationListPrototype> tableId,
-        string mutationName)
-    {
-        if (!TryComp<PlantComponent>(input, out var plant))
-        {
-            ctx.ReportError(new PlantCommandError($"Entity {input} is not a plant."));
-            return EntityUid.Invalid;
-        }
-
-        var table = _prototypeManager.Index(tableId);
-        var mutation = table.Mutations.FirstOrDefault(candidate =>
-            string.Equals(candidate.Name, mutationName, StringComparison.OrdinalIgnoreCase));
-
-        if (mutation == null)
-        {
-            ctx.ReportError(new PlantCommandError(
-                $"Mutation '{mutationName}' does not exist in mutation table '{tableId}'."));
-            return EntityUid.Invalid;
-        }
-
-        _mutationSystem ??= GetSys<PlantMutationSystem>();
-        if (!_mutationSystem.TryAddMutation((input, plant), mutation))
-        {
-            ctx.ReportError(new PlantCommandError(
-                $"Mutation '{mutation.Name}' is already present or conflicts with another mutation on entity {input}."));
-            return EntityUid.Invalid;
-        }
-
-        return input;
-    }
-
-    [CommandImplementation("add")]
-    public IEnumerable<EntityUid> Add(
-        IInvocationContext ctx,
-        [PipedArgument] IEnumerable<EntityUid> input,
-        ProtoId<RandomPlantMutationListPrototype> tableId,
-        string mutationName)
-    {
-        foreach (var entity in input)
-        {
-            var mutated = Add(ctx, entity, tableId, mutationName);
-            if (mutated.IsValid())
-                yield return mutated;
-        }
-    }
-}
 
 public record struct PlantCommandError(string Message) : IConError
 {
