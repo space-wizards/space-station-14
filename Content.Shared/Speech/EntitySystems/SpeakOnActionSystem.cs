@@ -29,12 +29,10 @@ public sealed partial class SpeakOnActionSystem : EntitySystem
         if (!random.Prob(ent.Comp.SpeakChance))
             return;
 
-        var randomSentence = GetDialogue(ent.Comp.DialogueDataset, random);
+        var randomSentence = GetDialogue(ent.Comp.DialogueDataset, random) ?? ent.Comp.Sentence;
 
         if (!string.IsNullOrWhiteSpace(randomSentence))
             _chat.TrySendInGameICMessage(user, Loc.GetString(randomSentence), InGameICChatType.Speak, false);
-        else if (!string.IsNullOrWhiteSpace(ent.Comp.Sentence))
-            _chat.TrySendInGameICMessage(user, Loc.GetString(ent.Comp.Sentence), InGameICChatType.Speak, false);
     }
 
     private string? GetDialogue(ProtoId<LocalizedDatasetPrototype>? dialogue, IRobustRandom random)
