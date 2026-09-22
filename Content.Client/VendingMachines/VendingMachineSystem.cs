@@ -18,6 +18,17 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
     [Dependency] private SharedPowerReceiverSystem _receiver = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
+    public IReadOnlyList<VendingMachineInventoryCategory> GetInventoryCategories(EntityUid uid)
+    {
+        if (!TryComp<VendingMachineComponent>(uid, out var vending) ||
+            !ProtoMan.TryIndex(vending.PackPrototypeId, out var inventoryPrototype))
+        {
+            return [];
+        }
+
+        return inventoryPrototype.Categories;
+    }
+
     protected override void UpdateUI(Entity<VendingMachineComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp))

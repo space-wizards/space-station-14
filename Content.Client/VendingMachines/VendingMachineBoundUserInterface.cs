@@ -3,15 +3,12 @@ using Content.Client.VendingMachines.UI;
 using Content.Shared.VendingMachines;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
-using Robust.Shared.Prototypes;
 using Content.Shared.VendingMachines.Components;
 
 namespace Content.Client.VendingMachines;
 
 public sealed partial class VendingMachineBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
-
     [ViewVariables]
     private VendingMachineMenu? _menu;
 
@@ -28,24 +25,14 @@ public sealed partial class VendingMachineBoundUserInterface(EntityUid owner, En
     public void Refresh()
     {
         var enabled = EntMan.TryGetComponent(Owner, out VendingMachineEjectComponent? eject) && !eject.Ejecting;
-
         var system = EntMan.System<VendingMachineSystem>();
         var inventory = system.GetAllInventory(Owner);
-
-        IReadOnlyList<VendingMachineInventoryCategory> categories = [];
-        if (EntMan.TryGetComponent(Owner, out VendingMachineComponent? vending) &&
-            _prototypeManager.Resolve(vending.PackPrototypeId, out var inventoryPrototype))
-        {
-            categories = inventoryPrototype.Categories;
-        }
-
-        _menu?.Populate(inventory, categories, enabled);
+        _menu?.Populate(inventory, system.GetInventoryCategories(Owner), enabled);
     }
 
     public void UpdateAmounts()
     {
         var enabled = EntMan.TryGetComponent(Owner, out VendingMachineEjectComponent? eject) && !eject.Ejecting;
-
         var system = EntMan.System<VendingMachineSystem>();
         var inventory = system.GetAllInventory(Owner);
         _menu?.UpdateAmounts(inventory, enabled);
