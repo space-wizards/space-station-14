@@ -115,6 +115,7 @@
   name: Fighter
   id: MobFighterGuardianBase
   parent: MobGuardianBase
+  abstract: true
   components:
     - type: NameIdentifier
       group: Holoparasite
@@ -159,6 +160,7 @@
   name: Explosive
   id: MobExplosiveGuardianBase
   parent: MobGuardianBase
+  abstract: true
   components:
     - type: NameIdentifier
       group: Holoparasite
@@ -197,6 +199,7 @@
   name: Duelist
   id: MobSwordGuardianBase
   parent: MobGuardianBase
+  abstract: true
   components:
     - type: NameIdentifier
       group: Holoparasite
@@ -245,6 +248,7 @@
   name: Healer
   parent: MobGuardianBase
   id: MobHealerGuardianBase
+  abstract: true
   components:
     - type: RandomSprite
       available:
