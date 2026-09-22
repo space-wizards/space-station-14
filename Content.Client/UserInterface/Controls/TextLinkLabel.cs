@@ -20,7 +20,7 @@ public sealed partial class TextLinkLabel : Label
     public Color LinkColor { get; set; }
 
     [Dependency] private IEntityManager _entity = default!;
-    private bool canClickLink;
+    private bool _canClickLink;
 
     public TextLinkLabel()
     {
@@ -36,24 +36,24 @@ public sealed partial class TextLinkLabel : Label
     /// and whenever that permission could have changed.
     /// </summary>
     /// <param name="visible">Whether the label should be shown at all. Defaults to true.</param>
-    /// <param name="clickable">Additional override to force the label non-clickable. Defaults to true.</param>
-    public void UpdateLabelProperties(SharedChatSystem chatSystem, bool? visible = null, bool? clickable = null)
+    /// <param name="clickable">Additional override to force the label non-clickable. Defaults to null.</param>
+    public void UpdateLabelProperties(SharedChatSystem? chatSystem, bool? visible = null, bool? clickable = null)
     {
         visible ??= true;
         Visible = visible.Value;
         clickable ??= true;
 
-        canClickLink = (LinkString != null || (LinkEntity is { } netEntity && chatSystem.CanClickMessageSender(netEntity))) && (bool)clickable;
+        _canClickLink = (LinkString != null || (LinkEntity is { } netEntity && (chatSystem?.CanClickMessageSender(netEntity) ?? false))) && (bool)clickable;
 
-        MouseFilter = canClickLink ? MouseFilterMode.Stop : MouseFilterMode.Ignore;
-        DefaultCursorShape = canClickLink ? CursorShape.Hand : CursorShape.Arrow;
+        MouseFilter = _canClickLink ? MouseFilterMode.Stop : MouseFilterMode.Ignore;
+        DefaultCursorShape = _canClickLink ? CursorShape.Hand : CursorShape.Arrow;
 
         OnHoverChanged(false);
     }
 
     private void OnHoverChanged(bool hovering)
     {
-        FontColorOverride = (canClickLink, hovering) switch
+        FontColorOverride = (_canClickLink, hovering) switch
         {
             (true, true) => Color.LightSkyBlue, // clickable and currently hovered
             _ => LinkColor, // not clickable, or not hovered
