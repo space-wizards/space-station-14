@@ -48,16 +48,49 @@ public sealed partial class PlantMutationSystem : EntitySystem
                 var odds = mutation.BaseOdds * severity - triggers;
                 triggers++;
                 if (Random(Math.Min(odds, 1.0f)))
-                {
-                    if (mutation.AppliesToPlant)
-                        _entityEffects.TryApplyEffect(ent, mutation.Effect);
-
-                    // Stat adjustments do not persist by being an attached effect, they just change the stat.
-                    if (mutation.Persists && ent.Comp.Mutations.All(m => m.Name != mutation.Name))
-                        ent.Comp.Mutations.Add(mutation);
-                }
+                    TryAddMutation(ent, mutation);
             }
         }
+    }
+
+    /// <summary>
+    /// Adds a specific mutation to a plant, applying its immediate plant effect and respecting duplicate and
+    /// mutually exclusive mutations.
+    /// </summary>
+    /// <returns>True if the mutation was applied.</returns>
+    [PublicAPI]
+    public bool TryAddMutation(Entity<PlantComponent?> ent, RandomPlantMutation mutation)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        // If we already have the mutation don't apply it twice
+        if (mutation.Persists && ent.Comp.Mutations.Any(existing => existing.Name == mutation.Name))
+            return false;
+
+        if (HasConflictingMutation(ent.Comp, mutation))
+            return false;
+
+        ApplyMutation((ent, ent.Comp), mutation);
+        return true;
+    }
+
+    private bool HasConflictingMutation(PlantComponent plant, RandomPlantMutation mutation)
+    {
+        return mutation.ExclusiveGroup != null &&
+               plant.Mutations.Any(existing =>
+                   existing.Name != mutation.Name &&
+                   existing.ExclusiveGroup == mutation.ExclusiveGroup);
+    }
+
+    private void ApplyMutation(Entity<PlantComponent> ent, RandomPlantMutation mutation)
+    {
+        if (mutation.AppliesToPlant)
+            _entityEffects.TryApplyEffect(ent, mutation.Effect);
+
+        // Stat adjustments do not persist by being an attached effect, they just change the stat.
+        if (mutation.Persists)
+            ent.Comp.Mutations.Add(mutation);
     }
 
     /// <summary>
@@ -133,8 +166,15 @@ public sealed partial class PlantMutationSystem : EntitySystem
 
         // LINQ Explanation
         // For the list of mutation effects on both plants, use a 50% chance to pick each one.
-        // Union all of the chosen mutations into one list, and pick ones with a Distinct (unique) name.
-        targetCore.Mutations = targetCore.Mutations.Where(_ => Random(0.5f)).Union(pollenCore.Mutations.Where(_ => Random(0.5f))).DistinctBy(m => m.Name).ToList();
+        // Union all of the chosen mutations into one list, keep unique names, then keep at most one mutation from
+        // each exclusive group.
+        var exclusiveGroups = new HashSet<string>();
+        targetCore.Mutations = targetCore.Mutations
+            .Where(_ => Random(0.5f))
+            .Union(pollenCore.Mutations.Where(_ => Random(0.5f)))
+            .DistinctBy(m => m.Name)
+            .Where(m => m.ExclusiveGroup == null || exclusiveGroups.Add(m.ExclusiveGroup))
+            .ToList();
 
         // Hybrids have a high chance of being seedless. Balances very
         // effective hybrid crossings.
