@@ -25,7 +25,7 @@
         weight: 4
       - id: NitrogenTankFilled
 
-# Emergency lockers are intended to be somewhat random (for verisimilitude/suspense), so other than the bare essentials there should rarely be 100% guarenteed spawns
+# Emergency lockers are intended to be somewhat random (for verisimilitude/suspense), so other than the bare essentials there should rarely be 100% guaranteed spawns
 - type: entityTable
   id: FillLockerEmergencyStandard
   table: !type:AllSelector
