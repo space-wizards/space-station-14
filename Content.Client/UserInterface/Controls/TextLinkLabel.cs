@@ -36,7 +36,7 @@ public sealed partial class TextLinkLabel : Label
     /// and whenever that permission could have changed.
     /// </summary>
     /// <param name="visible">Whether the label should be shown at all. Defaults to true.</param>
-    /// <param name="clickable">Additional override to force the label non-clickable. Defaults to null.</param>
+    /// <param name="clickable">Additional override to force the label non-clickable. Defaults to true.</param>
     public void UpdateLabelProperties(SharedChatSystem? chatSystem, bool? visible = null, bool? clickable = null)
     {
         visible ??= true;
