@@ -10,7 +10,6 @@ using Robust.Shared.Prototypes;
 using FancyWindow = Content.Client.UserInterface.Controls.FancyWindow;
 using Robust.Client.UserInterface;
 using Content.Client.UserInterface.Controls;
-using Robust.Shared.Utility;
 
 namespace Content.Client.VendingMachines.UI;
 
@@ -23,6 +22,7 @@ public sealed partial class VendingMachineMenu : FancyWindow
     [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     private readonly Dictionary<VendorItemKey, (ListContainerButton Button, VendingMachineItem Item)> _listItems = new();
+    private readonly Dictionary<VendorItemKey, uint> _amounts = new();
     private List<VendingMachineInventoryEntry> _cachedInventory = new();
     private VendingMachineInventoryCategory? _selectedCategory;
 
@@ -76,6 +76,7 @@ public sealed partial class VendingMachineMenu : FancyWindow
     {
         _enabled = enabled;
         _cachedInventory = inventory;
+        CacheAmounts();
 
         PopulateCategories(categories);
         PopulateInventory();
@@ -223,12 +224,15 @@ public sealed partial class VendingMachineMenu : FancyWindow
     {
         _enabled = enabled;
         _cachedInventory = cachedInventory;
+        CacheAmounts();
 
         foreach (var (key, control) in _listItems)
         {
             if (control.Button.Disposed ||
                 control.Button.Data is not VendorItemsListData { ItemName: var itemName })
+            {
                 continue;
+            }
 
             var amount = GetAmount(key);
 
@@ -239,11 +243,17 @@ public sealed partial class VendingMachineMenu : FancyWindow
 
     private uint GetAmount(VendorItemKey key)
     {
-        return _cachedInventory.TryFirstOrDefault(
-            entry => entry.Type == key.Type && entry.ID == key.Prototype,
-            out var inventoryEntry)
-            ? inventoryEntry.Amount
-            : 0;
+        return _amounts.GetValueOrDefault(key);
+    }
+
+    private void CacheAmounts()
+    {
+        _amounts.Clear();
+
+        foreach (var entry in _cachedInventory)
+        {
+            _amounts[new VendorItemKey(entry.Type, entry.ID)] = entry.Amount;
+        }
     }
 
     private string GetItemName(EntityPrototype prototype)
