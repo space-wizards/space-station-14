@@ -11,24 +11,24 @@ public record struct AttachedVisualsUpdatedEvent
     public EntityUid AttachedTo;
 
     /// <summary>
-    /// List of layer indexes
+    /// List of appearance MapKeys and the layer key they map to
     /// </summary>
-    public Dictionary<object, int> LayerMap;
+    public Dictionary<object, string> LayerMap;
 
-    public AttachedVisualsUpdatedEvent(EntityUid attachedTo, Dictionary<object, int> layerMap)
+    public AttachedVisualsUpdatedEvent(EntityUid attachedTo, Dictionary<object, string> layerMap)
     {
         AttachedTo = attachedTo;
         LayerMap = layerMap;
     }
 
-    public bool TryGetLayerIndex(Enum key, [NotNullWhen(true)] out int? index)
+    public bool TryGetLayerKey(Enum key, [NotNullWhen(true)] out string? layerKey)
     {
-        index = null;
+        layerKey = null;
 
         if (!LayerMap.TryGetValue(key, out var layerIndex))
             return false;
 
-        index = layerIndex;
+        layerKey = layerIndex;
         return true;
     }
 }

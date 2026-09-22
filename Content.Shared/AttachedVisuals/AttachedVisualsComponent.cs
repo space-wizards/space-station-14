@@ -59,13 +59,13 @@ public sealed partial class AttachmentDefinition: IComparable<AttachmentDefiniti
     /// <summary>
     /// Container ID that this attachment maps to
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public string Container;
 
     /// <summary>
     /// Attachment ID
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public ProtoId<VisualAttachmentPrototype> Attachment;
 
     /// <summary>

@@ -140,6 +140,7 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
         {
             foreach (var layer in attachedLayer)
             {
+                _displacement.EnsureDisplacementIsNotOnSprite((ent.Owner, sprite), layer.Key);
                 _sprite.RemoveLayer((ent.Owner, sprite), layer.Key);
             }
         }
@@ -161,13 +162,12 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
                 displacementData = sexedDisplacementData;
             }
 
+            var updated = new Dictionary<EntityUid, Dictionary<object, string>>();
             foreach (var attachedLayer in results)
             {
                 var index = _sprite.LayerMapReserve((ent.Owner, sprite), attachedLayer.Key);
                 _sprite.LayerSetData((ent.Owner, sprite), index, attachedLayer.Data);
                 ent.Comp.RevealedLayers.GetOrNew(attachedLayer.Origin).Add(attachedLayer);
-
-                var addedLayerMap = new Dictionary<object, int>();
 
                 if (displacementData is not null)
                 {
@@ -181,11 +181,14 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
                 foreach (var mapkey in attachedLayer.MapKeys)
                 {
                     var obj = ParseKey(mapkey);
-                    addedLayerMap[obj] = index;
+                    updated.GetOrNew(attachedLayer.Origin)[obj] = attachedLayer.Key;
                 }
+            }
 
-                var ev = new AttachedVisualsUpdatedEvent(ent, addedLayerMap);
-                RaiseLocalEvent(attachedLayer.Origin, ref ev);
+            foreach (var (origin, map) in updated)
+            {
+                var ev = new AttachedVisualsUpdatedEvent(ent, map);
+                RaiseLocalEvent(origin, ref ev);
             }
         }
     }
