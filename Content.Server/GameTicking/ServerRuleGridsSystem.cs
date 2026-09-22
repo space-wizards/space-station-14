@@ -6,16 +6,7 @@ namespace Content.Server.GameTicking;
 /// <inheritdoc/>
 public sealed partial class ServerRuleGridsSystem : RuleGridsSystem
 {
-    [Dependency] private EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<GridSplitEvent>(OnGridSplit);
-    }
-
+    [SubscribeLocalEvent]
     private void OnGridSplit(ref GridSplitEvent args)
     {
         var rule = QueryActiveRules();

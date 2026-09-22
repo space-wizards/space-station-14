@@ -1,6 +1,6 @@
-using Content.Shared.GameTicking.Rules;
+using Content.Shared.GameTicking;
 
 namespace Content.Client.GameTicking;
 
 /// <inheritdoc/>
-public abstract partial class RuleGridsSystem : GameRuleSystem<RuleGridsComponent>;
+public sealed partial class ClientRuleGridsSystem : RuleGridsSystem;

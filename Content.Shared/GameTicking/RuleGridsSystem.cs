@@ -14,14 +14,7 @@ public abstract partial class RuleGridsSystem : GameRuleSystem<RuleGridsComponen
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<RuleGridsComponent, RuleLoadedGridsEvent>(OnLoadedGrids);
-        SubscribeLocalEvent<RuleGridsComponent, AntagSelectLocationEvent>(OnSelectLocation);
-    }
-
+    [SubscribeLocalEvent]
     private void OnLoadedGrids(Entity<RuleGridsComponent> ent, ref RuleLoadedGridsEvent args)
     {
         var (uid, comp) = ent;
@@ -35,6 +28,7 @@ public abstract partial class RuleGridsSystem : GameRuleSystem<RuleGridsComponen
         comp.MapGrids.AddRange(args.Grids);
     }
 
+    [SubscribeLocalEvent]
     private void OnSelectLocation(Entity<RuleGridsComponent> ent, ref AntagSelectLocationEvent args)
     {
         var query = EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
