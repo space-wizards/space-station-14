@@ -72,7 +72,7 @@ public sealed partial class StoreDamageTakenOnMindSystem : EntitySystem
     }
 
     /// <summary>
-    /// Saves an specific cause of death inside of an entity LastBodyDamageComponent
+    /// Saves a specific cause of death inside of an entity's <see cref="LastBodyDamageComponent"/>.
     /// </summary>
     public void SaveSpecialCauseOfDeath(EntityUid ent, ProtoId<SpecialCauseOfDeathPrototype> cause)
     {
