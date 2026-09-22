@@ -3,6 +3,7 @@ using Content.Server.Audio;
 using Content.Server.Chat.Systems;
 using Content.Server.Pinpointer;
 using Content.Server.Popups;
+using Content.Shared.Antag;
 using Content.Shared.CosmicCult;
 using Content.Shared.CosmicCult.Components;
 using Content.Shared.DoAfter;

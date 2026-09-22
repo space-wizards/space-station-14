@@ -1,5 +1,6 @@
 using Content.Server.Antag;
 using Content.Server.Silicons.Laws;
+using Content.Shared.Antag;
 using Content.Shared.CosmicCult;
 using Content.Shared.CosmicCult.Components;
 using Content.Shared.CosmicCult.Components.Actions;

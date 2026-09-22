@@ -1,9 +1,3 @@
-using Content.Server.Actions;
-using Content.Server.Antag;
-using Content.Server.Chat.Systems;
-using Content.Server.EUI;
-using Content.Server.RoundEnd;
-using Content.Server.Station.Systems;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind;
@@ -11,9 +5,6 @@ using Content.Shared.Mobs;
 using Content.Shared.Parallax;
 using Content.Shared.Radio.Components;
 using Content.Shared.Roles;
-using Content.Shared.Weather;
-using Robust.Server.Audio;
-using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -22,52 +13,51 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Containers;
-using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Utility;
 using System.Collections.Immutable;
 using System.Linq;
-using Content.Server.Audio;
-using Content.Server.CosmicCult;
-using Content.Server.CosmicCult.Components;
-using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Pinpointer;
+using Content.Shared.Actions;
+using Content.Shared.Antag;
 using Content.Shared.Audio;
-using Content.Shared.CCVar;
+using Content.Shared.Chat;
 using Content.Shared.Coordinates;
 using Content.Shared.CosmicCult;
 using Content.Shared.CosmicCult.Abilities;
 using Content.Shared.CosmicCult.Components;
 using Content.Shared.CosmicCult.Prototypes;
 using Content.Shared.DoAfter;
-using Content.Shared.Interaction.Components;
+using Content.Shared.GameTicking.Rules.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Pinpointer;
+using Content.Shared.RoundEnd;
 using Content.Shared.Station.Components;
+using Content.Shared.Station.Systems;
+using Robust.Shared.Audio.Systems;
 
-namespace Content.Server.GameTicking.Rules;
+namespace Content.Shared.GameTicking.Rules;
 
 public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponent>
 {
-    [Dependency] private ActionsSystem _actions = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private AntagSelectionSystem _antag = default!;
-    [Dependency] private AudioSystem _audio = default!;
-    [Dependency] private ChatSystem _chatSystem = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedChatSystem _chatSystem = default!;
     [Dependency] private CosmicBreachSystem _breach = default!;
     [Dependency] private CosmicCultSystem _cosmicCult = default!;
+    [Dependency] private CosmicShiftSystem _cultShift = default!;
     [Dependency] private EuiManager _euiMan = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private IConfigurationManager _config = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IPlayerManager _playerMan = default!;
+    [Dependency] private ISharedPlayerManager _playerMan = default!;
     [Dependency] private IPrototypeManager _protoMan = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private MobStateSystem _mobState = default!;
-    [Dependency] private NavMapSystem _navMap = default!;
+    [Dependency] private SharedNavMapSystem _navMap = default!;
     [Dependency] private RoundEndSystem _roundEnd = default!;
     [Dependency] private ServerGlobalSoundSystem _sound = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private CosmicShiftSystem _cultShift = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private SharedMindSystem _mind = default!;
@@ -99,35 +89,35 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
     }
 
     #region Starting Events
-    protected override void Added(EntityUid uid, CosmicCultRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
+    protected override void Added(Entity<CosmicCultRuleComponent, GameRuleComponent> rule, ref GameRuleAddedEvent args)
     {
         // component.GoalsContainer = _goals.SpawnContainer("Cosmic Cult");
         // var ok = _goals.TryAddGoals(component.GoalsContainer.Value, component.Goals);
         // Debug.Assert(ok);
 
         var station = _random.Pick(_station.GetStations());
-        if (_station.GetLargestGrid(station) is not { } grid)
+        if (_station.GetLargestGrid(station.Owner) is not { } grid)
             return;
 
-        component.Station = station;
-        component.StationGrid = grid;
-        base.Added(uid, component, gameRule, args);
+        rule.Comp1.Station = station;
+        rule.Comp1.StationGrid = grid;
+        base.Added(rule, ref args);
     }
 
-    protected override void Started(EntityUid uid, CosmicCultRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    protected override void Started(Entity<CosmicCultRuleComponent, GameRuleComponent> rule, ref GameRuleStartedEvent args)
     {
-        component.TotalCrew = _playerMan.Sessions.Count(session => session.Status == SessionStatus.InGame && HasComp<HumanoidProfileComponent>(session.AttachedEntity));
-        component.FinaleTimer = gameRule.ActivatedAt + _finaleTimeMax;
-        component.Tier3Timer = gameRule.ActivatedAt + _finaleTimeMax * 0.7;
-        component.Tier2Timer = gameRule.ActivatedAt + _finaleTimeMax * 0.4;
+        rule.Comp1.TotalCrew = _playerMan.Sessions.Count(session => session.Status == SessionStatus.InGame && HasComp<HumanoidProfileComponent>(session.AttachedEntity));
+        rule.Comp1.FinaleTimer = rule.Comp2.ActivatedAt + _finaleTimeMax;
+        rule.Comp1.Tier3Timer = rule.Comp2.ActivatedAt + _finaleTimeMax * 0.7;
+        rule.Comp1.Tier2Timer = rule.Comp2.ActivatedAt + _finaleTimeMax * 0.4;
 
         _beaconSet.Clear();
         _breachSet.Clear();
-        _lookup.GetChildEntities(component.StationGrid, _beaconSet);
-        if (component.VoidMapId != null)
-            _lookup.GetEntitiesOnMap(component.VoidMapId.Value, _breachSet);
+        _lookup.GetChildEntities(rule.Comp1.StationGrid, _beaconSet);
+        if (rule.Comp1.VoidMapId != null)
+            _lookup.GetEntitiesOnMap(rule.Comp1.VoidMapId.Value, _breachSet);
 
-        base.Started(uid, component, gameRule, args);
+        base.Started(rule, ref args);
     }
 
     [SubscribeLocalEvent]
@@ -148,7 +138,7 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
-        if (TryFindRandomTileOnStation((ent, ent.Comp), out var _, out var _, out var coords)) { Spawn("CosmicMalignRift", coords); }
+        if (_station.TryFindRandomTileOnStation((ent, ent.Comp), out var _, out var _, out var coords)) { Spawn("CosmicMalignRift", coords); }
     }
 
     private void SpawnStigma(Entity<StationDataComponent?> ent)
@@ -156,7 +146,7 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
-        if (TryFindRandomTileOnStation((ent, ent.Comp), out var _, out var _, out var coords)) { Spawn("CosmicEntropicStigmaSpawn", coords); }
+        if (_station.TryFindRandomTileOnStation((ent, ent.Comp), out var _, out var _, out var coords)) { Spawn("CosmicEntropicStigmaSpawn", coords); }
     }
 
     public void UpdateCultData(Entity<CosmicCultRuleComponent> cult) // Runs every time Entropy is siphoned and whenever a crewmember is Converted.
@@ -458,7 +448,7 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         cult.Cultists.Remove(ent);
     }
 
-    protected override void AppendRoundEndText(EntityUid uid, CosmicCultRuleComponent component, GameRuleComponent gameRule, ref RoundEndTextAppendEvent args)
+    protected override void AppendRoundEndText(Entity<CosmicCultRuleComponent> ent, ref RoundEndTextAppendEvent args)
     {
         // var ftlKey = component.WinType.ToString().ToLower(); // convert this to a ternary boolean operator. the ! = xyz : xhz thingo.
         //
@@ -467,9 +457,9 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         // var summaryText = Loc.GetString($"cosmiccult-summary-{ftlKey}");
         // args.AddLine(winType);
         // args.AddLine(summaryText);
-        args.AddLine(Loc.GetString("cosmiccult-roundend-cultist-count", ("initialCount", component.TotalCult)));
-        args.AddLine(Loc.GetString("cosmiccult-roundend-cultpop-count", ("count", Math.Round(component.PortionConverted * 100d))));
-        args.AddLine(Loc.GetString("cosmiccult-roundend-entropy-count", ("count", component.EntropySiphoned)));
+        args.AddLine(Loc.GetString("cosmiccult-roundend-cultist-count", ("initialCount", ent.Comp.TotalCult)));
+        args.AddLine(Loc.GetString("cosmiccult-roundend-cultpop-count", ("count", Math.Round(ent.Comp.PortionConverted * 100d))));
+        args.AddLine(Loc.GetString("cosmiccult-roundend-entropy-count", ("count", ent.Comp.EntropySiphoned)));
     }
 
     public void IncrementCultObjectiveEntropy(Entity<CosmicCultistComponent> ent)

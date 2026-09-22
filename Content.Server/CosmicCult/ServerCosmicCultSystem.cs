@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Antag;
+using Content.Shared.Antag;
 using Content.Shared.CosmicCult;
 using Content.Shared.CosmicCult.Components;
 using Content.Shared.CosmicCult.Prototypes;

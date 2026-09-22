@@ -101,6 +101,8 @@
     vfx: EffectCosmicActionLapse
     sfx:
       path: "/Audio/Cosmic/Abilities/ability-lapse.ogg"
+  - type: SpeakOnAction
+    dialogueDataset: DatasetCosmicDialogueLapse
 
 - type: entity
   parent: BaseMentalAction
@@ -128,6 +130,8 @@
     vfx: EffectCosmicActionGlare
     sfx:
       path: "/Audio/Cosmic/Abilities/ability-glare.ogg"
+  - type: SpeakOnAction
+    dialogueDataset: DatasetCosmicDialogueGlare
 
 - type: entity
   parent: BaseMentalAction
@@ -174,6 +178,8 @@
     vfx: EffectCosmicBigWindup
     sfx:
       path: "/Audio/Cosmic/Abilities/ability-imposition.ogg"
+  - type: SpeakOnAction
+    dialogueDataset: DatasetCosmicDialogueImposition
 
 - type: entity
   parent: BaseAction
@@ -199,6 +205,8 @@
   - type: CosmicCultAction
     sfx:
       path: "/Audio/Cosmic/Abilities/ability-nova-cast.ogg"
+  - type: SpeakOnAction
+    dialogueDataset: DatasetCosmicDialogueNova
 
 - type: entity
   parent: BaseAction
@@ -229,6 +237,8 @@
     event: !type:EventCosmicFragmentation
   - type: CosmicActionFragmentation
   - type: CosmicCultAction
+  - type: SpeakOnAction
+    dialogueDataset: DatasetCosmicDialogueFragmentation
 
 - type: entity
   parent: BaseDoAfterAction

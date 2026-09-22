@@ -2,6 +2,7 @@ using Content.Server.GameTicking;
 using Content.Server.Zombies;
 using Content.Shared.Administration;
 using Content.Server.Clothing.Systems;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Antag;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Rules.Components;

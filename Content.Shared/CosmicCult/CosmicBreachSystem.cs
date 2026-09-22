@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.Server.Atmos.EntitySystems;
 using Content.Shared.CosmicCult.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -9,24 +8,14 @@ using Content.Shared.Physics;
 using Content.Shared.SubFloor;
 using Content.Shared.Pinpointer;
 using Content.Shared.Mind.Components;
-using Robust.Server.GameObjects;
 
-namespace Content.Server.CosmicCult;
+namespace Content.Shared.CosmicCult;
 
 public sealed partial class CosmicBreachSystem : EntitySystem
 {
 	[Dependency] private IRobustRandom _random = default!;
-	[Dependency] private MapSystem _mapSystem = default!;
-	[Dependency] private AtmosphereSystem _atmosphere = default!;
+	[Dependency] private SharedMapSystem _mapSystem = default!;
 	[Dependency] private SharedTransformSystem _transformSystem = default!;
-
-
-	//Arbitrary values for safe temperature and pressure ranges.
-	//If the location is outside these ranges, it'll fall back to different selection logic.
-	private const float MinPressureKpa = 50f;
-	private const float MaxPressureKpa = 300f;
-	private const float MinTemperatureK = 150f;
-	private const float MaxTemperatureK = 300f;
 
 	public Entity<CosmicBreachComponent>? StationBreach(HashSet<Entity<NavMapBeaconComponent>> beacons)
 	{
@@ -163,16 +152,6 @@ public sealed partial class CosmicBreachSystem : EntitySystem
 	    var tileRef = _mapSystem.GetTileRef(gridUid, grid, tile);
 	    if (tileRef.Tile.IsEmpty)
 		    return false;
-
-	    var mapUid = Transform(gridUid).MapUid;
-	    var mixture = _atmosphere.GetTileMixture(gridUid, mapUid, tile, excite: false);
-	    if (mixture == null)
-		    return false;
-
-	    if (mixture.Pressure < MinPressureKpa || mixture.Pressure > MaxPressureKpa)
-		    return false;
-	    if (mixture.Temperature < MinTemperatureK || mixture.Temperature > MaxTemperatureK)
-			    return false;
 
 		// Check for blocking entities
 		var anchored = new HashSet<EntityUid>(_mapSystem.GetAnchoredEntities(gridUid, grid, tile));

@@ -1,11 +1,9 @@
-﻿using Content.Server.RoundEnd;
-using Content.Shared.EntityTable;
+﻿using Content.Shared.RoundEnd;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.GameTicking.Rules.Components;
+namespace Content.Shared.GameTicking.Rules.Components;
 
 /// <summary>
 /// Gamerule component for handling the Cosmic Cult antagonist.
@@ -33,7 +31,6 @@ public sealed partial class CosmicCultRuleComponent : Component
     /// Text for announcement.
     /// </summary>
     [DataField] public LocId RoundEndTextAnnouncement = "cosmiccult-elimination-announcement";
-
 
     /// <summary>
     /// Time for emergency shuttle arrival.

@@ -10,6 +10,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Station.Components;
+using Content.Shared.Station.Systems;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Prototypes;
 
@@ -20,6 +21,7 @@ public sealed partial class CosmicRiftSystem : EntitySystem
     [Dependency] private ActionsSystem _actions = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private StationSystem _station = default!;
     [Dependency] private PopupSystem _popup = default!;
 
     public static readonly EntProtoId PressureImmunityEffect = "StatusEffectPressureImmunity";
@@ -81,7 +83,8 @@ public sealed partial class CosmicRiftSystem : EntitySystem
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;
-        // TODO: COSMIC CULT - SPAWNING A RIFT REQUIRES TryFindRandomTileOnStation TO BE EXPOSED OUTSIDE OF THE GAMERULESYSTEM.
-        // if (TryFindRandomTileOnStation( out var _, out var _, out var _, out var coords)) { Spawn("CosmicMalignRift", coords); }
+
+        if (_station.TryFindRandomTileOnStation((ent, ent.Comp), out var _, out var _, out var coords))
+            Spawn("CosmicMalignRift", coords);
     }
 }
