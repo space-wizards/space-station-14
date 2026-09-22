@@ -720,6 +720,8 @@
 - type: foodSequenceElement
   id: PineappleSliceBurger
   name: food-sequence-burger-content-pineapple
+  scale: 0.9, 0.9
+  offset: -0.015625, 0.03125 # left by 0.5 pixel, up by 1 pixel
   sprites:
   - sprite: Objects/Specific/Hydroponics/pineapple.rsi
     state: slice
