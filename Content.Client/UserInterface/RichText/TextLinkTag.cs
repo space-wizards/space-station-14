@@ -13,7 +13,7 @@ namespace Content.Client.UserInterface.RichText;
 
 /// <summary>
 /// Markup tag handler for <c>[textlink="LinkText"]</c> nodes. Renders a link
-/// <see cref="Label"/> in rich text, covering two link types:
+/// <see cref="TextLinkLabel"/> in rich text, covering two link types:
 /// <list type="bullet">
 /// <item><description>link="GuideEntryPrototypeID" — a plain link.</description></item>
 /// <item><description>entity="NetEntity" — an entity link.</description></item>
