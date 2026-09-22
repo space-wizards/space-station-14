@@ -1,7 +1,9 @@
 - type: vendingMachineInventory
   id: DiscountDansInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-snacks
+    icon: { entity: FoodSnackCheesie }
+    startingInventory:
       FoodSnackCheesie: 3
       FoodSnackChips: 3
       FoodSnackBoritos: 3

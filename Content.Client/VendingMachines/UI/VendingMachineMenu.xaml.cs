@@ -132,9 +132,6 @@ public sealed partial class VendingMachineMenu : FancyWindow
 
         foreach (var category in categories)
         {
-            if (category.Name == null || category.Icon == null)
-                continue;
-
             foreach (var entry in _cachedInventory)
             {
                 if (!CategoryContains(category, entry))
@@ -170,11 +167,11 @@ public sealed partial class VendingMachineMenu : FancyWindow
 
         foreach (var category in visibleCategories)
         {
-            var button = CreateCategoryButton(_loc.GetString(category.Name!.Value), category, group);
+            var button = CreateCategoryButton(_loc.GetString(category.Name), category, group);
 
             button.AddChild(new TextureRect
             {
-                Texture = spriteSystem.Frame0(category.Icon!),
+                Texture = spriteSystem.Frame0(category.Icon),
                 Stretch = TextureRect.StretchMode.KeepAspectCentered,
                 SetSize = new Vector2(48, 48)
             });

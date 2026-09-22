@@ -1,7 +1,9 @@
 - type: vendingMachineInventory
   id: SpaceUpInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-soft-drinks
+    icon: { entity: DrinkSpaceUpCan }
+    startingInventory:
       DrinkSpaceUpCan: 5
       DrinkSpaceMountainWindCan: 5
       DrinkGrapeCan: 2

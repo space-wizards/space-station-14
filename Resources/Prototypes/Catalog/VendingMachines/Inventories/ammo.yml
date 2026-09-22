@@ -1,7 +1,9 @@
 - type: vendingMachineInventory
   id: AmmoVendInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-ammunition
+    icon: { entity: MagazineBoxPistol }
+    startingInventory:
       MagazineBoxCaselessRifle: 6
       MagazineBoxCaselessRiflePractice: 3
       MagazineBoxLightRifleBig: 6

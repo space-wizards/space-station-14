@@ -1,7 +1,9 @@
 - type: vendingMachineInventory
   id: RobustSoftdrinksInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-soft-drinks
+    icon: { entity: DrinkColaCan }
+    startingInventory:
       DrinkColaCan: 4
       DrinkGrapeCan: 2
       DrinkRootBeerCan: 2

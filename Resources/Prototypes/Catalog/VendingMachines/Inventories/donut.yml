@@ -1,7 +1,9 @@
 - type: vendingMachineInventory
   id: DonutInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-food
+    icon: { entity: FoodDonutChocolate }
+    startingInventory:
       FoodDonutChocolate: 5
       FoodDonutApple: 3
       FoodDonutPink: 3

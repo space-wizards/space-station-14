@@ -1,7 +1,9 @@
 - type: vendingMachineInventory
   id: BodaInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-soft-drinks
+    icon: { entity: DrinkSodaWaterCan }
+    startingInventory:
       DrinkSodaWaterCan: 10 #typically hacked product. Default product is "soda"
     contrabandInventory:
       DrinkSodaWaterBottleFull: 2

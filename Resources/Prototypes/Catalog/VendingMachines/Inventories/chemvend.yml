@@ -1,7 +1,9 @@
 - type: vendingMachineInventory
   id: ChemVendInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-chemicals
+    icon: { entity: Jug }
+    startingInventory:
       Jug: 4
       JugAluminium: 2
       JugCarbon: 4
@@ -31,7 +33,9 @@
 - type: vendingMachineInventory
   id: ChemVendInventorySyndicate
   categories:
-  - startingInventory:
+  - name: vending-machine-category-chemicals
+    icon: { entity: Jug }
+    startingInventory:
       Jug: 4
       JugAluminium: 2
       JugCarbon: 4

@@ -1,14 +1,22 @@
 - type: vendingMachineInventory
   id: HyDrobeInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-bags
+    icon: { entity: ClothingBackpackHydroponics }
+    startingInventory:
       ClothingBackpackHydroponics: 2
       ClothingBackpackSatchelHydroponics: 2
       ClothingBackpackDuffelHydroponics: 2
-      ClothingOuterApronBotanist: 2
+  - name: vending-machine-category-uniforms
+    icon: { entity: ClothingUniformJumpsuitHydroponics }
+    startingInventory:
       ClothingUniformOveralls: 3
       ClothingUniformJumpsuitHydroponics: 3
       ClothingUniformJumpskirtHydroponics: 3
+  - name: vending-machine-category-equipment
+    icon: { entity: ClothingOuterApronBotanist }
+    startingInventory:
+      ClothingOuterApronBotanist: 2
       ClothingNeckScarfStripedGreen: 3
       ClothingHeadBandBotany: 3
       ClothingHeadsetService: 2

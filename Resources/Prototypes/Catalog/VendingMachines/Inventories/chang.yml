@@ -1,7 +1,9 @@
 - type: vendingMachineInventory
   id: ChangInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-food
+    icon: { entity: FoodSnackChowMein }
+    startingInventory:
       FoodCondimentPacketSoy: 5
       FoodSnackCookieFortune: 5
       DrinkRamen: 3

@@ -1,7 +1,9 @@
 - type: vendingMachineInventory
   id: HappyHonkDispenserInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-food
+    icon: { entity: HappyHonk }
+    startingInventory:
       HappyHonk: 10
       HappyHonkMime: 4
     contrabandInventory:

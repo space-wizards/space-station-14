@@ -29,11 +29,11 @@ public sealed partial class VendingMachineInventoryPrototype : IPrototype
 [DataDefinition]
 public sealed partial class VendingMachineInventoryCategory
 {
-    [DataField]
-    public LocId? Name { get; private set; }
+    [DataField(required: true)]
+    public LocId Name { get; private set; }
 
-    [DataField]
-    public SpriteSpecifier? Icon { get; private set; }
+    [DataField(required: true)]
+    public SpriteSpecifier Icon { get; private set; } = default!;
 
     [DataField]
     public Dictionary<EntProtoId, uint> StartingInventory { get; private set; } = [];

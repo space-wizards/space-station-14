@@ -1,7 +1,9 @@
 - type: vendingMachineInventory
   id: PwrGameInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-soft-drinks
+    icon: { entity: DrinkPwrGameCan }
+    startingInventory:
       DrinkPwrGameCan: 4
       DrinkEnergyDrinkCan: 4
       DrinkGrapeCan: 2

@@ -1,7 +1,9 @@
 - type: vendingMachineInventory
   id: SmiteInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-soft-drinks
+    icon: { entity: DrinkLemonLimeCan }
+    startingInventory:
       DrinkLemonLimeCan: 8
       DrinkLemonLimeCranberryCan: 6
       DrinkColaCan: 3

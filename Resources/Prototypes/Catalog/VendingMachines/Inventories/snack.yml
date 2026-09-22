@@ -1,7 +1,9 @@
 - type: vendingMachineInventory
   id: GetmoreChocolateCorpInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-snacks
+    icon: { entity: FoodSnackChocolate }
+    startingInventory:
       FoodSnackRaisins: 3
       FoodSnackChocolate: 3
       FoodSnackCnDs: 3

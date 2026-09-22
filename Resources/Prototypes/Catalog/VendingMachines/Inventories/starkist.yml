@@ -1,7 +1,9 @@
 - type: vendingMachineInventory
   id: StarkistInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-soft-drinks
+    icon: { entity: DrinkStarkistCan }
+    startingInventory:
       DrinkStarkistCan: 6
       DrinkGrapeCan: 2
       DrinkRootBeerCan: 2

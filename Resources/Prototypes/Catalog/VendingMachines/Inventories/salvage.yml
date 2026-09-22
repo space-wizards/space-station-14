@@ -1,7 +1,9 @@
 - type: vendingMachineInventory
   id: SalvageEquipmentInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-equipment
+    icon: { entity: Pickaxe }
+    startingInventory:
       Crowbar: 2
       Pickaxe: 4
       OreBag: 4

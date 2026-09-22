@@ -1,13 +1,21 @@
 - type: vendingMachineInventory
   id: ViroDrobeInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-uniforms
+    icon: { entity: ClothingUniformJumpsuitVirology }
+    startingInventory:
       ClothingUniformJumpsuitVirology: 2
       ClothingUniformJumpskirtVirology: 2
+  - name: vending-machine-category-equipment
+    icon: { entity: ClothingOuterCoatLabViro }
+    startingInventory:
       ClothingShoesColorWhite: 2
       ClothingOuterCoatLabViro: 2
       ClothingOuterWinterViro: 2
       ClothingMaskSterile: 2
+  - name: vending-machine-category-bags
+    icon: { entity: ClothingBackpackVirology }
+    startingInventory:
       ClothingBackpackVirology: 2
       ClothingBackpackSatchelVirology: 2
       ClothingBackpackDuffelVirology: 2

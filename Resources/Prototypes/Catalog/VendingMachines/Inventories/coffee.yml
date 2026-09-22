@@ -1,7 +1,9 @@
 - type: vendingMachineInventory
   id: HotDrinksMachineInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-hot-drinks
+    icon: { entity: DrinkHotCoffee }
+    startingInventory:
       DrinkHotCoffee: 5
       DrinkCafeLatte: 5
       DrinkTeacup: 5

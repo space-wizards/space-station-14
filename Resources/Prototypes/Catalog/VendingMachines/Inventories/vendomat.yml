@@ -1,7 +1,9 @@
 - type: vendingMachineInventory
   id: VendomatInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-components
+    icon: { entity: MicroManipulatorStockPart }
+    startingInventory:
       RemoteSignaller: 1
       Igniter: 2
       Wirecutter: 2

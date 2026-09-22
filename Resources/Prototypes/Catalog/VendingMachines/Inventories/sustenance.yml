@@ -1,7 +1,9 @@
 - type: vendingMachineInventory
   id: SustenanceInventory
   categories:
-  - startingInventory:
+  - name: vending-machine-category-food
+    icon: { entity: FoodSnackNutribrick }
+    startingInventory:
       DrinkMREFlask: 3
       FoodSnackNutribrick: 5
       FoodSnackMREBrownie: 5

@@ -1,13 +1,21 @@
 - type: vendingMachineInventory
   id: RoboDrobeInventory
   categories:
-  - startingInventory:
-      ClothingOuterCoatRobo: 2
+  - name: vending-machine-category-uniforms
+    icon: { entity: ClothingUniformJumpsuitRoboticist }
+    startingInventory:
       ClothingUniformJumpsuitRoboticist: 2
       ClothingUniformJumpskirtRoboticist: 2
+  - name: vending-machine-category-outerwear
+    icon: { entity: ClothingOuterCoatRobo }
+    startingInventory:
+      ClothingOuterCoatRobo: 2
+      ClothingOuterWinterRobo: 2
+  - name: vending-machine-category-equipment
+    icon: { entity: ClothingHandsGlovesRobohands }
+    startingInventory:
       ClothingShoesColorBlack: 2
       ClothingHandsGlovesRobohands: 2
       ClothingHeadHatCorpsoft: 2
       ClothingHeadBandSkull: 2
       ClothingHeadsetRobotics: 2
-      ClothingOuterWinterRobo: 2
