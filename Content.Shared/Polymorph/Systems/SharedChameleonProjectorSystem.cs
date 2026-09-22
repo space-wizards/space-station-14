@@ -294,12 +294,12 @@ public abstract partial class SharedChameleonProjectorSystem : EntitySystem
         if (!Resolve(disguised, ref disguised.Comp, false))
             return;
 
-        if (ent.Comp.Disguised == null)
+        if (ent.Comp.Disguised is not { } user)
             return;
 
-        var xform = Transform(ent.Comp.Disguised.Value);
-        _xform.SetNoLocalRotation(ent.Owner, false, xform);
-        _xform.Unanchor(disguised, xform);
+        var xform = Transform(user);
+        _xform.SetNoLocalRotation(user, false, xform);
+        _xform.Unanchor(user, xform);
 
         ent.Comp.Disguised = null;
         Del(disguised.Comp.Disguise);
