@@ -11,7 +11,8 @@
   - name: vending-machine-category-condiments
     icon: { entity: FoodCondimentBottleKetchup }
     startingInventory:
-      FoodCondimentPacketSalt: 4
+      ReagentContainerSalt: 1
+      ReagentContainerPepper: 1
       FoodCondimentBottleEnzyme: 2
       FoodCondimentBottleHotsauce: 1
       FoodCondimentBottleKetchup: 1
