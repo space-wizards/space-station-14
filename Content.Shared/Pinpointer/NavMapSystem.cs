@@ -17,7 +17,7 @@ namespace Content.Shared.Pinpointer;
 
 public abstract partial class NavMapSystem : EntitySystem
 {
-    public const int Categories = 3;
+    public static readonly int Categories = Enum.GetNames(typeof(NavMapChunkType)).Length - 1; // -1 due to "Invalid" entry.
     public const int Directions = 4; // Not directly tied to number of atmos directions
 
     public const int ChunkSize = 8;
@@ -28,8 +28,8 @@ public abstract partial class NavMapSystem : EntitySystem
     public const int WallMask = AllDirMask << (int) NavMapChunkType.Wall;
     public const int FloorMask = AllDirMask << (int) NavMapChunkType.Floor;
 
-    public const float CloseDistance = 15f;
-    public const float FarDistance = 30f;
+    protected const float CloseDistance = 15f;
+    protected const float FarDistance = 30f;
 
     [Dependency] protected SharedMapSystem MapSystem = default!;
 
@@ -42,15 +42,6 @@ public abstract partial class NavMapSystem : EntitySystem
     [Dependency] private EntityQuery<WallComponent> _wallQuery;
 
     private static readonly ProtoId<TagPrototype>[] WallTags = ["Window"];
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        // Data handling events
-        SubscribeLocalEvent<NavMapComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<ConfigurableNavMapBeaconComponent, ExaminedEvent>(OnConfigurableExamined);
-    }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int GetTileIndex(Vector2i relativeTile)
@@ -149,6 +140,7 @@ public abstract partial class NavMapSystem : EntitySystem
 
     #region: Event handling
 
+    [SubscribeLocalEvent]
     private void OnGetState(EntityUid uid, NavMapComponent component, ref ComponentGetState args)
     {
         Dictionary<Vector2i, int[]> chunks;
@@ -179,6 +171,7 @@ public abstract partial class NavMapSystem : EntitySystem
         args.State = new NavMapDeltaState(chunks, component.Beacons, component.RegionProperties, new(component.Chunks.Keys));
     }
 
+    [SubscribeLocalEvent]
     private void OnConfigurableExamined(Entity<ConfigurableNavMapBeaconComponent> ent, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange || !TryComp<NavMapBeaconComponent>(ent, out var navMap))
