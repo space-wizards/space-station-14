@@ -242,6 +242,7 @@
           - TrashBag
           - TrashBagHolding
         priority: 3 # Higher than drinking priority
+  - type: OpenItemSlotRadialOnInteract
   - type: Fixtures
     fixtures:
       fix1:
@@ -354,6 +355,8 @@
     interfaces:
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
+      enum.ItemSlotRadialUiKey.Key:
+        type: RadialItemSlotMenuBoundUserInterface
   - type: Edible
     edible: Drink
     solution: tank
