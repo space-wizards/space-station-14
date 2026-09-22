@@ -9,17 +9,6 @@
   - SalvageSpecialist
 
 - type: department
-  id: Civilian
-  name: department-Civilian
-  description: department-Civilian-description
-  color: "#7F7F7F"
-  weight: -10
-  ignoreForDepartmentFallback: true
-  roles:
-  - Passenger
-  - Visitor
-
-- type: department
   id: CentralCommand
   name: department-CentralCommand
   description: department-CentralCommand-description
@@ -27,6 +16,7 @@
   weight: 120 # Highest weight of all NT departments; Central Command's authority is absolute
   editorHidden: true
   roles:
+  - CBURN
   - CentralCommandOfficial
 
 - type: department
@@ -34,7 +24,7 @@
   name: department-Command
   description: department-Command-description
   color: "#334E6D"
-  weight: 100 # Highest weight of all "standard" station departments
+  weight: 100 # Highest weight of all "regular" crew departments
   primary: false
   roles:
   - Captain
@@ -84,7 +74,7 @@
   name: department-Security
   description: department-Security-description
   color: "#DE3A3A"
-  weight: 20
+  weight: 20 # Raised priority compared to most other crew departments
   roles:
   - HeadOfSecurity
   - SecurityCadet
@@ -118,6 +108,7 @@
   name: department-Silicon
   description: department-Silicon-description
   color: "#D381C9"
+  weight: -20 # Displays after all regular crew departments, including Civilian, both because they're mechanically distinct and because they're subordinate to all crew by default
   roles:
   - Borg
   - StationAi
@@ -144,7 +135,7 @@
   name: department-Specific
   description: department-Specific-description
   color: "#9FED58"
-  weight: 10
+  weight: -100 # Displays after all other departments, since that makes them obviously distinct in the lobby's jobs list
   ignoreForDepartmentFallback: true
   roles:
   - Reporter

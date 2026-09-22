@@ -16,6 +16,12 @@ public sealed partial class PlantHolderSystem : EntitySystem
 
     [Dependency] private EntityQuery<PlantComponent> _plantQuery;
 
+    public override void Initialize()
+    {
+        base.Initialize();
+        InitializeRelay();
+    }
+
     [SubscribeLocalEvent]
     private void OnCloning(Entity<PlantHolderComponent> ent, ref CloningEvent args)
     {
