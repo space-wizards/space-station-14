@@ -1,4 +1,4 @@
-﻿using Content.Shared.Actions.Events;
+using Content.Shared.Actions.Events;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 

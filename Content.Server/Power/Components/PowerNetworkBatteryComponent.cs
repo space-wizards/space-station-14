@@ -1,4 +1,4 @@
-﻿using Content.Server.Power.Pow3r;
+using Content.Server.Power.Pow3r;
 using Content.Shared.Guidebook;
 
 namespace Content.Server.Power.Components
