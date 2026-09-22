@@ -5,8 +5,8 @@ using Robust.Client.UserInterface.Controls;
 namespace Content.Client.UserInterface.Controls;
 
 /// <summary>
-/// Displays a single-select list of category buttons.
-/// Categories may use either text or an icon, with their action invoked when selected.
+/// Displays mutually exclusive category buttons using either text or an icon.
+/// Pressing a button invokes the corresponding category action.
 /// </summary>
 public sealed class CategorySelector : GridContainer
 {
@@ -14,7 +14,8 @@ public sealed class CategorySelector : GridContainer
     public int ButtonSize { get; set; }
 
     /// <summary>
-    /// Rebuilds the category buttons and marks <paramref name="selected"/> as pressed without invoking its action.
+    /// Rebuilds the buttons. Marks <paramref name="selected"/> as pressed when it is the same instance
+    /// as an entry in <paramref name="categories"/>, without invoking its action.
     /// </summary>
     public void SetCategories(IReadOnlyList<CategorySelectorEntry> categories, CategorySelectorEntry? selected)
     {
@@ -67,7 +68,7 @@ public sealed class CategorySelector : GridContainer
 }
 
 /// <summary>
-/// Describes a category shown by <see cref="CategorySelector"/>.
+/// Content and action for one category button.
 /// </summary>
 public sealed class CategorySelectorEntry(
     string name,

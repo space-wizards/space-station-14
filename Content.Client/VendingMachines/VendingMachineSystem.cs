@@ -18,6 +18,9 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
     [Dependency] private SharedPowerReceiverSystem _receiver = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
+    public bool IsUiEnabled(EntityUid uid) =>
+        TryComp<VendingMachineEjectComponent>(uid, out var eject) && !eject.Ejecting;
+
     public IReadOnlyList<VendingMachineInventoryCategory> GetInventoryCategories(EntityUid uid)
     {
         if (!TryComp<VendingMachineComponent>(uid, out var vending) ||
