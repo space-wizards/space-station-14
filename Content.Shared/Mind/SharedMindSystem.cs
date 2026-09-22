@@ -17,6 +17,7 @@ using Content.Shared.Objectives.Systems;
 using Content.Shared.Players;
 using Content.Shared.Speech;
 using Content.Shared.Whitelist;
+using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -35,6 +36,7 @@ public abstract partial class SharedMindSystem : EntitySystem
     [Dependency] private IDependencyCollection _dependency = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] protected ISharedPlayerManager PlayerMan = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private MetaDataSystem _metadata = default!;
     [Dependency] private MobStateSystem _mobState = default!;
@@ -141,6 +143,64 @@ public abstract partial class SharedMindSystem : EntitySystem
         mindId = null;
         mind = null;
         return false;
+    }
+
+    /// <summary>
+    /// Tries to get the session currently attached to this entity.
+    /// Works even if the mind is visiting somewhere else.
+    /// </summary>
+    /// <param name="entity">Entity.</param>
+    /// <param name="session">Session who currently owns this entity.</param>
+    /// <returns>True if a session was found!</returns>
+    public bool TryGetAttachedSession(Entity<MindContainerComponent?> entity, [NotNullWhen(true)] out ICommonSession? session)
+    {
+        return TryGetAttachedSession(entity, out _, out session);
+    }
+
+    /// <summary>
+    /// Tries to get the session currently attached to this entity.
+    /// Works even if the mind is visiting somewhere else.
+    /// </summary>
+    /// <param name="entity">Entity.</param>
+    /// <param name="mind">Mind Entity.</param>
+    /// <param name="session">Session who currently owns this entity.</param>
+    /// <returns>True if a session was found!</returns>
+    [PublicAPI]
+    public bool TryGetAttachedSession(Entity<MindContainerComponent?> entity, [NotNullWhen(true)] out Entity<MindComponent>? mind, [NotNullWhen(true)] out ICommonSession? session)
+    {
+        session = null;
+        mind = null;
+        if (!TryGetMind(entity, out var mindUid, out var mindComp, entity.Comp))
+            return false;
+
+        mind = (mindUid, mindComp);
+        return PlayerMan.TryGetSessionById(mind.Value.Comp.UserId, out session);
+    }
+
+    /// <summary>
+    /// Tries to get the original session which owned this mind.
+    /// </summary>
+    /// <param name="mind">Mind entity.</param>
+    /// <param name="session">Session who originally owned this mind.</param>
+    /// <returns>True if a session was found!</returns>
+    [PublicAPI]
+    public bool TryGetOriginalSessionByMind(Entity<MindComponent?> mind, [NotNullWhen(true)] out ICommonSession? session)
+    {
+        session = null;
+        return Resolve(mind, ref mind.Comp) && PlayerMan.TryGetSessionById(mind.Comp.OriginalOwnerUserId, out session);
+    }
+
+    /// <summary>
+    /// Tries to get the current session which owned this mind.
+    /// </summary>
+    /// <param name="mind">Mind entity.</param>
+    /// <param name="session">Session who currently owns this mind.</param>
+    /// <returns>True if a session was found!</returns>
+    [PublicAPI]
+    public bool TryGetSessionByMind(Entity<MindComponent?> mind, [NotNullWhen(true)] out ICommonSession? session)
+    {
+        session = null;
+        return Resolve(mind, ref mind.Comp) && PlayerMan.TryGetSessionById(mind.Comp.UserId, out session);
     }
 
     public bool TryGetMind(NetUserId user, [NotNullWhen(true)] out Entity<MindComponent>? mind)

@@ -25,9 +25,8 @@ public sealed partial class StationAiFixerConsoleSystem : SharedStationAiFixerCo
                 case StationAiFixerConsoleAction.Repair:
 
                     // Send message to disembodied player that they are being revived
-                    if (_mind.TryGetMind(ent.Comp.ActionTarget.Value, out _, out var mind) &&
-                        mind.IsVisitingEntity &&
-                        _player.TryGetSessionById(mind.UserId, out var session))
+                    if (_mind.TryGetAttachedSession(ent.Comp.ActionTarget.Value, out var mind, out var session) &&
+                        mind.Value.Comp.IsVisitingEntity)
                     {
                         _eui.OpenEui(new ReturnToBodyEui(mind, _mind, _player), session);
                         _popup.PopupEntity(Loc.GetString("station-ai-fixer-console-repair-finished"), ent);
