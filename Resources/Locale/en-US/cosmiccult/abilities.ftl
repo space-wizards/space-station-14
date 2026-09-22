@@ -23,6 +23,7 @@ cosmicability-shunt-conversion-fail-mindshield-wisp = Your influence isn't yet s
 cosmicability-shunt-conversion-fail-misc-body = Malign influence somehow fails to take hold of {CAPITALIZE(THE($target))}!
 cosmicability-shunt-conversion-fail-misc-wisp = Your influence somehow fails to take hold...
 
+
 ### DATASET-DRIVEN DIALOGUE
 
 cosmic-dialogue-nova-1 = ASTRAL NOVA.

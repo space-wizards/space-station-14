@@ -1,7 +1,4 @@
-using Content.Server.Antag;
-using Content.Server.Silicons.Laws;
 using Content.Shared.Antag;
-using Content.Shared.CosmicCult;
 using Content.Shared.CosmicCult.Components;
 using Content.Shared.CosmicCult.Components.Actions;
 using Content.Shared.Mind;
@@ -16,7 +13,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.CosmicCult.Abilities;
+namespace Content.Shared.CosmicCult.Abilities;
 
 public sealed partial class CosmicFragmentationSystem : EntitySystem
 {
@@ -27,7 +24,7 @@ public sealed partial class CosmicFragmentationSystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private SharedStationAiSystem _ai = default!;
-    [Dependency] private SiliconLawSystem _laws = default!;
+    [Dependency] private SharedSiliconLawSystem _laws = default!;
 
     private EntProtoId _indicatorEffect = "EffectCosmicBigWindup";
     private ProtoId<RadioChannelPrototype> _cosmicRadio = "CosmicRadio";

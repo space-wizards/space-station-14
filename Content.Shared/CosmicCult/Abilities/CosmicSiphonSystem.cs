@@ -1,5 +1,3 @@
-using Content.Server.GameTicking.Rules;
-using Content.Shared.CosmicCult;
 using Content.Shared.CosmicCult.Components.Actions;
 using Content.Shared.DoAfter;
 using Content.Shared.GameTicking.Rules;
@@ -9,7 +7,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Player;
 
-namespace Content.Server.CosmicCult.Abilities;
+namespace Content.Shared.CosmicCult.Abilities;
 
 public sealed partial class CosmicSiphonSystem : EntitySystem
 {

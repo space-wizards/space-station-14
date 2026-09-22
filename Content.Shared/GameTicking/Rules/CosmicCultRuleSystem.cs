@@ -351,7 +351,7 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         parallax.Parallax = "ParallaxMalignAlt";
         Dirty(mapData, parallax);
 
-        for (var i = 0; i < Convert.ToInt16(comp.TotalCrew / 3); i++) // spawn # stigma rifts equal to 33.37% of the playercount
+        for (var i = 0; i < (short) comp.TotalCrew / 3; i++) // spawn # stigma rifts equal to 33.37% of the playercount
         {
             SpawnStigma(comp.Station);
         }
@@ -384,7 +384,7 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         _chatSystem.DispatchStationAnnouncement(comp.StationGrid, Loc.GetString("cosmiccult-announce-tier2-warning"), null, false, null, Color.FromHex("#cae8e8"));
         _audio.PlayGlobal(_tier2Sound, Filter.Broadcast(), false, AudioParams.Default);
 
-        for (var i = 0; i < Convert.ToInt16(comp.TotalCrew / 6); i++) // spawn # malign rifts equal to 16.67% of the playercount
+        for (var i = 0; i < (short) comp.TotalCrew / 6; i++) // spawn # malign rifts equal to 16.67% of the playercount
         {
             SpawnRift(comp.Station);
         }

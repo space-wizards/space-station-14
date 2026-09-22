@@ -1,19 +1,13 @@
-using Content.Server.Polymorph.Systems;
-using Content.Server.Popups;
-using Content.Shared.CosmicCult;
 using Content.Shared.CosmicCult.Components;
 using Content.Shared.CosmicCult.Components.Actions;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
-using Content.Shared.IdentityManagement;
-using Content.Shared.Polymorph;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
 
-namespace Content.Server.CosmicCult.Abilities;
+namespace Content.Shared.CosmicCult.Abilities;
 
 public sealed partial class CosmicLapseSystem : EntitySystem
 {

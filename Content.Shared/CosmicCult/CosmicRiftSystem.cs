@@ -1,9 +1,4 @@
-using Content.Server.Actions;
-using Content.Server.Atmos.EntitySystems;
-using Content.Server.CosmicCult.Abilities;
-using Content.Server.CosmicCult.Components;
-using Content.Server.Popups;
-using Content.Shared.CosmicCult;
+using Content.Shared.Actions;
 using Content.Shared.CosmicCult.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
@@ -14,26 +9,26 @@ using Content.Shared.Station.Systems;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.CosmicCult;
+namespace Content.Shared.CosmicCult;
 
 public sealed partial class CosmicRiftSystem : EntitySystem
 {
-    [Dependency] private ActionsSystem _actions = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private StatusEffectsSystem _statusEffects = default!;
     [Dependency] private StationSystem _station = default!;
-    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public static readonly EntProtoId PressureImmunityEffect = "StatusEffectPressureImmunity";
     public static readonly EntProtoId MalignRiftEntity = "CosmicMalignRift";
 
     [SubscribeLocalEvent]
-    private void OnInteract(Entity<CosmicRiftComponent> uid, ref ActivateInWorldEvent args)
+    private void OnInteract(Entity<CosmicRiftComponent> ent, ref ActivateInWorldEvent args)
     {
-        if (!TryComp<CosmicCultistComponent>(args.User, out var cultist) || args.Handled )
+        if (!TryComp<CosmicCultistComponent>(args.User, out var cultist) || args.Handled)
             return;
 
-        if (uid.Comp.Occupied)
+        if (ent.Comp.Occupied)
         {
             _popup.PopupEntity(Loc.GetString("cosmiccult-rift-inuse"), args.User, args.User);
             return;
@@ -46,9 +41,9 @@ public sealed partial class CosmicRiftSystem : EntitySystem
         }
 
         args.Handled = true;
-        uid.Comp.Occupied = true;
+        ent.Comp.Occupied = true;
         _popup.PopupEntity(Loc.GetString("cosmiccult-rift-beginabsorb"), args.User, args.User);
-        var doargs = new DoAfterArgs(EntityManager, args.User, uid.Comp.AbsorbTime, new EventAbsorbRiftDoAfter(), args.User, uid)
+        var doargs = new DoAfterArgs(EntityManager, args.User, ent.Comp.AbsorbTime, new EventAbsorbRiftDoAfter(), args.User, ent)
         {
             MovementThreshold = 0.5f, DistanceThreshold = 1.5f, Hidden = true, BreakOnDamage = true, BreakOnHandChange = true, BreakOnMove = true,
         };
@@ -56,9 +51,9 @@ public sealed partial class CosmicRiftSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnAbsorbDoAfter(Entity<CosmicCultistComponent> uid, ref EventAbsorbRiftDoAfter args)
+    private void OnAbsorbDoAfter(Entity<CosmicCultistComponent> ent, ref EventAbsorbRiftDoAfter args)
     {
-        var comp = uid.Comp;
+        var comp = ent.Comp;
         if (args.Args.Target is not { } target || args.Cancelled || args.Handled)
         {
             if (TryComp<CosmicRiftComponent>(args.Args.Target, out var rift))
@@ -67,14 +62,14 @@ public sealed partial class CosmicRiftSystem : EntitySystem
         }
         args.Handled = true;
 
-        _actions.AddAction(uid, uid.Comp.CosmicFragmentationAction);
+        _actions.AddAction(ent, ent.Comp.CosmicFragmentationAction);
         Spawn(CosmicCultSystem.GenericVfx, Transform(target).Coordinates);
 
-        var ev = new CosmicCultistEmpowerChangedEvent(uid, true);
-        RaiseLocalEvent(uid, ref ev);
+        var ev = new CosmicCultistEmpowerChangedEvent(ent, true);
+        RaiseLocalEvent(ent, ref ev);
 
         comp.WasEmpowered = true;
-        _statusEffects.TrySetStatusEffectDuration(uid, PressureImmunityEffect);
+        _statusEffects.TrySetStatusEffectDuration(ent, PressureImmunityEffect);
         _popup.PopupCoordinates(Loc.GetString("cosmiccult-rift-absorb", ("NAME", Identity.Entity(args.Args.User, EntityManager))), Transform(args.Args.User).Coordinates, PopupType.MediumCaution);
         QueueDel(target);
     }

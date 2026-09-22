@@ -1,21 +1,13 @@
 using System.Collections.Immutable;
 using Content.Server.CosmicCult.Components;
-using Content.Server.GameTicking.Rules;
-using Content.Server.Popups;
-using Content.Shared.Changeling.Components;
-using Content.Shared.CosmicCult;
 using Content.Shared.CosmicCult.Components;
 using Content.Shared.CosmicCult.Components.Actions;
 using Content.Shared.GameTicking.Rules;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
 using Content.Shared.Mindshield.Components;
-using Content.Shared.Ninja.Components;
-using Content.Shared.NukeOps;
 using Content.Shared.Popups;
-using Content.Shared.Revolutionary.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
@@ -23,15 +15,15 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Server.CosmicCult.Abilities;
+namespace Content.Shared.CosmicCult.Abilities;
 
 public sealed partial class CosmicShuntSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private CosmicCultRuleSystem _cultRule = default!;
-    [Dependency] private PopupSystem _popup = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private CosmicCultSystem _cult = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private SharedStunSystem _stun = default!;

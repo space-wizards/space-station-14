@@ -1,26 +1,25 @@
 using System.Linq;
-using Content.Server.Flash;
-using Content.Server.Stunnable;
-using Content.Shared.CosmicCult;
 using Content.Shared.CosmicCult.Components.Actions;
 using Content.Shared.Effects;
+using Content.Shared.Flash;
 using Content.Shared.Interaction;
 using Content.Shared.Light.Components;
 using Content.Shared.Light.EntitySystems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Physics;
 using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Stunnable;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
-namespace Content.Server.CosmicCult.Abilities;
+namespace Content.Shared.CosmicCult.Abilities;
 
 public sealed partial class CosmicGlareSystem : EntitySystem
 {
     [Dependency] private EntityLookupSystem _lookup = default!;
-    [Dependency] private FlashSystem _flash = default!;
+    [Dependency] private SharedFlashSystem _flash = default!;
     [Dependency] private SharedPoweredLightSystem _poweredLight = default!;
-    [Dependency] private StunSystem _stun = default!;
+    [Dependency] private SharedStunSystem _stun = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedColorFlashEffectSystem _color = default!;
     [Dependency] private CosmicCultSystem _cult = default!;

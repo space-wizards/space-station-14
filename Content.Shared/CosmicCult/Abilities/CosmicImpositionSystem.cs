@@ -8,7 +8,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Spawners;
 using Robust.Shared.Timing;
 
-namespace Content.Server.CosmicCult.Abilities;
+namespace Content.Shared.CosmicCult.Abilities;
 
 public sealed partial class CosmicImpositionSystem : EntitySystem
 {
