@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.DisplacementMap;
 using Content.Shared.AttachedVisuals;
 using Content.Shared.Humanoid;
@@ -53,15 +54,13 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
         UpdateVisuals(ent);
     }
 
-    private void GetAttachedVisuals(Entity<AttachedVisualsComponent> ent, VisualAttachmentPrototype attachmentPrototype, string prefix, List<(EntityUid, string, HashSet<string> mapKeys, PrototypeLayerData)> layers)
+    private void GetAttachedVisuals(Entity<AttachedVisualsComponent> ent, VisualAttachmentPrototype attachmentPrototype, string prefix, List<AttachedLayer> layers)
     {
         if (!ent.Comp.AttachedVisuals.TryGetValue(attachmentPrototype, out var visuals))
             return;
 
         _genericVisualizerQuery.TryComp(ent, out var visualizer);
         _appearanceQuery.TryComp(ent, out var appearance);
-
-        var ev = new GetAttachedVisualsEvent(attachmentPrototype, prefix, layers);
 
         foreach (var protoLayer in visuals.Layers)
         {
@@ -84,10 +83,8 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
                 layer.MapKeys = null;
             }
 
-            ev.AddLayer(ent, keys, layer);
+            layers.Add(new AttachedLayer(ent, $"{prefix}-{layers.Count}", keys.ToArray(), layer));
         }
-
-        RaiseLocalEvent(ent, ref ev);
     }
 
     private void ApplyVisualizer(EntityUid uid,
@@ -139,11 +136,11 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
         if (TerminatingOrDeleted(ent) || !_spriteQuery.TryComp(ent, out var sprite))
             return;
 
-        foreach (var keys in ent.Comp.RevealedLayers.Values)
+        foreach (var attachedLayer in ent.Comp.RevealedLayers.Values)
         {
-            foreach (var key in keys)
+            foreach (var layer in attachedLayer)
             {
-                _sprite.RemoveLayer((ent.Owner, sprite), key);
+                _sprite.RemoveLayer((ent.Owner, sprite), layer.Key);
             }
         }
         ent.Comp.RevealedLayers.Clear();
@@ -151,7 +148,7 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
         ent.Comp.Attachments.Sort();
         foreach (var attachment in ent.Comp.Attachments)
         {
-            var results = new List<(EntityUid Origin, string Key, HashSet<string> mapKeys, PrototypeLayerData Data)>();
+            var results = new List<AttachedLayer>();
             GetAttachmentLayers(ent, attachment, results);
 
             // Select displacement maps
@@ -164,25 +161,31 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
                 displacementData = sexedDisplacementData;
             }
 
-            foreach (var (origin, key, mapKeys, data) in results)
+            foreach (var attachedLayer in results)
             {
-                var index = _sprite.LayerMapReserve((ent.Owner, sprite), key);
-                _sprite.LayerSetData((ent.Owner, sprite), index, data);
-                ent.Comp.RevealedLayers.GetOrNew(origin).Add(key);
+                var index = _sprite.LayerMapReserve((ent.Owner, sprite), attachedLayer.Key);
+                _sprite.LayerSetData((ent.Owner, sprite), index, attachedLayer.Data);
+                ent.Comp.RevealedLayers.GetOrNew(attachedLayer.Origin).Add(attachedLayer);
 
                 var addedLayerMap = new Dictionary<object, int>();
 
-                if (displacementData is not null && _displacement.TryAddDisplacement(displacementData, (ent, sprite), index, key, out var displacementKey))
-                    ent.Comp.RevealedLayers.GetOrNew(origin).Add(displacementKey);
+                if (displacementData is not null)
+                {
+                    _displacement.TryAddDisplacement(displacementData,
+                        (ent, sprite),
+                        index,
+                        attachedLayer.Key,
+                        out _);
+                }
 
-                foreach (var mapkey in mapKeys)
+                foreach (var mapkey in attachedLayer.MapKeys)
                 {
                     var obj = ParseKey(mapkey);
                     addedLayerMap[obj] = index;
                 }
 
                 var ev = new AttachedVisualsUpdatedEvent(ent, addedLayerMap);
-                RaiseLocalEvent(origin, ref ev);
+                RaiseLocalEvent(attachedLayer.Origin, ref ev);
             }
         }
     }
@@ -190,7 +193,7 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
     /// <summary>
     /// Gets the layers for a specific attachment on an entity
     /// </summary>
-    private void GetAttachmentLayers(Entity<AttachedVisualsComponent> ent, AttachmentDefinition attachment, List<(EntityUid, string, HashSet<string> mapKeys, PrototypeLayerData)> results, string keyPrefix = "attached")
+    private void GetAttachmentLayers(Entity<AttachedVisualsComponent> ent, AttachmentDefinition attachment, List<AttachedLayer> results, string keyPrefix = "attached")
     {
         if (!ProtoMan.Resolve(attachment.Attachment, out var attachmentPrototype))
             return;
@@ -257,12 +260,13 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
             {
                 foreach (var origin in origins)
                 {
-                    if (!comp.RevealedLayers.Remove(origin, out var keys))
+                    if (!comp.RevealedLayers.Remove(origin, out var attachedLayers))
                         continue;
 
-                    foreach (var key in keys)
+                    foreach (var layer in attachedLayers)
                     {
-                        _sprite.RemoveLayer((uid, sprite), key);
+                        _displacement.EnsureDisplacementIsNotOnSprite((uid, sprite), layer.Key);
+                        _sprite.RemoveLayer((uid, sprite), layer.Key);
                     }
                 }
             }

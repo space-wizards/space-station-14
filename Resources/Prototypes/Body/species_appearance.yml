@@ -118,24 +118,3 @@
       - attachment: EquippedOuterClothing
         container: outerClothing
         order: 4
-
-- type: visualAttachment
-  id: InhandRight
-
-- type: visualAttachment
-  id: InhandLeft
-
-- type: visualAttachment
-  id: EquippedShoes
-
-- type: visualAttachment
-  id: EquippedBoots
-
-- type: visualAttachment
-  id: EquippedJumpsuit
-
-- type: visualAttachment
-  id: EquippedOuterClothing
-
-- type: visualAttachment
-  id: EquippedBelt

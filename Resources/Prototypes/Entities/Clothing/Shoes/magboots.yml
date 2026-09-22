@@ -53,7 +53,7 @@
     sprite: Clothing/Shoes/Boots/magboots-advanced.rsi
     state: icon
   - type: Clothing
-    #sprite: Clothing/Shoes/Boots/magboots-advanced.rsi
+    sprite: Clothing/Shoes/Boots/magboots-advanced.rsi
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 1
@@ -65,44 +65,6 @@
     price: 750
   - type: StealTarget
     stealGroup: ClothingShoesBootsMagAdv
-  - type: AttachedVisuals
-    sprite: Clothing/Shoes/Boots/magboots-advanced.rsi
-    attachedVisuals:
-      EquippedBoots:
-        layers:
-        - state: equipped-FEET
-          color: "#00FF00"
-
-- type: entity
-  parent: [ClothingShoesBootsMagBase, BaseGrandTheftContraband]
-  id: ClothingShoesBootsMagAdvTest
-  name: advanced magboots
-  description: State-of-the-art magnetic boots that do not slow down their wearer.
-  components:
-  - type: Sprite
-    sprite: Clothing/Shoes/Boots/magboots-advanced.rsi
-    state: icon
-  - type: Clothing
-    #sprite: Clothing/Shoes/Boots/magboots-advanced.rsi#
-  - type: ClothingSpeedModifier
-    walkModifier: 1
-    sprintModifier: 1
-  - type: Tag
-    tags:
-    - WhitelistChameleon
-    - HighRiskItem
-  - type: StaticPrice
-    price: 750
-  - type: StealTarget
-    stealGroup: ClothingShoesBootsMagAdv
-  - type: AttachedVisuals
-    sprite: Clothing/Shoes/Boots/magboots-advanced.rsi
-    attachedVisuals:
-      EquippedShoes:
-        layers:
-        - state: equipped-FEET
-          color: "#0000FF"
-
 
 - type: entity
   parent: [ClothingShoesBootsMagBase]

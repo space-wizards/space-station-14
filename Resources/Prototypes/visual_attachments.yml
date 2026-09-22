@@ -1,0 +1,32 @@
+- type: visualAttachment
+  id: InhandRight
+
+- type: visualAttachment
+  id: InhandLeft
+
+- type: visualAttachment
+  id: EquippedShoes
+
+- type: visualAttachment
+  id: EquippedBoots
+
+- type: visualAttachment
+  id: EquippedJumpsuit
+
+- type: visualAttachment
+  id: EquippedOuterClothing
+
+- type: visualAttachment
+  id: EquippedBelt
+
+- type: visualAttachment
+  id: InBelt
+
+- type: visualAttachment
+  id: InEquippedBelt
+
+- type: visualAttachment
+  id: InHandRightInBelt
+
+- type: visualAttachment
+  id: InHandLeftInBelt

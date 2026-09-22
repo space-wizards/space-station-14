@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.DisplacementMap;
 using Robust.Shared.Prototypes;
 
@@ -28,8 +27,11 @@ public sealed partial class AttachedVisualsComponent : Component
     [DataField]
     public Dictionary<ProtoId<VisualAttachmentPrototype>, AttachedVisualLayers> AttachedVisuals = new();
 
+    /// <summary>
+    /// Entity origins, and the layers they are showing on this entity.
+    /// </summary>
     [ViewVariables]
-    public readonly Dictionary<EntityUid, List<string>> RevealedLayers = new();
+    public readonly Dictionary<EntityUid, List<AttachedLayer>> RevealedLayers = new();
 }
 
 [DataDefinition]
@@ -42,7 +44,7 @@ public sealed partial class AttachedVisualLayers
     public List<PrototypeLayerData> Layers = new();
 
     /// <summary>
-    /// List of extra attachments slots that this slot can provide
+    /// List of extra sub-attachment slots that this slot can provide
     /// </summary>
     [DataField]
     public List<AttachmentDefinition> Attachments = new();
@@ -104,56 +106,42 @@ public sealed partial class VisualAttachmentPrototype : IPrototype
     public string ID { get; private set; } = string.Empty;
 }
 
-[ByRefEvent]
-public record struct GetAttachedVisualsEvent
-{
-    private readonly string _childPrefix;
 
-    public readonly VisualAttachmentPrototype AttachmentName;
-
-    /// Kill this thing
-    public readonly List<(EntityUid, string, HashSet<string>, PrototypeLayerData)> Layers;
-
-    public GetAttachedVisualsEvent(VisualAttachmentPrototype attachmentName, string childPrefix, List<(EntityUid, string, HashSet<string>, PrototypeLayerData)> layers)
-    {
-        _childPrefix = childPrefix;
-        Layers = layers;
-        AttachmentName = attachmentName;
-    }
-
-    public void AddLayer(EntityUid owner, HashSet<string> mapKeys, PrototypeLayerData layer)
-    {
-        Layers.Add((owner, $"{_childPrefix}-{Layers.Count}", mapKeys, layer));
-    }
-}
-
-[ByRefEvent]
-public record struct AttachedVisualsUpdatedEvent
+public readonly record struct AttachedLayer
 {
     /// <summary>
-    /// Entity our sprite layers were drawn onto
+    /// The entity this layer is being provided by
     /// </summary>
-    public EntityUid AttachedTo;
+    public readonly EntityUid Origin;
 
     /// <summary>
-    /// List of layer indexes
+    /// The layer key
     /// </summary>
-    public Dictionary<object, int> LayerMap;
+    public readonly string Key;
 
-    public AttachedVisualsUpdatedEvent(EntityUid attachedTo, Dictionary<object, int> layerMap)
+    /// <summary>
+    /// Appearance MapKeys this layer has
+    /// </summary>
+    public readonly string[] MapKeys;
+
+    /// <summary>
+    /// The layer data itself
+    /// </summary>
+    public readonly PrototypeLayerData Data;
+
+    public AttachedLayer(EntityUid origin, string key, string[] mapKeys, PrototypeLayerData data)
     {
-        AttachedTo = attachedTo;
-        LayerMap = layerMap;
+        Origin = origin;
+        Key = key;
+        MapKeys = mapKeys;
+        Data = data;
     }
 
-    public bool TryGetLayerIndex(Enum key, [NotNullWhen(true)] out int? index)
+    public void Deconstruct(out EntityUid origin, out string key, out string[] mapKeys, out PrototypeLayerData prototypeLayerData)
     {
-        index = null;
-
-        if (!LayerMap.TryGetValue(key, out var layerIndex))
-            return false;
-
-        index = layerIndex;
-        return true;
+        origin = Origin;
+        key = Key;
+        mapKeys = MapKeys;
+        prototypeLayerData = Data;
     }
 }

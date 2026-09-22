@@ -49,20 +49,12 @@
         color: "#b3b3b3"
       - state: trinkets-inhand-right
   - type: Clothing
-#    sprite: Clothing/Uniforms/Jumpsuits/Color/color.rsi
-#    clothingVisuals:
-#      jumpsuit:
-#      - state: equipped-INNERCLOTHING
-#        color: "#b3b3b3"
-#      - state: trinkets-equipped-INNERCLOTHING
-  - type: AttachedVisuals
     sprite: Clothing/Uniforms/Jumpsuits/Color/color.rsi
-    attachedVisuals:
-      EquippedJumpsuit:
-        layers:
-        - state: equipped-INNERCLOTHING
-          color: "#b3b3b3"
-        - state: trinkets-equipped-INNERCLOTHING
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#b3b3b3"
+      - state: trinkets-equipped-INNERCLOTHING
 
 # Black Jumpsuit
 - type: entity
