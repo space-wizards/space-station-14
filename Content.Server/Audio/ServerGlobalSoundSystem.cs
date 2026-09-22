@@ -1,17 +1,13 @@
-using Content.Server.Station.Systems;
 using Content.Shared.Audio;
 using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Console;
 using Robust.Shared.Player;
 
 namespace Content.Server.Audio;
 
-public sealed partial class ServerGlobalSoundSystem : SharedGlobalSoundSystem
+public sealed partial class ServerGlobalSoundSystem : GlobalSoundSystem
 {
     [Dependency] private IConsoleHost _conHost = default!;
-    [Dependency] private ServerStationSystem _stationSystem = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
 
     public override void Shutdown()
     {
@@ -23,44 +19,5 @@ public sealed partial class ServerGlobalSoundSystem : SharedGlobalSoundSystem
     {
         var msg = new AdminSoundEvent(specifier, audioParams);
         RaiseNetworkEvent(msg, playerFilter, recordReplay: replay);
-    }
-
-    private Filter GetStationAndPvs(EntityUid source)
-    {
-        var stationFilter = _stationSystem.GetInOwningStation(source);
-        stationFilter.AddPlayersByPvs(source, entityManager: EntityManager);
-        return stationFilter;
-    }
-
-    public void PlayGlobalOnStation(EntityUid source, ResolvedSoundSpecifier specifier, AudioParams? audioParams = null)
-    {
-        var msg = new GameGlobalSoundEvent(specifier, audioParams);
-        var filter = GetStationAndPvs(source);
-        RaiseNetworkEvent(msg, filter);
-    }
-
-    public void StopStationEventMusic(EntityUid source, StationEventMusicType type)
-    {
-        // TODO REPLAYS
-        // these start & stop events are gonna be a PITA
-        // theres probably some nice way of handling them. Maybe it just needs dedicated replay data (in which case these events should NOT get recorded).
-
-        var msg = new StopStationEventMusic(type);
-        var filter = GetStationAndPvs(source);
-        RaiseNetworkEvent(msg, filter);
-    }
-
-    public void DispatchStationEventMusic(EntityUid source, SoundSpecifier sound, StationEventMusicType type)
-    {
-        DispatchStationEventMusic(source, _audio.ResolveSound(sound), type);
-    }
-
-    public void DispatchStationEventMusic(EntityUid source, ResolvedSoundSpecifier specifier, StationEventMusicType type)
-    {
-        var audio = AudioParams.Default.AddVolume(-8);
-        var msg = new StationEventMusicEvent(specifier, type, audio);
-
-        var filter = GetStationAndPvs(source);
-        RaiseNetworkEvent(msg, filter);
     }
 }

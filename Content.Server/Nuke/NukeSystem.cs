@@ -1,4 +1,3 @@
-using Content.Server.Audio;
 using Content.Server.Chat.Systems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Pinpointer;
@@ -35,7 +34,7 @@ public sealed partial class NukeSystem : EntitySystem
     [Dependency] private NavMapSystem _navMap = default!;
     [Dependency] private PointLightSystem _pointLight = default!;
     [Dependency] private PopupSystem _popups = default!;
-    [Dependency] private ServerGlobalSoundSystem _sound = default!;
+    [Dependency] private GlobalSoundSystem _sound = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
