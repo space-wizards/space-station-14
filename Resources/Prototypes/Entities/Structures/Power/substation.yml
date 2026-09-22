@@ -137,8 +137,6 @@
   categories: [ HideSpawnMenu ]
   name: wallmount substation
   description: A substation designed for compact shuttles and spaces.
-  placement:
-    mode: SnapgridCenter
   components:
   - type: AmbientSound
     range: 2
@@ -168,8 +166,6 @@
   - type: PowerMonitoringDevice
     sprite: Structures/Power/substation.rsi
     state: substation_wall_static
-  - type: Damageable
-    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:
