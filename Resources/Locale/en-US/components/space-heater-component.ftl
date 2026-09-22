@@ -1,4 +1,4 @@
-﻿comp-space-heater-ui-title = Temperature Control Unit
+comp-space-heater-ui-title = Temperature Control Unit
 comp-space-heater-ui-thermostat = Thermostat:
 comp-space-heater-ui-mode = Mode
 comp-space-heater-ui-increase-temperature-range = +

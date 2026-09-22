@@ -74,6 +74,8 @@
     actions:
     - ActionChangelingStasisWeak
   - type: ChangelingSlug
+  - type: DestructionResistance
+  - type: ZombieImmune
   - type: Puller
     needsHands: false
   - type: Tag # Removes DoorBumpOpener

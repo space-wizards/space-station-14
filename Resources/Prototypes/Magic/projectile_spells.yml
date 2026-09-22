@@ -22,7 +22,7 @@
     event: !type:ProjectileSpellEvent
       prototype: ProjectileFireball
   - type: SpeakOnAction
-    sentence: action-speech-spell-fireball
+    dialogueDataset: DatasetActionFireballDialogue
   - type: ActionUpgrade
     effectedLevels:
       2: ActionFireballII
