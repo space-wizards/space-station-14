@@ -99,7 +99,14 @@
   - type: Sprite
     sprite: Clothing/OuterClothing/Vests/detvest.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Vests/detvest.rsi
+    #sprite: Clothing/OuterClothing/Vests/detvest.rsi
+  - type: AttachedVisuals
+    sprite: Clothing/OuterClothing/Hardsuits/engineering.rsi
+    attachedVisuals:
+      EquippedOuterClothing:
+        layers:
+        - state: equipped-OUTERCLOTHING
+          color: "#FF0000"
 
 - type: entity
   parent: [ ClothingOuterBaseMedium, AllowSuitStorageClothing ]
