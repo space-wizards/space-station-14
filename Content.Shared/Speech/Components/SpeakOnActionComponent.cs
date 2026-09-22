@@ -22,11 +22,11 @@ public sealed partial class SpeakOnActionComponent : Component
     /// A dataset of possible things the user could speak. If specified, the system will use this instead of the single LocId sentence.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public ProtoId<LocalizedDatasetPrototype>? Sentences;
+    public ProtoId<LocalizedDatasetPrototype>? DialogueDataset;
 
     /// <summary>
-    /// The probability of the user speaking when
+    /// The probability of the user speaking when using this action. If less than 1, the user is not guaranteed to speak when using the action.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float? SpeakChance;
+    public float SpeakChance = 1f;
 }

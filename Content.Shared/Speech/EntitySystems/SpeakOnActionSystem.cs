@@ -26,10 +26,10 @@ public sealed partial class SpeakOnActionSystem : EntitySystem
         if (!HasComp<SpeechComponent>(user) || !_actionBlocker.CanSpeak(user))
             return;
 
-        if (ent.Comp.SpeakChance != null && !random.Prob(ent.Comp.SpeakChance.Value))
+        if (!random.Prob(ent.Comp.SpeakChance))
             return;
 
-        var randomSentence = GetDialogue(ent.Comp.Sentences, random);
+        var randomSentence = GetDialogue(ent.Comp.DialogueDataset, random);
 
         if (!string.IsNullOrWhiteSpace(randomSentence))
             _chat.TrySendInGameICMessage(user, Loc.GetString(randomSentence), InGameICChatType.Speak, false);
