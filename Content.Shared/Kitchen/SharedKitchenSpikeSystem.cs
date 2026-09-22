@@ -151,7 +151,7 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
 
         if (butcherable.SpawnedEntities.Count == 0)
         {
-            _popupSystem.PopupClient(Loc.GetString("comp-kitchen-spike-butcher-empty", ("victim", Identity.Entity(victim.Value, EntityManager))), ent, args.User, PopupType.MediumCaution);
+            _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-butcher-empty", ("victim", Identity.Entity(victim.Value, EntityManager))), ent, args.User, PopupType.MediumCaution);
             return;
         }
 

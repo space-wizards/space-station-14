@@ -108,7 +108,7 @@ public abstract partial class SharedChameleonProjectorSystem : EntitySystem
 
     private void OnInteract(Entity<ChameleonProjectorComponent> ent, ref AfterInteractEvent args)
     {
-        if (args.Handled || !args.CanReach || args.Target is not {} target)
+        if (args.Handled || !args.CanReach || args.Target is not { } target)
             return;
 
         args.Handled = true;
@@ -169,18 +169,18 @@ public abstract partial class SharedChameleonProjectorSystem : EntitySystem
 
     private void OnToggleNoRot(Entity<ChameleonProjectorComponent> ent, ref DisguiseToggleNoRotEvent args)
     {
-        if (ent.Comp.Disguised is not {} uid)
+        if (ent.Comp.Disguised is not { } uid)
             return;
 
         var xform = Transform(uid);
         _xform.SetLocalRotationNoLerp(uid, 0, xform);
-        xform.NoLocalRotation = !xform.NoLocalRotation;
+        _xform.SetNoLocalRotation(uid, !xform.NoLocalRotation, xform);
         args.Handled = true;
     }
 
     private void OnToggleAnchored(Entity<ChameleonProjectorComponent> ent, ref DisguiseToggleAnchoredEvent args)
     {
-        if (ent.Comp.Disguised is not {} uid)
+        if (ent.Comp.Disguised is not { } uid)
             return;
 
         var xform = Transform(uid);
@@ -298,7 +298,7 @@ public abstract partial class SharedChameleonProjectorSystem : EntitySystem
             return;
 
         var xform = Transform(ent.Comp.Disguised.Value);
-        xform.NoLocalRotation = false;
+        _xform.SetNoLocalRotation(ent.Owner, false, xform);
         _xform.Unanchor(disguised, xform);
 
         ent.Comp.Disguised = null;

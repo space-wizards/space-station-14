@@ -20,7 +20,6 @@ namespace Content.Shared.Decals
         {
             base.Initialize();
 
-            SubscribeLocalEvent<DecalGridComponent, ComponentGetState>(OnGetState);
             SubscribeLocalEvent<DecalChunkComponent, ComponentStartup>(OnChunkStartup);
             SubscribeAllEvent<RequestDecalPlacementEvent>(OnDecalPlacementRequest);
             SubscribeAllEvent<RequestDecalRemovalEvent>(OnDecalRemovalRequest);
@@ -35,6 +34,8 @@ namespace Content.Shared.Decals
             RebuildFreeDecalIds(ent.Comp);
         }
 
+        [SubscribeLocalEvent]
+        [Obsolete("Uses obsolete DecalGridComponent.")]
         private void OnGetState(EntityUid uid, DecalGridComponent component, ref ComponentGetState args)
         {
             if (PvsEnabled && !args.ReplayState)

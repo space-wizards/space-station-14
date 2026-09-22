@@ -589,13 +589,15 @@ public abstract partial class SharedActionsSystem : EntitySystem
         ev.Action = action;
 
         // TODO: This is where we'd add support for event lists
-        if (!action.Comp.RaiseOnUser && action.Comp.Container is {} container && !_mindQuery.HasComp(container))
+        if (!action.Comp.RaiseOnUser && action.Comp.Container is { } container && !_mindQuery.HasComp(container))
             target = container;
 
+#pragma warning disable CS0618 // Enabling RaiseOnAction compatibility behaviour.
         if (action.Comp.RaiseOnAction)
             target = action;
+#pragma warning restore CS0618
 
-        RaiseLocalEvent(target, (object) ev, broadcast: true);
+        RaiseLocalEvent(target, (object)ev, broadcast: true);
         handled = ev.Handled;
 
         if (!handled)
