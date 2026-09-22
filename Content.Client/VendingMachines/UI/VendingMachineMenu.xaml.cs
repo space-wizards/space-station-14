@@ -199,12 +199,11 @@ public sealed partial class VendingMachineMenu : FancyWindow
 
         if (category == null)
         {
-            button.AddChild(new Label
+            button.AddChild(new TextureRect
             {
-                Text = name,
-                HorizontalAlignment = HAlignment.Center,
-                VerticalAlignment = VAlignment.Center,
-                StyleClasses = { StyleClass.LabelHeading }
+                TexturePath = "/Textures/Interface/grid.svg.96dpi.png",
+                Stretch = TextureRect.StretchMode.KeepAspectCentered,
+                SetSize = new Vector2(32, 32)
             });
         }
 
