@@ -16,6 +16,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Utility;
 using System.Collections.Immutable;
 using System.Linq;
+using Content.Server.CosmicCult.Components;
 using Content.Shared.Actions;
 using Content.Shared.Antag;
 using Content.Shared.Audio;
@@ -45,7 +46,7 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
     [Dependency] private CosmicBreachSystem _breach = default!;
     [Dependency] private CosmicCultSystem _cosmicCult = default!;
     [Dependency] private CosmicShiftSystem _cultShift = default!;
-    [Dependency] private EuiManager _euiMan = default!;
+    // [Dependency] private EuiManager _euiMan = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private IConfigurationManager _config = default!;
     [Dependency] private IGameTiming _timing = default!;
@@ -54,8 +55,8 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedNavMapSystem _navMap = default!;
-    [Dependency] private RoundEndSystem _roundEnd = default!;
-    [Dependency] private ServerGlobalSoundSystem _sound = default!;
+    // [Dependency] private RoundEndSystem _roundEnd = default!;
+    // [Dependency] private ServerGlobalSoundSystem _sound = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
@@ -490,12 +491,12 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         {
             ent.Comp.PersonalProgress -= progressTarget;
             ent.Comp.MonumentVisits++;
-            _euiMan.OpenEui(new CosmicInfluenceEui(), session);
+            // _euiMan.OpenEui(new CosmicInfluenceEui(), session); // TODO: COSMIC CULT - EUI
             _audio.PlayEntity(ent.Comp.AbilityGainSfx, ent, ent);
         }
     }
 
-    public void AdjustCultObjectiveConversion(int value)
+    public void AdjustCultObjectiveConversion(int value) // TODO: COSMIC CULT - OBJECTIVES
     {
         // var query = EntityQueryEnumerator<CosmicConversionGoalComponent, StellarNumericGoalComponent>();
         // while (query.MoveNext(out var uid, out _, out var numeric))
@@ -504,7 +505,7 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         // }
     }
 
-    public void AdjustCultObjectiveFinality(int value)
+    public void AdjustCultObjectiveFinality(int value) // TODO: COSMIC CULT - OBJECTIVES
     {
         // var query = EntityQueryEnumerator<CosmicFinalityGoalComponent, StellarNumericGoalComponent>();
         // while (query.MoveNext(out var uid, out _, out var numeric))
@@ -531,8 +532,8 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         radio.Channels.Add("CosmicRadio");
         transmitter.Channels.Add("CosmicRadio");
 
-        if (_playerMan.TryGetSessionById(mind.UserId, out var session))
-            _euiMan.OpenEui(new CosmicRoundStartEui(), session);
+        // if (_playerMan.TryGetSessionById(mind.UserId, out var session))
+        //     _euiMan.OpenEui(new CosmicRoundStartEui(), session); TODO: COSMIC CULT - EUI
 
         rule.Comp.TotalCult++;
         rule.Comp.Cultists.Add(uid);
@@ -590,8 +591,8 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         radio.Channels = ["CosmicRadio"];
         transmitter.Channels = ["CosmicRadio"];
 
-        // _goals.ObserveContainer(mindId, cult.Comp.GoalsContainer!.Value);
-        _euiMan.OpenEui(new CosmicConvertedEui(), session);
+        // _goals.ObserveContainer(mindId, cult.Comp.GoalsContainer!.Value); TODO: COSMIC CULT - OBJECTIVES
+        // _euiMan.OpenEui(new CosmicConvertedEui(), session); TODO: COSMIC CULT - EUI
         cult.Comp.TotalCult++;
         cult.Comp.Cultists.Add(uid);
 
