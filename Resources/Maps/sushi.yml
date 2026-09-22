@@ -108811,8 +108811,6 @@ entities:
       deviceLists:
       - 11477
       - 80
-      configurators:
-      - invalid
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 13744
@@ -110811,8 +110809,6 @@ entities:
       deviceLists:
       - 11477
       - 80
-      configurators:
-      - invalid
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 13754
