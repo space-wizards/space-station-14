@@ -2,7 +2,7 @@
   parent: BaseAction
   id: ActionRetractableItemArmblade
   name: Armblade
-  description: Shed your flesh and reform it into a fleshy blade. Can be toggled when unconscious.
+  description: Shed your flesh and reform it into a fleshy blade. Can be toggled.
   components:
   - type: Action
     useDelay: 2
