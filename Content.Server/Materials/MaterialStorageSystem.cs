@@ -126,7 +126,7 @@ public sealed partial class MaterialStorageSystem : SharedMaterialStorageSystem
         {
             foreach (var stack in allSpawned)
             {
-                _stackSystem.TryMergeToContacts(stack);
+                _sharedStackSystem.TryMergeToContacts(stack);
             }
         }
 

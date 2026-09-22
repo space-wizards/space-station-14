@@ -23,7 +23,7 @@ public abstract partial class SharedMaterialStorageSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private SharedStackSystem _sharedStackSystem = default!;
+    [Dependency] protected SharedStackSystem _sharedStackSystem = default!;
 
     /// <summary>
     /// Default volume for a sheet if the material's entity prototype has no material composition.
