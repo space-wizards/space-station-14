@@ -11,9 +11,9 @@
     bodyType: Dynamic
   - type: Sprite
     noRot: true
-    sprite: Mobs/Aliens/flesh.rsi
+    sprite: Structures/Changeling/cocoon.rsi
     layers:
-    - state: golem
+    - state: cocoon
   - type: Clickable
   - type: DamageOnHighSpeedImpact
     damage:

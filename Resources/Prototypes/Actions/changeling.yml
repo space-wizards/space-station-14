@@ -477,7 +477,7 @@
   - type: Sprite
     sprite: Interface/Actions/changeling2.rsi
     layers:
-    - state: blind_sting
+    - state: fleshtomb
   - type: TargetAction
     interactOnMiss: false
   - type: ActionRequirements
