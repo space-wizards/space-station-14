@@ -86,22 +86,14 @@ public sealed partial class VendingMachineMenu : FancyWindow
     {
         _listItems.Clear();
 
-        if (_cachedInventory.Count == 0 && VendingContents.Visible)
+        var hasInventory = _cachedInventory.Count > 0;
+        SearchBar.Visible = hasInventory;
+        VendingContents.Visible = hasInventory;
+        OutOfStockLabel.Visible = !hasInventory;
+
+        if (!hasInventory)
         {
-            SearchBar.Visible = false;
-            VendingContents.Visible = false;
-
-            var outOfStockLabel = new Label
-            {
-                Text = Loc.GetString("vending-machine-component-try-eject-out-of-stock"),
-                Margin = new Thickness(4, 4),
-                HorizontalExpand = true,
-                VerticalAlignment = VAlignment.Stretch,
-                HorizontalAlignment = HAlignment.Center
-            };
-
-            MainContainer.AddChild(outOfStockLabel);
-
+            VendingContents.PopulateList([]);
             return;
         }
 
@@ -142,10 +134,12 @@ public sealed partial class VendingMachineMenu : FancyWindow
             }
         }
 
-        CategoryPanel.Visible = visibleCategories.Count > 1;
+        var showCategories = visibleCategories.Count > 1;
+        CategoryPanel.Visible = showCategories;
+        CategorySeparator.Visible = showCategories;
         CategoryButtons.RemoveAllChildren();
 
-        if (!CategoryPanel.Visible)
+        if (!showCategories)
         {
             _selectedCategory = null;
             return;
