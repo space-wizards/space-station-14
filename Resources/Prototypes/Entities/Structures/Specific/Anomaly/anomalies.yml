@@ -39,6 +39,7 @@
   - type: Clickable
   - type: Appearance
   - type: AnimationPlayer
+  - type: Damageable
   - type: GuideHelp
     guides:
     - AnomalousResearch
@@ -468,56 +469,6 @@
       - MobSpawnCrabUranium
 
 - type: entity
-  id: AnomalyRockBananium
-  parent: AnomalyRockBase
-  suffix: Rock, Bananium
-  components:
-  - type: Sprite
-    color: "#ddde40"
-  - type: PointLight
-    radius: 2.0
-    energy: 7.5
-    color: "#ddde40"
-  - type: EntitySpawnAnomaly
-    entries:
-    - settings:
-        spawnOnPulse: true
-        minAmount: 8
-        maxAmount: 15
-        minRange: 4.5
-        maxRange: 7.5
-      spawns:
-      - WallSpawnAsteroid
-      - WallSpawnAsteroid
-      - WallSpawnAsteroidBananium
-      - WallSpawnAsteroidBananiumCrab
-    - settings:
-        spawnOnPulse: true
-        maxAmount: 3
-        minRange: 2.5
-        maxRange: 4.5
-      spawns:
-      - CrystalYellow
-    - settings:
-        spawnOnSuperCritical: true
-        minAmount: 30
-        maxAmount: 40
-        minRange: 5
-        maxRange: 15
-      spawns:
-      - CrystalYellow
-      - WallSpawnAsteroid
-      - WallSpawnAsteroid
-      - WallSpawnAsteroidBananiumCrab
-    - settings:
-        spawnOnSuperCritical: true
-        minAmount: 3
-        maxAmount: 6
-        maxRange: 5
-      spawns:
-      - MobSpawnCrabBananium
-
-- type: entity
   id: AnomalyRockQuartz
   parent: AnomalyRockBase
   suffix: Rock, Quartz
@@ -849,17 +800,17 @@
     damageContainer: Biological
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 1
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:SpawnEntitiesBehavior
-            spawn:
-              EffectAnomalyFloraBulb:
-                min: 1
-                max: 1
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          EffectAnomalyFloraBulb:
+            min: 1
+            max: 1
   - type: PointLight
     radius: 2.0
     energy: 4.5

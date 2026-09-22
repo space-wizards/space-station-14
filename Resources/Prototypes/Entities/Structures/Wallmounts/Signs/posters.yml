@@ -1,34 +1,16 @@
 - type: entity
   abstract: true
-  parent: BaseSign
+  parent: BaseSignWeak
   id: PosterBase
   components:
   - type: Sprite
     sprite: Structures/Wallmounts/posters.rsi
-  - type: Damageable
-    damageModifierSet: Card
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/poster_broken.ogg
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 15
+        damage: 5
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/poster_broken.ogg
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
           PosterBroken:
@@ -40,7 +22,7 @@
     node: start
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignWeak
   id: PosterBroken
   name: broken poster
   description: "You can't make out anything from the poster's original print. It's ruined."
@@ -49,19 +31,6 @@
     drawdepth: WallTops
     sprite: Structures/Wallmounts/posters.rsi
     state: poster_broken
-  - type: Damageable
-    damageModifierSet: Card
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 5
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/poster_broken.ogg
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Construction
     graph: PosterGraph
     node: tornPoster

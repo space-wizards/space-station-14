@@ -1,12 +1,9 @@
 using System.Numerics;
 using Content.Shared.Conveyor;
 using Content.Shared.Gravity;
-using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Stacks;
-using Robust.Shared.Collections;
-using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
@@ -18,7 +15,6 @@ namespace Content.Shared.Physics.Controllers;
 
 public abstract partial class SharedConveyorController : VirtualController
 {
-    [Dependency] protected IMapManager MapManager = default!;
     [Dependency] private IParallelManager _parallel = default!;
     [Dependency] private CollisionWakeSystem _wake = default!;
     [Dependency] protected EntityLookupSystem Lookup = default!;

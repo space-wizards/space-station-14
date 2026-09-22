@@ -1,4 +1,4 @@
-﻿using Content.Server.GameTicking;
+using Content.Server.GameTicking;
 using Content.Shared.FeedbackSystem;
 using Content.Shared.GameTicking;
 using Robust.Shared.Prototypes;
@@ -8,8 +8,7 @@ namespace Content.Server.FeedbackSystem;
 public sealed partial class FeedbackSystem : EntitySystem
 {
     [Dependency] private ServerFeedbackManager _feedbackManager = null!;
-    [Dependency] private GameTicker _gameTicker = null!;
-    [Dependency] private IPrototypeManager _prototypeManager = null!;
+    [Dependency] private ServerGameTicker _gameTicker = null!;
 
     public override void Initialize()
     {
@@ -24,7 +23,7 @@ public sealed partial class FeedbackSystem : EntitySystem
 
         foreach (var feedback in _feedbackManager.GetOriginFeedbackPrototypes(true, true))
         {
-            if (_gameTicker.IsGameRuleAdded(_prototypeManager.Index(feedback).RuleWhitelist))
+            if (_gameTicker.IsGameRuleAdded(ProtoMan.Index(feedback).RuleWhitelist))
                 validPopups.Add(feedback);
             else
                 notValidPopups.Add(feedback);

@@ -1,47 +1,47 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/tgstation/tgstation/tree/dfb73d28e68aa56c34c7c539448f713b78b6d4d5 and modified.",
+    "copyright": "By rye-rice (GitHub) and 20nypercent, modified by AftrLite (GitHub)",
+    "source": "https://github.com/rye-rice/Shiptest/blob/30760c66503e00e13c20c6cc714e9c7df1a52565/icons/turf/walls/plastitanium_wall.dmi",
     "size": {
-      "x": 32,
-      "y": 32
+        "x": 32,
+        "y": 32
     },
     "states": [
-      {
-        "name": "full"
-      },
-      {
-        "name": "plastitanium0",
-        "directions": 4
-      },
-      {
-        "name": "plastitanium1",
-        "directions": 4
-      },
-      {
-        "name": "plastitanium2",
-        "directions": 4
-      },
-      {
-        "name": "plastitanium3",
-        "directions": 4
-      },
-      {
-        "name": "plastitanium4",
-        "directions": 4
-      },
-      {
-        "name": "plastitanium5",
-        "directions": 4
-      },
-      {
-        "name": "plastitanium6",
-        "directions": 4
-      },
-      {
-        "name": "plastitanium7",
-        "directions": 4
-      }
+        {
+            "name": "full"
+        },
+        {
+            "name": "plastitanium0",
+            "directions": 4
+        },
+        {
+            "name": "plastitanium1",
+            "directions": 4
+        },
+        {
+            "name": "plastitanium2",
+            "directions": 4
+        },
+        {
+            "name": "plastitanium3",
+            "directions": 4
+        },
+        {
+            "name": "plastitanium4",
+            "directions": 4
+        },
+        {
+            "name": "plastitanium5",
+            "directions": 4
+        },
+        {
+            "name": "plastitanium6",
+            "directions": 4
+        },
+        {
+            "name": "plastitanium7",
+            "directions": 4
+        }
     ]
-  }
-  
+}

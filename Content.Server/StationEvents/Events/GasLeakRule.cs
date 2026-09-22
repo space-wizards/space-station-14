@@ -1,90 +1,96 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Server.StationEvents.Events
+namespace Content.Server.StationEvents.Events;
+
+/// <summary>
+/// Handler for events that spawn gas at vents on the station.
+/// </summary>
+/// <seealso cref="GasLeakRuleComponent"/>
+public sealed partial class GasLeakRule : StationEventSystem<GasLeakRuleComponent>
 {
-    internal sealed partial class GasLeakRule : StationEventSystem<GasLeakRuleComponent>
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private AtmosphereSystem _atmosphere = default!;
+
+    protected override void Started(Entity<GasLeakRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
     {
-        [Dependency] private IGameTiming _timing = default!;
-        [Dependency] private AtmosphereSystem _atmosphere = default!;
+        base.Started(ent, ref args);
 
-        protected override void Started(EntityUid uid, GasLeakRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
+        var gasLeak = ent.Comp1;
+        var gameRule = ent.Comp2;
+
+        if (!TryComp<StationEventComponent>(ent, out var stationEvent))
+            return;
+
+        // Essentially we'll pick out a target amount of gas to leak, then a rate to leak it at, then work out the duration from there.
+        if (Station.TryFindRandomTile(out gasLeak.TargetTile, out var target, out var grid, out gasLeak.TargetCoords))
         {
-            base.Started(uid, component, gameRule, args);
+            gasLeak.TargetGrid = grid.Value;
+            gasLeak.TargetStation = target.Value;
+            gasLeak.FoundTile = true;
 
-            if (!TryComp<StationEventComponent>(uid, out var stationEvent))
-                return;
+            gasLeak.LeakGas = RobustRandom.Pick(gasLeak.LeakableGases);
+            // Was 50-50 on using normal distribution.
+            var totalGas = RobustRandom.Next(gasLeak.MinimumGas, gasLeak.MaximumGas);
+            gasLeak.MolesPerSecond = RobustRandom.Next(gasLeak.MinimumMolesPerSecond, gasLeak.MaximumMolesPerSecond);
 
-            // Essentially we'll pick out a target amount of gas to leak, then a rate to leak it at, then work out the duration from there.
-            if (TryFindRandomTile(out component.TargetTile, out var target, out component.TargetGrid, out component.TargetCoords))
-            {
-                component.TargetStation = target.Value;
-                component.FoundTile = true;
-
-                component.LeakGas = RobustRandom.Pick(component.LeakableGases);
-                // Was 50-50 on using normal distribution.
-                var totalGas = RobustRandom.Next(component.MinimumGas, component.MaximumGas);
-                component.MolesPerSecond = RobustRandom.Next(component.MinimumMolesPerSecond, component.MaximumMolesPerSecond);
-
-                if (gameRule.Delay is {} startAfter)
-                    stationEvent.EndTime = _timing.CurTime + TimeSpan.FromSeconds(totalGas / component.MolesPerSecond + startAfter.Next(RobustRandom));
-            }
-
-            // Look technically if you wanted to guarantee a leak you'd do this in announcement but having the announcement
-            // there just to fuck with people even if there is no valid tile is funny.
+            if (gameRule.Delay is {} startAfter)
+                stationEvent.EndTime = _timing.CurTime + TimeSpan.FromSeconds(totalGas / gasLeak.MolesPerSecond + startAfter.Next(RobustRandom));
         }
 
-        protected override void ActiveTick(EntityUid uid, GasLeakRuleComponent component, GameRuleComponent gameRule, float frameTime)
+        // Look technically if you wanted to guarantee a leak you'd do this in announcement but having the announcement
+        // there just to fuck with people even if there is no valid tile is funny.
+    }
+
+    protected override void ActiveTick(EntityUid uid, GasLeakRuleComponent component, GameRuleComponent gameRule, float frameTime)
+    {
+        base.ActiveTick(uid, component, gameRule, frameTime);
+        component.TimeUntilLeak -= frameTime;
+
+        if (component.TimeUntilLeak > 0f)
+            return;
+        component.TimeUntilLeak += component.LeakCooldown;
+
+        if (!component.FoundTile ||
+            component.TargetGrid == default ||
+            Deleted(component.TargetGrid) ||
+            !_atmosphere.IsSimulatedGrid(component.TargetGrid))
         {
-            base.ActiveTick(uid, component, gameRule, frameTime);
-            component.TimeUntilLeak -= frameTime;
+            ForceEndSelf((uid, gameRule));
+            return;
+        }
 
-            if (component.TimeUntilLeak > 0f)
-                return;
-            component.TimeUntilLeak += component.LeakCooldown;
+        var environment = _atmosphere.GetTileMixture(component.TargetGrid, null, component.TargetTile, true);
 
-            if (!component.FoundTile ||
-                component.TargetGrid == default ||
-                Deleted(component.TargetGrid) ||
-                !_atmosphere.IsSimulatedGrid(component.TargetGrid))
+        environment?.AdjustMoles(component.LeakGas, component.LeakCooldown * component.MolesPerSecond);
+    }
+
+    protected override void Ended(Entity<GasLeakRuleComponent> rule, ref GameRuleEndedEvent args)
+    {
+        base.Ended(rule, ref args);
+        Spark(rule);
+    }
+
+    private void Spark(Entity<GasLeakRuleComponent> rule)
+    {
+        if (RobustRandom.NextFloat() <= rule.Comp.SparkChance)
+        {
+            if (!rule.Comp.FoundTile ||
+                rule.Comp.TargetGrid == default ||
+                (!Exists(rule.Comp.TargetGrid) ? EntityLifeStage.Deleted : MetaData(rule.Comp.TargetGrid).EntityLifeStage) >= EntityLifeStage.Deleted ||
+                !_atmosphere.IsSimulatedGrid(rule.Comp.TargetGrid))
             {
-                ForceEndSelf(uid, gameRule);
                 return;
             }
 
-            var environment = _atmosphere.GetTileMixture(component.TargetGrid, null, component.TargetTile, true);
-
-            environment?.AdjustMoles(component.LeakGas, component.LeakCooldown * component.MolesPerSecond);
-        }
-
-        protected override void Ended(EntityUid uid, GasLeakRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
-        {
-            base.Ended(uid, component, gameRule, args);
-            Spark(uid, component);
-        }
-
-        private void Spark(EntityUid uid, GasLeakRuleComponent component)
-        {
-            if (RobustRandom.NextFloat() <= component.SparkChance)
-            {
-                if (!component.FoundTile ||
-                    component.TargetGrid == default ||
-                    (!Exists(component.TargetGrid) ? EntityLifeStage.Deleted : MetaData(component.TargetGrid).EntityLifeStage) >= EntityLifeStage.Deleted ||
-                    !_atmosphere.IsSimulatedGrid(component.TargetGrid))
-                {
-                    return;
-                }
-
-                // Don't want it to be so obnoxious as to instantly murder anyone in the area but enough that
-                // it COULD start potentially start a bigger fire.
-                _atmosphere.HotspotExpose(component.TargetGrid, component.TargetTile, 700f, 50f, null, true);
-                Audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/sparks4.ogg"), component.TargetCoords);
-            }
+            // Don't want it to be so obnoxious as to instantly murder anyone in the area but enough that
+            // it COULD start potentially start a bigger fire.
+            _atmosphere.HotspotExpose(rule.Comp.TargetGrid, rule.Comp.TargetTile, 700f, 50f, null, true);
+            Audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/sparks4.ogg"), rule.Comp.TargetCoords);
         }
     }
 }

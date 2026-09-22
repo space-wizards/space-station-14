@@ -9,6 +9,8 @@
       board: [ DoorElectronicsService ]
   - type: Wires
     layoutId: AirlockService
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/service-base.rsi
 
 - type: entity
   parent: AirlockServiceLocked
@@ -903,217 +905,217 @@
   id: AirlockMaintSalvageLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockCargoLocked
   id: AirlockMaintCargoLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockCommandLocked
   id: AirlockMaintCommandLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockEngineeringLocked
   id: AirlockMaintEngiLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockAtmosphericsLocked
   id: AirlockMaintAtmoLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockBarLocked
   id: AirlockMaintBarLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockBarKitchenLocked
   id: AirlockMaintBarKitchenLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockChapelLocked
   id: AirlockMaintChapelLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockHydroponicsLocked
   id: AirlockMaintHydroLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockJanitorLocked
   id: AirlockMaintJanitorLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockLawyerLocked
   id: AirlockMaintLawyerLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockServiceLocked
   id: AirlockMaintServiceLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockTheatreLocked
   id: AirlockMaintTheatreLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockServiceTheatreLocked
   id: AirlockMaintServiceTheatreLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockKitchenLocked
   id: AirlockMaintKitchenLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockFreezerKitchenHydroLocked
   id: AirlockMaintKitchenHydroLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockMedicalLocked
   id: AirlockMaintMedLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockMedicalMorgueLocked
   id: AirlockMedicalMorgueMaintLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockChemistryLocked
   id: AirlockMaintChemLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockScienceLocked
   id: AirlockMaintRnDLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockMedicalScienceLocked
   id: AirlockMaintRnDMedLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockSecurityLocked
   id: AirlockMaintSecLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockDetectiveLocked
   id: AirlockMaintDetectiveLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockHeadOfPersonnelLocked
   id: AirlockMaintHOPLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockCaptainLocked
   id: AirlockMaintCaptainLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockChiefEngineerLocked
   id: AirlockMaintChiefEngineerLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockChiefMedicalOfficerLocked
   id: AirlockMaintChiefMedicalOfficerLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockHeadOfSecurityLocked
   id: AirlockMaintHeadOfSecurityLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockResearchDirectorLocked
   id: AirlockMaintResearchDirectorLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockQuartermasterLocked
   id: AirlockMaintQuartermasterLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockArmoryLocked
   id: AirlockMaintArmoryLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockSyndicate
@@ -1157,7 +1159,7 @@
 - type: entity
   parent: AirlockShuttleSyndicate
   id: AirlockExternalShuttleSyndicateLocked
-  suffix: External, Docking, Syndicate, Locked
+  suffix: Syndicate, Docking, Locked
   components:
   - type: ContainerFill
     containers:
@@ -1166,7 +1168,7 @@
 - type: entity
   parent: AirlockShuttleSyndicate
   id: AirlockExternalShuttleNukeopLocked
-  suffix: External, Docking, Nukeop, Locked
+  suffix: Nukeop, Docking, Locked
   components:
   - type: ContainerFill
     containers:
@@ -1175,7 +1177,7 @@
 - type: entity
   parent: AirlockShuttleXenoborg
   id: AirlockGlassShuttleXenoborgLocked
-  suffix: External, Docking, Xenoborg, Locked
+  suffix: Xenoborg, Docking, Locked
   components:
   - type: StationAiWhitelist
     enabled: false
@@ -1186,7 +1188,7 @@
 - type: entity
   parent: AirlockGlassShuttle
   id: AirlockExternalGlassShuttleLocked
-  suffix: External, Glass, Docking, Locked
+  suffix: External, Docking, Glass
   components:
   - type: ContainerFill
     containers:
@@ -1195,7 +1197,7 @@
 - type: entity
   parent: AirlockGlassShuttleSyndicate
   id: AirlockExternalGlassShuttleSyndicateLocked
-  suffix: Syndicate, Locked, Glass
+  suffix: Syndicate, Docking, Glass
   components:
   - type: ContainerFill
     containers:
@@ -1204,7 +1206,7 @@
 - type: entity
   parent: AirlockGlassShuttleSyndicate
   id: AirlockExternalGlassShuttleNukeopLocked
-  suffix: Nukeop, Locked, Glass
+  suffix: Nukeop, Docking, Glass
   components:
   - type: ContainerFill
     containers:
@@ -1213,7 +1215,7 @@
 - type: entity
   parent: AirlockGlassShuttle
   id: AirlockExternalGlassShuttleEmergencyLocked
-  suffix: External, Emergency, Glass, Docking, Locked
+  suffix: External, Emergency, Docking, Glass
   components:
   - type: PriorityDock
     tag: DockEmergency
@@ -1224,18 +1226,37 @@
 - type: entity
   parent: AirlockGlassShuttle
   id: AirlockExternalGlassShuttleArrivals
-  suffix: External, Arrivals, Glass, Docking
+  name: arrivals airlock
+  suffix: External, Arrivals, Docking, Glass
   components:
   - type: PriorityDock
     tag: DockArrivals
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsExternal ]
+  - type: Docking
+    radarColor: "#B22222"
+    highlightedRadarColor: Red
+    dockLegendCategory: Arrivals
+
+- type: entity
+  parent: AirlockGlassShuttle
+  id: AirlockExternalGlassShuttleCargo
+  name: cargo airlock
+  suffix: External, Cargo, Docking, Glass
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsExternal ]
+  - type: Docking
+    radarColor: "#FFFF9F"
+    highlightedRadarColor: LightYellow
+    dockLegendCategory: Cargo
 
 - type: entity
   parent: AirlockGlassShuttle
   id: AirlockExternalGlassShuttleEscape
-  suffix: External, Escape 3x4, Glass, Docking
+  suffix: External, Escape 3x4, Docking, Glass
   components:
   - type: GridFill
     addComponents:

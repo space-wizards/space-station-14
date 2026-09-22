@@ -11,7 +11,6 @@ using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
 using Content.Shared.Labels.Components;
 using Content.Shared.Storage;
 using Content.Server.Hands.Systems;
@@ -30,7 +29,6 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private SolutionTransferSystem _solutionTransferSystem = default!;
         [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
-        [Dependency] private IPrototypeManager _prototypeManager = default!;
         [Dependency] private OpenableSystem _openable = default!;
         [Dependency] private HandsSystem _handsSystem = default!;
 
@@ -59,7 +57,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void UpdateUiState(Entity<ReagentDispenserComponent> reagentDispenser)
         {
-            var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser, SharedReagentDispenser.OutputSlotName);
+            var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser.Owner, SharedReagentDispenser.OutputSlotName);
             var outputContainerInfo = BuildOutputContainerInfo(outputContainer);
 
             var inventory = GetInventory(reagentDispenser);
@@ -107,7 +105,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 if (_solutionContainerSystem.TryGetDrainableSolution(storedContainer, out _, out var sol))
                 {
                     quantity = sol.Volume;
-                    reagentColor = sol.GetColor(_prototypeManager);
+                    reagentColor = sol.GetColor(ProtoMan);
                 }
 
                 inventory.Add(new ReagentInventoryItem(storageLocation, reagentLabel, quantity, reagentColor));
@@ -136,7 +134,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (storedContainer == EntityUid.Invalid)
                 return;
 
-            var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser, SharedReagentDispenser.OutputSlotName);
+            var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser.Owner, SharedReagentDispenser.OutputSlotName);
             if (outputContainer is not { Valid: true } || !_solutionContainerSystem.TryGetFitsInDispenser(outputContainer.Value, out var solution, out _))
                 return;
 
@@ -172,7 +170,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnClearContainerSolutionMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserClearContainerSolutionMessage message)
         {
-            var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser, SharedReagentDispenser.OutputSlotName);
+            var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser.Owner, SharedReagentDispenser.OutputSlotName);
             if (outputContainer is not { Valid: true } || !_solutionContainerSystem.TryGetFitsInDispenser(outputContainer.Value, out var solution, out _))
                 return;
 
@@ -183,7 +181,9 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void ClickSound(Entity<ReagentDispenserComponent> reagentDispenser)
         {
-            _audioSystem.PlayPvs(reagentDispenser.Comp.ClickSound, reagentDispenser, AudioParams.Default.WithVolume(-2f));
+            var audioParams = reagentDispenser.Comp.ClickSound?.Params ?? AudioParams.Default;
+            audioParams = audioParams.AddVolume(-2f);
+            _audioSystem.PlayPvs(reagentDispenser.Comp.ClickSound, reagentDispenser, audioParams);
         }
 
         /// <summary>

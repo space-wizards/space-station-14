@@ -5,7 +5,7 @@ using static Content.Shared.Paper.PaperComponent;
 
 namespace Content.Client.Paper;
 
-public sealed class PaperVisualizerSystem : VisualizerSystem<PaperVisualizerComponent>
+public sealed partial class PaperVisualizerSystem : VisualizerSystem<PaperVisualizerComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, PaperVisualizerComponent component, ref AppearanceChangeEvent args)
     {

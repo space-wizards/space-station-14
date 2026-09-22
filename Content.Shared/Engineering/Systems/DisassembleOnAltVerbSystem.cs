@@ -20,6 +20,9 @@ public sealed partial class DisassembleOnAltVerbSystem : EntitySystem
         SubscribeLocalEvent<DisassembleOnAltVerbComponent, DisassembleDoAfterEvent>(OnDisassembleDoAfter);
     }
 
+    /// <summary>
+    /// Begins disassembly of an entity.
+    /// </summary>
     public void StartDisassembly(Entity<DisassembleOnAltVerbComponent> entity, EntityUid user)
     {
         // Doafter setup

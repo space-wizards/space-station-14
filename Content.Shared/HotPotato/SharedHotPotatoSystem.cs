@@ -57,15 +57,14 @@ public abstract partial class SharedHotPotatoSystem : EntitySystem
 
             if (!_hands.IsHolding((hitEntity, hands), ent.Owner, out _) && _hands.TryForcePickupAnyHand(hitEntity, ent.Owner, handsComp: hands))
             {
-                _popup.PopupPredicted(
+                _popup.PopupEntity(
                     Loc.GetString("hot-potato-passed", ("from", Identity.Entity(args.User, EntityManager)), ("to", Identity.Entity(hitEntity, EntityManager))),
                     ent.Owner,
-                    args.User,
                     PopupType.Medium);
                 break;
             }
 
-            _popup.PopupClient(
+            _popup.PopupEntity(
                 Loc.GetString("hot-potato-failed", ("to", Identity.Entity(hitEntity, EntityManager))),
                 ent.Owner,
                 args.User,

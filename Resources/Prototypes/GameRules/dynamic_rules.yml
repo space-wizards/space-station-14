@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseGameRule
   id: DynamicRule
   components:
@@ -54,6 +54,11 @@
         children:
         - id: Thief
           prob: 0.5
+          conditions:
+          - !type:HasBudgetCondition
+          - !type:MaxRuleOccurenceCondition
+        - id: Changeling
+          prob: 0.25
           conditions:
           - !type:HasBudgetCondition
           - !type:MaxRuleOccurenceCondition

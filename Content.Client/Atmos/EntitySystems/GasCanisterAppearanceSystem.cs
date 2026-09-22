@@ -1,7 +1,6 @@
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.SprayPainter.Prototypes;
 using Robust.Client.GameObjects;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Atmos.EntitySystems;
 
@@ -10,14 +9,12 @@ namespace Content.Client.Atmos.EntitySystems;
 /// </summary>
 public sealed partial class GasCanisterAppearanceSystem : VisualizerSystem<GasCanisterComponent>
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
-
     protected override void OnAppearanceChange(EntityUid uid, GasCanisterComponent component, ref AppearanceChangeEvent args)
     {
         if (!AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.Prototype, out var protoName, args.Component) || args.Sprite is not { } old)
             return;
 
-        if (!_prototypeManager.HasIndex(protoName))
+        if (!ProtoMan.HasIndex(protoName))
             return;
 
         // Create the given prototype and get its first layer.

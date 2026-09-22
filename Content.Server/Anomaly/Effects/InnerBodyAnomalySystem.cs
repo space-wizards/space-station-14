@@ -1,5 +1,4 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Body.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.Jittering;
 using Content.Server.Mind;
@@ -7,7 +6,6 @@ using Content.Server.Stunnable;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects;
-using Content.Shared.Body.Components;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Gibbing;
@@ -17,7 +15,6 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Anomaly.Effects;
 
@@ -33,7 +30,6 @@ public sealed partial class InnerBodyAnomalySystem : SharedInnerBodyAnomalySyste
     [Dependency] private JitteringSystem _jitter = default!;
     [Dependency] private MindSystem _mind = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private StunSystem _stun = default!;
 
     private readonly Color _messageColor = Color.FromSrgb(new Color(201, 22, 94));
@@ -87,7 +83,7 @@ public sealed partial class InnerBodyAnomalySystem : SharedInnerBodyAnomalySyste
 
     private void AddAnomalyToBody(Entity<InnerBodyAnomalyComponent> ent)
     {
-        if (!_proto.Resolve(ent.Comp.InjectionProto, out var injectedAnom))
+        if (!ProtoMan.Resolve(ent.Comp.InjectionProto, out var injectedAnom))
             return;
 
         if (ent.Comp.Injected)
@@ -208,7 +204,7 @@ public sealed partial class InnerBodyAnomalySystem : SharedInnerBodyAnomalySyste
         if (!ent.Comp.Injected)
             return;
 
-        if (_proto.Resolve(ent.Comp.InjectionProto, out var injectedAnom))
+        if (ProtoMan.Resolve(ent.Comp.InjectionProto, out var injectedAnom))
             EntityManager.RemoveComponents(ent, injectedAnom.Components);
 
         _stun.TryUpdateParalyzeDuration(ent, TimeSpan.FromSeconds(ent.Comp.StunDuration));
