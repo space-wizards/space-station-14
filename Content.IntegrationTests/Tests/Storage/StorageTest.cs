@@ -256,9 +256,9 @@ public sealed class StorageTest : GameTest
             }
 #pragma warning restore CS0618
 
-            foreach (var (proto, fill) in pair.GetPrototypesWithComponent<EntityTableContainerFillComponent>())
+            foreach (var (proto, fill) in pair.GetPrototypesWithComponent<ContainerFillComponent>())
             {
-                Assert.That(!proto.HasComp<ContainerFillComponent>(compFact), $"Prototype {proto.ID} has both {nameof(EntityTableContainerFillComponent)} and {nameof(ContainerFillComponent)}.");
+                Assert.That(!proto.HasComp<EntityTableContainerFillComponent>(compFact), $"Prototype {proto.ID} has both {nameof(ContainerFillComponent)} and {nameof(EntityTableContainerFillComponent)}.");
             }
         });
     }
