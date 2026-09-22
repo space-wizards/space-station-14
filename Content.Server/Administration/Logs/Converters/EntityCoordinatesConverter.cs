@@ -15,9 +15,9 @@ public sealed class EntityCoordinatesConverter : AdminLogConverter<EntityCoordin
 
     public override void Init(IDependencyCollection dependencies)
     {
-        _entityManager = new WeakReference<IEntityManager>(dependencies.Resolve<IEntityManager>());
-        if (_entityManager.TryGetTarget(out var entMan))
-            _xform = new WeakReference<SharedTransformSystem>(entMan.System<SharedTransformSystem>());
+        var entMan = dependencies.Resolve<IEntityManager>();
+        _entityManager = new WeakReference<IEntityManager>(entMan);
+        _xform = new WeakReference<SharedTransformSystem>(entMan.System<SharedTransformSystem>());
     }
 
     public void Write(Utf8JsonWriter writer, EntityCoordinates value, JsonSerializerOptions options, IEntityManager entities)
