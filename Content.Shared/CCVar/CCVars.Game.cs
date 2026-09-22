@@ -474,10 +474,10 @@ public sealed partial class CCVars
         CVarDef.Create("game.show_new_player_icons", true, CVar.REPLICATED | CVar.CLIENT | CVar.ARCHIVE);
 
     /// <summary>
-    /// The hours under which a new player will have an indicator above their sprite, when <see cref="ShowNewPlayerIcons"/> is true.
+    /// The minutes under which a new player will have an indicator above their sprite, when <see cref="ShowNewPlayerIcons"/> is true.
     /// </summary>
-    public static readonly CVarDef<float> NewPlayerTimeTotalHours =
-        CVarDef.Create("game.new_player_time_total_hours", 1f, CVar.REPLICATED | CVar.SERVER);
+    public static readonly CVarDef<float> NewPlayerTimeTotalMinutes =
+        CVarDef.Create("game.new_player_time_total_minutes", 60f, CVar.REPLICATED | CVar.SERVER);
 
     /// <summary>
     /// Determines whether wall-mounted entities are hidden when viewed from outside their facing arc.

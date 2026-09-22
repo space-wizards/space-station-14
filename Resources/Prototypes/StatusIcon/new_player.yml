@@ -4,7 +4,7 @@
   icon:
     sprite: /Textures/Interface/Misc/new_player_icon.rsi
     state: new_player_icon
-  visibleToGhosts: false
+  visibleToGhosts: false # Only visible to whitelisted player ghosts. This is false here as otherwise it would be visible to ALL ghosts!
   locationPreference: Fixed
   offsetHorizontal: 11
   isShaded: true

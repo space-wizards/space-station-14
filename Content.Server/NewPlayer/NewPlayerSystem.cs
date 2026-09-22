@@ -28,7 +28,7 @@ public sealed partial class NewPlayerSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        Subs.CVar(_config, CCVars.NewPlayerTimeTotalHours, v => _newPlayerTimeTotal = TimeSpan.FromHours(v), true);
+        Subs.CVar(_config, CCVars.NewPlayerTimeTotalMinutes, v => _newPlayerTimeTotal = TimeSpan.FromMinutes(v), true);
     }
 
     [SubscribeLocalEvent]
