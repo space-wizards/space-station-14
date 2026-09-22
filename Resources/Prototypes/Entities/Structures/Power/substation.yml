@@ -224,7 +224,7 @@
   - type: WiresPanel
   - type: WiresVisuals
   - type: Fixtures
-    fixtures:
+    fixtures: &wallmountFixtures
       fix1:
         shape:
           !type:PhysShapeAabb
@@ -289,3 +289,5 @@
   - type: Construction
     graph: WallmountSubstation
     node: frame
+  - type: Fixtures
+    fixtures: *wallmountFixtures
