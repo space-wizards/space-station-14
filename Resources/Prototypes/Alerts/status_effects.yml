@@ -36,6 +36,12 @@
   description: alerts-vow-silence-desc
 
 - type: alert
+  id: BlindAlert
+  icons: [ Interface/Actions/eyeclose.png ]
+  name: alerts-blind-name
+  description: alerts-blind-desc
+
+- type: alert
   id: FrailStatusAlert
   icons:
   - sprite: /Textures/Interface/Alerts/status_effects.rsi

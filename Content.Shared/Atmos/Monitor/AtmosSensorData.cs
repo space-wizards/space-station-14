@@ -1,12 +1,28 @@
-using Content.Shared.Atmos.Monitor.Components;
+using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Systems;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Monitor;
 
-[Serializable, NetSerializable]
-public sealed class AtmosSensorData : IAtmosDeviceData
+/// <summary>
+/// Contains <see cref="AtmosMonitorData"/>.
+/// </summary>
+public partial record struct AtmosMonitorDataPayload : INetworkPayload
 {
-    public AtmosSensorData(float pressure, float temperature, float totalMoles, AtmosAlarmType alarmState, Dictionary<Gas, float> gases, AtmosAlarmThreshold pressureThreshold, AtmosAlarmThreshold temperatureThreshold, Dictionary<Gas, AtmosAlarmThreshold> gasThresholds)
+    [DataField]
+    public AtmosMonitorData Data;
+}
+
+[Serializable, NetSerializable]
+public sealed partial class AtmosMonitorData : BaseAtmosDeviceData
+{
+    public override void RaisePayload(EntityUid uid, string address, SharedDeviceNetworkSystem deviceNetSys)
+    {
+        var payload = new AtmosMonitorDataPayload { Data = this };
+        deviceNetSys.SendPacket(uid, address, ref payload);
+    }
+
+    public AtmosMonitorData(float pressure, float temperature, float totalMoles, AtmosAlarmType alarmState, Dictionary<Gas, float> gases, AtmosAlarmThreshold pressureThreshold, AtmosAlarmThreshold temperatureThreshold, Dictionary<Gas, AtmosAlarmThreshold> gasThresholds)
     {
         Pressure = pressure;
         Temperature = temperature;
@@ -17,10 +33,6 @@ public sealed class AtmosSensorData : IAtmosDeviceData
         TemperatureThreshold = temperatureThreshold;
         GasThresholds = gasThresholds;
     }
-
-    public bool Enabled { get; set; }
-    public bool Dirty { get; set; }
-    public bool IgnoreAlarms { get; set; }
 
     /// Most fields are readonly, because it's data that's meant to be transmitted.
 
