@@ -143,7 +143,7 @@ public sealed class PlantTest : ToolshedTest
                 if (!entityManager.HasComponent<PlantTraitLigneousComponent>(plant))
                 {
                     var mutatedPlant = InvokeCommand<EntityUid>(
-                        "var $plant plantmutation:add RandomPlantMutations \"Lignification\"");
+                        "var $plant plant:addmutation RandomPlantMutations \"Lignification\"");
                     Assert.That(mutatedPlant, Is.EqualTo(plant),
                         $"Plant grown from {seed.ID} could not be made ligneous.");
                 }
