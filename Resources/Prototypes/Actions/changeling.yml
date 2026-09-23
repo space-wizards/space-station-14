@@ -468,7 +468,7 @@
   parent: BaseDoAfterAction
   id: ActionChangelingFleshtomb
   name: Fleshtomb
-  description: "Preserve a body in a fragile cocoon made of flesh, which slowly harvests their life for DNA. \n\nRequires 50 Chemicals."
+  description: "Preserve a body in a fragile cocoon made of flesh, which slowly harvests their life for DNA. \n\nRequires 35 Chemicals."
   components:
   - type: Action
     useDelay: 50
@@ -487,7 +487,7 @@
       Performer:
       - !type:SatiationCondition
         satiationType: Chemicals
-        min: 50
+        min: 35
       Target:
       - !type:MobStateCondition
         mobstate: Dead
@@ -495,7 +495,7 @@
       Performer:
       - !type:Satiate
         satiationType: Chemicals
-        factor: -50
+        factor: -35
   - type: PopupOnAction
     popupType: MediumCaution
     selfMessage: changeling-cocoon-success

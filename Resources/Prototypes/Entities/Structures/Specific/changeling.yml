@@ -67,6 +67,10 @@
     damage:
       types:
         Blunt: 0.25
+  - type: AmbientSound
+    range: 3 # Purely to prevent holding those in 1x1 rooms, very difficult to hear anyway.
+    sound:
+      path: /Audio/Ambience/bubbling.ogg
   - type: ContainerContainer
     containers:
       storage: !type:Container

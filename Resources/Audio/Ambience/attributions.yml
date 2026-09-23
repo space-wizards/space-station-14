@@ -126,3 +126,8 @@
   license: "CC-BY-4.0"
   copyright: "Created by zimbot, edited and converted to mono by TheShuEd"
   source: "https://freesound.org/people/zimbot/sounds/122972/"
+
+- files: ["bubbling.ogg"]
+  license: "CC-0"
+  copyright: "Created by brunoboselli, edited by ScarKy0"
+  source: "https://freesound.org/people/brunoboselli/sounds/782992/"
