@@ -1,0 +1,11 @@
+- type: entity
+  name: wizard spider
+  parent: MobGiantSpider
+  id: MobGiantSpiderWizard
+  description: This spider looks a little magical
+  suffix: Wizard
+  components:
+  - type: Accentless
+    removes:
+    - type: ReplacementAccent
+      accent: xeno  #let this wizard speak

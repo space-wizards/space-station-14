@@ -1,0 +1,74 @@
+# Guard Spider
+- type: entity
+  parent: MobSpiderBase
+  id: MobGiantSpiderGuard
+  name: guard spider
+  description: A stockier spider that stands its ground and blocks escape routes with webs.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      sprite: Mobs/Animals/spider.rsi
+      state: guard
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: guard-moving
+    noMovementLayers:
+      movement:
+        state: guard
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: guard
+      Critical:
+        Base: guard_dead
+      Dead:
+        Base: guard_dead
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 4
+  - type: SolutionManager
+    solutions:
+    - SolutionVenomSpiderGuard
+  - type: MeleeChemicalInjector
+    transferAmount: 1
+    solution: melee
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3
+    baseSprintSpeed : 3
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      180: Dead
+
+- type: entity
+  parent: [SolutionWeapon, SolutionTiny]
+  id: SolutionVenomSpiderGuard
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 5
+      reagents:
+      - ReagentId: Mechanotoxin
+        Quantity: 5
+  - type: SolutionRegeneration
+    generated:
+      reagents:
+      - ReagentId: Mechanotoxin
+        Quantity: 0.5
+
+# Angry Guard Spider
+- type: entity
+  parent:
+  - MobSpiderAngryBase
+  - MobGiantSpiderGuard
+  id: MobGiantSpiderGuardAngry

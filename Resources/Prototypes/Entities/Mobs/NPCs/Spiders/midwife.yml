@@ -1,0 +1,74 @@
+# Midwife Spider
+- type: entity
+  parent: MobSpiderBase
+  id: MobGiantSpiderMidwife
+  name: midwife spider
+  description: Skittering and watchful; it seems to tend to egg sacs and cocoons.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      sprite: Mobs/Animals/spider.rsi
+      state: midwife
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: midwife-moving
+    noMovementLayers:
+      movement:
+        state: midwife
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: midwife
+      Critical:
+        Base: midwife_dead
+      Dead:
+        Base: midwife_dead
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 4
+  - type: SolutionManager
+    solutions:
+    - SolutionVenomSpiderMidwife
+  - type: MeleeChemicalInjector
+    transferAmount: 5
+    solution: melee
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3
+    baseSprintSpeed: 4
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      120: Dead
+
+- type: entity
+  parent: [SolutionWeapon, SolutionTiny]
+  id: SolutionVenomSpiderMidwife
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 30
+      reagents:
+      - ReagentId: Mechanotoxin
+        Quantity: 30
+  - type: SolutionRegeneration
+    generated:
+      reagents:
+      - ReagentId: Mechanotoxin
+        Quantity: 0.2
+
+# Angry Midwife Spider
+- type: entity
+  parent:
+  - MobSpiderAngryBase
+  - MobGiantSpiderMidwife
+  id: MobGiantSpiderMidwifeAngry

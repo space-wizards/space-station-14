@@ -1,0 +1,89 @@
+- type: entity
+  name: tarantula
+  parent: MobSpiderBase
+  id: MobGiantSpider
+  description: Widely recognized to be the literal worst thing in existence.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: tarantula
+      sprite: Mobs/Animals/spider.rsi
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: tarantula-moving
+    noMovementLayers:
+      movement:
+        state: tarantula
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: tarantula
+      Critical:
+        Base: tarantula_dead
+      Dead:
+        Base: tarantula_dead
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 6
+
+- type: entity
+  parent:
+  - MobSpiderAngryBase
+  - MobGiantSpider
+  id: MobGiantSpiderAngry
+
+# Tarantula Spider
+- type: entity
+  parent: MobGiantSpider
+  id: MobGiantSpiderTarantula
+  name: tarantula
+  description: Widely considered to be the worse thing in existence.
+  components:
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 4
+  - type: SolutionManager
+    solutions:
+    - SolutionVenomSpiderTarantula
+  - type: MeleeChemicalInjector
+    transferAmount: 5
+    solution: melee
+
+- type: entity
+  parent: [SolutionWeapon, SolutionTiny]
+  id: SolutionVenomSpiderTarantula
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 5
+      reagents:
+      - ReagentId: Mechanotoxin
+        Quantity: 5
+  - type: SolutionRegeneration
+    generated:
+      reagents:
+      - ReagentId: Mechanotoxin
+        Quantity: 0.1
+
+# Angry Tarantula
+- type: entity
+  parent:
+  - MobSpiderAngryBase
+  - MobGiantSpiderTarantula
+  id: MobGiantSpiderTarantulaAngry
