@@ -25,11 +25,13 @@ namespace Content.Server.DeviceLinking.Systems
 
         private void OnInit(EntityUid uid, DoorSignalControlComponent component, ComponentInit args)
         {
-
             _signalSystem.EnsureSinkPorts(uid, component.OpenPort, component.ClosePort, component.TogglePort);
+
+            if (HasComp<DoorBoltComponent>(uid))
+                _signalSystem.EnsureSinkPorts(uid, component.InBolt);
+
             _signalSystem.EnsureSourcePorts(uid, component.OutOpen);
 
-            // only doors that can actually be bolted get the port, e.g. not shutters
             if (HasComp<DoorBoltComponent>(uid))
                 _signalSystem.EnsureSourcePorts(uid, component.OutBolt);
         }
