@@ -19,7 +19,7 @@ public sealed partial class XATDamageThresholdReachedSystem : BaseXATSystem<XATD
 
     private void OnDamageDealt(Entity<XenoArtifactComponent> artifact, Entity<XATDamageThresholdReachedComponent, XenoArtifactNodeComponent> node, ref DamageDealtEvent args)
     {
-        if (!args.AnyPositive || args.Origin == artifact.Owner)
+        if (args.Damage.Empty || args.Origin == artifact.Owner)
             return;
 
         var damageTriggerComponent = node.Comp1;
