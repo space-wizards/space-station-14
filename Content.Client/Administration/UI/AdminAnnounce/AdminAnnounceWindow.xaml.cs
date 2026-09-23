@@ -5,6 +5,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
+using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
@@ -18,6 +19,7 @@ public sealed partial class AdminAnnounceWindow : DefaultWindow
     [Dependency] private IEntityManager _entityManager = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IPrototypeManager _prototypes = default!;
+    [Dependency] private IResourceManager _resourceManager = default!;
 
     public event Action<AdminAnnounceEuiMsg.DoAnnounce>? OnAnnounce;
 

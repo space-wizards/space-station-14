@@ -89,9 +89,10 @@ public sealed partial class ChatSystem
 
     private string WrapAnnouncement(string sender, string message, string? signature)
     {
+        var escapedSender = FormattedMessage.EscapeText(sender);
         var escapedMessage = FormattedMessage.EscapeText(message);
         return string.IsNullOrWhiteSpace(signature)
-            ? Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender), ("message", escapedMessage))
-            : Loc.GetString("chat-manager-sender-announcement-wrap-message-signed", ("sender", sender), ("message", escapedMessage), ("signature", FormattedMessage.EscapeText(signature)));
+            ? Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", escapedSender), ("message", escapedMessage))
+            : Loc.GetString("chat-manager-sender-announcement-wrap-message-signed", ("sender", escapedSender), ("message", escapedMessage), ("signature", FormattedMessage.EscapeText(signature)));
     }
 }

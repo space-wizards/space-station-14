@@ -20,10 +20,7 @@ public sealed partial class AdminAnnounceWindow
 
     private void StopPreview()
     {
-        if (_previewStream is { } stream)
-            _audio.Stop(stream);
-
-        _previewStream = null;
+        _previewStream = _audio.Stop(_previewStream);
     }
 
     private SoundPathSpecifier? GetSound()
@@ -33,8 +30,9 @@ public sealed partial class AdminAnnounceWindow
             return null;
 
         var path = new ResPath(value);
-        return path.IsRooted
-            ? new SoundPathSpecifier(path)
-            : null;
+        if (!path.IsRooted || !_resourceManager.ContentFileExists(path))
+            return null;
+
+        return new SoundPathSpecifier(path);
     }
 }
