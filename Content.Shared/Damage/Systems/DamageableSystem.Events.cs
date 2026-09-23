@@ -293,12 +293,12 @@ public sealed class DamageModifyEvent(DamageSpecifier damage, EntityUid? origin 
 public readonly record struct DamageDealtEvent(DamageSpecifier Damage, EntityUid? Origin, bool InterruptsDoAfters)
 {
     /// <summary>
-    /// A cached version of <see cref="this.Damage.AnyPositive"/>.
+    /// A cached version of <see cref="DamageSpecifier.AnyPositive"/> for <see cref="Damage"/>.
     /// </summary>
     public readonly bool AnyPositive = Damage.AnyPositive();
 
     /// <summary>
-    /// A cached value of Damage.GetTotal.
+    /// A cached value of <see cref="DamageSpecifier.GetTotal"/> for <see cref="Damage"/>.
     /// </summary>
     public readonly FixedPoint2 Total = Damage.GetTotal();
 }
