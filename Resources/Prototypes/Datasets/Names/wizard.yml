@@ -1,4 +1,4 @@
-﻿- type: localizedDataset
+- type: localizedDataset
   id: NamesWizardFirst
   values:
     prefix: names-wizard-first-dataset-

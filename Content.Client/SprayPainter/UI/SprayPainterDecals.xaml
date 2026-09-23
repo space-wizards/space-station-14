@@ -12,7 +12,7 @@
                 HorizontalExpand="True" VerticalExpand="True"/>
         </ScrollContainer>
 
-        <PanelContainer StyleClasses="LowDivider" />
+        <controls:Separator StyleClasses="LowDivider"/>
         <BoxContainer Orientation="Vertical">
             <ColorSelectorSliders Name="ColorSelector" IsAlphaVisible="True">
                 <BoxContainer HorizontalAlignment="Right" VerticalAlignment="Top" SetHeight="29">

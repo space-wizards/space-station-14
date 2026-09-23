@@ -2,6 +2,7 @@ using Content.Shared.Chat;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -10,6 +11,7 @@ namespace Content.Shared.Speech.EntitySystems;
 public sealed partial class SpeechSoundSystem : EntitySystem
 {
     [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private INetManager _net = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
 
     [SubscribeLocalEvent]
@@ -27,7 +29,8 @@ public sealed partial class SpeechSoundSystem : EntitySystem
 
         var sound = GetSpeechSound(ent, args.Message);
         ent.Comp.LastTimeSoundPlayed = currentTime;
-        _audio.PlayPredicted(sound, ent, ent);
+        if (_net.IsServer) // TODO: replace this call with PlayPredicted when chat is predicted.
+            _audio.PlayPvs(sound, ent);
     }
 
     /// <summary>

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Changeling.Components;
+using Content.Shared.Changeling.Components;
 using Content.Shared.Destructible;
 
 namespace Content.Shared.Changeling.Systems;

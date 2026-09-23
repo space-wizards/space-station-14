@@ -1,4 +1,4 @@
-﻿spacevillain-menu-title = Space Villain
+spacevillain-menu-title = Space Villain
 spacevillain-menu-label-player = Player
 spacevillain-menu-label-enemy = Villain
 spacevillain-menu-label-health = {$amount} {-spacevillain-health}

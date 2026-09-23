@@ -1,0 +1,41 @@
+- type: job
+  id: Lawyer
+  name: job-name-lawyer
+  description: job-description-lawyer
+  playTimeTracker: JobLawyer
+  requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 2.5h
+  startingGear: LawyerGear
+  icon: "JobIconLawyer"
+  supervisors: job-supervisors-hop
+  guides: [ SpaceLaw ] # TODO: should have a more specific guidebook page instead of just linking to Space Law
+  access:
+  - Service
+  - Lawyer
+  - Brig
+  - Maintenance
+
+- type: startingGear
+  id: LawyerGear
+  equipment:
+    shoes: ClothingShoesBootsLaceup
+    id: LawyerPDA
+    ears: ClothingHeadsetSecurity
+  inhand:
+    - BriefcaseBrownFilled
+  storage:
+    back:
+    - RubberStampLawyer
+    - BookSpaceLaw
+
+- type: chameleonOutfit
+  id: LawyerChameleonOutfit
+  job: Lawyer
+  equipment:
+    head: ClothingHeadHatBowlerHat
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskBreath
+    neck: ClothingNeckLawyerbadge
+    outerClothing: ClothingOuterWinterColorBlack
+    gloves: ClothingHandsGlovesColorBlack

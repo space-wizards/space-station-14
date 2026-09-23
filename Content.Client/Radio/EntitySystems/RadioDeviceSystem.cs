@@ -6,16 +6,12 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Radio.EntitySystems;
 
+/// <inheritdoc/>
 public sealed partial class RadioDeviceSystem : SharedRadioDeviceSystem
 {
     [Dependency] private UserInterfaceSystem _ui = default!;
 
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<IntercomComponent, AfterAutoHandleStateEvent>(OnAfterHandleState);
-    }
-
+    [SubscribeLocalEvent]
     private void OnAfterHandleState(Entity<IntercomComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         if (_ui.TryGetOpenUi<IntercomBoundUserInterface>(ent.Owner, IntercomUiKey.Key, out var bui))
