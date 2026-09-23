@@ -109,10 +109,13 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         args.Price += price;
     }
 
+    /// <remarks>
+    /// NOTE: Repairing only raises DamageChangedEvent, not DamageDealt.
+    /// </remarks>
     [SubscribeLocalEvent]
-    private void OnDamageChanged(Entity<VendingMachineComponent> entity, ref DamageDealtEvent args)
+    private void OnDamageChanged(Entity<VendingMachineComponent> entity, ref DamageChangedEvent args)
     {
-        if (!args.AnyPositive && entity.Comp.Broken)
+        if (!args.DamageIncreased && entity.Comp.Broken)
         {
             entity.Comp.Broken = false;
             Dirty(entity);
@@ -122,10 +125,10 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         if (!TryComp<VendingMachineDispenseOnHitComponent>(entity.Owner, out var dispenseOnHit))
             return;
 
-        if (entity.Comp.Broken || dispenseOnHit.CoolingDown)
+        if (entity.Comp.Broken || dispenseOnHit.CoolingDown || args.DamageDelta == null)
             return;
 
-        if (!(args.AnyPositive && args.Total >= dispenseOnHit.Threshold) ||
+        if (!(args.DamageIncreased && args.DamageDelta.GetTotal() >= dispenseOnHit.Threshold) ||
             !_random.Prob(dispenseOnHit.Chance)) return;
 
         if (dispenseOnHit.NextDispenseDelay != null)
