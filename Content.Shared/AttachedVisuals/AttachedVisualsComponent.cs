@@ -1,4 +1,5 @@
 using Content.Shared.DisplacementMap;
+using Content.Shared.Humanoid;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.AttachedVisuals;
@@ -78,7 +79,7 @@ public sealed partial class AttachmentDefinition: IComparable<AttachmentDefiniti
     /// If we have sex displacement data, put it here
     /// </summary>
     [DataField]
-    public Dictionary<Enum, DisplacementData>? SexedDisplacementData;
+    public Dictionary<Sex, DisplacementData>? SexedDisplacementData;
 
     /// <summary>
     /// Sorting order for sprite layering.
