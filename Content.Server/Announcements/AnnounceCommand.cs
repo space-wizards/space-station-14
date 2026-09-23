@@ -62,8 +62,18 @@ public sealed partial class AnnounceCommand : LocalizedEntityCommands
             sound = new SoundPathSpecifier(args[3]);
 
         _chat.DispatchGlobalAnnouncement(message, sender, true, sound, color);
-        _adminLogger.Add(LogType.Chat, LogImpact.Low,
-            $"{shell.Player:Player} used 'announce' with displayed sender \"{sender}\": {message}");
+
+        if (shell.Player is null)
+        {
+            _adminLogger.Add(LogType.Chat, LogImpact.Low,
+                $"LOCAL used 'announce' with displayed sender {sender}: {message}");
+        }
+        else
+        {
+            _adminLogger.Add(LogType.Chat, LogImpact.Low,
+                $"{shell.Player:Player} used 'announce' with displayed sender {sender}: {message}");
+        }
+
         shell.WriteLine(Loc.GetString("shell-command-success"));
     }
 

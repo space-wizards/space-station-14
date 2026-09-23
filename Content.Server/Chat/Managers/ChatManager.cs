@@ -125,8 +125,12 @@ private ISawmill? _sawmill = default!;
         // during server setup when some cvars are changed
         _sawmill?.Info(message);
 
-        var author = sender != null ? sender.Name : "SYSTEM";
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server announcement from {sender:Player}: {message}");
+        if (sender is null) //just so that log search works...
+            _adminLogger.Add(LogType.Chat, LogImpact.Low,
+                $"Server announcement from SYSTEM: {message}");
+        else
+            _adminLogger.Add(LogType.Chat, LogImpact.Low,
+                $"Server announcement from {sender:Player}: {message}");
     }
 
     public void DispatchServerMessage(ICommonSession player, string message, bool suppressLog = false)
