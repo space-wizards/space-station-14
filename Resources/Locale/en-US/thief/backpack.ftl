@@ -10,8 +10,7 @@ thief-backpack-window-description =
 thief-backpack-window-selected = Kits selected: ({$selectedCount}/{$maxCount})
 
 thief-backpack-window-approve-button = Approve
-thief-backpack-button-select = Select [  ]
-thief-backpack-button-deselect = Select [X]
+thief-backpack-selected-tooltip = Selected
 
 # Sets
 
