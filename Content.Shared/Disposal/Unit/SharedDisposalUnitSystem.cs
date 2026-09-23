@@ -55,6 +55,7 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private SharedTransformSystem _xform = default!;
     [Dependency] private INetManager _net = default!;
+    [Dependency] private SharedPowerStateSystem _powerState = default!;
 
     public override void Initialize()
     {
@@ -259,9 +260,15 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
 
         ent.Comp.State = state;
 
-        if (state == DisposalsPressureState.Ready)
+        switch (state)
         {
-            ent.Comp.NextPressurized = TimeSpan.Zero;
+            case DisposalsPressureState.Ready:
+                ent.Comp.NextPressurized = TimeSpan.Zero;
+                _powerState.SetWorkingState(ent.Owner, false);
+                break;
+            case DisposalsPressureState.Pressurizing:
+                _powerState.SetWorkingState(ent.Owner, true);
+                break;
         }
 
         RecalculateFlushTime(ent, true);

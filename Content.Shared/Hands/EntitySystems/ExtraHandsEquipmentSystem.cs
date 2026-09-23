@@ -1,11 +1,13 @@
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory.Events;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Hands.EntitySystems;
 
 public sealed partial class ExtraHandsEquipmentSystem : EntitySystem
 {
     [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -17,6 +19,9 @@ public sealed partial class ExtraHandsEquipmentSystem : EntitySystem
 
     private void OnEquipped(Entity<ExtraHandsEquipmentComponent> ent, ref GotEquippedEvent args)
     {
+        if (_timing.ApplyingState)
+            return; // The changes are already networked as part of the same game state.
+
         if (!TryComp<HandsComponent>(args.EquipTarget, out var handsComp))
             return;
 
@@ -30,6 +35,9 @@ public sealed partial class ExtraHandsEquipmentSystem : EntitySystem
 
     private void OnUnequipped(Entity<ExtraHandsEquipmentComponent> ent, ref GotUnequippedEvent args)
     {
+        if (_timing.ApplyingState)
+            return; // The changes are already networked as part of the same game state.
+
         if (!TryComp<HandsComponent>(args.EquipTarget, out var handsComp))
             return;
 
