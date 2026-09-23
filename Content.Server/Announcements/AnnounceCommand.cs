@@ -63,7 +63,7 @@ public sealed partial class AnnounceCommand : LocalizedEntityCommands
 
         _chat.DispatchGlobalAnnouncement(message, sender, true, sound, color);
         _adminLogger.Add(LogType.Chat, LogImpact.Low,
-            $"{(shell.Player != null ? shell.Player.Name : "LOCAL")} used 'announce' with displayed sender \"{sender}\": {message}");
+            $"{shell.Player:Player} used 'announce' with displayed sender \"{sender}\": {message}");
         shell.WriteLine(Loc.GetString("shell-command-success"));
     }
 

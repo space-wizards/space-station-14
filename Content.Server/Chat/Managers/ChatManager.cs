@@ -126,7 +126,7 @@ private ISawmill? _sawmill = default!;
         _sawmill?.Info(message);
 
         var author = sender != null ? sender.Name : "SYSTEM";
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server announcement from {author}: {message}");
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server announcement from {sender:Player}: {message}");
     }
 
     public void DispatchServerMessage(ICommonSession player, string message, bool suppressLog = false)
