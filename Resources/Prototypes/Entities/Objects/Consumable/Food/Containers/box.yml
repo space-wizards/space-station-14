@@ -355,8 +355,7 @@
     grid:
     - 0,0,3,2
     whitelist:
-      tags:
-      - DonkPocket
+      tags: [ DonkPocket ]
   - type: Item
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
     size: Normal

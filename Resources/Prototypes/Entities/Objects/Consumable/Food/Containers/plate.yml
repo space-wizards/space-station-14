@@ -39,8 +39,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Tag
-    tags:
-    - Trash
+    tags: [ Dinnerware, Trash ]
   - type: SpaceGarbage
 
 - type: entity
@@ -154,8 +153,7 @@
       right:
       - state: plate-plastic-inhand-right
   - type: Tag
-    tags:
-    - Trash
+    tags: [ Dinnerware, Trash ]
 
 - type: entity
   parent: BaseFoodPlate
@@ -174,8 +172,7 @@
       right:
       - state: plate-plastic-inhand-right
   - type: Tag
-    tags:
-    - Trash
+    tags: [ Dinnerware, Trash ]
 
 # Pie Tin
 
@@ -194,8 +191,7 @@
     - 0,0,1,0
     storedOffset: 0,-3
   - type: Tag
-    tags:
-    - Trash
+    tags: [ Dinnerware, Trash ]
   - type: PhysicalComposition
     materialComposition:
       Steel: 50
@@ -218,8 +214,7 @@
     - 0,0,0,0
     storedOffset: 0,-2
   - type: Tag
-    tags:
-    - Trash
+    tags: [ Dinnerware, Trash ]
   - type: PhysicalComposition
     materialComposition:
       Steel: 25

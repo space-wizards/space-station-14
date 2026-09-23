@@ -20,6 +20,8 @@
       reagents:
       - ReagentId: Nutriment
         Quantity: 10
+  - type: Tag
+    tags: [ Bread ]
 
 - type: entity
   parent: FoodBagelBase
@@ -60,9 +62,6 @@
     state: bagel-cottondough
   - type: Edible
     requiresSpecialDigestion: true
-  - type: Tag
-    tags:
-    - ClothMade
   - type: Solution
     solution:
       reagents:
@@ -70,3 +69,5 @@
         Quantity: 5
       - ReagentId: Fiber
         Quantity: 5
+  - type: Tag
+    tags: [ Bread, ClothMade ]

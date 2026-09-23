@@ -63,8 +63,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Tag
-    tags:
-    - Trash
+    tags: [ Dinnerware, Trash ]
 
 - type: entity
   parent: BaseItem

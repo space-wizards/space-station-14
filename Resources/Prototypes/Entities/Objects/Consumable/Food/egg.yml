@@ -7,9 +7,7 @@
   abstract: true
   components:
   - type: Tag
-    tags:
-      - Egg
-      - Meat
+    tags: [ Egg, Meat ]
   - type: Edible
     trash:
     - Eggshells
@@ -80,9 +78,7 @@
   - type: Item
     size: Tiny
   - type: Tag
-    tags:
-    - Egg
-    - Trash
+    tags: [ Egg, Trash ]
   - type: SpaceGarbage
 
 # Egg
@@ -124,3 +120,5 @@
     temperature: 344.0 # preserve temperature from the boiling step, TODO: Construction system that doesn't suck.
     heatCapacity: 15000
   - type: TemperatureDamage
+  - type: Tag
+    tags: [ Egg, FinishedMeal, Meat ]

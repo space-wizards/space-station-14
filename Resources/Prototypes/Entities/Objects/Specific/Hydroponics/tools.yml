@@ -5,8 +5,7 @@
   description: It's used for removing weeds or scratching your back.
   components:
   - type: Tag
-    tags:
-    - Hoe
+    tags: [ BotanyTool, Hoe ]
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hoe.rsi
     state: icon
@@ -32,6 +31,8 @@
   id: HydroponicsToolClippers
   description: A tool used to take samples from plants.
   components:
+  - type: Tag
+    tags: [ BotanyTool ]
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/clippers.rsi
     state: icon
@@ -60,6 +61,8 @@
   - type: Tool
     qualities:
     - Slicing
+  - type: Tag
+    tags: [ BotanyTool ]
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/scythe.rsi
     state: icon
@@ -92,8 +95,7 @@
     - Slicing
     - Sawing
   - type: Tag
-    tags:
-    - BotanyHatchet
+    tags: [ BotanyHatchet, BotanyTool ]
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
     state: icon
@@ -120,8 +122,7 @@
   description: A small tool for digging and moving dirt.
   components:
   - type: Tag
-    tags:
-    - BotanyShovel
+    tags: [ BotanyShovel, BotanyTool ]
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/spade.rsi
     state: icon

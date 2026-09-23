@@ -150,6 +150,9 @@
   id: Bot # Targeting whitelist: ChameleonProjector
 
 - type: Tag
+  id: BotanyTool # For borg gardening module whitelisted module slot
+
+- type: Tag
   id: BotanyHatchet # Storage whitelist: ClothingBeltPlant. ItemMapper: ClothingBeltPlant
 
 - type: Tag
@@ -325,7 +328,7 @@
   id: CleanerGrenade # Storage whitelist: ClothingBeltJanitor. ItemMapper: ClothingBeltJanitor
 
 - type: Tag
-  id: ClothMade # SpecialDigestible: OrganMothStomach. Storage whitelist: FoodBoxCloth
+  id: ClothMade # SpecialDigestible: OrganMothStomach. Storage whitelist: FoodBoxCloth, BorgModuleCooking
 
 - type: Tag
   id: ClownMask # ConstructionGraph: Honker, BananaClownMask
@@ -362,6 +365,9 @@
 
 - type: Tag
   id: Cooked # MetamorphRecipe: FoodBurgerCheese, FoodBurgerChicken, FoodBurgerCrab, FoodBurgerDuck
+
+- type: Tag
+  id: FinishedMeal # Storage whitelist: BorgModuleCooking
 
 - type: Tag
   id: CoordinatesDisk # Storage whitelist: DiskCase
@@ -457,6 +463,9 @@
 
 - type: Tag
   id: Diamond # CargoBounty: BountySalvageDiamond
+
+- type: Tag
+  id: Dinnerware # Storage whitelist: BorgModuleCooking
 
 - type: Tag
   id: Dice # Storage whitelist: BorgModuleService, DiceBag, BooksBag
@@ -620,7 +629,7 @@
   id: FreezerElectronics # ConstructionGraph: CrateFreezer, ClosetFreezer
 
 - type: Tag
-  id: Fruit # SpecialDigestible: OrganReptilianStomach. CargoBounty: BountyFruit
+  id: Fruit # SpecialDigestible: OrganReptilianStomach. CargoBounty: BountyFruit. StorageWhitelist: BorgModuleCooking
 
 ## G ##
 
@@ -816,6 +825,9 @@
   id: InnateDontDelete # Basically used as a bool for InnateToolComponent in InnateToolSystem. TODO remove
 
 - type: Tag
+  id: Ingredient # StorageWhitelist: BorgModuleCooking
+
+- type: Tag
   id: InstantDoAfters # Used by SharedDoAfterSystem for tagged entities to skip DoAfters (aghost). TODO remove
 
 - type: Tag
@@ -996,6 +1008,9 @@
 
 - type: Tag
   id: Mouse # CargoBounty: BountyMouse
+
+- type: Tag
+  id: Muffin #  StorageWhitelist: BorgModuleCooking
 
 - type: Tag
   id: Multitool # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering. ConstructionGraph: LogicGate
@@ -1585,6 +1600,9 @@
 - type: Tag
   id: WoodwindInstrument # even more like our atmos
                          # MachineBoard construction: DawInstrumentMachineCircuitboard
+
+- type: Tag
+  id: WrappedCube # StorageWhitelist: BorgModuleCooking
 
 - type: Tag
   id: Wrench # Storage whitelist: BaseClothingBeltEngineering, ClothingBeltJanitor, ClothingBeltMedical.

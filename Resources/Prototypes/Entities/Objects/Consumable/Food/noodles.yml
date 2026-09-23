@@ -17,6 +17,8 @@
       reagents:
       - ReagentId: Nutriment
         Quantity: 30
+  - type: Tag
+    tags: [ FinishedMeal ]
 
 # Noodles
 
@@ -57,8 +59,7 @@
       - ReagentId: Vitamin
         Quantity: 5
   - type: Tag
-    tags:
-    - Fruit # ???
+    tags: [ FinishedMeal, Fruit ] # because tomatos are fruit
 # Tastes like pasta, tomato.
 
 - type: entity
@@ -111,8 +112,7 @@
       - ReagentId: Protein
         Quantity: 5
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
 # Tastes like pasta, meat.
 
 - type: entity
@@ -129,6 +129,8 @@
       - meaty
   - type: Sprite
     state: spesslaw
+  - type: Tag
+    tags: [ FinishedMeal, Meat ]
 # Tastes like pasta, meat.
 
 - type: entity
@@ -152,7 +154,9 @@
         Quantity: 45
       - ReagentId: Vitamin
         Quantity: 12
-# Tastes like pasta, tomato.
+  - type: Tag
+    tags: [ FinishedMeal ]
+# Tastes like pasta, oily, eggplant, and carrot.
 
 - type: entity
   parent: FoodNoodlesBase

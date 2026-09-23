@@ -96,6 +96,8 @@
     sprite: Objects/Consumable/Food/burger.rsi
     shape:
     - 0,0,1,0
+  - type: Tag
+    tags: [ FinishedMeal ]
 
 # Custom Burger Example
 
@@ -145,8 +147,7 @@
   - type: Sprite
     state: appendix
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
   - type: Item
     inhandVisuals:
       left:
@@ -185,8 +186,7 @@
       - ReagentId: Vitamin
         Quantity: 5
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
   - type: Item
     inhandVisuals:
       left:
@@ -225,8 +225,7 @@
       - ReagentId: Vitamin
         Quantity: 5
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal ]
   - type: Item
     inhandVisuals:
       left:
@@ -258,8 +257,7 @@
   - type: Sprite
     state: bearger
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
 
 - type: entity
   parent: [SolutionNormal, FoodBurgerBase]
@@ -295,8 +293,7 @@
   - type: Sprite
     state: bigbite
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
 # Tastes like bun, silver, magic.
 
 - type: entity
@@ -319,8 +316,7 @@
   - type: Sprite
     state: brain
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
 # Tastes like bun, brains.
 
 - type: entity
@@ -346,8 +342,7 @@
       - meaty
       - cat
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
 
 - type: entity
   parent: FoodBurgerBase
@@ -370,8 +365,7 @@
       - ReagentId: Protein
         Quantity: 10
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
   - type: Item
     inhandVisuals:
       left:
@@ -412,8 +406,7 @@
       - ReagentId: Mayo
         Quantity: 2
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
   - type: Item
     inhandVisuals:
       left:
@@ -450,8 +443,7 @@
   - type: Sprite
     state: clown
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
 
 - type: entity
   parent: FoodBurgerBase
@@ -475,8 +467,7 @@
       - ReagentId: Vitamin
         Quantity: 10
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
   - type: Item
     inhandVisuals:
       left:
@@ -497,8 +488,7 @@
   - type: Sprite
     state: crab
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
   - type: Item
     inhandVisuals:
       left:
@@ -566,8 +556,7 @@
       - ReagentId: Sulfur
         Quantity: 4
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
 
 - type: entity
   parent: FoodBurgerBase
@@ -597,8 +586,7 @@
   - type: Sprite
     state: chicken
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
 # Tastes like bun, duck.
 
 - type: entity
@@ -659,8 +647,7 @@
   - type: Sprite
     state: fish
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
 # Tastes like bun, fish.
 
 - type: entity
@@ -698,8 +685,7 @@
       - ReagentId: Vitamin
         Quantity: 12
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
 
 # Tastes like bun, HEAT.
 
@@ -744,9 +730,7 @@
       - ReagentId: Fresium
         Quantity: 15
   - type: Tag
-    tags:
-      - ClothMade
-      - Meat
+    tags: [ ClothMade, FinishedMeal, Meat ]
 # Tastes like bun, ectoplasm.
 
 - type: entity
@@ -762,8 +746,7 @@
   - type: Sprite
     state: human
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
   - type: Item
     inhandVisuals:
       left:
@@ -810,8 +793,7 @@
       - ReagentId: Vitamin
         Quantity: 5
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
 
 - type: entity
   parent: [SolutionNormal, FoodBurgerBase]
@@ -842,8 +824,7 @@
       - ReagentId: Vitamin
         Quantity: 5
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
   - type: Item
     size: Normal
     shape:
@@ -904,8 +885,7 @@
   - type: Sprite
     state: plain
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
   - type: Item
     inhandVisuals:
       left:
@@ -937,8 +917,7 @@
       - ReagentId: Fat
         Quantity: 1
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
   - type: Item
     inhandVisuals:
       left:
@@ -981,8 +960,7 @@
       - ReagentId: Carbon
         Quantity: 1
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
   - type: Item
     inhandVisuals:
       left:
@@ -1099,8 +1077,7 @@
   - type: Sprite
     state: superbite
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
 # Tastes like bun, diabetes.
 
 - type: entity
@@ -1154,8 +1131,7 @@
   - type: Sprite
     state: x
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
   - type: Item
     inhandVisuals:
       left:
@@ -1197,6 +1173,5 @@
   - type: Sprite
     state: mothroach
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
 

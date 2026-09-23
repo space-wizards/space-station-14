@@ -20,6 +20,8 @@
       reagents:
       - ReagentId: Nutriment
         Quantity: 40 # Bonus for complete meal
+  - type: Tag
+    tags: [ FinishedMeal ]
 
 # Meals
 
@@ -87,8 +89,7 @@
   - type: Sprite
     state: fries-carrot
   - type: Tag
-    tags:
-    - CarrotFries
+    tags: [ CarrotFries, FinishedMeal ]
   - type: Solution
     solution:
       reagents:
@@ -218,8 +219,7 @@
   - type: Sprite
     state: eggplantparm
   - type: Tag
-    tags:
-    - Fruit
+    tags: [ FinishedMeal, Fruit ]
 # Tastes like eggplant, cheese.
 
 - type: entity
@@ -267,9 +267,7 @@
       - ReagentId: Vitamin
         Quantity: 5
   - type: Tag
-    tags:
-    - CubanCarp
-    - Meat
+    tags: [ CubanCarp, FinishedMeal, Meat ]
 # Tastes like fish, batter, hot peppers.
 
 - type: entity
@@ -287,8 +285,7 @@
   - type: Sprite
     state: cornedbeef
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
 # Tastes like meat, cabbage.
 
 - type: entity
@@ -308,8 +305,7 @@
   - type: Sprite
     state: bearsteak
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
 # Tastes like meat, salmon.
 
 - type: entity
@@ -328,8 +324,7 @@
   - type: Sprite
     state: pigblanket
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
 # Tastes like meat, butter.
 
 - type: entity
@@ -361,8 +356,7 @@
       - ReagentId: BbqSauce
         Quantity: 10
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
 # Tastes like meat, smokey sauce.
 
 - type: entity
@@ -379,8 +373,7 @@
   - type: Sprite
     state: benedict
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
 # Tastes like eggs, bacon, bun.
 
 - type: entity
@@ -398,8 +391,7 @@
   - type: Sprite
     state: omelette
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
 # Tastes like egg, cheese.
 
 - type: entity
@@ -418,8 +410,7 @@
   - type: Sprite
     state: friedegg
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
 # Tastes like egg, salt, pepper.
 
 - type: entity
@@ -505,8 +496,7 @@
       - ReagentId: TableSalt
         Quantity: 1
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FinishedMeal, Meat ]
 # tastes exotic
 
 - type: entity
@@ -534,8 +524,7 @@
         - ReagentId: Vitamin
           Quantity: 5
     - type: Tag
-      tags:
-      - Meat
+      tags: [ FinishedMeal, Meat ]
 # What do Europeans eat instead of enchiladas? 25.4 millimeter-iladas.
 
 - type: entity
@@ -568,8 +557,7 @@
       - ReagentId: Kelotane
         Quantity: 5
   - type: Tag
-    tags:
-    - Fruit
+    tags: [ FinishedMeal, Fruit ]
 
 - type: entity
   parent: FoodMealBase

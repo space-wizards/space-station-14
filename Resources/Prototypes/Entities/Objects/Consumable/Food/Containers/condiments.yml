@@ -20,6 +20,8 @@
   - type: SpaceGarbage
   - type: StaticPrice
     price: 0
+  - type: Tag
+    tags: [ Ingredient ]
 
 # Packets
 
@@ -385,8 +387,7 @@
   - type: Icon
     state: bottle-coldsauce
   - type: Tag
-    tags:
-      - Coldsauce
+    tags: [ Coldsauce, Ingredient ]
 
 - type: entity
   parent: BaseFoodCondimentBottle
@@ -410,8 +411,7 @@
   - type: Icon
     state: bottle-enzyme
   - type: Tag
-    tags:
-      - Enzyme
+    tags: [ Enzyme, Ingredient ]
 
 - type: entity
   parent: BaseFoodCondimentBottle
@@ -457,8 +457,7 @@
   - type: Icon
     state: bottle-hotsauce
   - type: Tag
-    tags:
-      - Hotsauce
+    tags: [ Hotsauce, Ingredient ]
 
 - type: entity
   parent: BaseFoodCondimentBottle
@@ -482,8 +481,7 @@
   - type: Icon
     state: bottle-ketchup
   - type: Tag
-    tags:
-      - Ketchup
+    tags: [ Ingredient, Ketchup ]
 
 - type: entity
   parent: BaseFoodCondimentBottle
@@ -508,8 +506,7 @@
   - type: Icon
     state: bottle-ketchup
   - type: Tag
-    tags:
-      - BBQsauce
+    tags: [ BBQsauce, Ingredient]
 
 # Shakers
 
@@ -568,8 +565,7 @@
   - type: Icon
     state: shaker-salt
   - type: Tag
-    tags:
-      - SaltShaker
+    tags: [ Ingredient, SaltShaker ]
 
 - type: entity
   parent: BaseFoodShaker
@@ -587,5 +583,4 @@
   - type: Icon
     state: shaker-pepper
   - type: Tag
-    tags:
-      - PepperShaker
+    tags: [ Ingredient, PepperShaker ]

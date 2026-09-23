@@ -205,6 +205,7 @@
     tags:
     - Fruit # Seed of a fruit, you can yell at me
     - Pistachios # Added tag due to CrateServiceGetMore interaction with BountyFruit.
+    - FoodSnack
 
 - type: entity
   name: popcorn
@@ -244,6 +245,7 @@
   - type: Tag
     tags:
     - Fruit
+    - FoodSnack
 
 - type: entity
   parent: FoodSnackBase
@@ -280,8 +282,7 @@
     trash:
     - FoodPacketSusTrash
   - type: Tag
-    tags:
-    - Meat
+    tags: [ FoodSnack, Meat ]
 
 - type: entity
   name: syndi-cakes
