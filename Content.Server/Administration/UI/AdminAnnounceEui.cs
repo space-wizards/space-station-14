@@ -82,15 +82,6 @@ public sealed partial class AdminAnnounceEui : BaseEui
     {
         var announcer = announce.Announcer.Trim();
         var signature = SharedChatSystem.SanitizeAnnouncement(announce.Signature, maxLength);
-
-        if (!string.IsNullOrWhiteSpace(signature))
-        {
-            message = Loc.GetString(
-                "admin-announce-with-signature",
-                ("message", message),
-                ("signature", signature));
-        }
-
         var sound = ValidateSound(announce.Sound);
 
         if (announce.MapId is not { } mapId)
@@ -100,10 +91,9 @@ public sealed partial class AdminAnnounceEui : BaseEui
                 announcer,
                 playSound: sound != null,
                 announcementSound: sound,
-                colorOverride: announce.Color);
-            _adminLog.Add(
-                LogType.AdminCommands,
-                LogImpact.Low,
+                colorOverride: announce.Color,
+                signature: signature);
+            _adminLog.Add(LogType.AdminCommands, LogImpact.Low,
                 $"{Player:actor} sent a global station announcement as {announcer}: {message}");
             return;
         }
@@ -117,10 +107,9 @@ public sealed partial class AdminAnnounceEui : BaseEui
             sender: announcer,
             playSound: sound != null,
             announcementSound: sound,
-            colorOverride: announce.Color);
-        _adminLog.Add(
-            LogType.AdminCommands,
-            LogImpact.Low,
+            colorOverride: announce.Color,
+            signature: signature);
+        _adminLog.Add(LogType.AdminCommands, LogImpact.Low,
             $"{Player:actor} sent a station announcement to map {mapId} as {announcer}: {message}");
     }
 

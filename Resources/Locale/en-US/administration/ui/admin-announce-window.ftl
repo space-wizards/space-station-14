@@ -9,8 +9,6 @@ admin-announce-scope-global = All maps
 admin-announce-palette-title = Announcement Color
 admin-announce-sound-placeholder = Audio Path
 admin-announce-signature-placeholder = Sent by...
-admin-announce-with-signature = {$message}
-    Sent by {$signature}
 
 admin-announce-presets = Presets
 admin-announce-preset-station = Station
