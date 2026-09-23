@@ -100,7 +100,7 @@ public sealed partial class DamageForceSaySystem : EntitySystem
 
     private void OnDamageDealt(Entity<DamageForceSayComponent> ent, ref DamageDealtEvent args)
     {
-        if (!args.AnyPositive || args.Damage.GetTotal() < ent.Comp.DamageThreshold)
+        if (!args.AnyPositive || args.Total < ent.Comp.DamageThreshold)
             return;
 
         if (ent.Comp.ValidDamageGroups != null)
