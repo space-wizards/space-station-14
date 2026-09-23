@@ -48,13 +48,11 @@ public sealed partial class VehicleSystem : EntitySystem
 
     /// <remarks>
     /// We subscribe to BeforeDamageChangedEvent so that we can access the damage value before the container is applied.
+    /// TODO: this doesn't respect Cancelled at all, this isn't ordered vs. anything else...
     /// </remarks>
     [SubscribeLocalEvent]
     private void OnBeforeDamageChanged(Entity<VehicleComponent> ent, ref BeforeDamageChangedEvent args)
     {
-        if (args.Cancelled)
-            return;
-
         if (!ent.Comp.TransferDamage || !args.Damage.AnyPositive() || ent.Comp.Operator is not { } operatorUid)
             return;
 
