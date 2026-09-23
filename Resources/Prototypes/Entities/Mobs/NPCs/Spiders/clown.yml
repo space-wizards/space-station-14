@@ -15,14 +15,6 @@
     refineResult:
     - id: MaterialBananium1
       amount: 1
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: idle
-      Critical:
-        Base: dead
-      Dead:
-        Base: dead
   - type: MobThresholds
     thresholds:
       0: Alive

@@ -26,6 +26,14 @@
     thresholds:
       0: Alive
       90: Dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: idle
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
   - type: SolutionManager
     solutions:
     - SolutionVenomSpider
@@ -95,14 +103,6 @@
     noMovementLayers:
       movement:
         state: idle
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: idle
-      Critical:
-        Base: dead
-      Dead:
-        Base: dead
 
 - type: entity
   parent: [SolutionWeapon, SolutionTiny]

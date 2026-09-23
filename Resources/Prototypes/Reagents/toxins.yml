@@ -731,7 +731,7 @@
           inverted: true
         walkSpeedModifier: 0.4
         sprintSpeedModifier: 0.4
-      - !type:ModifyBleed # thickens the blood, preventing venom from being excreted into blood puddles by bleeding from pierce damage injection.  
+      - !type:ModifyBleed # thickens the blood, preventing venom from being excreted into blood puddles by bleeding from pierce damage injection.
         amount: -0.25
 
 - type: reagent
