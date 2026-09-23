@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.AttachedVisuals;
 
 /// <summary>
-/// This is used for...
+/// This is used for handling sprite visuals for items inside containers
 /// </summary>
 [RegisterComponent]
 public sealed partial class AttachedVisualsComponent : Component
@@ -35,6 +35,11 @@ public sealed partial class AttachedVisualsComponent : Component
     public readonly Dictionary<EntityUid, List<AttachedLayer>> RevealedLayers = new();
 }
 
+/// <summary>
+/// Defines sprite layers to show when this item is on a specific attachment point.
+/// Also allows you to define sub-attachments, attachment points this item provides
+/// only when it is attached to this point.
+/// </summary>
 [DataDefinition]
 public sealed partial class AttachedVisualLayers
 {
@@ -52,10 +57,13 @@ public sealed partial class AttachedVisualLayers
 }
 
 /// <summary>
-/// Defines an attachment
+/// Defines a visual attachment slot. Things
+/// Maps to a specific Container ID. You can have multiple attachments per container slot.
+/// For example, the "shoes" container on a Urist can have attachments called "Boots" and "Shoes"
+/// Those attachments can have different orders, so you can have boots over suits, but shoes under suits.
 /// </summary>
 [DataDefinition]
-public sealed partial class AttachmentDefinition: IComparable<AttachmentDefinition>
+public sealed partial class AttachmentDefinition : IComparable<AttachmentDefinition>
 {
     /// <summary>
     /// Container ID that this attachment maps to
@@ -96,17 +104,13 @@ public sealed partial class AttachmentDefinition: IComparable<AttachmentDefiniti
         if (other is null)
             return 1;
 
-        return Order.CompareTo(other.Order);
+        var orderComparison = Order.CompareTo(other.Order);
+        if (orderComparison != 0)
+            return orderComparison;
+
+        return Attachment.CompareTo(other.Attachment);
     }
 }
-
-[Prototype]
-public sealed partial class VisualAttachmentPrototype : IPrototype
-{
-    [IdDataField]
-    public string ID { get; private set; } = string.Empty;
-}
-
 
 public readonly record struct AttachedLayer
 {

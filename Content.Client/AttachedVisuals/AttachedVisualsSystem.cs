@@ -154,10 +154,10 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
 
             // Select displacement maps
             var displacementData = attachment.DisplacementData;
-            var equipeeSex = CompOrNull<HumanoidProfileComponent>(ent)?.Sex;
-            if (equipeeSex != null
+            var wearerSex = CompOrNull<HumanoidProfileComponent>(ent)?.Sex;
+            if (wearerSex != null
                 && attachment.SexedDisplacementData != null
-                && attachment.SexedDisplacementData.TryGetValue(equipeeSex.Value, out var sexedDisplacementData))
+                && attachment.SexedDisplacementData.TryGetValue(wearerSex.Value, out var sexedDisplacementData))
             {
                 displacementData = sexedDisplacementData;
             }

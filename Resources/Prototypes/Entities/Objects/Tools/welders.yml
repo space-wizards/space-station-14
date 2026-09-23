@@ -66,11 +66,13 @@
         layers:
         - state: inhand-left-flame
           map: [ "enum.ToggleableVisuals.Layer" ]
+          shader: unshaded
           visible: false
       InhandRight:
         layers:
         - state: inhand-right-flame
           map: [ "enum.ToggleableVisuals.Layer" ]
+          shader: unshaded
           visible: false
   - type: UseDelay
   - type: MeleeWeapon
