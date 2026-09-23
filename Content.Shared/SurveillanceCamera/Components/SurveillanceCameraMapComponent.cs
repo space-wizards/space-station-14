@@ -1,5 +1,7 @@
 using System.Numerics;
+using Content.Shared.DeviceNetwork;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.SurveillanceCamera.Components;
@@ -46,7 +48,7 @@ public partial struct CameraMarker
     /// Subnet the camera is connected to.
     /// </summary>
     [DataField]
-    public string Subnet;
+    public ProtoId<DeviceFrequencyPrototype> Subnet;
 
     /// <summary>
     /// Should the camera be displayed on the camera map.

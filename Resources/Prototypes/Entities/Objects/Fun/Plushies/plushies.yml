@@ -385,6 +385,10 @@
     sprite: Objects/Fun/Plushies/lizard.rsi
     slots:
     - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.03"
   - type: Speech
     speechVerb: Reptilian # for pais (In the secret stash)
   - type: FoodSequenceElement
@@ -478,6 +482,7 @@
       head:
       - state: rainbowlizardplush-equipped-HELMET
         shader: unshaded
+        offset: "0, 0.03"
   - type: Item
     inhandVisuals:
       left:
@@ -533,7 +538,7 @@
     clothingVisuals:
       head:
       - state: spacelizard-equipped-HELMET
-        offset: "0, 0.03"
+        offset: "0, 0.09"
   - type: FoodSequenceElement
     entries:
       CottonBurger: SpaceLizardPlushie
@@ -583,6 +588,10 @@
     equippedPrefix: plushielizardinversed
     slots:
     - HEAD
+    clothingVisuals:
+      head:
+      - state: plushielizardinversed-equipped-HELMET
+        offset: "0, 0.03"
   - type: FoodSequenceElement
     entries:
       CottonBurger: InversedLizardPlushie
@@ -1205,7 +1214,7 @@
     sprite: Objects/Fun/Plushies/sheep.rsi
     state: sheeptoy
   - type: Item
-    sprite: Objects/Fun/Plushies/carp.rsi
+    sprite: Objects/Fun/Plushies/sheep.rsi
     heldPrefix: sheeptoy
     storedRotation: -90
   - type: EmitSoundOnUse
@@ -1245,6 +1254,9 @@
   - type: Sprite
     sprite: Objects/Fun/Plushies/sheep.rsi
     state: spacesheeptoy
+  - type: Item
+    sprite: Objects/Fun/Plushies/sheep.rsi
+    heldPrefix: spacesheeptoy
   - type: FoodSequenceElement
     entries:
       CottonBurger: SheepSpacePlushie

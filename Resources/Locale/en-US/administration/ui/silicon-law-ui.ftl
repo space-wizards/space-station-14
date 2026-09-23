@@ -1,4 +1,4 @@
-﻿silicon-law-ui-verb = Manage Laws
+silicon-law-ui-verb = Manage Laws
 silicon-law-ui-title = Admin Edit: Silicon Laws
 silicon-law-ui-new-law = New Law
 silicon-law-ui-save = Save Changes

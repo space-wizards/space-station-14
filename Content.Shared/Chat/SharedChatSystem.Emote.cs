@@ -96,7 +96,7 @@ public abstract partial class SharedChatSystem
         if (didEmote && emote.ChatMessages.Count != 0)
         {
             // not all emotes are loc'd, but for the ones that are we pass in entity
-            var action = Loc.GetString(_random.Pick(emote.ChatMessages), ("entity", source));
+            var action = Loc.GetString(Random.Pick(emote.ChatMessages), ("entity", source));
             SendEntityEmote(source, action, range, nameOverride, hideLog: hideLog, checkEmote: false, ignoreActionBlocker: ignoreActionBlocker);
         }
 
@@ -156,7 +156,10 @@ public abstract partial class SharedChatSystem
 
         // optional override params > general params for all sounds in set > individual sound params
         var param = audioParams ?? proto.GeneralParams ?? sound.Params;
-        _audio.PlayPredicted(sound, uid, uid, param);
+
+        if (_net.IsServer) // TODO: replace this call with PlayPredicted when chat is predicted.
+            _audio.PlayPvs(sound, uid, param);
+
         return true;
     }
     /// <summary>
