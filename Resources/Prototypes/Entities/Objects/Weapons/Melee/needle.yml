@@ -7,6 +7,14 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/needle.rsi
     state: icon
+  - type: Appearance
+  - type: ToggleableVisuals # Add support for multiple layers
+    spriteLayer: blade
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
