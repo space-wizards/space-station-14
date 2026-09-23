@@ -21,6 +21,7 @@ public abstract partial class SharedItemSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         ProtoMan.PrototypesReloaded += OnPrototypesReloaded;
 
         SubscribeLocalEvent<ItemComponent, GetVerbsEvent<InteractionVerb>>(AddPickupVerb);
@@ -41,11 +42,8 @@ public abstract partial class SharedItemSystem : EntitySystem
 
     public void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
     {
-        if (args.WasModified<ItemSizePrototype>()))
-            || (args.Removed?.ContainsKey(typeof(ItemSizePrototype)) ?? false))
-        {
+        if (args.WasModified<ItemSizePrototype>())
             UpdatePrototypeCache();
-        }
     }
 
     private void UpdatePrototypeCache()
@@ -198,12 +196,12 @@ public abstract partial class SharedItemSystem : EntitySystem
     /// </summary>
     /// <returns>null if the size is the smallest</returns>
     [PublicAPI]
-    public ItemSizePrototype? GetSizeSmaller(ItemSizePrototype sizePrototype)
+    public ItemSizePrototype? GetSizeSmaller(ProtoId<ItemSizePrototype> size)
     {
-        var index = _sortedSizes.IndexOf(sizePrototype);
+        var index = _sortedSizes.FindIndex(sizePrototype => sizePrototype.ID == size);
         if (index == -1)
         {
-            Log.Error($"Size prototype: {sizePrototype} not found in _sortedSizes");
+            Log.Error($"Size prototype: {size} not found in _sortedSizes");
             return null;
         }
 
@@ -215,12 +213,12 @@ public abstract partial class SharedItemSystem : EntitySystem
     /// </summary>
     /// <returns>null if the size is the largest</returns>
     [PublicAPI]
-    public ItemSizePrototype? GetSizeBigger(ItemSizePrototype sizePrototype)
+    public ItemSizePrototype? GetSizeBigger(ProtoId<ItemSizePrototype> size)
     {
-        var index = _sortedSizes.IndexOf(sizePrototype);
+        var index = _sortedSizes.FindIndex(sizePrototype => sizePrototype.ID == size);
         if (index == -1)
         {
-            Log.Error($"Size prototype: {sizePrototype} not found in _sortedSizes");
+            Log.Error($"Size prototype: {size} not found in _sortedSizes");
             return null;
         }
 

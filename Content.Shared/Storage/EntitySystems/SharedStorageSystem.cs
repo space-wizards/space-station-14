@@ -1802,7 +1802,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
 
         // if there is no max item size specified, the value used
         // is one below the item size of the storage entity.
-        return ItemSystem.GetSizeSmaller(ItemSystem.GetSizePrototype(item.Size)) ?? ItemSystem.GetSmallestSize();
+        return ItemSystem.GetSizeSmaller(item.Size) ?? ItemSystem.GetSmallestSize();
     }
 
     /// <summary>

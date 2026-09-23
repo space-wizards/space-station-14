@@ -24,6 +24,7 @@ namespace Content.Shared.Storage.Components
     {
         /// <summary>
         ///     Max item size that can be inserted into secret stash.
+        ///     If null, uses one size smaller than the stash's <see cref="ItemComponent"/> size.
         /// </summary>
         [DataField, AutoNetworkedField]
         public ProtoId<ItemSizePrototype>? MaxItemSize;
