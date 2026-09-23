@@ -1,8 +1,7 @@
-using Content.Server.GameTicking.Rules;
 using Content.Shared.Antag;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Spawners.Components;
+namespace Content.Shared.Spawners.Components;
 
 /// <summary>
 /// Defines a list of antag prototypes which can spawn at a given spawn point with <see cref="RuleGridsSystem"/>

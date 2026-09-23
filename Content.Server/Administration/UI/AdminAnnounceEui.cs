@@ -72,11 +72,7 @@ public sealed partial class AdminAnnounceEui : BaseEui
 
     private void AnnounceServer(AdminAnnounceEuiMsg.DoAnnounce announce, string message)
     {
-        _chatManager.DispatchServerAnnouncement(message, announce.Color);
-        _adminLog.Add(
-            LogType.AdminCommands,
-            LogImpact.Low,
-            $"{Player:actor} sent a server announcement: {message}");
+        _chatManager.DispatchServerAnnouncement(message, announce.Color, sender: Player);
     }
 
     private void AnnounceStation(

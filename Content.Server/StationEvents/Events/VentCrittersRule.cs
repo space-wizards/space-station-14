@@ -7,21 +7,24 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
+/// <summary>
+/// Handler for events that spawn random reagent foam around a vent.
+/// </summary>
+/// <remarks>
+/// Do NOT copy paste this class to make a new mob event, create a new game rule entity using <see cref="VentCrittersRuleComponent"/>.
+/// </remarks>
 public sealed partial class VentCrittersRule : StationEventSystem<VentCrittersRuleComponent>
 {
-    /*
-     * DO NOT COPY PASTE THIS TO MAKE YOUR MOB EVENT.
-     * USE THE PROTOTYPE.
-     */
-
-    protected override void Started(EntityUid uid, VentCrittersRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    protected override void Started(Entity<VentCrittersRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
     {
-        base.Started(uid, component, gameRule, args);
+        base.Started(ent, ref args);
 
-        if (!Station.TryGetRandomStation(out var station))
+        if (!Station.TryGetRandomStation<StationEventEligibleComponent>(out var station))
         {
             return;
         }
+
+        var critterRule = ent.Comp1;
 
         var locations = EntityQueryEnumerator<VentCritterSpawnLocationComponent, TransformComponent>();
         var validLocations = new List<EntityCoordinates>();
@@ -33,26 +36,26 @@ public sealed partial class VentCrittersRule : StationEventSystem<VentCrittersRu
             if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == station.Value.Owner)
             {
                 validLocations.Add(transform.Coordinates);
-                foreach (var spawn in EntitySpawnCollection.GetSpawns(component.Entries, RobustRandom))
+                foreach (var spawn in EntitySpawnCollection.GetSpawns(critterRule.Entries, RobustRandom))
                 {
                     Spawn(spawn, transform.Coordinates);
                 }
             }
         }
 
-        if (component.SpecialEntries.Count == 0 || validLocations.Count == 0)
+        if (critterRule.SpecialEntries.Count == 0 || validLocations.Count == 0)
         {
             return;
         }
 
         // guaranteed spawn
-        var specialEntry = RobustRandom.Pick(component.SpecialEntries);
+        var specialEntry = RobustRandom.Pick(critterRule.SpecialEntries);
         var specialSpawn = RobustRandom.Pick(validLocations);
         Spawn(specialEntry.PrototypeId, specialSpawn);
 
         foreach (var location in validLocations)
         {
-            foreach (var spawn in EntitySpawnCollection.GetSpawns(component.SpecialEntries, RobustRandom))
+            foreach (var spawn in EntitySpawnCollection.GetSpawns(critterRule.SpecialEntries, RobustRandom))
             {
                 Spawn(spawn, location);
             }

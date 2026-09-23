@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 289.0.0
+  engineVersion: 290.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/10/2026 23:17:57
+  time: 09/22/2026 18:29:32
   entityCount: 23929
 maps:
 - 5350
@@ -12,9 +12,6 @@ grids:
 - 30
 orphans: []
 nullspace:
-- 11787
-- 11788
-- 11789
 - 11790
 - 11791
 - 11792
@@ -30,6 +27,9 @@ nullspace:
 - 20609
 - 20610
 - 20611
+- 20984
+- 21588
+- 21589
 - 23196
 - 23890
 - 23891
@@ -159,7 +159,7 @@ entities:
           version: 7
         -1,1:
           ind: -1,1
-          tiles: LgAAAAAAAH4AAAAAAAAfAAAAAAAAHwAAAAAAAH4AAAAAAAB6AAAAAAAAegAAAAAAAHoAAAAAAAAfAAAAAAAAfgAAAAAAAGwAAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAC4AAAAAAAB+AAAAAAAAHwAAAAAAAH4AAAAAAAB+AAAAAAAAegAAAAAAAHoAAAAAAAB6AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAHwAAAAAAAHoAAAAAAAB6AAAAAAAAegAAAAAAAHoAAAAAAABsAAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAGwAAAAAAAB+AAAAAAAAbAAAAAAAAGwAAAAAAABsAAAAAAAAfgAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAB+AAAAAAAAbAAAAAAAAH4AAAAAAAB+AAAAAAAAHwAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAB8AAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAAfAAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAHwAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAAwAAAAAAAAMAAAAAAMADAAAAAAEAAwAAAAAAwAMAAAAAAQADAAAAAAFAAwAAAAABAB+AAAAAAAAfgAAAAAAAB8AAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAB+AAAAAAAAbAAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAPAAAAAAAAH4AAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAHwAAAAAAAB8AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAAfAAAAAAAAHwAAAAAAAH4AAAAAAAB+AAAAAAAAPAAAAAAAAB8AAAAAAAAfAAAAAAAAfgAAAAAAAH0AAAAAAAB9AAAAAAAAfQAAAAAAAH0AAAAAAgB9AAAAAAAAfQAAAAACAH0AAAAAAgB+AAAAAAAAHwAAAAAAAB8AAAAAAAB+AAAAAAAAPAAAAAAAADwAAAAAAAAfAAAAAAAAHwAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAB8AAAAAAAAfAAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAHwAAAAAAAB8AAAAAAAB+AAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAH4AAAAAAAAfAAAAAAAAHwAAAAAAAH4AAAAAAAAfAAAAAAAAegAAAAAAAA==
+          tiles: LgAAAAAAAH4AAAAAAAAfAAAAAAAAHwAAAAAAAH4AAAAAAAB6AAAAAAAAegAAAAAAAHoAAAAAAAAfAAAAAAAAfgAAAAAAAGwAAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAC4AAAAAAAB+AAAAAAAAHwAAAAAAAH4AAAAAAAB+AAAAAAAAegAAAAAAAHoAAAAAAAB6AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAHwAAAAAAAHoAAAAAAAB6AAAAAAAAegAAAAAAAHoAAAAAAABsAAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAGwAAAAAAAB+AAAAAAAAbAAAAAAAAGwAAAAAAABsAAAAAAAAfgAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAB+AAAAAAAAbAAAAAAAAH4AAAAAAAB+AAAAAAAAHwAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAB8AAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAAfAAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAHwAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAAwAAAAAAAAMAAAAAAMADAAAAAAEAAwAAAAAAwAMAAAAAAQADAAAAAAFAAwAAAAABAB+AAAAAAAAfgAAAAAAAB8AAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAB+AAAAAAAAbAAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAADwAAAAAAAB+AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAPAAAAAAAADwAAAAAAAA8AAAAAAAAHwAAAAAAAB8AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAAfAAAAAAAAHwAAAAAAAH4AAAAAAAB+AAAAAAAAPAAAAAAAAB8AAAAAAAAfAAAAAAAAfgAAAAAAAH0AAAAAAAB9AAAAAAAAfQAAAAAAAH0AAAAAAgB9AAAAAAAAfQAAAAACAH0AAAAAAgB+AAAAAAAAHwAAAAAAAB8AAAAAAAB+AAAAAAAAPAAAAAAAADwAAAAAAAAfAAAAAAAAHwAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAfgAAAAAAAB8AAAAAAAAfAAAAAAAAfgAAAAAAAH4AAAAAAAB+AAAAAAAAHwAAAAAAAB8AAAAAAAB+AAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAH4AAAAAAAAfAAAAAAAAHwAAAAAAAH4AAAAAAAAfAAAAAAAAegAAAAAAAA==
           version: 7
         -2,1:
           ind: -2,1
@@ -790,7 +790,7 @@ entities:
           0,6:
             0: 65520
           -1,6:
-            0: 65528
+            0: 65524
           0,7:
             0: 61680
           -1,7:
@@ -988,7 +988,7 @@ entities:
           -15,0:
             0: 4352
           -15,1:
-            0: 64785
+            0: 64529
           -15,2:
             0: 3279
           -15,3:
@@ -997,7 +997,7 @@ entities:
             0: 52428
             2: 4368
           -14,1:
-            0: 64392
+            0: 62344
           -14,2:
             0: 36863
           -14,3:
@@ -1011,7 +1011,7 @@ entities:
           -13,-4:
             2: 34952
           -12,-3:
-            0: 65518
+            0: 61166
           -13,-3:
             2: 8
             0: 65280
@@ -1399,7 +1399,7 @@ entities:
             0: 65288
             2: 2
           1,10:
-            0: 65520
+            0: 65522
           1,11:
             0: 15
             3: 3840
@@ -2930,9 +2930,6 @@ entities:
       chunkHistory: {}
     - type: ChunkContainer
       chunkEntities:
-      - 11787
-      - 11788
-      - 11789
       - 11790
       - 11791
       - 11792
@@ -2948,6 +2945,9 @@ entities:
       - 20609
       - 20610
       - 20611
+      - 20984
+      - 21588
+      - 21589
       - 23196
       - 23890
       - 23891
@@ -5461,6 +5461,12 @@ entities:
       pos: -41.5,34.5
 - proto: AirlockEngineeringGlassLocked
   entities:
+  - uid: 204
+    components:
+    - type: Transform
+      parent: 30
+      rot: 3.141592653589793 rad
+      pos: 4.5,24.5
   - uid: 4827
     components:
     - type: Transform
@@ -5512,19 +5518,10 @@ entities:
       parent: 30
       rot: 3.141592653589793 rad
       pos: -17.5,-45.5
-  - uid: 20984
-    components:
-    - type: MetaData
-      name: Technical Storage
-    - type: Transform
-      parent: 30
-      pos: 4.5,24.5
 - proto: AirlockEngineeringLocked
   entities:
-  - uid: 204
+  - uid: 302
     components:
-    - type: MetaData
-      name: EVA Storage
     - type: Transform
       parent: 30
       rot: 1.5707963267948966 rad
@@ -5657,6 +5654,13 @@ entities:
       parent: 30
       rot: 1.5707963267948966 rad
       pos: -39.5,-24.5
+- proto: AirlockEVAGlassLocked
+  entities:
+  - uid: 381
+    components:
+    - type: Transform
+      parent: 30
+      pos: -1.5,24.5
 - proto: AirlockExternal
   entities:
   - uid: 841
@@ -6703,13 +6707,6 @@ entities:
     - type: Transform
       parent: 30
       pos: -10.5,-15.5
-- proto: AirlockHeadOfPersonnelGlassLocked
-  entities:
-  - uid: 766
-    components:
-    - type: Transform
-      parent: 30
-      pos: -0.5,24.5
 - proto: AirlockHeadOfPersonnelLocked
   entities:
   - uid: 5407
@@ -6918,6 +6915,13 @@ entities:
       parent: 30
       rot: 1.5707963267948966 rad
       pos: -26.5,-41.5
+- proto: AirlockMaintEVALocked
+  entities:
+  - uid: 718
+    components:
+    - type: Transform
+      parent: 30
+      pos: -1.5,18.5
 - proto: AirlockMaintGlass
   entities:
   - uid: 8303
@@ -6934,13 +6938,6 @@ entities:
     - type: Transform
       parent: 30
       pos: 46.5,40.5
-- proto: AirlockMaintHOPLocked
-  entities:
-  - uid: 772
-    components:
-    - type: Transform
-      parent: 30
-      pos: -1.5,18.5
 - proto: AirlockMaintHydroLocked
   entities:
   - uid: 310
@@ -7068,7 +7065,7 @@ entities:
       pos: 34.5,45.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -59275.88
+      secondsUntilStateChange: -59862.62
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -12762,11 +12759,6 @@ entities:
       pos: -28.5,10.5
 - proto: BlastDoor
   entities:
-  - uid: 953
-    components:
-    - type: Transform
-      parent: 30
-      pos: -2.5,24.5
   - uid: 3512
     components:
     - type: Transform
@@ -49302,7 +49294,7 @@ entities:
       pos: -56.515633,10.561228
 - proto: ChunkEntity
   entities:
-  - uid: 11787
+  - uid: 11790
     components:
     - type: ChunkEntity
       root: 30
@@ -49568,7 +49560,7 @@ entities:
             1280: -44,32
             2183: -42,32
             2184: -45,32
-  - uid: 11788
+  - uid: 11791
     components:
     - type: ChunkEntity
       root: 30
@@ -49620,7 +49612,7 @@ entities:
             1284: -52,32
             1285: -53,32
             1292: -54,32
-  - uid: 11789
+  - uid: 11792
     components:
     - type: ChunkEntity
       root: 30
@@ -49804,7 +49796,7 @@ entities:
             1622: 28,16
             1630: 27,16
             1631: 26,16
-  - uid: 11790
+  - uid: 11793
     components:
     - type: ChunkEntity
       root: 30
@@ -50053,7 +50045,7 @@ entities:
             1606: 9,-17
             1607: 8,-17
             1608: 7,-17
-  - uid: 11791
+  - uid: 11794
     components:
     - type: ChunkEntity
       root: 30
@@ -50148,7 +50140,7 @@ entities:
             1181: 19,-21
             2802: 16,-19
             2803: 17,-19
-  - uid: 11792
+  - uid: 11864
     components:
     - type: ChunkEntity
       root: 30
@@ -50177,7 +50169,7 @@ entities:
             color: '#FFFFFFFF'
           decals:
             3387: 21,-37
-  - uid: 11793
+  - uid: 12012
     components:
     - type: ChunkEntity
       root: 30
@@ -50508,7 +50500,7 @@ entities:
             2358: -31,-3
             2359: -31,-2
             2360: -31,-1
-  - uid: 11794
+  - uid: 12083
     components:
     - type: ChunkEntity
       root: 30
@@ -50591,7 +50583,7 @@ entities:
             color: '#FFFFFFFF'
           decals:
             1119: 32,-12
-  - uid: 11864
+  - uid: 20341
     components:
     - type: ChunkEntity
       root: 30
@@ -50756,7 +50748,7 @@ entities:
             color: '#FFFFFFFF'
           decals:
             1600: 0,15
-  - uid: 12012
+  - uid: 20600
     components:
     - type: ChunkEntity
       root: 30
@@ -50961,7 +50953,7 @@ entities:
             color: '#FFFFFFFF'
           decals:
             3062: -37,22
-  - uid: 12083
+  - uid: 20606
     components:
     - type: ChunkEntity
       root: 30
@@ -51169,7 +51161,7 @@ entities:
             color: '#FFFFFFFF'
           decals:
             3065: -37,12
-  - uid: 20341
+  - uid: 20607
     components:
     - type: ChunkEntity
       root: 30
@@ -51352,7 +51344,7 @@ entities:
             1289: -50,29
             1290: -49,29
             1291: -54,29
-  - uid: 20600
+  - uid: 20609
     components:
     - type: ChunkEntity
       root: 30
@@ -51472,7 +51464,7 @@ entities:
             1295: -24,52
             1296: -25,52
             1297: -26,52
-  - uid: 20606
+  - uid: 20610
     components:
     - type: ChunkEntity
       root: 30
@@ -51625,7 +51617,7 @@ entities:
             color: '#FFFFFFFF'
           decals:
             1336: -22,30
-  - uid: 20607
+  - uid: 20611
     components:
     - type: ChunkEntity
       root: 30
@@ -51905,7 +51897,7 @@ entities:
             7: 0,21
             8: 0,22
             9: 0,23
-  - uid: 20609
+  - uid: 20984
     components:
     - type: ChunkEntity
       root: 30
@@ -52017,7 +52009,7 @@ entities:
             1436: 4,34
             1437: 5,34
             1438: 2,34
-  - uid: 20610
+  - uid: 21588
     components:
     - type: ChunkEntity
       root: 30
@@ -52329,7 +52321,7 @@ entities:
             3073: -5,-3
             3074: -1,-3
             3110: -5,-12
-  - uid: 20611
+  - uid: 21589
     components:
     - type: ChunkEntity
       root: 30
@@ -99447,11 +99439,6 @@ entities:
     - type: Transform
       parent: 30
       pos: -3.5,24.5
-  - uid: 718
-    components:
-    - type: Transform
-      parent: 30
-      pos: -1.5,24.5
   - uid: 719
     components:
     - type: Transform
@@ -99472,6 +99459,11 @@ entities:
     - type: Transform
       parent: 30
       pos: 40.5,50.5
+  - uid: 772
+    components:
+    - type: Transform
+      parent: 30
+      pos: -0.5,24.5
   - uid: 784
     components:
     - type: Transform
@@ -99527,6 +99519,11 @@ entities:
     - type: Transform
       parent: 30
       pos: -60.5,7.5
+  - uid: 953
+    components:
+    - type: Transform
+      parent: 30
+      pos: -2.5,24.5
   - uid: 963
     components:
     - type: Transform
@@ -109422,18 +109419,18 @@ entities:
     - type: Transform
       parent: 30
       pos: -10.241633,-47.32097
-- proto: JetpackMini
+- proto: JetpackMiniFilled
   entities:
-  - uid: 21588
+  - uid: 11788
     components:
     - type: Transform
       parent: 30
-      pos: -2.5235682,19.479452
-  - uid: 21589
+      pos: -2.5342598,19.467384
+  - uid: 11789
     components:
     - type: Transform
       parent: 30
-      pos: -2.5235682,19.807577
+      pos: -2.562038,19.77294
 - proto: JetpackSecurityFilled
   entities:
   - uid: 1984
@@ -119315,11 +119312,6 @@ entities:
     - type: Transform
       parent: 30
       pos: 0.5,24.5
-  - uid: 302
-    components:
-    - type: Transform
-      parent: 30
-      pos: -1.5,24.5
   - uid: 303
     components:
     - type: Transform
@@ -119360,6 +119352,11 @@ entities:
     - type: Transform
       parent: 30
       pos: -64.5,12.5
+  - uid: 766
+    components:
+    - type: Transform
+      parent: 30
+      pos: -0.5,24.5
   - uid: 843
     components:
     - type: Transform
@@ -121355,6 +121352,11 @@ entities:
     - type: Transform
       parent: 30
       pos: 33.5,-12.5
+  - uid: 11787
+    components:
+    - type: Transform
+      parent: 30
+      pos: -2.5,24.5
   - uid: 11867
     components:
     - type: Transform
@@ -123964,16 +123966,6 @@ entities:
       pos: -18.5,41.5
 - proto: SignalButton
   entities:
-  - uid: 381
-    components:
-    - type: Transform
-      parent: 30
-      pos: -1.5,22.5
-    - type: DeviceLinkSource
-      linkedPorts:
-        953:
-        - - Pressed
-          - Toggle
   - uid: 384
     components:
     - type: Transform
@@ -132835,7 +132827,6 @@ entities:
     components:
     - type: Transform
       parent: 30
-      rot: 1.5707963267948966 rad
       pos: -3.5,-35.5
   - uid: 5353
     components:
@@ -133001,7 +132992,6 @@ entities:
     components:
     - type: Transform
       parent: 30
-      rot: 1.5707963267948966 rad
       pos: -3.5,-34.5
   - uid: 9658
     components:
@@ -133107,7 +133097,6 @@ entities:
     components:
     - type: Transform
       parent: 30
-      rot: 1.5707963267948966 rad
       pos: -3.5,-33.5
 - proto: TableReinforcedGlass
   entities:
@@ -133222,25 +133211,21 @@ entities:
     components:
     - type: Transform
       parent: 30
-      rot: 1.5707963267948966 rad
       pos: -0.5,9.5
   - uid: 563
     components:
     - type: Transform
       parent: 30
-      rot: 1.5707963267948966 rad
       pos: -5.5,9.5
   - uid: 564
     components:
     - type: Transform
       parent: 30
-      rot: 1.5707963267948966 rad
       pos: -5.5,8.5
   - uid: 567
     components:
     - type: Transform
       parent: 30
-      rot: 1.5707963267948966 rad
       pos: -0.5,8.5
   - uid: 572
     components:
@@ -133571,7 +133556,6 @@ entities:
     components:
     - type: Transform
       parent: 30
-      rot: 3.141592653589793 rad
       pos: 0.5,6.5
   - uid: 6886
     components:
@@ -133622,7 +133606,6 @@ entities:
     components:
     - type: Transform
       parent: 30
-      rot: 3.141592653589793 rad
       pos: -62.5,-65.5
   - uid: 11353
     components:
@@ -141130,7 +141113,6 @@ entities:
     components:
     - type: Transform
       parent: 30
-      rot: 1.5707963267948966 rad
       pos: -23.5,28.5
   - uid: 12781
     components:
@@ -141166,7 +141148,6 @@ entities:
     components:
     - type: Transform
       parent: 30
-      rot: 1.5707963267948966 rad
       pos: -25.5,38.5
   - uid: 12846
     components:
@@ -143007,25 +142988,21 @@ entities:
     components:
     - type: Transform
       parent: 30
-      rot: 1.5707963267948966 rad
       pos: -26.5,40.5
   - uid: 19683
     components:
     - type: Transform
       parent: 30
-      rot: 1.5707963267948966 rad
       pos: -25.5,40.5
   - uid: 19684
     components:
     - type: Transform
       parent: 30
-      rot: 1.5707963267948966 rad
       pos: -27.5,40.5
   - uid: 19693
     components:
     - type: Transform
       parent: 30
-      rot: 1.5707963267948966 rad
       pos: -28.5,40.5
   - uid: 19784
     components:
