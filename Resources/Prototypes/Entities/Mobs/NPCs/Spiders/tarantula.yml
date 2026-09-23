@@ -1,30 +1,15 @@
 - type: entity
-  name: tarantula
-  parent: MobSpiderBase
+  parent: MobSpiderAnimated
   id: MobGiantSpider
+  name: tarantula
   description: Widely recognized to be the literal worst thing in existence.
   components:
   - type: Sprite
     drawdepth: Mobs
+    sprite: Mobs/Animals/Spiders/tarantulaspider.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
-      state: tarantula
-      sprite: Mobs/Animals/spider.rsi
-  - type: SpriteMovement
-    movementLayers:
-      movement:
-        state: tarantula-moving
-    noMovementLayers:
-      movement:
-        state: tarantula
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: tarantula
-      Critical:
-        Base: tarantula_dead
-      Dead:
-        Base: tarantula_dead
+      state: idle
   - type: MeleeWeapon
     altDisarm: false
     angle: 0

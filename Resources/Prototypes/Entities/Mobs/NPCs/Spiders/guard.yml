@@ -1,31 +1,16 @@
 # Guard Spider
 - type: entity
-  parent: MobSpiderBase
+  parent: MobSpiderAnimated
   id: MobGiantSpiderGuard
   name: guard spider
   description: A stockier spider that stands its ground and blocks escape routes with webs.
   components:
   - type: Sprite
     drawdepth: Mobs
+    sprite: Mobs/Animals/Spiders/guardspider.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
-      sprite: Mobs/Animals/spider.rsi
-      state: guard
-  - type: SpriteMovement
-    movementLayers:
-      movement:
-        state: guard-moving
-    noMovementLayers:
-      movement:
-        state: guard
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: guard
-      Critical:
-        Base: guard_dead
-      Dead:
-        Base: guard_dead
+      state: idle
   - type: MeleeWeapon
     altDisarm: false
     angle: 0
@@ -42,8 +27,8 @@
     transferAmount: 1
     solution: melee
   - type: MovementSpeedModifier
-    baseWalkSpeed : 3
-    baseSprintSpeed : 3
+    baseWalkSpeed: 3
+    baseSprintSpeed: 3
   - type: MobThresholds
     thresholds:
       0: Alive

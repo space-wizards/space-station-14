@@ -1,9 +1,9 @@
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.
 - type: entity
+  abstract: true
   parent: [ SimpleMobBase, BaseMobHemocyanin, MobCombat, BaseSlicingRefinable, MobNightVision, BaseMobDestructible ]
   id: MobSpiderBase
-  abstract: true
   components:
   - type: Physics
   - type: Fixtures
@@ -84,6 +84,27 @@
         Shock: -0.03
 
 - type: entity
+  abstract: true
+  parent: MobSpiderBase
+  id: MobSpiderAnimated
+  components:
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: moving
+    noMovementLayers:
+      movement:
+        state: idle
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: idle
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+
+- type: entity
   parent: [SolutionWeapon, SolutionTiny]
   id: SolutionVenomSpider
   categories: [ HideSpawnMenu ]
@@ -94,15 +115,15 @@
       - ReagentId: Mechanotoxin
         Quantity: 1
 
-# Angry BaseSpider, should not be used
+# Angry MobSpiderAngryBase; should not be used
 - type: entity
+  abstract: true
   parent: MobSpiderBase
   id: MobSpiderAngryBase
-  abstract: true
   components:
   - type: NpcFactionMember
     factions:
-      - Xeno
+    - Xeno
   - type: InputMover
   - type: MobMover
   - type: HTN

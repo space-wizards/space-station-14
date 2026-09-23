@@ -1,31 +1,16 @@
 # Nurse Spider
 - type: entity
-  parent: MobSpiderBase
+  parent: MobSpiderAnimated
   id: MobGiantSpiderNurse
   name: nurse spider
   description: A pallid, unsettling spider that oozes something caustic.
   components:
   - type: Sprite
     drawdepth: Mobs
+    sprite: Mobs/Animals/Spiders/nursespider.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
-      sprite: Mobs/Animals/spider.rsi
-      state: nurse
-  - type: SpriteMovement
-    movementLayers:
-      movement:
-        state: nurse-moving
-    noMovementLayers:
-      movement:
-        state: nurse
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: nurse
-      Critical:
-        Base: nurse_dead
-      Dead:
-        Base: nurse_dead
+      state: idle
   - type: MeleeWeapon
     altDisarm: false
     angle: 0
