@@ -17,5 +17,5 @@ public sealed partial class SoundOnGatherComponent : Component
     [DataField]
     public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Effects/break_stone.ogg", AudioParams.Default
         .WithVariation(SharedContentAudioSystem.DefaultVariation)
-        .WithVolume(-3f));
+        .AddVolume(-3f));
 }

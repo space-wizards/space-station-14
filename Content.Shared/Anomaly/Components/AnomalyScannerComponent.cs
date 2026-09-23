@@ -1,4 +1,4 @@
-﻿using Content.Shared.Anomaly;
+using Content.Shared.Anomaly;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
@@ -35,4 +35,7 @@ public sealed partial class AnomalyScannerComponent : Component
     /// </summary>
     [DataField]
     public bool IgnoreSecret;
+
+    [DataField]
+    public LocId DoAfterExamineText = "anomaly-scanner-doafter-examine";
 }

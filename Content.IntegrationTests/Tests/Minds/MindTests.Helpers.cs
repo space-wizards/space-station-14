@@ -1,8 +1,8 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.IntegrationTests.Pair;
 using Content.Server.GameTicking;
 using Content.Server.Mind;
-using Content.Shared.Ghost;
+using Content.Shared.Ghost.Components;
 using Content.Shared.Mind;
 using Content.Shared.Players;
 using Robust.Server.GameObjects;
@@ -80,7 +80,7 @@ public sealed partial class MindTests
         await pair.Server.WaitAssertion(() =>
         {
             var oldUid = player.AttachedEntity;
-            ghostUid = entMan.SpawnEntity(GameTicker.ObserverPrototypeName, MapCoordinates.Nullspace);
+            ghostUid = entMan.SpawnEntity(ServerGameTicker.ObserverPrototypeName, MapCoordinates.Nullspace);
             mindId = mindSys.GetMind(player.UserId)!.Value;
             Assert.That(mindId, Is.Not.EqualTo(default(EntityUid)));
             mind = entMan.GetComponent<MindComponent>(mindId);

@@ -1,4 +1,3 @@
-using Content.Server.Shuttles.Components;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
@@ -6,7 +5,6 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
-using Content.Shared.Projectiles;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -18,6 +16,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Numerics;
 using Content.Shared.Damage.Components;
+using Content.Shared.Shuttles.Components;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -138,7 +137,7 @@ public sealed partial class ShuttleSystem
             var coordinates = new EntityCoordinates(ourXform.MapUid.Value, worldPoint);
 
             var volume = MathF.Min(10f, MathF.Pow(jungleDiff, 0.5f) - 5f);
-            var audioParams = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(volume);
+            var audioParams = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).AddVolume(volume);
             _audio.PlayPvs(_shuttleImpactSound, coordinates, audioParams);
 
             // if we're not enabled, stop after playing sound

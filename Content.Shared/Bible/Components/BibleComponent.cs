@@ -31,7 +31,7 @@ public sealed partial class BibleComponent : Component
     /// Sound to play when Bible hits somebody.
     /// </summary>
     [DataField]
-    public SoundSpecifier BibleHitSound = new SoundCollectionSpecifier(DefaultBibleHitSound, AudioParams.Default.WithVolume(-4f));
+    public SoundSpecifier BibleHitSound = new SoundCollectionSpecifier(DefaultBibleHitSound, AudioParams.Default.AddVolume(-4f));
 
     /// <summary>
     /// Sound to play when Bible fails to heal somebody.

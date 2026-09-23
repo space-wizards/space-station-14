@@ -35,9 +35,6 @@ public abstract partial class SharedGasPressurePumpSystem : EntitySystem
 
     private void OnExamined(Entity<GasPressurePumpComponent> ent, ref ExaminedEvent args)
     {
-        if (!Transform(ent).Anchored)
-            return;
-
         if (Loc.TryGetString("gas-pressure-pump-system-examined",
                 out var str,
                 ("statusColor", "lightblue"), // TODO: change with pressure?

@@ -219,7 +219,7 @@
   - type: PotencyVisuals
   - type: Appearance
   - type: Produce
-    seedId: killerTomato
+    plantId: KillerTomatoPlants
   - type: PassiveDamage # Slight passive damage. 35 hp \ 5 min \ 60 sec = 0.08
     allowedStates:
     - Alive
