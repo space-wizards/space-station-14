@@ -74,12 +74,9 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
 
         comp.IsBroken = false;
 
-        if (!TryComp<DamageableComponent>(entity, out var damageable))
-            return;
-
         foreach (var threshold in comp.Thresholds)
         {
-            if (Triggered(threshold, (uid, damageable)))
+            if (Triggered(threshold, (uid, args.Damageable)))
             {
                 RaiseLocalEvent(uid, new DamageThresholdReached(comp, threshold), true);
 
