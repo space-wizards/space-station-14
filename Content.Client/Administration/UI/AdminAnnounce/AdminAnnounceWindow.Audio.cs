@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -30,9 +31,9 @@ public sealed partial class AdminAnnounceWindow
             return null;
 
         var path = new ResPath(value);
-        if (!path.IsRooted || !_resourceManager.ContentFileExists(path))
-            return null;
-
-        return new SoundPathSpecifier(path);
+        var sound = new SoundPathSpecifier(path);
+        return AudioHelpers.IsValidContentSound(sound, _resourceManager)
+            ? sound
+            : null;
     }
 }

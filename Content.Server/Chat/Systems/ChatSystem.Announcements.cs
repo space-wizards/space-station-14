@@ -16,7 +16,8 @@ public sealed partial class ChatSystem
         bool playSound = true,
         SoundSpecifier? announcementSound = null,
         Color? colorOverride = null,
-        string? signature = null
+        string? signature = null,
+        ICommonSession? actor = null
         )
     {
         sender ??= Loc.GetString("chat-manager-sender-announcement");
@@ -27,7 +28,7 @@ public sealed partial class ChatSystem
         {
             _audio.PlayGlobal(announcementSound ?? DefaultAnnouncementSound, Filter.Broadcast(), true, AudioParams.Default.WithVolume(-2f));
         }
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Global station announcement from {sender}: {message}");
+        LogAnnouncement("Global station announcement", sender, message, actor);
     }
 
     /// <inheritdoc />
@@ -39,7 +40,8 @@ public sealed partial class ChatSystem
         bool playSound = true,
         SoundSpecifier? announcementSound = null,
         Color? colorOverride = null,
-        string? signature = null)
+        string? signature = null,
+        ICommonSession? actor = null)
     {
         sender ??= Loc.GetString("chat-manager-sender-announcement");
 
@@ -49,7 +51,7 @@ public sealed partial class ChatSystem
         {
             _audio.PlayGlobal(announcementSound ?? DefaultAnnouncementSound, filter, true, AudioParams.Default.WithVolume(-2f));
         }
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement from {sender}: {message}");
+        LogAnnouncement("Station announcement", sender, message, actor);
     }
 
     /// <inheritdoc />
@@ -60,7 +62,8 @@ public sealed partial class ChatSystem
         bool playDefaultSound = true,
         SoundSpecifier? announcementSound = null,
         Color? colorOverride = null,
-        string? signature = null)
+        string? signature = null,
+        ICommonSession? actor = null)
     {
         sender ??= Loc.GetString("chat-manager-sender-announcement");
 
@@ -84,7 +87,19 @@ public sealed partial class ChatSystem
             _audio.PlayGlobal(announcementSound ?? DefaultAnnouncementSound, filter, true, AudioParams.Default.WithVolume(-2f));
         }
 
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement on {station} from {sender}: {message}");
+        LogAnnouncement($"Station announcement on {station}", sender, message, actor);
+    }
+
+    private void LogAnnouncement(string scope, string sender, string message, ICommonSession? actor)
+    {
+        if (actor == null)
+        {
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{scope} from {sender}: {message}");
+            return;
+        }
+
+        _adminLogger.Add(LogType.Chat, LogImpact.Low,
+            $"{scope} from {sender}, initiated by {actor:Player}: {message}");
     }
 
     private string WrapAnnouncement(string sender, string message, string? signature)
