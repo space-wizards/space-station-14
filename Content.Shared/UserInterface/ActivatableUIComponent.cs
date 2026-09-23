@@ -10,7 +10,7 @@ public sealed partial class ActivatableUIComponent : Component
     /// <summary>
     /// The UiKey on which the UI will be shown.
     /// </summary>
-    [DataField(required: true, customTypeSerializer: typeof(EnumSerializer))]
+    [DataField(required: true)]
     public Enum Key;
 
     /// <summary>
