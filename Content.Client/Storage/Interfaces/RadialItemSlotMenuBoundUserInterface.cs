@@ -1,6 +1,5 @@
 ﻿using Content.Client.UserInterface.Controls;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Containers.ItemSlots.Events;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
@@ -71,7 +70,7 @@ public sealed partial class RadialItemSlotMenuBoundUserInterface(EntityUid owner
 
     private void EjectItem(string slotId)
     {
-        var message = new EjectItemFromSlotMessage(slotId);
+        var message = new ItemSlotButtonPressedEvent(slotId, true, false);
         SendPredictedMessage(message);
     }
 }
