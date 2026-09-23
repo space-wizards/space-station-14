@@ -70,7 +70,7 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
         _heatGradientTexture = _resourceCache.GetTexture("/Textures/Effects/HeatBlur/soft_circle.png");
 
         _shader = _proto.Index(HeatOverlayShader).InstanceUnique();
-        _configManager.OnValueChanged(CCVars.ReducedMotion, SetReducedMotion, invokeImmediately: true);
+        _configManager.OnValueChanged(CCVars.DisableHeatDistortion, SetReducedMotion, invokeImmediately: true);
     }
 
     private void SetReducedMotion(bool reducedMotion)
@@ -227,7 +227,7 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
     {
         _resources.Dispose();
 
-        _configManager.UnsubValueChanged(CCVars.ReducedMotion, SetReducedMotion);
+        _configManager.UnsubValueChanged(CCVars.DisableHeatDistortion, SetReducedMotion);
         base.DisposeBehavior();
     }
 

@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Client.Graphics;
+using Content.Client.Light.EntitySystems;
 using Content.Client.Parallax;
 using Content.Client.Weather;
 using Content.Shared.Salvage;
@@ -34,6 +35,7 @@ public sealed partial class StencilOverlay : Overlay
     private readonly SpriteSystem _sprite;
     private readonly WeatherSystem _weather;
     private readonly StatusEffectsSystem _statusEffects;
+    private GridStencilSystem _gridStencil = default!;
     private HashSet<Entity<WeatherStatusEffectComponent, StatusEffectComponent>>? _weatherSet = new();
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
@@ -52,6 +54,7 @@ public sealed partial class StencilOverlay : Overlay
         _weather = weather;
         _statusEffects = statusEffects;
         IoCManager.InjectDependencies(this);
+        _gridStencil = _entManager.System<GridStencilSystem>();
         _shader = _protoManager.Index(CircleShader).InstanceUnique();
     }
 
@@ -69,7 +72,7 @@ public sealed partial class StencilOverlay : Overlay
         }
 
         if (_statusEffects.TryEffectsWithComp(mapUid, out _weatherSet))
-            DrawWeather(args, res, _weatherSet, invMatrix);
+            DrawWeather(args, _weatherSet);
 
         if (_entManager.TryGetComponent<RestrictedRangeComponent>(mapUid, out var restrictedRangeComponent))
             DrawRestrictedRange(args, res, restrictedRangeComponent, invMatrix);

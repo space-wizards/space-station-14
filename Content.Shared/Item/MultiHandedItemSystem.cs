@@ -43,7 +43,7 @@ public sealed partial class MultiHandedItemSystem : EntitySystem
         args.Cancel();
 
         if (args.ShowPopup)
-            _popup.PopupPredictedCursor(
+            _popup.PopupCursor(
                 Loc.GetString("multi-handed-item-pick-up-fail",
                     ("number", ent.Comp.HandsNeeded - 1),
                     ("item", ent.Owner)),

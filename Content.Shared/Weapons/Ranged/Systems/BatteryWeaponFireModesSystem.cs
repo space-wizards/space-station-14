@@ -121,7 +121,7 @@ public sealed partial class BatteryWeaponFireModesSystem : EntitySystem
                 _appearanceSystem.SetData(ent, BatteryWeaponFireModeVisuals.State, prototype.ID, appearance);
 
             if (user != null)
-                _popupSystem.PopupClient(Loc.GetString("gun-set-fire-mode-popup", ("mode", prototype.Name)), ent, user.Value);
+                _popupSystem.PopupEntity(Loc.GetString("gun-set-fire-mode-popup", ("mode", prototype.Name)), ent, user.Value);
         }
 
         if (TryComp(ent, out BatteryAmmoProviderComponent? batteryAmmoProviderComponent))

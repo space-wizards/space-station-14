@@ -52,6 +52,7 @@ shell-argument-number-must-be-between = Argument {$index} must be a number betwe
 shell-argument-station-id-invalid = Argument {$index} must be a valid station id!
 shell-argument-map-id-invalid = Argument {$index} must be a valid map id!
 shell-argument-number-invalid = Argument {$index} must be a valid number!
+shell-argument-chat-invalid = Argument {$index} must be a valid chat!
 
 # Hints
 shell-argument-username-hint = <username>

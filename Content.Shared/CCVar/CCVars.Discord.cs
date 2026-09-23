@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Configuration;
+using Robust.Shared.Configuration;
 
 namespace Content.Shared.CCVar;
 
@@ -46,6 +46,12 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<string> DiscordVotekickWebhook =
         CVarDef.Create("discord.votekick_webhook", string.Empty, CVar.SERVERONLY);
+
+    /// <summary>
+    ///     URL of the Discord webhook which will relay event logs. If left empty, disables the webhook.
+    /// </summary>
+    public static readonly CVarDef<string> DiscordEventWebhook =
+        CVarDef.Create("discord.event_webhook", string.Empty, CVar.SERVERONLY);
 
     /// <summary>
     ///     URL of the Discord webhook which will relay round restart messages.

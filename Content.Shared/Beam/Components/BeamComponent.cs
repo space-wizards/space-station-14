@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Audio;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -10,6 +10,11 @@ namespace Content.Shared.Beam.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class BeamComponent : Component
 {
+    /// <summary>
+    /// The ID of the fixture that will be created for the beam.
+    /// </summary>
+    public static string FixtureID = "BeamBody";
+
     /// <summary>
     /// A unique list of targets that this beam collided with.
     /// Useful for code like Arcing in the Lightning Component.

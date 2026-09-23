@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration.BanList;
+using Content.Server.Administration.BanList;
 using Content.Server.EUI;
 using Content.Server.Database;
 using Content.Shared.Administration;

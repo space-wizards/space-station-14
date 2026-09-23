@@ -1,12 +1,12 @@
 - type: entity
-  parent: BaseWallmountCabinet
+  parent: [ BaseWallmountCabinet, StructureHealthContainerWeak ]
   id: ExtinguisherCabinet
   name: extinguisher cabinet
   description: A small wall mounted cabinet designed to hold a fire extinguisher.
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/extinguisher_cabinet.rsi
-    snapCardinals: true
+    sprite: Structures/Wallmounts/extinguisher-cabinet.rsi
+    offset: 0, -0.25
     layers:
     - state: frame
     - state: extinguisher
@@ -25,11 +25,9 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 40
+        damage: 60
       behaviors:
       - !type:EmptyAllContainersBehaviour
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak

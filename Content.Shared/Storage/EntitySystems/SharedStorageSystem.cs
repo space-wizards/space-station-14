@@ -22,7 +22,6 @@ using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Storage.Components;
 using Content.Shared.Tag;
-using Content.Shared.Timing;
 using Content.Shared.Storage.Events;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
@@ -39,6 +38,8 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Content.Shared.Rounding;
+using Content.Shared.Timing.Components;
+using Content.Shared.Timing.Systems;
 using Robust.Shared.Collections;
 using Robust.Shared.Map.Enumerators;
 
@@ -85,7 +86,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
     public const float AreaInsertDelayPerItem = 0.075f;
     private static AudioParams _audioParams = AudioParams.Default
         .WithMaxDistance(7f)
-        .WithVolume(-2f);
+        .AddVolume(-2f);
 
     private ItemSizePrototype _defaultStorageMaxItemSize = default!;
 
@@ -173,18 +174,16 @@ public abstract partial class SharedStorageSystem : EntitySystem
 
     private void OnItemSizeChanged(ref ItemSizeChangedEvent ev)
     {
-        var itemEnt = new Entity<ItemComponent?>(ev.Entity, null);
-
-        if (!TryGetStorageLocation(itemEnt, out var container, out var storage, out var loc))
-        {
+        if (!TryGetContainingStorage(ev.Entity, out var storage))
             return;
-        }
 
-        UpdateOccupied((container.Owner, storage));
+        var loc = storage.Value.Comp.StoredItems[ev.Entity];
 
-        if (!ItemFitsInGridLocation((itemEnt.Owner, itemEnt.Comp), (container.Owner, storage), loc))
+        UpdateOccupied(storage.Value);
+
+        if (!ItemFitsInGridLocation(ev.Entity, storage.Value.AsNullable(), loc))
         {
-            ContainerSystem.Remove(itemEnt.Owner, container, force: true);
+            ContainerSystem.Remove(ev.Entity, storage.Value.Comp.Container, force: true);
         }
     }
 
@@ -387,33 +386,31 @@ public abstract partial class SharedStorageSystem : EntitySystem
     }
 
     /// <summary>
-    /// Tries to get the storage location of an item.
+    /// Tries to get the storage that the specified entity is stored inside of.
     /// </summary>
-    public bool TryGetStorageLocation(Entity<ItemComponent?> itemEnt, [NotNullWhen(true)] out BaseContainer? container, [NotNullWhen(true)] out StorageComponent? storage, out ItemStorageLocation loc)
+    public bool TryGetContainingStorage(EntityUid uid, [NotNullWhen(true)] out Entity<StorageComponent>? storage)
     {
-        loc = default;
         storage = null;
 
-        if (!ContainerSystem.TryGetContainingContainer(itemEnt.Owner, out container) ||
+        if (!ContainerSystem.TryGetContainingContainer(uid, out var container) ||
             container.ID != StorageComponent.ContainerId ||
-            !TryComp(container.Owner, out storage) ||
-            !_itemQuery.Resolve(itemEnt, ref itemEnt.Comp, false))
+            !TryComp(container.Owner, out StorageComponent? storageComp))
         {
             return false;
         }
 
-        loc = storage.StoredItems[itemEnt];
+        storage = (container.Owner, storageComp);
         return true;
     }
 
     public void OpenStorageUI(EntityUid uid, EntityUid actor, StorageComponent? storageComp = null, bool silent = true)
     {
         // Handle recursively opening nested storages.
-        if (ContainerSystem.TryGetContainingContainer(uid, out var container) &&
-            UI.IsUiOpen(container.Owner, StorageComponent.StorageUiKey.Key, actor))
+        if (TryGetContainingStorage(uid, out var parentStorage) &&
+            UI.IsUiOpen(parentStorage.Value.Owner, StorageComponent.StorageUiKey.Key, actor))
         {
             _nestedCheck = true;
-            HideStorageWindow(container.Owner, actor);
+            HideStorageWindow(parentStorage.Value.Owner, actor);
             OpenStorageUIInternal(uid, actor, storageComp, silent: true);
             _nestedCheck = false;
         }
@@ -568,7 +565,8 @@ public abstract partial class SharedStorageSystem : EntitySystem
             _entityLookupSystem.GetEntitiesInRange(args.ClickLocation, storageComp.AreaInsertRadius, _entSet, LookupFlags.Dynamic | LookupFlags.Sundries);
             var delay = 0f;
 
-            foreach (var entity in _entSet)
+            // TODO: Remove OrderBy when this issue is fixed in RT https://github.com/space-wizards/RobustToolbox/issues/6241
+            foreach (var entity in _entSet.OrderBy(e => GetNetEntity(e)))
             {
                 if (entity == args.User
                     || !_itemQuery.TryGetComponent(entity, out var itemComp) // Need comp to get item size to get weight
@@ -810,8 +808,8 @@ public abstract partial class SharedStorageSystem : EntitySystem
         var itemEnt = new Entity<ItemComponent?>(itemUid.Value, itemComp);
 
         // Validate the source storage
-        if (!TryGetStorageLocation(itemEnt, out var container, out _, out _) ||
-            !ValidateInput(args, GetNetEntity(container.Owner), out _, out _))
+        if (!TryGetContainingStorage(itemEnt.Owner, out var sourceStorage) ||
+            !ValidateInput(args, GetNetEntity(sourceStorage.Value.Owner), out _, out _))
         {
             return;
         }
@@ -1009,7 +1007,8 @@ public abstract partial class SharedStorageSystem : EntitySystem
             || Resolve(target, ref targetLock, false) && targetLock.Locked)
             return;
 
-        foreach (var entity in entities.ToArray())
+        // TODO: Remove OrderBy when this issue is fixed in RT https://github.com/space-wizards/RobustToolbox/issues/6241
+        foreach (var entity in entities.ToArray().OrderBy(e => GetNetEntity(e)))
         {
             Insert(target, entity, out _, user: user, targetComp, playSound: false);
         }
@@ -1208,7 +1207,8 @@ public abstract partial class SharedStorageSystem : EntitySystem
 
         var toInsertCount = insertStack.Count;
 
-        foreach (var ent in storageComp.Container.ContainedEntities)
+        // TODO: Remove OrderBy when this issue is fixed in RT https://github.com/space-wizards/RobustToolbox/issues/6241
+        foreach (var ent in storageComp.Container.ContainedEntities.OrderBy(e => GetNetEntity(e)))
         {
             if (!_stackQuery.TryGetComponent(ent, out var containedStack))
                 continue;
@@ -1253,13 +1253,13 @@ public abstract partial class SharedStorageSystem : EntitySystem
 
         if (!CanInsert(ent, toInsert.Value, out var reason, ent.Comp))
         {
-            _popupSystem.PopupClient(Loc.GetString(reason ?? "comp-storage-cant-insert"), ent, player);
+            _popupSystem.PopupEntity(Loc.GetString(reason ?? "comp-storage-cant-insert"), ent, player);
             return false;
         }
 
         if (!_sharedHandsSystem.CanDrop(player, toInsert.Value))
         {
-            _popupSystem.PopupClient(Loc.GetString("comp-storage-cant-drop", ("entity", toInsert.Value)), ent, player);
+            _popupSystem.PopupEntity(Loc.GetString("comp-storage-cant-drop", ("entity", toInsert.Value)), ent, player);
             return false;
         }
 
@@ -1281,7 +1281,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
 
         if (!Insert(uid, toInsert, out _, user: player, uid.Comp, playSound: playSound))
         {
-            _popupSystem.PopupClient(Loc.GetString("comp-storage-cant-insert"), uid, player);
+            _popupSystem.PopupEntity(Loc.GetString("comp-storage-cant-insert"), uid, player);
             return false;
         }
         return true;

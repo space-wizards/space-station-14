@@ -2,11 +2,11 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
-using Content.Server.Afk.Events;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
 using Content.Server.Preferences.Managers;
 using Content.Server.Station.Events;
+using Content.Shared.Afk.Events;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Mobs;
@@ -48,8 +48,8 @@ public sealed partial class PlayTimeTrackingSystem : EntitySystem
         SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<RoleAddedEvent>(OnRoleEvent);
         SubscribeLocalEvent<RoleRemovedEvent>(OnRoleEvent);
-        SubscribeLocalEvent<AFKEvent>(OnAFK);
-        SubscribeLocalEvent<UnAFKEvent>(OnUnAFK);
+        SubscribeLocalEvent<AfkEvent>(OnAfk);
+        SubscribeLocalEvent<UnAfkEvent>(OnUnAfk);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<PlayerJoinedLobbyEvent>(OnPlayerJoinedLobby);
         SubscribeLocalEvent<StationJobsGetCandidatesEvent>(OnStationJobsGetCandidates);
@@ -134,12 +134,12 @@ public sealed partial class PlayTimeTrackingSystem : EntitySystem
         _tracking.Save();
     }
 
-    private void OnUnAFK(ref UnAFKEvent ev)
+    private void OnUnAfk(ref UnAfkEvent ev)
     {
         _tracking.QueueRefreshTrackers(ev.Session);
     }
 
-    private void OnAFK(ref AFKEvent ev)
+    private void OnAfk(ref AfkEvent ev)
     {
         _tracking.QueueRefreshTrackers(ev.Session);
     }
@@ -301,7 +301,7 @@ public sealed partial class PlayTimeTrackingSystem : EntitySystem
 
         foreach (var job in ProtoMan.EnumeratePrototypes<JobPrototype>())
         {
-            if (JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, ProtoMan, (HumanoidCharacterProfile?) _preferencesManager.GetPreferences(player.UserId).SelectedCharacter))
+            if (!JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, ProtoMan, (HumanoidCharacterProfile?) _preferencesManager.GetPreferences(player.UserId).SelectedCharacter))
                 roles.Add(job.ID);
         }
 
