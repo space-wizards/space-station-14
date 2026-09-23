@@ -33,13 +33,22 @@ public abstract partial class SharedPlantConsumeExudeGasSystem : EntitySystem
     /// Adds a random amount of a random gas to the exude gasses.
     /// </summary>
     [PublicAPI]
-    public void MutateRandomExudeGasses(Entity<PlantConsumeExudeGasComponent?> ent, float amount)
+    public void MutateRandomExudeGasses(Entity<PlantConsumeExudeGasComponent?> ent, float amount, Gas? spawnGas)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
         var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
-        var gas = random.Pick(Enum.GetValues<Gas>());
+
+        Gas gas;
+        if (spawnGas != null)  // Get gas, otherwise randomly pick one
+        { 
+            gas = spawnGas.Value;
+        }
+        else
+        {
+            gas = random.Pick(Enum.GetValues<Gas>());
+        }
 
         var gasses = ent.Comp.ExudeGasses;
         if (!gasses.TryAdd(gas, amount))

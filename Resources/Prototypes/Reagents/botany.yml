@@ -321,6 +321,8 @@
   flavor: tingly
   color: "#450631"
   plantMetabolism:
+    - !type:PlantMutateExudeGases
+      spawnGas: Fungalin
     - !type:PlantAdjustNutrition
       amount: -1
     - !type:PlantAdjustToxins
@@ -366,7 +368,7 @@
               min: 0.7
         
         
-# REEMOVE TEST CAN
+# Test can, ill shrimply remove this bit when pr is ready
 - type: entity
   parent: DrinkCanBaseFull
   id: FungalinCan
