@@ -50,7 +50,7 @@ public sealed class GasArrayTest : GameTest
         var gasTank = SProtoMan.Index(GasTankTestDummyId);
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(gasTank.TryGetComponent<GasTankComponent>(out var gasTankComponent, _compFactory));
+            Assert.That(gasTank.TryComp<GasTankComponent>(out var gasTankComponent, _compFactory));
 
             Assert.That(gasTankComponent!.Air.GetMoles(Gas.Oxygen), Is.EqualTo(10));
             Assert.That(gasTankComponent!.Air.GetMoles(Gas.Frezon), Is.EqualTo(20));
@@ -63,7 +63,7 @@ public sealed class GasArrayTest : GameTest
         var legacyGasTank = SProtoMan.Index(GasTankLegacyTestDummyId);
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(legacyGasTank.TryGetComponent<GasTankComponent>(out var gasTankComponent, _compFactory));
+            Assert.That(legacyGasTank.TryComp<GasTankComponent>(out var gasTankComponent, _compFactory));
 
             Assert.That(gasTankComponent!.Air.GetMoles(3), Is.EqualTo(10));
 
