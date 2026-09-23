@@ -12,7 +12,7 @@
   name: steal-target-groups-handheld-crew-monitor
   sprite:
     sprite: Objects/Specific/Medical/handheldcrewmonitor.rsi
-    state: scanner
+    state: icon
 
 - type: stealTargetGroup
   id: ClothingOuterHardsuitRd

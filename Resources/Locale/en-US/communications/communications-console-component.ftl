@@ -28,7 +28,6 @@ comms-console-message-too-long = Message is too long
 comms-console-message-cannot-send = Communications temporarily disabled
 
 # Placeholder values
-comms-console-announcement-sent-by = Sent by
 comms-console-announcement-unknown-sender = Unknown
 
 # Comms console variant titles

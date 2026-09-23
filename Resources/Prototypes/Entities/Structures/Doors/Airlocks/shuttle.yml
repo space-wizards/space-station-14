@@ -6,9 +6,6 @@
   components:
   - type: Docking
   - type: DockingSignalControl
-  - type: DeviceLinkSource
-    ports:
-    - DoorStatus
   - type: Fixtures
     fixtures:
       fix1:

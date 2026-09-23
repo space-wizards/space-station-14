@@ -51,7 +51,7 @@ changeling-biodegrade-used-popup-self = We vomit acid over our {$restraint}!
 changeling-takeover-not-dead = This body yet lives! We cannot infest it alive.
 changeling-takeover-is-changeling = This body rejects our attempts to take over!
 changeling-takeover-start-others = {CAPITALIZE(THE($user))} begins to crawl inside the corpse!
-changeling-takeover-success-self = We have successfully infested the body and assumed its form.
+changeling-takeover-doafter = [color=red]{ CAPITALIZE(SUBJECT($user)) } { CONJUGATE-BE($user) } crawling inside of {$target}![/color]
 
 # stings
 changeling-sting-success = We silently sting {THE($target)}!
