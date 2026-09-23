@@ -97,6 +97,9 @@
     crushingWhitelist:
       components:
       - XenoArtifact
+      tags:
+      - XenoArtifact
+      requireAll: true
     crushingDamage:
       types:
         Blunt: 10

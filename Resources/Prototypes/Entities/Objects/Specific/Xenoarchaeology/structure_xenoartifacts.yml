@@ -39,6 +39,10 @@
         - Opaque
         mask:
         - MachineMask
+  - type: Tag
+    tags:
+      - XenoArtifact
+      - Structure
 
 - type: entity
   id: DummyArtifactStructure

@@ -51,16 +51,10 @@ public sealed partial class ArtifactCrusherComponent : Component
     public EntityWhitelist CrushingWhitelist = new();
 
     /// <summary>
-    /// The minimum amount of fragments spawned.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public int MinFragments = 2;
-
-    /// <summary>
     /// The maximum amount of fragments spawned, non-inclusive.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public int MaxFragments = 5;
+    public int MaxFragments = 8;
 
     /// <summary>
     /// The material for the fragments.
@@ -109,6 +103,20 @@ public sealed partial class ArtifactCrusherComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool AutoLock = false;
+
+    /// <summary>
+    /// Whether the crusher should also spawn anomalous shards of nodes that are locked.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool GetLockedNodes = false;
+
+    /// <summary>
+    /// The entity prototype that should be spawned for anomalous shards.
+    /// If null, don't spawn them.
+    /// This prototype should have the XenoArtifactComponent and ideally no pre-generated nodes.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntProtoId? ShardProtoId = "ArtifactShardEmpty";
 }
 
 [Serializable, NetSerializable]

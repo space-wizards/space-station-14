@@ -7,7 +7,21 @@
     - to: done
       steps:
       - material: ArtifactFragment
-        amount: 4
+        amount: 10
         doAfter: 5
   - node: done
     entity: ComplexXenoArtifactItem
+
+- type: constructionGraph
+  id: ArtifactShard
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: done
+      steps:
+      - material: ArtifactFragment
+        amount: 2
+        doAfter: 3
+  - node: done
+    entity: ArtifactShard
