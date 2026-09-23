@@ -18,13 +18,11 @@ public sealed class SprayPainterDecalsSheetlet<T> : Sheetlet<T> where T : IButto
     /// </summary>
     private sealed class OverrideModulationStyleBox(StyleBox baseBox) : StyleBox
     {
-        private readonly StyleBox _baseBox = baseBox;
-
         protected override void DoDraw(DrawingHandleScreen handle, UIBox2 box, float uiScale)
         {
             var oldModulation = handle.Modulate;
             handle.Modulate = Color.White;
-            _baseBox.Draw(handle, box, uiScale);
+            baseBox.Draw(handle, box, uiScale);
             handle.Modulate = oldModulation;
         }
     }
@@ -32,7 +30,7 @@ public sealed class SprayPainterDecalsSheetlet<T> : Sheetlet<T> where T : IButto
     public override StyleRule[] GetRules(T sheet, object config)
     {
         var noBackground = new StyleBoxFlat { BackgroundColor = Color.Transparent };
-        var highlightBase = new StyleBoxFlat() { BackgroundColor = sheet.ButtonPalette.BackgroundLight };
+        var highlightBase = new StyleBoxFlat { BackgroundColor = sheet.ButtonPalette.BackgroundLight };
 
         var highlight = new OverrideModulationStyleBox(highlightBase);
 
