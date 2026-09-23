@@ -210,6 +210,8 @@ public sealed partial class NPCSteeringSystem
                 ResetStuck(steering, ourCoordinates);
                 SteeringObstacleStatus status;
 
+                Array.Clear(steering.Interest);
+
                 // Breaking behaviours and the likes.
                 lock (_obstacles)
                 {
