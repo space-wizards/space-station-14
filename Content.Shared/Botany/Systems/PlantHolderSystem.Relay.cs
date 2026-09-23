@@ -19,9 +19,6 @@ public sealed partial class PlantHolderSystem
 
     private void RelayPlantHolderEvent<T>(EntityUid uid, PlantHolderComponent component, T args) where T : class
     {
-        if (args is HandledEntityEventArgs { Handled: true })
-            return;
-
         RelayEvent((uid, component), args);
     }
 

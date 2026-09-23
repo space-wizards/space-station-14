@@ -2,7 +2,6 @@ using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
 using Content.Shared.Botany.Systems;
 using Content.Shared.Botany.Traits.Components;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tools.Systems;
@@ -14,7 +13,6 @@ public sealed partial class PlantTraitLigneousSystem : EntitySystem
 {
     [Dependency] private PlantHarvestSystem _plantHarvest = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
-    [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedToolSystem _tool = default!;
 
@@ -50,14 +48,6 @@ public sealed partial class PlantTraitLigneousSystem : EntitySystem
     [SubscribeLocalEvent(before: [typeof(PlantHarvestSystem)])]
     private void OnHarvestAttempt(Entity<PlantTraitLigneousComponent> ent, ref PlantHarvestAttemptEvent args)
     {
-        var harvestToolQuality = ent.Comp.HarvestToolQuality;
-        if (!harvestToolQuality.HasValue ||
-            _hands.TryGetActiveItem(args.User, out var heldItem) &&
-            _tool.HasQuality(heldItem.Value, harvestToolQuality.Value))
-        {
-            return;
-        }
-
         _popup.PopupCursor(Loc.GetString("plant-component-ligneous-cant-harvest-message"), args.User);
         args.Cancelled = true;
     }
