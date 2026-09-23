@@ -1,0 +1,153 @@
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: EngineeringBeltTest
+  suffix: attachedTest
+  name: TestBelt
+  components:
+  - type: Storage
+    # Don't add more than absolutely needed to this whitelist!
+    # Utility belts shouldn't just be free extra storage.
+    # This is only intended for basic engineering equipment.
+    whitelist:
+      tags:
+      - Powerdrill
+      - Wirecutter
+      - Crowbar
+      - Screwdriver
+      - Flashlight
+      - Wrench
+      - GeigerCounter
+      - Flare
+      - CableCoil
+      - CigPack
+      - Radio
+      - HolofanProjector
+      - Multitool
+      - AppraisalTool
+      - JawsOfLife
+      - GPS
+      - WeldingMask
+      - RemoteSignaller
+      - UtilityKnife
+      components:
+      - StationMap
+      - SprayPainter
+      - SprayPainterAmmo
+      - NetworkConfigurator
+      - RCD
+      - RCDAmmo
+      - Welder
+      - PowerCell
+      - Geiger
+      - TrayScanner
+      - GasAnalyzer
+      - HandLabeler
+  - type: Sprite
+    sprite: Clothing/Belt/utility.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/utility.rsi
+  - type: Tag
+    tags:
+    - UtilityBelt
+    - WhitelistChameleon
+  - type: Item
+  - type: AttachedVisuals
+    sprite: Clothing/Belt/utility.rsi
+    attachments:
+      - attachment: InBelt
+        container: storagebase
+    attachedVisuals:
+      InhandRight:
+        layers:
+          - state: inhand-right
+        attachments:
+          - attachment: InHandRightInBelt
+            container: storagebase
+      InhandLeft:
+        layers:
+          - state: inhand-left
+        attachments:
+          - attachment: InHandLeftInBelt
+            container: storagebase
+      EquippedBelt:
+        layers:
+          - state: equipped-BELT
+        attachments:
+          - attachment: InEquippedBelt
+            container: storagebase
+
+- type: entity
+  parent: BaseItem
+  id: CrowbarTesting
+  name: crowbar
+  suffix: attachedTest
+  description: A multipurpose tool used for many tasks, such as prying doors or bludgeoning interdimensional invaders.
+  components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/crowbar_drop.ogg
+  - type: Tag
+    tags:
+    - Crowbar
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 8
+    soundHit:
+      collection: MetalThud
+  - type: Tool
+    qualities:
+    - Prying
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: ToolTileCompatible
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+  - type: StaticPrice
+    price: 22
+  - type: Prying
+  - type: Sprite
+    sprite: Objects/Tools/crowbar.rsi
+    layers:
+    - state: icon
+    - state: cover-icon
+      color: limegreen
+  - type: Clothing
+    sprite: Objects/Tools/crowbar.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: Item
+    sprite: Objects/Tools/crowbar.rsi
+    size: Small
+  - type: AttachedVisuals
+    sprite: Objects/Tools/crowbar.rsi
+    attachedVisuals:
+      InhandLeft:
+        layers:
+        - state: inhand-left
+        - state: cover-inhand-left
+          color: limegreen
+      InhandRight:
+        layers:
+        - state: inhand-right
+        - state: cover-inhand-right
+          color: limegreen
+      EquippedBelt:
+        layers:
+        - state: equipped-BELT
+        - state: cover-equipped-BELT
+          color: limegreen
+      InBelt:
+        layers:
+        - sprite: Clothing/Belt/belt_overlay.rsi
+          state: crowbar
+          color: limegreen
+      InEquippedBelt:
+        layers:
+        - sprite: Clothing/Belt/belt_overlay.rsi
+          state: crowbar
+          color: limegreen
+
