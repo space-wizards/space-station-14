@@ -201,7 +201,7 @@ public sealed partial class ExplosionSystem
     /// <summary>
     ///     On receiving damage, re-evaluate how much explosion damage is needed to destroy an airtight entity.
     /// </summary>
-    private void OnAirtightDamaged(Entity<AirtightComponent> ent, ref DamageDealtEvent args)
+    private void OnAirtightDamaged(Entity<AirtightComponent> ent, ref DamageChangedEvent args)
     {
         // do we need to update our explosion blocking map?
         if (!ent.Comp.AirBlocked)
