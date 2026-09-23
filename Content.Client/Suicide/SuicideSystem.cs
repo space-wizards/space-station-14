@@ -2,4 +2,4 @@ using Content.Shared.Suicide;
 
 namespace Content.Client.Suicide;
 
-public sealed class SuicideSystem : SharedSuicideSystem;
+public sealed partial class SuicideSystem : SharedSuicideSystem;
