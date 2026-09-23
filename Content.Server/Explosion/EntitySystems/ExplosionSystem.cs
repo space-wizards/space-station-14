@@ -95,7 +95,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         SubscribeLocalEvent<MapRemovedEvent>(OnMapRemoved);
 
         // handled in ExplosionSystemAirtight.cs
-        SubscribeLocalEvent<AirtightComponent, DamageChangedEvent>(OnAirtightDamaged);
+        SubscribeLocalEvent<AirtightComponent, DamageDealtEvent>(OnAirtightDamaged);
         SubscribeCvars();
         InitAirtightMap();
         InitVisuals();

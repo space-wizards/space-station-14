@@ -290,7 +290,18 @@ public sealed class DamageModifyEvent(DamageSpecifier damage, EntityUid? origin 
 /// <param name="Origin">The originator of the damage</param>
 /// <param name="InterruptsDoAfters">If the damage being dealt will interrupt do-afters</param>
 [ByRefEvent]
-public readonly record struct DamageDealtEvent(DamageSpecifier Damage, EntityUid? Origin, bool InterruptsDoAfters);
+public readonly record struct DamageDealtEvent(DamageSpecifier Damage, EntityUid? Origin, bool InterruptsDoAfters)
+{
+    /// <summary>
+    /// A cached version of <see cref="this.Damage.AnyPositive"/>.
+    /// </summary>
+    public readonly bool AnyPositive = Damage.AnyPositive();
+
+    /// <summary>
+    /// A cached value of Damage.GetTotal.
+    /// </summary>
+    public readonly FixedPoint2 Total = Damage.GetTotal();
+}
 
 [Obsolete("Will be replaced with damage-model specific events; general 'took damage' can be served by DamageDealtEvent")]
 public sealed class DamageChangedEvent : EntityEventArgs

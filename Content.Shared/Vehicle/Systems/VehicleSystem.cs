@@ -52,6 +52,9 @@ public sealed partial class VehicleSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnBeforeDamageChanged(Entity<VehicleComponent> ent, ref BeforeDamageChangedEvent args)
     {
+        if (args.Cancelled)
+            return;
+
         if (!ent.Comp.TransferDamage || !args.Damage.AnyPositive() || ent.Comp.Operator is not { } operatorUid)
             return;
 

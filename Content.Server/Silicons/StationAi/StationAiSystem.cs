@@ -82,7 +82,7 @@ public sealed partial class StationAiSystem : SharedStationAiSystem
         SubscribeLocalEvent<StationAiCoreComponent, ContainerSpawnEvent>(OnContainerSpawn);
         SubscribeLocalEvent<StationAiCoreComponent, ApcPowerReceiverBatteryChangedEvent>(OnApcBatteryChanged);
         SubscribeLocalEvent<StationAiCoreComponent, ChargeChangedEvent>(OnChargeChanged);
-        SubscribeLocalEvent<StationAiCoreComponent, DamageChangedEvent>(OnDamageChanged);
+        SubscribeLocalEvent<StationAiCoreComponent, DamageDealtEvent>(OnDamageDealt);
         SubscribeLocalEvent<StationAiCoreComponent, DestructionEventArgs>(OnDestruction);
         SubscribeLocalEvent<StationAiCoreComponent, DoAfterAttemptEvent<IntellicardDoAfterEvent>>(OnDoAfterAttempt);
         SubscribeLocalEvent<StationAiCoreComponent, RejuvenateEvent>(OnRejuvenate);
@@ -233,9 +233,9 @@ public sealed partial class StationAiSystem : SharedStationAiSystem
         UpdateDamagedAccent(entity);
     }
 
-    private void OnDamageChanged(Entity<StationAiCoreComponent> entity, ref DamageChangedEvent args)
+    private void OnDamageDealt(Entity<StationAiCoreComponent> entity, ref DamageDealtEvent args)
     {
-        UpdateCoreIntegrityAlert(entity, args.DamageIncreased);
+        UpdateCoreIntegrityAlert(entity, args.AnyPositive);
         UpdateDamagedAccent(entity);
     }
 

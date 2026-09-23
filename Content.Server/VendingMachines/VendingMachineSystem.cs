@@ -110,9 +110,9 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnDamageChanged(Entity<VendingMachineComponent> entity, ref DamageChangedEvent args)
+    private void OnDamageChanged(Entity<VendingMachineComponent> entity, ref DamageDealtEvent args)
     {
-        if (!args.DamageIncreased && entity.Comp.Broken)
+        if (!args.AnyPositive && entity.Comp.Broken)
         {
             entity.Comp.Broken = false;
             Dirty(entity);
@@ -122,10 +122,10 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         if (!TryComp<VendingMachineDispenseOnHitComponent>(entity.Owner, out var dispenseOnHit))
             return;
 
-        if (entity.Comp.Broken || dispenseOnHit.CoolingDown || args.DamageDelta == null)
+        if (entity.Comp.Broken || dispenseOnHit.CoolingDown)
             return;
 
-        if (!(args.DamageIncreased && args.DamageDelta.GetTotal() >= dispenseOnHit.Threshold) ||
+        if (!(args.AnyPositive && args.Total >= dispenseOnHit.Threshold) ||
             !_random.Prob(dispenseOnHit.Chance)) return;
 
         if (dispenseOnHit.NextDispenseDelay != null)

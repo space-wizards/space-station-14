@@ -27,24 +27,24 @@ public sealed partial class KudzuSystem : EntitySystem
     {
         SubscribeLocalEvent<KudzuComponent, ComponentStartup>(SetupKudzu);
         SubscribeLocalEvent<KudzuComponent, SpreadNeighborsEvent>(OnKudzuSpread);
-        SubscribeLocalEvent<KudzuComponent, DamageChangedEvent>(OnDamageChanged);
+        SubscribeLocalEvent<KudzuComponent, DamageDealtEvent>(OnDamageDealt);
     }
 
-    private void OnDamageChanged(EntityUid uid, KudzuComponent component, DamageChangedEvent args)
+    private void OnDamageDealt(EntityUid uid, KudzuComponent component, DamageDealtEvent args)
     {
+        if (!_damageableQuery.TryComp(uid, out var damageable))
+            return;
+
         // Every time we take any damage, we reduce growth depending on all damage over the growth impact
         //   So the kudzu gets slower growing the more it is hurt.
-        var growthDamage = (int) (_damageable.GetTotalDamage((uid, args.Damageable)) / component.GrowthHealth);
+        var growthDamage = (int)(_damageable.GetTotalDamage((uid, damageable)) / component.GrowthHealth);
         if (growthDamage > 0)
         {
             if (!EnsureComp<GrowingKudzuComponent>(uid, out _))
                 component.GrowthLevel = 3;
 
             component.GrowthLevel = Math.Max(1, component.GrowthLevel - growthDamage);
-            if (TryComp<AppearanceComponent>(uid, out var appearance))
-            {
-                _appearance.SetData(uid, KudzuVisuals.GrowthLevel, component.GrowthLevel, appearance);
-            }
+            _appearance.SetData(uid, KudzuVisuals.GrowthLevel, component.GrowthLevel);
         }
     }
 
@@ -84,10 +84,8 @@ public sealed partial class KudzuSystem : EntitySystem
 
     private void SetupKudzu(EntityUid uid, KudzuComponent component, ComponentStartup args)
     {
-        if (!TryComp<AppearanceComponent>(uid, out var appearance))
-        {
+        if (!_appearanceQuery.TryComp(uid, out var appearance))
             return;
-        }
 
         _appearance.SetData(uid, KudzuVisuals.Variant, _robustRandom.Next(1, component.SpriteVariants), appearance);
         _appearance.SetData(uid, KudzuVisuals.GrowthLevel, 1, appearance);
@@ -146,10 +144,7 @@ public sealed partial class KudzuSystem : EntitySystem
                 RemCompDeferred(uid, grow);
             }
 
-            if (_appearanceQuery.TryGetComponent(uid, out var appearance))
-            {
-                _appearance.SetData(uid, KudzuVisuals.GrowthLevel, kudzu.GrowthLevel, appearance);
-            }
+            _appearance.SetData(uid, KudzuVisuals.GrowthLevel, kudzu.GrowthLevel);
         }
     }
 }

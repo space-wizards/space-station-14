@@ -9,6 +9,7 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Stack;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
@@ -52,18 +53,12 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
     /// </summary>
     private const double OverkillMultiplier = 2.0;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<DestructibleComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<DestructibleComponent, DamageChangedEvent>(OnDamageChanged);
-    }
-
     /// <summary>
     /// Map Initialization function for <see cref="DestructibleComponent"/>, adding automatic overkill threshold.
     /// </summary>
     /// <param name="entity">The uid, component tuple.</param>
     /// <param name="args">The event arguments.</param>
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<DestructibleComponent> entity, ref MapInitEvent args)
     {
         AddOverkillThreshold(entity);
@@ -72,15 +67,19 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
     /// <summary>
     /// Check if any thresholds were reached. if they were, execute them.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnDamageChanged(Entity<DestructibleComponent> entity, ref DamageChangedEvent args)
     {
         var (uid, comp) = entity;
 
         comp.IsBroken = false;
 
+        if (!TryComp<DamageableComponent>(entity, out var damageable))
+            return;
+
         foreach (var threshold in comp.Thresholds)
         {
-            if (Triggered(threshold, (uid, args.Damageable)))
+            if (Triggered(threshold, (uid, damageable)))
             {
                 RaiseLocalEvent(uid, new DamageThresholdReached(comp, threshold), true);
 
@@ -132,7 +131,7 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
     /// <summary>
     /// Check if the given threshold should trigger.
     /// </summary>
-    public bool Triggered(DamageThreshold threshold, Entity<Shared.Damage.Components.DamageableComponent> owner)
+    public bool Triggered(DamageThreshold threshold, Entity<DamageableComponent> owner)
     {
         if (threshold.Triggered && threshold.TriggersOnce)
             return false;
@@ -153,7 +152,7 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
     /// <summary>
     /// Check if the conditions for the given threshold are currently true.
     /// </summary>
-    public bool Reached(DamageThreshold threshold, Entity<Shared.Damage.Components.DamageableComponent> owner)
+    public bool Reached(DamageThreshold threshold, Entity<DamageableComponent> owner)
     {
         if (threshold.Trigger == null)
             return false;

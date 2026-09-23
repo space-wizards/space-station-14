@@ -201,13 +201,13 @@ public sealed partial class ExplosionSystem
     /// <summary>
     ///     On receiving damage, re-evaluate how much explosion damage is needed to destroy an airtight entity.
     /// </summary>
-    private void OnAirtightDamaged(EntityUid uid, AirtightComponent airtight, DamageChangedEvent args)
+    private void OnAirtightDamaged(Entity<AirtightComponent> ent, ref DamageDealtEvent args)
     {
         // do we need to update our explosion blocking map?
-        if (!airtight.AirBlocked)
+        if (!ent.Comp.AirBlocked)
             return;
 
-        if (!TryComp(uid, out TransformComponent? transform) || !transform.Anchored)
+        if (!TryComp(ent, out TransformComponent? transform) || !transform.Anchored)
             return;
 
         if (!TryComp<MapGridComponent>(transform.GridUid, out var grid))
