@@ -21,7 +21,7 @@ public sealed partial class ServerCosmicFragmentationSystem : CosmicFragmentatio
     [SubscribeLocalEvent]
     private void OnFragmentAi(Entity<StationAiCoreComponent> ent, ref MalignFragmentationEvent args)
     {
-        if (!ProtoMan.TryIndex(_cosmicLaws, out var proto) || _ai.GetInsertedAI(ent) is not { } brain)
+        if (!ProtoMan.Resolve(_cosmicLaws, out var proto) || _ai.GetInsertedAI(ent) is not { } brain)
         {
             args.Cancelled = true;
             return;
