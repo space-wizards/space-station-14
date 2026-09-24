@@ -3,7 +3,7 @@
   parent: MobSpiderAnimated
   id: MobGiantSpiderBreacher
   name: breacher spider
-  description: A sturdy spider whose jaws can tear into structures.
+  description: A broad, sturdy spider with unusually powerful jaws.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -16,6 +16,8 @@
       types:
         Piercing: 6
         Structural: 6
+  - type: Prying
+    speedModifier: 2.0
   - type: SolutionManager
     solutions:
     - SolutionVenomSpiderBreacher

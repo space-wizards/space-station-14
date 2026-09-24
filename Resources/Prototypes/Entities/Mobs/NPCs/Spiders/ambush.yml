@@ -3,7 +3,7 @@
   parent: MobSpiderAnimated
   id: MobGiantSpiderAmbush
   name: ambush spider
-  description: A heavy-fanged spider that strikes hard at close range.
+  description: A pale, heavy-fanged spider that waits patiently for prey to come near.
   components:
   - type: Sprite
     drawdepth: Mobs

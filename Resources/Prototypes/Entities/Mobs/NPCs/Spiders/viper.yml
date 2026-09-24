@@ -3,7 +3,7 @@
   parent: MobSpiderAnimated
   id: MobGiantSpiderViper
   name: viper spider
-  description: A frail spider with a dangerously venomous bite.
+  description: A frail-looking spider with a dangerously venomous bite.
   components:
   - type: Sprite
     drawdepth: Mobs
