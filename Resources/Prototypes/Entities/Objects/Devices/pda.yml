@@ -970,30 +970,6 @@
         - id: AstroNavCartridge
 
 - type: entity
-  parent: BaseSecurityPDA
-  id: CentcommLawyerPDA
-  name: CentComm lawyer PDA
-  description: For lawyers to poach dubious clients.
-  components:
-  - type: Pda
-    id: CentcomLawyerIDCard #TODO needs ID to exist
-    penSlot:
-      startingItem: LuxuryPen
-      priority: -1
-      whitelist:
-        tags:
-        - Write
-  - type: Appearance
-    appearanceDataInit:
-     enum.PdaVisuals.PdaType:
-       !type:String
-       pda-centcomlawyer #TODO needs appearance
-  - type: PdaBorderColor
-    borderColor: "#6f6192" #TODO this is just lawyer rn
-  - type: Icon
-    state: pda-centcomlawyer # TODO needs sprite
-
-- type: entity
   parent: CentcomPDA
   id: AdminPDA
   name: Admin PDA
