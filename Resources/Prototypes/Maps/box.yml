@@ -2,7 +2,7 @@
   id: Box
   mapName: 'Box Station'
   mapPath: /Maps/box.yml
-  minPlayers: 50
+  minPlayers: 45
   stations:
     Boxstation:
       stationProto: StandardNanotrasenStation
@@ -15,8 +15,9 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_box.yml
         - type: StationJobs
-          availableJobs: # 63 jobs total w/o latejoins & interns, 82 jobs total w/ latejoins & interns
-            #Command (7)
+          availableJobs:
+            # TOTAL: 65 job slots
+            # Command (7)
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             HeadOfSecurity: [ 1, 1 ]
@@ -24,42 +25,41 @@
             ChiefEngineer: [ 1, 1 ]
             ResearchDirector: [ 1, 1 ]
             Quartermaster: [ 1, 1 ]
-            #Service (14)
-            Bartender: [ 2, 2 ]
-            Botanist: [ 3, 3 ]
-            Chef: [ 2, 2 ]
-            Janitor: [ 2, 2 ]
-            Chaplain: [ 1, 1 ]
-            Librarian: [ 1, 1 ]
-            Reporter: [ 1, 1 ]
-            ServiceWorker: [ 2, 2 ]
-            #Engineering (8)
-            AtmosphericTechnician: [ 3, 3 ]
-            StationEngineer: [ 5, 5 ]
-            TechnicalAssistant: [ 4, 4 ] #intern, exclude from dept count
-            #Medical (8)
-            Chemist: [ 2, 2 ]
-            MedicalDoctor: [ 4, 4 ]
-            Paramedic: [ 1, 1 ]
-            MedicalIntern: [ 4, 4 ] #intern, exclude from dept count
-            Psychologist: [ 1, 1 ]
-            #Science (5)
-            Scientist: [ 5, 5 ]
-            ResearchAssistant: [ 4, 4 ] #intern, exclude from dept count
-            #Security (9 - 11)
+            # Service (12)
+            Bartender: [ 0, 1 ]
+            Botanist: [ 0, 2 ]
+            Chef: [ 0, 2 ]
+            Janitor: [ 0, 2 ]
+            Chaplain: [ 0, 1 ]
+            Librarian: [ 0, 1 ]
+            ServiceWorker: [ 0, 2 ]
+            Reporter: [ 0, 1 ]
+            # Engineering (8)
+            AtmosphericTechnician: [ 1, 2 ]
+            StationEngineer: [ 2, 4 ]
+            TechnicalAssistant: [ 0, 2 ]
+            # Medical (8)
+            Chemist: [ 1, 2 ]
+            MedicalDoctor: [ 2, 3 ]
+            Paramedic: [ 0, 1 ]
+            MedicalIntern: [ 0, 2 ]
+            # Science (6)
+            Scientist: [ 2, 4 ]
+            ResearchAssistant: [ 0, 2 ]
+            # Security (11)
             Warden: [ 1, 1 ]
-            SecurityOfficer: [ 5, 7 ]
+            SecurityOfficer: [ 2, 6 ]
             Detective: [ 1, 1 ]
-            SecurityCadet: [ 2, 4 ] #intern, exclude from dept count
-            Lawyer: [ 2, 2 ]
-            #Supply (6)
-            SalvageSpecialist: [ 3, 3 ]
-            CargoTechnician: [ 3, 3 ]
-            #Civilian (3+)
-            Passenger: [ -1, -1 ] #infinite, not counted
-            Clown: [ 1, 1 ]
-            Mime: [ 1, 1 ]
-            Musician: [ 1, 1 ]
-            #Silicon (3)
+            SecurityCadet: [ 0, 2 ]
+            Lawyer: [ 0, 1 ]
+            # Supply (6)
+            SalvageSpecialist: [ 1, 3 ]
+            CargoTechnician: [ 2, 3 ]
+            # Civilian (3 + overflow)
+            Passenger: [ -1, -1 ] # infinite, not counted
+            Clown: [ 0, 1 ]
+            Mime: [ 0, 1 ]
+            Musician: [ 0, 1 ]
+            # Silicon (4)
             StationAi: [ 1, 1 ]
-            Borg: [ 2, 3 ]
+            Borg: [ 0, 3 ]

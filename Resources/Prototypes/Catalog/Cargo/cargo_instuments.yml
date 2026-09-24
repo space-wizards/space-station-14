@@ -1,4 +1,4 @@
-﻿# Handheld Instruments
+# Handheld Instruments
 
 - type: cargoProduct
   id: FunInstrumentsVariety
@@ -189,5 +189,15 @@
     state: toms
   product: TomDrumsInstrument
   cost: 750
+  category: cargoproduct-category-name-instruments
+  group: market
+
+- type: cargoProduct
+  id: BigDrumsInstrument
+  icon:
+    sprite: Objects/Fun/Instruments/structureinstruments.rsi
+    state: drum
+  product: BigDrumsInstrument
+  cost: 1500
   category: cargoproduct-category-name-instruments
   group: market

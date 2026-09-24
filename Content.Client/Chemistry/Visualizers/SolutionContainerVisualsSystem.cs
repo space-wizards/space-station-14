@@ -80,6 +80,10 @@ public sealed partial class SolutionContainerVisualsSystem : VisualizerSystem<So
                 changeColor = reagentProto.MetamorphicChangeColor;
                 fillSprite = reagentProto.MetamorphicSprite ?? fillSprite;
             }
+            else if (reagentProto?.MetamorphicSprite == null)
+                // The reagent has no metamorphic sprite, but the default one
+                // will still be used. So we set the fill to visible.
+                SpriteSystem.LayerSetVisible(ent, fillLayer, true);
             else
                 SpriteSystem.LayerSetVisible(ent, fillLayer, false);
         }
@@ -132,7 +136,7 @@ public sealed partial class SolutionContainerVisualsSystem : VisualizerSystem<So
         var reagentProto = ProtoMan.Index<ReagentPrototype>(baseOverride);
 
         if (SpriteSystem.LayerMapTryGet(ent, component.OverlayLayer, out var overlayLayer, false))
-            SpriteSystem.LayerSetVisible(ent, overlayLayer, reagentProto.MetamorphicSprite is not null);
+            SpriteSystem.LayerSetVisible(ent, overlayLayer, reagentProto.MetamorphicSprite is null);
 
         if (!SpriteSystem.LayerMapTryGet(ent, component.BaseLayer, out var baseLayer, false))
             return null;

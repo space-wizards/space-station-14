@@ -133,14 +133,14 @@ public sealed partial class LabelSystem : EntitySystem
 
     private void OnComponentInit(Entity<PaperLabelComponent> ent, ref ComponentInit args)
     {
-        _itemSlots.AddItemSlot(ent, ContainerName, ent.Comp.LabelSlot);
+        _itemSlots.AddItemSlot(ent.Owner, ContainerName, ent.Comp.LabelSlot);
 
         UpdateAppearance(ent);
     }
 
     private void OnComponentRemove(Entity<PaperLabelComponent> ent, ref ComponentRemove args)
     {
-        _itemSlots.RemoveItemSlot(ent, ent.Comp.LabelSlot);
+        _itemSlots.RemoveItemSlot(ent.Owner, ent.Comp.LabelSlot);
     }
 
     private void OnExamined(Entity<PaperLabelComponent> ent, ref ExaminedEvent args)
@@ -167,8 +167,9 @@ public sealed partial class LabelSystem : EntitySystem
             }
 
             args.PushMarkup(Loc.GetString("comp-paper-label-has-label"));
-            var text = paper.Content;
-            args.PushMarkup(text.TrimEnd());
+            var message = new FormattedMessage();
+            message.AddMarkupPermissive(paper.Content.TrimEnd());
+            args.PushMessage(message);
         }
     }
 

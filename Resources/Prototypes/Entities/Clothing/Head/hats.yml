@@ -187,6 +187,7 @@
     tags:
     - PetWearable
     - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -202,6 +203,7 @@
     tags:
     - PetWearable
     - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -265,6 +267,7 @@
     tags:
     - PetWearable
     - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: [ClothingHeadBase, BaseCommandContraband]
@@ -314,6 +317,7 @@
     tags:
     - PetWearable
     - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -552,7 +556,6 @@
   components:
   - type: Clothing
     sprite: Clothing/Head/Hats/santahat.rsi
-  - type: Appearance
   - type: HideLayerClothing
     layers:
       Hair: HEAD
@@ -677,7 +680,6 @@
   components:
   - type: Clothing
     sprite: Clothing/Head/Hats/ushanka.rsi
-  - type: Appearance
   - type: RussianAccent
     relayAccent: true
   - type: Foldable
@@ -764,6 +766,7 @@
     tags:
     - PetWearable
     - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -1484,6 +1487,7 @@
     tags:
     - PetWearable
     - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -1547,3 +1551,19 @@
     sprite: Clothing/Head/Hats/mitre_clown.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/mitre_clown.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatTramDriver
+  name: tram driver hat
+  description: It smells like confidence.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/tramdriver.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/tramdriver.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - WhitelistChameleon

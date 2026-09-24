@@ -1,4 +1,4 @@
-﻿using Content.Shared.Roles;
+using Content.Shared.Roles;
 using Content.Shared.StatusEffectNew;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;

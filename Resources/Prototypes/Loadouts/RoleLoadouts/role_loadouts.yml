@@ -209,7 +209,7 @@
   - MimeBelt
   - Glasses
   - AssistiveItems
-  - SurvivalMime
+  - Survival
   - Trinkets
   #- MimeJobTrinkets
 
@@ -491,6 +491,21 @@
   #- PsychologistJobTrinkets
   - GroupSpeciesBreathTool
 
+- type: roleLoadout
+  id: JobTramDriver
+  groups:
+  - GroupTankHarness
+  - CommonBackpack
+  - TramDriverJumpsuit
+  - TramDriverOuterClothing #Vest and such
+  - TramDriverHat
+  - TramDriverGloves
+  - Glasses
+  - Survival
+  - Trinkets
+  #- TramDriverJobTrinkets
+  - GroupSpeciesBreathTool
+
 # These loadouts are used for non-crew spawns, like off-station antags and event mobs
 # They will be used without player configuration, thus they will only ever apply what is forced by MinLimit
 
@@ -526,6 +541,13 @@
   id: RoleSurvivalExtended
   groups:
   - SurvivalExtended
+  - GroupSpeciesBreathTool
+  - GroupTankHarness
+
+- type: roleLoadout
+  id: RoleSurvivalExtendedAntag # Used by antagonists that spawn off-station (e.g wizards)
+  groups:
+  - SurvivalExtendedAntag
   - GroupSpeciesBreathTool
   - GroupTankHarness
 
@@ -567,6 +589,12 @@
   groups:
   - GroupEVATank
   - SurvivalExtended
+
+- type: roleLoadout
+  id: RoleSurvivalEVAAntag # Used by antagonists that spawn off-station AND in space (e.g ninjas)
+  groups:
+  - GroupEVATank
+  - SurvivalExtendedAntag
 
 - type: roleLoadout
   id: RoleSurvivalSpaceNinja
