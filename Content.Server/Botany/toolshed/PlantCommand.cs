@@ -5,6 +5,8 @@ using Content.Shared.Administration;
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Items.Components;
 using Content.Shared.Botany.Systems;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -26,6 +28,7 @@ public sealed partial class PlantCommand : ToolshedCommand
 
     private PlantMutationSystem? _mutationSystem;
     private BotanySystem? _botany;
+    private PlantChemicalsSystem? _plantChemicals;
     private PlantHolderSystem? _plantHolder;
     private PlantSystem? _plant;
     private PlantTraySystem? _plantTray;
@@ -238,6 +241,48 @@ public sealed partial class PlantCommand : ToolshedCommand
         }
     }
 
+    [CommandImplementation("addchem")]
+    public EntityUid AddChemical(
+        IInvocationContext ctx,
+        [PipedArgument] EntityUid input,
+        ProtoId<ReagentPrototype> reagent,
+        float min,
+        float amount,
+        bool inherent = false)
+    {
+        if (!TryGetPlant(input, ctx, out _, out _))
+            return EntityUid.Invalid;
+
+        if (!float.IsFinite(min) || !float.IsFinite(amount) || min < 0f || amount < 0f || min + amount <= 0)
+        {
+            ctx.ReportError(new PlantCommandError(
+                $"Chemical quantities must be finite, with min and max both non-negative and at least one nonzero."));
+            return EntityUid.Invalid;
+        }
+
+        _plantChemicals ??= GetSys<PlantChemicalsSystem>();
+        if (!_plantChemicals.AddChemical(input, reagent, FixedPoint2.New(min), FixedPoint2.New(amount), inherent))
+        {
+            ctx.ReportError(new PlantCommandError(
+                $"Plant entity {input} did not accept added chemicals."));
+            return EntityUid.Invalid;
+        }
+
+        return input;
+    }
+
+    [CommandImplementation("addchem")]
+    public IEnumerable<EntityUid> AddChemical(
+        IInvocationContext ctx,
+        [PipedArgument] IEnumerable<EntityUid> input,
+        ProtoId<ReagentPrototype> reagent,
+        float min,
+        float max)
+    {
+        return input
+            .Select(entity => AddChemical(ctx, entity, reagent, min, max))
+            .Where(entity => entity.IsValid());
+    }
 
     private bool TryGetPlant(
         EntityUid input,

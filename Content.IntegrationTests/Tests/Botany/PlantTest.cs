@@ -7,6 +7,8 @@ using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Items.Components;
 using Content.Shared.Botany.Systems;
 using Content.Shared.Botany.Traits.Components;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
@@ -161,6 +163,25 @@ public sealed class PlantTest : ToolshedTest
                 Assert.That(holder!.ReadyForHarvest, Is.True,
                     $"Ligneous plant grown from {seed.ID} was harvested without a hatchet.");
             }
+        });
+    }
+
+    [Test]
+    public async Task ChemicalsCanBeAddedToPlants()
+    {
+        await CreateBotanyTestMap();
+
+        await Server.WaitAssertion(() =>
+        {
+            var plantChemicals = Server.System<PlantChemicalsSystem>();
+            var plant = InvokeCommand<EntityUid>("var $coordinates plant:spawn WheatSeeds");
+            WriteVar("plant", plant);
+
+            var updatedPlant = InvokeCommand<EntityUid>("var $plant plant:addchem Omnizine 1 5");
+            Assert.That(updatedPlant, Is.EqualTo(plant));
+
+            var reagent = new ProtoId<ReagentPrototype>("Omnizine");
+            Assert.That(plantChemicals.TryGetChemical(plant, reagent, out var quantity), Is.True);
         });
     }
 
