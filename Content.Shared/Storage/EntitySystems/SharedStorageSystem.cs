@@ -241,9 +241,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
         // TODO: This should update all entities in storage.
 
         if (args.WasModified<ItemSizePrototype>())
-        {
             CacheDefaultStorageSize();
-        }
     }
 
     private void CacheDefaultStorageSize()
