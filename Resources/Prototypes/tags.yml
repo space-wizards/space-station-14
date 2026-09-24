@@ -1169,6 +1169,8 @@
 - type: Tag
   id: PowerCellSmall # Storage whitelist: BaseWeaponPowerCell, PowerCellRecharger, ShuttleGunSvalinnMachineGun.
                      # ConstructionGraph: WallmountSubstation, makeshiftstunprod
+- type: Tag
+  id: PowerCellMedium # ConstructionGraph: MakeshiftLaser
 
 - type: Tag
   id: Powerdrill # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering

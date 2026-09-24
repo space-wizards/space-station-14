@@ -144,6 +144,9 @@
       reagents:
       - ReagentId: Lithium
         Quantity: 5
+  - type: Tag
+    tags:
+    - PowerCellMedium
 
 - type: entity
   id: PowerCellMediumPrinted

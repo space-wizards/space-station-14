@@ -209,10 +209,18 @@
 
 - type: entity
   name: makeshift laser pistol
-  parent: [BaseWeaponBatterySmall, BaseMinorContraband]
+  parent: [BaseWeaponPowerCell, BaseMinorContraband]
   id: WeaponMakeshiftLaser
   description: Better pray it won't burn your hands off.
   components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        locked: true
+        name: Magazine
+        whitelist:
+          tags:
+            - PowerCell
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
     layers:
@@ -230,23 +238,24 @@
   - type: Appearance
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
+    quickEquip: false
+    slots:
+    - Belt
+    - suitStorage
   - type: BatteryAmmoProvider
     proto: RedLaser
     fireCost: 62.5
-  - type: Battery
-    maxCharge: 500
-    startingCharge: 500
   - type: Tag
     tags:
     - Sidearm
     - LaserWeapon
   - type: Construction
-    graph: MakeshiftLaser
-    node: MakeshiftLaser
+    graph: MakeshiftLaserGraph
+    node: mslaser
 
 - type: entity
   parent: [BaseItem, BaseMinorContraband]
-  name: laser pistol frame
+  name: makeshift laser pistol frame
   id: WeaponMakeshiftLaserFrame
   description: Only needs a bit more screwing and a doctorate in practical bluespace technology.
   components:
@@ -254,8 +263,9 @@
     sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
     state: frame
   - type: Construction
-    graph: MakeshiftLaser
+    graph: MakeshiftLaserGraph
     node: mslaserframe
+    defaultTarget: mslaser
 
 - type: entity
   name: tesla gun
