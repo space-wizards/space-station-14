@@ -84,22 +84,10 @@ public sealed partial class StoreCurrencyGeneratorComponent : Component
     public SoundSpecifier? CollectSound;
 
     /// <summary>
-    /// LocId of the text used for the verb the store sees when looking at this entity.
+    /// Description to show when an eligible user attempts to collect from an empty generator.
     /// </summary>
     [DataField]
-    public LocId Verb = "store-generator-verb";
-
-    /// <summary>
-    /// Description for the <see cref="Verb"/> verb.
-    /// </summary>
-    [DataField]
-    public LocId VerbDescription = "store-generator-verb-description";
-
-    /// <summary>
-    /// Description for the <see cref="Verb"/> verb.
-    /// </summary>
-    [DataField]
-    public LocId VerbDescriptionEmpty = "store-generator-verb-description-empty";
+    public LocId EmptyPopup = "store-generator-collect-empty-popup";
 
     /// <summary>
     /// Description to show to the user/store when it is collected from.

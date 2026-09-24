@@ -2,7 +2,6 @@
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Store.Components;
-using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
@@ -11,7 +10,7 @@ using Robust.Shared.Timing;
 namespace Content.Shared.Store;
 
 /// <summary>
-/// This handles...
+/// This handles currency generation and collection for <see cref="StoreCurrencyGeneratorComponent"/>.
 /// </summary>
 public abstract partial class SharedStoreSystem
 {
@@ -27,51 +26,15 @@ public abstract partial class SharedStoreSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnInteractedUsingStore(Entity<StoreCurrencyGeneratorComponent> entity, ref InteractUsingEvent args)
+    private void OnInteractedUsingHand(Entity<StoreCurrencyGeneratorComponent> entity, ref InteractHandEvent args)
     {
-        if (entity.Comp.Amount == 0)
-            return;
-
-        if (!TryComp<StoreComponent>(args.Used, out var storeComp))
-            return;
-
-        if (!_whitelist.CheckBoth(args.Used, entity.Comp.Blacklist, entity.Comp.Whitelist))
-            return;
-
-        if (!ProtoMan.TryIndex(entity.Comp.Currency, out var proto))
-            return;
-
-        CollectGenerator(entity, (args.Used, storeComp), args.User, proto);
-
+        AttemptCollection(entity, args.User, args.User);
     }
 
     [SubscribeLocalEvent]
-    private void OnStoreVerbs(Entity<StoreCurrencyGeneratorComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
+    private void OnInteractedUsingStore(Entity<StoreCurrencyGeneratorComponent> entity, ref InteractUsingEvent args)
     {
-        if (!TryComp<StoreComponent>(args.User, out var storeComp))
-            return;
-
-        if (!_whitelist.CheckBoth(args.User, entity.Comp.Blacklist, entity.Comp.Whitelist))
-            return;
-
-        if (!ProtoMan.TryIndex(entity.Comp.Currency, out var proto))
-            return;
-
-        var user = args.User;
-        args.Verbs.Add(new AlternativeVerb
-        {
-            Text = Loc.GetString(entity.Comp.Verb),
-            Message = entity.Comp.Amount == 0 ? Loc.GetString(entity.Comp.VerbDescriptionEmpty) : Loc.GetString(entity.Comp.VerbDescription, ("amount", entity.Comp.Amount), ("currency", Loc.GetString(proto.DisplayName)), ("entity", entity)),
-            Disabled = entity.Comp.Amount == 0, // Dont allow collection when empty
-            DoContactInteraction = true,
-            Act = () =>
-            {
-                if (entity.Comp.Amount == 0)
-                    return;
-
-                CollectGenerator(entity, (user, storeComp), user, proto);
-            },
-        });
+        AttemptCollection(entity, args.Used, args.User);
     }
 
     [SubscribeLocalEvent]
@@ -133,5 +96,25 @@ public abstract partial class SharedStoreSystem
             DirtyField(generator, generator.Comp, nameof(StoreCurrencyGeneratorComponent.Amount));
             _audio.PlayPredicted(generator.Comp.CollectSound, generator, user);
         }
+    }
+
+    private void AttemptCollection(Entity<StoreCurrencyGeneratorComponent> entity, EntityUid collector, EntityUid user)
+    {
+        if (!TryComp<StoreComponent>(collector, out var storeComp))
+            return;
+
+        if (!_whitelist.CheckBoth(collector, entity.Comp.Blacklist, entity.Comp.Whitelist))
+            return;
+
+        if (!ProtoMan.TryIndex(entity.Comp.Currency, out var proto))
+            return;
+
+        if (entity.Comp.Amount == 0)
+        {
+            Popup.PopupEntity(Loc.GetString(entity.Comp.EmptyPopup), entity, user);
+            return;
+        }
+
+        CollectGenerator(entity, (collector, storeComp), collector, proto);
     }
 }
