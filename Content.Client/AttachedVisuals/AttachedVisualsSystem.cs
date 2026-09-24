@@ -25,19 +25,40 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
     [Dependency] private EntityQuery<GenericVisualizerComponent> _genericVisualizerQuery = default!;
     [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
 
+    private readonly Queue<EntityUid> _dirtyEntities = new();
+
+    public override void FrameUpdate(float frameTime)
+    {
+        base.FrameUpdate(frameTime);
+
+        while (_dirtyEntities.TryDequeue(out var uid))
+        {
+            if (!_attachedVisualsQuery.TryComp(uid, out var attachedVisuals))
+                return;
+
+            UpdateVisuals((uid, attachedVisuals));
+        }
+    }
+
     [SubscribeLocalEvent]
     private void OnStartup(Entity<AttachedVisualsComponent> ent, ref ComponentStartup args)
     {
-        UpdateVisuals(ent);
+        _dirtyEntities.Enqueue(ent);
     }
 
     [SubscribeLocalEvent]
     private void OnInserted(Entity<AttachedVisualsComponent> ent, ref EntGotInsertedIntoContainerMessage args)
     {
-        if (!_attachedVisualsQuery.TryComp(args.Container.Owner, out var attachedVisuals))
+        if (!_attachedVisualsQuery.HasComp(args.Container.Owner))
             return;
 
-        UpdateVisuals((args.Container.Owner, attachedVisuals));
+        _dirtyEntities.Enqueue(args.Container.Owner);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnAppearanceChange(Entity<AttachedVisualsComponent> ent, ref AppearanceChangeEvent args)
+    {
+        _dirtyEntities.Enqueue(ent);
     }
 
     [SubscribeLocalEvent]
@@ -46,12 +67,6 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
         var origins = new List<EntityUid>();
         GetOrigins(ent, origins);
         RemoveSprites(args.Container.Owner, origins);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnAppearanceChange(Entity<AttachedVisualsComponent> ent, ref AppearanceChangeEvent args)
-    {
-        UpdateVisuals(ent);
     }
 
     private void GetAttachedVisuals(Entity<AttachedVisualsComponent> ent, VisualAttachmentPrototype attachmentPrototype, string prefix, List<AttachedLayer> layers)
