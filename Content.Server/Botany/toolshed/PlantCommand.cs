@@ -277,10 +277,11 @@ public sealed partial class PlantCommand : ToolshedCommand
         [PipedArgument] IEnumerable<EntityUid> input,
         ProtoId<ReagentPrototype> reagent,
         float min,
-        float max)
+        float amount,
+        bool inherent = false)
     {
         return input
-            .Select(entity => AddChemical(ctx, entity, reagent, min, max))
+            .Select(entity => AddChemical(ctx, entity, reagent, min, amount, inherent))
             .Where(entity => entity.IsValid());
     }
 
