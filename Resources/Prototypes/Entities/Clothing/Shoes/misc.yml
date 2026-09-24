@@ -91,21 +91,21 @@
     sprite: Clothing/Shoes/Misc/sandals.rsi
     layers:
     - state: icon
-      color: "#4e4e4e"
+      color: "#111111"
   - type: Item
     inhandVisuals:
       left:
       - state: inhand-left
-        color: "#4e4e4e"
+        color: "#111111"
       right:
       - state: inhand-right
-        color: "#4e4e4e"
+        color: "#111111"
   - type: Clothing
     sprite: Clothing/Shoes/Misc/sandals.rsi
     clothingVisuals:
       shoes:
       - state: equipped-FEET
-        color: "#4e4e4e"
+        color: "#111111"
 
 - type: entity
   parent: ClothingShoesBaseButcherable
@@ -117,21 +117,21 @@
     sprite: Clothing/Shoes/Misc/sandals.rsi
     layers:
     - state: icon
-      color: "#804000"
+      color: "#603000"
   - type: Item
     inhandVisuals:
       left:
       - state: inhand-left
-        color: "#804000"
+        color: "#603000"
       right:
       - state: inhand-right
-        color: "#804000"
+        color: "#603000"
   - type: Clothing
     sprite: Clothing/Shoes/Misc/sandals.rsi
     clothingVisuals:
       shoes:
       - state: equipped-FEET
-        color: "#804000"
+        color: "#603000"
 
 - type: entity
   parent: ClothingShoesBaseButcherable
