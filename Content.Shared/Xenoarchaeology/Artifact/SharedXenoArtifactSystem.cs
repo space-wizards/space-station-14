@@ -80,7 +80,7 @@ public abstract partial class SharedXenoArtifactSystem : EntitySystem
             return false;
 
         var result = ent.Comp.AttachedEntities.Remove(entityToDetach);
-        if(result)
+        if (result)
             Dirty(ent);
 
         return result;
@@ -102,7 +102,7 @@ public abstract partial class SharedXenoArtifactSystem : EntitySystem
             return false;
 
         var result = ent.Comp.AttachedEntities.Add(entityToAttach);
-        if(result)
+        if (result)
             Dirty(ent);
 
         return result;
