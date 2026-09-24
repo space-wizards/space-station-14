@@ -40,7 +40,7 @@ public abstract partial class SharedXenoArtifactSystem : EntitySystem
         UpdateUnlock(frameTime);
     }
 
-    /// <summary> Clears attached scanners if any  </summary>
+    /// <summary> Clears all attached scanners.  </summary>
     [SubscribeLocalEvent]
     private void OnShutdown(Entity<XenoArtifactComponent> ent, ref ComponentRemove shutdown)
     {
@@ -62,7 +62,6 @@ public abstract partial class SharedXenoArtifactSystem : EntitySystem
     {
         args.Handled = TryActivateXenoArtifact(ent, ent, null, Transform(ent).Coordinates, false);
     }
-
 
     /// <summary>
     /// Tries to remove an entity from the list of attached entities.

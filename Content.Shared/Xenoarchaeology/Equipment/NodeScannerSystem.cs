@@ -58,7 +58,6 @@ public sealed partial class NodeScannerSystem : EntitySystem
 
     /// <summary> Attach scanner if target is fitting. </summary>
     [SubscribeLocalEvent]
-
     private void OnBeforeRangedInteract(Entity<NodeScannerComponent> ent, ref BeforeRangedInteractEvent args)
     {
         if (args.Handled || !args.CanReach || args.Target is not { } target || !HasComp<XenoArtifactComponent>(target))
@@ -104,12 +103,19 @@ public sealed partial class NodeScannerSystem : EntitySystem
             return;
 
         var connected = EnsureComp<NodeScannerConnectedComponent>(device);
+        var previousEntity = connected.AttachedTo;
+
         EntityUid artifact = unlockingEnt;
         if (connected.AttachedTo != artifact)
         {
             connected.AttachedTo = artifact;
             Dirty(device, connected);
             _artifact.TryAttachEntity((artifact, null), device);
+        }
+
+        if (previousEntity.Valid)
+        {
+            _artifact.TryDetachEntity((previousEntity, null), device);
         }
 
         _ui.TryOpenUi((device, null), NodeScannerUiKey.Key, actor, predicted: true);
