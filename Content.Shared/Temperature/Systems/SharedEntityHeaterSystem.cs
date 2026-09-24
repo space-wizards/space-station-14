@@ -39,7 +39,7 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
 
     private void OnGetVerbs(Entity<EntityHeaterComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract)
             return;
 
         var nextSettingIndex = ((int)ent.Comp.Setting + 1) % _settingCount;
