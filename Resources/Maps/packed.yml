@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 289.0.0
+  engineVersion: 290.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/10/2026 21:56:10
+  time: 09/22/2026 15:51:04
   entityCount: 16513
 maps:
 - 126
@@ -418,18 +418,18 @@ entities:
           -2,-4:
             0: 30582
           -2,-3:
-            0: 26471
+            0: 26215
           -3,-2:
             1: 34952
           -2,-1:
             0: 65382
-          -2,-5:
-            0: 30310
           -2,-2:
             0: 26222
           -2,0:
             0: 2191
             1: 768
+          -2,-5:
+            0: 26214
           -1,-4:
             1: 17
             0: 28672
@@ -771,7 +771,7 @@ entities:
           5,-9:
             0: 62079
           6,-8:
-            0: 65263
+            0: 65039
           6,-7:
             0: 65102
           6,-6:
@@ -901,7 +901,7 @@ entities:
           9,-6:
             0: 7423
           9,-5:
-            0: 30479
+            0: 63247
           9,-9:
             2: 4096
             0: 52428
@@ -1293,7 +1293,7 @@ entities:
           3,10:
             0: 238
           4,9:
-            0: 57583
+            0: 58607
           4,11:
             1: 12850
             0: 2184
@@ -1359,7 +1359,7 @@ entities:
           10,7:
             0: 65485
           10,8:
-            0: 64433
+            0: 65457
           11,5:
             0: 52692
           11,6:
@@ -1715,7 +1715,7 @@ entities:
             1: 92
             0: 25088
           20,7:
-            0: 30578
+            0: 32626
           16,12:
             0: 4
           17,9:
@@ -1816,7 +1816,7 @@ entities:
             1: 17652
             2: 40960
           21,7:
-            0: 30583
+            0: 32631
           21,10:
             2: 43690
             1: 17476
@@ -1959,7 +1959,7 @@ entities:
             0: 13296
             1: 32768
           -6,-5:
-            0: 62259
+            0: 45875
             1: 136
           -7,-4:
             0: 52424
@@ -1993,7 +1993,7 @@ entities:
             1: 8738
             0: 34952
           -6,-3:
-            0: 16183
+            0: 15159
           -6,-2:
             0: 13107
             1: 34952
@@ -3600,6 +3600,11 @@ entities:
       parent: 2
       rot: 1.5707963267948966 rad
       pos: -0.5,-10.5
+  - uid: 590
+    components:
+    - type: Transform
+      parent: 2
+      pos: 33.5,26.5
 - proto: AirlockCaptainLocked
   entities:
   - uid: 2616
@@ -4408,8 +4413,6 @@ entities:
         553:
         - - DoorStatus
           - InputA
-        - - DockStatus
-          - InputB
     - type: DeviceLinkSink
       invokeCounter: 1
   - uid: 607
@@ -4423,8 +4426,6 @@ entities:
         10982:
         - - DoorStatus
           - InputA
-        - - DockStatus
-          - InputB
     - type: DeviceLinkSink
       invokeCounter: 1
 - proto: AirlockExternalGlassShuttleEmergencyLocked
@@ -4489,8 +4490,6 @@ entities:
         13328:
         - - DoorStatus
           - InputA
-        - - DockStatus
-          - InputB
     - type: DeviceLinkSink
       invokeCounter: 1
   - uid: 11675
@@ -4504,8 +4503,6 @@ entities:
         13329:
         - - DoorStatus
           - InputA
-        - - DockStatus
-          - InputB
     - type: DeviceLinkSink
       invokeCounter: 1
   - uid: 16051
@@ -4519,8 +4516,6 @@ entities:
         13297:
         - - DoorStatus
           - InputA
-        - - DockStatus
-          - InputB
     - type: DeviceLinkSink
       invokeCounter: 1
   - uid: 16052
@@ -4534,8 +4529,6 @@ entities:
         9402:
         - - DoorStatus
           - InputA
-        - - DockStatus
-          - InputB
     - type: DeviceLinkSink
       invokeCounter: 1
   - uid: 16053
@@ -4549,8 +4542,6 @@ entities:
         8663:
         - - DoorStatus
           - InputA
-        - - DockStatus
-          - InputB
     - type: DeviceLinkSink
       invokeCounter: 1
   - uid: 16054
@@ -4564,8 +4555,6 @@ entities:
         6639:
         - - DoorStatus
           - InputA
-        - - DockStatus
-          - InputB
     - type: DeviceLinkSink
       invokeCounter: 1
 - proto: AirlockExternalLocked
@@ -5020,13 +5009,6 @@ entities:
     - type: Transform
       parent: 2
       pos: 50.5,-9.5
-- proto: AirlockMaintCommandLocked
-  entities:
-  - uid: 205
-    components:
-    - type: Transform
-      parent: 2
-      pos: 9.5,-10.5
 - proto: AirlockMaintEngiLocked
   entities:
   - uid: 810
@@ -5036,6 +5018,13 @@ entities:
     - type: Transform
       parent: 2
       pos: 13.5,-22.5
+- proto: AirlockMaintEVALocked
+  entities:
+  - uid: 205
+    components:
+    - type: Transform
+      parent: 2
+      pos: 9.5,-10.5
 - proto: AirlockMaintGlassLocked
   entities:
   - uid: 223
@@ -5196,7 +5185,7 @@ entities:
       pos: 88.5,-10.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -10138.046
+      secondsUntilStateChange: -10195.349
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -5570,11 +5559,6 @@ entities:
       pos: 51.5,34.5
 - proto: AirlockSecurityLocked
   entities:
-  - uid: 590
-    components:
-    - type: Transform
-      parent: 2
-      pos: 33.5,26.5
   - uid: 7736
     components:
     - type: Transform
@@ -47796,7 +47780,7 @@ entities:
       pos: 59.5,39.5
     - type: Door
       state: Closing
-      secondsUntilStateChange: -41704.82
+      secondsUntilStateChange: -41762.12
 - proto: CurtainsWhiteOpen
   entities:
   - uid: 5741
@@ -77398,7 +77382,7 @@ entities:
       pos: 12.5,12.5
     - type: Door
       state: Closing
-      secondsUntilStateChange: -27170.557
+      secondsUntilStateChange: -27227.86
   - uid: 5750
     components:
     - type: Transform
@@ -87835,7 +87819,7 @@ entities:
     - type: Transform
       parent: 2
       rot: 1.5707963267948966 rad
-      pos: 36.41377,27.721725
+      pos: 36.5,27.5
     - type: DeviceLinkSource
       linkedPorts:
         267:
@@ -87890,7 +87874,7 @@ entities:
       name: signal button (Front Doors)
     - type: Transform
       parent: 2
-      pos: 31.49404,31.68
+      pos: 31.5,31.5
     - type: DeviceLinkSource
       linkedPorts:
         267:
@@ -93711,13 +93695,11 @@ entities:
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
       pos: 20.5,32.5
   - uid: 15462
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
       pos: 20.5,33.5
 - proto: TableFancyRed
   entities:
@@ -93730,25 +93712,21 @@ entities:
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
       pos: 49.5,41.5
   - uid: 8779
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
       pos: 48.5,41.5
   - uid: 12764
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
       pos: 20.5,29.5
   - uid: 15460
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
       pos: 20.5,30.5
 - proto: TableFrame
   entities:
@@ -94196,7 +94174,6 @@ entities:
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
       pos: 30.5,41.5
   - uid: 2719
     components:
@@ -94207,25 +94184,21 @@ entities:
     components:
     - type: Transform
       parent: 2
-      rot: 1.5707963267948966 rad
       pos: 23.5,40.5
   - uid: 2777
     components:
     - type: Transform
       parent: 2
-      rot: 1.5707963267948966 rad
       pos: 22.5,40.5
   - uid: 2778
     components:
     - type: Transform
       parent: 2
-      rot: 1.5707963267948966 rad
       pos: 22.5,39.5
   - uid: 2779
     components:
     - type: Transform
       parent: 2
-      rot: 1.5707963267948966 rad
       pos: 23.5,39.5
   - uid: 3091
     components:
@@ -94306,7 +94279,6 @@ entities:
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
       pos: 58.5,39.5
   - uid: 10084
     components:
@@ -94322,13 +94294,11 @@ entities:
     components:
     - type: Transform
       parent: 2
-      rot: 1.5707963267948966 rad
       pos: 9.5,18.5
   - uid: 13486
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
       pos: 9.5,-42.5
   - uid: 14381
     components:
@@ -94339,7 +94309,6 @@ entities:
     components:
     - type: Transform
       parent: 2
-      rot: 1.5707963267948966 rad
       pos: 46.5,42.5
 - proto: TargetClown
   entities:

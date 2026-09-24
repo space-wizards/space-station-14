@@ -294,7 +294,7 @@
   parent: ChemicalMedipen
   id: BruteAutoInjector
   name: brute auto-injector
-  description: A single-dose, non-refillable medipen containing bicaridine and tranexamic acid, used to quickly and easily treat simple physical injuries. Commonly used as a combat medicine.
+  description: A single-dose, non-refillable medipen containing Polypryrylium and tranexamic acid, used to quickly and easily treat simple physical injuries. Commonly used as a combat medicine.
   components:
   - type: Item
     inhandVisuals:
@@ -320,7 +320,7 @@
   - type: Solution
     solution:
       reagents:
-      - ReagentId: Bicaridine
+      - ReagentId: PolypyryliumOligomers
         Quantity: 15
       - ReagentId: TranexamicAcid
         Quantity: 5
