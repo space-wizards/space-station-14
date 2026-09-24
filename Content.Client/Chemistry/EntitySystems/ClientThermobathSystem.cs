@@ -18,6 +18,12 @@ public sealed partial class ClientThermobathSystem : ThermobathSystem
             UpdateUi((ent, thermobath));
     }
 
+    [SubscribeLocalEvent]
+    private void OnThermobathState(Entity<ThermobathComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        UpdateUi(ent);
+    }
+
     protected override void UpdateUi(Entity<ThermobathComponent> ent)
     {
         if (_ui.TryGetOpenUi(ent.Owner, ThermobathUiKey.Key, out var bui))

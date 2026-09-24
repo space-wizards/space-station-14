@@ -1,11 +1,10 @@
 using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature.HeatContainer;
-using Content.Shared.Temperature.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Temperature.Systems;
 
-public sealed partial class ServerThermoregulatorSystem : ThermoRegulatorSystem
+public sealed partial class ThermoregulatorSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
 
@@ -86,11 +85,6 @@ public sealed partial class ServerThermoregulatorSystem : ThermoRegulatorSystem
         RaiseLocalEvent(ent, ref ev);
     }
 
-    protected override void OnSettingsChanged(Entity<ThermoregulatorComponent> ent)
-    {
-        RefreshActiveMode(ent.AsNullable());
-    }
-
     private ThermoregulatorControlEvent GetControl(Entity<ThermoregulatorComponent> ent)
     {
         var control = new ThermoregulatorControlEvent(ent.Comp.Temperature);
@@ -139,5 +133,9 @@ public readonly record struct ThermoregulatorUpdatedEvent(ThermoregulatorCompone
 [ByRefEvent]
 public readonly record struct ThermoregulatorActiveModeChangedEvent(ThermoregulatorComponent Thermoregulator);
 
+/// <summary>
+/// Requests a target temperature and energy limits in joules per regulator update from the device.
+/// Without a provider, the regulator remains idle.
+/// </summary>
 [ByRefEvent]
 public record struct ThermoregulatorControlEvent(float TargetTemperature, float MinEnergy = 0f, float MaxEnergy = 0f);

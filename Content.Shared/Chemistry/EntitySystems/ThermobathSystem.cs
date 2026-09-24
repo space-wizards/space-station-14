@@ -4,14 +4,14 @@ using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Power.Components;
 using Content.Shared.Temperature.Components;
-using Content.Shared.Temperature.Systems;
+using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
 /// <summary>
-/// Handles thermobath UI messages and appearance data.
+/// Handles thermobath settings, UI messages and appearance data.
 /// </summary>
 public abstract partial class ThermobathSystem : EntitySystem
 {
@@ -19,7 +19,38 @@ public abstract partial class ThermobathSystem : EntitySystem
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] protected SharedPowerReceiverSystem _power = default!;
-    [Dependency] private ThermoRegulatorSystem _thermoregulator = default!;
+
+    [PublicAPI]
+    public void SetSetpoint(Entity<ThermobathComponent?> ent, float setpoint)
+    {
+        if (!float.IsFinite(setpoint) || !Resolve(ent, ref ent.Comp))
+            return;
+
+        var bath = ent.Comp;
+        var clampedSetpoint = Math.Clamp(setpoint, bath.MinTemperature, bath.MaxTemperature);
+        if (MathHelper.CloseTo(bath.Setpoint, clampedSetpoint))
+            return;
+
+        bath.Setpoint = clampedSetpoint;
+        DirtyField(ent, nameof(ThermobathComponent.Setpoint));
+        OnControlChanged((ent.Owner, bath));
+    }
+
+    [PublicAPI]
+    public void SetMode(Entity<ThermobathComponent?> ent, ThermobathMode mode)
+    {
+        if (!Enum.IsDefined(mode) || !Resolve(ent, ref ent.Comp))
+            return;
+
+        if (ent.Comp.Mode == mode)
+            return;
+
+        ent.Comp.Mode = mode;
+        DirtyField(ent, nameof(ThermobathComponent.Mode));
+        OnControlChanged((ent.Owner, ent.Comp));
+    }
+
+    protected virtual void OnControlChanged(Entity<ThermobathComponent> ent, bool? powered = null) { }
 
     [SubscribeLocalEvent]
     private void OnStartup(Entity<ThermobathComponent> ent, ref ComponentStartup args)
@@ -58,11 +89,9 @@ public abstract partial class ThermobathSystem : EntitySystem
             return;
         }
 
-        OnPowerStateChanged(ent);
+        OnControlChanged(ent, args.Powered);
         UpdateState(ent, powered: args.Powered);
     }
-
-    protected virtual void OnPowerStateChanged(Entity<ThermobathComponent> ent) { }
 
     [SubscribeLocalEvent]
     private void OnPowerChangeMessage(Entity<ThermobathComponent> ent, ref ThermobathPowerChangedMessage args)
@@ -84,14 +113,14 @@ public abstract partial class ThermobathSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnSetpointChangeMessage(Entity<ThermobathComponent> ent, ref ThermobathSetpointChangedMessage args)
     {
-        _thermoregulator.SetSetpoint(ent.Owner, args.Setpoint);
+        SetSetpoint(ent.AsNullable(), args.Setpoint);
         UpdateUi(ent);
     }
 
     [SubscribeLocalEvent]
     private void OnModeChangeMessage(Entity<ThermobathComponent> ent, ref ThermobathModeChangedMessage args)
     {
-        _thermoregulator.SetMode(ent.Owner, args.Mode);
+        SetMode(ent.AsNullable(), args.Mode);
         UpdateUi(ent);
     }
 

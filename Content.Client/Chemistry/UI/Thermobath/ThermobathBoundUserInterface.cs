@@ -21,6 +21,7 @@ public sealed class ThermobathBoundUserInterface : BoundUserInterface, IBuiPreTi
     [ViewVariables]
     private ThermobathMenu? _window;
 
+    private ThermobathComponent? _thermobath;
     private ThermoregulatorComponent? _thermoregulator;
 
     public ThermobathBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
@@ -41,8 +42,10 @@ public sealed class ThermobathBoundUserInterface : BoundUserInterface, IBuiPreTi
         _window.OnSetpointChanged += setpoint => SendPredictedMessage(new ThermobathSetpointChangedMessage(setpoint));
         _window.OnModeChanged += mode => SendPredictedMessage(new ThermobathModeChangedMessage(mode));
 
-        if (EntMan.TryGetComponent(Owner, out _thermoregulator))
-            _window.SetTemperatureLimits(_thermoregulator.MinTemperature, _thermoregulator.MaxTemperature);
+        if (EntMan.TryGetComponent(Owner, out _thermobath))
+            _window.SetTemperatureLimits(_thermobath.MinTemperature, _thermobath.MaxTemperature);
+
+        EntMan.TryGetComponent(Owner, out _thermoregulator);
 
         UpdateWindow();
     }
@@ -66,12 +69,12 @@ public sealed class ThermobathBoundUserInterface : BoundUserInterface, IBuiPreTi
         UpdatePower(_window);
         UpdateThermobath(_window);
 
-        if (_thermoregulator == null)
+        if (_thermobath == null || _thermoregulator == null)
             return;
 
-        _window.SetMode(_thermoregulator.Mode);
+        _window.SetMode(_thermobath.Mode);
         _window.SetCurrentTemperature(_thermoregulator.Temperature);
-        _window.SetSetpoint(_thermoregulator.Setpoint);
+        _window.SetSetpoint(_thermobath.Setpoint);
         _window.SetActiveMode(_thermoregulator.ActiveMode);
     }
 

@@ -1,6 +1,5 @@
 using Content.Shared.Atmos;
 using Content.Shared.Temperature.HeatContainer;
-using Content.Shared.Temperature.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -8,9 +7,9 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.Temperature.Components;
 
 /// <summary>
-/// Generic temperature controller with a configurable setpoint.
+/// Generic heat container that regulates its temperature using device-provided limits and target.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(ThermoRegulatorSystem))]
+[RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState(true, fieldDeltas: true), AutoGenerateComponentPause]
 public sealed partial class ThermoregulatorComponent : Component, IHeatContainer
 {
@@ -47,50 +46,17 @@ public sealed partial class ThermoregulatorComponent : Component, IHeatContainer
     public ThermoregulatorActiveMode ActiveMode = ThermoregulatorActiveMode.Idle;
 
     /// <summary>
-    /// Operation mode of the thermoregulator.
-    /// <seealso cref="ThermoregulatorMode"/>
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public ThermoregulatorMode Mode = ThermoregulatorMode.Auto;
-
-    /// <summary>
-    /// Target temperature setpoint in Kelvin.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public float Setpoint = Atmospherics.T20C;
-
-    /// <summary>
     /// Temperature difference required to start regulating, in kelvin.
-    /// Once active, the regulator runs until it reaches the setpoint.
+    /// Once active, the regulator runs until it reaches the target temperature.
     /// </summary>
     [DataField]
     public float TemperatureTolerance = 0.05f;
-
-    /// <summary>
-    /// Maximum allowed temperature setpoint.
-    /// </summary>
-    [DataField]
-    public float MaxTemperature = 573.15f; // 300 °C, taken from HUBER CC-308B datasheet
-
-    /// <summary>
-    /// Minimum allowed temperature setpoint.
-    /// </summary>
-    [DataField]
-    public float MinTemperature = 253.15f; // -20 °C, taken from HUBER CC-308B datasheet
 
     /// <summary>
     /// Thermal conductance between the regulator and the controlled object, in watts per kelvin.
     /// </summary>
     [DataField]
     public float ThermalConductance = 2f;
-}
-
-[Serializable, NetSerializable]
-public enum ThermoregulatorMode : byte
-{
-    Cooling = 0,
-    Auto = 1,
-    Heating = 2
 }
 
 [Serializable, NetSerializable]

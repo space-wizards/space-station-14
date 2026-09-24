@@ -14,31 +14,43 @@ public sealed partial class ServerThermobathSystem : ThermobathSystem
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private ServerThermoregulatorSystem _thermoregulator = default!;
+    [Dependency] private ThermoregulatorSystem _thermoregulator = default!;
+
+    [SubscribeLocalEvent]
+    private void OnMapInit(Entity<ThermobathComponent> ent, ref MapInitEvent args)
+    {
+        UpdateEnergyLimits(ent);
+    }
 
     [SubscribeLocalEvent]
     private void OnThermoregulatorControl(Entity<ThermobathComponent> ent, ref ThermoregulatorControlEvent args)
     {
-        var regulator = CompOrNull<ThermoregulatorComponent>(ent);
-        if (regulator == null)
-            return;
+        args.TargetTemperature = ent.Comp.Setpoint;
+        args.MinEnergy = ent.Comp.MinEnergy;
+        args.MaxEnergy = ent.Comp.MaxEnergy;
+    }
 
-        args.TargetTemperature = regulator.Setpoint;
-        if (!_power.IsPowered(ent.Owner))
+    protected override void OnControlChanged(Entity<ThermobathComponent> ent, bool? powered = null)
+    {
+        UpdateEnergyLimits(ent, powered);
+        _thermoregulator.RefreshActiveMode(ent.Owner);
+    }
+
+    private void UpdateEnergyLimits(Entity<ThermobathComponent> ent, bool? powered = null)
+    {
+        ent.Comp.MinEnergy = 0f;
+        ent.Comp.MaxEnergy = 0f;
+
+        var regulator = CompOrNull<ThermoregulatorComponent>(ent);
+        if (regulator == null || !(powered ?? _power.IsPowered(ent.Owner)))
             return;
 
         var dt = (float) regulator.UpdateInterval.TotalSeconds;
-        args.MinEnergy = regulator.Mode != ThermoregulatorMode.Heating
-            ? -Math.Max(0f, ent.Comp.CoolingPower) * dt
-            : 0f;
-        args.MaxEnergy = regulator.Mode != ThermoregulatorMode.Cooling
-            ? Math.Max(0f, ent.Comp.HeatingPower) * dt
-            : 0f;
-    }
+        if (ent.Comp.Mode != ThermobathMode.Heating)
+            ent.Comp.MinEnergy = -Math.Max(0f, ent.Comp.CoolingPower) * dt;
 
-    protected override void OnPowerStateChanged(Entity<ThermobathComponent> ent)
-    {
-        _thermoregulator.RefreshActiveMode(ent.Owner);
+        if (ent.Comp.Mode != ThermobathMode.Cooling)
+            ent.Comp.MaxEnergy = Math.Max(0f, ent.Comp.HeatingPower) * dt;
     }
 
     [SubscribeLocalEvent]
