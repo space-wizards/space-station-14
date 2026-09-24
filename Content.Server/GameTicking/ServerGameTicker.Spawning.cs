@@ -17,6 +17,7 @@ using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
 using Content.Shared.Spawners.Components;
 using Content.Shared.Station.Components;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
@@ -32,6 +33,7 @@ namespace Content.Server.GameTicking
         [Dependency] private IAdminManager _adminManager = default!;
         [Dependency] private SharedJobSystem _jobs = default!;
         [Dependency] private AdminSystem _admin = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
 
         public static readonly EntProtoId ObserverPrototypeName = "MobObserver";
         public static readonly EntProtoId AdminObserverPrototypeName = "AdminObserver";
@@ -183,7 +185,7 @@ namespace Content.Server.GameTicking
             string speciesId;
             if (_randomizeCharacters)
             {
-                var weightId = Cfg.GetCVar(CCVars.ICRandomSpeciesWeights);
+                var weightId = _cfg.GetCVar(CCVars.ICRandomSpeciesWeights);
 
                 // If blank, choose a round start species.
                 if (string.IsNullOrEmpty(weightId))
@@ -426,18 +428,8 @@ namespace Content.Server.GameTicking
                 makeObserver = true;
             }
 
-            EntityUid? ghost;
-            if (admin)
-            {
-                var adminGhost = Spawn(AdminObserverPrototypeName, GetObserverSpawnPoint());
-                _metaData.SetEntityName(adminGhost, player.Name);
-                _mind.TransferTo(mind.Value, adminGhost, mind: mind.Value.Comp);
-                ghost = adminGhost;
-            }
-            else
-            {
-                ghost = _ghost.SpawnGhost(mind.Value);
-            }
+            var proto = admin ? AdminObserverPrototypeName : ObserverPrototypeName;
+            var ghost = _ghost.SpawnGhost(mind.Value, ghostProto: proto);
 
             if (makeObserver)
                 Role.MindAddRole(mind.Value, "MindRoleObserver");
