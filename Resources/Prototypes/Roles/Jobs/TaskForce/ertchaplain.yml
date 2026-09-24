@@ -1,0 +1,74 @@
+- type: job
+  id: ERTChaplain
+  name: job-name-ertchaplain
+  description: job-description-ertchaplain
+  playTimeTracker: JobERTChaplain
+  setPreference: false
+  startingGear: ERTChaplainGear
+  icon: "JobIconERTChaplain"
+  supervisors: job-supervisors-centcom
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: BibleUser #Lets them heal with bibles
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
+
+- type: startingGear
+  parent: ERTChaplainGearEVA
+  id: ERTChaplainGear
+  equipment:
+    shoes: ClothingShoesBootsJackFilled
+    head: ClothingHeadHatFez
+    neck: ClothingNeckStoleChaplain
+    outerClothing: ClothingOuterArmorBasic
+    pocket2: FlashlightSeclite
+
+- type: startingGear
+  id: ERTChaplainGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTChaplain
+    back: ClothingBackpackERTChaplain
+    shoes: ClothingShoesBootsMagERT
+    mask: ClothingMaskGasERT
+    eyes: ClothingEyesHudMedical
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitERTChaplain
+    id: ERTChaplainPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltMilitaryWebbingERT
+    pocket2: CombatKnife
+  storage:
+    back:
+    - BoxCandle
+    - BodyBagFolded
+    - BodyBagFolded
+    - JugWater
+    - JugBlood # End of first row
+    - FoodBakedBunHotX
+    - FoodBakedBunHotX
+    - FoodBakedBunHotX
+    - FoodBakedBunHotX
+    belt:
+    - Bible
+    - Lantern
+    - Lantern
+    - Lantern
+    - CrowbarRed
+    - WeaponPistolMk58
+    - MagazinePistol
+    - FlippoEngravedLighter
+
+- type: chameleonOutfit
+  id: ERTChaplainChameleonOutfit
+  job: ERTChaplain
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHelmetHardsuitERTChaplain
+    mask: ClothingMaskGasERT
+    outerClothing: ClothingOuterHardsuitERTChaplain
+    shoes: ClothingShoesBootsMagAdv

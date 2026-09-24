@@ -1,4 +1,4 @@
-﻿using Content.Shared.FixedPoint;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Console;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Syntax;
