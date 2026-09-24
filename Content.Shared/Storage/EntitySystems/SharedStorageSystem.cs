@@ -165,6 +165,8 @@ public abstract partial class SharedStorageSystem : EntitySystem
             .Register<SharedStorageSystem>();
 
         Subs.CVar(_cfg, CCVars.NestedStorage, OnNestedStorageCvar, true);
+
+        CacheDefaultStorageSize();
     }
 
     private void OnItemSizeChanged(ref ItemSizeChangedEvent ev)
@@ -238,6 +240,17 @@ public abstract partial class SharedStorageSystem : EntitySystem
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
     {
         // TODO: This should update all entities in storage.
+
+        if (args.ByType.ContainsKey(typeof(ItemSizePrototype))
+            || (args.Removed?.ContainsKey(typeof(ItemSizePrototype)) ?? false))
+        {
+            CacheDefaultStorageSize();
+        }
+    }
+
+    private void CacheDefaultStorageSize()
+    {
+        _defaultStorageMaxItemSize = ProtoMan.Index(DefaultStorageMaxItemSize);
     }
 
     private void OnComponentInit(EntityUid uid, StorageComponent storageComp, ComponentInit args)
