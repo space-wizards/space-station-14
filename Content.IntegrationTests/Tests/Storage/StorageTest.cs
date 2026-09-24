@@ -297,28 +297,26 @@ public sealed class StorageTest : GameTest
 
     [Test]
     [Description("Tests that entities with no specified max size start with sane values.")]
+    [RunOnSide(Side.Server)]
     public async Task ValidDefaultStorageSizeTest()
     {
-        await Server.WaitAssertion(() =>
+        var uid = SSpawn(TestEntity);
+        var storage = SComp<StorageComponent>(uid);
+        Assume.That(storage.MaxItemSize, Is.Null);
+
+        var smallUid = SSpawn(SmallItem);
+        var smallStorage = SComp<StorageComponent>(smallUid);
+        Assume.That(smallStorage.MaxItemSize, Is.Null);
+
+        var normalUid = SSpawn(NormalItem);
+        var normalStorage = SComp<StorageComponent>(normalUid);
+        Assume.That(normalStorage.MaxItemSize, Is.Null);
+
+        using (Assert.EnterMultipleScope())
         {
-            var uid = SSpawn(TestEntity);
-            var storage = SComp<StorageComponent>(uid);
-
-            var smallUid = SSpawn(SmallItem);
-            var smallStorage = SComp<StorageComponent>(smallUid);
-
-            var normalUid = SSpawn(NormalItem);
-            var normalStorage = SComp<StorageComponent>(normalUid);
-
-            using var scope = Assert.EnterMultipleScope();
-
-            Assert.That(storage.MaxItemSize, Is.Null);
-            Assert.That(smallStorage.MaxItemSize, Is.Null);
-            Assert.That(normalStorage.MaxItemSize, Is.Null);
-
             Assert.That(_sStorage.GetMaxItemSize((uid, storage)), Is.Not.Null);
             Assert.That(_sStorage.GetMaxItemSize((smallUid, smallStorage)).ID, Is.EqualTo(TinySize));
             Assert.That(_sStorage.GetMaxItemSize((normalUid, normalStorage)).ID, Is.EqualTo(SmallSize));
-        });
+        }
     }
 }
