@@ -78,6 +78,9 @@ public sealed partial class ActivatableUIComponent : Component
     /// <summary>
     /// The client channel currently using the object, or null if there's none/not single user.
     /// </summary>
+    /// <remarks>
+    /// You cannot and should not set this directly, use <seealso cref="ActivatableUISystem.SetCurrentSingleUser"/> instead.
+    /// </remarks>
     [DataField, AutoNetworkedField]
     public EntityUid? CurrentSingleUser;
 }

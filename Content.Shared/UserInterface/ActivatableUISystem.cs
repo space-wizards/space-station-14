@@ -32,7 +32,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
             if (args.Hands == null)
                 return false;
 
-            if (!IsCorrectHand(ent, args.User))
+            if (!ValidateHandRequirement(ent, args.User))
                 return false;
         }
 
@@ -62,7 +62,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
                 return false;
         }
 
-        if (!IsCorrectHand(ent, user))
+        if (!ValidateHandRequirement(ent, user))
             return false;
 
         if (ent.Comp.AdminOnly && !_admin.IsAdmin(user))
@@ -151,7 +151,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         return true;
     }
 
-    private bool IsCorrectHand(Entity<ActivatableUIComponent> uiEnt, Entity<HandsComponent?> user)
+    private bool ValidateHandRequirement(Entity<ActivatableUIComponent> uiEnt, Entity<HandsComponent?> user)
     {
         if (uiEnt.Comp.InHandsOnly)
         {

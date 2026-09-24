@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
@@ -34,9 +35,14 @@ public sealed partial class RadialItemSlotMenuBoundUserInterface(EntityUid owner
     private IEnumerable<RadialMenuOptionBase> CreateButtons(ItemSlotsComponent itemSlots)
     {
         // We don't wanna fill up the radial menu with the same things, so we save what we added before.
-        HashSet<EntProtoId> usedPrototypes = [];
+        // We use the name, so secret items that imitate other items don't get their own option.
+        HashSet<string> usedItemNames = [];
 
-        foreach (var (_, slot) in itemSlots.Slots)
+        // We reverse it here, so the last filled item slot will be shown as an option in the case of multiple identical slots.
+        // e.g. placing an explosive wet floor sign and a normal one into a janitorial trolley in that order will eject the normal one.
+        var slots = itemSlots.Slots.Values.Reverse();
+
+        foreach (var slot in slots)
         {
             if(!slot.HasItem)
                 continue;
@@ -44,7 +50,7 @@ public sealed partial class RadialItemSlotMenuBoundUserInterface(EntityUid owner
             if (!_metaQuery.TryComp(slot.Item.Value, out var meta)
                 || meta.EntityPrototype == null
                 || slot.ID == null
-                || !usedPrototypes.Add(meta.EntityPrototype))
+                || !usedItemNames.Add(meta.EntityName))
                 continue;
 
             var option = new RadialMenuActionOption<string>(EjectItem, slot.ID)
