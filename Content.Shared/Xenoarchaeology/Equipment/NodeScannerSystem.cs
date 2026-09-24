@@ -103,19 +103,17 @@ public sealed partial class NodeScannerSystem : EntitySystem
             return;
 
         var connected = EnsureComp<NodeScannerConnectedComponent>(device);
-        var previousEntity = connected.AttachedTo;
 
         EntityUid artifact = unlockingEnt;
         if (connected.AttachedTo != artifact)
         {
+            // Remove connection from previous scanner.
+            if (connected.AttachedTo.Valid)
+                _artifact.TryDetachEntity(connected.AttachedTo, device);
+
             connected.AttachedTo = artifact;
             Dirty(device, connected);
-            _artifact.TryAttachEntity((artifact, null), device);
-        }
-
-        if (previousEntity.Valid)
-        {
-            _artifact.TryDetachEntity((previousEntity, null), device);
+            _artifact.TryAttachEntity(artifact, device);
         }
 
         _ui.TryOpenUi((device, null), NodeScannerUiKey.Key, actor, predicted: true);
