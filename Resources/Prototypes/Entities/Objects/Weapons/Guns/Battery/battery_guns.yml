@@ -210,8 +210,9 @@
 - type: entity
   name: makeshift laser pistol
   parent: [BaseWeaponPowerCell, BaseMinorContraband]
-  id: WeaponMakeshiftLaser
+  id: WeaponMakeshiftLaserNoCell
   description: Better pray it won't burn your hands off.
+  suffix: No Cell
   components:
   - type: ItemSlots
     slots:
@@ -243,7 +244,7 @@
     - Belt
     - suitStorage
   - type: BatteryAmmoProvider
-    proto: RedLaser
+    proto: RedLaserMakeshift
     fireCost: 62.5
   - type: Tag
     tags:
@@ -252,6 +253,16 @@
   - type: Construction
     graph: MakeshiftLaserGraph
     node: mslaser
+
+- type: entity # for salv loot & co
+  parent: WeaponMakeshiftLaserNoCell
+  id: WeaponMakeshiftLaser
+  suffix: Medium Cell
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        startingItem: PowerCellMedium
 
 - type: entity
   parent: [BaseItem, BaseMinorContraband]

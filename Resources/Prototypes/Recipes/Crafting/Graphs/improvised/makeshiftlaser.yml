@@ -74,7 +74,7 @@
             doAfter: 1
 
     - node: mslaser
-      entity: WeaponMakeshiftLaser
+      entity: WeaponMakeshiftLaserNoCell
       edges:
         - to: mslaserframescrewed
           completed:
