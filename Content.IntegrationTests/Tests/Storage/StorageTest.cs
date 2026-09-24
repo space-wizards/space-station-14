@@ -16,15 +16,17 @@ namespace Content.IntegrationTests.Tests.Storage;
 
 public sealed class StorageTest : GameTest
 {
-    private static readonly EntProtoId TestEntity = "StorageTestEntity";
-    private static readonly EntProtoId SmallItem = "SmallStorageItem";
-    private static readonly EntProtoId NormalItem = "NormalStorageItem";
-    private static readonly ProtoId<ItemSizePrototype> TinySize = "Tiny";
-    private static readonly ProtoId<ItemSizePrototype> SmallSize = "Small";
-    private static readonly ProtoId<ItemSizePrototype> NormalSize = "Normal";
+    // EntProtoId
+    private const string TestEntity = "StorageTestEntity";
+    private const string SmallItem = "SmallStorageItem";
+    private const string NormalItem = "NormalStorageItem";
+    // ProtoId<ItemSizePrototype>
+    private const string TinySize = "Tiny";
+    private const string SmallSize = "Small";
+    private const string NormalSize = "Normal";
 
     [TestPrototypes]
-    private static readonly string Prototypes = $@"
+    private const string Prototypes = $@"
 - type: entity
   id: {TestEntity}
   name: storage test
