@@ -91,10 +91,11 @@
   name: shambling abomination # no more Urist McHorror
   description: Its gaping maw open, an ever-expanding, all consuming mass of flesh stands before you.
   components:
+  - type: Hands
+    showInHands: false # hides the arm blades
   # it speaks like a SPOOKY MONSTER!!!!
   - type: Speech
     speechVerb: Horror
-  - type: StutteringAccent
   - type: PassiveDamage
     allowedStates:
     - Alive
@@ -138,6 +139,9 @@
       path: /Audio/Animals/space_dragon_roar.ogg
     tagsToAdd:
     - StunImmune
+  - type: PermanentStatusEffects
+    statusEffects:
+    - StatusEffectHorrorFormArmblades
 
 
 - type: entity
