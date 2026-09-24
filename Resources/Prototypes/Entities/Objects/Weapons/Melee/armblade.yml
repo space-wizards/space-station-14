@@ -42,3 +42,18 @@
         Piercing: 5
         Caustic: 2.5
         Structural: 6
+
+# stronger version of the armblade
+# TODO: BALANCE THIS THING!!!!
+- type: entity
+  parent: Armblade
+  id: ArmbladeHorror
+  suffix: Horror
+  components:
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 16 # a load of damage
+        Piercing: 12
+        Caustic: 10
+        Structural: 160 # break down walls absurdly easily

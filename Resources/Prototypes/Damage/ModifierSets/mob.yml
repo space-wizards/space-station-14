@@ -74,3 +74,13 @@
   id: ManifestedSpirit
   coefficients:
     Holy: 2
+
+- type: damageModifierSet
+  id: Horror
+  coefficients: # they take less damage from everything, heat a bit less so. These ridiculous damage modifiers are meant to immitate higher HP tresholds
+    Blunt: 0.1
+    Piercing: 0.05
+    Cold: 0.2
+    Heat: 0.25
+    Poison: 0.05
+    Radiation: 0.15
