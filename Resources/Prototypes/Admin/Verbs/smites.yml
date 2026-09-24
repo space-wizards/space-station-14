@@ -393,7 +393,9 @@
     sprite: Structures/Storage/closet.rsi
     state: generic
   effects:
-  - !type:StuffIntoLocker
+  - !type:TrapInContainer
+    entity: ClosetMaintenanceWelded
+    container: entity_storage
 
 - type: adminVerb
   id: AdminSmiteHomingRod
