@@ -17,7 +17,7 @@
           emergencyShuttlePath: /Maps/Shuttles/emergency_rod.yml
         - type: StationJobs
           availableJobs:
-            # TOTAL: 53 job slots + 1 late-join only
+            # TOTAL: 54 job slots
             # Command (7)
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -27,39 +27,39 @@
             ResearchDirector: [ 1, 1 ]
             Quartermaster: [ 1, 1 ]
             # Service (8-9)
-            Bartender: [ 1, 1 ]
-            Botanist: [ 2, 2 ]
-            Chef: [ 1, 1 ]
-            Janitor: [ 1, 2 ]
-            Chaplain: [ 1, 1 ]
-            Librarian: [ 1, 1 ]
-            ServiceWorker: [ 1, 1 ]
+            Bartender: [ 0, 1 ]
+            Botanist: [ 0, 2 ]
+            Chef: [ 0, 1 ]
+            Janitor: [ 0, 2 ]
+            Chaplain: [ 0, 1 ]
+            Librarian: [ 0, 1 ]
+            ServiceWorker: [ 0, 1 ]
             # Engineering (7)
-            AtmosphericTechnician: [ 2, 2 ]
-            StationEngineer: [ 3, 3 ]
-            TechnicalAssistant: [ 2, 2 ]
+            AtmosphericTechnician: [ 1, 2 ]
+            StationEngineer: [ 1, 3 ]
+            TechnicalAssistant: [ 0, 2 ]
             # Medical (8)
-            Chemist: [ 2, 2 ]
-            MedicalDoctor: [ 3, 3 ]
-            MedicalIntern: [ 2, 2 ]
-            Paramedic: [ 1, 1 ]
+            Chemist: [ 1, 2 ]
+            MedicalDoctor: [ 1, 3 ]
+            MedicalIntern: [ 0, 2 ]
+            Paramedic: [ 0, 1 ]
             # Science (5)
-            Scientist: [ 3, 3 ]
-            ResearchAssistant: [ 2, 2 ]
+            Scientist: [ 1, 3 ]
+            ResearchAssistant: [ 0, 2 ]
             # Security (8)
             Warden: [ 1, 1 ]
-            SecurityOfficer: [ 3, 3 ]
+            SecurityOfficer: [ 1, 3 ]
             Detective: [ 1, 1 ]
-            SecurityCadet: [ 2, 2 ]
-            Lawyer: [ 1, 1 ]
+            SecurityCadet: [ 0, 2 ]
+            Lawyer: [ 0, 1 ]
             # Supply (4)
-            SalvageSpecialist: [ 2, 2 ]
-            CargoTechnician: [ 2, 2 ]
+            SalvageSpecialist: [ 1, 2 ]
+            CargoTechnician: [ 1, 2 ]
             # Civilian (3 + overflow)
             Passenger: [ -1, -1 ] # infinite, not counted
-            Clown: [ 1, 1 ]
-            Mime: [ 1, 1 ]
-            Musician: [ 1, 1 ]
+            Clown: [ 0, 1 ]
+            Mime: [ 0, 1 ]
+            Musician: [ 0, 1 ]
             # Silicon (3)
             StationAi: [ 1, 1 ]
-            Borg: [ 2, 2 ]
+            Borg: [ 0, 2 ]
