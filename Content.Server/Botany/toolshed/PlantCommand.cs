@@ -5,11 +5,14 @@ using Content.Shared.Administration;
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Items.Components;
 using Content.Shared.Botany.Systems;
+using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Errors;
+using Robust.Shared.Toolshed.Syntax;
+using Robust.Shared.Toolshed.TypeParsers;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Botany;
@@ -188,6 +191,7 @@ public sealed partial class PlantCommand : ToolshedCommand
         IInvocationContext ctx,
         [PipedArgument] EntityUid input,
         ProtoId<RandomPlantMutationListPrototype> tableId,
+        [CommandArgument(typeof(PlantMutationNameParser))]
         string mutationName)
     {
         if (!TryComp<PlantComponent>(input, out var plant))
@@ -223,6 +227,7 @@ public sealed partial class PlantCommand : ToolshedCommand
         IInvocationContext ctx,
         [PipedArgument] IEnumerable<EntityUid> input,
         ProtoId<RandomPlantMutationListPrototype> tableId,
+        [CommandArgument(typeof(PlantMutationNameParser))]
         string mutationName)
     {
         foreach (var entity in input)
@@ -284,4 +289,26 @@ public record struct PlantCommandError(string Message) : IConError
     public string? Expression { get; set; }
     public Vector2i? IssueSpan { get; set; }
     public StackTrace? Trace { get; set; }
+}
+
+public sealed partial class PlantMutationNameParser : CustomCompletionParser<string>
+{
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+
+    public override Robust.Shared.Console.CompletionResult TryAutocomplete(
+        ParserContext ctx,
+        CommandArgument? arg)
+    {
+        var options = _prototypeManager
+            .EnumeratePrototypes<RandomPlantMutationListPrototype>()
+            .SelectMany(table => table.Mutations)
+            .Select(mutation => mutation.Name)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(name => name)
+            .Select(name => new CompletionOption(
+                $"\"{name}\"",
+                Flags: CompletionOptionFlags.NoEscape));
+
+        return CompletionResult.FromHintOptions(options, "<mutation name>");
+    }
 }
