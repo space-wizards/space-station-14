@@ -1118,6 +1118,24 @@
   - type: Sprite
     state: poster56_legit
 
+- type: entity
+  parent: PosterBase
+  id: PosterLegitRaptor
+  name: "Raptor - Fact or Fiction?"
+  description: "A poster for an obscure documentary. It attempts to explore the life of space raptors, a species of rare theropods rumored to help stranded spessmen in their time of need."
+  components:
+  - type: Sprite
+    state: poster57_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitVulture
+  name: "Vulture in Sunset"
+  description: "A test print from a photograph, depicting a vulture's silhouetted against the backdrop of a tranquil sunset."
+  components:
+  - type: Sprite
+    state: poster58_legit
+
 #maps
 
 - type: entity
