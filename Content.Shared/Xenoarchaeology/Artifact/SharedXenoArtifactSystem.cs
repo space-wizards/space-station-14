@@ -65,7 +65,7 @@ public abstract partial class SharedXenoArtifactSystem : EntitySystem
 
 
     /// <summary>
-    /// Tries to add an entity to list of attached entities.
+    /// Tries to remove an entity from the list of attached entities.
     /// This helps with tracking relationship.
     /// </summary>
     /// <param name="ent">Artifact entity.</param>
