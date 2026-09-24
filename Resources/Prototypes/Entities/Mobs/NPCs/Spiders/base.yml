@@ -22,6 +22,12 @@
     - id: FoodMeatSpider
       amount: 2
   - type: CombatMode
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
   - type: MobThresholds
     thresholds:
       0: Alive

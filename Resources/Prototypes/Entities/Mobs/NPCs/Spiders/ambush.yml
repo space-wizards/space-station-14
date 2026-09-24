@@ -12,11 +12,6 @@
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: idle
   - type: MeleeWeapon
-    altDisarm: false
-    angle: 0
-    animation: WeaponArcBite
-    soundHit:
-      path: /Audio/Effects/bite.ogg
     damage:
       types:
         Piercing: 9
