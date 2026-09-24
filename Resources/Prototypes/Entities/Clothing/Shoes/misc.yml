@@ -83,14 +83,55 @@
 
 - type: entity
   parent: ClothingShoesBaseButcherable
-  id: ClothingShoesTourist
-  name: tourist shoes
-  description: These cheap sandals don't look very comfortable.
+  id: ClothingShoesSandalsBlack
+  name: black sandals
+  description: Best paired with robes or Hawaiian shirts. Worst paired with socks.
   components:
   - type: Sprite
-    sprite: Clothing/Shoes/Misc/tourist.rsi
+    sprite: Clothing/Shoes/Misc/sandals.rsi
+    layers:
+    - state: icon
+      color: "#4e4e4e"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#4e4e4e"
+      right:
+      - state: inhand-right
+        color: "#4e4e4e"
   - type: Clothing
-    sprite: Clothing/Shoes/Misc/tourist.rsi
+    sprite: Clothing/Shoes/Misc/sandals.rsi
+    clothingVisuals:
+      shoes:
+      - state: equipped-FEET
+        color: "#4e4e4e"
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesSandalsBrown
+  name: brown sandals
+  description: Best paired with robes or Hawaiian shirts. Worst paired with socks.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Misc/sandals.rsi
+    layers:
+    - state: icon
+      color: "#804000"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#804000"
+      right:
+      - state: inhand-right
+        color: "#804000"
+  - type: Clothing
+    sprite: Clothing/Shoes/Misc/sandals.rsi
+    clothingVisuals:
+      shoes:
+      - state: equipped-FEET
+        color: "#804000"
 
 - type: entity
   parent: ClothingShoesBaseButcherable
