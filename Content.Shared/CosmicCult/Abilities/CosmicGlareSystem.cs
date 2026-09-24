@@ -10,12 +10,17 @@ using Content.Shared.Physics;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Stunnable;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.CosmicCult.Abilities;
 
 public sealed partial class CosmicGlareSystem : EntitySystem
 {
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private INetManager _net = default!;
+
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private SharedFlashSystem _flash = default!;
     [Dependency] private SharedPoweredLightSystem _poweredLight = default!;
@@ -30,12 +35,13 @@ public sealed partial class CosmicGlareSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnCosmicGlare(Entity<CosmicActionGlareComponent> ent, ref EventCosmicGlare args)
     {
-        if (!_cult.CultActionQuery.TryComp(ent, out var action))
+        if (!_cult.CultActionQuery.TryComp(ent, out var action) || args.Handled)
             return;
 
-        _audio.PlayPvs(action.Sfx, args.Performer);
-        SpawnAttachedTo(action.Vfx, Transform(args.Performer).Coordinates);
         args.Handled = true;
+
+        if (_net.IsClient && _timing.IsFirstTimePredicted) // This is lazy but it's either this or multiple engine PRs to fix predicted animated sprite spawning nonsense!
+            SpawnAttachedTo(action.Vfx, Transform(ent).Coordinates);
 
         var stun = action.Empowered ? ent.Comp.StunEmpowered : ent.Comp.StunDefault;
         var range = action.Empowered ? ent.Comp.RangeDefault : ent.Comp.RangeEmpowered;
@@ -44,6 +50,7 @@ public sealed partial class CosmicGlareSystem : EntitySystem
 
         _lights.Clear();
         _lookup.GetEntitiesInRange(Transform(ent).Coordinates, range, _lights);
+        _audio.PlayPredicted(action.Sfx, args.Performer, args.Performer);
 
         foreach (var entity in _lights)
         {

@@ -10,10 +10,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.CosmicCult.Abilities;
 
-public sealed partial class CosmicImpositionSystem : EntitySystem
+public abstract partial class CosmicImpositionSystem : EntitySystem
 {
-    [Dependency] private CosmicCultSystem _cult = default!;
-    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] protected CosmicCultSystem Cult = default!;
+    [Dependency] protected IGameTiming Timing = default!;
+
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private MovementModStatusSystem _movementMod = default!;
 
@@ -24,7 +25,7 @@ public sealed partial class CosmicImpositionSystem : EntitySystem
         var query = EntityQueryEnumerator<CosmicImpositionInvulnerableComponent>();
         while (query.MoveNext(out var ent, out var comp))
         {
-            if (_timing.CurTime >= comp.Expiry)
+            if (Timing.CurTime >= comp.Expiry)
             {
                 RemComp(ent, comp);
             }
@@ -32,27 +33,19 @@ public sealed partial class CosmicImpositionSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnCosmicImposition(Entity<CosmicActionImpositionComponent> ent, ref EventCosmicImposition args)
+    protected virtual void OnCosmicImposition(Entity<CosmicActionImpositionComponent> ent, ref EventCosmicImposition args)
     {
-        if (!_cult.CultActionQuery.TryComp(ent, out var action))
+        if (!Cult.CultActionQuery.TryComp(ent, out var action) || args.Handled)
             return;
 
         args.Handled = true;
         var duration = action.Empowered ? ent.Comp.DurationEmpowered : ent.Comp.DurationDefault;
         var slowDown = action.Empowered ? ent.Comp.MovePenaltyEmpowered : ent.Comp.MovePenaltyDefault;
-        var overlayEffect = SpawnAttachedTo(ent.Comp.ImpositionOverlay, Transform(ent).Coordinates);
 
-        SpawnAttachedTo(action.Vfx, Transform(ent).Coordinates);
         EnsureComp<CosmicImpositionInvulnerableComponent>(args.Performer, out var comp);
-        EnsureComp<CosmicImpositionFadeComponent>(overlayEffect, out var fade);
-        EnsureComp<TimedDespawnComponent>(overlayEffect, out var despawn);
+        comp.Expiry = Timing.CurTime + duration;
 
-        despawn.Lifetime = (float) duration.TotalSeconds;
-        fade.Duration = (float) duration.TotalSeconds;
-        comp.Expiry = _timing.CurTime + duration;
-
-        Dirty(overlayEffect, fade);
-        _audio.PlayPvs(action.Sfx, ent, AudioParams.Default.WithVariation(0.05f));
+        _audio.PlayPredicted(action.Sfx, args.Performer, args.Performer, AudioParams.Default.WithVariation(0.05f));
         _movementMod.TryAddMovementSpeedModDuration(args.Performer, MovementModStatusSystem.ImpositionSlowdown, duration, slowDown);
     }
 

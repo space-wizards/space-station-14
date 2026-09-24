@@ -1,30 +1,28 @@
 using System.Linq;
-using Content.Server.Chat.Systems;
-using Content.Server.GameTicking.Rules.Components;
-using Content.Server.StationEvents.Events;
+using Content.Shared.Chat;
 using Content.Shared.CosmicCult.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.GameTicking.Rules;
 using Content.Shared.GameTicking.Rules.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Station.Components;
 using Content.Shared.Station.Systems;
-using Robust.Server.Audio;
-using Robust.Server.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Enums;
 using Robust.Shared.Player;
 
-namespace Content.Server.CosmicCult;
+namespace Content.Shared.CosmicCult;
 
-public sealed partial class MalignRiftSpawnRule : StationEventSystem<MalignRiftSpawnRuleComponent>
+public sealed partial class MalignRiftSpawnRule : GameRuleSystem<MalignRiftSpawnRuleComponent>
 {
     [Dependency] private GameTicker _ticker = default!;
-    [Dependency] private AudioSystem _audio = default!;
-    [Dependency] private ChatSystem _chatSystem = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedChatSystem _chatSystem = default!;
     [Dependency] private CosmicRiftSystem _malignRift = default!;
     [Dependency] private StationSystem _station = default!;
-    [Dependency] private IPlayerManager _playerMan = default!;
+    [Dependency] private ISharedPlayerManager _playerMan = default!;
 
     protected override void Started(Entity<MalignRiftSpawnRuleComponent, GameRuleComponent> rule, ref GameRuleStartedEvent args)
     {
@@ -46,7 +44,7 @@ public sealed partial class MalignRiftSpawnRule : StationEventSystem<MalignRiftS
             _chatSystem.DispatchStationAnnouncement(chosenStation.Value, Loc.GetString("cosmiccult-announce-tier2-warning"), null, false, null, Color.FromHex("#cae8e8"));
             _audio.PlayGlobal(rule.Comp1.Tier2Sound, Filter.Broadcast(), false, AudioParams.Default);
 
-            for (var i = 0; i < Convert.ToInt16(totalCrew / 6); i++) // spawn # malign rifts equal to 16.67% of the playercount
+            for (var i = 0; i < (short) totalCrew / 6; i++) // spawn # malign rifts equal to 16.67% of the playercount
             {
                 _malignRift.SpawnRift(chosenStation.Value.Owner);
             }

@@ -51,7 +51,7 @@ public sealed partial class ClientCosmicCultSystem : CosmicCultSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnImposition(Entity<CosmicImpositionFadeComponent> ent, ref ComponentStartup args)
+    private void OnImposition(Entity<CosmicVisualFadeComponent> ent, ref ComponentStartup args)
     {
         var duration = ent.Comp.Duration;
         var animation = new Animation
