@@ -214,7 +214,7 @@
   description: changeling-catalog-fleshtomb-desc
   applyToMob: true
   cost:
-    ChangelingDNA: 10
+    ChangelingDNA: 5
   categories:
   - ChangelingStoreUtility
   conditions:
