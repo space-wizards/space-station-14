@@ -14,23 +14,22 @@ public sealed class CategorySelector : GridContainer
     public int ButtonSize { get; set; }
 
     /// <summary>
-    /// Rebuilds the buttons. Marks <paramref name="selected"/> as pressed when it is the same instance
-    /// as an entry in <paramref name="categories"/>, without invoking its action.
+    /// Rebuilds the buttons. Marks the button at <paramref name="selectedIndex"/>
+    /// as pressed without invoking its action.
     /// </summary>
-    public void SetCategories(IReadOnlyList<CategorySelectorEntry> categories, CategorySelectorEntry? selected)
+    public void SetCategories(IReadOnlyList<CategorySelectorEntry> categories, int selectedIndex)
     {
         RemoveAllChildren();
 
         var group = new ButtonGroup();
 
-        foreach (var category in categories)
+        for (var index = 0; index < categories.Count; index++)
         {
-            var button = CreateButton(category, group);
-            button.OnPressed += _ => category.OnSelected();
+            var button = CreateButton(categories[index], group);
 
             AddChild(button);
 
-            if (ReferenceEquals(category, selected))
+            if (index == selectedIndex)
                 button.Pressed = true;
         }
     }
@@ -42,6 +41,7 @@ public sealed class CategorySelector : GridContainer
             Group = group,
             ToolTip = category.Icon == null ? null : category.Name
         };
+        button.OnPressed += _ => category.OnSelected();
 
         if (ButtonSize > 0)
             button.SetSize = new Vector2(ButtonSize);
@@ -70,14 +70,8 @@ public sealed class CategorySelector : GridContainer
 /// <summary>
 /// Content and action for one category button.
 /// </summary>
-public sealed class CategorySelectorEntry(
-    string name,
-    Action onSelected,
-    Texture? icon = null,
-    Vector2? iconSize = null)
-{
-    public string Name { get; } = name;
-    public Action OnSelected { get; } = onSelected;
-    public Texture? Icon { get; } = icon;
-    public Vector2? IconSize { get; } = iconSize;
-}
+public sealed record CategorySelectorEntry(
+    string Name,
+    Action OnSelected,
+    Texture? Icon = null,
+    Vector2? IconSize = null);

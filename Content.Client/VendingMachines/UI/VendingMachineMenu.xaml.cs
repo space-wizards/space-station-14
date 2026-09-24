@@ -138,7 +138,7 @@ public sealed partial class VendingMachineMenu : FancyWindow
         if (!showCategories)
         {
             _selectedCategory = null;
-            CategorySelector.SetCategories([], null);
+            CategorySelector.SetCategories([], 0);
             return;
         }
 
@@ -152,7 +152,7 @@ public sealed partial class VendingMachineMenu : FancyWindow
             spriteSystem.Frame0(AllCategoryIcon),
             new Vector2(32));
         var choices = new List<CategorySelectorEntry> { allCategory };
-        var selectedChoice = allCategory;
+        var selectedIndex = 0;
 
         foreach (var category in visibleCategories)
         {
@@ -164,10 +164,10 @@ public sealed partial class VendingMachineMenu : FancyWindow
             choices.Add(choice);
 
             if (_selectedCategory == category)
-                selectedChoice = choice;
+                selectedIndex = choices.Count - 1;
         }
 
-        CategorySelector.SetCategories(choices, selectedChoice);
+        CategorySelector.SetCategories(choices, selectedIndex);
     }
 
     private void SelectCategory(VendingMachineInventoryCategory? category)
