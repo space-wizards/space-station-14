@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
+using Content.Server.Item;
 using Content.Shared.Containers;
 using Content.Shared.Item;
 using Content.Shared.Prototypes;
@@ -16,41 +17,8 @@ namespace Content.IntegrationTests.Tests.Storage;
 
 public sealed class StorageTest : GameTest
 {
-    // EntProtoId
-    private const string TestEntity = "StorageTestEntity";
-    private const string SmallItem = "SmallStorageItem";
-    private const string NormalItem = "NormalStorageItem";
-    // ProtoId<ItemSizePrototype>
-    private const string TinySize = "Tiny";
-    private const string SmallSize = "Small";
-    private const string NormalSize = "Normal";
-
-    [TestPrototypes]
-    private const string Prototypes = $@"
-- type: entity
-  id: {TestEntity}
-  name: storage test
-  components:
-  - type: Storage
-
-- type: entity
-  id: {SmallItem}
-  name: small storage item
-  components:
-  - type: Storage
-  - type: Item
-    size: {SmallSize}
-
-- type: entity
-  id: {NormalItem}
-  name: storage test
-  components:
-  - type: Storage
-  - type: Item
-    size: {NormalSize}
-";
-
     [SidedDependency(Side.Server)] private SharedStorageSystem _sStorage = default!;
+    [SidedDependency(Side.Server)] private ItemSystem _sItem = default!;
 
     /// <summary>
     /// Can an item store more than itself weighs.
@@ -300,23 +268,30 @@ public sealed class StorageTest : GameTest
     [RunOnSide(Side.Server)]
     public async Task ValidDefaultStorageSizeTest()
     {
-        var uid = SSpawn(TestEntity);
-        var storage = SComp<StorageComponent>(uid);
+        var uid = SSpawn(null);
+        var storage = SEntMan.EnsureComponent<StorageComponent>(uid);
         Assume.That(storage.MaxItemSize, Is.Null);
 
-        var smallUid = SSpawn(SmallItem);
-        var smallStorage = SComp<StorageComponent>(smallUid);
-        Assume.That(smallStorage.MaxItemSize, Is.Null);
-
-        var normalUid = SSpawn(NormalItem);
-        var normalStorage = SComp<StorageComponent>(normalUid);
-        Assume.That(normalStorage.MaxItemSize, Is.Null);
+        var allSizes = SProtoMan.EnumeratePrototypes<ItemSizePrototype>().ToList();
+        allSizes.Sort();
 
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(_sStorage.GetMaxItemSize((uid, storage)), Is.Not.Null);
-            Assert.That(_sStorage.GetMaxItemSize((smallUid, smallStorage)).ID, Is.EqualTo(TinySize));
-            Assert.That(_sStorage.GetMaxItemSize((normalUid, normalStorage)).ID, Is.EqualTo(SmallSize));
+            var defaultSize = _sStorage.GetMaxItemSize((uid, storage));
+            Assert.That(defaultSize, Is.Not.Null, "MaxItemSize for a default storage entity without ItemComponent was null.");
+            Assert.That(SProtoMan.HasIndex<ItemSizePrototype>(defaultSize), Is.True, "MaxItemSize for a default storage entity without ItemComponent returned an invalid prototype.");
+
+            var item = SEntMan.EnsureComponent<ItemComponent>(uid);
+
+            // Assign each size, check the max item size of the entity vs. the previous one.
+            ProtoId<ItemSizePrototype>? lastSize = null;
+            foreach (var size in allSizes)
+            {
+                _sItem.SetSize(uid, size, item);
+                var oldSize = lastSize ?? size;
+                Assert.That(_sStorage.GetMaxItemSize((uid, storage)).ID, Is.EqualTo(oldSize), $"Unexpected size returned from GetMaxItemSize for size \"{size.ID}\"");
+                lastSize = size;
+            }
         }
     }
 }

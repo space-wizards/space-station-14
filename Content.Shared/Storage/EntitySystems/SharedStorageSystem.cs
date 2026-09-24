@@ -240,8 +240,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
     {
         // TODO: This should update all entities in storage.
 
-        if (args.ByType.ContainsKey(typeof(ItemSizePrototype))
-            || (args.Removed?.ContainsKey(typeof(ItemSizePrototype)) ?? false))
+        if (args.WasModified<ItemSizePrototype>())
         {
             CacheDefaultStorageSize();
         }
@@ -435,7 +434,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
         }
     }
 
-    public virtual void UpdateUI(Entity<StorageComponent?> entity) {}
+    public virtual void UpdateUI(Entity<StorageComponent?> entity) { }
 
     private void AddTransferVerbs(EntityUid uid, StorageComponent component, GetVerbsEvent<UtilityVerb> args)
     {
