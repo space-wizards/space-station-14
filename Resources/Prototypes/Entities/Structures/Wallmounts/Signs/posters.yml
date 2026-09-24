@@ -1131,7 +1131,7 @@
   parent: PosterBase
   id: PosterLegitVulture
   name: "Vulture in Sunset"
-  description: "A test print from a photograph, depicting a vulture's silhouetted against the backdrop of a tranquil sunset."
+  description: "A test print from a photograph, depicting a vulture silhouetted against the backdrop of a tranquil sunset."
   components:
   - type: Sprite
     state: poster58_legit
