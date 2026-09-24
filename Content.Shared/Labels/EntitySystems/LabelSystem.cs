@@ -173,7 +173,6 @@ public sealed partial class LabelSystem : EntitySystem
     /// <param name="label">label component for resolve</param>
     /// <param name="metadata">metadata component for resolve</param>
     // TODO - Change signature to `Label(Entity<LabelComponent?> ent, string? text)`
-    [PublicAPI]
     public void Label(EntityUid uid, string? text, MetaDataComponent? metadata = null, LabelComponent? label = null)
     {
         // If setting the label to be blank, just remove the label.
@@ -196,7 +195,6 @@ public sealed partial class LabelSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The entity from which the label should be removed.</param>
     /// <returns>true if a label was removed, or false if the entity already didn't have a label.</returns>
-    [PublicAPI]
     public bool RemoveLabel(Entity<LabelComponent?> ent)
     {
         return RemComp<LabelComponent>(ent);
@@ -207,7 +205,6 @@ public sealed partial class LabelSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The entity from which to get the label text.</param>
     [Pure]
-    [PublicAPI]
     public string? GetLabelText(Entity<LabelComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, logMissing: false))
@@ -221,7 +218,6 @@ public sealed partial class LabelSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The entity to check for a label.</param>
     [Pure]
-    [PublicAPI]
     public bool HasLabel(EntityUid ent)
     {
         return HasComp<LabelComponent>(ent);
@@ -230,7 +226,6 @@ public sealed partial class LabelSystem : EntitySystem
     /// <summary>
     /// Retrieves a label with the specified component from the default label slot.
     /// </summary>
-    [PublicAPI]
     public bool TryGetLabel<T>(Entity<PaperLabelComponent?> ent, [NotNullWhen(true)] out Entity<T>? label) where T : Component
     {
         label = null;
