@@ -57,6 +57,7 @@ public sealed partial class EntityProviderSystem
     /// <summary>
     /// Try to get an entity from the provider and spawn it.
     /// </summary>
+    /// <remarks> This will prioritize getting an already spawned entity before spawning a new one. </remarks>
     /// <param name="provider">The entity providing the entityProvider storage.</param>
     /// <param name="protoId">The entity prototype ID to be spawned.</param>
     /// <param name="entity">The uid of the spawned entity.</param>
@@ -77,6 +78,7 @@ public sealed partial class EntityProviderSystem
     /// <summary>
     /// Try to get a list of entities of the same kind from the provider and spawn them.
     /// </summary>
+    /// <remarks> This will prioritize getting already spawned entities before spawning new ones. </remarks>
     /// <param name="provider">The entity providing the entityProvider storage.</param>
     /// <param name="protoId">The entity prototype ID to be spawned.</param>
     /// <param name="entities">The uid list of the spawned entities.</param>
@@ -149,6 +151,7 @@ public sealed partial class EntityProviderSystem
     /// <summary>
     /// Attempts to spawn entities of a kind, and then eject them from the provider.
     /// </summary>
+    /// <remarks> This will prioritize ejecting already spawned entities before spawning new ones. </remarks>
     /// <param name="provider">The entity providing the entityProvider storage.</param>
     /// <param name="protoId">The entity prototype ID to be spawned.</param>
     /// <param name="entities">The uid list of the spawned and ejected entities.</param>
@@ -185,8 +188,9 @@ public sealed partial class EntityProviderSystem
     }
 
     /// <summary>
-    /// Attempts to eject an entity of a kind, spawn it if there is no prepared beforehand.
+    /// Attempts to spawn an entity of a kind and eject it.
     /// </summary>
+    /// <remarks> This will prioritize ejecting an already spawned entity before spawning a new one. </remarks>
     /// <param name="provider">The entity providing the entityProvider storage.</param>
     /// <param name="protoId">The entity prototype ID to be spawned.</param>
     /// <param name="entity">The entity that were and ejected.</param>
@@ -215,6 +219,7 @@ public sealed partial class EntityProviderSystem
     /// <summary>
     /// Attempts to spawn an entity of a kind, and then eject them to the hands of the user from the provider.
     /// </summary>
+    /// <remarks> This will prioritize ejecting an already spawned entity before spawning a new one. </remarks>
     /// <param name="provider">The entity providing the entityProvider storage.</param>
     /// <param name="protoId">The entity prototype ID to be spawned.</param>
     /// <param name="entity">The spawned and ejected entity.</param>
