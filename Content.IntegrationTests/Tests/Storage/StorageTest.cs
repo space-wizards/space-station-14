@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Containers;
 using Content.Shared.Item;
 using Content.Shared.Prototypes;
@@ -15,6 +16,40 @@ namespace Content.IntegrationTests.Tests.Storage;
 
 public sealed class StorageTest : GameTest
 {
+    private static readonly EntProtoId TestEntity = "StorageTestEntity";
+    private static readonly EntProtoId SmallItem = "SmallStorageItem";
+    private static readonly EntProtoId NormalItem = "NormalStorageItem";
+    private static readonly ProtoId<ItemSizePrototype> TinySize = "Tiny";
+    private static readonly ProtoId<ItemSizePrototype> SmallSize = "Small";
+    private static readonly ProtoId<ItemSizePrototype> NormalSize = "Normal";
+
+    [TestPrototypes]
+    private static readonly string Prototypes = $@"
+- type: entity
+  id: {TestEntity}
+  name: storage test
+  components:
+  - type: Storage
+
+- type: entity
+  id: {SmallItem}
+  name: small storage item
+  components:
+  - type: Storage
+  - type: Item
+    size: {SmallSize}
+
+- type: entity
+  id: {NormalItem}
+  name: storage test
+  components:
+  - type: Storage
+  - type: Item
+    size: {NormalSize}
+";
+
+    [SidedDependency(Side.Server)] private SharedStorageSystem _sStorage = default!;
+
     /// <summary>
     /// Can an item store more than itself weighs.
     /// In an ideal world this test wouldn't need to exist because sizes would be recursive.
@@ -255,6 +290,33 @@ public sealed class StorageTest : GameTest
             {
                 Assert.That(!proto.HasComp<StorageFillComponent>(compFact), $"Prototype {proto.ID} has both {nameof(ContainerFillComponent)} and {nameof(StorageFillComponent)}.");
             }
+        });
+    }
+
+    [Test]
+    [Description("Tests that entities with no specified max size start with sane values.")]
+    public async Task ValidDefaultStorageSizeTest()
+    {
+        await Server.WaitAssertion(() =>
+        {
+            var uid = SSpawn(TestEntity);
+            var storage = SComp<StorageComponent>(uid);
+
+            var smallUid = SSpawn(SmallItem);
+            var smallStorage = SComp<StorageComponent>(smallUid);
+
+            var normalUid = SSpawn(NormalItem);
+            var normalStorage = SComp<StorageComponent>(normalUid);
+
+            using var scope = Assert.EnterMultipleScope();
+
+            Assert.That(storage.MaxItemSize, Is.Null);
+            Assert.That(smallStorage.MaxItemSize, Is.Null);
+            Assert.That(normalStorage.MaxItemSize, Is.Null);
+
+            Assert.That(_sStorage.GetMaxItemSize((uid, storage)), Is.Not.Null);
+            Assert.That(_sStorage.GetMaxItemSize((smallUid, smallStorage)).ID, Is.EqualTo(TinySize));
+            Assert.That(_sStorage.GetMaxItemSize((normalUid, normalStorage)).ID, Is.EqualTo(SmallSize));
         });
     }
 }
