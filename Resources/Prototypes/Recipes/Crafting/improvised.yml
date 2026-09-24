@@ -21,6 +21,13 @@
 
 - type: construction
   parent: BaseWeapon
+  id: MakeshiftLaser
+  graph: MakeshiftLaserGraph
+  targetNode: mslaser
+
+
+- type: construction
+  parent: BaseWeapon
   id: pneumaticcannon
   graph: PneumaticCannon
   targetNode: cannon

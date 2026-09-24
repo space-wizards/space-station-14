@@ -1,0 +1,71 @@
+- type: constructionGraph
+  id: MakeshiftLaserGraph
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: mslaserframe
+          steps:
+            - material: Steel
+              amount: 2
+            - material: Cable
+              amount: 5
+              doAfter: 10
+    - node: mslaserframe
+      entity: WeaponMakeshiftLaserFrame
+      edges:
+        - to: mslaserframescrewed
+          steps:
+            - tool: Screwing
+              doAfter: 8
+        - to: start
+          steps:
+            - tool: Cutting
+              doAfter: 1
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+              amount: 5
+            - !type:DeleteEntity {}
+    - node: mslaserframescrewed
+      entity: WeaponMakeshiftLaserFrame
+      edges:
+        - to: mslaserwelded
+          steps:
+            - tool: Welding
+              doAfter: 8
+        - to: mslaserframe
+          steps:
+            - tool: Prying
+              doAfter: 1
+    - node: mslaserwelded
+      entity: WeaponMakeshiftLaserFrame
+      edges:
+        - to: mslaser
+          steps:
+          - tag: PowerCellSmall
+            name: construction-graph-tag-power-cell-medium
+            icon:
+              sprite: Objects/Power/power_cells.rsi
+              state: medium
+            doAfter: 8
+        - to: mslaserframescrewed
+          steps:
+          - tool: Cutting
+            doAfter: 1
+    - node: mslaser
+      entity: WeaponMakeshiftLaser
+      edges:
+        - to: mslaserframescrewed
+          completed:
+            - !type:SpawnPrototype
+              prototype: WeaponMakeshiftLaserFrame
+            - !type:SpawnPrototype
+              prototype: PowerCellMedium
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 3

@@ -240,6 +240,22 @@
     tags:
     - Sidearm
     - LaserWeapon
+  - type: Construction
+    graph: MakeshiftLaser
+    node: MakeshiftLaser
+
+- type: entity
+  parent: [BaseItem, BaseMinorContraband]
+  name: laser pistol frame
+  id: WeaponMakeshiftLaserFrame
+  description: Only needs a bit more screwing and a doctorate in practical bluespace technology.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
+    state: frame
+  - type: Construction
+    graph: MakeshiftLaser
+    node: mslaserframe
 
 - type: entity
   name: tesla gun
