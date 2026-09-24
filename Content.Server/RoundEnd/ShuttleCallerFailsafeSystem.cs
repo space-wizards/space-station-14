@@ -17,14 +17,12 @@ public sealed partial class ShuttleCallerFailsafeSystem : EntitySystem
     [Dependency] private RoundEndSystem _roundEndSys = default!;
 
     public static readonly LocId AnnouncementText = "round-end-system-shuttle-called-failsafe-announcement";
-    private bool _shuttleEnabled;
     private bool _failsafeEnabled;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        Subs.CVar(_configMan, CCVars.EmergencyShuttleEnabled, value => _shuttleEnabled = value, true);
         Subs.CVar(_configMan, CCVars.EmergencyShuttleCallerFailsafeEnabled, value => _failsafeEnabled = value, true);
     }
 
