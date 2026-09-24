@@ -1,0 +1,73 @@
+# Clown Spider
+- type: entity
+  parent: MobSpiderBase
+  id: MobGiantSpiderClown
+  name: clown spider
+  description: Combines the two most terrifying things in existence, spiders and clowns.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/Spiders/clownspider.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: idle
+  - type: ToolRefinable
+    refineResult:
+    - id: MaterialBananium1
+      amount: 1
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      180: Dead
+  - type: Spider
+    webPrototype: SpiderWebClown
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepClownFast
+  - type: Speech
+    speechVerb: Cluwne
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Laughter
+        Quantity: 150
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 6
+  - type: SolutionManager
+    solutions:
+    - SolutionVenomSpiderClown
+  - type: MeleeChemicalInjector
+    transferAmount: 5
+    solution: melee
+
+- type: entity
+  parent: [SolutionWeapon, SolutionTiny]
+  id: SolutionVenomSpiderClown
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 30
+      reagents:
+      - ReagentId: Laughter
+        Quantity: 30
+  - type: SolutionRegeneration
+    generated:
+      reagents:
+      - ReagentId: Laughter
+        Quantity: 1
+
+# Angry Clown Spider
+- type: entity
+  parent:
+  - MobSpiderAngryBase
+  - MobGiantSpiderClown
+  id: MobGiantSpiderClownAngry
+  suffix: Angry
