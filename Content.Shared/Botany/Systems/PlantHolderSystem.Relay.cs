@@ -5,7 +5,7 @@ namespace Content.Shared.Botany.Systems;
 
 public sealed partial class PlantHolderSystem
 {
-    [Dependency] private PlantSystem _plantSystem = default!;
+    [Dependency] private PlantSystem _plant = default!;
 
     private void InitializeRelay()
     {
@@ -19,6 +19,9 @@ public sealed partial class PlantHolderSystem
 
     private void RelayPlantHolderEvent<T>(EntityUid uid, PlantHolderComponent component, T args) where T : class
     {
+        if (args is HandledEntityEventArgs { Handled: true })
+            return;
+
         RelayEvent((uid, component), args);
     }
 
@@ -30,7 +33,7 @@ public sealed partial class PlantHolderSystem
     /// <typeparam name="T">The type of the event</typeparam>
     public void RelayEvent<T>(Entity<PlantHolderComponent> ent, ref T args) where T : struct
     {
-        if (!_plantSystem.TryGetTray(ent.Owner, out var tray))
+        if (!_plant.TryGetTray(ent.Owner, out var tray))
             return;
 
         var ev = new PlantHolderRelayedEvent<T>(args, ent);
@@ -46,7 +49,7 @@ public sealed partial class PlantHolderSystem
     /// <typeparam name="T">The type of the event</typeparam>
     public void RelayEvent<T>(Entity<PlantHolderComponent> ent, T args) where T : class
     {
-        if (!_plantSystem.TryGetTray(ent.Owner, out var tray))
+        if (!_plant.TryGetTray(ent.Owner, out var tray))
             return;
 
         var ev = new PlantHolderRelayedEvent<T>(args, ent);
