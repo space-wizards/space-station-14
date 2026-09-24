@@ -55,9 +55,11 @@ public sealed partial class NewPlayerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnPlayerSpawnComplete(PlayerSpawnCompleteEvent ev)
     {
-        if (_whitelistManager.IsConnectedWhitelisted(ev.Player))
+        // Give to players who should see
+        if (_whitelistManager.IsConnectedWhitelisted(ev.Player)) // TODO: This should use permissions from a Mentor group or similar, as this only checks manual whitelisting.
             EnsureComp<ShowNewPlayerIconComponent>(ev.Mob);
 
+        // Give the players who should have it
         try
         {
             var totalTime = _playtimeManager.GetOverallPlaytime(ev.Player);
