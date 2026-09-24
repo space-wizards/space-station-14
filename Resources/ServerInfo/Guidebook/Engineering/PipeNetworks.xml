@@ -28,12 +28,12 @@
   - [textlink="All Valves" link="Valves"]
   - [textlink="Radiators" link="Radiators"]
 
-  An example of a pipenet being seperated into two, distinct pipenets by a [textlink="pump" link="Pumps"] is shown below:
+  An example of a pipenet being separated into two, distinct pipenets by a [textlink="pump" link="Pumps"] is shown below:
 
   <Box>
     <GuideEntityEmbed Entity="GasPipeStraight" Caption="Pipenet 1" Rotation="90"/>
     <GuideEntityEmbed Entity="GasPipeStraight" Caption="" Rotation="90"/>
-    <GuideEntityEmbed Entity="GasPressurePump" Caption="Network Seperator" Rotation="90"/>
+    <GuideEntityEmbed Entity="GasPressurePump" Caption="Network Separator" Rotation="90"/>
     <GuideEntityEmbed Entity="GasPipeStraight" Caption="" Rotation="90"/>
     <GuideEntityEmbed Entity="GasPipeStraight" Caption="Pipenet 2" Rotation="90"/>
   </Box>

@@ -1,0 +1,29 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "By Imaginos16 (GitHub). Inhands by AftrLite (GitHub), based on the sprites by Imaginos16.",
+    "source": "https://github.com/Wallemations/heavenstation/blob/3bb667878178365e5505e81cae7b4ad1b6068653/icons/obj/stack_objects.dmi",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "bananium-1"
+        },
+        {
+            "name": "bananium-2"
+        },
+        {
+            "name": "bananium-3"
+        },
+        {
+            "name": "bananium-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "bananium-inhand-right",
+            "directions": 4
+        }
+    ]
+}

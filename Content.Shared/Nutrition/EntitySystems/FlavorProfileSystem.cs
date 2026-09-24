@@ -12,7 +12,6 @@ namespace Content.Shared.Nutrition.EntitySystems;
 /// </summary>
 public sealed partial class FlavorProfileSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IConfigurationManager _configManager = default!;
 
     private const string BackupFlavorMessage = "flavor-profile-unknown";
@@ -60,7 +59,7 @@ public sealed partial class FlavorProfileSystem : EntitySystem
         var flavors = new List<FlavorPrototype>(flavorSet.Count);
         foreach (var flavor in flavorSet)
         {
-            flavors.Add(_prototypeManager.Index(flavor));
+            flavors.Add(ProtoMan.Index(flavor));
         }
 
         flavors.Sort((a, b) => a.FlavorType.CompareTo(b.FlavorType));
@@ -83,7 +82,7 @@ public sealed partial class FlavorProfileSystem : EntitySystem
     private HashSet<ProtoId<FlavorPrototype>> GetFlavorsFromReagents(Solution solution, int desiredAmount, HashSet<string>? toIgnore = null)
     {
         var flavors = new HashSet<ProtoId<FlavorPrototype>>();
-        foreach (var (reagent, quantity) in solution.GetReagentPrototypes(_prototypeManager))
+        foreach (var (reagent, quantity) in solution.GetReagentPrototypes(ProtoMan))
         {
             if (toIgnore != null && toIgnore.Contains(reagent.ID))
             {

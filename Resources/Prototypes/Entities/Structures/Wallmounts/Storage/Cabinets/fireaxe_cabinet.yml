@@ -1,26 +1,24 @@
 - type: entity
-  parent: BaseWallmountCabinetGlass
-  id: FireAxeCabinet
+  parent: [ BaseWallmountCabinetGlass, StructureHealthContainerStrong ]
+  id: FireAxeCabinetConstructed
   name: fire axe cabinet
+  suffix: Free Access
   description: There is a small label that reads "For Emergency use only" along with details for safe use of the axe. As if.
   placement:
     mode: SnapgridCenter
   components:
+  - type: Construction
+    graph: FireAxeCabinetGraph
+    node: done
+    containers:
+    - ItemCabinet
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 200 #20ish crowbar hits
+        damage: 140
       behaviors:
       - !type:EmptyAllContainersBehaviour
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
@@ -33,6 +31,9 @@
       visible: true
     - state: glass
       map: ["enum.OpenableVisuals.Layer"]
+    - state: locked
+      shader: unshaded
+      map: ["enum.LockVisualLayers.Lock"]
   - type: ItemSlots
     slots:
       ItemCabinet:
@@ -41,6 +42,15 @@
           tags:
           - FireAxe
   - type: Lock
+  - type: AccessReader
+
+- type: entity
+  parent: FireAxeCabinetConstructed
+  id: FireAxeCabinet
+  name: fire axe cabinet
+  suffix: Atmospherics
+  description: There is a small label that reads "For Emergency use only" along with details for safe use of the axe. As if.
+  components:
   - type: AccessReader
     access: [["Atmospherics"], ["Command"]]
 

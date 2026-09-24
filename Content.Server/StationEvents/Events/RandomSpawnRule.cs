@@ -1,19 +1,22 @@
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed class RandomSpawnRule : StationEventSystem<RandomSpawnRuleComponent>
+/// <summary>
+/// Handler for events that spawn a given entity at a random tile on the affected station.
+/// </summary>
+/// <seealso cref="RandomSpawnRuleComponent"/>
+public sealed partial class RandomSpawnRule : StationEventSystem<RandomSpawnRuleComponent>
 {
-    protected override void Started(EntityUid uid, RandomSpawnRuleComponent comp, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    protected override void Started(Entity<RandomSpawnRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
     {
-        base.Started(uid, comp, gameRule, args);
+        base.Started(ent, ref args);
 
-        if (TryFindRandomTile(out _, out _, out _, out var coords))
+        if (Station.TryFindRandomTile(out _, out _, out _, out var coords))
         {
-            Sawmill.Info($"Spawning {comp.Prototype} at {coords}");
-            Spawn(comp.Prototype, coords);
+            Sawmill.Info($"Spawning {ent.Comp1.Prototype} at {coords}");
+            Spawn(ent.Comp1.Prototype, coords);
         }
     }
 }

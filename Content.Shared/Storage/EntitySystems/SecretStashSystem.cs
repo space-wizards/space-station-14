@@ -17,6 +17,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -94,24 +95,44 @@ public sealed partial class SecretStashSystem : EntitySystem
         if (!TryComp<ItemComponent>(itemToHideUid, out var itemComp))
             return false;
 
-        _audio.PlayPredicted(entity.Comp.TryInsertItemSound, entity, userUid, AudioParams.Default.WithVariation(0.25f));
+        var audioParams = entity.Comp.TryInsertItemSound?.Params ?? AudioParams.Default;
+        audioParams = audioParams.WithVariation(0.25f);
+        _audio.PlayPredicted(entity.Comp.TryInsertItemSound, entity, userUid, audioParams);
 
         // check if secret stash is already occupied
         var container = entity.Comp.ItemContainer;
         if (HasItemInside(entity))
         {
             var popup = Loc.GetString("comp-secret-stash-action-hide-container-not-empty");
-            _popupSystem.PopupClient(popup, entity, userUid);
+            _popupSystem.PopupEntity(popup, entity, userUid);
             return false;
         }
 
-        // check if item is too big to fit into secret stash or is in the blacklist
-        if (_item.GetSizePrototype(itemComp.Size) > _item.GetSizePrototype(entity.Comp.MaxItemSize) ||
+        // Check if item is too big to fit into secret stash or is in the blacklist.
+        ProtoId<ItemSizePrototype> maxItemSize;
+        if (entity.Comp.MaxItemSize != null)
+        {
+            maxItemSize = entity.Comp.MaxItemSize.Value;
+        }
+        else if (TryComp<ItemComponent>(entity, out var stashItem))
+        {
+            var smallerSize = _item.GetSizeSmaller(stashItem.Size);
+            if (smallerSize == null)
+                return false;
+
+            maxItemSize = smallerSize.ID;
+        }
+        else
+        {
+            return false;
+        }
+
+        if (_item.GetSizePrototype(itemComp.Size) > _item.GetSizePrototype(maxItemSize) ||
             _whitelistSystem.IsWhitelistPass(entity.Comp.Blacklist, itemToHideUid))
         {
             var msg = Loc.GetString("comp-secret-stash-action-hide-item-too-big",
                 ("item", itemToHideUid), ("stashname", GetStashName(entity)));
-            _popupSystem.PopupClient(msg, entity, userUid);
+            _popupSystem.PopupEntity(msg, entity, userUid);
             return false;
         }
 
@@ -122,7 +143,7 @@ public sealed partial class SecretStashSystem : EntitySystem
         // all done, show success message
         var successMsg = Loc.GetString("comp-secret-stash-action-hide-success",
             ("item", itemToHideUid), ("stashname", GetStashName(entity)));
-        _popupSystem.PopupClient(successMsg, entity, userUid);
+        _popupSystem.PopupEntity(successMsg, entity, userUid);
         return true;
     }
 
@@ -136,7 +157,9 @@ public sealed partial class SecretStashSystem : EntitySystem
         if (!TryComp<HandsComponent>(userUid, out var handsComp))
             return false;
 
-        _audio.PlayPredicted(entity.Comp.TryRemoveItemSound, entity, userUid, AudioParams.Default.WithVariation(0.25f));
+        var audioParams = entity.Comp.TryRemoveItemSound?.Params ?? AudioParams.Default;
+        audioParams = audioParams.WithVariation(0.25f);
+        _audio.PlayPredicted(entity.Comp.TryRemoveItemSound, entity, userUid, audioParams);
 
         // check if secret stash has something inside
         var itemInStash = entity.Comp.ItemContainer.ContainedEntity;
@@ -148,7 +171,7 @@ public sealed partial class SecretStashSystem : EntitySystem
         // show success message
         var successMsg = Loc.GetString("comp-secret-stash-action-get-item-found-something",
             ("stashname", GetStashName(entity)));
-        _popupSystem.PopupClient(successMsg, entity, userUid);
+        _popupSystem.PopupEntity(successMsg, entity, userUid);
 
         return true;
     }
@@ -234,7 +257,7 @@ public sealed partial class SecretStashSystem : EntitySystem
         if (storedInside != null && storedInside.Count >= 1)
         {
             var popup = Loc.GetString("comp-secret-stash-on-destroyed-popup", ("stashname", GetStashName(entity)));
-            _popupSystem.PopupPredicted(popup, storedInside[0], null, PopupType.MediumCaution);
+            _popupSystem.PopupEntity(popup, storedInside[0], PopupType.MediumCaution);
         }
     }
 

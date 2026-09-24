@@ -1,4 +1,4 @@
-﻿using NetCord.Logging;
+using NetCord.Logging;
 using NLogLevel = NetCord.Logging.LogLevel;
 using LogLevel = Robust.Shared.Log.LogLevel;
 

@@ -36,7 +36,7 @@ public sealed partial class BlockAnchorOnSystem : EntitySystem
         if (!HasOverlap((ent, ent.Comp, Transform(ent))))
             return;
 
-        _popup.PopupPredicted(Loc.GetString("anchored-already-present"), ent, null);
+        _popup.PopupEntity(Loc.GetString("anchored-already-present"), ent);
         _xform.Unanchor(ent, Transform(ent));
     }
 
@@ -51,7 +51,7 @@ public sealed partial class BlockAnchorOnSystem : EntitySystem
         if (!HasOverlap((ent, ent.Comp, Transform(ent))))
             return;
 
-        _popup.PopupPredicted(Loc.GetString("anchored-already-present"), ent, args.User);
+        _popup.PopupEntity(Loc.GetString("anchored-already-present"), ent, args.User);
         args.Cancel();
     }
 
@@ -65,7 +65,7 @@ public sealed partial class BlockAnchorOnSystem : EntitySystem
             return false;
 
         var indices = _map.TileIndicesFor(grid, gridComp, ent.Comp2.Coordinates);
-        var enumerator = _map.GetAnchoredEntitiesEnumerator(grid, gridComp, indices);
+        var enumerator = _map.GetAnchoredEntities(grid, gridComp, indices);
 
         while (enumerator.MoveNext(out var otherEnt))
         {

@@ -29,7 +29,6 @@ public sealed partial class CloningSystem : SharedCloningSystem
 {
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedContainerSystem _container = default!;
@@ -46,13 +45,13 @@ public sealed partial class CloningSystem : SharedCloningSystem
         [NotNullWhen(true)] out EntityUid? clone)
     {
         clone = null;
-        if (!_prototype.Resolve(settingsId, out var settings))
+        if (!ProtoMan.Resolve(settingsId, out var settings))
             return false; // invalid settings
 
         if (!TryComp<HumanoidProfileComponent>(original, out var humanoid))
             return false; // whatever body was to be cloned, was not a humanoid
 
-        if (!_prototype.Resolve(humanoid.Species, out var speciesPrototype))
+        if (!ProtoMan.Resolve(humanoid.Species, out var speciesPrototype))
             return false; // invalid species
 
         if (!settings.ForceCloning)
@@ -70,25 +69,26 @@ public sealed partial class CloningSystem : SharedCloningSystem
 
         // Add equipment first so that SetEntityName also renames the ID card.
         if (settings.CopyEquipment != null)
-            CopyEquipment(original, clone.Value, settings.CopyEquipment.Value, settings.Whitelist, settings.Blacklist);
+            CopyEquipment(original, clone.Value, settings.CopyEquipment.Value, settings.EquipmentWhitelist, settings.EquipmentBlacklist);
 
         // Copy storage on the mob itself as well.
         // This is needed for slime storage.
         if (settings.CopyInternalStorage)
-            CopyStorage(original, clone.Value, settings.Whitelist, settings.Blacklist);
+            CopyStorage(original, clone.Value, settings.EquipmentWhitelist, settings.EquipmentBlacklist);
 
         // copy implants and their storage contents
         if (settings.CopyImplants)
-            CopyImplants(original, clone.Value, settings.CopyInternalStorage, settings.Whitelist, settings.Blacklist);
+            CopyImplants(original, clone.Value, settings.CopyInternalStorage, settings.EquipmentWhitelist, settings.EquipmentBlacklist);
 
         // Copy permanent status effects
         if (settings.CopyStatusEffects)
-            CopyStatusEffects(original, clone.Value);
+            CopyStatusEffects(original, clone.Value, settings.StatusEffectWhitelist, settings.StatusEffectBlacklist);
 
         var originalName = _nameMod.GetBaseName(original);
 
         // Set the clone's name. The raised events will also adjust their PDA and ID card names.
         _metaData.SetEntityName(clone.Value, originalName, raiseEvents: settings.RaiseEntityRenamedEvent);
+        _metaData.SetEntityDescription(clone.Value, Description(original));
         _identity.QueueIdentityUpdate(clone.Value); // We have to manually refresh the identity in case we did not raise events.
 
         _adminLogger.Add(LogType.Chat, LogImpact.Medium, $"The body of {original:player} was cloned as {clone.Value:player}");
@@ -100,7 +100,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
         EntityUid clone,
         ProtoId<CloningSettingsPrototype> settings)
     {
-        if (!_prototype.Resolve(settings, out var proto))
+        if (!ProtoMan.Resolve(settings, out var proto))
             return;
 
         CloneComponents(original, clone, proto);
@@ -132,7 +132,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
 
             // If the original does not have the component, then the clone shouldn't have it either.
             RemComp(clone, componentRegistration.Type);
-            if (EntityManager.TryGetComponent(original, componentRegistration.Type, out var sourceComp)) // Does the original have this component?
+            if (TryComp(original, componentRegistration.Type, out var sourceComp)) // Does the original have this component?
             {
                 CopyComp(original, clone, sourceComp);
             }

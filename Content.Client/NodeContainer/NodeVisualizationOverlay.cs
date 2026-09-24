@@ -17,7 +17,6 @@ namespace Content.Client.NodeContainer
     {
         private readonly NodeGroupSystem _system;
         private readonly EntityLookupSystem _lookup;
-        private readonly IMapManager _mapManager;
         private readonly IInputManager _inputManager;
         private readonly IEntityManager _entityManager;
         private readonly SharedTransformSystem _transformSystem;
@@ -38,14 +37,12 @@ namespace Content.Client.NodeContainer
         public NodeVisualizationOverlay(
             NodeGroupSystem system,
             EntityLookupSystem lookup,
-            IMapManager mapManager,
             IInputManager inputManager,
             IResourceCache cache,
             IEntityManager entityManager)
         {
             _system = system;
             _lookup = lookup;
-            _mapManager = mapManager;
             _inputManager = inputManager;
             _entityManager = entityManager;
             _transformSystem = _entityManager.System<SharedTransformSystem>();
@@ -96,7 +93,7 @@ namespace Content.Client.NodeContainer
             sb.Append($"grid pos: {gridTile}\n");
             sb.Append(group.DebugData);
 
-            args.ScreenHandle.DrawString(_font, mousePos + new Vector2(20, -20), sb.ToString());
+            args.ScreenHandle.DrawString(_font, mousePos + new Vector2(20, -20), sb.ToString(), 1, Color.White, TextOutline.Default);
         }
 
         private void DrawWorld(in OverlayDrawArgs overlayDrawArgs)
@@ -119,7 +116,7 @@ namespace Content.Client.NodeContainer
             var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
 
             _grids.Clear();
-            _mapManager.FindGridsIntersecting(map, worldAABB, ref _grids);
+            _mapSystem.FindGridsIntersecting(map, worldAABB, ref _grids);
 
             foreach (var grid in _grids)
             {
