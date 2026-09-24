@@ -96,8 +96,20 @@ public sealed partial class LabelSystem : EntitySystem
                 return;
             }
 
-            LabelExaminedEvent ev = new(args);
-            RaiseLocalEvent(item, ref ev);
+            // Assuming yaml has the correct entity whitelist, this should not happen.
+            if (!TryComp<PaperComponent>(item, out var paper))
+                return;
+
+            if (string.IsNullOrWhiteSpace(paper.Content))
+            {
+                args.PushMarkup(Loc.GetString("comp-paper-label-has-label-blank"));
+                return;
+            }
+
+            args.PushMarkup(Loc.GetString("comp-paper-label-has-label"));
+            var message = new FormattedMessage();
+            message.AddMarkupPermissive(paper.Content.TrimEnd());
+            args.PushMessage(message);
         }
     }
 

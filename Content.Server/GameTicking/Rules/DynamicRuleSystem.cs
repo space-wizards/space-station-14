@@ -11,6 +11,10 @@ using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules;
 
+/// <summary>
+/// Handler for dynamically adding subgamemode rules based on a budget.
+/// </summary>
+/// <seealso cref="DynamicRuleComponent"/>
 public sealed partial class DynamicRuleSystem : GameRuleSystem<DynamicRuleComponent>
 {
     [Dependency] private IAdminLogManager _adminLog = default!;
@@ -18,22 +22,26 @@ public sealed partial class DynamicRuleSystem : GameRuleSystem<DynamicRuleCompon
     [Dependency] private RoundEndSystem _roundEnd = default!;
     [Dependency] private IRobustRandom _random = default!;
 
-    protected override void Added(EntityUid uid, DynamicRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
-    {
-        base.Added(uid, component, gameRule, args);
+    [Dependency] private EntityQuery<DynamicRuleCostComponent> _ruleCostQuery;
 
-        component.Budget = _random.Next(component.StartingBudgetMin, component.StartingBudgetMax);;
-        component.NextRuleTime = Timing.CurTime + _random.Next(component.MinRuleInterval, component.MaxRuleInterval);
+    protected override void Added(Entity<DynamicRuleComponent, GameRuleComponent> ent, ref GameRuleAddedEvent args)
+    {
+        base.Added(ent, ref args);
+
+        var dynamic = ent.Comp1;
+
+        dynamic.Budget = _random.Next(dynamic.StartingBudgetMin, dynamic.StartingBudgetMax);
+        dynamic.NextRuleTime = Timing.CurTime + _random.Next(dynamic.MinRuleInterval, dynamic.MaxRuleInterval);
     }
 
-    protected override void Started(EntityUid uid, DynamicRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    protected override void Started(Entity<DynamicRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
     {
-        base.Started(uid, component, gameRule, args);
+        base.Started(ent, ref args);
 
         // Since we don't know how long until this rule is activated, we need to
         // set the last budget update to now so it doesn't immediately give the component a bunch of points.
-        component.LastBudgetUpdate = Timing.CurTime;
-        Execute((uid, component));
+        ent.Comp1.LastBudgetUpdate = Timing.CurTime;
+        Execute(ent);
     }
 
     // TODO: We may not actually want to do this
@@ -82,7 +90,7 @@ public sealed partial class DynamicRuleSystem : GameRuleSystem<DynamicRuleCompon
     /// </summary>
     private void UpdateBudget(Entity<DynamicRuleComponent> entity)
     {
-        var duration = (float) (Timing.CurTime - entity.Comp.LastBudgetUpdate).TotalSeconds;
+        var duration = (float)(Timing.CurTime - entity.Comp.LastBudgetUpdate).TotalSeconds;
 
         entity.Comp.Budget += duration * entity.Comp.BudgetPerSecond;
         entity.Comp.LastBudgetUpdate = Timing.CurTime;
@@ -108,7 +116,7 @@ public sealed partial class DynamicRuleSystem : GameRuleSystem<DynamicRuleCompon
 
             executedRules.Add(ruleUid.Value);
 
-            if (TryComp<DynamicRuleCostComponent>(ruleUid, out var cost))
+            if (_ruleCostQuery.TryComp(ruleUid, out var cost))
             {
                 entity.Comp.Budget -= cost.Cost;
                 _adminLog.Add(LogType.EventRan, LogImpact.High, $"{ToPrettyString(entity)} ran rule {ToPrettyString(ruleUid)} with cost {cost.Cost} on budget {entity.Comp.Budget}.");
