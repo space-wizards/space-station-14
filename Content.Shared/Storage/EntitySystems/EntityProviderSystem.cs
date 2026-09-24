@@ -40,9 +40,17 @@ public sealed partial class EntityProviderSystem : EntitySystem
     private void OnInit(Entity<EntityProviderComponent> provider, ref ComponentInit args)
     {
         provider.Comp.Container = _container.EnsureContainer<Container>(provider, ContainerId);
+    }
 
-        if (provider.Comp.CanEject && provider.Comp.EntityCounter.Count == 1)
-            provider.Comp.SelectedEntityProtoId =  provider.Comp.EntityCounter.Single().Key;
+    /// <summary> This needs to be in map init, as putting this in CompInit will result in a test fail. </summary>
+    [SubscribeLocalEvent]
+    private void OnMapInit(Entity<EntityProviderComponent> provider, ref MapInitEvent args)
+    {
+        if (!provider.Comp.CanEject || provider.Comp.EntityCounter.Count != 1)
+            return;
+
+        provider.Comp.SelectedEntityProtoId =  provider.Comp.EntityCounter.Single().Key;
+        Dirty(provider);
     }
 
     /// <summary> Adds contents info into examine. </summary>
