@@ -173,8 +173,8 @@ public sealed partial class ItemSlotsSystem : EntitySystem
     /// <summary>
     /// Checks whether an entity has an item in any of their item slots.
     /// </summary>
-    /// <param name="slots"></param>
-    /// <returns></returns>
+    /// <param name="container">Container entity, which item slots should be checked.</param>
+    /// <returns>True if there wer item slots and at least one of them had an item in it, false otherwise.</returns>
     [PublicAPI]
     private bool HasItemInAnySlot(Entity<ItemSlotsComponent?> container)
     {
@@ -188,6 +188,7 @@ public sealed partial class ItemSlotsSystem : EntitySystem
 
             return true;
         }
+
         return false;
     }
 

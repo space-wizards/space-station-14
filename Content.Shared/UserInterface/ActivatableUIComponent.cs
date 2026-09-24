@@ -1,10 +1,10 @@
 using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Shared.UserInterface;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(ActivatableUISystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(ActivatableUISystem))]
 public sealed partial class ActivatableUIComponent : Component
 {
     /// <summary>

@@ -1,4 +1,4 @@
-﻿using Robust.Shared.GameStates;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Containers.ItemSlots.Components;
 
@@ -7,4 +7,5 @@ namespace Content.Shared.Containers.ItemSlots.Components;
 /// and having at least one of the item slots filled.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
+[Access(typeof(ItemSlotsSystem))]
 public sealed partial class ActivatableUIRequiresFilledItemSlotComponent : Component;
