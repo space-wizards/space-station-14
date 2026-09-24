@@ -23,7 +23,6 @@ public sealed partial class VendingMachineMenu : FancyWindow
 
     private readonly Dictionary<VendorItemKey, (ListContainerButton Button, VendingMachineItem Item)> _listItems = new();
     private readonly Dictionary<VendorItemKey, uint> _amounts = new();
-    private List<VendingMachineInventoryEntry> _cachedInventory = new();
     private VendingMachineInventoryCategory? _selectedCategory;
 
     private static readonly SpriteSpecifier AllCategoryIcon =
@@ -74,8 +73,7 @@ public sealed partial class VendingMachineMenu : FancyWindow
     public void Populate(List<VendingMachineInventoryEntry> inventory, IReadOnlyList<VendingMachineInventoryCategory> categories, bool enabled)
     {
         _enabled = enabled;
-        _cachedInventory = inventory;
-        CacheAmounts();
+        CacheAmounts(inventory);
 
         PopulateCategories(categories);
         PopulateInventory();
@@ -85,7 +83,7 @@ public sealed partial class VendingMachineMenu : FancyWindow
     {
         _listItems.Clear();
 
-        var hasInventory = _cachedInventory.Count > 0;
+        var hasInventory = _amounts.Count > 0;
         SearchBar.Visible = hasInventory;
         VendingContents.Visible = hasInventory;
         OutOfStockLabel.Visible = !hasInventory;
@@ -98,23 +96,23 @@ public sealed partial class VendingMachineMenu : FancyWindow
 
         var listData = new List<VendorItemsListData>();
 
-        foreach (var entry in _cachedInventory)
+        foreach (var key in _amounts.Keys)
         {
-            if (_selectedCategory is { } selected && !CategoryContains(selected, entry))
+            if (_selectedCategory is { } selected && !CategoryContains(selected, key))
                 continue;
 
-            if (!_prototypeManager.Resolve(entry.ID, out var prototype))
+            if (!_prototypeManager.Resolve(key.Prototype, out var prototype))
                 continue;
 
-            listData.Add(new VendorItemsListData(entry.Type, prototype.ID, GetItemName(prototype)));
+            listData.Add(new VendorItemsListData(key.Type, prototype.ID, GetItemName(prototype)));
         }
 
         VendingContents.PopulateList(listData);
     }
 
-    private static bool CategoryContains(VendingMachineInventoryCategory category, VendingMachineInventoryEntry entry)
+    private static bool CategoryContains(VendingMachineInventoryCategory category, VendorItemKey key)
     {
-        return category.GetInventory(entry.Type).ContainsKey(entry.ID);
+        return category.GetInventory(key.Type).ContainsKey(key.Prototype);
     }
 
     private void PopulateCategories(IReadOnlyList<VendingMachineInventoryCategory> categories)
@@ -123,9 +121,9 @@ public sealed partial class VendingMachineMenu : FancyWindow
 
         foreach (var category in categories)
         {
-            foreach (var entry in _cachedInventory)
+            foreach (var key in _amounts.Keys)
             {
-                if (!CategoryContains(category, entry))
+                if (!CategoryContains(category, key))
                     continue;
 
                 visibleCategories.Add(category);
@@ -181,11 +179,10 @@ public sealed partial class VendingMachineMenu : FancyWindow
     /// <summary>
     /// Updates text entries for vending data in place without modifying the list controls.
     /// </summary>
-    public void UpdateAmounts(List<VendingMachineInventoryEntry> cachedInventory, bool enabled)
+    public void UpdateAmounts(List<VendingMachineInventoryEntry> inventory, bool enabled)
     {
         _enabled = enabled;
-        _cachedInventory = cachedInventory;
-        CacheAmounts();
+        CacheAmounts(inventory);
 
         foreach (var (key, control) in _listItems)
         {
@@ -207,13 +204,14 @@ public sealed partial class VendingMachineMenu : FancyWindow
         return _amounts.GetValueOrDefault(key);
     }
 
-    private void CacheAmounts()
+    private void CacheAmounts(List<VendingMachineInventoryEntry> inventory)
     {
         _amounts.Clear();
 
-        foreach (var entry in _cachedInventory)
+        foreach (var entry in inventory)
         {
-            _amounts[new VendorItemKey(entry.Type, entry.ID)] = entry.Amount;
+            var key = new VendorItemKey(entry.Type, entry.ID);
+            _amounts[key] = entry.Amount;
         }
     }
 
