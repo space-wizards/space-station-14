@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.Events;
@@ -186,6 +185,34 @@ public sealed partial class EntityProviderSystem
     }
 
     /// <summary>
+    /// Attempts to eject an entity of a kind, spawn it if there is no prepared beforehand.
+    /// </summary>
+    /// <param name="provider">The entity providing the entityProvider storage.</param>
+    /// <param name="protoId">The entity prototype ID to be spawned.</param>
+    /// <param name="entity">The entity that were and ejected.</param>
+    /// <param name="requestedAmount">The amount of entities to spawn and eject. If null, it'll spawn all of them.</param>
+    /// <param name="user">The user ejecting the entities.</param>
+    /// <returns>Returns true when the entities were spawned and ejected, otherwise false.</returns>
+    public bool TryEjectEntity(
+        Entity<EntityProviderComponent?> provider,
+        EntProtoId protoId,
+        [NotNullWhen(true)] out EntityUid? entity,
+        int? requestedAmount = null,
+        EntityUid? user = null
+    )
+    {
+        entity = null;
+        if (!TryEjectEntities(provider, protoId, out var uids, requestedAmount, user))
+            return false;
+
+        if (uids.Count == 0)
+            return false;
+
+        entity = uids[0];
+        return true;
+    }
+
+    /// <summary>
     /// Attempts to spawn an entity of a kind, and then eject them to the hands of the user from the provider.
     /// </summary>
     /// <param name="provider">The entity providing the entityProvider storage.</param>
@@ -201,11 +228,9 @@ public sealed partial class EntityProviderSystem
         EntityUid user)
     {
         entity = null;
-        if (!Resolve(provider, ref provider.Comp) || !TryEjectEntities(provider, protoId, out var entities, 1, user))
+        if (!Resolve(provider, ref provider.Comp) || !TryEjectEntity(provider, protoId, out entity, 1, user))
             return false;
 
-        // Using Single because if there's more than one entity in the list after just taking one, something went wrong.
-        entity = entities.Single();
         _hands.TryPickupAnyHand(user, entity.Value);
         return true;
     }
