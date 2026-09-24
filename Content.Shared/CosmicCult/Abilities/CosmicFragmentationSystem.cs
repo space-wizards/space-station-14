@@ -40,12 +40,15 @@ public abstract partial class CosmicFragmentationSystem : EntitySystem
             return;
 
         if (HasComp<BorgChassisComponent>(args.Target) && !_mind.TryGetMind(args.Target, out _, out _))
-            return; // Don't waste charges on borgs that ain't here.
+            return;
 
-        args.Handled = true;
-        var evt = new MalignFragmentationEvent(args.Target);
+        var evt = new MalignFragmentationEvent(args.Target, false);
         RaiseLocalEvent(args.Target, ref evt);
-        UnEmpower(args.Performer);
+
+        if (!evt.Cancelled)
+            UnEmpower(args.Performer);
+
+        args.Handled = !evt.Cancelled;
     }
 
     [SubscribeLocalEvent]
@@ -66,4 +69,4 @@ public abstract partial class CosmicFragmentationSystem : EntitySystem
 }
 
 [ByRefEvent]
-public record struct MalignFragmentationEvent(EntityUid Target);
+public record struct MalignFragmentationEvent(EntityUid Target, bool Cancelled);

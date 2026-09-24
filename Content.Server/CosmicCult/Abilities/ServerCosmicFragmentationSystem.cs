@@ -21,14 +21,17 @@ public sealed partial class ServerCosmicFragmentationSystem : CosmicFragmentatio
     [SubscribeLocalEvent]
     private void OnFragmentAi(Entity<StationAiCoreComponent> ent, ref MalignFragmentationEvent args)
     {
-        if (!ProtoMan.TryIndex(_cosmicLaws, out var proto))
+        if (!ProtoMan.TryIndex(_cosmicLaws, out var proto) || _ai.GetInsertedAI(ent) is not { } brain)
+        {
+            args.Cancelled = true;
             return;
-
-        if (_ai.GetInsertedAI(ent) is not { } brain)
-            return;
+        }
 
         if (!TryComp<IntrinsicRadioTransmitterComponent>(brain, out var radio) || !TryComp<ActiveRadioComponent>(brain, out var transmitter))
+        {
+            args.Cancelled = true;
             return;
+        }
 
         var lawset = _laws.GetLawset(proto);
 
