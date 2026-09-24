@@ -33,6 +33,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         SubscribeLocalEvent<ActivatableUIComponent, HandDeselectedEvent>(OnHandDeselected);
         SubscribeLocalEvent<ActivatableUIComponent, GotUnequippedHandEvent>(OnHandUnequipped);
         SubscribeLocalEvent<ActivatableUIComponent, BoundUIClosedEvent>(OnUIClose);
+        SubscribeLocalEvent<ActivatableUIComponent, BoundUserInterfaceMessageAttempt>(OnBoundInterfaceOpenAttempt);
         SubscribeLocalEvent<ActivatableUIComponent, GetVerbsEvent<ActivationVerb>>(GetActivationVerb);
         SubscribeLocalEvent<ActivatableUIComponent, GetVerbsEvent<Verb>>(GetVerb);
 
@@ -178,6 +179,16 @@ public sealed partial class ActivatableUISystem : EntitySystem
             return;
 
         SetCurrentSingleUser(uid, null, component);
+    }
+
+    private void OnBoundInterfaceOpenAttempt(Entity<ActivatableUIComponent> ent,
+        ref BoundUserInterfaceMessageAttempt args)
+    {
+        if (args.Message is not OpenBoundInterfaceMessage || ent.Comp.Key != args.UiKey)
+            return;
+
+        if (!RaiseCanOpenEventChecks(args.Actor, ent.Owner))
+            args.Cancel();
     }
 
     private bool InteractUI(EntityUid user, EntityUid uiEntity, ActivatableUIComponent aui)
