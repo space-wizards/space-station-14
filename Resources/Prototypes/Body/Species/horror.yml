@@ -97,8 +97,10 @@
   - type: Speech
     speechVerb: Horror
   - type: PassiveDamage
-    allowedStates:
+    allowedStates: # it is hard to kill
     - Alive
+    - Critical
+    - Dead
     damage:
       types: # it regenerates very fast
         Heat: -0.05
@@ -136,12 +138,25 @@
     emoteSounds: null # there should be a way to not make them scream but oh well
   - type: ChangelingHorror # marks them as a changeling horror
     spawnAnnouncementSound:
-      path: /Audio/Animals/space_dragon_roar.ogg
-    tagsToAdd:
+      path: /Audio/Effects/Screech/changeling_screech_strong.ogg
+    tagsToAdd: # because copying tags is icky
     - StunImmune
+    spawnEffects:
+    - !type:EvenHealthChange # why not
+      damage:
+        Burn: -50
+        Toxin: -50
+        Airloss: -50
+        Brute: -50
+        Genetic: -50
+    - !type:ModifyBleed
+        amount: -50 # bleeding is evil
   - type: PermanentStatusEffects
     statusEffects:
     - StatusEffectHorrorFormArmblades
+  - type: ActionGrant
+    actions:
+    - ActionChangelingScreech
 
 
 - type: entity
