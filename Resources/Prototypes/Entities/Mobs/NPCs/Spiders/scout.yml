@@ -1,0 +1,60 @@
+# Scout Spider
+- type: entity
+  parent: MobSpiderAnimated
+  id: MobGiantSpiderScout
+  name: scout spider
+  description: A quick, fragile spider that darts at its prey.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/Spiders/scoutspider.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: idle
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 2
+  - type: SolutionManager
+    solutions:
+    - SolutionVenomSpiderScout
+  - type: MeleeChemicalInjector
+    transferAmount: 1
+    solution: melee
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3
+    baseSprintSpeed: 7
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Dead
+
+- type: entity
+  parent: [SolutionWeapon, SolutionTiny]
+  id: SolutionVenomSpiderScout
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 5
+      reagents:
+      - ReagentId: Mechanotoxin
+        Quantity: 5
+  - type: SolutionRegeneration
+    generated:
+      reagents:
+      - ReagentId: Mechanotoxin
+        Quantity: 0.2
+
+# Angry Scout Spider
+- type: entity
+  parent:
+  - MobSpiderAngryBase
+  - MobGiantSpiderScout
+  id: MobGiantSpiderScoutAngry
+  suffix: Angry
