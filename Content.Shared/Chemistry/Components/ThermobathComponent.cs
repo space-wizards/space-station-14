@@ -12,6 +12,18 @@ namespace Content.Shared.Chemistry.Components;
 public sealed partial class ThermobathComponent : Component
 {
     public const string BeakerSlotId = "beakerSlot";
+
+    /// <summary>
+    /// Heating power in watts.
+    /// </summary>
+    [DataField]
+    public float HeatingPower = 200f;
+
+    /// <summary>
+    /// Cooling power in watts.
+    /// </summary>
+    [DataField]
+    public float CoolingPower = 60f;
 }
 
 [Serializable, NetSerializable]

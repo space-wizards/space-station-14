@@ -47,21 +47,6 @@ public sealed partial class ThermoregulatorComponent : Component, IHeatContainer
     public ThermoregulatorActiveMode ActiveMode = ThermoregulatorActiveMode.Idle;
 
     /// <summary>
-    /// Cached power state, updated when the power supply changes.
-    /// </summary>
-    public bool Powered;
-
-    /// <summary>
-    /// Cached minimum energy change in joules per update for the selected mode and power state.
-    /// </summary>
-    public float MinEnergy;
-
-    /// <summary>
-    /// Cached maximum energy change in joules per update for the selected mode and power state.
-    /// </summary>
-    public float MaxEnergy;
-
-    /// <summary>
     /// Operation mode of the thermoregulator.
     /// <seealso cref="ThermoregulatorMode"/>
     /// </summary>
@@ -92,18 +77,6 @@ public sealed partial class ThermoregulatorComponent : Component, IHeatContainer
     /// </summary>
     [DataField]
     public float MinTemperature = 253.15f; // -20 °C, taken from HUBER CC-308B datasheet
-
-    /// <summary>
-    /// Heating power in watts.
-    /// </summary>
-    [DataField]
-    public float HeatingPower = 200f;
-
-    /// <summary>
-    /// Cooling power in watts.
-    /// </summary>
-    [DataField]
-    public float CoolingPower = 60f;
 
     /// <summary>
     /// Thermal conductance between the regulator and the controlled object, in watts per kelvin.

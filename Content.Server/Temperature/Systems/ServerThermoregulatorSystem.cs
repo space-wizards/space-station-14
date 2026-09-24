@@ -1,5 +1,3 @@
-using Content.Shared.Power;
-using Content.Shared.Power.EntitySystems;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature.HeatContainer;
 using Content.Shared.Temperature.Systems;
@@ -10,7 +8,6 @@ namespace Content.Server.Temperature.Systems;
 public sealed partial class ServerThermoregulatorSystem : ThermoRegulatorSystem
 {
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private SharedPowerReceiverSystem _power = default!;
 
     public override void Update(float frameTime)
     {
@@ -28,30 +25,16 @@ public sealed partial class ServerThermoregulatorSystem : ThermoRegulatorSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnInit(Entity<ThermoregulatorComponent> ent, ref ComponentInit args)
-    {
-        ent.Comp.Powered = _power.IsPowered(ent.Owner);
-        UpdateEnergyLimits(ent.Comp);
-    }
-
-    [SubscribeLocalEvent]
     private void OnMapInit(Entity<ThermoregulatorComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextUpdate = _timing.CurTime + ent.Comp.UpdateInterval;
     }
 
-    [SubscribeLocalEvent]
-    private void OnPowerChanged(Entity<ThermoregulatorComponent> ent, ref PowerChangedEvent args)
-    {
-        ent.Comp.Powered = args.Powered;
-        UpdateEnergyLimits(ent.Comp);
-        UpdateActiveMode(ent);
-    }
-
     private void UpdateThermoregulator(Entity<ThermoregulatorComponent> ent)
     {
-        var energyToSetpoint = HeatContainerHelpers.ConductHeatToTempQuery(ref ent.Comp, ent.Comp.Setpoint);
-        var energy = Math.Clamp(energyToSetpoint, ent.Comp.MinEnergy, ent.Comp.MaxEnergy);
+        var control = GetControl(ent);
+        var energyToSetpoint = HeatContainerHelpers.ConductHeatToTempQuery(ref ent.Comp, control.TargetTemperature);
+        var energy = Math.Clamp(energyToSetpoint, control.MinEnergy, control.MaxEnergy);
 
         var originalTemperature = ent.Comp.Temperature;
         HeatContainerHelpers.AddHeat(ref ent.Comp, energy);
@@ -61,17 +44,20 @@ public sealed partial class ServerThermoregulatorSystem : ThermoRegulatorSystem
         var ev = new ThermoregulatorUpdatedEvent(ent.Comp);
         RaiseLocalEvent(ent, ref ev);
 
-        UpdateActiveMode(ent);
+        UpdateActiveMode(ent, control);
 
         if (!MathHelper.CloseTo(originalTemperature, ent.Comp.Temperature))
             DirtyField(ent.AsNullable(), nameof(ThermoregulatorComponent.Temperature));
     }
 
-    private static ThermoregulatorActiveMode GetActiveMode(ThermoregulatorComponent comp, ThermoregulatorActiveMode previousMode)
+    private static ThermoregulatorActiveMode GetActiveMode(
+        ThermoregulatorComponent comp,
+        ThermoregulatorControlEvent control,
+        ThermoregulatorActiveMode previousMode)
     {
-        var difference = comp.Setpoint - comp.Temperature;
-        var canHeat = comp.Mode != ThermoregulatorMode.Cooling && comp.HeatingPower > 0f;
-        var canCool = comp.Mode != ThermoregulatorMode.Heating && comp.CoolingPower > 0f;
+        var difference = control.TargetTemperature - comp.Temperature;
+        var canHeat = control.MaxEnergy > 0f;
+        var canCool = control.MinEnergy < 0f;
 
         if (previousMode == ThermoregulatorActiveMode.Heating && canHeat && difference > 0f)
             return ThermoregulatorActiveMode.Heating;
@@ -100,33 +86,33 @@ public sealed partial class ServerThermoregulatorSystem : ThermoRegulatorSystem
         RaiseLocalEvent(ent, ref ev);
     }
 
-    protected override void OnSetpointChanged(Entity<ThermoregulatorComponent> ent)
+    protected override void OnSettingsChanged(Entity<ThermoregulatorComponent> ent)
     {
-        UpdateActiveMode(ent);
+        RefreshActiveMode(ent.AsNullable());
     }
 
-    protected override void OnModeChanged(Entity<ThermoregulatorComponent> ent)
+    private ThermoregulatorControlEvent GetControl(Entity<ThermoregulatorComponent> ent)
     {
-        UpdateEnergyLimits(ent.Comp);
-        UpdateActiveMode(ent);
+        var control = new ThermoregulatorControlEvent(ent.Comp.Temperature);
+        RaiseLocalEvent(ent, ref control);
+        return control;
     }
 
-    private void UpdateActiveMode(Entity<ThermoregulatorComponent> ent)
+    /// <summary>
+    /// Recalculates the active mode after a device changes its available energy.
+    /// </summary>
+    public void RefreshActiveMode(Entity<ThermoregulatorComponent?> ent)
     {
-        SetActiveMode(ent, ent.Comp.Powered
-            ? GetActiveMode(ent.Comp, ent.Comp.ActiveMode)
-            : ThermoregulatorActiveMode.Idle);
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        var regulator = (ent.Owner, ent.Comp);
+        UpdateActiveMode(regulator, GetControl(regulator));
     }
 
-    private static void UpdateEnergyLimits(ThermoregulatorComponent comp)
+    private void UpdateActiveMode(Entity<ThermoregulatorComponent> ent, ThermoregulatorControlEvent control)
     {
-        var dt = (float) comp.UpdateInterval.TotalSeconds;
-        comp.MinEnergy = comp.Powered && comp.Mode != ThermoregulatorMode.Heating
-            ? -Math.Max(0f, comp.CoolingPower) * dt
-            : 0f;
-        comp.MaxEnergy = comp.Powered && comp.Mode != ThermoregulatorMode.Cooling
-            ? Math.Max(0f, comp.HeatingPower) * dt
-            : 0f;
+        SetActiveMode(ent, GetActiveMode(ent.Comp, control, ent.Comp.ActiveMode));
     }
 
     /// <summary>
@@ -152,3 +138,6 @@ public readonly record struct ThermoregulatorUpdatedEvent(ThermoregulatorCompone
 
 [ByRefEvent]
 public readonly record struct ThermoregulatorActiveModeChangedEvent(ThermoregulatorComponent Thermoregulator);
+
+[ByRefEvent]
+public record struct ThermoregulatorControlEvent(float TargetTemperature, float MinEnergy = 0f, float MaxEnergy = 0f);

@@ -18,7 +18,7 @@ public abstract partial class ThermobathSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private SharedPowerReceiverSystem _power = default!;
+    [Dependency] protected SharedPowerReceiverSystem _power = default!;
     [Dependency] private ThermoRegulatorSystem _thermoregulator = default!;
 
     [SubscribeLocalEvent]
@@ -58,8 +58,11 @@ public abstract partial class ThermobathSystem : EntitySystem
             return;
         }
 
+        OnPowerStateChanged(ent);
         UpdateState(ent, powered: args.Powered);
     }
+
+    protected virtual void OnPowerStateChanged(Entity<ThermobathComponent> ent) { }
 
     [SubscribeLocalEvent]
     private void OnPowerChangeMessage(Entity<ThermobathComponent> ent, ref ThermobathPowerChangedMessage args)

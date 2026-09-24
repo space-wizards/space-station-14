@@ -22,7 +22,7 @@ public abstract partial class ThermoRegulatorSystem : EntitySystem
 
         thermo.Setpoint = clampedSetpoint;
         DirtyField(ent, nameof(ThermoregulatorComponent.Setpoint));
-        OnSetpointChanged((ent.Owner, thermo));
+        OnSettingsChanged((ent.Owner, thermo));
     }
 
     [PublicAPI]
@@ -39,10 +39,8 @@ public abstract partial class ThermoRegulatorSystem : EntitySystem
 
         ent.Comp.Mode = mode;
         DirtyField(ent, nameof(ThermoregulatorComponent.Mode));
-        OnModeChanged((ent.Owner, ent.Comp));
+        OnSettingsChanged((ent.Owner, ent.Comp));
     }
 
-    protected virtual void OnSetpointChanged(Entity<ThermoregulatorComponent> ent) { }
-
-    protected virtual void OnModeChanged(Entity<ThermoregulatorComponent> ent) { }
+    protected virtual void OnSettingsChanged(Entity<ThermoregulatorComponent> ent) { }
 }

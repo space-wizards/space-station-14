@@ -33,10 +33,10 @@
     - state: lid_hot
       map: [ "enum.ThermobathVisualLayers.LidHeating" ]
   - type: Thermobath
-  - type: Thermoregulator
-    heatCapacity: 100
     heatingPower: 1200
     coolingPower: 400
+  - type: Thermoregulator
+    heatCapacity: 100
   - type: ApcPowerReceiver
     powerLoad: 1200
     powerDisabled: true
