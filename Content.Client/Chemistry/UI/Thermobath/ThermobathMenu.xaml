@@ -1,6 +1,5 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                      xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
                       xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                       SetSize="700 430"
                       Resizable="False">
@@ -66,7 +65,7 @@
                                              Margin="1" />
                 </PanelContainer>
             </BoxContainer>
-            <customControls:VSeparator StyleClasses="LowDivider" Margin="0 5" />
+            <controls:Separator StyleClasses="LowDivider" Orientation="Vertical" Margin="0 5" />
             <BoxContainer Orientation="Vertical" HorizontalExpand="True"
                           SizeFlagsStretchRatio="1.5" Margin="5 3 0 0">
                 <PanelContainer StyleClasses="PanelDeep" Margin="0 0 0 5">
