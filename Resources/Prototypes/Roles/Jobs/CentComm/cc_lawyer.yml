@@ -1,0 +1,42 @@
+- type: job
+  id: CentralCommandLawyer
+  name: job-name-centcommlawyer # TODO
+  description: job-description-centcommlawyer # TODO
+  playTimeTracker: JobCentralCommandLawyer
+  setPreference: false
+  startingGear: CentcommLawyerGear
+  icon: "JobIconCentcommLawyer" # TODO
+  supervisors: job-supervisors-centcom
+  access: # doesn't get AA because they work FOR CentComm but they're not part of the actual leadership
+  - Service
+  - Lawyer
+  - Brig
+  - Maintenance
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ] # no CC deathrattle implant, since this is primarily a desk job
+
+- type: startingGear
+  id: CentcommLawyerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentcommLawyer
+    shoes: ClothingShoesLeather
+    neck: ClothingNeckLawyerbadge
+    id: VisitorLawyerPDA
+    back: ClothingBackpackSatchelLeather
+    eyes: ClothingEyesGlassesSunglasses
+    ears: ClothingHeadsetCentCom
+  inhand:
+  - BriefcaseBrownFilled
+  storage:
+    back:
+    - RubberStampLawyer #TODO needs a unique stamp probably?
+    - BookSpaceLaw
+
+
+- type: chameleonOutfit
+  id: CentralCommandLawyerOutfit #TODO need to actually fill this out
+  job: CentralCommandLawyer
+  hasMindShield: true
+  equipment:
+    mask: ClothingMaskGasCentcom
