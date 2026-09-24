@@ -30,6 +30,7 @@ public sealed partial class ServerCosmicFragmentationSystem : CosmicFragmentatio
         if (!TryComp<IntrinsicRadioTransmitterComponent>(brain, out var radio) || !TryComp<ActiveRadioComponent>(brain, out var transmitter))
         {
             args.Cancelled = true;
+            Log.Error("Failed to find expected radio components on AI target of Malign Fragmentation");
             return;
         }
 
