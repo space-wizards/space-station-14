@@ -14,9 +14,6 @@ public sealed partial class ThermobathComponent : Component
 {
     public const string BeakerSlotId = "beakerSlot";
 
-    /// <summary>
-    /// Selected heating and cooling mode.
-    /// </summary>
     [DataField, AutoNetworkedField]
     public ThermobathMode Mode = ThermobathMode.Auto;
 
@@ -51,12 +48,12 @@ public sealed partial class ThermobathComponent : Component
     public float CoolingPower = 60f;
 
     /// <summary>
-    /// Available cooling energy in joules per regulator update, cached for the current mode and power state.
+    /// Minimum energy change per regulator update in joules.
     /// </summary>
     public float MinEnergy;
 
     /// <summary>
-    /// Available heating energy in joules per regulator update, cached for the current mode and power state.
+    /// Maximum energy change per regulator update in joules.
     /// </summary>
     public float MaxEnergy;
 }

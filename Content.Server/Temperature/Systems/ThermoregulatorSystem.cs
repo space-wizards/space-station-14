@@ -93,7 +93,7 @@ public sealed partial class ThermoregulatorSystem : EntitySystem
     }
 
     /// <summary>
-    /// Recalculates the active mode after a device changes its available energy.
+    /// Recalculates the active mode after the target or energy limits change.
     /// </summary>
     public void RefreshActiveMode(Entity<ThermoregulatorComponent?> ent)
     {
@@ -134,8 +134,8 @@ public readonly record struct ThermoregulatorUpdatedEvent(ThermoregulatorCompone
 public readonly record struct ThermoregulatorActiveModeChangedEvent(ThermoregulatorComponent Thermoregulator);
 
 /// <summary>
-/// Requests a target temperature and energy limits in joules per regulator update from the device.
-/// Without a provider, the regulator remains idle.
+/// Supplies the target temperature and energy limits in joules per regulator update.
+/// The default limits keep the regulator idle.
 /// </summary>
 [ByRefEvent]
 public record struct ThermoregulatorControlEvent(float TargetTemperature, float MinEnergy = 0f, float MaxEnergy = 0f);
