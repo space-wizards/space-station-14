@@ -9,7 +9,6 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Errors;
@@ -17,7 +16,7 @@ using Robust.Shared.Toolshed.Syntax;
 using Robust.Shared.Toolshed.TypeParsers;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Botany;
+namespace Content.Server.Toolshed.Botany;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Spawn | AdminFlags.VarEdit)]
 public sealed partial class PlantCommand : ToolshedCommand
@@ -33,27 +32,25 @@ public sealed partial class PlantCommand : ToolshedCommand
     private PlantSystem? _plant;
     private PlantTraySystem? _plantTray;
 
-    [CommandImplementation("spawn")]
-    public EntityUid SpawnPlant(
+    private EntityUid? SpawnPlant(
         IInvocationContext ctx,
         [PipedArgument] EntityCoordinates coordinates,
         EntProtoId seedPrototype)
     {
+        if (!_prototypeManager.TryIndex(seedPrototype, out var seedProto) ||
+            !seedProto.TryComp<SeedComponent>(out var seedComponent, EntityManager.ComponentFactory))
+        {
+            ctx.ReportError(new PlantCommandError(
+                $"Prototype '{seedPrototype}' is not a seed."));
+            return null;
+        }
+
         var tray = Spawn(TrayPrototype, coordinates);
         if (!TryComp<PlantTrayComponent>(tray, out var trayComponent))
         {
             QDel(tray);
             ctx.ReportError(new PlantCommandError($"Prototype '{TrayPrototype}' did not create a plant tray."));
-            return EntityUid.Invalid;
-        }
-
-        var seed = Spawn(seedPrototype, coordinates);
-        if (!TryComp<SeedComponent>(seed, out var seedComponent))
-        {
-            QDel(seed);
-            QDel(tray);
-            ctx.ReportError(new PlantCommandError($"Prototype '{seedPrototype}' is not a seed."));
-            return EntityUid.Invalid;
+            return null;
         }
 
         var plant = Spawn(seedComponent.PlantProtoId, coordinates);
@@ -62,22 +59,19 @@ public sealed partial class PlantCommand : ToolshedCommand
 
         if (!HasComp<PlantComponent>(plant) || !HasComp<PlantHolderComponent>(plant))
         {
-            QDel(seed);
             QDel(plant);
             QDel(tray);
             ctx.ReportError(new PlantCommandError(
                 $"Seed prototype '{seedPrototype}' did not create a valid plant entity."));
-            return EntityUid.Invalid;
+            return null;
         }
 
         _plantTray ??= GetSys<PlantTraySystem>();
-        _plantTray.PlantingPlantInTray((tray, trayComponent), plant, seedComponent.HealthOverride);
-        QDel(seed);
+        _plantTray.PlantingPlantInTray((tray, trayComponent), plant);
         return plant;
     }
 
-    [CommandImplementation("spawn")]
-    public EntityUid SpawnPlant(
+    private EntityUid? SpawnPlant(
         IInvocationContext ctx,
         [PipedArgument] EntityUid target,
         EntProtoId seedPrototype)
@@ -93,7 +87,7 @@ public sealed partial class PlantCommand : ToolshedCommand
     {
         return coordinates
             .Select(coordinate => SpawnPlant(ctx, coordinate, seedPrototype))
-            .Where(entity => entity.IsValid());
+            .OfType<EntityUid>();
     }
 
     [CommandImplementation("spawn")]
@@ -104,34 +98,27 @@ public sealed partial class PlantCommand : ToolshedCommand
     {
         return targets
             .Select(target => SpawnPlant(ctx, target, seedPrototype))
-            .Where(entity => entity.IsValid());
+            .OfType<EntityUid>();
+
     }
 
-    [CommandImplementation("age")]
-    public EntityUid Age(
+    private EntityUid? Age(
         IInvocationContext ctx,
         [PipedArgument] EntityUid input,
         int ticks)
     {
-        if (ticks < 0 || ticks > MaxAgeTicks)
+        if (ticks is < 0 or > MaxAgeTicks)
         {
             ctx.ReportError(new PlantCommandError(
                 $"Plant growth ticks must be between 0 and {MaxAgeTicks}."));
-            return EntityUid.Invalid;
+            return null;
         }
 
         if (!TryGetPlant(input, ctx, out var plant, out var holder))
-            return EntityUid.Invalid;
+            return null;
 
-        for (var i = 0; i < ticks; i++)
-        {
-            if (!AgeOneTick((input, plant), (input, holder)))
-            {
-                ctx.ReportError(new PlantCommandError(
-                    $"Plant entity {input} died after {i + 1} growth ticks."));
-                return EntityUid.Invalid;
-            }
-        }
+
+        AgeTicks((input, plant), (input, holder), ticks);
 
         return input;
     }
@@ -144,37 +131,36 @@ public sealed partial class PlantCommand : ToolshedCommand
     {
         return input
             .Select(entity => Age(ctx, entity, ticks))
-            .Where(entity => entity.IsValid());
+            .OfType<EntityUid>();
+
     }
 
     [CommandImplementation("ageuntilready")]
-    public EntityUid AgeUntilReady(IInvocationContext ctx, [PipedArgument] EntityUid input)
+    public EntityUid? AgeUntilReady(IInvocationContext ctx, [PipedArgument] EntityUid input)
     {
         if (!TryGetPlant(input, ctx, out var plant, out var holder))
-            return EntityUid.Invalid;
+            return null;
 
         if (!HasComp<PlantHarvestComponent>(input))
         {
             ctx.ReportError(new PlantCommandError($"Plant entity {input} cannot produce a harvest."));
-            return EntityUid.Invalid;
+            return null;
         }
 
-        for (var i = 0; i < MaxAgeTicks && !holder.ReadyForHarvest; i++)
-        {
-            if (!AgeOneTick((input, plant), (input, holder)))
-            {
-                ctx.ReportError(new PlantCommandError(
-                    $"Plant entity {input} died before it became ready to harvest."));
-                return EntityUid.Invalid;
-            }
-        }
+        if (holder.ReadyForHarvest)
+            return input; //Why'd you even call this command...
 
-        if (!holder.ReadyForHarvest)
+        int readyAge;
+
+        if (holder.Age < plant.Maturation)
         {
-            ctx.ReportError(new PlantCommandError(
-                $"Plant entity {input} was not ready to harvest after {MaxAgeTicks} growth ticks."));
-            return EntityUid.Invalid;
+            readyAge = (int)MathF.Ceiling(plant.Maturation) + (int)MathF.Floor(plant.Production) + 1;
         }
+        else
+        {
+            readyAge = holder.LastHarvest + (int)MathF.Floor(plant.Production) + 1;
+        }
+        AgeTicks((input, plant), (input, holder), readyAge - holder.Age);
 
         return input;
     }
@@ -186,11 +172,10 @@ public sealed partial class PlantCommand : ToolshedCommand
     {
         return input
             .Select(entity => AgeUntilReady(ctx, entity))
-            .Where(entity => entity.IsValid());
+            .OfType<EntityUid>();
     }
 
-    [CommandImplementation("addmutation")]
-    public EntityUid Add(
+    public EntityUid? AddMutation(
         IInvocationContext ctx,
         [PipedArgument] EntityUid input,
         ProtoId<RandomPlantMutationListPrototype> tableId,
@@ -200,7 +185,7 @@ public sealed partial class PlantCommand : ToolshedCommand
         if (!TryComp<PlantComponent>(input, out var plant))
         {
             ctx.ReportError(new PlantCommandError($"Entity {input} is not a plant."));
-            return EntityUid.Invalid;
+            return null;
         }
 
         var table = _prototypeManager.Index(tableId);
@@ -226,19 +211,16 @@ public sealed partial class PlantCommand : ToolshedCommand
     }
 
     [CommandImplementation("addmutation")]
-    public IEnumerable<EntityUid> Add(
+    public IEnumerable<EntityUid> AddMutation(
         IInvocationContext ctx,
         [PipedArgument] IEnumerable<EntityUid> input,
         ProtoId<RandomPlantMutationListPrototype> tableId,
         [CommandArgument(typeof(PlantMutationNameParser))]
         string mutationName)
     {
-        foreach (var entity in input)
-        {
-            var mutated = Add(ctx, entity, tableId, mutationName);
-            if (mutated.IsValid())
-                yield return mutated;
-        }
+        return input
+            .Select(entity => AddMutation(ctx, entity, tableId, mutationName))
+            .OfType<EntityUid>();
     }
 
     [CommandImplementation("addchem")]
@@ -313,12 +295,12 @@ public sealed partial class PlantCommand : ToolshedCommand
         return true;
     }
 
-    private bool AgeOneTick(Entity<PlantComponent> plant, Entity<PlantHolderComponent> holder)
+    private bool AgeTicks(Entity<PlantComponent> plant, Entity<PlantHolderComponent> holder, int ticks)
     {
         _plantHolder ??= GetSys<PlantHolderSystem>();
         _plant ??= GetSys<PlantSystem>();
 
-        _plantHolder.AdjustsAge(holder.AsNullable(), 1);
+        _plantHolder.AdjustsAge(holder.AsNullable(), ticks);
         _plant.ForceUpdate(plant.AsNullable());
         return !Deleted(plant) && !_plantHolder.IsDead(holder.AsNullable());
     }
@@ -341,7 +323,7 @@ public sealed partial class PlantMutationNameParser : CustomCompletionParser<str
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;
 
-    public override Robust.Shared.Console.CompletionResult TryAutocomplete(
+    public override CompletionResult TryAutocomplete(
         ParserContext ctx,
         CommandArgument? arg)
     {
