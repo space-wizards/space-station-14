@@ -21,7 +21,7 @@
     - to: done
       steps:
       - material: ArtifactFragment
-        amount: 2
+        amount: 3
         doAfter: 3
   - node: done
     entity: XenoArtifactShard

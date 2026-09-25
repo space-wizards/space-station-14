@@ -46,6 +46,9 @@
       reagents:
       - ReagentId: Artifexium
         Quantity: 15
+  - type: Construction
+    graph: ArtifactShard
+    node: done
   - type: Item
   - type: XenoArtifact
     nodeCount:
