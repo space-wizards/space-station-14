@@ -47,7 +47,7 @@
         store: glasses
         name: construction-graph-tag-glasses
         icon:
-          sprite: Objects/Clothing/Eyes/Glasses/jamjar.rsi
+          sprite: Clothing/Eyes/Glasses/jamjar.rsi
           state: icon
         doAfter: 2
     - to: mslaserframe
