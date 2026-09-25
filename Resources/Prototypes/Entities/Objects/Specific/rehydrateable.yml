@@ -10,6 +10,10 @@
     - SolutionCube
   - type: RefillableSolution
     solution: cube
+  - type: DrawableSolution
+    solution: cube
+  - type: InjectableSolution
+    solution: cube
   - type: Reactive
     reactions:
     - reagents: [Water]
