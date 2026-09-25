@@ -11,18 +11,17 @@
     noRot: true
   - type: Sprite
     noRot: true
-    sprite: Structures/Storage/closet.rsi
+    sprite: Structures/Storage/Closets/generic.rsi
     layers:
-    - state: generic
-      map: ["enum.StorageVisualLayers.Base"]
-    - state: generic_door
+    - state: closed
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
+      sprite: Structures/Storage/Closets/closet-effects.rsi
       map: ["enum.WeldableLayers.BaseWelded"]
     - state: paper
       visible: false
-      sprite: Structures/Storage/closet_labels.rsi
+      sprite: Structures/Storage/Closets/closet-effects.rsi
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
@@ -70,9 +69,8 @@
           Invoice: { state: invoice }
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBaseClosed: generic
-    stateDoorOpen: generic_open
-    stateDoorClosed: generic_door
+    stateDoorOpen: open
+    stateDoorClosed: closed
   - type: StaticPrice
     price: 75
 
@@ -86,8 +84,6 @@
     node: done
     containers:
     - entity_storage
-  - type: Paintable
-    group: Closet
   - type: Damageable
     damageModifierSet: SteelMod
   - type: Destructible
@@ -120,16 +116,16 @@
   - type: StaticPrice
     price: 75
   - type: Sprite
+    offset: 0, -0.15625
     drawdepth: WallMountedItems
     noRot: false
-    sprite: Structures/Storage/wall_locker.rsi
+    sprite: Structures/Storage/ClosetsWallmounted/generic.rsi
     layers:
-    - state: generic
-      map: ["enum.StorageVisualLayers.Base"]
-    - state: generic_door
+    - state: closed
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
+      sprite: Structures/Storage/ClosetsWallmounted/closet-effects.rsi
       map: ["enum.WeldableLayers.BaseWelded"]
   - type: EntityStorage
     isCollidableWhenOpen: true
@@ -161,9 +157,8 @@
             max: 1
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBaseClosed: generic
-    stateDoorOpen: generic_open
-    stateDoorClosed: generic_door
+    stateDoorOpen: open
+    stateDoorClosed: closed
   - type: Construction
     graph: ClosetWall
     node: done
@@ -191,18 +186,24 @@
   - type: Lock
   - type: LockVisuals
   - type: Sprite
-    sprite: Structures/Storage/wall_locker.rsi
+    sprite: Structures/Storage/ClosetsWallmounted/generic-secure.rsi
     layers:
-    - state: generic
-      map: ["enum.StorageVisualLayers.Base"]
-    - state: generic_door
+    - state: closed
       map: ["enum.StorageVisualLayers.Door"]
     - state: locked
+      sprite: Structures/Storage/ClosetsWallmounted/closet-effects.rsi
       map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
     - state: welded
       visible: false
+      sprite: Structures/Storage/ClosetsWallmounted/closet-effects.rsi
       map: ["enum.WeldableLayers.BaseWelded"]
+  - type: GenericVisualizer
+    visuals:
+      enum.LockVisuals.Locked:
+        enum.LockVisualLayers.Lock:
+          True: { state: locked }
+          False: { state: unlocked }
   - type: Paintable
     group: WallLocker
 
