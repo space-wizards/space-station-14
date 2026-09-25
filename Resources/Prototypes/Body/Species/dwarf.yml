@@ -111,7 +111,7 @@
     attachments:
     - attachment: InhandLeft
       container: left
-      order: 10
+      order: 100
       displacementData:
         sizeMaps:
           32:
@@ -119,15 +119,95 @@
             state: dwarfism_hand_left
     - attachment: InhandRight
       container: right
-      order: 10
+      order: 100
       displacementData:
         sizeMaps:
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: dwarfism_hand_right
+    - attachment: EquippedBack
+      container: back
+      order: 70
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: dwarfism
     - attachment: EquippedBelt
       container: belt
-      order: 7
+      order: 65
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+    - attachment: EquippedBelt
+      container: id
+      order: 60
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+    - attachment: EquippedSuitStorage
+      container: suitstorage
+      order: 55
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+    - attachment: EquippedHead
+      container: head
+      order: 50
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+    - attachment: EquippedEars
+      container: ears
+      order: 45
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+    - attachment: EquippedEyes
+      container: eyes
+      order: 40
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+    - attachment: EquippedMask
+      container: mask
+      order: 35
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+    - attachment: EquippedNeck
+      container: neck
+      order: 30
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+    - attachment: EquippedGloves
+      container: gloves
+      order: 25
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+    - attachment: EquippedOuterClothing
+      container: outerclothing
+      order: 20
       displacementData:
         sizeMaps:
           32:
@@ -135,15 +215,15 @@
             state: dwarfism
     - attachment: EquippedJumpsuit
       container: jumpsuit
-      order: 3
+      order: 15
       displacementData:
         sizeMaps:
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: dwarfism
-    - attachment: EquippedOuterClothing
-      container: outerClothing
-      order: 4
+    - attachment: EquippedShoes
+      container: shoes
+      order: 10
       displacementData:
         sizeMaps:
           32:

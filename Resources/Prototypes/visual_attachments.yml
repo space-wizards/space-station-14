@@ -1,3 +1,4 @@
+# Standard inhand slots
 - type: visualAttachment
   id: InhandRight
   defaultState: inhand-right
@@ -6,21 +7,66 @@
   id: InhandLeft
   defaultState: inhand-left
 
-- type: visualAttachment
-  id: EquippedShoes
 
+# Standard equipment slots
 - type: visualAttachment
-  id: EquippedBoots
-
-- type: visualAttachment
-  id: EquippedJumpsuit
-
-- type: visualAttachment
-  id: EquippedOuterClothing
+  id: EquippedBack
+  defaultState: equipped-BACKPACK
 
 - type: visualAttachment
   id: EquippedBelt
+  defaultState: equipped-BELT
 
+- type: visualAttachment
+  id: EquippedId
+  defaultState: equipped-IDCARD
+
+- type: visualAttachment
+  id: EquippedSuitStorage
+  defaultState: equipped-SUITSTORAGE
+
+- type: visualAttachment
+  id: EquippedHead
+  defaultState: equipped-HELMET
+
+- type: visualAttachment
+  id: EquippedEars
+  defaultState: equipped-EARS
+
+- type: visualAttachment
+  id: EquippedEyes
+  defaultState: equipped-EYES
+
+- type: visualAttachment
+  id: EquippedMask
+  defaultState: equipped-MASK
+
+- type: visualAttachment
+  id: EquippedNeck
+  defaultState: equipped-NECK
+
+- type: visualAttachment
+  id: EquippedGloves
+  defaultState: equipped-HAND
+
+- type: visualAttachment
+  id: EquippedOuterClothing
+  defaultState: equipped-OUTERCLOTHING
+
+- type: visualAttachment
+  id: EquippedJumpsuit
+  defaultState: equipped-INNERCLOTHING
+
+- type: visualAttachment
+  id: EquippedShoes
+  defaultState: equipped-FEET
+
+- type: visualAttachment
+  id: EquippedBoots
+  defaultState: equipped-FEET
+
+
+# Belt Visuals
 - type: visualAttachment
   id: InBelt
 
