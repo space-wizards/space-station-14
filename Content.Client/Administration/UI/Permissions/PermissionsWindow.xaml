@@ -1,0 +1,32 @@
+<controls:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    Title="{Loc 'permissions-eui-menu-title'}"
+    MinSize="600 400">
+    <TabContainer Name="PermissionTabs">
+        <BoxContainer Name="AdminsContainer" Orientation="Vertical" Margin="8">
+            <ScrollContainer VerticalExpand="True">
+                <GridContainer Name="AdminsList"
+                               Columns="5"
+                               VerticalExpand="True">
+                    <!-- Populated by PermissionsEui -->
+                </GridContainer>
+            </ScrollContainer>
+            <Button Name="AddAdminButton"
+                    HorizontalAlignment="Right"
+                    Text="{Loc 'permissions-eui-menu-add-admin-button'}" />
+        </BoxContainer>
+        <BoxContainer Name="AdminRanksContainer" Orientation="Vertical" Margin="8">
+            <ScrollContainer VerticalExpand="True">
+                <GridContainer Name="AdminRanksList"
+                               Columns="3"
+                               VerticalExpand="True">
+                    <!-- Populated by PermissionsEui -->
+                </GridContainer>
+            </ScrollContainer>
+            <Button Name="AddAdminRankButton"
+                    HorizontalAlignment="Right"
+                    Text="{Loc 'permissions-eui-menu-add-admin-rank-button'}" />
+        </BoxContainer>
+    </TabContainer>
+</controls:FancyWindow>
