@@ -225,17 +225,24 @@
     noRot: true
   - type: Sprite
     noRot: true
-    sprite: Structures/Storage/suit_storage.rsi
+    sprite: Structures/Storage/SuitStorage/generic.rsi
     layers:
-    - state: base
-    - state: door
-      map: ["enum.StorageVisualLayers.Door"]
+    - state: closed
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: welded
       visible: false
+      sprite: Structures/Storage/SuitStorage/effects.rsi
       map: ["enum.WeldableLayers.BaseWelded"]
     - state: locked
+      sprite: Structures/Storage/SuitStorage/effects.rsi
       map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
+  - type: GenericVisualizer
+    visuals:
+      enum.LockVisuals.Locked:
+        enum.LockVisualLayers.Lock:
+          True: { state: locked }
+          False: { state: unlocked }
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
     damage:
@@ -285,6 +292,6 @@
   - type: Appearance
   - type: EntityStorageVisuals
     # stateBase: base  // This field does not exist. this is probably a bug. TODO
-    stateDoorOpen: base
-    stateDoorClosed: door
+    stateDoorOpen: open
+    stateDoorClosed: closed
   - type: LockVisuals
