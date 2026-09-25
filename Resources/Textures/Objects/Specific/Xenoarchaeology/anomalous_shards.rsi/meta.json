@@ -11,61 +11,441 @@
       "name": "shard01"
     },
     {
+      "name": "shard01_on",
+      "delays": [
+                [
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ]
+            ]
+    },
+    {
+        "name": "shard01-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "shard01-inhand-right",
+        "directions": 4
+    },
+    {
       "name": "shard02"
+    },
+    {
+      "name": "shard02_on",
+      "delays": [
+                [
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ]
+            ]
+    },
+    {
+        "name": "shard02-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "shard02-inhand-right",
+        "directions": 4
     },
     {
       "name": "shard03"
     },
     {
+      "name": "shard03_on",
+      "delays": [
+                [
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ]
+            ]
+    },
+    {
+        "name": "shard03-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "shard03-inhand-right",
+        "directions": 4
+    },
+    {
       "name": "shard04"
+    },
+    {
+      "name": "shard04_on",
+      "delays": [
+                [
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ]
+            ]
+    },
+    {
+        "name": "shard04-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "shard04-inhand-right",
+        "directions": 4
     },
     {
       "name": "shard05"
     },
     {
+      "name": "shard05_on",
+      "delays": [
+                [
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ]
+            ]
+    },
+    {
+        "name": "shard05-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "shard05-inhand-right",
+        "directions": 4
+    },
+    {
       "name": "shard06"
+    },
+    {
+      "name": "shard06_on",
+      "delays": [
+                [
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ]
+            ]
+    },
+    {
+        "name": "shard06-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "shard06-inhand-right",
+        "directions": 4
     },
     {
       "name": "shard07"
     },
     {
+      "name": "shard07_on",
+      "delays": [
+                [
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ]
+            ]
+    },
+    {
+        "name": "shard07-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "shard07-inhand-right",
+        "directions": 4
+    },
+    {
       "name": "shard08"
+    },
+    {
+      "name": "shard08_on",
+      "delays": [
+                [
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ]
+            ]
+    },
+    {
+        "name": "shard08-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "shard08-inhand-right",
+        "directions": 4
     },
     {
       "name": "shard09"
     },
     {
+      "name": "shard09_on",
+      "delays": [
+                [
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ]
+            ]
+    },
+    {
+        "name": "shard09-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "shard09-inhand-right",
+        "directions": 4
+    },
+    {
       "name": "shard10"
+    },
+    {
+      "name": "shard10_on",
+      "delays": [
+                [
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ]
+            ]
+    },
+    {
+        "name": "shard10-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "shard10-inhand-right",
+        "directions": 4
     },
     {
       "name": "shard11"
     },
     {
+      "name": "shard11_on",
+      "delays": [
+                [
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ]
+            ]
+    },
+    {
+        "name": "shard11-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "shard11-inhand-right",
+        "directions": 4
+    },
+    {
       "name": "shard12"
+    },
+    {
+      "name": "shard12_on",
+      "delays": [
+                [
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ]
+            ]
+    },
+    {
+        "name": "shard12-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "shard12-inhand-right",
+        "directions": 4
     },
     {
       "name": "shard13"
     },
     {
+      "name": "shard13_on",
+      "delays": [
+                [
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ]
+            ]
+    },
+    {
+        "name": "shard13-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "shard13-inhand-right",
+        "directions": 4
+    },
+    {
       "name": "shard14"
+    },
+    {
+      "name": "shard14_on",
+      "delays": [
+                [
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ]
+            ]
+    },
+    {
+        "name": "shard14-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "shard14-inhand-right",
+        "directions": 4
     },
     {
       "name": "shard15"
     },
     {
+      "name": "shard15_on",
+      "delays": [
+                [
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ]
+            ]
+    },
+    {
+        "name": "shard15-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "shard15-inhand-right",
+        "directions": 4
+    },
+    {
       "name": "shard16"
+    },
+    {
+      "name": "shard16_on",
+      "delays": [
+                [
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ]
+            ]
+    },
+    {
+        "name": "shard16-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "shard16-inhand-right",
+        "directions": 4
     },
     {
       "name": "shard17"
     },
     {
+      "name": "shard17_on",
+      "delays": [
+                [
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ]
+            ]
+    },
+    {
+        "name": "shard17-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "shard17-inhand-right",
+        "directions": 4
+    },
+    {
       "name": "shard18"
+    },
+    {
+      "name": "shard18_on",
+      "delays": [
+                [
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ]
+            ]
+    },
+    {
+        "name": "shard18-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "shard18-inhand-right",
+        "directions": 4
     },
     {
       "name": "shard19"
     },
     {
+      "name": "shard19_on",
+      "delays": [
+                [
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ]
+            ]
+    },
+    {
+        "name": "shard19-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "shard19-inhand-right",
+        "directions": 4
+    },
+    {
       "name": "shard20"
+    },
+    {
+      "name": "shard20_on",
+      "delays": [
+                [
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ]
+            ]
+    },
+    {
+        "name": "shard20-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "shard20-inhand-right",
+        "directions": 4
     }
   ]
 }

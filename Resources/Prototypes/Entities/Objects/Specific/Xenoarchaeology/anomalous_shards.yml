@@ -5,42 +5,25 @@
   description: A shard of a greater whole, still possessing a fraction of ancient power.
   components:
   - type: Sprite
-    scale: 0.75, 0.75
     sprite: Objects/Specific/Xenoarchaeology/anomalous_shards.rsi
     layers:
     - state: shard01
       map: [ "enum.ArtifactsVisualLayers.Base" ]
-    - state: artifact-activation
-      sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+    - state: shard01_on
       map: [ "enum.ArtifactsVisualLayers.UnlockingEffect" ]
       visible: false
     - state: artifact-activation
       sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
       map: [ "enum.ArtifactsVisualLayers.ActivationEffect" ]
       visible: false
+  - type: RandomArtifactSprite
+    maxSprite: 20
+    activationTime: 2.4
+    prefix: shard
   - type: RandomSprite
     available:
-    - enum.ArtifactsVisualLayers.Base:
-        shard01: ""
-        shard02: ""
-        shard03: ""
-        shard04: ""
-        shard05: ""
-        shard06: ""
-        shard07: ""
-        shard08: ""
-        shard09: ""
-        shard10: ""
-        shard11: ""
-        shard12: ""
-        shard13: ""
-        shard14: ""
-        shard15: ""
-        shard16: ""
-        shard17: ""
-        shard18: ""
-        shard19: ""
-        shard20: ""
+    - enum.ArtifactsVisualLayers.UnlockingEffect:
+        shard01_on: Rainbow
   - type: Physics
     bodyType: KinematicController
   - type: CollisionWake
@@ -62,9 +45,8 @@
     juiceSolution:
       reagents:
       - ReagentId: Artifexium
-        Quantity: 10
+        Quantity: 15
   - type: Item
-    size: Normal
   - type: XenoArtifact
     nodeCount:
       min: 1
@@ -79,6 +61,16 @@
       min: 0
       max: 0
     unlockStateRefractory: 1
+    triggersTable: !type:NestedSelector
+      tableId: XenoArtifactHandheldOnlyTriggerTable
+    effectsTable: !type:GroupSelector
+      children:
+      - !type:NestedSelector
+        tableId: XenoArtifactEffectsDefaultTable
+        weight: 54
+      - !type:NestedSelector
+        tableId: XenoArtifactEffectsHandheldOnlyTable
+        weight: 2
   - type: Tag
     tags:
       - XenoArtifactShard
