@@ -253,6 +253,8 @@
   - type: Construction
     graph: MakeshiftLaserGraph
     node: mslaser
+    containers:
+    - cell_slot
 
 - type: entity # for salv loot & co
   parent: WeaponMakeshiftLaserNoCell
