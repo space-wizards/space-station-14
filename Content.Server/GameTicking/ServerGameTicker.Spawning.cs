@@ -432,10 +432,9 @@ namespace Content.Server.GameTicking
         {
             _possiblePositions.Clear();
             var spawnPointQuery = EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
-            while (spawnPointQuery.MoveNext(out var uid, out var point, out var transform))
+            while (spawnPointQuery.MoveNext(out var point, out var transform))
             {
                 if (point.SpawnType != SpawnPointType.Observer
-                   || TerminatingOrDeleted(uid)
                    || transform.MapUid == null
                    || TerminatingOrDeleted(transform.MapUid.Value))
                 {
@@ -451,7 +450,9 @@ namespace Content.Server.GameTicking
                 var query = EntityQueryEnumerator<MapGridComponent>();
                 while (query.MoveNext(out var uid, out _))
                 {
-                    _possiblePositions.Add(new EntityCoordinates(uid, Vector2.Zero));
+                    // Band-aid fix cause we aren't queueing observer re-attach.
+                    if (!TerminatingOrDeleted(uid))
+                        _possiblePositions.Add(new EntityCoordinates(uid, Vector2.Zero));
                 }
             }
 
@@ -463,10 +464,9 @@ namespace Content.Server.GameTicking
                 var spawn = Random.Pick(_possiblePositions);
                 var toMap = XForm.ToMapCoordinates(spawn);
 
-                if (Map.TryFindGridAt(toMap, out var gridUid, out _))
+                if (Map.TryFindGridAt(toMap, out var gridUid, out _) && !TerminatingOrDeleted(gridUid))
                 {
                     var gridXform = Transform(gridUid);
-
                     return new EntityCoordinates(gridUid, Vector2.Transform(toMap.Position, XForm.GetInvWorldMatrix(gridXform)));
                 }
 

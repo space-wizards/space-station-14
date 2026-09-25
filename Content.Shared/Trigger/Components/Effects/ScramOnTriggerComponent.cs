@@ -16,7 +16,7 @@ public sealed partial class ScramOnTriggerComponent : BaseXOnTriggerComponent
     /// Up to how far to teleport the entity. Represented with X as Min Radius, and Y as Max Radius
     /// </summary>
     [DataField, AutoNetworkedField]
-    public Vector2 TeleportRadius = new (10f, 15f);
+    public Vector2 TeleportRadius = new (15f, 50f);
 
     /// <summary>
     /// the sound to play when teleporting.

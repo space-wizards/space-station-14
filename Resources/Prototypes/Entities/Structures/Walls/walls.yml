@@ -321,6 +321,9 @@
         density: 4000
   - type: RadiationBlocker
     resistance: 5
+  - type: Tag
+    tags:
+    - SmeltingImmune
 
 - type: entity
   parent: [ WallPlastitaniumIndestructible, StructureHealthWallStrong ]
@@ -353,6 +356,10 @@
     state: state0
   - type: RadiationBlocker
     resistance: 5
+  - type: Tag
+    tags:
+    - Diagonal
+    - SmeltingImmune
 
 - type: entity
   parent: [ WallPlastitaniumDiagonalIndestructible, StructureHealthWallStrong ]

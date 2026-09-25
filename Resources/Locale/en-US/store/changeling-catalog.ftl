@@ -14,16 +14,13 @@ changeling-catalog-sting-dna-name = Extract DNA
 changeling-catalog-sting-dna-desc = Learn to utilize your stinger to absorb the identity of unsuspecting victims. Does not grant DNA to your store or count as devouring.
 
 changeling-catalog-blind-sting-name = Blind Sting
-changeling-catalog-blind-sting-desc = Causes temporary blindness in the target. Good to escape or initiate a fight. Can be used on self.
+changeling-catalog-blind-sting-desc = Causes eye damage and temporary blindness in the target. Good to escape or initiate a fight. Can be used on self.
 
 changeling-catalog-cryogenic-sting-name = Cryogenic Sting
 changeling-catalog-cryogenic-sting-desc = Causes movement slowdown in the target. Perfect for keeping prey from running away. Can be used on self.
 
 changeling-catalog-lethal-sting-name = Lethal Sting
 changeling-catalog-lethal-sting-desc = Causes very slow damage to the target. Useless in combat, but ensures they will require medical attention. Can be used on self.
-
-changeling-catalog-hallucinogenic-sting-name = Hallucinogenic Sting
-changeling-catalog-hallucinogenic-sting-desc = Causes the target to get high and have difficulty speaking. Causes confusion among the crew. Can be used on self.
 
 changeling-catalog-mute-sting-name = Mute Sting
 changeling-catalog-mute-sting-desc = Causes the target to be incapable of speech. Imperceptible until the target tries to speak. Can be used on self.
@@ -44,3 +41,6 @@ changeling-catalog-voice-mindshield-desc = Modify your neuron's natural waves to
 
 changeling-catalog-night-vision-name = Night Vision
 changeling-catalog-night-vision-desc = You modify your photoreceptors and heighten your senses as to become able to see in complete darkness.
+
+changeling-catalog-fleshtomb-name = Fleshtomb [EXPERIMENTAL]
+changeling-catalog-fleshtomb-desc = Preserve a corpse in a fleshy prison, slowly harvesting their genetic code for your own use. It slowly generates DNA, but is very fragile and must be preserved in proper atmosphere to not fall apart.
