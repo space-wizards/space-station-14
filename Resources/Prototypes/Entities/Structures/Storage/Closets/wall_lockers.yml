@@ -1,6 +1,6 @@
 - type: entity
-  id: ClosetWall
   parent: BaseWallCloset
+  id: ClosetWall
   name: maintenance wall closet
   description: It's a storage unit.
   components:
@@ -10,9 +10,9 @@
     stateDoorClosed: generic_door
 
 - type: entity
+  parent: BaseWallCloset
   id: ClosetWallEmergency
   name: emergency wall closet
-  parent: BaseWallCloset
   description: It's a storage unit for emergency breath masks and O2 tanks.
   components:
   - type: EntityStorageVisuals
@@ -32,9 +32,9 @@
     stateDoorClosed: n2_door
 
 - type: entity
+  parent: BaseWallCloset
   id: ClosetWallFire
   name: fire-safety wall closet
-  parent: BaseWallCloset
   description: It's a storage unit for fire-fighting supplies.
   components:
   - type: EntityStorageVisuals
@@ -43,8 +43,8 @@
     stateDoorClosed: fire_door
 
 - type: entity
-  id: ClosetWallBlue
   parent: BaseWallCloset
+  id: ClosetWallBlue
   name: blue wall closet
   description: "A wardrobe packed with stylish blue clothing."
   components:
@@ -54,8 +54,8 @@
     stateDoorClosed: blue_door
 
 - type: entity
-  id: ClosetWallPink
   parent: BaseWallCloset
+  id: ClosetWallPink
   name: pink wall closet
   description: "A wardrobe packed with fabulous pink clothing."
   components:
@@ -65,8 +65,8 @@
     stateDoorClosed: pink_door
 
 - type: entity
-  id: ClosetWallBlack
   parent: BaseWallCloset
+  id: ClosetWallBlack
   name: black wall closet
   description: "A wardrobe packed with stylish black clothing."
   components:
@@ -76,8 +76,8 @@
     stateDoorClosed: black_door
 
 - type: entity
-  id: ClosetWallGreen
   parent: BaseWallCloset
+  id: ClosetWallGreen
   name: green wall closet
   description: "A wardrobe packed with stylish green clothing."
   components:
@@ -87,8 +87,8 @@
     stateDoorClosed: green_door
 
 - type: entity
-  id: ClosetWallOrange
   parent: BaseWallCloset
+  id: ClosetWallOrange
   name: prison wall closet
   components:
   - type: EntityStorageVisuals
@@ -97,8 +97,8 @@
     stateDoorClosed: orange_door
 
 - type: entity
-  id: ClosetWallYellow
   parent: BaseWallCloset
+  id: ClosetWallYellow
   name: yellow wall closet
   description: "A wardrobe packed with stylish yellow clothing."
   components:
@@ -108,8 +108,8 @@
     stateDoorClosed: yellow_door
 
 - type: entity
-  id: ClosetWallWhite
   parent: BaseWallCloset
+  id: ClosetWallWhite
   name: white wall closet
   description: "A wardrobe packed with stylish white clothing."
   components:
@@ -119,8 +119,8 @@
     stateDoorClosed: white_door
 
 - type: entity
-  id: ClosetWallGrey
   parent: BaseWallCloset
+  id: ClosetWallGrey
   name: grey wall closet
   description: "A wardrobe packed with a tide of grey clothing."
   components:
@@ -130,8 +130,8 @@
     stateDoorClosed: gray_door
 
 - type: entity
-  id: ClosetWallMixed
   parent: BaseWallCloset
+  id: ClosetWallMixed
   name: mixed wall closet
   description: "A wardrobe packed with a mix of colorful clothing."
   components:
@@ -141,8 +141,8 @@
     stateDoorClosed: mixed_door
 
 - type: entity
-  id: ClosetWallAtmospherics
   parent: BaseWallCloset
+  id: ClosetWallAtmospherics
   name: atmospherics wall closet
   components:
   - type: EntityStorageVisuals
@@ -151,8 +151,8 @@
     stateDoorClosed: atmos_door
 
 - type: entity
-  id: LockerWallMedical
   parent: BaseWallLocker
+  id: LockerWallMedical
   name: medical wall locker
   components:
   - type: EntityStorageVisuals
@@ -239,8 +239,8 @@
     stateDoorClosed: genpop_door_8
 
 - type: entity
-  id: LockerWallSyndicate
   parent: BaseWallLocker
+  id: LockerWallSyndicate
   name: blood-red wall locker
   description: It's a wall storage unit with a blood-red design.
   suffix: "Locked"
