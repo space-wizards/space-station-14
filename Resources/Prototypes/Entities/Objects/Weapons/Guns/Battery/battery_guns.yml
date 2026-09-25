@@ -277,6 +277,8 @@
     graph: MakeshiftLaserGraph
     node: mslaserframe
     defaultTarget: mslaser
+    containers:
+    - cell_slot
 
 - type: entity
   name: tesla gun
