@@ -222,19 +222,19 @@ public sealed partial class VehicleSystem : EntitySystem
         if (TryComp<RelayInputMoverComponent>(operatorUid, out var relayMover) &&
             relayMover.RelayEntity == vehicleUid)
         {
-            RemCompDeferred<RelayInputMoverComponent>(operatorUid);
+            RemComp<RelayInputMoverComponent>(operatorUid);
         }
 
         if (TryComp<InteractionRelayComponent>(operatorUid, out var interactionRelay) &&
             interactionRelay.RelayEntity == vehicleUid)
         {
-            RemCompDeferred<InteractionRelayComponent>(operatorUid);
+            RemComp<InteractionRelayComponent>(operatorUid);
         }
 
         if (TryComp<MovementRelayTargetComponent>(vehicleUid, out var relayTarget) &&
             relayTarget.Source == operatorUid)
         {
-            RemCompDeferred<MovementRelayTargetComponent>(vehicleUid);
+            RemComp<MovementRelayTargetComponent>(vehicleUid);
         }
     }
 
