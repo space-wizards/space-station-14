@@ -41,12 +41,6 @@ public sealed partial class TextScreenVisualsComponent : Component
     public Vector2 TextOffset = Vector2.Zero;
 
     /// <summary>
-    /// Offset for centering the timer.
-    /// </summary>
-    [DataField]
-    public Vector2 TimerOffset = Vector2.Zero;
-
-    /// <summary>
     /// Vertical distance between the top pixel of each row.
     /// </summary>
     [DataField]
@@ -93,6 +87,9 @@ public sealed partial class TextScreenVisualsComponent : Component
     /// <summary>
     /// The list of row data for the text screens.
     /// </summary>
+    /// <remarks>
+    /// Each row needs its own entry. To declare a three row timer, the yaml could look like <c>rowData: [{},{},{}]</c>.
+    /// </remarks>
     [DataField]
     public TextScreenRow[] RowData = { new(), new() };
 

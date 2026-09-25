@@ -226,7 +226,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
                     if (rowData.NextScroll <= _timing.CurTime)
                     {
                         ScrollRow(ref rowData);
-                        DrawLayers((uid, screen, sprite), rowData, i);
+                        DrawLayers((uid, screen, sprite), ref rowData, i);
                     }
                 }
             }
@@ -306,9 +306,6 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     #endregion Public API
 
     #region Event Handlers
-    /// <summary>
-    /// Handles updates from the server.
-    /// </summary>
     [SubscribeLocalEvent]
     private void OnStartup(Entity<TextScreenVisualsComponent> ent, ref ComponentStartup args)
     {
@@ -444,10 +441,10 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
                 }
 
                 // Actually draw our new layers.
-                DrawLayers((ent.Owner, ent.Comp, sprite), rowData, i);
+                DrawLayers((ent.Owner, ent.Comp, sprite), ref rowData, i);
             }
 
-            // Finally, commit the row state.
+            // Finally, commit the row state if it hasn't been modified by ref.
             ent.Comp.RowData[i] = rowData;
         }
     }
@@ -467,7 +464,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     /// <summary>
     /// Draws sprite layers for the given row on the given entity.
     /// </summary>
-    private void DrawLayers(Entity<TextScreenVisualsComponent, SpriteComponent> ent, TextScreenRow rowData, int rowIndex)
+    private void DrawLayers(Entity<TextScreenVisualsComponent, SpriteComponent> ent, ref TextScreenRow rowData, int rowIndex)
     {
         Entity<SpriteComponent?> sprite = (ent.Owner, ent.Comp2);
         var screen = ent.Comp1;

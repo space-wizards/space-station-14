@@ -10,7 +10,6 @@
     showCentiseconds: false # Distracting when too common.
   - type: TextScreenVisuals
     textOffset: 0,3
-    timerOffset: 0,-4
     rowData: [{},{}]
     rowLength: 6
     horizontalScrollOffset: 1
