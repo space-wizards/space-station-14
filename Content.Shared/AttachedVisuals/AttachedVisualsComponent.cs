@@ -47,13 +47,13 @@ public sealed partial class AttachedVisualLayers
     /// Sprite layers to draw
     /// </summary>
     [DataField]
-    public List<PrototypeLayerData> Layers = new();
+    public List<PrototypeLayerData>? Layers = new();
 
     /// <summary>
     /// List of extra sub-attachment slots that this slot can provide
     /// </summary>
     [DataField]
-    public List<AttachmentDefinition> Attachments = new();
+    public List<AttachmentDefinition>? Attachments = new();
 }
 
 /// <summary>

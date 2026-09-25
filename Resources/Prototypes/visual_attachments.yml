@@ -1,8 +1,10 @@
 - type: visualAttachment
   id: InhandRight
+  defaultState: inhand-right
 
 - type: visualAttachment
   id: InhandLeft
+  defaultState: inhand-left
 
 - type: visualAttachment
   id: EquippedShoes

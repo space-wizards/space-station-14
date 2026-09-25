@@ -3,9 +3,12 @@ using Content.Client.DisplacementMap;
 using Content.Shared.AttachedVisuals;
 using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.Containers;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Utility;
 
 namespace Content.Client.AttachedVisuals;
@@ -17,6 +20,7 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private ISerializationManager _serialization = default!;
     [Dependency] private IReflectionManager _reflection = default!;
+    [Dependency] private IResourceCache _resCache = default!;
     [Dependency] private DisplacementMapSystem _displacement = default!;
 
 
@@ -76,6 +80,34 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
 
         _genericVisualizerQuery.TryComp(ent, out var visualizer);
         _appearanceQuery.TryComp(ent, out var appearance);
+
+        if (attachmentPrototype.DefaultState != null && visuals.Layers == null)
+        {
+            RSI? rsi = null;
+
+            if (ent.Comp.RsiPath != null)
+                rsi = _resCache.GetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / ent.Comp.RsiPath).RSI;
+            else if (_spriteQuery.TryComp(ent, out var sprite))
+                rsi = sprite.BaseRSI;
+
+            if (rsi == null)
+                return;
+
+            var state = attachmentPrototype.DefaultState;
+
+            if (!rsi.TryGetState(state, out var _))
+                return;
+
+            var layer = new PrototypeLayerData();
+            layer.RsiPath = rsi.Path.ToString();
+            layer.State = state;
+
+            layers.Add(new AttachedLayer(ent, $"{prefix}-{layers.Count}", [], layer));
+            return;
+        }
+
+        if (visuals.Layers == null)
+            return;
 
         foreach (var protoLayer in visuals.Layers)
         {
@@ -227,10 +259,13 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
             if (!childComp.AttachedVisuals.TryGetValue(attachmentPrototype, out var childAttachedVisualLayers))
                 continue;
 
-            childAttachedVisualLayers.Attachments.Sort();
-
             var childPrefix = $"{keyPrefix}-{attachment.Container}-{child.Id}";
             GetAttachedVisuals((child, childComp), attachmentPrototype, childPrefix, results);
+
+            if (childAttachedVisualLayers.Attachments == null)
+                return;
+
+            childAttachedVisualLayers.Attachments.Sort();
 
             foreach (var childAttachment in childAttachedVisualLayers.Attachments)
             {

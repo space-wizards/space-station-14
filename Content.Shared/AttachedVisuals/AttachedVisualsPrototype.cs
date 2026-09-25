@@ -11,4 +11,11 @@ public sealed partial class VisualAttachmentPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = string.Empty;
+
+    /// <summary>
+    /// Default sprite state. Convenience for things like inhands or clothing.
+    /// Ignored if the attachment sets it's own state.
+    /// </summary>
+    [DataField]
+    public string? DefaultState;
 }
