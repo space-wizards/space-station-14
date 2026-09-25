@@ -81,7 +81,7 @@
     - state: finished
       shader: unshaded
       map: [ enum.TimerVisualLayers.Light ]
-    noRot: true
+    # noRot: true # TODO From an accessibility standpoint, screens with text shouldn't be rotatable; Mapping Lead already have concerns about this.
   - type: Construction
     graph: Timer
     node: screen

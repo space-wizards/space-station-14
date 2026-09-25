@@ -189,12 +189,6 @@ public record DisposalSystemTransitionEvent;
 public sealed partial class DisposalDoAfterEvent : SimpleDoAfterEvent;
 
 /// <summary>
-/// Message sent from the server to the client to update the UI of disposal units.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class DisposalUnitBoundUserInterfaceState : BoundUserInterfaceState;
-
-/// <summary>
 /// Disposal unit pressure states.
 /// </summary>
 [Serializable, NetSerializable]
