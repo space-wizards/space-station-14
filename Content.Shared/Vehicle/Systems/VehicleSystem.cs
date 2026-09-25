@@ -43,8 +43,8 @@ public sealed partial class VehicleSystem : EntitySystem
     [Dependency] private EntityQuery<HandsComponent> _handsQuery;
     [Dependency] private EntityQuery<InputMoverComponent> _inputMoverQuery;
     [Dependency] private EntityQuery<InteractionRelayComponent> _interactionRelayQuery;
-    [Dependency] private EntityQuery<RelayInputMoverComponent> _relayInputMoverQuery;
     [Dependency] private EntityQuery<MovementRelayTargetComponent> _movementRelayQuery;
+    [Dependency] private EntityQuery<RelayInputMoverComponent> _relayInputMoverQuery;
     [Dependency] private EntityQuery<VehicleComponent> _vehicleQuery;
     [Dependency] private EntityQuery<VehicleHandBlockerComponent> _handBlockerQuery;
     [Dependency] private EntityQuery<VehicleOperatorComponent> _operatorQuery;
