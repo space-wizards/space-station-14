@@ -25,13 +25,13 @@
   Security is obligated to seize contraband through routine searches or when processing criminals in the brig, but may prioritize other duties over confiscation if they see fit. With regards to contraband usage, Security is expected to follow the same regulations as everyone else. Confiscated contraband should be transferred to the Security department for secure storage or permanently disposed of. Collaborating with Cargo to sell confiscated contraband is highly encouraged, as it generally fetches a high value.
 
   ## Command's Authority
-  Department heads have authority over their departments, and the Captain has authority over all departments on the station (including the rest of Command). This authority can be exercised as follows:
+  Department heads have authority over their respective departments, and the Captain has authority over all departments on the station (including the rest of Command). This authority can be exercised as follows:
 
-  - Permitting crew members to use departmentally-restricted contraband (as described above)
-  - Permitting crew members to access departmentally-restricted areas
+  - Permitting crew members to carry and use departmentally-restricted contraband (as described above)
+  - Permitting crew members to access departmentally-restricted areas, or areas restricted to general Command staff
   - Hiring, transfering, and firing employees within their department
 
-  If a member of Command uses the threat of punishment as a way to coerce someone into complying with dangerous or illegal orders, that Command member can be charged with any crimes committed/attempted in the coerced's place.
+  Crew members who refuse to comply with a lawful job change may be elligible for certain criminal charges; for instance, refusing to turn in items not permitted to their new position can be treated as theft, and refusing to leave areas their new position does not have access to can be treated as trespass.
 
   ## Search and Seizure
   A personnel search is the inspection and seizure of a crewmember's possessions. If any contraband is found during a search, the officer should confiscate the restricted items. Non-restricted items may be seized by Security if they were used to facilitate a crime. After the search is conducted, all legal items are to be returned to the person. A crewmate may legally decline any search conducted without probable cause or a warrant while the alert level is green. Random searches without probable cause or a warrant are permitted at any other alert level.
@@ -72,6 +72,9 @@
   [color=#a4885c]Repeat Offenders:[/color] A repeated crime occurs when someone is released after committing a crime and then commits the same crime again during the same shift. Repeated crimes can be charged with tacked-on time; first repeat: 3:00, second repeat: 6:00, third repeat: Permanent Confinement. It should be noted that each tacked-on time is directly linked to one charge, and that in the instance of multiple crimes being committed, you should use the longer time for the maximum allowable sentence. For example, if someone does their second repeat of Assault and one count of Kidnapping, their maximum allowable sentence would be 11 minutes. 5 from the Moderate crime of Assault, plus 6 from the second repeat.
 
   [color=#a4885c]Accessory, Attempting, and Intention:[/color] If someone intentionally, knowingly, and substantially assists someone in enacting a crime, they can be charged with the relevant crimes, such as an engineer giving someone tools, who says they are going to break into an area. The same applies to a clear and substantial attempt to commit a crime, or a person who shows clear intent to act out a crime, such as a syndicate nuclear operative arming a nuke but getting arrested before it goes off, they can still be charged with station-wide destruction.
+
+  [color=#a4885c]Coercion:[/color] If someone intentionally coerces someone else into unwillingly committing a crime on their behalf (e.g, under threat of violence or punishment), they can be charged with the relevant crimes.
+
   ## Normal Punishments
   - [color=#a4885c]Warning:[/color] For minor crimes, fix the issue, then warn the person not to attempt the crime again. If they still proceed to do it at a later date, sentencing may be preferable.
   - [color=#a4885c]Confinement:[/color] The typical punishment, being confined in a cell for a temporary amount of time according to the crimes.
