@@ -183,8 +183,8 @@
 
 #Wall locker
 - type: entity
-  id: BaseWallLocker
   parent: BaseWallCloset
+  id: BaseWallLocker
   abstract: true
   components:
   - type: AccessReader
