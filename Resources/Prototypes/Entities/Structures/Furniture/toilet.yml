@@ -15,6 +15,7 @@
       visible: false
     - map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
       state: dispover-ready
+      shader: unshaded
     - map: [ "stash" ]
       state: disposal-open
       visible: false
