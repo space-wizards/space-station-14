@@ -24,4 +24,4 @@
         amount: 2
         doAfter: 3
   - node: done
-    entity: ArtifactShard
+    entity: XenoArtifactShard

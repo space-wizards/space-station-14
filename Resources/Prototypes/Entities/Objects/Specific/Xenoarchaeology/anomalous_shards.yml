@@ -1,6 +1,6 @@
 - type: entity
   parent: [BaseItem, BaseXenoArtifact]
-  id: ArtifactShard
+  id: XenoArtifactShard
   name: anomalous shard
   description: A shard of a greater whole, still possessing a fraction of ancient power.
   components:
@@ -77,8 +77,8 @@
   - type: XenoArtifactShard
 
 - type: entity
-  parent: ArtifactShard
-  id: ArtifactShardEmpty
+  parent: XenoArtifactShard
+  id: XenoArtifactShardEmpty
   suffix: Empty
   components:
   - type: XenoArtifact

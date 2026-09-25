@@ -163,6 +163,9 @@
           weight: 1
     - !type:NestedSelector
       tableId: RingTableRare
+    - id: XenoArtifactShard
+      amount: !type:RangeNumberSelector
+        range: 2, 4
 
 - type: entityTable
   id: SalvageTreasureLegendary

@@ -116,7 +116,7 @@ public sealed partial class ArtifactCrusherComponent : Component
     /// This prototype should have the XenoArtifactComponent and ideally no pre-generated nodes.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public EntProtoId? ShardProtoId = "ArtifactShardEmpty";
+    public EntProtoId? ShardProtoId = "XenoArtifactShardEmpty";
 }
 
 [Serializable, NetSerializable]
