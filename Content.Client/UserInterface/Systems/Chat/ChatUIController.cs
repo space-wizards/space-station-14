@@ -858,14 +858,15 @@ public sealed partial class ChatUIController : UIController
 
                 if (count > 0)
                 {
-                    previousMessage.WrappedMessage = Loc.GetString("popup-system-repeated-popup-stacking-wrap",
-                        ("popup-message", msg.WrappedMessage),
-                        ("count", count + 1));
+                    previousMessage.WrappedMessage = Loc.GetString("chat-manager-repeated-message-stacking-wrap",
+                        ("message", msg.WrappedMessage),
+                        ("count", 1 + count),
+                        ("size", Math.Min(8 + count, 16)));
                 }
 
                 foreach (var chat in _chats)
                 {
-                    chat.UpdateMessage(i, previousMessage);
+                    chat.UpdateMessage(previousMessage);
                 }
 
                 skipMessage = true;
