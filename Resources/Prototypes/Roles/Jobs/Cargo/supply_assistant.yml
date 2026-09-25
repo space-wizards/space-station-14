@@ -23,7 +23,7 @@
     id: SupplyAssistantPDA
     ears: ClothingHeadsetCargo
     pocket1: AppraisalTool
-    # TODO: pocket2 should include a guidebook once we have an actual cargo guidebook item
+    pocket2: BookLogisticsManual
   #storage:
     #back:
     #- Stuff
