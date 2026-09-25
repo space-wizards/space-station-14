@@ -26,6 +26,8 @@ namespace Content.Client.Inventory
         [Dependency] private ExamineSystem _examine = default!;
         [Dependency] private PointingSystem _pointing = default!;
 
+        [Dependency] private EntityQuery<InventorySlotBlockComponent> _slotBlockQuery = default!;
+
         public Action<SlotData>? EntitySlotUpdate = null;
         public Action<SlotData>? OnSlotAdded = null;
         public Action<SlotData>? OnSlotRemoved = null;
@@ -114,6 +116,21 @@ namespace Content.Client.Inventory
         private void OnPlayerAttached(EntityUid uid, InventorySlotsComponent component, LocalPlayerAttachedEvent args)
         {
             OnLinkInventorySlots?.Invoke(uid, component);
+
+            // TODO: Refactor client-side inventories. Code is VERY messy all over the UIController and this system.
+            // Also StippableBUI has some duplication
+            var enumerator = GetSlotEnumerator(uid);
+            while (enumerator.NextItem(out var item))
+            {
+                if (!_slotBlockQuery.TryComp(item, out var comp))
+                    continue;
+
+                var blockedSlots = GetSlotEnumerator(uid, comp.Slots);
+                while (blockedSlots.MoveNext(out var container))
+                {
+                    AddSlotBlocker(uid, container.ID, item);
+                }
+            }
         }
 
         protected override void OnInit(Entity<InventoryComponent> ent, ref ComponentInit args)
@@ -121,6 +138,26 @@ namespace Content.Client.Inventory
             base.OnInit(ent, ref args);
 
             _clothingVisualsSystem.InitClothing(ent.Owner, ent.Comp);
+        }
+
+        [SubscribeLocalEvent]
+        private void OnEquippedSlotBlocker(Entity<InventorySlotBlockComponent> ent, ref GotEquippedEvent args)
+        {
+            var enumerator = GetSlotEnumerator(args.EquipTarget, ent.Comp.Slots);
+            while (enumerator.MoveNext(out var container))
+            {
+                AddSlotBlocker(args.EquipTarget, container.ID, ent);
+            }
+        }
+
+        [SubscribeLocalEvent]
+        private void OnUnequippedSlotBlocker(Entity<InventorySlotBlockComponent> ent, ref GotUnequippedEvent args)
+        {
+            var enumerator = GetSlotEnumerator(args.EquipTarget, ent.Comp.Slots);
+            while (enumerator.MoveNext(out var container))
+            {
+                RemoveSlotBlocker(args.EquipTarget, container.ID, ent);
+            }
         }
 
         public override void Shutdown()
@@ -147,6 +184,44 @@ namespace Content.Client.Inventory
             var newData = component.SlotData[slotName] = new SlotData(oldData, state);
             if (owner == _playerManager.LocalEntity)
                 EntitySlotUpdate?.Invoke(newData);
+        }
+
+        /// <summary>
+        /// Adds a new slot blocker to the slot.
+        /// </summary>
+        /// <param name="ent">The entity containing the slot.</param>
+        /// <param name="slotName">The name of the slot.</param>
+        /// <param name="blocker">The blocker to add.</param>
+        [PublicAPI]
+        public void AddSlotBlocker(Entity<InventorySlotsComponent?> ent, string slotName, EntityUid blocker)
+        {
+            if (!Resolve(ent, ref ent.Comp, false))
+                return;
+
+            var data = ent.Comp.SlotData[slotName];
+            data.Blockers.Add(blocker);
+
+            if (ent.Owner == _playerManager.LocalEntity)
+                EntitySlotUpdate?.Invoke(data);
+        }
+
+        /// <summary>
+        /// Removes a slot blocker from the slot.
+        /// </summary>
+        /// <param name="ent">The entity containing the slot.</param>
+        /// <param name="slotName">The name of the slot.</param>
+        /// <param name="blocker">The blocker to remove.</param>
+        [PublicAPI]
+        public void RemoveSlotBlocker(Entity<InventorySlotsComponent?> ent, string slotName, EntityUid blocker)
+        {
+            if (!Resolve(ent, ref ent.Comp, false))
+                return;
+
+            var data = ent.Comp.SlotData[slotName];
+            data.Blockers.Remove(blocker);
+
+            if (ent.Owner == _playerManager.LocalEntity)
+                EntitySlotUpdate?.Invoke(data);
         }
 
         public void UpdateSlot(EntityUid owner, InventorySlotsComponent component, string slotName,
@@ -293,6 +368,7 @@ namespace Content.Client.Inventory
             [ViewVariables] public bool Blocked;
             [ViewVariables] public bool Highlighted;
             [ViewVariables] public ContainerSlot? Container;
+            [ViewVariables] public List<EntityUid> Blockers = [];
             [ViewVariables] public bool HasSlotGroup => SlotDef.SlotGroup != "Default";
             [ViewVariables] public Vector2i ButtonOffset => SlotDef.UIWindowPosition;
             [ViewVariables] public string SlotName => SlotDef.Name;
@@ -317,6 +393,16 @@ namespace Content.Client.Inventory
                 Highlighted = highlighted;
                 Container = oldData.Container;
                 Blocked = blocked;
+                Blockers = oldData.Blockers;
+            }
+
+            /// <summary>
+            /// Returns whether this slot is blocked.
+            /// </summary>
+            /// <returns>Whether this slot is blocked.</returns>
+            public bool IsBlocked()
+            {
+                return Blockers.Count > 0 || Blocked;
             }
 
             public static implicit operator SlotData(SlotDefinition s)

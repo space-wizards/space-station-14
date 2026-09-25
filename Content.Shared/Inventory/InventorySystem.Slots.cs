@@ -83,6 +83,32 @@ public partial class InventorySystem : EntitySystem
         UpdateInventoryTemplate(ent);
     }
 
+    [SubscribeLocalEvent]
+    private static void OnEquipAttempt(Entity<InventorySlotBlockComponent> ent, ref InventoryRelayedEvent<IsEquippingTargetAttemptEvent> args)
+    {
+        if (args.Args.Cancelled)
+            return;
+
+        if ((args.Args.SlotFlags & ent.Comp.Slots) == 0)
+            return;
+
+        args.Args.Reason = "slot-block-component-blocked";
+        args.Args.Cancel();
+    }
+
+    [SubscribeLocalEvent]
+    private static void OnUnequipAttempt(Entity<InventorySlotBlockComponent> ent, ref InventoryRelayedEvent<IsUnequippingTargetAttemptEvent> args)
+    {
+        if (args.Args.Cancelled)
+            return;
+
+        if ((args.Args.SlotFlags & ent.Comp.Slots) == 0)
+            return;
+
+        args.Args.Reason = "slot-block-component-blocked";
+        args.Args.Cancel();
+    }
+
     protected virtual void UpdateInventoryTemplate(Entity<InventoryComponent> ent)
     {
         if (!ProtoMan.Resolve(ent.Comp.TemplateId, out var invTemplate))
