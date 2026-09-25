@@ -97,7 +97,7 @@
     - node: mslaser
       entity: WeaponMakeshiftLaserNoCell
       edges:
-        - to: mslaserframescrewed
+        - to: mslaserwelded
           completed:
             - !type:SpawnPrototype
               prototype: WeaponMakeshiftLaserFrame
