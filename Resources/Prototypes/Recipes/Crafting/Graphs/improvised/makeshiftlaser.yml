@@ -13,7 +13,7 @@
         name: construction-graph-tag-modular-receiver
       - material: Steel
         amount: 2
-      - material: Cable
+      - material: CableMV
         amount: 5
         doAfter: 5
 
@@ -33,10 +33,11 @@
         prototype: SheetSteel1
         amount: 2
       - !type:SpawnPrototype
-        prototype: CableApcStack1
+        prototype: CableMVStack1
         amount: 5
       - !type:SpawnPrototype
         prototype: ModularReceiver
+      - !type:DeleteEntity
 
   - node: mslaserframescrewed
     entity: WeaponMakeshiftLaserFrame
@@ -97,8 +98,6 @@
     edges:
     - to: mslaserwelded
       completed:
-      - !type:SpawnPrototype
-        prototype: WeaponMakeshiftLaserFrame
       - !type:EmptyContainer
         container: cell_slot
         pickup: true

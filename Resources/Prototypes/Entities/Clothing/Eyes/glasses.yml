@@ -13,6 +13,9 @@
     damage:
       types:
         Blunt: 7
+  - type: Tag
+    tags:
+    - Glasses
 
 - type: entity
   parent: ClothingEyesBase
@@ -32,6 +35,9 @@
     damage:
       types:
         Blunt: 10
+  - type: Tag
+    tags:
+    - Glasses
 
 - type: entity
   parent: ClothingEyesBase
@@ -51,6 +57,9 @@
     damage:
       types:
         Blunt: 10
+  - type: Tag
+    tags:
+    - Glasses
 
 - type: entity
   parent: [ClothingEyesBase, BaseEngineeringContraband]

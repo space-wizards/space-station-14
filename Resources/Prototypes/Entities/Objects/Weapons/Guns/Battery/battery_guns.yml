@@ -213,12 +213,19 @@
   id: WeaponMakeshiftLaserNoCell
   description: Better pray it won't burn your hands off.
   suffix: No Cell
+  categories: [ HideSpawnMenu ]
   components:
   - type: ContainerContainer
     containers:
       glasses: !type:ContainerSlot
+      cell_slot: !type:ContainerSlot
   - type: ItemSlots
     slots:
+      glasses:
+        locked: true
+        whitelist:
+          tags:
+          - Glasses
       cell_slot:
         locked: true
         name: Magazine
@@ -269,8 +276,16 @@
     slots:
       cell_slot:
         startingItem: PowerCellMedium
+        locked: true
+        whitelist:
+          tags:
+          - PowerCell
       glasses:
         startingItem: ClothingEyesGlassesJamjar
+        locked: true
+        whitelist:
+          tags:
+          - Glasses
 
 - type: entity
   parent: [BaseItem, BaseMinorContraband]
