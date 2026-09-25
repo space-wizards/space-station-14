@@ -14,7 +14,7 @@ public sealed partial class XenoArtifactTypeParser : CustomCompletionParser<Prot
 {
     private static readonly EntProtoId ArtifactDummyItem = "DummyArtifactItem";
     private static readonly EntProtoId ArtifactDummyStructure = "DummyArtifactStructure";
-    private static readonly EntProtoId ArtifactDummyShard = "ArtifactShardEmpty";
+    private static readonly EntProtoId ArtifactDummyShard = "XenoArtifactShardEmpty";
 
     public override CompletionResult TryAutocomplete(ParserContext ctx, CommandArgument? arg)
     {
