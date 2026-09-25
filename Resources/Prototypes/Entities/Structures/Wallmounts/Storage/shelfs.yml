@@ -386,8 +386,8 @@
             max: 1
   - type: Storage
     grid:
-    - 0,0,15,1
-    - 0,3,15,4
+    - 0,0,11,1
+    - 0,3,11,4
     maxItemSize: Large
   - type: Construction
     graph: Shelf
