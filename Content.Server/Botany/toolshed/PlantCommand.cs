@@ -1,5 +1,6 @@
-using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Botany.Components;
@@ -188,12 +189,12 @@ public sealed partial class PlantCommand : ToolshedCommand
     public IEnumerable<EntityUid> AddMutation(
         IInvocationContext ctx,
         [PipedArgument] IEnumerable<EntityUid> input,
-        [CommandArgument(typeof(PlantMutationTableParser))] ProtoId<RandomPlantMutationListPrototype> tableId,
         [CommandArgument(typeof(PlantMutationNameParser))]
-        string mutationName)
+        (ProtoId<RandomPlantMutationListPrototype> tableId, string mutationName) mutation
+    )
     {
         return input
-            .Select(entity => AddMutation(ctx, entity, tableId, mutationName))
+            .Select(entity => AddMutation(ctx, entity, mutation.tableId, mutation.mutationName))
             .OfType<EntityUid>();
     }
 
@@ -395,96 +396,64 @@ public sealed partial class PlantSeedPrototypeParser : CustomTypeParser<EntProto
     }
 }
 
-public sealed class PlantMutationTableParser
-    : CustomCompletionParser<ProtoId<RandomPlantMutationListPrototype>>
-{
-    // Need to do this so that we can actually get the value when trying to parse the mutations
-    public override bool EnableValueRef => false;
-
-    public override CompletionResult? TryAutocomplete(
-        ParserContext ctx,
-        CommandArgument? arg)
-    {
-        return Toolshed.TryAutocomplete(
-            ctx,
-            typeof(ProtoId<RandomPlantMutationListPrototype>),
-            arg);
-    }
-}
-
-public sealed partial class PlantMutationNameParser : CustomTypeParser<string>
+public sealed partial class PlantMutationNameParser : CustomTypeParser<(ProtoId<RandomPlantMutationListPrototype> tableId, string mutationName)>
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     public override bool TryParse(
         ParserContext ctx,
-        out string result)
+        out (ProtoId<RandomPlantMutationListPrototype> tableId, string mutationName) result)
     {
         var start = ctx.Index;
-
-        string? name;
-
-        if (!Toolshed.TryParse(ctx, out name))
+        ProtoId<RandomPlantMutationListPrototype> table;
+        if (!Toolshed.TryParse(ctx, out table))
         {
-            result = "";
+            ctx.Error = new PlantCommandError(
+                $"Plant mutation list is not parsing.");
+            ctx.Error.Contextualize(ctx.Input, (start, ctx.Index));
+            result = (table, "");
             return false;
         }
 
-        result = name;
-        var exists = false;
-        if (ctx.Bundle.Arguments?.TryGetValue("tableId", out var mutationTable) is not true ||
-            mutationTable is not ProtoId<RandomPlantMutationListPrototype> tableId)
+        var mid = ctx.Index;
+        string? name;
+        if (!Toolshed.TryParse(ctx, out name))
         {
-            exists = _prototypeManager
-            .EnumeratePrototypes<RandomPlantMutationListPrototype>()
-            .SelectMany(table => table.Mutations)
-            .Any(mutation => string.Equals(
-                mutation.Name,
-                name,
-                StringComparison.OrdinalIgnoreCase));
+            ctx.Error = new PlantCommandError(
+                $"Plant mutation is not parsing.");
+            ctx.Error.Contextualize(ctx.Input, (mid, ctx.Index));
+            result = (table, "");
+            return false;
         }
-        else
-        {
-            exists = _prototypeManager
-            .Index(tableId)
+
+        result = (table, name);
+        if (!_prototypeManager
+            .Index(table)
             .Mutations
             .Any(mutation => string.Equals(
                 mutation.Name,
                 name,
-                StringComparison.OrdinalIgnoreCase));
+                StringComparison.OrdinalIgnoreCase)))
+        {
+            ctx.Error = new PlantCommandError(
+                $"Plant mutation '{name}' is not on list '{table}'.");
+            ctx.Error.Contextualize(ctx.Input, (mid, ctx.Index));
+            return false;
         }
-
-        if (exists)
-            return true;
-
-        ctx.Error = new PlantCommandError(
-            $"Unknown plant mutation '{result}'.");
-        ctx.Error.Contextualize(ctx.Input, (start, ctx.Index));
-
-        result = name;
-        return false;
+        return true;
     }
-    public override CompletionResult TryAutocomplete(
+    public override CompletionResult? TryAutocomplete(
         ParserContext ctx,
         CommandArgument? arg)
     {
-        IEnumerable<RandomPlantMutation> mutations;
-
-        if (ctx.Bundle.Arguments?.TryGetValue("tableId", out var mutationTable) is not true ||
-            mutationTable is not ProtoId<RandomPlantMutationListPrototype> tableId)
+        if (!Toolshed.TryParse<ProtoId<RandomPlantMutationListPrototype>>(ctx, out var tableId))
         {
-            mutations = _prototypeManager
-            .EnumeratePrototypes<RandomPlantMutationListPrototype>()
-            .SelectMany(table => table.Mutations);
-        }
-        else
-        {
-            mutations = _prototypeManager
-            .Index(tableId)
-            .Mutations;
+            return CompletionResult.FromHintOptions(
+                _prototypeManager.EnumeratePrototypes<RandomPlantMutationListPrototype>()
+                .Select(prototype => new CompletionOption(prototype.ID)), "<mutation table>");
         }
 
-        var options = mutations
+        var options = _prototypeManager.Index(tableId).Mutations
             .Select(mutation => mutation.Name)
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .OrderBy(name => name)
