@@ -1,0 +1,24 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "By MTandi (GitHub), modified by AftrLite (GitHub)",
+    "source": "https://github.com/MTandi/tgstation/blob/46b7151ffa7ae85e8d53ef2b14d8154337cabaa6/icons/obj/storage/closet.dmi",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "open"
+        },
+        {
+            "name": "closed"
+        },
+        {
+            "name": "locked"
+        },
+        {
+            "name": "unlocked"
+        }
+    ]
+}
