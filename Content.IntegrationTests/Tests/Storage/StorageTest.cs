@@ -17,8 +17,8 @@ namespace Content.IntegrationTests.Tests.Storage;
 
 public sealed class StorageTest : GameTest
 {
-    [SidedDependency(Side.Server)] private SharedStorageSystem _sStorage = default!;
     [SidedDependency(Side.Server)] private ItemSystem _sItem = default!;
+    [SidedDependency(Side.Server)] private SharedStorageSystem _sStorage = default!;
 
     /// <summary>
     /// Can an item store more than itself weighs.
@@ -269,7 +269,7 @@ public sealed class StorageTest : GameTest
     public async Task ValidDefaultStorageSizeTest()
     {
         var uid = SSpawn(null);
-        var storage = SEntMan.EnsureComponent<StorageComponent>(uid);
+        var storage = SEntMan.AddComponent<StorageComponent>(uid);
         Assume.That(storage.MaxItemSize, Is.Null);
 
         var allSizes = SProtoMan.EnumeratePrototypes<ItemSizePrototype>().ToList();
@@ -281,7 +281,7 @@ public sealed class StorageTest : GameTest
             Assert.That(defaultSize, Is.Not.Null, "MaxItemSize for a default storage entity without ItemComponent was null.");
             Assert.That(SProtoMan.HasIndex<ItemSizePrototype>(defaultSize), Is.True, "MaxItemSize for a default storage entity without ItemComponent returned an invalid prototype.");
 
-            var item = SEntMan.EnsureComponent<ItemComponent>(uid);
+            var item = SEntMan.AddComponent<ItemComponent>(uid);
 
             // Assign each size, check the max item size of the entity vs. the previous one.
             ProtoId<ItemSizePrototype>? lastSize = null;
