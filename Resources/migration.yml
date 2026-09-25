@@ -1139,3 +1139,7 @@ AsimovCircuitBoard: CrewsimovCircuitBoard
 # 2026-09-08
 ChemistryHotplate: MachineThermobath
 HotplateMachineCircuitboard: ThermobathMachineCircuitboard
+
+# 2026-09-24
+ClothingShoesTourist: ClothingShoesSandalsBlack
+ClothingShoesWizard: ClothingShoesSandalsBrown
