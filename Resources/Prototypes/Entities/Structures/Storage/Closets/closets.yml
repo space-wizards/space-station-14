@@ -190,16 +190,16 @@
   suffix: Bluespace
   description: It's a storage unit... right?
   components:
-    - type: ArrivalsBlacklist
-    - type: BluespaceLocker
-      pickLinksFromSameMap: true
-      minBluespaceLinks: 1
-      behaviorProperties:
-        bluespaceEffectOnTeleportSource: true
-      autoLinksBidirectional: true
-      autoLinksUseProperties: true
-      autoLinkProperties:
-        bluespaceEffectOnTeleportSource: true
+  - type: ArrivalsBlacklist
+  - type: BluespaceLocker
+    pickLinksFromSameMap: true
+    minBluespaceLinks: 1
+    behaviorProperties:
+      bluespaceEffectOnTeleportSource: true
+    autoLinksBidirectional: true
+    autoLinksUseProperties: true
+    autoLinkProperties:
+      bluespaceEffectOnTeleportSource: true
 
 # Unstable bluespace closet
 - type: entity
@@ -209,21 +209,21 @@
   suffix: Bluespace unstable
   description: It's a storage unit... right?
   components:
-    - type: ArrivalsBlacklist
-    - type: BluespaceLocker
-      pickLinksFromSameMap: true
-      minBluespaceLinks: 1
-      behaviorProperties:
-        clearLinksDebluespaces: true
-        transportEntities: false
-        bluespaceEffectOnTeleportSource: true
-        clearLinksEvery: 2
-      autoLinksBidirectional: true
-      autoLinksUseProperties: true
-      usesSinceLinkClear: -1 # hacky
-      autoLinkProperties:
-        invalidateOneWayLinks: true
-        transportEntities: false
-        bluespaceEffectOnTeleportSource: true
-        destroyAfterUses: 2
-        destroyType: DeleteComponent
+  - type: ArrivalsBlacklist
+  - type: BluespaceLocker
+    pickLinksFromSameMap: true
+    minBluespaceLinks: 1
+    behaviorProperties:
+      clearLinksDebluespaces: true
+      transportEntities: false
+      bluespaceEffectOnTeleportSource: true
+      clearLinksEvery: 2
+    autoLinksBidirectional: true
+    autoLinksUseProperties: true
+    usesSinceLinkClear: -1 # hacky
+    autoLinkProperties:
+      invalidateOneWayLinks: true
+      transportEntities: false
+      bluespaceEffectOnTeleportSource: true
+      destroyAfterUses: 2
+      destroyType: DeleteComponent
