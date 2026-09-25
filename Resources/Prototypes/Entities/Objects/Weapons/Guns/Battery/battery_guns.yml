@@ -224,7 +224,7 @@
         name: Magazine
         whitelist:
           tags:
-            - PowerCell
+          - PowerCell
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
     layers:
