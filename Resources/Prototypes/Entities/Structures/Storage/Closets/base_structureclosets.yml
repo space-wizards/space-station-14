@@ -78,7 +78,7 @@
 
 # steel closet base (that can be constructed/deconstructed)
 - type: entity
-  parent: [ ClosetBase, StructureHealthContainer ]
+  parent: [ ClosetBase, StructureHealthContainerWeak ]
   id: ClosetSteelBase
   components:
   - type: Construction
@@ -94,7 +94,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 60
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -171,6 +171,15 @@
     - entity_storage
   - type: Paintable
     group: WallCloset
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.35,0.25,0.35"
+        density: 5
+        mask:
+        - FullTileMask
 
 #Wall locker
 - type: entity

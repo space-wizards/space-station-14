@@ -292,6 +292,7 @@
   plantMetabolism:
   - !type:PlantAdjustMutationLevel
     amount: 1
+    mutationTable: RandomPlantMutations
   metabolisms:
     Bloodstream:
       effects:
@@ -552,24 +553,6 @@
             Poison: 0.06
 
 - type: reagent
-  id: Pax
-  name: reagent-name-pax
-  group: Narcotics
-  desc: reagent-desc-pax
-  physicalDesc: reagent-physical-desc-soothing
-  allowedDepartments:
-  - Security
-  - Medical
-  color: "#AAAAAA"
-  metabolisms:
-    Bloodstream:
-      effects:
-      - !type:GenericStatusEffect
-        key: Pacified
-        component: Pacified
-        time: 4
-
-- type: reagent
   id: Honk
   name: reagent-name-honk
   group: Toxins
@@ -642,8 +625,9 @@
   flavor: medicine
   color: "#435166"
   plantMetabolism:
-  - !type:PlantMutateChemicals
-    randomPickBotanyReagent: EvilRandomFillSolution
+  - !type:PlantAdjustMutationLevel
+    amount: 1
+    mutationTable: EvilPlantMutations
   - !type:PlantAdjustToxins
     amount: 10
   metabolisms:
@@ -726,12 +710,12 @@
           inverted: true
         damage:
           types:
-            Poison: 1.6
+            Poison: 0.6 # A 10u spider bite will deal 30 poison damage
       - !type:MovementSpeedModifier
         conditions:
         - !type:ReagentCondition
           reagent: Mechanotoxin
-          min: 2
+          min: 9 # 5 seconds of 20% slow
         - !type:MetabolizerTypeCondition
           type: [Arachnid]
           inverted: true
@@ -741,12 +725,14 @@
         conditions:
         - !type:ReagentCondition
           reagent: Mechanotoxin
-          min: 4
+          min: 9.5 # A spider bite that injects 10u will cause ~3 seconds of 80% slowdown then another 2 seconds of 20% slowdown (additive 20% slow plus 60% slow)
         - !type:MetabolizerTypeCondition
           type: [Arachnid]
           inverted: true
         walkSpeedModifier: 0.4
         sprintSpeedModifier: 0.4
+      - !type:ModifyBleed # thickens the blood, preventing venom from being excreted into blood puddles by bleeding from pierce damage injection.
+        amount: -0.25
 
 - type: reagent
   id: ToxinTrash
@@ -874,3 +860,33 @@
       - !type:Emote
         emote: Scream
         probability: 0.1
+
+- type: reagent
+  id: HardlightToxin
+  name: reagent-name-hardlight-toxin
+  group: Toxins
+  desc: reagent-desc-hardlight-toxin
+  evaporationSpeed: 100 # Dissolves basically instantly if you *somehow* spill it
+  color: "#00FF00"
+  physicalDesc: reagent-physical-desc-glowing
+  contrabandSeverity: Syndicate
+  metabolisms:
+    Bloodstream: # TODO Make this a metabolite!!!
+      metabolismRate: 2.5 # It's basically pure energy so it metabolizes very fast
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Radiation: 1
+      - !type:StaminaDamage
+        damage: 10
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectKnockdown
+        time: 1.5
+        delay: 2.5
+      - !type:MovementSpeedModifier
+        effectProto: TaserSlowdownStatusEffect
+        time: 1.5
+        delay: 2.5
+        walkSpeedModifier: 0.5
+        sprintSpeedModifier: 0.5

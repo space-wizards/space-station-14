@@ -3,7 +3,7 @@
 
 - type: entity
   parent: [SolutionNormal, FoodInjectableBase]
-  id: FoodCakeBase
+  id: FoodCakeBaseNoSecretStash
   abstract: true
   components:
   - type: FlavorProfile
@@ -25,22 +25,14 @@
   - type: Tag
     tags:
     - Cake
-  - type: SecretStash
-    maxItemSize: "Normal"
-    secretStashName: secret-stash-cake
-    damageEatenItemInside:
-      types:
-        Slash: 7.5
-  - type: ToolOpenable
-    openToolQualityNeeded: Slicing
-    closeToolQualityNeeded: Slicing
-    verbOnly: true
-  - type: ContainerContainer
-    containers:
-      stash: !type:ContainerSlot {}
 
 - type: entity
-  parent: [SolutionVeryTiny, FoodCakeBase]
+  abstract: true
+  parent: [FoodCakeBaseNoSecretStash, BaseStashCake]
+  id: FoodCakeBase
+
+- type: entity
+  parent: [SolutionVeryTiny, FoodCakeBaseNoSecretStash] # no secret stash since it's tiny!
   id: FoodCakeSliceBase
   abstract: true
   description: Just a slice of cake, it is enough for everyone.

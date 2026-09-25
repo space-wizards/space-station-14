@@ -40,12 +40,18 @@
         - id: DrinkDrGibbJug
         - id: DrinkEnergyDrinkJug
         - id: DrinkGreenTeaJug
+        - id: DrinkGrenadineBottleFull
         - id: DrinkIceJug
+        - id: DrinkJuiceLemonJug
         - id: DrinkJuiceLimeCartonXL
         - id: DrinkJuiceOrangeCartonXL
+        - id: DrinkJuicePineappleJug
+        - id: DrinkJuiceTomatoJug
         - id: DrinkLemonLimeJug
+        - id: DrinkMilkJug
         - id: DrinkRootBeerJug
         - id: DrinkSodaWaterBottleFull
+        - id: DrinkSolDryJug
         - id: DrinkSpaceMountainWindBottleFull
         - id: DrinkSpaceUpBottleFull
         - id: DrinkSugarJug
