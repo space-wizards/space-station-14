@@ -152,11 +152,10 @@
     - HamsterWearable
     - PetWearable
     - WhitelistChameleon
+    - Glasses
   - type: IdentityBlocker
     coverage: EYES
-  - type: Tag
-    tags:
-    - Glasses
+
 
 - type: entity
   parent: ClothingEyesGlassesCheapSunglasses
