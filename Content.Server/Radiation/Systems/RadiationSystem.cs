@@ -39,7 +39,11 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
         if (_accumulator < GridcastUpdateRate)
             return;
 
+        // Added tile emitter component that place sources on tiles for testing
+        // but it can probably be removed or commented out down the line
+        UpdateTileEmitters();
         UpdateGridcast();
+        UpdateTileHalfLives();
         UpdateResistanceDebugOverlay();
         _accumulator = 0f;
     }

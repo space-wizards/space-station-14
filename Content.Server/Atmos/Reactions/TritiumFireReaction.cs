@@ -1,4 +1,5 @@
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Radiation.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Reactions;
 using JetBrains.Annotations;
@@ -42,7 +43,40 @@ namespace Content.Server.Atmos.Reactions
             {
                 energyReleased += (Atmospherics.FireHydrogenEnergyReleased * burnedFuel);
 
-                // TODO ATMOS Radiation pulse here!
+                // Radiation pulse
+                if (location != null)
+                {
+                    var entManager = IoCManager.Resolve<IEntityManager>();
+                    var radSystem = entManager.System<RadiationSystem>();
+
+                    if (entManager.TryGetComponent<TransformComponent>(location.GridIndex, out var gridXform))
+                    {
+                        var gridUid = gridXform.GridUid ?? location.GridIndex;
+
+                        float radIntensity;
+                        if (burnedFuel <= Atmospherics.TritiumFireRadThreshold)
+                        {
+                            radIntensity = burnedFuel * Atmospherics.TritiumFireRadMultiplier;
+                        }
+                        else
+                        {
+                            // multiplier scales down smoothly the more you burn
+                            var excessFuel = burnedFuel - Atmospherics.TritiumFireRadThreshold;
+                            var dynamicMultiplier = Atmospherics.TritiumFireRadMultiplier / (1f + Atmospherics.TritiumFireRadDropoff * excessFuel);
+
+                            radIntensity = burnedFuel * dynamicMultiplier;
+                        }
+
+                        radSystem.SetTileRadiation(
+                        gridUid,
+                        location.GridIndices,
+                        Atmospherics.TritiumFireSourceId,
+                        radIntensity,
+                        Atmospherics.TritiumFireSlope,
+                        Atmospherics.TritiumFireHalfLife
+                        );
+                    }
+                }
 
                 // Conservation of mass is important.
                 mixture.AdjustMoles(Gas.WaterVapor, burnedFuel);
