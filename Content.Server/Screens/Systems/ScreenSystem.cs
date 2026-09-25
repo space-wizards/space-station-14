@@ -40,7 +40,6 @@ public sealed partial class ScreenSystem : EntitySystem
         if (screenMap == null)
             return;
 
-        _appearanceSystem.SetData(ent, TextScreenVisuals.DefaultText, text, appearance);
         _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenText, text, appearance);
         _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenTextTime, _gameTiming.CurTime, appearance);
     }
@@ -63,7 +62,7 @@ public sealed partial class ScreenSystem : EntitySystem
         if (timerXform.MapUid == null)
             return;
 
-        // Need to have AppearanceData to do anything.
+        // Need to have have the AppearanceComponent to do anything.
         if (!_appearanceQuery.TryComp(ent, out var appearance))
             return;
 
