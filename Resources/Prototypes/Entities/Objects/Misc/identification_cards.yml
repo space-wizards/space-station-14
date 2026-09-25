@@ -823,6 +823,24 @@
 
 - type: entity
   parent: IDCardStandard
+  id: SupplyAssistantIDCard
+  name: supply assistant ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: stripe_top
+      color: *color-supply-top
+    - state: stripe_bottom
+      color: *color-supply-bottom
+    - sprite: *icon-rsi
+      offset: *icon-offset
+      state: SupplyAssistant
+  - type: PresetIdCard
+    job: SupplyAssistant
+
+- type: entity
+  parent: IDCardStandard
   id: CargoIDCard
   name: cargo ID card
   components:

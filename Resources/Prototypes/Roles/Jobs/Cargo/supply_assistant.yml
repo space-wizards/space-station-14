@@ -1,38 +1,36 @@
 - type: job
-  id: CargoTechnician
-  name: job-name-cargotech
-  description: job-description-cargotech
-  playTimeTracker: JobCargoTechnician
+  id: SupplyAssistant
+  name: job-name-supply-assistant
+  description: job-description-supply-assistant
+  playTimeTracker: JobSupplyAssistant
   requirements:
     - !type:DepartmentTimeRequirement
       department: Cargo
-      time: 2.5h
-  startingGear: CargoTechGear
-  icon: "JobIconCargoTechnician"
-  supervisors: job-supervisors-qm
+      time: 10h
+      inverted: true # stop playing intern if you're good at Cargo!
+  startingGear: SupplyAssistantGear
+  icon: "JobIconSupplyAssistant"
+  supervisors: job-supervisors-cargo
   guides: [ Cargo ] # TODO: should have a more specific guidebook page instead of using the department itself
   access:
   - Cargo
   - Maintenance
-  extendedAccess:
-  - Salvage
-  special:
-  - !type:GiveItemOnHolidaySpecial
-    holiday: BoxingDay
-    prototype: BoxCardboard
 
 - type: startingGear
-  id: CargoTechGear
+  id: SupplyAssistantGear
   equipment:
+    shoes: ClothingShoesColorBlack
+    id: SupplyAssistantPDA
     ears: ClothingHeadsetCargo
     pocket1: AppraisalTool
+    # TODO: pocket2 should include a guidebook once we have an actual cargo guidebook item
   #storage:
     #back:
     #- Stuff
 
 - type: chameleonOutfit
-  id: CargoTechnicianChameleonOutfit
-  job: CargoTechnician
+  id: SupplyAssistantChameleonOutfit
+  job: SupplyAssistant
   equipment:
     head: ClothingHeadHatCargosoft
     eyes: ClothingEyesGlassesCheapSunglasses
