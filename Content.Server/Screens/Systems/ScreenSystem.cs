@@ -13,7 +13,7 @@ namespace Content.Server.Screens.Systems;
 public sealed partial class ScreenSystem : EntitySystem
 {
     [Dependency] private IGameTiming _gameTiming = default!;
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
 
     [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery;
 
@@ -32,7 +32,7 @@ public sealed partial class ScreenSystem : EntitySystem
 
         // don't allow text updates if there's an active timer
         // (and just check here so the server doesn't have to track them)
-        if (_appearance.TryGetData(ent, TextScreenVisuals.TargetTime, out TimeSpan target, appearance)
+        if (_appearanceSystem.TryGetData(ent, TextScreenVisuals.TargetTime, out TimeSpan target, appearance)
             && target > _gameTiming.CurTime)
             return;
 
@@ -40,12 +40,9 @@ public sealed partial class ScreenSystem : EntitySystem
         if (screenMap == null)
             return;
 
-        if (screenMap != Transform(args.Sender).MapUid)
-            return;
-
-        _appearance.SetData(ent, TextScreenVisuals.DefaultText, text, appearance);
-        _appearance.SetData(ent, TextScreenVisuals.ScreenText, text, appearance);
-        _appearance.SetData(ent, TextScreenVisuals.ScreenTextTime, _gameTiming.CurTime, appearance);
+        _appearanceSystem.SetData(ent, TextScreenVisuals.DefaultText, text, appearance);
+        _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenText, text, appearance);
+        _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenTextTime, _gameTiming.CurTime, appearance);
     }
 
     /// <summary>
@@ -70,7 +67,7 @@ public sealed partial class ScreenSystem : EntitySystem
         if (!_appearanceQuery.TryComp(ent, out var appearance))
             return;
 
-        string? text = null;
+        string? text = payload.OverrideText;
         TimeSpan time;
 
         switch (timerXform.MapUid)
@@ -78,28 +75,34 @@ public sealed partial class ScreenSystem : EntitySystem
             // sometimes the timer transforms on FTL shuttles have a hyperspace mapent, so matching by grid works as a fallback.
             case var local when local == payload.Shuttle || timerXform.GridUid == payload.Shuttle:
                 time = payload.ShuttleTime;
+                text ??= GetShuttleScreenText(ref args);
                 break;
             case var origin when origin == payload.SourceMap:
                 time = payload.SourceTime;
+                text ??= GetShuttleScreenText(ref args);
                 break;
             case var remote when remote == payload.DestinationMap:
                 time = payload.DestinationTime;
-                text = ShuttleTimerMasks.ETA;
+                text ??= ShuttleTimerMasks.ETA;
                 break;
             default:
                 return;
         }
 
-        if (payload.OverrideText != null)
-            text = payload.OverrideText;
-
-        _appearance.SetData(ent, TextScreenVisuals.TargetTime, _gameTiming.CurTime + time, appearance);
-        _appearance.SetData(ent, TextScreenVisuals.ScreenTextTime, _gameTiming.CurTime, appearance);
-
+        _appearanceSystem.SetData(ent, TextScreenVisuals.TargetTime, _gameTiming.CurTime + time, appearance);
+        _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenTextTime, _gameTiming.CurTime, appearance);
         if (text != null)
-            _appearance.SetData(ent, TextScreenVisuals.ScreenText, text, appearance);
+            _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenText, text, appearance);
 
         if (payload.OverrideColor != null)
-            _appearance.SetData(ent, TextScreenVisuals.Color, payload.OverrideColor, appearance);
+            _appearanceSystem.SetData(ent, TextScreenVisuals.Color, payload.OverrideColor, appearance);
+    }
+
+    /// <summary>
+    /// Returns the localization key for ETA or ETD, depending on if the shuttle is currently docked.
+    /// </summary>
+    private string GetShuttleScreenText(ref DeviceNetworkPacketEvent<ScreenShuttlePayload> args)
+    {
+        return args.Data.Docked ? ShuttleTimerMasks.ETD : ShuttleTimerMasks.ETA;
     }
 }
