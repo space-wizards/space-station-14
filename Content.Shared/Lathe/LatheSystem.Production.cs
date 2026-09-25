@@ -38,7 +38,19 @@ public abstract partial class LatheSystem
         return ProtoMan.Resolve(recipe, out var proto) && CanProduce(entity, proto, materials, amount);
     }
 
-
+    /// <summary>
+    /// Checks if a lathe can produce a specific recipe prototype
+    /// </summary>
+    /// <param name="entity">Lathe entity</param>
+    /// <param name="recipe">Recipe to produce</param>
+    /// <param name="materials">Materials available</param>
+    /// <param name="amount">Amount to produce</param>
+    /// <returns>True if we can produce the given recipe at the given amount with the given materials.</returns>
+    [PublicAPI]
+    public bool CanProduce(Entity<LatheComponent?> entity, LatheRecipePrototype recipe, Dictionary<ProtoId<MaterialPrototype>, int> materials, int amount = 1)
+    {
+        return Resolve(entity, ref entity.Comp) && HasMaterials(materials, recipe, entity.Comp.MaterialUseMultiplier, amount);
+    }
 
     /// <inheritdoc cref="HasMaterials(Dictionary{ProtoId{MaterialPrototype},int},LatheRecipePrototype,float,int)"/>
     public bool HasMaterials(Dictionary<ProtoId<MaterialPrototype>, int> materials, ProtoId<LatheRecipePrototype> recipe, float materialMultiplier, int amount = 1)
