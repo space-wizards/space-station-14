@@ -20,6 +20,9 @@ namespace Content.Client.Ghost
         [Dependency] private SpriteSystem _sprite = default!;
         [Dependency] private SharedNightVisionSystem _nv = default!;
 
+        [Dependency] private EntityQuery<SpriteComponent> _spriteQuery;
+        [Dependency] private EntityQuery<NightVisionComponent> _nightVisionQuery;
+
         public int AvailableGhostRoleCount { get; private set; }
 
         public GhostVisibilityMode GhostVisibility { get; private set; } = GhostVisibilityMode.ShowAllGhosts;
@@ -34,33 +37,16 @@ namespace Content.Client.Ghost
         public event Action<GhostWarpsResponseEvent>? GhostWarpsResponse;
         public event Action<GhostUpdateGhostRoleCountEvent>? GhostRoleCountUpdated;
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            SubscribeLocalEvent<GhostComponent, ComponentStartup>(OnStartup);
-            SubscribeLocalEvent<GhostComponent, ComponentRemove>(OnGhostRemove);
-            SubscribeLocalEvent<GhostComponent, AfterAutoHandleStateEvent>(OnGhostState);
-
-            SubscribeLocalEvent<GhostComponent, LocalPlayerAttachedEvent>(OnGhostPlayerAttach);
-            SubscribeLocalEvent<GhostComponent, LocalPlayerDetachedEvent>(OnGhostPlayerDetach);
-
-            SubscribeNetworkEvent<GhostWarpsResponseEvent>(OnGhostWarpsResponse);
-            SubscribeNetworkEvent<GhostUpdateGhostRoleCountEvent>(OnUpdateGhostRoleCount);
-
-            SubscribeLocalEvent<EyeComponent, ToggleLightingActionEvent>(OnToggleLighting);
-            SubscribeLocalEvent<EyeComponent, ToggleFoVActionEvent>(OnToggleFoV);
-            SubscribeLocalEvent<GhostComponent, ToggleGhostsActionEvent>(OnToggleGhosts);
-        }
-
+        [SubscribeLocalEvent]
         private void OnStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
         {
-            if (!TryComp(uid, out SpriteComponent? sprite))
+            if (!_spriteQuery.TryComp(uid, out var sprite))
                 return;
 
             _sprite.SetVisible((uid, sprite), GetGhostVisible(uid, GhostVisibility));
         }
 
+        [SubscribeLocalEvent]
         private void OnToggleLighting(EntityUid uid, EyeComponent component, ToggleLightingActionEvent args)
         {
             if (args.Handled)
@@ -72,7 +58,7 @@ namespace Content.Client.Ghost
                 Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-lighting-manager-popup-normal"), args.Performer);
                 _contentEye.RequestEye(component.DrawFov, true);
             }
-            else if (TryComp<NightVisionComponent>(uid, out var nv) && !nv.Enabled)
+            else if (_nightVisionQuery.TryComp(uid, out var nv) && !nv.Enabled)
             {
                 Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-lighting-manager-popup-half-bright"), args.Performer);
                 _nv.SetEnabled((uid, nv), true);
@@ -88,6 +74,7 @@ namespace Content.Client.Ghost
             args.Handled = true;
         }
 
+        [SubscribeLocalEvent]
         private void OnToggleFoV(EntityUid uid, EyeComponent component, ToggleFoVActionEvent args)
         {
             if (args.Handled)
@@ -98,25 +85,19 @@ namespace Content.Client.Ghost
             args.Handled = true;
         }
 
+        [SubscribeLocalEvent]
         private void OnToggleGhosts(EntityUid uid, GhostComponent component, ToggleGhostsActionEvent args)
         {
             if (args.Handled)
                 return;
 
-            var locId = string.Empty;
-
-            switch (GhostVisibility)
+            var locId = GhostVisibility switch
             {
-                case GhostVisibilityMode.ShowAllGhosts:
-                    locId = "ghost-gui-toggle-ghost-visibility-popup-off";
-                    break;
-                case GhostVisibilityMode.HideOtherGhosts:
-                    locId = "ghost-gui-toggle-all-ghosts-visibility-popup-off";
-                    break;
-                case GhostVisibilityMode.HideOtherGhostsAndSelf:
-                    locId = "ghost-gui-toggle-ghost-visibility-popup-on";
-                    break;
-            }
+                GhostVisibilityMode.ShowAllGhosts => "ghost-gui-toggle-ghost-visibility-popup-off",
+                GhostVisibilityMode.HideOtherGhosts => "ghost-gui-toggle-all-ghosts-visibility-popup-off",
+                GhostVisibilityMode.HideOtherGhostsAndSelf => "ghost-gui-toggle-ghost-visibility-popup-on",
+                _ => throw new ArgumentOutOfRangeException()
+            };
 
             Popup.PopupEntity(Loc.GetString(locId), args.Performer);
             if (uid == _playerManager.LocalEntity)
@@ -125,6 +106,7 @@ namespace Content.Client.Ghost
             args.Handled = true;
         }
 
+        [SubscribeLocalEvent]
         private void OnGhostRemove(EntityUid uid, GhostComponent component, ComponentRemove args)
         {
             _actions.RemoveAction(uid, component.ToggleLightingActionEntity);
@@ -139,15 +121,17 @@ namespace Content.Client.Ghost
             PlayerRemoved?.Invoke(component);
         }
 
+        [SubscribeLocalEvent]
         private void OnGhostPlayerAttach(EntityUid uid, GhostComponent component, LocalPlayerAttachedEvent localPlayerAttachedEvent)
         {
             ApplyGhostVisibility(GhostVisibilityMode.ShowAllGhosts);
             PlayerAttached?.Invoke(component);
         }
 
+        [SubscribeLocalEvent]
         private void OnGhostState(EntityUid uid, GhostComponent component, ref AfterAutoHandleStateEvent args)
         {
-            if (TryComp<SpriteComponent>(uid, out var sprite))
+            if (!_spriteQuery.TryComp(uid, out var sprite))
                 _sprite.LayerSetColor((uid, sprite), 0, component.Color);
 
             if (uid != _playerManager.LocalEntity)
@@ -156,12 +140,14 @@ namespace Content.Client.Ghost
             PlayerUpdated?.Invoke(component);
         }
 
+        [SubscribeLocalEvent]
         private void OnGhostPlayerDetach(EntityUid uid, GhostComponent component, LocalPlayerDetachedEvent args)
         {
             ApplyGhostVisibility(GhostVisibilityMode.HideOtherGhosts);
             PlayerDetached?.Invoke();
         }
 
+        [SubscribeNetworkEvent]
         private void OnGhostWarpsResponse(GhostWarpsResponseEvent msg)
         {
             if (!IsGhost)
@@ -172,6 +158,7 @@ namespace Content.Client.Ghost
             GhostWarpsResponse?.Invoke(msg);
         }
 
+        [SubscribeNetworkEvent]
         private void OnUpdateGhostRoleCount(GhostUpdateGhostRoleCountEvent msg)
         {
             AvailableGhostRoleCount = msg.AvailableGhostRoles;
@@ -194,13 +181,20 @@ namespace Content.Client.Ghost
             _console.RemoteExecuteCommand(null, "ghostroles");
         }
 
+        /// <summary>
+        /// Advances through the available ghost visibility modes in sequence.
+        /// </summary>
         public void ToggleGhostVisibility()
         {
-            // difficult ass implementation for toggling Enum ghost visibility cyclically
-            // (after 1 is 2, after 2 is 3, and after 3 is 1 again)
-            // is needed in case somebody would want to add another mode to GhostVisibilityMode Enum so it won't break
-            var count = Enum.GetValues(typeof(GhostVisibilityMode)).Length;
-            ApplyGhostVisibility((GhostVisibilityMode)(((int)GhostVisibility + 1) % count));
+            var nextMode = GhostVisibility switch
+            {
+                GhostVisibilityMode.ShowAllGhosts => GhostVisibilityMode.HideOtherGhosts,
+                GhostVisibilityMode.HideOtherGhosts => GhostVisibilityMode.HideOtherGhostsAndSelf,
+                GhostVisibilityMode.HideOtherGhostsAndSelf => GhostVisibilityMode.ShowAllGhosts,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            ApplyGhostVisibility(nextMode);
         }
 
         private void ApplyGhostVisibility(GhostVisibilityMode mode)
@@ -211,7 +205,6 @@ namespace Content.Client.Ghost
             GhostVisibility = mode;
 
             var query = AllEntityQuery<GhostComponent, SpriteComponent>();
-
             while (query.MoveNext(out var uid, out _, out var sprite))
             {
                 _sprite.SetVisible((uid, sprite), GetGhostVisible(uid, mode));
@@ -231,10 +224,24 @@ namespace Content.Client.Ghost
 
     }
 
+    /// <summary>
+    /// Controls which ghost sprites are visible to the local client.
+    /// </summary>
     public enum GhostVisibilityMode : byte
     {
+        /// <summary>
+        /// Show all ghosts.
+        /// </summary>
         ShowAllGhosts,
+
+        /// <summary>
+        /// Hide other ghosts, but keep the local ghost visible.
+        /// </summary>
         HideOtherGhosts,
+
+        /// <summary>
+        /// Hide all ghosts, including the local ghost.
+        /// </summary>
         HideOtherGhostsAndSelf,
     }
 }
