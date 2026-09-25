@@ -8,17 +8,17 @@ using Robust.Shared.Utility;
 namespace Content.Client.TextScreen;
 
 /// <summary>
-/// The TextScreenSystem draws text in the game world using 3x5 sprite states for each character.
-/// It optionally supports scrolling text.
-/// <br/>
+/// Draws text on screens using 3x5 sprite states for each character. Optionally supports scrolling text.
+/// </summary>
+/// <remarks>
 /// Data is passed from server to client through <see cref="SharedAppearanceSystem.SetData"/>,
-/// calling <see cref="OnAppearanceChange"/>.  This sets <see cref="TextScreenVisualsComponent.RowData"/>,
+/// calling <see cref="OnAppearanceChange"/>. This sets <see cref="TextScreenVisualsComponent.RowData"/>,
 /// which will be drawn in the next Update call.
 /// <br/>
 /// Layers for the text screen are set up on the ComponentStartup event, and stored in tuples
-/// in the <see cref="TextScreenVisualsComponent.RowData"/>.  An additional character per row is used for
+/// in the <see cref="TextScreenVisualsComponent.RowData"/>. An additional character per row is used for
 /// screens that support scrolling.
-/// </summary>
+/// </remarks>
 /// <seealso cref="TextScreenVisualsComponent"/>
 /// <seealso cref="TextScreenTimerVisualsComponent"/>
 public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisualsComponent>
@@ -238,7 +238,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     /// <summary>
     /// Converts the difference between two timespans into a value between 0 and 9999.
     /// </summary>
-    public int ConvertTimeToScreenValue(TimeSpan targetTime, TimeSpan curTime, bool showCentiseconds)
+    public static int ConvertTimeToScreenValue(TimeSpan targetTime, TimeSpan curTime, bool showCentiseconds)
     {
         if (targetTime <= curTime)
             return 0;
@@ -289,36 +289,19 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     }
 
     /// <summary>
-    /// Returns the <paramref name="timeSpan"/> converted to a string in either HH:MM, MM:SS or potentially SS:mm format.
+    /// Returns the <paramref name="timeSpan"/> converted to a string in either HH:MM, MM:SS or potentially SS:CC format.
     /// </summary>
     /// <param name="timeSpan">TimeSpan to convert into string.</param>
-    /// <param name="getMilliseconds">Should the string be ss:ms if minutes are less than 1?</param>
+    /// <param name="getCentiseconds">Should the string be ss:CC if minutes are less than 1?</param>
     /// <remarks>
-    /// hours, minutes, seconds, and centiseconds are each set to 2 decimal places by default.
+    /// Hours, minutes, seconds, and centiseconds are each set to 2 decimal places by default.
     /// </remarks>
-    public static string TimeToString(TimeSpan timeSpan, bool getMilliseconds = true, string hours = "D2", string minutes = "D2", string seconds = "D2", string cs = "D2")
+    public static string TimeToString(TimeSpan timeSpan, bool getCentiseconds = true)
     {
-        string firstString;
-        string lastString;
-
-        if (timeSpan.TotalHours >= 1)
-        {
-            firstString = timeSpan.Hours.ToString(hours);
-            lastString = timeSpan.Minutes.ToString(minutes);
-        }
-        else if (timeSpan.TotalMinutes >= 1 || !getMilliseconds)
-        {
-            firstString = timeSpan.Minutes.ToString(minutes);
-            lastString = timeSpan.Seconds.ToString(seconds);
-        }
-        else
-        {
-            firstString = timeSpan.Seconds.ToString(seconds);
-            var centiseconds = timeSpan.Milliseconds / 10;
-            lastString = centiseconds.ToString(cs);
-        }
-
-        return firstString + ':' + lastString;
+        var value = ConvertTimeToScreenValue(timeSpan, TimeSpan.Zero, getCentiseconds);
+        var lastValue = value % 100;
+        var firstValue = int.Min(value - lastValue, 99);
+        return $"{firstValue:D2}:{lastValue:D2}";
     }
     #endregion Public API
 
