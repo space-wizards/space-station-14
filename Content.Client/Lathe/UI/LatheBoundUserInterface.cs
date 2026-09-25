@@ -35,6 +35,14 @@ public sealed class LatheBoundUserInterface : BoundUserInterface
         _menu.QueueMoveUpAction += index => SendPredictedMessage(new LatheMoveRequestMessage(index, -1));
         _menu.QueueMoveDownAction += index => SendPredictedMessage(new LatheMoveRequestMessage(index, 1));
         _menu.DeleteFabricatingAction += () => SendPredictedMessage(new LatheAbortFabricationMessage());
+
+        if (EntMan.TryGetComponent<LatheComponent>(Owner, out var lathe))
+        {
+            _menu.PopulateQueueList(lathe.Queue);
+            _menu.SetQueueInfo(lathe.CurrentRecipe);
+        }
+
+        _menu.RefreshRecipes();
     }
 
     public override void Update()

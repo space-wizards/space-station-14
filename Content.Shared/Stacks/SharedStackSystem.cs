@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Stacks;
 
@@ -282,6 +283,44 @@ public abstract partial class SharedStackSystem : EntitySystem
     {
         return null;
     }
+
+    #region Spawning
+    #region Calculate
+
+    /// <summary>
+    /// Calculates how many stacks to spawn that total up to <paramref name="amount"/>.
+    /// </summary>
+    /// <returns>The list of stack counts per entity.</returns>
+    private IEnumerable<int> CalculateSpawns(int maxCountPerStack, int amount)
+    {
+        while (amount > 0)
+        {
+            var countAmount = Math.Min(maxCountPerStack, amount);
+            amount -= countAmount;
+            yield return countAmount;
+        }
+    }
+
+    /// <inheritdoc cref="CalculateSpawns(int, int)"/>
+    private IEnumerable<int> CalculateSpawns(StackPrototype stackProto, int amount)
+    {
+        return CalculateSpawns(GetMaxCount(stackProto), amount);
+    }
+
+    /// <inheritdoc cref="CalculateSpawns(int, int)"/>
+    private IEnumerable<int> CalculateSpawns(EntityPrototype entityPrototype, int amount)
+    {
+        return CalculateSpawns(GetMaxCount(entityPrototype), amount);
+    }
+
+    /// <inheritdoc cref="CalculateSpawns(int, int)"/>
+    private IEnumerable<int> CalculateSpawns(EntProtoId entityId, int amount)
+    {
+        return CalculateSpawns(GetMaxCount(entityId), amount);
+    }
+
+    #endregion
+    #endregion
 }
 
 /// <summary>
