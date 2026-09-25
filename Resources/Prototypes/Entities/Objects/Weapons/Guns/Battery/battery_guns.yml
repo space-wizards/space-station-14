@@ -214,6 +214,9 @@
   description: Better pray it won't burn your hands off.
   suffix: No Cell
   components:
+  - type: ContainerContainer
+    containers:
+      glasses: !type:ContainerSlot
   - type: ItemSlots
     slots:
       cell_slot:
@@ -255,6 +258,7 @@
     node: mslaser
     containers:
     - cell_slot
+    - glasses
 
 - type: entity # for salv loot & co
   parent: WeaponMakeshiftLaserNoCell
@@ -265,6 +269,8 @@
     slots:
       cell_slot:
         startingItem: PowerCellMedium
+      glasses:
+        startingItem: ClothingEyesGlassesJamjar
 
 - type: entity
   parent: [BaseItem, BaseMinorContraband]

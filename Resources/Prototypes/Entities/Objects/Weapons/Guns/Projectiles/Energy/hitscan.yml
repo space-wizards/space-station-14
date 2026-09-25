@@ -87,8 +87,8 @@
 - type: entity
   parent: LaserHitscanBase
   id: RedLaserMakeshift
-  name: weak red laser ray
   categories: [ HideSpawnMenu ]
+  name: weak red laser ray
   components:
   - type: HitscanBasicDamage
     damage:

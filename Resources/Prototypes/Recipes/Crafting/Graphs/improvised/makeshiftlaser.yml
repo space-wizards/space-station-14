@@ -16,7 +16,7 @@
         amount: 2
       - material: Cable
         amount: 5
-        doAfter: 10
+        doAfter: 5
 
   - node: mslaserframe
     entity: WeaponMakeshiftLaserFrame
@@ -24,7 +24,7 @@
     - to: mslaserframescrewed
       steps:
       - tool: Screwing
-        doAfter: 8
+        doAfter: 2
     - to: start
       steps:
       - tool: Cutting
@@ -50,7 +50,7 @@
         icon:
           sprite: Objects/Eyes/Glasses/jamjar.rsi
           state: icon
-        doAfter: 3
+        doAfter: 2
     - to: mslaserframe
       steps:
       - tool: Prying
@@ -62,7 +62,7 @@
     - to: mslaserwelded
       steps:
       - tool: Welding
-        doAfter: 8
+        doAfter: 2
     - to: mslaserframescrewed
       steps:
       - tool: Cutting
@@ -87,7 +87,7 @@
         icon:
           sprite: Objects/Power/power_cells.rsi
           state: medium
-        doAfter: 3
+        doAfter: 1
     - to: mslaserframeglasses
       steps:
       - tool: Cutting
