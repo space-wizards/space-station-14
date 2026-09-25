@@ -25,7 +25,6 @@
   graph: MakeshiftLaserGraph
   targetNode: mslaser
 
-
 - type: construction
   parent: BaseWeapon
   id: pneumaticcannon
