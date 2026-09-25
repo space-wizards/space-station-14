@@ -22,6 +22,7 @@
       PestSpray: 20
       ChemistryBottleRobustHarvest: 3
       ChemistryBottleEZNutrient: 3
+      ReagentContainerMutagenicFertilizer: 3
     contrabandInventory:
       ChemistryBottleUnstableMutagen: 1
       Joint: 1
