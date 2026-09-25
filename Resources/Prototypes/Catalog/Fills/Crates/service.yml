@@ -48,8 +48,10 @@
           amount: 2
         - id: ReagentContainerSugar
           amount: 2
-        - id: FoodCondimentPacketSalt
-          amount: 3
+        - id: ReagentContainerSalt
+          amount: 2
+        - id: ReagentContainerPepper
+          amount: 1
         - id: FoodCondimentBottleEnzyme
           amount: 2
         - id: FoodContainerEgg
@@ -102,8 +104,10 @@
           amount: 3
         - id: ReagentContainerSugar
           amount: 2
-        - id: FoodCondimentPacketSalt
-          amount: 3
+        - id: ReagentContainerSalt
+          amount: 2
+        - id: ReagentContainerPepper
+          amount: 1
         - id: DrinkMilkCarton
           amount: 2
         - id: DrinkSoyMilkCarton

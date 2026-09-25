@@ -6,6 +6,7 @@
   startingGear: ChaplainGear
   icon: "JobIconChaplain"
   supervisors: job-supervisors-hop
+  guides: [ Service ] # TODO: should have a more specific guidebook page instead of using the department itself
   access:
   - Chapel
   - Maintenance
@@ -17,7 +18,6 @@
 - type: startingGear
   id: ChaplainGear
   equipment:
-    shoes: ClothingShoesColorBlack
     id: ChaplainPDA
     ears: ClothingHeadsetService
   storage:

@@ -1,6 +1,5 @@
-﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+<controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                      xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
                       Title="{Loc 'research-console-menu-title'}"
                       MinSize="625 400"
                       SetSize="700 550">
@@ -33,7 +32,7 @@
                           Margin="10 0 10 10"
                           MinWidth="175">
                 <Label Text="{Loc 'research-console-available-text'}" HorizontalAlignment="Center"/>
-                <customControls:HSeparator StyleClasses="LowDivider" Margin="0 0 0 10"/>
+                <controls:Separator StyleClasses="LowDivider" Margin="0 0 0 10"/>
                 <PanelContainer VerticalExpand="True" StyleClasses="PanelDeep">
                     <ScrollContainer
                         HScrollEnabled="False"
@@ -48,7 +47,7 @@
                 </PanelContainer>
                 <Control MinHeight="10"/>
                 <Label Text="{Loc 'research-console-unlocked-text'}" HorizontalAlignment="Center"/>
-                <customControls:HSeparator StyleClasses="LowDivider" Margin="0 0 0 10"/>
+                <controls:Separator StyleClasses="LowDivider" Margin="0 0 0 10"/>
                 <PanelContainer VerticalExpand="True" StyleClasses="PanelDeep">
                     <ScrollContainer
                         HScrollEnabled="False"

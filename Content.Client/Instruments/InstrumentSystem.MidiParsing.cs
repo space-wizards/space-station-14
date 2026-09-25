@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Instruments;
 using Robust.Shared.Audio.Midi;
 
