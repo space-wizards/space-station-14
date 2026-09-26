@@ -21,6 +21,10 @@
         {
             "name": "inhand-right",
 			"directions": 4
+        },
+        {
+            "name": "folding-overlay",
+			"directions": 4
         }
     ]
 }
