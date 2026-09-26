@@ -20,12 +20,12 @@ public partial class RadiationSystem
         float Slope,
         TransformComponent Transform,
         Vector2 WorldPosition,
-        EntityUid? SourceUid, // Nullable for tile sources
-        RadiationSourceComponent? SourceComponent = null,
-        string SourceId = "")
+        EntityUid? SourceUid, // Nullable for tile sources,
+        ushort SourceId = 0,
+        RadiationSourceComponent? SourceComponent = null)
     {
         public EntityUid? GridUid => Transform.GridUid;
-        public bool IsTileSource => !string.IsNullOrEmpty(SourceId);
+        public bool IsTileSource => SourceId != 0;
     }
 
     private void UpdateGridcast()
@@ -64,6 +64,7 @@ public partial class RadiationSystem
                 xform,
                 worldPos,
                 uid,
+                0,
                 source
             ));
         }
@@ -89,8 +90,8 @@ public partial class RadiationSystem
                     mapXform,
                     worldCenter,
                     null,
-                    null,
-                    tileSource.SourceId
+                    tileSource.SourceId,
+                    null
                 ));
             }
         }

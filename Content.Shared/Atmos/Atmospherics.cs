@@ -288,7 +288,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Identifier for tritium fire radiation sources
         /// </summary>
-        public const string TritiumFireSourceId = "trit_fire";
+        public const ushort TritiumFireSourceId = 1;
 
         public const float FrezonCoolLowerTemperature = 23.15f;
 

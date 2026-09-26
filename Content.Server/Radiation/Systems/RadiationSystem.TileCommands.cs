@@ -129,6 +129,7 @@ public sealed partial class TileRadiationCommand : IConsoleCommand
         if (!NetEntity.TryParse(args[1], out var netGrid) ||
             !int.TryParse(args[2], out var x) ||
             !int.TryParse(args[3], out var y) ||
+            !ushort.TryParse(args[4], out var sourceId) ||
             !float.TryParse(args[5], out var intensity))
         {
             shell.WriteError("gridUid, x, y must be valid. intensity must be a float.");
@@ -142,7 +143,6 @@ public sealed partial class TileRadiationCommand : IConsoleCommand
             return;
         }
         var tile = new Vector2i(x, y);
-        var sourceId = args[4];
 
         var slope = 0.5f;
         if (args.Length >= 7 && !float.TryParse(args[6], out slope))
@@ -188,7 +188,11 @@ public sealed partial class TileRadiationCommand : IConsoleCommand
 
         if (args.Length == 5)
         {
-            var targetId = args[4];
+            if (!ushort.TryParse(args[4], out var targetId))
+            {
+                shell.WriteError("sourceId must be a valid ushort integer.");
+                return;
+            }
             radSystem.ClearTileRadiation(gridUid, tile, source => source.SourceId == targetId);
             shell.WriteLine($"Cleared tile sources matching ID '{targetId}' on grid {gridUid} tile ({x}, {y}).");
         }
@@ -209,7 +213,11 @@ public sealed partial class TileRadiationCommand : IConsoleCommand
 
         if (args.Length == 2)
         {
-            var targetId = args[1];
+            if (!ushort.TryParse(args[1], out var targetId))
+            {
+                shell.WriteError("sourceId must be a valid ushort integer.");
+                return;
+            }
             radSystem.ClearAllTileRadiation(source => source.SourceId == targetId);
             shell.WriteLine($"Cleared all tile sources matching ID: {targetId}");
         }

@@ -12,14 +12,14 @@ public partial class RadiationSystem
         public float Intensity;
         public float Slope;
         public float HalfLife;
-        public string SourceId = string.Empty;
+        public ushort SourceId = 0;
     }
 
     public readonly record struct SpatialTileKey(EntityUid GridUid, Vector2i Tile);
 
-    private readonly Dictionary<SpatialTileKey, Dictionary<string, TileSourceData>> _tileRadiationSources = new();
+    private readonly Dictionary<SpatialTileKey, Dictionary<ushort, TileSourceData>> _tileRadiationSources = new();
 
-    public void SetTileRadiation(EntityUid gridUid, Vector2i tile, string sourceId, float intensity, float slope, float halfLife = -1f, bool forceSet = false)
+    public void SetTileRadiation(EntityUid gridUid, Vector2i tile, ushort sourceId, float intensity, float slope, float halfLife = -1f, bool forceSet = false)
     {
         if (intensity < MinIntensity)
             return;
@@ -29,7 +29,7 @@ public partial class RadiationSystem
         ref var tileSources = ref CollectionsMarshal.GetValueRefOrAddDefault(_tileRadiationSources, key, out var exists);
         if (!exists || tileSources == null)
         {
-            tileSources = new Dictionary<string, TileSourceData>();
+            tileSources = new Dictionary<ushort, TileSourceData>();
         }
 
         ref var source = ref CollectionsMarshal.GetValueRefOrAddDefault(tileSources, sourceId, out var sourceExists);
@@ -57,7 +57,7 @@ public partial class RadiationSystem
 
         foreach (var (spatialKey, tileSources) in _tileRadiationSources)
         {
-            var expiredSources = new ValueList<string>();
+            var expiredSources = new ValueList<ushort>();
 
             foreach (var (sourceId, source) in tileSources)
             {
@@ -109,7 +109,7 @@ public partial class RadiationSystem
 
             var tileIndices = _maps.TileIndicesFor((gridUid.Value, grid), xform.Coordinates);
             var totalIntensity = emitter.Intensity * _stack.GetCount(uid);
-            var sourceId = uid.ToString();
+            var sourceId = (ushort)uid;
 
             SetTileRadiation(
                 gridUid.Value,
@@ -128,7 +128,7 @@ public partial class RadiationSystem
         if (!_tileRadiationSources.TryGetValue(key, out var tileSources))
             return;
 
-        var expiredSources = new ValueList<string>();
+        var expiredSources = new ValueList<ushort>();
 
         foreach (var (sourceId, source) in tileSources)
         {
@@ -155,7 +155,7 @@ public partial class RadiationSystem
 
         foreach (var (spatialKey, tileSources) in _tileRadiationSources)
         {
-            var expiredSources = new ValueList<string>();
+            var expiredSources = new ValueList<ushort>();
 
             foreach (var (sourceId, source) in tileSources)
             {
@@ -182,7 +182,7 @@ public partial class RadiationSystem
         }
     }
 
-    public IReadOnlyDictionary<SpatialTileKey, Dictionary<string, TileSourceData>> GetTileRadiationSources()
+    public IReadOnlyDictionary<SpatialTileKey, Dictionary<ushort, TileSourceData>> GetTileRadiationSources()
     {
         return _tileRadiationSources;
     }
