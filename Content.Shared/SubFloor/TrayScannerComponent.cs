@@ -8,12 +8,6 @@ namespace Content.Shared.SubFloor;
 public sealed partial class TrayScannerComponent : Component
 {
     /// <summary>
-    ///     Whether the scanner is currently on.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool Enabled;
-
-    /// <summary>
     ///     Current mode of operation, defines which subfloor entities are shown.
     /// </summary>
     [DataField, AutoNetworkedField]
