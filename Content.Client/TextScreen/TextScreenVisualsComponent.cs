@@ -56,6 +56,24 @@ public sealed partial class TextScreenVisualsComponent : Component
     public int RowLength = 5;
 
     /// <summary>
+    /// The longest that a message should take to cross the screen before wrapping around.
+    /// </summary>
+    [DataField]
+    public TimeSpan MaxMessageScrollTime = TimeSpan.FromSeconds(5);
+
+    /// <summary>
+    /// The longest that it should take to scroll one pixel on a screen.
+    /// </summary>
+    [DataField]
+    public TimeSpan MaxPixelScrollTime = TimeSpan.FromMilliseconds(100);
+
+    /// <summary>
+    /// The maximum number of characters to display per row.
+    /// </summary>
+    [DataField]
+    public int MaxScrollingCharacters = 32;
+
+    /// <summary>
     /// When scrolling, a horizontal offset for the scrolling, in pixels
     /// </summary>
     /// <seealso cref="TextScreenSystem.CharWidth"/>

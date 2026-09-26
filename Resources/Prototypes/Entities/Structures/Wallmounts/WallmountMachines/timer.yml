@@ -71,6 +71,7 @@
     horizontalScrollOffset: 1
     leftInvisiblePixels: 2
     rightInvisiblePixels: 1
+    maxScrollingCharacters: 16
     frameState:
       state: outer_frame
   - type: Sprite

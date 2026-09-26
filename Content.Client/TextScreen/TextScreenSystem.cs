@@ -29,9 +29,11 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     [Dependency] private EntityQuery<TextScreenTimerVisualsComponent> _screenTimerQuery;
 
     /// <summary>
-    /// Contains char/state Key/Value pairs. <br/>
-    /// The states in Textures/Effects/text.rsi that special character should be replaced with.
+    /// Contains the state that should be drawn for each non-alphanumeric character.
     /// </summary>
+    /// <remarks>
+    /// Each state is expected to be in Textures/Effects/text.rsi.
+    /// </remarks>
     private static readonly FrozenDictionary<char, string> CharStatePairs = new Dictionary<char, string>
     {
         { '<', "angle-l" },
@@ -75,21 +77,6 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     /// The width of an individual character, in pixels.
     /// </summary>
     private const int CharWidth = 4;
-
-    /// <summary>
-    /// The maximum number of characters to display per row.
-    /// </summary>
-    private const int MaxScrollingCharacters = 32;
-
-    /// <summary>
-    /// The longest that a message should take to cross the screen before wrapping around.
-    /// </summary>
-    private static readonly TimeSpan MaxMessageScrollTime = TimeSpan.FromSeconds(5);
-
-    /// <summary>
-    /// The longest that it should take to scroll one pixel on a screen.
-    /// </summary>
-    private static readonly TimeSpan MaxPixelScrollTime = TimeSpan.FromMilliseconds(100);
 
     #region Inherited
     /// <inheritdoc/>
@@ -431,11 +418,11 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
                 else
                 {
                     // Scrolling: find our timing, adjust rolling position within the text.
-                    var rowText = texts[i][..int.Min(texts[i].Length, MaxScrollingCharacters)];
+                    var rowText = texts[i][..int.Min(texts[i].Length, ent.Comp.MaxScrollingCharacters)];
                     rowData.Text = rowText.PadRight(rowText.Length + ent.Comp.RowLength - 1);
 
-                    var newMaxPixelScrollTime = MaxMessageScrollTime / rowText.Length / CharWidth; // Scroll speed per pixel at the max message scroll length.
-                    rowData.ScrollDelay = newMaxPixelScrollTime < MaxPixelScrollTime ? newMaxPixelScrollTime : MaxPixelScrollTime;
+                    var newMaxPixelScrollTime = ent.Comp.MaxMessageScrollTime / rowText.Length / CharWidth; // Scroll speed per pixel at the max message scroll length.
+                    rowData.ScrollDelay = newMaxPixelScrollTime < ent.Comp.MaxPixelScrollTime ? newMaxPixelScrollTime : ent.Comp.MaxPixelScrollTime;
 
                     rowData.NextScroll = ent.Comp.TextTime;
                     rowData.ScrollPosition = 0;
