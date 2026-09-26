@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "rot"
+    },
+    {
+      "name": "rot-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "rot-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "trash_rot"
+    },
+    {
+      "name": "trash_rot-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "trash_rot-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "spider_rot"
+    },
+    {
+      "name": "spider_rot-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "spider_rot-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "space_tick_rot"
+    },
+    {
+      "name": "space_tick_rot-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "space_tick_rot-inhand-left",
+      "directions": 4
+    }
+  ]
+}
