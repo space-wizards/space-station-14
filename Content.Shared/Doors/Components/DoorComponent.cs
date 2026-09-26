@@ -329,7 +329,6 @@ public enum DoorState : byte
     Closing,
     Open,
     Opening,
-    Welded,
     Denying,
     Emagging
 }
