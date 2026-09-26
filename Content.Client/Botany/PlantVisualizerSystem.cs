@@ -11,6 +11,7 @@ public sealed partial class PlantVisualizerSystem : VisualizerSystem<PlantVisual
     [Dependency] private PlantSystem _plant = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
     [Dependency] private PlantTrayVisualizerSystem _plantTrayVisualizer = default!;
+    [Dependency] private PlantAnalyzerSystem _plantAnalyzer = default!;
 
     [SubscribeLocalEvent]
     private void OnComponentInit(EntityUid uid, PlantVisualsComponent component, ComponentInit args)
@@ -34,14 +35,40 @@ public sealed partial class PlantVisualizerSystem : VisualizerSystem<PlantVisual
     private void OnPlantState(Entity<PlantComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         UpdateSprite(ent.Owner);
+        _plantAnalyzer.UpdatePlantUi(ent.Owner);
     }
 
     [SubscribeLocalEvent]
     private void OnHolderState(Entity<PlantHolderComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         UpdateSprite(ent.Owner);
+        _plantAnalyzer.UpdatePlantUi(ent.Owner);
         if (_plant.TryGetTray(ent.Owner, out var trayEnt))
             _plantTrayVisualizer.UpdateTrayWarnings(trayEnt.AsNullable());
+    }
+
+    [SubscribeLocalEvent]
+    private void OnChemicalsState(Entity<PlantChemicalsComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        _plantAnalyzer.UpdatePlantUi(ent.Owner);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnGrowthState(Entity<PlantGrowthComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        _plantAnalyzer.UpdatePlantUi(ent.Owner);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnAtmosphericState(Entity<PlantAtmosphericComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        _plantAnalyzer.UpdatePlantUi(ent.Owner);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnGasState(Entity<PlantConsumeExudeGasComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        _plantAnalyzer.UpdatePlantUi(ent.Owner);
     }
 
     [SubscribeLocalEvent]
