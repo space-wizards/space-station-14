@@ -3,6 +3,7 @@
   name: job-name-supply-assistant
   description: job-description-supply-assistant
   playTimeTracker: JobSupplyAssistant
+  setPreference: false # TEMPORARILY not a player-facing role until the spawns are mapped; otherwise Cargo is just entirely unplayable for new players
   requirements:
     - !type:DepartmentTimeRequirement
       department: Cargo

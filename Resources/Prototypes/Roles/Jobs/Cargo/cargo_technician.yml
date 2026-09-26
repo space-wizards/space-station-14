@@ -3,10 +3,11 @@
   name: job-name-cargotech
   description: job-description-cargotech
   playTimeTracker: JobCargoTechnician
-  requirements:
-    - !type:DepartmentTimeRequirement
-      department: Cargo
-      time: 2.5h
+  # Add the below playtime requirements once Supply Assistant is player-facing
+  # requirements:
+  #   - !type:DepartmentTimeRequirement
+  #     department: Cargo
+  #     time: 2.5h
   startingGear: CargoTechGear
   icon: "JobIconCargoTechnician"
   supervisors: job-supervisors-qm
