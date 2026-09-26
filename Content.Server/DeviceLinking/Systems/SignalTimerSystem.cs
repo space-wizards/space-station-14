@@ -11,9 +11,10 @@ using Robust.Shared.Timing;
 namespace Content.Server.DeviceLinking.Systems;
 
 /// <summary>
-/// A system for signallable timers. This is a timer with a screen
+/// A system for signallable timers. Sets timer AppearanceData when triggered to start/stop.
 /// </summary>
-/// <seealso cref="TextScreenTimerVisualsComponent"/>
+/// <seealso cref="Content.Client.TextScreenTimerVisualsComponent"/>
+/// <seealso cref="AppearanceComponent"/>
 public sealed partial class SignalTimerSystem : EntitySystem
 {
     [Dependency] private IGameTiming _gameTiming = default!;
@@ -53,9 +54,11 @@ public sealed partial class SignalTimerSystem : EntitySystem
         if (!_ui.HasUi(ent, SignalTimerUiKey.Key))
             return;
 
+        var timeSpan = TimeSpan.FromSeconds(ent.Comp.Delay);
+
         _ui.SetUiState(ent.Owner, SignalTimerUiKey.Key, new SignalTimerBoundUserInterfaceState(ent.Comp.Label,
-            TimeSpan.FromSeconds(ent.Comp.Delay).Minutes.ToString("D2"),
-            TimeSpan.FromSeconds(ent.Comp.Delay).Seconds.ToString("D2"),
+            timeSpan.Minutes.ToString("D2"),
+            timeSpan.Seconds.ToString("D2"),
             ent.Comp.CanEditLabel,
             time,
             active != null,

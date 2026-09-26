@@ -9,7 +9,7 @@ namespace Content.Client.TextScreen;
 /// Can show scrolling text, timers, or other specific-use information (e.g. arrivals timer).
 /// </summary>
 /// <remarks>
-/// Pausing handled manually due to manual TextScreenRow logic.
+/// Pausing handled manually due to <see cref="TextScreenRow"/> logic.
 /// </remarks>
 [RegisterComponent, Access(typeof(TextScreenSystem))]
 public sealed partial class TextScreenVisualsComponent : Component
@@ -19,6 +19,7 @@ public sealed partial class TextScreenVisualsComponent : Component
     /// </summary>
     public const float PixelSize = 1f / EyeManager.PixelsPerMeter;
 
+    #region Appearance
     /// <summary>
     /// The color of the text drawn.
     /// </summary>
@@ -37,6 +38,9 @@ public sealed partial class TextScreenVisualsComponent : Component
     /// <summary>
     /// Offset for centering the text.
     /// </summary>
+    /// <remarks>
+    /// Values in pixels.
+    /// </remarks>
     [DataField]
     public Vector2 TextOffset = Vector2.Zero;
 
@@ -101,6 +105,18 @@ public sealed partial class TextScreenVisualsComponent : Component
     public int RightInvisiblePixels;
 
     /// <summary>
+    /// The layer for the outer frame of the text screen.
+    /// </summary>
+    /// <remarks>
+    /// Will be registered on top of the other layers.
+    /// Should be at least 2 pixels thick on either side for the illusion to work.
+    /// </remarks>
+    [DataField]
+    public PrototypeLayerData? FrameState;
+    #endregion
+
+    #region Text State
+    /// <summary>
     /// If true, the screen is able to scroll its text.
     /// </summary>
     [DataField]
@@ -134,13 +150,7 @@ public sealed partial class TextScreenVisualsComponent : Component
     /// </summary>
     [ViewVariables]
     public bool NewTextToDisplay;
-
-    /// <summary>
-    /// The layer for the outer frame of the text screen.
-    /// Will be registered on top of the other layers.
-    /// </summary>
-    [DataField]
-    public PrototypeLayerData? FrameState;
+    #endregion
 }
 
 /// <summary>
@@ -174,6 +184,9 @@ public partial struct TextScreenRow()
     /// <summary>
     /// A list with each of the row's sprite layers, with the key inside of it and the state it's currently on.
     /// </summary>
+    /// <remarks>
+    /// Currently not removed from the sprite when the component is removed.
+    /// </remarks>
     [DataField]
     public List<(string Key, string? State)> Layers = new();
 

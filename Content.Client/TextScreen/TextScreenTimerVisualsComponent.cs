@@ -3,9 +3,11 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Client.TextScreen;
 
 /// <summary>
-/// Additional visual data for text screens that support countdown timers with frame-by-frame updates.
-/// Entities must have <see cref="TextScreenVisualsComponent"/> to work!
+/// A component for text screens that support countdown timers with frame-by-frame updates.
 /// </summary>
+/// <remarks>
+/// Entities must have <see cref="TextScreenVisualsComponent"/> to work!
+/// </remarks>
 [RegisterComponent, Access(typeof(TextScreenSystem))]
 [AutoGenerateComponentPause]
 public sealed partial class TextScreenTimerVisualsComponent : Component
@@ -24,7 +26,7 @@ public sealed partial class TextScreenTimerVisualsComponent : Component
     public string RunningText = "";
 
     /// <summary>
-    /// The string to draw onto the screen when the timer has elapsed.
+    /// The string to draw onto the screen when the target time is reached.
     /// </summary>
     [DataField]
     public string FinishedText = "";
@@ -36,17 +38,17 @@ public sealed partial class TextScreenTimerVisualsComponent : Component
     public int TimerRow;
 
     /// <summary>
-    /// Whether or not the timer will show times with centisecond precision.
+    /// If true, the timer will show small durations with centisecond precision.
     /// If false, times will be shown with second precision at most.
     /// </summary>
     [DataField]
     public bool ShowCentiseconds = true;
 
     /// <summary>
-    /// The last value being displayed on the screen, (hundreds):(ones).
-    /// e.g. 12:34 would be a value of 1234.
-    /// 0 indicates that the timer has finished, and should display FinishedText instead.
+    /// The last value being displayed on the screen.
     /// </summary>
+    /// <remarks>
+    /// A value of all zeros implies the timer is done, and <see cref="FinishedText"/> should be displayed instead.
     [DataField]
     public TimerDisplay ScreenValue;
 
@@ -64,10 +66,11 @@ public sealed partial class TextScreenTimerVisualsComponent : Component
 }
 
 /// <summary>
-/// A small value representing a value to display on a timer.
+/// A value to display on a timer, agnostic of time unit.
 /// </summary>
 /// <remarks>
 /// Values to be expressed as <c>HIGH:LOW</c>, both values effectively capped at 99.
+/// Used to avoid string comparisons.
 /// </remarks>
 [DataDefinition, Serializable]
 public partial record struct TimerDisplay(int HighValue, int LowValue)
@@ -86,6 +89,6 @@ public partial record struct TimerDisplay(int HighValue, int LowValue)
 [Serializable]
 public enum TimerVisualLayers : byte
 {
-    /// <summary>A light that lights up with the status of the timer.</summary>
+    /// <summary>A light that turns on with the status of the timer.</summary>
     Light
 }

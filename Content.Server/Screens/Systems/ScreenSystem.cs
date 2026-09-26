@@ -19,7 +19,7 @@ public sealed partial class ScreenSystem : EntitySystem
     [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery;
 
     /// <summary>
-    /// Send a text update to every screen on the same MapUid as the originating comms console.
+    /// Send a text update to every screen on the same map as the originating device.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnScreenText(Entity<ScreenComponent> ent, ref DeviceNetworkPacketEvent<ScreenTextPayload> args)
@@ -33,7 +33,7 @@ public sealed partial class ScreenSystem : EntitySystem
 
         // don't allow text updates if there's an active timer
         // (and just check here so the server doesn't have to track them)
-        if (_appearance.TryGetData(ent, TextScreenVisuals.TargetTime, out TimeSpan target)
+        if (_appearance.TryGetData(ent, TextScreenVisuals.TargetTime, out TimeSpan target, appearance)
             && target > _gameTiming.CurTime)
             return;
 
@@ -47,12 +47,14 @@ public sealed partial class ScreenSystem : EntitySystem
 
     /// <summary>
     /// Determines if/how a timer packet affects this screen.
+    /// </summary>
+    /// <remarks>
     /// Currently there are 2 broadcast domains: Arrivals, and every other screen.
     /// Domain is determined by the <see cref="DeviceNetworkComponent.TransmitFrequencyId"/> on each timer.
     /// Each broadcast domain is divided into subnets. Screen MapUid determines subnet.
     /// Subnets are the shuttle, source, and dest. Source/dest change each jump.
     /// This is required to send different timers to the shuttle/terminal/station.
-    /// </summary>
+    /// </remarks>
     [SubscribeLocalEvent]
     private void OnShuttleTimer(Entity<ScreenComponent> ent, ref DeviceNetworkPacketEvent<ScreenShuttlePayload> args)
     {
