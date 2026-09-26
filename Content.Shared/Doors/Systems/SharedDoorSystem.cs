@@ -7,7 +7,6 @@ using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
-using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Prying.Components;
@@ -22,9 +21,9 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Doors.Systems;
@@ -46,8 +45,10 @@ public abstract partial class SharedDoorSystem : EntitySystem
     [Dependency] private AccessReaderSystem _accessReaderSystem = default!;
     [Dependency] private PryingSystem _pryingSystem = default!;
     [Dependency] protected SharedPopupSystem Popup = default!;
-    [Dependency] private SharedMapSystem _mapSystem = default!;
     [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private EntityQuery<DoorComponent> _doorQuery = default!;
+    [Dependency] private EntityQuery<FixturesComponent> _fixturesQuery = default!;
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
     public static readonly ProtoId<TagPrototype> DoorBumpTag = "DoorBumpOpener";
 
@@ -55,6 +56,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     ///     A set of doors that are currently opening, closing, or just queued to open/close after some delay.
     /// </summary>
     private readonly HashSet<Entity<DoorComponent>> _activeDoors = new();
+    private readonly HashSet<EntityUid> _tempSet = new();
 
     public override void Initialize()
     {
@@ -389,7 +391,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
         SetCollidable(uid, false, door);
         door.Partial = true;
-        door.NextStateChange = GameTiming.CurTime + door.CloseTimeTwo;
+        door.NextStateChange = GameTiming.CurTime + door.OpenTimeTwo;
         _activeDoors.Add((uid, door));
         Dirty(uid, door);
 
@@ -455,7 +457,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (!HasAccess(uid, user, door))
             return false;
 
-        return !ev.PerformCollisionCheck || !GetColliding(uid, null, null, door.CheckFixtureCollision, door.PerformCollisionCheck).Any();
+        return !ev.PerformCollisionCheck || !AnyColliding(uid, door);
     }
 
     public void StartClosing(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
@@ -487,23 +489,40 @@ public abstract partial class SharedDoorSystem : EntitySystem
         // Make sure no entity walked into the airlock when it started closing.
         if (!CanClose(uid, door, partial: true))
         {
-            door.NextStateChange = GameTiming.CurTime + door.OpenTimeTwo;
-            door.State = DoorState.Open;
-            AppearanceSystem.SetData(uid, DoorVisuals.State, DoorState.Open);
-            Dirty(uid, door);
+            ReversePartialClose(uid, door, physics);
             return false;
         }
 
         door.Partial = true;
-        SetCollidable(uid, true, door, physics);
         door.NextStateChange = GameTiming.CurTime + door.CloseTimeTwo;
         Dirty(uid, door);
+        SetCollidable(uid, true, door, physics);
         _activeDoors.Add((uid, door));
 
         // Crush any entities. Note that we don't check airlock safety here. This should have been checked before
         // the door closed.
         Crush(uid, door, physics);
         return true;
+    }
+
+    /// <summary>
+    /// Reverses a door that reached the solid part of closing but found something in the way.
+    /// </summary>
+    private void ReversePartialClose(EntityUid uid, DoorComponent door, PhysicsComponent physics)
+    {
+        // The door never became solid, so this is the second half of an opening transition, not a fully-open state.
+        // Sending Open immediately makes clients stop the closing animation and start a full opening animation while
+        // the server queues another transition almost immediately.
+        SetCollidable(uid, false, door, physics);
+        door.Partial = true;
+        door.RetryCloseAfterOpening = true;
+
+        if (door.State != DoorState.Opening)
+            SetState(uid, DoorState.Opening, door);
+
+        door.NextStateChange = GameTiming.CurTime + door.OpenTimeTwo;
+        _activeDoors.Add((uid, door));
+        Dirty(uid, door);
     }
     #endregion
 
@@ -542,7 +561,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
         // Find entities and apply crushing effects
         var stunTime = door.DoorStunTime + door.OpenTimeOne;
-        foreach (var entity in GetColliding(uid, physics, null, door.CheckFixtureCollision, door.AllowMachineLayer))
+        _tempSet.Clear();
+        GetColliding(uid, _tempSet, door, physics);
+        foreach (var entity in _tempSet)
         {
             door.CurrentlyCrushing.Add(entity);
             if (door.CrushDamage != null)
@@ -557,92 +578,125 @@ public abstract partial class SharedDoorSystem : EntitySystem
         // queue the door to open so that the player is no longer stunned once it has FINISHED opening.
         door.NextStateChange = GameTiming.CurTime + door.DoorStunTime;
         door.Partial = false;
+        Dirty(uid, door);
     }
 
     /// <summary>
-    /// Checks if there are any entities colliding with the door, passing them back out to use e.g. to prevent closing.
+    /// Checks whether any entity is colliding with the door while it is trying to close.
     /// </summary>
-    /// <param name="uid">The door entity to check.</param>
-    /// <param name="physics">The door's <see cref="PhysicsComponent"/>.</param>
-    /// <param name="checkFixtureCollision">If true, the door will do a more exact check based on its first fixture.</param>
-    /// <param name="fixtures">The door's <see cref="FixturesComponent"/>.</param>
-    /// <param name="allowMachineLayer">The door will be able to close over <see cref="CollisionGroup.MachineLayer"/>.</param>
-    /// <returns>The list of entities inside the door.</returns>
-    public IEnumerable<EntityUid> GetColliding(EntityUid uid, PhysicsComponent? physics = null, FixturesComponent? fixtures = null, bool checkFixtureCollision = false, bool allowMachineLayer = false)
+    public bool AnyColliding(
+        EntityUid uid,
+        DoorComponent? door = null,
+        PhysicsComponent? physics = null,
+        FixturesComponent? fixtures = null)
     {
-        if (!Resolve(uid, ref physics) || !Resolve(uid, ref fixtures))
-            yield break;
+        if (!_doorQuery.Resolve(uid, ref door) ||
+            !_physicsQuery.Resolve(uid, ref physics) ||
+            !_fixturesQuery.Resolve(uid, ref fixtures))
+        {
+            return false;
+        }
 
+        return FindColliding(uid, door, physics, fixtures, null);
+    }
+
+    /// <summary>
+    /// Adds entities colliding with the door while it is trying to close.
+    /// </summary>
+    public void GetColliding(
+        EntityUid uid,
+        HashSet<EntityUid> colliding,
+        DoorComponent? door = null,
+        PhysicsComponent? physics = null,
+        FixturesComponent? fixtures = null)
+    {
+        if (!_doorQuery.Resolve(uid, ref door) ||
+            !_physicsQuery.Resolve(uid, ref physics) ||
+            !_fixturesQuery.Resolve(uid, ref fixtures))
+        {
+            return;
+        }
+
+        FindColliding(uid, door, physics, fixtures, colliding);
+    }
+
+    private bool FindColliding(
+        EntityUid uid,
+        DoorComponent door,
+        PhysicsComponent physics,
+        FixturesComponent fixtures,
+        HashSet<EntityUid>? colliding)
+    {
         var xform = Transform(uid);
-        // Getting the world bounds from the gridUid allows us to use the version of
-        // GetCollidingEntities that returns Entity<PhysicsComponent>
-        if (!TryComp<MapGridComponent>(xform.GridUid, out var mapGridComp))
-            yield break;
-        var tileRef = _mapSystem.GetTileRef(xform.GridUid.Value, mapGridComp, xform.Coordinates);
+        var doorTransform = PhysicsSystem.GetPhysicsTransform(uid, xform);
+        var state = new DoorCollisionQueryState(uid, physics, colliding);
+        var callback = new DoorCollisionQueryCallback();
 
-        var doorIntersecting = new HashSet<Entity<PhysicsComponent>>();
-
-        if (checkFixtureCollision && fixtures.Fixtures.TryFirstOrNull(out var fixture))
+        foreach (var fixture in fixtures.Fixtures.Values)
         {
-            var fixtureToWorld = PhysicsSystem.GetPhysicsTransform(uid, xform);
+            var query = GetDoorQuery(fixture);
 
-            _entityLookup.GetEntitiesIntersecting(xform.MapID,
-                fixture.Value.Value.Shape,
-                fixtureToWorld,
-                doorIntersecting,
-                flags: LookupFlags.All & ~(LookupFlags.Sensors | LookupFlags.Contained));
-        }
-        else
-        {
-            _entityLookup.GetLocalEntitiesIntersecting(xform.GridUid.Value, tileRef.GridIndices, doorIntersecting, gridComp: mapGridComp, flags: LookupFlags.All & ~(LookupFlags.Sensors | LookupFlags.Contained));
-        }
-
-        // TODO SLOTH fix electro's code.
-        // ReSharper disable once InconsistentNaming
-
-        foreach (var otherPhysics in doorIntersecting)
-        {
-            if (otherPhysics.Comp == physics)
-                continue;
-
-            if (!otherPhysics.Comp.CanCollide)
-                continue;
-
-            // Skip anchored static entities on adjacent tiles.
-            // The fixture-based AABB lookup may slightly overlap neighboring tiles
-            // due to PolygonRadius enlargement, picking up walls and other structures.
-            if (otherPhysics.Comp.BodyType == BodyType.Static)
+            for (var i = 0; i < fixture.Shape.ChildCount; i++)
             {
-                var otherXform = Transform(otherPhysics.Owner);
-                if (otherXform.Anchored)
+                if (!_entityLookup.ForEachFixtureIntersecting(
+                    xform.MapID,
+                    fixture.Shape,
+                    i,
+                    doorTransform,
+                    ref state,
+                    callback,
+                    query))
                 {
-                    var otherTile = _mapSystem.GetTileRef(xform.GridUid.Value, mapGridComp, otherXform.Coordinates);
-                    if (otherTile.GridIndices != tileRef.GridIndices)
-                        continue;
+                    return true;
                 }
             }
+        }
 
-            //TODO: Make only shutters ignore these objects upon colliding instead of all airlocks
-            // Excludes Glasslayer for windows, GlassAirlockLayer for windoors, TableLayer for tables
-            if (otherPhysics.Comp.CollisionLayer == (int) CollisionGroup.GlassLayer || otherPhysics.Comp.CollisionLayer == (int) CollisionGroup.GlassAirlockLayer || otherPhysics.Comp.CollisionLayer == (int) CollisionGroup.TableLayer)
-                continue;
+        return state.Found;
+    }
 
-            // Ignore low-passable entities.
-            if ((otherPhysics.Comp.CollisionMask & (int)CollisionGroup.LowImpassable) == 0)
-                continue;
+    private static FixtureQueryArgs GetDoorQuery(Fixture fixture)
+    {
+        return new FixtureQueryArgs(
+            new QueryFilter
+            {
+                LayerBits = fixture.CollisionLayer,
+                MaskBits = fixture.CollisionMask,
+                Flags = QueryFlags.Dynamic | QueryFlags.Static,
+            },
+            ignoreShapeSkin: true);
+    }
 
-            //For when doors need to close over conveyor belts
-            if (otherPhysics.Comp.CollisionLayer == (int) CollisionGroup.ConveyorMask)
-                continue;
+    private struct DoorCollisionQueryState
+    {
+        public readonly EntityUid Door;
+        public readonly PhysicsComponent Physics;
+        public readonly HashSet<EntityUid>? Colliding;
+        public bool Found;
 
-            // We want windoors to be able to close over machines
-            if (allowMachineLayer && otherPhysics.Comp.CollisionLayer == (int) CollisionGroup.MachineLayer)
-                continue;
+        public DoorCollisionQueryState(EntityUid door, PhysicsComponent physics, HashSet<EntityUid>? colliding)
+        {
+            Door = door;
+            Physics = physics;
+            Colliding = colliding;
+            Found = false;
+        }
+    }
 
-            if ((physics.CollisionMask & otherPhysics.Comp.CollisionLayer) == 0 && (otherPhysics.Comp.CollisionMask & physics.CollisionLayer) == 0)
-                continue;
+    private readonly struct DoorCollisionQueryCallback : IFixtureQueryCallback<DoorCollisionQueryState>
+    {
+        public bool Invoke(ref DoorCollisionQueryState state, in FixtureProxy fixture)
+        {
+            if (fixture.Entity == state.Door || fixture.Body == state.Physics)
+                return true;
 
-            yield return otherPhysics.Owner;
+            state.Found = true;
+
+            if (state.Colliding == null)
+                return false;
+
+            state.Colliding.Add(fixture.Entity);
+            return true;
         }
     }
 
@@ -755,7 +809,12 @@ public abstract partial class SharedDoorSystem : EntitySystem
         // Is this trying to prevent an update? (e.g., cancel an auto-close)
         if (delay == null || delay.Value <= TimeSpan.Zero)
         {
+            var hadNextStateChange = door.NextStateChange != null;
             door.NextStateChange = null;
+
+            if (hadNextStateChange)
+                Dirty(uid, door);
+
             _activeDoors.Remove((uid, door));
             return;
         }
@@ -832,9 +891,17 @@ public abstract partial class SharedDoorSystem : EntitySystem
             case DoorState.Opening:
                 // Either fully or partially open this door.
                 if (door.Partial)
+                {
+                    var retryClose = door.RetryCloseAfterOpening;
+                    door.RetryCloseAfterOpening = false;
                     SetState(ent, DoorState.Open, door);
+                    if (retryClose)
+                        QueueCloseRetryAfterOpening(ent, door, time);
+                }
                 else
+                {
                     OnPartialOpen(ent, door);
+                }
 
                 break;
 
@@ -862,6 +929,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
                 {
                     // The door failed to close (blocked?). Try again in one second.
                     door.NextStateChange = time + TimeSpan.FromSeconds(1);
+                    Dirty(ent, door);
                 }
                 break;
 
@@ -870,6 +938,24 @@ public abstract partial class SharedDoorSystem : EntitySystem
                 Log.Error($"Welded door was in the list of active doors. Door: {ToPrettyString(ent)}");
                 break;
         }
+    }
+
+    private void QueueCloseRetryAfterOpening(EntityUid uid, DoorComponent door, TimeSpan time)
+    {
+        var delay = door.OpeningAnimationTime - door.OpenTimeTwo;
+
+        if (delay > TimeSpan.Zero)
+        {
+            SetNextStateChange(uid, delay, door);
+            return;
+        }
+
+        if (TryClose(uid, door))
+            return;
+
+        door.NextStateChange = time + TimeSpan.FromSeconds(1);
+        _activeDoors.Add((uid, door));
+        Dirty(uid, door);
     }
     #endregion
 }
