@@ -28,6 +28,8 @@ public partial class RadiationSystem
         public bool IsTileSource => SourceId != 0;
     }
 
+    private Vector2 _halfTileOffset = new(0.5f, 0.5f);
+
     private void UpdateGridcast()
     {
         // should we save debug information into rays?
@@ -69,24 +71,47 @@ public partial class RadiationSystem
             ));
         }
 
+        var lastGridUid = EntityUid.Invalid;
+        TransformComponent? lastMapXform = null;
+        var lastLocalMatrix = Matrix3x2.Identity;
+        var currentGridValid = false;
+
         // Add tile radiation sources to the main sources list
         foreach (var (spatialKey, tileSources) in _tileRadiationSources)
         {
-            var gridXform = Transform(spatialKey.GridUid);
-            if (gridXform.MapUid is not { } mapUid)
+            if (spatialKey.GridUid != lastGridUid)
+            {
+                lastGridUid = spatialKey.GridUid;
+
+                if (TryComp(lastGridUid, typeof(TransformComponent), out var gridComp) &&
+                    gridComp is TransformComponent gridXform &&
+                    gridXform.MapUid is { } mapUid &&
+                    TryComp(mapUid, typeof(TransformComponent), out var mapComp) &&
+                    mapComp is TransformComponent mapXform)
+                {
+                    lastMapXform = mapXform;
+                    lastLocalMatrix = gridXform.LocalMatrix;
+                    currentGridValid = true;
+                }
+                else
+                {
+                    lastMapXform = null;
+                    currentGridValid = false;
+                }
+            }
+
+            if (!currentGridValid || lastMapXform == null)
                 continue;
 
-            var mapXform = Transform(mapUid);
-
-            var localTileCenter = new Vector2(spatialKey.Tile.X + 0.5f, spatialKey.Tile.Y + 0.5f);
-            var worldCenter = Vector2.Transform(localTileCenter, gridXform.LocalMatrix);
+            var localTileCenter = new Vector2(spatialKey.Tile.X, spatialKey.Tile.Y) + _halfTileOffset;
+            var worldCenter = Vector2.Transform(localTileCenter, lastLocalMatrix);
 
             foreach (var (_, tileSource) in tileSources)
             {
                 _sources.Add(new SourceData(
                     tileSource.Intensity,
                     tileSource.Slope,
-                    mapXform,
+                    lastMapXform,
                     worldCenter,
                     null,
                     tileSource.SourceId,
