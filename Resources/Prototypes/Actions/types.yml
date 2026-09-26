@@ -323,13 +323,33 @@
 - type: entity
   parent: BaseAction
   id: ActionVendingThrow
+  name: Eject Item
+  description: Randomly ejects an item from your stock.
+  components:
+  - type: Sprite
+    color: "#FF8000"
+    layers:
+      - texture: Interface/eject.png
+  - type: Action
+    useDelay: 15
+  - type: InstantAction
+    event: !type:VendingMachineSelfDispenseEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionVendingDispense
   name: Dispense Item
   description: Randomly dispense an item from your stock.
   components:
   - type: Action
-    useDelay: 30
+    useDelay: 15
+  - type: Sprite
+    color: "#00FF00"
+    layers:
+      - texture: Interface/eject.png
   - type: InstantAction
     event: !type:VendingMachineSelfDispenseEvent
+      throwItem: false
 
 - type: entity
   parent: BaseToggleAction
