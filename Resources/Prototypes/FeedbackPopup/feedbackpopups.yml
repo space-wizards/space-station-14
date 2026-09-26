@@ -1,4 +1,4 @@
-﻿- type: feedbackPopup
+- type: feedbackPopup
   id: GeneralFeedback
   popupOrigin: wizden_master
   title: "[bold]General feedback for Space Station 14[/bold]"
