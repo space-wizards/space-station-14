@@ -8,7 +8,6 @@
   - Quartermaster
   - SalvageSpecialist
 
-# Please kill this
 - type: department
   id: CentralCommand
   name: department-CentralCommand
@@ -17,15 +16,7 @@
   weight: 120 # Highest weight of all NT departments; Central Command's authority is absolute
   editorHidden: true
   roles:
-  - CBURN
   - CentralCommandOfficial
-  - DeathSquad
-  - ERTLeader
-  - ERTChaplain
-  - ERTJanitor
-  - ERTMedical
-  - ERTSecurity
-  - ERTEngineer
 
 - type: department
   id: Civilian
@@ -53,16 +44,6 @@
   - HeadOfSecurity
   - ResearchDirector
   - Quartermaster
-  # Please kill these
-  - CentralCommandOfficial
-  - CBURN
-  - ERTLeader
-  - ERTChaplain
-  - ERTJanitor
-  - ERTMedical
-  - ERTSecurity
-  - ERTEngineer
-  - DeathSquad
 
 - type: department
   id: Engineering
@@ -141,6 +122,23 @@
   roles:
   - Borg
   - StationAi
+
+- type: department
+  id: TaskForce
+  name: department-Task-Force
+  description: department-Task-Force-description
+  color: "#0c344d"
+  weight: 110 # Higher weight than Command, but below Central Command
+  editorHidden: true
+  roles:
+  - CBURN
+  - ERTLeader
+  - ERTChaplain
+  - ERTJanitor
+  - ERTMedical
+  - ERTSecurity
+  - ERTEngineer
+  - DeathSquad
 
 - type: department
   id: Specific

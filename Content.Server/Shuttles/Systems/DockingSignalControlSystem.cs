@@ -31,18 +31,29 @@ public sealed partial class DockingSignalControlSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
+    private void OnSignalReceived(Entity<DockingSignalControlComponent> ent, ref SignalReceivedEvent args)
+    {
+        if (args.Port != ent.Comp.DockTogglePort)
+            return;
+
+        ToggleDock(ent, SignalState.Momentary);
+    }
+
+    [SubscribeLocalEvent]
     private void OnSignalReceived(Entity<DockingSignalControlComponent> ent, ref SignalReceivedEvent<LogicStatePayload> args)
     {
         if (args.Port != ent.Comp.DockTogglePort)
             return;
 
+        ToggleDock(ent, args.Data.State);
+    }
+
+    private void ToggleDock(Entity<DockingSignalControlComponent> ent, SignalState state)
+    {
         if (!TryComp<DockingComponent>(ent, out var dock))
             return;
 
-        var state = args.Data.State;
-
         var shouldDock = state == SignalState.High || state == SignalState.Momentary && !dock.Docked;
-
         if (shouldDock)
         {
             var query = AllEntityQuery<DockingComponent>();
