@@ -29,7 +29,7 @@ public sealed partial class SignalTimerSystem : EntitySystem
     /// <summary>
     /// Per-tick timer cache.
     /// </summary>
-    private List<Entity<SignalTimerComponent>> _timers = new();
+    private readonly List<Entity<SignalTimerComponent>> _timers = new();
 
     #region Event Handlers
     [SubscribeLocalEvent]
@@ -197,6 +197,7 @@ public sealed partial class SignalTimerSystem : EntitySystem
     /// Checks if a UI <paramref name="message"/> is allowed to be sent by the user.
     /// </summary>
     /// <param name="uid">The entity that is interacted with.</param>
+    /// <param name="message">The message to check.</param>
     private bool IsMessageValid(EntityUid uid, BoundUserInterfaceMessage message)
     {
         if (!_accessReader.IsAllowed(message.Actor, uid))

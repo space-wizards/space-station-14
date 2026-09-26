@@ -26,7 +26,7 @@ public sealed partial class TextScreenVisualsComponent : Component
     /// 15,151,251 is the old ss13 color, from tg
     /// </remarks>
     [DataField]
-    public Color Color = new Color(15, 151, 251);
+    public Color Color = new(15, 151, 251);
 
     /// <summary>
     /// The current color being drawn on the screen.

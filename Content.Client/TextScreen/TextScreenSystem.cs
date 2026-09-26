@@ -32,7 +32,8 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     /// Contains char/state Key/Value pairs. <br/>
     /// The states in Textures/Effects/text.rsi that special character should be replaced with.
     /// </summary>
-    private static readonly FrozenDictionary<char, string> CharStatePairs = new Dictionary<char, string>() {
+    private static readonly FrozenDictionary<char, string> CharStatePairs = new Dictionary<char, string>
+    {
         { '<', "angle-l" },
         { '>', "angle-r" },
         {'\'', "apostrophe" },
@@ -125,7 +126,9 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
             foreach (var row in comp.RowData)
             {
                 foreach (var layer in row.Layers)
+                {
                     SpriteSystem.LayerSetColor((uid, sprite), layer.Key, comp.CurrentColor);
+                }
             }
         }
 
@@ -139,14 +142,14 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
             && args.TryGetData(TextScreenVisuals.TargetTime, out TimeSpan? textTime))
         {
             // If we have a valid timer, draw the timer.
-            if (defaultTextValue is { } defaultText && defaultText != timer.FinishedText)
+            if (defaultTextValue != null && defaultTextValue != timer.FinishedText)
             {
-                timer.FinishedText = defaultText;
+                timer.FinishedText = defaultTextValue;
                 anyChange = true;
             }
-            if (screenTextValue is { } screenText && screenText != timer.RunningText)
+            if (screenTextValue != null && screenTextValue != timer.RunningText)
             {
-                timer.RunningText = screenText;
+                timer.RunningText = screenTextValue;
                 anyChange = true;
             }
             if (textTime != timer.TargetTime)
@@ -197,14 +200,14 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
             else
             {
                 // Check if we need to update our time by the value it would print.
-                int screenValue = ConvertTimeToScreenValue(timer.TargetTime.Value, _timing.CurTime, timer.ShowCentiseconds);
-                if (screenValue != timer.ScreenValue)
-                {
-                    var timerText = GetTimerString((uid, timer), screenValue);
-                    SetTextToDisplay(uid, timerText);
-                    UpdateTimerSprite((uid, timer), true);
-                    timer.ScreenValue = screenValue;
-                }
+                var screenValue = ConvertTimeToScreenValue(timer.TargetTime.Value, _timing.CurTime, timer.ShowCentiseconds);
+                if (screenValue == timer.ScreenValue)
+                    continue;
+
+                var timerText = GetTimerString((uid, timer), screenValue);
+                SetTextToDisplay(uid, timerText);
+                UpdateTimerSprite((uid, timer), true);
+                timer.ScreenValue = screenValue;
             }
         }
 
@@ -220,14 +223,14 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
             }
             else if (screen.ScrollEnabled)
             {
-                for (int i = 0; i < screen.RowData.Length; i++)
+                for (var i = 0; i < screen.RowData.Length; i++)
                 {
                     var rowData = screen.RowData[i];
-                    if (rowData.NextScroll <= _timing.CurTime)
-                    {
-                        ScrollRow(ref rowData);
-                        DrawLayers((uid, screen, sprite), ref rowData, i);
-                    }
+                    if (rowData.NextScroll > _timing.CurTime)
+                        continue;
+
+                    ScrollRow(ref rowData);
+                    DrawLayers((uid, screen, sprite), ref rowData, i);
                 }
             }
         }
@@ -245,12 +248,14 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
 
         var difference = targetTime - curTime;
         var millis = difference.TotalMilliseconds;
+
         if (showCentiseconds && millis < 100_000) // 9999 centiseconds, 99:99, the largest value that could fit in two fields.
             return (int)millis / 10;
-        else if (millis < TimeSpan.MillisecondsPerHour)
+
+        if (millis < TimeSpan.MillisecondsPerHour)
             return difference.Minutes * 100 + difference.Seconds;
-        else
-            return difference.Hours * 100 + difference.Minutes;
+
+        return difference.Hours * 100 + difference.Minutes;
     }
 
     /// <summary>
@@ -326,7 +331,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
             {
                 var newKey = TextMapKey + rowIdx + chr;
                 var layerIndex = SpriteSystem.LayerMapReserve((ent, sprite), newKey);
-                SpriteSystem.LayerSetRsi((ent, sprite), layerIndex, textRsiPath, null);
+                SpriteSystem.LayerSetRsi((ent, sprite), layerIndex, textRsiPath);
                 SpriteSystem.LayerSetColor((ent, sprite), layerIndex, ent.Comp.CurrentColor);
                 textScreenRow.Layers.Add((newKey, null));
             }
@@ -354,10 +359,16 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
         {
             // Extend our array until we have a timer row.
             var newStrings = new string[ent.Comp.TimerRow + 1];
-            for (int i = 0; i < strings.Length; i++)
+            for (var i = 0; i < strings.Length; i++)
+            {
                 newStrings[i] = strings[i];
-            for (int i = strings.Length; i < ent.Comp.TimerRow; i++)
+            }
+
+            for (var i = strings.Length; i < ent.Comp.TimerRow; i++)
+            {
                 newStrings[i] = "";
+            }
+
             newStrings[ent.Comp.TimerRow] = timerString;
 
             strings = newStrings;
@@ -422,12 +433,12 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
                     rowData.ScrollDelay = TimeSpan.MaxValue;
                     rowData.NextScroll = TimeSpan.MaxValue;
                     rowData.ScrollPosition = 0;
-                    rowData.Text = texts[i].Substring(0, int.Min(texts[i].Length, ent.Comp.RowLength));
+                    rowData.Text = texts[i][..int.Min(texts[i].Length, ent.Comp.RowLength)];
                 }
                 else
                 {
                     // Scrolling: find our timing, adjust rolling position within the text.
-                    var rowText = texts[i].Substring(0, int.Min(texts[i].Length, MaxScrollingCharacters));
+                    var rowText = texts[i][..int.Min(texts[i].Length, MaxScrollingCharacters)];
                     rowData.Text = rowText.PadRight(rowText.Length + ent.Comp.RowLength - 1);
 
                     var newMaxPixelScrollTime = MaxMessageScrollTime / rowText.Length / CharWidth; // Scroll speed per pixel at the max message scroll length.
