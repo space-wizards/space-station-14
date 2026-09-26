@@ -1,0 +1,27 @@
+# Bizarre. Composed of an adjective + a noun, so this here is the noun pool
+names-guardian-last-dataset-1 = Diamond
+names-guardian-last-dataset-2 = Platinum
+names-guardian-last-dataset-3 = World
+names-guardian-last-dataset-4 = Bird
+names-guardian-last-dataset-5 = Cream
+names-guardian-last-dataset-6 = Dog
+names-guardian-last-dataset-7 = Ice
+names-guardian-last-dataset-8 = Cake
+names-guardian-last-dataset-9 = Eagle
+names-guardian-last-dataset-10 = Car
+names-guardian-last-dataset-11 = Dragon
+names-guardian-last-dataset-12 = Wire
+names-guardian-last-dataset-13 = Shrub
+names-guardian-last-dataset-14 = Mechanism
+names-guardian-last-dataset-15 = Fox
+names-guardian-last-dataset-16 = Ship
+names-guardian-last-dataset-17 = Captain
+names-guardian-last-dataset-18 = Noise
+names-guardian-last-dataset-19 = Magician
+names-guardian-last-dataset-20 = Witch
+names-guardian-last-dataset-21 = Wizard
+names-guardian-last-dataset-22 = Officer
+names-guardian-last-dataset-23 = Canon
+names-guardian-last-dataset-24 = Truth
+names-guardian-last-dataset-25 = Card
+names-guardian-last-dataset-26 = Taxi
