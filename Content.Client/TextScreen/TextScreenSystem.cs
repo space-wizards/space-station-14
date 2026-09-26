@@ -296,21 +296,6 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
 
         return null;
     }
-
-    /// <summary>
-    /// Returns <paramref name="value"/> as a string, usable as a row's text.
-    /// </summary>
-    /// <param name="value">The .</param>
-    /// <param name="getCentiseconds">Should the string be ss:CC if minutes are less than 1?</param>
-    /// <remarks>
-    /// Hours, minutes, seconds, and centiseconds are each set to 2 decimal places by default.
-    /// </remarks>
-    public static string GetString(TimerDisplay value)
-    {
-        var high = int.Clamp(value.HighValue, 0, 99);
-        var low = int.Clamp(value.LowValue, 0, 99);
-        return $"{high:D2}:{low:D2}";
-    }
     #endregion Public API
 
     #region Event Handlers

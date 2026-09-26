@@ -62,7 +62,7 @@ public sealed partial class SignalTimerWindow : DefaultWindow
         if (_timing.CurTime < _triggerTime.Value)
         {
             var displayValue = TextScreenSystem.ConvertTimeToDisplayValue(_triggerTime.Value - _timing.CurTime, true);
-            StartTimer.Text = TextScreenSystem.GetString(displayValue);
+            StartTimer.Text = displayValue.ToString();
         }
         else
         {

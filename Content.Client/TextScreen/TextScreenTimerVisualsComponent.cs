@@ -70,7 +70,15 @@ public sealed partial class TextScreenTimerVisualsComponent : Component
 /// Values to be expressed as <c>HIGH:LOW</c>, both values effectively capped at 99.
 /// </remarks>
 [Serializable]
-public record struct TimerDisplay(int HighValue, int LowValue);
+public record struct TimerDisplay(int HighValue, int LowValue)
+{
+    public readonly override string ToString()
+    {
+        var high = int.Clamp(HighValue, 0, 99);
+        var low = int.Clamp(LowValue, 0, 99);
+        return $"{high:D2}:{low:D2}";
+    }
+}
 
 /// <summary>
 /// Sprite layers for text screen timers.
