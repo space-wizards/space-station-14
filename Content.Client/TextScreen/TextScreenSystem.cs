@@ -170,6 +170,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
             comp.NewTextToDisplay = anyChange;
         }
     }
+
     /// <summary>
     /// Update handler - keep timers and scrolling text up to date.
     /// </summary>
@@ -192,12 +193,12 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
 
                 // Timer finished, reset state.
                 timer.TargetTime = null;
-                timer.ScreenValue = 0;
+                timer.ScreenValue = new(0, 0);
             }
             else
             {
                 // Check if we need to update our time by the value it would print.
-                int screenValue = ConvertTimeToScreenValue(timer.TargetTime.Value, _timing.CurTime, timer.ShowCentiseconds);
+                TimerDisplay screenValue = ConvertTimeToDisplayValue(timer.TargetTime.Value - _timing.CurTime, timer.ShowCentiseconds);
                 if (screenValue != timer.ScreenValue)
                 {
                     var timerText = GetTimerString((uid, timer), screenValue);
@@ -227,6 +228,9 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
                     {
                         ScrollRow(ref rowData);
                         DrawLayers((uid, screen, sprite), ref rowData, i);
+
+                        // Commit changes to struct.
+                        screen.RowData[i] = rowData;
                     }
                 }
             }
@@ -236,21 +240,23 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
 
     #region Public API
     /// <summary>
-    /// Converts the difference between two timespans into a value between 0 and 9999.
+    /// Converts a duration into a <see cref="TimerDisplay"/>.
     /// </summary>
-    public static int ConvertTimeToScreenValue(TimeSpan targetTime, TimeSpan curTime, bool showCentiseconds)
+    public static TimerDisplay ConvertTimeToDisplayValue(TimeSpan duration, bool showCentiseconds)
     {
-        if (targetTime <= curTime)
-            return 0;
+        if (duration < TimeSpan.Zero)
+            return new(0, 0);
 
-        var difference = targetTime - curTime;
-        var millis = difference.TotalMilliseconds;
+        var millis = duration.TotalMilliseconds;
         if (showCentiseconds && millis < 100_000) // 9999 centiseconds, 99:99, the largest value that could fit in two fields.
-            return (int)millis / 10;
+        {
+            var centis = (int)millis / 10;
+            return new(centis / 100, centis % 100);
+        }
         else if (millis < TimeSpan.MillisecondsPerHour)
-            return difference.Minutes * 100 + difference.Seconds;
+            return new(duration.Minutes, duration.Seconds);
         else
-            return difference.Hours * 100 + difference.Minutes;
+            return new(duration.Hours, duration.Minutes);
     }
 
     /// <summary>
@@ -268,7 +274,6 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
         ent.Comp.NewTextToDisplay = true;
     }
 
-
     /// <summary>
     /// Returns the Effects/text.rsi state string based on <paramref name="character"/>, or null if none available.
     /// </summary>
@@ -282,26 +287,26 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
             return value;
 
         // Or else it checks if its a normal letter or digit
-        if (char.IsLetterOrDigit(character.Value))
+        // (With apologies to non-latin character sets)
+        if (char.IsAscii(character.Value) && char.IsLetterOrDigit(character.Value))
             return character.Value.ToString().ToLower();
 
         return null;
     }
 
     /// <summary>
-    /// Returns the <paramref name="timeSpan"/> converted to a string in either HH:MM, MM:SS or potentially SS:CC format.
+    /// Returns <paramref name="value"/> as a string, usable as a row's text.
     /// </summary>
-    /// <param name="timeSpan">TimeSpan to convert into string.</param>
+    /// <param name="value">The .</param>
     /// <param name="getCentiseconds">Should the string be ss:CC if minutes are less than 1?</param>
     /// <remarks>
     /// Hours, minutes, seconds, and centiseconds are each set to 2 decimal places by default.
     /// </remarks>
-    public static string TimeToString(TimeSpan timeSpan, bool getCentiseconds = true)
+    public static string GetString(TimerDisplay value)
     {
-        var value = ConvertTimeToScreenValue(timeSpan, TimeSpan.Zero, getCentiseconds);
-        var lastValue = value % 100;
-        var firstValue = int.Min(value - lastValue, 99);
-        return $"{firstValue:D2}:{lastValue:D2}";
+        var high = int.Clamp(value.HighValue, 0, 99);
+        var low = int.Clamp(value.LowValue, 0, 99);
+        return $"{high:D2}:{low:D2}";
     }
     #endregion Public API
 
@@ -320,7 +325,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
         for (var rowIdx = 0; rowIdx < ent.Comp.RowData.Length; rowIdx++)
         {
             var maxIndex = ent.Comp.ScrollEnabled ? ent.Comp.RowLength + 1 : ent.Comp.RowLength;
-            var textScreenRow = ent.Comp.RowData[rowIdx];
+            var layers = ent.Comp.RowData[rowIdx].Layers;
 
             for (var chr = 0; chr < maxIndex; chr++)
             {
@@ -328,7 +333,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
                 var layerIndex = SpriteSystem.LayerMapReserve((ent, sprite), newKey);
                 SpriteSystem.LayerSetRsi((ent, sprite), layerIndex, textRsiPath, null);
                 SpriteSystem.LayerSetColor((ent, sprite), layerIndex, ent.Comp.CurrentColor);
-                textScreenRow.Layers.Add((newKey, null));
+                layers.Add((newKey, null));
             }
         }
 
@@ -339,15 +344,20 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     #endregion Event Handlers
 
     #region Internal
-    private string GetTimerString(Entity<TextScreenTimerVisualsComponent> ent, int newScreenValue)
+    /// <summary>
+    /// Returns the string (\n row-separated) that should be displayed on a screen for a particular timer value.
+    /// </summary>
+    private string GetTimerString(Entity<TextScreenTimerVisualsComponent> ent, TimerDisplay newScreenValue)
     {
         if (ent.Comp.TimerRow < 0)
             return ent.Comp.RunningText;
 
         var strings = ent.Comp.RunningText.Split("\n");
-        var timerString = $"{newScreenValue / 100:D2}:{newScreenValue % 100:D2}";
+        var timerString = $"{newScreenValue.HighValue:D2}:{newScreenValue.LowValue:D2}";
+
         if (ent.Comp.TimerRow < strings.Length)
         {
+            // Timer row within array bounds.
             strings[ent.Comp.TimerRow] = timerString;
         }
         else
@@ -444,7 +454,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
                 DrawLayers((ent.Owner, ent.Comp, sprite), ref rowData, i);
             }
 
-            // Finally, commit the row state if it hasn't been modified by ref.
+            // Finally, commit the row state.
             ent.Comp.RowData[i] = rowData;
         }
     }

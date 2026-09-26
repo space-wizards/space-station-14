@@ -48,7 +48,7 @@ public sealed partial class TextScreenTimerVisualsComponent : Component
     /// 0 indicates that the timer has finished, and should display FinishedText instead.
     /// </summary>
     [DataField]
-    public int ScreenValue;
+    public TimerDisplay ScreenValue;
 
     /// <summary>
     /// The state to use for the <see cref="TimerVisualLayers.Light"/> layer when the timer is in progress.
@@ -62,6 +62,15 @@ public sealed partial class TextScreenTimerVisualsComponent : Component
     [DataField]
     public string? FinishedState;
 }
+
+/// <summary>
+/// A small value representing a value to display on a timer.
+/// </summary>
+/// <remarks>
+/// Values to be expressed as <c>HIGH:LOW</c>, both values effectively capped at 99.
+/// </remarks>
+[Serializable]
+public record struct TimerDisplay(int HighValue, int LowValue);
 
 /// <summary>
 /// Sprite layers for text screen timers.
