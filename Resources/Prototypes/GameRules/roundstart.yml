@@ -5,6 +5,13 @@
   - type: GameRule
 
 - type: entity
+  id: BaseSilentGameRule
+  abstract: true
+  components:
+  - type: GameRule
+    silent: true
+
+- type: entity
   parent: BaseGameRule
   id: BaseRoundstartAntagRule
   abstract: true
@@ -212,38 +219,6 @@
     antags:
     - !type:FixedAntagCount
       proto: TraitorReinforcement
-
-- type: entity
-  id: Changeling
-  parent: [BaseGameRule, BaseRoundstartAntagRule]
-  components:
-  - type: ChangelingRule
-  - type: GameRule
-    minPlayers: 20
-    delay:
-      min: 240
-      max: 420
-    cancelPresetOnTooFewPlayers: false
-  - type: AntagSelection
-    agentName: changeling-round-end-agent-name
-    antags:
-    - !type:LinearAntagCount
-      proto: Changeling
-      playerRatio: 15
-      range:
-        min: 1
-        max: 3
-  - type: AntagRandomObjectives
-    sets:
-    - groups: ChangelingObjectiveGroupDevourDummy
-      maxPicks: 1
-    - groups: ChangelingObjectiveGroupEscapeDummy
-      maxPicks: 1
-    - groups: ChangelingObjectiveGroupKillDummy
-      maxPicks: 1
-    maxDifficulty: 8
-  - type: DynamicRuleCost
-    cost: 75
 
 - type: entity
   id: Revolutionary
@@ -465,7 +440,7 @@
 # variation passes
 - type: entity
   id: BasicRoundstartVariation
-  parent: BaseGameRule
+  parent: BaseSilentGameRule
   components:
   - type: RoundstartStationVariationRule
     rules:

@@ -32,7 +32,7 @@ public sealed partial class PlantToxinsSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnPlantGrow(Entity<PlantToxinsComponent> ent, ref PlantGrowEvent args)
     {
-        var trayUid = GetEntity(args.Tray);
+        var trayUid = args.Tray;
         if (!_trayQuery.TryComp(trayUid, out var tray)
             || !_holderQuery.TryComp(ent.Owner, out var holder))
             return;

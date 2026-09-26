@@ -1,4 +1,4 @@
-﻿using Content.Shared.Lock;
+using Content.Shared.Lock;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Security.Components;

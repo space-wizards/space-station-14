@@ -1130,3 +1130,12 @@ DrinkNeurotoxinGlass: null
 #2026-08-19
 JanitorServiceLight: null
 
+#2026-08-31
+DrinkWaterJug: JugWater
+
+#2026-09-05
+AsimovCircuitBoard: CrewsimovCircuitBoard
+
+# 2026-09-24
+ClothingShoesTourist: ClothingShoesSandalsBlack
+ClothingShoesWizard: ClothingShoesSandalsBrown

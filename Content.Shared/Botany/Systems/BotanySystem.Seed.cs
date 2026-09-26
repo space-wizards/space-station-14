@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Items.Components;
@@ -7,6 +6,7 @@ using Content.Shared.Cloning;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Random;
+using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -178,5 +178,34 @@ public sealed partial class BotanySystem : EntitySystem
 
         _hands.TryPickupAnyHand(user, seedItem);
         return seedItem;
+    }
+
+    /// <summary>
+    /// Reverts a planted plant back into a seed packet while preserving its genetics.
+    /// </summary>
+    [PublicAPI]
+    public bool TryRevertPlantToSeed(Entity<PlantComponent?, PlantDataComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp1, ref ent.Comp2, false))
+            return false;
+
+        if (!_plant.TryGetTray(ent.Owner, out var tray))
+            return false;
+
+        if (!ProtoMan.Resolve(ent.Comp2.PacketPrototype, out var seedProto)
+            || !seedProto.TryComp<SeedComponent>(out var seedComp, _componentFactory))
+        {
+            return false;
+        }
+
+        SpawnSeedPacket(
+            ent.Comp2,
+            seedComp.PlantProtoId,
+            ent.Owner,
+            Transform(tray).Coordinates,
+            tray.Owner);
+
+        _plant.RemovePlant(ent.Owner);
+        return true;
     }
 }
