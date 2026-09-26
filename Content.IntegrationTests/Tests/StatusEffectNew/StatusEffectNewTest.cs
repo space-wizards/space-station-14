@@ -222,7 +222,6 @@ public sealed class StatusEffectNewTest : InteractionTest
         {
             _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, TenTicks);
             curTime = STiming.CurTime;
-            
         });
 
         Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var time), Is.True, "Could not get time info for effect A");
