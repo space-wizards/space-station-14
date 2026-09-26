@@ -1,55 +1,55 @@
-# Midwife Spider
+# Viper Spider
 - type: entity
   parent: MobSpiderAnimated
-  id: MobGiantSpiderMidwife
-  name: midwife spider
-  description: Skittering and watchful; it seems to tend to egg sacs and cocoons.
+  id: MobGiantSpiderViper
+  name: viper spider
+  description: A frail-looking spider with a dangerously venomous bite.
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Animals/Spiders/midwifespider.rsi
+    sprite: Mobs/Animals/Spiders/viperspider.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: idle
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 4
+        Piercing: 2
   - type: SolutionManager
     solutions:
-    - SolutionVenomSpiderMidwife
+    - SolutionVenomSpiderViper
   - type: MeleeChemicalInjector
-    transferAmount: 5
+    transferAmount: 12
     solution: melee
   - type: MovementSpeedModifier
     baseWalkSpeed: 3
-    baseSprintSpeed: 4
+    baseSprintSpeed: 6
   - type: MobThresholds
     thresholds:
       0: Alive
-      120: Dead
+      40: Dead
 
 - type: entity
   parent: [SolutionWeapon, SolutionTiny]
-  id: SolutionVenomSpiderMidwife
+  id: SolutionVenomSpiderViper
   categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
-      maxVol: 30
+      maxVol: 12
       reagents:
       - ReagentId: Mechanotoxin
-        Quantity: 30
+        Quantity: 12
   - type: SolutionRegeneration
     generated:
       reagents:
       - ReagentId: Mechanotoxin
-        Quantity: 0.2
+        Quantity: 0.1
 
-# Angry Midwife Spider
+# Angry Viper Spider
 - type: entity
   parent:
   - MobSpiderAngryBase
-  - MobGiantSpiderMidwife
-  id: MobGiantSpiderMidwifeAngry
+  - MobGiantSpiderViper
+  id: MobGiantSpiderViperAngry
   suffix: Angry

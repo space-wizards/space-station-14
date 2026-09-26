@@ -32,11 +32,6 @@
       - ReagentId: Laughter
         Quantity: 150
   - type: MeleeWeapon
-    altDisarm: false
-    angle: 0
-    animation: WeaponArcBite
-    soundHit:
-      path: /Audio/Effects/bite.ogg
     damage:
       types:
         Piercing: 6

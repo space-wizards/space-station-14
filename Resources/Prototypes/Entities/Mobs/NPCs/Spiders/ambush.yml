@@ -1,25 +1,25 @@
-# Midwife Spider
+# Ambush Spider
 - type: entity
   parent: MobSpiderAnimated
-  id: MobGiantSpiderMidwife
-  name: midwife spider
-  description: Skittering and watchful; it seems to tend to egg sacs and cocoons.
+  id: MobGiantSpiderAmbush
+  name: ambush spider
+  description: A pale, heavy-fanged spider that waits patiently for prey to come near.
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Animals/Spiders/midwifespider.rsi
+    sprite: Mobs/Animals/Spiders/ambushspider.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: idle
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 4
+        Piercing: 9
   - type: SolutionManager
     solutions:
-    - SolutionVenomSpiderMidwife
+    - SolutionVenomSpiderAmbush
   - type: MeleeChemicalInjector
-    transferAmount: 5
+    transferAmount: 1
     solution: melee
   - type: MovementSpeedModifier
     baseWalkSpeed: 3
@@ -27,29 +27,29 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      120: Dead
+      80: Dead
 
 - type: entity
   parent: [SolutionWeapon, SolutionTiny]
-  id: SolutionVenomSpiderMidwife
+  id: SolutionVenomSpiderAmbush
   categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
-      maxVol: 30
+      maxVol: 4
       reagents:
       - ReagentId: Mechanotoxin
-        Quantity: 30
+        Quantity: 4
   - type: SolutionRegeneration
     generated:
       reagents:
       - ReagentId: Mechanotoxin
-        Quantity: 0.2
+        Quantity: 0.1
 
-# Angry Midwife Spider
+# Angry Ambush Spider
 - type: entity
   parent:
   - MobSpiderAngryBase
-  - MobGiantSpiderMidwife
-  id: MobGiantSpiderMidwifeAngry
+  - MobGiantSpiderAmbush
+  id: MobGiantSpiderAmbushAngry
   suffix: Angry

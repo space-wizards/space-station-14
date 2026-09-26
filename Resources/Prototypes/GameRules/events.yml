@@ -497,6 +497,10 @@
       - id: MobGiantSpiderGuardAngry
       - id: MobGiantSpiderMidwifeAngry
       - id: MobGiantSpiderNurseAngry
+      - id: MobGiantSpiderAmbushAngry
+      - id: MobGiantSpiderScoutAngry
+      - id: MobGiantSpiderViperAngry
+      - id: MobGiantSpiderBreacherAngry
 
 - type: entity
   id: SpiderClownSpawnHorde

@@ -1,55 +1,55 @@
-# Midwife Spider
+# Scout Spider
 - type: entity
   parent: MobSpiderAnimated
-  id: MobGiantSpiderMidwife
-  name: midwife spider
-  description: Skittering and watchful; it seems to tend to egg sacs and cocoons.
+  id: MobGiantSpiderScout
+  name: scout spider
+  description: A quick, fragile spider that darts at its prey.
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Animals/Spiders/midwifespider.rsi
+    sprite: Mobs/Animals/Spiders/scoutspider.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: idle
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 4
+        Piercing: 2
   - type: SolutionManager
     solutions:
-    - SolutionVenomSpiderMidwife
+    - SolutionVenomSpiderScout
   - type: MeleeChemicalInjector
-    transferAmount: 5
+    transferAmount: 1
     solution: melee
   - type: MovementSpeedModifier
     baseWalkSpeed: 3
-    baseSprintSpeed: 4
+    baseSprintSpeed: 7
   - type: MobThresholds
     thresholds:
       0: Alive
-      120: Dead
+      50: Dead
 
 - type: entity
   parent: [SolutionWeapon, SolutionTiny]
-  id: SolutionVenomSpiderMidwife
+  id: SolutionVenomSpiderScout
   categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
-      maxVol: 30
+      maxVol: 5
       reagents:
       - ReagentId: Mechanotoxin
-        Quantity: 30
+        Quantity: 5
   - type: SolutionRegeneration
     generated:
       reagents:
       - ReagentId: Mechanotoxin
         Quantity: 0.2
 
-# Angry Midwife Spider
+# Angry Scout Spider
 - type: entity
   parent:
   - MobSpiderAngryBase
-  - MobGiantSpiderMidwife
-  id: MobGiantSpiderMidwifeAngry
+  - MobGiantSpiderScout
+  id: MobGiantSpiderScoutAngry
   suffix: Angry
