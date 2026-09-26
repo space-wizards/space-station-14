@@ -5,10 +5,18 @@
     <GuideEntityEmbed Entity="MobArachnid" Caption=""/>
   </Box>
 
-  They have two additional Pocket slots in their inventory. They can eat raw meat without any ill effects, but some foods like chocolate and onion poisons them.
-  They suffocate 50% faster, and their Blue Blood can't be metabolised from Iron, being based on Copper instead.
+  ## General Information
 
-  Their unarmed attacks deal Piercing damage instead of Blunt.
+  Arachnids can use webbing to carry small items, effectively giving them [color=lightgreen]two extra pockets[/color] for item storage.
+
+  Their strong fangs make their unarmed attacks deal Piercing damage.
+
+  Their animal-like digestive system can [color=lightgreen]digest raw meat and blood[/color] without ill effects.
+  They are [color=palevioletred]poisoned[/color] by allicin (found in garlic and onions) and theobromine (found in caffeinated beverages and chocolate).
+
+  Their blue blood is copper-based, and is replenished by metabolizing copper, rather than iron.
+
+  They [color=palevioletred]suffocate 50% faster[/color] and [color=palevioletred]recover from Asphyxiation damage 100% slower[/color].
 
   ## Sericulture
 
@@ -19,7 +27,6 @@
     <GuideEntityEmbed Entity="WallWeb" Caption=""/>
   </Box>
 
-  Arachnids can create Websilk at the cost of getting more hungry. They (and only they) can craft bundles of websilk into various items from clothing and shields to entire walls.
-
+  Arachnids can create silk on demand, at the cost of making themselves hungrier. They can craft silk into items such as clothing, furniture, and even entire walls.
 
 </Document>

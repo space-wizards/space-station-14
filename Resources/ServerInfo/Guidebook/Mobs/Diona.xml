@@ -5,34 +5,54 @@
     <GuideEntityEmbed Entity="MobDiona" Caption=""/>
   </Box>
 
-  They can't wear shoes, but are not slowed by Kudzu.
-  They get hungry and thirsty slower.
-  Their "blood" is tree sap and can't be metabolised from Iron.
-  Being plants, Weed Killer poisons them, while Robust Harvest heals them (but not without risk when overused!)
+  ## General Information
 
-  They take [color=#1e90ff]30% less Blunt damage and 20% less Slash damage[/color];
-  but [color=#ffa500]50% more Heat damage, 20% more Shock damage, and they can easily
-  catch on fire when receiving enough Heat damage from *any* source.[/color]
+  Diona have large, dense bodies, so they're slowed less when dragging objects and slow others more when dragged themselves.
 
-  ## Make Like A Tree And Leave
+  They have plant-like metabolisms, [color=lightgreen]getting hungry slower[/color] than other species, but [color=palevioletred]getting thirsty faster[/color].
+
+  They have sap rather than blood, which replenishes when metabolizing iron.
+  Sap is slightly nutritious when consumed by other species, though drinking the blood of your coworkers is usually frowned upon.
+
+  They metabolize reagents with a single organ, up to six reagents per metabolism stage (digestion, bloodstream, and metabolites).
+
+  They take [color=lightgreen]30% less Blunt damage[/color] and [color=lightgreen]20% less Slash damage[/color],
+  but [color=palevioletred]50% more Heat damage[/color] and [color=palevioletred]20% more Shock damage[/color]. Their
+  bark-like skin can [color=palevioletred]easily catch fire[/color] when receiving enough Heat damage from [italic]any[/italic] source.[/color]
+
+  They [color=lightgreen]suffocate 100% slower[/color].
+
+  ## Rooting
+
+  Diona move around using a dense network of roots. This [color=palevioletred]prevents them from wearing [italic]any[/italic] footwear[/color], but
+  these roots also allow a diona to firmly root themselves to the ground.
+
+  While rooted, a diona [color=palevioletred]moves 20% slower[/color], but is able to freely move around in zero-gravity environments
+  instead of awkwardly floating around. Being rooted also causes a diona to passively absorb reagents from puddles they're standing in;
+  this can potentially be dangerous if they're standing in something unsafe to drink!
+
+  ## Botanical Reagents
   <Box>
     <GuideEntityEmbed Entity="FloraTree" Caption=""/>
   </Box>
-  Being exposed to too much Robust Harvest will cause a Diona to grow out of control, turning into an immobile tree (dropping all their equipment).
-  Cutting down the tree will "restore" the Diona to their mobile state.
 
-  ## Diona Nymphs
+  While diona can digest the same foods that most other species can, they're also affected by certain botanical reagents.
+  Fertilizers will [color=lightgreen]sate their hunger[/color], but pesticides will [color=palevioletred]poison[/color] them!
+
+  Robust harvest (an especially potent fertilizer) will [color=lightgreen]heal a diona's injuries[/color], but overdosing will cause
+  them to [color=palevioletred]grow out of control[/color], turning into an immobile tree (and dropping all their equipment). Cutting down the tree will
+  "restore" the Diona to their regular, mobile state.
+
+  ## Nymphs
   <Box>
     <GuideEntityEmbed Entity="MobDionaNymph" Caption=""/>
     <GuideEntityEmbed Entity="MobDionaNymph" Caption=""/>
     <GuideEntityEmbed Entity="MobDionaNymph" Caption=""/>
   </Box>
-  After death, a Diona can voluntarily destroy their own body, releasing their "internal organs" as three Nymphs,
-  with the player taking control of the Brain Nymph.
-  It can talk but has no hands or inventory, and can't do much.
+  After death, a Diona can voluntarily destroy their own body, releasing their internal organs as three "nymphs",
+  with the player taking control of the nymph containing the brain. The brain nymph can speak, but has no hands or inventory.
 
-  After 10 minutes, a Nymph can reform into a whole Diona. This will be a new randomised body with a random name,
-  and there will be little to no evidence beyond their word about who they were before.
-
+  After 10 minutes, the brain nymph can regrow into a "full" Diona. This will be a brand-new body with a new name, appearance, fingerprints, and even DNA,
+  leaving little definitive evidence about who they were before.
 
 </Document>

@@ -5,7 +5,12 @@
     <GuideEntityEmbed Entity="MobDwarf" Caption=""/>
   </Box>
 
-  Dwarves are similar to humans in most respect, but tolerate alcohol better and are healed by it.
+  ## General Information
 
+  Dwarves are physically smaller than most other species, so they're slowed more when dragging objects and slow others less when dragged themselves.
+
+  Their hardy digestive systems are more resistant to the effects of alcohol, and they can even [color=lightgreen]heal minor injuries[/color] by drinking.
+
+  They tend to be fond of food, and can digest up to five reagents at once, where other species generally digest up to three.
 
 </Document>
