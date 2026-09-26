@@ -2,19 +2,37 @@
     xmlns="https://spacestation14.io"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-    MinHeight="210">
-    <BoxContainer Name="MainContainer" Orientation="Vertical">
-        <LineEdit Name="SearchBar" PlaceHolder="{Loc 'vending-machine-component-search-filter'}" HorizontalExpand="True"  Margin ="4 4"/>
-        <controls:SearchListContainer Name="VendingContents" VerticalExpand="True" Margin="4 4"/>
-         <!-- Footer -->
+    MinSize="470 350"
+    SetSize="470 350">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal" VerticalExpand="True">
+            <PanelContainer Name="CategoryPanel" Visible="False" SetWidth="70" Margin="4 4 0 4" VerticalExpand="True">
+                <ScrollContainer HScrollEnabled="False" VerticalExpand="True">
+                    <controls:TabBar Name="CategoryTabs" StyleClasses="VendingCategoryTabBar" Orientation="Vertical"
+                                     SeparationOverride="2" HorizontalAlignment="Center" />
+                </ScrollContainer>
+            </PanelContainer>
+            <controls:Separator Name="CategorySeparator" StyleClasses="LowDivider" Orientation="Vertical" MinHeight="5"
+                                Visible="False" />
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+                <LineEdit Name="SearchBar" PlaceHolder="{Loc 'vending-machine-component-search-filter'}"
+                          HorizontalExpand="True" Margin="4 4" />
+                <controls:SearchListContainer Name="VendingContents" VerticalExpand="True" Margin="4 4" />
+                <Label Name="OutOfStockLabel" Text="{Loc 'vending-machine-component-try-eject-out-of-stock'}"
+                       Visible="False"
+                       Margin="4 4" HorizontalExpand="True" VerticalExpand="True" HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+            </BoxContainer>
+        </BoxContainer>
+        <!-- Footer -->
         <BoxContainer Orientation="Vertical">
-            <controls:Separator StyleClasses="LowDivider"/>
+            <controls:Separator StyleClasses="LowDivider" />
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
                 <Label Text="{Loc 'vending-machine-flavor-left'}" StyleClasses="WindowFooterText" />
                 <Label Text="{Loc 'vending-machine-flavor-right'}" StyleClasses="WindowFooterText"
-                        HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
+                       HorizontalAlignment="Right" HorizontalExpand="True" Margin="0 0 5 0" />
                 <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
-                        VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
+                             VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19" />
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>

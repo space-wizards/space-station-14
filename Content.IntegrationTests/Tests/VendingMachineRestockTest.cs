@@ -44,18 +44,27 @@ namespace Content.IntegrationTests.Tests
 
 - type: vendingMachineInventory
   id: TestInventory
-  startingInventory:
-    TestRamen: 1
+  categories:
+  - name: vending-machine-category-food
+    icon: { entity: TestRamen }
+    startingInventory:
+      TestRamen: 1
 
 - type: vendingMachineInventory
   id: OtherTestInventory
-  startingInventory:
-    TestRamen: 3
+  categories:
+  - name: vending-machine-category-food
+    icon: { entity: TestRamen }
+    startingInventory:
+      TestRamen: 3
 
 - type: vendingMachineInventory
   id: BigTestInventory
-  startingInventory:
-    TestRamen: 4
+  categories:
+  - name: vending-machine-category-food
+    icon: { entity: TestRamen }
+    startingInventory:
+      TestRamen: 4
 
 - type: entity
   parent: BaseVendingMachineRestock
