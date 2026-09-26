@@ -570,8 +570,6 @@ namespace Content.Client.NPC
                     }
                 }
             }
-
-            worldHandle.SetTransform(Matrix3x2.Identity);
         }
     }
 }
