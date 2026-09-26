@@ -113,6 +113,8 @@
   - type: Item
     sprite: null
     size: Normal
+    shape:
+    - 0,0,1,1
   - type: StaticPrice
     price: 1500
 
