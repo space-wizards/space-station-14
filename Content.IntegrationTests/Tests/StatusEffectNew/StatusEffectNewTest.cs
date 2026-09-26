@@ -177,8 +177,8 @@ public sealed class StatusEffectNewTest : InteractionTest
         Assert.That(timePlusTenPlusTwentyMinusTen.EndEffectTime, Is.EqualTo(curTime + twentyTicks), "Status effect A did not have expected updated end time of 20 ticks after current time (was 30, 10 removed)");
     }
     
-    [Test, Description("Testing TryAddTime and TryRemoveTime with null args")]
-    public async Task TestAddRemoveEffectTime_Null()
+    [Test, Description("Testing TryAddTime with null args (should make status effect last indefinitely)")]
+    public async Task TestAddEffectTime_Null()
     {
         await Server.WaitPost(() =>
         {
@@ -190,11 +190,21 @@ public sealed class StatusEffectNewTest : InteractionTest
 
         Assert.That(_sStatusSystem.TryAddTime(SPlayer, StatusA, null), Is.True, "TryAddTime setting duration to null did not return true");
         _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timePermanent);
-        Assert.That(timePermanent.EndEffectTime, Is.Null, "TryAddTime setting to null did not set the duration to null");
- 
+        Assert.That(timePermanent.EndEffectTime, Is.Null, "TryAddTime setting to null did not set the duration to null"); 
+    }
+    
+    [Test, Description("Testing TryRemoveTime with null args (should remove status effect)")]
+    public async Task TestRemoveEffectTime_Null()
+    {
+        await Server.WaitPost(() =>
+        {
+            _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, TenTicks);
+        });
+
+        Assume.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA), Is.True, "Status effect A was not found on the player (can't really test removing time from it if it's not present...)");
         Assert.That(_sStatusSystem.TryRemoveTime(SPlayer, StatusA,  null), Is.True, "TryRemoveTime with param of null did not return true");
         await Server.WaitRunTicks(1); // status effect removal is queued to next tick.
-        Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out _),  Is.False, "TryRemoveTime set to null did not remove the status effect (TryRemoveTime is supposed to remove status effect if null is given)");
+        Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA),  Is.False, "TryRemoveTime set to null did not remove the status effect (TryRemoveTime is supposed to remove status effect if null is given)");
     }
     
     [Test, Description("Testing TryAddStatusEffectDuration to adjust status effect duration.")]
