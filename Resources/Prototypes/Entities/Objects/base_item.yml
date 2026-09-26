@@ -5,6 +5,14 @@
   components:
   - type: Item
     size: Small
+  - type: AttachedVisuals
+    attachedVisuals:
+      InhandLeft:
+        layers:
+        attachments:
+      InhandRight:
+        layers:
+        attachments:
   - type: Animateable
   - type: Clickable
   - type: InteractionOutline

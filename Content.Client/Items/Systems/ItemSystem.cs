@@ -1,12 +1,15 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.AttachedVisuals;
 using Content.Shared.Hands;
+using Content.Shared.Hands.Components;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Items.Systems;
 
@@ -19,11 +22,46 @@ public sealed partial class ItemSystem : SharedItemSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ItemComponent, GetInhandVisualsEvent>(OnGetVisuals);
+        //SubscribeLocalEvent<ItemComponent, GetInhandVisualsEvent>(OnGetVisuals);
 
         // TODO is this still needed? Shouldn't containers occlude them?
-        SubscribeLocalEvent<SpriteComponent, GotEquippedEvent>(OnEquipped);
-        SubscribeLocalEvent<SpriteComponent, GotUnequippedEvent>(OnUnequipped);
+        //SubscribeLocalEvent<SpriteComponent, GotEquippedEvent>(OnEquipped);
+        //SubscribeLocalEvent<SpriteComponent, GotUnequippedEvent>(OnUnequipped);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnMapInit(Entity<ItemComponent> ent, ref ComponentStartup args)
+    {
+        var attachedVisuals = EnsureComp<AttachedVisualsComponent>(ent);
+
+        if (attachedVisuals.RsiPath == null)
+            attachedVisuals.RsiPath = ent.Comp.RsiPath;
+
+        if (ent.Comp.InhandVisuals.Count == 0
+            && !attachedVisuals.AttachedVisuals.ContainsKey("InhandLeft")
+            && TryGetDefaultVisuals(ent, ent.Comp, "inhand-left", out var leftLayerData))
+        {
+            attachedVisuals.AttachedVisuals.GetOrNew("InhandLeft").Layers = leftLayerData;
+        }
+
+        if (ent.Comp.InhandVisuals.Count == 0
+            && !attachedVisuals.AttachedVisuals.ContainsKey("InhandRight")
+            && TryGetDefaultVisuals(ent, ent.Comp, "inhand-right", out var rightLayerData))
+        {
+            attachedVisuals.AttachedVisuals.GetOrNew("InhandRight").Layers = rightLayerData;
+        }
+
+        if (!attachedVisuals.AttachedVisuals.ContainsKey("InhandLeft")
+            && ent.Comp.InhandVisuals.TryGetValue(HandLocation.Left, out var leftInhandVisuals))
+        {
+            attachedVisuals.AttachedVisuals.GetOrNew("InhandLeft").Layers = leftInhandVisuals;
+        }
+
+        if (!attachedVisuals.AttachedVisuals.ContainsKey("InhandRight")
+            && ent.Comp.InhandVisuals.TryGetValue(HandLocation.Right, out var rightInhandVisuals))
+        {
+            attachedVisuals.AttachedVisuals.GetOrNew("InhandRight").Layers = rightInhandVisuals;
+        }
     }
 
     private void OnUnequipped(EntityUid uid, SpriteComponent component, GotUnequippedEvent args)

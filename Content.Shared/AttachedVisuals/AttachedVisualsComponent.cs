@@ -1,5 +1,6 @@
 using Content.Shared.DisplacementMap;
 using Content.Shared.Humanoid;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.AttachedVisuals;
@@ -7,25 +8,25 @@ namespace Content.Shared.AttachedVisuals;
 /// <summary>
 /// This is used for handling sprite visuals for items inside containers
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class AttachedVisualsComponent : Component
 {
     /// <summary>
     /// Path to RSI to use for sprites
     /// </summary>
-    [DataField("sprite")]
+    [DataField("sprite"), AutoNetworkedField]
     public string? RsiPath;
 
     /// <summary>
     /// Attachment points that this entity supports
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public List<AttachmentDefinition> Attachments = new();
 
     /// <summary>
     /// Visuals to show when this entity is in a given attachment slot
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public Dictionary<ProtoId<VisualAttachmentPrototype>, AttachedVisualLayers> AttachedVisuals = new();
 
     /// <summary>
@@ -40,7 +41,7 @@ public sealed partial class AttachedVisualsComponent : Component
 /// Also allows you to define sub-attachments, attachment points this item provides
 /// only when it is attached to this point.
 /// </summary>
-[DataDefinition]
+[DataDefinition, Serializable]
 public sealed partial class AttachedVisualLayers
 {
     /// <summary>
@@ -62,7 +63,7 @@ public sealed partial class AttachedVisualLayers
 /// For example, the "shoes" container on a Urist can have attachments called "Boots" and "Shoes"
 /// Those attachments can have different orders, so you can have boots over suits, but shoes under suits.
 /// </summary>
-[DataDefinition]
+[DataDefinition, Serializable]
 public sealed partial class AttachmentDefinition : IComparable<AttachmentDefinition>
 {
     /// <summary>

@@ -159,6 +159,9 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
                 layer.Color = patch.Color ?? layer.Color;
                 layer.Scale = patch.Scale ?? layer.Scale;
                 layer.Visible = patch.Visible ?? layer.Visible;
+                layer.Shader = patch.Shader ?? layer.Shader;
+                layer.Offset = patch.Offset ?? layer.Offset;
+                layer.Rotation = patch.Rotation ?? layer.Rotation;
             }
         }
     }
