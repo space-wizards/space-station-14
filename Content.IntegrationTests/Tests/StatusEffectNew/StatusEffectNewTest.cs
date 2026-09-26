@@ -62,18 +62,17 @@ public sealed class StatusEffectNewTest : InteractionTest
         Assume.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var timeA), Is.True, "Could not get time info for effect A");
         Assume.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusA, out var idStatusA),  Is.True, "Status effect A was not found on the player");
         Assume.That(effectQuery.TryComp(idStatusA, out var compStatusA), Is.True, "Status effect A component was not found on the player");
+
+        Assume.That(_sStatusSystem.TryGetTime(SPlayer, StatusB, out var timeB), Is.True, "Could not get time info for effect B");
+        Assume.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusB, out var idStatusB),  Is.True, "Status effect B was not found on the player");
+        Assume.That(effectQuery.TryComp(idStatusB, out var compStatusB), Is.True, "Status effect B component was not found on the player");
+
         using (Assert.EnterMultipleScope())
         {
             Assert.That(timeA.StartEffectTime, Is.EqualTo(curTimeA), "Status effect A did not start immediately");
             Assert.That(timeA.EndEffectTime, Is.EqualTo(curTimeA + twentyTicks), "Status effect A (immediate, 20 tick duration) will not end twenty ticks from now"); 
             Assert.That(compStatusA!.Applied, Is.True, "Status effect A was not applied on the player, despite not having a delay");
-        }
 
-        Assume.That(_sStatusSystem.TryGetTime(SPlayer, StatusB, out var timeB), Is.True, "Could not get time info for effect B");
-        Assume.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusB, out var idStatusB),  Is.True, "Status effect B was not found on the player");
-        Assume.That(effectQuery.TryComp(idStatusB, out var compStatusB), Is.True, "Status effect B component was not found on the player");
-        using (Assert.EnterMultipleScope())
-        {
             Assert.That(timeB.StartEffectTime, Is.EqualTo(curTimeB + TenTicks), "Status effect B is not going to start after a delay of ten ticks");
             Assert.That(timeB.EndEffectTime, Is.EqualTo(curTimeB + twentyTicks), "Status effect B (10 tick delay, 10 tick duration) will not end 20 ticks from now");
             Assert.That(compStatusB!.Applied, Is.False, "Status effect B was applied on the player, despite delay not being over.");
