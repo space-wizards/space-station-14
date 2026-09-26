@@ -21,6 +21,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.VirtualItem;
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -68,6 +69,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
     [Dependency] private SharedStaminaSystem _stamina = default!;
     [Dependency] private DamageExamineSystem _damageExamine = default!;
     [Dependency] private SharedEntityEffectsSystem _effects = default!;
+    [Dependency] private ItemToggleSystem _toggle = default!;
 
     [Dependency] private EntityQuery<DamageableComponent> _damageQuery = default!;
 
@@ -146,10 +148,22 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
 
         var damageSpec = GetDamage(uid, args.User, component);
 
+        float? stamina = null;
+        if (TryComp<StaminaDamageOnHitComponent>(uid, out var comp))
+        {
+            if (HasComp<StaminaDamageOnHitRequiresToggleComponent>(uid))
+            {
+                if (_toggle.IsActivated(uid))
+                    stamina = comp.Damage;
+            }
+            else
+                stamina = comp.Damage;
+        }
+
         if (damageSpec.Empty)
             return;
 
-        _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), Loc.GetString("damage-melee"));
+        _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), Loc.GetString("damage-melee"), stamina);
     }
     private void OnMeleeSelected(EntityUid uid, MeleeWeaponComponent component, HandSelectedEvent args)
     {
