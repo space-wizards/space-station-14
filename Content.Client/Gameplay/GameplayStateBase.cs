@@ -1,11 +1,8 @@
-using System.Linq;
-using System.Numerics;
 using Content.Client.Clickable;
 using Content.Client.UserInterface;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using Content.Shared.Input;
-using Robust.Client.ComponentTrees;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -42,8 +39,6 @@ namespace Content.Client.Gameplay
         [Dependency] private IViewVariablesManager _vvm = default!;
         [Dependency] private IConsoleHost _conHost = default!;
         [Dependency] private IConfigurationManager _configurationManager = default!;
-
-        private ClickableEntityComparer _comparer = default!;
 
         private (ViewVariablesPath? path, string[] segments) ResolveVvHoverObject(string path)
         {
@@ -82,7 +77,6 @@ namespace Content.Client.Gameplay
         {
             _vvm.RegisterDomain("enthover", ResolveVvHoverObject, ListVVHoverPaths);
             _inputManager.KeyBindStateChanged += OnKeyBindStateChanged;
-            _comparer = new ClickableEntityComparer();
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.InspectEntity, new PointerInputCmdHandler(HandleInspect, outsidePrediction: true))
                 .Bind(ContentKeyFunctions.InspectServerComponent, new PointerInputCmdHandler(HandleInspectServerComponent, outsidePrediction: true))
@@ -125,87 +119,23 @@ namespace Content.Client.Gameplay
 
         public EntityUid? GetClickedEntity(MapCoordinates coordinates, IEye? eye)
         {
-            if (eye == null)
-                return null;
-
-            var first = GetClickableEntities(coordinates, eye).FirstOrDefault();
-            return first.IsValid() ? first : null;
+            return _entitySystemManager.GetEntitySystem<ClickableSystem>().GetClickedEntity(coordinates, eye);
         }
 
-        public IEnumerable<EntityUid> GetClickableEntities(EntityCoordinates coordinates, bool excludeFaded = true)
+        public IReadOnlyList<EntityUid> GetClickableEntities(EntityCoordinates coordinates, bool excludeFaded = true)
         {
             var transformSystem = _entitySystemManager.GetEntitySystem<SharedTransformSystem>();
             return GetClickableEntities(transformSystem.ToMapCoordinates(coordinates), excludeFaded);
         }
 
-        public IEnumerable<EntityUid> GetClickableEntities(MapCoordinates coordinates, bool excludeFaded = true)
+        public IReadOnlyList<EntityUid> GetClickableEntities(MapCoordinates coordinates, bool excludeFaded = true)
         {
             return GetClickableEntities(coordinates, _eyeManager.CurrentEye, excludeFaded);
         }
 
-        public IEnumerable<EntityUid> GetClickableEntities(MapCoordinates coordinates, IEye? eye, bool excludeFaded = true)
+        public IReadOnlyList<EntityUid> GetClickableEntities(MapCoordinates coordinates, IEye? eye, bool excludeFaded = true)
         {
-            /*
-             * TODO:
-             * 1. Stuff like MeleeWeaponSystem need an easy way to hook into viewport specific entities / entities under mouse
-             * 2. Cleanup the mess around InteractionOutlineSystem + below the keybind click detection.
-             */
-
-            if (eye == null)
-                return Array.Empty<EntityUid>();
-
-            // Find all the entities intersecting our click
-            var spriteTree = _entityManager.EntitySysManager.GetEntitySystem<SpriteTreeSystem>();
-            var entities = spriteTree.QueryAabb(coordinates.MapId, Box2.CenteredAround(coordinates.Position, new Vector2(1, 1)));
-
-            // Check the entities against whether or not we can click them
-            var foundEntities = new List<(EntityUid, int, uint, float)>(entities.Count);
-            var clickables = _entityManager.System<ClickableSystem>();
-
-            foreach (var entity in entities)
-            {
-                if (clickables.CheckClick((entity.Uid, null, entity.Component, entity.Transform), coordinates.Position, eye, excludeFaded, out var drawDepthClicked, out var renderOrder, out var bottom))
-                {
-                    foundEntities.Add((entity.Uid, drawDepthClicked, renderOrder, bottom));
-                }
-            }
-
-            if (foundEntities.Count == 0)
-                return Array.Empty<EntityUid>();
-
-            // Do drawdepth & y-sorting. First index is the top-most sprite (opposite of normal render order).
-            foundEntities.Sort(_comparer);
-
-            return foundEntities.Select(a => a.Item1);
-        }
-
-        private sealed class ClickableEntityComparer : IComparer<(EntityUid clicked, int depth, uint renderOrder, float bottom)>
-        {
-            public int Compare((EntityUid clicked, int depth, uint renderOrder, float bottom) x,
-                (EntityUid clicked, int depth, uint renderOrder, float bottom) y)
-            {
-                var cmp = y.depth.CompareTo(x.depth);
-                if (cmp != 0)
-                {
-                    return cmp;
-                }
-
-                cmp = y.renderOrder.CompareTo(x.renderOrder);
-
-                if (cmp != 0)
-                {
-                    return cmp;
-                }
-
-                cmp = -y.bottom.CompareTo(x.bottom);
-
-                if (cmp != 0)
-                {
-                    return cmp;
-                }
-
-                return y.clicked.CompareTo(x.clicked);
-            }
+            return _entitySystemManager.GetEntitySystem<ClickableSystem>().GetClickableEntities(coordinates, eye, excludeFaded);
         }
 
         /// <summary>

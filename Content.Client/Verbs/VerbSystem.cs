@@ -34,9 +34,11 @@ namespace Content.Client.Verbs
         [Dependency] private SharedContainerSystem _containers = default!;
         [Dependency] private IConfigurationManager _cfg = default!;
         [Dependency] private EntityLookupSystem _lookup = default!;
+        [Dependency] private SharedTransformSystem _transform = default!;
         [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
 
         private float _lookupSize;
+        private readonly HashSet<Entity<SpriteComponent, TransformComponent>> _entityMenuQueryResults = new();
 
         private static readonly ProtoId<TagPrototype> HideContextMenuTag = "HideContextMenu";
 
@@ -66,7 +68,20 @@ namespace Content.Client.Verbs
         /// <returns>True if any entities were found.</returns>
         public bool TryGetEntityMenuEntities(MapCoordinates targetPos, [NotNullWhen(true)] out List<EntityUid>? entities)
         {
+            return TryGetEntityMenuEntities(targetPos, out entities, out _);
+        }
+
+        /// <summary>
+        /// Get all of the entities in an area for displaying on the context menu.
+        /// </summary>
+        /// <returns>True if any entities were found.</returns>
+        public bool TryGetEntityMenuEntities(
+            MapCoordinates targetPos,
+            [NotNullWhen(true)] out List<EntityUid>? entities,
+            out MenuVisibility visibility)
+        {
             entities = null;
+            visibility = MenuVisibility.Default;
 
             if (_stateManager.CurrentState is not GameplayStateBase)
                 return false;
@@ -74,25 +89,16 @@ namespace Content.Client.Verbs
             if (_playerManager.LocalEntity is not { } player)
                 return false;
 
-            // If FOV drawing is disabled, we will modify the visibility option to ignore visiblity checks.
-            var visibility = _eyeManager.CurrentEye.DrawFov ? Visibility : Visibility | MenuVisibility.NoFov;
-
-            var ev = new MenuVisibilityEvent
-            {
-                TargetPos = targetPos,
-                Visibility = visibility,
-            };
-
-            RaiseLocalEvent(player, ref ev);
-            visibility = ev.Visibility;
+            visibility = GetEntityMenuVisibility(player, targetPos);
 
             // Initially, we include all entities returned by a sprite area lookup
             var box = Box2.CenteredAround(targetPos.Position, new Vector2(_lookupSize, _lookupSize));
-            var queryResult = _tree.QueryAabb(targetPos.MapId, box);
-            entities = new List<EntityUid>(queryResult.Count);
-            foreach (var ent in queryResult)
+            _entityMenuQueryResults.Clear();
+            _tree.QueryAabb(_entityMenuQueryResults, targetPos.MapId, box);
+            entities = new List<EntityUid>(_entityMenuQueryResults.Count);
+            foreach (var ent in _entityMenuQueryResults)
             {
-                entities.Add(ent.Uid);
+                entities.Add(ent.Owner);
             }
 
             // If we're in a container list all other entities in it.
@@ -139,9 +145,11 @@ namespace Content.Client.Verbs
             if ((visibility & MenuVisibility.NoFov) == 0)
             {
                 TryComp(player, out ExaminerComponent? examiner);
+                TryComp(player, out TransformComponent? playerXform);
+                var playerCoords = playerXform == null ? default : _transform.GetMapCoordinates(player, playerXform);
                 for (var i = entities.Count - 1; i >= 0; i--)
                 {
-                    if (!_examine.CanExamine(player, targetPos, e => e == player, entities[i], examiner))
+                    if (!_examine.CanExamine((player, examiner, playerXform), targetPos, examined: entities[i], examinerCoordinates: playerCoords))
                         entities.RemoveSwap(i);
                 }
             }
@@ -167,6 +175,21 @@ namespace Content.Client.Verbs
             }
 
             return entities.Count != 0;
+        }
+
+        public MenuVisibility GetEntityMenuVisibility(EntityUid player, MapCoordinates targetPos)
+        {
+            // If FOV drawing is disabled, ignore FoV restrictions.
+            var visibility = _eyeManager.CurrentEye.DrawFov ? Visibility : Visibility | MenuVisibility.NoFov;
+
+            var ev = new MenuVisibilityEvent
+            {
+                TargetPos = targetPos,
+                Visibility = visibility,
+            };
+
+            RaiseLocalEvent(player, ref ev);
+            return ev.Visibility;
         }
 
         /// <summary>
