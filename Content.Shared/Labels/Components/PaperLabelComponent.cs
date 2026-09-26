@@ -5,7 +5,8 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Labels.Components;
 
 /// <summary>
-///     This component allows you to attach and remove a piece of paper to an entity.
+/// This component allows you to attach and remove a piece of paper to an entity.
+/// See LabelStates for the default name of related sprites.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(LabelSystem))]
