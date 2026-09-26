@@ -22,7 +22,6 @@
     - MindRoleGhostRoleTeamAntagonist
     raffle:
       settings: default
-  - type: GhostTakeoverAvailable
   - type: HTN
     rootTask:
       task: XenoCompound

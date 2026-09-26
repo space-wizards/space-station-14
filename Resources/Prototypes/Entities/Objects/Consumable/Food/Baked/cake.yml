@@ -1082,7 +1082,6 @@
     rules: ghost-role-information-nonantagonist-rules
     raffle:
       settings: short
-  - type: GhostTakeoverAvailable
   - type: OwOAccent
   - type: Speech
     speechSounds: Cat

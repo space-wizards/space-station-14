@@ -116,7 +116,6 @@
   components:
   - type: ReplacementAccent
     accent: slimes
-  - type: GhostTakeoverAvailable
   - type: GhostRole
     makeSentient: true
     name: ghost-role-information-slimes-name

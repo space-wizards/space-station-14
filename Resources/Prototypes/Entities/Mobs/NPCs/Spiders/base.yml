@@ -138,4 +138,3 @@
     - MindRoleGhostRoleTeamAntagonist
     raffle:
       settings: short
-  - type: GhostTakeoverAvailable

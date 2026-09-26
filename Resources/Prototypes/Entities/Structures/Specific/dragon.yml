@@ -56,7 +56,6 @@
   abstract: true
   id: MobDragonBrood
   components:
-  - type: GhostTakeoverAvailable
   - type: HTN
     rootTask:
       task: DragonCarpCompound

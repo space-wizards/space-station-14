@@ -1,16 +1,16 @@
 using Content.Shared.NPC.Prototypes;
 using Content.Server.Actions;
-using Content.Server.Body.Systems;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Emoting.Systems;
-using Content.Shared.Speech.EntitySystems;
+using Content.Server.Ghost.Roles;
+using Content.Server.Ghost.Roles.Components;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Armor;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Body.Systems;
-using Content.Shared.Cloning.Events;
 using Content.Shared.Chat;
+using Content.Shared.Cloning.Events;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Inventory;
 using Content.Shared.Mind;
@@ -22,14 +22,12 @@ using Content.Shared.Popups;
 using Content.Shared.Revolutionary;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
+using Content.Shared.Speech.EntitySystems;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Content.Server.Ghost.Roles.Components;
-using Content.Shared.Medical;
-using Content.Shared.Construction.Steps;
 
 namespace Content.Server.Zombies
 {
@@ -37,12 +35,13 @@ namespace Content.Server.Zombies
     {
         [Dependency] private IGameTiming _timing = default!;
         [Dependency] private IRobustRandom _random = default!;
-        [Dependency] private BloodstreamSystem _bloodstream = default!;
-        [Dependency] private DamageableSystem _damageable = default!;
-        [Dependency] private ChatSystem _chat = default!;
         [Dependency] private ActionsSystem _actions = default!;
         [Dependency] private AutoEmoteSystem _autoEmote = default!;
+        [Dependency] private BloodstreamSystem _bloodstream = default!;
+        [Dependency] private ChatSystem _chat = default!;
+        [Dependency] private DamageableSystem _damageable = default!;
         [Dependency] private EmoteOnDamageSystem _emoteOnDamage = default!;
+        [Dependency] private GhostRoleSystem _ghostRole = default!;
         [Dependency] private MobStateSystem _mobState = default!;
         [Dependency] private SharedPopupSystem _popup = default!;
         [Dependency] private SharedRoleSystem _role = default!;
@@ -345,13 +344,11 @@ namespace Content.Server.Zombies
         private void MakeGhostRole(EntityUid ent)
         {
             //yet more hardcoding. Visit zombie.ftl for more information.
-            var ghostRole = EnsureComp<GhostRoleComponent>(ent);
-            EnsureComp<GhostTakeoverAvailableComponent>(ent);
-
-            ghostRole.RoleName = Loc.GetString("zombie-generic");
-            ghostRole.RoleDescription = Loc.GetString("zombie-role-desc");
-            ghostRole.RoleRules = Loc.GetString("zombie-role-rules");
-            ghostRole.MindRoles.Add(MindRoleZombie);
+            _ghostRole.CreateGhostRole(ent,
+                name: Loc.GetString("zombie-generic"),
+                description: Loc.GetString("zombie-role-desc"),
+                rules: Loc.GetString("zombie-role-rules"),
+                mindRoles: new() { GhostRoleComponent.DefaultMindRole, MindRoleZombie });
         }
     }
 }

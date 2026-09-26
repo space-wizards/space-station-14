@@ -11,7 +11,6 @@
     - MindRoleGhostRoleFreeAgent
     raffle:
       settings: default
-  - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [PirateGear]
   - type: RandomHumanoidAppearance
@@ -30,7 +29,6 @@
     - MindRoleGhostRoleFreeAgent
     raffle:
       settings: default
-  - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [SkeletonBiker]
   - type: RandomHumanoidAppearance
@@ -48,7 +46,6 @@
     - MindRoleGhostRoleFreeAgent
     raffle:
       settings: default
-  - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [LimitedPassengerGear]
   - type: RandomHumanoidAppearance
