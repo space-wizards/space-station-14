@@ -189,7 +189,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
             else
             {
                 // Check if we need to update our time by the value it would print.
-                TimerDisplay screenValue = ConvertTimeToDisplayValue(timer.TargetTime.Value - _timing.CurTime, timer.ShowCentiseconds);
+                var screenValue = ConvertTimeToDisplayValue(timer.TargetTime.Value - _timing.CurTime, timer.ShowCentiseconds);
                 if (screenValue == timer.ScreenValue)
                     continue;
 
@@ -233,6 +233,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     /// <summary>
     /// Converts <paramref name="duration"/> into a <see cref="TimerDisplay"/> for display.
     /// </summary>
+    /// <param name="duration">The duration to convert.</param>
     /// <param name="showCentiseconds">If true, enables sub-second precision for small durations.</param>
     public static TimerDisplay ConvertTimeToDisplayValue(TimeSpan duration, bool showCentiseconds)
     {
@@ -245,10 +246,11 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
             var centis = (int)millis / 10;
             return new(centis / 100, centis % 100);
         }
-        else if (millis < TimeSpan.MillisecondsPerHour)
+
+        if (millis < TimeSpan.MillisecondsPerHour)
             return new(duration.Minutes, duration.Seconds);
-        else
-            return new(duration.Hours, duration.Minutes);
+
+        return new(duration.Hours, duration.Minutes);
     }
 
     /// <summary>
