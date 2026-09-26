@@ -54,6 +54,7 @@ markings-layer-SnoutCover = Snout (Cover)
 markings-layer-HeadSide = Head (Side)
 markings-layer-HeadTop = Head (Top)
 markings-layer-Eyes = Eyes
+markings-layer-OverEyes = Over Eyes
 markings-layer-RArm = Right Arm
 markings-layer-LArm = Left Arm
 markings-layer-RHand = Right Hand
