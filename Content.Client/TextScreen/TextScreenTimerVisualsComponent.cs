@@ -69,8 +69,8 @@ public sealed partial class TextScreenTimerVisualsComponent : Component
 /// <remarks>
 /// Values to be expressed as <c>HIGH:LOW</c>, both values effectively capped at 99.
 /// </remarks>
-[Serializable]
-public record struct TimerDisplay(int HighValue, int LowValue)
+[DataDefinition, Serializable]
+public partial record struct TimerDisplay(int HighValue, int LowValue)
 {
     public readonly override string ToString()
     {

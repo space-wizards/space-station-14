@@ -146,7 +146,7 @@ public sealed partial class TextScreenVisualsComponent : Component
 /// <summary>
 /// All information about a given row of text.
 /// </summary>
-[DataRecord, Serializable]
+[DataDefinition, Serializable]
 public partial struct TextScreenRow()
 {
     /// <summary>
