@@ -40,10 +40,10 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
             return;
 
         // Added tile emitter component that place sources on tiles for testing
-        // but it can probably be removed or commented out down the line
+        // but not optimized for performance so it can probably be removed or commented out before merging
         UpdateTileRadiationEmitters();
         UpdateGridcast();
-        UpdateTileRadiationSources();
+        UpdateTileRadiationSources(_accumulator);
         UpdateResistanceDebugOverlay();
         _accumulator = 0f;
     }

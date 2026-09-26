@@ -54,7 +54,7 @@ public partial class RadiationSystem
         }
     }
 
-    private void UpdateTileRadiationSources()
+    private void UpdateTileRadiationSources(float seconds)
     {
         _expiredKeys.Clear();
 
@@ -91,7 +91,7 @@ public partial class RadiationSystem
 
                 if (source.HalfLife > 0f)
                 {
-                    source.Intensity *= MathF.Pow(0.5f, GridcastUpdateRate / source.HalfLife);
+                    source.Intensity *= MathF.Pow(0.5f, seconds / source.HalfLife);
                 }
 
                 if (source.Intensity < MinIntensity)
@@ -117,6 +117,8 @@ public partial class RadiationSystem
         }
     }
 
+    // Only used for testing currently. If there is any reason to keep it, it should
+    // be rewritten to be more performant as radSys Update() calls it every second.
     private void UpdateTileRadiationEmitters()
     {
         var query = EntityQueryEnumerator<TileRadiationEmitterComponent, TransformComponent>();
