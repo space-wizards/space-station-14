@@ -11,7 +11,6 @@ using Content.Client.Gameplay;
 using Content.Client.Ghost;
 using Content.Client.Mind;
 using Content.Client.Roles;
-using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Chat.Widgets;
 using Content.Client.UserInterface.Systems.Gameplay;
@@ -826,26 +825,35 @@ public sealed partial class ChatUIController : UIController
     private void OnChatMessage(MsgChatMessage message)
     {
         var msg = message.Message;
-        ProcessChatMessage(msg);
+        ProcessChatMessage(msg, true, out var sendToReplay);
 
-        if ((msg.Channel & ChatChannel.AdminRelated) == 0 ||
-            _config.GetCVar(CCVars.ReplayRecordAdminChat))
+        if (((msg.Channel & ChatChannel.AdminRelated) == 0
+             || _config.GetCVar(CCVars.ReplayRecordAdminChat))
+            && sendToReplay)
         {
             _replayRecording.RecordClientMessage(msg);
         }
     }
 
-    public void ProcessChatMessage(ChatMessage msg, bool speechBubble = true)
+    public void ProcessChatMessage(ChatMessage msg, bool speechBubble, out bool sendToReplay)
     {
+        sendToReplay = true;
+
         var skipMessage = false;
 
-        if (msg.Channel is ChatChannel.Notifications or ChatChannel.Visual or ChatChannel.Damage or ChatChannel.Emotes)
+        if ((msg.Channel & (ChatChannel.Notifications
+                            | ChatChannel.Visual
+                            | ChatChannel.Damage
+                            | ChatChannel.Emotes)) != 0)
         {
+            sendToReplay = (msg.Channel & ChatChannel.Emotes) != 0;
+
             for (var i = History.Count - 1; i >= 0 && History.Count - i <= RecentRepeatMessageLimit; i--)
             {
                 var (sentTime, previousMessage) = History[i];
 
-                if (previousMessage.Channel != msg.Channel || !previousMessage.WrappedMessage.Contains(msg.WrappedMessage))
+                if (previousMessage.Channel != msg.Channel ||
+                    !previousMessage.WrappedMessage.Contains(msg.WrappedMessage))
                 {
                     continue;
                 }

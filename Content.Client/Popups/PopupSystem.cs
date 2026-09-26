@@ -89,7 +89,7 @@ public sealed partial class PopupSystem : SharedPopupSystem
         };
     }
 
-    private void SendPopupToChat(string message, PopupType type)
+    private void SendPopupToChat(string message, PopupType type, out bool sendToReplay)
     {
         var chat = _uiManager.GetUIController<ChatUIController>();
         chat.ProcessChatMessage(new ChatMessage(
@@ -99,7 +99,9 @@ public sealed partial class PopupSystem : SharedPopupSystem
             default,
             null,
             colorOverride: PopupTypeToChatColor(type)
-        ), false);
+            ),
+            false,
+            out sendToReplay);
     }
 
     /// <summary>
@@ -110,9 +112,9 @@ public sealed partial class PopupSystem : SharedPopupSystem
         if (string.IsNullOrWhiteSpace(message))
             return;
 
-        SendPopupToChat(message, type);
+        SendPopupToChat(message, type, out var sendToReplay);
 
-        if (recordReplay && _replayRecording.IsRecording)
+        if (recordReplay && _replayRecording.IsRecording && sendToReplay)
         {
             if (entity != null)
                 _replayRecording.RecordClientMessage(new PopupEntityEvent(message, type, Timing.CurTick, GetNetEntity(entity.Value)));
@@ -144,9 +146,9 @@ public sealed partial class PopupSystem : SharedPopupSystem
         if (string.IsNullOrWhiteSpace(message))
             return;
 
-        SendPopupToChat(message, type);
+        SendPopupToChat(message, type, out var sendToReplay);
 
-        if (recordReplay && _replayRecording.IsRecording)
+        if (recordReplay && _replayRecording.IsRecording && sendToReplay)
             _replayRecording.RecordClientMessage(new PopupCursorEvent(message, type, Timing.CurTick));
 
         var popupData = new CursorPopupData(message, type);
