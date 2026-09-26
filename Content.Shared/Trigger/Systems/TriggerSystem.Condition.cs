@@ -1,23 +1,12 @@
 using Content.Shared.Random.Helpers;
 using Content.Shared.Trigger.Components.Conditions;
 using Content.Shared.Verbs;
-using Robust.Shared.Random;
 
 namespace Content.Shared.Trigger.Systems;
 
 public sealed partial class TriggerSystem
 {
-    private void InitializeCondition()
-    {
-        SubscribeLocalEvent<WhitelistTriggerConditionComponent, AttemptTriggerEvent>(OnWhitelistTriggerAttempt);
-        SubscribeLocalEvent<UseDelayTriggerConditionComponent, AttemptTriggerEvent>(OnUseDelayTriggerAttempt);
-        SubscribeLocalEvent<ToggleTriggerConditionComponent, AttemptTriggerEvent>(OnToggleTriggerAttempt);
-        SubscribeLocalEvent<RandomChanceTriggerConditionComponent, AttemptTriggerEvent>(OnRandomChanceTriggerAttempt);
-        SubscribeLocalEvent<MindRoleTriggerConditionComponent, AttemptTriggerEvent>(OnMindRoleTriggerAttempt);
-
-        SubscribeLocalEvent<ToggleTriggerConditionComponent, GetVerbsEvent<AlternativeVerb>>(OnToggleGetAltVerbs);
-    }
-
+    [SubscribeLocalEvent]
     private void OnWhitelistTriggerAttempt(Entity<WhitelistTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
     {
         if (args.Key != null && !ent.Comp.Keys.Contains(args.Key))
@@ -26,6 +15,7 @@ public sealed partial class TriggerSystem
         args.Cancelled |= !_whitelist.CheckBoth(args.User, ent.Comp.UserBlacklist, ent.Comp.UserWhitelist);
     }
 
+    [SubscribeLocalEvent]
     private void OnUseDelayTriggerAttempt(Entity<UseDelayTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
     {
         if (args.Key != null && !ent.Comp.Keys.Contains(args.Key))
@@ -34,6 +24,7 @@ public sealed partial class TriggerSystem
         args.Cancelled |= _useDelay.IsDelayed(ent.Owner, ent.Comp.UseDelayId);
     }
 
+    [SubscribeLocalEvent]
     private void OnToggleTriggerAttempt(Entity<ToggleTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
     {
         if (args.Key != null && !ent.Comp.Keys.Contains(args.Key))
@@ -42,6 +33,7 @@ public sealed partial class TriggerSystem
         args.Cancelled |= !ent.Comp.Enabled;
     }
 
+    [SubscribeLocalEvent]
     private void OnToggleGetAltVerbs(Entity<ToggleTriggerConditionComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess || args.Hands == null)
@@ -64,6 +56,7 @@ public sealed partial class TriggerSystem
         Dirty(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnRandomChanceTriggerAttempt(Entity<RandomChanceTriggerConditionComponent> ent,
         ref AttemptTriggerEvent args)
     {
@@ -73,6 +66,8 @@ public sealed partial class TriggerSystem
         // When not successful, Cancelled = true
         args.Cancelled |= !SharedRandomExtensions.PredictedProb(_timing, ent.Comp.SuccessChance, GetNetEntity(ent), GetNetEntity(args.User));
     }
+
+    [SubscribeLocalEvent]
     private void OnMindRoleTriggerAttempt(Entity<MindRoleTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
     {
         if (args.Key != null && !ent.Comp.Keys.Contains(args.Key))

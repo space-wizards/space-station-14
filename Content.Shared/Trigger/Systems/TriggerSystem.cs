@@ -1,8 +1,6 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking;
-using Content.Shared.EntityTable;
-using Content.Shared.Item.ItemToggle;
 using Content.Shared.Mind;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
@@ -39,27 +37,11 @@ public sealed partial class TriggerSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private UseDelaySystem _useDelay = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private ItemToggleSystem _itemToggle = default!;
     [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
     [Dependency] private SharedRoleSystem _role = default!;
     [Dependency] private SharedMindSystem _mind = default!;
-    [Dependency] private EntityTableSystem _entityTable = default!;
 
     public const string DefaultTriggerKey = "trigger";
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        InitializeCollide();
-        InitializeCondition();
-        InitializeInteraction();
-        InitializeProximity();
-        InitializeSignal();
-        InitializeTimer();
-        InitializeSpawn();
-        InitializeVoice();
-    }
 
     /// <summary>
     /// Trigger the given entity.
