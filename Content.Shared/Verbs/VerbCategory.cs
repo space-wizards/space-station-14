@@ -91,5 +91,8 @@ namespace Content.Shared.Verbs
 
         public static readonly VerbCategory Metabolizers =
             new("verb-categories-select-target", "/Textures/Interface/VerbIcons/group.svg.192dpi.png");
+
+        public static readonly VerbCategory ToggleClothing =
+            new("verb-categories-toggle-clothing", "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png");
     }
 }
