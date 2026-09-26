@@ -72,7 +72,7 @@ public sealed partial class TextScreenTimerVisualsComponent : Component
 [DataDefinition, Serializable]
 public partial record struct TimerDisplay(int HighValue, int LowValue)
 {
-    public readonly override string ToString()
+    public override readonly string ToString()
     {
         var high = int.Clamp(HighValue, 0, 99);
         var low = int.Clamp(LowValue, 0, 99);
