@@ -1,23 +1,16 @@
-using Robust.Client.GameObjects;
 using Content.Shared.Speech.Components;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Weapons.Melee.UI;
 
 /// <summary>
-/// Initializes a <see cref="MeleeSpeechWindow"/> and updates it when new server messages are received.
+/// A BUI to set the battlecry for an entity.  Wraps a <see cref="MeleeSpeechWindow"/>.
 /// </summary>
-public sealed partial class MeleeSpeechBoundUserInterface : BoundUserInterface
+/// <seealso cref="MeleeSpeechComponent"/>
+public sealed partial class MeleeSpeechBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
-    [Dependency] private IEntityManager _entManager = default!;
-
     [ViewVariables]
     private MeleeSpeechWindow? _window;
-
-    public MeleeSpeechBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-        IoCManager.InjectDependencies(this);
-    }
 
     protected override void Open()
     {
@@ -25,7 +18,7 @@ public sealed partial class MeleeSpeechBoundUserInterface : BoundUserInterface
 
         _window = this.CreateWindow<MeleeSpeechWindow>();
 
-        if (_entManager.TryGetComponent(Owner, out MeleeSpeechComponent? speech))
+        if (EntMan.TryGetComponent(Owner, out MeleeSpeechComponent? speech))
         {
             _window.SetInitialBattlecry(speech!.Battlecry);
             _window.SetMaxBattlecryLength(speech!.MaxBattlecryLength);
@@ -50,14 +43,5 @@ public sealed partial class MeleeSpeechBoundUserInterface : BoundUserInterface
             return;
 
         _window.SetCurrentBattlecry(cast.CurrentBattlecry);
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing)
-            return;
-
-        _window?.Dispose();
     }
 }
