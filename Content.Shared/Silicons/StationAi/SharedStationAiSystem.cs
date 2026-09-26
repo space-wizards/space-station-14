@@ -492,7 +492,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         _metadata.SetEntityName(ent.Comp.RemoteEntity.Value, eyeName);
     }
 
-    private EntityUid? GetInsertedAI(Entity<StationAiCoreComponent> ent)
+    public EntityUid? GetInsertedAI(Entity<StationAiCoreComponent> ent)
     {
         if (!_containers.TryGetContainer(ent.Owner, StationAiHolderComponent.Container, out var container) ||
             container.ContainedEntities.Count != 1)

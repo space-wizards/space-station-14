@@ -1,0 +1,129 @@
+- type: entity
+  parent: BaseItem
+  id: CosmicCultStigmaCrystal
+  name: harvested entropic stigma
+  description: An otherworldly substance, somewhere between resin and crystal.
+  components:
+  - type: Sprite
+    sprite: Objects/Cosmic/cosmic-stigma-crystal.rsi
+    state: icon
+  - type: CosmicEquipment
+  - type: CosmicStigmaItem
+  - type: CosmicExamine
+    cultistText: cosmic-examine-text-stigma-crystal
+    othersText: cosmic-examine-text-structures
+
+- type: entity
+  parent: BaseStructure
+  id: CosmicLapsedEntity
+  name: "???"
+  categories: [ HideSpawnMenu ]
+  description: Trapped in a lapse between here and there.
+  components:
+  - type: DoAfter
+  - type: Sprite
+    sprite: Effects/Cosmic/ability-lapse-polymorph.rsi
+    layers:
+    - state: vfx-human
+      shader: unshaded
+      map: ["enum.CosmicLapseVisuals.Layer"]
+    drawdepth: Mobs
+  - type: PointLight
+    radius: 1.25
+    energy: 12
+    color: "#42a4ae"
+    castShadows: false
+  - type: CosmicLapsed
+  - type: CosmicExamine
+    cultistText: cosmic-examine-text-abilitylapse
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      interpolate: Linear
+      minDuration: 1.75
+      maxDuration: 1.75
+      startValue: 0.5
+      endValue: 12
+      property: Energy
+      enabled: true
+      isLooped: true
+      reverseWhenFinished: true
+  - type: Speech
+    enabled: False
+  - type: Transform
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.49
+          position: 0,0
+        mask:
+        - LargeMobMask
+        layer:
+        - WallLayer
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.CosmicLapseVisuals.Visuals:
+        enum.CosmicLapseVisuals.Layer:
+          Human: {state: vfx-human}
+          Arachnid: {state: vfx-arachnid}
+          Diona: {state: vfx-diona}
+          Moth: {state: vfx-moth}
+          Vox: {state: vfx-vox}
+          Vulpkanin: {state: vfx-vulpkanin}
+          Reptilian: {state: vfx-reptilian}
+          SlimePerson: {state: vfx-slime}
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+        ent: null
+        showEnts: False
+        occludes: True
+
+- type: entity
+  parent: BaseBullet
+  id: CosmicAnomalousParticleLambda
+  name: lambda particles
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: CosmicLambaParticle
+  - type: PointLight
+    enabled: true
+    color: "#c2385d"
+    radius: 2.0
+    energy: 7.0
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: magicm_red
+      shader: unshaded
+  - type: Ammo
+    muzzleFlash: null
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        mask:
+        - Opaque
+      fly-by:
+        shape: !type:PhysShapeCircle
+          radius: 1.5
+        layer:
+        - Impassable
+        - MidImpassable
+        - HighImpassable
+        - LowImpassable
+        hard: false
+  - type: Projectile
+    damage:
+      types:
+        Heat: 5
+  - type: TimedDespawn
+    lifetime: 3
+  - type: Reflective
+    reflective:
+    - Energy

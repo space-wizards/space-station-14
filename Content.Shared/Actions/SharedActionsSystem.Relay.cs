@@ -1,5 +1,6 @@
 using Content.Shared.Actions.Components;
 using Content.Shared.Changeling.Systems;
+using Content.Shared.CosmicCult;
 using Content.Shared.Ghost;
 using Content.Shared.Ghost.Systems;
 using Content.Shared.Mobs;
@@ -13,6 +14,7 @@ public abstract partial class SharedActionsSystem
         SubscribeLocalEvent<ActionsComponent, BodyTakenByHeadslugEvent>(RefRelayActionEvent);
         SubscribeLocalEvent<ActionsComponent, MobStateChangedEvent>(RefRelayActionEvent);
         SubscribeLocalEvent<ActionsComponent, GhostAttemptEvent>(RefRelayActionEvent);
+        SubscribeLocalEvent<ActionsComponent, CosmicCultistEmpowerChangedEvent>(RefRelayActionEvent);
     }
 
     private void RefRelayActionEvent<T>(EntityUid uid, ActionsComponent component, ref T args) where T : struct

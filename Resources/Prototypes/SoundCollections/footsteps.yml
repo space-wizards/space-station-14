@@ -249,3 +249,12 @@
   - /Audio/Effects/Footsteps/heelsclack3.ogg
   - /Audio/Effects/Footsteps/heelsclack4.ogg
   - /Audio/Effects/Footsteps/heelsclack5.ogg
+
+- type: soundCollection
+  id: FootstepCosmic
+  files:
+  - /Audio/Cosmic/Footsteps/step1.ogg
+  - /Audio/Cosmic/Footsteps/step2.ogg
+  - /Audio/Cosmic/Footsteps/step3.ogg
+  - /Audio/Cosmic/Footsteps/step4.ogg
+  - /Audio/Cosmic/Footsteps/step5.ogg

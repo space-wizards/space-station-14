@@ -1,0 +1,330 @@
+- type: entity
+  parent: [ BaseSimpleMob, FlyingMobBase ]
+  abstract: true
+  id: MobCosmicColossusBase
+  name: entropic colossus
+  description: A colossal monstrosity wrought of malign plating.
+  components:
+  - type: FTLSmashImmune
+  - type: CosmicExamine
+    cultistText: cosmic-examine-text-cultentity
+    othersText: cosmic-examine-text-entities
+  - type: AntagImmune
+  - type: StaminaResistance
+    damageCoefficient: 0 # Players can't stun colossi but they're still stunnable for the purposes of game systems
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Cosmic/cosmic-colossus.rsi
+    layers:
+    - state: vfx-bg
+      shader: unshaded
+      map: ["underlay"]
+    - state: colossus
+      map: ["base"]
+    - state: dead
+      visible: false
+      map: ["corpse"]
+    - state: vfx-fg
+      shader: unshaded
+      map: ["overlay"]
+    - state: hibernate
+      shader: unshaded
+      visible: false
+      map: ["action"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ColossusVisuals.Visuals:
+        underlay:
+          Alive: { visible: true }
+          Dead: { visible: false }
+          Hibernate: { visible: false }
+        base:
+          Alive: { visible: true }
+          Dead: { visible: false }
+          Hibernate: { visible: false }
+        corpse:
+          Alive: { visible: false }
+          Dead: { visible: true }
+          Hibernate: { visible: false }
+        overlay:
+          Alive: { visible: true }
+          Dead: { visible: false }
+          Hibernate: { visible: false }
+        action:
+          Alive: { visible: false }
+          Dead: { visible: false }
+          Hibernate: { visible: true }
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 2500
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
+  - type: WarpPoint
+    follow: true
+  - type: Body
+  - type: Emoting
+  - type: Speech
+    speechSounds: ColossusSpeech
+    speechVerb: Robotic
+    allowedEmotes: []
+#  - type: TypingIndicator
+#    proto: CosmicTyping
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: epicene
+  - type: ProtectedFromStepTriggers
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.25
+    baseSprintSpeed: 3.25
+    baseWeightlessModifier: 1
+    weightlessAcceleration: 1.5
+    weightlessFriction: 1
+  - type: AmbientSound
+    volume: +8
+    range: 18
+    sound:
+      path: /Audio/Cosmic/colossus-ambience.ogg
+  - type: EmitSoundOnSpawn
+    sound:
+      path: /Audio/Cosmic/colossus-spawn.ogg
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - Unimplantable
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: PointLight
+    color: "#42a4ae"
+    radius: 4
+    energy: 4
+    castShadows: true
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      interpolate: Linear
+      minDuration: 5.5
+      maxDuration: 5.5
+      startValue: 1
+      endValue: 4
+      property: Energy
+      enabled: true
+      isLooped: true
+      reverseWhenFinished: true
+  - type: StatusEffects
+    allowed:
+    - Stutter
+    - Stun
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+    - Common
+    - CosmicRadio
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Common
+    - CosmicRadio
+  - type: ZombieImmune
+  - type: NoSlip
+  - type: Puller
+    needsHands: false
+  - type: CombatMode
+  - type: ActionGrant
+    actions:
+    - ActionCosmicColossusSunder
+    - ActionCosmicColossusHibernate
+    - ActionCosmicColossusIngress
+  - type: MeleeWeapon
+    altDisarm: false
+    animation: WeaponArcCosmic
+    attackRate: 0.425
+    range: 3
+    damage:
+      types:
+        Blunt: 25
+        Asphyxiation: 5
+        Cold: 5
+        Structural: 60
+    soundHit:
+      path: /Audio/Cosmic/cosmic-sword-glance.ogg
+      params:
+        variation: 0.2
+        volume: 1
+    soundSwing:
+      path: /Audio/Cosmic/cosmic-weapon-swing.ogg
+      params:
+        variation: 0.125
+        volume: -4
+  - type: MeleeThrowOnHit
+    speed: 8
+    distance: 7
+  - type: Reflect
+    reflectProb: .20
+    spread: 120
+    soundOnReflect:
+      path: /Audio/Cosmic/cosmic-sword-glance.ogg
+      params:
+        variation: 0.2
+        volume: -6
+  - type: GhostRole
+    name: ghost-role-information-colossus-name
+    description: ghost-role-information-colossus-description
+    rules: ghost-role-information-colossus-rules
+    mindRoles:
+    - MindRoleCosmicColossus
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+#  - type: GuideHelp
+#    guides:
+#    - CosmicColossus
+
+- type: entity
+  parent: [ MobCosmicColossusBase ]
+  categories: [ HideSpawnMenu ]
+  id: MobCosmicColossusLone
+  suffix: MidRoundAntag
+  components:
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      600: Dead
+  - type: TileConversion
+    mobile: true
+    autoDisable: false
+    chanceReduction: 0
+
+- type: entity
+  parent: [ MobCosmicColossusBase ]
+  id: MobCosmicColossus
+  components:
+  - type: RandomMetadata
+    nameSegments:
+    - DatasetCosmicColossusNames
+    - DatasetCosmicColossusTitles
+    nameFormat: name-format-colossus
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      450: Dead
+  - type: CosmicColossus
+
+- type: speechSounds
+  id: ColossusSpeech
+  saySound:
+    path: /Audio/Cosmic/colossus-say.ogg
+  askSound:
+    path: /Audio/Cosmic/colossus-ask.ogg
+  exclaimSound:
+    path: /Audio/Cosmic/colossus-exclaim.ogg
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  id: CosmicSunderAreaEffect
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: CosmicTileDetonator
+  - type: Transform
+    anchored: true
+  - type: EmitSoundOnSpawn
+    sound:
+      path: "/Audio/Cosmic/Abilities/ability-sunder.ogg"
+  - type: TimedDespawn
+    lifetime: 8
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  id: CosmicSunderExplosionWindup
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: AnimationPlayer
+  - type: EffectVisuals
+  - type: TimedDespawn
+    lifetime: 0.6
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    noRot: true
+    sprite: Effects/Cosmic/tile-attacks.rsi
+    offset: 0, 0.27
+    layers:
+    - state: vfx-1
+      shader: unshaded
+  - type: Tag
+    tags:
+    - HideContextMenu
+  - type: SpawnOnDespawn
+    prototype: CosmicSunderExplosion
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  id: CosmicSunderExplosion
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: AnimationPlayer
+  - type: EffectVisuals
+  - type: Sprite
+    noRot: true
+    sprite: Effects/Cosmic/tile-attacks.rsi
+    offset: 0, 0.27
+    layers:
+    - state: vfx-2
+      shader: unshaded
+  - type: Transform
+    noRot: true
+    anchored: true
+  - type: TimedDespawn
+    lifetime: 0.85
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+          - SlipLayer
+        mask:
+          - ItemMask
+        density: 2500
+        hard: false
+  - type: StepTrigger
+    requiredTriggeredSpeed: 0
+    intersectRatio: 0.1
+    ignoreWeightless: true
+    blacklist:
+      tags:
+        - Catwalk
+  - type: TileEntityEffect
+    effects:
+    - !type:HealthChange
+      damage:
+        types:
+          Cold: 14.5

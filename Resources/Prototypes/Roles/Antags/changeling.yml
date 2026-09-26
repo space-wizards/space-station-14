@@ -35,9 +35,9 @@
     actions:
     - ActionChangelingStore
     - ActionChangelingStasis
-  - type: SatiationGrant
+  - type: SatiationModify
     removeOnShutdown: false
-    satiation:
+    satiationGrant:
       Chemicals:
         prototype: ChemicalsChangeling
   - type: Store

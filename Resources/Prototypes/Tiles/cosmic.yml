@@ -1,0 +1,108 @@
+
+- type: tile
+  id: FloorCosmicGlyph
+  editorHidden: false
+  name: tiles-cosmiccult-floor-glyph
+  sprite: /Textures/Tiles/Cosmic/tile_glyph.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepCosmic
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorCosmicSmooth
+  editorHidden: false
+  name: tiles-cosmiccult-floor-smooth
+  sprite: /Textures/Tiles/Cosmic/tile_smooth.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepCosmic
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorCosmicHalf
+  editorHidden: false
+  name: tiles-cosmiccult-floor-half
+  sprite: /Textures/Tiles/Cosmic/tile_half.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepCosmic
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorCosmicSplit
+  editorHidden: false
+  name: tiles-cosmiccult-floor-split
+  sprite: /Textures/Tiles/Cosmic/tile_split.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepCosmic
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorCosmicNotched
+  editorHidden: false
+  name: tiles-cosmiccult-floor-notched
+  sprite: /Textures/Tiles/Cosmic/tile_notched.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepCosmic
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorCosmicCorruption
+  editorHidden: false
+  name: tiles-cosmiccult-floor-malign
+  sprite: /Textures/Tiles/Cosmic/tile_malign.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepCosmic
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorCosmicRough
+  editorHidden: false
+  parent: FloorCosmicSmooth
+  name: tiles-cosmiccult-floor-malign
+  sprite: /Textures/Tiles/CosmicRough/floor.png
+  edgeSpritePriority: 6
+  edgeSprites:
+    SouthEast: /Textures/Tiles/CosmicRough/single_edge_SE.png
+    NorthEast: /Textures/Tiles/CosmicRough/single_edge_NE.png
+    NorthWest: /Textures/Tiles/CosmicRough/single_edge_NW.png
+    SouthWest: /Textures/Tiles/CosmicRough/single_edge_SW.png
+    South: /Textures/Tiles/CosmicRough/double_edge_S.png
+    East: /Textures/Tiles/CosmicRough/double_edge_E.png
+    North: /Textures/Tiles/CosmicRough/double_edge_N.png
+    West: /Textures/Tiles/CosmicRough/double_edge_W.png
+  footstepSounds:
+    collection: FootstepCosmic
+
+- type: tile
+  id: FloorCosmicVoid
+  name: tiles-cosmiccult-floor-void
+  sprite: /Textures/Tiles/Cosmic/floor_void.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepCosmic
+  heatCapacity: 10000

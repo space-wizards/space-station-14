@@ -311,12 +311,12 @@ public abstract partial class SharedDoorSystem : EntitySystem
     #endregion
 
     #region Opening
-    public bool TryOpen(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false, bool quiet = false)
+    public bool TryOpen(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false, bool quiet = false, bool checkAccess = true)
     {
         if (!Resolve(uid, ref door))
             return false;
 
-        if (!CanOpen(uid, door, user, quiet))
+        if (!CanOpen(uid, door, user, quiet, checkAccess))
             return false;
 
         StartOpening(uid, door, user, predicted);
@@ -324,7 +324,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         return true;
     }
 
-    public bool CanOpen(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool quiet = true)
+    public bool CanOpen(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool quiet = true, bool checkAccess = true)
     {
         if (!Resolve(uid, ref door))
             return false;
@@ -340,7 +340,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (ev.Cancelled)
             return false;
 
-        if (!HasAccess(uid, user, door))
+        if (checkAccess && !HasAccess(uid, user, door))
         {
             if (!quiet)
                 Deny(uid, door, user, predicted: true);

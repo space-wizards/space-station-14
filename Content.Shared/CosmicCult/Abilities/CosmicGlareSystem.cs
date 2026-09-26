@@ -1,0 +1,85 @@
+using System.Linq;
+using Content.Shared.CosmicCult.Components.Actions;
+using Content.Shared.Effects;
+using Content.Shared.Flash;
+using Content.Shared.Interaction;
+using Content.Shared.Light.Components;
+using Content.Shared.Light.EntitySystems;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Physics;
+using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Stunnable;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
+using Robust.Shared.Player;
+using Robust.Shared.Timing;
+
+namespace Content.Shared.CosmicCult.Abilities;
+
+public sealed partial class CosmicGlareSystem : EntitySystem
+{
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private INetManager _net = default!;
+
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedFlashSystem _flash = default!;
+    [Dependency] private SharedPoweredLightSystem _poweredLight = default!;
+    [Dependency] private SharedStunSystem _stun = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedColorFlashEffectSystem _color = default!;
+    [Dependency] private CosmicCultSystem _cult = default!;
+    [Dependency] private SharedInteractionSystem _interact = default!;
+
+    private HashSet<Entity<PoweredLightComponent>> _lights = [];
+
+    [SubscribeLocalEvent]
+    private void OnCosmicGlare(Entity<CosmicActionGlareComponent> ent, ref EventCosmicGlare args)
+    {
+        if (!_cult.CultActionQuery.TryComp(ent, out var action) || args.Handled)
+            return;
+
+        args.Handled = true;
+
+        if (_net.IsClient && _timing.IsFirstTimePredicted) // This is lazy but it's either this or multiple engine PRs to fix predicted animated sprite spawning nonsense!
+            SpawnAttachedTo(action.Vfx, Transform(ent).Coordinates);
+
+        var stun = action.Empowered ? ent.Comp.StunEmpowered : ent.Comp.StunDefault;
+        var range = action.Empowered ? ent.Comp.RangeDefault : ent.Comp.RangeEmpowered;
+        var duration = action.Empowered ? ent.Comp.DurationDefault : ent.Comp.DurationEmpowered;
+        var penalty = action.Empowered ? ent.Comp.MovePenaltyDefault : ent.Comp.MovePenaltyEmpowered;
+
+        _lights.Clear();
+        _lookup.GetEntitiesInRange(Transform(ent).Coordinates, range, _lights);
+        _audio.PlayPredicted(action.Sfx, args.Performer, args.Performer);
+
+        foreach (var entity in _lights)
+        {
+            _poweredLight.TryDestroyBulb(entity);
+        }
+
+        var targetFilter = Filter.Pvs(ent).RemoveWhere(player =>
+        {
+            if (player.AttachedEntity == null)
+                return true;
+
+            var ent = player.AttachedEntity.Value;
+            if (!HasComp<MobStateComponent>(ent) || _cult.EntityIsCultist(ent))
+                return true;
+
+            return !_interact.InRangeUnobstructed((ent, Transform(ent)), (ent, Transform(ent)), range: 0, collisionMask: CollisionGroup.Impassable);
+        });
+
+        var targets = new HashSet<NetEntity>(targetFilter.RemovePlayerByAttachedEntity(ent).Recipients.Select(ply => GetNetEntity(ply.AttachedEntity!.Value)));
+        foreach (var target in targets)
+        {
+            var targetEnt = GetEntity(target);
+
+            _flash.Flash(targetEnt, ent, args.Action, duration, penalty, false, false, stun);
+
+            if (HasComp<BorgChassisComponent>(targetEnt))
+                _stun.TryAddParalyzeDuration(targetEnt, duration / 2);
+
+            _color.RaiseEffect(Color.CadetBlue, new List<EntityUid>() { targetEnt }, Filter.Pvs(targetEnt, entityManager: EntityManager));
+        }
+    }
+}

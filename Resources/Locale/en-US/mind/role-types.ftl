@@ -36,3 +36,5 @@ role-subtype-wizard = Wizard
 role-subtype-xenoborg = Xenoborg
 role-subtype-xenoborg-core = Xenoborg Core
 role-subtype-changeling = Changeling
+role-subtype-cosmic-cultist = Cosmic Cultist
+role-subtype-cosmic-colossus = Entropic Colossus
