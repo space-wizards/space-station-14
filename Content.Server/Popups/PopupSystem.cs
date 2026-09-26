@@ -15,7 +15,7 @@ public sealed partial class PopupSystem : SharedPopupSystem
 
     public override void PopupCursor(string? message, EntityUid? recipient, PopupType type = PopupType.Small)
     {
-        if (message == null)
+        if (string.IsNullOrWhiteSpace(message))
             return;
 
         if (TryComp(recipient, out ActorComponent? actor))
@@ -24,7 +24,7 @@ public sealed partial class PopupSystem : SharedPopupSystem
 
     public override void PopupCursor(string? message, ICommonSession recipient, PopupType type = PopupType.Small)
     {
-        if (message == null)
+        if (string.IsNullOrWhiteSpace(message))
             return;
 
         RaiseNetworkEvent(new PopupCursorEvent(message, type, Timing.CurTick), recipient);
@@ -32,7 +32,7 @@ public sealed partial class PopupSystem : SharedPopupSystem
 
     public override void PopupCursor(string? message, Filter filter, bool recordReplay, PopupType type = PopupType.Small)
     {
-        if (message == null)
+        if (string.IsNullOrWhiteSpace(message))
             return;
 
         RaiseNetworkEvent(new PopupCursorEvent(message, type, Timing.CurTick), filter, recordReplay);
@@ -40,7 +40,7 @@ public sealed partial class PopupSystem : SharedPopupSystem
 
     public override void PopupCoordinates(string? message, EntityCoordinates coordinates, PopupType type = PopupType.Small, int predictionKey = 0)
     {
-        if (message == null)
+        if (string.IsNullOrWhiteSpace(message))
             return;
 
         var mapPos = _transform.ToMapCoordinates(coordinates);
@@ -50,7 +50,7 @@ public sealed partial class PopupSystem : SharedPopupSystem
 
     public override void PopupCoordinates(string? message, EntityCoordinates coordinates, EntityUid? recipient, PopupType type = PopupType.Small, int predictionKey = 0)
     {
-        if (message == null)
+        if (string.IsNullOrWhiteSpace(message))
             return;
 
         if (TryComp(recipient, out ActorComponent? actor))
@@ -59,7 +59,7 @@ public sealed partial class PopupSystem : SharedPopupSystem
 
     public override void PopupCoordinates(string? message, EntityCoordinates coordinates, ICommonSession recipient, PopupType type = PopupType.Small, int predictionKey = 0)
     {
-        if (message == null)
+        if (string.IsNullOrWhiteSpace(message))
             return;
 
         RaiseNetworkEvent(new PopupCoordinatesEvent(message, type, Timing.CurTick, GetNetCoordinates(coordinates), predictionKey), recipient);
@@ -67,7 +67,7 @@ public sealed partial class PopupSystem : SharedPopupSystem
 
     public override void PopupCoordinates(string? message, EntityCoordinates coordinates, Filter filter, bool recordReplay, PopupType type = PopupType.Small, int predictionKey = 0)
     {
-        if (message == null)
+        if (string.IsNullOrWhiteSpace(message))
             return;
 
         RaiseNetworkEvent(new PopupCoordinatesEvent(message, type, Timing.CurTick, GetNetCoordinates(coordinates), predictionKey), RestrictToVoiceRange(filter, _transform.ToMapCoordinates(coordinates)), recordReplay);
@@ -75,7 +75,7 @@ public sealed partial class PopupSystem : SharedPopupSystem
 
     public override void PopupEntity(string? message, EntityUid uid, PopupType type = PopupType.Small)
     {
-        if (message == null)
+        if (string.IsNullOrWhiteSpace(message))
             return;
 
         var filter = VoiceRangeFilter(_transform.GetMapCoordinates(uid));
@@ -84,7 +84,7 @@ public sealed partial class PopupSystem : SharedPopupSystem
 
     public override void PopupEntity(string? message, EntityUid uid, EntityUid? recipient, PopupType type = PopupType.Small)
     {
-        if (message == null)
+        if (string.IsNullOrWhiteSpace(message))
             return;
 
         if (TryComp(recipient, out ActorComponent? actor))
@@ -93,7 +93,7 @@ public sealed partial class PopupSystem : SharedPopupSystem
 
     public override void PopupEntity(string? message, EntityUid uid, ICommonSession recipient, PopupType type = PopupType.Small)
     {
-        if (message == null)
+        if (string.IsNullOrWhiteSpace(message))
             return;
 
         RaiseNetworkEvent(new PopupEntityEvent(message, type, Timing.CurTick, GetNetEntity(uid)), recipient);
@@ -101,7 +101,7 @@ public sealed partial class PopupSystem : SharedPopupSystem
 
     public override void PopupEntity(string? message, EntityUid uid, Filter filter, bool recordReplay, PopupType type = PopupType.Small)
     {
-        if (message == null)
+        if (string.IsNullOrWhiteSpace(message))
             return;
 
         RaiseNetworkEvent(new PopupEntityEvent(message, type, Timing.CurTick, GetNetEntity(uid)), RestrictToVoiceRange(filter, _transform.GetMapCoordinates(uid)), recordReplay);

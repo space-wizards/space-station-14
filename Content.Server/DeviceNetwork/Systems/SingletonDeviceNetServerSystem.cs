@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.Medical.CrewMonitoring;
 using Content.Server.Station.Systems;
@@ -14,7 +14,7 @@ namespace Content.Server.DeviceNetwork.Systems;
 public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
 {
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
-    [Dependency] private StationSystem _stationSystem = default!;
+    [Dependency] private ServerStationSystem _stationSystem = default!;
 
     public override void Initialize()
     {

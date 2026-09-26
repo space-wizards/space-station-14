@@ -1,4 +1,4 @@
-﻿using Robust.Server.Audio;
+using Robust.Server.Audio;
 using Robust.Shared.Audio;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
