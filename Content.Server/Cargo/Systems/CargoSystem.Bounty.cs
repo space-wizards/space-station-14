@@ -166,23 +166,47 @@ public sealed partial class CargoSystem
     {
         foreach (var sold in args.Sold)
         {
-            if (!TryGetBountyLabel(sold, out _, out var component))
-                continue;
-
-            if (component.AssociatedStationId is not { } station || !TryGetBountyFromId(station, component.Id, out var bounty))
-            {
-                continue;
-            }
-
-            if (!IsBountyComplete(sold, bounty.Value))
-            {
-                continue;
-            }
-
-            TryRemoveBounty(station, bounty.Value, false);
-            FillBountyDatabase(station);
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"Bounty \"{bounty.Value.Bounty}\" (id:{bounty.Value.Id}) was fulfilled");
+            CheckForContainedBounties(sold);
         }
+    }
+
+    private void CheckForContainedBounties(EntityUid uid)
+    {
+        if (TrySellBounty(uid))
+            return;
+        if (!TryComp<ContainerManagerComponent>(uid, out var containers))
+            return;
+        foreach (var container in containers.Containers.Values)
+        {
+            foreach (var ent in container.ContainedEntities)
+            {
+                CheckForContainedBounties(ent);
+            }
+        }
+    }
+
+    private bool TrySellBounty(EntityUid sold)
+    {
+        if (!TryGetBountyLabel(sold, out _, out var component))
+        {
+            return false;
+        }
+
+        if (component.AssociatedStationId is not { } station || !TryGetBountyFromId(station, component.Id, out var bounty))
+        {
+            return false;
+        }
+
+        if (!IsBountyComplete(sold, bounty.Value))
+        {
+            return false;
+        }
+
+        TryRemoveBounty(station, bounty.Value, false);
+        FillBountyDatabase(station);
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"Bounty \"{bounty.Value.Bounty}\" (id:{bounty.Value.Id}) was fulfilled");
+
+        return true;
     }
 
     private bool TryGetBountyLabel(EntityUid uid,
