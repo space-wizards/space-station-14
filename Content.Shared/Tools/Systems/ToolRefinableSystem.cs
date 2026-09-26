@@ -5,6 +5,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Construction;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Destructible;
+using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Gibbing;
 using Content.Shared.Interaction;
@@ -19,6 +20,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Tools.Systems;
 
@@ -34,18 +36,39 @@ public sealed partial class ToolRefinableSystem : EntitySystem
     [Dependency] private SharedDestructibleSystem _destructible = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<ToolRefinableComponent, GetVerbsEvent<InteractionVerb>>(AddVerb);
-        SubscribeLocalEvent<ToolRefinableComponent, InteractUsingEvent>(OnInteractUsing, after: [typeof(ItemSlotsSystem)]);
-        SubscribeLocalEvent<ToolRefinableComponent, ToolRefineDoAfterEvent>(OnDoAfter);
-    }
-
     #region Subscriptions
 
+    /// <summary>
+    ///     Adds an examine tooltip to a refinable entity if one is specified, hinting at what
+    ///     tool quality is needed to refine this entity.
+    /// </summary>
+    /// <param name="ent">The refinable entity.</param>
+    [SubscribeLocalEvent]
+    private void OnExamined(Entity<ToolRefinableComponent> ent, ref ExaminedEvent args)
+    {
+        if (ent.Comp.TooltipQualityHint == null
+            || !ProtoMan.Resolve(ent.Comp.QualityNeeded, out var quality))
+            return;
+
+        // Check to make sure we *can* refine the entity, first.
+        var attemptEvent = new AttemptToolRefineEvent();
+        RaiseLocalEvent(ent, ref attemptEvent);
+        if (attemptEvent.IsCancelled)
+            return;
+
+        // Add examine text.
+        var qualityName = Loc.GetString(quality.Name);
+        var hint = Loc.GetString(ent.Comp.TooltipQualityHint,
+            ("target", ent),
+            ("quality", qualityName));
+        var message = new FormattedMessage();
+        message.AddMarkupPermissive(hint);
+
+        args.PushMessage(message);
+    }
+
     /// <summary> Normal interactions. </summary>
+    [SubscribeLocalEvent]
     private void OnInteractUsing(Entity<ToolRefinableComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled || !_toolSystem.HasQuality(args.Used, ent.Comp.QualityNeeded))
@@ -65,6 +88,7 @@ public sealed partial class ToolRefinableSystem : EntitySystem
     }
 
     /// <summary> Verb interactions. </summary>
+    [SubscribeLocalEvent(after: [typeof(ItemSlotsSystem)])]
     private void AddVerb(Entity<ToolRefinableComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
     {
         var used = args.Using;
@@ -120,6 +144,7 @@ public sealed partial class ToolRefinableSystem : EntitySystem
     }
 
     /// <summary> DoAfter for refining. </summary>
+    [SubscribeLocalEvent]
     private void OnDoAfter(Entity<ToolRefinableComponent> ent, ref ToolRefineDoAfterEvent args)
     {
         if (args.Cancelled || args.Used == null || !args.Target.HasValue)
@@ -285,7 +310,7 @@ public sealed partial class ToolRefinableSystem : EntitySystem
 /// </summary>
 [ByRefEvent]
 public record struct AttemptToolRefineEvent(
-    EntityUid Using,
+    EntityUid? Using = null,
     bool IsCancelled = false,
     string? BlockCause = null
 );
