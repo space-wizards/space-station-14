@@ -126,11 +126,23 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (!airlock.Powered)
             return;
 
-        if (door.State != DoorState.Closed)
-            return;
-
-        if (!SetState(uid, DoorState.Emagging, door))
-            return;
+        switch (door.State)
+        {
+            case DoorState.Emagging or DoorState.EmaggingWelded:
+                return;
+            case DoorState.Welded:
+            {
+                if (!SetState(uid, DoorState.EmaggingWelded, door))
+                    return;
+                break;
+            }
+            default:
+            {
+                if (!SetState(uid, DoorState.Emagging, door))
+                    return;
+                break;
+            }
+        }
 
         args.Repeatable = true;
         args.Handled = true;
@@ -174,7 +186,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
                 door.NextStateChange = GameTiming.CurTime + door.DenyDuration;
                 break;
 
-            case DoorState.Emagging:
+            case DoorState.Emagging or DoorState.EmaggingWelded:
                 _activeDoors.Add((uid, door));
                 door.NextStateChange = GameTiming.CurTime + door.EmagDuration;
                 break;
@@ -219,7 +231,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
     private void OnBeforePry(EntityUid uid, DoorComponent door, ref BeforePryEvent args)
     {
-        if (door.State == DoorState.Welded || !door.CanPry)
+        if (door.State == DoorState.Welded || door.State == DoorState.EmaggingWelded || !door.CanPry)
             args.Cancelled = true;
     }
 
@@ -247,7 +259,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
             args.Cancel();
             return;
         }
-        if (component.State != DoorState.Closed && component.State != DoorState.Welded)
+        if (component.State != DoorState.Closed && component.State != DoorState.Welded && component.State != DoorState.EmaggingWelded)
         {
             args.Cancel();
         }
@@ -259,6 +271,8 @@ public abstract partial class SharedDoorSystem : EntitySystem
             SetState(uid, DoorState.Welded, component);
         else if (component.State == DoorState.Welded)
             SetState(uid, DoorState.Closed, component);
+        else if (component.State == DoorState.EmaggingWelded)
+            SetState(uid, DoorState.Emagging, component);
     }
 
     /// <summary>
@@ -329,7 +343,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref door))
             return false;
 
-        if (door.State == DoorState.Welded)
+        if (door.State is DoorState.Welded or DoorState.EmaggingWelded)
             return false;
 
         if (Paused(uid))
@@ -409,7 +423,14 @@ public abstract partial class SharedDoorSystem : EntitySystem
             return false;
         }
 
-        SetState(uid, DoorState.Emagging, door);
+        if (door.State == DoorState.Welded)
+        {
+            SetState(uid, DoorState.EmaggingWelded, door);
+        }
+        else if (door.State != DoorState.Emagging && door.State !=  DoorState.EmaggingWelded)
+        {
+            SetState(uid, DoorState.Emagging, door);
+        }
 
         return true;
     }
@@ -441,7 +462,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
         // since both closing/closed and welded are door states, we need to prevent 'closing'
         // a welded door or else there will be weird state bugs
-        if (door.State is DoorState.Welded or DoorState.Closed)
+        if (door.State is DoorState.Welded or DoorState.EmaggingWelded or DoorState.Closed)
             return false;
 
         if (Paused(uid))
@@ -850,6 +871,13 @@ public abstract partial class SharedDoorSystem : EntitySystem
             case DoorState.Denying:
                 // Finish denying entry and return to the closed state.
                 SetState(ent, DoorState.Closed, door);
+                break;
+
+            case DoorState.EmaggingWelded:
+                // engage bolts, leave it welded
+                if (TryComp<DoorBoltComponent>(ent, out var doorBoltComponent))
+                    SetBoltsDown((ent, doorBoltComponent),true, predicted:true);
+                SetState(ent, DoorState.Welded, door);
                 break;
 
             case DoorState.Emagging:
