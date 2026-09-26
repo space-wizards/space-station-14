@@ -50,6 +50,7 @@
         layer:
         - MobLayer
   - type: FloorOcclusion
+  - type: FootstepTrack
   - type: RangedDamageSound
     soundGroups:
       Brute:
