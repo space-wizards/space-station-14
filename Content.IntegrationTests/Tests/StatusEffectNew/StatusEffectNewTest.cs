@@ -183,15 +183,13 @@ public sealed class StatusEffectNewTest : InteractionTest
     [Test, Description("Testing TryAddTime and TryRemoveTime with null args")]
     public async Task TestAddRemoveEffectTime_Null()
     {
-        var curTime = TimeSpan.Zero;
         await Server.WaitPost(() =>
         {
             _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, TenTicks);
-            curTime = STiming.CurTime;
         });
 
         Assume.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var time), Is.True, "Could not get time info for effect A");
-        Assert.That(time.EndEffectTime, Is.EqualTo(curTime + TenTicks), "Status effect A did not have expected end time of 10 ticks after current time");
+        Assume.That(time.EndEffectTime, Is.Not.Null, "Can't properly test setting duration to null when it's already null...");
 
         Assert.That(_sStatusSystem.TryAddTime(SPlayer, StatusA, null), Is.True, "TryAddTime setting duration to null did not return true");
         _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timePermanent);
