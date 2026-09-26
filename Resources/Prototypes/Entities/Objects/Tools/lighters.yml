@@ -25,7 +25,7 @@
     size: Tiny
   - type: UseDelay
   - type: RefillableSolution
-    solution: Welder
+    solution: welder
   - type: MeleeWeapon
     wideAnimationRotation: 180
     damage:
