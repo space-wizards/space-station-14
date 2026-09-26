@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Made by Moxie Mockery (moxie_is_moxie)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "heating"
+    },
+    {
+      "name": "cooling"
+    },
+    {
+      "name": "on"
+    },
+    {
+      "name": "off"
+    },
+    {
+      "name": "beaker"
+    },
+    {
+      "name": "open"
+    },
+    {
+      "name": "lid_none"
+    },
+    {
+      "name": "lid_hot"
+    },
+    {
+      "name": "lid_cold"
+    }
+  ]
+}
