@@ -278,7 +278,7 @@ namespace Content.Shared.Atmos
         ///     Radiation slope for a tritium fire
         ///     Tritium emits very weak beta radiation
         /// </summary>
-        public const float TritiumFireSlope = 2.5f;
+        public const float TritiumFireSlope = 0.75f;
 
         /// <summary>
         ///     The half-life duration in seconds for tritium fire radiation
