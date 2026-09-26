@@ -365,7 +365,7 @@ public sealed partial class ZombieSystem
         //zombie gamemode stuff
         var ev = new EntityZombifiedEvent(target);
         RaiseLocalEvent(target, ref ev, true);
-        //zombies get slowdown once they convert
+        //zombies revert to their default movement speed.
         _movementSpeedModifier.RefreshMovementSpeedModifiers(target);
 
         //Need to prevent them from getting an item, they have no hands.
