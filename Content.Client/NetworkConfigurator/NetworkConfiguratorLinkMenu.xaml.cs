@@ -27,11 +27,11 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
 
     private (ButtonPosition position, string id, int index)? _selectedButton;
 
-    private List<(string left, string right)>? _defaults;
+    private List<DeviceLink>? _defaults;
 
     public event Action? OnClearLinks;
-    public event Action<string, string>? OnToggleLink;
-    public event Action<List<(string left, string right)>>? OnLinkDefaults;
+    public event Action<DeviceLink>? OnToggleLink;
+    public event Action<List<DeviceLink>>? OnLinkDefaults;
 
     public NetworkConfiguratorLinkMenu()
     {
@@ -59,13 +59,21 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
         ButtonClear.OnPressed += _ => OnClearLinks?.Invoke();
     }
 
-    public void UpdateState(DeviceLinkUserInterfaceState linkState)
+    public void UpdateState(
+        ProtoId<SourcePortPrototype>[] sources,
+        ProtoId<SinkPortPrototype>[] sinks,
+        HashSet<DeviceLink> links,
+        DeviceAddress sourceAddressId,
+        DeviceAddress sinkAddressId,
+        string sourceAddress,
+        string sinkAddress,
+        List<DeviceLink>? defaults = null)
     {
         ButtonContainerLeft.RemoveAllChildren();
         ButtonContainerRight.RemoveAllChildren();
 
         _sources.Clear();
-        _sources.AddRange(linkState.Sources.Select(s => _prototypeManager.Index(s)));
+        _sources.AddRange(sources.Select(s => _prototypeManager.Index(s)));
         _links.SourceButtons.Clear();
         var i = 0;
         foreach (var source in _sources)
@@ -77,7 +85,7 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
         }
 
         _sinks.Clear();
-        _sinks.AddRange(linkState.Sinks.Select(s => _prototypeManager.Index(s)));
+        _sinks.AddRange(sinks.Select(s => _prototypeManager.Index(s)));
         _links.SinkButtons.Clear();
         i = 0;
         foreach (var sink in _sinks)
@@ -89,12 +97,12 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
         }
 
         _links.Links.Clear();
-        _links.Links.AddRange(linkState.Links);
-        _defaults = linkState.Defaults;
+        _links.Links.AddRange(links);
+        _defaults = defaults;
 
         ButtonLinkDefault.Disabled = _defaults == default;
-        FromAddressLabel.Text = linkState.SourceAddress;
-        ToAddressLabel.Text = linkState.SinkAddress;
+        FromAddressLabel.Text = sourceAddress;
+        ToAddressLabel.Text = sinkAddress;
     }
 
     private void LinkDefaults()
@@ -142,7 +150,7 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
         var left = _selectedButton.Value.position == ButtonPosition.Left ? _selectedButton.Value.id : id;
         var right = _selectedButton.Value.position == ButtonPosition.Left ? id : _selectedButton.Value.id;
 
-        OnToggleLink?.Invoke(left, right);
+        OnToggleLink?.Invoke(new DeviceLink(left, right));
 
         args.Button.Pressed = false;
 
@@ -165,7 +173,7 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
     /// </summary>
     private sealed class LinksRender : Control
     {
-        public readonly List<(ProtoId<SourcePortPrototype>, ProtoId<SinkPortPrototype>)> Links = new();
+        public readonly List<DeviceLink> Links = new();
         public readonly Dictionary<string, Button> SourceButtons = new();
         public readonly Dictionary<string, Button> SinkButtons = new();
         private readonly BoxContainer _leftButtonContainer;

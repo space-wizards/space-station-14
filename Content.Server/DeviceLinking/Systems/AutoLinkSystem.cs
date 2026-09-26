@@ -1,4 +1,6 @@
 using Content.Server.DeviceLinking.Components;
+using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Systems;
 
 namespace Content.Server.DeviceLinking.Systems;
 

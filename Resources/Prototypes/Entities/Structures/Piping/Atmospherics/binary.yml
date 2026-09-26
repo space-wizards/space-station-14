@@ -164,7 +164,7 @@
       sendBroadcastAttemptEvent: true
       examinableAddress: true
       prefix: device-address-prefix-volume-pump
-    - type: WiredNetworkConnection
+    - type: WiredNetwork
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasFlowRegulator
     - type: GuideHelp
@@ -387,7 +387,7 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 200
   - type: DeviceLinkSink
     ports:
@@ -511,6 +511,16 @@
       inlet: inlet
       outlet: outlet
       canLink: false
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: BasicDevice
+    - type: WirelessNetwork
+      range: 200
+    - type: DeviceLinkSink
+      ports:
+        - Pressurize
+        - Depressurize
+      
     - type: Construction
       graph: !type:CreateVariants
         values: [ GasBinary, GasBinaryAlt1, GasBinaryAlt2 ]

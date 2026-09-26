@@ -1,12 +1,4 @@
-namespace Content.Shared.DeviceLinking.Events
-{
-    public sealed class PortDisconnectedEvent : EntityEventArgs
-    {
-        public readonly string Port;
+namespace Content.Shared.DeviceLinking.Events;
 
-        public PortDisconnectedEvent(string port)
-        {
-            Port = port;
-        }
-    }
-}
+[ByRefEvent]
+public readonly record struct PortDisconnectedEvent(string Port);
