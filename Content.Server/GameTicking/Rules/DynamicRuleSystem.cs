@@ -62,11 +62,9 @@ public sealed partial class DynamicRuleSystem : GameRuleSystem<DynamicRuleCompon
         if (Timing.CurTime < component.NextRuleTime)
             return;
 
-        // don't spawn antags during evac
-        if (_roundEnd.IsRoundEndRequested())
-            return;
-
-        Execute((uid, component));
+        // only spawn antags if we aren't evacuating.
+        if (!_roundEnd.IsRoundEndRequested() || _roundEnd.CanCallOrRecall())
+            Execute((uid, component));
     }
 
     /// <summary>
