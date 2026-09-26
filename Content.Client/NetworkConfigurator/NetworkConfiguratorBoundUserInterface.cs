@@ -1,4 +1,4 @@
-﻿using Content.Client.NetworkConfigurator.Systems;
+using Content.Client.NetworkConfigurator.Systems;
 using Content.Shared.DeviceConfigurator;
 using Content.Shared.DeviceConfigurator.Components;
 using Content.Shared.DeviceNetwork;

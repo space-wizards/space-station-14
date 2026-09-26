@@ -1,4 +1,4 @@
-﻿using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Hands.Components;
 
 namespace Content.Client.UserInterface.Systems.Hands.Controls;

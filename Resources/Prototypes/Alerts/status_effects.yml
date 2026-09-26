@@ -34,3 +34,9 @@
   name: alerts-vow-silence-name
   clickEvent: !type:BreakVowAlertEvent
   description: alerts-vow-silence-desc
+
+- type: alert
+  id: BlindAlert
+  icons: [ Interface/Actions/eyeclose.png ]
+  name: alerts-blind-name
+  description: alerts-blind-desc

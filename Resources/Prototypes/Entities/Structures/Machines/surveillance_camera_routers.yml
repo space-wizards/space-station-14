@@ -193,6 +193,8 @@
   - type: WirelessNetwork
     range: 200
   - type: DeviceNetworkRequiresPower
+  - type: DeviceNetworkRouter
+  - type: SurveillanceCameraRouter
   - type: UserInterface
     interfaces:
       enum.SurveillanceCameraSetupUiKey.Router:
