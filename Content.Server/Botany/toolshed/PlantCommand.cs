@@ -202,8 +202,8 @@ public sealed partial class PlantCommand : ToolshedCommand
         IInvocationContext ctx,
         [PipedArgument] EntityUid input,
         ProtoId<ReagentPrototype> reagent,
-        [CommandArgument(typeof(PlantChemQuantityParser))] float min,
-        [CommandArgument(typeof(PlantChemQuantityParser))] float amount,
+        float min,
+        float amount,
         bool inherent = false)
     {
         if (!TryGetPlant(input, ctx, out _, out _))
@@ -225,8 +225,8 @@ public sealed partial class PlantCommand : ToolshedCommand
         IInvocationContext ctx,
         [PipedArgument] IEnumerable<EntityUid> input,
         ProtoId<ReagentPrototype> reagent,
-        float min,
-        float amount,
+        [CommandArgument(typeof(PlantChemQuantityParser))] float min,
+        [CommandArgument(typeof(PlantChemQuantityParser))] float amount,
         bool inherent = false)
     {
         return input
