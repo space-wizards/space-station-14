@@ -18,6 +18,7 @@
     instrumentList:
       "Electro": {62: 0} #i needed generic sounding synth presets, sue me
       "Bubbles": {63: 0}
+      "Square": {80: 0}
   - type: Sprite
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
   - type: StaticPrice

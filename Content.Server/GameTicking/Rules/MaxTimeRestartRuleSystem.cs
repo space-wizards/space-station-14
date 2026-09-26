@@ -1,35 +1,34 @@
 using System.Threading;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.GameTicking.Rules;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameTicking.Rules;
 
+/// <summary>
+/// Handles rules that force the round to restart after a given time.
+/// </summary>
+/// <seealso cref="MaxTimeRestartRuleComponent"/>
 public sealed partial class MaxTimeRestartRuleSystem : GameRuleSystem<MaxTimeRestartRuleComponent>
 {
     [Dependency] private IChatManager _chatManager = default!;
 
-    public override void Initialize()
+    protected override void Started(Entity<MaxTimeRestartRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
     {
-        base.Initialize();
+        base.Started(ent, ref args);
 
-        SubscribeLocalEvent<GameRunLevelChangedEvent>(RunLevelChanged);
+        if (GameTicker.RunLevel == GameRunLevel.InRound)
+            RestartTimer(ent.Comp1);
     }
 
-    protected override void Started(EntityUid uid, MaxTimeRestartRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    protected override void Ended(Entity<MaxTimeRestartRuleComponent> rule, ref GameRuleEndedEvent args)
     {
-        base.Started(uid, component, gameRule, args);
+        base.Ended(rule, ref args);
 
-        if(GameTicker.RunLevel == GameRunLevel.InRound)
-            RestartTimer(component);
-    }
-
-    protected override void Ended(EntityUid uid, MaxTimeRestartRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
-    {
-        base.Ended(uid, component, gameRule, args);
-
-        StopTimer(component);
+        StopTimer(rule);
     }
 
     public void RestartTimer(MaxTimeRestartRuleComponent component)
@@ -49,18 +48,19 @@ public sealed partial class MaxTimeRestartRuleSystem : GameRuleSystem<MaxTimeRes
     {
         GameTicker.EndRound(Loc.GetString("rule-time-has-run-out"));
 
-        _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds",("seconds", (int) component.RoundEndDelay.TotalSeconds)));
+        _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds", ("seconds", (int)component.RoundEndDelay.TotalSeconds)));
 
         // TODO FULL GAME SAVE
         Timer.Spawn(component.RoundEndDelay, () => GameTicker.RestartRound());
     }
 
+    [SubscribeLocalEvent]
     private void RunLevelChanged(GameRunLevelChangedEvent args)
     {
         var query = EntityQueryEnumerator<MaxTimeRestartRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var timer, out var gameRule))
         {
-            if (!GameTicker.IsGameRuleActive(uid, gameRule))
+            if (!GameTicker.IsGameRuleActive((uid, gameRule)))
                 return;
 
             switch (args.New)

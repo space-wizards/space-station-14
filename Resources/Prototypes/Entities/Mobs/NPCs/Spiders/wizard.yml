@@ -1,0 +1,26 @@
+- type: entity
+  parent: MobSpiderAnimated
+  id: MobGiantSpiderWizard
+  name: wizard spider
+  suffix: Wizard
+  description: This spider looks a little magical
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/Spiders/tarantulaspider.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: idle
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 6
+  - type: Accentless
+    removes:
+    - type: ReplacementAccent
+      accent: xeno  # Let this wizard speak.

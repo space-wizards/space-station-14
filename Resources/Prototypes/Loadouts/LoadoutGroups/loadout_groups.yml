@@ -419,6 +419,14 @@
   loadouts:
   - ChaplainNeck
 
+- type: loadoutGroup
+  id: ChaplainShoes
+  name: loadout-group-chaplain-shoes
+  loadouts:
+  - BlackShoes
+  - BlackSandals
+  - BrownSandals
+
 #- type: loadoutGroup
 #  id: ChaplainJobTrinkets
 #  name: loadout-group-jobtrinkets

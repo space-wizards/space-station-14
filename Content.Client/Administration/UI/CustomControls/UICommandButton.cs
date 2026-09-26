@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 
