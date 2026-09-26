@@ -171,7 +171,7 @@
   components:
   - type: EffectVisuals
   - type: TimedDespawn
-    lifetime: 0.7
+    lifetime: 1.4
   - type: Sprite
     layers:
     - sprite: Effects/Cosmic/effect-generic.rsi
@@ -231,7 +231,6 @@
   parent: EffectCosmicBase
   id: EffectCosmicBigWindup
   components:
-  - type: EffectVisuals
   - type: TimedDespawn
     lifetime: 0.9
   - type: Sprite

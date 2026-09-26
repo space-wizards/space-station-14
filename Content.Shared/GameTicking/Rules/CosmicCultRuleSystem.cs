@@ -156,7 +156,10 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
 
         #if DEBUG
         if (cult.Comp.TotalCrew < 25)
+        {
             cult.Comp.TotalCrew = 25;
+            Log.Debug("Debug mode. Cosmic Cult will behave as if Player Count is 25.");
+        }
         #endif
 
         var maxTime = gameRule.ActivatedAt + _finaleTimeMax;
@@ -383,6 +386,13 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
         _chatSystem.DispatchStationAnnouncement(comp.StationGrid, Loc.GetString("cosmiccult-announce-tier2-progress"), sender, false, null, Color.FromHex("#4cabb3"));
         _chatSystem.DispatchStationAnnouncement(comp.StationGrid, Loc.GetString("cosmiccult-announce-tier2-warning"), null, false, null, Color.FromHex("#cae8e8"));
         _audio.PlayGlobal(_tier2Sound, Filter.Broadcast(), false, AudioParams.Default);
+
+        var devices = EntityQueryEnumerator<CosmicLambdaDeviceComponent>();
+        while (devices.MoveNext(out var device, out _))
+        {
+            var evt = new CosmicDeviceUpgradeEvent();
+            RaiseLocalEvent(device, ref evt);
+        }
 
         for (var i = 0; i < (short) comp.TotalCrew / 6; i++) // spawn # malign rifts equal to 16.67% of the playercount
         {

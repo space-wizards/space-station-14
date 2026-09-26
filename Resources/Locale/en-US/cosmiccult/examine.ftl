@@ -5,7 +5,7 @@ cosmic-examine-text-entities = [color=#4cabb3]This entity should not exist.[/col
 
 ## CREW EXAMINES - SPECIFIC
 cosmic-examine-text-crew-monument = [color=#4cabb3]the end is the end is the end is the end is the end is the end is the end is the end is the end is the end is[/color]
-cosmic-examine-text-crew-rift = [color=#4cabb3][color=#a929ff][bold]Science[/bold][/color] should use an [color=#a929ff][bold]A.P.E[/bold][/color] to deal with this.[/color]
+cosmic-examine-text-crew-rift = [color=#4cabb3][color=#a929ff][bold]Science[/bold][/color] should use an [color=#a929ff][bold]A.P.E[/bold][/color]'s Lambda Particles to deal with this.[/color]
 cosmic-examine-text-crew-door = [color=#4cabb3]Once we [color=#cae8e8][bold]Open[/bold][/color] this, it can't be closed again.[/color][/color]
 cosmic-examine-text-crew-stigma = [color=#4cabb3]It looks fragile, I can probably [color=#cae8e8][bold]Destroy[/bold][/color] it![/color]
 cosmic-examine-text-crew-gateway = [color=#4cabb3]This could allow us to [color=#cae8e8][bold]Confront[/bold][/color] the cosmic cult![/color][/color]

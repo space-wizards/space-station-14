@@ -118,6 +118,8 @@
   name: A.P.E.
   description: An Anomalous Particle Emitter, capable of shooting out unstable particles which can interface with anomalies.
   components:
+  - type: CosmicLambdaDevice
+  - type: DoAfter
   - type: Sprite
     noRot: true
     sprite: Structures/Machines/Anomaly/ape.rsi

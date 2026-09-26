@@ -6,6 +6,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.CosmicCult.Abilities;
@@ -20,6 +21,7 @@ public abstract partial class CosmicFragmentationSystem : EntitySystem
     [Dependency] private SharedMindSystem _mind = default!;
 
     protected EntProtoId IndicatorEffect = "EffectCosmicBigWindup";
+    private EntProtoId _chantryEntity = "CosmicBorgChantry";
 
     private void UnEmpower(Entity<CosmicCultistComponent?> ent)
     {
@@ -54,9 +56,12 @@ public abstract partial class CosmicFragmentationSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnFragmentBorg(Entity<BorgChassisComponent> ent, ref MalignFragmentationEvent args)
     {
-        var chantry = Spawn("CosmicBorgChantry", Transform(ent).Coordinates);
+        // if (!_net.IsServer) // PREDICTION BULLDOZING OCCURS ON DOAFTER AND CONTAINER INSERTION. AAAAAAAA
+        //     return;
+
+        var chantry = PredictedSpawnAtPosition(_chantryEntity, Transform(ent).Coordinates);
         EnsureComp<CosmicChantryComponent>(chantry, out var chantryComponent);
-        Spawn(IndicatorEffect, Transform(chantry).Coordinates);
+        PredictedSpawnAtPosition(IndicatorEffect, Transform(chantry).Coordinates);
 
         if (_container.TryGetContainer(chantry, SharedEntityStorageSystem.ContainerName, out var container))
             _container.Insert(args.Target, container);

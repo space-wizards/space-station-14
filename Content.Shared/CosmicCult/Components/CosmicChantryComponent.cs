@@ -14,10 +14,7 @@ namespace Content.Shared.CosmicCult.Components;
 public sealed partial class CosmicChantryComponent : Component
 {
     [AutoPausedField, DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan SpawnTimer = default!;
-
-    [AutoPausedField, DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan CountdownTimer = default!;
+    public TimeSpan? SpawnTimer;
 
     [DataField] public TimeSpan SpawningTime = TimeSpan.FromSeconds(0.9f);
 

@@ -48,15 +48,13 @@ cosmiccult-conversion-geeting =
     All you need do is usher it in.
     You are a Cosmic Cultist!
 
-cosmiccult-monument-stage2-briefing =
-    The Monument grows in power!
-    Its influence will affect realspace in {$time} seconds.
+cosmiccult-silicon-geeting =
+    Malign energies suddenly flood your circuitry!
+    A revelation beyond compare. An end to cyclic, sisyphean suffering.
+    A gentle curtain call.
 
-cosmiccult-monument-stage3-briefing =
-    The Monument has been completed!
-    Its influence will begin to overlap with realspace in {$time} seconds.
-    This is the final stretch! Amass as much entropy as you can muster.
-
+    All you need do is usher it in.
+    You are aligned with the Cosmic Cult!
 
 ## MALIGN RIFTS
 
@@ -115,7 +113,7 @@ objective-condition-victory-desc = When the time is right, bring about the end o
 ## CHAT ANNOUNCEMENTS
 
 cosmiccult-announce-tier2-progress = An unnerving numbness prickles your senses.
-cosmiccult-announce-tier2-warning = Scanners detect a notable increase in Lambda-CDM! Rifts in realspace may appear shortly. Please alert the science department if sighted.
+cosmiccult-announce-tier2-warning = Scanners detect a notable increase in Lambda-CDM! Rifts in realspace may appear shortly, please alert the science department. We have remotely issued software upgrades to all A.P.Es.
 
 cosmiccult-announce-tier3-progress = Arcs of malign energy crackle across the station's groaning structure. The end draws nearer.
 cosmiccult-announce-tier3-warning = Critical increase in Lambda-CDM detected. Realspace corrosion and infected crew are to be eliminated on sight.
@@ -126,10 +124,9 @@ cosmiccult-announce-finale-warning = All station crew. The Lambda-CDM anomaly is
 cosmiccult-announce-breach-location = A realspace breach has opened {$location}!
 
 ## MISC
-
+cosmiccult-device-upgraded = Device upgraded!
 cosmiccult-player-ascendant = {$baseName}, Ascendant
 
-cosmiccult-spire-entropy = A mote of entropy condenses from the surface of the spire.
 cosmiccult-influences-unavailable = You have no influences to gain at this time.
 cosmiccult-influences-maxed = You possess all influences available at this time.
 cosmiccult-influence-gained = You've gained:

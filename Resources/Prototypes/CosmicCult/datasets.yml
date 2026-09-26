@@ -1,3 +1,24 @@
+## MALIGN RIFT POPUPS
+- type: localizedDataset
+  id: DatasetCosmicRiftPopups
+  values:
+    prefix: cosmic-rift-popup-
+    count: 5
+
+## COLOSSUS
+- type: localizedDataset
+  id: DatasetCosmicColossusNames
+  values:
+    prefix: cosmiccolossus-names-dataset-
+    count: 6
+
+- type: localizedDataset
+  id: DatasetCosmicColossusTitles
+  values:
+    prefix: cosmiccolossus-titles-dataset-
+    count: 8
+
+## DIALOGUE
 - type: localizedDataset
   id: DatasetCosmicDialogueLapse
   values:

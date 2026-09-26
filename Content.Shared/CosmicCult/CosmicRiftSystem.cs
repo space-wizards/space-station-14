@@ -1,26 +1,53 @@
 using Content.Shared.Actions;
 using Content.Shared.CosmicCult.Components;
+using Content.Shared.Dataset;
 using Content.Shared.DoAfter;
+using Content.Shared.Effects;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Station.Components;
-using Content.Shared.Station.Systems;
+using Content.Shared.Projectiles;
+using Content.Shared.Random.Helpers;
 using Content.Shared.StatusEffectNew;
+using Robust.Shared.Physics.Events;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.CosmicCult;
 
-public sealed partial class CosmicRiftSystem : EntitySystem
+public abstract partial class CosmicRiftSystem : EntitySystem
 {
+    [Dependency] protected IGameTiming Timing = default!;
+
     [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private SharedColorFlashEffectSystem _color = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private StatusEffectsSystem _statusEffects = default!;
-    [Dependency] private StationSystem _station = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
-    public static readonly EntProtoId PressureImmunityEffect = "StatusEffectPressureImmunity";
-    public static readonly EntProtoId MalignRiftEntity = "CosmicMalignRift";
+    private static readonly EntProtoId PressureImmunityEffect = "StatusEffectPressureImmunity";
+
+    [SubscribeLocalEvent]
+    protected virtual void OnCollide(Entity<CosmicRiftComponent> ent, ref EndCollideEvent args)
+    {
+        if (ent.Comp.HitTimer != null)
+            return;
+
+        if (!HasComp<CosmicLambaParticleComponent>(args.OtherEntity) || !TryComp<ProjectileComponent>(args.OtherEntity, out var projectile) || !HasComp<CosmicLambdaDeviceComponent>(projectile.Shooter))
+            return;
+
+        _color.RaiseEffect(Color.FromHex("#9F18FF"), new List<EntityUid>() { ent }, Filter.Pvs(ent, entityManager: EntityManager));
+        var random = SharedRandomExtensions.PredictedRandom(Timing, GetNetEntity(ent));
+        var text = GetText(ent.Comp.PopUpDataset, random);
+
+        if (random.Prob(ent.Comp.TextChance) && !string.IsNullOrWhiteSpace(text))
+            _popup.PopupEntity(Loc.GetString(text), ent, PopupType.Medium);
+
+        ent.Comp.CurrentHits++;
+        ent.Comp.HitTimer = Timing.CurTime + TimeSpan.FromSeconds(0.5f);
+    }
 
     [SubscribeLocalEvent]
     private void OnInteract(Entity<CosmicRiftComponent> ent, ref ActivateInWorldEvent args)
@@ -74,12 +101,14 @@ public sealed partial class CosmicRiftSystem : EntitySystem
         QueueDel(target);
     }
 
-    public void SpawnRift(Entity<StationDataComponent?> ent)
+    private string? GetText(ProtoId<LocalizedDatasetPrototype> dialogue, IRobustRandom random)
     {
-        if (!Resolve(ent, ref ent.Comp, false))
-            return;
+        if (!ProtoMan.Resolve(dialogue, out var proto))
+            return null;
 
-        if (_station.TryFindRandomTileOnStation((ent, ent.Comp), out var _, out var _, out var coords))
-            Spawn("CosmicMalignRift", coords);
+        return random.Pick(proto.Values);
     }
 }
+
+[ByRefEvent]
+public record struct CosmicRiftPurgeEvent(bool Cancelled = false);

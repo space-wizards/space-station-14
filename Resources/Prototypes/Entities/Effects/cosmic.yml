@@ -7,6 +7,20 @@
     mode: SnapgridCenter
   components:
   - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+    bodyStatus: InAir
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
   - type: Sprite
     sprite: Structures/Specific/cosmic-rift.rsi
     drawdepth: Mobs

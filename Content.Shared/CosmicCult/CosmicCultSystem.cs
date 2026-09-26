@@ -62,32 +62,14 @@ public abstract partial class CosmicCultSystem : EntitySystem
     private static readonly EntProtoId PressureImmunityEffect = "StatusEffectPressureImmunity";
     public static SoundSpecifier GenericSfx = new SoundPathSpecifier("/Audio/Cosmic/trigger-sound.ogg");
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<CosmicCultistComponent, ComponentGetStateAttemptEvent>(OnCosmicCultCompGetStateAttempt);
-        SubscribeLocalEvent<CosmicCultistComponent, ComponentStartup>(DirtyCosmicCultComps);
-
-        SubscribeLocalEvent<CosmicExamineComponent, ExaminedEvent>(OnCosmicCultExamined);
-
-        SubscribeLocalEvent<CosmicColliderComponent, PreventCollideEvent>(OnPreventCollide);
-        SubscribeLocalEvent<CosmicEquipmentComponent, BeforeGettingEquippedHandEvent>(OnPickupAttempt);
-        SubscribeLocalEvent<CosmicBrandComponent, BeforeDamageChangedEvent>(OnDamaged);
-        SubscribeLocalEvent<CosmicBrandComponent, DamageModifyEvent>(OnDamageModified);
-        SubscribeLocalEvent<CosmicBrandComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
-        SubscribeLocalEvent<CosmicStigmaComponent, CosmicStigmaDoAfter>(OnStigmaDoAfter);
-        SubscribeLocalEvent<CosmicStigmaComponent, InteractHandEvent>(OnStigmaInteracted);
-        SubscribeLocalEvent<CosmicMonumentComponent, InteractHandEvent>(OnMonumentInteracted);
-        SubscribeLocalEvent<CosmicDoorComponent, InteractHandEvent>(OnDoorInteracted);
-        SubscribeLocalEvent<CosmicBreachComponent, InteractHandEvent>(OnBreachInteracted);
-        SubscribeLocalEvent<CosmicFontComponent, InteractUsingEvent>(OnFontInteracted);
-    }
+    [SubscribeLocalEvent]
     private void OnPreventCollide(EntityUid uid, CosmicColliderComponent comp, ref PreventCollideEvent args)
     {
         if (EntityIsCultist(args.OtherEntity))
             args.Cancelled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnDamaged(Entity<CosmicBrandComponent> ent, ref BeforeDamageChangedEvent args)
     {
         if (args.Cancelled)
@@ -97,6 +79,7 @@ public abstract partial class CosmicCultSystem : EntitySystem
             args.Cancelled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnDamageModified(Entity<CosmicBrandComponent> ent, ref DamageModifyEvent args)
     {
         if (TryComp<CosmicCultistComponent>(ent, out var cultComp) && cultComp.AstralAegisStacks > 0 && Above5Damage(args.Damage))
@@ -123,38 +106,48 @@ public abstract partial class CosmicCultSystem : EntitySystem
         return false;
     }
 
+    [SubscribeLocalEvent]
     private void OnStigmaDoAfter(Entity<CosmicStigmaComponent> ent, ref CosmicStigmaDoAfter args)
     {
         if (args.Handled || args.Cancelled)
             return;
 
-        Audio.PlayPredicted(ent.Comp.DestroySfx, Transform(ent).Coordinates, args.User);
-        PredictedSpawnAtPosition(GenericVfx, Transform(ent).Coordinates);
-        PredictedQueueDel(ent);
         args.Handled = true;
+
+        if (_net.IsClient && Timing.IsFirstTimePredicted)
+            Spawn(GenericVfx, Transform(ent).Coordinates);
+
+        Audio.PlayPredicted(ent.Comp.DestroySfx, Transform(ent).Coordinates, args.User);
+        PredictedQueueDel(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnStigmaInteracted(Entity<CosmicStigmaComponent> ent, ref InteractHandEvent args)
     {
         if (args.Handled)
             return;
 
-        if (!ent.Comp.Harvested && EntityIsCultist(args.User) && Timing.IsFirstTimePredicted)
+        if (!ent.Comp.Harvested && EntityIsCultist(args.User))
         {
+            ent.Comp.Harvested = true;
+            args.Handled = true;
+
             var stigmaCrystal = PredictedSpawnAtPosition("CosmicCultStigmaCrystal", Transform(ent).Coordinates);
             var farFilter = Filter.Empty().AddInRange(TransformSystem.GetMapCoordinates(ent), 25f);
-            ent.Comp.Harvested = true;
 
             _statusEffects.TrySetStatusEffectDuration(args.User, PressureImmunityEffect);
+            _appearance.SetData(ent, CosmicFontVisualLayers.Base, true);
             _hands.TryPickupAnyHand(args.User, stigmaCrystal);
+
             if (_net.IsServer)
             {
                 Audio.PlayGlobal(ent.Comp.HarvestSfx, farFilter, true);
                 Brand(args.User);
             }
 
-            PredictedSpawnAtPosition(GenericVfx, Transform(ent).Coordinates);
-            _appearance.SetData(ent, CosmicFontVisualLayers.Base, true);
+            if (_net.IsClient && Timing.IsFirstTimePredicted)
+                Spawn(GenericVfx, Transform(ent).Coordinates);
+
             if (TryComp<CosmicExamineComponent>(ent, out var examine))
                 examine.CultistText = "cosmic-examine-text-stigma-harvested";
 
@@ -175,8 +168,10 @@ public abstract partial class CosmicCultSystem : EntitySystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     protected virtual void OnMonumentInteracted(Entity<CosmicMonumentComponent> ent, ref InteractHandEvent args) { }
 
+    [SubscribeLocalEvent]
     private void OnDoorInteracted(Entity<CosmicDoorComponent> ent, ref InteractHandEvent args)
     {
         if (args.Handled || EntityIsCultist(args.User))
@@ -185,6 +180,7 @@ public abstract partial class CosmicCultSystem : EntitySystem
         _door.StartOpening(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnBreachInteracted(Entity<CosmicBreachComponent> ent, ref InteractHandEvent args)
     {
         if (args.Handled || EntityIsCultist(args.User) || !HasComp<HumanoidProfileComponent>(args.User) || ent.Comp.LinkedBreach is null)
@@ -206,6 +202,7 @@ public abstract partial class CosmicCultSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnFontInteracted(Entity<CosmicFontComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled || ent.Comp.Activated || !EntityIsCultist(args.User) || !HasComp<CosmicStigmaItemComponent>(args.Used))
@@ -239,6 +236,7 @@ public abstract partial class CosmicCultSystem : EntitySystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnCosmicCultExamined(Entity<CosmicExamineComponent> ent, ref ExaminedEvent args)
     {
         args.PushMarkup(Loc.GetString(EntitySeesCult(args.Examiner) ? ent.Comp.CultistText : ent.Comp.OthersText));
@@ -257,6 +255,7 @@ public abstract partial class CosmicCultSystem : EntitySystem
         return EntityIsCultist(user) || HasComp<GhostComponent>(user);
     }
 
+    [SubscribeLocalEvent]
     private void OnPickupAttempt(Entity<CosmicEquipmentComponent> ent, ref BeforeGettingEquippedHandEvent args)
     {
         if (!EntityIsCultist(args.User))
@@ -277,6 +276,7 @@ public abstract partial class CosmicCultSystem : EntitySystem
     /// <summary>
     /// Determines if a Cosmic Cultist component should be sent to the client.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnCosmicCultCompGetStateAttempt(EntityUid uid, CosmicCultistComponent comp, ref ComponentGetStateAttemptEvent args)
     {
         args.Cancelled = !CanGetState(args.Player);
@@ -305,7 +305,8 @@ public abstract partial class CosmicCultSystem : EntitySystem
     /// becomes a Cult then we need to send all the components to it. To my knowledge there is no way to do this on a
     /// per client basis so we are just dirtying all the components.
     /// </summary>
-    private void DirtyCosmicCultComps<T>(EntityUid someUid, T someComp, ComponentStartup ev)
+    [SubscribeLocalEvent]
+    private void DirtyCosmicCultComps(Entity<CosmicCultActionComponent> ent, ref ComponentStartup ev)
     {
         var cosmicCultComps = AllEntityQuery<CosmicCultistComponent>();
         while (cosmicCultComps.MoveNext(out var uid, out var comp))
@@ -325,6 +326,7 @@ public abstract partial class CosmicCultSystem : EntitySystem
         _nameModifier.RefreshNameModifiers(cultist);
     }
 
+    [SubscribeLocalEvent]
     private void OnRefreshNameModifiers(Entity<CosmicBrandComponent> ent, ref RefreshNameModifiersEvent args)
     {
         args.AddModifier("cosmiccult-player-ascendant");

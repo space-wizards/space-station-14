@@ -69,8 +69,6 @@
           On: { state: base-animated }
   - type: Appearance
   - type: InteractionOutline
-  - type: Transform
-    anchored: true
   - type: Physics
     bodyType: Static
   - type: PointLight
