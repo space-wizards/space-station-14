@@ -13,11 +13,8 @@
 - type: loadout
   id: ReporterPressFedora
   effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobReporter
-      time: 10h
+  - !type:GroupLoadoutEffect
+    proto: ReporterStarter
   equipment:
     head: ClothingHeadHatFedoraPress
 
@@ -25,10 +22,7 @@
 - type: loadout
   id: ReporterPressVest
   effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobReporter
-      time: 35h
+  - !type:GroupLoadoutEffect
+    proto: ReporterCapstone
   equipment:
     outerClothing: ClothingOuterVestPress

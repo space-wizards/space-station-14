@@ -1,13 +1,3 @@
-# For mantles
-- type: loadoutEffectGroup
-  id: MasterRD
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobResearchDirector
-      time: 20h
-
 # Head
 - type: loadout
   id: ResearchDirectorBeret
@@ -20,7 +10,7 @@
     neck: ClothingNeckMantleRD
   effects:
   - !type:GroupLoadoutEffect
-    proto: MasterRD
+    proto: ResearchDirectorSenior
 
 - type: startingGear
   id: ResearchDirectorMantle
