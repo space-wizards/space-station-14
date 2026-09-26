@@ -43,13 +43,19 @@ public sealed partial class GenericCounterAlertSystem : EntitySystem
             ? amount.ToString().Length
             : maxDigitCount;
 
-        if (ent.Comp.HideLeadingZeroes)
+        for (var i = 0; i < ent.Comp.DigitKeys.Count; i++)
         {
-            for (var i = 0; i < ent.Comp.DigitKeys.Count; i++)
-            {
-                if (!_sprite.LayerMapTryGet(ent.Owner, ent.Comp.DigitKeys[i], out var layer, false))
-                    continue;
+            if (!_sprite.LayerMapTryGet(ent.Owner, ent.Comp.DigitKeys[i], out var layer, false))
+                continue;
 
+            if ((amount == 1 || amount == 0) && ent.Comp.HideZeroAndSingleValues)
+            {
+                _sprite.LayerSetVisible(ent.Owner, layer, false);
+                continue;
+            }
+
+            if (ent.Comp.HideLeadingZeroes)
+            {
                 _sprite.LayerSetVisible(ent.Owner, layer, i <= digitCount - 1);
             }
         }
