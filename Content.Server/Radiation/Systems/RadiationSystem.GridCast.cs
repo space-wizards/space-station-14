@@ -72,8 +72,8 @@ public partial class RadiationSystem
         }
 
         var lastGridUid = EntityUid.Invalid;
-        TransformComponent? lastMapXform = null;
-        var lastLocalMatrix = Matrix3x2.Identity;
+        TransformComponent? lastXform = null;
+        var lastMatrix = Matrix3x2.Identity;
         var currentGridValid = false;
 
         // Add tile radiation sources to the main sources list
@@ -89,30 +89,30 @@ public partial class RadiationSystem
                     TryComp(mapUid, typeof(TransformComponent), out var mapComp) &&
                     mapComp is TransformComponent mapXform)
                 {
-                    lastMapXform = mapXform;
-                    lastLocalMatrix = gridXform.LocalMatrix;
+                    lastXform = mapXform;
+                    lastMatrix = gridXform.LocalMatrix;
                     currentGridValid = true;
                 }
                 else
                 {
-                    lastMapXform = null;
+                    lastXform = null;
                     currentGridValid = false;
                 }
             }
 
-            if (!currentGridValid || lastMapXform == null)
+            if (!currentGridValid || lastXform == null)
                 continue;
 
             var localTileCenter = new Vector2(spatialKey.Tile.X, spatialKey.Tile.Y) + _halfTileOffset;
-            var worldCenter = Vector2.Transform(localTileCenter, lastLocalMatrix);
+            var worldPos = Vector2.Transform(localTileCenter, lastMatrix);
 
             foreach (var (_, tileSource) in tileSources)
             {
                 _sources.Add(new SourceData(
                     tileSource.Intensity,
                     tileSource.Slope,
-                    lastMapXform,
-                    worldCenter,
+                    lastXform,
+                    worldPos,
                     null,
                     tileSource.SourceId,
                     null

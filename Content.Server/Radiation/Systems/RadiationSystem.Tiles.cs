@@ -2,6 +2,7 @@ using System.Runtime.InteropServices;
 using Content.Server.Radiation.Components;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Radiation.Systems;
 
@@ -17,7 +18,9 @@ public partial class RadiationSystem
 
     public readonly record struct SpatialTileKey(EntityUid GridUid, Vector2i Tile);
 
-    private readonly Dictionary<SpatialTileKey, Dictionary<ushort, TileSourceData>> _tileRadiationSources = new();
+    private readonly Dictionary<SpatialTileKey, Dictionary<ushort, TileSourceData>> _tileRadiationSources = [];
+    private readonly ValueList<SpatialTileKey> _expiredKeys = [];
+    private readonly ValueList<ushort> _expiredSources = [];
 
     public void SetTileRadiation(EntityUid gridUid, Vector2i tile, ushort sourceId, float intensity, float slope, float halfLife = -1f, bool forceSet = false)
     {
@@ -51,19 +54,38 @@ public partial class RadiationSystem
         }
     }
 
-    private void UpdateTileHalfLives()
+    private void UpdateTileRadiationSources()
     {
-        var expiredKeys = new ValueList<SpatialTileKey>();
+        _expiredKeys.Clear();
+
+        var lastGridUid = EntityUid.Invalid;
+        MapGridComponent? lastGridComp = null;
 
         foreach (var (spatialKey, tileSources) in _tileRadiationSources)
         {
-            var expiredSources = new ValueList<ushort>();
+            var gridUid = spatialKey.GridUid;
+
+            if (gridUid != lastGridUid)
+            {
+                lastGridUid = gridUid;
+                _gridQuery.TryGetComponent(gridUid, out lastGridComp);
+            }
+
+            if (lastGridComp == null ||
+                !_maps.TryGetTileRef(gridUid, lastGridComp, spatialKey.Tile, out var tileRef) ||
+                tileRef.Tile.IsEmpty)
+            {
+                _expiredKeys.Add(spatialKey);
+                continue;
+            }
+
+            _expiredSources.Clear();
 
             foreach (var (sourceId, source) in tileSources)
             {
                 if (source.HalfLife < 0f)
                 {
-                    expiredSources.Add(sourceId);
+                    _expiredSources.Add(sourceId);
                     continue;
                 }
 
@@ -74,28 +96,28 @@ public partial class RadiationSystem
 
                 if (source.Intensity < MinIntensity)
                 {
-                    expiredSources.Add(sourceId);
+                    _expiredSources.Add(sourceId);
                 }
             }
 
-            foreach (var sourceId in expiredSources)
+            for (var i = 0; i < _expiredSources.Count; i++)
             {
-                tileSources.Remove(sourceId);
+                tileSources.Remove(_expiredSources[i]);
             }
 
             if (tileSources.Count == 0)
             {
-                expiredKeys.Add(spatialKey);
+                _expiredKeys.Add(spatialKey);
             }
         }
 
-        foreach (var key in expiredKeys)
+        for (var i = 0; i < _expiredKeys.Count; i++)
         {
-            _tileRadiationSources.Remove(key);
+            _tileRadiationSources.Remove(_expiredKeys[i]);
         }
     }
 
-    private void UpdateTileEmitters()
+    private void UpdateTileRadiationEmitters()
     {
         var query = EntityQueryEnumerator<TileRadiationEmitterComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var emitter, out var xform))
