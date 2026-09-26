@@ -10,7 +10,7 @@ public readonly record struct PlantGrowEvent(EntityUid Tray);
 /// Event raised when a harvest is attempted. Cancel to prevent the harvest.
 /// </summary>
 [ByRefEvent]
-public record struct PlantHarvestAttemptEvent(EntityUid User, EntityUid Target, bool Cancelled = false);
+public record struct PlantHarvestAttemptEvent(EntityUid User, EntityUid Target, EntityUid? Used = null, bool Cancelled = false);
 
 /// <summary>
 /// Event raised after a plant has been harvested.
