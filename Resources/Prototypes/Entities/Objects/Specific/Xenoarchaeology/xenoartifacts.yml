@@ -56,6 +56,9 @@
     baseCritThreshold: 1000
     decay: 1000
     cooldown: 0.1
+  - type: Tag
+    tags:
+      - XenoArtifact
 
 - type: entity
   parent: BaseAction

@@ -3,3 +3,9 @@
   id: Artifact
   graph: Artifact
   targetNode: done
+
+- type: construction
+  parent: BaseItemMisc
+  id: ArtifactShard
+  graph: ArtifactShard
+  targetNode: done

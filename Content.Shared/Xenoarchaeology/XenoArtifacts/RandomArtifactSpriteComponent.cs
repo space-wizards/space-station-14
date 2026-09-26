@@ -13,4 +13,7 @@ public sealed partial class RandomArtifactSpriteComponent : Component
     public double ActivationTime = 0.4;
 
     public TimeSpan? ActivationStart;
+
+    [DataField]
+    public string Prefix = "ano";
 }

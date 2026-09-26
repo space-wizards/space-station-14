@@ -58,6 +58,16 @@
     damage:
       types:
         Radiation: 10
+  - type: EntitySpawnAnomaly
+    entries:
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 2
+        maxAmount: 5
+        minRange: 0.5
+        maxRange: 3
+      spawns:
+      - XenoArtifactShard
 
 - type: entity
   id: AnomalyPyroclastic
@@ -272,6 +282,14 @@
       - MobFleshClamp
       - MobFleshLover
       - FleshKudzu
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 2
+        maxAmount: 5
+        minRange: 0.5
+        maxRange: 3
+      spawns:
+      - XenoArtifactShard
 
 - type: entity
   id: AnomalyBluespace
@@ -361,6 +379,14 @@
         maxRange: 4
       spawns:
       - IceCrust
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 2
+        maxAmount: 5
+        minRange: 0.5
+        maxRange: 3
+      spawns:
+      - XenoArtifactShard
   - type: TempAffectingAnomaly
     tempChangePerSecond: -25
     hotspotExposeTemperature: -1000
@@ -467,6 +493,14 @@
         maxRange: 5
       spawns:
       - MobSpawnCrabUranium
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 2
+        maxAmount: 5
+        minRange: 0.5
+        maxRange: 3
+      spawns:
+      - XenoArtifactShard
 
 - type: entity
   id: AnomalyRockQuartz
@@ -517,6 +551,14 @@
         maxRange: 5
       spawns:
       - MobSpawnCrabQuartz
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 2
+        maxAmount: 5
+        minRange: 0.5
+        maxRange: 3
+      spawns:
+      - XenoArtifactShard
 
 - type: entity
   id: AnomalyRockSilver
@@ -567,6 +609,14 @@
         maxRange: 5
       spawns:
       - MobSpawnCrabSilver
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 2
+        maxAmount: 5
+        minRange: 0.5
+        maxRange: 3
+      spawns:
+      - XenoArtifactShard
 
 - type: entity
   id: AnomalyRockGold
@@ -617,6 +667,14 @@
         maxRange: 5
       spawns:
       - MobSpawnCrabGold
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 2
+        maxAmount: 5
+        minRange: 0.5
+        maxRange: 3
+      spawns:
+      - XenoArtifactShard
 
 - type: entity
   id: AnomalyRockIron
@@ -667,6 +725,14 @@
         maxRange: 5
       spawns:
       - MobSpawnCrabIron
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 2
+        maxAmount: 5
+        minRange: 0.5
+        maxRange: 3
+      spawns:
+      - XenoArtifactShard
 
 - type: entity
   id: AnomalyRockCoal
@@ -717,6 +783,14 @@
         maxRange: 5
       spawns:
       - MobSpawnCrabCoal
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 2
+        maxAmount: 5
+        minRange: 0.5
+        maxRange: 3
+      spawns:
+      - XenoArtifactShard
 
 - type: entity
   id: AnomalyFlora
@@ -775,6 +849,14 @@
         maxRange: 6
       spawns:
       - KudzuFlowerAngry
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 2
+        maxAmount: 5
+        minRange: 0.5
+        maxRange: 3
+      spawns:
+      - XenoArtifactShard
 
 - type: entity
   id: AnomalyFloraBulb
@@ -860,6 +942,14 @@
         maxRange: 2
       spawns:
       - ReagentSlimeSpawner
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 2
+        maxAmount: 5
+        minRange: 0.5
+        maxRange: 3
+      spawns:
+      - XenoArtifactShard
   - type: Solution
     id: anomaly
     solution:
@@ -988,6 +1078,14 @@
         maxRange: 50
       spawns:
       - ShadowKudzu
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 2
+        maxAmount: 5
+        minRange: 0.5
+        maxRange: 3
+      spawns:
+      - XenoArtifactShard
   - type: Portal
     arrivalSound: /Audio/Items/hiss.ogg
     departureSound: /Audio/Items/hiss.ogg
@@ -1038,6 +1136,16 @@
     ports:
       - Pulse
       - Timer
+  - type: EntitySpawnAnomaly
+    entries:
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 2
+        maxAmount: 5
+        minRange: 0.5
+        maxRange: 3
+      spawns:
+      - XenoArtifactShard
 
 - type: entity
   id: AnomalyTechBeam
@@ -1114,6 +1222,14 @@
         maxRange: 6
       spawns:
       - PresentRandomInsane
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 2
+        maxAmount: 5
+        minRange: 0.5
+        maxRange: 3
+      spawns:
+      - XenoArtifactShard
   - type: ProjectileAnomaly
     projectilePrototype: DrinkLemonLimeCranberryCan
     minProjectiles: 1
