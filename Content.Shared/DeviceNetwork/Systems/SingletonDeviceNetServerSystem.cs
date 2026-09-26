@@ -1,10 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.DeviceNetwork.Components;
-using Content.Server.Medical.CrewMonitoring;
-using Content.Server.Station.Systems;
 using Content.Shared.Power;
 using Content.Shared.DeviceNetwork.Components;
-using Content.Shared.Station;
+using Content.Shared.Station.Systems;
 
 namespace Content.Shared.DeviceNetwork.Systems;
 
@@ -15,7 +12,7 @@ namespace Content.Shared.DeviceNetwork.Systems;
 public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
 {
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
-    [Dependency] private SharedStationSystem _stationSystem = default!;
+    [Dependency] private StationSystem _stationSystem = default!;
 
     /// <summary>
     /// Returns whether the given entity is an active server or not
