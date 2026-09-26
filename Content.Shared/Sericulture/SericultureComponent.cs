@@ -1,4 +1,4 @@
-using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Cloning;
 using Content.Shared.Nutrition.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -9,7 +9,8 @@ namespace Content.Shared.Sericulture;
 /// Should be applied to any mob that you want to be able to produce any material with an action and the cost of hunger.
 /// TODO: Probably adjust this to utilize organs?
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedSericultureSystem)), AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(SharedSericultureSystem), typeof(CloningContext))]
 public sealed partial class SericultureComponent : Component
 {
     /// <summary>
