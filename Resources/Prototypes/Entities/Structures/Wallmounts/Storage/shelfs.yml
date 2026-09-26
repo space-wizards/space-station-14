@@ -386,8 +386,9 @@
             max: 1
   - type: Storage
     grid:
-    - 0,0,5,1
-    - 0,3,5,4
+    - 0,0,11,1
+    - 0,3,11,4
+    maxItemSize: Large
   - type: Construction
     graph: Shelf
     node: ShelfChemistry
