@@ -85,6 +85,18 @@ public sealed partial class CCVars
         CVarDef.Create("chat.highlights_color", "#17FFC1FF", CVar.CLIENTONLY | CVar.ARCHIVE, "The color in which the highlights will be displayed.");
 
     /// <summary>
+    /// A string containing a list of newline-separated words to be masked in the chat.
+    /// </summary>
+    public static readonly CVarDef<string> ChatWordFilters =
+        CVarDef.Create("chat.word_filters", "", CVar.CLIENTONLY | CVar.ARCHIVE, "A list of newline-separated words to be masked in the chat.");
+
+    /// <summary>
+    /// A string containing the mask symbol.
+    /// </summary>
+    public static readonly CVarDef<string> ChatWordFiltersSymbol = 
+        CVarDef.Create("chat.word_filters_symbol", "*", CVar.CLIENTONLY | CVar.ARCHIVE, "The symbol used to mask words in the chat.");
+    
+    /// <summary>
     /// If true will allow TextLinkTags to make interactable chat labels in place of sender names.
     /// </summary>
     public static readonly CVarDef<bool> ChatNameLinks =
