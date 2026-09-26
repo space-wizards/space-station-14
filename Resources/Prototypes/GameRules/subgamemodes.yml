@@ -44,6 +44,7 @@
   - type: AntagSelection
     agentName: changeling-round-end-agent-name
     lateJoinAdditional: true
+    selectionTime: PrePlayerSpawn
     antags:
     - !type:LinearAntagCount
       proto: Changeling
