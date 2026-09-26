@@ -12,10 +12,6 @@
   id: SlowedDown
 
 - type: statusEffect
-  id: Jitter
-  alwaysAllowed: true
-
-- type: statusEffect
   id: Stutter
 
 - type: statusEffect
