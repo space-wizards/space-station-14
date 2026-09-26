@@ -1,6 +1,5 @@
 using Content.Shared.Clothing;
 using Content.Shared.Hands;
-using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 
 namespace Content.Shared.Item;
@@ -42,6 +41,16 @@ public sealed partial class HeldSpeedModifierSystem : EntitySystem
         }
 
         return (walkMod, sprintMod);
+    }
+
+    /// <summary> Changes movement speed modifier. </summary>
+    public void ChangeModifiers(Entity<HeldSpeedModifierComponent?> ent, float walkMod, float sprintMod)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        ent.Comp.SprintModifier = sprintMod;
+        ent.Comp.WalkModifier = walkMod;
     }
 
     private void OnRefreshMovementSpeedModifiers(EntityUid uid, HeldSpeedModifierComponent component, HeldRelayedEvent<RefreshMovementSpeedModifiersEvent> args)

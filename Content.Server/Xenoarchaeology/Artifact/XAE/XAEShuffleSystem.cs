@@ -23,9 +23,13 @@ public sealed partial class XAEShuffleSystem : BaseXAESystem<XAEShuffleComponent
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEShuffleComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
+        var range = ent.Comp.Range;
+        if (args.Modifications.TryGetValue(XenoArtifactEffectModifier.Range, out var rangeModifier))
+            range = Math.Max(1, rangeModifier.Modify(range));
+
         List<Entity<TransformComponent>> toShuffle = new();
         _entities.Clear();
-        _lookup.GetEntitiesInRange(ent.Owner, ent.Comp.Radius, _entities, LookupFlags.Dynamic | LookupFlags.Sundries);
+        _lookup.GetEntitiesInRange(ent.Owner, range, _entities, LookupFlags.Dynamic | LookupFlags.Sundries);
         foreach (var entity in _entities)
         {
             if (!_mobState.HasComponent(entity))

@@ -20,6 +20,16 @@ public sealed partial class XAECreateGasSystem : BaseXAESystem<XAECreateGasCompo
 
     protected override void OnActivated(Entity<XAECreateGasComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
+        var gases = ent.Comp.Gases;
+        if (args.Modifications.TryGetValue(XenoArtifactEffectModifier.Power, out var amountModifier))
+        {
+            gases = new Dictionary<Gas, float>(gases);
+            foreach (var gas in gases.Keys)
+            {
+                gases[gas] = amountModifier.Modify(gases[gas]);
+            }
+        }
+
         var grid = _transform.GetGrid(args.Coordinates);
         var map = _transform.GetMap(args.Coordinates);
         if (map == null || !TryComp<MapGridComponent>(grid, out var gridComp))
@@ -39,7 +49,7 @@ public sealed partial class XAECreateGasSystem : BaseXAESystem<XAECreateGasCompo
             }
         }
 
-        foreach (var (gas, moles) in ent.Comp.Gases)
+        foreach (var (gas, moles) in gases)
         {
             var molesPerMixture = moles / mixtures.Count;
 

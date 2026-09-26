@@ -432,4 +432,20 @@ public sealed partial class PolymorphSystem : EntitySystem
         if (actions.TryGetValue(id, out var action))
             _actions.RemoveAction(target.Owner, action);
     }
+
+    /// <summary>
+    /// Attempts to add provided value to duration of polymorph.
+    /// Returns false if entity is not polymorphed, true otherwise.
+    /// </summary>
+    public bool TryAddDuration(Entity<PolymorphedEntityComponent?> ent, int duration)
+    {
+        if (duration == 0)
+            return true;
+
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
+        ent.Comp.Configuration.Duration += duration;
+        return true;
+    }
 }

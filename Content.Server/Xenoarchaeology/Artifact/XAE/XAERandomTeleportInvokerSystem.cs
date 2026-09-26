@@ -26,11 +26,18 @@ public sealed partial class XAERandomTeleportInvokerSystem : BaseXAESystem<XAERa
         // todo: for prediction we need to have delay between activation and make a viewersub at a target spot
         // todo: teleport person who activated artifact with artifact itself
         var component = ent.Comp;
+        var minRange = component.MinRange;
+        var maxRange = component.MaxRange;
+        if (args.Modifications.TryGetValue(XenoArtifactEffectModifier.Range, out var rangeModifier))
+        {
+            maxRange = MathF.Max(4f, rangeModifier.Modify(maxRange));
+            minRange = MathF.Max(4f, rangeModifier.Modify(minRange));
+        }
 
         var xform = Transform(args.Artifact);
         _popup.PopupCoordinates(Loc.GetString("blink-artifact-popup"), xform.Coordinates, PopupType.Medium);
 
-        var offsetTo = random.NextVector2(component.MinRange, component.MaxRange);
+        var offsetTo = random.NextVector2(minRange, maxRange);
 
         _xform.AttachToGridOrMap(args.Artifact);
         _jointSystem.ClearJoints(args.Artifact);

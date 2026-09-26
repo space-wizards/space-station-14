@@ -1,3 +1,4 @@
+using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Whitelist;
@@ -23,6 +24,16 @@ public sealed partial class XAEDamageInAreaSystem : BaseXAESystem<XAEDamageInAre
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEDamageInAreaComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
+        var damage = ent.Comp.Damage;
+        if (args.Modifications.TryGetValue(XenoArtifactDamageEffectModifier.DamageAmount, out var amountModifier))
+        {
+            damage = new DamageSpecifier(damage);
+            foreach (var dmg in damage.DamageDict)
+            {
+                damage.DamageDict[dmg.Key] += (int)amountModifier.Modify(dmg.Value.Value);
+            }
+        }
+
         var damageInAreaComponent = ent.Comp;
         _entitiesInRange.Clear();
         _lookup.GetEntitiesInRange(ent.Owner, damageInAreaComponent.Radius, _entitiesInRange);
@@ -35,7 +46,12 @@ public sealed partial class XAEDamageInAreaSystem : BaseXAESystem<XAEDamageInAre
             if (!random.Prob(damageInAreaComponent.DamageChance))
                 continue;
 
-            _damageable.TryChangeDamage(entityInRange, damageInAreaComponent.Damage, damageInAreaComponent.IgnoreResistances);
+            _damageable.TryChangeDamage(entityInRange, damage, damageInAreaComponent.IgnoreResistances);
         }
     }
+}
+
+public enum XenoArtifactDamageEffectModifier
+{
+    DamageAmount
 }

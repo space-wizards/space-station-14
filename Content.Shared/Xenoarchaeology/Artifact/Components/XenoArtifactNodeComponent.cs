@@ -1,4 +1,3 @@
-using Content.Shared.Destructible.Thresholds;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -35,6 +34,9 @@ public sealed partial class XenoArtifactNodeComponent : Component
     [DataField, AutoNetworkedField]
     public EntityUid? Attached;
 
+    [DataField, AutoNetworkedField]
+    public float Budget;
+    
     #region Durability
     /// <summary>
     /// Marker, is durability of node degraded or not.
@@ -52,12 +54,6 @@ public sealed partial class XenoArtifactNodeComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public int MaxDurability = 5;
-
-    /// <summary>
-    /// The variance from MaxDurability present when a node is created.
-    /// </summary>
-    [DataField]
-    public MinMax MaxDurabilityCanDecreaseBy = new(0, 2);
     #endregion
 
     #region Research
