@@ -158,6 +158,7 @@ public partial struct TextScreenRow()
     /// <summary>
     /// The delay between each pixel scrolled on this screen.
     /// </summary>
+    [DataField]
     public TimeSpan ScrollDelay = TimeSpan.MaxValue;
 
     /// <summary>
@@ -167,15 +168,18 @@ public partial struct TextScreenRow()
     /// Increases monotonically, should be taken modulo the text length.
     /// Each character is a fixed size (pixel width defined in <see cref="TextScreenSystem.CharWidth"/>).
     /// </remarks>
+    [DataField]
     public int ScrollPosition;
 
     /// <summary>
     /// A list with each of the row's sprite layers, with the key inside of it and the state it's currently on.
     /// </summary>
+    [DataField]
     public List<(string Key, string? State)> Layers = new();
 
     /// <summary>
     /// The full text currently being drawn on the row. May not all fit on the screen at once.
     /// </summary>
+    [DataField]
     public string Text = string.Empty;
 }
