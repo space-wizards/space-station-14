@@ -29,7 +29,7 @@ public sealed partial class DrunkOverlay : Overlay
     // Needed so it doesn't always look the same for 0 motion.
     public float Phase = 0f;
 
-    private const float VisualThreshold = 10.0f;
+    private const float VisualThreshold = 40.0f;
     private const float PowerDivisor = 250.0f;
     /// <remarks>
     /// This is a magic number based on my person preference of how quickly the bloodloss effect should kick in.
@@ -114,13 +114,13 @@ public sealed partial class DrunkOverlay : Overlay
     private float BoozePowerToVisual(float boozePower)
     {
         // Clamp booze power when it's low, to prevent really jittery effects
-        if (boozePower < 50f)
+        if (boozePower < 1f)
         {
             return 0;
         }
         else
         {
-            return Math.Clamp((boozePower - VisualThreshold) / PowerDivisor, 0.0f, 1.0f);
+            return Math.Clamp((boozePower + VisualThreshold) / PowerDivisor, 0.0f, 1.0f);
         }
     }
 }
