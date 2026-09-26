@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Light.EntitySystems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Doors.Components;
@@ -36,6 +37,13 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
             var channel = RobustRandom.Pick(ent.Comp1.ExtraChannels);
             ent.Comp1.AffectedChannels.Add(channel);
         }
+
+        ent.Comp1.AffectedLights = Station.GetEntitiesWithComponentOnStation<PoweredLightComponent>(true)
+            .Select(e => (e.Owner, e.Comp))
+            .ToHashSet();
+        ent.Comp1.AffectedAirlocks = Station.GetEntitiesWithComponentOnStation<AirlockComponent>(true)
+            .Select(e => (e.Owner, e.Comp))
+            .ToHashSet();
     }
 
     protected override void ActiveTick(EntityUid uid, SolarFlareRuleComponent component, GameRuleComponent gameRule, float frameTime)
@@ -46,17 +54,16 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
         if (_effectTimer < 0)
         {
             _effectTimer += 1;
-            var lightQuery = EntityQueryEnumerator<PoweredLightComponent>();
-            while (lightQuery.MoveNext(out var lightEnt, out var light))
+            foreach (var light in component.AffectedLights)
             {
                 if (RobustRandom.Prob(component.LightBreakChancePerSecond))
-                    _poweredLight.TryDestroyBulb(lightEnt, light);
+                    _poweredLight.TryDestroyBulb(light.Item1, light.Item2);
             }
-            var airlockQuery = EntityQueryEnumerator<AirlockComponent, DoorComponent>();
-            while (airlockQuery.MoveNext(out var airlockEnt, out var airlock, out var door))
+
+            foreach (var airlockEnt in component.AffectedAirlocks)
             {
-                if (airlock.AutoClose && RobustRandom.Prob(component.DoorToggleChancePerSecond))
-                    _door.TryToggleDoor(airlockEnt, door);
+                if (airlockEnt.Item2.AutoClose && RobustRandom.Prob(component.DoorToggleChancePerSecond))
+                    _door.TryToggleDoor(airlockEnt.Item1, Comp<DoorComponent>(airlockEnt.Item1));
             }
         }
     }

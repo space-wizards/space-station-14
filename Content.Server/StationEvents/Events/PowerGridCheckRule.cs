@@ -31,28 +31,22 @@ namespace Content.Server.StationEvents.Events
         {
             base.Started(ent, ref args);
 
-            if (!Station.TryGetRandomStation<StationEventEligibleComponent>(out var chosenStation))
+            var apcs = Station.GetEntitiesWithComponentOnStation<ApcComponent>(true, out var chosenStation);
+
+            if (chosenStation is null)
                 return;
 
             var powerGridCheck = ent.Comp1;
 
             powerGridCheck.AffectedStation = chosenStation.Value;
 
-            var largestGrid = Station.GetLargestGrid(chosenStation.Value.AsNullable());
-
-            if (largestGrid == null)
-                return;
-
-            var query = AllEntityQuery<ApcComponent, TransformComponent>();
-            while (query.MoveNext(out var apcUid, out var apc, out var transform))
+            foreach (var apcUid in apcs)
             {
-                if (!apc.MainBreakerEnabled)
+                if (apcUid.Comp.MainBreakerEnabled)
                     continue;
 
-                if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station != chosenStation.Value.Owner)
-                    continue;
-
-                if (transform.GridUid != largestGrid.Value)
+                var apcTransform = Transform(apcUid);
+                if (apcTransform.GridUid != powerGridCheck.AffectedStation)
                     continue;
 
                 powerGridCheck.Powered.Add(apcUid);
