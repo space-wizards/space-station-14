@@ -96,3 +96,6 @@ reagent-desc-phosphoric-acid = An acidic chemical often used in agriculture. Kee
 
 reagent-name-hardlight-toxin = hardlight toxin
 reagent-desc-hardlight-toxin = A highly advanced toxin which inundates a victim's nervous system with ionizing radiation when metabolized.
+
+reagent-name-hemotoxin = hemotoxin
+reagent-desc-hemotoxin = A close cousin of Hemorrhinol. Specifically targets and destroys red blood cells, causing rapid blood loss.
