@@ -24,6 +24,9 @@ public sealed partial class ReagentCondition : EntityConditionBase<IReagentCondi
     [DataField(required: true)]
     public ProtoId<ReagentPrototype> Reagent { get; set; }
 
+    /// <inheritdoc/>
+    public string? Solution { get; set; }
+
     public override string EntityConditionGuidebookText(IPrototypeManager prototype)
     {
         if (!prototype.Resolve(Reagent, out var reagentProto))

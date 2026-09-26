@@ -1,5 +1,8 @@
 using Content.Server.Wires;
+using Content.Shared.Conditions;
+using Content.Shared.Conditions.UnifiedConditions;
 using Content.Shared.Construction;
+using Content.Shared.EntityConditions;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 
@@ -11,31 +14,14 @@ namespace Content.Server.Construction.Conditions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class AllWiresCut : IGraphCondition
+    public sealed partial class AllWiresCut : GraphConditionBase<IWiresCutCondition>
     {
         [DataField("value")] public bool Value { get; private set; } = true;
 
-        public bool Condition(EntityUid uid, IEntityManager entityManager)
+        public override bool DoExamine(ExaminedEvent args)
         {
-            if (!entityManager.TryGetComponent(uid, out WiresComponent? wires))
-                return true;
-
-            foreach (var wire in wires.WiresList)
-            {
-                switch (Value)
-                {
-                    case true when !wire.IsCut:
-                    case false when wire.IsCut:
-                        return false;
-                }
-            }
-
-            return true;
-        }
-
-        public bool DoExamine(ExaminedEvent args)
-        {
-            if (Condition(args.Examined, IoCManager.Resolve<IEntityManager>()))
+            if (IoCManager.Resolve<SharedConditionEvaluationSystem>()
+                .IsConditionSatisfied(this, args.Examined, args.Examiner))
                 return false;
 
             args.PushMarkup(Loc.GetString(Value
@@ -44,11 +30,12 @@ namespace Content.Server.Construction.Conditions
             return true;
         }
 
-        public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+        public override IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
         {
             yield return new ConstructionGuideEntry()
             {
-                Localization = Value ? "construction-guide-condition-all-wires-cut"
+                Localization = Value
+                    ? "construction-guide-condition-all-wires-cut"
                     : "construction-guide-condition-all-wires-intact"
             };
         }

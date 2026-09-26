@@ -1,4 +1,5 @@
 using Content.Server.Construction.Components;
+using Content.Shared.Conditions.UnifiedConditions;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
@@ -12,7 +13,7 @@ namespace Content.Server.Construction.Conditions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class MachineFrameComplete : IGraphCondition
+    public sealed partial class MachineFrameComplete : GraphConditionBase<IMachineFrameCompleteCondition>, IMachineFrameCompleteCondition
     {
         [DataField("guideIconBoard")]
         public SpriteSpecifier? GuideIconBoard { get; private set; }
@@ -20,16 +21,7 @@ namespace Content.Server.Construction.Conditions
         [DataField("guideIconParts")]
         public SpriteSpecifier? GuideIconParts { get; private set; }
 
-
-        public bool Condition(EntityUid uid, IEntityManager entityManager)
-        {
-            if (!entityManager.TryGetComponent(uid, out MachineFrameComponent? machineFrame))
-                return false;
-
-            return entityManager.EntitySysManager.GetEntitySystem<MachineFrameSystem>().IsComplete(machineFrame);
-        }
-
-        public bool DoExamine(ExaminedEvent args)
+        public override bool DoExamine(ExaminedEvent args)
         {
             var entity = args.Examined;
 
@@ -94,7 +86,7 @@ namespace Content.Server.Construction.Conditions
             return true;
         }
 
-        public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+        public override IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
         {
             yield return new ConstructionGuideEntry()
             {

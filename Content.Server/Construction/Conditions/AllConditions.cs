@@ -1,3 +1,5 @@
+using Content.Shared.Conditions;
+using Content.Shared.Conditions.HelperConditions;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
@@ -6,23 +8,14 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class AllConditions : IGraphCondition
+    public sealed partial class AllConditions : GraphConditionBase<IAllCondition>,IAllCondition
     {
+        IEnumerable<ICondition> IAllCondition.Conditions => Conditions;
+
         [DataField("conditions")]
-        public IGraphCondition[] Conditions { get; private set; } = Array.Empty<IGraphCondition>();
+        public GraphCondition[] Conditions { get; private set; } = Array.Empty<GraphCondition>();
 
-        public bool Condition(EntityUid uid, IEntityManager entityManager)
-        {
-            foreach (var condition in Conditions)
-            {
-                if (!condition.Condition(uid, entityManager))
-                    return false;
-            }
-
-            return true;
-        }
-
-        public bool DoExamine(ExaminedEvent args)
+        public override bool DoExamine(ExaminedEvent args)
         {
             var ret = false;
 
@@ -34,7 +27,7 @@ namespace Content.Server.Construction.Conditions
             return ret;
         }
 
-        public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+        public override IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
         {
             foreach (var condition in Conditions)
             {
@@ -44,5 +37,6 @@ namespace Content.Server.Construction.Conditions
                 }
             }
         }
+
     }
 }

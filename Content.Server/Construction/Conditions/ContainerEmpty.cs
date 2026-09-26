@@ -1,7 +1,8 @@
+using Content.Shared.Conditions.Satisfier;
+using Content.Shared.Conditions.UnifiedConditions;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
-using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
 
@@ -9,8 +10,21 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class ContainerEmpty : IGraphCondition
+    public sealed partial class ContainerEmpty : GraphConditionBase<IContainerContentsCountCondition>
     {
+
+        /// <summary>
+        /// The base condition just counts contained entities, this satisfier makes sure the condition is only met, when actually empty.
+        /// </summary>
+        public ContainerEmpty()
+        {
+            Satisfier = new WithThreshold()
+            {
+                Comparison = WithThreshold.Comparator.Equal,
+                Threshold = 0
+            };
+        }
+
         [DataField("container")]
         public string Container { get; private set; } = string.Empty;
 
@@ -23,16 +37,7 @@ namespace Content.Server.Construction.Conditions
         [DataField("guideIcon")]
         public SpriteSpecifier? GuideIcon { get; private set; }
 
-        public bool Condition(EntityUid uid, IEntityManager entityManager)
-        {
-            var containerSystem = entityManager.EntitySysManager.GetEntitySystem<ContainerSystem>();
-            if (!containerSystem.TryGetContainer(uid, Container, out var container))
-                return false;
-
-            return container.ContainedEntities.Count == 0;
-        }
-
-        public bool DoExamine(ExaminedEvent args)
+        public override bool DoExamine(ExaminedEvent args)
         {
             if (string.IsNullOrEmpty(ExamineText))
                 return false;
@@ -41,7 +46,8 @@ namespace Content.Server.Construction.Conditions
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
             if (!entityManager.TryGetComponent(entity, out ContainerManagerComponent? containerManager) ||
-                !entityManager.System<SharedContainerSystem>().TryGetContainer(entity, Container, out var container, containerManager)) return false;
+                !entityManager.System<SharedContainerSystem>().TryGetContainer(entity, Container, out var container, containerManager))
+                return false;
 
             if (container.ContainedEntities.Count == 0)
                 return false;
@@ -49,7 +55,7 @@ namespace Content.Server.Construction.Conditions
             args.PushMarkup(Loc.GetString(ExamineText));
             return true;
         }
-        public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+        public override IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
         {
             if (string.IsNullOrEmpty(GuideText))
                 yield break;

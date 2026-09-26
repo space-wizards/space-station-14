@@ -1,3 +1,4 @@
+using Content.Shared.Conditions;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 
@@ -9,7 +10,7 @@ namespace Content.Server.Construction.Completions
     {
         [DataField("passUser")] public bool PassUser { get; private set; }
 
-        [DataField("condition", required:true)] public IGraphCondition? Condition { get; private set; }
+        [DataField("condition", required:true)] public GraphCondition? Condition { get; private set; }
 
         [DataField("action", required:true)] public IGraphAction? Action { get; private set; }
 
@@ -20,7 +21,7 @@ namespace Content.Server.Construction.Completions
             if (Condition == null || Action == null)
                 return;
 
-            if (Condition.Condition(PassUser && userUid != null ? userUid.Value : uid, entityManager))
+            if (entityManager.System<SharedConditionEvaluationSystem>().IsConditionSatisfied(Condition, PassUser && userUid != null ? userUid.Value : uid))
                 Action.PerformAction(uid, userUid, entityManager);
             else
                 Else?.PerformAction(uid, userUid, entityManager);

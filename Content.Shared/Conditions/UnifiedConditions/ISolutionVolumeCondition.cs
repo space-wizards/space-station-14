@@ -1,14 +1,11 @@
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Conditions.Satisfier;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IReagentCondition : ICondition<IReagentCondition>, IConditionWithDefaultSatisfactionRule
+public interface ISolutionVolumeCondition : ICondition<ISolutionVolumeCondition>, IConditionWithDefaultSatisfactionRule
 {
     /// <summary>
     /// Minimum amount required.
@@ -19,11 +16,6 @@ public interface IReagentCondition : ICondition<IReagentCondition>, IConditionWi
     /// Maximum amount required
     /// </summary>
     FixedPoint2 Max { get; }
-
-    /// <summary>
-    /// Reagent we look for in a solution component.
-    /// </summary>
-    ProtoId<ReagentPrototype> Reagent { get; }
 
     /// <summary>
     /// The solution to look for. if null we take the solutionComponent of the Entity.
@@ -51,21 +43,22 @@ public interface IReagentCondition : ICondition<IReagentCondition>, IConditionWi
             Inverted = false,
         };
     }
+
 }
 
 /// <summary>
 /// Returns true if this solution entity has an amount of reagent in it within a specified minimum and maximum.
 /// </summary>
-public sealed partial class ReagentEntityConditionSystem : EntitySystem
+public sealed partial class SolutionVolumeConditionSystem : EntitySystem
 {
     [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
     [SubscribeLocalEvent]
-    private void Condition(Entity<MetaDataComponent> entity, ref ConditionEvaluationEvent<IReagentCondition> args)
+    private void Condition(Entity<MetaDataComponent> entity, ref ConditionEvaluationEvent<ISolutionVolumeCondition> args)
     {
         args.Handled = true;
 
-        if (args.Condition.Max == args.Condition.Min && args.Condition.Max == 0)
+        if(args.Condition.Max == args.Condition.Min&&args.Condition.Max==0)
             args.Value = 1;
 
         Solution? solution;
@@ -81,15 +74,15 @@ public sealed partial class ReagentEntityConditionSystem : EntitySystem
                 return;
         }
 
-        var quant = solution.GetTotalPrototypeQuantity(args.Condition.Reagent);
+
 
         if (args.Condition.Max == args.Condition.Min)
         {
-            args.Value = quant == args.Condition.Max ? 1 : 0;
+            args.Value = solution.Volume == args.Condition.Max ? 1 : 0;
         }
         else
         {
-            args.Value = ((quant - args.Condition.Min) / (args.Condition.Max - args.Condition.Min)).Float();
+            args.Value = ((solution.Volume - args.Condition.Min) / (args.Condition.Max - args.Condition.Min)).Float();
         }
     }
 }
