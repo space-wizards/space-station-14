@@ -81,7 +81,6 @@ public sealed class StatusEffectNewTest : InteractionTest
 
         // wait for effect B's delay to end
         await Server.WaitRunTicks((int)TenTicks.Ticks);
-
         Assert.That(compStatusB!.Applied, Is.True, "Status effect B had not been applied to the player, despite its delay being over.");
     }
 
@@ -151,9 +150,7 @@ public sealed class StatusEffectNewTest : InteractionTest
             Assert.That(_sStatusSystem.TryRemoveStatusEffect(SPlayer, StatusA), Is.True, "TryRemoveStatusEffect for Status A failed!");
             Assert.That(_sStatusSystem.TryRemoveStatusEffect(SPlayer, StatusB), Is.False, "TryRemoveStatusEffect for Status B (not on the player) somehow succeeded despite this effect not being on the player!?");
         }
-
         await Server.WaitRunTicks(1); // have to wait for queued deletion of status effects
-
         Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA), Is.False, "Status effect A was still on the player after being removed!");
     }
 
@@ -195,10 +192,9 @@ public sealed class StatusEffectNewTest : InteractionTest
         Assert.That(_sStatusSystem.TryAddTime(SPlayer, StatusA, null), Is.True, "TryAddTime setting duration to null did not return true");
         _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timePermanent);
         Assert.That(timePermanent.EndEffectTime, Is.Null, "TryAddTime setting to null did not set the duration to null");
+ 
         Assert.That(_sStatusSystem.TryRemoveTime(SPlayer, StatusA,  null), Is.True, "TryRemoveTime with param of null did not return true");
-
         await Server.WaitRunTicks(1); // status effect removal is queued to next tick.
-
         Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out _),  Is.False, "TryRemoveTime set to null did not remove the status effect (TryRemoveTime is supposed to remove status effect if null is given)");
     }
     
@@ -325,7 +321,6 @@ public sealed class StatusEffectNewTest : InteractionTest
             Assert.That(time3.StartEffectTime, Is.EqualTo(curTime), "Status effect A did not have expected start time of immediately (delay null, duration 10, end time should be 10)");
             Assert.That(time3.EndEffectTime, Is.EqualTo(curTime + TenTicks), "Status effect A did not have expected end time of 10 ticks after current time  (delay null, duration 10, end time should be 10)");
         }
-
         await Server.WaitRunTicks(1); // need to wait for callbacks and such to resolve themselves in order for the "applied" status to update 
         Assert.That(compStatusA!.Applied, Is.True, "Status effect A was not applied to the player after delay was reduced to zero");
     }
