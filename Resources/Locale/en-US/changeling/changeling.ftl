@@ -55,6 +55,7 @@ changeling-takeover-doafter = [color=red]{ CAPITALIZE(SUBJECT($user)) } { CONJUG
 
 # stings
 changeling-sting-success = We silently sting {THE($target)}!
+changeling-sting-hemotoxin = You feel sharp pain in your chest!
 
 # mindshield
 changeling-fake-mindshield-enabled = We emit fake mindshield waves.

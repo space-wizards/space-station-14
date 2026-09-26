@@ -380,9 +380,16 @@
   - type: Sprite
     sprite: Interface/Actions/changeling2.rsi
     layers:
-    - state: lethal_sting
+    - state: hemotoxin_sting
+  - type: PopupOnAction
+    popupType: Medium
+    selfMessage: changeling-sting-success
   - type: EntityEffectAction
     effects:
+    - !type:PopupMessage
+      visualType: LargeCaution
+      messages: changeling-sting-hemotoxin
+      type: Local
     - !type:AddReagentToBloodstream
       reagent: Hemorrhinol
       quantity: 10 # Bloodloss is very weak, this will likely need tweaks once its more interesting.
