@@ -311,6 +311,24 @@
     state: horns_floppy_kobold_ears
 
 - type: marking
+  id: LizardVisageTribal
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: visage_tribal
+
+- type: marking
+  id: LizardHornsGoblinEars
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: horns_goblin_ears
+
+- type: marking
   id: LizardChestUnderbelly
   bodyPart: Chest
   groupWhitelist: [Reptilian]
