@@ -12,7 +12,7 @@ public sealed partial class ChangelingEscapeIdentityConditionSystem : EntitySyst
 {
     [Dependency] private EmergencyShuttleSystem _emergencyShuttle = default!;
     [Dependency] private SharedChangelingIdentitySystem _changelingIdentity = default!;
-    [Dependency] private SharedCuffableSystem _cuffable = default!;
+    [Dependency] private CuffableSystem _cuffable = default!;
     [Dependency] private SharedIdCardSystem _idCard = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private TargetObjectiveSystem _target = default!;

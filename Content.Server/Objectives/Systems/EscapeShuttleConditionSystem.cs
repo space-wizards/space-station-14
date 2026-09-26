@@ -9,7 +9,7 @@ namespace Content.Server.Objectives.Systems;
 public sealed partial class EscapeShuttleConditionSystem : EntitySystem
 {
     [Dependency] private EmergencyShuttleSystem _emergencyShuttle = default!;
-    [Dependency] private SharedCuffableSystem _cuffable = default!;
+    [Dependency] private CuffableSystem _cuffable = default!;
     [Dependency] private SharedMindSystem _mind = default!;
 
     public override void Initialize()

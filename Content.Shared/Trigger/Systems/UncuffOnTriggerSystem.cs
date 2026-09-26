@@ -6,14 +6,14 @@ namespace Content.Shared.Trigger.Systems;
 
 public sealed partial class UncuffOnTriggerSystem : XOnTriggerSystem<UncuffOnTriggerComponent>
 {
-    [Dependency] private SharedCuffableSystem _cuffable = default!;
+    [Dependency] private CuffableSystem _cuffable = default!;
 
     protected override void OnTrigger(Entity<UncuffOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
-        if (!TryComp<CuffableComponent>(target, out var cuffs) || !_cuffable.TryGetLastCuff(target, out var cuff))
+        if (!TryComp<CuffableComponent>(target, out var cuffs) || !_cuffable.TryGetLastCuff((target, cuffs), out var cuff))
             return;
 
-        _cuffable.Uncuff(target, args.User, cuff.Value);
+        _cuffable.Uncuff((target, cuffs), cuff.Value.AsNullable(), args.User);
         args.Handled = true;
     }
 }
