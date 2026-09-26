@@ -3,6 +3,7 @@ using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Medical.CrewMonitoring;
 using Content.Shared.Pinpointer;
 using Content.Shared.PowerCell;
+using Content.Shared.Station.Systems;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Medical.CrewMonitoring;
@@ -11,6 +12,7 @@ public sealed partial class CrewMonitoringConsoleSystem : EntitySystem
 {
     [Dependency] private PowerCellSystem _cell = default!;
     [Dependency] private UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private StationSystem _station = default!;
 
     public override void Initialize()
     {
@@ -28,7 +30,7 @@ public sealed partial class CrewMonitoringConsoleSystem : EntitySystem
     private void OnSuitSensorBroadcast(Entity<CrewMonitoringConsoleComponent> ent, ref DeviceNetworkPacketEvent<BroadcastSuitSensorStatePayload> args)
     {
         ent.Comp.ConnectedSensors = args.Data.SensorStatus;
-        UpdateUserInterface(ent, ent.Comp);
+        UpdateUserInterface(ent, ent.Comp, args.Data.Station);
     }
 
     private void OnUIOpened(EntityUid uid, CrewMonitoringConsoleComponent component, BoundUIOpenedEvent args)
@@ -39,7 +41,7 @@ public sealed partial class CrewMonitoringConsoleSystem : EntitySystem
         UpdateUserInterface(uid, component);
     }
 
-    private void UpdateUserInterface(EntityUid uid, CrewMonitoringConsoleComponent? component = null)
+    private void UpdateUserInterface(EntityUid uid, CrewMonitoringConsoleComponent? component = null, NetEntity? station = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -55,6 +57,6 @@ public sealed partial class CrewMonitoringConsoleSystem : EntitySystem
 
         // Update all sensors info
         var allSensors = component.ConnectedSensors.Values.ToList();
-        _uiSystem.SetUiState(uid, CrewMonitoringUIKey.Key, new CrewMonitoringState(allSensors));
+        _uiSystem.SetUiState(uid, CrewMonitoringUIKey.Key, new CrewMonitoringState(allSensors, station));
     }
 }

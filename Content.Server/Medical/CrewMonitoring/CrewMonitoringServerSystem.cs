@@ -4,6 +4,7 @@ using Robust.Shared.Timing;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Medical.CrewMonitoring;
 using Content.Shared.Medical.SuitSensors;
+using Content.Shared.Station.Systems;
 
 namespace Content.Server.Medical.CrewMonitoring;
 
@@ -12,6 +13,7 @@ public sealed partial class CrewMonitoringServerSystem : EntitySystem
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private SingletonDeviceNetServerSystem _singletonServerSystem = default!;
+    [Dependency] private StationSystem _station = default!;
 
     private const float UpdateRate = 3f;
     private float _updateDiff;
@@ -91,6 +93,7 @@ public sealed partial class CrewMonitoringServerSystem : EntitySystem
         var payload = new BroadcastSuitSensorStatePayload
         {
             SensorStatus = serverComponent.SensorStatus,
+            Station = GetNetEntity(_station.GetOwningStation(uid)),
         };
 
         _deviceNetworkSystem.SendPacket((uid, device), null, ref payload);
