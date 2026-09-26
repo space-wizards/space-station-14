@@ -24,7 +24,7 @@ vending-machine-category-beer-and-wine = Beer and wine
 vending-machine-category-spirits = Spirits
 vending-machine-category-bar-supplies = Bar supplies
 
-# Kitchem
+# Kitchen
 vending-machine-category-fresh-ingredients = Fresh ingredients
 vending-machine-category-dry-ingredients = Dry ingredients
 vending-machine-category-condiments = Condiments
