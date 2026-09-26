@@ -147,6 +147,8 @@ public sealed class StatusEffectNewTest : InteractionTest
     public async Task TestAddRemoveEffectTime()
     {
         var curTime = TimeSpan.Zero;
+        var twentyTicks = TenTicks + TenTicks;
+        var thirtyTicks = twentyTicks + TenTicks;
         await Server.WaitPost(() =>
         {
             _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, TenTicks);
@@ -156,13 +158,13 @@ public sealed class StatusEffectNewTest : InteractionTest
         Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var time), Is.True, "Could not get time info for effect A");
         Assert.That(time.EndEffectTime, Is.EqualTo(curTime + TenTicks), "Status effect A did not have expected end time of 10 ticks after current time");
 
-        Assert.That(_sStatusSystem.TryAddTime(SPlayer, StatusA, TenTicks), Is.True, "TryAddTime adding ten ticks to duration did not return true");
-        _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timePlusTen);
-        Assert.That(timePlusTen.EndEffectTime, Is.EqualTo(curTime + (TenTicks * 2)), "Status effect A did not have expected updated end time of 20 ticks after current time");
+        Assert.That(_sStatusSystem.TryAddTime(SPlayer, StatusA, twentyTicks), Is.True, "TryAddTime adding 20 ticks to duration did not return true");
+        _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timePlusTenPlusTwenty);
+        Assert.That(timePlusTenPlusTwenty.EndEffectTime, Is.EqualTo(curTime + thirtyTicks), "Status effect A did not have expected updated end time of 30 ticks after current time (was 10, 20 added)");
 
         Assert.That(_sStatusSystem.TryRemoveTime(SPlayer, StatusA, TenTicks), Is.True, "TryRemoveTime removing ten ticks from duration did not return true");
-        _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timePlusTenMinusTen);
-        Assert.That(timePlusTenMinusTen.EndEffectTime, Is.EqualTo(curTime + TenTicks), "Status effect A did not have expected updated end time of 10 ticks after current time");
+        _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timePlusTenPlusTwentyMinusTen);
+        Assert.That(timePlusTenPlusTwentyMinusTen.EndEffectTime, Is.EqualTo(curTime + twentyTicks), "Status effect A did not have expected updated end time of 20 ticks after current time (was 30, 10 removed)");
     }
     
     [Test, Description("Testing TryAddTime and TryRemoveTime with null args")]
