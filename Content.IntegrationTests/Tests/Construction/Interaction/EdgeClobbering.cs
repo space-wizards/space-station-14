@@ -1,3 +1,4 @@
+#nullable enable
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Server.Construction.Components;
 using Content.Shared.Temperature;
@@ -6,8 +7,10 @@ namespace Content.IntegrationTests.Tests.Construction.Interaction;
 
 public sealed class EdgeClobbering : InteractionTest
 {
+    private const string ExampleEntity = "ExampleEntity";
+
     [TestPrototypes]
-    private const string Prototypes = @"
+    private const string Prototypes = $@"
 - type: constructionGraph
   id: ExampleGraph
   start: A
@@ -26,7 +29,7 @@ public sealed class EdgeClobbering : InteractionTest
   - node: C
 
 - type: entity
-  id: ExampleEntity
+  id: {ExampleEntity}
   components:
   - type: Construction
     graph: ExampleGraph
@@ -37,14 +40,13 @@ public sealed class EdgeClobbering : InteractionTest
     [Test]
     public async Task EnsureNoEdgeClobbering()
     {
-        await SpawnTarget("ExampleEntity");
-        var sTarget = SEntMan.GetEntity(Target!.Value);
+        await SpawnTarget(ExampleEntity);
 
         await InteractUsing(Screw, false);
         var ev = new TemperatureChangedEvent(0f, 0f);
-        SEntMan.EventBus.RaiseLocalEvent(sTarget, ref ev);
+        SEntMan.EventBus.RaiseLocalEvent(STarget.Value, ref ev);
         await AwaitDoAfters();
 
-        Assert.That(SEntMan.GetComponent<ConstructionComponent>(sTarget).Node, Is.EqualTo("C"));
+        Assert.That(SComp<ConstructionComponent>(STarget.Value).Node, Is.EqualTo("C"));
     }
 }

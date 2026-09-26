@@ -1,46 +1,31 @@
+#nullable enable
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Contraband;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests;
 
-[TestFixture]
 public sealed class ContrabandTest : GameTest
 {
     [Test]
+    [Description($"Checks that an entity with a {nameof(ContrabandComponent)} is configured correctly.")]
+    [RunOnSide(Side.Client)]
     public async Task EntityShowDepartmentsAndJobs()
     {
-        var pair = Pair;
-        var client = pair.Client;
-        var protoMan = client.ResolveDependency<IPrototypeManager>();
-        var componentFactory = client.ResolveDependency<IComponentFactory>();
-
-        await client.WaitAssertion(() =>
+        using (Assert.EnterMultipleScope())
         {
-            Assert.Multiple(() =>
+            foreach (var (proto, contraband) in Pair.GetPrototypesWithComponent<ContrabandComponent>())
             {
-                foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
-                {
-                    if (proto.Abstract || pair.IsTestPrototype(proto))
-                        continue;
+                Assert.That(CProtoMan.TryIndex(contraband.Severity, out var severity),
+                    $"{proto.ID} has a {nameof(ContrabandComponent)} with an unknown severity."
+                );
 
-                    if (!proto.TryComp<ContrabandComponent>(out var contraband, componentFactory))
-                        continue;
+                if (!severity!.ShowDepartmentsAndJobs)
+                    return;
 
-                    if (!protoMan.TryIndex(contraband.Severity, out var severity))
-                    {
-                        Assert.Fail($"{proto.ID} has a ContrabandComponent with a unknown severity.");
-                        continue;
-                    }
-
-                    if (!severity.ShowDepartmentsAndJobs)
-                        continue;
-
-                    Assert.That(contraband.AllowedDepartments.Count + contraband.AllowedJobs.Count, Is.Not.EqualTo(0),
-                        @$"{proto.ID} has a ContrabandComponent with ShowDepartmentsAndJobs but no allowed departments or jobs.");
-                }
-            });
-        });
+                Assert.That(contraband.AllowedDepartments.Count + contraband.AllowedJobs.Count, Is.Not.Zero,
+                    @$"{proto.ID} has a {nameof(ContrabandComponent)} with {nameof(ContrabandSeverityPrototype.ShowDepartmentsAndJobs)} but no allowed departments or jobs.");
+            }
+        }
     }
 }
