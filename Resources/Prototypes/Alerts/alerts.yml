@@ -93,7 +93,7 @@
   clickEvent: !type:ResistFireAlertEvent
   name: alerts-on-fire-name
   description: alerts-on-fire-desc
-
+  checkCanInteract: false
 
 - type: alert
   id: Cold
@@ -153,6 +153,7 @@
   icons: [ /Textures/Interface/Alerts/Handcuffed/Handcuffed.png ]
   name: alerts-handcuffed-name
   description: alerts-handcuffed-desc
+  checkCanInteract: false
 
 - type: alert
   id: Ensnared
