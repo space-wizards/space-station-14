@@ -7,8 +7,9 @@ using Content.Shared.Interaction;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
-using Robust.Shared.Player;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
+using Robust.Shared.Player;
 using static Content.Shared.Paper.PaperComponent;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -26,6 +27,7 @@ public sealed partial class PaperSystem : EntitySystem
     [Dependency] private SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private MetaDataSystem _metaSystem = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private INetManager _net = default!;
 
     [Dependency] private EntityQuery<PaperComponent> _paperQuery = default!;
 
@@ -59,7 +61,6 @@ public sealed partial class PaperSystem : EntitySystem
 
     private void OnInit(Entity<PaperComponent> entity, ref ComponentInit args)
     {
-        entity.Comp.Mode = PaperAction.Read;
         UpdateUserInterface(entity);
 
         if (TryComp<AppearanceComponent>(entity, out var appearance))
@@ -74,7 +75,6 @@ public sealed partial class PaperSystem : EntitySystem
 
     private void BeforeUIOpen(Entity<PaperComponent> entity, ref BeforeActivatableUIOpenEvent args)
     {
-        entity.Comp.Mode = PaperAction.Read;
         UpdateUserInterface(entity);
     }
 
@@ -109,22 +109,33 @@ public sealed partial class PaperSystem : EntitySystem
         }
     }
 
+    private bool IsWritingTool(EntityUid writingTool)
+    {
+        return _tagSystem.HasTag(writingTool, WriteTag);
+    }
+
+    private bool IsEditable(Entity<PaperComponent> entity, EntityUid writingTool)
+    {
+        return IsWritingTool(writingTool)
+            // only allow editing if there are no stamps or when using a cyberpen
+            && (entity.Comp.StampedBy.Count == 0 || _tagSystem.HasTag(writingTool, WriteIgnoreStampsTag));
+    }
+
     private void OnInteractUsing(Entity<PaperComponent> entity, ref InteractUsingEvent args)
     {
-        // only allow editing if there are no stamps or when using a cyberpen
-        var editable = entity.Comp.StampedBy.Count == 0 || _tagSystem.HasTag(args.Used, WriteIgnoreStampsTag);
-        if (_tagSystem.HasTag(args.Used, WriteTag))
+        if (IsWritingTool(args.Used))
         {
-            if (editable)
+            if (entity.Comp.EditingDisabled)
             {
-                if (entity.Comp.EditingDisabled)
-                {
-                    var paperEditingDisabledMessage = Loc.GetString("paper-tamper-proof-modified-message");
-                    _popupSystem.PopupEntity(paperEditingDisabledMessage, entity, args.User);
+                var paperEditingDisabledMessage = Loc.GetString("paper-tamper-proof-modified-message");
+                _popupSystem.PopupEntity(paperEditingDisabledMessage, entity, args.User);
 
-                    args.Handled = true;
-                    return;
-                }
+                args.Handled = true;
+                return;
+            }
+
+            if (IsEditable(entity, args.Used))
+            {
 
                 var ev = new PaperWriteAttemptEvent(entity.Owner);
                 RaiseLocalEvent(args.User, ref ev);
@@ -143,10 +154,22 @@ public sealed partial class PaperSystem : EntitySystem
                 var writeEvent = new PaperWriteEvent(args.User, entity);
                 RaiseLocalEvent(args.Used, ref writeEvent);
 
-                entity.Comp.Mode = PaperAction.Write;
+                // Broadcast message to players which have the UI opened,
+                // updating the UI with any new contents.
                 _uiSystem.OpenUi(entity.Owner, PaperUiKey.Key, args.User);
                 UpdateUserInterface(entity);
+
+                if (_net.IsServer)
+                {
+                    // Send a message only to the player which interacted with the pen.
+                    // This will update the UI, enabling edit mode only for that player.
+                    var toolNetEnt = GetNetEntity(args.Used);
+                    _uiSystem.ServerSendUiMessage(entity.Owner, PaperUiKey.Key, new PaperBeginEditMessage(toolNetEnt), args.User);
+                }
             }
+
+            // Handle the event even if we attempted to use a writing tool, but couldn't write on
+            // the paper. This prevents crayons from losing durability, etc.
             args.Handled = true;
             return;
         }
@@ -186,7 +209,7 @@ public sealed partial class PaperSystem : EntitySystem
         if (ev.Cancelled)
             return;
 
-        if (args.Text.Length <= entity.Comp.ContentSize)
+        if (args.Text.Length <= entity.Comp.ContentSize && IsEditable(entity, GetEntity(args.EditToolEntity)))
         {
             SetContent(entity, args.Text);
 
@@ -204,8 +227,15 @@ public sealed partial class PaperSystem : EntitySystem
 
             _audio.PlayPvs(entity.Comp.Sound, entity);
         }
+        else
+        {
+            // This block can be hit if the user somehow managed to input more than the maximum content size
+            // or if the paper was stamped after they started editing it with a normal, stamp-respecting pen.
+            var user = GetEntity(args.User);
+            var writeFailedMessage = Loc.GetString("paper-component-action-write-failed");
+            _popupSystem.PopupEntity(writeFailedMessage, entity, user);
+        }
 
-        entity.Comp.Mode = PaperAction.Read;
         UpdateUserInterface(entity);
     }
 
@@ -302,7 +332,7 @@ public sealed partial class PaperSystem : EntitySystem
 
     private void UpdateUserInterface(Entity<PaperComponent> entity)
     {
-        _uiSystem.SetUiState(entity.Owner, PaperUiKey.Key, new PaperBoundUserInterfaceState(entity.Comp.Content, entity.Comp.StampedBy, entity.Comp.Mode));
+        _uiSystem.SetUiState(entity.Owner, PaperUiKey.Key, new PaperBoundUserInterfaceState(entity.Comp.Content, entity.Comp.StampedBy));
     }
 }
 
